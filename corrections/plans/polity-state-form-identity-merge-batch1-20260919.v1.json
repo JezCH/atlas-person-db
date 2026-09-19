@@ -1,0 +1,329 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_state_form_identity_merge_batch1_20260919_v1",
+  "as_of": "2026-09-19",
+  "status": "REVIEWED_POLITY_IDENTITY_MERGE_WITH_TEMPORAL_DESIGNATIONS",
+  "release_order": 596,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY-IDENTITY-REVIEW-16-20260919; reviewed same-identity state-form merges after #1215 temporal designation read resolution",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-cordoba-caliphate-into-emirate-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "15770246-9789-4be1-86e0-1632e861673f",
+      "baseline_before": {
+        "person_id": "9a81fac4-fa3e-4279-84bd-9105f098c996",
+        "polity_id": "0a0ed67e-ab5b-4b43-8c3c-a32c32aa3653",
+        "role_id": "4edacb4f-eb6d-5be2-a6f2-627309a9044c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 929,
+        "activity_end": 961,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "15770246-9789-4be1-86e0-1632e861673f",
+        "person_id": "9a81fac4-fa3e-4279-84bd-9105f098c996",
+        "polity_id": "dd89dd8d-f816-4a07-b5a3-a2556da90296",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "4edacb4f-eb6d-5be2-a6f2-627309a9044c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 929,
+        "activity_end": 961,
+        "activity_start_detail": {
+          "year": 929,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 961,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-bulgaria-principality-into-kingdom",
+      "type": "rewrite_activity",
+      "activity_id": "17a97ee3-783e-4090-80c2-fd832a7b5237",
+      "baseline_before": {
+        "person_id": "6b23fbeb-5ac3-4848-9d6a-5643fd24fe49",
+        "polity_id": "4a92bbb3-6532-4dab-b515-837ad344ec6c",
+        "role_id": "0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1887,
+        "activity_end": 1908,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "17a97ee3-783e-4090-80c2-fd832a7b5237",
+        "person_id": "6b23fbeb-5ac3-4848-9d6a-5643fd24fe49",
+        "polity_id": "c9c9ed4f-17ff-496a-a2b3-d949c631eb22",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1887,
+        "activity_end": 1908,
+        "activity_start_detail": {
+          "year": 1887,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1908,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-montenegro-principality-into-kingdom",
+      "type": "rewrite_activity",
+      "activity_id": "50631f7e-a198-4005-9790-857180d756fd",
+      "baseline_before": {
+        "person_id": "373db3e7-2fbc-49cb-865c-7570befa75dd",
+        "polity_id": "a7049680-e80e-40a0-9aec-4efeaeb0f301",
+        "role_id": "0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1860,
+        "activity_end": 1910,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "50631f7e-a198-4005-9790-857180d756fd",
+        "person_id": "373db3e7-2fbc-49cb-865c-7570befa75dd",
+        "polity_id": "71838f1f-0098-4ab1-bbc4-8679f1683c1d",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1860,
+        "activity_end": 1910,
+        "activity_start_detail": {
+          "year": 1860,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1910,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "cordoba-caliphate-temporal-designation-929-1031",
+      "exact_before": {
+        "designation_absent_id": "c051e24a-65b4-5f54-9fb0-28bbe1823e46"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "c051e24a-65b4-5f54-9fb0-28bbe1823e46",
+          "polity_id": "dd89dd8d-f816-4a07-b5a3-a2556da90296",
+          "designation_type": "state_form",
+          "valid_from_year": 929,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1031,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form designation preserving the Caliphate of Cordoba phase on the stable Cordoban polity identity; National Atlas of Spain dates the Caliphate to 929-1031."
+        },
+        "names": [
+          {
+            "id": "8328a5ac-7b91-5ec1-9e92-19722e8762ea",
+            "polity_designation_id": "c051e24a-65b4-5f54-9fb0-28bbe1823e46",
+            "locale": "en",
+            "name": "Caliphate of Cordoba",
+            "is_preferred": true
+          },
+          {
+            "id": "c2ca2e27-638d-53d3-9957-3380050dc43c",
+            "polity_designation_id": "c051e24a-65b4-5f54-9fb0-28bbe1823e46",
+            "locale": "ko",
+            "name": "코르도바 칼리파국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "c051e24a-65b4-5f54-9fb0-28bbe1823e46",
+            "source_id": "a56ad7a4-48dd-41c7-91e9-e7ec93ba7c28",
+            "source_locator_key": "https://www.ign.es/web/resources/docs/IGNCnig/ANE/Capitulos/06_Historicaloverview_2024.pdf"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "bulgaria-principality-temporal-designation-1887-1908",
+      "exact_before": {
+        "designation_absent_id": "6c7377a1-64be-5a45-a584-e153b91738eb"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "6c7377a1-64be-5a45-a584-e153b91738eb",
+          "polity_id": "c9c9ed4f-17ff-496a-a2b3-d949c631eb22",
+          "designation_type": "state_form",
+          "valid_from_year": 1887,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1908,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form designation preserving the Principality of Bulgaria phase on the stable Bulgarian kingdom survivor identity for Ferdinand I's 1887-1908 princely reign."
+        },
+        "names": [
+          {
+            "id": "0a27134e-e18a-54e4-87fc-8f9c343fd01b",
+            "polity_designation_id": "6c7377a1-64be-5a45-a584-e153b91738eb",
+            "locale": "en",
+            "name": "Principality of Bulgaria",
+            "is_preferred": true
+          },
+          {
+            "id": "8cb00622-fc60-5189-a7eb-48739ff65c30",
+            "polity_designation_id": "6c7377a1-64be-5a45-a584-e153b91738eb",
+            "locale": "ko",
+            "name": "불가리아 공국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "6c7377a1-64be-5a45-a584-e153b91738eb",
+            "source_id": "a028ce3d-167e-4279-8d7d-cfc1aa214292",
+            "source_locator_key": "https://en.wikipedia.org/wiki/Ferdinand_I_of_Bulgaria"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "montenegro-principality-temporal-designation-1860-1910",
+      "exact_before": {
+        "designation_absent_id": "7c82861b-5b30-5788-9933-33ecf758dcb1"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "7c82861b-5b30-5788-9933-33ecf758dcb1",
+          "polity_id": "71838f1f-0098-4ab1-bbc4-8679f1683c1d",
+          "designation_type": "state_form",
+          "valid_from_year": 1860,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1910,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form designation preserving the Principality of Montenegro phase on the stable Kingdom of Montenegro survivor identity for Nikola I's 1860-1910 princely reign."
+        },
+        "names": [
+          {
+            "id": "e830e069-f1f7-5377-a4f8-2910d6286466",
+            "polity_designation_id": "7c82861b-5b30-5788-9933-33ecf758dcb1",
+            "locale": "en",
+            "name": "Principality of Montenegro",
+            "is_preferred": true
+          },
+          {
+            "id": "9ebaac8e-1c42-56fb-8fbd-74ff4649b721",
+            "polity_designation_id": "7c82861b-5b30-5788-9933-33ecf758dcb1",
+            "locale": "ko",
+            "name": "몬테네그로 공국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "7c82861b-5b30-5788-9933-33ecf758dcb1",
+            "source_id": "f7af507a-cf52-4c46-9894-283d79fd398b",
+            "source_locator_key": "https://nikola.dlib.me/me/biografija"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 3,
+    "activity_relinks": 3,
+    "polity_designation_assertions": 3,
+    "production_mutation_authorized": false
+  }
+}
