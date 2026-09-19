@@ -47,6 +47,7 @@ The row-oriented Persons screen is a working product surface, not the final onto
 - Source is a reusable evidence object capable of bibliographic/web metadata plus artifact/hash metadata when an ingested file exists. File hash/bytes are not a substitute for citation metadata.
 - AI research follows **candidate → evidence/source/confidence → human review → authoritative authoring**; it never bypasses the normalized writer.
 - Game-specific or presentation-only fields are extensions/crosswalks, not Person/Polity identity.
+- **Roster scope:** a Person who is currently serving in an active political or public office is excluded from ATLAS entirely while that office remains current. Do not keep a partial historical-only Person record, HOLD row, or approved authoring manifest for that Person during the active term. Reconsider registration only after the current office has ended.
 
 Unknown optional profile facts remain absent/unresolved. The system must not require religion, dynasty, gender, media, place or any other optional field merely to make a Person row “complete”. **Person, Place and Source exist as first-class Authoring objects** in the intended end state.
 
