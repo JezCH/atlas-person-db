@@ -212,6 +212,16 @@ Each active board SHOULD carry an `Archive cutoff` comment ID. During normal sta
 
 Open PR inventory follows the same rule: close historical diagnostic, superseded, or replaced PRs once their useful evidence is preserved elsewhere. An old open PR must not remain as a false signal of active work.
 
+Branch inventory is **historical storage, not a work queue**. During normal status discovery:
+
+- inspect only the head branches of currently open PRs or branches explicitly referenced by an ACTIVE board row;
+- do not enumerate historical branch names to reconstruct project status;
+- a merged/closed/discarded branch does not represent active work merely because its ref still exists;
+- when branch deletion is unavailable, a conclusively disposable merged/temporary branch may be normalized to exact current `main` so it carries zero hidden code delta;
+- never normalize or discard a branch whose unique commits have not been positively classified as obsolete or already materialized elsewhere.
+
+Closed `REFERENCE ARCHIVE`, `CLOSED ARCHIVE`, and explicitly parked/non-active issues are also not status surfaces. Reopen or promote them only when fresh evidence creates a concrete actionable task.
+
 A new worker answers "what is active?" from the active board first: full historical fold is exceptional recovery work, not normal bootstrap.
 
 ## 11. Registration completeness without repeated cleanup
