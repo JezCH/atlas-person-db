@@ -2,6 +2,7 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
+const { assertReplaySafeCanonicalMigration } = require("./atlas-replay-migration-safety.js");
 
 const CORRECTION_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260811_correction_manifest_runs.sql"),
@@ -65,6 +66,20 @@ async function applyMigrationPaths(client, migrationPaths, options = {}) {
   return Object.freeze({ applied: migrations.map((migration) => path.basename(migration.path)) });
 }
 
+async function applyReplayMigrationPaths(client, migrationPaths, options = {}) {
+  if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
+  const migrations = readMigrationPaths(migrationPaths, options);
+  for (const migration of migrations) {
+    assertReplaySafeCanonicalMigration({
+      migrationPath: migration.path,
+      sql: migration.sql,
+      surface: "correction-apply"
+    });
+    await client.query(migration.sql);
+  }
+  return Object.freeze({ applied: migrations.map((migration) => path.basename(migration.path)) });
+}
+
 async function applyPostStage2Migrations(client, options = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   if (!(await stage2SemanticSchemaReady(client))) throw new Error("POST_STAGE2_SEMANTIC_SCHEMA_REQUIRED");
@@ -72,7 +87,7 @@ async function applyPostStage2Migrations(client, options = {}) {
 }
 
 async function applyCorrectionMigrations(client, options = {}) {
-  const result = await applyMigrationPaths(client, CORRECTION_MIGRATION_PATHS, options);
+  const result = await applyReplayMigrationPaths(client, CORRECTION_MIGRATION_PATHS, options);
 
   // Correction Apply is a replay path. Only schema/constraint migrations that
   // are safe to execute repeatedly may run here. The 2026-08-23/24 migrations
@@ -81,7 +96,7 @@ async function applyCorrectionMigrations(client, options = {}) {
   // Roman Republic/opposes to null/null this way). Keep those data migrations
   // available only through the explicit full post-Stage2 reconstruction path.
   if (await stage2SemanticSchemaReady(client)) {
-    await applyMigrationPaths(client, CORRECTION_APPLY_POST_STAGE2_MIGRATION_PATHS, options);
+    await applyReplayMigrationPaths(client, CORRECTION_APPLY_POST_STAGE2_MIGRATION_PATHS, options);
   }
 
   return result;
