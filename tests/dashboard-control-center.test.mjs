@@ -410,7 +410,7 @@ test("System Strip distinguishes known Production main identity from unknown run
 
 test("Dashboard System / Production Strip reports deployed identity without claiming GitHub main parity", () => {
   assert.match(dashboardSource, /SYSTEM \/ PRODUCTION/);
-  assert.match(dashboardSource, /DEPLOYED GIT/);
+  assert.match(dashboardSource, /배포 커밋/);
   assert.match(dashboardSource, /배포 식별 정보와 CI 상태는 별도/);
   assert.doesNotMatch(dashboardSource, /main parity|GitHub main exact|CI success|Actions success/i);
 });
@@ -747,4 +747,37 @@ test("Dashboard source freshness localizes display labels without changing fresh
   assert.match(dashboardSource, /원본 시각/);
   assert.match(dashboardSource, /마지막 읽기/);
   assert.doesNotMatch(dashboardSource, />SOURCE TIMESTAMP<|>LAST READ<|>BASIS<|>STATUS</);
+});
+
+test("Dashboard maps canonical mutation kinds and gap codes to operator labels without changing raw model values", () => {
+  assert.match(dashboardSource, /function mutationKindLabel\(kind\)/);
+  assert.match(dashboardSource, /authoring\"\) return \"작성/);
+  assert.match(dashboardSource, /profile\"\) return \"프로필/);
+  assert.match(dashboardSource, /correction\"\) return \"보정/);
+  assert.match(dashboardSource, /data-timeline-kind=\"\$\{escapeHtml\(entry\?\.kind \|\| \"unknown\"\)\}\"/);
+  assert.match(dashboardSource, /dashboard-unit-badge\"\>\$\{escapeHtml\(mutationKindLabel\(entry\?\.kind\)\)\}/);
+  assert.match(dashboardSource, /tracked_sources \|\| \[\]\)\.map\(mutationKindLabel\)/);
+  assert.match(dashboardSource, /rd\.gaps\.map\(reasonLabel\)/);
+  assert.match(dashboardSource, /PERSON_DELETE_IMMUTABLE_AUDIT_NOT_EXPOSED\"\) return \"인물 삭제 이력 미노출/);
+});
+
+test("Dashboard completeness and source surfaces use display labels instead of raw source names", () => {
+  assert.match(dashboardSource, /function sourceDisplayLabel\(label\)/);
+  assert.match(dashboardSource, /function completenessLabel\(row\)/);
+  assert.match(dashboardSource, /completenessLabel\(row\)/);
+  assert.match(dashboardSource, /sourceDisplayLabel\(row\.source\)/);
+  assert.match(dashboardSource, /sourceDisplayLabel\(row\.label\)/);
+  assert.match(dashboardSource, /reasonLabel\(row\.data_timestamp_unavailable_reason\)/);
+});
+
+test("Dashboard system strip uses operator labels while retaining runtime identity fields", () => {
+  const start=dashboardSource.indexOf("SYSTEM / PRODUCTION");
+  const end=dashboardSource.indexOf("SOURCE FRESHNESS",start);
+  assert.ok(start >= 0 && end > start);
+  const block=dashboardSource.slice(start,end);
+  assert.match(block,/배포 환경/);
+  assert.match(block,/배포 커밋/);
+  assert.match(block,/실행 인프라/);
+  assert.match(block,/공통 원본/);
+  assert.doesNotMatch(block,/DEPLOYED GIT|SHARED SOURCES|commit\/ref unavailable|source states unavailable/);
 });
