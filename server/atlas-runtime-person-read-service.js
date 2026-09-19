@@ -44,12 +44,8 @@ join atlas_v2.person_polity_relation_types prt on prt.id=pp.relation_type_id
 left join atlas_v2.polity_names pen on pen.polity_id=pp.polity_id and pen.locale='en' and pen.is_preferred=true
 left join atlas_v2.polity_names pko on pko.polity_id=pp.polity_id and pko.locale='ko' and pko.is_preferred=true
 left join lateral (
-  select pdn.name
+  select pd.id
     from atlas_v2.polity_designations pd
-    join atlas_v2.polity_designation_names pdn
-      on pdn.polity_designation_id=pd.id
-     and pdn.locale='en'
-     and pdn.is_preferred=true
    where pd.polity_id=pp.polity_id
      and pp.activity_start is not null
      and pp.activity_end is not null
@@ -68,33 +64,9 @@ left join lateral (
      (coalesce(pd.valid_to_year,9999)-coalesce(pd.valid_from_year,-10000)),
      pd.id
    limit 1
-) td_en on true
-left join lateral (
-  select pdn.name
-    from atlas_v2.polity_designations pd
-    join atlas_v2.polity_designation_names pdn
-      on pdn.polity_designation_id=pd.id
-     and pdn.locale='ko'
-     and pdn.is_preferred=true
-   where pd.polity_id=pp.polity_id
-     and pp.activity_start is not null
-     and pp.activity_end is not null
-     and (pd.valid_from_year is null or pd.valid_from_year<=pp.activity_start)
-     and (pd.valid_to_year is null or pd.valid_to_year>=pp.activity_end)
-   order by
-     case pd.designation_type
-       when 'official_name' then 1
-       when 'state_form' then 2
-       when 'historiographic_period' then 3
-       when 'conventional_temporal_label' then 4
-       else 5
-     end,
-     case when pd.valid_from_year is null then 1 else 0 end,
-     case when pd.valid_to_year is null then 1 else 0 end,
-     (coalesce(pd.valid_to_year,9999)-coalesce(pd.valid_from_year,-10000)),
-     pd.id
-   limit 1
-) td_ko on true
+) td on true
+left join atlas_v2.polity_designation_names td_en on td_en.polity_designation_id=td.id and td_en.locale='en' and td_en.is_preferred=true
+left join atlas_v2.polity_designation_names td_ko on td_ko.polity_designation_id=td.id and td_ko.locale='ko' and td_ko.is_preferred=true
 left join atlas_v2.roles r on r.id=pp.role_id
 left join atlas_v2.role_names ren on ren.role_id=pp.role_id and ren.locale='en' and ren.is_preferred=true
 left join atlas_v2.role_names rko on rko.role_id=pp.role_id and rko.locale='ko' and rko.is_preferred=true
