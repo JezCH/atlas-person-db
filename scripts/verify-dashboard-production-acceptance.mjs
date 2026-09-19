@@ -465,8 +465,13 @@ async function main() {
 
     const majorNetworkErrors=resourceErrors.filter((row)=>{
       if (!row.url) return true;
+      let parsed=null;
       let sameOrigin=false;
-      try { sameOrigin=new URL(row.url).origin === new URL(PRODUCTION_ORIGIN).origin; } catch {}
+      try {
+        parsed=new URL(row.url);
+        sameOrigin=parsed.origin === new URL(PRODUCTION_ORIGIN).origin;
+      } catch {}
+      if (sameOrigin && parsed?.pathname === "/favicon.ico" && Number(row.status || 0) === 404 && row.type === "Other") return false;
       return sameOrigin || Number(row.status || 0) >= 500 || ["Document","Script","Stylesheet","XHR","Fetch"].includes(row.type);
     });
 
