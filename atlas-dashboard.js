@@ -74,6 +74,20 @@
     </article>`;
   }
 
+  function recentDeltaCard(row) {
+    const person = row?.display_name || (row?.person_id ? row.person_id : "Project-wide");
+    const count = Number(row?.change_count || 0);
+    const detail = count > 1 ? `${person} · ${count.toLocaleString("ko-KR")} changes` : person;
+    const timestamp = row?.occurred_at
+      ? new Intl.DateTimeFormat("ko-KR",{dateStyle:"short",timeStyle:"short"}).format(new Date(row.occurred_at))
+      : "—";
+    return `<article class="dashboard-source-card" data-source-state="ready">
+      <span class="dashboard-source-dot" aria-hidden="true"></span>
+      <div><strong>${escapeHtml(row?.label || row?.operation || row?.kind || "Change")}</strong><small>${escapeHtml(detail)}</small></div>
+      <b>${escapeHtml(timestamp)}</b>
+    </article>`;
+  }
+
   function sourceCard(source) {
     const ready = source.status === "ready";
     const loading = source.status === "loading";
@@ -100,6 +114,7 @@
     const a = snapshot.attention_queue;
     const b = snapshot.incomplete_breakdown;
     const kd = snapshot.kpi_drilldown;
+    const rd = snapshot.recent_delta;
     const domainRows = model.DOMAIN_CODES.map((code) => `<div class="dashboard-domain-row" data-domain="${escapeHtml(code)}">
       <span class="dashboard-domain-swatch" aria-hidden="true"></span><span>${escapeHtml(domainRegistry.LABELS[code] || code)}</span><b>${value(snapshot.domain_breakdown[code])}</b>
     </div>`).join("");
@@ -128,6 +143,19 @@
           <span>Known outstanding checks <b>${value(a.known_outstanding_checks)}</b></span>
           <span>Known affected persons <b>${value(a.known_affected_persons)}</b></span>
           <span>${a.complete ? "전체 범주 확인됨" : `부분 집계 · ${value(a.available_categories)}/${value(a.total_categories)} 범주만 대상 집합 확인`}</span>
+        </div>
+      </section>
+
+      <section class="dashboard-panel card">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">RECENT DELTA</p><h3>최근 추적 변경</h3></div><span>${rd.available ? `latest ${escapeHtml(rd.latest_at || "—")}` : "source unavailable"}</span></div>
+        <div class="dashboard-source-list">
+          ${rd.available
+            ? (rd.rows.length ? rd.rows.map(recentDeltaCard).join("") : '<article class="dashboard-source-card" data-source-state="idle"><span class="dashboard-source-dot" aria-hidden="true"></span><div><strong>추적 변경 없음</strong><small>현재 ledger 결과에 표시할 변경이 없습니다.</small></div><b>0</b></article>')
+            : '<article class="dashboard-source-card" data-source-state="error"><span class="dashboard-source-dot" aria-hidden="true"></span><div><strong>Recent Delta unavailable</strong><small>canonical mutation ledger를 읽지 못했습니다.</small></div><b>—</b></article>'}
+        </div>
+        <div class="dashboard-progress-meta">
+          <span>Tracked ${escapeHtml((rd.tracked_sources || []).join(" · ") || "—")}</span>
+          <span>${rd.gaps?.length ? `Coverage gap · ${escapeHtml(rd.gaps.join(", "))}` : "Tracked mutation coverage complete"}</span>
         </div>
       </section>
 
@@ -222,11 +250,12 @@
     const serial = ++requestSerial;
     renderLoading(root);
 
-    const [persons, domains, spatial, nonTimeline] = await Promise.allSettled([
+    const [persons, domains, spatial, nonTimeline, recentDelta] = await Promise.allSettled([
       store.loadPersons({ force }),
       store.loadPersonDomains({ force }),
       store.loadSpatialIndex({ force }),
-      store.loadNonTimelinePersons({ force })
+      store.loadNonTimelinePersons({ force }),
+      store.loadRecentDelta({ force })
     ]);
     if (serial !== requestSerial || root !== mountedRoot || !root.isConnected) return;
 
@@ -242,6 +271,7 @@
       domainResult:settledValue(domains),
       spatialIndex:settledValue(spatial),
       nonTimelineRows:settledValue(nonTimeline),
+      recentDeltaResult:settledValue(recentDelta),
       sourceStates:store.sourceStates()
     });
     renderSnapshot(root, snapshot);
