@@ -93,6 +93,33 @@ test('impossible full names defer instead of truncating or changing historical Y
   assert.ok(result.deferred[0].width > 180);
 });
 
+test('dense same-time Person labels use the shared horizontal overlay before deferring', () => {
+  const labels = Array.from({ length: 10 }, (_, index) => ({
+    person_id: `dense-${index}`,
+    text: `Dense Person ${index}`,
+    anchor_x: 80 + index * 6,
+    anchor_y: 120,
+    min_left: 72,
+    max_right: 180
+  }));
+
+  const result = engine.packLabels(labels, { width: 1000, height: 240 }, {
+    gap: 2,
+    maxHorizontalShift: 1000,
+    borrowHorizontalSpace: true,
+    preserveFullTextWidth: true
+  });
+
+  assert.equal(result.deferred.length, 0);
+  assert.equal(result.placed.length, labels.length);
+  for (const label of result.placed) assert.equal(label.label_y, 120);
+  for (let i = 0; i < result.placed.length; i += 1) {
+    for (let j = i + 1; j < result.placed.length; j += 1) {
+      assert.equal(engine.rectanglesOverlap(result.placed[i].rect, result.placed[j].rect, 2), false);
+    }
+  }
+});
+
 test('strict legacy bounds remain available explicitly for callers that must not borrow', () => {
   const result = pack([{
     person_id: 'strict',
