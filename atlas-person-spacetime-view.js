@@ -13,8 +13,8 @@
   const CAMERA_ZOOM_STEP = 1.25;
   const GLOBAL_EXTENT_COMPRESSION = 0.748;
   const MOBILE_VIEWPORT_MAX_WIDTH = 760;
-  const MOBILE_AXIS_WIDTH = 96;
-  const MOBILE_ERA_AXIS_WIDTH = 44;
+  const MOBILE_AXIS_WIDTH = 80;
+  const MOBILE_ERA_AXIS_WIDTH = 36;
   const MOBILE_HEADER_HEIGHT = 34;
   const MOBILE_PRESENTATION_SCALE = 0.46;
   const FOCUS_DETAIL_ZOOM = 6.5;
@@ -1180,10 +1180,20 @@
       <div class="spacetime-precision-legend"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>Place</span><span><i class="is-subregion"></i>Subregion 범위</span><span><i class="is-macroregion"></i>Macroregion 범위</span><small>점선은 배치 정밀도 범위이며 실제 이동 경로가 아닙니다.</small></div>
     </section>
     ${renderSearchResults(searchItems, needle)}
-    <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person track</span><span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 전체 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(cameraZoomLabel())}</b> 시공간 줌</span>${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? '<span class="spacetime-integrity-status"><b>!</b> 근거 없는 위치는 자동 추정하지 않습니다.</span>' : ""}</section>
+    <section class="spacetime-status-row">
+      <span class="spacetime-status-primary"><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person</span>
+      <span class="spacetime-status-primary"><b>${compiled.unresolvedPosition.length}</b> 위치 미확정</span>
+      <span class="spacetime-status-primary"><b>${escapeHtml(cameraZoomLabel())}</b> 줌</span>
+      <details class="spacetime-status-more">
+        <summary>상태 더보기</summary>
+        <div class="spacetime-status-more-content">
+          <span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span>${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? '<span class="spacetime-integrity-status"><b>!</b> 근거 없는 위치는 자동 추정하지 않습니다.</span>' : ""}
+        </div>
+      </details>
+    </section>
     ${renderMeanwhile(meanwhileSummary)}
     <div class="spacetime-workspace">
-    <section class="spacetime-frame card${responsive.mobile ? " is-mobile-presentation" : ""}" data-spacetime-presentation="${responsive.mobile ? "mobile" : "desktop"}" style="--spacetime-axis-width:${responsive.axisWidth}px;--spacetime-header-height:${responsive.headerHeight}px;--spacetime-era-axis-width:${responsive.eraAxisWidth}px;--spacetime-year-axis-width:${responsive.axisWidth - responsive.eraAxisWidth}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
+    <section class="spacetime-frame card${responsive.mobile ? " is-mobile-presentation" : ""}" data-spacetime-presentation="${responsive.mobile ? "mobile" : "desktop"}" data-spacetime-zoom="${Math.round(cameraZoom * 100)}" style="--spacetime-axis-width:${responsive.axisWidth}px;--spacetime-header-height:${responsive.headerHeight}px;--spacetime-era-axis-width:${responsive.eraAxisWidth}px;--spacetime-year-axis-width:${responsive.axisWidth - responsive.eraAxisWidth}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
       <div class="spacetime-sticky-corner"><span>시대</span><span>연도<small>${escapeHtml(timeAxis.stage_label)}</small></span></div>
       <div class="spacetime-region-head" style="width:${contentWidth}px">
         <div class="spacetime-region-head-layer is-macro" style="opacity:${spaceHeader.macro_opacity}">${spaceHeader.macroregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
