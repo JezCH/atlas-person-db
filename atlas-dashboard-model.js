@@ -3,13 +3,17 @@
   const domainRegistry = typeof module === "object" && module.exports
     ? require("./atlas-person-domain-registry.js")
     : root?.ATLAS_PERSON_DOMAIN_REGISTRY;
-  const api = factory(domainRegistry);
+  const spatialModel = typeof module === "object" && module.exports
+    ? require("./atlas-person-spacetime-model.js")
+    : root?.ATLAS_PERSON_SPACETIME_MODEL;
+  const api = factory(domainRegistry, spatialModel);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.ATLAS_DASHBOARD_MODEL = api;
-})(typeof globalThis !== "undefined" ? globalThis : this, (domainRegistry) => {
+})(typeof globalThis !== "undefined" ? globalThis : this, (domainRegistry, spatialModel) => {
   "use strict";
 
   if (!domainRegistry) throw new Error("ATLAS_PERSON_DOMAIN_REGISTRY is required");
+  if (!spatialModel) throw new Error("ATLAS_PERSON_SPACETIME_MODEL is required");
   const DOMAIN_CODES = domainRegistry.CODES;
 
   function text(value) { return value == null ? "" : String(value).trim(); }
@@ -30,29 +34,48 @@
   }
 
   function spatialStatus(personResult, spatialIndex) {
+    const persons = personResult?.persons || [];
     const used = uniquePolityIds(personResult);
     if (!spatialIndex) return Object.freeze({
-      total:used.size, ready:null, unresolved:null, review:null, macro_only:null, percentage:null
+      total:null, ready:null, unresolved:null, review:null, macro_only:null, percentage:null,
+      used_polities:used.size, unresolved_person_ids:null, reason_counts:null
     });
 
-    const subregions = spatialIndex.polity_subregions || {};
-    const placeFunctionIds = new Set((spatialIndex.place_function_records || []).map((row) => text(row?.polity_id)).filter(Boolean));
-    const readyIds = new Set();
-    const macroOnlyIds = new Set();
-    for (const id of used) {
-      if (text(subregions[id]) || placeFunctionIds.has(id)) readyIds.add(id);
-      else if (text(spatialIndex.polity_geography?.[id])) macroOnlyIds.add(id);
-    }
-    const unresolvedIds = new Set([...used].filter((id) => !readyIds.has(id)));
+    const lookup = spatialModel.createSpatialLookup(spatialIndex);
     const reviewIds = new Set((spatialIndex.review_queue || []).map((row) => text(row?.polity_id)).filter((id) => used.has(id)));
+    const macroOnlyIds = new Set(Object.keys(spatialIndex.polity_geography || {})
+      .filter((id) => used.has(id) && !text(spatialIndex.polity_subregions?.[id])));
+    const unresolvedPersonIds = new Set();
+    const reasonCounts = {};
+    let total = 0;
+    let ready = 0;
 
+    for (const person of persons) {
+      for (const activity of person?.activity_summaries || []) {
+        total += 1;
+        const result = spatialModel.resolveActivityPlacement(activity, lookup);
+        if (result?.status === "placed") {
+          ready += 1;
+          continue;
+        }
+        const reason = text(result?.reason || result?.chronology_reason || result?.status) || "unknown";
+        reasonCounts[reason] = (reasonCounts[reason] || 0) + 1;
+        const personId = text(person?.id);
+        if (personId) unresolvedPersonIds.add(personId);
+      }
+    }
+
+    const unresolved = Math.max(0, total - ready);
     return Object.freeze({
-      total:used.size,
-      ready:readyIds.size,
-      unresolved:unresolvedIds.size,
+      total,
+      ready,
+      unresolved,
       review:reviewIds.size,
       macro_only:macroOnlyIds.size,
-      percentage:percent(readyIds.size, used.size)
+      percentage:percent(ready,total),
+      used_polities:used.size,
+      unresolved_person_ids:Object.freeze([...unresolvedPersonIds].sort()),
+      reason_counts:Object.freeze(Object.fromEntries(Object.entries(reasonCounts).sort(([a],[b]) => a.localeCompare(b))))
     });
   }
 
@@ -76,16 +99,8 @@
       .map((person) => text(person?.id))
       .filter(Boolean);
 
-    let spatialPersonIds = null;
-    if (spatialIndex) {
-      const subregions = spatialIndex.polity_subregions || {};
-      const placeFunctionIds = new Set((spatialIndex.place_function_records || []).map((row) => text(row?.polity_id)).filter(Boolean));
-      const unresolvedPolityIds = new Set([...uniquePolityIds(personResult)].filter((id) => !text(subregions[id]) && !placeFunctionIds.has(id)));
-      spatialPersonIds = persons
-        .filter((person) => [...personPolityIds(person)].some((id) => unresolvedPolityIds.has(id)))
-        .map((person) => text(person?.id))
-        .filter(Boolean);
-    }
+    const spatial = spatialStatus(personResult, spatialIndex);
+    const spatialPersonIds = spatial.unresolved_person_ids;
 
     const items = [
       Object.freeze({
@@ -188,7 +203,7 @@
     }
     const domainMissing = domainAssigned == null ? null : Math.max(0, totalPersons - domainAssigned);
     const spatial = spatialStatus(personResult, spatialIndex);
-    const polityCount = spatial.total;
+    const polityCount = uniquePolityIds(personResult).size;
     const attentionQueue = buildAttentionQueue({ personResult, domainResult, spatialIndex });
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
