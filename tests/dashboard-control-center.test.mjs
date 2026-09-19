@@ -60,7 +60,6 @@ test("unavailable optional sources remain unknown instead of becoming fabricated
   assert.equal(snapshot.work.domain.done,null);
   assert.equal(snapshot.work.domain.remaining,null);
   assert.equal(snapshot.work.domain.percentage,null);
-  assert.equal(snapshot.quality.domain_unclassified,null);
   assert.equal(snapshot.quality.non_timeline_registry,null);
 });
 
@@ -296,4 +295,31 @@ test("coverage KPIs expose absolute done/total and remaining work", () => {
   assert.match(dashboardSource, /DOMAIN COVERAGE[\s\S]*w\.domain\.done[\s\S]*w\.domain\.total[\s\S]*w\.domain\.remaining/);
   assert.match(dashboardSource, /NAMUWIKI REVIEW[\s\S]*w\.namuwiki\.done[\s\S]*w\.namuwiki\.total[\s\S]*w\.namuwiki\.remaining/);
   assert.match(dashboardSource, /SPATIAL READY[\s\S]*w\.spatial\.done[\s\S]*w\.spatial\.total[\s\S]*w\.spatial\.remaining/);
+});
+
+
+test("Data Quality excludes Person work counters already exposed by Needs Attention", () => {
+  const start = dashboardSource.indexOf("DATA QUALITY");
+  const end = dashboardSource.indexOf("dashboard-lower-grid", start);
+  assert.ok(start >= 0 && end > start);
+  const block = dashboardSource.slice(start,end);
+  assert.doesNotMatch(block, /분야 미분류|나무위키 미검토|domain_unclassified|namuwiki_missing/);
+  assert.match(block, /Spatial 미해결/);
+  assert.match(block, /Spatial review queue/);
+  assert.match(block, /Runtime Activity 없음/);
+  assert.match(block, /Non-timeline registry/);
+});
+
+test("quality snapshot keeps only non-duplicated structural and exception counters", () => {
+  const snapshot = model.buildDashboardSnapshot({
+    personResult:{ persons:[{ id:"p1", historicity:"historical", activity_count:0, external_references:{}, facets:{polities:[]} }] },
+    domainResult:{ by_person_id:{} },
+    spatialIndex:null,
+    nonTimelineRows:[{person_name:"Legend"}]
+  });
+  assert.equal(Object.hasOwn(snapshot.quality,"domain_unclassified"),false);
+  assert.equal(Object.hasOwn(snapshot.quality,"namuwiki_missing"),false);
+  assert.deepEqual(Object.keys(snapshot.quality).sort(),[
+    "no_runtime_activity","non_timeline_registry","spatial_review","spatial_unresolved"
+  ]);
 });

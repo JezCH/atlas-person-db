@@ -377,8 +377,6 @@
       incomplete_breakdown:incompleteBreakdown,
       quality:Object.freeze({
         no_runtime_activity:noActivity,
-        domain_unclassified:domainMissing,
-        namuwiki_missing:namuMissing,
         spatial_unresolved:spatial.unresolved,
         spatial_review:spatial.review,
         non_timeline_registry:Array.isArray(nonTimelineRows) ? nonTimelineRows.length : null
