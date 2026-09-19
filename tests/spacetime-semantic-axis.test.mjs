@@ -38,9 +38,9 @@ test("readable-scale time axis starts at quarter-century detail and advances to 
   }
 });
 
-test("below-500 time stages no longer exist", () => {
-  assert.throws(() => semanticAxis.timeStage(4.99), /zoom must be >= 5/);
-  assert.equal(semanticAxis.timeStage(5).code, "quarter-century");
+test("below-300 time stages are rejected", () => {
+  assert.throws(() => semanticAxis.timeStage(2.99), /zoom must be >= 3/);
+  assert.equal(semanticAxis.timeStage(3).code, "quarter-century");
   assert.equal(semanticAxis.timeStage(6.5).code, "quarter-century");
   assert.equal(semanticAxis.timeStage(6.5001).code, "decade");
   const codes = semanticAxis.TIME_STAGES.map((stage) => stage.code);
@@ -49,13 +49,13 @@ test("below-500 time stages no longer exist", () => {
 
 test("space header is fixed to reviewed subregion hierarchy at the readable floor", () => {
   const continuum = spaceAxis.createSpatialContinuum();
-  const plan = semanticAxis.buildSpaceHeaderPlan(continuum, 3600, 5, []);
+  const plan = semanticAxis.buildSpaceHeaderPlan(continuum, 3600, 3, []);
 
   assert.equal(plan.stage, "subregion");
   assert.equal(plan.macroregions.length, 9);
   assert.equal(plan.subregions.length, continuum.subregions.length);
   assert.equal(plan.subregion_opacity, 1);
-  assert.equal(plan.minimum_zoom, 5);
+  assert.equal(plan.minimum_zoom, 3);
 
   for (const subregion of plan.subregions) {
     const parent = plan.macroregions.find((macro) => macro.code === subregion.parent_code);
