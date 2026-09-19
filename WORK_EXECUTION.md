@@ -191,18 +191,28 @@ Examples:
 
 Do not repeatedly re-prove completed layers that the task did not alter.
 
-## 10. Current-state records, not event-log replay
+## 10. Active-only operational boards and historical archive
 
-GitHub issue comments are audit history, not the primary state database.
+GitHub issue comments and merged PRs are durable audit history. They are **not** the operational status surface.
 
-For #917 and #977:
+For #917 and #977, the issue body is the authoritative **ACTIVE ONLY** board:
 
-- issue body/current snapshot holds the authoritative active frontier;
-- comments preserve append-only evidence and notable transitions;
-- a new worker reads the current state first and follows only the relevant task tail;
-- full historical fold is exceptional recovery work, not normal bootstrap.
+- list only genuinely non-terminal work and exact dependencies;
+- remove a task from the body in the same transition that makes it `DONE`, `SUCCESS`, `SUPERSEDED`, or `CANCELLED`;
+- never maintain a growing "completed work" section in the active body;
+- preserve completion evidence in the historical comment/PR record instead of copying it forward;
+- keep blocked work only when the blocker is still current and exact.
 
-When active state materially changes, update the compact current-state section so the next conversation can resume directly.
+Each active board SHOULD carry an `Archive cutoff` comment ID. During normal status discovery:
+
+- do not scan comments at or before that cutoff;
+- follow older evidence only when an active row explicitly references it or the body is proven inconsistent with current state;
+- an old `READY`, `BLOCKED`, `CLAIMED`, or `IN_PROGRESS` comment cannot reactivate a task after later terminal/superseding evidence;
+- re-entry requires the exact task/case plus new current evidence, then an explicit current-board update.
+
+Open PR inventory follows the same rule: close historical diagnostic, superseded, or replaced PRs once their useful evidence is preserved elsewhere. An old open PR must not remain as a false signal of active work.
+
+A new worker answers "what is active?" from the active board first: full historical fold is exceptional recovery work, not normal bootstrap.
 
 ## 11. Registration completeness without repeated cleanup
 
