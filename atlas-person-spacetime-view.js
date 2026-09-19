@@ -405,7 +405,7 @@
 
   function renderMeanwhile(summary) {
     if (!summary || meanwhileSelectedOrdinal == null) {
-      return '<section class="spacetime-meanwhile card is-empty" aria-label="동시대 탐색"><div><small>MEANWHILE</small><strong>동시대 보기</strong><span>Activity를 선택하거나 연도축·빈 시공간을 클릭하면 그 시점에 실제 Activity가 활성인 인물들을 비교합니다.</span></div></section>';
+      return '<section class="spacetime-meanwhile card is-empty" aria-label="동시대 탐색"><div><small>MEANWHILE</small><strong>동시대 보기</strong><span>Activity·연도·빈 시공간을 선택해 동시대 인물을 봅니다.</span></div></section>';
     }
     const momentLabel = meanwhileMomentLabel();
     const sourceLabel = meanwhileSelectionSource === "activity" ? "선택 Activity 중간 시점" : "직접 선택 시점";
@@ -1134,16 +1134,16 @@
     const primarySegmentCount = compiled.partitioned.tracks.reduce((sum, track) => sum + (track.primary_segments?.length || 0), 0);
 
     mount.innerHTML = `<section class="spacetime-toolbar card">
-      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>시공간 인물도는 500%를 최소·기본 축척으로 사용합니다. 시간과 공간은 하나의 전역 카메라 배율로 함께 확대되며, 물리 캔버스 크기에는 모든 시대와 모든 지역에 동일한 0.748 압축만 적용합니다. 가로 base world는 900px 하한·1,275px 상한을 사용하므로 넓은 화면에서도 세계 자체가 불필요하게 늘어나지 않습니다. 특정 시대나 특정 지역의 빈 공간만 따로 접지 않습니다. 검색·선택·줌은 normalized world 좌표를 바꾸지 않습니다. 자기 정치체가 없는 opposition-only Activity는 상대 정치체 권역을 대립 맥락 배치로 사용하지만, 이를 소속·복무로 해석하지 않습니다.</p><div class="spacetime-explore-help">방향키 이동 · PageUp/PageDown 큰 이동 · Shift+↑/↓ 이전/다음 인물 · F 선택 위치 · +/- 시공간 확대 · Esc 선택 해제</div></div>
+      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>인물의 활동 시기와 검토된 공간 배치를 함께 봅니다.</p><div class="spacetime-explore-help">방향키 이동 · +/- 확대 · F 위치 · Esc 해제</div></div>
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <div class="spacetime-camera" role="group" aria-label="시공간 확대"><span>시공간 확대</span><button id="spacetimeCameraZoomOut" type="button" aria-label="시공간 축소">−</button><output id="spacetimeCameraZoomValue">${escapeHtml(cameraZoomLabel())}</output><button id="spacetimeCameraZoomIn" type="button" aria-label="시공간 확대">+</button><button id="spacetimeCameraZoomReset" type="button">500%</button></div>
       </div>
     </section>
     ${renderSearchResults(searchItems, needle)}
-    <section class="spacetime-precision-legend card"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>Place</span><span><i class="is-subregion"></i>Subregion 범위</span><span><i class="is-macroregion"></i>Macroregion 범위</span><small>점선 가로선은 ATLAS 시공간 배치 정밀도 범위이며, 인물의 활동 영역이나 실제 이동 경로가 아닙니다.</small></section>
+    <section class="spacetime-precision-legend card"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>Place</span><span><i class="is-subregion"></i>Subregion 범위</span><span><i class="is-macroregion"></i>Macroregion 범위</span><small>점선은 배치 정밀도 범위이며 실제 이동 경로가 아닙니다.</small></section>
     <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person track</span><span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 전체 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(cameraZoomLabel())}</b> 시공간 줌</span></section>
-    ${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>현재 canonical spatial index가 제공하는 검토된 macroregion만 좌표로 사용합니다. 세부 Place/subregion 근거가 없으면 macroregion보다 정밀한 좌표를 만들지 않으며, counterparty인 opposes는 자기 위치 계산에서 제외합니다.</p></section>` : ""}
+    ${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong></section>` : ""}
     ${renderMeanwhile(meanwhileSummary)}
     <div class="spacetime-workspace">
     <section class="spacetime-frame card" style="--spacetime-axis-width:${AXIS_WIDTH}px;--spacetime-header-height:${CAMERA_HEADER_HEIGHT}px;--spacetime-era-axis-width:${ERA_AXIS_WIDTH}px;--spacetime-year-axis-width:${AXIS_WIDTH - ERA_AXIS_WIDTH}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">

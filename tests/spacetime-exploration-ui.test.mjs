@@ -37,7 +37,7 @@ test("keyboard navigation keeps panning cycling focus zoom and selection clearin
   assert.match(view, /command === "zoom-in" \|\| command === "zoom-out"/);
   assert.match(view, /requestCameraZoom\(mount, keyboardZoomTarget\)/);
   assert.match(view, /command === "clear-selection"/);
-  assert.match(view, /Shift\+↑\/↓ 이전\/다음 인물/);
+  assert.match(view, /방향키 이동 · \+\/- 확대 · F 위치 · Esc 해제/);
 });
 
 test("keyboard and modifier-wheel zoom respect the 500 percent bound", () => {
