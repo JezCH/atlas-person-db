@@ -257,6 +257,8 @@ async function collectMobile(client) {
     const rect=(el)=>{const r=el.getBoundingClientRect();return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
     const frame=q(".spacetime-frame"), scroll=q(".spacetime-scroll"), canvas=q(".spacetime-canvas");
     const header=q(".spacetime-region-head"), corner=q(".spacetime-sticky-corner"), minimap=q(".spacetime-minimap");
+    const searchLabel=q(".spacetime-controls label"), camera=q(".spacetime-camera"), statusMore=q(".spacetime-status-more");
+    const macroLayer=q(".spacetime-region-head-layer.is-macro"), subregionLayer=q(".spacetime-region-head-layer.is-subregion");
     return {
       viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},
       zoom:(q("#spacetimeCameraZoomValue")?.textContent||"").trim(),
@@ -271,7 +273,13 @@ async function collectMobile(client) {
       cornerWidth:rect(corner).width,
       cornerHeight:rect(corner).height,
       headerHeight:rect(header).height,
-      minimapWidth:rect(minimap).width
+      minimapWidth:rect(minimap).width,
+      searchRect:rect(searchLabel),
+      cameraRect:rect(camera),
+      macroOpacity:Number(getComputedStyle(macroLayer).opacity),
+      subregionOpacity:Number(getComputedStyle(subregionLayer).opacity),
+      statusMoreOpen:Boolean(statusMore?.open),
+      statusSummaryVisible:statusMore?.querySelector("summary") ? rect(statusMore.querySelector("summary")).width > 0 : false
     };
   })()`);
 }
@@ -466,7 +474,7 @@ async function main() {
     assert(mobile.zoom === "500%", "Mobile presentation did not preserve the 500% semantic floor", mobile);
     assert(mobile.presentation === "mobile" && mobile.frameClassMobile, "Mobile presentation camera was not activated", mobile);
     assert(mobile.bodyScrollWidth <= mobile.viewport.width + 1, "Spacetime leaked horizontal overflow into the mobile page", mobile);
-    assert(Math.abs(mobile.cornerWidth - 96) < 0.75, "Mobile shared axis width drifted from 96px", mobile);
+    assert(Math.abs(mobile.cornerWidth - 80) < 0.75, "Mobile shared axis width drifted from 80px", mobile);
     assert(Math.abs(mobile.cornerHeight - 34) < 0.75 && Math.abs(mobile.headerHeight - 34) < 0.75, "Mobile header height drifted from 34px", mobile);
     assert(mobile.canvasWidth >= 1500 && mobile.canvasWidth <= 1600, "Mobile world extent is outside the reviewed compact range", mobile);
     assert(mobile.scrollWidth > mobile.scrollClientWidth, "Mobile spacetime no longer has an internal horizontal camera range", mobile);
@@ -474,6 +482,9 @@ async function main() {
     assert(mobile.scrollOverflowX === "auto" || mobile.scrollOverflowX === "scroll", "Mobile horizontal movement is not owned by the spacetime viewport", mobile);
     assert(mobile.frameRect.left >= -0.5 && mobile.frameRect.right <= mobile.viewport.width + 0.5, "Mobile spacetime frame escapes the viewport", mobile);
     assert(mobile.minimapWidth <= 158, "Mobile minimap is wider than the compact contract", mobile);
+    assert(mobile.cameraRect.top >= mobile.searchRect.bottom + 3, "Mobile search and zoom controls did not split into separate rows", mobile);
+    assert(mobile.macroOpacity > 0.99 && mobile.subregionOpacity < 0.01, "Mobile 500% header did not prioritize macroregions", mobile);
+    assert(mobile.statusSummaryVisible && !mobile.statusMoreOpen, "Mobile secondary status details are not collapsed by default", mobile);
     await screenshot(client, "spacetime-mobile-390.png");
 
     await sleep(500);
