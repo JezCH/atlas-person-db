@@ -51,6 +51,16 @@ test("Production visual acceptance covers the compact 390px mobile presentation 
   assert.match(verifier, /spacetime-mobile-390\.png/);
 });
 
+test("Production visual acceptance requires every viewport Person name at 500 and 800 percent", () => {
+  const verifier = read("scripts/verify-spacetime-production-visual.mjs");
+  assert.match(verifier, /at500\.deferredLabelCount === 0/);
+  assert.match(verifier, /at500\.domLabelCount === at500\.domPersonCount/);
+  assert.match(verifier, /at800\.deferredLabelCount === 0/);
+  assert.match(verifier, /at800\.domLabelCount === at800\.domPersonCount/);
+  assert.doesNotMatch(verifier, /bandContainment\.label_violation_count === 0/);
+  assert.match(verifier, /bandContainment\.rail_violation_count === 0/);
+});
+
 test("real-Chrome domain acceptance preserves Person/Activity semantic separation", () => {
   const verifier = read("scripts/verify-spacetime-production-domain-colors.mjs");
   assert.match(verifier, /canonical_domains\.length === 8/);
