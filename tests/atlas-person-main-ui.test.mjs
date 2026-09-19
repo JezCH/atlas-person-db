@@ -24,7 +24,8 @@ test('Main loads the Person reader and shared data store before the Person-cente
 });
 
 test('Person-centered Main renders all historicity groups in one chronology table', () => {
-  assert.match(main, /reader\.preparePersonGroups\(persons, \{ query, sortOrder, facetFilters \}\)/);
+  assert.match(main, /reader\.preparePersonGroups\(persons, \{/);
+  assert.match(main, /secondaryPredicate:dashboardFilter/);
   assert.match(main, /\.\.\.groups\.historical/);
   assert.match(main, /\.\.\.groups\.other_or_uncertain/);
   assert.match(main, /\.\.\.visibleUnknownRegistryPersons\(\)/);
