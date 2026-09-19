@@ -34,6 +34,16 @@ test("exact-SHA verifier fails closed and byte-compares the current spacetime/do
   ]) assert.match(verifier, new RegExp(asset.replaceAll(".", "\\.")));
 });
 
+test("Production visual acceptance covers the compact 390px mobile presentation camera", () => {
+  const verifier = read("scripts/verify-spacetime-production-visual.mjs");
+  assert.match(verifier, /MOBILE_VIEWPORT = Object\.freeze\(\{ width: 390, height: 844/);
+  assert.match(verifier, /mobile\.presentation === "mobile"/);
+  assert.match(verifier, /mobile\.bodyScrollWidth <= mobile\.viewport\.width \+ 1/);
+  assert.match(verifier, /Math\.abs\(mobile\.cornerWidth - 96\)/);
+  assert.match(verifier, /mobile\.canvasWidth >= 1500 && mobile\.canvasWidth <= 1600/);
+  assert.match(verifier, /spacetime-mobile-390\.png/);
+});
+
 test("real-Chrome domain acceptance preserves Person/Activity semantic separation", () => {
   const verifier = read("scripts/verify-spacetime-production-domain-colors.mjs");
   assert.match(verifier, /canonical_domains\.length === 8/);
