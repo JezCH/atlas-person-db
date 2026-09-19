@@ -58,14 +58,18 @@ test("subregion context is always available at the readable floor", () => {
   assert.doesNotMatch(semanticAxis, /stage: "macroregion"/);
 });
 
-test("spacetime top chrome keeps controls and status without duplicate explanatory copy", () => {
-  assert.match(view, /<section class="spacetime-toolbar card">\s*<div class="spacetime-controls">/);
-  assert.doesNotMatch(view, /spacetime-toolbar-copy/);
-  assert.doesNotMatch(view, /spacetime-explore-help/);
+test("spacetime top chrome merges controls legend and integrity status into compact strips", () => {
+  assert.match(view, /<section class="spacetime-toolbar card">[\s\S]*?<div class="spacetime-controls">[\s\S]*?<div class="spacetime-precision-legend">/);
+  assert.doesNotMatch(view, /<section class="spacetime-precision-legend card">/);
+  assert.doesNotMatch(view, /spacetime-integrity-note/);
+  assert.match(view, /spacetime-integrity-status/);
   assert.match(view, /근거 없는 위치는 자동 추정하지 않습니다\./);
   assert.match(view, /spacetimeDomPersonCount/);
   assert.match(view, /spacetimeDeferredLabelCount/);
-  assert.match(css, /\.spacetime-toolbar\{padding:8px 10px;margin-bottom:8px\}/);
+  assert.match(view, /<section class="spacetime-meanwhile is-empty"/);
+  assert.doesNotMatch(view, /spacetime-meanwhile card is-empty/);
+  assert.match(css, /\.spacetime-toolbar\{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 9px;margin-bottom:5px\}/);
+  assert.match(css, /\.spacetime-status-row\{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px\}/);
 });
 
 test("the timeline remains a map-like camera viewport", () => {
