@@ -6,6 +6,7 @@ const require = createRequire(import.meta.url);
 const {
   OPERATION_TYPE,
   REVIEW_REASON,
+  REVIEW_REASON_SAME_IDENTITY_STATE_FORM,
   requireManifest,
   createCorrectionPolityRetireV2Service
 } = require("../server/atlas-correction-polity-retire-v2-service.js");
@@ -144,6 +145,20 @@ function fakeClient({ externalReferences = 0 } = {}) {
     }
   };
 }
+
+test("retirement manifest accepts the reviewed same-identity state-form reason without relabeling it", () => {
+  const parsed = requireManifest(manifest({
+    operation: { review_reason: REVIEW_REASON_SAME_IDENTITY_STATE_FORM }
+  }));
+  assert.equal(parsed.operations[0].review_reason, REVIEW_REASON_SAME_IDENTITY_STATE_FORM);
+});
+
+test("retirement manifest rejects unreviewed or unknown review reasons", () => {
+  assert.throws(
+    () => requireManifest(manifest({ operation: { review_reason: "UNREVIEWED_ALIAS" } })),
+    /CORRECTION_POLITY_RETIRE_REVIEW_REASON_REQUIRED/
+  );
+});
 
 test("retirement manifest requires a zero external-reference expectation", () => {
   assert.throws(
