@@ -365,3 +365,50 @@ test("Dashboard Recent Delta shows tracked mutations without inventing untracked
   assert.match(dashboardSource, /Coverage gap/);
   assert.doesNotMatch(dashboardSource, /delete(?:d)? persons?\s*[:=]\s*\$?\{?0/i);
 });
+
+
+test("public runtime identity surface exposes only deployment identity fields and never admin configuration", () => {
+  assert.match(readApiSource, /surface === "runtime-identity"/);
+  assert.match(readApiSource, /function publicRuntimeIdentity/);
+  const start=readApiSource.indexOf("function publicRuntimeIdentity");
+  const end=readApiSource.indexOf("function createPublicRuntimeIdentityHandler",start);
+  const block=readApiSource.slice(start,end);
+  assert.match(block, /provider/);
+  assert.match(block, /environment/);
+  assert.match(block, /git_commit_sha/);
+  assert.match(block, /git_commit_ref/);
+  assert.match(block, /region/);
+  assert.doesNotMatch(block, /deployment_url|configurationStatus|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|SUPABASE_DB_URL/);
+});
+
+test("shared store owns Runtime Identity and Dashboard does not issue a direct system fetch", () => {
+  assert.match(storeSource, /systemIdentity:[\s\S]*__atlas_read_surface=runtime-identity/);
+  assert.match(storeSource, /function loadSystemIdentity/);
+  assert.match(dashboardSource, /store\.loadSystemIdentity\(\{ force \}\)/);
+  assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
+});
+
+test("System Strip distinguishes known Production main identity from unknown runtime state", () => {
+  const known=model.buildSystemStrip({
+    identity:{provider:"vercel",environment:"production",git_commit_sha:"1234567890abcdef1234567890abcdef12345678",git_commit_ref:"main",region:"icn1"}
+  },{
+    persons:{status:"ready"},personDomains:{status:"ready"},spatialIndex:{status:"error"}
+  });
+  assert.equal(known.available,true);
+  assert.equal(known.production_main,true);
+  assert.equal(known.git_commit_short,"1234567890ab");
+  assert.deepEqual(known.source_health,{available:true,total:3,ready:2,errors:1,loading:0});
+
+  const unknown=model.buildSystemStrip(null,{});
+  assert.equal(unknown.available,false);
+  assert.equal(unknown.production_main,null);
+  assert.equal(unknown.git_commit_sha,null);
+  assert.equal(unknown.source_health.total,null);
+});
+
+test("Dashboard System / Production Strip reports deployed identity without claiming GitHub main parity", () => {
+  assert.match(dashboardSource, /SYSTEM \/ PRODUCTION/);
+  assert.match(dashboardSource, /DEPLOYED GIT/);
+  assert.match(dashboardSource, /GitHub Actions 상태는 runtime identity와 별도/);
+  assert.doesNotMatch(dashboardSource, /main parity|GitHub main exact|CI success|Actions success/i);
+});

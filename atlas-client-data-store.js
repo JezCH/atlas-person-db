@@ -12,7 +12,8 @@
     personDomains: Object.freeze({ key:"personDomains", label:"Person Domain", url:"/api/atlas-person-domain" }),
     spatialIndex: Object.freeze({ key:"spatialIndex", label:"Spatial Index", url:"./atlas-polity-spatial-index.json" }),
     nonTimeline: Object.freeze({ key:"nonTimeline", label:"Non-timeline Registry", url:"./non-timeline-persons.json" }),
-    recentDelta: Object.freeze({ key:"recentDelta", label:"Recent Delta", url:"/api/atlas-read?__atlas_read_surface=recent-delta" })
+    recentDelta: Object.freeze({ key:"recentDelta", label:"Recent Delta", url:"/api/atlas-read?__atlas_read_surface=recent-delta" }),
+    systemIdentity: Object.freeze({ key:"systemIdentity", label:"Runtime Identity", url:"/api/atlas-read?__atlas_read_surface=runtime-identity" })
   });
 
   const cache = new Map();
@@ -180,6 +181,28 @@
     return shared("recentDelta", async () => normalizeRecentDeltaPayload(await getJson(SOURCES.recentDelta.url)), { force });
   }
 
+  function normalizeSystemIdentityPayload(payload) {
+    if (payload?.ok !== true || payload?.schema !== "atlas-runtime-identity/v1" || !payload.identity || typeof payload.identity !== "object") {
+      throw new Error("INVALID_RUNTIME_IDENTITY_RESPONSE");
+    }
+    const identity=payload.identity;
+    return Object.freeze({
+      schema:payload.schema,
+      source:payload.source || null,
+      identity:Object.freeze({
+        provider:identity.provider == null ? null : String(identity.provider).trim() || null,
+        environment:identity.environment == null ? null : String(identity.environment).trim() || null,
+        git_commit_sha:identity.git_commit_sha == null ? null : String(identity.git_commit_sha).trim() || null,
+        git_commit_ref:identity.git_commit_ref == null ? null : String(identity.git_commit_ref).trim() || null,
+        region:identity.region == null ? null : String(identity.region).trim() || null
+      })
+    });
+  }
+
+  function loadSystemIdentity({ force = false } = {}) {
+    return shared("systemIdentity", async () => normalizeSystemIdentityPayload(await getJson(SOURCES.systemIdentity.url)), { force });
+  }
+
   function invalidate(key) {
     if (key) {
       cache.delete(key);
@@ -202,6 +225,7 @@
     loadSpatialIndex,
     loadNonTimelinePersons,
     loadRecentDelta,
+    loadSystemIdentity,
     getSourceState,
     sourceStates,
     invalidate

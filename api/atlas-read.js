@@ -6,6 +6,7 @@ const { createPersonReadHandler } = require("../server/atlas-person-read-handler
 const { createCatalogReadHandler } = require("../server/atlas-catalog-read-handler.js");
 const { createAdminInspectorHandler } = require("../server/atlas-admin-inspector-handler.js");
 const { createAdminSystemStatusHandler } = require("../server/atlas-admin-system-status-handler.js");
+const { runtimeIdentity } = require("../server/atlas-admin-system-status-service.js");
 
 const normalizedReadHandler = createNormalizedReadHandler({ clientFactory: createPostgresClient });
 const personReadHandler = createPersonReadHandler({ clientFactory: createPostgresClient });
@@ -15,6 +16,35 @@ const adminSystemStatusHandler = createAdminSystemStatusHandler({ clientFactory:
 
 const RECENT_DELTA_SCHEMA = "atlas-recent-delta/v1";
 const RECENT_DELTA_LIMIT = 12;
+const PUBLIC_RUNTIME_IDENTITY_SCHEMA = "atlas-runtime-identity/v1";
+
+function publicRuntimeIdentity(env = process.env) {
+  const runtime = runtimeIdentity(env);
+  return Object.freeze({
+    provider:runtime.provider || null,
+    environment:runtime.environment || null,
+    git_commit_sha:runtime.git_commit_sha || null,
+    git_commit_ref:runtime.git_commit_ref || null,
+    region:runtime.region || null
+  });
+}
+
+function createPublicRuntimeIdentityHandler({ env = process.env } = {}) {
+  return async function publicRuntimeIdentityHandler(req,res) {
+    if (String(req?.method || "GET").toUpperCase() !== "GET") {
+      sendJson(res,405,{ ok:false, schema:PUBLIC_RUNTIME_IDENTITY_SCHEMA, code:"METHOD_NOT_ALLOWED" });
+      return;
+    }
+    sendJson(res,200,{
+      ok:true,
+      schema:PUBLIC_RUNTIME_IDENTITY_SCHEMA,
+      source:"runtime-environment",
+      identity:publicRuntimeIdentity(env)
+    });
+  };
+}
+
+const publicRuntimeIdentityHandler = createPublicRuntimeIdentityHandler();
 
 async function recentDeltaTableCoverage(client) {
   const result = await client.query(`
@@ -185,6 +215,7 @@ async function consolidatedReadHandler(req, res) {
   if (surface === "person") return personReadHandler(req, res);
   if (surface === "catalog") return catalogReadHandler(req, res);
   if (surface === "recent-delta") return recentDeltaReadHandler(req, res);
+  if (surface === "runtime-identity") return publicRuntimeIdentityHandler(req, res);
   if (surface === "admin-inspector") return adminInspectorHandler(req, res);
   if (surface === "admin-system-status") return adminSystemStatusHandler(req, res);
   return normalizedReadHandler(req, res);
@@ -197,3 +228,6 @@ module.exports.RECENT_DELTA_LIMIT = RECENT_DELTA_LIMIT;
 module.exports.recentDeltaTableCoverage = recentDeltaTableCoverage;
 module.exports.readRecentDelta = readRecentDelta;
 module.exports.createRecentDeltaReadHandler = createRecentDeltaReadHandler;
+module.exports.PUBLIC_RUNTIME_IDENTITY_SCHEMA = PUBLIC_RUNTIME_IDENTITY_SCHEMA;
+module.exports.publicRuntimeIdentity = publicRuntimeIdentity;
+module.exports.createPublicRuntimeIdentityHandler = createPublicRuntimeIdentityHandler;
