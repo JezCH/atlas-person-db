@@ -181,7 +181,7 @@ jobs:
 
           endpoint="${ATLAS_AUDIT_ENDPOINT}?__atlas_audit_surface=polity-reference-audit"
           payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" \
-            '{deployment_sha:$deployment_sha,evidence_terms:["fifth","kamakura","tokugawa","toyotomi"]}')"
+            '{deployment_sha:$deployment_sha,evidence_terms:["fifth","kamakura","tokugawa","toyotomi","liao dynasty","ming dynasty","tsardom of russia","empire of japan","shakya","haudenosaunee","swedish empire","qara khitai"]}')"
           fetched=false
           for attempt in $(seq 1 12); do
             oidc_token="$(request_oidc)"
@@ -207,7 +207,7 @@ jobs:
           jq '{marker,read_only,committed,deployment_sha,complete,reference_model,reference_count,polity_count,external_orphan_count}' polity-reference-audit-response.json | tee polity-reference-audit-summary.json
           jq '.reference_catalog' polity-reference-audit-response.json > polity-reference-catalog.push.json
           jq '[.polities[] | select(.is_external_orphan == true)]' polity-reference-audit-response.json > polity-external-orphans.push.json
-          jq '[.polities[] | select(((.canonical_key // "") + " " + ([.names[]?.name] | join(" "))) | ascii_downcase | test("fifth|kamakura|tokugawa|toyotomi"))]' polity-reference-audit-response.json | tee polity-reference-candidates.push.json
+          jq '[.polities[] | select(((.canonical_key // "") + " " + ([.names[]?.name] | join(" "))) | ascii_downcase | test("fifth|kamakura|tokugawa|toyotomi|liao dynasty|ming dynasty|tsardom of russia|empire of japan|shakya|haudenosaunee|swedish empire|qara khitai"))]' polity-reference-audit-response.json | tee polity-reference-candidates.push.json
 
       - name: Upload read-only inventory evidence
         uses: actions/upload-artifact@v4
