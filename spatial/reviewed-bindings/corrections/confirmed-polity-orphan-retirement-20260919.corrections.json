@@ -66,6 +66,42 @@
       },
       "disposition": "remove_orphan",
       "reason": "Swedish Empire state-form UUID retired after exact Production orphan audit; remove stale static spatial binding."
+    },
+    {
+      "polity_id": "09ff1776-171f-435a-a444-4b0463e48137",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "central-europe"
+      },
+      "disposition": "remove_orphan",
+      "reason": "Principality of Hungary state-form UUID retired after reviewed temporal-designation preservation and Activity relink; remove stale static spatial binding."
+    },
+    {
+      "polity_id": "0a0ed67e-ab5b-4b43-8c3c-a32c32aa3653",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "iberia"
+      },
+      "disposition": "remove_orphan",
+      "reason": "Caliphate of Cordoba state-form UUID is being retired after reviewed temporal designation preservation and Activity relink to the Emirate of Cordoba survivor; remove stale static spatial binding."
+    },
+    {
+      "polity_id": "4a92bbb3-6532-4dab-b515-837ad344ec6c",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "balkans"
+      },
+      "disposition": "remove_orphan",
+      "reason": "Principality of Bulgaria state-form UUID is being retired after reviewed temporal designation preservation and Activity relink to the Kingdom of Bulgaria survivor; remove stale static spatial binding."
+    },
+    {
+      "polity_id": "a7049680-e80e-40a0-9aec-4efeaeb0f301",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "balkans"
+      },
+      "disposition": "remove_orphan",
+      "reason": "Principality of Montenegro state-form UUID is being retired after reviewed temporal designation preservation and Activity relink to the Kingdom of Montenegro survivor; remove stale static spatial binding."
     }
   ]
 }
