@@ -210,7 +210,7 @@ async function collectDesktopDom(client) {
     const qa=(s)=>[...document.querySelectorAll(s)];
     const visible=(el)=>{const r=el.getBoundingClientRect();const st=getComputedStyle(el);return r.width>0&&r.height>0&&st.display!=="none"&&st.visibility!=="hidden";};
     const eyebrowPanels=qa("#atlasDashboardMount .eyebrow").map((el)=>(el.textContent||"").trim()).filter(Boolean);
-    const freshnessRows=qa(".dashboard-source-freshness tbody tr").map((tr)=>qa.call ? null : tr).map((tr)=>[...tr.children].map((td)=>(td.textContent||"").trim()));
+    const freshnessRows=qa(".dashboard-source-freshness tbody tr").map((tr)=>[...tr.children].map((td)=>(td.textContent||"").trim()));
     const activityRows=qa('.dashboard-completeness tbody tr[data-completeness-unit="activity"]').map((tr)=>({
       text:(tr.textContent||"").trim(),
       has_person_drilldown:Boolean(tr.querySelector("[data-dashboard-completeness]"))
