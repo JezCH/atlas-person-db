@@ -14,6 +14,7 @@ const externalSource = fs.readFileSync(new URL("../atlas-person-external-referen
 const mainSource = fs.readFileSync(new URL("../atlas-person-main.js", import.meta.url), "utf8");
 const spacetimeSource = fs.readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
 const statusSummarySource = fs.readFileSync(new URL("../status-summary.js", import.meta.url), "utf8");
+const readApiSource = fs.readFileSync(new URL("../api/atlas-read.js", import.meta.url), "utf8");
 
 test("dashboard model derives progress from canonical snapshots without stored dashboard counters", () => {
   const P1="00000000-0000-4000-8000-000000000001", P2="00000000-0000-4000-8000-000000000002", P3="00000000-0000-4000-8000-000000000003";
@@ -322,4 +323,45 @@ test("quality snapshot keeps only non-duplicated structural and exception counte
   assert.deepEqual(Object.keys(snapshot.quality).sort(),[
     "no_runtime_activity","non_timeline_registry","spatial_review","spatial_unresolved"
   ]);
+});
+
+
+test("Recent Delta read surface is backed by canonical mutation ledgers and preserves delete coverage as unknown", () => {
+  assert.match(readApiSource, /surface === "recent-delta"/);
+  assert.match(readApiSource, /atlas_v2\.authoring_manifest_runs/);
+  assert.match(readApiSource, /atlas_v2\.person_profile_mutation_audits/);
+  assert.match(readApiSource, /atlas_v2\.correction_manifest_runs/);
+  assert.match(readApiSource, /atlas_v2\.person_merge_audits/);
+  assert.match(readApiSource, /delete_person:false/);
+  assert.match(readApiSource, /PERSON_DELETE_IMMUTABLE_AUDIT_NOT_EXPOSED/);
+  assert.doesNotMatch(readApiSource, /select[\s\S]{0,120}request_id[\s\S]{0,120}as occurred_at/i);
+});
+
+test("shared store owns the Recent Delta fetch and Dashboard only consumes normalized shared state", () => {
+  assert.match(storeSource, /recentDelta:[\s\S]*__atlas_read_surface=recent-delta/);
+  assert.match(storeSource, /function loadRecentDelta/);
+  assert.match(dashboardSource, /store\.loadRecentDelta\(\{ force \}\)/);
+  assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
+});
+
+test("Recent Delta model preserves canonical chronology and explicit coverage gaps", () => {
+  const delta=model.buildRecentDelta({
+    rows:[
+      {occurred_at:"2026-09-19T02:00:00.000Z",kind:"profile",operation:"set_person_external_reference",person_id:"p1",display_name:"인물 1",change_count:1},
+      {occurred_at:"2026-09-19T01:00:00.000Z",kind:"correction",operation:"relationship_correction",person_id:null,display_name:null,change_count:3}
+    ],
+    coverage:{authoring:true,profile:true,correction:true,merge:false,delete_person:false,delete_person_reason:"PERSON_DELETE_IMMUTABLE_AUDIT_NOT_EXPOSED"}
+  });
+  assert.equal(delta.available,true);
+  assert.equal(delta.latest_at,"2026-09-19T02:00:00.000Z");
+  assert.deepEqual(delta.rows.map((row)=>row.label),["외부참조 수정","Activity 보정"]);
+  assert.deepEqual(delta.tracked_sources,["authoring","profile","correction"]);
+  assert.deepEqual(delta.gaps,["PERSON_DELETE_IMMUTABLE_AUDIT_NOT_EXPOSED"]);
+});
+
+test("Dashboard Recent Delta shows tracked mutations without inventing untracked delete counts", () => {
+  assert.match(dashboardSource, /RECENT DELTA/);
+  assert.match(dashboardSource, /최근 추적 변경/);
+  assert.match(dashboardSource, /Coverage gap/);
+  assert.doesNotMatch(dashboardSource, /delete(?:d)? persons?\s*[:=]\s*\$?\{?0/i);
 });
