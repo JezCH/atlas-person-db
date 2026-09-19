@@ -34,6 +34,10 @@
       "destination": "/api/atlas-read?__atlas_read_surface=person"
     },
     {
+      "source": "/api/atlas-polity-read",
+      "destination": "/api/atlas-read?__atlas_read_surface=polity"
+    },
+    {
       "source": "/api/atlas-admin-inspector",
       "destination": "/api/atlas-read?__atlas_read_surface=admin-inspector"
     },
