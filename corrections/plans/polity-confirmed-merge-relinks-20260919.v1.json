@@ -1,0 +1,506 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_confirmed_merge_relinks_20260919_v1",
+  "as_of": "2026-09-19",
+  "status": "USER_APPROVED_CONFIRMED_POLITY_IDENTITY_MERGE_RELINKS",
+  "release_order": 590,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User instruction 2026-09-19 to merge already-confirmed same-identity Polities; existing reviewed Stage 2 continuity decisions for Northern Yuan, Russia state-form and Japan state-form; current Production exact/case duplicate evidence for Liao and Ming.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-liao-case-duplicate",
+      "type": "rewrite_activity",
+      "activity_id": "fb8ef26a-4930-4042-a328-cf075333ac3f",
+      "baseline_before": {
+        "person_id": "fdc9069c-e2fd-41d7-885d-dcb409957c3b",
+        "polity_id": "a1e5baa6-51e0-433e-8087-d800dd1cb3a2",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 982,
+        "activity_end": 1031,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "fb8ef26a-4930-4042-a328-cf075333ac3f",
+        "person_id": "fdc9069c-e2fd-41d7-885d-dcb409957c3b",
+        "polity_id": "c7414968-29fc-5749-bfda-bf4dab331dd8",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 982,
+        "activity_start_detail": {
+          "year": 982,
+          "month": 10,
+          "day": 14,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1031,
+        "activity_end_detail": {
+          "year": 1031,
+          "month": 6,
+          "day": 25,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "polity-merge-ming-case-duplicate",
+      "type": "rewrite_activity",
+      "activity_id": "c97fe904-9afe-4195-bc36-26e51c60a9d0",
+      "baseline_before": {
+        "person_id": "9d96d247-feeb-5069-bd11-98ea9ce1fdb7",
+        "polity_id": "14113865-1569-521a-bae5-8ae070f4817d",
+        "role_id": "42f56dea-7d07-4d64-8ea2-72767a25e4c2",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1405,
+        "activity_end": 1433,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "c97fe904-9afe-4195-bc36-26e51c60a9d0",
+        "person_id": "9d96d247-feeb-5069-bd11-98ea9ce1fdb7",
+        "polity_id": "756460ea-0f77-519e-9e91-43dfb694926a",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "42f56dea-7d07-4d64-8ea2-72767a25e4c2",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1405,
+        "activity_start_detail": {
+          "year": 1405,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1433,
+        "activity_end_detail": {
+          "year": 1433,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "polity-merge-northern-yuan-huizong",
+      "type": "rewrite_activity",
+      "activity_id": "68c203e5-ac61-59ed-853b-365bdf3ed340",
+      "baseline_before": {
+        "person_id": "c5f831b4-ca83-5fb5-8477-278c4ec0323c",
+        "polity_id": "986380c3-cc31-50d5-bb0d-6cae5fae0660",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1368,
+        "activity_end": 1370,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "68c203e5-ac61-59ed-853b-365bdf3ed340",
+        "person_id": "c5f831b4-ca83-5fb5-8477-278c4ec0323c",
+        "polity_id": "d035cbd8-e7b1-5947-8542-c7dd356d52bb",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1368,
+        "activity_start_detail": {
+          "year": 1368,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1370,
+        "activity_end_detail": {
+          "year": 1370,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "polity-merge-northern-yuan-koke-temur",
+      "type": "rewrite_activity",
+      "activity_id": "c5085fdb-379a-5710-bf14-c748b5b822da",
+      "baseline_before": {
+        "person_id": "eee1e3e6-f474-5438-8a07-44c88027d0c7",
+        "polity_id": "986380c3-cc31-50d5-bb0d-6cae5fae0660",
+        "role_id": "39150c0d-f86f-5a11-bd08-bf229a9bb1d4",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1368,
+        "activity_end": 1375,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "c5085fdb-379a-5710-bf14-c748b5b822da",
+        "person_id": "eee1e3e6-f474-5438-8a07-44c88027d0c7",
+        "polity_id": "d035cbd8-e7b1-5947-8542-c7dd356d52bb",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "39150c0d-f86f-5a11-bd08-bf229a9bb1d4",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1368,
+        "activity_start_detail": {
+          "year": 1368,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1375,
+        "activity_end_detail": {
+          "year": 1375,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "polity-merge-northern-yuan-mandukhai",
+      "type": "rewrite_activity",
+      "activity_id": "b2b9b692-2087-4b70-b69a-ce2ac79f147d",
+      "baseline_before": {
+        "person_id": "26af5607-36a7-47a3-a528-3b79bc4fc8b8",
+        "polity_id": "986380c3-cc31-50d5-bb0d-6cae5fae0660",
+        "role_id": "d774029b-1184-4881-9b9e-b8d4c976d112",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1479,
+        "activity_end": 1510,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "b2b9b692-2087-4b70-b69a-ce2ac79f147d",
+        "person_id": "26af5607-36a7-47a3-a528-3b79bc4fc8b8",
+        "polity_id": "d035cbd8-e7b1-5947-8542-c7dd356d52bb",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "d774029b-1184-4881-9b9e-b8d4c976d112",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1479,
+        "activity_start_detail": {
+          "year": 1479,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1510,
+        "activity_end_detail": {
+          "year": 1510,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "polity-merge-tsardom-russia-ivan-iv",
+      "type": "rewrite_activity",
+      "activity_id": "d6cdaf3b-2eab-4b98-8a17-b9c42342534f",
+      "baseline_before": {
+        "person_id": "57b00bae-2420-4ddd-b374-f70c81479bff",
+        "polity_id": "8e0c3472-867d-5165-89c2-cb7866f6a5ed",
+        "role_id": "f41c76fe-719a-546c-b1cc-6ee313a37bd5",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1547,
+        "activity_end": 1584,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "after": {
+        "activity_id": "d6cdaf3b-2eab-4b98-8a17-b9c42342534f",
+        "person_id": "57b00bae-2420-4ddd-b374-f70c81479bff",
+        "polity_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "f41c76fe-719a-546c-b1cc-6ee313a37bd5",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1547,
+        "activity_start_detail": {
+          "year": 1547,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1584,
+        "activity_end_detail": {
+          "year": 1584,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "polity-merge-tsardom-russia-zherebtsov",
+      "type": "rewrite_activity",
+      "activity_id": "60ca9460-8598-4833-939f-1a2d8c8acf6e",
+      "baseline_before": {
+        "person_id": "6bb2178f-0889-42b8-809a-84043ef8b2e1",
+        "polity_id": "8e0c3472-867d-5165-89c2-cb7866f6a5ed",
+        "role_id": "2a1af717-f521-4cf9-8f3d-f58407e58434",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1609,
+        "activity_end": 1610,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "after": {
+        "activity_id": "60ca9460-8598-4833-939f-1a2d8c8acf6e",
+        "person_id": "6bb2178f-0889-42b8-809a-84043ef8b2e1",
+        "polity_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "2a1af717-f521-4cf9-8f3d-f58407e58434",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1609,
+        "activity_start_detail": {
+          "year": 1609,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1610,
+        "activity_end_detail": {
+          "year": 1610,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "polity-merge-tsardom-russia-peter-i",
+      "type": "rewrite_activity",
+      "activity_id": "57cdefa5-9a5d-533c-b229-47e398f1d07a",
+      "baseline_before": {
+        "person_id": "072f2262-acbb-53a8-a63f-c3e798c24132",
+        "polity_id": "8e0c3472-867d-5165-89c2-cb7866f6a5ed",
+        "role_id": "f41c76fe-719a-546c-b1cc-6ee313a37bd5",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1682,
+        "activity_end": 1721,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "57cdefa5-9a5d-533c-b229-47e398f1d07a",
+        "person_id": "072f2262-acbb-53a8-a63f-c3e798c24132",
+        "polity_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "f41c76fe-719a-546c-b1cc-6ee313a37bd5",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1682,
+        "activity_start_detail": {
+          "year": 1682,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1721,
+        "activity_end_detail": {
+          "year": 1721,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "polity-merge-empire-japan-meiji",
+      "type": "rewrite_activity",
+      "activity_id": "486ce4c6-cb60-530f-8d88-03f7cc75a4bf",
+      "baseline_before": {
+        "person_id": "f14bd56a-8c24-591c-811a-e731bccc4eeb",
+        "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1867,
+        "activity_end": 1912,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "486ce4c6-cb60-530f-8d88-03f7cc75a4bf",
+        "person_id": "f14bd56a-8c24-591c-811a-e731bccc4eeb",
+        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1867,
+        "activity_start_detail": {
+          "year": 1867,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1912,
+        "activity_end_detail": {
+          "year": 1912,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "polity-merge-empire-japan-tojo",
+      "type": "rewrite_activity",
+      "activity_id": "12f673db-0669-5151-8506-83d52cd4a797",
+      "baseline_before": {
+        "person_id": "60fd935f-37f6-577c-9010-fb590220980f",
+        "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1941,
+        "activity_end": 1944,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "12f673db-0669-5151-8506-83d52cd4a797",
+        "person_id": "60fd935f-37f6-577c-9010-fb590220980f",
+        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1941,
+        "activity_start_detail": {
+          "year": 1941,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1944,
+        "activity_end_detail": {
+          "year": 1944,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 10,
+    "production_mutation_authorized": false
+  }
+}
