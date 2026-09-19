@@ -93,3 +93,53 @@ test("Person domain UI delegates source caching and in-flight dedupe to the shar
   assert.match(domainUiSource, /atlas-client-data-source-updated/);
   assert.match(domainUiSource, /event\?\.detail\?\.key !== "personDomains"/);
 });
+
+test("attention queue derives actionable Person sets from canonical snapshots and deduplicates affected Persons", () => {
+  const persons = [
+    { id:"p1", activity_count:1, external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:"x"}] } },
+    { id:"p2", activity_count:0, external_references:{}, facets:{ polities:[{id:"y"}] } },
+    { id:"p3", activity_count:1, external_references:{ namuwiki:{status:"not_found"} }, facets:{ polities:[{id:"y"}] } }
+  ];
+  const queue = model.buildAttentionQueue({
+    personResult:{ persons },
+    domainResult:{ by_person_id:{ p1:"governance" } },
+    spatialIndex:{
+      polity_geography:{ x:"europe", y:"east-asia" },
+      polity_subregions:{ x:"western-europe" },
+      place_function_records:[]
+    }
+  });
+  const byCode = Object.fromEntries(queue.items.map((item) => [item.code, item]));
+  assert.deepEqual(byCode.domain.person_ids,["p2","p3"]);
+  assert.deepEqual(byCode.namuwiki.person_ids,["p2"]);
+  assert.deepEqual(byCode.spatial.person_ids,["p2","p3"]);
+  assert.equal(queue.known_outstanding_checks,5);
+  assert.equal(queue.known_affected_persons,2);
+  assert.equal(queue.complete,false);
+  assert.equal(byCode.runtime_exclusion.count,null);
+  assert.equal(byCode.duplicate_review.count,null);
+});
+
+test("attention queue preserves unavailable sources as unknown instead of fake zero", () => {
+  const queue = model.buildAttentionQueue({
+    personResult:{ persons:[{ id:"p1", external_references:{}, facets:{polities:[]} }] },
+    domainResult:null,
+    spatialIndex:null
+  });
+  const byCode = Object.fromEntries(queue.items.map((item) => [item.code, item]));
+  assert.equal(byCode.domain.available,false);
+  assert.equal(byCode.domain.count,null);
+  assert.equal(byCode.spatial.available,false);
+  assert.equal(byCode.spatial.count,null);
+  assert.equal(byCode.namuwiki.count,1);
+  assert.equal(queue.known_outstanding_checks,1);
+});
+
+test("attention queue drill-down reuses Person Main instead of creating a duplicate list UI", () => {
+  assert.match(dashboardSource, /data-dashboard-attention/);
+  assert.match(dashboardSource, /ATLAS_PERSON_MAIN\?\.setDashboardFilter/);
+  assert.match(mainSource, /setDashboardFilter/);
+  assert.match(mainSource, /secondaryPredicate:dashboardFilter/);
+  assert.match(mainSource, /data-person-dashboard-filter-clear/);
+  assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
+});
