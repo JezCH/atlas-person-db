@@ -41,5 +41,5 @@ test("current runtime stack excludes density and retains required readable-scale
   assert.doesNotMatch(view,/atlas-person-spacetime-density\.js/);
   assert.match(view,/spacetimeMinimapCanvas/);
   assert.match(view,/bindVirtualizedLayers/);
-  assert.match(view,/opposes/);
+  assert.match(view,/counterparty_segments/);
 });
