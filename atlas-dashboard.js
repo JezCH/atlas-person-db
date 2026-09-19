@@ -51,26 +51,46 @@
   function attentionButton(item) {
     const unavailable = item?.available !== true;
     const disabled = unavailable || Number(item?.count || 0) <= 0;
-    const state = unavailable ? "Source unavailable" : `${value(item.count)}명`;
+    const state = unavailable ? "원본 확인 불가" : `${value(item.count)}명`;
     const title = unavailable ? item?.unavailable_reason || "SOURCE_UNAVAILABLE" : `${item.label} 대상 ${value(item.count)}명`;
     return `<button type="button" data-dashboard-attention="${escapeHtml(item?.code || "")}" ${disabled ? "disabled" : ""} title="${escapeHtml(title)}">
-      <span>${escapeHtml(item?.label || item?.code || "Attention")}</span><strong>${unavailable ? "—" : value(item.count)}</strong>
+      <span>${escapeHtml(item?.label || item?.code || "확인 필요")}</span><strong>${unavailable ? "—" : value(item.count)}</strong>
       <small>${escapeHtml(state)}</small>
     </button>`;
   }
 
+  function unitLabel(unit) {
+    if (unit === "polity") return "정치체";
+    if (unit === "activity") return "활동";
+    if (unit === "person") return "인물";
+    return unit || "—";
+  }
+
+  function sourceStatusLabel(status) {
+    if (status === "ready") return "정상";
+    if (status === "loading") return "확인 중";
+    if (status === "error") return "오류";
+    return "대기";
+  }
+
+  function timestampBasisLabel(basis) {
+    if (basis === "generated_at") return "생성 시각";
+    if (basis === "latest_tracked_mutation") return "최근 추적 변경";
+    return "미제공";
+  }
+
   function breakdownCard(label, item) {
     const total = item?.total == null ? "—" : value(item.total);
-    const unit = item?.unit === "polity" ? "polities" : item?.unit === "activity" ? "activities" : "persons";
+    const unit = unitLabel(item?.unit || "person");
     const rows = (item?.rows || []).map((row) => `<div class="dashboard-domain-row">
       <span title="${escapeHtml(row.label || row.code || "")}">${escapeHtml(row.label || row.code || "unknown")}</span><b>${value(row.count)}</b>
     </div>`).join("");
     const unattributed = Number(item?.unattributed_count || 0) > 0
-      ? `<div class="dashboard-domain-row"><span>Reason unavailable</span><b>${value(item.unattributed_count)}</b></div>`
+      ? `<div class="dashboard-domain-row"><span>사유 미확인</span><b>${value(item.unattributed_count)}</b></div>`
       : "";
     return `<article class="dashboard-panel card">
       <div class="dashboard-panel-head"><div><p class="eyebrow">INCOMPLETE REASONS</p><h3>${escapeHtml(label)}</h3></div><span>${total} ${unit}</span></div>
-      <div class="dashboard-domain-list">${rows || unattributed ? rows + unattributed : `<div class="dashboard-domain-row"><span>${escapeHtml(item?.unavailable_reason || "Reason source unavailable")}</span><b>—</b></div>`}</div>
+      <div class="dashboard-domain-list">${rows || unattributed ? rows + unattributed : `<div class="dashboard-domain-row"><span>${escapeHtml(item?.unavailable_reason || "사유 원본 확인 불가")}</span><b>—</b></div>`}</div>
     </article>`;
   }
 
@@ -80,7 +100,7 @@
   }
 
   function recentTimelineEntry(entry) {
-    const person = entry?.display_name || (entry?.person_id ? entry.person_id : "Project-wide");
+    const person = entry?.display_name || (entry?.person_id ? entry.person_id : "프로젝트 전체");
     const timestamp = entry?.occurred_at
       ? new Intl.DateTimeFormat("ko-KR",{dateStyle:"short",timeStyle:"short"}).format(new Date(entry.occurred_at))
       : "—";
@@ -88,15 +108,15 @@
     return `<article class="dashboard-timeline-entry" data-timeline-kind="${escapeHtml(entry?.kind || "unknown")}">
       <span class="dashboard-timeline-node" aria-hidden="true"></span>
       <div class="dashboard-timeline-copy">
-        <div><strong>${escapeHtml(entry?.label || entry?.operation || entry?.kind || "Change")}</strong><span class="dashboard-unit-badge">${escapeHtml(entry?.kind || "unknown")}</span></div>
+        <div><strong>${escapeHtml(entry?.label || entry?.operation || entry?.kind || "변경")}</strong><span class="dashboard-unit-badge">${escapeHtml(entry?.kind || "unknown")}</span></div>
         <small>${escapeHtml(person)}</small>
       </div>
-      <div class="dashboard-timeline-meta"><b>${escapeHtml(timestamp)}</b><small>${count > 0 ? `${value(count)} changes` : "change count unavailable"}</small></div>
+      <div class="dashboard-timeline-meta"><b>${escapeHtml(timestamp)}</b><small>${count > 0 ? `${value(count)}건 변경` : "변경 수 미확인"}</small></div>
     </article>`;
   }
 
   function recentTimelineSummary(timeline) {
-    return (timeline?.kind_summary || []).map((item) => `<span><b>${escapeHtml(item.kind)}</b> ${value(item.event_count)} events · ${value(item.change_count)} changes</span>`).join("");
+    return (timeline?.kind_summary || []).map((item) => `<span><b>${escapeHtml(item.kind)}</b> ${value(item.event_count)}건 · ${value(item.change_count)}건 변경</span>`).join("");
   }
 
   function systemCard(label, primary, detail, state = "ready") {
@@ -113,13 +133,13 @@
   }
 
   function heatmapTable(heatmap) {
-    if (!heatmap?.available) return `<div class="dashboard-heatmap-unavailable">${escapeHtml(heatmap?.unavailable_reason || "Heatmap unavailable")}</div>`;
+    if (!heatmap?.available) return `<div class="dashboard-heatmap-unavailable">${escapeHtml(heatmap?.unavailable_reason || "분포표 확인 불가")}</div>`;
     const head=heatmap.regions.map((region)=>`<th scope="col" title="${escapeHtml(region.label)}">${escapeHtml(region.label)}</th>`).join("");
     const body=heatmap.rows.map((row)=>`<tr>
       <th scope="row"><strong>${escapeHtml(row.era.label)}</strong><small>${escapeHtml(row.era.range)}</small></th>
-      ${row.cells.map((cell)=>`<td data-heatmap-level="${heatmapLevel(cell.count,heatmap.max_count)}" title="${escapeHtml(`${row.era.label} × ${heatmap.regions.find((region)=>region.code===cell.region_code)?.label || cell.region_code}: ${cell.count} activities`)}"><span>${value(cell.count)}</span></td>`).join("")}
+      ${row.cells.map((cell)=>`<td data-heatmap-level="${heatmapLevel(cell.count,heatmap.max_count)}" title="${escapeHtml(`${row.era.label} × ${heatmap.regions.find((region)=>region.code===cell.region_code)?.label || cell.region_code}: 활동 ${cell.count}건`)}"><span>${value(cell.count)}</span></td>`).join("")}
     </tr>`).join("");
-    return `<div class="dashboard-heatmap-wrap"><table class="dashboard-heatmap"><thead><tr><th scope="col">ERA \ REGION</th>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+    return `<div class="dashboard-heatmap-wrap"><table class="dashboard-heatmap"><thead><tr><th scope="col">시대 \ 권역</th>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
   }
 
   function completenessTable(matrix) {
@@ -132,7 +152,7 @@
         : `<span>${incomplete}</span>`;
       return `<tr data-completeness-unit="${escapeHtml(row.unit)}">
         <th scope="row"><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.source)}</small></th>
-        <td><span class="dashboard-unit-badge">${escapeHtml(row.unit)}</span></td>
+        <td><span class="dashboard-unit-badge">${escapeHtml(unitLabel(row.unit))}</span></td>
         <td>${known ? value(row.complete) : "—"}</td>
         <td>${incompleteCell}</td>
         <td>${known ? pct(row.percentage) : "—"}</td>
@@ -140,7 +160,7 @@
       </tr>`;
     }).join("");
     return `<div class="dashboard-completeness-wrap"><table class="dashboard-completeness">
-      <thead><tr><th scope="col">CHECK</th><th scope="col">UNIT</th><th scope="col">COMPLETE</th><th scope="col">INCOMPLETE</th><th scope="col">COVERAGE</th><th scope="col">TOTAL</th></tr></thead>
+      <thead><tr><th scope="col">항목</th><th scope="col">단위</th><th scope="col">완료</th><th scope="col">미완료</th><th scope="col">완성도</th><th scope="col">전체</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
   }
@@ -154,14 +174,14 @@
 
   function sourceFreshnessTable(freshness) {
     const rows=(freshness?.rows || []).map((row)=>`<tr>
-      <th scope="row"><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.key)}</small></th>
-      <td><span class="dashboard-unit-badge">${escapeHtml(row.status)}</span></td>
+      <th scope="row"><strong>${escapeHtml(row.label)}</strong></th>
+      <td><span class="dashboard-unit-badge">${escapeHtml(sourceStatusLabel(row.status))}</span></td>
       <td title="${escapeHtml(row.data_timestamp_unavailable_reason || row.data_basis || "")}">${escapeHtml(formatTimestamp(row.data_at))}</td>
-      <td>${escapeHtml(row.data_basis || "not exposed")}</td>
+      <td>${escapeHtml(timestampBasisLabel(row.data_basis))}</td>
       <td>${escapeHtml(formatTimestamp(row.read_at))}</td>
     </tr>`).join("");
     return `<div class="dashboard-completeness-wrap"><table class="dashboard-completeness dashboard-source-freshness">
-      <thead><tr><th scope="col">SOURCE</th><th scope="col">STATUS</th><th scope="col">SOURCE TIMESTAMP</th><th scope="col">BASIS</th><th scope="col">LAST READ</th></tr></thead>
+      <thead><tr><th scope="col">원본</th><th scope="col">상태</th><th scope="col">원본 시각</th><th scope="col">기준</th><th scope="col">마지막 읽기</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
   }
@@ -180,7 +200,7 @@
 
   function renderLoading(root) {
     root.innerHTML = `<section class="dashboard-control-center">
-      <div class="dashboard-hero card"><div><p class="eyebrow">ATLAS CONTROL CENTER</p><h2>프로젝트 현황을 불러오는 중</h2><p>Person·Domain·Spatial·Non-timeline 기준 원본을 하나의 shared store에서 읽고 있습니다.</p></div></div>
+      <div class="dashboard-hero card"><div><p class="eyebrow">ATLAS CONTROL CENTER</p><h2>프로젝트 현황을 불러오는 중</h2><p>인물·분야·공간·비연대표 기준 원본을 하나의 공통 데이터 경로에서 읽고 있습니다.</p></div></div>
       <div class="dashboard-loading-grid"><span></span><span></span><span></span><span></span></div>
     </section>`;
   }
@@ -225,7 +245,7 @@
       </section>
 
       <section class="dashboard-panel card" aria-label="시스템 및 Production 상태">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">SYSTEM / PRODUCTION</p><h3>현재 실행 환경</h3></div><span>${sys.available ? "runtime identity" : "identity unavailable"}</span></div>
+        <div class="dashboard-panel-head"><div><p class="eyebrow">SYSTEM / PRODUCTION</p><h3>현재 실행 환경</h3></div><span>${sys.available ? "배포 식별 정보" : "식별 정보 없음"}</span></div>
         <div class="dashboard-source-list">
           ${systemCard("ENVIRONMENT",sys.environment,sys.production_main === true ? "Production · main" : sys.production_main === false ? "Production/main 조합 아님" : "환경 판정 불가",sys.available ? "ready" : "error")}
           ${systemCard("DEPLOYED GIT",sys.git_commit_short,sys.git_commit_ref ? `ref ${sys.git_commit_ref}` : "commit/ref unavailable",sys.git_commit_sha && sys.git_commit_ref ? "ready" : "idle")}
@@ -233,8 +253,8 @@
           ${systemCard("SHARED SOURCES",sys.source_health.ready == null ? null : `${sys.source_health.ready}/${sys.source_health.total}`,sys.source_health.available ? `errors ${sys.source_health.errors} · loading ${sys.source_health.loading}` : "source states unavailable",sys.source_health.errors > 0 ? "error" : sys.source_health.available ? "ready" : "idle")}
         </div>
         <div class="dashboard-progress-meta">
-          <span>${sys.identity_complete ? "Runtime identity complete" : "Runtime identity partial"}</span>
-          <span>GitHub Actions 상태는 runtime identity와 별도</span>
+          <span>${sys.identity_complete ? "배포 식별 완료" : "배포 식별 일부 미확인"}</span>
+          <span>배포 식별 정보와 CI 상태는 별도</span>
         </div>
         ${sourceIssues.length ? `<div class="dashboard-source-issues" aria-label="비정상 source 상세">
           <p class="eyebrow">SOURCE ISSUES</p>
@@ -242,23 +262,23 @@
         </div>` : ""}
       </section>
 
-      <section class="dashboard-panel card" aria-label="기준 원본 timestamp와 읽기 시각">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">SOURCE FRESHNESS</p><h3>원본 시각 추적</h3></div><span>source timestamp ${value(freshness.data_timestamp_known)}/${value(freshness.total_sources)} known</span></div>
+      <section class="dashboard-panel card" aria-label="기준 원본 갱신 시각과 읽기 시각">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">SOURCE FRESHNESS</p><h3>원본 시각 추적</h3></div><span>원본 시각 ${value(freshness.data_timestamp_known)}/${value(freshness.total_sources)} 확인</span></div>
         ${sourceFreshnessTable(freshness)}
         <div class="dashboard-progress-meta">
-          <span>Source timestamp와 browser last read를 구분</span>
-          <span>timestamp 미노출 source는 — · 임의 fresh/stale 판정 없음</span>
+          <span>원본 갱신 시각과 브라우저 마지막 읽기 시각을 구분</span>
+          <span>갱신 시각 미제공 원본은 — · 최신/지연 상태를 임의 판정하지 않음</span>
         </div>
       </section>
 
       <section class="dashboard-panel card">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">NEEDS ATTENTION</p><h3>지금 처리할 대상</h3></div><span>canonical snapshots only</span></div>
+        <div class="dashboard-panel-head"><div><p class="eyebrow">NEEDS ATTENTION</p><h3>지금 처리할 대상</h3></div><span>기준 원본에서 파생</span></div>
         <div class="dashboard-issue-grid">
           ${a.items.map(attentionButton).join("")}
         </div>
         <div class="dashboard-progress-meta">
-          <span>Known outstanding checks <b>${value(a.known_outstanding_checks)}</b></span>
-          <span>Known affected persons <b>${value(a.known_affected_persons)}</b></span>
+          <span>확인된 미완료 건 <b>${value(a.known_outstanding_checks)}</b></span>
+          <span>영향 인물 <b>${value(a.known_affected_persons)}</b></span>
           <span>${a.complete ? "전체 범주 확인됨" : `부분 집계 · ${value(a.available_categories)}/${value(a.total_categories)} 범주만 대상 집합 확인`}</span>
         </div>
       </section>
@@ -267,10 +287,10 @@
         <article class="dashboard-panel card">
           <div class="dashboard-panel-head"><div><p class="eyebrow">WORK FRONTIER</p><h3>작업 진행</h3></div><span>실데이터 기준</span></div>
           <div class="dashboard-progress-list">
-            ${progressRow("대표 분야 분류", w.domain, "persons.representative_domain")}
-            ${progressRow("나무위키 검토", w.namuwiki, "linked + not_found")}
-            ${progressRow("Spatial 준비", w.spatial, "Runtime Activity placement")}
-            ${progressRow("Runtime Activity 연결", w.runtime_activity, "Runtime Activity가 1건 이상인 Person")}
+            ${progressRow("대표 분야 분류", w.domain, "대표 분야 배정")}
+            ${progressRow("나무위키 검토", w.namuwiki, "연결 + 없음 확인")}
+            ${progressRow("Spatial 준비", w.spatial, "활동 위치 배치")}
+            ${progressRow("활동 연결", w.runtime_activity, "활동이 1건 이상 연결된 인물")}
           </div>
         </article>
 
@@ -278,43 +298,43 @@
           <div class="dashboard-panel-head"><div><p class="eyebrow">DATA QUALITY</p><h3>구조·예외 상태</h3></div><span>중복 지표 제외</span></div>
           <div class="dashboard-issue-grid">
             <button type="button" data-dashboard-route="spacetime"><span>Spatial 미해결</span><strong>${value(q.spatial_unresolved)}</strong></button>
-            <button type="button" data-dashboard-route="spacetime"><span>Spatial review queue</span><strong>${value(q.spatial_review)}</strong></button>
-            <button type="button" data-dashboard-route="persons"><span>Runtime Activity 없음</span><strong>${value(q.no_runtime_activity)}</strong></button>
-            <button type="button" data-dashboard-route="persons"><span>Non-timeline registry</span><strong>${value(q.non_timeline_registry)}</strong></button>
+            <button type="button" data-dashboard-route="spacetime"><span>Spatial 검토 대기</span><strong>${value(q.spatial_review)}</strong></button>
+            <button type="button" data-dashboard-route="persons"><span>활동 연결 없음</span><strong>${value(q.no_runtime_activity)}</strong></button>
+            <button type="button" data-dashboard-route="persons"><span>비연대표 등록</span><strong>${value(q.non_timeline_registry)}</strong></button>
           </div>
         </article>
       </section>
 
       <section class="dashboard-panel card" aria-label="데이터 완성도 행렬">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">COMPLETENESS MATRIX</p><h3>축별 완성도</h3></div><span>Person 3 checks · Activity 2 checks</span></div>
+        <div class="dashboard-panel-head"><div><p class="eyebrow">COMPLETENESS MATRIX</p><h3>축별 완성도</h3></div><span>인물 3항목 · 활동 2항목</span></div>
         ${completenessTable(completeness)}
         <div class="dashboard-progress-meta">
-          <span>Person과 Activity 단위를 합산하지 않음</span>
-          <span>— = canonical source unavailable</span>
+          <span>인물과 활동 단위는 합산하지 않음</span>
+          <span>— = 기준 원본 확인 불가</span>
         </div>
       </section>
 
-      <section class="dashboard-panel card" aria-label="시대별 권역별 Activity coverage">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">ERA × REGION COVERAGE</p><h3>시공간 Activity 분포</h3></div><span>${heatmap.available ? `placed ${value(heatmap.placed_activity_count)} · unresolved ${value(heatmap.unresolved_activity_count)}` : "source unavailable"}</span></div>
+      <section class="dashboard-panel card" aria-label="시대별·권역별 활동 분포">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">ERA × REGION COVERAGE</p><h3>시공간 활동 분포</h3></div><span>${heatmap.available ? `배치 ${value(heatmap.placed_activity_count)} · 미해결 ${value(heatmap.unresolved_activity_count)}` : "원본 확인 불가"}</span></div>
         ${heatmapTable(heatmap)}
         <div class="dashboard-progress-meta">
-          <span>canonical 10 Era bands × Spatial macroregions</span>
-          <span>한 Activity는 같은 시대·권역에서 segment가 여러 개여도 1회 집계</span>
+          <span>10개 시대 구간 × Spatial 대권역</span>
+          <span>한 활동은 같은 시대·권역에서 구간이 여러 개여도 1회 집계</span>
         </div>
       </section>
 
       <section class="dashboard-panel card" aria-label="최근 프로젝트 변경 타임라인">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">RECENT DELTA · RECENT ACTIVITY TIMELINE</p><h3>최근 추적 변경 타임라인</h3></div><span>${timeline.available ? `${value(timeline.event_count)} events · ${value(timeline.total_change_count)} changes` : "source unavailable"}</span></div>
+        <div class="dashboard-panel-head"><div><p class="eyebrow">RECENT DELTA · RECENT ACTIVITY TIMELINE</p><h3>최근 추적 변경 타임라인</h3></div><span>${timeline.available ? `${value(timeline.event_count)}건 기록 · ${value(timeline.total_change_count)}건 변경` : "원본 확인 불가"}</span></div>
         ${timeline.available
           ? (timeline.entries.length
             ? `<div class="dashboard-timeline">${timeline.entries.map(recentTimelineEntry).join("")}</div>`
-            : '<div class="dashboard-heatmap-unavailable">현재 canonical mutation ledger에 표시할 변경이 없습니다.</div>')
-          : '<div class="dashboard-heatmap-unavailable">Recent Delta canonical source unavailable</div>'}
+            : '<div class="dashboard-heatmap-unavailable">현재 추적 원장에 표시할 변경이 없습니다.</div>')
+          : '<div class="dashboard-heatmap-unavailable">최근 변경 기준 원본을 확인할 수 없습니다.</div>'}
         <div class="dashboard-timeline-summary">${timeline.available ? recentTimelineSummary(timeline) : ""}</div>
         <div class="dashboard-progress-meta">
-          <span>Person-scoped ${timeline.available ? value(timeline.person_scoped_count) : "—"} · Project-wide ${timeline.available ? value(timeline.project_wide_count) : "—"}</span>
-          <span>Tracked ${escapeHtml((rd.tracked_sources || []).join(" · ") || "—")}</span>
-          <span>${rd.gaps?.length ? `Coverage gap · ${escapeHtml(rd.gaps.join(", "))}` : "Tracked mutation coverage complete"}</span>
+          <span>인물 단위 ${timeline.available ? value(timeline.person_scoped_count) : "—"} · 프로젝트 전체 ${timeline.available ? value(timeline.project_wide_count) : "—"}</span>
+          <span>추적 원본 ${escapeHtml((rd.tracked_sources || []).join(" · ") || "—")}</span>
+          <span>${rd.gaps?.length ? `추적 누락 · ${escapeHtml(rd.gaps.join(", "))}` : "추적 범위 확인 완료"}</span>
         </div>
       </section>
 
@@ -328,7 +348,7 @@
 
       <section class="dashboard-lower-grid">
         <article class="dashboard-panel card">
-          <div class="dashboard-panel-head"><div><p class="eyebrow">PERSON DOMAINS</p><h3>대표 분야 분포</h3></div><span>공식 8색 token 재사용</span></div>
+          <div class="dashboard-panel-head"><div><p class="eyebrow">PERSON DOMAINS</p><h3>대표 분야 분포</h3></div><span>분야 8색 체계 적용</span></div>
           <div class="dashboard-domain-list">${domainRows}</div>
         </article>
       </section>
