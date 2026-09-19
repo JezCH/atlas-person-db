@@ -232,6 +232,28 @@
         </div>
       </section>
 
+      <section class="dashboard-main-grid">
+        <article class="dashboard-panel card">
+          <div class="dashboard-panel-head"><div><p class="eyebrow">WORK FRONTIER</p><h3>작업 진행</h3></div><span>실데이터 기준</span></div>
+          <div class="dashboard-progress-list">
+            ${progressRow("대표 분야 분류", w.domain, "persons.representative_domain")}
+            ${progressRow("나무위키 검토", w.namuwiki, "linked + not_found")}
+            ${progressRow("Spatial 준비", w.spatial, "Runtime Activity placement")}
+            ${progressRow("Runtime Activity 연결", w.runtime_activity, "Runtime Activity가 1건 이상인 Person")}
+          </div>
+        </article>
+
+        <article class="dashboard-panel card">
+          <div class="dashboard-panel-head"><div><p class="eyebrow">DATA QUALITY</p><h3>구조·예외 상태</h3></div><span>중복 지표 제외</span></div>
+          <div class="dashboard-issue-grid">
+            <button type="button" data-dashboard-route="spacetime"><span>Spatial 미해결</span><strong>${value(q.spatial_unresolved)}</strong></button>
+            <button type="button" data-dashboard-route="spacetime"><span>Spatial review queue</span><strong>${value(q.spatial_review)}</strong></button>
+            <button type="button" data-dashboard-route="persons"><span>Runtime Activity 없음</span><strong>${value(q.no_runtime_activity)}</strong></button>
+            <button type="button" data-dashboard-route="persons"><span>Non-timeline registry</span><strong>${value(q.non_timeline_registry)}</strong></button>
+          </div>
+        </article>
+      </section>
+
       <section class="dashboard-panel card" aria-label="데이터 완성도 행렬">
         <div class="dashboard-panel-head"><div><p class="eyebrow">COMPLETENESS MATRIX</p><h3>축별 완성도</h3></div><span>Person 3 checks · Activity 2 checks</span></div>
         ${completenessTable(completeness)}
@@ -265,27 +287,7 @@
         </div>
       </section>
 
-      <section class="dashboard-main-grid">
-        <article class="dashboard-panel card">
-          <div class="dashboard-panel-head"><div><p class="eyebrow">WORK FRONTIER</p><h3>작업 진행</h3></div><span>실데이터 기준</span></div>
-          <div class="dashboard-progress-list">
-            ${progressRow("대표 분야 분류", w.domain, "persons.representative_domain")}
-            ${progressRow("나무위키 검토", w.namuwiki, "linked + not_found")}
-            ${progressRow("Spatial 준비", w.spatial, "Runtime Activity placement")}
-            ${progressRow("Runtime Activity 연결", w.runtime_activity, "Runtime Activity가 1건 이상인 Person")}
-          </div>
-        </article>
 
-        <article class="dashboard-panel card">
-          <div class="dashboard-panel-head"><div><p class="eyebrow">DATA QUALITY</p><h3>구조·예외 상태</h3></div><span>중복 지표 제외</span></div>
-          <div class="dashboard-issue-grid">
-            <button type="button" data-dashboard-route="spacetime"><span>Spatial 미해결</span><strong>${value(q.spatial_unresolved)}</strong></button>
-            <button type="button" data-dashboard-route="spacetime"><span>Spatial review queue</span><strong>${value(q.spatial_review)}</strong></button>
-            <button type="button" data-dashboard-route="persons"><span>Runtime Activity 없음</span><strong>${value(q.no_runtime_activity)}</strong></button>
-            <button type="button" data-dashboard-route="persons"><span>Non-timeline registry</span><strong>${value(q.non_timeline_registry)}</strong></button>
-          </div>
-        </article>
-      </section>
 
       <section class="dashboard-lower-grid" aria-label="미완료 사유">
         ${incompleteCards.length
