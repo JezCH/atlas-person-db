@@ -157,9 +157,10 @@
   function ensurePolityReviewAssets() {
     if (window.ATLAS_POLITY_REVIEW_WORKBENCH) return Promise.resolve(window.ATLAS_POLITY_REVIEW_WORKBENCH);
     if (polityReviewAssetsPromise) return polityReviewAssetsPromise;
-    appendStylesheetOnce("./atlas-polity-review-workbench.css?v=20260919-v1");
-    polityReviewAssetsPromise = loadScriptOnce("./atlas-polity-review-candidates.js?v=20260919-v1", () => Boolean(window.ATLAS_POLITY_REVIEW_CANDIDATES))
-      .then(() => loadScriptOnce("./atlas-polity-review-workbench.js?v=20260919-v1", () => Boolean(window.ATLAS_POLITY_REVIEW_WORKBENCH)))
+    appendStylesheetOnce("./atlas-polity-review-workbench.css?v=20260919-live-context-v2");
+    polityReviewAssetsPromise = loadScriptOnce("./atlas-polity-browser-reader.js?v=20260919-live-context-v2", () => Boolean(window.ATLAS_POLITY_BROWSER_READER))
+      .then(() => loadScriptOnce("./atlas-polity-review-candidates.js?v=20260919-live-context-v2", () => Boolean(window.ATLAS_POLITY_REVIEW_CANDIDATES)))
+      .then(() => loadScriptOnce("./atlas-polity-review-workbench.js?v=20260919-live-context-v2", () => Boolean(window.ATLAS_POLITY_REVIEW_WORKBENCH)))
       .then(() => window.ATLAS_POLITY_REVIEW_WORKBENCH)
       .catch((error) => {
         polityReviewAssetsPromise = null;

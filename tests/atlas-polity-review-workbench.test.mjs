@@ -5,6 +5,7 @@ import fs from 'node:fs';
 const candidates = fs.readFileSync(new URL('../atlas-polity-review-candidates.js', import.meta.url), 'utf8');
 const workbench = fs.readFileSync(new URL('../atlas-polity-review-workbench.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-polity-review-workbench.css', import.meta.url), 'utf8');
+const reader = fs.readFileSync(new URL('../atlas-polity-browser-reader.js', import.meta.url), 'utf8');
 
 test('polity review candidate registry separates confirmed merges, review candidates, and split candidates', () => {
   assert.match(candidates, /confirmed_merges/);
@@ -14,6 +15,11 @@ test('polity review candidate registry separates confirmed merges, review candid
   assert.match(candidates, /Liao Dynasty \/ Liao dynasty/);
   assert.match(candidates, /Israel identity 과통합/);
   assert.match(candidates, /Kingdom of Italy identity 과통합/);
+  assert.match(candidates, /Kingdom of Israel identity 내부 과통합/);
+  assert.match(candidates, /PRODUCTION_APPLIED_RETIRED/);
+  assert.match(candidates, /REVIEWED_MERGE_READY/);
+  assert.match(candidates, /REVIEWED_MERGE_BLOCKED_SPATIAL/);
+  assert.match(candidates, /REVIEWED_SPLIT_REQUIRED/);
 });
 
 test('polity review exposes explicit human decision options without direct Production mutation', () => {
@@ -24,13 +30,28 @@ test('polity review exposes explicit human decision options without direct Produ
   assert.match(workbench, /localStorage/);
   assert.match(workbench, /atlas-polity-review-decisions\/v1/);
   assert.match(workbench, /결정 JSON 내보내기/);
-  assert.doesNotMatch(workbench, /\/api\/|atlas-mutate|ATLAS_MUTATION_TOKEN|SUPABASE_DB_URL/);
+  assert.match(workbench, /검토 판정/);
+  assert.match(workbench, /내 입력/);
+  assert.match(workbench, /reviewed_decision/);
+  assert.match(workbench, /user_decision/);
+  assert.match(workbench, /disabled/);
+  assert.match(workbench, /ATLAS_POLITY_BROWSER_READER/);
+  assert.match(workbench, /정치체 기본 통계/);
+  assert.match(workbench, /연결 인물/);
+  assert.match(workbench, /양쪽 연결/);
+  assert.match(workbench, /Identity 통합 ≠ 시대별 표현 통합/);
+  assert.match(workbench, /polity_designation_name_ko/);
+  assert.match(reader, /\/api\/atlas-polity-read/);
+  assert.doesNotMatch(workbench, /atlas-mutate|ATLAS_MUTATION_TOKEN|SUPABASE_DB_URL/);
 });
 
 test('polity review layout remains responsive for desktop and mobile review', () => {
   assert.match(css, /polity-review-kpis/);
   assert.match(css, /polity-review-pair/);
   assert.match(css, /polity-review-controls/);
+  assert.match(css, /polity-review-dataset-kpis/);
+  assert.match(css, /polity-review-person-list/);
+  assert.match(css, /is-bridge-person/);
   assert.match(css, /@media\(max-width:900px\)/);
   assert.match(css, /@media\(max-width:600px\)/);
 });

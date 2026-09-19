@@ -6,6 +6,7 @@ const PRODUCTION_URL = process.env.ATLAS_PRODUCTION_URL || "https://atlas-person
 const EXPECTED_RUNTIME_SHA = process.env.ATLAS_EXPECTED_RUNTIME_SHA || "d8e8fa3f56419223bb3a67427de9b68cb0ea10a8";
 const OUT_DIR = process.env.ATLAS_VISUAL_OUT_DIR || "artifacts/spacetime-visual-acceptance";
 const VIEWPORT = Object.freeze({ width: 1600, height: 1000, deviceScaleFactor: 1, mobile: false });
+const MOBILE_VIEWPORT = Object.freeze({ width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
 const EXPECTED_REVIEWED_PLACE_COUNT = 5;
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -250,6 +251,31 @@ async function collect800(client, geometry500) {
   })()`);
 }
 
+async function collectMobile(client) {
+  return evaluate(client, `(() => {
+    const q=(s)=>document.querySelector(s);
+    const rect=(el)=>{const r=el.getBoundingClientRect();return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
+    const frame=q(".spacetime-frame"), scroll=q(".spacetime-scroll"), canvas=q(".spacetime-canvas");
+    const header=q(".spacetime-region-head"), corner=q(".spacetime-sticky-corner"), minimap=q(".spacetime-minimap");
+    return {
+      viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},
+      zoom:(q("#spacetimeCameraZoomValue")?.textContent||"").trim(),
+      presentation:frame?.dataset?.spacetimePresentation || null,
+      frameClassMobile:Boolean(frame?.classList.contains("is-mobile-presentation")),
+      bodyScrollWidth:Math.max(document.documentElement.scrollWidth,document.body.scrollWidth),
+      frameRect:rect(frame),
+      scrollClientWidth:scroll.clientWidth,
+      scrollWidth:scroll.scrollWidth,
+      scrollOverflowX:getComputedStyle(scroll).overflowX,
+      canvasWidth:rect(canvas).width,
+      cornerWidth:rect(corner).width,
+      cornerHeight:rect(corner).height,
+      headerHeight:rect(header).height,
+      minimapWidth:rect(minimap).width
+    };
+  })()`);
+}
+
 async function main() {
   const pages = await jsonFetch(`${DEBUG_URL}/json/list`);
   const page = pages.find((item) => item.type === "page") || pages[0];
@@ -429,6 +455,27 @@ async function main() {
     assert(Math.abs(interaction.lineWidth - interaction.canvasWidth) < 2, "Meanwhile line is not full-width", interaction);
     await screenshot(client, "spacetime-activity-meanwhile.png");
 
+    await client.call("Emulation.setDeviceMetricsOverride", MOBILE_VIEWPORT);
+    await client.call("Page.navigate", { url: PRODUCTION_URL });
+    await waitFor(client, "document.readyState === 'complete'", 45000);
+    await waitFor(client, "Boolean(document.querySelector('#personSpacetimeMount .spacetime-frame'))", 90000);
+    await waitFor(client, "document.querySelector('#spacetimeCameraZoomValue')?.textContent?.trim() === '500%'", 10000);
+    await sleep(700);
+    const mobile = await collectMobile(client);
+    assert(mobile.viewport.width === MOBILE_VIEWPORT.width && mobile.viewport.height === MOBILE_VIEWPORT.height, "Unexpected mobile visual acceptance viewport", mobile);
+    assert(mobile.zoom === "500%", "Mobile presentation did not preserve the 500% semantic floor", mobile);
+    assert(mobile.presentation === "mobile" && mobile.frameClassMobile, "Mobile presentation camera was not activated", mobile);
+    assert(mobile.bodyScrollWidth <= mobile.viewport.width + 1, "Spacetime leaked horizontal overflow into the mobile page", mobile);
+    assert(Math.abs(mobile.cornerWidth - 96) < 0.75, "Mobile shared axis width drifted from 96px", mobile);
+    assert(Math.abs(mobile.cornerHeight - 34) < 0.75 && Math.abs(mobile.headerHeight - 34) < 0.75, "Mobile header height drifted from 34px", mobile);
+    assert(mobile.canvasWidth >= 1500 && mobile.canvasWidth <= 1600, "Mobile world extent is outside the reviewed compact range", mobile);
+    assert(mobile.scrollWidth > mobile.scrollClientWidth, "Mobile spacetime no longer has an internal horizontal camera range", mobile);
+    assert(mobile.scrollWidth / mobile.scrollClientWidth < 5.5, "Mobile spacetime still opens as an excessively long desktop canvas", mobile);
+    assert(mobile.scrollOverflowX === "auto" || mobile.scrollOverflowX === "scroll", "Mobile horizontal movement is not owned by the spacetime viewport", mobile);
+    assert(mobile.frameRect.left >= -0.5 && mobile.frameRect.right <= mobile.viewport.width + 0.5, "Mobile spacetime frame escapes the viewport", mobile);
+    assert(mobile.minimapWidth <= 158, "Mobile minimap is wider than the compact contract", mobile);
+    await screenshot(client, "spacetime-mobile-390.png");
+
     await sleep(500);
     const ignorableResource = (item) => {
       try {
@@ -457,10 +504,11 @@ async function main() {
       at_500_percent:at500,
       at_800_percent:at800,
       interaction,
+      mobile,
       console_errors:filteredConsoleErrors,
       resource_errors:resourceErrors,
       runtime_exceptions:exceptions,
-      screenshots:["spacetime-500.png","spacetime-800.png","spacetime-activity-meanwhile.png"],
+      screenshots:["spacetime-500.png","spacetime-800.png","spacetime-activity-meanwhile.png","spacetime-mobile-390.png"],
       status:"PASS"
     };
     fs.writeFileSync(path.join(OUT_DIR,"visual-acceptance.json"), JSON.stringify(report,null,2)+"\n");

@@ -64,8 +64,8 @@ test("viewport growth cannot inflate base world beyond the global cap", () => {
 });
 
 test("shared chrome geometry is compact and owned by renderer constants", () => {
-  assert.match(view, /--spacetime-axis-width:\$\{AXIS_WIDTH\}px/);
-  assert.match(view, /--spacetime-header-height:\$\{CAMERA_HEADER_HEIGHT\}px/);
+  assert.match(view, /--spacetime-axis-width:\$\{responsive\.axisWidth\}px/);
+  assert.match(view, /--spacetime-header-height:\$\{responsive\.headerHeight\}px/);
   assert.match(css, /width:var\(--spacetime-axis-width,140px\)/);
   assert.match(css, /height:var\(--spacetime-header-height,36px\)/);
 });
