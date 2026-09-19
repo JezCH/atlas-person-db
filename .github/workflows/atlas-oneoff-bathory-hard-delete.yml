@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   hard_delete:
@@ -17,8 +18,7 @@ jobs:
     env:
       API_BASE: https://atlas-person-db.vercel.app
       TARGET_ID: c2f584d8-170b-49ca-a4b7-7afcf18c95b6
-      MUTATION_TOKEN: ${{ secrets.ATLAS_MUTATION_TOKEN }}
-      ADMIN_PASSWORD: ${{ secrets.ATLAS_ADMIN_PASSWORD }}
+      ATLAS_PERSON_DELETE_AUDIENCE: atlas-person-delete-api
     steps:
       - name: Hard-delete Elizabeth Báthory and verify zero live references
         shell: bash
@@ -35,38 +35,33 @@ jobs:
           jq -e --arg id "$TARGET_ID" '.rows | map(select(.person_id==$id)) | length == 0' <<<"$before_domain_json" >/dev/null
 
           payload="$(jq -cn --arg id "$TARGET_ID" '{operation:"delete_person",payload:{person_id:$id}}')"
-          rm -f /tmp/atlas-delete-cookies.txt /tmp/atlas-delete-response.json /tmp/atlas-login.json
+          rm -f /tmp/atlas-delete-response.json
 
-          if [[ -n "${MUTATION_TOKEN:-}" ]]; then
-            status="$(curl --silent --show-error \
-              --output /tmp/atlas-delete-response.json \
-              --write-out '%{http_code}' \
-              -H 'content-type: application/json' \
-              -H "authorization: Bearer $MUTATION_TOKEN" \
-              --data "$payload" \
-              "$API_BASE/api/atlas-mutate")"
-          elif [[ -n "${ADMIN_PASSWORD:-}" ]]; then
-            login_payload="$(jq -cn --arg password "$ADMIN_PASSWORD" '{password:$password}')"
-            login_status="$(curl --silent --show-error \
-              --output /tmp/atlas-login.json \
-              --write-out '%{http_code}' \
-              --cookie-jar /tmp/atlas-delete-cookies.txt \
-              -H 'content-type: application/json' \
-              --data "$login_payload" \
-              "$API_BASE/api/atlas-session")"
-            [[ "$login_status" == "200" ]] || { cat /tmp/atlas-login.json >&2; exit 1; }
-            jq -e '.ok==true and .authenticated==true' /tmp/atlas-login.json >/dev/null
-            status="$(curl --silent --show-error \
-              --output /tmp/atlas-delete-response.json \
-              --write-out '%{http_code}' \
-              --cookie /tmp/atlas-delete-cookies.txt \
-              -H 'content-type: application/json' \
-              --data "$payload" \
-              "$API_BASE/api/atlas-mutate")"
-          else
-            echo 'No Production mutation credential is available to this workflow.' >&2
+          deployed_sha=""
+          for attempt in {1..12}; do
+            readiness="$(curl --fail-with-body --silent --show-error "$API_BASE/api/atlas-authoring-apply")"
+            deployed_sha="$(jq -r '.runtime_sha // empty' <<<"$readiness")"
+            [[ "$deployed_sha" == "$GITHUB_SHA" ]] && break
+            echo "Production alias is at ${deployed_sha:-unknown}; waiting for $GITHUB_SHA (attempt $attempt/12)." >&2
+            sleep 5
+          done
+          [[ "$deployed_sha" == "$GITHUB_SHA" ]] || {
+            echo "Production alias did not reach exact workflow SHA $GITHUB_SHA." >&2
             exit 1
-          fi
+          }
+
+          oidc_token="$(curl --fail-with-body --silent --show-error \
+            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_PERSON_DELETE_AUDIENCE}" | jq -er '.value')"
+          echo "::add-mask::${oidc_token}"
+
+          status="$(curl --silent --show-error \
+            --output /tmp/atlas-delete-response.json \
+            --write-out '%{http_code}' \
+            -H 'content-type: application/json' \
+            -H "authorization: Bearer ${oidc_token}" \
+            --data "$payload" \
+            "$API_BASE/api/atlas-mutate")"
 
           [[ "$status" == "200" ]] || { cat /tmp/atlas-delete-response.json >&2; exit 1; }
           jq -e --arg id "$TARGET_ID" '
