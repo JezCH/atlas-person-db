@@ -1,0 +1,90 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:state-form-batch1-after-reviewed-merge:2026-09-19:v1",
+  "release_order": 597,
+  "evidence": {
+    "decision": "Reviewed same-identity state-form cleanup after temporal designation preservation and exact Production Activity relinks.",
+    "review_checkpoint": "#977 POLITY-IDENTITY-REVIEW-16-20260919",
+    "designation_relink_merge_sha": "0e43c94e5883beb69b0eeb07f35d816bab8e4762",
+    "correction_apply_run": 35448727792,
+    "production_readback": "All three source Polities returned activity_count=0 after relink; prior exact reference audit showed the sole external reference for each was its one person_politics_v2 Activity. Retirement service rechecks every live external reference fail-closed before delete."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:cordoba-caliphate-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "0a0ed67e-ab5b-4b43-8c3c-a32c32aa3653",
+        "canonical_key": "Caliphate of Cordoba",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Caliphate of Cordoba",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "코르도바 칼리파국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:bulgaria-principality-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "4a92bbb3-6532-4dab-b515-837ad344ec6c",
+        "canonical_key": "Principality of Bulgaria",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Principality of Bulgaria",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "불가리아 공국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:montenegro-principality-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "a7049680-e80e-40a0-9aec-4efeaeb0f301",
+        "canonical_key": "Principality of Montenegro",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Principality of Montenegro",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "몬테네그로 공국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
