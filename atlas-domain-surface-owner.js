@@ -68,7 +68,7 @@
     let script = document.querySelector('script[data-atlas-person-domain-ui="true"]');
     if (!script) {
       script = document.createElement("script");
-      script.src = "./atlas-person-domain-ui.js?v=20260905-v2";
+      script.src = "./atlas-person-domain-ui.js?v=20260919-shared-store-v1";
       script.async = true;
       script.dataset.atlasPersonDomainUi = "true";
       document.head.append(script);
