@@ -1,5 +1,7 @@
 "use strict";
 
+const { TEMPORAL_POLITY_DESIGNATION_JOIN_SQL } = require("./atlas-polity-temporal-designation-read.js");
+
 const DIRECT_READ_SQL = `
 select
   pp.id,
@@ -33,36 +35,7 @@ left join atlas_v2.polity_names tko
   on tko.polity_id = pp.polity_id
  and tko.locale = 'ko'
  and tko.is_preferred = true
-left join lateral (
-  select pd.id
-    from atlas_v2.polity_designations pd
-   where pd.polity_id = pp.polity_id
-     and pp.activity_start is not null
-     and pp.activity_end is not null
-     and (pd.valid_from_year is null or pd.valid_from_year <= pp.activity_start)
-     and (pd.valid_to_year is null or pd.valid_to_year >= pp.activity_end)
-   order by
-     case pd.designation_type
-       when 'official_name' then 1
-       when 'state_form' then 2
-       when 'historiographic_period' then 3
-       when 'conventional_temporal_label' then 4
-       else 5
-     end,
-     case when pd.valid_from_year is null then 1 else 0 end,
-     case when pd.valid_to_year is null then 1 else 0 end,
-     (coalesce(pd.valid_to_year, 9999) - coalesce(pd.valid_from_year, -10000)),
-     pd.id
-   limit 1
-) td on true
-left join atlas_v2.polity_designation_names td_en
-  on td_en.polity_designation_id = td.id
- and td_en.locale = 'en'
- and td_en.is_preferred = true
-left join atlas_v2.polity_designation_names td_ko
-  on td_ko.polity_designation_id = td.id
- and td_ko.locale = 'ko'
- and td_ko.is_preferred = true
+${TEMPORAL_POLITY_DESIGNATION_JOIN_SQL}
 left join atlas_v2.roles r
   on r.id = pp.role_id
 left join lateral (
