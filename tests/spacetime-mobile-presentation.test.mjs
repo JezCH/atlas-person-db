@@ -19,12 +19,37 @@ test("mobile presentation keeps semantic zoom at the reviewed 500 to 800 percent
   assert.equal(numericConstant("CAMERA_MIN_ZOOM"), 5);
   assert.equal(numericConstant("CAMERA_MAX_ZOOM"), 8);
   assert.equal(numericConstant("MOBILE_VIEWPORT_MAX_WIDTH"), 760);
-  assert.equal(numericConstant("MOBILE_AXIS_WIDTH"), 96);
-  assert.equal(numericConstant("MOBILE_ERA_AXIS_WIDTH"), 44);
+  assert.equal(numericConstant("MOBILE_AXIS_WIDTH"), 80);
+  assert.equal(numericConstant("MOBILE_ERA_AXIS_WIDTH"), 36);
   assert.equal(numericConstant("MOBILE_HEADER_HEIGHT"), 34);
   assert.equal(numericConstant("MOBILE_PRESENTATION_SCALE"), 0.46);
   assert.match(view, /const responsive = responsivePresentationMetrics\(viewportWidth\);/);
   assert.match(view, /lod\.lodWeights\(\{ zoom: cameraZoom \}\)/);
+});
+
+
+test("mobile toolbar uses separate search and zoom rows with touch-sized controls", () => {
+  assert.match(css, /\.spacetime-toolbar\{display:grid;grid-template-columns:1fr;gap:6px/);
+  assert.match(css, /\.spacetime-controls\{display:grid;grid-template-columns:1fr;gap:6px;width:100%;min-width:0\}/);
+  assert.match(css, /\.spacetime-controls label\{display:grid;grid-template-columns:44px minmax\(0,1fr\)/);
+  assert.match(css, /\.spacetime-camera\{display:grid;grid-template-columns:44px minmax\(68px,1fr\) 44px 72px/);
+  assert.match(css, /\.spacetime-camera button,\.spacetime-camera output\{height:44px/);
+  assert.match(css, /\.spacetime-precision-legend\{display:none\}/);
+});
+
+test("mobile 500 percent header prioritizes macroregions and defers leaf labels until zoom", () => {
+  assert.match(view, /data-spacetime-zoom="\$\{Math\.round\(cameraZoom \* 100\)\}"/);
+  assert.match(css, /data-spacetime-zoom="500"\] \.spacetime-region-head-layer\.is-macro\{opacity:1!important\}/);
+  assert.match(css, /data-spacetime-zoom="500"\] \.spacetime-region-head-layer\.is-subregion\{opacity:0!important\}/);
+  assert.match(css, /data-spacetime-zoom="500"\] \.spacetime-subregion-line\{opacity:\.16!important\}/);
+});
+
+test("mobile status surface keeps only core chips visible until expanded", () => {
+  assert.match(view, /class="spacetime-status-primary"/);
+  assert.match(view, /<details class="spacetime-status-more">/);
+  assert.match(view, /<summary>상태 더보기<\/summary>/);
+  assert.match(css, /\.spacetime-status-more:not\(\[open\]\)>\.spacetime-status-more-content\{display:none!important\}/);
+  assert.match(css, /\.spacetime-status-more\[open\]>\.spacetime-status-more-content\{display:flex!important/);
 });
 
 test("mobile presentation applies one uniform physical projection scale to both world axes", () => {
