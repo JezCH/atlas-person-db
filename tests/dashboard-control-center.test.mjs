@@ -279,3 +279,21 @@ test("KPI cards reuse Person Main drill-down without converting Activity or Poli
   assert.doesNotMatch(dashboardSource, /data-dashboard-kpi="spatial"/);
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
 });
+
+
+test("dashboard KPI order keeps actionable coverage ahead of passive counts on narrow layouts", () => {
+  const persons = dashboardSource.indexOf('code:"persons"');
+  const domain = dashboardSource.indexOf('code:"domain"');
+  const namuwiki = dashboardSource.indexOf('code:"namuwiki"');
+  const spatial = dashboardSource.indexOf('code:"spatial"');
+  const activities = dashboardSource.indexOf('code:"activities"');
+  const polities = dashboardSource.indexOf('code:"polities"');
+  assert.ok(persons >= 0 && domain > persons && namuwiki > domain && spatial > namuwiki);
+  assert.ok(activities > spatial && polities > activities);
+});
+
+test("coverage KPIs expose absolute done/total and remaining work", () => {
+  assert.match(dashboardSource, /DOMAIN COVERAGE[\s\S]*w\.domain\.done[\s\S]*w\.domain\.total[\s\S]*w\.domain\.remaining/);
+  assert.match(dashboardSource, /NAMUWIKI REVIEW[\s\S]*w\.namuwiki\.done[\s\S]*w\.namuwiki\.total[\s\S]*w\.namuwiki\.remaining/);
+  assert.match(dashboardSource, /SPATIAL READY[\s\S]*w\.spatial\.done[\s\S]*w\.spatial\.total[\s\S]*w\.spatial\.remaining/);
+});
