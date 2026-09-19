@@ -106,6 +106,38 @@ For long historical/content work:
 
 Do not pay PR/CI/deploy/read-back cost for every microbatch unless isolation is required by a real conflict or failure risk.
 
+### Conversation-length safety: close units before expanding
+
+For every task that may run long enough to be interrupted by conversation/tool limits, the worker MUST choose an independently closable work unit **before** expanding into the full task.
+
+Default unit examples:
+
+- 5–12 reviewed records;
+- one microbatch;
+- one feature plus its focused verification;
+- one audit slice with a durable result;
+- one correction plus exact read-back.
+
+Execution rule:
+
+```text
+choose smallest useful closable unit
+→ finish that unit
+→ write a durable checkpoint/commit/comment/result
+→ only then start the next unit
+```
+
+Do not spend the whole conversation only discovering, auditing, or preparing a large task when a smaller finished unit can be produced first.
+
+If the task is taking longer than expected, **shrink the unit immediately** rather than continuing an oversized batch.
+
+Whenever work stops before the whole task is complete, the durable record MUST state both:
+
+1. the last fully completed unit;
+2. the exact next incomplete starting point.
+
+This is the default project-wide behavior and does not require the user to repeat it in each conversation.
+
 ## 7. Verification proportional to risk
 
 ### Durable validation rule
