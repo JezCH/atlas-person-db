@@ -38,6 +38,16 @@
     </article>`;
   }
 
+  function kpiCard({ code, label, primary, detail, drilldown }) {
+    const actionable = drilldown?.available === true
+      && drilldown?.route === "persons"
+      && (drilldown.mode === "all_persons" || Array.isArray(drilldown.person_ids));
+    const disabled = actionable && drilldown.mode === "person_ids" && drilldown.person_ids.length === 0;
+    const inner = `<small>${escapeHtml(label)}</small><strong>${escapeHtml(primary)}</strong><span>${escapeHtml(detail)}</span>`;
+    if (!actionable) return `<article class="dashboard-kpi card" title="${escapeHtml(drilldown?.unavailable_reason || "")}">${inner}</article>`;
+    return `<button type="button" class="dashboard-kpi dashboard-kpi-action card" data-dashboard-kpi="${escapeHtml(code)}" ${disabled ? "disabled" : ""}>${inner}</button>`;
+  }
+
   function attentionButton(item) {
     const unavailable = item?.available !== true;
     const disabled = unavailable || Number(item?.count || 0) <= 0;
@@ -89,6 +99,7 @@
     const q = snapshot.quality;
     const a = snapshot.attention_queue;
     const b = snapshot.incomplete_breakdown;
+    const kd = snapshot.kpi_drilldown;
     const domainRows = model.DOMAIN_CODES.map((code) => `<div class="dashboard-domain-row" data-domain="${escapeHtml(code)}">
       <span class="dashboard-domain-swatch" aria-hidden="true"></span><span>${escapeHtml(domainRegistry.LABELS[code] || code)}</span><b>${value(snapshot.domain_breakdown[code])}</b>
     </div>`).join("");
@@ -100,12 +111,12 @@
       </header>
 
       <section class="dashboard-kpi-grid" aria-label="핵심 통계">
-        <article class="dashboard-kpi card"><small>PERSONS</small><strong>${value(k.persons)}</strong><span>historical ${value(k.historical)} · 기타 ${value(k.other_historicity)}</span></article>
-        <article class="dashboard-kpi card"><small>RUNTIME ACTIVITIES</small><strong>${value(k.activities)}</strong><span>Person Runtime projection</span></article>
-        <article class="dashboard-kpi card"><small>USED POLITIES</small><strong>${value(k.polities)}</strong><span>현재 Person Activity에서 참조</span></article>
-        <article class="dashboard-kpi card"><small>DOMAIN COVERAGE</small><strong>${pct(w.domain.percentage)}</strong><span>잔여 ${value(w.domain.remaining)}</span></article>
-        <article class="dashboard-kpi card"><small>NAMUWIKI REVIEW</small><strong>${pct(w.namuwiki.percentage)}</strong><span>연결 ${value(w.namuwiki.linked)} · 없음확인 ${value(w.namuwiki.not_found)}</span></article>
-        <article class="dashboard-kpi card"><small>SPATIAL READY</small><strong>${pct(w.spatial.percentage)}</strong><span>잔여 ${value(w.spatial.remaining)}</span></article>
+        ${kpiCard({code:"persons",label:"PERSONS",primary:value(k.persons),detail:`historical ${value(k.historical)} · 기타 ${value(k.other_historicity)}`,drilldown:kd.persons})}
+        ${kpiCard({code:"activities",label:"RUNTIME ACTIVITIES",primary:value(k.activities),detail:"Person Runtime projection",drilldown:kd.activities})}
+        ${kpiCard({code:"polities",label:"USED POLITIES",primary:value(k.polities),detail:"현재 Person Activity에서 참조",drilldown:kd.polities})}
+        ${kpiCard({code:"domain",label:"DOMAIN COVERAGE",primary:pct(w.domain.percentage),detail:`잔여 ${value(w.domain.remaining)}`,drilldown:kd.domain})}
+        ${kpiCard({code:"namuwiki",label:"NAMUWIKI REVIEW",primary:pct(w.namuwiki.percentage),detail:`연결 ${value(w.namuwiki.linked)} · 없음확인 ${value(w.namuwiki.not_found)}`,drilldown:kd.namuwiki})}
+        ${kpiCard({code:"spatial",label:"SPATIAL READY",primary:pct(w.spatial.percentage),detail:`잔여 ${value(w.spatial.remaining)}`,drilldown:kd.spatial})}
       </section>
 
       <section class="dashboard-panel card">
@@ -174,6 +185,21 @@
     </section>`;
 
     root.querySelector("#atlasDashboardRefresh")?.addEventListener("click", () => refresh({ force:true }));
+    root.querySelectorAll("[data-dashboard-kpi]").forEach((button) => button.addEventListener("click", () => {
+      const item = kd?.[button.dataset.dashboardKpi];
+      if (!item?.available || item.route !== "persons") return;
+      window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain?.("persons");
+      if (item.mode === "all_persons") {
+        window.ATLAS_PERSON_MAIN?.clearDashboardFilter?.();
+        return;
+      }
+      if (!Array.isArray(item.person_ids) || !item.person_ids.length) return;
+      window.ATLAS_PERSON_MAIN?.setDashboardFilter?.({
+        code:`kpi_${item.code}`,
+        label:item.label,
+        personIds:item.person_ids
+      });
+    }));
     root.querySelectorAll("[data-dashboard-attention]").forEach((button) => button.addEventListener("click", () => {
       const item = a.items.find((row) => row.code === button.dataset.dashboardAttention);
       if (!item?.available || !Array.isArray(item.person_ids) || !item.person_ids.length) return;
