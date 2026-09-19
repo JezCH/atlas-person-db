@@ -27,7 +27,7 @@ test("camera zoom is bounded to 300-1200 percent with a 500 default", () => {
   assert.match(view, /const CAMERA_ZOOM_STEP = 1\.25;/);
   assert.match(view, /Math\.max\(CAMERA_MIN_ZOOM, numeric\)/);
   assert.doesNotMatch(view, /TIME_CAMERA_MIN_ZOOM/);
-  assert.throws(() => timeProjection.createUniformTimeProjection(-3000, 2026, 1000, 4.99), /zoom must be >= 5/);
+  assert.throws(() => timeProjection.createUniformTimeProjection(-3000, 2026, 1000, 2.99), /zoom must be >= 3/);
 });
 
 test("unified camera owns both screen axes", () => {
