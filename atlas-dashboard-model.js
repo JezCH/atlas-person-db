@@ -56,6 +56,99 @@
     });
   }
 
+  function personPolityIds(person) {
+    return new Set((person?.facets?.polities || []).map((polity) => text(polity?.id || polity)).filter(Boolean));
+  }
+
+  function buildAttentionQueue({ personResult, domainResult = null, spatialIndex = null } = {}) {
+    const persons = personResult?.persons || [];
+    const domainAvailable = Boolean(domainResult && domainResult.by_person_id && typeof domainResult.by_person_id === "object");
+    const domainByPerson = domainAvailable ? domainResult.by_person_id : null;
+    const domainPersonIds = domainAvailable
+      ? persons.filter((person) => !DOMAIN_CODES.includes(text(domainByPerson[person?.id]))).map((person) => text(person?.id)).filter(Boolean)
+      : null;
+
+    const namuwikiPersonIds = persons
+      .filter((person) => {
+        const status = text(person?.external_references?.namuwiki?.status);
+        return status !== "linked" && status !== "not_found";
+      })
+      .map((person) => text(person?.id))
+      .filter(Boolean);
+
+    let spatialPersonIds = null;
+    if (spatialIndex) {
+      const subregions = spatialIndex.polity_subregions || {};
+      const placeFunctionIds = new Set((spatialIndex.place_function_records || []).map((row) => text(row?.polity_id)).filter(Boolean));
+      const unresolvedPolityIds = new Set([...uniquePolityIds(personResult)].filter((id) => !text(subregions[id]) && !placeFunctionIds.has(id)));
+      spatialPersonIds = persons
+        .filter((person) => [...personPolityIds(person)].some((id) => unresolvedPolityIds.has(id)))
+        .map((person) => text(person?.id))
+        .filter(Boolean);
+    }
+
+    const items = [
+      Object.freeze({
+        code:"domain",
+        label:"대표 분야 미분류",
+        available:domainPersonIds !== null,
+        count:domainPersonIds === null ? null : domainPersonIds.length,
+        unit:"person",
+        person_ids:domainPersonIds === null ? null : Object.freeze([...new Set(domainPersonIds)].sort()),
+        unavailable_reason:domainPersonIds === null ? "PERSON_DOMAIN_SOURCE_UNAVAILABLE" : null
+      }),
+      Object.freeze({
+        code:"namuwiki",
+        label:"나무위키 미검토",
+        available:true,
+        count:namuwikiPersonIds.length,
+        unit:"person",
+        person_ids:Object.freeze([...new Set(namuwikiPersonIds)].sort()),
+        unavailable_reason:null
+      }),
+      Object.freeze({
+        code:"spatial",
+        label:"Spatial 미해결 영향 인물",
+        available:spatialPersonIds !== null,
+        count:spatialPersonIds === null ? null : spatialPersonIds.length,
+        unit:"person",
+        person_ids:spatialPersonIds === null ? null : Object.freeze([...new Set(spatialPersonIds)].sort()),
+        unavailable_reason:spatialPersonIds === null ? "SPATIAL_SOURCE_UNAVAILABLE" : null
+      }),
+      Object.freeze({
+        code:"runtime_exclusion",
+        label:"Runtime exclusion",
+        available:false,
+        count:null,
+        unit:"person",
+        person_ids:null,
+        unavailable_reason:"RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED"
+      }),
+      Object.freeze({
+        code:"duplicate_review",
+        label:"Duplicate review",
+        available:false,
+        count:null,
+        unit:"person",
+        person_ids:null,
+        unavailable_reason:"DUPLICATE_REVIEW_TARGET_SOURCE_REQUIRES_ADMIN_CONTRACT"
+      })
+    ];
+
+    const available = items.filter((item) => item.available && Array.isArray(item.person_ids));
+    const affected = new Set(available.flatMap((item) => item.person_ids));
+    const unavailableCodes = items.filter((item) => !item.available).map((item) => item.code);
+    return Object.freeze({
+      complete:unavailableCodes.length === 0,
+      known_outstanding_checks:available.reduce((sum, item) => sum + Number(item.count || 0), 0),
+      known_affected_persons:affected.size,
+      available_categories:available.length,
+      total_categories:items.length,
+      unavailable_codes:Object.freeze(unavailableCodes),
+      items:Object.freeze(items)
+    });
+  }
+
   function buildDashboardSnapshot({
     personResult,
     domainResult = null,
@@ -96,6 +189,7 @@
     const domainMissing = domainAssigned == null ? null : Math.max(0, totalPersons - domainAssigned);
     const spatial = spatialStatus(personResult, spatialIndex);
     const polityCount = spatial.total;
+    const attentionQueue = buildAttentionQueue({ personResult, domainResult, spatialIndex });
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
       key,
@@ -121,6 +215,7 @@
         runtime_activity:Object.freeze({ done:Math.max(0,totalPersons-noActivity), remaining:noActivity, total:totalPersons, percentage:percent(Math.max(0,totalPersons-noActivity),totalPersons) })
       }),
       domain_breakdown:Object.freeze(domainBreakdown),
+      attention_queue:attentionQueue,
       quality:Object.freeze({
         no_runtime_activity:noActivity,
         domain_unclassified:domainMissing,
@@ -133,5 +228,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildDashboardSnapshot });
 });

@@ -38,6 +38,17 @@
     </article>`;
   }
 
+  function attentionButton(item) {
+    const unavailable = item?.available !== true;
+    const disabled = unavailable || Number(item?.count || 0) <= 0;
+    const state = unavailable ? "Source unavailable" : `${value(item.count)}명`;
+    const title = unavailable ? item?.unavailable_reason || "SOURCE_UNAVAILABLE" : `${item.label} 대상 ${value(item.count)}명`;
+    return `<button type="button" data-dashboard-attention="${escapeHtml(item?.code || "")}" ${disabled ? "disabled" : ""} title="${escapeHtml(title)}">
+      <span>${escapeHtml(item?.label || item?.code || "Attention")}</span><strong>${unavailable ? "—" : value(item.count)}</strong>
+      <small>${escapeHtml(state)}</small>
+    </button>`;
+  }
+
   function sourceCard(source) {
     const ready = source.status === "ready";
     const loading = source.status === "loading";
@@ -61,6 +72,7 @@
     const k = snapshot.kpis;
     const w = snapshot.work;
     const q = snapshot.quality;
+    const a = snapshot.attention_queue;
     const domainRows = model.DOMAIN_CODES.map((code) => `<div class="dashboard-domain-row" data-domain="${escapeHtml(code)}">
       <span class="dashboard-domain-swatch" aria-hidden="true"></span><span>${escapeHtml(domainRegistry.LABELS[code] || code)}</span><b>${value(snapshot.domain_breakdown[code])}</b>
     </div>`).join("");
@@ -78,6 +90,18 @@
         <article class="dashboard-kpi card"><small>DOMAIN COVERAGE</small><strong>${pct(w.domain.percentage)}</strong><span>잔여 ${value(w.domain.remaining)}</span></article>
         <article class="dashboard-kpi card"><small>NAMUWIKI REVIEW</small><strong>${pct(w.namuwiki.percentage)}</strong><span>연결 ${value(w.namuwiki.linked)} · 없음확인 ${value(w.namuwiki.not_found)}</span></article>
         <article class="dashboard-kpi card"><small>SPATIAL READY</small><strong>${pct(w.spatial.percentage)}</strong><span>잔여 ${value(w.spatial.remaining)}</span></article>
+      </section>
+
+      <section class="dashboard-panel card">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">NEEDS ATTENTION</p><h3>지금 처리할 대상</h3></div><span>canonical snapshots only</span></div>
+        <div class="dashboard-issue-grid">
+          ${a.items.map(attentionButton).join("")}
+        </div>
+        <div class="dashboard-progress-meta">
+          <span>Known outstanding checks <b>${value(a.known_outstanding_checks)}</b></span>
+          <span>Known affected persons <b>${value(a.known_affected_persons)}</b></span>
+          <span>${a.complete ? "전체 범주 확인됨" : `부분 집계 · ${value(a.available_categories)}/${value(a.total_categories)} 범주만 대상 집합 확인`}</span>
+        </div>
       </section>
 
       <section class="dashboard-main-grid">
@@ -127,7 +151,18 @@
     </section>`;
 
     root.querySelector("#atlasDashboardRefresh")?.addEventListener("click", () => refresh({ force:true }));
+    root.querySelectorAll("[data-dashboard-attention]").forEach((button) => button.addEventListener("click", () => {
+      const item = a.items.find((row) => row.code === button.dataset.dashboardAttention);
+      if (!item?.available || !Array.isArray(item.person_ids) || !item.person_ids.length) return;
+      window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain?.("persons");
+      window.ATLAS_PERSON_MAIN?.setDashboardFilter?.({
+        code:item.code,
+        label:item.label,
+        personIds:item.person_ids
+      });
+    }));
     root.querySelectorAll("[data-dashboard-route]").forEach((button) => button.addEventListener("click", () => {
+      if (button.dataset.dashboardRoute === "persons") window.ATLAS_PERSON_MAIN?.clearDashboardFilter?.();
       window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain?.(button.dataset.dashboardRoute);
     }));
   }
