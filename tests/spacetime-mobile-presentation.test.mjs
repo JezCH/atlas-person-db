@@ -7,6 +7,7 @@ const require = createRequire(import.meta.url);
 const spaceAxis = require("../atlas-person-spacetime-space-axis.js");
 const view = readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
 const css = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
+const authorityCss = readFileSync(new URL("../atlas-main-authority-nav.css", import.meta.url), "utf8");
 
 function numericConstant(name) {
   const match = view.match(new RegExp(`const ${name} = ([\\d.]+);`));
@@ -54,7 +55,13 @@ test("camera interactions derive mobile insets from rendered geometry rather tha
 });
 
 test("mobile spacetime remains contained inside its own scroll viewport", () => {
-  assert.match(css, /@media\(max-width:760px\)\{[^}]*\.spacetime-workspace,\.spacetime-frame,\.spacetime-scroll\{width:100%;max-width:100%;min-width:0\}/);
+  assert.match(css, /@media\(max-width:760px\)\{[^}]*\.person-spacetime-mount\{width:100%;max-width:100%;min-width:0;overflow-x:clip;contain:inline-size\}/);
+  assert.match(css, /\.spacetime-workspace,\.spacetime-frame,\.spacetime-scroll\{width:100%;max-width:100%;min-width:0\}/);
   assert.match(css, /\.spacetime-scroll\{scrollbar-gutter:auto;touch-action:pan-x pan-y\}/);
   assert.match(view, /data-spacetime-presentation="\$\{responsive\.mobile \? "mobile" : "desktop"\}"/);
+});
+
+test("authority shell prevents wide spacetime descendants from becoming document width", () => {
+  assert.match(authorityCss, /\.atlas-authority-shell \{[^}]*min-width: 0;[^}]*width: 100%;[^}]*max-width: 100%;[^}]*overflow-x: clip;/);
+  assert.match(authorityCss, /\.atlas-dashboard-mount, \.person-spacetime-mount, \.atlas-polity-review-mount \{ min-width: 0; width: 100%; max-width: 100%; \}/);
 });
