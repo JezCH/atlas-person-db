@@ -477,6 +477,109 @@
     });
   }
 
+  function buildCompletenessMatrix({ personResult, domainResult = null, spatialIndex = null } = {}) {
+    const persons = personResult?.persons || [];
+    const totalPersons = persons.length;
+    const domainAvailable = Boolean(domainResult && domainResult.by_person_id && typeof domainResult.by_person_id === "object");
+    const domainByPerson = domainAvailable ? domainResult.by_person_id : {};
+    const personIdsFor = (predicate) => Object.freeze(persons.filter(predicate).map((person) => text(person?.id)).filter(Boolean).sort());
+
+    const domainIncompleteIds = domainAvailable
+      ? personIdsFor((person) => !DOMAIN_CODES.includes(text(domainByPerson[person?.id])))
+      : null;
+    const namuwikiIncompleteIds = personIdsFor((person) => {
+      const status = text(person?.external_references?.namuwiki?.status);
+      return status !== "linked" && status !== "not_found";
+    });
+    const runtimeActivityIncompleteIds = personIdsFor((person) => Number(person?.activity_count || 0) <= 0);
+
+    const activities = persons.flatMap((person) => (person?.activity_summaries || []).map((activity) => ({ person, activity })));
+    let chronologyComplete = 0;
+    for (const { activity } of activities) {
+      const interval = spatialModel.activityInterval(activity);
+      if (interval && interval.partial !== true && interval.reversed_input !== true) chronologyComplete += 1;
+    }
+    const chronologyIncomplete = Math.max(0,activities.length-chronologyComplete);
+    const spatial = spatialStatus(personResult,spatialIndex);
+
+    const row = ({ code, label, unit, source, available, complete, incomplete, total, personIds = null, unavailableReason = null }) => Object.freeze({
+      code,
+      label,
+      unit,
+      source,
+      available,
+      complete:available ? complete : null,
+      incomplete:available ? incomplete : null,
+      total:available ? total : null,
+      percentage:available ? percent(complete,total) : null,
+      person_ids:available && unit === "person" && Array.isArray(personIds) ? Object.freeze([...personIds]) : null,
+      drilldown_available:available && unit === "person" && Array.isArray(personIds),
+      unavailable_reason:available ? null : unavailableReason || "SOURCE_UNAVAILABLE"
+    });
+
+    return Object.freeze({
+      rows:Object.freeze([
+        row({
+          code:"domain",
+          label:"Representative Domain",
+          unit:"person",
+          source:"Person Domain",
+          available:domainAvailable,
+          complete:domainAvailable ? totalPersons-domainIncompleteIds.length : null,
+          incomplete:domainAvailable ? domainIncompleteIds.length : null,
+          total:domainAvailable ? totalPersons : null,
+          personIds:domainIncompleteIds,
+          unavailableReason:"PERSON_DOMAIN_SOURCE_UNAVAILABLE"
+        }),
+        row({
+          code:"namuwiki",
+          label:"NamuWiki Review",
+          unit:"person",
+          source:"Person Runtime",
+          available:true,
+          complete:totalPersons-namuwikiIncompleteIds.length,
+          incomplete:namuwikiIncompleteIds.length,
+          total:totalPersons,
+          personIds:namuwikiIncompleteIds
+        }),
+        row({
+          code:"runtime_activity",
+          label:"Runtime Activity",
+          unit:"person",
+          source:"Person Runtime",
+          available:true,
+          complete:totalPersons-runtimeActivityIncompleteIds.length,
+          incomplete:runtimeActivityIncompleteIds.length,
+          total:totalPersons,
+          personIds:runtimeActivityIncompleteIds
+        }),
+        row({
+          code:"chronology",
+          label:"Activity Chronology",
+          unit:"activity",
+          source:"Person Runtime Activity",
+          available:true,
+          complete:chronologyComplete,
+          incomplete:chronologyIncomplete,
+          total:activities.length
+        }),
+        row({
+          code:"spatial",
+          label:"Spatial Placement",
+          unit:"activity",
+          source:"Spatial resolver",
+          available:Boolean(spatialIndex),
+          complete:spatial.ready,
+          incomplete:spatial.unresolved,
+          total:spatial.total,
+          unavailableReason:"SPATIAL_SOURCE_UNAVAILABLE"
+        })
+      ]),
+      person_check_count:3,
+      activity_check_count:2
+    });
+  }
+
   function buildDashboardSnapshot({
     personResult,
     domainResult = null,
@@ -525,6 +628,7 @@
     const recentDelta = buildRecentDelta(recentDeltaResult);
     const systemStrip = buildSystemStrip(systemIdentityResult, sourceStates);
     const coverageHeatmap = buildEraRegionHeatmap({ personResult, spatialIndex });
+    const completenessMatrix = buildCompletenessMatrix({ personResult, domainResult, spatialIndex });
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
       key,
@@ -556,6 +660,7 @@
       recent_delta:recentDelta,
       system_strip:systemStrip,
       coverage_heatmap:coverageHeatmap,
+      completeness_matrix:completenessMatrix,
       quality:Object.freeze({
         no_runtime_activity:noActivity,
         spatial_unresolved:spatial.unresolved,
@@ -566,5 +671,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildSystemStrip, buildEraRegionHeatmap, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildDashboardSnapshot });
 });
