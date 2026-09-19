@@ -71,6 +71,8 @@ function detailActivityRow() {
     relation_type_category: 'authority',
     polity_name_en: 'Scythian Kingdom',
     polity_name_ko: '스키타이 왕국',
+    polity_designation_name_en: 'Scythian Kingship',
+    polity_designation_name_ko: '스키타이 왕정기',
     role_code: 'king',
     role_category: 'ruler',
     role_source_label: 'King',
@@ -223,7 +225,11 @@ test('Person detail exposes authoritative Activity semantics and readable proven
 
   const activity = person.activities[0];
   assert.equal(activity.id, ACTIVITY_ID);
-  assert.equal(activity.polity.display_name, '스키타이 왕국');
+  assert.equal(activity.polity.canonical_name_en, 'Scythian Kingdom');
+  assert.equal(activity.polity.preferred_name_ko, '스키타이 왕국');
+  assert.equal(activity.polity.designation_name_en, 'Scythian Kingship');
+  assert.equal(activity.polity.designation_name_ko, '스키타이 왕정기');
+  assert.equal(activity.polity.display_name, '스키타이 왕정기');
   assert.deepEqual(activity.relation, {
     id: RELATION_ID,
     code: 'rules',
@@ -269,6 +275,12 @@ test('Person detail exposes authoritative Activity semantics and readable proven
   assert.doesNotMatch(personSourceProjection, /\bs\.id\b/i);
   assert.doesNotMatch(activitySourceProjection, /\bs\.id\b/i);
   assert.doesNotMatch(ACTIVITY_DETAIL_SQL, /canonical_key/);
+  assert.match(ACTIVITY_DETAIL_SQL, /atlas_v2\.polity_designations/);
+  assert.match(ACTIVITY_DETAIL_SQL, /atlas_v2\.polity_designation_names/);
+  assert.match(ACTIVITY_DETAIL_SQL, /pp\.activity_start is not null/);
+  assert.match(ACTIVITY_DETAIL_SQL, /pp\.activity_end is not null/);
+  assert.match(ACTIVITY_DETAIL_SQL, /pd\.valid_from_year is null or pd\.valid_from_year <= pp\.activity_start/);
+  assert.match(ACTIVITY_DETAIL_SQL, /pd\.valid_to_year is null or pd\.valid_to_year >= pp\.activity_end/);
   for (const field of [
     'relation_type_id',
     'activity_start_month',

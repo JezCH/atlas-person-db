@@ -12,6 +12,7 @@ const {
   readPolityDetail
 } = require('../server/atlas-polity-read-service.js');
 const { createPolityReadHandler } = require('../server/atlas-polity-read-handler.js');
+const { TEMPORAL_POLITY_DESIGNATION_JOIN_SQL } = require('../server/atlas-polity-temporal-designation-read.js');
 
 const POLITY_ID = '00000000-0000-4000-8000-000000000201';
 const PERSON_A = '00000000-0000-4000-8000-000000000001';
@@ -125,6 +126,9 @@ test('Polity SQL reads all catalog identities and joins Person Activity semantic
     'period_basis'
   ]) assert.match(POLITY_LIST_SQL, new RegExp(token));
   assert.match(POLITY_DETAIL_SQL, /where p\.id = \$1::uuid/);
+  assert.ok(POLITY_LIST_SQL.includes(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL));
+  assert.doesNotMatch(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /order by/i);
+  assert.doesNotMatch(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /limit\s+1/i);
 });
 
 test('Polity read service supports list and UUID detail reads', async () => {

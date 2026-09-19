@@ -44,3 +44,15 @@ test('runtime person list projects activity summary from Runtime rows',async()=>
   assert.equal(result.persons[0].first_activity_year,100);
   assert.equal(result.persons[0].last_activity_year,120);
 });
+
+
+test('runtime Activity display resolves one fully-containing temporal polity designation',()=> {
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/atlas_v2\.polity_designations/);
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/atlas_v2\.polity_designation_names/);
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/pp\.activity_start is not null/);
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/pp\.activity_end is not null/);
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/pd\.valid_from_year is null or pd\.valid_from_year\s*<=\s*pp\.activity_start/);
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/pd\.valid_to_year is null or pd\.valid_to_year\s*>=\s*pp\.activity_end/);
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/td_en\.polity_designation_id\s*=\s*td\.id/);
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/td_ko\.polity_designation_id\s*=\s*td\.id/);
+});

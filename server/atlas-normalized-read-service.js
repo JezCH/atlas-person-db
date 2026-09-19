@@ -1,12 +1,16 @@
 "use strict";
 
+const { TEMPORAL_POLITY_DESIGNATION_JOIN_SQL } = require("./atlas-polity-temporal-designation-read.js");
+
 const DIRECT_READ_SQL = `
 select
   pp.id,
   pen.name::text as person_name,
   coalesce(pko.name, pen.name)::text as person_display_name,
   ten.name::text as politic_name,
-  coalesce(tko.name, ten.name)::text as politic_display_name,
+  td_en.name::text as politic_designation_name_en,
+  td_ko.name::text as politic_designation_name_ko,
+  coalesce(td_ko.name, td_en.name, tko.name, ten.name)::text as politic_display_name,
   pp.activity_start,
   pp.activity_end,
   pp.chronology_status,
@@ -31,6 +35,7 @@ left join atlas_v2.polity_names tko
   on tko.polity_id = pp.polity_id
  and tko.locale = 'ko'
  and tko.is_preferred = true
+${TEMPORAL_POLITY_DESIGNATION_JOIN_SQL}
 left join atlas_v2.roles r
   on r.id = pp.role_id
 left join lateral (
@@ -62,6 +67,8 @@ async function readPersonPolitics({ client } = {}) {
     person_name: String(row.person_name),
     person_display_name: String(row.person_display_name ?? row.person_name),
     politic_name: String(row.politic_name),
+    politic_designation_name_en: row.politic_designation_name_en == null ? null : String(row.politic_designation_name_en),
+    politic_designation_name_ko: row.politic_designation_name_ko == null ? null : String(row.politic_designation_name_ko),
     politic_display_name: String(row.politic_display_name ?? row.politic_name),
     activity_start: row.activity_start == null ? null : Number(row.activity_start),
     activity_end: row.activity_end == null ? null : Number(row.activity_end),

@@ -1,5 +1,7 @@
 "use strict";
 
+const { TEMPORAL_POLITY_DESIGNATION_JOIN_SQL } = require("./atlas-polity-temporal-designation-read.js");
+
 const PERSON_READ_SQL = `
 select
   p.id,
@@ -126,6 +128,8 @@ select
   prt.category as relation_type_category,
   pen.name as polity_name_en,
   pko.name as polity_name_ko,
+  td_en.name as polity_designation_name_en,
+  td_ko.name as polity_designation_name_ko,
   r.code as role_code,
   r.category as role_category,
   r.source_label as role_source_label,
@@ -145,6 +149,7 @@ left join atlas_v2.polity_names pko
   on pko.polity_id = pp.polity_id
  and pko.locale = 'ko'
  and pko.is_preferred = true
+${TEMPORAL_POLITY_DESIGNATION_JOIN_SQL}
 left join atlas_v2.roles r
   on r.id = pp.role_id
 left join atlas_v2.role_names ren
@@ -328,6 +333,8 @@ function projectActivity(row) {
   const polityId = row.polity_id == null ? null : String(row.polity_id);
   const polityNameEn = row.polity_name_en == null ? null : String(row.polity_name_en);
   const polityNameKo = row.polity_name_ko == null ? null : String(row.polity_name_ko);
+  const polityDesignationNameEn = row.polity_designation_name_en == null ? null : String(row.polity_designation_name_en);
+  const polityDesignationNameKo = row.polity_designation_name_ko == null ? null : String(row.polity_designation_name_ko);
   const relationTypeId = row.relation_type_id == null ? null : String(row.relation_type_id);
   const roleNameEn = row.role_name_en == null ? null : String(row.role_name_en);
   const roleNameKo = row.role_name_ko == null ? null : String(row.role_name_ko);
@@ -342,7 +349,13 @@ function projectActivity(row) {
       id: polityId,
       canonical_name_en: polityNameEn,
       preferred_name_ko: polityNameKo,
-      display_name: displayValue(polityNameKo, polityNameEn, polityId)
+      designation_name_en: polityDesignationNameEn,
+      designation_name_ko: polityDesignationNameKo,
+      display_name: displayValue(
+        polityDesignationNameKo,
+        polityDesignationNameEn,
+        displayValue(polityNameKo, polityNameEn, polityId)
+      )
     }),
     relation: relationTypeId == null ? null : Object.freeze({
       id: relationTypeId,

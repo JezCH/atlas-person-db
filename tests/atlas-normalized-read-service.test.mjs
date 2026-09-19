@@ -9,6 +9,8 @@ test("normalized read SQL references only v2 normalized projection tables", () =
   assert.match(DIRECT_READ_SQL, /atlas_v2\.person_politics_v2/);
   assert.match(DIRECT_READ_SQL, /atlas_v2\.person_names/);
   assert.match(DIRECT_READ_SQL, /atlas_v2\.polity_names/);
+  assert.match(DIRECT_READ_SQL, /atlas_v2\.polity_designations/);
+  assert.match(DIRECT_READ_SQL, /atlas_v2\.polity_designation_names/);
   assert.match(DIRECT_READ_SQL, /left join atlas_v2\.roles/);
   assert.match(DIRECT_READ_SQL, /atlas_v2\.role_names/);
   assert.match(DIRECT_READ_SQL, /atlas_v2\.period_bases/);
@@ -23,7 +25,11 @@ test("normalized read SQL preserves English canonical values and prefers Korean 
   assert.match(DIRECT_READ_SQL, /tko\.locale = 'ko'/);
   assert.match(DIRECT_READ_SQL, /rn\.locale = 'ko'/);
   assert.match(DIRECT_READ_SQL, /coalesce\(pko\.name, pen\.name\).*person_display_name/s);
-  assert.match(DIRECT_READ_SQL, /coalesce\(tko\.name, ten\.name\).*politic_display_name/s);
+  assert.match(DIRECT_READ_SQL, /coalesce\(td_ko\.name, td_en\.name, tko\.name, ten\.name\).*politic_display_name/s);
+  assert.match(DIRECT_READ_SQL, /pp\.activity_start is not null/);
+  assert.match(DIRECT_READ_SQL, /pp\.activity_end is not null/);
+  assert.match(DIRECT_READ_SQL, /pd\.valid_from_year is null or pd\.valid_from_year <= pp\.activity_start/);
+  assert.match(DIRECT_READ_SQL, /pd\.valid_to_year is null or pd\.valid_to_year >= pp\.activity_end/);
   assert.match(DIRECT_READ_SQL, /coalesce\(rko\.name, r\.source_label\).*role_display_name/s);
 });
 
@@ -42,7 +48,9 @@ test("normalized read service preserves authoritative id, canonical aliases and 
         person_name: "Cyrus the Great",
         person_display_name: "키루스 2세",
         politic_name: "Achaemenid Empire",
-        politic_display_name: "아케메네스 제국",
+        politic_designation_name_en: "Achaemenid Kingdom",
+        politic_designation_name_ko: "아케메네스 왕국",
+        politic_display_name: "아케메네스 왕국",
         activity_start: -559,
         activity_end: -530,
         role: "King of Kings",
@@ -59,7 +67,9 @@ test("normalized read service preserves authoritative id, canonical aliases and 
     person_name: "Cyrus the Great",
     person_display_name: "키루스 2세",
     politic_name: "Achaemenid Empire",
-    politic_display_name: "아케메네스 제국",
+    politic_designation_name_en: "Achaemenid Kingdom",
+    politic_designation_name_ko: "아케메네스 왕국",
+    politic_display_name: "아케메네스 왕국",
     activity_start: -559,
     activity_end: -530,
     role: "King of Kings",
@@ -77,6 +87,8 @@ test("normalized read service preserves unresolved boundaries as null instead of
         person_name: "Unknown Start",
         person_display_name: "Unknown Start",
         politic_name: "Example Polity",
+        politic_designation_name_en: null,
+        politic_designation_name_ko: null,
         politic_display_name: "Example Polity",
         activity_start: null,
         activity_end: null,
@@ -102,6 +114,8 @@ test("normalized read service falls back display values to canonical values", as
         person_name: "A",
         person_display_name: null,
         politic_name: "B",
+        politic_designation_name_en: null,
+        politic_designation_name_ko: null,
         politic_display_name: null,
         activity_start: 1,
         activity_end: 2,

@@ -1,5 +1,7 @@
 "use strict";
 
+const { TEMPORAL_POLITY_DESIGNATION_JOIN_SQL } = require("./atlas-polity-temporal-designation-read.js");
+
 const authoringRead = require("./atlas-person-read-service.js");
 
 const PERSON_READ_SQL = `
@@ -35,6 +37,7 @@ select
   pp.confidence,pp.chronology_status,pp.source_locator->>'ongoing_as_of' as ongoing_as_of,pp.notes,
   prt.code as relation_type_code,prt.category as relation_type_category,
   pen.name as polity_name_en,pko.name as polity_name_ko,
+  td_en.name as polity_designation_name_en,td_ko.name as polity_designation_name_ko,
   r.code as role_code,r.category as role_category,r.source_label as role_source_label,
   ren.name as role_name_en,rko.name as role_name_ko,
   pb.code as period_basis_code,pben.name as period_basis_name_en,pbko.name as period_basis_name_ko
@@ -42,6 +45,7 @@ from atlas_v2.runtime_person_politics_v1 pp
 join atlas_v2.person_polity_relation_types prt on prt.id=pp.relation_type_id
 left join atlas_v2.polity_names pen on pen.polity_id=pp.polity_id and pen.locale='en' and pen.is_preferred=true
 left join atlas_v2.polity_names pko on pko.polity_id=pp.polity_id and pko.locale='ko' and pko.is_preferred=true
+${TEMPORAL_POLITY_DESIGNATION_JOIN_SQL}
 left join atlas_v2.roles r on r.id=pp.role_id
 left join atlas_v2.role_names ren on ren.role_id=pp.role_id and ren.locale='en' and ren.is_preferred=true
 left join atlas_v2.role_names rko on rko.role_id=pp.role_id and rko.locale='ko' and rko.is_preferred=true
