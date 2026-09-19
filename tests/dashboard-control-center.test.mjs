@@ -6,6 +6,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const registry = require("../atlas-person-domain-registry.js");
 const model = require("../atlas-dashboard-model.js");
+const spatialModel = require("../atlas-person-spacetime-model.js");
 const domainUiSource = fs.readFileSync(new URL("../atlas-person-domain-ui.js", import.meta.url), "utf8");
 const storeSource = fs.readFileSync(new URL("../atlas-client-data-store.js", import.meta.url), "utf8");
 const dashboardSource = fs.readFileSync(new URL("../atlas-dashboard.js", import.meta.url), "utf8");
@@ -94,27 +95,49 @@ test("Person domain UI delegates source caching and in-flight dedupe to the shar
   assert.match(domainUiSource, /event\?\.detail\?\.key !== "personDomains"/);
 });
 
-test("attention queue derives actionable Person sets from canonical snapshots and deduplicates affected Persons", () => {
+test("attention queue derives Spatial Person targets from the canonical Activity resolver, including overrides", () => {
+  const P1="00000000-0000-4000-8000-000000000001";
+  const P2="00000000-0000-4000-8000-000000000002";
+  const POLITY_STATIC="00000000-0000-4000-8000-000000000101";
+  const POLITY_REVIEW="00000000-0000-4000-8000-000000000102";
+  const A1="00000000-0000-4000-8000-000000000201";
+  const A2="00000000-0000-4000-8000-000000000202";
+  const A3="00000000-0000-4000-8000-000000000203";
+  const activity=(id,polity,start,end)=>({id,polity:{id},start:{year:start},end:{year:end}});
   const persons = [
-    { id:"p1", activity_count:1, external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:"x"}] } },
-    { id:"p2", activity_count:0, external_references:{}, facets:{ polities:[{id:"y"}] } },
-    { id:"p3", activity_count:1, external_references:{ namuwiki:{status:"not_found"} }, facets:{ polities:[{id:"y"}] } }
+    { id:P1, activity_count:2, external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:POLITY_STATIC},{id:POLITY_REVIEW}] }, activity_summaries:[activity(A1,POLITY_STATIC,100,110),activity(A2,POLITY_REVIEW,120,130)] },
+    { id:P2, activity_count:1, external_references:{ namuwiki:{status:"not_found"} }, facets:{ polities:[{id:POLITY_REVIEW}] }, activity_summaries:[activity(A3,POLITY_REVIEW,140,150)] }
   ];
+  const spatialIndex={
+    schema:spatialModel.SPATIAL_INDEX_SCHEMA,
+    polity_geography:{ [POLITY_STATIC]:"europe" },
+    polity_subregions:{ [POLITY_STATIC]:"western-europe" },
+    place_function_records:[],
+    review_queue:[{polity_id:POLITY_REVIEW,reason:"activity_specific_review"}],
+    activity_spatial_overrides:[{
+      activity_id:A2,expected_polity_id:POLITY_REVIEW,expected_start_year:120,expected_end_year:130,
+      region_code:"europe",subregion_code:"western-europe",location_label:"Reviewed activity anchor",
+      reason:"reviewed activity placement",source_refs:["fixture source"]
+    }]
+  };
+  const status=model.spatialStatus({persons},spatialIndex);
+  assert.equal(status.total,3);
+  assert.equal(status.ready,2);
+  assert.equal(status.unresolved,1);
+  assert.deepEqual(status.unresolved_person_ids,[P2]);
+  assert.equal(status.reason_counts.placement_missing,1);
+
   const queue = model.buildAttentionQueue({
     personResult:{ persons },
-    domainResult:{ by_person_id:{ p1:"governance" } },
-    spatialIndex:{
-      polity_geography:{ x:"europe", y:"east-asia" },
-      polity_subregions:{ x:"western-europe" },
-      place_function_records:[]
-    }
+    domainResult:{ by_person_id:{ [P1]:"governance" } },
+    spatialIndex
   });
   const byCode = Object.fromEntries(queue.items.map((item) => [item.code, item]));
-  assert.deepEqual(byCode.domain.person_ids,["p2","p3"]);
-  assert.deepEqual(byCode.namuwiki.person_ids,["p2"]);
-  assert.deepEqual(byCode.spatial.person_ids,["p2","p3"]);
-  assert.equal(queue.known_outstanding_checks,5);
-  assert.equal(queue.known_affected_persons,2);
+  assert.deepEqual(byCode.domain.person_ids,[P2]);
+  assert.deepEqual(byCode.namuwiki.person_ids,[]);
+  assert.deepEqual(byCode.spatial.person_ids,[P2]);
+  assert.equal(queue.known_outstanding_checks,2);
+  assert.equal(queue.known_affected_persons,1);
   assert.equal(queue.complete,false);
   assert.equal(byCode.runtime_exclusion.count,null);
   assert.equal(byCode.duplicate_review.count,null);
@@ -142,4 +165,14 @@ test("attention queue drill-down reuses Person Main instead of creating a duplic
   assert.match(mainSource, /secondaryPredicate:dashboardFilter/);
   assert.match(mainSource, /data-person-dashboard-filter-clear/);
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
+});
+
+
+test("Dashboard loads the canonical spacetime model before its model and does not duplicate spatial resolution rules", () => {
+  const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
+  const spatialIndex = html.indexOf("atlas-person-spacetime-model.js");
+  const dashboardIndex = html.indexOf("atlas-dashboard-model.js");
+  assert.ok(spatialIndex >= 0 && spatialIndex < dashboardIndex);
+  const dashboardModelSource = fs.readFileSync(new URL("../atlas-dashboard-model.js", import.meta.url), "utf8");
+  assert.match(dashboardModelSource, /spatialModel\.resolveActivityPlacement/);
 });
