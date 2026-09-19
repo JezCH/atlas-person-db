@@ -314,7 +314,7 @@ test("quality snapshot keeps only non-duplicated structural and exception counte
   const snapshot = model.buildDashboardSnapshot({
     personResult:{ persons:[{ id:"p1", historicity:"historical", activity_count:0, external_references:{}, facets:{polities:[]} }] },
     domainResult:{ by_person_id:{} },
-    spatialIndex:{ polity_subregions:{}, place_function_records:[], review_queue:[] },
+    spatialIndex:null,
     nonTimelineRows:[{person_name:"Legend"}]
   });
   assert.equal(Object.hasOwn(snapshot.quality,"domain_unclassified"),false);
