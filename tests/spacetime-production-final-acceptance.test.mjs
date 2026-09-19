@@ -39,8 +39,11 @@ test("Production visual acceptance covers the compact 390px mobile presentation 
   assert.match(verifier, /MOBILE_VIEWPORT = Object\.freeze\(\{ width: 390, height: 844/);
   assert.match(verifier, /mobile\.presentation === "mobile"/);
   assert.match(verifier, /mobile\.bodyScrollWidth <= mobile\.viewport\.width \+ 1/);
-  assert.match(verifier, /Math\.abs\(mobile\.cornerWidth - 96\)/);
+  assert.match(verifier, /Math\.abs\(mobile\.cornerWidth - 80\)/);
   assert.match(verifier, /mobile\.canvasWidth >= 1500 && mobile\.canvasWidth <= 1600/);
+  assert.match(verifier, /mobile\.cameraRect\.top >= mobile\.searchRect\.bottom \+ 3/);
+  assert.match(verifier, /mobile\.macroOpacity > 0\.99 && mobile\.subregionOpacity < 0\.01/);
+  assert.match(verifier, /mobile\.statusSummaryVisible && !mobile\.statusMoreOpen/);
   assert.match(verifier, /spacetime-mobile-390\.png/);
 });
 
