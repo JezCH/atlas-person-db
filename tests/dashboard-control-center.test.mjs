@@ -804,3 +804,19 @@ test("Completeness drill-down values render as compact action pills without chan
 test("Dashboard actionable motion respects reduced-motion preference", () => {
   assert.match(dashboardCssSource,/@media\(prefers-reduced-motion:reduce\)/);
 });
+
+test("mobile Dashboard exposes 44px touch targets and wraps dense metadata", () => {
+  assert.match(dashboardCssSource, /dashboard-completeness td button\{min-width:44px;min-height:44px;justify-content:center\}/);
+  assert.match(dashboardCssSource, /dashboard-tool-actions \.btn,#atlasDashboardRefresh\{min-height:44px;display:inline-flex;align-items:center;justify-content:center\}/);
+  assert.match(dashboardCssSource, /dashboard-panel-head\{display:grid;gap:4px\}/);
+  assert.match(dashboardCssSource, /dashboard-progress-meta\{justify-content:flex-start;flex-wrap:wrap;gap:4px 12px\}/);
+});
+
+test("Production browser acceptance enforces mobile touch-size and metadata overflow contracts", () => {
+  const acceptance=fs.readFileSync(new URL("../scripts/verify-dashboard-production-acceptance.mjs", import.meta.url),"utf8");
+  assert.match(acceptance,/touch_targets:touchTargets/);
+  assert.match(acceptance,/Mobile Dashboard has touch targets below 44px/);
+  assert.match(acceptance,/Mobile Dashboard metadata rows do not wrap/);
+  assert.match(acceptance,/Mobile Dashboard metadata rows overflow horizontally/);
+  assert.match(acceptance,/Mobile Dashboard panel headers overflow horizontally/);
+});
