@@ -143,10 +143,8 @@
         </article>
 
         <article class="dashboard-panel card">
-          <div class="dashboard-panel-head"><div><p class="eyebrow">DATA QUALITY</p><h3>잔여·보류</h3></div><span>숨기지 않음</span></div>
+          <div class="dashboard-panel-head"><div><p class="eyebrow">DATA QUALITY</p><h3>구조·예외 상태</h3></div><span>중복 지표 제외</span></div>
           <div class="dashboard-issue-grid">
-            <button type="button" data-dashboard-route="persons"><span>분야 미분류</span><strong>${value(q.domain_unclassified)}</strong></button>
-            <button type="button" data-dashboard-route="persons"><span>나무위키 미검토</span><strong>${value(q.namuwiki_missing)}</strong></button>
             <button type="button" data-dashboard-route="spacetime"><span>Spatial 미해결</span><strong>${value(q.spatial_unresolved)}</strong></button>
             <button type="button" data-dashboard-route="spacetime"><span>Spatial review queue</span><strong>${value(q.spatial_review)}</strong></button>
             <button type="button" data-dashboard-route="persons"><span>Runtime Activity 없음</span><strong>${value(q.no_runtime_activity)}</strong></button>
