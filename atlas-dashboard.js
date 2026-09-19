@@ -235,7 +235,7 @@
       </section>
 
       <section class="dashboard-panel card" aria-label="최근 프로젝트 변경 타임라인">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">RECENT ACTIVITY TIMELINE</p><h3>최근 변경 흐름</h3></div><span>${timeline.available ? `${value(timeline.event_count)} events · ${value(timeline.total_change_count)} changes` : "source unavailable"}</span></div>
+        <div class="dashboard-panel-head"><div><p class="eyebrow">RECENT DELTA · RECENT ACTIVITY TIMELINE</p><h3>최근 추적 변경 타임라인</h3></div><span>${timeline.available ? `${value(timeline.event_count)} events · ${value(timeline.total_change_count)} changes` : "source unavailable"}</span></div>
         ${timeline.available
           ? (timeline.entries.length
             ? `<div class="dashboard-timeline">${timeline.entries.map(recentTimelineEntry).join("")}</div>`
