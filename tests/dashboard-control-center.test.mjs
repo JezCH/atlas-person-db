@@ -5,6 +5,7 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const registry = require("../atlas-person-domain-registry.js");
+const eraModel = require("../atlas-person-era-model.js");
 const model = require("../atlas-dashboard-model.js");
 const spatialModel = require("../atlas-person-spacetime-model.js");
 const domainUiSource = fs.readFileSync(new URL("../atlas-person-domain-ui.js", import.meta.url), "utf8");
@@ -411,4 +412,79 @@ test("Dashboard System / Production Strip reports deployed identity without clai
   assert.match(dashboardSource, /DEPLOYED GIT/);
   assert.match(dashboardSource, /GitHub Actions 상태는 runtime identity와 별도/);
   assert.doesNotMatch(dashboardSource, /main parity|GitHub main exact|CI success|Actions success/i);
+});
+
+
+test("canonical Person Era model is reusable by Dashboard without a duplicate era taxonomy", () => {
+  assert.equal(eraModel.ERAS.length,10);
+  assert.deepEqual(model.buildEraRegionHeatmap({personResult:{persons:[]},spatialIndex:null}).eras,eraModel.ERAS);
+  const dashboardModelSource=fs.readFileSync(new URL("../atlas-dashboard-model.js",import.meta.url),"utf8");
+  assert.match(dashboardModelSource,/require\("\.\/atlas-person-era-model\.js"\)/);
+  assert.doesNotMatch(dashboardModelSource,/early-civilization", label:/);
+});
+
+test("Era × region heatmap counts placed Activity presence by canonical era overlap and macroregion", () => {
+  const P1="00000000-0000-4000-8000-000000000001";
+  const POLITY="00000000-0000-4000-8000-000000000101";
+  const A1="00000000-0000-4000-8000-000000000201";
+  const A2="00000000-0000-4000-8000-000000000202";
+  const activity=(id,start,end)=>({id,polity:{id:POLITY},start:{year:start},end:{year:end}});
+  const personResult={persons:[{
+    id:P1,
+    activity_summaries:[activity(A1,590,610),activity(A2,1490,1500)]
+  }]};
+  const spatialIndex={
+    schema:spatialModel.SPATIAL_INDEX_SCHEMA,
+    regions:[{code:"europe",label:"유럽"},{code:"east-asia",label:"동아시아"}],
+    polity_geography:{[POLITY]:"europe"},
+    polity_subregions:{[POLITY]:"western-europe"},
+    place_function_records:[],
+    review_queue:[],
+    activity_spatial_overrides:[]
+  };
+  const heatmap=model.buildEraRegionHeatmap({personResult,spatialIndex});
+  const byEra=Object.fromEntries(heatmap.rows.map((row)=>[row.era.code,Object.fromEntries(row.cells.map((cell)=>[cell.region_code,cell.count]))]));
+  assert.equal(heatmap.available,true);
+  assert.deepEqual(heatmap.regions.map((region)=>region.code),["europe","east-asia"]);
+  assert.equal(byEra.classical.europe,1);
+  assert.equal(byEra["early-medieval"].europe,1);
+  assert.equal(byEra["late-medieval"].europe,1);
+  assert.equal(byEra["early-modern"].europe,1);
+  assert.equal(byEra.classical["east-asia"],0);
+  assert.equal(heatmap.placed_activity_count,2);
+  assert.equal(heatmap.unresolved_activity_count,0);
+});
+
+test("Heatmap deduplicates multiple spatial segments of one Activity within the same era and region", () => {
+  const POLITY="00000000-0000-4000-8000-000000000101";
+  const A1="00000000-0000-4000-8000-000000000201";
+  const personResult={persons:[{id:"p1",activity_summaries:[{id:A1,polity:{id:POLITY},start:{year:100},end:{year:200}}]}]};
+  const spatialIndex={
+    schema:spatialModel.SPATIAL_INDEX_SCHEMA,
+    regions:[{code:"europe",label:"유럽"}],
+    polity_geography:{},
+    polity_subregions:{},
+    place_function_records:[],
+    review_queue:[{polity_id:POLITY,reason:"activity_specific_review"}],
+    activity_spatial_overrides:[{
+      activity_id:A1,expected_polity_id:POLITY,expected_start_year:100,expected_end_year:200,override_mode:"timeline_segments",
+      region_code:"",subregion_code:"",location_label:"",reason:"fixture",source_refs:["fixture"],
+      segments:[
+        {start_year:100,end_year:149,region_code:"europe",subregion_code:"western-europe",location_label:"A",source_refs:["fixture"]},
+        {start_year:150,end_year:200,region_code:"europe",subregion_code:"western-europe",location_label:"B",source_refs:["fixture"]}
+      ]
+    }]
+  };
+  const heatmap=model.buildEraRegionHeatmap({personResult,spatialIndex});
+  const classical=heatmap.rows.find((row)=>row.era.code==="classical");
+  assert.equal(classical.cells[0].count,1);
+});
+
+test("Dashboard heatmap reuses canonical spatial resolver and renders zero as real zero only when source is available", () => {
+  const dashboardModelSource=fs.readFileSync(new URL("../atlas-dashboard-model.js",import.meta.url),"utf8");
+  assert.match(dashboardModelSource,/spatialModel\.resolveActivityPlacement/);
+  assert.match(dashboardSource,/ERA × REGION COVERAGE/);
+  assert.match(dashboardSource,/heatmap\.available/);
+  assert.match(dashboardSource,/data-heatmap-level/);
+  assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
 });
