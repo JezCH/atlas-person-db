@@ -1,0 +1,329 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_state_form_identity_merge_batch2_20260920_v1",
+  "as_of": "2026-09-20",
+  "status": "REVIEWED_POLITY_IDENTITY_MERGE_WITH_TEMPORAL_DESIGNATIONS",
+  "release_order": 598,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY-IDENTITY-REVIEW-16-20260919; batch2 live recheck 2026-09-20",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-friedland-principality-into-duchy",
+      "type": "rewrite_activity",
+      "activity_id": "c96b7338-e0ea-406c-b9d4-74ced7269f45",
+      "baseline_before": {
+        "person_id": "59a5bad2-3caa-407c-9914-b8541dd2ac58",
+        "polity_id": "d7c3910c-cd34-444c-80a7-6107b7d7a71c",
+        "role_id": "0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1624,
+        "activity_end": 1627,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "c96b7338-e0ea-406c-b9d4-74ced7269f45",
+        "person_id": "59a5bad2-3caa-407c-9914-b8541dd2ac58",
+        "polity_id": "6d717245-4025-465e-bb66-9946b0e16481",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1624,
+        "activity_end": 1627,
+        "activity_start_detail": {
+          "year": 1624,
+          "month": 3,
+          "day": 12,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1627,
+          "month": 1,
+          "day": 3,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-vietnam-state-into-republic",
+      "type": "rewrite_activity",
+      "activity_id": "609221ab-0208-48e0-85f4-3f3db04de98d",
+      "baseline_before": {
+        "person_id": "bb579478-ee27-4e59-9e7d-4cfdc428fa2b",
+        "polity_id": "90d03d94-41bc-42b6-b910-f6c0c498bd20",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1954,
+        "activity_end": 1955,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "609221ab-0208-48e0-85f4-3f3db04de98d",
+        "person_id": "bb579478-ee27-4e59-9e7d-4cfdc428fa2b",
+        "polity_id": "4d6cea58-b611-47ba-96c4-b51c7bed1400",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1954,
+        "activity_end": 1955,
+        "activity_start_detail": {
+          "year": 1954,
+          "month": 6,
+          "day": 26,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1955,
+          "month": 10,
+          "day": 25,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-central-african-empire-into-republic",
+      "type": "rewrite_activity",
+      "activity_id": "b8ffd135-4bb5-49eb-80cc-e8219028a26f",
+      "baseline_before": {
+        "person_id": "fbd24edb-c0c1-4920-9d9b-3f5017b494eb",
+        "polity_id": "21c2fd7d-84ee-4674-9a7e-46db1be6266c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1976,
+        "activity_end": 1979,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "b8ffd135-4bb5-49eb-80cc-e8219028a26f",
+        "person_id": "fbd24edb-c0c1-4920-9d9b-3f5017b494eb",
+        "polity_id": "4470f274-7ead-4b70-9b54-78cd93cee4c5",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1976,
+        "activity_end": 1979,
+        "activity_start_detail": {
+          "year": 1976,
+          "month": 12,
+          "day": 4,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1979,
+          "month": 9,
+          "day": 20,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "friedland-principality-temporal-designation-1624-1627",
+      "exact_before": {
+        "designation_absent_id": "7d7aed82-f116-524b-925b-4d611d065de7"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "7d7aed82-f116-524b-925b-4d611d065de7",
+          "polity_id": "6d717245-4025-465e-bb66-9946b0e16481",
+          "designation_type": "state_form",
+          "valid_from_year": 1624,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1627,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form designation preserving the Principality of Friedland phase on the stable Friedland polity identity before its 1627 elevation to a duchy."
+        },
+        "names": [
+          {
+            "id": "28691433-16fc-582b-8344-f7c112c6bc0e",
+            "polity_designation_id": "7d7aed82-f116-524b-925b-4d611d065de7",
+            "locale": "en",
+            "name": "Principality of Friedland",
+            "is_preferred": true
+          },
+          {
+            "id": "93543a55-17ff-50be-8033-79384d504eaf",
+            "polity_designation_id": "7d7aed82-f116-524b-925b-4d611d065de7",
+            "locale": "ko",
+            "name": "프리들란트 공국(후국)",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "7d7aed82-f116-524b-925b-4d611d065de7",
+            "source_id": "f481df34-a189-487f-99b0-ca76d3cb79d3",
+            "source_locator_key": "https://www.newadvent.org/cathen/15538b.htm"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "vietnam-state-temporal-designation-1954-1955",
+      "exact_before": {
+        "designation_absent_id": "fe65f0f3-67db-564f-b0f7-5d2fe20d5ed6"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "fe65f0f3-67db-564f-b0f7-5d2fe20d5ed6",
+          "polity_id": "4d6cea58-b611-47ba-96c4-b51c7bed1400",
+          "designation_type": "state_form",
+          "valid_from_year": 1954,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1955,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form designation preserving the State of Vietnam phase on the stable South Vietnamese polity identity for Ngo Dinh Diem's 1954-1955 premiership."
+        },
+        "names": [
+          {
+            "id": "1c7bf313-3bae-51b7-bc55-f9223875c93d",
+            "polity_designation_id": "fe65f0f3-67db-564f-b0f7-5d2fe20d5ed6",
+            "locale": "en",
+            "name": "State of Vietnam",
+            "is_preferred": true
+          },
+          {
+            "id": "aacbf9ed-64c0-5c18-97be-a43b7813075c",
+            "polity_designation_id": "fe65f0f3-67db-564f-b0f7-5d2fe20d5ed6",
+            "locale": "ko",
+            "name": "베트남국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "fe65f0f3-67db-564f-b0f7-5d2fe20d5ed6",
+            "source_id": "dc1dddef-d97e-430d-96d2-d11631ec8106",
+            "source_locator_key": "https://en.wikipedia.org/wiki/Ngo_Dinh_Diem"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "central-african-empire-temporal-designation-1976-1979",
+      "exact_before": {
+        "designation_absent_id": "c8c9f0f5-7e29-5d55-8435-fd96b653090c"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "c8c9f0f5-7e29-5d55-8435-fd96b653090c",
+          "polity_id": "4470f274-7ead-4b70-9b54-78cd93cee4c5",
+          "designation_type": "state_form",
+          "valid_from_year": 1976,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1979,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form designation preserving the Central African Empire episode on the stable Central African Republic polity identity during Bokassa I's imperial rule."
+        },
+        "names": [
+          {
+            "id": "f3771b43-fe6b-5214-b2c4-e46280e28ce6",
+            "polity_designation_id": "c8c9f0f5-7e29-5d55-8435-fd96b653090c",
+            "locale": "en",
+            "name": "Central African Empire",
+            "is_preferred": true
+          },
+          {
+            "id": "762699ff-358e-5492-9bb2-09e82aac5277",
+            "polity_designation_id": "c8c9f0f5-7e29-5d55-8435-fd96b653090c",
+            "locale": "ko",
+            "name": "중앙아프리카 제국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "c8c9f0f5-7e29-5d55-8435-fd96b653090c",
+            "source_id": "cd35b808-bda4-4b24-8d6f-56529f4e6a81",
+            "source_locator_key": "https://www.britishmuseum.org/collection/term/BIOG181459"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 3,
+    "activity_relinks": 3,
+    "polity_designation_assertions": 3,
+    "production_mutation_authorized": false
+  }
+}
