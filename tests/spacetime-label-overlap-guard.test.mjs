@@ -31,18 +31,34 @@ test("live guard resolves a real box overlap by horizontal movement only", () =>
   assert.equal(guard.overlap(a, b, 2), false);
 });
 
-test("live guard keeps every shifted label inside its declared spatial band", () => {
+test("live guard may borrow the shared world overlay while keeping historical Y unchanged", () => {
   const rows = [
-    { id:"a", left:40, top:50, width:60, height:18, band_code:"band" },
-    { id:"b", left:50, top:51, width:60, height:18, band_code:"band" }
+    { id:"a", left:40, top:50, width:70, height:18, band_code:"band" },
+    { id:"b", left:44, top:51, width:70, height:18, band_code:"band" }
   ];
-  const band = { left:40, width:180 };
-  const result = guard.resolvePositions(rows, { band }, { gap:2, step:4, maxShift:160, canvasWidth:260 });
+  const band = { left:40, width:90 };
+  const result = guard.resolvePositions(rows, { band }, {
+    gap:2,
+    step:4,
+    maxShift:260,
+    canvasWidth:260,
+    borrowWorld:true
+  });
+  assert.deepEqual(result.unresolved, []);
+  assert.equal(result.positions.a.top, 50);
+  assert.equal(result.positions.b.top, 51);
   for (const id of ["a", "b"]) {
     const left = result.positions[id].left;
-    assert.ok(left >= band.left - 1e-6);
-    assert.ok(left + 60 <= band.left + band.width + 1e-6);
+    assert.ok(left >= -1e-6);
+    assert.ok(left + 70 <= 260 + 1e-6);
   }
+  assert.ok(
+    result.positions.a.left < band.left - 1e-6
+      || result.positions.a.left + 70 > band.left + band.width + 1e-6
+      || result.positions.b.left < band.left - 1e-6
+      || result.positions.b.left + 70 > band.left + band.width + 1e-6,
+    "at least one conflicting label should borrow presentation space outside its preferred band"
+  );
 });
 
 test("impossible capacity is reported instead of changing historical Y", () => {
@@ -61,6 +77,7 @@ test("browser integration never writes label top/Y geometry", () => {
   assert.doesNotMatch(source, /style\.top\s*=/);
   assert.match(source, /element\.style\.left\s*=/);
   assert.match(source, /data-spacetime-band/);
+  assert.match(source, /borrowWorld:true/);
 });
 
 test("surface owner loads the guard without modifying the core spacetime renderer", () => {
