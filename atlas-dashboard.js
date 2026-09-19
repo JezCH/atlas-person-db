@@ -49,6 +49,21 @@
     </button>`;
   }
 
+  function breakdownCard(label, item) {
+    const total = item?.total == null ? "—" : value(item.total);
+    const unit = item?.unit === "polity" ? "polities" : item?.unit === "activity" ? "activities" : "persons";
+    const rows = (item?.rows || []).map((row) => `<div class="dashboard-domain-row">
+      <span title="${escapeHtml(row.label || row.code || "")}">${escapeHtml(row.label || row.code || "unknown")}</span><b>${value(row.count)}</b>
+    </div>`).join("");
+    const unattributed = Number(item?.unattributed_count || 0) > 0
+      ? `<div class="dashboard-domain-row"><span>Reason unavailable</span><b>${value(item.unattributed_count)}</b></div>`
+      : "";
+    return `<article class="dashboard-panel card">
+      <div class="dashboard-panel-head"><div><p class="eyebrow">INCOMPLETE REASONS</p><h3>${escapeHtml(label)}</h3></div><span>${total} ${unit}</span></div>
+      <div class="dashboard-domain-list">${rows || unattributed ? rows + unattributed : `<div class="dashboard-domain-row"><span>${escapeHtml(item?.unavailable_reason || "Reason source unavailable")}</span><b>—</b></div>`}</div>
+    </article>`;
+  }
+
   function sourceCard(source) {
     const ready = source.status === "ready";
     const loading = source.status === "loading";
@@ -73,6 +88,7 @@
     const w = snapshot.work;
     const q = snapshot.quality;
     const a = snapshot.attention_queue;
+    const b = snapshot.incomplete_breakdown;
     const domainRows = model.DOMAIN_CODES.map((code) => `<div class="dashboard-domain-row" data-domain="${escapeHtml(code)}">
       <span class="dashboard-domain-swatch" aria-hidden="true"></span><span>${escapeHtml(domainRegistry.LABELS[code] || code)}</span><b>${value(snapshot.domain_breakdown[code])}</b>
     </div>`).join("");
@@ -126,6 +142,13 @@
             <button type="button" data-dashboard-route="persons"><span>Non-timeline registry</span><strong>${value(q.non_timeline_registry)}</strong></button>
           </div>
         </article>
+      </section>
+
+      <section class="dashboard-lower-grid" aria-label="미완료 사유">
+        ${breakdownCard("Representative Domain", b.domain)}
+        ${breakdownCard("NamuWiki", b.namuwiki)}
+        ${breakdownCard("Spatial", b.spatial)}
+        ${breakdownCard("Runtime Exclusion", b.runtime)}
       </section>
 
       <section class="dashboard-lower-grid">
