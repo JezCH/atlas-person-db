@@ -64,6 +64,7 @@
 
   let currentDomain = "persons";
   let spacetimeAssetsPromise = null;
+  let polityReviewAssetsPromise = null;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -85,6 +86,7 @@
     if (!domain) return "";
     if (key === "dashboard") return '<div id="atlasDashboardMount" class="atlas-dashboard-mount"></div>';
     if (key === "spacetime") return '<div id="personSpacetimeMount" class="person-spacetime-mount"></div>';
+    if (key === "polities") return '<div id="atlasPolityReviewMount" class="atlas-polity-review-mount"></div>';
     return `<div class="authority-shell-head card">
       <div><p class="eyebrow">${escapeHtml(domain.eyebrow)}</p><h2>${escapeHtml(domain.label)}</h2><p>${escapeHtml(domain.summary)}</p></div>
       <span class="authority-status ${statusClass(domain.status_code)}">${escapeHtml(domain.status_label)}</span>
@@ -148,6 +150,35 @@
       const currentMount = document.getElementById("personSpacetimeMount");
       if (currentDomain === "spacetime" && currentMount) {
         currentMount.innerHTML = `<section class="card" style="padding:24px"><strong>시공간 인물도 모듈을 불러오지 못했습니다.</strong><p>${escapeHtml(error?.message || error)}</p></section>`;
+      }
+    });
+  }
+
+  function ensurePolityReviewAssets() {
+    if (window.ATLAS_POLITY_REVIEW_WORKBENCH) return Promise.resolve(window.ATLAS_POLITY_REVIEW_WORKBENCH);
+    if (polityReviewAssetsPromise) return polityReviewAssetsPromise;
+    appendStylesheetOnce("./atlas-polity-review-workbench.css?v=20260919-v1");
+    polityReviewAssetsPromise = loadScriptOnce("./atlas-polity-review-candidates.js?v=20260919-v1", () => Boolean(window.ATLAS_POLITY_REVIEW_CANDIDATES))
+      .then(() => loadScriptOnce("./atlas-polity-review-workbench.js?v=20260919-v1", () => Boolean(window.ATLAS_POLITY_REVIEW_WORKBENCH)))
+      .then(() => window.ATLAS_POLITY_REVIEW_WORKBENCH)
+      .catch((error) => {
+        polityReviewAssetsPromise = null;
+        throw error;
+      });
+    return polityReviewAssetsPromise;
+  }
+
+  function activatePolityReview() {
+    const mount = document.getElementById("atlasPolityReviewMount");
+    if (!mount) return;
+    mount.innerHTML = '<section class="card" style="padding:24px"><strong>정치체 검토 작업대를 불러오는 중입니다.</strong></section>';
+    ensurePolityReviewAssets().then((workbench) => {
+      if (currentDomain === "polities") workbench?.mount?.(mount);
+    }).catch((error) => {
+      console.error(error);
+      const currentMount = document.getElementById("atlasPolityReviewMount");
+      if (currentDomain === "polities" && currentMount) {
+        currentMount.innerHTML = `<section class="card" style="padding:24px"><strong>정치체 검토 작업대를 불러오지 못했습니다.</strong><p>${escapeHtml(error?.message || error)}</p></section>`;
       }
     });
   }
@@ -219,6 +250,7 @@
     }
     window.dispatchEvent(new CustomEvent("atlas-authority-domain-changed", { detail: { domain: next } }));
     if (next === "spacetime") activateSpacetime();
+    if (next === "polities") activatePolityReview();
     if (previousDomain !== next) {
       requestAnimationFrame(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });

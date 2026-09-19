@@ -35,11 +35,11 @@
       label: "정치체",
       eyebrow: "정치체 기준 정보",
       status_code: "partial",
-      status_label: "부분 조회",
-      summary: "정치체 식별자는 이미 인물 활동과 의미 필터를 통해 보이지만 독립 공개 정치체 탐색 화면은 아직 기준 기능으로 완성되지 않았습니다.",
-      available: "인물 활동에서 정치체 UUID와 읽을 수 있는 이름을 확인할 수 있고 메인 필터에도 정치체 항목이 제공됩니다.",
-      missing: "독립 정치체 목록·상세·설명·출처를 제공하는 공개 조회 계약이 아직 없습니다.",
-      principle: "인물이 영토를 소유하지 않으며 인물 → 활동 → 정치체 관계를 유지합니다."
+      status_label: "검토 작업대",
+      summary: "정치체 identity 중복·표기 통일·폐기·분리 후보를 케이스별로 검토하고 결정을 기록합니다.",
+      available: "현재 Production Activity와 catalog 감사에서 잡힌 병합 확정군, 추가 통합 검토군, 과통합 분리 검토군을 한 화면에서 비교할 수 있습니다.",
+      missing: "검토 화면의 선택은 Production을 직접 변경하지 않습니다. 실제 relink·retire·split은 기존 correction writer와 exact-before 검증을 거쳐 별도로 적용합니다.",
+      principle: "이름 유사도만으로 자동 병합하지 않고 UUID·활동 연대·역사적 연속성·기존 reviewed decision을 함께 확인합니다."
     }),
     places: entry({
       label: "장소",
