@@ -13,6 +13,13 @@
     merge_review: Object.freeze({ label: "통합 검토", tone: "review" }),
     split_review: Object.freeze({ label: "분리 검토", tone: "split" })
   });
+  const STATUS_LABEL = Object.freeze({
+    PRODUCTION_APPLIED_RETIRED: "Production 반영 완료",
+    REVIEWED_MERGE_BLOCKED_SPATIAL: "병합 판정 · 공간 보존 선행",
+    REVIEWED_MERGE_READY: "병합 판정 완료",
+    REVIEWED_SPLIT_REQUIRED: "분리 판정 완료",
+    NEEDS_SPLIT_REVIEW: "분리 추가 검토"
+  });
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -45,13 +52,19 @@
   }
 
   function defaultDecision(row) {
-    return row.kind === "confirmed_merge" ? "merge" : "";
+    return row.reviewed_decision || (row.kind === "confirmed_merge" ? "merge" : "");
+  }
+
+  function statusLabel(code) {
+    return STATUS_LABEL[code] || String(code || "");
   }
 
   function caseHtml(row, decision) {
     const meta = KIND_META[row.kind] || KIND_META.merge_review;
+    const reviewed = row.reviewed_decision || "";
     const selected = decision?.decision || defaultDecision(row);
     const note = decision?.note || "";
+    const locked = Boolean(row.locked);
     const left = row.left || {};
     const right = row.right || {};
     const evidence = (row.evidence || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
@@ -64,7 +77,7 @@
           <span class="polity-review-kind is-${escapeHtml(meta.tone)}">${escapeHtml(meta.label)}</span>
           <h3>${escapeHtml(row.title)}</h3>
         </div>
-        <span class="polity-review-state">${escapeHtml(row.status || "")}</span>
+        <span class="polity-review-state">${escapeHtml(statusLabel(row.status))}</span>
       </div>
       <div class="polity-review-pair">
         <div class="polity-review-entity">
@@ -83,13 +96,13 @@
       </div>
       <p class="polity-review-rationale">${escapeHtml(row.rationale)}</p>
       <div class="polity-review-evidence"><strong>현재 확인 근거</strong><ul>${evidence}</ul></div>
-      <div class="polity-review-suggestion"><span>검토 제안</span><strong>${escapeHtml(decisionLabel(row.suggested_action))}</strong></div>
+      <div class="polity-review-suggestion"><span>${reviewed ? "검토 판정" : "검토 제안"}</span><strong>${escapeHtml(decisionLabel(reviewed || row.suggested_action))}</strong></div>
       <div class="polity-review-controls">
-        <label>내 결정
-          <select data-review-decision>${options}</select>
+        <label>${locked ? "반영 상태" : "내 결정"}
+          <select data-review-decision${locked ? " disabled" : ""}>${options}</select>
         </label>
         <label class="polity-review-note">메모
-          <textarea rows="2" data-review-note placeholder="판단 근거 또는 후속 지시">${escapeHtml(note)}</textarea>
+          <textarea rows="2" data-review-note placeholder="판단 근거 또는 후속 지시"${locked ? " disabled" : ""}>${escapeHtml(note)}</textarea>
         </label>
       </div>
     </article>`;
@@ -111,7 +124,10 @@
             kind: row.kind,
             title: row.title,
             decision,
+            reviewed_decision: row.reviewed_decision || null,
+            user_decision: saved?.decision || null,
             note,
+            status: row.status || null,
             left_polity_id: row.left?.polity_id || null,
             right_polity_id: row.right?.polity_id || null
           };
@@ -164,8 +180,9 @@
         return text.includes(needle);
       });
       list.innerHTML = rows.map((row) => caseHtml(row, decisions[row.id])).join("");
-      const decided = allCases().filter((row) => (decisions[row.id]?.decision || defaultDecision(row))).length;
-      progress.textContent = `검토 결정 ${decided}/${allCases().length}`;
+      const reviewed = allCases().filter((row) => Boolean(row.reviewed_decision)).length;
+      const explicit = allCases().filter((row) => Boolean(decisions[row.id]?.decision || decisions[row.id]?.note)).length;
+      progress.textContent = `검토 판정 ${reviewed}/${allCases().length} · 내 입력 ${explicit}`;
     }
 
     root.addEventListener("click", (event) => {
