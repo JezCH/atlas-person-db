@@ -96,6 +96,21 @@
     </article>`;
   }
 
+  function heatmapLevel(count,maxCount) {
+    if (!Number.isFinite(count) || count <= 0 || !Number.isFinite(maxCount) || maxCount <= 0) return 0;
+    return Math.max(1,Math.min(4,Math.ceil((count / maxCount) * 4)));
+  }
+
+  function heatmapTable(heatmap) {
+    if (!heatmap?.available) return `<div class="dashboard-heatmap-unavailable">${escapeHtml(heatmap?.unavailable_reason || "Heatmap unavailable")}</div>`;
+    const head=heatmap.regions.map((region)=>`<th scope="col" title="${escapeHtml(region.label)}">${escapeHtml(region.label)}</th>`).join("");
+    const body=heatmap.rows.map((row)=>`<tr>
+      <th scope="row"><strong>${escapeHtml(row.era.label)}</strong><small>${escapeHtml(row.era.range)}</small></th>
+      ${row.cells.map((cell)=>`<td data-heatmap-level="${heatmapLevel(cell.count,heatmap.max_count)}" title="${escapeHtml(`${row.era.label} × ${heatmap.regions.find((region)=>region.code===cell.region_code)?.label || cell.region_code}: ${cell.count} activities`)}"><span>${value(cell.count)}</span></td>`).join("")}
+    </tr>`).join("");
+    return `<div class="dashboard-heatmap-wrap"><table class="dashboard-heatmap"><thead><tr><th scope="col">ERA \ REGION</th>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+  }
+
   function sourceCard(source) {
     const ready = source.status === "ready";
     const loading = source.status === "loading";
@@ -124,6 +139,7 @@
     const kd = snapshot.kpi_drilldown;
     const rd = snapshot.recent_delta;
     const sys = snapshot.system_strip;
+    const heatmap = snapshot.coverage_heatmap;
     const domainRows = model.DOMAIN_CODES.map((code) => `<div class="dashboard-domain-row" data-domain="${escapeHtml(code)}">
       <span class="dashboard-domain-swatch" aria-hidden="true"></span><span>${escapeHtml(domainRegistry.LABELS[code] || code)}</span><b>${value(snapshot.domain_breakdown[code])}</b>
     </div>`).join("");
@@ -166,6 +182,15 @@
           <span>Known outstanding checks <b>${value(a.known_outstanding_checks)}</b></span>
           <span>Known affected persons <b>${value(a.known_affected_persons)}</b></span>
           <span>${a.complete ? "전체 범주 확인됨" : `부분 집계 · ${value(a.available_categories)}/${value(a.total_categories)} 범주만 대상 집합 확인`}</span>
+        </div>
+      </section>
+
+      <section class="dashboard-panel card" aria-label="시대별 권역별 Activity coverage">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">ERA × REGION COVERAGE</p><h3>시공간 Activity 분포</h3></div><span>${heatmap.available ? `placed ${value(heatmap.placed_activity_count)} · unresolved ${value(heatmap.unresolved_activity_count)}` : "source unavailable"}</span></div>
+        ${heatmapTable(heatmap)}
+        <div class="dashboard-progress-meta">
+          <span>canonical 10 Era bands × Spatial macroregions</span>
+          <span>한 Activity는 같은 시대·권역에서 segment가 여러 개여도 1회 집계</span>
         </div>
       </section>
 
