@@ -237,3 +237,8 @@ test("legacy status summary reuses shared Person Runtime instead of issuing a du
   assert.doesNotMatch(statusSummarySource, /AtlasReader\.loadPersonPolitics/);
   assert.doesNotMatch(statusSummarySource, /\/api\/atlas-read/);
 });
+
+
+test("dashboard has no no-op shared-source update listener", () => {
+  assert.doesNotMatch(dashboardSource, /addEventListener\(["']atlas-client-data-source-updated["']/);
+});
