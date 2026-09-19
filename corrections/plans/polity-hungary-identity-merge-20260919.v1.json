@@ -1,0 +1,129 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_hungary_identity_merge_20260919_v1",
+  "as_of": "2026-09-19",
+  "status": "REVIEWED_POLITY_IDENTITY_MERGE_WITH_TEMPORAL_DESIGNATION",
+  "release_order": 594,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY-IDENTITY-REVIEW-16-20260919; reviewed merge Principality of Hungary / Kingdom of Hungary",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-hungary-principality-into-kingdom",
+      "type": "rewrite_activity",
+      "activity_id": "1bafd003-bed8-4c6f-83a7-96c59dbdda15",
+      "baseline_before": {
+        "person_id": "624e484f-0459-4f7e-82d4-dea64bd0f32b",
+        "polity_id": "09ff1776-171f-435a-a444-4b0463e48137",
+        "role_id": "5c67b8ac-d83c-4145-bb33-c9aa17966312",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 997,
+        "activity_end": 1000,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "1bafd003-bed8-4c6f-83a7-96c59dbdda15",
+        "person_id": "624e484f-0459-4f7e-82d4-dea64bd0f32b",
+        "polity_id": "b07ef629-2fd6-59f9-bac8-ec685b371aac",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "5c67b8ac-d83c-4145-bb33-c9aa17966312",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 997,
+        "activity_end": 1000,
+        "activity_start_detail": {
+          "year": 997,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1000,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "hungary-principality-temporal-designation-997-1000",
+      "exact_before": {
+        "designation_absent_id": "ddc5d7c8-8714-51d4-9a2c-bd82dcde940a"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "ddc5d7c8-8714-51d4-9a2c-bd82dcde940a",
+          "polity_id": "b07ef629-2fd6-59f9-bac8-ec685b371aac",
+          "designation_type": "state_form",
+          "valid_from_year": 997,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1000,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "approximate",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form designation preserving the Principality of Hungary phase on the stable Kingdom of Hungary survivor identity for Stephen I's 997-c.1000 Activity."
+        },
+        "names": [
+          {
+            "id": "78a6393a-cd0e-58db-9982-9319e4235f10",
+            "polity_designation_id": "ddc5d7c8-8714-51d4-9a2c-bd82dcde940a",
+            "locale": "en",
+            "name": "Principality of Hungary",
+            "is_preferred": true
+          },
+          {
+            "id": "ca4ceb3f-3115-562c-af22-fb3307d97d3e",
+            "polity_designation_id": "ddc5d7c8-8714-51d4-9a2c-bd82dcde940a",
+            "locale": "ko",
+            "name": "헝가리 대공국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "ddc5d7c8-8714-51d4-9a2c-bd82dcde940a",
+            "source_id": "4268ba5e-d68b-439d-ae7a-fb43ee66e13f",
+            "source_locator_key": "National Széchényi Library / Hungarian Electronic Library: Saint Stephen I listed as Prince 997–1000 and King 1000–1038"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "activity_relinks": 1,
+    "polity_designation_assertions": 1,
+    "production_mutation_authorized": false
+  }
+}
