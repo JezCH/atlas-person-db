@@ -129,6 +129,83 @@
     const seen = new Set(preferred);
     return [...preferred, ...borrowed.filter((left) => !seen.has(left))];
   }
+  function verticalRangeOverlaps(label, rect, gap = 0) {
+    const safeGap = Math.max(0, Number(gap) || 0);
+    const top = label.anchor_y - label.height / 2;
+    const bottom = top + label.height;
+    return !(bottom + safeGap <= rect.top + EPSILON || rect.bottom + safeGap <= top + EPSILON);
+  }
+  function placementRanges(label, viewportWidth, options = {}) {
+    const hardLeft = 0;
+    const hardRight = viewportWidth;
+    const preferredLeft = clamp(Number.isFinite(label.min_left) ? label.min_left : hardLeft, hardLeft, hardRight);
+    const preferredRight = clamp(Number.isFinite(label.max_right) ? label.max_right : hardRight, preferredLeft, hardRight);
+    const ranges = [];
+    if (preferredRight > preferredLeft + EPSILON) ranges.push(Object.freeze({ left: preferredLeft, right: preferredRight }));
+    if (horizontalBorrowEnabled(label, viewportWidth, options)
+      && (preferredLeft > hardLeft + EPSILON || preferredRight < hardRight - EPSILON)) {
+      ranges.push(Object.freeze({ left: hardLeft, right: hardRight }));
+    }
+    return ranges;
+  }
+  function freeIntervals(label, placed, range, gap = 0) {
+    const safeGap = Math.max(0, Number(gap) || 0);
+    const occupied = placed
+      .filter((item) => verticalRangeOverlaps(label, item.rect, safeGap))
+      .map((item) => ({
+        left: Math.max(range.left, item.rect.left - safeGap),
+        right: Math.min(range.right, item.rect.right + safeGap)
+      }))
+      .filter((item) => item.right > item.left + EPSILON)
+      .sort((a, b) => a.left - b.left || a.right - b.right);
+
+    const merged = [];
+    for (const interval of occupied) {
+      const last = merged[merged.length - 1];
+      if (!last || interval.left > last.right + EPSILON) {
+        merged.push({ ...interval });
+      } else {
+        last.right = Math.max(last.right, interval.right);
+      }
+    }
+
+    const free = [];
+    let cursor = range.left;
+    for (const interval of merged) {
+      if (interval.left > cursor + EPSILON) free.push({ left: cursor, right: interval.left });
+      cursor = Math.max(cursor, interval.right);
+    }
+    if (cursor < range.right - EPSILON) free.push({ left: cursor, right: range.right });
+    return free.filter((interval) => interval.right - interval.left + EPSILON >= label.width);
+  }
+  function freeLeftPosition(label, placed, viewportWidth, gap = 0, options = {}) {
+    const anchorGap = Math.max(0, Number(options.anchorGap ?? DEFAULT_ANCHOR_GAP) || 0);
+    const preferredLeft = label.anchor_x + anchorGap;
+    const preferredCenter = preferredLeft + label.width / 2;
+    for (const range of placementRanges(label, viewportWidth, options)) {
+      const intervals = freeIntervals(label, placed, range, gap);
+      if (!intervals.length) continue;
+      let best = null;
+      for (const interval of intervals) {
+        const maxLeft = interval.right - label.width;
+        const left = clamp(preferredLeft, interval.left, maxLeft);
+        const center = left + label.width / 2;
+        const score = [
+          Math.abs(center - preferredCenter),
+          Math.abs(center - label.anchor_x),
+          left
+        ];
+        if (!best
+          || score[0] < best.score[0] - EPSILON
+          || (Math.abs(score[0] - best.score[0]) <= EPSILON && score[1] < best.score[1] - EPSILON)
+          || (Math.abs(score[0] - best.score[0]) <= EPSILON && Math.abs(score[1] - best.score[1]) <= EPSILON && score[2] < best.score[2] - EPSILON)) {
+          best = { left: Number(left.toFixed(6)), score };
+        }
+      }
+      if (best) return best.left;
+    }
+    return null;
+  }
   function connectorFor(label, rect, options = {}) {
     const threshold = Math.max(0, Number(options.connectorThreshold ?? DEFAULT_CONNECTOR_THRESHOLD) || 0);
     let endX = label.anchor_x;
@@ -151,15 +228,14 @@
       const horizontalCapacity = horizontalBorrowEnabled(label, viewport.width, options) ? viewport.width : preferredWidth;
       if (preferredTop < -EPSILON || preferredTop + label.height > viewport.height + EPSILON || label.width > horizontalCapacity + EPSILON) { deferred.push(Object.freeze({ ...label, reason: "viewport_capacity" })); continue; }
       let accepted = null;
-      for (const left of candidateLeftPositions(label, viewport.width, options)) {
+      const left = freeLeftPosition(label, placed, viewport.width, gap, options);
+      if (left != null) {
         const rect = rectFor(label, left);
-        if (placed.some((item) => rectanglesOverlap(rect, item.rect, gap))) continue;
         accepted = Object.freeze({ ...label, label_x: left, label_y: label.anchor_y, rect, horizontal_shift: left + label.width / 2 - label.anchor_x, connector: connectorFor(label, rect, options) });
-        break;
       }
       if (accepted) placed.push(accepted); else deferred.push(Object.freeze({ ...label, reason: "collision_capacity" }));
     }
     return Object.freeze({ placed: Object.freeze(placed), deferred: Object.freeze(deferred), viewport });
   }
-  return Object.freeze({ DEFAULT_LABEL_HEIGHT, DEFAULT_MIN_LABEL_WIDTH, DEFAULT_MAX_LABEL_WIDTH, DEFAULT_CHAR_WIDTH, DEFAULT_CJK_CHAR_WIDTH, DEFAULT_LABEL_CHROME_WIDTH, DEFAULT_LABEL_WIDTH_SAFETY, DEFAULT_HORIZONTAL_GAP, DEFAULT_MAX_HORIZONTAL_SHIFT, isWideCodePoint, estimatedTextWidth, naturalWidth, estimateWidth, hasPresentationZone, preservesFullText, horizontalBorrowEnabled, normalizeLabel, rectFor, rectanglesOverlap, candidateLeftPositions, connectorFor, packLabels });
+  return Object.freeze({ DEFAULT_LABEL_HEIGHT, DEFAULT_MIN_LABEL_WIDTH, DEFAULT_MAX_LABEL_WIDTH, DEFAULT_CHAR_WIDTH, DEFAULT_CJK_CHAR_WIDTH, DEFAULT_LABEL_CHROME_WIDTH, DEFAULT_LABEL_WIDTH_SAFETY, DEFAULT_HORIZONTAL_GAP, DEFAULT_MAX_HORIZONTAL_SHIFT, isWideCodePoint, estimatedTextWidth, naturalWidth, estimateWidth, hasPresentationZone, preservesFullText, horizontalBorrowEnabled, normalizeLabel, rectFor, rectanglesOverlap, candidateLeftPositions, verticalRangeOverlaps, placementRanges, freeIntervals, freeLeftPosition, connectorFor, packLabels });
 });

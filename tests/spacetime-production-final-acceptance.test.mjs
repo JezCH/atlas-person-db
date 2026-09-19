@@ -28,6 +28,7 @@ test("exact-SHA verifier fails closed and byte-compares the current spacetime/do
     "atlas-person-domain-ui.js",
     "atlas-person-spacetime-domain-colors.js",
     "atlas-person-spacetime-domain-colors.css",
+    "atlas-person-spacetime-label-engine.js",
     "atlas-person-spacetime-view.js",
     "atlas-person-spacetime-view.css",
     "atlas-person-spacetime-temporal-certainty.js"
@@ -49,6 +50,16 @@ test("Production visual acceptance covers the compact 390px mobile presentation 
   assert.match(verifier, /mobile\.macroOpacity > 0\.99 && mobile\.subregionOpacity < 0\.01/);
   assert.match(verifier, /mobile\.statusSummaryVisible && !mobile\.statusMoreOpen/);
   assert.match(verifier, /spacetime-mobile-390\.png/);
+});
+
+test("Production visual acceptance requires every viewport Person name at 500 and 800 percent", () => {
+  const verifier = read("scripts/verify-spacetime-production-visual.mjs");
+  assert.match(verifier, /at500\.deferredLabelCount === 0/);
+  assert.match(verifier, /at500\.domLabelCount === at500\.domPersonCount/);
+  assert.match(verifier, /at800\.deferredLabelCount === 0/);
+  assert.match(verifier, /at800\.domLabelCount === at800\.domPersonCount/);
+  assert.doesNotMatch(verifier, /bandContainment\.label_violation_count === 0/);
+  assert.match(verifier, /bandContainment\.rail_violation_count === 0/);
 });
 
 test("real-Chrome domain acceptance preserves Person/Activity semantic separation", () => {
