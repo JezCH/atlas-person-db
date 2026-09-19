@@ -647,3 +647,21 @@ test("Incomplete Reasons suppresses known zero-work cards but preserves unknown 
 test("single lower Dashboard panel expands across the full lower grid", () => {
   assert.match(dashboardCssSource, /dashboard-lower-grid>\.dashboard-panel:only-child\{grid-column:1\/-1\}/);
 });
+
+test("Dashboard keeps actionable work panels ahead of large analysis surfaces", () => {
+  const work = dashboardSource.indexOf("WORK FRONTIER");
+  const quality = dashboardSource.indexOf("DATA QUALITY");
+  const completeness = dashboardSource.indexOf("COMPLETENESS MATRIX");
+  const heatmap = dashboardSource.indexOf("ERA × REGION COVERAGE");
+  const timeline = dashboardSource.indexOf("RECENT DELTA · RECENT ACTIVITY TIMELINE");
+  assert.ok(work >= 0 && quality > work);
+  assert.ok(completeness > quality && heatmap > completeness && timeline > heatmap);
+});
+
+test("mobile Dashboard reduces table travel and caps timeline height without dropping data", () => {
+  assert.match(dashboardCssSource, /@media\(max-width:600px\)\{\.dashboard-heatmap\{min-width:760px;font-size:9px\}/);
+  assert.match(dashboardCssSource, /\.dashboard-completeness\{min-width:540px;font-size:9px\}/);
+  assert.match(dashboardCssSource, /\.dashboard-timeline\{max-height:360px;overflow:auto;overscroll-behavior:contain;padding-right:4px\}/);
+  assert.match(dashboardCssSource, /scrollbar-gutter:stable/);
+  assert.match(dashboardSource, /timeline\.entries\.map\(recentTimelineEntry\)/);
+});
