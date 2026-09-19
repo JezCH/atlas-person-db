@@ -126,9 +126,9 @@
   function ensureSpacetimeAssets() {
     if (window.ATLAS_PERSON_SPACETIME_VIEW) return Promise.resolve(window.ATLAS_PERSON_SPACETIME_VIEW);
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
-    appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260903-taxonomy-r2");
+    appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260919-top-chrome-v2");
     spacetimeAssetsPromise = loadScriptOnce("./atlas-person-spacetime-model.js?v=20260903-south-asia-r3", () => Boolean(window.ATLAS_PERSON_SPACETIME_MODEL))
-      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260919-compact-top-copy-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
+      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260919-top-chrome-v2", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
       .catch((error) => {
         spacetimeAssetsPromise = null;
@@ -168,13 +168,19 @@
     if (domain === "persons") {
       if (eyebrow) eyebrow.textContent = personHeading.eyebrow;
       if (title) title.textContent = personHeading.title;
-      if (subtitle) subtitle.textContent = personHeading.subtitle;
+      if (subtitle) {
+        subtitle.hidden = false;
+        subtitle.textContent = personHeading.subtitle;
+      }
       if (connectionStatus) connectionStatus.hidden = false;
       return;
     }
     if (eyebrow) eyebrow.textContent = meta.eyebrow;
     if (title) title.textContent = meta.label;
-    if (subtitle) subtitle.textContent = meta.summary;
+    if (subtitle) {
+      subtitle.hidden = domain === "spacetime";
+      subtitle.textContent = meta.summary;
+    }
     if (connectionStatus) connectionStatus.hidden = true;
   }
 
