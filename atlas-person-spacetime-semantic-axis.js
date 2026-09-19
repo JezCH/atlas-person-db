@@ -9,7 +9,7 @@
 
   if (!modelApi) throw new Error("ATLAS_PERSON_SPACETIME_MODEL is required");
 
-  const MIN_SUPPORTED_ZOOM = 5;
+  const MIN_SUPPORTED_ZOOM = 3;
   const PLACE_DETAIL_START_ZOOM = 7.2;
   const PLACE_DETAIL_FULL_ZOOM = 8;
 

@@ -1,9 +1,9 @@
 {
   "schema": "atlas-spacetime-acceptance-fixtures/v2",
   "readable_scale": {
-    "minimum_zoom_percent": 500,
+    "minimum_zoom_percent": 300,
     "default_zoom_percent": 500,
-    "maximum_zoom_percent": 800,
+    "maximum_zoom_percent": 1200,
     "global_extent_compression": 0.748,
     "local_density_compression_allowed": false,
     "minimum_base_world_width_px": 900,
