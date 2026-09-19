@@ -22,6 +22,7 @@
   let query = "";
   let sortOrder = "start-asc";
   let facetFilters = { polity_id: "" };
+  let dashboardFilter = null;
   let requestSerial = 0;
 
   function escapeHtml(value) {
@@ -162,6 +163,7 @@
   }
 
   function visibleUnknownRegistryPersons() {
+    if (dashboardFilter) return [];
     if (facetFilters.polity_id) return [];
     const firstClassNames = new Set(persons.flatMap(personIdentityKeys));
     const needle = normalizeRegistryText(query);
@@ -276,7 +278,12 @@
   function renderGroups() {
     const list = document.getElementById("personMainGroups");
     if (!list) return 0;
-    const groups = reader.preparePersonGroups(persons, { query, sortOrder, facetFilters });
+    const groups = reader.preparePersonGroups(persons, {
+      query,
+      sortOrder,
+      facetFilters,
+      secondaryPredicate:dashboardFilter ? (person) => dashboardFilter.ids.has(String(person?.id || "")) : null
+    });
     const rows = [
       ...groups.historical,
       ...groups.other_or_uncertain.map(withUnknownRegistryContext),
@@ -290,6 +297,9 @@
     });
     for (const child of [...list.children]) {
       if (child.id !== "personEraNavigator") child.remove();
+    }
+    if (dashboardFilter) {
+      list.insertAdjacentHTML("beforeend", `<div class="person-dashboard-filter"><strong>Dashboard · ${escapeHtml(dashboardFilter.label)}</strong><span>${dashboardFilter.ids.size.toLocaleString("ko-KR")}명</span><button type="button" class="mini-btn" data-person-dashboard-filter-clear>필터 해제</button></div>`);
     }
     list.insertAdjacentHTML("beforeend", renderedGroups);
     notifyPersonRender({ shown, polityCount: visiblePolityCount(rows) });
@@ -310,6 +320,27 @@
     const next = valid ? requested : "";
     if (facetFilters.polity_id === next) return false;
     facetFilters = { polity_id: next };
+    renderGroups();
+    return true;
+  }
+
+  function setDashboardFilter({ code = "", label = "", personIds = [] } = {}) {
+    const ids = [...new Set((Array.isArray(personIds) ? personIds : []).map((id) => String(id || "").trim()).filter(Boolean))];
+    if (!ids.length) return clearDashboardFilter();
+    dashboardFilter = Object.freeze({
+      code:String(code || "").trim(),
+      label:String(label || code || "Attention Queue").trim(),
+      ids:new Set(ids)
+    });
+    query = "";
+    facetFilters = { polity_id:"" };
+    renderGroups();
+    return true;
+  }
+
+  function clearDashboardFilter() {
+    if (!dashboardFilter) return false;
+    dashboardFilter = null;
     renderGroups();
     return true;
   }
@@ -631,6 +662,10 @@
       if (action === "legacy-tools") openLegacyTools();
     });
     groups?.addEventListener("click", (event) => {
+      if (event.target.closest("[data-person-dashboard-filter-clear]")) {
+        clearDashboardFilter();
+        return;
+      }
       const card = event.target.closest("[data-person-id]");
       if (card) selectPerson(card.dataset.personId);
     });
@@ -667,6 +702,9 @@
     setPolityFilter,
     getPolityFilter: () => facetFilters.polity_id,
     getPolityOptions: polityOptions,
+    setDashboardFilter,
+    clearDashboardFilter,
+    getDashboardFilter: () => dashboardFilter ? Object.freeze({ code:dashboardFilter.code, label:dashboardFilter.label, person_ids:Object.freeze([...dashboardFilter.ids]) }) : null,
     yearLabel,
     boundaryLabel,
     safeHttpUrl,
