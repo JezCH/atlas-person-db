@@ -143,3 +143,43 @@ test("attention queue drill-down reuses Person Main instead of creating a duplic
   assert.match(mainSource, /data-person-dashboard-filter-clear/);
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
 });
+
+
+test("incomplete breakdown only exposes reasons supported by canonical state", () => {
+  const persons = [
+    { id:"p1", external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:"x"}] } },
+    { id:"p2", external_references:{}, facets:{ polities:[{id:"y"}] } },
+    { id:"p3", external_references:{ namuwiki:{status:"not_found"} }, facets:{ polities:[{id:"z"}] } }
+  ];
+  const result = model.buildIncompleteBreakdown({
+    personResult:{ persons },
+    domainResult:{ by_person_id:{ p1:"governance" } },
+    spatialIndex:{
+      polity_subregions:{ x:"western-europe" },
+      place_function_records:[],
+      review_queue:[
+        { polity_id:"y", reason:"transregional_empire_requires_activity_period_capital_review" }
+      ]
+    }
+  });
+  assert.equal(result.domain.available,false);
+  assert.equal(result.domain.total,2);
+  assert.equal(result.domain.unavailable_reason,"DOMAIN_UNRESOLVED_REASON_NOT_EXPOSED");
+  assert.deepEqual(result.namuwiki.rows.map((row) => [row.code,row.count]),[["REFERENCE_ABSENT",1]]);
+  assert.equal(result.spatial.total,2);
+  assert.deepEqual(result.spatial.rows.map((row) => [row.code,row.count]),[
+    ["transregional_empire_requires_activity_period_capital_review",1]
+  ]);
+  assert.equal(result.spatial.unattributed_count,1);
+  assert.equal(result.spatial.complete,false);
+  assert.equal(result.runtime.total,null);
+  assert.equal(result.duplicate.total,null);
+});
+
+test("breakdown UI keeps unavailable reasons visibly unknown and never invents dashboard reason taxonomies", () => {
+  assert.match(dashboardSource, /snapshot\.incomplete_breakdown/);
+  assert.match(dashboardSource, /Reason unavailable/);
+  assert.match(dashboardSource, /unavailable_reason/);
+  assert.doesNotMatch(dashboardSource, /Historical ambiguity|Conflict review|Explicit HOLD/);
+  assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
+});

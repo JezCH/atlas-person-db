@@ -149,6 +149,102 @@
     });
   }
 
+  function buildIncompleteBreakdown({ personResult, domainResult = null, spatialIndex = null } = {}) {
+    const persons = personResult?.persons || [];
+    const domainAvailable = Boolean(domainResult && domainResult.by_person_id && typeof domainResult.by_person_id === "object");
+    const domainByPerson = domainAvailable ? domainResult.by_person_id : {};
+    const domainUnresolved = domainAvailable
+      ? persons.filter((person) => !DOMAIN_CODES.includes(text(domainByPerson[person?.id]))).length
+      : null;
+
+    const namuwikiNotChecked = persons.filter((person) => {
+      const status = text(person?.external_references?.namuwiki?.status);
+      return status !== "linked" && status !== "not_found";
+    }).length;
+
+    let spatial = Object.freeze({
+      available:false,
+      complete:false,
+      total:null,
+      unit:"polity",
+      rows:Object.freeze([]),
+      unattributed_count:null,
+      unavailable_reason:"SPATIAL_SOURCE_UNAVAILABLE"
+    });
+    if (spatialIndex) {
+      const used = uniquePolityIds(personResult);
+      const subregions = spatialIndex.polity_subregions || {};
+      const placeFunctionIds = new Set((spatialIndex.place_function_records || []).map((row) => text(row?.polity_id)).filter(Boolean));
+      const unresolved = new Set([...used].filter((id) => !text(subregions[id]) && !placeFunctionIds.has(id)));
+      const reasonByPolity = new Map();
+      for (const row of spatialIndex.review_queue || []) {
+        const polityId = text(row?.polity_id);
+        const reason = text(row?.reason);
+        if (polityId && reason && unresolved.has(polityId) && !reasonByPolity.has(polityId)) reasonByPolity.set(polityId, reason);
+      }
+      const counts = new Map();
+      for (const polityId of unresolved) {
+        const reason = reasonByPolity.get(polityId);
+        if (reason) counts.set(reason, (counts.get(reason) || 0) + 1);
+      }
+      const rows = [...counts.entries()]
+        .sort(([a],[b]) => a.localeCompare(b))
+        .map(([reason,count]) => Object.freeze({ code:reason, label:reason, count, canonical:true }));
+      const unattributed = Math.max(0, unresolved.size - reasonByPolity.size);
+      spatial = Object.freeze({
+        available:true,
+        complete:unattributed === 0,
+        total:unresolved.size,
+        unit:"polity",
+        rows:Object.freeze(rows),
+        unattributed_count:unattributed,
+        unavailable_reason:null
+      });
+    }
+
+    return Object.freeze({
+      domain:Object.freeze({
+        available:false,
+        complete:false,
+        total:domainUnresolved,
+        unit:"person",
+        rows:Object.freeze([]),
+        unattributed_count:domainUnresolved,
+        unavailable_reason:domainAvailable ? "DOMAIN_UNRESOLVED_REASON_NOT_EXPOSED" : "PERSON_DOMAIN_SOURCE_UNAVAILABLE"
+      }),
+      namuwiki:Object.freeze({
+        available:true,
+        complete:true,
+        total:namuwikiNotChecked,
+        unit:"person",
+        rows:Object.freeze([
+          Object.freeze({ code:"REFERENCE_ABSENT", label:"Not checked", count:namuwikiNotChecked, canonical:false })
+        ]),
+        unattributed_count:0,
+        unavailable_reason:null
+      }),
+      spatial,
+      runtime:Object.freeze({
+        available:false,
+        complete:false,
+        total:null,
+        unit:"activity",
+        rows:Object.freeze([]),
+        unattributed_count:null,
+        unavailable_reason:"RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED"
+      }),
+      duplicate:Object.freeze({
+        available:false,
+        complete:false,
+        total:null,
+        unit:"person",
+        rows:Object.freeze([]),
+        unattributed_count:null,
+        unavailable_reason:"DUPLICATE_REVIEW_TARGET_SOURCE_REQUIRES_ADMIN_CONTRACT"
+      })
+    });
+  }
+
   function buildDashboardSnapshot({
     personResult,
     domainResult = null,
@@ -190,6 +286,7 @@
     const spatial = spatialStatus(personResult, spatialIndex);
     const polityCount = spatial.total;
     const attentionQueue = buildAttentionQueue({ personResult, domainResult, spatialIndex });
+    const incompleteBreakdown = buildIncompleteBreakdown({ personResult, domainResult, spatialIndex });
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
       key,
@@ -216,6 +313,7 @@
       }),
       domain_breakdown:Object.freeze(domainBreakdown),
       attention_queue:attentionQueue,
+      incomplete_breakdown:incompleteBreakdown,
       quality:Object.freeze({
         no_runtime_activity:noActivity,
         domain_unclassified:domainMissing,
@@ -228,5 +326,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildIncompleteBreakdown, buildDashboardSnapshot });
 });
