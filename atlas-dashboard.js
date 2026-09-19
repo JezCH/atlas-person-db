@@ -110,7 +110,7 @@
           <div class="dashboard-progress-list">
             ${progressRow("대표 분야 분류", w.domain, "persons.representative_domain")}
             ${progressRow("나무위키 검토", w.namuwiki, "linked + not_found")}
-            ${progressRow("Spatial 준비", w.spatial, "leaf / reviewed place-function")}
+            ${progressRow("Spatial 준비", w.spatial, "Runtime Activity placement")}
             ${progressRow("Runtime Activity 연결", w.runtime_activity, "Runtime Activity가 1건 이상인 Person")}
           </div>
         </article>
