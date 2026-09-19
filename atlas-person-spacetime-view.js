@@ -1099,6 +1099,28 @@
       );
     };
 
+    const isInsideScroll = (target) => {
+      const scroll = target?.closest?.(".spacetime-scroll");
+      return Boolean(scroll && mount.contains(scroll));
+    };
+
+    const preventBrowserPinch = (event) => {
+      if (!isInsideScroll(event.target)) return;
+      if (event.touches && event.touches.length < 2) return;
+      event.preventDefault();
+    };
+
+    mount.addEventListener("touchstart", preventBrowserPinch, { passive: false });
+    mount.addEventListener("touchmove", preventBrowserPinch, { passive: false });
+    mount.addEventListener("gesturestart", (event) => {
+      if (!isInsideScroll(event.target)) return;
+      event.preventDefault();
+    }, { passive: false });
+    mount.addEventListener("gesturechange", (event) => {
+      if (!isInsideScroll(event.target)) return;
+      event.preventDefault();
+    }, { passive: false });
+
     mount.addEventListener("pointerdown", (event) => {
       if (event.pointerType !== "touch") return;
       const scroll = event.target?.closest?.(".spacetime-scroll");
