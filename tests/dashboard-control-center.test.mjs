@@ -83,3 +83,13 @@ test("dashboard domain colors reuse canonical CSS tokens rather than duplicating
   for (const code of model.DOMAIN_CODES) assert.match(css, new RegExp(`--atlas-person-domain-${code}`));
   assert.doesNotMatch(css, /#D4AF37|#B83A3A|#3F78C5|#59636D|#2E8B57|#9A5BA5|#E2D7B9|#D96B1E/i);
 });
+
+
+test("Person domain UI delegates source caching and in-flight dedupe to the shared store", () => {
+  assert.match(domainUiSource, /dataStore\.loadPersonDomains\(\{ force \}\)/);
+  assert.doesNotMatch(domainUiSource, /let loaded\s*=/);
+  assert.doesNotMatch(domainUiSource, /let loadPromise\s*=/);
+  assert.doesNotMatch(domainUiSource, /if \(!force && loaded\)/);
+  assert.match(domainUiSource, /atlas-client-data-source-updated/);
+  assert.match(domainUiSource, /event\?\.detail\?\.key !== "personDomains"/);
+});

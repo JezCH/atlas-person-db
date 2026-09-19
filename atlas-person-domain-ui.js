@@ -16,8 +16,6 @@
   const LABELS = domainRegistry.LABELS;
   const domainByPerson = new Map();
   const writer = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
-  let loaded = false;
-  let loadPromise = null;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -46,24 +44,14 @@
   }
 
   async function loadDomains({ force = false } = {}) {
-    if (!force && loaded) return domainByPerson;
-    if (!force && loadPromise) return loadPromise;
-    loadPromise = (async () => {
-      const result = await dataStore.loadPersonDomains({ force });
-      domainByPerson.clear();
-      for (const row of result.rows || []) {
-        const personId = String(row?.person_id || "").trim();
-        const domain = String(row?.representative_domain || "").trim();
-        if (personId && LABELS[domain]) domainByPerson.set(personId, domain);
-      }
-      loaded = true;
-      return domainByPerson;
-    })();
-    try {
-      return await loadPromise;
-    } finally {
-      loadPromise = null;
+    const result = await dataStore.loadPersonDomains({ force });
+    domainByPerson.clear();
+    for (const row of result.rows || []) {
+      const personId = String(row?.person_id || "").trim();
+      const domain = String(row?.representative_domain || "").trim();
+      if (personId && LABELS[domain]) domainByPerson.set(personId, domain);
     }
+    return domainByPerson;
   }
 
   function decorateRow(row) {
@@ -186,6 +174,12 @@
   });
 
   window.addEventListener("atlas-person-main-rendered", scheduleDecorate);
+  window.addEventListener("atlas-client-data-source-updated", (event) => {
+    if (event?.detail?.key !== "personDomains" || event?.detail?.state?.status !== "ready") return;
+    loadDomains().then(scheduleDecorate).catch((error) => {
+      console.warn("ATLAS representative person domains could not refresh from shared store", error);
+    });
+  });
 
   const observer = new MutationObserver(() => scheduleDecorate());
   observer.observe(document.body, { childList:true, subtree:true });
