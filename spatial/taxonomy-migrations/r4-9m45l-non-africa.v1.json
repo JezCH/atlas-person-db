@@ -14,224 +14,398 @@
   "migrations": [
     {
       "polity_id": "031bdca0-d5e8-51e8-9f59-2db5ee51c55f",
-      "from": { "region_code": "southeast-asia", "subregion_code": null },
-      "to": { "region_code": "southeast-asia", "subregion_code": "mainland-southeast-asia" },
+      "from": {
+        "region_code": "southeast-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "southeast-asia",
+        "subregion_code": "mainland-southeast-asia"
+      },
       "reason": "Jiaozhou; reviewed Red River/northern Vietnam placement in mainland Southeast Asia."
     },
     {
       "polity_id": "0d7a50f2-e6ea-4a02-aedc-67c9b1bd9bb3",
-      "from": { "region_code": "central-asia", "subregion_code": null },
-      "to": { "region_code": "central-asia", "subregion_code": "western-siberia" },
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "central-asia",
+        "subregion_code": "western-siberia"
+      },
       "reason": "Nenets-Hanty Resistance; reviewed Western Siberian Ob-region placement."
     },
     {
       "polity_id": "0eec74a4-a2a4-43f3-b347-54370b94da14",
-      "from": { "region_code": "south-asia", "subregion_code": null },
-      "to": { "region_code": "south-asia", "subregion_code": "himalayas" },
+      "from": {
+        "region_code": "south-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "south-asia",
+        "subregion_code": "himalayas"
+      },
       "reason": "Gorkha Kingdom; reviewed Himalayan political core."
     },
     {
-      "polity_id": "14113865-1569-521a-bae5-8ae070f4817d",
-      "from": { "region_code": "east-asia", "subregion_code": null },
-      "to": { "region_code": "east-asia", "subregion_code": "china" },
-      "reason": "Ming dynasty; reviewed Chinese imperial core."
-    },
-    {
       "polity_id": "16add357-f450-515d-87d6-fc32835d0e13",
-      "from": { "region_code": "americas", "subregion_code": null },
-      "to": { "region_code": "americas", "subregion_code": "caribbean" },
+      "from": {
+        "region_code": "americas",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "americas",
+        "subregion_code": "caribbean"
+      },
       "reason": "Nassau Pirate Republic; reviewed Nassau/Bahamas Caribbean core."
     },
     {
       "polity_id": "18f27d4e-a522-59f3-92c3-09ca5202de0d",
-      "from": { "region_code": "west-asia", "subregion_code": null },
-      "to": { "region_code": "west-asia", "subregion_code": "levant" },
+      "from": {
+        "region_code": "west-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "west-asia",
+        "subregion_code": "levant"
+      },
       "reason": "Roman Judaea; reviewed Levantine placement."
     },
     {
       "polity_id": "1fa78018-e3af-55c3-8b8e-1bf7ad1c4b08",
-      "from": { "region_code": "americas", "subregion_code": null },
-      "to": { "region_code": "americas", "subregion_code": "north-america" },
+      "from": {
+        "region_code": "americas",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "americas",
+        "subregion_code": "north-america"
+      },
       "reason": "Iroquois Confederacy; reviewed northeastern North American core."
     },
     {
       "polity_id": "264b069b-994f-4a2c-8af1-7331c631a376",
-      "from": { "region_code": "europe", "subregion_code": null },
-      "to": { "region_code": "europe", "subregion_code": "eastern-europe" },
+      "from": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "europe",
+        "subregion_code": "eastern-europe"
+      },
       "reason": "January Uprising in Lithuania and Belarus; reviewed Eastern Europe placement."
     },
     {
       "polity_id": "29a81993-13e5-4bca-bf9b-d7421913dcd2",
-      "from": { "region_code": "central-asia", "subregion_code": null },
-      "to": { "region_code": "central-asia", "subregion_code": "western-siberia" },
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "central-asia",
+        "subregion_code": "western-siberia"
+      },
       "reason": "Pelym Mansi Principality; reviewed Western Siberian core."
     },
     {
       "polity_id": "4d4eee6d-389b-4ab6-8bca-fda9314ff796",
-      "from": { "region_code": "europe", "subregion_code": null },
-      "to": { "region_code": "europe", "subregion_code": "eastern-europe" },
+      "from": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "europe",
+        "subregion_code": "eastern-europe"
+      },
       "reason": "Old Great Bulgaria; reviewed Pontic-Azov placement in the project Eastern Europe leaf."
     },
     {
       "polity_id": "54433b65-1eb1-5c41-b440-6c4de8e18417",
-      "from": { "region_code": "east-asia", "subregion_code": null },
-      "to": { "region_code": "east-asia", "subregion_code": "japan" },
+      "from": {
+        "region_code": "east-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "east-asia",
+        "subregion_code": "japan"
+      },
       "reason": "Oda Clan; reviewed Japan placement."
     },
     {
       "polity_id": "5ee9928c-e6f4-4107-b078-1ae908db9beb",
-      "from": { "region_code": "central-asia", "subregion_code": null },
-      "to": { "region_code": "central-asia", "subregion_code": "tibetan-plateau" },
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "central-asia",
+        "subregion_code": "tibetan-plateau"
+      },
       "reason": "Ganden Phodrang; reviewed Tibetan Plateau core."
     },
     {
       "polity_id": "67ea837b-9ff6-4ade-ba49-00e73cf0b4b3",
-      "from": { "region_code": "americas", "subregion_code": null },
-      "to": { "region_code": "americas", "subregion_code": "north-america" },
+      "from": {
+        "region_code": "americas",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "americas",
+        "subregion_code": "north-america"
+      },
       "reason": "Las Californias; reviewed North America placement."
     },
     {
       "polity_id": "73539591-8035-4f03-ab39-796ebea9276b",
-      "from": { "region_code": "central-asia", "subregion_code": null },
-      "to": { "region_code": "central-asia", "subregion_code": "tibetan-plateau" },
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "central-asia",
+        "subregion_code": "tibetan-plateau"
+      },
       "reason": "Guge; reviewed western Tibetan Plateau core."
     },
     {
       "polity_id": "7518462f-9769-413f-a245-cc3825b45d17",
-      "from": { "region_code": "south-asia", "subregion_code": null },
-      "to": { "region_code": "south-asia", "subregion_code": "himalayas" },
+      "from": {
+        "region_code": "south-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "south-asia",
+        "subregion_code": "himalayas"
+      },
       "reason": "Kingdom of Nepal; reviewed durable Himalayan political core."
     },
     {
       "polity_id": "769e6a5e-b49b-5fec-9a2b-fa78999763a1",
-      "from": { "region_code": "oceania", "subregion_code": null },
-      "to": { "region_code": "oceania", "subregion_code": "australasia" },
+      "from": {
+        "region_code": "oceania",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "oceania",
+        "subregion_code": "australasia"
+      },
       "reason": "Maori; reviewed Aotearoa/New Zealand placement in Australasia."
     },
     {
-      "polity_id": "80810807-0abb-5255-b40c-1945f4073eb1",
-      "from": { "region_code": "south-asia", "subregion_code": null },
-      "to": { "region_code": "south-asia", "subregion_code": "north-india-ganges" },
-      "reason": "Shakya; reviewed Kapilavastu/Terai placement in the North India/Ganges leaf."
-    },
-    {
       "polity_id": "8382a731-65c6-4479-8fb1-553141313e2b",
-      "from": { "region_code": "central-asia", "subregion_code": null },
-      "to": { "region_code": "central-asia", "subregion_code": "western-siberia" },
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "central-asia",
+        "subregion_code": "western-siberia"
+      },
       "reason": "Mangazeya; reviewed northwestern Siberian core."
     },
     {
       "polity_id": "84e6365e-cd43-42cd-874e-3c517cd8243a",
-      "from": { "region_code": "central-asia", "subregion_code": null },
-      "to": { "region_code": "central-asia", "subregion_code": "western-siberia" },
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "central-asia",
+        "subregion_code": "western-siberia"
+      },
       "reason": "Piebald Horde; reviewed Western Siberian core."
     },
     {
       "polity_id": "8b335f26-bbc3-48db-9af7-66d29eaa8be5",
-      "from": { "region_code": "east-asia", "subregion_code": null },
-      "to": { "region_code": "east-asia", "subregion_code": "eastern-siberia-far-east" },
+      "from": {
+        "region_code": "east-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "east-asia",
+        "subregion_code": "eastern-siberia-far-east"
+      },
       "reason": "Itelmen; prior review fixed Kamchatka as the historical homeland, now covered by the r4 Eastern Siberia/Far East leaf."
     },
     {
       "polity_id": "8ed716e1-44b9-4cdd-8efd-ee19a4b63f40",
-      "from": { "region_code": "central-asia", "subregion_code": null },
-      "to": { "region_code": "central-asia", "subregion_code": "western-siberia" },
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "central-asia",
+        "subregion_code": "western-siberia"
+      },
       "reason": "Yamal Nenets; reviewed Western Siberian placement."
     },
     {
       "polity_id": "95fc9762-58e2-4045-aba4-d555ca0ebd66",
-      "from": { "region_code": "central-asia", "subregion_code": null },
-      "to": { "region_code": "central-asia", "subregion_code": "tibetan-plateau" },
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "central-asia",
+        "subregion_code": "tibetan-plateau"
+      },
       "reason": "Khoshut Khanate; reviewed Tibetan Plateau/Qinghai core."
     },
     {
       "polity_id": "9639b3f0-9b94-42d3-98b9-273c7a601def",
-      "from": { "region_code": "central-asia", "subregion_code": null },
-      "to": { "region_code": "central-asia", "subregion_code": "tibetan-plateau" },
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "central-asia",
+        "subregion_code": "tibetan-plateau"
+      },
       "reason": "Tibetan Empire; reviewed durable Tibetan Plateau political core."
     },
     {
       "polity_id": "a127a8aa-6e17-5045-9bd6-de4df7b53390",
-      "from": { "region_code": "africa", "subregion_code": null },
-      "to": { "region_code": "africa", "subregion_code": "central-africa" },
+      "from": {
+        "region_code": "africa",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "africa",
+        "subregion_code": "central-africa"
+      },
       "reason": "Kingdoms of Ndongo and Matamba; reviewed west-central African core."
     },
     {
       "polity_id": "b82ec632-5365-5f62-8aec-550548d63f83",
-      "from": { "region_code": "west-asia", "subregion_code": null },
-      "to": { "region_code": "west-asia", "subregion_code": "arabia" },
+      "from": {
+        "region_code": "west-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "west-asia",
+        "subregion_code": "arabia"
+      },
       "reason": "Medina; reviewed western Arabia placement."
     },
     {
       "polity_id": "ba7a7e2d-3ba5-5a54-a98f-88294d3429f7",
-      "from": { "region_code": "europe", "subregion_code": null },
-      "to": { "region_code": "europe", "subregion_code": "western-europe" },
+      "from": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "europe",
+        "subregion_code": "western-europe"
+      },
       "reason": "Dutch Revolt; reviewed Low Countries placement in Western Europe."
     },
     {
-      "polity_id": "c591bebb-90a3-5a96-90c5-9870ddd7f637",
-      "from": { "region_code": "americas", "subregion_code": null },
-      "to": { "region_code": "americas", "subregion_code": "north-america" },
-      "reason": "Haudenosaunee Confederacy; reviewed northeastern North American core."
-    },
-    {
       "polity_id": "cfe1faef-3a82-5b6c-b542-cff2bd667c6c",
-      "from": { "region_code": "europe", "subregion_code": null },
-      "to": { "region_code": "europe", "subregion_code": "western-europe" },
+      "from": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "europe",
+        "subregion_code": "western-europe"
+      },
       "reason": "Gaul; reviewed Western Europe placement."
     },
     {
       "polity_id": "d16ef45f-9721-4eaf-809f-c2ccdc499fb4",
-      "from": { "region_code": "east-asia", "subregion_code": null },
-      "to": { "region_code": "east-asia", "subregion_code": "manchuria" },
+      "from": {
+        "region_code": "east-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "east-asia",
+        "subregion_code": "manchuria"
+      },
       "reason": "Gojoseon; user-reviewed project decision fixes static placement in Manchuria."
     },
     {
       "polity_id": "d4c6c00a-5309-48b9-aaaf-80d43ca3700a",
-      "from": { "region_code": "europe", "subregion_code": null },
-      "to": { "region_code": "europe", "subregion_code": "central-europe" },
+      "from": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "europe",
+        "subregion_code": "central-europe"
+      },
       "reason": "Lotharingia; reviewed Central Europe representative placement."
     },
     {
       "polity_id": "d8477ae3-f78a-4053-a1ac-778df48b113b",
-      "from": { "region_code": "europe", "subregion_code": null },
-      "to": { "region_code": "europe", "subregion_code": "central-europe" },
+      "from": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "europe",
+        "subregion_code": "central-europe"
+      },
       "reason": "Saxons; reviewed northwestern German core in Central Europe."
     },
     {
       "polity_id": "e07ee32e-e126-5511-9d3d-d29e4444bd9c",
-      "from": { "region_code": "east-asia", "subregion_code": null },
-      "to": { "region_code": "east-asia", "subregion_code": "japan" },
+      "from": {
+        "region_code": "east-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "east-asia",
+        "subregion_code": "japan"
+      },
       "reason": "Uesugi Clan; reviewed Japan placement."
     },
     {
       "polity_id": "e146e6ef-15f0-4bca-9e5d-b26672c65018",
-      "from": { "region_code": "east-asia", "subregion_code": null },
-      "to": { "region_code": "east-asia", "subregion_code": "eastern-siberia-far-east" },
+      "from": {
+        "region_code": "east-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "east-asia",
+        "subregion_code": "eastern-siberia-far-east"
+      },
       "reason": "Kangalas Ulus; prior review fixed Middle Lena/Yakutia as its core, now covered by the r4 Eastern Siberia/Far East leaf."
     },
     {
       "polity_id": "e1548cb1-f89d-538b-9fb2-bad02ad87f8e",
-      "from": { "region_code": "east-asia", "subregion_code": null },
-      "to": { "region_code": "east-asia", "subregion_code": "japan" },
+      "from": {
+        "region_code": "east-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "east-asia",
+        "subregion_code": "japan"
+      },
       "reason": "Toyotomi Regime; reviewed Japan placement."
     },
     {
       "polity_id": "e3ca4f3c-3504-4830-b141-f4cdd0157763",
-      "from": { "region_code": "south-asia", "subregion_code": null },
-      "to": { "region_code": "south-asia", "subregion_code": "himalayas" },
+      "from": {
+        "region_code": "south-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "south-asia",
+        "subregion_code": "himalayas"
+      },
       "reason": "Kingdom of Bhutan; reviewed eastern-Himalayan core."
     },
     {
-      "polity_id": "efc86adb-7fc7-5efe-9c4d-7cd8e224890f",
-      "from": { "region_code": "europe", "subregion_code": null },
-      "to": { "region_code": "europe", "subregion_code": "northern-europe" },
-      "reason": "Swedish Empire; reviewed Swedish/Stockholm core in Northern Europe."
-    },
-    {
       "polity_id": "f67af5a4-a2f5-492d-9220-92fe401bc167",
-      "from": { "region_code": "central-asia", "subregion_code": null },
-      "to": { "region_code": "central-asia", "subregion_code": "western-siberia" },
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "central-asia",
+        "subregion_code": "western-siberia"
+      },
       "reason": "Khanate of Sibir; reviewed Tobol-Irtysh Western Siberian core."
     }
   ]
