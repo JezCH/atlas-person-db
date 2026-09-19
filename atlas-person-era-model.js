@@ -1,4 +1,9 @@
-(() => {
+((factory)=>{
+  "use strict";
+  const api=factory();
+  if(typeof module==="object"&&module.exports) module.exports=api;
+  if(typeof window!=="undefined") window.ATLAS_PERSON_ERA_MODEL=api;
+})(()=>{
   "use strict";
 
   const ERAS = Object.freeze([
@@ -27,5 +32,5 @@
     return ERAS.find((era) => containsYear(era, year)) || UNKNOWN_ERA;
   }
 
-  window.ATLAS_PERSON_ERA_MODEL = Object.freeze({ ERAS, UNKNOWN_ERA, containsYear, eraForYear });
-})();
+  return Object.freeze({ ERAS, UNKNOWN_ERA, containsYear, eraForYear });
+});

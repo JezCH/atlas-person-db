@@ -6,14 +6,18 @@
   const spatialModel = typeof module === "object" && module.exports
     ? require("./atlas-person-spacetime-model.js")
     : root?.ATLAS_PERSON_SPACETIME_MODEL;
-  const api = factory(domainRegistry, spatialModel);
+  const eraModel = typeof module === "object" && module.exports
+    ? require("./atlas-person-era-model.js")
+    : root?.ATLAS_PERSON_ERA_MODEL;
+  const api = factory(domainRegistry, spatialModel, eraModel);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.ATLAS_DASHBOARD_MODEL = api;
-})(typeof globalThis !== "undefined" ? globalThis : this, (domainRegistry, spatialModel) => {
+})(typeof globalThis !== "undefined" ? globalThis : this, (domainRegistry, spatialModel, eraModel) => {
   "use strict";
 
   if (!domainRegistry) throw new Error("ATLAS_PERSON_DOMAIN_REGISTRY is required");
   if (!spatialModel) throw new Error("ATLAS_PERSON_SPACETIME_MODEL is required");
+  if (!eraModel) throw new Error("ATLAS_PERSON_ERA_MODEL is required");
   const DOMAIN_CODES = domainRegistry.CODES;
 
   function text(value) { return value == null ? "" : String(value).trim(); }
@@ -385,6 +389,94 @@
     });
   }
 
+  function eraBounds(era) {
+    const start = Number.isInteger(era?.start_year) ? spatialModel.historicalYearToOrdinal(era.start_year) : Number.NEGATIVE_INFINITY;
+    const end = Number.isInteger(era?.end_year) ? spatialModel.historicalYearToOrdinal(era.end_year) : Number.POSITIVE_INFINITY;
+    return Object.freeze({ start, end });
+  }
+
+  function segmentOverlapsEra(segment, era) {
+    const start = spatialModel.historicalYearToOrdinal(Number(segment?.start_year));
+    const end = spatialModel.historicalYearToOrdinal(Number(segment?.end_year));
+    if (!Number.isInteger(start) || !Number.isInteger(end)) return false;
+    const bounds = eraBounds(era);
+    return start <= bounds.end && end >= bounds.start;
+  }
+
+  function buildEraRegionHeatmap({ personResult, spatialIndex } = {}) {
+    const eras = eraModel.ERAS;
+    if (!spatialIndex) return Object.freeze({
+      available:false,
+      unit:"placed_activity",
+      eras,
+      regions:Object.freeze([]),
+      rows:Object.freeze([]),
+      placed_activity_count:null,
+      unresolved_activity_count:null,
+      max_count:null,
+      unavailable_reason:"SPATIAL_SOURCE_UNAVAILABLE"
+    });
+
+    const regions = Object.freeze((Array.isArray(spatialIndex.regions) && spatialIndex.regions.length
+      ? spatialIndex.regions
+      : spatialModel.REGION_DEFINITIONS).map((region) => Object.freeze({
+        code:text(region?.code),
+        label:text(region?.label) || text(region?.code)
+      })).filter((region) => region.code));
+    const regionCodes = new Set(regions.map((region) => region.code));
+    const lookup = spatialModel.createSpatialLookup(spatialIndex);
+    const counts = new Map();
+    const seenCells = new Set();
+    const placedActivities = new Set();
+    let unresolvedActivityCount = 0;
+
+    for (const person of personResult?.persons || []) {
+      for (const activity of person?.activity_summaries || []) {
+        const activityId = text(activity?.id);
+        const result = spatialModel.resolveActivityPlacement(activity,lookup);
+        if (result?.status !== "placed") {
+          unresolvedActivityCount += 1;
+          continue;
+        }
+        if (activityId) placedActivities.add(activityId);
+        for (const segment of result.segments || []) {
+          const regionCode = text(segment?.region_code);
+          if (!regionCodes.has(regionCode)) continue;
+          for (const era of eras) {
+            if (!segmentOverlapsEra(segment,era)) continue;
+            const key = `${activityId || text(person?.id)}|${era.code}|${regionCode}`;
+            if (seenCells.has(key)) continue;
+            seenCells.add(key);
+            const cell = `${era.code}|${regionCode}`;
+            counts.set(cell,(counts.get(cell) || 0) + 1);
+          }
+        }
+      }
+    }
+
+    let maxCount = 0;
+    const rows = eras.map((era) => {
+      const cells = regions.map((region) => {
+        const count = counts.get(`${era.code}|${region.code}`) || 0;
+        maxCount=Math.max(maxCount,count);
+        return Object.freeze({ era_code:era.code, region_code:region.code, count });
+      });
+      return Object.freeze({ era, cells:Object.freeze(cells), total:cells.reduce((sum,cell)=>sum+cell.count,0) });
+    });
+
+    return Object.freeze({
+      available:true,
+      unit:"placed_activity",
+      eras,
+      regions,
+      rows:Object.freeze(rows),
+      placed_activity_count:placedActivities.size,
+      unresolved_activity_count:unresolvedActivityCount,
+      max_count:maxCount,
+      unavailable_reason:null
+    });
+  }
+
   function buildDashboardSnapshot({
     personResult,
     domainResult = null,
@@ -432,6 +524,7 @@
     const incompleteBreakdown = buildIncompleteBreakdown({ personResult, domainResult, spatialIndex });
     const recentDelta = buildRecentDelta(recentDeltaResult);
     const systemStrip = buildSystemStrip(systemIdentityResult, sourceStates);
+    const coverageHeatmap = buildEraRegionHeatmap({ personResult, spatialIndex });
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
       key,
@@ -462,6 +555,7 @@
       incomplete_breakdown:incompleteBreakdown,
       recent_delta:recentDelta,
       system_strip:systemStrip,
+      coverage_heatmap:coverageHeatmap,
       quality:Object.freeze({
         no_runtime_activity:noActivity,
         spatial_unresolved:spatial.unresolved,
@@ -472,5 +566,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildSystemStrip, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildSystemStrip, buildEraRegionHeatmap, buildDashboardSnapshot });
 });
