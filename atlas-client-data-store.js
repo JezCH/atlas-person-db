@@ -208,7 +208,7 @@
     if (payload?.ok !== true || payload?.schema !== "atlas-runtime-publication/v1") {
       throw new Error("INVALID_RUNTIME_PUBLICATION_RESPONSE");
     }
-    const latest = payload.latest_compile;
+    const latest = payload.active_compile;
     const latestCompile = latest && typeof latest === "object" ? Object.freeze({
       compiler_version:String(latest.compiler_version || "").trim() || null,
       input_row_count:Number(latest.input_row_count),
@@ -234,9 +234,9 @@
       source:payload.source || null,
       current_authoring_activity_count:authoringCount,
       current_runtime_activity_count:runtimeCount,
-      latest_compile:latestCompile,
+      active_compile:latestCompile,
       authoring_delta_since_compile:payload.authoring_delta_since_compile == null ? null : Number(payload.authoring_delta_since_compile),
-      projection_matches_latest_compile:payload.projection_matches_latest_compile == null ? null : payload.projection_matches_latest_compile === true
+      projection_matches_active_compile:payload.projection_matches_active_compile == null ? null : payload.projection_matches_active_compile === true
     });
   }
 
