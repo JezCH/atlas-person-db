@@ -34,7 +34,8 @@ const STALE_ORPHANS = Object.freeze([
 const RETIRED_RELINK_SOURCES = Object.freeze([
   '29b6b4bd-f767-4995-9e36-d50ecba7db88',
   '63c0aa8d-bc0b-42c5-9118-612b6c650646',
-  'bcb090c2-7906-4c3e-91cf-99b02646764e'
+  'bcb090c2-7906-4c3e-91cf-99b02646764e',
+  '02e66261-7798-4144-b298-9bc41ee2215b'
 ]);
 const ALL_TARGETS = Object.freeze([AZAD_HIND, RASHIDUN, ...MOBILE_REVIEW, ...STALE_ORPHANS, ...RETIRED_RELINK_SOURCES]);
 
