@@ -69,7 +69,7 @@ test("mobile status surface keeps only core chips visible until expanded", () =>
 test("mobile spacetime sticky headers stay below the mobile app bar", () => {
   assert.match(mobileCss, /\.mobile-appbar \{[\s\S]*?z-index:40;/);
   assert.match(css, /\.spacetime-frame\.is-mobile-presentation \.spacetime-sticky-corner\{z-index:35\}/);
-  assert.match(css, /\.spacetime-frame\.is-mobile-presentation \.spacetime-region-head\{z-index:30;/);
+  assert.match(css, /\.spacetime-frame\.is-mobile-presentation \.spacetime-region-head\{z-index:30\}/);
 });
 
 test("mobile minimap is a non-overlay sidecar panel", () => {
