@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-20T08:44:02.000Z",
+  "generated_at": "2026-09-20T10:27:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -341,7 +341,6 @@
     "82671a4d-2f26-47e4-b06b-7992c46d7b76": "south-asia",
     "8272e9a1-9564-451a-91ae-f6f0f1e3b279": "europe",
     "827d3753-154a-4575-aff0-a46048b8fe42": "africa",
-    "829b5976-18f4-48e3-a35d-3c141858ce56": "europe",
     "83699c22-0b91-5097-81bb-7a2310acaf72": "europe",
     "83dafb84-acce-4405-935a-a29890c480b2": "americas",
     "83f407e7-61af-4c5e-92f4-6ba0b7918101": "europe",
@@ -1894,7 +1893,6 @@
     "82671a4d-2f26-47e4-b06b-7992c46d7b76": "northwest-south-asia",
     "8272e9a1-9564-451a-91ae-f6f0f1e3b279": "central-europe",
     "827d3753-154a-4575-aff0-a46048b8fe42": "nile-valley",
-    "829b5976-18f4-48e3-a35d-3c141858ce56": "balkans",
     "83699c22-0b91-5097-81bb-7a2310acaf72": "britain-ireland",
     "83dafb84-acce-4405-935a-a29890c480b2": "mesoamerica",
     "83f407e7-61af-4c5e-92f4-6ba0b7918101": "western-europe",
