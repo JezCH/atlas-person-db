@@ -60,6 +60,14 @@ test("subregion context remains available across the widened range", () => {
   assert.doesNotMatch(semanticAxis, /stage: "macroregion"/);
 });
 
+test("desktop sidecar stays compact and expands the inspector only when populated", () => {
+  assert.match(css, /\.spacetime-sidecar\{display:grid;gap:8px;min-width:0;align-self:start;position:sticky;top:8px;max-height:clamp\(480px,62vh,720px\);overflow:hidden\}/);
+  assert.match(css, /\.spacetime-sticky-inspector:not\(\.is-empty\)\{max-height:calc\(clamp\(480px,62vh,720px\) - 148px\)\}/);
+  assert.match(css, /\.spacetime-sticky-inspector\.is-empty\{min-height:0;max-height:76px;padding:9px 10px/);
+  assert.match(css, /\.spacetime-minimap-surface\{[^}]*height:112px/);
+  assert.match(css, /\.spacetime-sidecar\{position:relative;top:auto;max-height:none;overflow:visible\}/);
+});
+
 test("spacetime top chrome keeps compact controls and moves precision guidance behind a disclosure", () => {
   assert.match(view, /<section class="spacetime-toolbar card">[\s\S]*?<div class="spacetime-controls">[\s\S]*?<details class="spacetime-precision-legend">[\s\S]*?<summary>표시 기준<\/summary>/);
   assert.match(view, /<div class="spacetime-precision-content">[\s\S]*?공간 배치 정밀도/);

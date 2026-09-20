@@ -40,9 +40,10 @@
 .spacetime-precision-content>small{font-size:9px;color:#7c8798;white-space:nowrap}
 .spacetime-workspace{display:grid;grid-template-columns:minmax(0,1fr) clamp(280px,17vw,320px);gap:10px;align-items:start;margin-bottom:8px}
 .spacetime-workspace>.spacetime-frame{min-width:0}
-.spacetime-sidecar{display:grid;gap:10px;min-width:0;align-self:start}
-.spacetime-sticky-inspector{position:sticky;top:8px;align-self:start;display:grid;gap:9px;max-height:clamp(520px,72vh,860px);padding:12px;overflow:auto;border-color:#cad8ed;background:#f8fbff;box-sizing:border-box;scrollbar-width:thin}
-.spacetime-sticky-inspector.is-empty{min-height:140px;align-content:start;color:#6f7d90}
+.spacetime-sidecar{display:grid;gap:8px;min-width:0;align-self:start;position:sticky;top:8px;max-height:clamp(480px,62vh,720px);overflow:hidden}
+.spacetime-sticky-inspector{position:relative;top:auto;align-self:start;display:grid;gap:9px;max-height:none;padding:12px;overflow:auto;border-color:#cad8ed;background:#f8fbff;box-sizing:border-box;scrollbar-width:thin}
+.spacetime-sticky-inspector:not(.is-empty){max-height:calc(clamp(480px,62vh,720px) - 148px)}
+.spacetime-sticky-inspector.is-empty{min-height:0;max-height:76px;padding:9px 10px;align-content:start;color:#6f7d90}
 .spacetime-sticky-inspector.is-empty>div{display:grid;gap:5px}
 .spacetime-sticky-inspector.is-empty small,.spacetime-inspector-person>small{font-size:9px;letter-spacing:.12em;color:#72819a}
 .spacetime-sticky-inspector.is-empty strong{font-size:14px;color:#34445e}
@@ -180,7 +181,7 @@
 .spacetime-minimap-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
 .spacetime-minimap-head strong{font-size:10px;color:#30435f}
 .spacetime-minimap-head span{font-size:8px;color:#8390a2}
-.spacetime-minimap-surface{position:relative;width:100%;height:142px;overflow:hidden;border:1px solid #d4deea;border-radius:7px;background:#f8fafc;cursor:crosshair;touch-action:none;box-sizing:border-box}
+.spacetime-minimap-surface{position:relative;width:100%;height:112px;overflow:hidden;border:1px solid #d4deea;border-radius:7px;background:#f8fafc;cursor:crosshair;touch-action:none;box-sizing:border-box}
 .spacetime-minimap-surface:focus-visible{outline:2px solid #7f97bd;outline-offset:2px}
 .spacetime-minimap-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .spacetime-minimap-viewport{position:absolute;z-index:3;min-width:4px;min-height:4px;border:2px solid rgba(49,82,127,.9);background:rgba(96,124,169,.11);box-sizing:border-box;pointer-events:none}
@@ -200,8 +201,8 @@
 .spacetime-loading,.spacetime-error{padding:28px}
 .spacetime-loading p,.spacetime-error p{color:#6b7789}
 .spacetime-error strong{color:#a43a3a}
-@media(max-width:1100px){.spacetime-region-head-layer.is-subregion .spacetime-region-head-band strong{font-size:8px}.spacetime-workspace{grid-template-columns:minmax(0,1fr) 286px}.spacetime-minimap{width:100%}.spacetime-minimap-surface{height:138px}}
-@media(max-width:900px){.spacetime-workspace{grid-template-columns:1fr}.spacetime-sticky-inspector{position:relative;top:auto;max-height:none}.spacetime-scroll{height:65vh;min-height:460px}.spacetime-search-result-list button{min-width:165px}.spacetime-unresolved-grid{grid-template-columns:1fr}.spacetime-unresolved-row{grid-template-columns:1fr 1fr}.spacetime-unresolved-row small{grid-column:1/-1}.spacetime-minimap{width:100%;padding:8px}.spacetime-minimap-surface{height:132px}.spacetime-minimap-head span{display:none}}
+@media(max-width:1100px){.spacetime-region-head-layer.is-subregion .spacetime-region-head-band strong{font-size:8px}.spacetime-workspace{grid-template-columns:minmax(0,1fr) 286px}.spacetime-minimap{width:100%}.spacetime-minimap-surface{height:108px}}
+@media(max-width:900px){.spacetime-workspace{grid-template-columns:1fr}.spacetime-sidecar{position:relative;top:auto;max-height:none;overflow:visible}.spacetime-sticky-inspector,.spacetime-sticky-inspector:not(.is-empty){position:relative;top:auto;max-height:none}.spacetime-scroll{height:65vh;min-height:460px}.spacetime-search-result-list button{min-width:165px}.spacetime-unresolved-grid{grid-template-columns:1fr}.spacetime-unresolved-row{grid-template-columns:1fr 1fr}.spacetime-unresolved-row small{grid-column:1/-1}.spacetime-minimap{width:100%;padding:8px}.spacetime-minimap-surface{height:132px}.spacetime-minimap-head span{display:none}}
 @media(max-width:760px){
 .person-spacetime-mount{width:100%;max-width:100%;min-width:0;overflow-x:clip;contain:inline-size}
 .spacetime-workspace,.spacetime-frame,.spacetime-scroll{width:100%;max-width:100%;min-width:0}

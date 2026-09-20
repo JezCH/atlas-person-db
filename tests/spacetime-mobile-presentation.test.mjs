@@ -74,7 +74,8 @@ test("mobile spacetime sticky headers stay below the mobile app bar", () => {
 
 test("mobile minimap is a non-overlay sidecar panel", () => {
   assert.match(view, /<aside class="spacetime-sidecar">[\s\S]*?\$\{renderMinimap\(\)\}[\s\S]*?\$\{renderStickyInspector/);
-  assert.match(css, /\.spacetime-sidecar\{display:grid;gap:10px;min-width:0;align-self:start\}/);
+  assert.match(css, /\.spacetime-sidecar\{display:grid;gap:8px;min-width:0;align-self:start;position:sticky/);
+  assert.match(css, /\.spacetime-sidecar\{position:relative;top:auto;max-height:none;overflow:visible\}/);
   assert.match(css, /\.spacetime-minimap\{position:relative;right:auto;bottom:auto;z-index:1;width:100%/);
   assert.doesNotMatch(css, /\.spacetime-frame\.is-mobile-presentation \.spacetime-minimap/);
 });
