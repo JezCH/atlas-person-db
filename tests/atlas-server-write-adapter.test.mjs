@@ -134,3 +134,92 @@ test("server adapter rejects a stale dual-write server deployment", async () => 
   assert.equal(result.committed, false);
   assert.match(result.errors[0], /unexpected server write mode/);
 });
+
+
+test("server adapter uploads Person portrait through authenticated consolidated portrait mutation surface", async () => {
+  const calls = [];
+  const fetchImpl = async (url, options = {}) => {
+    calls.push({ url, options });
+    if (url === "/api/atlas-session") return jsonResponse(200, { ok:true, authenticated:true });
+    assert.equal(url, "/api/atlas-mutate?__atlas_mutation_surface=person-portrait");
+    assert.equal(options.method, "PUT");
+    const body = JSON.parse(options.body);
+    assert.equal(body.person_id, "11111111-1111-4111-8111-111111111111");
+    assert.equal(body.image_base64, "QUJD");
+    assert.equal(body.portrait_kind, "artwork");
+    assert.equal(body.evidence_level, "direct");
+    assert.deepEqual(body.sources, []);
+    return jsonResponse(200, {
+      ok:true,
+      schema:"atlas-person-portrait/v1",
+      committed:true,
+      replay:false,
+      person_id:body.person_id,
+      portrait:{ asset_sha256:"a".repeat(64) }
+    });
+  };
+  const adapter = createAdapter({ fetchImpl, credentialProvider:async () => "unused" });
+  const result = await adapter.setPersonPortrait({
+    person_id:"11111111-1111-4111-8111-111111111111",
+    image_base64:"QUJD",
+    portrait_kind:"artwork",
+    evidence_level:"direct",
+    sources:[]
+  });
+  assert.equal(result.committed, true);
+  assert.equal(result.operation, "set_person_portrait");
+  assert.equal(result.errors.length, 0);
+  assert.deepEqual(calls.map((call) => `${call.options.method}:${call.url}`), [
+    "GET:/api/atlas-session",
+    "PUT:/api/atlas-mutate?__atlas_mutation_surface=person-portrait"
+  ]);
+});
+
+test("server adapter deletes Person portrait through authenticated consolidated portrait mutation surface", async () => {
+  const calls = [];
+  const fetchImpl = async (url, options = {}) => {
+    calls.push({ url, options });
+    if (url === "/api/atlas-session") return jsonResponse(200, { ok:true, authenticated:true });
+    assert.equal(url, "/api/atlas-mutate?__atlas_mutation_surface=person-portrait");
+    assert.equal(options.method, "DELETE");
+    assert.deepEqual(JSON.parse(options.body), {
+      person_id:"11111111-1111-4111-8111-111111111111"
+    });
+    return jsonResponse(200, {
+      ok:true,
+      schema:"atlas-person-portrait/v1",
+      committed:true,
+      replay:false,
+      person_id:"11111111-1111-4111-8111-111111111111",
+      portrait:null,
+      storage_cleanup:{ attempted:true, ok:true }
+    });
+  };
+  const adapter = createAdapter({ fetchImpl, credentialProvider:async () => "unused" });
+  const result = await adapter.deletePersonPortrait("11111111-1111-4111-8111-111111111111");
+  assert.equal(result.committed, true);
+  assert.equal(result.operation, "delete_person_portrait");
+  assert.equal(result.portrait, null);
+  assert.deepEqual(calls.map((call) => `${call.options.method}:${call.url}`), [
+    "GET:/api/atlas-session",
+    "DELETE:/api/atlas-mutate?__atlas_mutation_surface=person-portrait"
+  ]);
+});
+
+test("portrait mutation surfaces server error codes through the same adapter failure contract", async () => {
+  const fetchImpl = async (url) => {
+    if (url === "/api/atlas-session") return jsonResponse(200, { ok:true, authenticated:true });
+    return jsonResponse(400, { ok:false, schema:"atlas-person-portrait/v1", code:"PERSON_PORTRAIT_WEBP_REQUIRED" });
+  };
+  const adapter = createAdapter({ fetchImpl, credentialProvider:async () => "unused" });
+  const result = await adapter.setPersonPortrait({
+    person_id:"11111111-1111-4111-8111-111111111111",
+    image_base64:"QUJD",
+    portrait_kind:"artwork",
+    evidence_level:"direct",
+    sources:[]
+  });
+  assert.equal(result.committed, false);
+  assert.deepEqual(result.errors, ["PERSON_PORTRAIT_WEBP_REQUIRED"]);
+  assert.equal(result.http_status, 400);
+});
