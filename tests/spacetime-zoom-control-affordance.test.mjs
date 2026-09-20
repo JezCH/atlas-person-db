@@ -31,7 +31,7 @@ function button(textContent = "") {
   };
 }
 
-function zoomMount(current = "500%") {
+function zoomMount(current = "500%", minimum = null) {
   const zoomOut = button();
   const zoomValue = button(current);
   const zoomIn = button();
@@ -43,7 +43,10 @@ function zoomMount(current = "500%") {
     "#spacetimeCameraZoomReset": reset
   };
   return {
-    mount: { querySelector(selector) { return nodes[selector] || null; } },
+    mount: {
+      dataset: minimum == null ? {} : { spacetimeMinimumZoomPercent: String(minimum) },
+      querySelector(selector) { return nodes[selector] || null; }
+    },
     zoomOut,
     zoomValue,
     zoomIn,
@@ -62,7 +65,7 @@ test("production page loads the unified spacetime camera control state", () => {
   assert.doesNotMatch(controlCss, /spacetime-time-camera/);
 });
 
-test("100 percent is minimum and 500 percent remains the reset default", () => {
+test("100 percent remains the technical floor while the effective minimum can fit the viewport", () => {
   const api = loadControlApi();
   const state = zoomMount("500%");
 
@@ -82,6 +85,14 @@ test("100 percent is minimum and 500 percent remains the reset default", () => {
   assert.equal(state.zoomOut.disabled, false);
   assert.equal(state.zoomIn.disabled, false);
   assert.equal(state.reset.disabled, false);
+
+  const fitted = zoomMount("134%", 134);
+  assert.equal(api.minimumPercentForMount(fitted.mount), 134);
+  assert.equal(api.syncZoomControlState(fitted.mount), true);
+  assert.equal(fitted.zoomOut.disabled, true);
+  fitted.zoomValue.textContent = "168%";
+  assert.equal(api.syncZoomControlState(fitted.mount), true);
+  assert.equal(fitted.zoomOut.disabled, false);
 });
 
 test("1500 percent is the maximum", () => {
@@ -108,6 +119,10 @@ test("visible bounds stay aligned with the unified renderer camera contract", ()
   assert.equal(Number(minMatch[1]) * 100, 100);
   assert.equal(Number(maxMatch[1]) * 100, 1500);
   assert.equal(Number(adapterMaxMatch[1]), Number(maxMatch[1]) * 100);
+  assert.match(viewSource, /function viewportFitMinimumZoom\(scroll, referenceZoom = cameraZoom\)/);
+  assert.match(viewSource, /usableWidth \/ worldWidthAtOne/);
+  assert.match(viewSource, /spacetimeMinimumZoomPercent/);
+  assert.match(controlSource, /minimumPercentForMount\(mount\)/);
   assert.match(viewSource, /id="spacetimeCameraZoomReset"[^>]*aria-label="500% 기본 배율로 복귀"[^>]*>기본<\/button>/);
   assert.doesNotMatch(viewSource, /spacetimeTimeZoom/);
   assert.doesNotMatch(viewSource, />100%<\/button>/);
