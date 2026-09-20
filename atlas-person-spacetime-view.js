@@ -1310,9 +1310,12 @@
     mount.innerHTML = `<section class="spacetime-toolbar card">
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
-        <div class="spacetime-camera" role="group" aria-label="시공간 확대"><span>시공간 확대</span><button id="spacetimeCameraZoomOut" type="button" aria-label="시공간 축소">−</button><output id="spacetimeCameraZoomValue">${escapeHtml(cameraZoomLabel())}</output><button id="spacetimeCameraZoomIn" type="button" aria-label="시공간 확대">+</button><button id="spacetimeCameraZoomReset" type="button">500%</button></div>
+        <div class="spacetime-camera" role="group" aria-label="시공간 확대"><span>줌</span><button id="spacetimeCameraZoomOut" type="button" aria-label="시공간 축소">−</button><output id="spacetimeCameraZoomValue">${escapeHtml(cameraZoomLabel())}</output><button id="spacetimeCameraZoomIn" type="button" aria-label="시공간 확대">+</button><button id="spacetimeCameraZoomReset" type="button" aria-label="500% 기본 배율로 복귀">기본</button></div>
       </div>
-      <div class="spacetime-precision-legend"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>Place</span><span><i class="is-subregion"></i>Subregion 범위</span><span><i class="is-macroregion"></i>Macroregion 범위</span><small>점선은 배치 정밀도 범위이며 실제 이동 경로가 아닙니다.</small></div>
+      <details class="spacetime-precision-legend">
+        <summary>표시 기준</summary>
+        <div class="spacetime-precision-content"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>Place</span><span><i class="is-subregion"></i>Subregion 범위</span><span><i class="is-macroregion"></i>Macroregion 범위</span><small>점선은 배치 정밀도 범위이며 실제 이동 경로가 아닙니다.</small></div>
+      </details>
     </section>
     ${renderSearchResults(searchItems, needle)}
     <section class="spacetime-status-row">
