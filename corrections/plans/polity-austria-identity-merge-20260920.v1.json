@@ -1,0 +1,229 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_austria_identity_merge_20260920_v1",
+  "as_of": "2026-09-20",
+  "status": "REVIEWED_POLITY_IDENTITY_MERGE_WITH_TEMPORAL_DESIGNATIONS",
+  "release_order": 601,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY-IDENTITY-REVIEW-16-20260919; Austria exact Production recheck 2026-09-20",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-republic-of-austria-dollfuss-into-austria",
+      "type": "rewrite_activity",
+      "activity_id": "d380bec7-54de-4f61-bfcb-15dae6a3dcfd",
+      "baseline_before": {
+        "person_id": "c13581f3-d712-41ae-a859-8bea88194943",
+        "polity_id": "02e66261-7798-4144-b298-9bc41ee2215b",
+        "role_id": "6d5c65cd-baee-5cb0-b272-a9b9cb1ac355",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1932,
+        "activity_end": 1934,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "d380bec7-54de-4f61-bfcb-15dae6a3dcfd",
+        "person_id": "c13581f3-d712-41ae-a859-8bea88194943",
+        "polity_id": "ebee3963-6246-4b8e-9730-574001ec247d",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "6d5c65cd-baee-5cb0-b272-a9b9cb1ac355",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1932,
+        "activity_end": 1934,
+        "activity_start_detail": {
+          "year": 1932,
+          "month": 5,
+          "day": 20,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1934,
+          "month": 5,
+          "day": 1,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-republic-of-austria-waldheim-into-austria",
+      "type": "rewrite_activity",
+      "activity_id": "f05d4307-7efc-402f-894c-b14035d71d73",
+      "baseline_before": {
+        "person_id": "eaefe5ae-a363-43e6-80d2-c176e1001e06",
+        "polity_id": "02e66261-7798-4144-b298-9bc41ee2215b",
+        "role_id": "3d96409b-3c6e-468e-9792-5c2c6a96f190",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1986,
+        "activity_end": 1992,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "f05d4307-7efc-402f-894c-b14035d71d73",
+        "person_id": "eaefe5ae-a363-43e6-80d2-c176e1001e06",
+        "polity_id": "ebee3963-6246-4b8e-9730-574001ec247d",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "3d96409b-3c6e-468e-9792-5c2c6a96f190",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1986,
+        "activity_end": 1992,
+        "activity_start_detail": {
+          "year": 1986,
+          "month": 7,
+          "day": 8,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1992,
+          "month": 7,
+          "day": 8,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "austria-republic-temporal-designation-dollfuss-1932-1934",
+      "exact_before": {
+        "designation_absent_id": "296cb044-8535-52ca-8f16-5a5355b7f93d"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "296cb044-8535-52ca-8f16-5a5355b7f93d",
+          "polity_id": "ebee3963-6246-4b8e-9730-574001ec247d",
+          "designation_type": "state_form",
+          "valid_from_year": 1932,
+          "valid_from_month": 5,
+          "valid_from_day": 20,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1934,
+          "valid_to_month": 5,
+          "valid_to_day": 1,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form label preserving the existing ATLAS Republic of Austria label for Dollfuss's modeled 1932-1934 chancellorship before the Federal State phase."
+        },
+        "names": [
+          {
+            "id": "339fa639-ded8-58f0-a469-62757917a487",
+            "polity_designation_id": "296cb044-8535-52ca-8f16-5a5355b7f93d",
+            "locale": "en",
+            "name": "Republic of Austria",
+            "is_preferred": true
+          },
+          {
+            "id": "86e55ae4-9007-5632-8c11-2fc6f2c39775",
+            "polity_designation_id": "296cb044-8535-52ca-8f16-5a5355b7f93d",
+            "locale": "ko",
+            "name": "오스트리아 공화국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "296cb044-8535-52ca-8f16-5a5355b7f93d",
+            "source_id": "684fe105-7427-4042-813f-30e43ba6fbc1",
+            "source_locator_key": "https://en.wikipedia.org/wiki/Engelbert_Dollfuss"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "austria-republic-temporal-designation-waldheim-1986-1992",
+      "exact_before": {
+        "designation_absent_id": "2d782b44-e882-5dd0-b991-7f4568a18fd6"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "2d782b44-e882-5dd0-b991-7f4568a18fd6",
+          "polity_id": "ebee3963-6246-4b8e-9730-574001ec247d",
+          "designation_type": "state_form",
+          "valid_from_year": 1986,
+          "valid_from_month": 7,
+          "valid_from_day": 8,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1992,
+          "valid_to_month": 7,
+          "valid_to_day": 8,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form label preserving the existing ATLAS Republic of Austria label for Waldheim's modeled 1986-1992 federal presidency on the stable Austria identity."
+        },
+        "names": [
+          {
+            "id": "949cbb93-7329-518d-bb41-1cb0eb68f56a",
+            "polity_designation_id": "2d782b44-e882-5dd0-b991-7f4568a18fd6",
+            "locale": "en",
+            "name": "Republic of Austria",
+            "is_preferred": true
+          },
+          {
+            "id": "2780a0aa-3baf-51b7-bf2b-83c16dacf370",
+            "polity_designation_id": "2d782b44-e882-5dd0-b991-7f4568a18fd6",
+            "locale": "ko",
+            "name": "오스트리아 공화국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "2d782b44-e882-5dd0-b991-7f4568a18fd6",
+            "source_id": "aa219727-38be-473d-8e90-2b1783aa1876",
+            "source_locator_key": "https://www.parlament.gv.at/person/13961"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 2,
+    "activity_relinks": 2,
+    "polity_designation_assertions": 2,
+    "production_mutation_authorized": false
+  }
+}
