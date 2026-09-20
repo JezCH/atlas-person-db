@@ -29,3 +29,18 @@ test('spacetime uses document vertical scrolling instead of a capped nested view
   assert.doesNotMatch(ownerCss, /72vh|75vh/);
   assert.match(ownerScript, /document\.scrollingElement/);
 });
+
+test('mobile Person surface contains horizontal overflow inside Person-owned scrollers', () => {
+  assert.match(ownerCss, /#personDomainRoot\{[^}]*width:100%[^}]*min-width:0[^}]*max-width:100%/);
+  assert.match(ownerCss, /@media\(max-width:760px\)[\s\S]*#personDomainRoot\{overflow-x:clip\}/);
+  assert.match(ownerCss, /#personDomainRoot \.person-card-grid\.person-table-grid\{overflow-x:auto\}/);
+});
+
+test('Person activation and rerender reset document horizontal drift without resetting vertical position', () => {
+  assert.match(ownerScript, /function resetDocumentHorizontalScroll\(\)/);
+  assert.match(ownerScript, /scrollingElement\?\.scrollTop \?\? window\.scrollY/);
+  assert.match(ownerScript, /scrollTo\(\{ top, left: 0, behavior: "auto" \}\)/);
+  assert.match(ownerScript, /atlas-person-main-rendered/);
+  assert.match(ownerScript, /currentDomain\(\) === "persons"/);
+  assert.match(ownerScript, /resetScroll: currentDomain\(\) === "spacetime" \|\| currentDomain\(\) === "persons"/);
+});
