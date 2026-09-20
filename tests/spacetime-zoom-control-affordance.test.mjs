@@ -147,6 +147,11 @@ test("touch pinch inside spacetime controls the internal 100 to 1500 percent cam
   assert.match(viewCss, /\.spacetime-scroll\{height:54vh;min-height:400px;scrollbar-gutter:auto;touch-action:pan-x pan-y\}/);
 });
 
+test("ctrl-wheel remains contained inside spacetime at the viewport-fit camera bound", () => {
+  const wheelBlock = viewSource.match(/scroll\.addEventListener\("wheel",[\s\S]*?\}, \{ passive: false \}\);/)?.[0] || "";
+  assert.match(wheelBlock, /event\.preventDefault\(\);[\s\S]*?clampCameraZoom\(wheelZoomTarget, scroll\)/);
+});
+
 test("two-finger gestures inside spacetime suppress simultaneous browser zoom", () => {
   assert.match(viewSource, /const preventBrowserPinch = \(event\) => \{/);
   assert.match(viewSource, /if \(!isInsideScroll\(event\.target\)\) return;/);
