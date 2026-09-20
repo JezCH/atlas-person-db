@@ -169,13 +169,13 @@
     const exclusionRows=(funnel.exclusion_rows || []).map((row)=>`<span><b>${escapeHtml(runtimeExclusionLabel(row.code))}</b> ${value(row.count)}</span>`).join("");
     return `<div class="dashboard-publication-flow">
       ${publicationStage("현재 Authoring",funnel.current_authoring,"현재 canonical Activity")}
-      ${publicationStage("마지막 Compile 입력",funnel.compile_input,"sealed compile snapshot")}
+      ${publicationStage("현재 Runtime Compile 입력",funnel.compile_input,"sealed compile snapshot")}
       ${publicationStage("Runtime 포함",funnel.runtime_included,`현재 Runtime ${value(funnel.current_runtime)}`)}
       ${publicationStage("Runtime 제외",funnel.runtime_excluded,"Activity 단위")}
     </div>
     <div class="dashboard-publication-meta">
       <span>${escapeHtml(deltaLabel)}</span>
-      <span>${funnel.projection_matches_latest_compile ? "Runtime projection = 마지막 Compile 출력" : "Runtime projection과 마지막 Compile 출력 불일치"}</span>
+      <span>${funnel.projection_matches_latest_compile ? "Runtime projection = 현재 Runtime Compile 출력" : "Runtime projection과 현재 Runtime Compile 출력 불일치"}</span>
       <span>${escapeHtml(funnel.compiler_version || "compiler 미확인")} · ${escapeHtml(formatTimestamp(funnel.compiled_at))}</span>
     </div>
     <div class="dashboard-timeline-summary dashboard-publication-exclusions">${exclusionRows || "<span>제외 사유 0건</span>"}</div>`;
@@ -376,7 +376,7 @@
         <div class="dashboard-panel-head"><div><p class="eyebrow">AUTHORING → COMPILE → RUNTIME</p><h3>게시 파이프라인</h3></div><span>${publication?.sealed ? `최근 Compile ${escapeHtml(formatTimestamp(publication.compiled_at))}` : "Compile 상태 확인"}</span></div>
         ${publicationFunnelMarkup(publication)}
         <div class="dashboard-progress-meta">
-          <span>현재 Authoring과 마지막 Compile snapshot을 구분해 표시</span>
+          <span>현재 Authoring과 현재 Runtime Compile snapshot을 구분해 표시</span>
           <span>Runtime 제외는 인물이 아닌 Activity 단위</span>
         </div>
       </section>
