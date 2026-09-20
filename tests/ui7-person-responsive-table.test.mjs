@@ -84,7 +84,7 @@ test('UI7 keeps presentation separate from canonical geometry ownership', () => 
 });
 
 test('UI7 assets load as a presentation layer after shared era ownership and before Person Main initializes', () => {
-  assert.match(html, /atlas-person-table-view\.css\?v=20260920-sticky-containment-fix-v1/);
+  assert.match(html, /atlas-person-table-view\.css\?v=20260920-sticky-ancestor-fix-v2/);
   assert.match(html, /atlas-person-table-alignment\.css\?v=20260817-table-geometry-r2/);
   assert.match(html, /atlas-person-era-model\.js\?v=20260909-era-10-band-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20260819-era-model-r2/);
