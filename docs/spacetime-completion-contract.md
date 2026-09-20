@@ -4,9 +4,10 @@ Status: authoritative completion gate for the current Production `시공간 인�
 
 ## Readable-scale decision
 
-The readable camera range is **100%–1500%**, with **500% as the default/reset scale**.
+The camera supports **100%–1500%**, but the effective UI minimum is **viewport-fit**: the world width must exactly fill the available spacetime table viewport. **500% remains the default/reset scale**.
 
-- minimum zoom: 100%
+- technical zoom floor: 100%
+- effective UI minimum: viewport-fit (world width = available table viewport width)
 - default/reset zoom: 500%
 - maximum zoom: 1500%
 - X and Y use the same global camera zoom
@@ -43,7 +44,7 @@ A reviewed Place point uses a zero-width world range (`x_min = x_anchor = x_max`
 
 ## Spatial semantic LOD
 
-The horizontal world geometry never changes with semantic detail. The 100% floor preserves the same labels + rails representation, while mobile presentation keeps macroregion priority through the 500% default range. Above 720%, reviewed Place semantics begin to appear and reach full opacity at 800%.
+The horizontal world geometry never changes with semantic detail. The 100% value is only a technical floor; the UI does not zoom out far enough to make the world narrower than the table viewport. Mobile presentation keeps macroregion priority through the 500% default range. Above 720%, reviewed Place semantics begin to appear and reach full opacity at 800%.
 
 Place semantic markers:
 - come only from `spatialCompile.REVIEWED_PLACE_BINDINGS`;
@@ -80,9 +81,9 @@ Macroregions remain equal stable bands in normalized world space. Subregions are
 
 ## Interaction
 
-The Production surface must provide continuous two-axis camera behavior at 100%-1500%, pointer-centered zoom, Person search/focus, minimap context, inspector evidence, Meanwhile exploration, and reset to 500%.
+The Production surface must provide continuous two-axis camera behavior from the viewport-fit effective minimum up to 1500%, with a 100% technical floor, pointer-centered zoom, Person search/focus, minimap context, inspector evidence, Meanwhile exploration, and reset to 500%.
 
-A camera action that produces a scale below 100% is prohibited.
+A camera action that produces a scale below 100% or makes the rendered world narrower than the available table viewport is prohibited.
 
 ## Sticky Person / Activity inspector
 
@@ -195,7 +196,7 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
-Changing the 100% floor, 500% default/reset, 1500% ceiling, 0.748 shared compression, 900–1,275 px base-world bounds, 140/36 px shared chrome geometry, or prohibition on local compression requires explicit review.
+Changing the 100% technical floor, viewport-fit effective minimum policy, 500% default/reset, 1500% ceiling, 0.748 shared compression, 900–1,275 px base-world bounds, 140/36 px shared chrome geometry, or prohibition on local compression requires explicit review.
 
 ## Original-plan reconciliation
 
