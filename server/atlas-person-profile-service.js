@@ -211,11 +211,51 @@ async function setExternalReference(client, personId, rawPayload) {
   });
 }
 
+function sameAuditTarget(operation, personId, after, existing) {
+  if (!existing) return false;
+  if (String(existing.person_id || "").toLowerCase() !== String(personId || "").toLowerCase()) return false;
+  if (String(existing.operation || "") !== String(operation || "")) return false;
+
+  const previousAfter = existing.after_snapshot && typeof existing.after_snapshot === "object"
+    ? existing.after_snapshot
+    : {};
+
+  if (operation === "set_person_korean_name") {
+    return previousAfter.preferred_name_ko === after?.preferred_name_ko;
+  }
+
+  if (operation === "set_person_external_reference") {
+    const previous = previousAfter.external_reference;
+    const next = after?.external_reference;
+    return Boolean(previous && next)
+      && previous.provider === next.provider
+      && previous.status === next.status
+      && previous.document_title === next.document_title
+      && previous.url === next.url;
+  }
+
+  return false;
+}
+
 async function writeAudit(client, { requestId, personId, operation, before, after }) {
-  await client.query(`
+  const inserted = await client.query(`
     insert into atlas_v2.person_profile_mutation_audits(request_id,person_id,operation,before_snapshot,after_snapshot)
-    values($1,$2::uuid,$3,$4::jsonb,$5::jsonb)`,
+    values($1,$2::uuid,$3,$4::jsonb,$5::jsonb)
+    on conflict (request_id) do nothing
+    returning request_id`,
     [requestId, personId, operation, JSON.stringify(before || {}), JSON.stringify(after || {})]);
+
+  if (inserted.rowCount === 1) return Object.freeze({ reused:false });
+
+  const existing = await client.query(`
+    select person_id::text,operation,after_snapshot
+      from atlas_v2.person_profile_mutation_audits
+     where request_id=$1`,
+    [requestId]);
+  if (existing.rowCount !== 1 || !sameAuditTarget(operation, personId, after, existing.rows[0])) {
+    throw new Error("PERSON_PROFILE_AUDIT_REQUEST_ID_COLLISION");
+  }
+  return Object.freeze({ reused:true });
 }
 
 async function verifyMutation(client, { personId, operation, expected }) {
@@ -296,5 +336,6 @@ module.exports = Object.freeze({
   PROFILE_OPERATIONS,
   normalizeNamuWikiInput,
   shouldBlockExternalReferenceOverwrite,
+  sameAuditTarget,
   createPersonProfileMutationService
 });
