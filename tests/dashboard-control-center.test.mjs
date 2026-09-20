@@ -112,7 +112,7 @@ test("attention queue derives Spatial Person targets from the canonical Activity
   const A1="00000000-0000-4000-8000-000000000201";
   const A2="00000000-0000-4000-8000-000000000202";
   const A3="00000000-0000-4000-8000-000000000203";
-  const activity=(id,polity,start,end)=>({id,polity:{id:polity},start:{year:start},end:{year:end}});
+  const activity=(id,polity,start,end,sourceCount=1)=>({id,polity:{id:polity},start:{year:start},end:{year:end},source_count:sourceCount});
   const persons = [
     { id:P1, activity_count:2, external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:POLITY_STATIC},{id:POLITY_REVIEW}] }, activity_summaries:[activity(A1,POLITY_STATIC,100,110),activity(A2,POLITY_REVIEW,120,130)] },
     { id:P2, activity_count:1, external_references:{ namuwiki:{status:"not_found"} }, facets:{ polities:[{id:POLITY_REVIEW}] }, activity_summaries:[activity(A3,POLITY_REVIEW,140,150,0)] }
