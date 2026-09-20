@@ -40,11 +40,18 @@
       "citation_text": "Independent Moabite and Israelite textual traditions attest Omri and his dynasty."
     }
   ],
-  "external_references": {},
   "review_context": {
     "request_batch": "israel-polity-identity-split-20260920",
     "requested_item": 2,
     "decision_authority": "#977 Kingdom of Israel internal split review + user approval 2026-09-20",
     "identity_note": "Create a distinct Northern Kingdom of Israel polity identity. Reuse the existing Omri Person; a governed correction stage will retire the old duplicate Activity and relink the remaining northern-kingdom Activities."
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-20",
+      "reason": "Direct NamuWiki original-page verification is unavailable in this session. Search evidence indicates an Omri article exists, but project policy forbids synthesizing a canonical namu.wiki URL from mirrors, so no URL or not_found assertion is fabricated.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
   }
 }
