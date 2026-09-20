@@ -503,6 +503,7 @@ test("Dashboard renders the publication funnel with Activity units and canonical
   assert.match(dashboardSource,/현재 Runtime Compile 입력/);
   assert.match(dashboardSource,/Runtime 제외/);
   assert.match(dashboardSource,/Runtime 제외는 인물이 아닌 Activity 단위/);
+  assert.match(dashboardSource,/projection_matches_active_compile/);
   assert.match(dashboardSource,/START_BOUNDARY_UNRESOLVED/);
   assert.match(dashboardSource,/PROVENANCE_UNRESOLVED/);
   assert.match(dashboardCssSource,/dashboard-publication-flow/);
