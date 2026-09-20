@@ -105,12 +105,20 @@
     else window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }
 
+  function resetDocumentHorizontalScroll() {
+    const scrollingElement = document.scrollingElement;
+    const top = Number(scrollingElement?.scrollTop ?? window.scrollY ?? 0);
+    if (scrollingElement?.scrollTo) scrollingElement.scrollTo({ top, left: 0, behavior: "auto" });
+    else window.scrollTo({ top, left: 0, behavior: "auto" });
+  }
+
   function applyDomain(domain, { resetScroll = false } = {}) {
     const root = ensurePersonRoot();
     const isPersons = domain === "persons";
     root.hidden = !isPersons;
     root.setAttribute("aria-hidden", String(!isPersons));
     if (!isPersons) closePersonOverlay();
+    if (isPersons && resetScroll) requestAnimationFrame(resetDocumentHorizontalScroll);
     if (domain === "spacetime" && resetScroll) requestAnimationFrame(resetDocumentScroll);
   }
 
@@ -119,6 +127,9 @@
   }
 
   window.addEventListener("atlas-authority-domain-changed", onDomainChanged);
+  window.addEventListener("atlas-person-main-rendered", () => {
+    if (currentDomain() === "persons") requestAnimationFrame(resetDocumentHorizontalScroll);
+  });
 
   const observer = new MutationObserver(() => {
     const root = ensurePersonRoot();
@@ -130,7 +141,7 @@
 
   function init() {
     ensurePersonDomainAssets();
-    applyDomain(currentDomain(), { resetScroll: currentDomain() === "spacetime" });
+    applyDomain(currentDomain(), { resetScroll: currentDomain() === "spacetime" || currentDomain() === "persons" });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
