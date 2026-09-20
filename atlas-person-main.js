@@ -24,6 +24,10 @@
   let personDomainsById = Object.freeze({});
   let dashboardFilter = null;
   let requestSerial = 0;
+  let selectedPortrait = null;
+  const PORTRAIT_SOURCE_MAX_BYTES = 20 * 1024 * 1024;
+  const PORTRAIT_OUTPUT_MAX_BYTES = 3 * 1024 * 1024;
+  const PORTRAIT_MAX_SIDE = 1600;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -432,7 +436,48 @@
     return descriptions.map((row) => `<article class="person-description"><small>${escapeHtml(row.locale || "")}</small><p>${escapeHtml(row.content || "")}</p></article>`).join("");
   }
 
-  function profileEditorHtml(person) {
+  function portraitKindOptions(selected = "") {
+    return [
+      ["archival","사진·동시대 기록"],
+      ["artwork","미술·초상 작품"],
+      ["reconstruction","역사적 복원·재구성"],
+      ["symbolic","상징 이미지"]
+    ].map(([value,label]) => `<option value="${value}"${selected === value ? " selected" : ""}>${label}</option>`).join("");
+  }
+
+  function portraitEvidenceOptions(selected = "") {
+    return [
+      ["direct","직접 근거"],
+      ["strong","강한 근거"],
+      ["contextual","맥락 근거"],
+      ["symbolic","상징적 근거"]
+    ].map(([value,label]) => `<option value="${value}"${selected === value ? " selected" : ""}>${label}</option>`).join("");
+  }
+
+  function portraitEditorHtml(person, portraitResult = null) {
+    const personId = escapeHtml(person?.id || "");
+    if (!personId) return "";
+    if (portraitResult?.error) {
+      return '<div class="person-portrait-editor is-error"><p class="person-profile-help">초상화 조회에 실패해 업로드·삭제를 비활성화했습니다. 새로고침 후 다시 시도하세요.</p></div>';
+    }
+    const portrait = portraitResult?.portrait || null;
+    const currentKind = String(portrait?.portrait_kind || "");
+    const currentEvidence = String(portrait?.evidence_level || "");
+    const currentState = portrait
+      ? `현재 초상: ${escapeHtml(currentKind || "유형 미상")} · ${escapeHtml(currentEvidence || "근거 미상")} · 출처 ${Array.isArray(portrait.sources) ? portrait.sources.length : 0}건`
+      : "현재 등록된 초상 없음";
+    return `<div class="person-portrait-editor">
+      <form class="person-profile-form person-portrait-form" data-person-portrait-operation="upload" data-person-id="${personId}">
+        <label class="person-portrait-file"><span>초상 이미지</span><input type="file" name="portrait_file" accept="image/*" required></label>
+        <label><span>초상 유형</span><select name="portrait_kind" required><option value=""${currentKind ? "" : " selected"} disabled>유형 선택</option>${portraitKindOptions(currentKind)}</select></label>
+        <label><span>근거 수준</span><select name="evidence_level" required><option value=""${currentEvidence ? "" : " selected"} disabled>근거 선택</option>${portraitEvidenceOptions(currentEvidence)}</select></label>
+        <div class="person-portrait-actions"><button class="mini-btn edit" type="submit">${portrait ? "초상 교체" : "초상 업로드"}</button>${portrait ? `<button class="mini-btn danger delete" type="button" data-person-portrait-delete data-person-id="${personId}">초상 삭제</button>` : ""}</div>
+      </form>
+      <p class="person-profile-help">${currentState} · JPG/PNG/WebP 등 일반 이미지는 브라우저에서 WebP로 변환한 뒤 저장합니다.</p>
+    </div>`;
+  }
+
+  function profileEditorHtml(person, portraitResult = null) {
     const personId = escapeHtml(person?.id || "");
     const koreanName = escapeHtml(person?.preferred_name_ko || "");
     const namuwiki = person?.external_references?.namuwiki;
@@ -450,6 +495,7 @@
         <button class="mini-btn edit" type="submit">등록</button>
       </form>
       <p class="person-profile-help">${namuwikiState} · 저장 시 관리자 인증 후 authoritative Person 데이터에 기록됩니다.</p>
+      ${portraitEditorHtml(person, portraitResult)}
     </section>`;
   }
 
@@ -500,7 +546,7 @@
     if (!panel) return;
     const rawHistoricity = person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity);
     panel.innerHTML = `<div class="person-detail-head">${portraitFrameHtml(person, portraitResult)}<div><p class="eyebrow">PERSON DETAIL</p><div class="person-detail-name-row"><h2>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</h2>${externalLinksHtml(person)}</div><p><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "type 미상")}</span></p></div></div>
-      ${profileEditorHtml(person)}
+      ${profileEditorHtml(person, portraitResult)}
       <section class="person-detail-section"><h3>이름</h3>${namesHtml(person.names)}</section>
       <section class="person-detail-section"><h3>설명</h3>${descriptionsHtml(person.descriptions)}</section>
       <section class="person-detail-section"><h3>Person 출처</h3>${sourceListHtml(person.sources)}</section>
@@ -520,6 +566,7 @@
   async function selectPerson(personId, { force = false } = {}) {
     if (!personId || (!force && selectedPersonId === personId)) return;
     selectedPersonId = personId;
+    selectedPortrait = null;
     renderGroups();
     renderDetailLoading();
     const serial = ++requestSerial;
@@ -529,6 +576,7 @@
         reader.readPortrait(personId).catch((error) => Object.freeze({ error }))
       ]);
       if (serial !== requestSerial || selectedPersonId !== personId) return;
+      selectedPortrait = portraitResult?.portrait || null;
       renderDetail(result.person, portraitResult);
     } catch (error) {
       if (serial !== requestSerial) return;
@@ -577,6 +625,139 @@
       return outcome.validation_failures.map((row) => row?.code || row?.field || "validation failed").join("; ");
     }
     return outcome?.transaction_failure || fallback;
+  }
+
+  function imageElementFromFile(file) {
+    return new Promise((resolve, reject) => {
+      const objectUrl = URL.createObjectURL(file);
+      const image = new Image();
+      image.decoding = "async";
+      image.onload = () => resolve({ image, release:() => URL.revokeObjectURL(objectUrl) });
+      image.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        reject(new Error("이미지를 읽을 수 없습니다."));
+      };
+      image.src = objectUrl;
+    });
+  }
+
+  function canvasWebpBlob(canvas, quality) {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob((blob) => {
+        if (!blob || blob.type !== "image/webp") return reject(new Error("이 브라우저는 WebP 변환을 지원하지 않습니다."));
+        resolve(blob);
+      }, "image/webp", quality);
+    });
+  }
+
+  async function blobBase64(blob) {
+    const bytes = new Uint8Array(await blob.arrayBuffer());
+    let binary = "";
+    const chunkSize = 0x8000;
+    for (let offset = 0; offset < bytes.length; offset += chunkSize) {
+      binary += String.fromCharCode(...bytes.subarray(offset, Math.min(bytes.length, offset + chunkSize)));
+    }
+    return btoa(binary);
+  }
+
+  async function portraitFileToWebpBase64(file) {
+    if (!file || !String(file.type || "").startsWith("image/")) throw new Error("이미지 파일을 선택하세요.");
+    if (Number(file.size || 0) > PORTRAIT_SOURCE_MAX_BYTES) throw new Error("원본 이미지는 20MB 이하만 업로드할 수 있습니다.");
+    const loaded = await imageElementFromFile(file);
+    try {
+      const sourceWidth = Number(loaded.image.naturalWidth || loaded.image.width || 0);
+      const sourceHeight = Number(loaded.image.naturalHeight || loaded.image.height || 0);
+      if (!(sourceWidth > 0 && sourceHeight > 0)) throw new Error("이미지 크기를 확인할 수 없습니다.");
+
+      let scale = Math.min(1, PORTRAIT_MAX_SIDE / Math.max(sourceWidth, sourceHeight));
+      const qualities = [0.9, 0.78, 0.66];
+      for (let pass = 0; pass < 4; pass += 1) {
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(sourceWidth * scale));
+        canvas.height = Math.max(1, Math.round(sourceHeight * scale));
+        const context = canvas.getContext("2d", { alpha:false });
+        if (!context) throw new Error("이미지 변환 컨텍스트를 만들 수 없습니다.");
+        context.drawImage(loaded.image, 0, 0, canvas.width, canvas.height);
+        for (const quality of qualities) {
+          const blob = await canvasWebpBlob(canvas, quality);
+          if (blob.size <= PORTRAIT_OUTPUT_MAX_BYTES) return blobBase64(blob);
+        }
+        scale *= 0.8;
+      }
+      throw new Error("WebP 변환 후에도 3MB를 초과합니다. 더 작은 이미지를 사용하세요.");
+    } finally {
+      loaded.release();
+    }
+  }
+
+  function preservedPortraitSources() {
+    if (!Array.isArray(selectedPortrait?.sources)) return [];
+    return selectedPortrait.sources
+      .map((row) => ({
+        source_id:String(row?.source_id || "").trim(),
+        evidence_role:String(row?.evidence_role || "").trim()
+      }))
+      .filter((row) => row.source_id && row.evidence_role);
+  }
+
+  async function handlePortraitSubmit(event) {
+    const form = event.target.closest?.("form[data-person-portrait-operation='upload'][data-person-id]");
+    if (!form) return;
+    event.preventDefault();
+    if (!profileWriter?.setPersonPortrait) return showOperationalMessage("초상화 저장 서비스를 사용할 수 없습니다.");
+    const personId = String(form.dataset.personId || "").trim();
+    if (!personId || selectedPersonId !== personId) return showOperationalMessage("현재 선택한 인물과 초상화 편집 대상이 다릅니다.");
+    const file = form.elements.portrait_file?.files?.[0] || null;
+    const portraitKind = String(form.elements.portrait_kind?.value || "").trim();
+    const evidenceLevel = String(form.elements.evidence_level?.value || "").trim();
+    if (!file) return showOperationalMessage("업로드할 이미지를 선택하세요.");
+    if (!portraitKind || !evidenceLevel) return showOperationalMessage("초상 유형과 근거 수준을 선택하세요.");
+
+    const controls = [...form.querySelectorAll("button,input,select")];
+    controls.forEach((control) => { control.disabled = true; });
+    try {
+      showOperationalMessage("초상 이미지를 WebP로 변환 중입니다.");
+      const imageBase64 = await portraitFileToWebpBase64(file);
+      const outcome = await profileWriter.setPersonPortrait({
+        person_id:personId,
+        image_base64:imageBase64,
+        portrait_kind:portraitKind,
+        evidence_level:evidenceLevel,
+        sources:preservedPortraitSources()
+      });
+      if (outcome?.committed !== true) {
+        return showOperationalMessage(outcomeError(outcome, "초상화 저장에 실패했습니다."));
+      }
+      await selectPerson(personId, { force:true });
+      if (outcome?.replaced_asset_cleanup?.ok === false) {
+        showOperationalMessage("초상화는 교체됐지만 이전 저장 파일 정리에 실패했습니다.");
+      } else {
+        showOperationalMessage(selectedPortrait ? "초상화를 저장했습니다." : "초상화를 저장했습니다.");
+      }
+    } catch (error) {
+      showOperationalMessage(error?.message || "초상화 저장에 실패했습니다.");
+    } finally {
+      controls.forEach((control) => { if (control.isConnected) control.disabled = false; });
+    }
+  }
+
+  async function deletePersonPortrait(personId) {
+    const id = String(personId || "").trim();
+    if (!id || id !== selectedPersonId) return;
+    if (!profileWriter?.deletePersonPortrait) return showOperationalMessage("초상화 삭제 서비스를 사용할 수 없습니다.");
+    if (!window.confirm("이 인물의 초상화를 삭제할까요?")) return;
+    try {
+      const outcome = await profileWriter.deletePersonPortrait(id);
+      if (outcome?.committed !== true) return showOperationalMessage(outcomeError(outcome, "초상화 삭제에 실패했습니다."));
+      await selectPerson(id, { force:true });
+      if (outcome?.storage_cleanup?.ok === false) {
+        showOperationalMessage("초상화 DB 연결은 삭제됐지만 저장 파일 정리에 실패했습니다.");
+      } else {
+        showOperationalMessage("초상화를 삭제했습니다.");
+      }
+    } catch (error) {
+      showOperationalMessage(error?.message || "초상화 삭제에 실패했습니다.");
+    }
   }
 
   async function handleProfileSubmit(event) {
@@ -701,7 +882,13 @@
       if (card) selectPerson(card.dataset.personId);
     });
     detail?.addEventListener("submit", handleProfileSubmit);
+    detail?.addEventListener("submit", handlePortraitSubmit);
     detail?.addEventListener("click", (event) => {
+      const portraitDelete = event.target.closest("[data-person-portrait-delete][data-person-id]");
+      if (portraitDelete) {
+        deletePersonPortrait(portraitDelete.dataset.personId);
+        return;
+      }
       const actionButton = event.target.closest("[data-authoring-action][data-activity-id]");
       if (!actionButton) return;
       if (actionButton.dataset.authoringAction === "delete") deleteActivity(actionButton.dataset.activityId);
@@ -745,6 +932,9 @@
     safeHttpUrl,
     externalLinksHtml,
     profileEditorHtml,
+    portraitFileToWebpBase64,
+    handlePortraitSubmit,
+    deletePersonPortrait,
     deleteActivity,
     exportCurrentExcel
   });
