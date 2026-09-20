@@ -171,7 +171,7 @@ async function dashboardReady(client) {
   await waitFor(client, "document.readyState === 'complete'", 45000);
   await waitFor(client, "Boolean(window.ATLAS_MAIN_AUTHORITY_NAV && window.ATLAS_DASHBOARD && window.ATLAS_CLIENT_DATA_STORE && window.ATLAS_DASHBOARD_MODEL)", 45000);
   await waitFor(client, "document.querySelectorAll('#atlasDashboardMount .dashboard-kpi').length >= 6", 90000);
-  await waitFor(client, "document.querySelectorAll('.dashboard-source-freshness tbody tr').length >= 6", 90000);
+  await waitFor(client, "document.querySelectorAll('.dashboard-source-freshness tbody tr').length >= 8", 90000);
 }
 
 async function showDashboard(client) {
@@ -183,17 +183,18 @@ async function collectCanonicalSnapshot(client) {
   return evaluate(client, `(async () => {
     const store=window.ATLAS_CLIENT_DATA_STORE;
     const model=window.ATLAS_DASHBOARD_MODEL;
-    const [personResult,domainResult,spatialIndex,nonTimelineRows,recentDeltaResult,systemIdentityResult,runtimePublicationResult]=await Promise.all([
+    const [personResult,domainResult,spatialIndex,nonTimelineRows,recentDeltaResult,systemIdentityResult,runtimePublicationResult,runtimeExclusionsResult]=await Promise.all([
       store.loadPersons(),
       store.loadPersonDomains(),
       store.loadSpatialIndex(),
       store.loadNonTimelinePersons(),
       store.loadRecentDelta(),
       store.loadSystemIdentity(),
-      store.loadRuntimePublication()
+      store.loadRuntimePublication(),
+      store.loadRuntimeExclusions()
     ]);
     const snapshot=model.buildDashboardSnapshot({
-      personResult,domainResult,spatialIndex,nonTimelineRows,recentDeltaResult,systemIdentityResult,runtimePublicationResult,
+      personResult,domainResult,spatialIndex,nonTimelineRows,recentDeltaResult,systemIdentityResult,runtimePublicationResult,runtimeExclusionsResult,
       sourceStates:store.sourceStates()
     });
     return {
@@ -207,6 +208,7 @@ async function collectCanonicalSnapshot(client) {
       recent_delta:snapshot.recent_delta,
       timeline:snapshot.recent_activity_timeline,
       runtime_publication:runtimePublicationResult,
+      runtime_exclusions:runtimeExclusionsResult,
       runtime_delta_drift:snapshot.runtime_delta_drift,
       completeness:snapshot.completeness_matrix,
       attention:snapshot.attention_queue,
@@ -268,7 +270,7 @@ async function collectDesktopDom(client) {
   })()`);
 }
 
-async function verifyDrilldowns(client) {
+async function verifyDrilldowns(client, modelState) {
   const results = {};
 
   const kpi = await evaluate(client, `(() => {
@@ -316,6 +318,29 @@ async function verifyDrilldowns(client) {
   const completenessFilter = await evaluate(client, "window.ATLAS_PERSON_MAIN?.getDashboardFilter?.() || null");
   results.completeness = { ...completeness, filter:completenessFilter };
   assert(completenessFilter && completenessFilter.person_ids?.length > 0, "Completeness Person click did not set a Person filter", results.completeness);
+
+  await showDashboard(client);
+  const runtimeExclusion = await evaluate(client, `(() => {
+    const button=document.querySelector('[data-dashboard-attention="runtime_exclusion"]:not(:disabled)');
+    const panel=document.querySelector("#dashboardRuntimeExclusionTargets");
+    if (!button || !panel) return null;
+    const beforeHidden=panel.hidden;
+    button.click();
+    return {
+      before_hidden:beforeHidden,
+      after_hidden:panel.hidden,
+      aria_expanded:button.getAttribute("aria-expanded"),
+      row_count:panel.querySelectorAll(".dashboard-runtime-exclusion-table tbody tr").length,
+      activity_ids:[...panel.querySelectorAll(".dashboard-runtime-exclusion-table tbody code")].map((el)=>(el.textContent||"").trim())
+    };
+  })()`);
+  assert(runtimeExclusion, "Runtime exclusion Attention drill-down is unavailable");
+  const expectedRuntimeTargets=Number(modelState.runtime_exclusions?.total_count);
+  assert(runtimeExclusion.before_hidden === true && runtimeExclusion.after_hidden === false, "Runtime exclusion target panel did not reveal on click", runtimeExclusion);
+  assert(runtimeExclusion.aria_expanded === "true", "Runtime exclusion button did not expose expanded state", runtimeExclusion);
+  assert(runtimeExclusion.row_count === expectedRuntimeTargets, "Rendered Runtime exclusion row count differs from canonical target snapshot", { runtimeExclusion,expectedRuntimeTargets });
+  assert(runtimeExclusion.activity_ids.length === expectedRuntimeTargets && runtimeExclusion.activity_ids.every(Boolean), "Rendered Runtime exclusion Activity UUIDs are incomplete", runtimeExclusion);
+  results.runtime_exclusion = runtimeExclusion;
 
   await showDashboard(client);
   return results;
@@ -369,7 +394,7 @@ function verifyCanonicalContracts(modelState, desktopDom) {
   assert(modelState.system_identity?.git_commit_sha === EXPECTED_RUNTIME_SHA, "Dashboard Runtime Identity SHA mismatch", modelState.system_identity);
 
   const freshness = modelState.source_freshness;
-  assert(freshness?.total_sources === 7, "Expected seven shared Dashboard sources", freshness);
+  assert(freshness?.total_sources === 8, "Expected eight shared Dashboard sources", freshness);
   const byKey = Object.fromEntries((freshness.rows || []).map((row)=>[row.key,row]));
   const spatialExpected = canonicalTimestamp(modelState.spatial_generated_at);
   assert(spatialExpected, "Spatial Index generated_at is missing or invalid", { generated_at:modelState.spatial_generated_at });
@@ -406,6 +431,19 @@ function verifyCanonicalContracts(modelState, desktopDom) {
   assert(publicationCompiledAt, "Runtime Publication active compile timestamp is missing", publication);
   assert(byKey.runtimePublication?.data_at === publicationCompiledAt, "Runtime Publication freshness is not active compile timestamp", { row:byKey.runtimePublication,publication });
   assert(byKey.runtimePublication?.data_basis === "compiled_at", "Runtime Publication freshness basis mismatch", byKey.runtimePublication);
+
+  const runtimeExclusions=modelState.runtime_exclusions;
+  assert(runtimeExclusions?.available === true, "Runtime exclusion target snapshot unavailable in Production acceptance", runtimeExclusions);
+  assert(runtimeExclusions.total_count === publication.active_compile?.excluded_row_count, "Runtime exclusion target count differs from active compile", { runtimeExclusions,publication });
+  assert(JSON.stringify(runtimeExclusions.reason_summary) === JSON.stringify(publication.active_compile?.exclusion_summary), "Runtime exclusion reason summary differs from active compile", { runtimeExclusions,publication });
+  assert(Array.isArray(runtimeExclusions.targets) && runtimeExclusions.targets.length === runtimeExclusions.total_count, "Runtime exclusion target list is incomplete", runtimeExclusions);
+  const runtimeAttention=(modelState.attention?.items || []).find((item)=>item.code==="runtime_exclusion");
+  assert(runtimeAttention?.available === true && runtimeAttention.unit === "activity", "Runtime exclusion Attention is not Activity-actionable", runtimeAttention);
+  assert(runtimeAttention.count === runtimeExclusions.total_count, "Runtime exclusion Attention count differs from target snapshot", { runtimeAttention,runtimeExclusions });
+  const exclusionCompiledAt=canonicalTimestamp(runtimeExclusions.compiled_at);
+  assert(exclusionCompiledAt, "Runtime exclusion compile timestamp is missing", runtimeExclusions);
+  assert(byKey.runtimeExclusions?.data_at === exclusionCompiledAt, "Runtime exclusion freshness is not compile timestamp", { row:byKey.runtimeExclusions,runtimeExclusions });
+  assert(byKey.runtimeExclusions?.data_basis === "compiled_at", "Runtime exclusion freshness basis mismatch", byKey.runtimeExclusions);
 
   for (const key of ["persons","personDomains","nonTimeline","systemIdentity"]) {
     assert(byKey[key]?.data_at == null, `${key} incorrectly exposes a source timestamp`, byKey[key]);
@@ -522,7 +560,7 @@ async function main() {
 
     const modelState=await collectCanonicalSnapshot(client);
     verifyCanonicalContracts(modelState, desktopDom);
-    const drilldowns=await verifyDrilldowns(client);
+    const drilldowns=await verifyDrilldowns(client, modelState);
     const desktopScreenshot=await screenshot(client, "dashboard-desktop.png");
 
     await client.call("Emulation.setDeviceMetricsOverride", MOBILE);
@@ -597,7 +635,8 @@ async function main() {
         recent_delta_coverage:modelState.recent_delta_coverage,
         heatmap:{available:modelState.heatmap?.available,placed_activity_count:modelState.heatmap?.placed_activity_count,unresolved_activity_count:modelState.heatmap?.unresolved_activity_count,row_count:modelState.heatmap?.rows?.length || 0},
         timeline:{available:modelState.timeline?.available,event_count:modelState.timeline?.event_count,total_change_count:modelState.timeline?.total_change_count,entry_count:modelState.timeline?.entries?.length || 0},
-        runtime_delta_drift:modelState.runtime_delta_drift
+        runtime_delta_drift:modelState.runtime_delta_drift,
+        runtime_exclusions:{available:modelState.runtime_exclusions?.available,total_count:modelState.runtime_exclusions?.total_count,reason_summary:modelState.runtime_exclusions?.reason_summary}
       },
       browser_errors:{console:consoleErrors,major_console:majorConsoleErrors,exceptions,major_network:majorNetworkErrors,all_network:resourceErrors},
       screenshots:{desktop:desktopScreenshot,mobile:mobileScreenshot}
