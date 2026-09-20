@@ -81,7 +81,7 @@ test('macroregion-only polity placement is surfaced at Activity level', () => {
 
 test('chronology-unresolved rows are tracked separately instead of misclassified as spatial debt', () => {
   const result = buildSpatialActivityCandidates({
-    personRead: personRead({ start: { year: null }, end: { year: null } }),
+    personRead: personRead({ activity: { start: { year: null }, end: { year: null } } }),
     spatial: spatial({ review_queue: [] })
   });
   assert.equal(result.summary.chronology_unresolved_activity_count, 1);
