@@ -28,8 +28,8 @@ test("normalized read SQL preserves English canonical values and prefers Korean 
   assert.match(DIRECT_READ_SQL, /coalesce\(td_ko\.name, td_en\.name, tko\.name, ten\.name\).*politic_display_name/s);
   assert.match(DIRECT_READ_SQL, /pp\.activity_start is not null/);
   assert.match(DIRECT_READ_SQL, /pp\.activity_end is not null/);
-  assert.match(DIRECT_READ_SQL, /pd\.valid_from_year is null or pd\.valid_from_year <= pp\.activity_start/);
-  assert.match(DIRECT_READ_SQL, /pd\.valid_to_year is null or pd\.valid_to_year >= pp\.activity_end/);
+  assert.match(DIRECT_READ_SQL, /coalesce\\(pd\\.valid_from_month, 1\\)/);\n  assert.match(DIRECT_READ_SQL, /coalesce\\(pp\\.activity_start_month, 1\\)/);
+  assert.match(DIRECT_READ_SQL, /coalesce\\(pd\\.valid_to_month, 12\\)/);\n  assert.match(DIRECT_READ_SQL, /coalesce\\(pp\\.activity_end_month, 12\\)/);
   assert.match(DIRECT_READ_SQL, /coalesce\(rko\.name, r\.source_label\).*role_display_name/s);
 });
 
