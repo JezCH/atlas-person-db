@@ -24,7 +24,9 @@
   let personDomainsById = Object.freeze({});
   let dashboardFilter = null;
   let requestSerial = 0;
+  let selectedPersonDetail = null;
   let selectedPortrait = null;
+  let selectedPortraitSourceCandidates = null;
   const PORTRAIT_SOURCE_MAX_BYTES = 20 * 1024 * 1024;
   const PORTRAIT_OUTPUT_MAX_BYTES = 3 * 1024 * 1024;
   const PORTRAIT_MAX_SIDE = 1600;
@@ -473,9 +475,9 @@
     return row?.citation_text || row?.title || row?.canonical_url || source?.source_id || "출처";
   }
 
-  function portraitSourceCandidates(person, portrait) {
+  function portraitSourceCandidates(_person, portrait) {
     const byId = new Map();
-    for (const source of person?.sources || []) {
+    for (const source of selectedPortraitSourceCandidates || []) {
       const id = String(source?.source_id || "").trim();
       if (id) byId.set(id, source);
     }
@@ -508,13 +510,15 @@
     const candidateOptions = candidates.map((source) =>
       `<option value="${escapeHtml(source.source_id || "")}">${escapeHtml(portraitSourceDisplay(source))}</option>`
     ).join("");
-    const add = candidateOptions
-      ? `<form class="person-profile-form person-portrait-source-add" data-person-portrait-operation="source-add" data-person-id="${personId}">
-          <label><span>Person 출처에서 근거 추가</span><select name="source_id" required><option value="" selected disabled>출처 선택</option>${candidateOptions}</select></label>
-          <label><span>근거 역할</span><select name="evidence_role" required>${portraitEvidenceRoleOptions("context_reference")}</select></label>
-          <button class="mini-btn edit" type="submit">근거 연결</button>
-        </form>`
-      : '<p class="person-profile-help">이 Person에 연결된 canonical Source가 없어 여기서 새 근거를 추가할 수 없습니다. Source 생성·Person 연결은 별도 Source authoring 책임으로 유지합니다.</p>';
+    const add = selectedPortraitSourceCandidates === null
+      ? `<button class="mini-btn" type="button" data-person-portrait-load-sources data-person-id="${personId}">Person 출처 불러오기</button>`
+      : candidateOptions
+        ? `<form class="person-profile-form person-portrait-source-add" data-person-portrait-operation="source-add" data-person-id="${personId}">
+            <label><span>Person 출처에서 근거 추가</span><select name="source_id" required><option value="" selected disabled>출처 선택</option>${candidateOptions}</select></label>
+            <label><span>근거 역할</span><select name="evidence_role" required>${portraitEvidenceRoleOptions("context_reference")}</select></label>
+            <button class="mini-btn edit" type="submit">근거 연결</button>
+          </form>`
+        : '<p class="person-profile-help">이 Person에 연결된 canonical Source가 없습니다. Source 생성·Person 연결은 별도 Source authoring 책임으로 유지합니다.</p>';
     return `<div class="person-portrait-provenance">
       <div class="person-detail-section-head"><h4>초상 근거</h4><span>${links.length}건</span></div>
       ${linked}
@@ -639,7 +643,9 @@
   async function selectPerson(personId, { force = false } = {}) {
     if (!personId || (!force && selectedPersonId === personId)) return;
     selectedPersonId = personId;
+    selectedPersonDetail = null;
     selectedPortrait = null;
+    selectedPortraitSourceCandidates = null;
     renderGroups();
     renderDetailLoading();
     const serial = ++requestSerial;
@@ -649,6 +655,7 @@
         reader.readPortrait(personId).catch((error) => Object.freeze({ error }))
       ]);
       if (serial !== requestSerial || selectedPersonId !== personId) return;
+      selectedPersonDetail = result.person;
       selectedPortrait = portraitResult?.portrait || null;
       renderDetail(result.person, portraitResult);
     } catch (error) {
@@ -771,6 +778,25 @@
         evidence_role:String(row?.evidence_role || "").trim()
       }))
       .filter((row) => row.source_id && row.evidence_role);
+  }
+
+  async function loadPortraitSourceCandidates(personId) {
+    const id = String(personId || "").trim();
+    if (!id || id !== selectedPersonId || !selectedPortrait || !selectedPersonDetail) return;
+    if (!profileWriter?.readPersonPortraitSourceCandidates) {
+      return showOperationalMessage("초상 근거 후보 조회 서비스를 사용할 수 없습니다.");
+    }
+    try {
+      const outcome = await profileWriter.readPersonPortraitSourceCandidates(id);
+      if (outcome?.committed !== true || !Array.isArray(outcome?.candidates)) {
+        return showOperationalMessage(outcomeError(outcome, "Person 출처 조회에 실패했습니다."));
+      }
+      selectedPortraitSourceCandidates = outcome.candidates.slice();
+      renderDetail(selectedPersonDetail, { portrait:selectedPortrait });
+      showOperationalMessage(`초상 근거 후보 ${selectedPortraitSourceCandidates.length}건을 불러왔습니다.`);
+    } catch (error) {
+      showOperationalMessage(error?.message || "Person 출처 조회에 실패했습니다.");
+    }
   }
 
   async function patchPortraitMetadata(personId, {
@@ -1056,6 +1082,11 @@
     detail?.addEventListener("submit", handlePortraitSubmit);
     detail?.addEventListener("submit", handlePortraitMetadataSubmit);
     detail?.addEventListener("click", (event) => {
+      const sourceLoad = event.target.closest("[data-person-portrait-load-sources][data-person-id]");
+      if (sourceLoad) {
+        loadPortraitSourceCandidates(sourceLoad.dataset.personId);
+        return;
+      }
       const sourceRemove = event.target.closest("[data-person-portrait-source-remove][data-person-id]");
       if (sourceRemove) {
         removePortraitSource(sourceRemove.dataset.personId, sourceRemove.dataset.sourceId, sourceRemove.dataset.evidenceRole);
@@ -1112,6 +1143,7 @@
     portraitFileToWebpBase64,
     handlePortraitSubmit,
     handlePortraitMetadataSubmit,
+    loadPortraitSourceCandidates,
     removePortraitSource,
     deletePersonPortrait,
     deleteActivity,
