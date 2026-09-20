@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Francis Drake",
+    "display_name_ko": "프랜시스 드레이크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Privateer and expedition commander",
+    "role_display_name_ko": "사략선장·원정대장",
+    "period_basis": "general_activity",
+    "start_year": 1577,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1580,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Drake commanded the English circumnavigation of 1577–1580. Royal Museums Greenwich identifies him as the first Englishman to circumnavigate the globe and notes that the voyage was a Crown-sanctioned privateering expedition against Spanish interests."
+  },
+  "sources": [
+    {
+      "source_type": "museum_reference",
+      "title": "Sir Francis Drake, 1540–96 — Royal Museums Greenwich",
+      "canonical_url": "https://www.rmg.co.uk/collections/objects/rmgc-object-14136",
+      "citation_text": "Identifies Drake as commander of the successful 1577–1580 circumnavigation and the first Englishman to circumnavigate the world."
+    },
+    {
+      "source_type": "museum_reference",
+      "title": "Sir Francis Drake facts — Royal Museums Greenwich",
+      "canonical_url": "https://www.rmg.co.uk/stories/maritime-history/sir-francis-drake-facts",
+      "citation_text": "Describes Drake's circumnavigation as a secret privateering mission sanctioned by Elizabeth I against Spanish colonies and shipping."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-20"
+    }
+  }
+}

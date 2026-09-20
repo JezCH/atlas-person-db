@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Henry Morgan",
+    "display_name_ko": "헨리 모건",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Privateer commander",
+    "role_display_name_ko": "사략선 지휘관",
+    "period_basis": "military_activity",
+    "start_year": 1666,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1671,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Morgan is first explicitly recorded commanding a ship in the 1666 privateering expedition and was subsequently elected admiral of the buccaneers. His English-authorized Caribbean privateering culminated in the Panama expedition of 1670–1671."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Dictionary of National Biography, 1885–1900 — Morgan, Henry",
+      "canonical_url": "https://en.wikisource.org/wiki/Morgan%2C_Henry_%281635-1688%29_%28DNB00%29",
+      "citation_text": "Records Morgan commanding a ship in 1666, his election as admiral of the buccaneers, and later commissioned expeditions from Jamaica."
+    },
+    {
+      "source_type": "academic_article",
+      "title": "The Jamaica discipline and the epochal nature of English Atlantic privateering and piracy, 1660–1726",
+      "canonical_url": "https://journals.sagepub.com/doi/full/10.1177/08438714231153693",
+      "citation_text": "Cites the 1670 commission and instructions issued to Admiral Henry Morgan and his 1671 account of the Panama expedition."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-20"
+    }
+  }
+}
