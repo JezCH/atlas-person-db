@@ -173,6 +173,62 @@ test("attention queue preserves unavailable sources as unknown instead of fake z
   assert.equal(queue.known_outstanding_checks,1);
 });
 
+test("Runtime exclusion Attention uses exact Activity targets from the active compile snapshot", () => {
+  const targets=[
+    {
+      activity_id:"00000000-0000-4000-8000-000000000201",
+      person_id:"00000000-0000-4000-8000-000000000001",
+      person_display_name:"인물 A",
+      polity_id:"00000000-0000-4000-8000-000000000101",
+      polity_display_name:"정치체 A",
+      reason_code:"START_BOUNDARY_UNRESOLVED"
+    },
+    {
+      activity_id:"00000000-0000-4000-8000-000000000202",
+      person_id:"00000000-0000-4000-8000-000000000002",
+      person_display_name:"인물 B",
+      polity_id:"00000000-0000-4000-8000-000000000102",
+      polity_display_name:"정치체 B",
+      reason_code:"PROVENANCE_UNRESOLVED"
+    }
+  ];
+  const queue=model.buildAttentionQueue({
+    personResult:{persons:[
+      {id:targets[0].person_id,external_references:{namuwiki:{status:"linked"}},activity_summaries:[],facets:{polities:[]}},
+      {id:targets[1].person_id,external_references:{namuwiki:{status:"linked"}},activity_summaries:[],facets:{polities:[]}}
+    ]},
+    domainResult:{by_person_id:{[targets[0].person_id]:"governance",[targets[1].person_id]:"culture"}},
+    spatialIndex:{schema:spatialModel.SPATIAL_INDEX_SCHEMA,polity_geography:{},polity_subregions:{},place_function_records:[],review_queue:[],activity_spatial_overrides:[]},
+    runtimeExclusionsResult:{available:true,total_count:2,reason_summary:{START_BOUNDARY_UNRESOLVED:1,PROVENANCE_UNRESOLVED:1},targets}
+  });
+  const runtime=queue.items.find((item)=>item.code==="runtime_exclusion");
+  assert.equal(runtime.available,true);
+  assert.equal(runtime.unit,"activity");
+  assert.equal(runtime.count,2);
+  assert.deepEqual(runtime.person_ids,[targets[0].person_id,targets[1].person_id]);
+  assert.deepEqual(runtime.activity_targets,targets);
+  assert.equal(runtime.action_href,null);
+});
+
+test("Runtime exclusion breakdown uses canonical compile reason summary", () => {
+  const result=model.buildIncompleteBreakdown({
+    personResult:{persons:[]},
+    runtimeExclusionsResult:{
+      available:true,
+      total_count:10,
+      reason_summary:{START_BOUNDARY_UNRESOLVED:8,PROVENANCE_UNRESOLVED:2},
+      targets:Array.from({length:10},(_,index)=>({activity_id:String(index)}))
+    }
+  });
+  assert.equal(result.runtime.available,true);
+  assert.equal(result.runtime.total,10);
+  assert.equal(result.runtime.unit,"activity");
+  assert.deepEqual(result.runtime.rows.map((row)=>[row.code,row.count]),[
+    ["START_BOUNDARY_UNRESOLVED",8],
+    ["PROVENANCE_UNRESOLVED",2]
+  ]);
+});
+
 test("attention queue drill-down reuses Person Main instead of creating a duplicate list UI", () => {
   assert.match(dashboardSource, /data-dashboard-attention/);
   assert.match(dashboardSource, /ATLAS_PERSON_MAIN\?\.setDashboardFilter/);
@@ -183,10 +239,10 @@ test("attention queue drill-down reuses Person Main instead of creating a duplic
 });
 
 
-test("unavailable Attention categories route to authoritative Admin diagnostics without inventing counts", () => {
+test("unavailable Attention categories retain authoritative Admin diagnostics without inventing counts", () => {
   assert.match(dashboardSource, /dashboard-attention-link/);
   assert.match(dashboardSource, /data-dashboard-attention-diagnostic/);
-  assert.match(dashboardSource, /Runtime 제외 대상 집계는 공개 대시보드에 미노출/);
+  assert.match(dashboardSource, /Runtime 제외 대상 원본 확인 불가/);
   assert.match(dashboardSource, /중복 후보 대상은 관리자 인증 영역에서 확인/);
   assert.match(dashboardCssSource, /dashboard-attention-link/);
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
@@ -1125,5 +1181,35 @@ test("Dashboard keeps Needs Attention immediately after KPIs and ahead of system
   const attention=dashboardSource.indexOf("NEEDS ATTENTION");
   const system=dashboardSource.indexOf("SYSTEM / PRODUCTION");
   assert.ok(kpis >= 0 && attention > kpis && system > attention);
+});
+
+test("shared store owns and validates Runtime exclusion target reads", () => {
+  assert.match(storeSource,/runtimeExclusions:[\s\S]*__atlas_read_surface=runtime-exclusions/);
+  assert.match(storeSource,/function normalizeRuntimeExclusionsPayload/);
+  assert.match(storeSource,/INVALID_RUNTIME_EXCLUSION_TARGET_COUNT/);
+  assert.match(storeSource,/DUPLICATE_RUNTIME_EXCLUSION_ACTIVITY/);
+  assert.match(storeSource,/INVALID_RUNTIME_EXCLUSION_REASON_BALANCE/);
+  assert.match(storeSource,/function loadRuntimeExclusions/);
+  assert.match(dashboardSource,/store\.loadRuntimeExclusions\(\{ force \}\)/);
+  assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
+});
+
+test("Dashboard Runtime exclusion Attention reveals exact Activity target table", () => {
+  assert.match(dashboardSource,/RUNTIME EXCLUSION TARGETS/);
+  assert.match(dashboardSource,/dashboardRuntimeExclusionTargets/);
+  assert.match(dashboardSource,/Activity UUID/);
+  assert.match(dashboardSource,/row\.person_display_name/);
+  assert.match(dashboardSource,/row\.polity_display_name/);
+  assert.match(dashboardSource,/row\.activity_id/);
+  assert.match(dashboardSource,/item\.code === "runtime_exclusion"/);
+  assert.match(dashboardSource,/panel\.hidden=false/);
+  assert.match(dashboardSource,/aria-expanded/);
+  assert.match(dashboardCssSource,/dashboard-runtime-exclusion-table/);
+  assert.match(dashboardCssSource,/dashboard-runtime-exclusion-targets\[hidden\]/);
+});
+
+test("Runtime exclusion Attention renders Activity units instead of person units", () => {
+  assert.match(dashboardSource,/const itemUnit = unitLabel\(item\?\.unit \|\| "person"\)/);
+  assert.match(dashboardSource,/\$\{value\(item\.count\)\} \$\{itemUnit\}/);
 });
 
