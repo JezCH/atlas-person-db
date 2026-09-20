@@ -99,6 +99,7 @@
     if (label === "Person Runtime") return "인물 기준";
     if (label === "Person Domain") return "인물 분야";
     if (label === "Person Runtime Activity") return "인물 활동";
+    if (label === "Person Activity Sources") return "활동 출처";
     if (label === "Spatial Index") return "공간 인덱스";
     if (label === "Spatial resolver") return "공간 배치 판정";
     if (label === "Non-timeline Registry") return "비연대표 목록";
@@ -113,6 +114,7 @@
     if (row?.code === "namuwiki") return "나무위키 검토";
     if (row?.code === "runtime_activity") return "활동 연결";
     if (row?.code === "chronology") return "활동 연대";
+    if (row?.code === "provenance") return "출처 연결";
     if (row?.code === "spatial") return "공간 배치";
     return row?.label || row?.code || "확인 항목";
   }
@@ -425,7 +427,7 @@
       </section>
 
       <section class="dashboard-panel card" aria-label="데이터 완성도 행렬">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">COMPLETENESS MATRIX</p><h3>축별 완성도</h3></div><span>인물 3항목 · 활동 2항목</span></div>
+        <div class="dashboard-panel-head"><div><p class="eyebrow">COMPLETENESS MATRIX</p><h3>축별 완성도</h3></div><span>인물 3항목 · 활동 3항목</span></div>
         ${completenessTable(completeness)}
         <div class="dashboard-progress-meta">
           <span>인물과 활동 단위는 합산하지 않음</span>
