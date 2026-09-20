@@ -29,6 +29,10 @@ test("exact-SHA verifier fails closed and byte-compares the current spacetime/do
     "atlas-person-spacetime-domain-colors.js",
     "atlas-person-spacetime-domain-colors.css",
     "atlas-person-spacetime-label-engine.js",
+    "atlas-person-spacetime-control-state.js",
+    "atlas-person-spacetime-time-projection.js",
+    "atlas-person-spacetime-semantic-axis.js",
+    "atlas-person-spacetime-lod.js",
     "atlas-person-spacetime-view.js",
     "atlas-person-spacetime-view.css",
     "atlas-person-spacetime-temporal-certainty.js"
@@ -54,20 +58,21 @@ test("Production visual acceptance covers the compact 390px mobile presentation 
   assert.match(verifier, /spacetime-mobile-390\.png/);
 });
 
-test("Production visual acceptance requires every viewport Person name at 500 and 1200 percent", () => {
+test("Production visual acceptance requires every viewport Person name at 500 and 1500 percent", () => {
   const verifier = read("scripts/verify-spacetime-production-visual.mjs");
   assert.match(verifier, /defaultAcceptanceZoom === "500%"/);
-  assert.doesNotMatch(verifier, /spacetimeCameraZoomReset'\)\?\.click/);
+  assert.match(verifier, /spacetimeCameraZoomReset'\)\?\.click/);
   assert.match(verifier, /at500\.deferredLabelCount === 0/);
   assert.match(verifier, /at500\.domLabelCount === at500\.domPersonCount/);
-  assert.match(verifier, /at1200\.deferredLabelCount === 0/);
-  assert.match(verifier, /at1200\.domLabelCount === at1200\.domPersonCount/);
-  assert.match(verifier, /spacetime-1200\.png/);
-  assert.match(verifier, /at1200\.zoom === "1200%"/);
+  assert.match(verifier, /minimumAcceptanceZoom === "100%"/);
+  assert.match(verifier, /at1500\.deferredLabelCount === 0/);
+  assert.match(verifier, /at1500\.domLabelCount === at1500\.domPersonCount/);
+  assert.match(verifier, /spacetime-1500\.png/);
+  assert.match(verifier, /at1500\.zoom === "1500%"/);
   assert.match(verifier, /reviewedDisplayPlaceCount/);
   assert.match(verifier, /semantic\.buildReviewedPlaceGeometry/);
   assert.match(verifier, /at500\.placeMarkerCount === at500\.reviewedDisplayPlaceCount/);
-  assert.match(verifier, /at1200\.placeMarkerCount === at1200\.reviewedDisplayPlaceCount/);
+  assert.match(verifier, /at1500\.placeMarkerCount === at1500\.reviewedDisplayPlaceCount/);
   assert.doesNotMatch(verifier, /EXPECTED_REVIEWED_PLACE_COUNT/);
   assert.doesNotMatch(verifier, /bandContainment\.label_violation_count === 0/);
   assert.match(verifier, /bandContainment\.rail_violation_count === 0/);
@@ -86,9 +91,9 @@ test("real-Chrome domain acceptance preserves Person/Activity semantic separatio
 
 test("final acceptance documentation keeps established stable-world invariants", () => {
   const doc = read("docs/spacetime-current-renderer-final-acceptance.md");
-  assert.match(doc, /300%/);
+  assert.match(doc, /100%/);
   assert.match(doc, /500%/);
-  assert.match(doc, /1200%/);
+  assert.match(doc, /1500%/);
   assert.match(doc, /0\.748/);
   assert.match(doc, /no local region\/time compression/);
   assert.match(doc, /Missing, unknown, future, or unclassified values remain neutral/);

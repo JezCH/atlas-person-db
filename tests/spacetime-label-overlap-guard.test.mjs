@@ -84,9 +84,9 @@ test("surface owner loads the guard without modifying the core spacetime rendere
   const owner = fs.readFileSync(path.join(root, "atlas-domain-surface-owner.js"), "utf8");
   const view = fs.readFileSync(path.join(root, "atlas-person-spacetime-view.js"), "utf8");
   assert.match(owner, /atlas-person-spacetime-label-overlap-guard\.js\?v=20260920-world-name-overlay/);
-  assert.match(view, /const CAMERA_MIN_ZOOM = 3;/);
+  assert.match(view, /const CAMERA_MIN_ZOOM = 1;/);
   assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);
-  assert.match(view, /const CAMERA_MAX_ZOOM = 12;/);
+  assert.match(view, /const CAMERA_MAX_ZOOM = 15;/);
   assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.748;/);
   assert.doesNotMatch(view, /LABEL_OVERLAP_GUARD/);
 });

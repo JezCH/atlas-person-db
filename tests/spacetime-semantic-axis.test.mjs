@@ -38,8 +38,8 @@ test("readable-scale time axis starts at quarter-century detail and advances to 
   }
 });
 
-test("below-300 time stages are rejected", () => {
-  assert.throws(() => semanticAxis.timeStage(2.99), /zoom must be >= 3/);
+test("below-100 time stages are rejected", () => {
+  assert.throws(() => semanticAxis.timeStage(0.99), /zoom must be >= 1/);
   assert.equal(semanticAxis.timeStage(3).code, "quarter-century");
   assert.equal(semanticAxis.timeStage(6.5).code, "quarter-century");
   assert.equal(semanticAxis.timeStage(6.5001).code, "decade");
@@ -55,7 +55,7 @@ test("space header is fixed to reviewed subregion hierarchy at the readable floo
   assert.equal(plan.macroregions.length, 9);
   assert.equal(plan.subregions.length, continuum.subregions.length);
   assert.equal(plan.subregion_opacity, 1);
-  assert.equal(plan.minimum_zoom, 3);
+  assert.equal(plan.minimum_zoom, 1);
 
   for (const subregion of plan.subregions) {
     const parent = plan.macroregions.find((macro) => macro.code === subregion.parent_code);

@@ -6,9 +6,9 @@
     "sufficient_for_final_completion": false
   },
   "readable_scale": {
-    "minimum_zoom_percent": 300,
+    "minimum_zoom_percent": 100,
     "default_zoom_percent": 500,
-    "maximum_zoom_percent": 1200,
+    "maximum_zoom_percent": 1500,
     "global_extent_compression": 0.748,
     "local_density_compression_allowed": false,
     "minimum_base_world_width_px": 900,
@@ -297,7 +297,7 @@
   "spatial_place_semantic_lod_verification": {
     "status": "locked",
     "source": "spatialCompile.REVIEWED_PLACE_BINDINGS",
-    "minimum_zoom_percent": 300,
+    "minimum_zoom_percent": 100,
     "place_detail_start_percent": 720,
     "place_detail_full_percent": 800,
     "floor_stage": "subregion",
