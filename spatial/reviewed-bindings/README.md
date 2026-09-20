@@ -32,7 +32,7 @@ The migration helper is a cutover bootstrap tool, not a permanent authoring path
 
 ## New reviewed shard format
 
-New reviews live as uniquely named files under `shards/` ending in `.bindings.json`. A shard may contain stable static `bindings`, explicit `review_queue` decisions, or both for different Polity UUIDs.
+New reviews live as uniquely named files under `shards/` ending in `.bindings.json`. A shard may contain stable static `bindings`, explicit `review_queue` decisions, Activity-specific `activity_overrides`, or any compatible combination.
 
 A stable static placement uses `bindings`:
 
@@ -75,6 +75,8 @@ When a currently used Polity has been reviewed but static geography would be his
 ```
 
 `review_queue` is a reviewed disposition, not a geography assignment. It records that the Polity is intentionally unresolved at static-map precision and prevents Candidate Audit from repeatedly reporting the same reviewed ambiguity as undispositioned debt. Temporal `place_function_records` are likewise reviewed dispositions when they already provide the required time-dependent representation.
+
+A `review_queue` decision closes only the **Polity-level** review. It does **not** make Activities under that Polity spatially complete. Every Runtime Activity that references a review-queue Polity must have an exact reviewed `activity_override` (or be represented by another canonical temporal mechanism after an explicit correction). Activity UUID, Polity UUID, and interval are fail-closed so a later Activity cannot silently inherit an unrelated placement.
 
 One Polity UUID must never appear as both a static binding and a review-queue decision. The shard stores only already reviewed payload; it does not infer Polity identity, geography, or HOLD reasons.
 
@@ -145,6 +147,8 @@ A currently Activity-referenced Polity is **undispositioned** only when all thre
 3. no explicit `review_queue` decision.
 
 Candidate Audit may retain legacy `unplaced` artifact filenames for compatibility, but its actionable count is `undispositioned_used_polity_count`. A reviewed temporal or HOLD case must not re-enter the work queue merely because it lacks static geography.
+
+The Production audit also runs an **Activity-level resolver pass** over the Runtime Person read model. This second pass is authoritative for display coverage: a review-queue Polity with a missing Activity override, a macro-only Polity, a place-function gap/conflict, or a compile-time subregion gap is reported as unresolved Activity debt. The audit fails while any chronology-resolved Runtime Activity remains spatially unresolved.
 
 ## B46-B77 transition rule
 
