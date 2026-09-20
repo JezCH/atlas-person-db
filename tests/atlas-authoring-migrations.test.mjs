@@ -14,7 +14,7 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 11);
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 12);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
@@ -26,6 +26,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(AUTHORING_MIGRATION_PATHS[8], /20260905_person_representative_domain_standard_v1\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[9], /20260906_p13a_temporal_unknown_boundaries\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[10], /20260906_p13_source_place_objects\.sql$/);
+  assert.match(AUTHORING_MIGRATION_PATHS[11], /20260920_person_portraits\.sql$/);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
@@ -82,6 +83,12 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(sourcePlace, /CREATE TABLE IF NOT EXISTS atlas_v2\.place_names/i);
   assert.match(sourcePlace, /CREATE TABLE IF NOT EXISTS atlas_v2\.place_sources/i);
   assert.match(sourcePlace, /REFERENCES atlas_v2\.sources\(id\) ON DELETE RESTRICT/i);
+
+  const personPortraits = migrations[11].sql;
+  assert.match(personPortraits, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_portraits/i);
+  assert.match(personPortraits, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_portrait_sources/i);
+  assert.match(personPortraits, /PRIMARY KEY \(person_id\)/i);
+  assert.match(personPortraits, /REFERENCES atlas_v2\.sources\(id\) ON DELETE RESTRICT/i);
 });
 
 test('current clean schema baseline remains the measured pre-lifecycle Production shape', () => {
