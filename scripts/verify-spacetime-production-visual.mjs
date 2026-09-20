@@ -7,7 +7,6 @@ const EXPECTED_RUNTIME_SHA = process.env.ATLAS_EXPECTED_RUNTIME_SHA || "d8e8fa3f
 const OUT_DIR = process.env.ATLAS_VISUAL_OUT_DIR || "artifacts/spacetime-visual-acceptance";
 const VIEWPORT = Object.freeze({ width: 1600, height: 1000, deviceScaleFactor: 1, mobile: false });
 const MOBILE_VIEWPORT = Object.freeze({ width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
-const EXPECTED_REVIEWED_PLACE_COUNT = 5;
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
 
@@ -202,6 +201,9 @@ async function collect500(client) {
       zoom:(q("#spacetimeCameraZoomValue")?.textContent||"").trim(),
       spatialStage:qa(".spacetime-status-row span").map(x=>(x.textContent||"").trim()).find(x=>x.endsWith("공간축"))||null,
       placeOpacity:Number(style(placeLayer).opacity),
+      reviewedPlaceBindingCount:Array.isArray(window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE?.REVIEWED_PLACE_BINDINGS)
+        ? window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE.REVIEWED_PLACE_BINDINGS.length
+        : 0,
       placeMarkerCount:qa(".spacetime-place-head-marker").length,
       placeVisibleCount:Number(style(placeLayer).opacity) > 0.02 ? qa(".spacetime-place-head-marker").filter(el=>Number(style(el).opacity) > 0.02).length : 0,
       macro, sub,
@@ -242,6 +244,9 @@ async function collect1200(client, geometry500) {
       zoom:(q("#spacetimeCameraZoomValue")?.textContent||"").trim(),
       spatialStage:qa(".spacetime-status-row span").map(x=>(x.textContent||"").trim()).find(x=>x.endsWith("공간축"))||null,
       placeOpacity:Number(style(placeLayer).opacity),
+      reviewedPlaceBindingCount:Array.isArray(window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE?.REVIEWED_PLACE_BINDINGS)
+        ? window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE.REVIEWED_PLACE_BINDINGS.length
+        : 0,
       placeMarkerCount:markers.length,
       placeMarkers:markers.map(rect),
       placeOverlap,
@@ -381,7 +386,8 @@ async function main() {
     assert(at500.viewport.width === 1600 && at500.viewport.height === 1000, "Unexpected visual acceptance viewport", at500.viewport);
     assert(at500.zoom === "500%", "Readable-floor zoom is not 500%", at500);
     assert(at500.placeOpacity === 0, "Reviewed Place layer must be hidden at the 500% floor", at500);
-    assert(at500.placeMarkerCount === EXPECTED_REVIEWED_PLACE_COUNT, "Unexpected reviewed Place registry count at 500%", at500);
+    assert(at500.reviewedPlaceBindingCount > 0, "Reviewed Place registry is unavailable at 500%", at500);
+    assert(at500.placeMarkerCount === at500.reviewedPlaceBindingCount, "Rendered Place marker count does not match the runtime reviewed registry at 500%", at500);
     assert(at500.placeVisibleCount === 0, "Reviewed Place markers are visibly leaking into 500%", at500);
     assert(at500.inspectorPosition === "sticky", "Person/Activity inspector is not sticky", at500);
     assert(at500.frameRect.right <= at500.inspectorRect.left + 0.5, "Map and inspector overlap at desktop viewport", at500);
@@ -416,9 +422,10 @@ async function main() {
 
     const at1200 = await collect1200(client, { macro:at500.macro, sub:at500.sub });
     at1200.uncertaintyCount = uncertaintyCount;
-    assert(at1200.zoom === "800%", "Maximum visual zoom is not 1200%", at1200);
+    assert(at1200.zoom === "1200%", "Maximum visual zoom is not 1200%", at1200);
     assert(at1200.placeOpacity > 0.99, "Reviewed Place layer is not fully visible at 1200%", at1200);
-    assert(at1200.placeMarkerCount === EXPECTED_REVIEWED_PLACE_COUNT, "Unexpected reviewed Place marker count at 1200%", at1200);
+    assert(at1200.reviewedPlaceBindingCount === at500.reviewedPlaceBindingCount, "Reviewed Place registry changed across camera zoom", { at500, at1200 });
+    assert(at1200.placeMarkerCount === at1200.reviewedPlaceBindingCount, "Rendered Place marker count does not match the runtime reviewed registry at 1200%", at1200);
     assert(at1200.placeOverlap.count === 0, "Reviewed Place header markers overlap at 1200%", at1200.placeOverlap);
     assert(at1200.labelOverlap.count === 0, "Visible Person labels overlap at 1200%", at1200.labelOverlap);
     assert(at1200.deferredLabelCount === 0, "Person names are deferred at 1200%", at1200);
