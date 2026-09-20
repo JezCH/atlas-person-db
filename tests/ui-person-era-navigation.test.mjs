@@ -100,13 +100,23 @@ test('era navigation is sticky, keeps visible facet status, and pins the table h
   assert.match(navCss, /top:64px/);
 });
 
+test('mobile Person facet controls stay inside the viewport without browser focus zoom', () => {
+  const start = navCss.indexOf('@media(max-width:760px)');
+  const end = navCss.indexOf('@media(max-width:520px)');
+  const mobileCss = navCss.slice(start, end);
+  assert.match(mobileCss, /\.person-era-navigator\{[^}]*max-width:100%[^}]*text-size-adjust:100%/);
+  assert.match(mobileCss, /\.person-era-nav-controls\{[^}]*min-width:0[^}]*max-width:100%/);
+  assert.match(mobileCss, /\.person-era-search,\.person-era-polity-filter,\.person-era-relation-filter\{[^}]*min-width:0[^}]*max-width:100%[^}]*font-size:16px/);
+  assert.doesNotMatch(mobileCss, /\.person-era-search,\.person-era-polity-filter,\.person-era-relation-filter\{[^}]*font-size:8\.5px/);
+});
+
 test('era navigation assets load after the shared era model/table grouping and before Person Main initializes', () => {
   const eraModelJs = 'atlas-person-era-model.js?v=20260909-era-10-band-v1';
   const tableJs = 'atlas-person-table-view.js?v=20260819-era-model-r2';
   const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
   const mainJs = 'atlas-person-main.js?v=20260920-single-person-surface';
   const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
-  const navCssAsset = 'atlas-person-era-navigation.css?v=20260920-person-facets-sticky-v1';
+  const navCssAsset = 'atlas-person-era-navigation.css?v=20260920-mobile-viewport-fit-v1';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
 
   for (const asset of [eraModelJs, tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
