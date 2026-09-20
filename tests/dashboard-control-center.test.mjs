@@ -1236,6 +1236,7 @@ test("Production browser acceptance permanently verifies Activity completeness p
   assert.match(acceptance,/runtimePublicationResult/);
   assert.match(acceptance,/runtimeExclusionsResult/);
   assert.match(acceptance,/Expected eight shared Dashboard sources/);
+  assert.match(acceptance,/Activity completeness DOM row count differs from canonical model/);
   assert.match(acceptance,/Activity completeness drill-down availability differs from canonical target set/);
   assert.match(acceptance,/No actionable Activity completeness drill-down button found/);
   assert.match(acceptance,/Activity completeness target panel did not reveal on click/);

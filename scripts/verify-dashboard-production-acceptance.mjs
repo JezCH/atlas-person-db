@@ -517,12 +517,12 @@ function verifyCanonicalContracts(modelState, desktopDom) {
 
   assert(desktopDom.activity_rows.length > 0, "Completeness Matrix has no Activity-unit rows", desktopDom.activity_rows);
   assert(desktopDom.activity_rows.every((row)=>row.has_person_drilldown === false), "Activity-unit Completeness row incorrectly exposes Person drill-down", desktopDom.activity_rows);
-  const activityCompletenessByCode=Object.fromEntries((modelState.completeness?.rows || []).filter((row)=>row.unit === "activity").map((row)=>[row.code,row]));
-  for (const row of desktopDom.activity_rows) {
-    const modelRow=activityCompletenessByCode[row.code];
-    assert(modelRow, "Rendered Activity completeness row is missing from canonical model", row);
-    assert(row.has_activity_drilldown === Boolean(modelRow.drilldown_available), "Activity completeness drill-down availability differs from canonical target set", { dom:row,model:modelRow });
-  }
+  const activityCompletenessRows=(modelState.completeness?.rows || []).filter((row)=>row.unit === "activity");
+  assert(desktopDom.activity_rows.length === activityCompletenessRows.length, "Activity completeness DOM row count differs from canonical model", { dom:desktopDom.activity_rows,model:activityCompletenessRows });
+  desktopDom.activity_rows.forEach((row,index)=>{
+    const modelRow=activityCompletenessRows[index];
+    assert(row.has_activity_drilldown === Boolean(modelRow.drilldown_available), "Activity completeness drill-down availability differs from canonical target set", { index,dom:row,model:modelRow });
+  });
   assert(desktopDom.person_rows.every((row)=>row.has_activity_drilldown === false), "Person-unit Completeness row incorrectly exposes Activity drill-down", desktopDom.person_rows);
   assert(desktopDom.person_rows.some((row)=>row.has_person_drilldown), "Completeness Matrix has no actionable Person drill-down row", desktopDom.person_rows);
 
