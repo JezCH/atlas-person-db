@@ -138,6 +138,33 @@ Whenever work stops before the whole task is complete, the durable record MUST s
 
 This is the default project-wide behavior and does not require the user to repeat it in each conversation.
 
+### Response barrier: close the user turn after each completed work unit
+
+Unless the user explicitly requests multiple work units to be completed continuously in the same response, **one completed work unit is the maximum unit of execution for one user turn**.
+
+After the chosen unit reaches its actual completion boundary — including the unit's required verification, checkpoint/commit/comment, merge, read-back, or other stated completion proof — the worker MUST:
+
+```text
+finish the chosen work unit completely
+→ write its durable completion record
+→ stop all work on the next unit
+→ report the completed result to the user in the final response
+→ end the turn
+```
+
+Hard rules:
+
+- do **not** automatically start the next microbatch, record range, PR, queue item, audit slice, or feature after the current unit is complete;
+- do **not** pre-open, pre-review, pre-claim, partially edit, or otherwise begin the next unit before the user sends the next message;
+- the final response MUST state the unit that was completed, the completion/verification result, and the exact next resume point when remaining work exists;
+- a durable checkpoint is **not** a substitute for the user-visible completion response; both are required;
+- do not stop halfway through the chosen unit merely to satisfy this barrier — finish that unit to its real completion condition first;
+- the next unit begins only after a new user message such as `continue`, `이어가`, or an equivalent instruction.
+
+Exception: if the user explicitly instructs the worker to continue across multiple units in the same response (for example, "continue through multiple batches" or "keep going until this whole set is complete"), the worker may cross the response barrier for that request. The exception applies only to that explicit request and does not become the new default.
+
+This response barrier overrides the general preference for maximum forward progress whenever continuing would cross from a completed work unit into a new one without a new user turn.
+
 ## 7. Verification proportional to risk
 
 ### Durable validation rule
