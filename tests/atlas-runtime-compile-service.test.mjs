@@ -100,6 +100,139 @@ test('Runtime migration creates sealed snapshot and compile ledger rather than a
   assert.match(sql,/compile_key text NOT NULL REFERENCES atlas_v2\.runtime_compile_runs/i);
 });
 
+test('Runtime activation migration records repeated committed activations without pretending compile rows are activation history', () => {
+  const sql=fs.readFileSync(new URL('../db/migrations/20260920_runtime_projection_activation_history_v1.sql',import.meta.url),'utf8');
+  assert.match(sql,/CREATE TABLE IF NOT EXISTS atlas_v2\.runtime_projection_activations/i);
+  assert.match(sql,/activation_kind text NOT NULL/i);
+  assert.match(sql,/baseline_observed/);
+  assert.match(sql,/compile_commit/);
+  assert.equal(sql.includes("runtime_sha ~ '^[0-9a-f]{40}$'"),true);
+  assert.equal(sql.includes("authoring_sha ~ '^[0-9a-f]{40}$'"),true);
+  assert.doesNotMatch(sql,/UNIQUE\s*\([^)]*compile_key/i);
+});
+
+test('activation baseline captures only the currently observed Runtime projection and never fabricates deployment SHAs', async () => {
+  const calls=[];
+  const client={async query(sql,params){
+    calls.push({sql,params});
+    if (/count\(\*\)::int as activation_count/.test(sql)) return {rows:[{activation_count:0}]};
+    if (/count\(distinct compile_key\)::int as compile_count/.test(sql)) {
+      return {rows:[{row_count:12,compile_count:1,compile_key:'runtime-person-politics-v1:old'}]};
+    }
+    if (/activation_kind,runtime_sha,authoring_sha,row_count/.test(sql) && /baseline_observed/.test(sql)) {
+      assert.deepEqual(params,[runtime.ACTIVATION_PROJECTION,'runtime-person-politics-v1:old',12]);
+      return {rows:[{id:'41',activated_at:'2026-09-20T05:00:00Z'}]};
+    }
+    throw new Error('unexpected query');
+  }};
+  const row=await runtime.ensureRuntimeActivationBaseline(client);
+  assert.equal(row.activation_kind,'baseline_observed');
+  assert.equal(row.compile_key,'runtime-person-politics-v1:old');
+  assert.equal(row.row_count,12);
+  assert.equal(calls.length,3);
+  assert.doesNotMatch(calls[2].sql,/\$4|\$5/);
+});
+
+test('committed activation records deployment SHAs and permits the same compile key to be activated repeatedly', async () => {
+  let nextId=50;
+  const paramsSeen=[];
+  const client={async query(sql,params){
+    assert.match(sql,/insert into atlas_v2\.runtime_projection_activations/);
+    assert.match(sql,/compile_commit/);
+    paramsSeen.push(params);
+    nextId+=1;
+    return {rows:[{id:String(nextId),activated_at:'2026-09-20T05:10:00Z'}]};
+  }};
+  const args={
+    compileKey:'runtime-person-politics-v1:same',
+    rowCount:9,
+    runtimeSha:'A'.repeat(40),
+    authoringSha:'B'.repeat(40)
+  };
+  const first=await runtime.recordRuntimeActivation(client,args);
+  const second=await runtime.recordRuntimeActivation(client,args);
+  assert.equal(first.compile_key,second.compile_key);
+  assert.notEqual(first.id,second.id);
+  assert.equal(first.runtime_sha,'a'.repeat(40));
+  assert.equal(first.authoring_sha,'b'.repeat(40));
+  assert.equal(paramsSeen.length,2);
+  assert.deepEqual(paramsSeen[0],paramsSeen[1]);
+});
+
+test('dry-run compile rolls back and does not write activation history', async () => {
+  const source=[activity()];
+  const compiled=runtime.compileSnapshot(source);
+  const queries=[];
+  const client={async query(sql,params){
+    queries.push({sql,params});
+    if (/begin isolation level serializable/i.test(sql)) return {};
+    if (/pg_advisory_xact_lock/.test(sql)) return {};
+    if (sql === runtime.AUTHORING_SNAPSHOT_SQL) return {rows:source};
+    if (/insert into atlas_v2\.runtime_compile_runs/.test(sql)) return {rowCount:1,rows:[]};
+    if (/delete from atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
+    if (/insert into atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
+    if (/count\(distinct compile_key\)::int as compile_count/.test(sql)) {
+      return {rows:[{row_count:1,compile_count:1,compile_key:compiled.compile_key}]};
+    }
+    if (/^rollback$/i.test(sql.trim())) return {};
+    throw new Error('unexpected query: '+sql);
+  }};
+  const out=await runtime.compileRuntimeProjection(client,{
+    dryRun:true,
+    runtimeSha:'1'.repeat(40),
+    authoringSha:'2'.repeat(40)
+  });
+  assert.equal(out.dry_run,true);
+  assert.equal(out.committed,false);
+  assert.equal(out.activation,null);
+  assert.equal(out.activation_baseline_recorded,false);
+  assert.equal(queries.some(({sql})=>/runtime_projection_activations/.test(sql)),false);
+  assert.equal(queries.some(({sql})=>/^rollback$/i.test(sql.trim())),true);
+  assert.equal(queries.some(({sql})=>/^commit$/i.test(sql.trim())),false);
+});
+
+test('committed compile captures pre-existing Runtime baseline once and writes a compile_commit activation in the same transaction', async () => {
+  const source=[activity()];
+  const compiled=runtime.compileSnapshot(source);
+  const queries=[];
+  const client={async query(sql,params){
+    queries.push({sql,params});
+    if (/begin isolation level serializable/i.test(sql)) return {};
+    if (/pg_advisory_xact_lock/.test(sql)) return {};
+    if (/count\(\*\)::int as activation_count/.test(sql)) return {rows:[{activation_count:0}]};
+    if (/from atlas_v2\.runtime_person_politics_v1/.test(sql) && /count\(distinct compile_key\)::int as compile_count/.test(sql) && !/min\(compile_key\) as compile_key/.test(sql)) {
+      return {rows:[{row_count:3,compile_count:1,compile_key:'runtime-person-politics-v1:previous'}]};
+    }
+    if (/insert into atlas_v2\.runtime_projection_activations/.test(sql) && /baseline_observed/.test(sql)) {
+      return {rows:[{id:'70',activated_at:'2026-09-20T05:00:00Z'}]};
+    }
+    if (sql === runtime.AUTHORING_SNAPSHOT_SQL) return {rows:source};
+    if (/insert into atlas_v2\.runtime_compile_runs/.test(sql)) return {rowCount:1,rows:[]};
+    if (/delete from atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
+    if (/insert into atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
+    if (/min\(compile_key\) as compile_key/.test(sql)) {
+      return {rows:[{row_count:1,compile_count:1,compile_key:compiled.compile_key}]};
+    }
+    if (/insert into atlas_v2\.runtime_projection_activations/.test(sql) && /compile_commit/.test(sql)) {
+      assert.deepEqual(params,[runtime.ACTIVATION_PROJECTION,compiled.compile_key,'3'.repeat(40),'4'.repeat(40),1]);
+      return {rows:[{id:'71',activated_at:'2026-09-20T05:20:00Z'}]};
+    }
+    if (/^commit$/i.test(sql.trim())) return {};
+    throw new Error('unexpected query: '+sql);
+  }};
+  const out=await runtime.compileRuntimeProjection(client,{
+    dryRun:false,
+    runtimeSha:'3'.repeat(40),
+    authoringSha:'4'.repeat(40)
+  });
+  assert.equal(out.committed,true);
+  assert.equal(out.activation_baseline_recorded,true);
+  assert.equal(out.activation.activation_kind,'compile_commit');
+  assert.equal(out.activation.id,'71');
+  assert.equal(queries.filter(({sql})=>/insert into atlas_v2\.runtime_projection_activations/.test(sql)).length,2);
+  assert.equal(queries.some(({sql})=>/^commit$/i.test(sql.trim())),true);
+});
+
 test('Runtime contract forbids public live Authoring joins', () => {
   const contract=JSON.parse(fs.readFileSync(new URL('../contracts/runtime-projection-contract.v1.json',import.meta.url),'utf8'));
   assert.equal(contract.principles.public_runtime_reads_must_use_projection,true);

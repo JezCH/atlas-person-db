@@ -39,7 +39,13 @@ test('runtime compile applies idempotent Runtime migration before deterministic 
     clientFactory:async()=>client,
     verifyOidc:async(token,{expectedSha,policy})=>{ calls.push(['oidc',token,expectedSha,policy.audience]); },
     applyMigrations:async(received)=>{ assert.equal(received,client); calls.push('migrate'); return {applied:['runtime.sql']}; },
-    compileProjection:async(received,{dryRun})=>{ assert.equal(received,client); calls.push(['compile',dryRun]); return {marker:'ATLAS_RUNTIME_PERSON_POLITICS_COMPILE_V1',dry_run:dryRun,committed:!dryRun,input_fingerprint:'a'.repeat(64),output_fingerprint:'b'.repeat(64),input_row_count:3,output_row_count:2,excluded_row_count:1,exclusion_summary:{START_BOUNDARY_UNRESOLVED:1}}; }
+    compileProjection:async(received,{dryRun,runtimeSha,authoringSha})=>{
+      assert.equal(received,client);
+      assert.equal(runtimeSha,env.VERCEL_GIT_COMMIT_SHA);
+      assert.equal(authoringSha,'2222222222222222222222222222222222222222');
+      calls.push(['compile',dryRun]);
+      return {marker:'ATLAS_RUNTIME_PERSON_POLITICS_COMPILE_V1',dry_run:dryRun,committed:!dryRun,input_fingerprint:'a'.repeat(64),output_fingerprint:'b'.repeat(64),input_row_count:3,output_row_count:2,excluded_row_count:1,exclusion_summary:{START_BOUNDARY_UNRESOLVED:1}};
+    }
   });
   const res=response();
   await handler({method:'POST',headers:{authorization:'Bearer oidc'},body:{runtime_sha:env.VERCEL_GIT_COMMIT_SHA,authoring_sha:'2222222222222222222222222222222222222222',dry_run:false}},res);
