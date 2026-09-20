@@ -78,7 +78,7 @@
         "activity_end": 970,
         "confidence": "legacy_asserted",
         "chronology_status": "exact_as_recorded",
-        "legacy_source_key": null,
+        "legacy_source_key": "pending-records-supplement.json:19:d9e7f80f4effaa2d",
         "source_count": 1
       },
       "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
@@ -109,7 +109,7 @@
         },
         "confidence": "legacy_asserted",
         "chronology_status": "exact_as_recorded",
-        "legacy_source_key": null,
+        "legacy_source_key": "pending-records-supplement.json:19:d9e7f80f4effaa2d",
         "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
         "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
       }
@@ -127,7 +127,7 @@
         "activity_end": 1035,
         "confidence": "legacy_asserted",
         "chronology_status": "exact_as_recorded",
-        "legacy_source_key": null,
+        "legacy_source_key": "pending-records-corrections.json:16:8908746f22a01eed",
         "source_count": 2
       },
       "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
@@ -158,7 +158,7 @@
         },
         "confidence": "legacy_asserted",
         "chronology_status": "exact_as_recorded",
-        "legacy_source_key": null,
+        "legacy_source_key": "pending-records-corrections.json:16:8908746f22a01eed",
         "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
         "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
       }
@@ -176,7 +176,7 @@
         "activity_end": 1066,
         "confidence": "legacy_asserted",
         "chronology_status": "exact_as_recorded",
-        "legacy_source_key": null,
+        "legacy_source_key": "pending-records-supplement-3.json:1:edab586c77789ce9",
         "source_count": 1
       },
       "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
@@ -207,7 +207,7 @@
         },
         "confidence": "legacy_asserted",
         "chronology_status": "exact_as_recorded",
-        "legacy_source_key": null,
+        "legacy_source_key": "pending-records-supplement-3.json:1:edab586c77789ce9",
         "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
         "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
       }
