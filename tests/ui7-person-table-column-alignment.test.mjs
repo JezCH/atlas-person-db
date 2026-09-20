@@ -69,7 +69,7 @@ test('polity label has the same primary type size as the Person name', () => {
 });
 
 test('canonical geometry layer loads directly after the table presentation assets', () => {
-  const tableStyle = html.indexOf('atlas-person-table-view.css?v=20260920-person-facets-sticky-v1');
+  const tableStyle = html.indexOf('atlas-person-table-view.css?v=20260920-sticky-containment-fix-v1');
   const alignment = html.indexOf('atlas-person-table-alignment.css?v=20260817-table-geometry-r2');
   assert.ok(tableStyle >= 0 && alignment > tableStyle);
   assert.doesNotMatch(html, /atlas-person-mobile-column-widths\.css/);
