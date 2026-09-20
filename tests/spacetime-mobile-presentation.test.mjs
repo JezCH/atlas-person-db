@@ -16,10 +16,10 @@ function numericConstant(name) {
   return Number(match[1]);
 }
 
-test("mobile presentation keeps a 500 default inside the 300 to 1200 percent contract", () => {
-  assert.equal(numericConstant("CAMERA_MIN_ZOOM"), 3);
+test("mobile presentation keeps a 500 default inside the 100 to 1500 percent contract", () => {
+  assert.equal(numericConstant("CAMERA_MIN_ZOOM"), 1);
   assert.equal(numericConstant("CAMERA_DEFAULT_ZOOM"), 5);
-  assert.equal(numericConstant("CAMERA_MAX_ZOOM"), 12);
+  assert.equal(numericConstant("CAMERA_MAX_ZOOM"), 15);
   assert.equal(numericConstant("MOBILE_VIEWPORT_MAX_WIDTH"), 760);
   assert.equal(numericConstant("MOBILE_AXIS_WIDTH"), 80);
   assert.equal(numericConstant("MOBILE_ERA_AXIS_WIDTH"), 36);
@@ -50,7 +50,7 @@ test("mobile vertical chrome is compact without changing timeline geometry", () 
   assert.match(css, /@media\(max-width:560px\)\{\.spacetime-minimap\{width:100%\}\.spacetime-minimap-surface\{height:84px\}/);
 });
 
-test("mobile 300 to 500 percent overview prioritizes macroregions and defers leaf labels", () => {
+test("mobile 100 to 500 percent overview prioritizes macroregions and defers leaf labels", () => {
   assert.match(view, /data-spacetime-zoom="\$\{Math\.round\(cameraZoom \* 100\)\}"/);
   assert.match(view, /data-spacetime-overview="\$\{cameraZoom <= CAMERA_DEFAULT_ZOOM \? "true" : "false"\}"/);
   assert.match(css, /data-spacetime-overview="true"\] \.spacetime-region-head-layer\.is-macro\{opacity:1!important\}/);

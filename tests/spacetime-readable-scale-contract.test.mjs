@@ -12,10 +12,10 @@ const control = readFileSync(new URL("../atlas-person-spacetime-control-state.js
 const labelEngine = require("../atlas-person-spacetime-label-engine.js");
 const presentationLayout = require("../atlas-person-spacetime-presentation-layout.js");
 
-test("spacetime keeps 500 percent as default while allowing a wider 300 to 1200 range", () => {
-  assert.match(view, /const CAMERA_MIN_ZOOM = 3;/);
+test("spacetime keeps 500 percent as default while allowing a wider 100 to 1500 range", () => {
+  assert.match(view, /const CAMERA_MIN_ZOOM = 1;/);
   assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);
-  assert.match(view, /const CAMERA_MAX_ZOOM = 12;/);
+  assert.match(view, /const CAMERA_MAX_ZOOM = 15;/);
   assert.match(view, /let cameraZoom = CAMERA_DEFAULT_ZOOM;/);
   assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.748;/);
   assert.equal(spaceAxis.DEFAULT_MIN_BASE_WORLD_WIDTH, 900);
@@ -85,9 +85,9 @@ test("retired low-scale overview rendering has no production artifacts", () => {
 test("time projection is globally uniform across the widened zoom range", () => {
   const projection = require("../atlas-person-spacetime-time-projection.js");
   assert.equal(typeof projection.createUniformTimeProjection, "function");
-  assert.equal(projection.MIN_SUPPORTED_ZOOM, 3);
-  assert.throws(() => projection.createUniformTimeProjection(-3000, 2026, 1000, 2.99), /zoom must be >= 3/);
-  const scale = projection.createUniformTimeProjection(-3000, 2026, 10000, 3);
+  assert.equal(projection.MIN_SUPPORTED_ZOOM, 1);
+  assert.throws(() => projection.createUniformTimeProjection(-3000, 2026, 1000, 0.99), /zoom must be >= 1/);
+  const scale = projection.createUniformTimeProjection(-3000, 2026, 10000, 1);
   const y1800 = scale.yForYear(1800);
   const y1900 = scale.yForYear(1900);
   const y2000 = scale.yForYear(2000);
@@ -95,10 +95,10 @@ test("time projection is globally uniform across the widened zoom range", () => 
   assert.equal(scale.mode, "linear_time");
 });
 
-test("LOD remains labels plus rails at the widened 300 percent floor", () => {
+test("LOD remains labels plus rails at the widened 100 percent floor", () => {
   const lod = require("../atlas-person-spacetime-lod.js");
-  assert.throws(() => lod.lodWeights({ zoom: 2.99 }), /zoom must be >= 3/);
-  const minimum = lod.lodWeights({ zoom: 3 });
+  assert.throws(() => lod.lodWeights({ zoom: 0.99 }), /zoom must be >= 1/);
+  const minimum = lod.lodWeights({ zoom: 1 });
   assert.equal(minimum.labels, 1);
   assert.equal(minimum.rails, 1);
   assert.equal(Object.hasOwn(minimum, "density"), false);
@@ -106,10 +106,10 @@ test("LOD remains labels plus rails at the widened 300 percent floor", () => {
   assert.equal(lod.representationStage(minimum), "rail");
 });
 
-test("control adapter separates 300 minimum, 500 default, and 1200 maximum", () => {
-  assert.match(control, /const MINIMUM_PERCENT = 300;/);
+test("control adapter separates 100 minimum, 500 default, and 1500 maximum", () => {
+  assert.match(control, /const MINIMUM_PERCENT = 100;/);
   assert.match(control, /const DEFAULT_PERCENT = 500;/);
-  assert.match(control, /const MAXIMUM_PERCENT = 1200;/);
+  assert.match(control, /const MAXIMUM_PERCENT = 1500;/);
   assert.doesNotMatch(control, /spacetimeHorizontalMode/);
   assert.doesNotMatch(control, /captureHorizontalCamera/);
   assert.doesNotMatch(control, /restoreHorizontalCamera/);

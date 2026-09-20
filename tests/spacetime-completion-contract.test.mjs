@@ -16,9 +16,9 @@ test("completion contract records the readable-scale architecture and final Prod
   assert.equal(contract.schema, "atlas-spacetime-completion-contract/v2");
   assert.equal(contract.foundation_track.status, "completed");
   assert.equal(contract.foundation_track.sufficient_for_final_completion, false);
-  assert.equal(contract.readable_scale.minimum_zoom_percent, 300);
+  assert.equal(contract.readable_scale.minimum_zoom_percent, 100);
   assert.equal(contract.readable_scale.default_zoom_percent, 500);
-  assert.equal(contract.readable_scale.maximum_zoom_percent, 1200);
+  assert.equal(contract.readable_scale.maximum_zoom_percent, 1500);
   assert.equal(contract.readable_scale.global_extent_compression, 0.748);
   assert.equal(contract.readable_scale.minimum_base_world_width_px, 900);
   assert.equal(contract.readable_scale.maximum_base_world_width_px, 1275);
@@ -94,7 +94,7 @@ test("required product gates remain explicit", () => {
   assert.equal(contract.original_plan_visual_acceptance_verification.runtime_exception_count, 0);
   assert.equal(capabilities.get("spatial-place-semantic-lod")?.status, "locked");
   assert.equal(contract.spatial_place_semantic_lod_verification.status, "locked");
-  assert.equal(contract.spatial_place_semantic_lod_verification.minimum_zoom_percent, 300);
+  assert.equal(contract.spatial_place_semantic_lod_verification.minimum_zoom_percent, 100);
   assert.equal(contract.spatial_place_semantic_lod_verification.place_detail_start_percent, 720);
   assert.equal(contract.spatial_place_semantic_lod_verification.place_detail_full_percent, 800);
   assert.equal(contract.spatial_place_semantic_lod_verification.macroregion_geometry_invariant, true);
@@ -173,9 +173,9 @@ test("coordinate invariance uses one global camera zoom", () => {
   assert.deepEqual(fixtures.coordinate_invariance.normalized_world_coordinate_must_match_under, [
     "search-off","search-on","selection-change","global-camera-zoom","minimap-navigation"
   ]);
-  assert.equal(fixtures.readable_scale.minimum_zoom_percent, 300);
+  assert.equal(fixtures.readable_scale.minimum_zoom_percent, 100);
   assert.equal(fixtures.readable_scale.default_zoom_percent, 500);
-  assert.equal(fixtures.readable_scale.maximum_zoom_percent, 1200);
+  assert.equal(fixtures.readable_scale.maximum_zoom_percent, 1500);
   assert.equal(fixtures.readable_scale.global_extent_compression, 0.748);
   assert.equal(fixtures.readable_scale.minimum_base_world_width_px, 900);
   assert.equal(fixtures.readable_scale.maximum_base_world_width_px, 1275);
@@ -191,6 +191,6 @@ test("current locked geometry facts remain true", () => {
   const continuum = spaceAxis.createSpatialContinuum();
   assert.equal(continuum.macroregions.length, 9);
   assert.ok(continuum.subregions.length > continuum.macroregions.length);
-  assert.equal(timeProjection.MIN_SUPPORTED_ZOOM, 3);
-  assert.equal(timeProjection.createUniformTimeProjection(-3000, 2026, 1000, 3).mode, "linear_time");
+  assert.equal(timeProjection.MIN_SUPPORTED_ZOOM, 1);
+  assert.equal(timeProjection.createUniformTimeProjection(-3000, 2026, 1000, 1).mode, "linear_time");
 });

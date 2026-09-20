@@ -4,9 +4,9 @@ This document is the closure contract for the current non-Spatial `시공간 인
 
 ## Invariants that must remain unchanged
 
-- camera minimum: 300%
+- camera minimum: 100%
 - camera default/reset: 500%
-- camera maximum: 1200%
+- camera maximum: 1500%
 - global presentation compression: 0.748
 - historical Y derives only from historical time
 - no local region/time compression
@@ -51,7 +51,7 @@ The browser-only guard, `atlas-person-spacetime-label-overlap-guard.js`, follows
 - connector geometry is updated when a shifted label has a horizontal connector;
 - impossible capacity is reported rather than resolved by vertical displacement, local region expansion, or smaller text.
 
-The completion rule for the default-and-above camera range is: at both 500% and 1200%, browser-visible Person label overlap must be zero, the deferred Person-label count must be zero, and the number of rendered Person names must equal the number of viewport Persons.
+The completion rule for the default-and-above camera range is: at both 500% and 1500%, browser-visible Person label overlap must be zero, the deferred Person-label count must be zero, and the number of rendered Person names must equal the number of viewport Persons.
 
 ## Final exact-SHA Production gate
 
@@ -65,8 +65,8 @@ The run fails closed unless all of the following succeed:
    - includes the live overlap guard among the compared assets;
    - records SHA-256 evidence for every compared asset.
 2. `scripts/verify-spacetime-production-visual.mjs`
-   - preserves the established real-Chrome 500%/1200% geometry, overlap, LOD, inspector, uncertainty, Meanwhile, and runtime-error acceptance;
-   - requires zero deferred Person labels and one rendered name for every viewport Person at both 500% and 1200%.
+   - preserves the established real-Chrome 500%/1500% geometry, overlap, LOD, inspector, uncertainty, Meanwhile, and runtime-error acceptance;
+   - requires zero deferred Person labels and one rendered name for every viewport Person at both 500% and 1500%.
 3. `scripts/verify-spacetime-production-domain-colors.mjs`
    - verifies the eight-way canonical domain registry in the live browser;
    - requires live spacetime Person label and rail decoration;

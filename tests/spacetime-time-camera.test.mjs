@@ -20,14 +20,14 @@ test("time projection is globally linear at every supported camera zoom", () => 
   }
 });
 
-test("camera zoom is bounded to 300-1200 percent with a 500 default", () => {
-  assert.match(view, /const CAMERA_MIN_ZOOM = 3;/);
+test("camera zoom is bounded to 100-1500 percent with a 500 default", () => {
+  assert.match(view, /const CAMERA_MIN_ZOOM = 1;/);
   assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);
-  assert.match(view, /const CAMERA_MAX_ZOOM = 12;/);
+  assert.match(view, /const CAMERA_MAX_ZOOM = 15;/);
   assert.match(view, /const CAMERA_ZOOM_STEP = 1\.25;/);
   assert.match(view, /Math\.max\(CAMERA_MIN_ZOOM, numeric\)/);
   assert.doesNotMatch(view, /TIME_CAMERA_MIN_ZOOM/);
-  assert.throws(() => timeProjection.createUniformTimeProjection(-3000, 2026, 1000, 2.99), /zoom must be >= 3/);
+  assert.throws(() => timeProjection.createUniformTimeProjection(-3000, 2026, 1000, 0.99), /zoom must be >= 1/);
 });
 
 test("unified camera owns both screen axes", () => {
