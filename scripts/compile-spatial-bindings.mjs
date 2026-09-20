@@ -347,6 +347,45 @@ export function validateCanonicalBaseline(baseline) {
   return baseline;
 }
 
+function normalizeActivityOverride(raw, label) {
+  const record = structuredClone(asObject(raw, label));
+  const normalized = {
+    activity_id: text(record.activity_id),
+    expected_polity_id: record.expected_polity_id == null ? null : text(record.expected_polity_id),
+    expected_start_year: Number(record.expected_start_year),
+    expected_end_year: Number(record.expected_end_year),
+    reason: text(record.reason),
+    source_refs: [...new Set((Array.isArray(record.source_refs) ? record.source_refs : []).map(text).filter(Boolean))].sort()
+  };
+  if (Array.isArray(record.segments) && record.segments.length) {
+    normalized.override_mode = text(record.override_mode);
+    normalized.segments = record.segments.map((segment) => ({
+      start_year: Number(segment.start_year),
+      end_year: Number(segment.end_year),
+      region_code: text(segment.region_code),
+      subregion_code: text(segment.subregion_code),
+      location_label: text(segment.location_label),
+      source_refs: [...new Set((Array.isArray(segment.source_refs) ? segment.source_refs : []).map(text).filter(Boolean))].sort()
+    }));
+  } else {
+    normalized.region_code = text(record.region_code);
+    normalized.subregion_code = text(record.subregion_code);
+    normalized.location_label = text(record.location_label);
+  }
+
+  const probe = {
+    schema: CANONICAL_SPATIAL_INDEX_SCHEMA,
+    polity_geography: {},
+    polity_subregions: {},
+    place_function_records: [],
+    review_queue: [],
+    activity_spatial_overrides: [normalized]
+  };
+  const validation = model.validateSpatialIndex(probe);
+  if (!validation.valid) fail('INVALID_SPATIAL_ACTIVITY_OVERRIDE', `${label}: ${validation.errors.join(' | ')}`);
+  return Object.freeze(normalized);
+}
+
 function normalizeShard(shardEntry) {
   const source = text(shardEntry?.source) || '(memory)';
   const shard = asObject(shardEntry?.value, `shard ${source}`);
@@ -361,10 +400,12 @@ function normalizeShard(shardEntry) {
 
   const rawBindings = shard.bindings == null ? [] : shard.bindings;
   const rawReviewQueue = shard.review_queue == null ? [] : shard.review_queue;
+  const rawActivityOverrides = shard.activity_overrides == null ? [] : shard.activity_overrides;
   if (!Array.isArray(rawBindings)) fail('INVALID_SPATIAL_BINDINGS', `${source}: bindings must be an array when present`);
   if (!Array.isArray(rawReviewQueue)) fail('INVALID_SPATIAL_REVIEW_QUEUE', `${source}: review_queue must be an array when present`);
-  if (rawBindings.length === 0 && rawReviewQueue.length === 0) {
-    fail('INVALID_SPATIAL_BINDINGS', `${source}: at least one binding or review_queue decision is required`);
+  if (!Array.isArray(rawActivityOverrides)) fail('INVALID_SPATIAL_ACTIVITY_OVERRIDES', `${source}: activity_overrides must be an array when present`);
+  if (rawBindings.length === 0 && rawReviewQueue.length === 0 && rawActivityOverrides.length === 0) {
+    fail('INVALID_SPATIAL_BINDINGS', `${source}: at least one binding, review_queue decision, or activity_override is required`);
   }
 
   const taxonomy = taxonomyContract();
@@ -393,7 +434,15 @@ function normalizeShard(shardEntry) {
     return decision;
   }).sort((left, right) => left.polity_id.localeCompare(right.polity_id, 'en'));
 
-  return Object.freeze({ source, shard_id: shardId, reviewed_at: reviewedAt, baseline, bindings, review_queue: reviewQueue });
+  const activityOverrideSeen = new Set();
+  const activityOverrides = rawActivityOverrides.map((raw, index) => {
+    const override = normalizeActivityOverride(raw, `${source} activity_overrides[${index}]`);
+    if (activityOverrideSeen.has(override.activity_id)) fail('DUPLICATE_SPATIAL_ACTIVITY_OVERRIDE', `${source}: duplicate activity_id ${override.activity_id}`);
+    activityOverrideSeen.add(override.activity_id);
+    return override;
+  }).sort((left, right) => left.activity_id.localeCompare(right.activity_id, 'en'));
+
+  return Object.freeze({ source, shard_id: shardId, reviewed_at: reviewedAt, baseline, bindings, review_queue: reviewQueue, activity_overrides: Object.freeze(activityOverrides) });
 }
 
 function sourceMapping(regionCode, subregionCode = null) {
@@ -434,7 +483,9 @@ export function compileSpatialBindings({ baseline, shards = [], corrections = []
   const politySubregions = { ...(baseline.polity_subregions || {}) };
   const placeFunctionRecords = structuredClone(baseline.place_function_records || []);
   const reviewQueue = structuredClone(baseline.review_queue || []);
+  const activitySpatialOverrides = structuredClone(baseline.activity_spatial_overrides || []);
   const seen = new Map();
+  const activityOverrideSeen = new Map(activitySpatialOverrides.map((record) => [text(record?.activity_id), 'baseline activity_spatial_overrides']));
 
   for (const [polityId, regionCode] of Object.entries(polityGeography)) {
     seen.set(polityId, { source: 'baseline', kind: 'binding', mapping: sourceMapping(regionCode, politySubregions[polityId] || null) });
@@ -478,6 +529,12 @@ export function compileSpatialBindings({ baseline, shards = [], corrections = []
       seen.set(decision.polity_id, { source: shard.source, kind: 'review', reason: decision.reason });
       reviewQueue.push({ polity_id: decision.polity_id, reason: decision.reason });
     }
+    for (const override of shard.activity_overrides) {
+      const previous = activityOverrideSeen.get(override.activity_id);
+      if (previous) fail('DUPLICATE_SPATIAL_ACTIVITY_OVERRIDE', `${override.activity_id}: ${previous} and ${shard.source}`);
+      activityOverrideSeen.set(override.activity_id, shard.source);
+      activitySpatialOverrides.push(structuredClone(override));
+    }
   }
 
   const merged = {};
@@ -487,11 +544,13 @@ export function compileSpatialBindings({ baseline, shards = [], corrections = []
     else if (key === 'polity_subregions') merged[key] = politySubregions;
     else if (key === 'place_function_records') merged[key] = placeFunctionRecords;
     else if (key === 'review_queue') merged[key] = reviewQueue;
+    else if (key === 'activity_spatial_overrides') merged[key] = activitySpatialOverrides;
     else merged[key] = structuredClone(value);
   }
   if (!Object.prototype.hasOwnProperty.call(merged, 'polity_subregions')) merged.polity_subregions = politySubregions;
   if (!Object.prototype.hasOwnProperty.call(merged, 'place_function_records')) merged.place_function_records = placeFunctionRecords;
   if (!Object.prototype.hasOwnProperty.call(merged, 'review_queue')) merged.review_queue = reviewQueue;
+  if (!Object.prototype.hasOwnProperty.call(merged, 'activity_spatial_overrides')) merged.activity_spatial_overrides = activitySpatialOverrides;
 
   const corrected = applyNormalizedSpatialCorrections(merged, normalizedCorrections);
   corrected.generated_at = generatedAtFor(baseline, normalizedShards, normalizedCorrections);
@@ -515,6 +574,7 @@ export function computeSpatialStats(index) {
     geography_count: Object.keys(index.polity_geography || {}).length,
     subregion_count: Object.keys(index.polity_subregions || {}).length,
     review_queue_count: (index.review_queue || []).length,
+    activity_override_count: (index.activity_spatial_overrides || []).length,
     macroregion_counts: Object.freeze(macroregionCounts),
     subregion_counts: Object.freeze(subregionCounts)
   });
