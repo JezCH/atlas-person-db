@@ -418,6 +418,18 @@
         ${kpiCard({code:"polities",label:"USED POLITIES",primary:value(k.polities),detail:"현재 Person Activity에서 참조",drilldown:kd.polities})}
       </section>
 
+      <section class="dashboard-panel card">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">NEEDS ATTENTION</p><h3>지금 처리할 대상</h3></div><span>기준 원본에서 파생</span></div>
+        <div class="dashboard-issue-grid">
+          ${a.items.map(attentionButton).join("")}
+        </div>
+        <div class="dashboard-progress-meta">
+          <span>확인된 미완료 건 <b>${value(a.known_outstanding_checks)}</b></span>
+          <span>영향 인물 <b>${value(a.known_affected_persons)}</b></span>
+          <span>${a.complete ? "전체 범주 확인됨" : `부분 집계 · ${value(a.available_categories)}/${value(a.total_categories)} 범주만 대상 집합 확인`}</span>
+        </div>
+      </section>
+
       <section class="dashboard-panel card" aria-label="시스템 및 Production 상태">
         <div class="dashboard-panel-head"><div><p class="eyebrow">SYSTEM / PRODUCTION</p><h3>현재 실행 환경</h3></div><span>${sys.available ? "배포 식별 정보" : "식별 정보 없음"}</span></div>
         <div class="dashboard-source-list">
@@ -460,18 +472,6 @@
         <div class="dashboard-progress-meta">
           <span>원본 갱신 시각과 브라우저 마지막 읽기 시각을 구분</span>
           <span>갱신 시각 미제공 원본은 — · 최신/지연 상태를 임의 판정하지 않음</span>
-        </div>
-      </section>
-
-      <section class="dashboard-panel card">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">NEEDS ATTENTION</p><h3>지금 처리할 대상</h3></div><span>기준 원본에서 파생</span></div>
-        <div class="dashboard-issue-grid">
-          ${a.items.map(attentionButton).join("")}
-        </div>
-        <div class="dashboard-progress-meta">
-          <span>확인된 미완료 건 <b>${value(a.known_outstanding_checks)}</b></span>
-          <span>영향 인물 <b>${value(a.known_affected_persons)}</b></span>
-          <span>${a.complete ? "전체 범주 확인됨" : `부분 집계 · ${value(a.available_categories)}/${value(a.total_categories)} 범주만 대상 집합 확인`}</span>
         </div>
       </section>
 
