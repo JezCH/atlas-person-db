@@ -17,7 +17,7 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /dataAtlasDomain|dataset\.atlasDomain|data-atlas-domain="spacetime"/i);
   assert.match(catalog, /spacetime: entry/);
   assert.match(html, /atlas-main-authority-nav\.css\?v=20260919-control-center-v1/);
-  assert.match(html, /atlas-main-authority-nav\.js\?v=20260920-polity-composite-exact-fit-floor/);
+  assert.match(html, /atlas-main-authority-nav\.js\?v=20260920-single-person-surface/);
   assert.match(nav, /atlasDashboardMount/);
   assert.match(nav, /ATLAS_DASHBOARD/);
   assert.match(nav, /atlasPolityMount/);
@@ -46,9 +46,8 @@ test('future authority shells state readiness from the Korean catalog instead of
 
 test('Persons remains the authoritative working surface and future shells only hide or restore it', () => {
   assert.match(nav, /document\.getElementById\("personMainView"\)/);
-  assert.match(nav, /document\.getElementById\("relationshipAuthoringTools"\)/);
+  assert.doesNotMatch(nav, /relationshipAuthoringTools/);
   assert.match(nav, /personView\.hidden = !isPersons/);
-  assert.match(nav, /authoringTools\.hidden = !isPersons/);
   assert.match(nav, /shell\.hidden = isPersons/);
 });
 
