@@ -25,6 +25,7 @@ const EXPECTED = new Map([
   ["baf5a91d-e054-407d-9ce9-4f8f28f1b68e", ["9e227293-7ab8-5870-b05b-0b8c715738a4", 1785, 1785, "americas", "north-america", "Mission San Gabriel, California"]],
   ["32ad5a54-9dbe-46b4-bfd1-859dab6dca91", ["eb2f8e2e-220b-4754-afe9-25449b1d35ec", 1915, 1915, "west-asia", "levant", "Negev–Sinai Tarabin core"]],
   ["e65edaa4-645a-479f-be81-6414ff2f71ba", ["a602213a-dccb-4a23-96c3-e91dfc300a9f", 1958, 1970, "africa", "nile-valley", "Cairo"]],
+  ["f61310eb-65e8-58f9-a09d-a5dcbb8ebfc8", ["a1c6b0b4-ca71-420d-8d9f-502dc7914dd7", -195, -190, "west-asia", "anatolia", "Ephesus–Side / western Seleucid service theatre"]],
   ["f5d38634-6cc2-4fdb-8b8c-535ee16c5340", ["08a804bf-81c1-4206-85ed-47b139104915", 1983, 1983, "africa", "east-africa", "Mauritius (Chagos Refugees Group)"]]
 ]);
 

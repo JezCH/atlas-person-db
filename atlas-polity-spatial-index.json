@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-20T07:39:25.000Z",
+  "generated_at": "2026-09-20T08:20:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -3519,6 +3519,21 @@
         "UC Berkeley ORIAS, Journey to Mali — left Fez autumn 1351, Sahara crossing 1352, Mali, left Takadda September 1353, returned Fez 1354",
         "UC Berkeley ORIAS, Writing the Rihla: 1355 — returned Fez 1354 and dictated the Rihla in Fez"
       ]
+    },
+    {
+      "activity_id": "f61310eb-65e8-58f9-a09d-a5dcbb8ebfc8",
+      "expected_polity_id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
+      "expected_start_year": -195,
+      "expected_end_year": -190,
+      "reason": "Hannibal's 195–190 BCE Seleucid service is an Activity-specific transregional case. Ephesus is explicitly attested during his association with Antiochus III, and his 190 BCE naval command culminated off Side in Pamphylia. ATLAS uses Anatolia as the reviewed representative subregion for this Activity without asserting a continuous itinerary or a fixed Seleucid capital.",
+      "source_refs": [
+        "Appian, Syrian Wars 5 — Antiochus sent Hannibal to Syria to fit out a fleet from Phoenicia and Cilicia; the returning fleet was driven into Pamphylia",
+        "Livy, Ab Urbe Condita 34.61 — Hannibal is explicitly attested at Ephesus during his association with Antiochus III",
+        "Livy, Periochae 35.1 — Scipio met Hannibal at Ephesus after Hannibal had joined Antiochus"
+      ],
+      "region_code": "west-asia",
+      "subregion_code": "anatolia",
+      "location_label": "Ephesus–Side / western Seleucid service theatre"
     }
   ]
 }

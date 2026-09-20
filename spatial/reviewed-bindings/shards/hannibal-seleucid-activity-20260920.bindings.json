@@ -1,0 +1,24 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "hannibal-seleucid-activity-20260920",
+  "baseline": "Production Person read 2026-09-20 + main 7937e29a14632800a0299645494593b18e581886",
+  "reviewed_at": "2026-09-20T08:20:00Z",
+  "bindings": [],
+  "activity_overrides": [
+    {
+      "activity_id": "f61310eb-65e8-58f9-a09d-a5dcbb8ebfc8",
+      "expected_polity_id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
+      "expected_start_year": -195,
+      "expected_end_year": -190,
+      "region_code": "west-asia",
+      "subregion_code": "anatolia",
+      "location_label": "Ephesus–Side / western Seleucid service theatre",
+      "reason": "Hannibal's 195–190 BCE Seleucid service is an Activity-specific transregional case. Ephesus is explicitly attested during his association with Antiochus III, and his 190 BCE naval command culminated off Side in Pamphylia. ATLAS uses Anatolia as the reviewed representative subregion for this Activity without asserting a continuous itinerary or a fixed Seleucid capital.",
+      "source_refs": [
+        "Livy, Ab Urbe Condita 34.61 — Hannibal is explicitly attested at Ephesus during his association with Antiochus III",
+        "Livy, Periochae 35.1 — Scipio met Hannibal at Ephesus after Hannibal had joined Antiochus",
+        "Appian, Syrian Wars 5 — Antiochus sent Hannibal to Syria to fit out a fleet from Phoenicia and Cilicia; the returning fleet was driven into Pamphylia"
+      ]
+    }
+  ]
+}
