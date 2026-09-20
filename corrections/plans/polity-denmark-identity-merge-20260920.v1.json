@@ -1,0 +1,330 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_denmark_identity_merge_20260920_v1",
+  "as_of": "2026-09-20",
+  "status": "REVIEWED_POLITY_IDENTITY_MERGE_WITH_TEMPORAL_DESIGNATION",
+  "release_order": 608,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY-IDENTITY-REVIEW-16-20260919; Denmark exact Production recheck and LQ_CLAIM 5749642075 on 2026-09-20",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-kingdom-of-denmark-harald-bluetooth-into-denmark",
+      "type": "rewrite_activity",
+      "activity_id": "9259d672-e727-5af4-80c0-a9921f6915c5",
+      "baseline_before": {
+        "person_id": "7be5ac59-4c78-5e0a-a08a-0a8b2c2f4bb1",
+        "polity_id": "da99e975-fba4-510b-bb1c-6937d443abf5",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 958,
+        "activity_end": 986,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "9259d672-e727-5af4-80c0-a9921f6915c5",
+        "person_id": "7be5ac59-4c78-5e0a-a08a-0a8b2c2f4bb1",
+        "polity_id": "c117fb82-4943-40d6-bc2d-740f0665665a",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 958,
+        "activity_end": 986,
+        "activity_start_detail": {
+          "year": 958,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 986,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-denmark-cnut-into-denmark",
+      "type": "rewrite_activity",
+      "activity_id": "62081978-a7b1-5ea7-84c2-9b45e4c111d4",
+      "baseline_before": {
+        "person_id": "6767baba-82d1-5ba2-9cf3-b5143cd84010",
+        "polity_id": "da99e975-fba4-510b-bb1c-6937d443abf5",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1018,
+        "activity_end": 1035,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "62081978-a7b1-5ea7-84c2-9b45e4c111d4",
+        "person_id": "6767baba-82d1-5ba2-9cf3-b5143cd84010",
+        "polity_id": "c117fb82-4943-40d6-bc2d-740f0665665a",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1018,
+        "activity_end": 1035,
+        "activity_start_detail": {
+          "year": 1018,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1035,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-denmark-valdemar-ii-into-denmark",
+      "type": "rewrite_activity",
+      "activity_id": "0e345abf-60ec-4af8-a8ac-cef02d736dad",
+      "baseline_before": {
+        "person_id": "6df6719b-89fd-4967-8eac-a9c1517f970b",
+        "polity_id": "da99e975-fba4-510b-bb1c-6937d443abf5",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1202,
+        "activity_end": 1241,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "0e345abf-60ec-4af8-a8ac-cef02d736dad",
+        "person_id": "6df6719b-89fd-4967-8eac-a9c1517f970b",
+        "polity_id": "c117fb82-4943-40d6-bc2d-740f0665665a",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1202,
+        "activity_end": 1241,
+        "activity_start_detail": {
+          "year": 1202,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1241,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-denmark-margaret-i-into-denmark",
+      "type": "rewrite_activity",
+      "activity_id": "9a06c2d7-8ec6-4f08-a519-fc8524a13e4b",
+      "baseline_before": {
+        "person_id": "d5765513-e68f-4eda-a4ac-3c6be2665a80",
+        "polity_id": "da99e975-fba4-510b-bb1c-6937d443abf5",
+        "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1376,
+        "activity_end": 1397,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "9a06c2d7-8ec6-4f08-a519-fc8524a13e4b",
+        "person_id": "d5765513-e68f-4eda-a4ac-3c6be2665a80",
+        "polity_id": "c117fb82-4943-40d6-bc2d-740f0665665a",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1376,
+        "activity_end": 1397,
+        "activity_start_detail": {
+          "year": 1376,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1397,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-denmark-frederick-vii-into-denmark",
+      "type": "rewrite_activity",
+      "activity_id": "be4677d4-631b-473e-8330-bf790222cf35",
+      "baseline_before": {
+        "person_id": "5911b977-4788-474a-a8ce-2d7745d89515",
+        "polity_id": "da99e975-fba4-510b-bb1c-6937d443abf5",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1848,
+        "activity_end": 1863,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "be4677d4-631b-473e-8330-bf790222cf35",
+        "person_id": "5911b977-4788-474a-a8ce-2d7745d89515",
+        "polity_id": "c117fb82-4943-40d6-bc2d-740f0665665a",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1848,
+        "activity_end": 1863,
+        "activity_start_detail": {
+          "year": 1848,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1863,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "denmark-kingdom-temporal-designation-958-2024",
+      "exact_before": {
+        "designation_absent_id": "2017ed72-a80b-4847-9e1c-bb542f4dee84"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "2017ed72-a80b-4847-9e1c-bb542f4dee84",
+          "polity_id": "c117fb82-4943-40d6-bc2d-740f0665665a",
+          "designation_type": "state_form",
+          "valid_from_year": 958,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 2024,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed state-form designation preserving Kingdom of Denmark / 덴마크 왕국 across the currently modeled Denmark Activity span from 958 through 2024. This is a display/history designation on the stable Denmark identity and does not collapse distinct union-level Polities such as the Kalmar Union or Denmark-Norway."
+        },
+        "names": [
+          {
+            "id": "9d8be712-ee4d-4aee-a87c-56b92b7d700c",
+            "polity_designation_id": "2017ed72-a80b-4847-9e1c-bb542f4dee84",
+            "locale": "en",
+            "name": "Kingdom of Denmark",
+            "is_preferred": true
+          },
+          {
+            "id": "6c2cf7d6-448f-40ed-95bf-1ba260f40b40",
+            "polity_designation_id": "2017ed72-a80b-4847-9e1c-bb542f4dee84",
+            "locale": "ko",
+            "name": "덴마크 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "2017ed72-a80b-4847-9e1c-bb542f4dee84",
+            "source_id": "478cdc6c-410a-49c5-ad54-9760d59e9078",
+            "source_locator_key": "https://www.kongehuset.dk/monarkiet-i-danmark/kongerakken"
+          },
+          {
+            "polity_designation_id": "2017ed72-a80b-4847-9e1c-bb542f4dee84",
+            "source_id": "23420d5d-6860-4968-9f2d-e8a204bb61f2",
+            "source_locator_key": "https://en.wikisource.org/wiki/Encyclop%C3%A6dia_Britannica%2C_Ninth_Edition/Denmark"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 5,
+    "activity_relinks": 5,
+    "polity_designation_assertions": 1,
+    "production_mutation_authorized": false
+  }
+}
