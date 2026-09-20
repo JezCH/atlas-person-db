@@ -17,6 +17,7 @@ test('Admin loads the isolated read-only observability surface after authenticat
   assert.match(html, /SYSTEM \/ STATUS · READ ONLY/);
   assert.match(html, /OBJECT INSPECTOR · READ ONLY/);
   assert.match(css, /\.obs-summary-grid/);
+  assert.match(css, /repeat\(auto-fit, minmax\(160px, 1fr\)\)/);
   assert.match(css, /\.obs-tree/);
 });
 
@@ -44,6 +45,18 @@ test('Admin session gate treats the new read endpoints as protected session surf
   assert.match(observability, /atlas-admin-auth-expired/);
   assert.match(observability, /atlas-admin-logged-out/);
   assert.match(observability, /clearAdminReadState/);
+});
+
+test('System Status exposes active Runtime compile diagnostics without creating a second truth source', () => {
+  assert.match(observability, /payload\.runtime_publication/);
+  assert.match(observability, /Runtime compile/);
+  assert.match(observability, /Runtime publication \/ active compile/);
+  assert.match(observability, /projection_matches_compile_output/);
+  assert.match(observability, /compile_balance_valid/);
+  assert.match(observability, /exclusion_summary_matches_excluded/);
+  assert.match(observability, /included ·/);
+  assert.match(observability, /excluded/);
+  assert.doesNotMatch(observability, /__atlas_read_surface=runtime-publication/);
 });
 
 test('System Status renders unknown states without fabricating GitHub Actions health', () => {
