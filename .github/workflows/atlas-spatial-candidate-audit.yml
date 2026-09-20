@@ -10,6 +10,7 @@ on:
       - 'server/atlas-polity-reference-audit-handler.js'
       - 'server/atlas-audit-github-oidc.js'
       - 'scripts/build-spatial-polity-candidates.mjs'
+      - 'scripts/build-spatial-activity-candidates.mjs'
       - 'scripts/compile-spatial-bindings*.mjs'
       - 'spatial/**'
       - 'atlas-polity-spatial-index.json'
@@ -86,6 +87,25 @@ jobs:
           echo 'Top 100 currently used polities without a reviewed Spatial disposition:'
           cat polity-spatial-unplaced-candidates-top100.json
 
+      - name: Audit Runtime Activities for unresolved spatial placement
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail-with-body --silent --show-error             -H 'cache-control: no-cache'             'https://atlas-person-db.vercel.app/api/atlas-person-read'             -o runtime-person-read.json
+
+          jq -e '.ok==true and .schema=="atlas-person-read/v1" and (.persons | type=="array")' runtime-person-read.json >/dev/null
+
+          node scripts/build-spatial-activity-candidates.mjs             --person-read runtime-person-read.json             --spatial atlas-polity-spatial-index.json             --out activity-spatial-unplaced-candidates.json             --top activity-spatial-unplaced-candidates-top100.json             --summary activity-spatial-candidate-summary.json             --top-limit 100
+
+          echo 'Top unresolved Runtime Activities:'
+          cat activity-spatial-unplaced-candidates-top100.json
+          jq -e '.spatial_unresolved_activity_count == 0' activity-spatial-candidate-summary.json >/dev/null || {
+            echo 'SPATIAL_ACTIVITY_COVERAGE_INCOMPLETE' >&2
+            cat activity-spatial-candidate-summary.json >&2
+            exit 1
+          }
+
+
       - name: Upload spatial candidate evidence
         uses: actions/upload-artifact@v4
         with:
@@ -95,6 +115,10 @@ jobs:
             polity-spatial-candidate-summary.json
             polity-spatial-unplaced-candidates.json
             polity-spatial-unplaced-candidates-top100.json
+            runtime-person-read.json
+            activity-spatial-candidate-summary.json
+            activity-spatial-unplaced-candidates.json
+            activity-spatial-unplaced-candidates-top100.json
             atlas-polity-spatial-index.json
           if-no-files-found: error
           retention-days: 90
