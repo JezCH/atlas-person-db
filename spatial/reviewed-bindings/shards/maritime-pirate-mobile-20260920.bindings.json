@@ -1,0 +1,47 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "maritime-pirate-mobile-20260920",
+  "baseline": "Production Person read 2026-09-20 + main d73400adc49b41ff5c919348111dc319c0eb3862",
+  "reviewed_at": "2026-09-20T13:52:00Z",
+  "bindings": [],
+  "review_queue": [
+    {
+      "polity_id": "389a3173-9372-4b87-a8ff-38c2a0ca4bef",
+      "reason": "mobile_transatlantic_pirate_company_requires_activity_specific_representative_spatial_override"
+    },
+    {
+      "polity_id": "f02ae5bc-968c-4f28-a312-4bdc3d353860",
+      "reason": "mobile_transregional_indian_ocean_to_caribbean_pirate_company_requires_activity_specific_representative_spatial_override"
+    }
+  ],
+  "activity_overrides": [
+    {
+      "activity_id": "daf6e79a-a2e7-4c31-8db7-d7063b563463",
+      "expected_polity_id": "389a3173-9372-4b87-a8ff-38c2a0ca4bef",
+      "expected_start_year": 1719,
+      "expected_end_year": 1722,
+      "region_code": "africa",
+      "subregion_code": "west-africa",
+      "location_label": "West African Atlantic theatre (representative anchor)",
+      "reason": "Roberts's pirate company was highly mobile across the Atlantic. ATLAS therefore does not assign the mobile company a static homeland. This Activity-level representative anchor uses the well-attested West African theatre, including Sierra Leone and Ouidah, while explicitly not asserting that the full 1719-1722 itinerary remained in one subregion.",
+      "source_refs": [
+        "Dictionary of Welsh Biography — Bartholomew Roberts: records operations and shore visits including Sierra Leone and his final campaign off West Africa",
+        "Royal Museums Greenwich — Death of Bartholomew Roberts: documents the 1721-1722 West African campaign, Ouidah, and the pursuit ending near Cape Lopez"
+      ]
+    },
+    {
+      "activity_id": "9bdef027-7274-44ec-ad5f-b17f36045a2c",
+      "expected_polity_id": "f02ae5bc-968c-4f28-a312-4bdc3d353860",
+      "expected_start_year": 1694,
+      "expected_end_year": 1696,
+      "region_code": "south-asia",
+      "subregion_code": "northwest-south-asia",
+      "location_label": "Surat approaches / Arabian Sea (representative anchor)",
+      "reason": "Every's pirate company ranged from Europe through the Indian Ocean and later dispersed in the Caribbean, so a static polity homeland would be misleading. The representative Activity anchor is the career-defining 1695 capture of the Mughal Ganj-i-Sawai as it neared Surat; this is a display anchor, not a claim that the entire 1694-1696 itinerary stayed in northwest South Asia.",
+      "source_refs": [
+        "World History Encyclopedia — Henry Every: records Indian Ocean and Red Sea piracy and the 1695 Ganj-i-Sawai capture near the coast of Surat",
+        "World History Encyclopedia — Henry Every timeline: records the May 1694 takeover and April 1696 dispersal"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:arumer-zwarte-hoop-registration-duplicate:2026-09-20:v1",
+  "release_order": 621,
+  "evidence": {
+    "decision": "The registration-created Arumer Zwarte Hoop UUID duplicates the pre-existing Arumer Zwarte Hoop (Frisian rebel movement) identity. The preceding release-order 620 correction retires the duplicate Pier Gerlofs Donia Activity while transferring its normalized source links to the reviewed survivor Activity. This request retires the now-orphan duplicate polity only after exact reference preflight.",
+    "survivor_polity_id": "8b6f88e1-4c0d-43df-8bc6-d61dff56b018",
+    "survivor_activity_id": "0c83728e-582a-4ffc-b6ff-53fe4060659d",
+    "source_polity_id": "cc85777c-1eb9-42e3-8dab-dfeeb6a6a4b3",
+    "source_activity_id": "794440e6-6c67-4406-9526-2ac221404efb",
+    "spatial_preservation": "Survivor polity already has reviewed europe/western-europe spatial binding; duplicate source polity has no reviewed spatial disposition."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:arumer-zwarte-hoop-registration-duplicate",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "cc85777c-1eb9-42e3-8dab-dfeeb6a6a4b3",
+        "canonical_key": "Arumer Zwarte Hoop",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Arumer Zwarte Hoop",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "아루머 즈바르터 호프",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}

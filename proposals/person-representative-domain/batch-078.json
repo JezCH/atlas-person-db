@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-20",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "d73400adc49b41ff5c919348111dc319c0eb3862",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Reviewed maritime-person follow-up. Pirate/privateer and armed-resistance identities are military unless another identity dominates; Francis Drake is exploration because his canonical global representation is the 1577-1580 circumnavigation, while Okinka Pampa is governance as a queen-priestess exercising rule. Existing project comparables are consistent: Benjamin Hornigold and Edward Teach are military; Zheng He, Columbus, and Magellan are exploration."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-MARITIME-COHORT-20260920",
+    "queue_issue": 977,
+    "assignment_count": 8,
+    "distribution": {
+      "governance": 1,
+      "military": 6,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 1
+    }
+  },
+  "entries": [
+    {
+      "person_id": "e4bc96d0-f94a-4014-8e05-6f9b2e826fd1",
+      "canonical_name_en": "Henry Every",
+      "preferred_name_ko": "헨리 에브리",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "54be569c-170b-4f00-b244-4685c4f4e00b",
+      "canonical_name_en": "Bartholomew Roberts",
+      "preferred_name_ko": "바솔로뮤 로버츠",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "5f931acd-c5c2-4eda-9498-0abf7df5fef0",
+      "canonical_name_en": "Amaro Pargo",
+      "preferred_name_ko": "아마로 파고",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "e0383913-ad19-46ec-9740-d3a23874be90",
+      "canonical_name_en": "Henry Morgan",
+      "preferred_name_ko": "헨리 모건",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "ff32bba5-85ff-4cef-9dfd-e2e9516e67da",
+      "canonical_name_en": "Francis Drake",
+      "preferred_name_ko": "프랜시스 드레이크",
+      "representative_domain": "exploration"
+    },
+    {
+      "person_id": "fc299f9e-a64c-410a-b329-3bfa2cb43ffe",
+      "canonical_name_en": "Pier Gerlofs Donia",
+      "preferred_name_ko": "피어 헤를로프스 도니아",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "82d5b68a-457c-4cda-b003-e0678039f9ae",
+      "canonical_name_en": "Ivan Anikeyev",
+      "preferred_name_ko": "이반 아니케예프",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "63f3a079-0a1e-4c46-9cab-beb3bc41d8ef",
+      "canonical_name_en": "Okinka Pampa",
+      "preferred_name_ko": "오킨카 팜파",
+      "representative_domain": "governance"
+    }
+  ]
+}
