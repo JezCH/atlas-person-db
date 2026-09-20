@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Emperor Renzong of Song",
+    "display_name_ko": "송 인종",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-20",
+      "document_title": "인종(북송)",
+      "url": "https://namu.wiki/w/%EC%9D%B8%EC%A2%85(%EB%B6%81%EC%86%A1)"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Song Dynasty"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1022,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1063,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Emperor Renzong (Zhao Zhen) reigned as emperor of the Northern Song from 1022 to 1063. Empress Dowager Liu exercised regency during his minority until 1033, but the sovereign reign itself begins with Renzong's accession in 1022."
+  },
+  "sources": [
+    {
+      "title": "The Reigns of Jen-tsung (1022–1063) and Ying-tsung (1063–1067)",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/reigns-of-jentsung-10221063-and-yingtsung-10631067/2A90B85FF443029031EAF5A19669777A",
+      "citation_text": "Michael McGrath's chapter in The Cambridge History of China identifies Jen-tsung (Emperor Renzong)'s reign as 1022–1063.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
