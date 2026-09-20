@@ -153,6 +153,7 @@ test("desktop mouse drag pans the spacetime camera without stealing simple click
   assert.match(viewSource, /event\.pointerType !== "mouse" \|\| event\.button !== 0/);
   assert.match(viewSource, /if \(!event\.target\?\.closest\?\.\("\.spacetime-canvas"\)\) return;/);
   assert.match(viewSource, /if \(interactiveTarget\(event\.target\)\) return;/);
+  assert.match(viewSource, /event\.preventDefault\(\);\s*scroll\.classList\.add\("is-mouse-pan-armed"\);/);
   assert.match(viewSource, /Math\.hypot\(dx, dy\) < DRAG_THRESHOLD/);
   assert.match(viewSource, /scroll\.scrollLeft = drag\.start_left - dx;/);
   assert.match(viewSource, /scroll\.scrollTop = drag\.start_top - dy;/);
@@ -160,7 +161,9 @@ test("desktop mouse drag pans the spacetime camera without stealing simple click
   assert.match(viewSource, /scroll\.addEventListener\("click",[\s\S]*?event\.preventDefault\(\);[\s\S]*?event\.stopPropagation\(\);[\s\S]*?, true\);/);
   assert.match(viewSource, /bindMouseCameraPan\(scroll\);/);
   assert.match(viewCss, /@media\(hover:hover\) and \(pointer:fine\)\{\.spacetime-canvas\{cursor:grab\}/);
-  assert.match(viewCss, /\.spacetime-scroll\.is-mouse-panning[^}]*cursor:grabbing!important;user-select:none/);
+  assert.match(viewCss, /\.spacetime-scroll\.is-mouse-pan-armed,\.spacetime-scroll\.is-mouse-pan-armed \*\{user-select:none\}/);
+  assert.match(viewCss, /\.spacetime-scroll\.is-mouse-panning[^}]*cursor:grabbing!important/);
+  assert.match(viewSource, /scroll\.classList\.remove\("is-mouse-pan-armed"\)/);
 });
 
 test("ctrl-wheel remains contained inside spacetime at the viewport-fit camera bound", () => {
