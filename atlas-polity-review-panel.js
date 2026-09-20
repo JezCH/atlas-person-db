@@ -18,7 +18,9 @@
     REVIEWED_MERGE_BLOCKED_SPATIAL: "병합 판정 · 공간 보존 선행",
     REVIEWED_MERGE_READY: "병합 판정 완료",
     REVIEWED_SPLIT_REQUIRED: "분리 판정 완료",
-    NEEDS_SPLIT_REVIEW: "분리 추가 검토"
+    NEEDS_SPLIT_REVIEW: "분리 추가 검토",
+    PRODUCTION_APPLIED_SPLIT: "Production 분리 반영 완료",
+    SUPERSEDED_NO_WRITE: "후속 검토로 폐기 · 별도 유지"
   });
   let liveDataPromise = null;
 
