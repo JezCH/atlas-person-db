@@ -1,0 +1,47 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:kingdom-of-norway-after-reviewed-merge:2026-09-20:v1",
+  "release_order": 611,
+  "evidence": {
+    "decision": "Reviewed same-identity generic/formal-name cleanup after exact Activity relink, Kingdom of Norway temporal designation preservation, reviewed Spatial source removal, and sealed Runtime projection refresh.",
+    "review_claim": "#977 comment 5749790436; parent review POLITY-IDENTITY-REVIEW-16-20260919",
+    "relink_merge_sha": "863e6c2adaf73de964a918cebf83e2611cb4166d",
+    "relink_guard_fix_merge_sha": "582d59b68998765b7e4e6813372a31d0f0d29e4b",
+    "relink_apply_run": "35511011253",
+    "spatial_preservation_merge_sha": "87634961c98a0140166aa55cd98f1dc32bbb8c11",
+    "runtime_recompile_trigger_merge_sha": "31b2d54b2f3466b64c928883b04cdb2b2b04c243",
+    "runtime_compile_run": "35511792339",
+    "runtime_compile_sha": "56a800579a08b771d98ca0477aa55df12c23f0a5",
+    "runtime_compile_result": "SUCCESS: exact descendant of Norway trigger; runtime_person_politics_v1 committed from 2261 canonical input rows to 2251 output rows with 10 reviewed exclusions.",
+    "reference_audit_lineage": "Full Production polity reference audit artifact run 35505555910 showed source-owned rows exactly polity_names=2 plus polity_sources=3. Before relink it also showed person_politics_v2=6 and runtime_person_politics_v1=6; both external groups were subsequently cleared by exact relink and sealed Runtime compile.",
+    "production_readback": "Kingdom of Norway has activity_count=0. Norway has 22 Activities from 865 through 2026; all six source Activity UUIDs are preserved and modeled Norway Activities display Kingdom of Norway / 노르웨이 왕국. Distinct Kalmar Union, Denmark-Norway, Sweden-Norway, England, Denmark, and Sweden activities remain separate. Canonical Spatial source binding is removed and Norway remains europe/northern-europe."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:kingdom-of-norway-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "b00cd071-3772-563e-9139-ca4947d5bd9b",
+        "canonical_key": "Kingdom of Norway",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Kingdom of Norway",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "노르웨이 왕국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 5,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
