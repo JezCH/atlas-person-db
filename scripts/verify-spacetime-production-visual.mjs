@@ -502,6 +502,8 @@ async function main() {
     await screenshot(client, "spacetime-activity-meanwhile.png");
 
     await client.call("Emulation.setDeviceMetricsOverride", MOBILE_VIEWPORT);
+    await client.call("Page.navigate", { url: "about:blank" });
+    await waitFor(client, "document.readyState === 'complete'", 10000);
     await client.call("Page.navigate", { url: PRODUCTION_URL });
     await waitFor(client, "document.readyState === 'complete'", 45000);
     await waitFor(client, "Boolean(document.querySelector('#personSpacetimeMount .spacetime-frame'))", 90000);
