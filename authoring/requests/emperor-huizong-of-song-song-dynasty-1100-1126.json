@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Emperor Huizong of Song",
+    "display_name_ko": "송 휘종",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-20",
+      "reason": "NamuWiki search and direct page access were unavailable through the current provider path, so the exact Person document title and canonical URL could not be verified without guessing.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Song Dynasty"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1100,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1126,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Emperor Huizong (Zhao Ji) ruled the Northern Song from 1100 until his abdication in 1126. This Activity follows the political chronology used by The Cambridge History of China; art-catalogue year labels may abbreviate the reign differently."
+  },
+  "sources": [
+    {
+      "title": "The Reigns of Hui-tsung (1100–1126) and Ch’in-tsung (1126–1127) and the Fall of the Northern Sung",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/reigns-of-huitsung-11001126-and-chintsung-11261127-and-the-fall-of-the-northern-sung/C1186B649A07ED96C45F2EB2D7318D54",
+      "citation_text": "Ari Levine's chapter in The Cambridge History of China identifies Hui-tsung's reign as 1100–1126 and treats it as the final major reign before Ch'in-tsung and the fall of the Northern Sung.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Northern Song Dynasty (960–1127) — Heilbrunn Timeline of Art History",
+      "canonical_url": "https://www.metmuseum.org/essays/northern-song-dynasty-960-1127",
+      "citation_text": "The Metropolitan Museum of Art identifies Emperor Huizong as an accomplished painter and calligrapher and places his reign at the end of the Northern Song.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
