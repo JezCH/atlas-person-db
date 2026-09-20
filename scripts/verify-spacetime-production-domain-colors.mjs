@@ -4,6 +4,7 @@ import path from "node:path";
 const DEBUG_URL = process.env.ATLAS_CDP_URL || "http://127.0.0.1:9222";
 const PRODUCTION_URL = process.env.ATLAS_PRODUCTION_URL || "https://atlas-person-db.vercel.app/#atlas-spacetime";
 const OUT_DIR = process.env.ATLAS_VISUAL_OUT_DIR || "artifacts/spacetime-visual-acceptance";
+const VIEWPORT = Object.freeze({ width: 1600, height: 1000, deviceScaleFactor: 1, mobile: false });
 
 function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 function assert(condition, message, details = null) {
@@ -81,16 +82,48 @@ async function main() {
   assert(page?.webSocketDebuggerUrl, "No Chrome page target found");
   const client = new CdpClient(page.webSocketDebuggerUrl);
   await client.ready();
+  await client.call("Page.enable");
   await client.call("Runtime.enable");
 
   try {
-    const href = await evaluate(client, "location.href");
-    if (!String(href || "").startsWith(new URL(PRODUCTION_URL).origin)) {
-      await client.call("Page.enable");
-      await client.call("Page.navigate", { url: PRODUCTION_URL });
-    }
+    // This verifier must be independent of any viewport, scroll, or selection state
+    // left behind by a preceding browser acceptance script.
+    await client.call("Emulation.setDeviceMetricsOverride", VIEWPORT);
+    await client.call("Page.navigate", { url: "about:blank" });
+    await waitFor(client, "document.readyState === 'complete'", 10000);
+    await client.call("Page.navigate", { url: PRODUCTION_URL });
+    await waitFor(client, "document.readyState === 'complete'", 45000);
     await waitFor(client, "Boolean(window.ATLAS_PERSON_DOMAIN_UI && window.ATLAS_PERSON_SPACETIME_DOMAIN_COLORS && document.querySelector('#personSpacetimeMount .spacetime-frame'))", 90000);
+
+    // The full historical world can open on an era with no virtualized Person rows.
+    // Focus one real Person to move the camera into populated history, then restore
+    // the unfiltered, unselected state before evaluating domain decoration.
+    const focused = await evaluate(client, `(() => {
+      const input=document.querySelector('#spacetimeSearch');
+      if (!input) return false;
+      input.value='a';
+      input.dispatchEvent(new Event('input',{bubbles:true}));
+      return true;
+    })()`);
+    assert(focused, "Spacetime search input was not available for domain acceptance");
+    await waitFor(client, "document.querySelectorAll('[data-spacetime-search-result]').length > 0", 30000);
+    await evaluate(client, "document.querySelector('[data-spacetime-search-result]')?.click()");
+    await waitFor(client, "Boolean(document.querySelector('#spacetimeInspector:not(.is-empty)'))", 30000);
+    await sleep(700);
+    await evaluate(client, `(() => {
+      const input=document.querySelector('#spacetimeSearch');
+      if (!input) return false;
+      input.value='';
+      input.dispatchEvent(new Event('input',{bubbles:true}));
+      return true;
+    })()`);
+    await waitFor(client, "document.querySelectorAll('.spacetime-track-label[data-spacetime-person]').length > 0 && document.querySelectorAll('.spacetime-track-rail[data-spacetime-person]').length > 0", 30000);
+    await evaluate(client, "document.querySelector('#spacetimeClearPerson')?.click()");
+    await waitFor(client, "Boolean(document.querySelector('#spacetimeInspector.is-empty'))", 10000);
+
     await evaluate(client, "window.ATLAS_PERSON_DOMAIN_UI.loadDomains({ force:true })");
+    await evaluate(client, "window.ATLAS_PERSON_SPACETIME_DOMAIN_COLORS.decorateSpacetime(document, window.ATLAS_PERSON_DOMAIN_UI)");
+    await waitFor(client, "document.querySelectorAll('.spacetime-track-label[data-representative-domain]').length > 0 && document.querySelectorAll('.spacetime-track-rail[data-representative-domain]').length > 0", 10000);
 
     const report = await evaluate(client, `(() => {
       const ui=window.ATLAS_PERSON_DOMAIN_UI;
