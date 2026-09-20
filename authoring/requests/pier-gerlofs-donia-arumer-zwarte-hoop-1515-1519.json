@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Pier Gerlofs Donia",
+    "display_name_ko": "피에르 게를로프스 도니아",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Arumer Zwarte Hoop",
+    "display_name_ko": "아루머 즈바르터 호프",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Rebel and maritime leader",
+    "role_display_name_ko": "반란·해상전 지도자",
+    "period_basis": "military_activity",
+    "start_year": 1515,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1519,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After his farm was burned in 1515, Pier Gerlofs Donia joined resistance in Friesland, helped form the Arumer Zwarte Hoop, became leader of the seagoing fighters, and fought as a pirate on the Zuiderzee. Later accounts place his retirement and transfer of command to Wijerd Jelckama in 1519; the end boundary is therefore marked approximate."
+  },
+  "sources": [
+    {
+      "source_type": "museum_reference",
+      "title": "Grutte Pier — Fries Museum",
+      "canonical_url": "https://www.friesmuseum.nl/en/collection/grutte-pier",
+      "citation_text": "Places Donia's turn to armed resistance in 1515, names the Arumer Zwarte Hoop, and identifies him as leader of the seagoing fighters and a pirate on the Zuiderzee."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Pier Gerlofs Donia",
+      "canonical_url": "https://en.wikipedia.org/wiki/Pier_Gerlofs_Donia",
+      "citation_text": "Summarizes the 1515–1519 Frisian rebellion leadership and records Donia's retirement in 1519 and death in 1520."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-20"
+    }
+  }
+}

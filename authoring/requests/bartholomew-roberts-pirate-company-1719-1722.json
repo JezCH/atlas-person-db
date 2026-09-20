@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Bartholomew Roberts",
+    "display_name_ko": "바솔로뮤 로버츠",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bartholomew Roberts pirate company",
+    "display_name_ko": "바솔로뮤 로버츠 해적단",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Pirate captain",
+    "role_display_name_ko": "해적 선장",
+    "period_basis": "general_activity",
+    "start_year": 1719,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1722,
+    "end_month": 2,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Roberts was elected captain after Howell Davis was killed in 1719 and commanded a highly successful pirate company until he was killed in action against HMS Swallow off Cape Lopez on 10 February 1722."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "ROBERTS, BARTHOLOMEW [originally JOHN] — Dictionary of Welsh Biography",
+      "canonical_url": "https://biography.wales/article/s-ROBE-BAR-1682.html",
+      "citation_text": "Describes Roberts's election as pirate captain after Howell Davis's death and records his death in action on 10 February 1722."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Death of Bartholomew Roberts — Royal Museums Greenwich",
+      "canonical_url": "https://www.rmg.co.uk/stories/maritime-history/pirates-bartholomew-roberts-chaloner-ogle-cup",
+      "citation_text": "Summarizes Roberts's exceptionally successful pirate career and the Royal Navy operation that ended it in 1722."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-20",
+      "document_title": "바솔로뮤 로버츠",
+      "url": "https://namu.wiki/w/%EB%B0%94%EC%86%94%EB%A1%9C%EB%AE%A4%20%EB%A1%9C%EB%B2%84%EC%B8%A0"
+    }
+  }
+}

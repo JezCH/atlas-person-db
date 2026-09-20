@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Henry Every",
+    "display_name_ko": "헨리 에브리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Henry Every pirate company",
+    "display_name_ko": "헨리 에브리 해적단",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Pirate captain",
+    "role_display_name_ko": "해적 선장",
+    "period_basis": "general_activity",
+    "start_year": 1694,
+    "start_month": 5,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1696,
+    "end_month": 4,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In May 1694 Henry Every led the mutiny aboard Charles II, was elected captain, renamed the vessel Fancy, and led the pirate company. World History Encyclopedia records that the crews led by Every disbanded in the Caribbean in April 1696 after the 1695 capture of the Mughal treasure ship Ganj-i-Sawai."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Henry Every — World History Encyclopedia",
+      "canonical_url": "https://www.worldhistory.org/Henry_Every/",
+      "citation_text": "Records the May 1694 mutiny, Every's election as captain, renaming Charles II as Fancy, and his subsequent piracy in the Indian Ocean."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Timeline: Henry Every — World History Encyclopedia",
+      "canonical_url": "https://www.worldhistory.org/timeline/Henry_Every/",
+      "citation_text": "Dates Every's takeover of Charles II to May 1694 and the disbanding of the pirate crews he led to April 1696."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-20",
+      "document_title": "헨리 에브리",
+      "url": "https://namu.wiki/w/%ED%97%A8%EB%A6%AC%20%EC%97%90%EB%B8%8C%EB%A6%AC"
+    }
+  }
+}

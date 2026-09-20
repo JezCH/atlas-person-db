@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Amaro Pargo",
+    "display_name_ko": "아마로 파고",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Spain",
+    "display_name_ko": "스페인 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Privateer captain",
+    "role_display_name_ko": "사략선장",
+    "period_basis": "military_activity",
+    "start_year": 1711,
+    "start_month": 12,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1712,
+    "end_month": 6,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The surviving privateering patent appoints Amaro Rodríguez Felipe (Amaro Pargo) as a captain of privateers on 14 December 1711 in the service of Philip V. The patent was tied to the vessel Bravo; when he sold Bravo in June 1712, that specific legal authorization ceased."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Reconstruyendo el legado de Amaro Pargo — Universidad de La Laguna",
+      "canonical_url": "https://riull.ull.es/xmlui/bitstream/handle/915/26608/RECONSTRUYENDO%20EL%20LEGADO%20DE%20AMARO%20PARGO.pdf?isAllowed=y&sequence=1",
+      "citation_text": "University of La Laguna research reviews documentary evidence establishing Amaro Pargo's historical activity as a corsair."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "La Patente de Corso de Amaro Pargo",
+      "canonical_url": "https://amaropargo.es/2025/04/10/la-patente-de-corso-de-amaro-pargo/",
+      "citation_text": "Publishes and discusses the patent dated 14 December 1711 and documents the sale of the patent-linked vessel Bravo in June 1712."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-20",
+      "document_title": "아마로 파고",
+      "url": "https://namu.wiki/w/%EC%95%84%EB%A7%88%EB%A1%9C%20%ED%8C%8C%EA%B3%A0"
+    }
+  }
+}
