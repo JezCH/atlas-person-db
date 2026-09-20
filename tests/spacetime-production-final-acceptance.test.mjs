@@ -106,7 +106,8 @@ test("real-Chrome domain acceptance preserves Person/Activity semantic separatio
 
 test("final acceptance documentation keeps established stable-world invariants", () => {
   const doc = read("docs/spacetime-current-renderer-final-acceptance.md");
-  assert.match(doc, /100%/);
+  assert.match(doc, /viewport-fit/);
+  assert.match(doc, /50%/);
   assert.match(doc, /500%/);
   assert.match(doc, /1500%/);
   assert.match(doc, /0\.748/);
