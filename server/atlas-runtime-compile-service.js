@@ -6,6 +6,7 @@ const COMPILER_VERSION = "runtime-person-politics-v1";
 const LOCK_KEY = "atlas-runtime:person-politics-v1:compile";
 const ACTIVATION_PROJECTION = "runtime_person_politics_v1";
 const SHA40_RE = /^[0-9a-f]{40}$/;
+const RUNTIME_INSERT_BATCH_SIZE = 200;
 
 const AUTHORING_SNAPSHOT_SQL = `
 select
@@ -245,22 +246,46 @@ async function ensureCompileRun(client, compiled) {
   return true;
 }
 
-async function insertRuntimeRow(client, compileKey, row) {
-  await client.query(`
-    insert into atlas_v2.runtime_person_politics_v1(
-      id,compile_key,person_id,polity_id,relation_type_id,role_id,period_basis_id,
-      activity_start,activity_start_month,activity_start_day,activity_start_granularity,activity_start_certainty,activity_start_calendar,
-      activity_end,activity_end_month,activity_end_day,activity_end_granularity,activity_end_certainty,activity_end_calendar,
-      confidence,chronology_status,notes,source_locator,content_hash,provenance_snapshot
-    ) values(
-      $1::uuid,$2,$3::uuid,$4::uuid,$5::uuid,$6::uuid,$7::uuid,
-      $8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23::jsonb,$24,$25::jsonb
-    )`, [
-      row.id,compileKey,row.person_id,row.polity_id,row.relation_type_id,row.role_id,row.period_basis_id,
-      row.activity_start,row.activity_start_month,row.activity_start_day,row.activity_start_granularity,row.activity_start_certainty,row.activity_start_calendar,
-      row.activity_end,row.activity_end_month,row.activity_end_day,row.activity_end_granularity,row.activity_end_certainty,row.activity_end_calendar,
-      row.confidence,row.chronology_status,row.notes,JSON.stringify(row.source_locator),row.content_hash,JSON.stringify(row.provenance_snapshot)
-    ]);
+function runtimeInsertParams(row) {
+  return [
+    row.id,row.person_id,row.polity_id,row.relation_type_id,row.role_id,row.period_basis_id,
+    row.activity_start,row.activity_start_month,row.activity_start_day,row.activity_start_granularity,row.activity_start_certainty,row.activity_start_calendar,
+    row.activity_end,row.activity_end_month,row.activity_end_day,row.activity_end_granularity,row.activity_end_certainty,row.activity_end_calendar,
+    row.confidence,row.chronology_status,row.notes,JSON.stringify(row.source_locator),row.content_hash,JSON.stringify(row.provenance_snapshot)
+  ];
+}
+
+function runtimeInsertTuple(rowIndex) {
+  const start=2+(rowIndex*24);
+  const p=(offset)=>"$"+String(start+offset);
+  return `(
+    ${p(0)}::uuid,$1,${p(1)}::uuid,${p(2)}::uuid,${p(3)}::uuid,${p(4)}::uuid,${p(5)}::uuid,
+    ${p(6)},${p(7)},${p(8)},${p(9)},${p(10)},${p(11)},${p(12)},${p(13)},${p(14)},${p(15)},${p(16)},${p(17)},
+    ${p(18)},${p(19)},${p(20)},${p(21)}::jsonb,${p(22)},${p(23)}::jsonb
+  )`;
+}
+
+async function insertRuntimeRows(client, compileKey, rows, { batchSize=RUNTIME_INSERT_BATCH_SIZE } = {}) {
+  const source=Array.isArray(rows) ? rows : [];
+  const size=Number(batchSize);
+  if (!Number.isInteger(size) || size <= 0) throw new Error("RUNTIME_INSERT_BATCH_SIZE_INVALID");
+  let batchCount=0;
+  for (let offset=0; offset<source.length; offset+=size) {
+    const batch=source.slice(offset,offset+size);
+    const params=[compileKey];
+    for (const row of batch) params.push(...runtimeInsertParams(row));
+    const values=batch.map((_,index)=>runtimeInsertTuple(index)).join(",\n");
+    await client.query(`
+      insert into atlas_v2.runtime_person_politics_v1(
+        id,compile_key,person_id,polity_id,relation_type_id,role_id,period_basis_id,
+        activity_start,activity_start_month,activity_start_day,activity_start_granularity,activity_start_certainty,activity_start_calendar,
+        activity_end,activity_end_month,activity_end_day,activity_end_granularity,activity_end_certainty,activity_end_calendar,
+        confidence,chronology_status,notes,source_locator,content_hash,provenance_snapshot
+      ) values ${values}
+    `,params);
+    batchCount+=1;
+  }
+  return batchCount;
 }
 
 async function compileRuntimeProjection(client, { dryRun=false, runtimeSha=null, authoringSha=null } = {}) {
@@ -275,7 +300,7 @@ async function compileRuntimeProjection(client, { dryRun=false, runtimeSha=null,
     const compiled = compileSnapshot(source.rows || []);
     const ledgerReplay = await ensureCompileRun(client, compiled);
     await client.query("delete from atlas_v2.runtime_person_politics_v1");
-    for (const row of compiled.rows) await insertRuntimeRow(client, compiled.compile_key, row);
+    await insertRuntimeRows(client, compiled.compile_key, compiled.rows);
     const verify = await client.query(`
       select count(*)::int as row_count,
              count(distinct compile_key)::int as compile_count,
@@ -312,9 +337,10 @@ async function compileRuntimeProjection(client, { dryRun=false, runtimeSha=null,
 }
 
 module.exports = Object.freeze({
-  COMPILER_VERSION, LOCK_KEY, ACTIVATION_PROJECTION, SHA40_RE, AUTHORING_SNAPSHOT_SQL,
+  COMPILER_VERSION, LOCK_KEY, ACTIVATION_PROJECTION, SHA40_RE, RUNTIME_INSERT_BATCH_SIZE, AUTHORING_SNAPSHOT_SQL,
   stableJson, sha256, requiredSha, hasKnownBoundary, hasLegacyProvenance,
   ensureRuntimeActivationBaseline, recordRuntimeActivation,
   classifyReadiness, provenanceSnapshot, runtimeRow, compileSnapshot,
+  runtimeInsertParams, runtimeInsertTuple, insertRuntimeRows,
   compileRuntimeProjection
 });
