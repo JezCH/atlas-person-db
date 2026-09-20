@@ -57,6 +57,13 @@ test('desktop and mobile navigation stay synchronized and hash-addressable', () 
   assert.match(nav, /#atlas-/);
   assert.match(nav, /hashchange/);
   assert.match(nav, /mobileMenuClose/);
+  assert.match(nav, /function syncNavigationStatusLabels\(buttons\)/);
+  assert.match(nav, /meta = DOMAINS\?\.\[button\.dataset\.atlasDomain\]/);
+  assert.match(nav, /status\.textContent = meta\.status_label/);
+  assert.match(nav, /syncNavigationStatusLabels\(\[\.\.\.desktopButtons, \.\.\.mobileButtons\]\)/);
+  for (const domain of ['dashboard', 'persons', 'polities', 'places', 'events', 'sources', 'geometry']) {
+    assert.match(html, new RegExp(`data-atlas-domain="${domain}"[^>]*>.*?<small><\\/small>`));
+  }
 });
 
 test('mobile Person search remains fail-closed outside Persons if the legacy shell input exists', () => {
