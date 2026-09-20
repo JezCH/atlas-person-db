@@ -103,7 +103,8 @@ test("Production view uses right sticky Person/Activity inspector and distinct A
   assert.match(view,/data-spacetime-activity=/);
   assert.match(view,/spacetime-sticky-inspector/);
   assert.doesNotMatch(view,/class="spacetime-selection" id="spacetimeSelection"/);
-  assert.match(css,/\.spacetime-sticky-inspector\{[^}]*position:sticky/);
+  assert.match(css,/\.spacetime-sidecar\{[^}]*position:sticky/);
+  assert.match(css,/\.spacetime-sticky-inspector\{[^}]*position:relative/);
   assert.match(css,/\.spacetime-workspace\{[^}]*grid-template-columns/);
 });
 
