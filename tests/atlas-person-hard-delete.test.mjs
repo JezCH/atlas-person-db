@@ -23,6 +23,8 @@ function verificationRow(overrides = {}) {
     person_sources: 0,
     person_descriptions: 0,
     external_references: 0,
+    portraits: 0,
+    portrait_sources: 0,
     activities: 0,
     people_affiliations: 0,
     event_participations: 0,
@@ -46,6 +48,9 @@ function createFakeClient({ personExists = true, verification = verificationRow(
         return { rowCount: 1, rows: [{ relation: requirementLedgerPresent ? 'atlas_v2.person_duplicate_revalidation_requirements' : null }] };
       }
       if (text.includes('as active_duplicate_candidates')) return { rowCount: 1, rows: [verification] };
+      if (text.startsWith('select count(*)::int as source_count from atlas_v2.person_portrait_sources')) {
+        return { rowCount: 1, rows: [{ source_count: 1 }] };
+      }
       if (text.startsWith('select id,canonical_key,person_type,historicity from atlas_v2.persons')) {
         return personExists
           ? { rowCount: 1, rows: [{ id: PERSON, canonical_key: 'delete-target', person_type: 'historical', historicity: 'historical' }] }
@@ -170,6 +175,7 @@ test('successful Person hard-delete removes live references, stales only target 
     'delete from atlas_v2.person_sources',
     'delete from atlas_v2.person_descriptions',
     'delete from atlas_v2.person_external_references',
+    'delete from atlas_v2.person_portraits',
     'delete from atlas_v2.person_names',
     'delete from atlas_v2.persons'
   ]) assert.ok(sql.some((text) => text.startsWith(expected)), `missing ${expected}`);
