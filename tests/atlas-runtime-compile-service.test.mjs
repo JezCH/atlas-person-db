@@ -106,22 +106,8 @@ test('Runtime activation migration records repeated committed activations withou
   assert.match(sql,/activation_kind text NOT NULL/i);
   assert.match(sql,/baseline_observed/);
   assert.match(sql,/compile_commit/);
-  assert.match(sql,/runtime_sha ~ '\^\[0-9a-f\]\{40\}\
-  const contract=JSON.parse(fs.readFileSync(new URL('../contracts/runtime-projection-contract.v1.json',import.meta.url),'utf8'));
-  assert.equal(contract.principles.public_runtime_reads_must_use_projection,true);
-  assert.equal(contract.snapshot.live_authoring_join_from_runtime_forbidden,true);
-  assert.equal(contract.readiness.start_boundary,'known_complete');
-  assert.equal(contract.readiness.end_boundary,'known_complete_or_verified_ongoing');
-});
-/);
-  assert.match(sql,/authoring_sha ~ '\^\[0-9a-f\]\{40\}\
-  const contract=JSON.parse(fs.readFileSync(new URL('../contracts/runtime-projection-contract.v1.json',import.meta.url),'utf8'));
-  assert.equal(contract.principles.public_runtime_reads_must_use_projection,true);
-  assert.equal(contract.snapshot.live_authoring_join_from_runtime_forbidden,true);
-  assert.equal(contract.readiness.start_boundary,'known_complete');
-  assert.equal(contract.readiness.end_boundary,'known_complete_or_verified_ongoing');
-});
-/);
+  assert.equal(sql.includes("runtime_sha ~ '^[0-9a-f]{40}$'"),true);
+  assert.equal(sql.includes("authoring_sha ~ '^[0-9a-f]{40}$'"),true);
   assert.doesNotMatch(sql,/UNIQUE\s*\([^)]*compile_key/i);
 });
 
