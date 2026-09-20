@@ -39,7 +39,7 @@ test('Person-centered Main renders all historicity groups in one chronology tabl
 });
 
 test('Person Main owns visible Polity, Relation, and domain filter state and delegates controls to era navigation', () => {
-  assert.match(main, /let facetFilters = \\{ polity_id: "", relation_type_id: "", domain: "" \\}/);
+  assert.match(main, /let facetFilters = \{ polity_id: "", relation_type_id: "", domain: "" \}/);
   assert.match(main, /function setPolityFilter/);
   assert.match(main, /function setRelationFilter/);
   assert.match(main, /function setDomainFilter/);
