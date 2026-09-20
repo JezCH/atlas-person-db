@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 const require = createRequire(import.meta.url);
 const guard = require("../atlas-person-spacetime-label-overlap-guard.js");
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const viewCss = fs.readFileSync(path.join(root, "atlas-person-spacetime-view.css"), "utf8");
 
 test("browser CSS pixel geometry is parsed as numeric world-space presentation geometry", () => {
   assert.equal(guard.cssNumber("123.5px"), 123.5);
@@ -78,6 +79,17 @@ test("browser integration never writes label top/Y geometry", () => {
   assert.match(source, /element\.style\.left\s*=/);
   assert.match(source, /data-spacetime-band/);
   assert.match(source, /borrowWorld:true/);
+});
+
+test("person names stay above every temporal and spatial line layer", () => {
+  assert.match(viewCss, /\.spacetime-track-label\{position:absolute;z-index:30;[^}]*background:#fff/);
+  assert.match(viewCss, /\.spacetime-activity-glyph\{position:absolute;z-index:32;/);
+  assert.match(viewCss, /\.spacetime-track-label:hover,\.spacetime-track-label\.is-selected\{z-index:42/);
+  assert.match(viewCss, /\.spacetime-track-label\.is-meanwhile-active\{z-index:41/);
+  assert.match(viewCss, /\.spacetime-activity-glyph:hover,\.spacetime-activity-glyph\.is-selected\{z-index:42/);
+  assert.match(viewCss, /\.spacetime-activity-glyph\.is-activity-selected\{z-index:43/);
+  assert.match(viewCss, /\.spacetime-track-rail\.is-activity-selected\{z-index:20/);
+  assert.match(viewCss, /\.spacetime-spatial-uncertainty\.is-activity-selected\{z-index:20/);
 });
 
 test("surface owner loads the guard without modifying the core spacetime renderer", () => {

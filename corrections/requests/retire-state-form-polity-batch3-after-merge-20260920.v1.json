@@ -1,0 +1,91 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:state-form-batch3-after-reviewed-merge:2026-09-20:v1",
+  "release_order": 599,
+  "evidence": {
+    "decision": "Reviewed same-identity state-form cleanup after temporal designation preservation, exact Production Activity relinks, and reviewed Spatial source-to-survivor preservation.",
+    "review_checkpoint": "#977 POLITY-IDENTITY-STATE-FORM-BATCH3-20260920",
+    "designation_relink_merge_sha": "fc3f6404641b905255334d9e365daa308b550679",
+    "correction_apply_run": 35495867677,
+    "spatial_preservation_merge_sha": "39e2fb2e57840122461f726a9e05ea4bcfbe7d3e",
+    "production_readback": "All three source Polities have activity_count=0; survivor Activities preserve original UUIDs and temporal labels. Production spatial index removes the three source dispositions and rebinds Theodoric's reviewed 474-493 Activity override to the Ostrogothic Kingdom survivor without changing its segments."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:state-of-ecuador-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "29b6b4bd-f767-4995-9e36-d50ecba7db88",
+        "canonical_key": "State of Ecuador",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "State of Ecuador",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "에콰도르국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:kingdom-of-romania-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "63c0aa8d-bc0b-42c5-9118-612b6c650646",
+        "canonical_key": "Kingdom of Romania",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Kingdom of Romania",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "루마니아 왕국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:ostrogothic-confederation-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "bcb090c2-7906-4c3e-91cf-99b02646764e",
+        "canonical_key": "Ostrogothic Confederation",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Ostrogothic Confederation",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "동고트 정치연합",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
