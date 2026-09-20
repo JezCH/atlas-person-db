@@ -86,7 +86,7 @@ test('current-result Polity count uses authoritative facet IDs instead of string
   assert.doesNotMatch(main, /if \(facetFilters\.polity_id\) return rows\.length \? 1 : 0/);
 });
 
-test('Person detail renders readable names, descriptions, Person sources and user-facing Activity meaning', () => {
+test('Person detail renders identity, portrait slot, sources and user-facing Activity meaning', () => {
   for (const token of [
     'person.names',
     'person.descriptions',
@@ -101,6 +101,8 @@ test('Person detail renders readable names, descriptions, Person sources and use
     'activity.notes',
     'activity.sources'
   ]) assert.match(main, new RegExp(token.replaceAll('.', '\\.')));
+  assert.match(main, /person-detail-portrait/);
+  assert.match(main, /person-detail-portrait-empty">없음/);
   assert.match(main, /Activity 출처/);
   assert.match(main, /Person 출처/);
 });
@@ -117,31 +119,29 @@ test('refresh preserves selected Person and forces authoritative detail refresh'
   assert.match(main, /\(!force && selectedPersonId === personId\)/);
 });
 
-test('mobile shell does not create a second Person search owner', () => {
+test('mobile shell does not create a second Person search or legacy row owner', () => {
   assert.match(nav, /search\.id = "personMainSearch"/);
   assert.match(nav, /atlas-person-search-change/);
   assert.match(main, /new CustomEvent\("atlas-person-main-rendered"/);
-  assert.doesNotMatch(mobile, /personMainSearch|atlas-person-main-rendered|atlas-person-search-change|visiblePersonCount/);
+  assert.doesNotMatch(mobile, /personMainSearch|atlas-person-main-rendered|atlas-person-search-change|visiblePersonCount|dataBody|mobile-expanded/);
   assert.doesNotMatch(html, /mobileSearchInput|mobileSearchClear|mobileSearchCount/);
   assert.match(html, /mobile-appbar-title/);
 });
 
-test('existing Activity authoring DOM is moved into a separate expandable tool instead of being recreated or deleted', () => {
-  assert.match(main, /body\.append\(toolbar, legacyContent\)/);
-  assert.match(main, /relationshipAuthoringTools/);
-  assert.match(main, /전체 관계 편집표/);
-  assert.match(main, /기존 Activity 행 등록·수정·엑셀 도구/);
-  assert.match(html, /id="addButton"/);
-  assert.match(html, /id="dataBody"/);
-  assert.match(html, /id="editorDialog"/);
+test('legacy Activity table, detail panel, dialog and app runtime are retired', () => {
+  assert.doesNotMatch(html, /id="addButton"|id="dataBody"|id="detailPanel"|id="editorDialog"|\.\/app\.js/);
+  assert.doesNotMatch(main, /relationshipAuthoringTools|전체 관계 편집표|legacyContent|legacyActivityButton|invokeLegacyActivityAction/);
 });
 
-test('Person Main is read-only and consumes the shared list snapshot without embedding Admin-only mutation surfaces', () => {
+test('Person Main consumes the shared read snapshot and routes supported mutations through the server adapter', () => {
   assert.doesNotMatch(main, /\/api\/atlas-(?:mutate|identity|authoring|duplicate-review|admin-inspector|admin-system-status|audit-inventory)/);
   assert.doesNotMatch(main, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|authorization|bearer\s/i);
   assert.match(main, /dataStore\.loadPersons/);
   assert.match(dataStore, /personReader\.listPersons\(\)/);
   assert.match(main, /reader\.readPerson\(personId/);
+  assert.match(main, /ATLAS_SERVER_WRITE_ADAPTER/);
+  assert.match(main, /profileWriter\.deleteActivity\(activityId\)/);
+  assert.doesNotMatch(main, /createActivity\(|updateActivity\(|importActivities\(/);
 });
 
 test('source links are restricted to HTTP(S) and user-visible strings are escaped', () => {
@@ -150,11 +150,12 @@ test('source links are restricted to HTTP(S) and user-visible strings are escape
   assert.match(main, /escapeHtml/);
 });
 
-test('Person Main CSS isolates the new layout and keeps responsive fallbacks', () => {
+test('Person Main CSS owns one responsive detail surface and no legacy authoring surface', () => {
   assert.match(css, /\.person-main-layout/);
   assert.match(css, /\.person-group-other/);
   assert.match(css, /\.person-main-detail/);
-  assert.match(css, /\.relationship-authoring-tools/);
+  assert.match(css, /\.person-detail-portrait/);
+  assert.doesNotMatch(css, /\.relationship-authoring-tools|\.relationship-authoring-body/);
   assert.match(css, /@media\(max-width:760px\)/);
 });
 
