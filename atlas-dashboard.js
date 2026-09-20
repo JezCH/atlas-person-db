@@ -51,12 +51,18 @@
   function attentionButton(item) {
     const unavailable = item?.available !== true;
     const disabled = unavailable || Number(item?.count || 0) <= 0;
-    const state = unavailable ? "원본 확인 불가" : `${value(item.count)}명`;
-    const title = unavailable ? item?.unavailable_reason || "SOURCE_UNAVAILABLE" : `${item.label} 대상 ${value(item.count)}명`;
-    return `<button type="button" data-dashboard-attention="${escapeHtml(item?.code || "")}" ${disabled ? "disabled" : ""} title="${escapeHtml(title)}">
-      <span>${escapeHtml(item?.label || item?.code || "확인 필요")}</span><strong>${unavailable ? "—" : value(item.count)}</strong>
-      <small>${escapeHtml(state)}</small>
-    </button>`;
+    const diagnosticHref = unavailable ? String(item?.action_href || "").trim() : "";
+    const reason = unavailable ? reasonLabel(item?.unavailable_reason) || "원본 확인 불가" : "";
+    const state = unavailable
+      ? `${reason}${item?.action_label ? ` · ${item.action_label}` : ""}`
+      : `${value(item.count)}명`;
+    const title = unavailable ? state : `${item.label} 대상 ${value(item.count)}명`;
+    const inner = `<span>${escapeHtml(item?.label || item?.code || "확인 필요")}</span><strong>${unavailable ? "—" : value(item.count)}</strong>
+      <small>${escapeHtml(state)}</small>`;
+    if (diagnosticHref) {
+      return `<a class="dashboard-attention-link" data-dashboard-attention-diagnostic="${escapeHtml(item?.code || "")}" href="${escapeHtml(diagnosticHref)}" title="${escapeHtml(title)}">${inner}</a>`;
+    }
+    return `<button type="button" data-dashboard-attention="${escapeHtml(item?.code || "")}" ${disabled ? "disabled" : ""} title="${escapeHtml(title)}">${inner}</button>`;
   }
 
   function unitLabel(unit) {
@@ -123,6 +129,8 @@
     if (reason === "RUNTIME_IDENTITY_DATA_TIMESTAMP_NOT_EXPOSED") return "배포 식별 갱신 시각 미제공";
     if (reason === "SOURCE_DATA_TIMESTAMP_NOT_EXPOSED") return "원본 갱신 시각 미제공";
     if (reason === "SOURCE_UNAVAILABLE") return "원본 확인 불가";
+    if (reason === "RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED") return "Runtime 제외 대상 집계는 공개 대시보드에 미노출";
+    if (reason === "DUPLICATE_REVIEW_TARGET_SOURCE_REQUIRES_ADMIN_CONTRACT") return "중복 후보 대상은 관리자 인증 영역에서 확인";
     return "세부 사유 미분류";
   }
 
