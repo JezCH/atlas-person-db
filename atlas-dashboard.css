@@ -6,3 +6,13 @@
 .dashboard-issue-grid .dashboard-attention-link small,.dashboard-issue-grid button small{font-size:9px;color:#7d8798;line-height:1.35}
 @media(prefers-reduced-motion:reduce){.dashboard-issue-grid .dashboard-attention-link{transition:none}}
 @media(max-width:600px){.dashboard-issue-grid .dashboard-attention-link{min-height:44px}}
+.dashboard-publication-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.dashboard-publication-stage{position:relative;display:grid;gap:4px;padding:12px;border:1px solid #e2e6ed;border-radius:10px;background:#fbfcfe;min-width:0}
+.dashboard-publication-stage:not(:last-child)::after{content:"→";position:absolute;right:-9px;top:50%;z-index:2;transform:translateY(-50%);font-size:11px;font-weight:900;color:#98a2b3}
+.dashboard-publication-stage small{font-size:9px;font-weight:900;letter-spacing:.05em;color:#7b8494}
+.dashboard-publication-stage strong{font-size:22px;line-height:1.05;color:#182236;font-variant-numeric:tabular-nums}
+.dashboard-publication-stage span{font-size:9px;color:#7d8798;line-height:1.35}
+.dashboard-publication-meta{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:10px;color:#687286;font-size:9px}
+.dashboard-publication-exclusions{margin-top:8px}
+@media(max-width:700px){.dashboard-publication-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-publication-stage::after{display:none}}
+@media(max-width:430px){.dashboard-publication-flow{grid-template-columns:1fr}}
