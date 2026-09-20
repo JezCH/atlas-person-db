@@ -15,7 +15,57 @@
     "production_executable": false,
     "production_mutation_authorized": false
   },
-  "operations": [],
+  "operations": [
+    {
+      "case_id": "greece-designation-workflow-anchor-george-ii-1922-1924",
+      "type": "rewrite_activity",
+      "activity_id": "b735d2ce-e1af-4736-9b2c-a83e809c82c0",
+      "baseline_before": {
+        "person_id": "a6b9190b-e4e9-463e-b407-92c6a2eee1e9",
+        "polity_id": "4dd77aef-9070-448e-b8da-425dfd0f4732",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1922,
+        "activity_end": 1924,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "b735d2ce-e1af-4736-9b2c-a83e809c82c0",
+        "person_id": "a6b9190b-e4e9-463e-b407-92c6a2eee1e9",
+        "polity_id": "4dd77aef-9070-448e-b8da-425dfd0f4732",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1922,
+        "activity_end": 1924,
+        "activity_start_detail": {
+          "year": 1922,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1924,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
   "stage2_assertions": [
     {
       "type": "assert_polity_designation",
@@ -76,7 +126,7 @@
   ],
   "polity_relation_assertions": [],
   "result": {
-    "activity_targets": 0,
+    "activity_targets": 1,
     "activity_relinks": 0,
     "polity_designation_assertions": 1,
     "production_mutation_authorized": false
