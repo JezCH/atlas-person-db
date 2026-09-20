@@ -11,7 +11,7 @@
 
   if (!modelApi) throw new Error("ATLAS_PERSON_SPACETIME_MODEL is required");
 
-  const MIN_SUPPORTED_ZOOM = 1;
+  const MIN_SUPPORTED_ZOOM = 0.5;
 
   function finite(value, label) {
     const number = Number(value);

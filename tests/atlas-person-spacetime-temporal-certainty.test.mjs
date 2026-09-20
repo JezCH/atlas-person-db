@@ -43,7 +43,7 @@ test("spacetime view consumes temporal certainty without changing geometry const
   assert.match(source, /temporalCertainty: window\.ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY/);
   assert.match(source, /return temporalCertainty\.periodLabel\(activity, model\.yearLabel\);/);
   assert.match(source, /const GLOBAL_EXTENT_COMPRESSION = 0\.748;/);
-  assert.match(source, /const CAMERA_MIN_ZOOM = 1;/);
+  assert.match(source, /const CAMERA_MIN_ZOOM = 0\.5;/);
   assert.match(source, /const CAMERA_DEFAULT_ZOOM = 5;/);
   assert.match(source, /const CAMERA_MAX_ZOOM = 15;/);
 });

@@ -76,7 +76,7 @@ test("Production visual acceptance requires every viewport Person name at 500 an
   assert.match(verifier, /at500\.missingVisibleLabelPersonIds\.length === 0/);
   assert.match(verifier, /at500\.extraVisibleLabelPersonIds\.length === 0/);
   assert.match(verifier, /minimumAcceptance\.zoomOutDisabled/);
-  assert.match(verifier, /minimumAcceptance\.minimumPercent >= 100/);
+  assert.match(verifier, /minimumAcceptance\.minimumPercent >= 50/);
   assert.match(verifier, /Math\.abs\(minimumAcceptance\.worldWidth - minimumAcceptance\.usableWidth\) <= 2/);
   assert.match(verifier, /at1500\.deferredLabelCount === 0/);
   assert.match(verifier, /at1500\.domLabelCount === at1500\.domPersonCount/);
@@ -106,7 +106,8 @@ test("real-Chrome domain acceptance preserves Person/Activity semantic separatio
 
 test("final acceptance documentation keeps established stable-world invariants", () => {
   const doc = read("docs/spacetime-current-renderer-final-acceptance.md");
-  assert.match(doc, /100%/);
+  assert.match(doc, /viewport-fit/);
+  assert.match(doc, /50%/);
   assert.match(doc, /500%/);
   assert.match(doc, /1500%/);
   assert.match(doc, /0\.748/);

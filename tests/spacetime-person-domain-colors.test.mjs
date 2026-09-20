@@ -94,7 +94,7 @@ test("domain surface owner loads spacetime semantics after canonical domain UI",
 
 test("domain integration does not alter spacetime geometry or camera invariants", () => {
   const view = fs.readFileSync(path.join(root, "atlas-person-spacetime-view.js"), "utf8");
-  assert.match(view, /const CAMERA_MIN_ZOOM = 1;/);
+  assert.match(view, /const CAMERA_MIN_ZOOM = 0\.5;/);
   assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);
   assert.match(view, /const CAMERA_MAX_ZOOM = 15;/);
   assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.748;/);

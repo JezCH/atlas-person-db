@@ -3,7 +3,7 @@
 
   const MOUNT_ID = "personSpacetimeMount";
   const BOUND_EPSILON = 0.01;
-  const MINIMUM_PERCENT = 100;
+  const MINIMUM_PERCENT = 50;
   const DEFAULT_PERCENT = 500;
   const MAXIMUM_PERCENT = 1500;
 

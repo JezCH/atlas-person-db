@@ -8,7 +8,7 @@
   const ERA_AXIS_WIDTH = 68;
   const DEFAULT_TIMELINE_HEIGHT = 4200;
   const CAMERA_HEADER_HEIGHT = 36;
-  const CAMERA_MIN_ZOOM = 1;
+  const CAMERA_MIN_ZOOM = 0.5;
   const CAMERA_DEFAULT_ZOOM = 5;
   const CAMERA_MAX_ZOOM = 15;
   const CAMERA_ZOOM_STEP = 1.25;
@@ -20,10 +20,10 @@
   const MOBILE_PRESENTATION_SCALE = 0.46;
   const FOCUS_DETAIL_ZOOM = 6.5;
   const RUNTIME_ASSETS = Object.freeze([
-    ["./atlas-person-spacetime-time-projection.js?v=20260920-range-100-1500", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
+    ["./atlas-person-spacetime-time-projection.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
     ["./atlas-person-spacetime-space-axis.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-presentation-layout.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
-    ["./atlas-person-spacetime-semantic-axis.js?v=20260920-range-100-1500", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
+    ["./atlas-person-spacetime-semantic-axis.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
     ["./atlas-person-spacetime-temporal-certainty.js?v=20260906-boundary-certainty", "ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY"],
     ["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"],
@@ -35,7 +35,7 @@
     ["./atlas-person-spacetime-spatial-compile.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
     ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260918-opposition-context", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
-    ["./atlas-person-spacetime-lod.js?v=20260920-range-100-1500", "ATLAS_PERSON_SPACETIME_LOD"],
+    ["./atlas-person-spacetime-lod.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_LOD"],
     ["./atlas-person-spacetime-label-engine.js?v=20260920-global-name-overlay", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
 

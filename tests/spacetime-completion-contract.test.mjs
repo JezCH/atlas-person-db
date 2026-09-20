@@ -16,7 +16,7 @@ test("completion contract records the readable-scale architecture and final Prod
   assert.equal(contract.schema, "atlas-spacetime-completion-contract/v2");
   assert.equal(contract.foundation_track.status, "completed");
   assert.equal(contract.foundation_track.sufficient_for_final_completion, false);
-  assert.equal(contract.readable_scale.minimum_zoom_percent, 100);
+  assert.equal(contract.readable_scale.minimum_zoom_percent, 50);
   assert.equal(contract.readable_scale.effective_minimum_zoom_policy, "fit_world_to_table_viewport");
   assert.equal(contract.readable_scale.default_zoom_percent, 500);
   assert.equal(contract.readable_scale.maximum_zoom_percent, 1500);
@@ -174,7 +174,7 @@ test("coordinate invariance uses one global camera zoom", () => {
   assert.deepEqual(fixtures.coordinate_invariance.normalized_world_coordinate_must_match_under, [
     "search-off","search-on","selection-change","global-camera-zoom","minimap-navigation"
   ]);
-  assert.equal(fixtures.readable_scale.minimum_zoom_percent, 100);
+  assert.equal(fixtures.readable_scale.minimum_zoom_percent, 50);
   assert.equal(fixtures.readable_scale.default_zoom_percent, 500);
   assert.equal(fixtures.readable_scale.maximum_zoom_percent, 1500);
   assert.equal(fixtures.readable_scale.global_extent_compression, 0.748);
@@ -192,6 +192,6 @@ test("current locked geometry facts remain true", () => {
   const continuum = spaceAxis.createSpatialContinuum();
   assert.equal(continuum.macroregions.length, 9);
   assert.ok(continuum.subregions.length > continuum.macroregions.length);
-  assert.equal(timeProjection.MIN_SUPPORTED_ZOOM, 1);
+  assert.equal(timeProjection.MIN_SUPPORTED_ZOOM, 0.5);
   assert.equal(timeProjection.createUniformTimeProjection(-3000, 2026, 1000, 1).mode, "linear_time");
 });
