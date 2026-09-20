@@ -1229,13 +1229,19 @@ test("Runtime Delta/Drift card has explicit drift state and responsive layouts",
   assert.match(dashboardCssSource,/@media\(max-width:430px\)\{\.dashboard-drift-grid\{grid-template-columns:1fr\}\}/);
 });
 
-test("Production browser acceptance permanently verifies Runtime activation history, exclusion targets, delta, and drift", () => {
+test("Production browser acceptance permanently verifies Activity completeness plus Runtime exclusion, activation delta, and drift", () => {
   const acceptance=fs.readFileSync(new URL("../scripts/verify-dashboard-production-acceptance.mjs", import.meta.url),"utf8");
   assert.match(acceptance,/store\.loadRuntimePublication\(\)/);
   assert.match(acceptance,/store\.loadRuntimeExclusions\(\)/);
   assert.match(acceptance,/runtimePublicationResult/);
   assert.match(acceptance,/runtimeExclusionsResult/);
   assert.match(acceptance,/Expected eight shared Dashboard sources/);
+  assert.match(acceptance,/Activity completeness drill-down availability differs from canonical target set/);
+  assert.match(acceptance,/No actionable Activity completeness drill-down button found/);
+  assert.match(acceptance,/Activity completeness target panel did not reveal on click/);
+  assert.match(acceptance,/Activity completeness drill-down incorrectly navigated away from Dashboard/);
+  assert.match(acceptance,/Rendered Activity completeness row count differs from canonical target set/);
+  assert.match(acceptance,/Rendered Activity completeness UUIDs differ from canonical target set/);
   assert.match(acceptance,/Runtime exclusion target count differs from active compile/);
   assert.match(acceptance,/Runtime exclusion Attention is not Activity-actionable/);
   assert.match(acceptance,/Runtime exclusion target panel did not reveal on click/);
