@@ -674,12 +674,23 @@ test("Completeness Matrix keeps Person and Activity units separate and preserves
   assert.equal(byCode.chronology.complete,1);
   assert.equal(byCode.chronology.incomplete,1);
   assert.equal(byCode.chronology.person_ids,null);
+  assert.equal(byCode.chronology.drilldown_available,true);
+  assert.equal(byCode.chronology.activity_targets.length,1);
+  assert.equal(byCode.chronology.activity_targets[0].activity_id,A2);
+  assert.equal(byCode.chronology.activity_targets[0].person_id,P2);
+  assert.equal(byCode.chronology.activity_targets[0].reason_code,"CHRONOLOGY_UNRESOLVED");
   assert.equal(byCode.provenance.unit,"activity");
   assert.equal(byCode.provenance.complete,1);
   assert.equal(byCode.provenance.incomplete,1);
   assert.equal(byCode.provenance.person_ids,null);
+  assert.equal(byCode.provenance.drilldown_available,true);
+  assert.equal(byCode.provenance.activity_targets.length,1);
+  assert.equal(byCode.provenance.activity_targets[0].activity_id,A2);
+  assert.equal(byCode.provenance.activity_targets[0].reason_code,"SOURCE_LINK_MISSING");
   assert.equal(byCode.spatial.available,false);
   assert.equal(byCode.spatial.total,null);
+  assert.equal(byCode.spatial.activity_targets,null);
+  assert.equal(byCode.spatial.drilldown_available,false);
 });
 
 test("Completeness Matrix Spatial row reuses the canonical Activity resolver", () => {
@@ -705,14 +716,56 @@ test("Completeness Matrix Spatial row reuses the canonical Activity resolver", (
   assert.equal(spatial.complete,2);
   assert.equal(spatial.incomplete,0);
   assert.equal(spatial.percentage,100);
+  assert.deepEqual(spatial.activity_targets,[]);
+  assert.equal(spatial.drilldown_available,false);
 });
 
-test("Completeness Matrix only drills down exact Person target sets and never converts Activity counts into Person targets", () => {
+test("Completeness Matrix exposes exact unresolved Spatial Activity targets with canonical resolver reasons", () => {
+  const P1="00000000-0000-4000-8000-000000000001";
+  const X="00000000-0000-4000-8000-000000000101";
+  const A1="00000000-0000-4000-8000-000000000201";
+  const persons=[{
+    id:P1,
+    display_name:"인물 A",
+    activity_count:1,
+    external_references:{namuwiki:{status:"linked"}},
+    facets:{polities:[{id:X}]},
+    activity_summaries:[{id:A1,polity:{id:X,display_name:"정치체 A"},start:{year:100},end:{year:120},source_count:1}]
+  }];
+  const spatialIndex={
+    schema:spatialModel.SPATIAL_INDEX_SCHEMA,
+    polity_geography:{},
+    polity_subregions:{},
+    place_function_records:[],
+    review_queue:[{polity_id:X,reason:"activity_specific_review"}],
+    activity_spatial_overrides:[]
+  };
+  const matrix=model.buildCompletenessMatrix({personResult:{persons},domainResult:{by_person_id:{[P1]:"governance"}},spatialIndex});
+  const spatial=matrix.rows.find((row)=>row.code==="spatial");
+  assert.equal(spatial.incomplete,1);
+  assert.equal(spatial.drilldown_available,true);
+  assert.equal(spatial.activity_targets.length,1);
+  assert.equal(spatial.activity_targets[0].activity_id,A1);
+  assert.equal(spatial.activity_targets[0].person_display_name,"인물 A");
+  assert.equal(spatial.activity_targets[0].polity_display_name,"정치체 A");
+  assert.ok(spatial.activity_targets[0].reason_code);
+});
+
+
+test("Completeness Matrix drills down exact Person and Activity targets without converting units", () => {
   assert.match(dashboardSource,/COMPLETENESS MATRIX/);
   assert.match(dashboardSource,/data-dashboard-completeness/);
+  assert.match(dashboardSource,/item\.unit === "activity"/);
+  assert.match(dashboardSource,/Array\.isArray\(item\.activity_targets\)/);
+  assert.match(dashboardSource,/dashboardCompletenessActivityTargets/);
+  assert.match(dashboardSource,/ACTIVITY COMPLETENESS TARGETS/);
+  assert.match(dashboardSource,/Activity UUID/);
+  assert.match(dashboardSource,/panel\.innerHTML=completenessActivityTargetsTable\(item\)/);
+  assert.match(dashboardSource,/panel\.hidden=false/);
   assert.match(dashboardSource,/item\.unit !== "person"/);
   assert.match(dashboardSource,/code:\x60completeness_\$\{item\.code\}\x60/);
   assert.match(dashboardSource,/인물과 활동 단위는 합산하지 않음/);
+  assert.match(dashboardCssSource,/dashboard-activity-completeness-targets\[hidden\]/);
   assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
 });
 
