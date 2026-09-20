@@ -102,6 +102,13 @@ test("the timeline remains a map-like camera viewport", () => {
   assert.match(css, /overscroll-behavior:contain/);
 });
 
+test("sticky era axis stays opaque while only era content fades", () => {
+  assert.match(view, /class="spacetime-era-axis" style="--spacetime-era-content-opacity:\$\{timeAxis\.era_opacity\}"/);
+  assert.doesNotMatch(view, /class="spacetime-era-axis" style="opacity:/);
+  assert.match(css, /\.spacetime-era-axis\{[^}]*background:#fff/);
+  assert.match(css, /\.spacetime-era-axis>div\{[^}]*opacity:var\(--spacetime-era-content-opacity,1\)/);
+});
+
 test("common chrome and label geometry are uniformly compact", () => {
   assert.match(css, /\.spacetime-sticky-corner\{[^}]*width:var\(--spacetime-axis-width,140px\);height:var\(--spacetime-header-height,36px\)/);
   assert.match(css, /\.spacetime-region-head\{[^}]*height:var\(--spacetime-header-height,36px\);margin-top:calc\(-1 \* var\(--spacetime-header-height,36px\)\);margin-left:var\(--spacetime-axis-width,140px\)/);
