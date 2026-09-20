@@ -140,7 +140,9 @@
         count:null,
         unit:"person",
         person_ids:null,
-        unavailable_reason:"RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED"
+        unavailable_reason:"RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED",
+        action_href:"./admin.html#system-status-title",
+        action_label:"관리자 시스템 현황"
       }),
       Object.freeze({
         code:"duplicate_review",
@@ -149,7 +151,9 @@
         count:null,
         unit:"person",
         person_ids:null,
-        unavailable_reason:"DUPLICATE_REVIEW_TARGET_SOURCE_REQUIRES_ADMIN_CONTRACT"
+        unavailable_reason:"DUPLICATE_REVIEW_TARGET_SOURCE_REQUIRES_ADMIN_CONTRACT",
+        action_href:"./admin.html#duplicateProtectedArea",
+        action_label:"관리자 중복 검토"
       })
     ];
 

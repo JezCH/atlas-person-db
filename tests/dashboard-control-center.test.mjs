@@ -149,7 +149,11 @@ test("attention queue derives Spatial Person targets from the canonical Activity
   assert.equal(queue.known_affected_persons,1);
   assert.equal(queue.complete,false);
   assert.equal(byCode.runtime_exclusion.count,null);
+  assert.equal(byCode.runtime_exclusion.action_href,"./admin.html#system-status-title");
+  assert.equal(byCode.runtime_exclusion.action_label,"관리자 시스템 현황");
   assert.equal(byCode.duplicate_review.count,null);
+  assert.equal(byCode.duplicate_review.action_href,"./admin.html#duplicateProtectedArea");
+  assert.equal(byCode.duplicate_review.action_label,"관리자 중복 검토");
 });
 
 test("attention queue preserves unavailable sources as unknown instead of fake zero", () => {
@@ -176,6 +180,15 @@ test("attention queue drill-down reuses Person Main instead of creating a duplic
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
 });
 
+
+test("unavailable Attention categories route to authoritative Admin diagnostics without inventing counts", () => {
+  assert.match(dashboardSource, /dashboard-attention-link/);
+  assert.match(dashboardSource, /data-dashboard-attention-diagnostic/);
+  assert.match(dashboardSource, /Runtime 제외 대상 집계는 공개 대시보드에 미노출/);
+  assert.match(dashboardSource, /중복 후보 대상은 관리자 인증 영역에서 확인/);
+  assert.match(dashboardCssSource, /dashboard-attention-link/);
+  assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
+});
 
 test("incomplete breakdown only exposes reasons supported by canonical state", () => {
   const P1="00000000-0000-4000-8000-000000000001", P2="00000000-0000-4000-8000-000000000002", P3="00000000-0000-4000-8000-000000000003";
