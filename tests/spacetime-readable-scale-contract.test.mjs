@@ -48,7 +48,7 @@ test("reviewed compact label geometry preserves text readability while reducing 
   assert.doesNotMatch(css, /@media\(max-width:1100px\)\{\.spacetime-track-label\{font-size:9px\}/);
   assert.match(view, /borrowHorizontalSpace:true/);
   assert.match(view, /preserveFullTextWidth:true/);
-  assert.match(view, /maxHorizontalShift:worldWidth/);
+  assert.match(view, /maxHorizontalShift:packingWidth/);
   assert.doesNotMatch(view, /Math\.max\(38, Math\.min\(156/);
 });
 
@@ -135,15 +135,15 @@ test("presentation geometry owns rail and label pixels without changing global g
   assert.match(view, /data-spacetime-rail-basis=/);
 });
 
-test("label packing keeps each label zone as a preference while borrowing shared world space", () => {
+test("label packing keeps each label zone as a preference while borrowing visible viewport space", () => {
   assert.match(view, /presentation_band_code/);
   assert.match(view, /label_zone_left/);
   assert.match(view, /label_zone_right/);
   assert.match(view, /min_left:/);
   assert.match(view, /max_right:/);
-  assert.match(view, /width:worldWidth/);
+  assert.match(view, /width:packingWidth/);
   assert.match(view, /borrowHorizontalSpace:true/);
   assert.match(view, /preserveFullTextWidth:true/);
-  assert.match(view, /maxHorizontalShift:worldWidth/);
+  assert.match(view, /maxHorizontalShift:packingWidth/);
   assert.doesNotMatch(view, /const groups = new Map\(\)/);
 });
