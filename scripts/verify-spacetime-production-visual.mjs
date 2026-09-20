@@ -400,19 +400,37 @@ async function main() {
 
     const defaultAcceptanceZoom = await evaluate(client, "(document.querySelector('#spacetimeCameraZoomValue')?.textContent||'').trim()");
     assert(defaultAcceptanceZoom === "500%", "Production did not remain at the 500% default zoom before acceptance", { defaultAcceptanceZoom });
-    for (let i=0;i<8;i++) {
+    for (let i=0;i<10;i++) {
+      const disabled = await evaluate(client, "Boolean(document.querySelector('#spacetimeCameraZoomOut')?.disabled)");
+      if (disabled) break;
       await evaluate(client, "document.querySelector('#spacetimeCameraZoomOut')?.click()");
       await sleep(180);
     }
-    await waitFor(client, "document.querySelector('#spacetimeCameraZoomValue')?.textContent?.trim() === '100%'", 10000);
-    const minimumAcceptanceZoom = await evaluate(client, "(document.querySelector('#spacetimeCameraZoomValue')?.textContent||'').trim()");
-    assert(minimumAcceptanceZoom === "100%", "Minimum visual zoom is not 100%", { minimumAcceptanceZoom });
+    await waitFor(client, "Boolean(document.querySelector('#spacetimeCameraZoomOut')?.disabled)", 10000);
+    const minimumAcceptance = await evaluate(client, `(() => {
+      const scroll=document.querySelector(".spacetime-scroll");
+      const canvas=document.querySelector(".spacetime-canvas");
+      const zoom=(document.querySelector("#spacetimeCameraZoomValue")?.textContent||"").trim();
+      const axis=Number(canvas?.offsetLeft)||0;
+      const viewport=Number(scroll?.clientWidth)||0;
+      const world=Number(canvas?.offsetWidth)||parseFloat(canvas?.style?.width||"0")||0;
+      return {
+        zoom,
+        minimumPercent:Number(document.querySelector("#personSpacetimeMount")?.dataset?.spacetimeMinimumZoomPercent||0),
+        usableWidth:Math.max(1,viewport-axis),
+        worldWidth:world,
+        zoomOutDisabled:Boolean(document.querySelector("#spacetimeCameraZoomOut")?.disabled)
+      };
+    })()`);
+    assert(minimumAcceptance.zoomOutDisabled, "Viewport-fit minimum did not disable zoom-out", minimumAcceptance);
+    assert(minimumAcceptance.minimumPercent >= 100 && minimumAcceptance.minimumPercent <= 1500, "Viewport-fit minimum is outside the supported range", minimumAcceptance);
+    assert(Math.abs(minimumAcceptance.worldWidth - minimumAcceptance.usableWidth) <= 2, "Minimum zoom does not fit the world width to the table viewport", minimumAcceptance);
     await evaluate(client, "document.querySelector('#spacetimeCameraZoomReset')?.click()");
     await waitFor(client, "document.querySelector('#spacetimeCameraZoomValue')?.textContent?.trim() === '500%'", 10000);
     await sleep(600);
     const at500 = await collect500(client);
     assert(at500.viewport.width === 1600 && at500.viewport.height === 1000, "Unexpected visual acceptance viewport", at500.viewport);
-    assert(at500.zoom === "500%", "Readable-floor zoom is not 500%", at500);
+    assert(at500.zoom === "500%", "Default zoom is not 500%", at500);
     assert(at500.placeOpacity === 0, "Reviewed Place layer must be hidden at the 500% floor", at500);
     assert(at500.reviewedPlaceBindingCount > 0, "Reviewed Place registry is unavailable at 500%", at500);
     assert(at500.reviewedDisplayPlaceCount > 0, "Reviewed display Place plan is unavailable at 500%", at500);
