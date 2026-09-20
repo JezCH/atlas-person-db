@@ -17,7 +17,7 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /dataAtlasDomain|dataset\.atlasDomain|data-atlas-domain="spacetime"/i);
   assert.match(catalog, /spacetime: entry/);
   assert.match(html, /atlas-main-authority-nav\.css\?v=20260919-control-center-v1/);
-  assert.match(html, /atlas-main-authority-nav\.js\?v=20260920-catalog-status-v1/);
+  assert.match(html, /atlas-main-authority-nav\.js\?v=20260920-catalog-status-visible-rail-names/);
   assert.match(nav, /atlasDashboardMount/);
   assert.match(nav, /ATLAS_DASHBOARD/);
   assert.match(nav, /atlasPolityMount/);

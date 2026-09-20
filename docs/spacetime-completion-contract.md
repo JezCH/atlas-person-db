@@ -73,7 +73,7 @@ Normalized world coordinates remain identical under search, selection, global ca
 
 ## Time invariant
 
-Historical Y is derived from historical time only. The supported readable surface uses a **uniform linear time projection**. There is no low-scale logarithmic overview and no era-specific density compression. Labels may move horizontally or defer, never vertically.
+Historical Y is derived from historical time only. The supported readable surface uses a **uniform linear time projection**. There is no low-scale logarithmic overview and no era-specific density compression. Historical rails and Activity chronology never move. A viewport-visible Person label may choose a presentation anchor along the same currently visible Activity rail interval so the name remains on-screen; collision resolution itself remains horizontal-only and never rewrites historical Y.
 
 ## Space invariant
 
@@ -127,7 +127,7 @@ Permanent dense windows:
 1. Europe, AD 1800–1950.
 2. East Asia, AD 500–1900.
 
-At sufficient zoom: label overlap count = 0, historical Y deviation = 0 px, deferred visible labels = 0. Reducing below 100% is never an acceptance strategy.
+At sufficient zoom: label overlap count = 0, rail/Activity historical Y deviation = 0 px, deferred visible labels = 0, and every visible rail Person has a visible name. Reducing below 100% is never an acceptance strategy.
 
 These two dense-label gates are locked by the reproducible Production snapshot in `tests/fixtures/spacetime-dense-label-snapshot.json`. The snapshot is packed at 800% using the minimum 900 px base world, the shared 0.748 compression, and the production label engine; CI requires zero overlap, zero deferred labels, and zero historical-Y deviation for both permanent dense windows.
 
