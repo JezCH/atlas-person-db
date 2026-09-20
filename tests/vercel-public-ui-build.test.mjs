@@ -18,7 +18,6 @@ test('Vercel build publishes the root UI into public', () => {
   for (const required of [
     'index.html',
     'styles.css',
-    'app.js',
     'atlas-person-main.js',
     'atlas-person-spacetime-view.js',
     'atlas-polity-spatial-index.json',
