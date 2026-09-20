@@ -1,0 +1,1221 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_france_identity_merge_20260920_v1",
+  "as_of": "2026-09-20",
+  "status": "REVIEWED_POLITY_IDENTITY_MERGE_WITH_TEMPORAL_DESIGNATIONS",
+  "release_order": 612,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY-IDENTITY-REVIEW-16-20260919; France LQ_CLAIM 5750107930 and temporal precision update 5750115912",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-kingdom-of-france-louis-ix-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "905cda75-bdfd-46cb-9baf-01318326f721",
+      "baseline_before": {
+        "person_id": "8d36f55b-eee2-4424-a6e5-c293e1e68e87",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1226,
+        "activity_end": 1270,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "905cda75-bdfd-46cb-9baf-01318326f721",
+        "person_id": "8d36f55b-eee2-4424-a6e5-c293e1e68e87",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1226,
+        "activity_start_detail": {
+          "year": 1226,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "julian"
+        },
+        "activity_end": 1270,
+        "activity_end_detail": {
+          "year": 1270,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "julian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-thomas-aquinas-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "1f58c690-ee86-4c2c-9bad-312b62288d43",
+      "baseline_before": {
+        "person_id": "d53f1105-927f-4188-8b5d-eaa1d8773691",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "35fa13be-b7f1-481c-8d25-d0b3df1ed931",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1252,
+        "activity_end": 1259,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "1f58c690-ee86-4c2c-9bad-312b62288d43",
+        "person_id": "d53f1105-927f-4188-8b5d-eaa1d8773691",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "35fa13be-b7f1-481c-8d25-d0b3df1ed931",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1252,
+        "activity_start_detail": {
+          "year": 1252,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1259,
+        "activity_end_detail": {
+          "year": 1259,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-philip-iv-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "f5dea88c-0077-4532-a4e2-d9074ef64481",
+      "baseline_before": {
+        "person_id": "ec8721f6-0af9-4a62-ad6e-d1d372ac5131",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "b816f8eb-5d9e-475d-8739-475438718a29",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1285,
+        "activity_end": 1314,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "f5dea88c-0077-4532-a4e2-d9074ef64481",
+        "person_id": "ec8721f6-0af9-4a62-ad6e-d1d372ac5131",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "b816f8eb-5d9e-475d-8739-475438718a29",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1285,
+        "activity_start_detail": {
+          "year": 1285,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1314,
+        "activity_end_detail": {
+          "year": 1314,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-bertrand-du-guesclin-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "05dc00c9-291d-48fb-b798-32e4d5b4719b",
+      "baseline_before": {
+        "person_id": "6f217b91-f8e3-4ab4-932f-e72ad1eb536d",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "d23632ab-9869-47f2-8e33-25c4ef04b40c",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1370,
+        "activity_end": 1380,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "05dc00c9-291d-48fb-b798-32e4d5b4719b",
+        "person_id": "6f217b91-f8e3-4ab4-932f-e72ad1eb536d",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "d23632ab-9869-47f2-8e33-25c4ef04b40c",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1370,
+        "activity_start_detail": {
+          "year": 1370,
+          "month": 10,
+          "day": 2,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1380,
+        "activity_end_detail": {
+          "year": 1380,
+          "month": 7,
+          "day": 13,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-joan-of-arc-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "71c77bb1-6585-58f0-bc5d-73db102b9e8f",
+      "baseline_before": {
+        "person_id": "6a9b78de-8871-5ac6-be98-26f30a7c7fbf",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "a0d2c0bc-caf7-5ca9-b28b-6f679f3abab9",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1429,
+        "activity_end": 1431,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:2:48a3b076e7fb9cd5",
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "71c77bb1-6585-58f0-bc5d-73db102b9e8f",
+        "person_id": "6a9b78de-8871-5ac6-be98-26f30a7c7fbf",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "a0d2c0bc-caf7-5ca9-b28b-6f679f3abab9",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1429,
+        "activity_start_detail": {
+          "year": 1429,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1431,
+        "activity_end_detail": {
+          "year": 1431,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:2:48a3b076e7fb9cd5",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-louis-xi-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "1422e4d7-c2c0-4a8e-b987-897a741bc5f1",
+      "baseline_before": {
+        "person_id": "096c6ae6-13ef-4d52-b6f9-7bb0c0e1fc6d",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1461,
+        "activity_end": 1483,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "1422e4d7-c2c0-4a8e-b987-897a741bc5f1",
+        "person_id": "096c6ae6-13ef-4d52-b6f9-7bb0c0e1fc6d",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1461,
+        "activity_start_detail": {
+          "year": 1461,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1483,
+        "activity_end_detail": {
+          "year": 1483,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-francis-i-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "75a2e938-f0e2-46a1-9452-c9429a5f8090",
+      "baseline_before": {
+        "person_id": "07616aa6-c848-4e8f-b5ca-adcd62031687",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1515,
+        "activity_end": 1547,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "75a2e938-f0e2-46a1-9452-c9429a5f8090",
+        "person_id": "07616aa6-c848-4e8f-b5ca-adcd62031687",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1515,
+        "activity_start_detail": {
+          "year": 1515,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "julian"
+        },
+        "activity_end": 1547,
+        "activity_end_detail": {
+          "year": 1547,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "julian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-catherine-queen-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "bea1fe4f-d365-45b3-b303-e70819e9364d",
+      "baseline_before": {
+        "person_id": "d3db3949-d37e-5e7f-9b75-7c993fce314b",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "7d7c388d-45a3-5329-a451-8ebfcb7ca189",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1547,
+        "activity_end": 1559,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "bea1fe4f-d365-45b3-b303-e70819e9364d",
+        "person_id": "d3db3949-d37e-5e7f-9b75-7c993fce314b",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "7d7c388d-45a3-5329-a451-8ebfcb7ca189",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1547,
+        "activity_start_detail": {
+          "year": 1547,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1559,
+        "activity_end_detail": {
+          "year": 1559,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-catherine-regent-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "c665ca7c-c809-475a-9c62-9fa5be5ffeca",
+      "baseline_before": {
+        "person_id": "d3db3949-d37e-5e7f-9b75-7c993fce314b",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1560,
+        "activity_end": 1563,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "c665ca7c-c809-475a-9c62-9fa5be5ffeca",
+        "person_id": "d3db3949-d37e-5e7f-9b75-7c993fce314b",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1560,
+        "activity_start_detail": {
+          "year": 1560,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1563,
+        "activity_end_detail": {
+          "year": 1563,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-catherine-queen-mother-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "1bce9a74-bd6c-4ca7-b32a-eece60bcab80",
+      "baseline_before": {
+        "person_id": "d3db3949-d37e-5e7f-9b75-7c993fce314b",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "1a97512e-e141-4a96-9f98-63cb5c20a9e4",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1564,
+        "activity_end": 1589,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "1bce9a74-bd6c-4ca7-b32a-eece60bcab80",
+        "person_id": "d3db3949-d37e-5e7f-9b75-7c993fce314b",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "1a97512e-e141-4a96-9f98-63cb5c20a9e4",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1564,
+        "activity_start_detail": {
+          "year": 1564,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1589,
+        "activity_end_detail": {
+          "year": 1589,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-henry-iv-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "3ed44626-92bd-4f39-9095-56959afc8c34",
+      "baseline_before": {
+        "person_id": "c77a6f54-3a2c-48d5-b20c-09ed7d54463f",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1589,
+        "activity_end": 1610,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "3ed44626-92bd-4f39-9095-56959afc8c34",
+        "person_id": "c77a6f54-3a2c-48d5-b20c-09ed7d54463f",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1589,
+        "activity_start_detail": {
+          "year": 1589,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1610,
+        "activity_end_detail": {
+          "year": 1610,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-richelieu-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "c23e7d3a-1d1b-450f-a65e-260564dee5c2",
+      "baseline_before": {
+        "person_id": "14654029-2f54-43ef-b97b-5e66de7a6831",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "e85f9a3a-35ef-4f02-95c8-a784559534d9",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1624,
+        "activity_end": 1642,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "c23e7d3a-1d1b-450f-a65e-260564dee5c2",
+        "person_id": "14654029-2f54-43ef-b97b-5e66de7a6831",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "e85f9a3a-35ef-4f02-95c8-a784559534d9",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1624,
+        "activity_start_detail": {
+          "year": 1624,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1642,
+        "activity_end_detail": {
+          "year": 1642,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-louis-xiv-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "77f56b60-eeb3-5996-b262-3a725abb5d0f",
+      "baseline_before": {
+        "person_id": "e2a6cf52-b9dc-5e33-ab28-b5e3f668359b",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1643,
+        "activity_end": 1715,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:1:6f30657287886bd3",
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "77f56b60-eeb3-5996-b262-3a725abb5d0f",
+        "person_id": "e2a6cf52-b9dc-5e33-ab28-b5e3f668359b",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1643,
+        "activity_start_detail": {
+          "year": 1643,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1715,
+        "activity_end_detail": {
+          "year": 1715,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:1:6f30657287886bd3",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-louis-xvi-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "e99f63ca-df45-4194-846a-09a52aa9635e",
+      "baseline_before": {
+        "person_id": "35f9e752-e680-458e-aa5f-e5be343d8a8f",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1774,
+        "activity_end": 1792,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "e99f63ca-df45-4194-846a-09a52aa9635e",
+        "person_id": "35f9e752-e680-458e-aa5f-e5be343d8a8f",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1774,
+        "activity_start_detail": {
+          "year": 1774,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1792,
+        "activity_end_detail": {
+          "year": 1792,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-marie-antoinette-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "fddc684f-b29a-4753-8d00-2bdc4c6bf456",
+      "baseline_before": {
+        "person_id": "e84961d3-ccf7-4e75-a14d-37c3187bdaa1",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "7d7c388d-45a3-5329-a451-8ebfcb7ca189",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1774,
+        "activity_end": 1792,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "fddc684f-b29a-4753-8d00-2bdc4c6bf456",
+        "person_id": "e84961d3-ccf7-4e75-a14d-37c3187bdaa1",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "7d7c388d-45a3-5329-a451-8ebfcb7ca189",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1774,
+        "activity_start_detail": {
+          "year": 1774,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1792,
+        "activity_end_detail": {
+          "year": 1792,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-lavoisier-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "cb1b0409-6a7b-4df7-8a47-36c106dabf04",
+      "baseline_before": {
+        "person_id": "f841000f-2bc6-41a0-9995-2dc19a30da94",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "81b9745d-6e17-4638-8b81-2db089af3176",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1787,
+        "activity_end": 1789,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "cb1b0409-6a7b-4df7-8a47-36c106dabf04",
+        "person_id": "f841000f-2bc6-41a0-9995-2dc19a30da94",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "81b9745d-6e17-4638-8b81-2db089af3176",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1787,
+        "activity_start_detail": {
+          "year": 1787,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1789,
+        "activity_end_detail": {
+          "year": 1789,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-lafayette-revolution-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "49fca0c0-b779-5c3d-be69-a910cacf7874",
+      "baseline_before": {
+        "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1789,
+        "activity_end": 1792,
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "49fca0c0-b779-5c3d-be69-a910cacf7874",
+        "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1789,
+        "activity_start_detail": {
+          "year": 1789,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1792,
+        "activity_end_detail": {
+          "year": 1792,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-talleyrand-first-restoration-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "5874d1f7-14d9-4041-acdc-f35bd68c0a9e",
+      "baseline_before": {
+        "person_id": "0b6a34b4-89d0-4728-876e-923f5030b0eb",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "5d7ce4e9-731f-4d1f-a000-07e046268bf3",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1814,
+        "activity_end": 1815,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "5874d1f7-14d9-4041-acdc-f35bd68c0a9e",
+        "person_id": "0b6a34b4-89d0-4728-876e-923f5030b0eb",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "5d7ce4e9-731f-4d1f-a000-07e046268bf3",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1814,
+        "activity_start_detail": {
+          "year": 1814,
+          "month": 5,
+          "day": 13,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1815,
+        "activity_end_detail": {
+          "year": 1815,
+          "month": 3,
+          "day": 20,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-talleyrand-second-restoration-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "b2c5e268-82b1-478a-8d99-c787eea97e03",
+      "baseline_before": {
+        "person_id": "0b6a34b4-89d0-4728-876e-923f5030b0eb",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "5d7ce4e9-731f-4d1f-a000-07e046268bf3",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1815,
+        "activity_end": 1815,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "b2c5e268-82b1-478a-8d99-c787eea97e03",
+        "person_id": "0b6a34b4-89d0-4728-876e-923f5030b0eb",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "5d7ce4e9-731f-4d1f-a000-07e046268bf3",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1815,
+        "activity_start_detail": {
+          "year": 1815,
+          "month": 7,
+          "day": 9,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1815,
+        "activity_end_detail": {
+          "year": 1815,
+          "month": 9,
+          "day": 26,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-lafayette-restoration-1-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "ad709c50-698d-597f-b860-abd8935b3ef5",
+      "baseline_before": {
+        "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1818,
+        "activity_end": 1824,
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "ad709c50-698d-597f-b860-abd8935b3ef5",
+        "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1818,
+        "activity_start_detail": {
+          "year": 1818,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1824,
+        "activity_end_detail": {
+          "year": 1824,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-france-lafayette-restoration-2-into-france",
+      "type": "rewrite_activity",
+      "activity_id": "b0b8e81a-14d7-5497-b0a9-d201fd0f9c24",
+      "baseline_before": {
+        "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1827,
+        "activity_end": 1830,
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "b0b8e81a-14d7-5497-b0a9-d201fd0f9c24",
+        "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1827,
+        "activity_start_detail": {
+          "year": 1827,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1830,
+        "activity_end_detail": {
+          "year": 1830,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "france-kingdom-temporal-designation-1226-1792",
+      "exact_before": {
+        "designation_absent_id": "70124d31-f22b-4715-bfd8-99cadc18badb"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "70124d31-f22b-4715-bfd8-99cadc18badb",
+          "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+          "designation_type": "state_form",
+          "valid_from_year": 1226,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "julian",
+          "valid_to_year": 1792,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed state-form designation preserving Kingdom of France / 프랑스 왕국 across the currently modeled pre-revolutionary monarchy Activities on the stable France identity. The interval ends with the modeled 1792 monarchy boundary and does not project into separately modeled revolutionary or imperial regime Polities."
+        },
+        "names": [
+          {
+            "id": "e2813567-f5a5-4208-8438-2adf1bb6a233",
+            "polity_designation_id": "70124d31-f22b-4715-bfd8-99cadc18badb",
+            "locale": "en",
+            "name": "Kingdom of France",
+            "is_preferred": true
+          },
+          {
+            "id": "6e736623-5d6c-478a-b684-7ceb377ad93e",
+            "polity_designation_id": "70124d31-f22b-4715-bfd8-99cadc18badb",
+            "locale": "ko",
+            "name": "프랑스 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "70124d31-f22b-4715-bfd8-99cadc18badb",
+            "source_id": "171b2ae3-1795-451b-90ac-de5531ac11bd",
+            "source_locator_key": "https://catalogue.bnf.fr/ark:/12148/cb120344600"
+          },
+          {
+            "polity_designation_id": "70124d31-f22b-4715-bfd8-99cadc18badb",
+            "source_id": "91860945-3b6a-4e87-8aa5-8b29655a26c4",
+            "source_locator_key": "https://en.chateauversailles.fr/discover/history/great-characters/louis-xvi"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "france-kingdom-first-restoration-1814-1815",
+      "exact_before": {
+        "designation_absent_id": "719fa6e7-2053-4f81-9d75-e4cabf29dc55"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "719fa6e7-2053-4f81-9d75-e4cabf29dc55",
+          "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+          "designation_type": "state_form",
+          "valid_from_year": 1814,
+          "valid_from_month": 5,
+          "valid_from_day": 13,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1815,
+          "valid_to_month": 3,
+          "valid_to_day": 20,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed first Bourbon Restoration state-form designation on the stable France identity, bounded to the exact modeled Talleyrand royal-ministry Activity and intentionally ending at the Hundred Days interruption."
+        },
+        "names": [
+          {
+            "id": "d1bd00b3-774c-4f88-aeef-d8d9aec3c874",
+            "polity_designation_id": "719fa6e7-2053-4f81-9d75-e4cabf29dc55",
+            "locale": "en",
+            "name": "Kingdom of France",
+            "is_preferred": true
+          },
+          {
+            "id": "ec75d491-1eb7-4215-a305-c2a23191481e",
+            "polity_designation_id": "719fa6e7-2053-4f81-9d75-e4cabf29dc55",
+            "locale": "ko",
+            "name": "프랑스 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "719fa6e7-2053-4f81-9d75-e4cabf29dc55",
+            "source_id": "194bffc0-1f80-4255-b19c-4c4ad25c0328",
+            "source_locator_key": "Biographical history: Minister of Foreign Affairs under Louis XVIII and French representative at the Congress of Vienna"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "france-kingdom-second-restoration-1815-1830",
+      "exact_before": {
+        "designation_absent_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+          "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+          "designation_type": "state_form",
+          "valid_from_year": 1815,
+          "valid_from_month": 7,
+          "valid_from_day": 9,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1830,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed second Bourbon Restoration state-form designation on the stable France identity. It begins with the exact modeled post-Hundred-Days Talleyrand ministry and extends through the latest currently modeled Restoration Activity in 1830; it does not merge or relabel the separately modeled First Empire or later French regime Polities."
+        },
+        "names": [
+          {
+            "id": "9c39dc5b-45b5-4b24-aec4-9b49ca299d89",
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "locale": "en",
+            "name": "Kingdom of France",
+            "is_preferred": true
+          },
+          {
+            "id": "ca527188-0fa2-4356-a9f5-9d9079732e03",
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "locale": "ko",
+            "name": "프랑스 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "source_id": "194bffc0-1f80-4255-b19c-4c4ad25c0328",
+            "source_locator_key": "Biographical history: 1815 appointment as Foreign Minister and President of the Council, followed by replacement"
+          },
+          {
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "source_id": "521297b7-7252-548d-b600-4dc89b9b651b",
+            "source_locator_key": "pending-records-supplement-4.json:6"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 21,
+    "activity_relinks": 21,
+    "polity_designation_assertions": 3,
+    "production_mutation_authorized": false
+  }
+}
