@@ -395,8 +395,8 @@ async function main() {
     assert(live.bodyTextLength > 500, "Production page appears blank or incomplete", live);
     assert(!live.errorOverlay, "Framework error overlay detected", live);
 
-    await evaluate(client, "document.querySelector('#spacetimeCameraZoomReset')?.click()");
-    await waitFor(client, "document.querySelector('#spacetimeCameraZoomValue')?.textContent?.trim() === '500%'", 10000);
+    const defaultAcceptanceZoom = await evaluate(client, "(document.querySelector('#spacetimeCameraZoomValue')?.textContent||'').trim()");
+    assert(defaultAcceptanceZoom === "500%", "Production did not remain at the 500% default zoom before acceptance", { defaultAcceptanceZoom });
     await sleep(600);
     const at500 = await collect500(client);
     assert(at500.viewport.width === 1600 && at500.viewport.height === 1000, "Unexpected visual acceptance viewport", at500.viewport);
