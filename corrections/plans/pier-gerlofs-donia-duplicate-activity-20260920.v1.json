@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "pier_gerlofs_donia_duplicate_activity_cleanup_20260920_v1",
+  "as_of": "2026-09-20",
+  "status": "REVIEWED_DUPLICATE_ACTIVITY_CLEANUP",
+  "release_order": 620,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-approved registration follow-up 2026-09-20; exact Production Person read at main d73400adc49b41ff5c919348111dc319c0eb3862 confirmed duplicate 1515-1519 Pier Gerlofs Donia Activities for the same Arumer Zwarte Hoop organization.",
+  "baseline": {
+    "deployment_sha": "d73400adc49b41ff5c919348111dc319c0eb3862"
+  },
+  "execution_rules": {
+    "same_person_activity_integrity_cleanup": true,
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "pier-gerlofs-donia-retire-registration-duplicate",
+      "type": "retire_activity",
+      "activity_id": "794440e6-6c67-4406-9526-2ac221404efb",
+      "baseline_before": {
+        "person_id": "fc299f9e-a64c-410a-b329-3bfa2cb43ffe",
+        "polity_id": "cc85777c-1eb9-42e3-8dab-dfeeb6a6a4b3",
+        "role_id": "bba2aa37-774d-4cab-bf5d-e2acf3ab09dd",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1515,
+        "activity_end": 1519,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true,
+      "replacement_activity_ids": [
+        "0c83728e-582a-4ffc-b6ff-53fe4060659d"
+      ]
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "retirements": 1,
+    "production_mutation_authorized": false
+  }
+}
