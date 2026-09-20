@@ -7,6 +7,8 @@ const mainCss = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.
 const eraSource = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
+// Regression contract: the current Person surface must never reintroduce a hidden legacy Activity editor.
+
 test('Person Main exposes only current supported operations before the Person list', () => {
   for (const token of ['id="personMainRefresh"','id="personMainExcelExport"','⇩ 엑셀 출력','href="./admin.html"']) assert.ok(mainSource.includes(token));
   for (const retired of ['personMainAdd','personMainExcelImport','personMainMoreButton','relationshipAuthoringTools','전체 관계 편집표']) assert.doesNotMatch(mainSource, new RegExp(retired));
