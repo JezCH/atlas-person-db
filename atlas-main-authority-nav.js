@@ -4,6 +4,14 @@
   const DOMAIN_ORDER = ["dashboard", "persons", "spacetime", "polities", "places", "events", "sources", "geometry"];
   const DOMAINS = window.ATLAS_UI_AUTHORITY_CATALOG_KO;
 
+  function syncNavigationStatusLabels(buttons) {
+    for (const button of buttons) {
+      const meta = DOMAINS?.[button.dataset.atlasDomain];
+      const status = button.querySelector("small");
+      if (meta?.status_label && status) status.textContent = meta.status_label;
+    }
+  }
+
   function ensureSpacetimeNavButtons() {
     const meta = DOMAINS?.spacetime;
     const label = meta?.label || "시공간 인물도";
@@ -47,6 +55,8 @@
     console.warn("ATLAS authority navigation could not initialize required DOM anchors.");
     return;
   }
+
+  syncNavigationStatusLabels([...desktopButtons, ...mobileButtons]);
 
   const personHeading = Object.freeze({
     eyebrow: DOMAINS.persons.eyebrow,
