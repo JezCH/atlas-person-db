@@ -57,7 +57,7 @@
   }
 
   function buildSummary() {
-    const toolbar = document.querySelector(".toolbar");
+    const toolbar = document.querySelector("#personMainView .person-main-toolbar");
     if (!toolbar || document.getElementById("registrationSummary")) return null;
     const section = document.createElement("section");
     section.id = "registrationSummary";
