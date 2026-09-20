@@ -28,6 +28,11 @@ test("spacetime keeps 500 percent default, 1500 maximum, and a viewport-fit effe
   assert.match(view, /return Math\.min\(CAMERA_MAX_ZOOM, Math\.max\(minimum, numeric\)\);/);
   assert.match(view, /usableWidth \/ worldWidthAtOne/);
   assert.doesNotMatch(view, />100%<\/button>/);
+  assert.match(view, /function visibleRailLabelItems\(/);
+  assert.match(view, /presentationLayout\.geometryForSegment\(presentation, segment\)/);
+  assert.match(view, /viewport_label_anchor: true/);
+  assert.match(view, /packTrackLabels\(personItems, state\.timelineHeight, state\.contentWidth, Boolean\(state\.needle\), cullRect\)/);
+  assert.doesNotMatch(view, /performance\.cullProjectedItems\(state\.projectedTracks, cullRect, forced\)/);
 });
 
 test("reviewed compact label geometry preserves text readability while reducing collision waste", () => {
