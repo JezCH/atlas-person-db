@@ -76,12 +76,29 @@
   function renderSystemStatus(payload) {
     if (!statusBody) return;
     const tableCount = payload.counts?.atlas_v2_table_count ?? null;
+    const publicationGuard = payload.runtime_publication;
+    const publication = publicationGuard?.available === true ? publicationGuard.value : null;
+    const activeCompile = publication?.active_compile || null;
+    const compileHealthy = publication?.available === true
+      && activeCompile
+      && publication.projection_matches_compile_output === true
+      && publication.compile_balance_valid === true
+      && publication.exclusion_summary_matches_excluded === true;
+    const compileState = compileHealthy
+      ? "consistent"
+      : activeCompile || publication?.reason || publicationGuard?.error?.code
+        ? "attention"
+        : "unknown";
+    const compileDetail = activeCompile
+      ? `${activeCompile.output_row_count} included · ${activeCompile.excluded_row_count} excluded`
+      : publication?.reason || publicationGuard?.error?.code || "not supplied";
     statusBody.innerHTML = `
       <div class="obs-summary-grid">
         <div><span>Runtime</span><strong>${escapeHtml(payload.runtime?.environment ?? "unknown")}</strong><small>${escapeHtml(payload.runtime?.git_commit_ref ?? payload.runtime?.provider ?? "unknown")}</small></div>
         <div><span>Database</span><strong>${payload.database?.reachable === true ? "reachable" : "unknown"}</strong><small>atlas_v2: ${payload.database?.atlas_v2_schema_present === true ? "present" : "not confirmed"}</small></div>
         <div><span>atlas_v2 tables</span><strong>${tableCount === null ? "—" : escapeHtml(tableCount)}</strong><small>catalog-discovered</small></div>
         <div><span>Actions verification</span><strong>${payload.verification?.github_actions_status_embedded === true ? "embedded" : "external"}</strong><small>${escapeHtml(payload.verification?.reason ?? "unknown")}</small></div>
+        <div><span>Runtime compile</span><strong>${escapeHtml(compileState)}</strong><small>${escapeHtml(compileDetail)}</small></div>
       </div>
       <div class="obs-sections">
         ${statusSection("Runtime identity", payload.runtime, { open: true })}
@@ -90,6 +107,7 @@
         ${statusSection("Migration identity", payload.migration)}
         ${statusSection("Semantic / detector / merge versions", payload.semantics, { open: true })}
         ${statusSection("Authoring & P10 readiness", payload.readiness, { open: true })}
+        ${statusSection("Runtime publication / active compile", payload.runtime_publication, { open: true })}
         ${statusSection("Duplicate lifecycle", payload.duplicate_lifecycle, { open: true })}
         <details class="obs-section"><summary>atlas_v2 exact row counts</summary><div class="obs-section-body">${renderTableCounts(payload.counts?.tables)}</div></details>
         ${statusSection("Runtime verification boundary", payload.verification)}

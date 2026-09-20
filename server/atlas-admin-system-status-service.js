@@ -121,6 +121,105 @@ async function migrationIdentity(client, tables) {
   });
 }
 
+function normalizeExclusionSummary(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return Object.freeze({});
+  const entries = Object.entries(value)
+    .map(([code, count]) => [String(code), Number(count || 0)])
+    .filter(([code, count]) => code && Number.isInteger(count) && count >= 0);
+  return Object.freeze(Object.fromEntries(entries));
+}
+
+async function runtimePublicationDiagnostics(client, tables) {
+  const required = ["runtime_person_politics_v1", "runtime_compile_runs"];
+  const missingTables = required.filter((name) => !tables.includes(name));
+  if (missingTables.length) {
+    return Object.freeze({
+      available: false,
+      reason: "RUNTIME_PUBLICATION_TABLES_NOT_PRESENT",
+      missing_tables: Object.freeze(missingTables)
+    });
+  }
+
+  const projectionResult = await client.query(`
+    select
+      count(*)::int as runtime_activity_count,
+      count(distinct compile_key)::int as compile_key_count,
+      min(compile_key)::text as active_compile_key
+    from atlas_v2.runtime_person_politics_v1
+  `);
+  const projection = projectionResult.rows?.[0] || {};
+  const runtimeActivityCount = Number(projection.runtime_activity_count || 0);
+  const compileKeyCount = Number(projection.compile_key_count || 0);
+  const activeCompileKey = optionalText(projection.active_compile_key);
+
+  if (runtimeActivityCount === 0) {
+    return Object.freeze({
+      available: true,
+      runtime_activity_count: 0,
+      compile_key_count: compileKeyCount,
+      active_compile_key: null,
+      active_compile: null,
+      projection_matches_compile_output: null,
+      compile_balance_valid: null,
+      reason: "RUNTIME_PROJECTION_EMPTY"
+    });
+  }
+
+  if (compileKeyCount !== 1 || !activeCompileKey) {
+    return Object.freeze({
+      available: false,
+      runtime_activity_count: runtimeActivityCount,
+      compile_key_count: compileKeyCount,
+      active_compile_key: activeCompileKey,
+      reason: "RUNTIME_PROJECTION_COMPILE_KEY_INVALID"
+    });
+  }
+
+  const compileResult = await client.query(`
+    select compile_key, compiler_version, input_row_count, output_row_count, excluded_row_count,
+           exclusion_summary, compiled_at
+      from atlas_v2.runtime_compile_runs
+     where compile_key=$1
+     limit 1
+  `, [activeCompileKey]);
+  const row = compileResult.rows?.[0];
+  if (!row) {
+    return Object.freeze({
+      available: false,
+      runtime_activity_count: runtimeActivityCount,
+      compile_key_count: compileKeyCount,
+      active_compile_key: activeCompileKey,
+      reason: "ACTIVE_RUNTIME_COMPILE_LEDGER_MISSING"
+    });
+  }
+
+  const input = Number(row.input_row_count || 0);
+  const output = Number(row.output_row_count || 0);
+  const excluded = Number(row.excluded_row_count || 0);
+  const exclusionSummary = normalizeExclusionSummary(row.exclusion_summary);
+  const exclusionSummaryTotal = Object.values(exclusionSummary).reduce((sum, count) => sum + Number(count || 0), 0);
+
+  return Object.freeze({
+    available: true,
+    runtime_activity_count: runtimeActivityCount,
+    compile_key_count: compileKeyCount,
+    active_compile_key: activeCompileKey,
+    active_compile: Object.freeze({
+      compiler_version: optionalText(row.compiler_version),
+      input_row_count: input,
+      output_row_count: output,
+      excluded_row_count: excluded,
+      exclusion_summary: exclusionSummary,
+      exclusion_summary_total: exclusionSummaryTotal,
+      compiled_at: row.compiled_at ?? null
+    }),
+    projection_matches_compile_output: runtimeActivityCount === output,
+    compile_balance_valid: input === output + excluded,
+    exclusion_summary_matches_excluded: exclusionSummaryTotal === excluded,
+    reason: null
+  });
+}
+
 function emptyDuplicateSummary() {
   return {
     active: 0,
@@ -218,6 +317,7 @@ async function inspectAdminSystemStatus({ client, env = process.env } = {}) {
   const migration = db.atlas_v2_schema_present ? await guarded(() => migrationIdentity(client, tables), "MIGRATION_IDENTITY_CHECK_FAILED") : Object.freeze({ available: false, error: { code: "ATLAS_V2_SCHEMA_MISSING" } });
   const authoring = db.atlas_v2_schema_present ? await guarded(() => inspectAuthoringReadiness(client), "AUTHORING_READINESS_CHECK_FAILED") : Object.freeze({ available: false, error: { code: "ATLAS_V2_SCHEMA_MISSING" } });
   const duplicates = db.atlas_v2_schema_present ? await guarded(() => duplicateLifecycle(client, tables), "DUPLICATE_STATUS_CHECK_FAILED") : Object.freeze({ available: false, error: { code: "ATLAS_V2_SCHEMA_MISSING" } });
+  const runtimePublication = db.atlas_v2_schema_present ? await guarded(() => runtimePublicationDiagnostics(client, tables), "RUNTIME_PUBLICATION_CHECK_FAILED") : Object.freeze({ available: false, error: { code: "ATLAS_V2_SCHEMA_MISSING" } });
 
   const p10Module = optionalReadinessModule();
   const p10Revalidation = !p10Module?.inspectPersonDuplicateRevalidationReadiness
@@ -245,6 +345,7 @@ async function inspectAdminSystemStatus({ client, env = process.env } = {}) {
       p10_duplicate_revalidation: p10Revalidation
     }),
     duplicate_lifecycle: duplicates,
+    runtime_publication: runtimePublication,
     verification: Object.freeze({
       github_actions_status_embedded: false,
       reason: "GITHUB_ACTIONS_IS_EXTERNAL_TO_RUNTIME"
@@ -265,6 +366,8 @@ module.exports = Object.freeze({
   exactTableCounts,
   databaseIdentity,
   migrationIdentity,
+  normalizeExclusionSummary,
+  runtimePublicationDiagnostics,
   duplicateLifecycle,
   optionalReadinessModule,
   inspectAdminSystemStatus
