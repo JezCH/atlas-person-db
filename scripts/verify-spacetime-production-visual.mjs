@@ -196,6 +196,18 @@ async function collect500(client) {
     const header=q(".spacetime-region-head"), corner=q(".spacetime-sticky-corner"), scroll=q(".spacetime-scroll");
     const labelOverlap=(${overlapCode})(qa(".spacetime-track-label"));
     const bandContainment=(${bandContainmentCode})(qa(".spacetime-track-label"),qa(".spacetime-region-head-band[data-spacetime-band]"),qa(".spacetime-track-rail"));
+    const dataViewport=(() => {
+      const sr=scroll.getBoundingClientRect();
+      const axis=Number(q(".spacetime-canvas")?.offsetLeft)||0;
+      const header=Number(q(".spacetime-canvas")?.offsetTop)||0;
+      return {left:sr.left+axis,top:sr.top+header,right:sr.right,bottom:sr.bottom};
+    })();
+    const intersects=(r,v)=>Math.min(r.right,v.right)-Math.max(r.left,v.left)>0.5&&Math.min(r.bottom,v.bottom)-Math.max(r.top,v.top)>0.5;
+    const visiblePersonIds=(selector)=>[...new Set(qa(selector).filter(el=>intersects(el.getBoundingClientRect(),dataViewport)&&Number(style(el).opacity)>0.02).map(el=>el.dataset.spacetimePerson).filter(Boolean))].sort();
+    const visibleRailPersonIds=visiblePersonIds(".spacetime-track-rail");
+    const visibleLabelPersonIds=visiblePersonIds(".spacetime-track-label");
+    const missingVisibleLabelPersonIds=visibleRailPersonIds.filter(id=>!visibleLabelPersonIds.includes(id));
+    const extraVisibleLabelPersonIds=visibleLabelPersonIds.filter(id=>!visibleRailPersonIds.includes(id));
     return {
       viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},
       zoom:(q("#spacetimeCameraZoomValue")?.textContent||"").trim(),
@@ -232,6 +244,10 @@ async function collect500(client) {
       domPersonCount:Number((q("#spacetimeDomPersonCount")?.textContent||"0").trim())||0,
       domLabelCount:Number((q("#spacetimeDomLabelCount")?.textContent||"0").trim())||0,
       deferredLabelCount:Number((q("#spacetimeDeferredLabelCount")?.textContent||"0").trim())||0,
+      visibleRailPersonIds,
+      visibleLabelPersonIds,
+      missingVisibleLabelPersonIds,
+      extraVisibleLabelPersonIds,
       labelOverlap,
       bandContainment
     };
@@ -251,6 +267,19 @@ async function collect1500(client, geometry500) {
     const placeOverlap=(${overlapCode})(markers);
     const labelOverlap=(${overlapCode})(qa(".spacetime-track-label"));
     const bandContainment=(${bandContainmentCode})(qa(".spacetime-track-label"),qa(".spacetime-region-head-band[data-spacetime-band]"),qa(".spacetime-track-rail"));
+    const scroll=q(".spacetime-scroll");
+    const dataViewport=(() => {
+      const sr=scroll.getBoundingClientRect();
+      const axis=Number(q(".spacetime-canvas")?.offsetLeft)||0;
+      const header=Number(q(".spacetime-canvas")?.offsetTop)||0;
+      return {left:sr.left+axis,top:sr.top+header,right:sr.right,bottom:sr.bottom};
+    })();
+    const intersects=(r,v)=>Math.min(r.right,v.right)-Math.max(r.left,v.left)>0.5&&Math.min(r.bottom,v.bottom)-Math.max(r.top,v.top)>0.5;
+    const visiblePersonIds=(selector)=>[...new Set(qa(selector).filter(el=>intersects(el.getBoundingClientRect(),dataViewport)&&Number(style(el).opacity)>0.02).map(el=>el.dataset.spacetimePerson).filter(Boolean))].sort();
+    const visibleRailPersonIds=visiblePersonIds(".spacetime-track-rail");
+    const visibleLabelPersonIds=visiblePersonIds(".spacetime-track-label");
+    const missingVisibleLabelPersonIds=visibleRailPersonIds.filter(id=>!visibleLabelPersonIds.includes(id));
+    const extraVisibleLabelPersonIds=visibleLabelPersonIds.filter(id=>!visibleRailPersonIds.includes(id));
     return {
       zoom:(q("#spacetimeCameraZoomValue")?.textContent||"").trim(),
       spatialStage:qa(".spacetime-status-row span").map(x=>(x.textContent||"").trim()).find(x=>x.endsWith("공간축"))||null,
@@ -272,6 +301,10 @@ async function collect1500(client, geometry500) {
       domPersonCount:Number((q("#spacetimeDomPersonCount")?.textContent||"0").trim())||0,
       domLabelCount:Number((q("#spacetimeDomLabelCount")?.textContent||"0").trim())||0,
       deferredLabelCount:Number((q("#spacetimeDeferredLabelCount")?.textContent||"0").trim())||0,
+      visibleRailPersonIds,
+      visibleLabelPersonIds,
+      missingVisibleLabelPersonIds,
+      extraVisibleLabelPersonIds,
       labelOverlap,
       bandContainment,
       macro,sub,
@@ -448,7 +481,10 @@ async function main() {
     assert(Math.abs(at500.cornerHeight - 36) < 0.75, "Shared corner height drifted from 36px", at500);
     assert(at500.labelOverlap.count === 0, "Visible Person labels overlap at 500%", at500.labelOverlap);
     assert(at500.deferredLabelCount === 0, "Person names are deferred at the 500% readable floor", at500);
-    assert(at500.domLabelCount === at500.domPersonCount, "Not every viewport Person has a visible name at 500%", at500);
+    assert(at500.domLabelCount === at500.domPersonCount, "Not every viewport Person has a rendered name at 500%", at500);
+    assert(at500.visibleRailPersonIds.length > 0, "No visible rail Person was detected at 500%", at500);
+    assert(at500.missingVisibleLabelPersonIds.length === 0, "A visible rail Person is missing a visible name at 500%", at500);
+    assert(at500.extraVisibleLabelPersonIds.length === 0, "A visible Person name has no visible rail at 500%", at500);
     assert(at500.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 500%", at500.bandContainment);
     await screenshot(client, "spacetime-500.png");
 
@@ -482,7 +518,10 @@ async function main() {
     assert(at1500.placeOverlap.count === 0, "Reviewed Place header markers overlap at 1500%", at1500.placeOverlap);
     assert(at1500.labelOverlap.count === 0, "Visible Person labels overlap at 1500%", at1500.labelOverlap);
     assert(at1500.deferredLabelCount === 0, "Person names are deferred at 1500%", at1500);
-    assert(at1500.domLabelCount === at1500.domPersonCount, "Not every viewport Person has a visible name at 1500%", at1500);
+    assert(at1500.domLabelCount === at1500.domPersonCount, "Not every viewport Person has a rendered name at 1500%", at1500);
+    assert(at1500.visibleRailPersonIds.length > 0, "No visible rail Person was detected at 1500%", at1500);
+    assert(at1500.missingVisibleLabelPersonIds.length === 0, "A visible rail Person is missing a visible name at 1500%", at1500);
+    assert(at1500.extraVisibleLabelPersonIds.length === 0, "A visible Person name has no visible rail at 1500%", at1500);
     assert(at1500.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 1500%", at1500.bandContainment);
     assertNormalizedGeometryInvariant(at500.macro, at1500.macro, "Macroregion");
     assertNormalizedGeometryInvariant(at500.sub, at1500.sub, "Subregion");
