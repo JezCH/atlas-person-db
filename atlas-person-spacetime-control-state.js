@@ -47,6 +47,12 @@
     button.setAttribute("aria-disabled", String(Boolean(disabled)));
   }
 
+  function minimumPercentForMount(mount) {
+    const fit = Number(mount?.dataset?.spacetimeMinimumZoomPercent);
+    if (!Number.isFinite(fit)) return MINIMUM_PERCENT;
+    return Math.min(MAXIMUM_PERCENT, Math.max(MINIMUM_PERCENT, fit));
+  }
+
   function syncZoomControlState(mount) {
     if (!mount) return false;
     const zoomOut = mount.querySelector("#spacetimeCameraZoomOut");
@@ -58,7 +64,7 @@
     const currentPercent = parsePercent(zoomValue.textContent);
     if (currentPercent == null) return false;
 
-    const atMinimum = currentPercent <= MINIMUM_PERCENT + BOUND_EPSILON;
+    const atMinimum = currentPercent <= minimumPercentForMount(mount) + BOUND_EPSILON;
     const atMaximum = currentPercent >= MAXIMUM_PERCENT - BOUND_EPSILON;
     const atDefault = Math.abs(currentPercent - DEFAULT_PERCENT) <= BOUND_EPSILON;
     setDisabled(zoomOut, atMinimum);
@@ -100,6 +106,7 @@
 
   window.ATLAS_PERSON_SPACETIME_CONTROL_STATE = Object.freeze({
     parsePercent,
+    minimumPercentForMount,
     horizontalCenterRatio,
     scrollLeftForHorizontalCenter,
     syncZoomControlState

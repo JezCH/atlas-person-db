@@ -7,6 +7,7 @@
   },
   "readable_scale": {
     "minimum_zoom_percent": 100,
+    "effective_minimum_zoom_policy": "fit_world_to_table_viewport",
     "default_zoom_percent": 500,
     "maximum_zoom_percent": 1500,
     "global_extent_compression": 0.748,

@@ -17,6 +17,7 @@ test("completion contract records the readable-scale architecture and final Prod
   assert.equal(contract.foundation_track.status, "completed");
   assert.equal(contract.foundation_track.sufficient_for_final_completion, false);
   assert.equal(contract.readable_scale.minimum_zoom_percent, 100);
+  assert.equal(contract.readable_scale.effective_minimum_zoom_policy, "fit_world_to_table_viewport");
   assert.equal(contract.readable_scale.default_zoom_percent, 500);
   assert.equal(contract.readable_scale.maximum_zoom_percent, 1500);
   assert.equal(contract.readable_scale.global_extent_compression, 0.748);
