@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-reviewed-spatial-corrections/v1",
+  "correction_id": "republic-of-latvia-relinked-source-retirement-20260920",
+  "baseline": "43a4d770a9c5efdf862665d994a2b22273e0ae95",
+  "reviewed_at": "2026-09-20T08:44:02Z",
+  "changes": [
+    {
+      "polity_id": "eaa3ad78-bb73-4812-b00a-1b4e160acd69",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "eastern-europe"
+      },
+      "disposition": "remove_relinked_source",
+      "reason": "Republic of Latvia is now an Activity-orphan after the exact reviewed relink to Latvia; the Latvia survivor already carries the same Europe/Eastern Europe placement and Republic of Latvia / 라트비아 공화국 is preserved as a bounded temporal state-form designation."
+    }
+  ]
+}
