@@ -204,6 +204,103 @@
     return shared("systemIdentity", async () => normalizeSystemIdentityPayload(await getJson(SOURCES.systemIdentity.url)), { force });
   }
 
+  function normalizeRuntimeActivationCompile(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("INVALID_RUNTIME_ACTIVATION_COMPILE");
+    const normalized=Object.freeze({
+      compiler_version:String(value.compiler_version || "").trim() || null,
+      input_row_count:Number(value.input_row_count),
+      output_row_count:Number(value.output_row_count),
+      excluded_row_count:Number(value.excluded_row_count),
+      exclusion_summary:Object.freeze({ ...(value.exclusion_summary || {}) }),
+      compiled_at:value.compiled_at == null ? null : String(value.compiled_at).trim() || null
+    });
+    const counts=[normalized.input_row_count,normalized.output_row_count,normalized.excluded_row_count];
+    if (counts.some((count)=>!Number.isInteger(count) || count < 0)) throw new Error("INVALID_RUNTIME_ACTIVATION_COMPILE_COUNTS");
+    if (normalized.input_row_count !== normalized.output_row_count + normalized.excluded_row_count) {
+      throw new Error("INVALID_RUNTIME_ACTIVATION_COMPILE_BALANCE");
+    }
+    for (const count of Object.values(normalized.exclusion_summary)) {
+      if (!Number.isInteger(Number(count)) || Number(count) < 0) throw new Error("INVALID_RUNTIME_ACTIVATION_EXCLUSION_SUMMARY");
+    }
+    return normalized;
+  }
+
+  function normalizeRuntimeActivationRecord(value) {
+    if (value == null) return null;
+    if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("INVALID_RUNTIME_ACTIVATION_RECORD");
+    const activationKind=String(value.activation_kind || "").trim();
+    if (!["baseline_observed","compile_commit"].includes(activationKind)) throw new Error("INVALID_RUNTIME_ACTIVATION_KIND");
+    const rowCount=Number(value.row_count);
+    if (!Number.isInteger(rowCount) || rowCount < 0) throw new Error("INVALID_RUNTIME_ACTIVATION_ROW_COUNT");
+    const compile=normalizeRuntimeActivationCompile(value.compile);
+    if (rowCount !== compile.output_row_count) throw new Error("INVALID_RUNTIME_ACTIVATION_OUTPUT_MATCH");
+    const normalized=Object.freeze({
+      id:String(value.id || "").trim(),
+      activation_kind:activationKind,
+      compile_key:String(value.compile_key || "").trim(),
+      runtime_sha:value.runtime_sha == null ? null : String(value.runtime_sha).trim() || null,
+      authoring_sha:value.authoring_sha == null ? null : String(value.authoring_sha).trim() || null,
+      row_count:rowCount,
+      activated_at:value.activated_at == null ? null : String(value.activated_at).trim() || null,
+      compile
+    });
+    if (!normalized.id || !normalized.compile_key) throw new Error("INVALID_RUNTIME_ACTIVATION_IDENTITY");
+    if (activationKind === "compile_commit") {
+      if (!/^[0-9a-f]{40}$/i.test(normalized.runtime_sha || "") || !/^[0-9a-f]{40}$/i.test(normalized.authoring_sha || "")) {
+        throw new Error("INVALID_RUNTIME_ACTIVATION_SHA");
+      }
+    }
+    if (activationKind === "baseline_observed" && (normalized.runtime_sha || normalized.authoring_sha)) {
+      throw new Error("INVALID_RUNTIME_ACTIVATION_BASELINE_SHA");
+    }
+    return normalized;
+  }
+
+  function normalizeRuntimeActivationHistory(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
+      return Object.freeze({
+        available:false,
+        reason:"RUNTIME_ACTIVATION_HISTORY_NOT_EXPOSED",
+        projection_name:null,
+        latest_recorded:null,
+        previous_recorded:null,
+        latest_matches_projection:null,
+        delta_from_previous:null
+      });
+    }
+    const available=value.available === true;
+    const latest=available ? normalizeRuntimeActivationRecord(value.latest_recorded) : null;
+    const previous=available ? normalizeRuntimeActivationRecord(value.previous_recorded) : null;
+    const delta=value.delta_from_previous;
+    let normalizedDelta=null;
+    if (available && previous) {
+      if (!delta || typeof delta !== "object" || Array.isArray(delta)) throw new Error("INVALID_RUNTIME_ACTIVATION_DELTA");
+      const runtimeDelta=Number(delta.runtime_activity_count);
+      const excludedDelta=Number(delta.excluded_activity_count);
+      if (!Number.isInteger(runtimeDelta) || !Number.isInteger(excludedDelta)) throw new Error("INVALID_RUNTIME_ACTIVATION_DELTA_COUNTS");
+      const exclusionSummary=Object.freeze(Object.fromEntries(Object.entries(delta.exclusion_summary || {}).map(([code,count])=>{
+        const numeric=Number(count);
+        if (!Number.isInteger(numeric)) throw new Error("INVALID_RUNTIME_ACTIVATION_DELTA_REASON_COUNT");
+        return [String(code),numeric];
+      })));
+      normalizedDelta=Object.freeze({
+        runtime_activity_count:runtimeDelta,
+        excluded_activity_count:excludedDelta,
+        compile_key_changed:delta.compile_key_changed === true,
+        exclusion_summary:exclusionSummary
+      });
+    }
+    return Object.freeze({
+      available,
+      reason:available ? null : String(value.reason || "RUNTIME_ACTIVATION_HISTORY_UNAVAILABLE"),
+      projection_name:value.projection_name == null ? null : String(value.projection_name).trim() || null,
+      latest_recorded:latest,
+      previous_recorded:previous,
+      latest_matches_projection:available ? value.latest_matches_projection === true : null,
+      delta_from_previous:normalizedDelta
+    });
+  }
+
   function normalizeRuntimePublicationPayload(payload) {
     if (payload?.ok !== true || payload?.schema !== "atlas-runtime-publication/v1") {
       throw new Error("INVALID_RUNTIME_PUBLICATION_RESPONSE");
@@ -236,7 +333,8 @@
       current_runtime_activity_count:runtimeCount,
       active_compile:latestCompile,
       authoring_delta_since_compile:payload.authoring_delta_since_compile == null ? null : Number(payload.authoring_delta_since_compile),
-      projection_matches_active_compile:payload.projection_matches_active_compile == null ? null : payload.projection_matches_active_compile === true
+      projection_matches_active_compile:payload.projection_matches_active_compile == null ? null : payload.projection_matches_active_compile === true,
+      activation_history:normalizeRuntimeActivationHistory(payload.activation_history)
     });
   }
 
