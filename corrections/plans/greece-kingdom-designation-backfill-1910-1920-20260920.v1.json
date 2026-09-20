@@ -1,0 +1,84 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "greece_kingdom_designation_backfill_1910_1920_20260920_v1",
+  "as_of": "2026-09-20",
+  "status": "REVIEWED_TEMPORAL_DESIGNATION_BACKFILL",
+  "release_order": 606,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 Greece merge unit; Production read-back after #1326 showed pre-existing 1910-1920 Greece Activities still lacked the reviewed monarchy state-form designation",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "greece-kingdom-temporal-designation-1910-1920",
+      "exact_before": {
+        "designation_absent_id": "376fc580-cd86-5e7a-bb91-4bee2f987107"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "376fc580-cd86-5e7a-bb91-4bee2f987107",
+          "polity_id": "4dd77aef-9070-448e-b8da-425dfd0f4732",
+          "designation_type": "state_form",
+          "valid_from_year": 1910,
+          "valid_from_month": 10,
+          "valid_from_day": 6,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1920,
+          "valid_to_month": 11,
+          "valid_to_day": 4,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form backfill preserving Kingdom of Greece / 그리스 왕국 for the existing Greece Activities modeled from Venizelos's 6 October 1910 premiership start through 4 November 1920. This closes the pre-existing monarchy-era display gap exposed by the Greece identity merge; it does not alter the separately modeled Provisional Government of National Defence."
+        },
+        "names": [
+          {
+            "id": "58ae6325-336d-52f9-a9c1-2c14cbe2b357",
+            "polity_designation_id": "376fc580-cd86-5e7a-bb91-4bee2f987107",
+            "locale": "en",
+            "name": "Kingdom of Greece",
+            "is_preferred": true
+          },
+          {
+            "id": "3eda399a-5ce8-59cd-b018-76e127f33212",
+            "polity_designation_id": "376fc580-cd86-5e7a-bb91-4bee2f987107",
+            "locale": "ko",
+            "name": "그리스 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "376fc580-cd86-5e7a-bb91-4bee2f987107",
+            "source_id": "3edeae69-88c2-45b5-9105-fb56f04d0ee3",
+            "source_locator_key": "https://www.venizelos-foundation.gr/en/eleftherios-venizelos/biography/"
+          },
+          {
+            "polity_designation_id": "376fc580-cd86-5e7a-bb91-4bee2f987107",
+            "source_id": "70486a43-cdf8-4536-ac5b-7cedfc15a343",
+            "source_locator_key": "https://gslegal.gov.gr/en/thegovernment/historical-information/?sort=time"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 0,
+    "activity_relinks": 0,
+    "polity_designation_assertions": 1,
+    "production_mutation_authorized": false
+  }
+}
