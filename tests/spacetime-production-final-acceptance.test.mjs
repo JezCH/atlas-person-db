@@ -61,7 +61,7 @@ test("Production visual acceptance covers the compact 390px mobile presentation 
 test("Production visual acceptance requires every viewport Person name at 500 and 1500 percent", () => {
   const verifier = read("scripts/verify-spacetime-production-visual.mjs");
   assert.match(verifier, /defaultAcceptanceZoom === "500%"/);
-  assert.doesNotMatch(verifier, /spacetimeCameraZoomReset'\)\?\.click/);
+  assert.match(verifier, /spacetimeCameraZoomReset'\)\?\.click/);
   assert.match(verifier, /at500\.deferredLabelCount === 0/);
   assert.match(verifier, /at500\.domLabelCount === at500\.domPersonCount/);
   assert.match(verifier, /minimumAcceptanceZoom === "100%"/);
