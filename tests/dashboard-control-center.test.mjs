@@ -944,3 +944,165 @@ test("Production browser acceptance runs only against deployed main or an explic
   assert.match(workflow,/workflow_dispatch:/);
   assert.match(workflow,/EXPECTED_SHA="\$GITHUB_SHA"/);
 });
+
+test("Runtime Delta/Drift model compares activation order rather than compile timestamps", () => {
+  const latest={
+    id:"12",
+    activation_kind:"compile_commit",
+    compile_key:"compile-b",
+    runtime_sha:"1".repeat(40),
+    authoring_sha:"2".repeat(40),
+    row_count:91,
+    activated_at:"2026-09-20T06:20:00.000Z",
+    compile:{excluded_row_count:9}
+  };
+  const previous={
+    id:"11",
+    activation_kind:"baseline_observed",
+    compile_key:"compile-a",
+    runtime_sha:null,
+    authoring_sha:null,
+    row_count:84,
+    activated_at:"2026-09-20T06:10:00.000Z",
+    compile:{excluded_row_count:12}
+  };
+  const result=model.buildRuntimeDeltaDrift({
+    activation_history:{
+      available:true,
+      reason:null,
+      projection_name:"runtime_person_politics_v1",
+      latest_recorded:latest,
+      previous_recorded:previous,
+      latest_matches_projection:true,
+      delta_from_previous:{
+        runtime_activity_count:7,
+        excluded_activity_count:-3,
+        compile_key_changed:true,
+        exclusion_summary:{
+          PROVENANCE_UNRESOLVED:1,
+          START_BOUNDARY_UNRESOLVED:-4,
+          END_BOUNDARY_UNRESOLVED:0
+        }
+      }
+    }
+  });
+  assert.equal(result.available,true);
+  assert.equal(result.comparison_available,true);
+  assert.equal(result.drift,false);
+  assert.equal(result.latest.activation_kind,"compile_commit");
+  assert.equal(result.previous.activation_kind,"baseline_observed");
+  assert.equal(result.runtime_activity_delta,7);
+  assert.equal(result.excluded_activity_delta,-3);
+  assert.equal(result.compile_key_changed,true);
+  assert.equal(result.same_compile_reactivation,false);
+  assert.deepEqual(result.exclusion_delta_rows,[
+    {code:"START_BOUNDARY_UNRESOLVED",delta:-4},
+    {code:"PROVENANCE_UNRESOLVED",delta:1},
+    {code:"END_BOUNDARY_UNRESOLVED",delta:0}
+  ]);
+});
+
+test("Runtime Delta/Drift preserves same-compile reactivation and zero deltas", () => {
+  const activation=(id,at)=>({
+    id,
+    activation_kind:"compile_commit",
+    compile_key:"same-compile",
+    runtime_sha:"1".repeat(40),
+    authoring_sha:"2".repeat(40),
+    row_count:90,
+    activated_at:at,
+    compile:{excluded_row_count:10}
+  });
+  const result=model.buildRuntimeDeltaDrift({
+    activation_history:{
+      available:true,
+      latest_recorded:activation("8","2026-09-20T06:20:00.000Z"),
+      previous_recorded:activation("7","2026-09-20T06:10:00.000Z"),
+      latest_matches_projection:true,
+      delta_from_previous:{
+        runtime_activity_count:0,
+        excluded_activity_count:0,
+        compile_key_changed:false,
+        exclusion_summary:{PROVENANCE_UNRESOLVED:0}
+      }
+    }
+  });
+  assert.equal(result.comparison_available,true);
+  assert.equal(result.compile_key_changed,false);
+  assert.equal(result.same_compile_reactivation,true);
+  assert.equal(result.runtime_activity_delta,0);
+  assert.equal(result.excluded_activity_delta,0);
+});
+
+test("Runtime Delta/Drift surfaces projection drift and missing history without inventing zeros", () => {
+  const drift=model.buildRuntimeDeltaDrift({
+    activation_history:{
+      available:true,
+      latest_recorded:{
+        id:"1",
+        activation_kind:"baseline_observed",
+        compile_key:"observed",
+        runtime_sha:null,
+        authoring_sha:null,
+        row_count:88,
+        activated_at:"2026-09-20T06:00:00.000Z",
+        compile:{excluded_row_count:11}
+      },
+      previous_recorded:null,
+      latest_matches_projection:false,
+      delta_from_previous:null
+    }
+  });
+  assert.equal(drift.available,true);
+  assert.equal(drift.comparison_available,false);
+  assert.equal(drift.drift,true);
+  assert.equal(drift.runtime_activity_delta,null);
+  assert.equal(drift.excluded_activity_delta,null);
+  assert.equal(drift.previous,null);
+
+  const unavailable=model.buildRuntimeDeltaDrift({
+    activation_history:{
+      available:false,
+      reason:"RUNTIME_ACTIVATION_LEDGER_NOT_APPLIED",
+      latest_recorded:null,
+      previous_recorded:null,
+      latest_matches_projection:null,
+      delta_from_previous:null
+    }
+  });
+  assert.equal(unavailable.available,false);
+  assert.equal(unavailable.runtime_activity_delta,null);
+  assert.equal(unavailable.excluded_activity_delta,null);
+  assert.equal(unavailable.unavailable_reason,"RUNTIME_ACTIVATION_LEDGER_NOT_APPLIED");
+});
+
+test("shared store validates Runtime activation history instead of trusting raw Dashboard payloads", () => {
+  assert.match(storeSource,/function normalizeRuntimeActivationCompile/);
+  assert.match(storeSource,/function normalizeRuntimeActivationRecord/);
+  assert.match(storeSource,/function normalizeRuntimeActivationHistory/);
+  assert.match(storeSource,/INVALID_RUNTIME_ACTIVATION_COMPILE_BALANCE/);
+  assert.match(storeSource,/INVALID_RUNTIME_ACTIVATION_OUTPUT_MATCH/);
+  assert.match(storeSource,/INVALID_RUNTIME_ACTIVATION_SHA/);
+  assert.match(storeSource,/RUNTIME_ACTIVATION_HISTORY_NOT_EXPOSED/);
+  assert.match(storeSource,/activation_history:normalizeRuntimeActivationHistory\(payload\.activation_history\)/);
+});
+
+test("Dashboard renders Runtime activation delta and drift from the shared publication source only", () => {
+  assert.match(dashboardSource,/RUNTIME DELTA \/ DRIFT/);
+  assert.match(dashboardSource,/직전 활성화 대비 변화/);
+  assert.match(dashboardSource,/runtimeDeltaDriftMarkup\(runtimeDelta\)/);
+  assert.match(dashboardSource,/직전 Production은 Compile 시각이 아닌 Runtime activation 원장 순서로 판정/);
+  assert.match(dashboardSource,/같은 Compile 재활성화/);
+  assert.match(dashboardSource,/latest activation과 현재 Runtime projection 불일치/);
+  assert.match(dashboardSource,/원장 도입 시점 관측 · 배포 SHA 없음/);
+  assert.doesNotMatch(dashboardSource,/order by compiled_at|previous compile timestamp/i);
+  assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
+});
+
+test("Runtime Delta/Drift card has explicit drift state and responsive layouts", () => {
+  assert.match(dashboardCssSource,/dashboard-drift-card\[data-drift-state="drift"\]/);
+  assert.match(dashboardCssSource,/dashboard-drift-meta \[data-runtime-drift="true"\]/);
+  assert.match(dashboardCssSource,/@media\(max-width:700px\)\{\.dashboard-drift-grid\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)\}\}/);
+  assert.match(dashboardCssSource,/@media\(max-width:430px\)\{\.dashboard-drift-grid\{grid-template-columns:1fr\}\}/);
+});
+
