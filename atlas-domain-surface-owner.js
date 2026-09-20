@@ -2,10 +2,7 @@
   "use strict";
 
   const ROOT_ID = "personDomainRoot";
-  const PERSON_SURFACE_IDS = Object.freeze([
-    "personMainView",
-    "relationshipAuthoringTools"
-  ]);
+  const PERSON_SURFACE_IDS = Object.freeze(["personMainView"]);
 
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
