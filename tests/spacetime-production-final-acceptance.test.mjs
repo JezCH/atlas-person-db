@@ -28,6 +28,7 @@ test("exact-SHA verifier fails closed and byte-compares the current spacetime/do
     "atlas-person-domain-ui.js",
     "atlas-person-spacetime-domain-colors.js",
     "atlas-person-spacetime-domain-colors.css",
+    "atlas-person-spacetime-label-engine.js",
     "atlas-person-spacetime-view.js",
     "atlas-person-spacetime-view.css",
     "atlas-person-spacetime-temporal-certainty.js"
@@ -51,6 +52,17 @@ test("Production visual acceptance covers the compact 390px mobile presentation 
   assert.match(verifier, /spacetime-mobile-390\.png/);
 });
 
+test("Production visual acceptance requires every viewport Person name at 500 and 1200 percent", () => {
+  const verifier = read("scripts/verify-spacetime-production-visual.mjs");
+  assert.match(verifier, /at500\.deferredLabelCount === 0/);
+  assert.match(verifier, /at500\.domLabelCount === at500\.domPersonCount/);
+  assert.match(verifier, /at1200\.deferredLabelCount === 0/);
+  assert.match(verifier, /at1200\.domLabelCount === at1200\.domPersonCount/);
+  assert.match(verifier, /spacetime-1200\.png/);
+  assert.doesNotMatch(verifier, /bandContainment\.label_violation_count === 0/);
+  assert.match(verifier, /bandContainment\.rail_violation_count === 0/);
+});
+
 test("real-Chrome domain acceptance preserves Person/Activity semantic separation", () => {
   const verifier = read("scripts/verify-spacetime-production-domain-colors.mjs");
   assert.match(verifier, /canonical_domains\.length === 8/);
@@ -64,8 +76,9 @@ test("real-Chrome domain acceptance preserves Person/Activity semantic separatio
 
 test("final acceptance documentation keeps established stable-world invariants", () => {
   const doc = read("docs/spacetime-current-renderer-final-acceptance.md");
+  assert.match(doc, /300%/);
   assert.match(doc, /500%/);
-  assert.match(doc, /800%/);
+  assert.match(doc, /1200%/);
   assert.match(doc, /0\.748/);
   assert.match(doc, /no local region\/time compression/);
   assert.match(doc, /Missing, unknown, future, or unclassified values remain neutral/);
