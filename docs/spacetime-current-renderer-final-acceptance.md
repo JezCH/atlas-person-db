@@ -35,20 +35,22 @@ Person labels and Person rails carry `data-representative-domain`. Activity glyp
 
 The legacy point-only Person renderer remains prohibited, so the current semantic surface is the Person label + rail representation rather than a reintroduced point renderer.
 
-## Live browser label-box reconciliation
+## Shared-world Person name presentation
 
-The historical label engine remains the primary deterministic packer. A final browser-only guard, `atlas-person-spacetime-label-overlap-guard.js`, reconciles rare cross-pack box collisions that can appear after data growth even when each independently packed presentation band is internally valid.
+The historical label engine remains the primary deterministic packer, but Person names are no longer packed as isolated per-band pools. At the reviewed 500% to 800% camera, every viewport Person is offered one shared horizontal presentation overlay across the stable world width.
 
-The guard is presentation-only:
+Each Person keeps its reviewed presentation band and label zone as the preferred location nearest its historical/presentation anchor. When that preferred interval cannot hold the complete name without collision, the label may borrow otherwise empty horizontal presentation space outside that band. This is presentation-only borrowing: the Person rail, historical X/Y, Activity chronology, macro/subregion geometry, and world width never move.
+
+The browser-only guard, `atlas-person-spacetime-label-overlap-guard.js`, follows the same rule for rare real-box collisions:
 
 - it never writes label `top`, historical Y, rail Y, Activity chronology, world coordinates, or band geometry;
-- it may move a conflicting Person label only horizontally;
-- candidate movement is bounded to the label's declared spatial band;
-- selected and Meanwhile-active labels receive placement priority;
+- it may move a conflicting Person label only horizontally within the world presentation overlay;
+- the declared spatial band remains label metadata and a preferred origin, not a hard clipping boundary;
+- selected and Meanwhile-active labels retain placement priority;
 - connector geometry is updated when a shifted label has a horizontal connector;
-- impossible capacity is reported rather than resolved by vertical displacement or local compression.
+- impossible capacity is reported rather than resolved by vertical displacement, local region expansion, or smaller text.
 
-This preserves the existing completion rule: browser-visible label overlap must be zero without moving historical Y or reducing the camera below 500%.
+The completion rule is therefore stronger than before: at both 500% and 800%, browser-visible Person label overlap must be zero, the deferred Person-label count must be zero, and the number of rendered Person names must equal the number of viewport Persons.
 
 ## Final exact-SHA Production gate
 
@@ -62,7 +64,8 @@ The run fails closed unless all of the following succeed:
    - includes the live overlap guard among the compared assets;
    - records SHA-256 evidence for every compared asset.
 2. `scripts/verify-spacetime-production-visual.mjs`
-   - preserves the established real-Chrome 500%/800% geometry, overlap, LOD, inspector, uncertainty, Meanwhile, and runtime-error acceptance.
+   - preserves the established real-Chrome 500%/800% geometry, overlap, LOD, inspector, uncertainty, Meanwhile, and runtime-error acceptance;
+   - requires zero deferred Person labels and one rendered name for every viewport Person at both 500% and 800%.
 3. `scripts/verify-spacetime-production-domain-colors.mjs`
    - verifies the eight-way canonical domain registry in the live browser;
    - requires live spacetime Person label and rail decoration;
