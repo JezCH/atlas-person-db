@@ -20,18 +20,29 @@ test('era navigation consumes rendered era bands instead of creating a second ch
   assert.doesNotMatch(tableSource, /const ERAS\s*=/);
 });
 
-test('era navigation owns Person search, Polity filtering, and current-result status in one toolbar', () => {
+test('era navigation owns Person search, persistent Polity/Relation filters, domain strip, and current-result status', () => {
   assert.match(navSource, /person-era-search/);
   assert.match(navSource, /search\.id = "personMainSearch"/);
   assert.match(navSource, /intro\.append\(title, status, summary\)/);
-  assert.match(navSource, /controls\.append\(search, select\)/);
+  assert.match(navSource, /controls\.append\(search, select, relation\)/);
   assert.match(navSource, /atlas-person-search-change/);
   assert.match(navSource, /person-era-polity-filter/);
   assert.match(navSource, /모든 정치체/);
   assert.match(navSource, /인물 \$\{state\.visibleCount\}명 · 정치체 \$\{state\.visiblePolityCount\}개/);
   assert.match(navSource, /atlas-person-polity-filter-change/);
+  assert.match(navSource, /person-era-relation-filter/);
+  assert.match(navSource, /모든 관계/);
+  assert.match(navSource, /atlas-person-relation-filter-change/);
   assert.match(navSource, /selectedPolityId/);
   assert.match(navSource, /polityOptions/);
+  assert.match(navSource, /selectedRelationId/);
+  assert.match(navSource, /relationOptions/);
+  assert.match(navSource, /person-domain-filter-row/);
+  assert.match(navSource, /person-domain-filter-list/);
+  assert.match(navSource, /ATLAS_PERSON_DOMAIN_REGISTRY/);
+  assert.match(navSource, /atlas-person-domain-filter-change/);
+  assert.match(navSource, /selectedDomain/);
+  assert.match(navSource, /domainCounts/);
   assert.doesNotMatch(html, /atlas-person-summary-counts\.js/);
 });
 
@@ -62,12 +73,16 @@ test('era navigation tracks current location without repeating the era count', (
   assert.doesNotMatch(navSource, /const text = \[entry\.label, entry\.range, `\$\{entry\.count\}명 표시`\]/);
 });
 
-test('era navigation is sticky, responsive, and uses larger desktop but slightly smaller mobile typography', () => {
+test('era navigation is sticky, keeps visible facet status, and pins the table header beneath its live height', () => {
   assert.match(navCss, /\.person-era-navigator\{position:sticky/);
   assert.match(navCss, /\.person-era-nav-top/);
   assert.match(navCss, /\.person-era-nav-track/);
   assert.match(navCss, /\.person-era-search/);
   assert.match(navCss, /\.person-era-polity-filter/);
+  assert.match(navCss, /\.person-era-relation-filter/);
+  assert.match(navCss, /\.person-domain-filter-row/);
+  assert.match(navCss, /\.person-domain-filter-list\{[^}]*overflow-x:auto/);
+  assert.match(navCss, /\.person-domain-filter\.is-active/);
   assert.match(navCss, /\.person-era-nav-summary/);
   assert.match(navCss, /\.person-era-nav-intro>strong\{[^}]*font-size:14px/);
   assert.match(navCss, /\.person-era-nav-current\{[^}]*font-size:11px/);
@@ -77,7 +92,9 @@ test('era navigation is sticky, responsive, and uses larger desktop but slightly
   assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-nav-current\{font-size:7\.5px\}/);
   assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-jump-label\{font-size:9\.5px\}/);
   assert.match(navCss, /\.person-era-jump-list\{[^}]*overflow-x:auto/);
-  assert.match(navCss, /\.person-era-group\{scroll-margin-top:/);
+  assert.match(navCss, /\.person-era-group\{scroll-margin-top:calc\(var\(--person-table-sticky-top/);
+  assert.match(navSource, /--person-table-sticky-top/);
+  assert.match(navSource, /ResizeObserver/);
   assert.match(navCss, /@media\(max-width:760px\)/);
   assert.match(navCss, /@media\(max-width:520px\)/);
   assert.match(navCss, /top:64px/);
@@ -86,10 +103,10 @@ test('era navigation is sticky, responsive, and uses larger desktop but slightly
 test('era navigation assets load after the shared era model/table grouping and before Person Main initializes', () => {
   const eraModelJs = 'atlas-person-era-model.js?v=20260909-era-10-band-v1';
   const tableJs = 'atlas-person-table-view.js?v=20260819-era-model-r2';
-  const navJs = 'atlas-person-era-navigation.js?v=20260817-era-search-toolbar-v2';
-  const mainJs = 'atlas-person-main.js?v=20260919-shared-store-v1';
+  const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
+  const mainJs = 'atlas-person-main.js?v=20260920-person-facets-sticky-v1';
   const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
-  const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-search-toolbar-v3';
+  const navCssAsset = 'atlas-person-era-navigation.css?v=20260920-person-facets-sticky-v1';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
 
   for (const asset of [eraModelJs, tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
