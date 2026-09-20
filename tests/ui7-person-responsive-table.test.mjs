@@ -66,6 +66,7 @@ test('UI7 hides ordinary diagnostics and duplicate single-Activity periods while
 
 test('UI7 keeps the desktop table header viewport-sticky without trapping it in the horizontal scroller', () => {
   assert.match(tableCss, /person-table-grid\{display:block;padding:0;overflow-x:clip/);
+  assert.match(tableCss, /@media\(min-width:1101px\)\{\.person-group\.person-group-historical\{overflow:visible\}\}/);
   assert.match(tableCss, /@media\(max-width:1100px\)\{\.person-card-grid\.person-table-grid\{overflow-x:auto\}\.person-table-head\{position:static;top:auto\}\}/);
   assert.match(geometryCss, /--era-band-width:\s*58px/);
   assert.match(tableCss, /person-table-head\{position:sticky;top:var\(--person-table-sticky-top,0px\)/);
