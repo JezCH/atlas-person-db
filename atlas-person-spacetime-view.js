@@ -202,10 +202,28 @@
     return api;
   }
 
-  function clampCameraZoom(value) {
+  function viewportFitMinimumZoom(scroll, referenceZoom = cameraZoom) {
+    const geometry = horizontalCameraGeometry(scroll);
+    const reference = Number(referenceZoom);
+    if (!geometry || !(reference > 0)) return CAMERA_MIN_ZOOM;
+    const usableWidth = Math.max(1, geometry.viewport_width - geometry.axis_width);
+    const worldWidthAtOne = geometry.world_width / reference;
+    if (!(worldWidthAtOne > 0)) return CAMERA_MIN_ZOOM;
+    return Math.min(CAMERA_MAX_ZOOM, Math.max(CAMERA_MIN_ZOOM, usableWidth / worldWidthAtOne));
+  }
+
+  function clampCameraZoom(value, scroll = null) {
     const numeric = Number(value);
-    if (!Number.isFinite(numeric)) return CAMERA_MIN_ZOOM;
-    return Math.min(CAMERA_MAX_ZOOM, Math.max(CAMERA_MIN_ZOOM, numeric));
+    const minimum = scroll ? viewportFitMinimumZoom(scroll, cameraZoom) : CAMERA_MIN_ZOOM;
+    if (!Number.isFinite(numeric)) return minimum;
+    return Math.min(CAMERA_MAX_ZOOM, Math.max(minimum, numeric));
+  }
+
+  function syncViewportFitMinimum(mount, scroll) {
+    const minimum = viewportFitMinimumZoom(scroll, cameraZoom);
+    mount.dataset.spacetimeMinimumZoomPercent = String(Math.round(minimum * 100));
+    window.ATLAS_PERSON_SPACETIME_CONTROL_STATE?.syncZoomControlState?.(mount);
+    return minimum;
   }
 
   function cameraZoomLabel() {
@@ -346,7 +364,7 @@
   function requestCameraZoom(mount, nextZoom, viewportX = null, viewportY = null) {
     const scroll = mount.querySelector(".spacetime-scroll");
     if (!scroll || !currentTimelineProjection?.screenToWorldOrdinal) return;
-    const clampedZoom = clampCameraZoom(nextZoom);
+    const clampedZoom = clampCameraZoom(nextZoom, scroll);
     if (Math.abs(clampedZoom - cameraZoom) < 1e-9) return;
     const rawViewportX = Number.isFinite(Number(viewportX)) ? Number(viewportX) : cameraViewportCenterX(scroll);
     const rawViewportY = Number.isFinite(Number(viewportY)) ? Number(viewportY) : cameraViewportCenterY(scroll);
@@ -1195,6 +1213,14 @@
     bindPinchCameraZoom(mount);
     const scroll = mount.querySelector(".spacetime-scroll");
     if (!scroll) return;
+    const effectiveMinimumZoom = syncViewportFitMinimum(mount, scroll);
+    if (cameraZoom + 1e-9 < effectiveMinimumZoom) {
+      cameraZoom = effectiveMinimumZoom;
+      requestAnimationFrame(() => {
+        if (mount.isConnected && !mount.hidden) renderInto(mount);
+      });
+      return;
+    }
     const { exploration } = runtime();
     restoreCameraViewport(scroll, projection);
     if (pendingFocusPersonId) {
@@ -1206,7 +1232,7 @@
       if (!event.ctrlKey && !event.metaKey) return;
       const factor = event.deltaY < 0 ? CAMERA_ZOOM_STEP : 1 / CAMERA_ZOOM_STEP;
       const wheelZoomTarget = cameraZoom * factor;
-      if (Math.abs(clampCameraZoom(wheelZoomTarget) - cameraZoom) < 1e-9) return;
+      if (Math.abs(clampCameraZoom(wheelZoomTarget, scroll) - cameraZoom) < 1e-9) return;
       event.preventDefault();
       const rect = scroll.getBoundingClientRect();
       requestCameraZoom(mount, wheelZoomTarget, event.clientX - rect.left, event.clientY - rect.top);
@@ -1220,7 +1246,7 @@
       const keyboardZoomTarget = command === "zoom-in"
         ? cameraZoom * CAMERA_ZOOM_STEP
         : command === "zoom-out" ? cameraZoom / CAMERA_ZOOM_STEP : null;
-      if (keyboardZoomTarget != null && Math.abs(clampCameraZoom(keyboardZoomTarget) - cameraZoom) < 1e-9) return;
+      if (keyboardZoomTarget != null && Math.abs(clampCameraZoom(keyboardZoomTarget, scroll) - cameraZoom) < 1e-9) return;
       event.preventDefault();
       if (command === "previous-person" || command === "next-person") {
         const nextId = exploration.adjacentPersonId(navigationItems, selectedPersonId, command === "previous-person" ? -1 : 1);
