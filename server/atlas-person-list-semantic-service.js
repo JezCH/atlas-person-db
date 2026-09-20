@@ -25,6 +25,11 @@ select
   pp.confidence,
   pp.chronology_status,
   pp.source_locator->>'ongoing_as_of' as ongoing_as_of,
+  (
+    select count(*)::int
+    from atlas_v2.person_politics_sources pps
+    where pps.person_politics_id = pp.id
+  ) as source_count,
   pp.notes,
   prt.code as relation_type_code,
   prt.category as relation_type_category,
@@ -109,6 +114,7 @@ function projectCompactActivity(row) {
     end: activity.end,
     confidence: activity.confidence,
     chronology_status: activity.chronology_status,
+    source_count: Number(row?.source_count || 0),
     notes: activity.notes
   });
 }
