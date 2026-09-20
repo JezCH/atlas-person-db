@@ -581,9 +581,73 @@
     return searchable;
   }
 
-  function packTrackLabels(projectedTracks, timelineHeight, contentWidth, forceAll) {
+  function visibleRailLabelItems(projectedTracks, segmentTracks, projection, presentation, contentWidth, cullRect) {
+    const { exploration, presentationLayout, labelEngine } = runtime();
+    const projectedByPerson = new Map((Array.isArray(projectedTracks) ? projectedTracks : []).map((item) => [item.person_id, item]));
+    const visibleLeft = Number(cullRect?.visible_left) || 0;
+    const visibleTop = Number(cullRect?.visible_top) || 0;
+    const visibleRight = visibleLeft + Math.max(1, Number(cullRect?.visible_width) || 1);
+    const visibleBottom = visibleTop + Math.max(1, Number(cullRect?.visible_height) || 1);
+    const labelHalfHeight = labelEngine.DEFAULT_LABEL_HEIGHT / 2;
+    const result = [];
+
+    for (const track of Array.isArray(segmentTracks) ? segmentTracks : []) {
+      let best = null;
+      for (const segment of Array.isArray(track?.primary_segments) ? track.primary_segments : []) {
+        const geometry = presentationLayout.geometryForSegment(presentation, segment);
+        const historicalX = Number(segment?.x_anchor) * Number(contentWidth);
+        const railX = Number(geometry?.rail_x);
+        const x = Number.isFinite(railX) ? railX : historicalX;
+        if (!Number.isFinite(x) || x < visibleLeft - 2 || x > visibleRight + 2) continue;
+
+        const y1 = Number(projection?.yForOrdinal?.(segment.start_ordinal));
+        const y2 = Number(projection?.yForOrdinal?.(segment.end_ordinal));
+        if (!Number.isFinite(y1) || !Number.isFinite(y2)) continue;
+        const top = Math.min(y1, y2);
+        const bottom = Math.max(y1, y2);
+        const overlapTop = Math.max(top, visibleTop);
+        const overlapBottom = Math.min(bottom, visibleBottom);
+        if (overlapBottom < overlapTop) continue;
+
+        const overlap = Math.max(0, overlapBottom - overlapTop);
+        const viewportCenterY = visibleTop + (visibleBottom - visibleTop) / 2;
+        const rawAnchorY = (overlapTop + overlapBottom) / 2;
+        const anchorY = Math.min(
+          Math.max(rawAnchorY, visibleTop + labelHalfHeight),
+          Math.max(visibleTop + labelHalfHeight, visibleBottom - labelHalfHeight)
+        );
+        const score = [overlap, -Math.abs(anchorY - viewportCenterY)];
+        if (!best || score[0] > best.score[0] || (score[0] === best.score[0] && score[1] > best.score[1])) {
+          best = { segment, anchorY, score };
+        }
+      }
+
+      if (!best) continue;
+      const segmentOnlyTrack = Object.freeze({ ...track, primary_segments: Object.freeze([best.segment]) });
+      const projected = exploration.projectTrack(segmentOnlyTrack, projection, contentWidth);
+      const presented = projected ? presentationLayout.applyTrackPresentation(projected, presentation) : null;
+      const fallback = projectedByPerson.get(track.person_id);
+      const item = presented || fallback;
+      if (!item) continue;
+      result.push(Object.freeze({ ...item, y: best.anchorY, viewport_label_anchor: true }));
+    }
+
+    result.sort((a, b) =>
+      Number(a?.y) - Number(b?.y)
+      || Number(a?.x) - Number(b?.x)
+      || String(a?.display_name || "").localeCompare(String(b?.display_name || ""), "ko")
+      || String(a?.person_id || "").localeCompare(String(b?.person_id || ""))
+    );
+    return Object.freeze(result);
+  }
+
+  function packTrackLabels(projectedTracks, timelineHeight, contentWidth, forceAll, viewportRect = null) {
     const { labelEngine } = runtime();
     const worldWidth = Number(contentWidth);
+    const viewportLeft = viewportRect ? Math.max(0, Number(viewportRect.visible_left) || 0) : 0;
+    const viewportTop = viewportRect ? Math.max(0, Number(viewportRect.visible_top) || 0) : 0;
+    const packingWidth = viewportRect ? Math.max(1, Number(viewportRect.visible_width) || 1) : worldWidth;
+    const packingHeight = viewportRect ? Math.max(1, Number(viewportRect.visible_height) || 1) : Number(timelineHeight);
     const deferred = [];
     if (!(worldWidth > 0)) {
       return {
@@ -598,9 +662,11 @@
 
     const labels = [];
     for (const item of projectedTracks) {
-      const anchorX = Number(item?.x);
-      const anchorY = Number(item?.y);
-      if (!Number.isFinite(anchorX) || !Number.isFinite(anchorY)) {
+      const anchorXWorld = Number(item?.x);
+      const anchorYWorld = Number(item?.y);
+      const anchorX = viewportRect ? anchorXWorld - viewportLeft : anchorXWorld;
+      const anchorY = viewportRect ? anchorYWorld - viewportTop : anchorYWorld;
+      if (!Number.isFinite(anchorXWorld) || !Number.isFinite(anchorYWorld) || !Number.isFinite(anchorX) || !Number.isFinite(anchorY)) {
         deferred.push(Object.freeze({
           person_id:item?.track?.person_id || null,
           track_id:item?.track?.track_id || null,
@@ -613,8 +679,10 @@
       const rawZoneLeft = Number(item?.label_zone_left);
       const rawZoneRight = Number(item?.label_zone_right);
       const hasZone = Number.isFinite(rawZoneLeft) && Number.isFinite(rawZoneRight) && rawZoneRight > rawZoneLeft;
-      const zoneLeft = hasZone ? Math.max(0, Math.min(worldWidth, rawZoneLeft)) : 0;
-      const zoneRight = hasZone ? Math.max(zoneLeft, Math.min(worldWidth, rawZoneRight)) : worldWidth;
+      const zoneLeftWorld = hasZone ? Math.max(0, Math.min(worldWidth, rawZoneLeft)) : 0;
+      const zoneRightWorld = hasZone ? Math.max(zoneLeftWorld, Math.min(worldWidth, rawZoneRight)) : worldWidth;
+      const zoneLeft = viewportRect ? Math.max(0, Math.min(packingWidth, zoneLeftWorld - viewportLeft)) : zoneLeftWorld;
+      const zoneRight = viewportRect ? Math.max(zoneLeft, Math.min(packingWidth, zoneRightWorld - viewportLeft)) : zoneRightWorld;
 
       labels.push({
         person_id:item.track.person_id,
@@ -631,9 +699,9 @@
 
     const result = labelEngine.packLabels(
       labels,
-      { width:worldWidth, height:timelineHeight },
+      { width:packingWidth, height:packingHeight },
       {
-        maxHorizontalShift:worldWidth,
+        maxHorizontalShift:packingWidth,
         borrowHorizontalSpace:true,
         preserveFullTextWidth:true,
         gap:labelEngine.DEFAULT_HORIZONTAL_GAP
@@ -643,6 +711,24 @@
     return {
       placed:result.placed.map((label) => ({
         ...label,
+        label_x:label.label_x + viewportLeft,
+        label_y:label.label_y + viewportTop,
+        anchor_x:label.anchor_x + viewportLeft,
+        anchor_y:label.anchor_y + viewportTop,
+        rect:Object.freeze({
+          ...label.rect,
+          left:label.rect.left + viewportLeft,
+          right:label.rect.right + viewportLeft,
+          top:label.rect.top + viewportTop,
+          bottom:label.rect.bottom + viewportTop
+        }),
+        connector:label.connector ? Object.freeze({
+          ...label.connector,
+          x1:label.connector.x1 + viewportLeft,
+          x2:label.connector.x2 + viewportLeft,
+          y1:label.connector.y1 + viewportTop,
+          y2:label.connector.y2 + viewportTop
+        }) : null,
         region_code:label.region_code || "world",
         region_left:0,
         region_right:worldWidth
@@ -1036,14 +1122,21 @@
         cameraInsets(scroll)
       );
       const forced = forcedIds();
-      const personItems = performance.cullProjectedItems(state.projectedTracks, cullRect, forced);
       const segmentTracks = performance.cullTrackSegments(state.visibleTracks, state.projection, state.contentWidth, cullRect, forced);
+      const personItems = visibleRailLabelItems(
+        state.projectedTracks,
+        segmentTracks,
+        state.projection,
+        state.presentation,
+        state.contentWidth,
+        cullRect
+      );
       const segmentIds = segmentTracks.flatMap((track) => (track.primary_segments || []).map((segment) => segment.stable_id || `${track.person_id}:${segment.start_ordinal}:${segment.end_ordinal}`));
       const personIds = personItems.map((item) => item.person_id);
-      const signature = `${personIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${selectedActivityId || ""}|${state.meanwhileOrdinal ?? ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.rails}|${state.lodWeights.activities}`;
+      const signature = `${personIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${selectedActivityId || ""}|${state.meanwhileOrdinal ?? ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.rails}|${state.lodWeights.activities}|${Math.round(cullRect.visible_left)}|${Math.round(cullRect.visible_top)}`;
 
       if (signature !== lastSignature) {
-        const labelPack = packTrackLabels(personItems, state.timelineHeight, state.contentWidth, Boolean(state.needle));
+        const labelPack = packTrackLabels(personItems, state.timelineHeight, state.contentWidth, Boolean(state.needle), cullRect);
         const railLayer = mount.querySelector("#spacetimeRailLayer");
         const uncertaintyLayer = mount.querySelector("#spacetimeUncertaintyLayer");
         const labelLayer = mount.querySelector("#spacetimeLabelLayer");
