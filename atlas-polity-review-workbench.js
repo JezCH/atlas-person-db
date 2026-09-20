@@ -7,7 +7,7 @@
     return;
   }
 
-  const PAGE_SIZE = 120;
+  const PAGE_SIZE = 12;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -163,7 +163,7 @@
     root.innerHTML = '<section class="polity-browser-shell">' +
       '<header class="polity-browser-summary card">' +
         '<div><p class="eyebrow">CANONICAL POLITY BROWSER</p><h2>정치체</h2>' +
-        '<p>이 화면의 정치체 목록·이름·UUID·연결 Activity는 별도 정적 목록이 아니라 현재 canonical Polity read에서 직접 가져옵니다. Identity 검토 문서는 감사자료일 뿐 이 화면의 데이터 원천이 아닙니다.</p></div>' +
+        '<p>이 화면의 정치체 목록·이름·UUID·연결 Activity는 별도 정적 목록이 아니라 현재 canonical Polity read에서 직접 가져옵니다. 이 목록은 canonical Polity read를 직접 사용합니다. 첫 화면은 12개만 표시하고 나머지는 ‘더 보기’로 펼칩니다. 아래에는 별도의 충돌·Identity 검토 작업대를 함께 표시합니다.</p></div>' +
         '<button type="button" class="btn" data-polity-refresh>현재 데이터 새로고침</button>' +
       '</header>' +
       '<section class="polity-browser-dataset card" aria-live="polite">' +

@@ -11,8 +11,8 @@
 
   window.ATLAS_POLITY_REVIEW_CANDIDATES = Object.freeze({
     schema: "atlas-polity-review-candidates/v1",
-    generated_at: "2026-09-19",
-    source_scope: "Production /api/atlas-read 2,260 Activity rows + 1,194 Polity post-retirement catalog + reviewed Stage 2 polity identity decisions",
+    generated_at: "2026-09-20",
+    source_scope: "Production /api/atlas-read current canonical Polity read + reviewed identity decisions + 2026-09-20 exhaustive similarity audit",
     decision_options: Object.freeze([
       entry({ code: "merge", label: "병합" }),
       entry({ code: "keep_left", label: "왼쪽 유지" }),
@@ -69,11 +69,12 @@
         title: "Yuan Dynasty / Northern Yuan",
         left: { name: "Yuan Dynasty", ko: "원나라", polity_id: "d035cbd8-e7b1-5947-8542-c7dd356d52bb" },
         right: { name: "Northern Yuan", ko: "북원", polity_id: "986380c3-cc31-50d5-bb0d-6cae5fae0660" },
-        rationale: "Stage 2는 북원을 1368년 이후의 historiographic designation으로 보고 stable Yuan polity에 통합하도록 확정했습니다.",
-        suggested_action: "merge",
-        status: "REVIEWED_MERGE_BLOCKED_SPATIAL",
-        reviewed_decision: "merge",
-        evidence: ["Yuan Activity 4건", "Northern Yuan Activity 3건", "1368년 이후 spatial 위치 변화는 temporal spatial metadata로 보존 필요"]
+        rationale: "후속 identity 재검토에서 1368년의 대규모 영토·정치 중심 붕괴를 catastrophic territorial rupture로 판정했습니다. 원과 북원은 별도 Polity identity를 유지합니다.",
+        suggested_action: "keep_both",
+        status: "SUPERSEDED_NO_WRITE",
+        reviewed_decision: "keep_both",
+        locked: true,
+        evidence: ["기존 merge 제안은 후속 검토로 폐기", "Yuan / Northern Yuan 별도 identity 유지", "Spatial 의미도 별도 보존"]
       },
       {
         id: "haudenosaunee-iroquois-reviewed-merge",
@@ -345,9 +346,10 @@
         right: { name: "Kingdom of Israel", ko: "이스라엘 왕국", polity_id: "89509d8c-67a9-54aa-bf30-a3c49b150ac1" },
         rationale: "현재 Israel UUID 하나에 고대 사사시대 인물과 현대 State of Israel 인물이 함께 연결되어 있어 이름 충돌에 의한 과통합 가능성이 높습니다.",
         suggested_action: "split_required",
-        status: "REVIEWED_SPLIT_REQUIRED",
+        status: "PRODUCTION_APPLIED_SPLIT",
         reviewed_decision: "split_required",
-        evidence: ["Israel 관측 범위 약 기원전 1125년–1983년", "고대 Deborah·Barak·Gideon과 현대 David Ben-Gurion 계열이 같은 generic identity에 존재"]
+        locked: true,
+        evidence: ["Israel split Production 적용 완료", "Israel 관측 범위 약 기원전 1125년–1983년", "고대 Deborah·Barak·Gideon과 현대 David Ben-Gurion 계열이 같은 generic identity에 존재"]
       },
       {
         id: "kingdom-of-italy-multi-era-collapse",
@@ -369,8 +371,10 @@
         right: { name: "United Monarchy / Northern Kingdom", ko: "통일왕국 계열 / 북이스라엘 왕국" },
         rationale: "현재 한 UUID가 사무엘·사울·다윗·솔로몬의 통일왕국 계열과 오므리·아합·예후의 후대 북이스라엘 왕국을 함께 담고 있어 별도 identity 분리 검토가 필요합니다.",
         suggested_action: "split_required",
-        status: "NEEDS_SPLIT_REVIEW",
-        evidence: ["통일왕국 계열: Samuel·Saul·David·Solomon", "후대 북왕국 계열: Omri·Ahab·Jehu", "Israel 고대/현대 분리 작업 전에 이 내부 과통합도 별도 판정 필요"]
+        status: "PRODUCTION_APPLIED_SPLIT",
+        reviewed_decision: "split_required",
+        locked: true,
+        evidence: ["Kingdom of Israel 내부 split Production 적용 완료", "통일왕국 계열: Samuel·Saul·David·Solomon", "후대 북왕국 계열: Omri·Ahab·Jehu", "Israel 고대/현대 분리 작업 전에 이 내부 과통합도 별도 판정 필요"]
       }
     ])
   });
