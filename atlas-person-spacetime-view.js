@@ -1328,10 +1328,82 @@
     mount.addEventListener("pointercancel", finishPointer);
   }
 
+  function bindMouseCameraPan(scroll) {
+    if (!scroll || scroll.__spacetimeMousePanBound) return;
+    scroll.__spacetimeMousePanBound = true;
+
+    const DRAG_THRESHOLD = 5;
+    let drag = null;
+    let suppressClick = false;
+
+    const interactiveTarget = (target) => Boolean(target?.closest?.(
+      "button,a,input,select,textarea,summary,[data-spacetime-person],.spacetime-year-axis"
+    ));
+
+    scroll.addEventListener("pointerdown", (event) => {
+      if (event.pointerType !== "mouse" || event.button !== 0) return;
+      if (!event.target?.closest?.(".spacetime-canvas")) return;
+      if (interactiveTarget(event.target)) return;
+
+      drag = {
+        pointer_id: event.pointerId,
+        start_x: event.clientX,
+        start_y: event.clientY,
+        start_left: scroll.scrollLeft,
+        start_top: scroll.scrollTop,
+        active: false
+      };
+      suppressClick = false;
+      try { scroll.setPointerCapture?.(event.pointerId); } catch {}
+    });
+
+    scroll.addEventListener("pointermove", (event) => {
+      if (!drag || event.pointerId !== drag.pointer_id) return;
+      const dx = event.clientX - drag.start_x;
+      const dy = event.clientY - drag.start_y;
+
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+        drag.active = true;
+        suppressClick = true;
+        scroll.classList.add("is-mouse-panning");
+      }
+
+      event.preventDefault();
+      scroll.scrollLeft = drag.start_left - dx;
+      scroll.scrollTop = drag.start_top - dy;
+    }, { passive: false });
+
+    const finishMousePan = (event) => {
+      if (!drag || event.pointerId !== drag.pointer_id) return;
+      const wasActive = drag.active;
+      try {
+        if (scroll.hasPointerCapture?.(event.pointerId)) scroll.releasePointerCapture(event.pointerId);
+      } catch {}
+      drag = null;
+      scroll.classList.remove("is-mouse-panning");
+      if (!wasActive) suppressClick = false;
+    };
+
+    scroll.addEventListener("pointerup", finishMousePan);
+    scroll.addEventListener("pointercancel", (event) => {
+      finishMousePan(event);
+      suppressClick = false;
+    });
+
+    scroll.addEventListener("click", (event) => {
+      if (!suppressClick) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+  }
+
   function bindCameraViewport(mount, projection, navigationItems) {
     bindPinchCameraZoom(mount);
     const scroll = mount.querySelector(".spacetime-scroll");
     if (!scroll) return;
+    bindMouseCameraPan(scroll);
     const effectiveMinimumZoom = syncViewportFitMinimum(mount, scroll);
     if (cameraZoom + 1e-9 < effectiveMinimumZoom) {
       cameraZoom = effectiveMinimumZoom;
