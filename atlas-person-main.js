@@ -675,7 +675,7 @@
         const canvas = document.createElement("canvas");
         canvas.width = Math.max(1, Math.round(sourceWidth * scale));
         canvas.height = Math.max(1, Math.round(sourceHeight * scale));
-        const context = canvas.getContext("2d", { alpha:false });
+        const context = canvas.getContext("2d");
         if (!context) throw new Error("이미지 변환 컨텍스트를 만들 수 없습니다.");
         context.drawImage(loaded.image, 0, 0, canvas.width, canvas.height);
         for (const quality of qualities) {
@@ -732,7 +732,7 @@
       if (outcome?.replaced_asset_cleanup?.ok === false) {
         showOperationalMessage("초상화는 교체됐지만 이전 저장 파일 정리에 실패했습니다.");
       } else {
-        showOperationalMessage(selectedPortrait ? "초상화를 저장했습니다." : "초상화를 저장했습니다.");
+        showOperationalMessage("초상화를 저장했습니다.");
       }
     } catch (error) {
       showOperationalMessage(error?.message || "초상화 저장에 실패했습니다.");
