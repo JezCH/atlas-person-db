@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-reviewed-spatial-corrections/v1",
+  "correction_id": "kingdom-of-greece-relinked-source-retirement-20260920",
+  "baseline": "4f88443ba160cce7e2c9b78295009ecce5be7c59",
+  "reviewed_at": "2026-09-20T10:27:00Z",
+  "changes": [
+    {
+      "polity_id": "829b5976-18f4-48e3-a35d-3c141858ce56",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "balkans"
+      },
+      "disposition": "remove_relinked_source",
+      "reason": "Kingdom of Greece is now an Activity-orphan after the exact reviewed relink to Greece; the Greece survivor already carries the same Europe/Balkans placement and Kingdom of Greece / 그리스 왕국 is preserved as reviewed temporal state-form designations."
+    }
+  ]
+}
