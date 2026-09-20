@@ -35,6 +35,12 @@ function canonicalTimestamp(value) {
   const parsed = Date.parse(value);
   return Number.isFinite(parsed) ? new Date(parsed).toISOString() : null;
 }
+function renderedInteger(value) {
+  const raw=String(value ?? "").trim();
+  if (!raw || raw === "—") return null;
+  const numeric=Number(raw.replace(/,/g,"").replace(/^\+/,""));
+  return Number.isInteger(numeric) ? numeric : Number.NaN;
+}
 async function fetchJson(url) {
   const response = await fetch(url, { cache:"no-store", headers:{ accept:"application/json", "cache-control":"no-cache" } });
   if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
@@ -177,16 +183,17 @@ async function collectCanonicalSnapshot(client) {
   return evaluate(client, `(async () => {
     const store=window.ATLAS_CLIENT_DATA_STORE;
     const model=window.ATLAS_DASHBOARD_MODEL;
-    const [personResult,domainResult,spatialIndex,nonTimelineRows,recentDeltaResult,systemIdentityResult]=await Promise.all([
+    const [personResult,domainResult,spatialIndex,nonTimelineRows,recentDeltaResult,systemIdentityResult,runtimePublicationResult]=await Promise.all([
       store.loadPersons(),
       store.loadPersonDomains(),
       store.loadSpatialIndex(),
       store.loadNonTimelinePersons(),
       store.loadRecentDelta(),
-      store.loadSystemIdentity()
+      store.loadSystemIdentity(),
+      store.loadRuntimePublication()
     ]);
     const snapshot=model.buildDashboardSnapshot({
-      personResult,domainResult,spatialIndex,nonTimelineRows,recentDeltaResult,systemIdentityResult,
+      personResult,domainResult,spatialIndex,nonTimelineRows,recentDeltaResult,systemIdentityResult,runtimePublicationResult,
       sourceStates:store.sourceStates()
     });
     return {
@@ -199,6 +206,8 @@ async function collectCanonicalSnapshot(client) {
       heatmap:snapshot.coverage_heatmap,
       recent_delta:snapshot.recent_delta,
       timeline:snapshot.recent_activity_timeline,
+      runtime_publication:runtimePublicationResult,
+      runtime_delta_drift:snapshot.runtime_delta_drift,
       completeness:snapshot.completeness_matrix,
       attention:snapshot.attention_queue,
       kpi_drilldown:snapshot.kpi_drilldown
@@ -221,8 +230,22 @@ async function collectDesktopDom(client) {
       has_person_drilldown:Boolean(tr.querySelector("[data-dashboard-completeness]"))
     }));
     const heatmapCells=qa(".dashboard-heatmap tbody td").map((td)=>Number((td.textContent||"").replace(/,/g,"").trim())).filter(Number.isFinite);
-    const timelinePanel=qa("#atlasDashboardMount .dashboard-panel").find((p)=>p.querySelector(".eyebrow")?.textContent?.includes("RECENT DELTA"));
+    const panels=qa("#atlasDashboardMount .dashboard-panel");
+    const timelinePanel=panels.find((p)=>p.querySelector(".eyebrow")?.textContent?.includes("RECENT DELTA"));
     const timelineMeta=timelinePanel ? [...timelinePanel.querySelectorAll(".dashboard-progress-meta span")].map((x)=>(x.textContent||"").trim()) : [];
+    const runtimeDeltaPanel=panels.find((p)=>(p.querySelector(".eyebrow")?.textContent||"").trim()==="RUNTIME DELTA / DRIFT");
+    const runtimeDeltaCards=runtimeDeltaPanel ? [...runtimeDeltaPanel.querySelectorAll(".dashboard-drift-card")].map((card)=>({
+      label:(card.querySelector("small")?.textContent||"").trim(),
+      value:(card.querySelector("strong")?.textContent||"").trim(),
+      detail:(card.querySelector("span")?.textContent||"").trim(),
+      state:card.dataset.driftState || null
+    })) : [];
+    const runtimeDeltaMeta=runtimeDeltaPanel ? [...runtimeDeltaPanel.querySelectorAll(".dashboard-drift-meta span")].map((x)=>(x.textContent||"").trim()) : [];
+    const runtimeDeltaReasons=runtimeDeltaPanel ? [...runtimeDeltaPanel.querySelectorAll(".dashboard-drift-reasons span")].map((row)=>{
+      const label=(row.querySelector("b")?.textContent||"").trim();
+      const text=(row.textContent||"").trim();
+      return {label,value:text.slice(label.length).trim(),text};
+    }) : [];
     const doc=document.documentElement;
     return {
       href:location.href,
@@ -239,6 +262,7 @@ async function collectDesktopDom(client) {
       person_rows:personRows,
       heatmap:{row_count:qa(".dashboard-heatmap tbody tr").length,cell_count:heatmapCells.length,non_zero:heatmapCells.filter((v)=>v>0).length,total:heatmapCells.reduce((a,b)=>a+b,0)},
       timeline:{entry_count:qa(".dashboard-timeline-entry").length,meta:timelineMeta},
+      runtime_delta:{present:Boolean(runtimeDeltaPanel),cards:runtimeDeltaCards,meta:runtimeDeltaMeta,reasons:runtimeDeltaReasons},
       error_overlay:Boolean(document.querySelector("[data-nextjs-dialog], .vite-error-overlay, #webpack-dev-server-client-overlay"))
     };
   })()`);
@@ -345,7 +369,7 @@ function verifyCanonicalContracts(modelState, desktopDom) {
   assert(modelState.system_identity?.git_commit_sha === EXPECTED_RUNTIME_SHA, "Dashboard Runtime Identity SHA mismatch", modelState.system_identity);
 
   const freshness = modelState.source_freshness;
-  assert(freshness?.total_sources === 6, "Expected six shared Dashboard sources", freshness);
+  assert(freshness?.total_sources === 7, "Expected seven shared Dashboard sources", freshness);
   const byKey = Object.fromEntries((freshness.rows || []).map((row)=>[row.key,row]));
   const spatialExpected = canonicalTimestamp(modelState.spatial_generated_at);
   assert(spatialExpected, "Spatial Index generated_at is missing or invalid", { generated_at:modelState.spatial_generated_at });
@@ -357,6 +381,31 @@ function verifyCanonicalContracts(modelState, desktopDom) {
   const recentExpected=recentTimes.at(-1);
   assert(byKey.recentDelta?.data_at === recentExpected, "Recent Delta freshness is not latest mutation timestamp", { row:byKey.recentDelta, expected:recentExpected });
   assert(byKey.recentDelta?.data_basis === "latest_tracked_mutation", "Recent Delta freshness basis mismatch", byKey.recentDelta);
+
+  const publication=modelState.runtime_publication;
+  const activation=publication?.activation_history;
+  const runtimeDelta=modelState.runtime_delta_drift;
+  assert(activation?.available === true, "Runtime activation history unavailable in Production acceptance", activation);
+  assert(activation.latest_recorded && activation.previous_recorded, "Runtime activation history must expose latest and previous Production activations", activation);
+  assert(activation.delta_from_previous && typeof activation.delta_from_previous === "object", "Runtime activation delta is missing", activation);
+  assert(activation.latest_matches_projection === true, "Latest Runtime activation does not match current projection", activation);
+  assert(publication.current_runtime_activity_count === activation.latest_recorded.row_count, "Runtime publication count does not match latest activation", { publication,activation });
+  assert(Number.isInteger(activation.delta_from_previous.runtime_activity_count), "Runtime Activity delta is not an integer", activation.delta_from_previous);
+  assert(Number.isInteger(activation.delta_from_previous.excluded_activity_count), "Runtime excluded delta is not an integer", activation.delta_from_previous);
+
+  assert(runtimeDelta?.available === true, "Dashboard Runtime Delta/Drift model is unavailable", runtimeDelta);
+  assert(runtimeDelta.comparison_available === true, "Dashboard Runtime Delta/Drift has no previous activation comparison", runtimeDelta);
+  assert(runtimeDelta.drift === false && runtimeDelta.latest_matches_projection === true, "Dashboard Runtime Delta/Drift detected projection drift", runtimeDelta);
+  assert(runtimeDelta.latest?.id === activation.latest_recorded.id, "Dashboard latest activation id differs from publication source", { runtimeDelta,activation });
+  assert(runtimeDelta.previous?.id === activation.previous_recorded.id, "Dashboard previous activation id differs from publication source", { runtimeDelta,activation });
+  assert(runtimeDelta.runtime_activity_delta === activation.delta_from_previous.runtime_activity_count, "Dashboard Runtime Activity delta differs from publication source", { runtimeDelta,activation });
+  assert(runtimeDelta.excluded_activity_delta === activation.delta_from_previous.excluded_activity_count, "Dashboard Runtime excluded delta differs from publication source", { runtimeDelta,activation });
+  assert(runtimeDelta.compile_key_changed === activation.delta_from_previous.compile_key_changed, "Dashboard compile-key comparison differs from publication source", { runtimeDelta,activation });
+
+  const publicationCompiledAt=canonicalTimestamp(publication.active_compile?.compiled_at);
+  assert(publicationCompiledAt, "Runtime Publication active compile timestamp is missing", publication);
+  assert(byKey.runtimePublication?.data_at === publicationCompiledAt, "Runtime Publication freshness is not active compile timestamp", { row:byKey.runtimePublication,publication });
+  assert(byKey.runtimePublication?.data_basis === "compiled_at", "Runtime Publication freshness basis mismatch", byKey.runtimePublication);
 
   for (const key of ["persons","personDomains","nonTimeline","systemIdentity"]) {
     assert(byKey[key]?.data_at == null, `${key} incorrectly exposes a source timestamp`, byKey[key]);
@@ -388,6 +437,24 @@ function verifyCanonicalContracts(modelState, desktopDom) {
   assert(desktopDom.activity_rows.length > 0, "Completeness Matrix has no Activity-unit rows", desktopDom.activity_rows);
   assert(desktopDom.activity_rows.every((row)=>row.has_person_drilldown === false), "Activity-unit Completeness row incorrectly exposes Person drill-down", desktopDom.activity_rows);
   assert(desktopDom.person_rows.some((row)=>row.has_person_drilldown), "Completeness Matrix has no actionable Person drill-down row", desktopDom.person_rows);
+
+  const runtimeDom=desktopDom.runtime_delta;
+  assert(runtimeDom?.present === true, "Runtime Delta/Drift panel did not render", runtimeDom);
+  const cards=Object.fromEntries((runtimeDom.cards || []).map((row)=>[row.label,row]));
+  assert(renderedInteger(cards["최신 Runtime"]?.value) === runtimeDelta.latest.row_count, "Rendered latest Runtime count differs from model", { dom:runtimeDom,model:runtimeDelta });
+  assert(renderedInteger(cards["직전 Runtime"]?.value) === runtimeDelta.previous.row_count, "Rendered previous Runtime count differs from model", { dom:runtimeDom,model:runtimeDelta });
+  assert(renderedInteger(cards["Runtime Activity 증감"]?.value) === runtimeDelta.runtime_activity_delta, "Rendered Runtime Activity delta differs from model", { dom:runtimeDom,model:runtimeDelta });
+  assert(renderedInteger(cards["Runtime 제외 증감"]?.value) === runtimeDelta.excluded_activity_delta, "Rendered Runtime excluded delta differs from model", { dom:runtimeDom,model:runtimeDelta });
+  assert(cards["최신 Runtime"]?.state === "ready", "Rendered Runtime Delta/Drift card is not in ready state", cards["최신 Runtime"]);
+
+  const comparisonLabel=runtimeDelta.compile_key_changed ? "직전과 다른 Compile 활성화" : "같은 Compile 재활성화";
+  assert((runtimeDom.meta || []).includes(comparisonLabel), "Rendered Runtime activation comparison label differs from model", { dom:runtimeDom,model:runtimeDelta });
+  assert((runtimeDom.meta || []).includes("최신 activation = 현재 Runtime projection"), "Rendered Runtime projection-match label is missing", runtimeDom);
+
+  const renderedReasonDeltas=(runtimeDom.reasons || []).map((row)=>renderedInteger(row.value));
+  const expectedReasonDeltas=(runtimeDelta.exclusion_delta_rows || []).map((row)=>row.delta);
+  assert(renderedReasonDeltas.length === expectedReasonDeltas.length, "Rendered Runtime exclusion delta reason count differs from model", { dom:runtimeDom,model:runtimeDelta });
+  assert(renderedReasonDeltas.every((value,index)=>value === expectedReasonDeltas[index]), "Rendered Runtime exclusion reason deltas differ from model", { rendered:renderedReasonDeltas,expected:expectedReasonDeltas,dom:runtimeDom });
 }
 
 async function main() {
@@ -443,7 +510,7 @@ async function main() {
     await dashboardReady(client);
 
     const requiredEyebrows=[
-      "SYSTEM / PRODUCTION","SOURCE FRESHNESS","NEEDS ATTENTION","WORK FRONTIER","DATA QUALITY",
+      "SYSTEM / PRODUCTION","RUNTIME DELTA / DRIFT","SOURCE FRESHNESS","NEEDS ATTENTION","WORK FRONTIER","DATA QUALITY",
       "COMPLETENESS MATRIX","ERA × REGION COVERAGE","RECENT DELTA · RECENT ACTIVITY TIMELINE","PERSON DOMAINS","WORKSPACE"
     ];
     const desktopDom=await collectDesktopDom(client);
@@ -529,7 +596,8 @@ async function main() {
         recent_delta_gaps:modelState.recent_delta?.gaps || [],
         recent_delta_coverage:modelState.recent_delta_coverage,
         heatmap:{available:modelState.heatmap?.available,placed_activity_count:modelState.heatmap?.placed_activity_count,unresolved_activity_count:modelState.heatmap?.unresolved_activity_count,row_count:modelState.heatmap?.rows?.length || 0},
-        timeline:{available:modelState.timeline?.available,event_count:modelState.timeline?.event_count,total_change_count:modelState.timeline?.total_change_count,entry_count:modelState.timeline?.entries?.length || 0}
+        timeline:{available:modelState.timeline?.available,event_count:modelState.timeline?.event_count,total_change_count:modelState.timeline?.total_change_count,entry_count:modelState.timeline?.entries?.length || 0},
+        runtime_delta_drift:modelState.runtime_delta_drift
       },
       browser_errors:{console:consoleErrors,major_console:majorConsoleErrors,exceptions,major_network:majorNetworkErrors,all_network:resourceErrors},
       screenshots:{desktop:desktopScreenshot,mobile:mobileScreenshot}
