@@ -30,7 +30,7 @@ test('authority navigation loads the current spacetime renderer without a stale 
   assert.match(spacetimeView, /ATLAS_CLIENT_DATA_STORE/);
   assert.match(spacetimeView, /dataStore\.loadSpatialIndex/);
   assert.match(spacetimeView, /dataStore\.loadPersons/);
-  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260920-polity-composite-exact-fit-floor/);
+  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260920-single-person-surface/);
 });
 
 test('spacetime topbar suppresses desktop-only explanatory subtitle', () => {
@@ -46,6 +46,6 @@ test('authority navigation resets the viewport only when the domain changes', ()
 
 test('inactive person surfaces are forced out of layout', () => {
   assert.match(navCss, /#personMainView\[hidden\]/);
-  assert.match(navCss, /#relationshipAuthoringTools\[hidden\]/);
+  assert.doesNotMatch(navCss, /#relationshipAuthoringTools\[hidden\]/);
   assert.match(navCss, /display\s*:\s*none\s*!important/);
 });

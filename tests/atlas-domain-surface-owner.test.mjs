@@ -18,7 +18,7 @@ test('all Person-owned top-level surfaces are consolidated under one domain root
   assert.match(ownerScript, /personDomainRoot/);
   assert.match(ownerScript, /"personMainView"/);
   assert.doesNotMatch(ownerScript, /"nonTimelineSection"/);
-  assert.match(ownerScript, /"relationshipAuthoringTools"/);
+  assert.doesNotMatch(ownerScript, /"relationshipAuthoringTools"/);
   assert.match(ownerScript, /root\.hidden\s*=\s*!isPersons/);
   assert.match(ownerCss, /#personDomainRoot\[hidden\]\{display:none!important\}/);
 });

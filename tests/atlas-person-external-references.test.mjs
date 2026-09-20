@@ -35,10 +35,10 @@ test("shared Person store and external-reference assets load before Person Main 
   assert.match(html, /atlas-person-external-references\.css\?v=20260821-v1/);
   assert.match(html, /atlas-client-data-store\.js\?v=20260919-shared-store-v1/);
   assert.match(html, /atlas-person-external-references\.js\?v=20260919-shared-store-v1/);
-  assert.match(html, /atlas-person-main\.js\?v=20260920-person-facets-sticky-v1/);
+  assert.match(html, /atlas-person-main\.js\?v=20260920-single-person-surface/);
   const storeIndex = html.indexOf("atlas-client-data-store.js?v=20260919-shared-store-v1");
   const refsIndex = html.indexOf("atlas-person-external-references.js?v=20260919-shared-store-v1");
-  const mainIndex = html.indexOf("atlas-person-main.js?v=20260920-person-facets-sticky-v1");
+  const mainIndex = html.indexOf("atlas-person-main.js?v=20260920-single-person-surface");
   assert.ok(storeIndex >= 0 && storeIndex < refsIndex && refsIndex < mainIndex);
   assert.match(html, /atlas-person-era-navigation\.js\?v=20260920-person-facets-sticky-v1/);
 });

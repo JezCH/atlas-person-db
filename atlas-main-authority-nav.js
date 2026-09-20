@@ -43,7 +43,6 @@
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
   const personView = document.getElementById("personMainView");
-  const authoringTools = document.getElementById("relationshipAuthoringTools");
   const connectionStatus = document.getElementById("connectionStatus");
   const mobileSearch = document.getElementById("mobileSearchInput");
   const mobileSearchClear = document.getElementById("mobileSearchClear");
@@ -51,7 +50,7 @@
   const desktopButtons = [...document.querySelectorAll(".nav-list [data-atlas-domain]")];
   const mobileButtons = [...document.querySelectorAll(".mobile-nav [data-atlas-domain]")];
 
-  if (!mainArea || !topbar || !personView || !authoringTools || !desktopButtons.length || !mobileButtons.length) {
+  if (!mainArea || !topbar || !personView || !desktopButtons.length || !mobileButtons.length) {
     console.warn("ATLAS authority navigation could not initialize required DOM anchors.");
     return;
   }
@@ -251,7 +250,6 @@
     currentDomain = next;
     const isPersons = next === "persons";
     personView.hidden = !isPersons;
-    authoringTools.hidden = !isPersons;
     shell.hidden = isPersons;
     if (!isPersons) shell.innerHTML = domainHtml(next);
     if (next === "dashboard") window.ATLAS_DASHBOARD?.mount?.(shell.querySelector("#atlasDashboardMount"));
