@@ -16,8 +16,8 @@ function numericConstant(name) {
   return Number(match[1]);
 }
 
-test("mobile presentation keeps a 500 default inside the 100 to 1500 percent contract", () => {
-  assert.equal(numericConstant("CAMERA_MIN_ZOOM"), 1);
+test("mobile presentation keeps a 500 default inside the viewport-fit to 1500 percent contract", () => {
+  assert.equal(numericConstant("CAMERA_MIN_ZOOM"), 0.5);
   assert.equal(numericConstant("CAMERA_DEFAULT_ZOOM"), 5);
   assert.equal(numericConstant("CAMERA_MAX_ZOOM"), 15);
   assert.equal(numericConstant("MOBILE_VIEWPORT_MAX_WIDTH"), 760);
