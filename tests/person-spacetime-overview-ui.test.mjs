@@ -79,14 +79,15 @@ test("spacetime top chrome merges controls legend and integrity status into comp
 
 test("the timeline remains a map-like camera viewport", () => {
   assert.match(css, /\.spacetime-scroll\{[^}]*overflow:auto/);
-  assert.match(css, /height:clamp\(520px,72vh,860px\)/);
-  assert.match(css, /max-height:860px/);
+  assert.match(css, /height:clamp\(480px,62vh,720px\)/);
+  assert.match(css, /max-height:720px/);
   assert.match(css, /overscroll-behavior:contain/);
 });
 
 test("common chrome and label geometry are uniformly compact", () => {
   assert.match(css, /\.spacetime-sticky-corner\{[^}]*width:var\(--spacetime-axis-width,140px\);height:var\(--spacetime-header-height,36px\)/);
-  assert.match(css, /\.spacetime-region-head\{[^}]*height:var\(--spacetime-header-height,36px\);margin-left:var\(--spacetime-axis-width,140px\)/);
+  assert.match(css, /\.spacetime-region-head\{[^}]*height:var\(--spacetime-header-height,36px\);margin-top:calc\(-1 \* var\(--spacetime-header-height,36px\)\);margin-left:var\(--spacetime-axis-width,140px\)/);
+  assert.match(css, /\.spacetime-time-axis\{[^}]*margin-top:0\}/);
   assert.match(css, /\.spacetime-canvas\{[^}]*left:var\(--spacetime-axis-width,140px\);top:var\(--spacetime-header-height,36px\)/);
   assert.match(css, /\.spacetime-track-label\{[^}]*height:18px/);
 });
