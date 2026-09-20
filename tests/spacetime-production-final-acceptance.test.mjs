@@ -100,6 +100,15 @@ test("Production visual acceptance requires every viewport Person name at 500 an
 
 test("real-Chrome domain acceptance preserves Person/Activity semantic separation", () => {
   const verifier = read("scripts/verify-spacetime-production-domain-colors.mjs");
+  assert.match(verifier, /VIEWPORT = Object\.freeze\(\{ width: 1600, height: 1000/);
+  assert.match(verifier, /Emulation\.setDeviceMetricsOverride", VIEWPORT/);
+  assert.match(verifier, /Page\.navigate", \{ url: "about:blank" \}/);
+  assert.match(verifier, /Page\.navigate", \{ url: PRODUCTION_URL \}/);
+  assert.match(verifier, /data-spacetime-search-result/);
+  assert.match(verifier, /spacetimeClearPerson/);
+  assert.match(verifier, /decorateSpacetime\(document, window\.ATLAS_PERSON_DOMAIN_UI\)/);
+  assert.match(verifier, /spacetime-track-label\[data-representative-domain\]/);
+  assert.match(verifier, /spacetime-track-rail\[data-representative-domain\]/);
   assert.match(verifier, /canonical_domains\.length === 8/);
   assert.match(verifier, /decorated_label_count > 0/);
   assert.match(verifier, /decorated_rail_count > 0/);
