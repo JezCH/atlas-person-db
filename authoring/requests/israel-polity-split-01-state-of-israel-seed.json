@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "israel-polity-split-20260920:state-of-israel-seed",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "David Ben-Gurion",
+    "display_name_ko": "다비드 벤구리온",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "State of Israel",
+    "display_name_ko": "이스라엘국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "David Ben-Gurion headed Israel's provisional government from the establishment of the State of Israel on 14 May 1948 and continued as Prime Minister through the first four governments. This reviewed Activity is the seed for separating the modern State of Israel from the unrelated premonarchic ancient-Israel polity that currently shares the generic Israel identity.",
+    "start_year": 1948,
+    "start_month": 5,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1954,
+    "end_month": 1,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "government_institution_web",
+      "title": "David Ben-Gurion — Knesset",
+      "citation_text": "The Knesset identifies Ben-Gurion as Israel's first Prime Minister and records his first premiership before his later return."
+    },
+    {
+      "source_type": "government_web",
+      "title": "Past Governments — Prime Minister's Office, Israel",
+      "citation_text": "The Israeli Prime Minister's Office records David Ben-Gurion as prime minister of the Provisional Government beginning 14 May 1948 and through the Fourth Government ending 26 January 1954."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "review_context": {
+    "request_batch": "israel-polity-identity-split-20260920",
+    "requested_item": 1,
+    "decision_authority": "#977 reviewed ancient/modern Israel split + user approval 2026-09-20",
+    "identity_note": "Create a distinct modern State of Israel polity identity. Reuse the existing David Ben-Gurion Person; a governed correction stage will retire the old duplicate Activity and relink the remaining modern-Israel Activities."
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "israel-polity-split-20260920:northern-kingdom-seed",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Omri",
+    "display_name_ko": "오므리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Northern Kingdom of Israel",
+    "display_name_ko": "북이스라엘 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Conventional year-level reign window for Omri, founder of the Omride dynasty and builder of Samaria as royal capital. This reviewed Activity is the seed for separating the post-division northern Kingdom of Israel from the earlier Saul-David-Solomon united monarchy that currently shares the Kingdom of Israel identity.",
+    "start_year": -885,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -874,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "bibliographic_reference",
+      "title": "Mesha Stele; Hebrew Bible — 1 Kings 16:15–28",
+      "citation_text": "Independent Moabite and Israelite textual traditions attest Omri and his dynasty."
+    }
+  ],
+  "review_context": {
+    "request_batch": "israel-polity-identity-split-20260920",
+    "requested_item": 2,
+    "decision_authority": "#977 Kingdom of Israel internal split review + user approval 2026-09-20",
+    "identity_note": "Create a distinct Northern Kingdom of Israel polity identity. Reuse the existing Omri Person; a governed correction stage will retire the old duplicate Activity and relink the remaining northern-kingdom Activities."
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-20",
+      "reason": "Direct NamuWiki original-page verification is unavailable in this session. Search evidence indicates an Omri article exists, but project policy forbids synthesizing a canonical namu.wiki URL from mirrors, so no URL or not_found assertion is fabricated.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  }
+}
