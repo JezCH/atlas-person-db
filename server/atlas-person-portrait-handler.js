@@ -53,7 +53,7 @@ function databaseUrl(env = process.env) {
 
 function statusForError(error) {
   const code = String(error?.code || error?.message || "");
-  if (code === "PERSON_PORTRAIT_TARGET_NOT_FOUND") return 404;
+  if (code === "PERSON_PORTRAIT_TARGET_NOT_FOUND" || code === "PERSON_PORTRAIT_NOT_FOUND") return 404;
   if (code === "PORTRAIT_BLOB_STORAGE_NOT_CONFIGURED" || code === "PORTRAIT_DATABASE_NOT_CONFIGURED") return 503;
   if (code === "PERSON_PORTRAIT_ASSET_DUPLICATE_REVIEW_REQUIRED") return 409;
   if (/REQUIRED|INVALID|TOO_LARGE|TOO_MANY|WEBP_REQUIRED|SOURCE_NOT_FOUND/.test(code)) return 400;
@@ -74,7 +74,7 @@ function createPersonPortraitHandler({
   authorizer = null,
   storageFactory = createPortraitBlobStorage,
   serviceFactory = createPersonPortraitService,
-  allowedMethods = ["GET", "PUT", "DELETE"]
+  allowedMethods = ["GET", "PUT", "PATCH", "DELETE"]
 } = {}) {
   const allowedMethodSet = new Set((allowedMethods || []).map((value) => String(value || "").toUpperCase()));
   return async function personPortraitHandler(req, res) {
@@ -138,6 +138,12 @@ function createPersonPortraitHandler({
 
       if (method === "PUT") {
         const result = await service.put(body);
+        sendJson(res, 200, { ok:true, schema:PORTRAIT_API_SCHEMA, ...result });
+        return;
+      }
+
+      if (method === "PATCH") {
+        const result = await service.patch(body);
         sendJson(res, 200, { ok:true, schema:PORTRAIT_API_SCHEMA, ...result });
         return;
       }
