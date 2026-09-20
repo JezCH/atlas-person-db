@@ -231,6 +231,7 @@ async function collect500(client) {
       frameRect:rect(frame),
       sidecarRect:rect(sidecar),
       inspectorRect:rect(inspector),
+      inspectorEmpty:Boolean(inspector?.classList.contains("is-empty")),
       minimapSurfaceRect:rect(minimapSurface),
       workspaceGrid:style(workspace).gridTemplateColumns,
       sidecarPosition:style(sidecar).position,
@@ -415,7 +416,9 @@ async function main() {
       return true;
     })()`);
     await waitFor(client, "document.querySelectorAll('.spacetime-track-label').length > 0", 30000);
-    await sleep(1200);
+    await evaluate(client, "document.querySelector('#spacetimeClearPerson')?.click()");
+    await waitFor(client, "Boolean(document.querySelector('#spacetimeInspector.is-empty'))", 10000);
+    await sleep(400);
 
     const live = await evaluate(client, `(() => ({
       href:location.href,
@@ -475,6 +478,7 @@ async function main() {
     assert(at500.frameRect.right <= at500.sidecarRect.left + 0.5, "Map and sidecar overlap at desktop viewport", at500);
     assert(at500.sidecarRect.height <= at500.scrollHeight + 1, "Desktop sidecar exceeds the spacetime viewport height", at500);
     assert(at500.minimapSurfaceRect.height <= 114, "Desktop minimap is taller than the compact contract", at500);
+    assert(at500.inspectorEmpty, "Desktop compact-height check requires an empty Inspector", at500);
     assert(at500.inspectorRect.height <= 78, "Empty desktop inspector is taller than the compact contract", at500);
     assert(Math.abs(at500.headerHeight - 36) < 0.75, "Space header height drifted from 36px", at500);
     assert(Math.abs(at500.cornerWidth - 140) < 0.75, "Shared axis width drifted from 140px", at500);
