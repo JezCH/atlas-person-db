@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-20T05:40:00.000Z",
+  "generated_at": "2026-09-20T05:58:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1209,7 +1209,9 @@
     "a47f57af-8ac2-4724-81b0-43074c64f84c": "europe",
     "1eaa48b6-dc60-49d6-91c4-49db556f4ddf": "europe",
     "14ad524a-01e4-4d70-9c79-9aaa596aa2fa": "west-asia",
-    "8785538e-ec07-4eba-bd05-5c7b3c7903c4": "west-asia"
+    "8785538e-ec07-4eba-bd05-5c7b3c7903c4": "west-asia",
+    "8053a905-8cee-4b43-8f56-c827291f7498": "east-asia",
+    "5a2433b4-6001-434c-abee-0e6077e12f54": "west-asia"
   },
   "place_function_records": [
     {
@@ -2776,7 +2778,9 @@
     "e146e6ef-15f0-4bca-9e5d-b26672c65018": "eastern-siberia-far-east",
     "e1548cb1-f89d-538b-9fb2-bad02ad87f8e": "japan",
     "e3ca4f3c-3504-4830-b141-f4cdd0157763": "himalayas",
-    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia"
+    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia",
+    "8053a905-8cee-4b43-8f56-c827291f7498": "china",
+    "5a2433b4-6001-434c-abee-0e6077e12f54": "anatolia"
   },
   "activity_spatial_overrides": [
     {
