@@ -204,6 +204,14 @@ async function collect500(client) {
       reviewedPlaceBindingCount:Array.isArray(window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE?.REVIEWED_PLACE_BINDINGS)
         ? window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE.REVIEWED_PLACE_BINDINGS.length
         : 0,
+      reviewedDisplayPlaceCount:(() => {
+        const spatial=window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE;
+        const semantic=window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS;
+        const axis=window.ATLAS_PERSON_SPACETIME_SPACE_AXIS;
+        if (!Array.isArray(spatial?.REVIEWED_PLACE_BINDINGS) || !semantic?.buildReviewedPlaceGeometry || !axis?.createSpatialContinuum) return 0;
+        const width=Math.max(1, parseFloat(header?.style?.width) || header?.getBoundingClientRect?.().width || 1);
+        return semantic.buildReviewedPlaceGeometry(spatial.REVIEWED_PLACE_BINDINGS, axis.createSpatialContinuum(), width).length;
+      })(),
       placeMarkerCount:qa(".spacetime-place-head-marker").length,
       placeVisibleCount:Number(style(placeLayer).opacity) > 0.02 ? qa(".spacetime-place-head-marker").filter(el=>Number(style(el).opacity) > 0.02).length : 0,
       macro, sub,
@@ -247,6 +255,14 @@ async function collect1200(client, geometry500) {
       reviewedPlaceBindingCount:Array.isArray(window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE?.REVIEWED_PLACE_BINDINGS)
         ? window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE.REVIEWED_PLACE_BINDINGS.length
         : 0,
+      reviewedDisplayPlaceCount:(() => {
+        const spatial=window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE;
+        const semantic=window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS;
+        const axis=window.ATLAS_PERSON_SPACETIME_SPACE_AXIS;
+        if (!Array.isArray(spatial?.REVIEWED_PLACE_BINDINGS) || !semantic?.buildReviewedPlaceGeometry || !axis?.createSpatialContinuum) return 0;
+        const width=Math.max(1, parseFloat(q(".spacetime-region-head")?.style?.width) || q(".spacetime-region-head")?.getBoundingClientRect?.().width || 1);
+        return semantic.buildReviewedPlaceGeometry(spatial.REVIEWED_PLACE_BINDINGS, axis.createSpatialContinuum(), width).length;
+      })(),
       placeMarkerCount:markers.length,
       placeMarkers:markers.map(rect),
       placeOverlap,
@@ -387,7 +403,9 @@ async function main() {
     assert(at500.zoom === "500%", "Readable-floor zoom is not 500%", at500);
     assert(at500.placeOpacity === 0, "Reviewed Place layer must be hidden at the 500% floor", at500);
     assert(at500.reviewedPlaceBindingCount > 0, "Reviewed Place registry is unavailable at 500%", at500);
-    assert(at500.placeMarkerCount === at500.reviewedPlaceBindingCount, "Rendered Place marker count does not match the runtime reviewed registry at 500%", at500);
+    assert(at500.reviewedDisplayPlaceCount > 0, "Reviewed display Place plan is unavailable at 500%", at500);
+    assert(at500.reviewedPlaceBindingCount >= at500.reviewedDisplayPlaceCount, "Reviewed display Place plan exceeds the source registry at 500%", at500);
+    assert(at500.placeMarkerCount === at500.reviewedDisplayPlaceCount, "Rendered Place marker count does not match the semantic-axis display plan at 500%", at500);
     assert(at500.placeVisibleCount === 0, "Reviewed Place markers are visibly leaking into 500%", at500);
     assert(at500.inspectorPosition === "sticky", "Person/Activity inspector is not sticky", at500);
     assert(at500.frameRect.right <= at500.inspectorRect.left + 0.5, "Map and inspector overlap at desktop viewport", at500);
@@ -425,7 +443,8 @@ async function main() {
     assert(at1200.zoom === "1200%", "Maximum visual zoom is not 1200%", at1200);
     assert(at1200.placeOpacity > 0.99, "Reviewed Place layer is not fully visible at 1200%", at1200);
     assert(at1200.reviewedPlaceBindingCount === at500.reviewedPlaceBindingCount, "Reviewed Place registry changed across camera zoom", { at500, at1200 });
-    assert(at1200.placeMarkerCount === at1200.reviewedPlaceBindingCount, "Rendered Place marker count does not match the runtime reviewed registry at 1200%", at1200);
+    assert(at1200.reviewedDisplayPlaceCount === at500.reviewedDisplayPlaceCount, "Reviewed display Place plan changed across camera zoom", { at500, at1200 });
+    assert(at1200.placeMarkerCount === at1200.reviewedDisplayPlaceCount, "Rendered Place marker count does not match the semantic-axis display plan at 1200%", at1200);
     assert(at1200.placeOverlap.count === 0, "Reviewed Place header markers overlap at 1200%", at1200.placeOverlap);
     assert(at1200.labelOverlap.count === 0, "Visible Person labels overlap at 1200%", at1200.labelOverlap);
     assert(at1200.deferredLabelCount === 0, "Person names are deferred at 1200%", at1200);

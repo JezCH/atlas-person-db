@@ -60,8 +60,10 @@ test("Production visual acceptance requires every viewport Person name at 500 an
   assert.match(verifier, /at1200\.domLabelCount === at1200\.domPersonCount/);
   assert.match(verifier, /spacetime-1200\.png/);
   assert.match(verifier, /at1200\.zoom === "1200%"/);
-  assert.match(verifier, /at500\.placeMarkerCount === at500\.reviewedPlaceBindingCount/);
-  assert.match(verifier, /at1200\.placeMarkerCount === at1200\.reviewedPlaceBindingCount/);
+  assert.match(verifier, /reviewedDisplayPlaceCount/);
+  assert.match(verifier, /semantic\.buildReviewedPlaceGeometry/);
+  assert.match(verifier, /at500\.placeMarkerCount === at500\.reviewedDisplayPlaceCount/);
+  assert.match(verifier, /at1200\.placeMarkerCount === at1200\.reviewedDisplayPlaceCount/);
   assert.doesNotMatch(verifier, /EXPECTED_REVIEWED_PLACE_COUNT/);
   assert.doesNotMatch(verifier, /bandContainment\.label_violation_count === 0/);
   assert.match(verifier, /bandContainment\.rail_violation_count === 0/);
