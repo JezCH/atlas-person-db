@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-reviewed-spatial-corrections/v1",
+  "correction_id": "kingdom-of-norway-relinked-source-retirement-20260920",
+  "baseline": "582d59b68998765b7e4e6813372a31d0f0d29e4b",
+  "reviewed_at": "2026-09-20T12:37:00Z",
+  "changes": [
+    {
+      "polity_id": "b00cd071-3772-563e-9139-ca4947d5bd9b",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "northern-europe"
+      },
+      "disposition": "remove_relinked_source",
+      "reason": "Kingdom of Norway is now an Activity-orphan after the exact reviewed relink to Norway; the Norway survivor already carries the same Europe/Northern Europe placement and Kingdom of Norway / 노르웨이 왕국 is preserved as a reviewed state-form designation."
+    }
+  ]
+}

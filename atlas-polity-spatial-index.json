@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-20T12:06:00.000Z",
+  "generated_at": "2026-09-20T12:37:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -449,7 +449,6 @@
     "afa43106-21d7-480f-8c42-06c3f59233ae": "oceania",
     "afcb601e-5f7b-5e88-8185-6b45134fbfc4": "southeast-asia",
     "afee7492-af20-594f-8ad5-4c55fd60b5f3": "oceania",
-    "b00cd071-3772-563e-9139-ca4947d5bd9b": "europe",
     "b030c005-1c9c-56fa-9d7e-1ce0a0da66bf": "europe",
     "b07ef629-2fd6-59f9-bac8-ec685b371aac": "europe",
     "b0e2c660-f5f3-58c5-a4e8-aac0f2abeb78": "east-asia",
@@ -1998,7 +1997,6 @@
     "afa43106-21d7-480f-8c42-06c3f59233ae": "australasia",
     "afcb601e-5f7b-5e88-8185-6b45134fbfc4": "mainland-southeast-asia",
     "afee7492-af20-594f-8ad5-4c55fd60b5f3": "pacific-islands",
-    "b00cd071-3772-563e-9139-ca4947d5bd9b": "northern-europe",
     "b030c005-1c9c-56fa-9d7e-1ce0a0da66bf": "italy",
     "b07ef629-2fd6-59f9-bac8-ec685b371aac": "central-europe",
     "b0e2c660-f5f3-58c5-a4e8-aac0f2abeb78": "china",
