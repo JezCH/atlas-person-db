@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zz-spatial-residual-wei-bithynia-20260920",
+  "baseline": "eb5c0d6e825f88662db022cbf60a7fdb0177dbfa",
+  "reviewed_at": "2026-09-20T05:58:00.000Z",
+  "bindings": [
+    {
+      "polity_id": "8053a905-8cee-4b43-8f56-c827291f7498",
+      "region_code": "east-asia",
+      "subregion_code": "china"
+    },
+    {
+      "polity_id": "5a2433b4-6001-434c-abee-0e6077e12f54",
+      "region_code": "west-asia",
+      "subregion_code": "anatolia"
+    }
+  ]
+}
