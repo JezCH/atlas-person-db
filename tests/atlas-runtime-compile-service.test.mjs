@@ -209,6 +209,7 @@ test('dry-run compile rolls back and does not write activation history', async (
     if (/pg_advisory_xact_lock/.test(sql)) return {};
     if (sql === runtime.AUTHORING_SNAPSHOT_SQL) return {rows:source};
     if (/insert into atlas_v2\.runtime_compile_runs/.test(sql)) return {rowCount:1,rows:[]};
+    if (/from atlas_v2\.runtime_compile_exclusions/.test(sql)) return {rows:[]};
     if (/delete from atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
     if (/insert into atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
     if (/count\(distinct compile_key\)::int as compile_count/.test(sql)) {
@@ -248,6 +249,7 @@ test('committed compile captures pre-existing Runtime baseline once and writes a
     }
     if (sql === runtime.AUTHORING_SNAPSHOT_SQL) return {rows:source};
     if (/insert into atlas_v2\.runtime_compile_runs/.test(sql)) return {rowCount:1,rows:[]};
+    if (/from atlas_v2\.runtime_compile_exclusions/.test(sql)) return {rows:[]};
     if (/delete from atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
     if (/insert into atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
     if (/min\(compile_key\) as compile_key/.test(sql)) {
@@ -280,3 +282,60 @@ test('Runtime contract forbids public live Authoring joins', () => {
   assert.equal(contract.readiness.start_boundary,'known_complete');
   assert.equal(contract.readiness.end_boundary,'known_complete_or_verified_ongoing');
 });
+
+test('compile snapshot preserves exact excluded Activity targets beside the aggregate summary', () => {
+  const unresolved=activity({
+    id:'00000000-0000-4000-8000-000000000001',
+    activity_start:null,activity_start_granularity:null,activity_start_certainty:null,activity_start_calendar:null
+  });
+  const compiled=runtime.compileSnapshot([activity(),unresolved]);
+  assert.equal(compiled.excluded_row_count,1);
+  assert.deepEqual(compiled.exclusions,[{
+    activity_id:'00000000-0000-4000-8000-000000000001',
+    person_id:'22222222-2222-4222-8222-222222222222',
+    polity_id:'33333333-3333-4333-8333-333333333333',
+    reason_code:'START_BOUNDARY_UNRESOLVED'
+  }]);
+});
+
+test('Runtime exclusion ledger stores exact targets for a compile and replays immutably', async () => {
+  const unresolved=activity({
+    id:'00000000-0000-4000-8000-000000000001',
+    activity_start:null,activity_start_granularity:null,activity_start_certainty:null,activity_start_calendar:null
+  });
+  const compiled=runtime.compileSnapshot([unresolved]);
+  const calls=[];
+  const insertClient={async query(sql,params){
+    calls.push({sql,params});
+    if (/select activity_id::text/.test(sql)) return {rows:[]};
+    if (/insert into atlas_v2\.runtime_compile_exclusions/.test(sql)) return {rowCount:1};
+    throw new Error('unexpected query');
+  }};
+  assert.equal(await runtime.ensureCompileExclusions(insertClient,compiled),false);
+  assert.match(calls[1].sql,/\$2::uuid,\$3::uuid,\$4::uuid,\$5/);
+  assert.deepEqual(calls[1].params,[
+    compiled.compile_key,
+    unresolved.id,unresolved.person_id,unresolved.polity_id,'START_BOUNDARY_UNRESOLVED'
+  ]);
+
+  const replayClient={async query(sql,params){
+    assert.deepEqual(params,[compiled.compile_key]);
+    return {rows:[{
+      activity_id:unresolved.id,
+      person_id:unresolved.person_id,
+      polity_id:unresolved.polity_id,
+      reason_code:'START_BOUNDARY_UNRESOLVED'
+    }]};
+  }};
+  assert.equal(await runtime.ensureCompileExclusions(replayClient,compiled),true);
+});
+
+test('Runtime exclusion target migration is replay-safe and wired into runtime migrations', () => {
+  const sql=fs.readFileSync(new URL('../db/migrations/20260920_runtime_compile_exclusion_targets_v1.sql',import.meta.url),'utf8');
+  const migrations=fs.readFileSync(new URL('../server/atlas-runtime-migrations.js',import.meta.url),'utf8');
+  assert.match(sql,/CREATE TABLE IF NOT EXISTS atlas_v2\.runtime_compile_exclusions/i);
+  assert.match(sql,/PRIMARY KEY \(compile_key, activity_id\)/i);
+  assert.match(sql,/START_BOUNDARY_UNRESOLVED/);
+  assert.match(migrations,/20260920_runtime_compile_exclusion_targets_v1\.sql/);
+});
+
