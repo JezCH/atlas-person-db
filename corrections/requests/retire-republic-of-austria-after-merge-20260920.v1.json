@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:republic-of-austria-after-reviewed-merge:2026-09-20:v1",
+  "release_order": 602,
+  "evidence": {
+    "decision": "Reviewed same-identity state-form cleanup after exact Activity relink to Austria, bounded Republic of Austria temporal designations, and removal of the stale same-placement spatial source binding.",
+    "review_checkpoint": "#977 POLITY-IDENTITY-AUSTRIA-RETIRE-20260920",
+    "activity_relink_merge_sha": "4721d978c587de9dc593b3cba3f76d242b57934f",
+    "spatial_cleanup_merge_sha": "e271a3250feecfa6ab2d9c8964c100e615fc0a68",
+    "prior_reference_audit_run": 35443614519,
+    "reference_basis": "Read-only audit recorded owned_reference_total=2 (two preferred polity_names; descriptions=0; polity_sources=0). Its only two external references were the two person_politics_v2 rows later relinked by #1290. Current Production Polity detail confirms activity_count=0; retirement dry-run must re-prove external_reference_total=0 before delete."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:republic-of-austria-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "02e66261-7798-4144-b298-9bc41ee2215b",
+        "canonical_key": "Republic of Austria",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Republic of Austria",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "오스트리아 공화국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
