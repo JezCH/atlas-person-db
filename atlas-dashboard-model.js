@@ -104,6 +104,10 @@
 
     const spatial = spatialStatus(personResult, spatialIndex);
     const spatialPersonIds = spatial.unresolved_person_ids;
+    const provenancePersonIds = persons
+      .filter((person) => (person?.activity_summaries || []).some((activity) => Number(activity?.source_count || 0) <= 0))
+      .map((person) => text(person?.id))
+      .filter(Boolean);
 
     const items = [
       Object.freeze({
@@ -132,6 +136,15 @@
         unit:"person",
         person_ids:spatialPersonIds === null ? null : Object.freeze([...new Set(spatialPersonIds)].sort()),
         unavailable_reason:spatialPersonIds === null ? "SPATIAL_SOURCE_UNAVAILABLE" : null
+      }),
+      Object.freeze({
+        code:"provenance",
+        label:"출처 미연결 영향 인물",
+        available:true,
+        count:provenancePersonIds.length,
+        unit:"person",
+        person_ids:Object.freeze([...new Set(provenancePersonIds)].sort()),
+        unavailable_reason:null
       }),
       Object.freeze({
         code:"runtime_exclusion",
@@ -683,6 +696,8 @@
       if (interval && interval.partial !== true && interval.reversed_input !== true) chronologyComplete += 1;
     }
     const chronologyIncomplete = Math.max(0,activities.length-chronologyComplete);
+    const provenanceComplete = activities.filter(({ activity }) => Number(activity?.source_count || 0) > 0).length;
+    const provenanceIncomplete = Math.max(0,activities.length-provenanceComplete);
     const spatial = spatialStatus(personResult,spatialIndex);
 
     const row = ({ code, label, unit, source, available, complete, incomplete, total, personIds = null, unavailableReason = null }) => Object.freeze({
@@ -747,6 +762,16 @@
           total:activities.length
         }),
         row({
+          code:"provenance",
+          label:"Activity Provenance",
+          unit:"activity",
+          source:"Person Activity Sources",
+          available:true,
+          complete:provenanceComplete,
+          incomplete:provenanceIncomplete,
+          total:activities.length
+        }),
+        row({
           code:"spatial",
           label:"Spatial Placement",
           unit:"activity",
@@ -759,7 +784,7 @@
         })
       ]),
       person_check_count:3,
-      activity_check_count:2
+      activity_check_count:3
     });
   }
 
