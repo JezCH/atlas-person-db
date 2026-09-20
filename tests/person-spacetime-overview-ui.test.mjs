@@ -79,8 +79,8 @@ test("spacetime top chrome merges controls legend and integrity status into comp
 
 test("the timeline remains a map-like camera viewport", () => {
   assert.match(css, /\.spacetime-scroll\{[^}]*overflow:auto/);
-  assert.match(css, /height:clamp\(520px,72vh,860px\)/);
-  assert.match(css, /max-height:860px/);
+  assert.match(css, /height:clamp\(480px,62vh,720px\)/);
+  assert.match(css, /max-height:720px/);
   assert.match(css, /overscroll-behavior:contain/);
 });
 
