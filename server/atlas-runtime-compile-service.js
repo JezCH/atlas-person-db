@@ -252,7 +252,8 @@ async function ensureCompileExclusions(client, compiled) {
   const tuples=[];
   compiled.exclusions.forEach((row,index)=>{
     const base=2+(index*4);
-    tuples.push(`($1,${base}::uuid,${base+1}::uuid,${base+2}::uuid,${base+3})`);
+    const p=(offset)=>"$"+String(base+offset);
+    tuples.push(`($1,${p(0)}::uuid,${p(1)}::uuid,${p(2)}::uuid,${p(3)})`);
     params.push(row.activity_id,row.person_id,row.polity_id,row.reason_code);
   });
   await client.query(`
