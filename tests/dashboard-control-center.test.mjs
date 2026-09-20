@@ -1106,3 +1106,17 @@ test("Runtime Delta/Drift card has explicit drift state and responsive layouts",
   assert.match(dashboardCssSource,/@media\(max-width:430px\)\{\.dashboard-drift-grid\{grid-template-columns:1fr\}\}/);
 });
 
+test("Production browser acceptance permanently verifies Runtime activation history, delta, and drift", () => {
+  const acceptance=fs.readFileSync(new URL("../scripts/verify-dashboard-production-acceptance.mjs", import.meta.url),"utf8");
+  assert.match(acceptance,/store\.loadRuntimePublication\(\)/);
+  assert.match(acceptance,/runtimePublicationResult/);
+  assert.match(acceptance,/runtime_delta_drift:snapshot\.runtime_delta_drift/);
+  assert.match(acceptance,/Runtime activation history must expose latest and previous Production activations/);
+  assert.match(acceptance,/Latest Runtime activation does not match current projection/);
+  assert.match(acceptance,/Rendered Runtime Activity delta differs from model/);
+  assert.match(acceptance,/Rendered Runtime excluded delta differs from model/);
+  assert.match(acceptance,/Rendered Runtime exclusion reason deltas differ from model/);
+  assert.match(acceptance,/"RUNTIME DELTA \/ DRIFT"/);
+  assert.match(acceptance,/runtime_delta_drift:modelState\.runtime_delta_drift/);
+});
+
