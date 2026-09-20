@@ -159,6 +159,46 @@ test('committed activation records deployment SHAs and permits the same compile 
   assert.deepEqual(paramsSeen[0],paramsSeen[1]);
 });
 
+test('Runtime projection insert placeholders reserve $1 for compile_key across every batched row', () => {
+  const first=runtime.runtimeInsertTuple(0);
+  const second=runtime.runtimeInsertTuple(1);
+  assert.match(first,/\$2::uuid,\$1,\$3::uuid,\$4::uuid/);
+  assert.match(first,/\$23::jsonb,\$24,\$25::jsonb/);
+  assert.match(second,/\$26::uuid,\$1,\$27::uuid,\$28::uuid/);
+  assert.match(second,/\$47::jsonb,\$48,\$49::jsonb/);
+});
+
+test('Runtime projection inserts are bounded into 200-row batches instead of one query per Activity', async () => {
+  const rows=Array.from({length:401},(_,index)=>runtime.runtimeRow(activity({
+    id:`00000000-0000-4000-8000-${String(index+1).padStart(12,'0')}`
+  })));
+  const calls=[];
+  const client={async query(sql,params){
+    calls.push({sql,params});
+    return {};
+  }};
+  const batches=await runtime.insertRuntimeRows(client,'runtime-person-politics-v1:test',rows);
+  assert.equal(runtime.RUNTIME_INSERT_BATCH_SIZE,200);
+  assert.equal(batches,3);
+  assert.equal(calls.length,3);
+  assert.deepEqual(calls.map(({params})=>params.length),[4801,4801,25]);
+  assert.equal(calls[0].params[0],'runtime-person-politics-v1:test');
+  assert.equal(calls[0].params[1],rows[0].id);
+  assert.equal(calls[1].params[1],rows[200].id);
+  assert.equal(calls[2].params[1],rows[400].id);
+  assert.match(calls[0].sql,/\$4801::jsonb/);
+  assert.match(calls[1].sql,/\$4801::jsonb/);
+  assert.match(calls[2].sql,/\$25::jsonb/);
+});
+
+test('Runtime projection batching preserves empty output without issuing an INSERT', async () => {
+  let calls=0;
+  const client={async query(){ calls+=1; }};
+  const batches=await runtime.insertRuntimeRows(client,'runtime-person-politics-v1:empty',[]);
+  assert.equal(batches,0);
+  assert.equal(calls,0);
+});
+
 test('dry-run compile rolls back and does not write activation history', async () => {
   const source=[activity()];
   const compiled=runtime.compileSnapshot(source);
