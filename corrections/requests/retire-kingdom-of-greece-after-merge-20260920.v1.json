@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:kingdom-of-greece-after-reviewed-merge:2026-09-20:v1",
+  "release_order": 607,
+  "evidence": {
+    "decision": "Reviewed same-identity generic/state-form cleanup after exact Activity relink, temporal designation preservation, and reviewed Spatial source removal.",
+    "review_claim": "#977 Greece merge claim 5749166454 and reviewed POLITY-IDENTITY-REVIEW-16-20260919",
+    "designation_relink_merge_sha": "3babc243dbbf9f8cfc75336d51a765b917b80b1c",
+    "designation_backfill_merge_sha": "4f88443ba160cce7e2c9b78295009ecce5be7c59",
+    "spatial_preservation_merge_sha": "216c24a4cdd783c05bcc04fdc432a7894447141d",
+    "production_readback": "Kingdom of Greece has activity_count=0. Greece has ten Activities; all three source Activity UUIDs are preserved on Greece. Reviewed Kingdom of Greece / 그리스 왕국 temporal state-form designations cover the modeled monarchy-era Greece Activities while 1928-1933 republican Activities remain generic Greece. Canonical Spatial output contains no source UUID and preserves Greece at europe/balkans."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:kingdom-of-greece-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "829b5976-18f4-48e3-a35d-3c141858ce56",
+        "canonical_key": "Kingdom of Greece",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Kingdom of Greece",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "그리스 왕국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
