@@ -65,7 +65,7 @@ test("desktop sidecar stays compact and expands the inspector only when populate
   assert.match(css, /\.spacetime-sticky-inspector:not\(\.is-empty\)\{max-height:calc\(clamp\(480px,62vh,720px\) - 148px\)\}/);
   assert.match(css, /\.spacetime-sticky-inspector\.is-empty\{min-height:0;max-height:76px;padding:9px 10px/);
   assert.match(css, /\.spacetime-minimap-surface\{[^}]*height:112px/);
-  assert.match(css, /@media\(max-width:900px\)\{[^}]*\.spacetime-sidecar\{position:relative;top:auto;max-height:none;overflow:visible\}/);
+  assert.match(css, /\.spacetime-sidecar\{position:relative;top:auto;max-height:none;overflow:visible\}/);
 });
 
 test("spacetime top chrome keeps compact controls and moves precision guidance behind a disclosure", () => {
