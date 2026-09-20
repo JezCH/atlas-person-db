@@ -96,7 +96,7 @@
     if (!domain) return "";
     if (key === "dashboard") return '<div id="atlasDashboardMount" class="atlas-dashboard-mount"></div>';
     if (key === "spacetime") return '<div id="personSpacetimeMount" class="person-spacetime-mount"></div>';
-    if (key === "polities") return '<div id="atlasPolityMount" class="atlas-polity-review-mount"></div>';
+    if (key === "polities") return '<div class="atlas-polity-composite-shell"><div id="atlasPolityMount" class="atlas-polity-review-mount"></div><div id="atlasPolityReviewMount" class="atlas-polity-review-mount atlas-polity-review-section"></div></div>';
     return `<div class="authority-shell-head card">
       <div><p class="eyebrow">${escapeHtml(domain.eyebrow)}</p><h2>${escapeHtml(domain.label)}</h2><p>${escapeHtml(domain.summary)}</p></div>
       <span class="authority-status ${statusClass(domain.status_code)}">${escapeHtml(domain.status_label)}</span>
@@ -167,10 +167,12 @@
   function ensurePolityAssets() {
     if (window.ATLAS_POLITY_BROWSER_VIEW) return Promise.resolve(window.ATLAS_POLITY_BROWSER_VIEW);
     if (polityAssetsPromise) return polityAssetsPromise;
-    appendStylesheetOnce("./atlas-polity-review-workbench.css?v=20260920-canonical-polity-v3");
-    polityAssetsPromise = loadScriptOnce("./atlas-polity-browser-reader.js?v=20260920-canonical-polity-v3", () => Boolean(window.ATLAS_POLITY_BROWSER_READER))
-      .then(() => loadScriptOnce("./atlas-polity-review-workbench.js?v=20260920-canonical-polity-v3", () => Boolean(window.ATLAS_POLITY_BROWSER_VIEW)))
-      .then(() => window.ATLAS_POLITY_BROWSER_VIEW)
+    appendStylesheetOnce("./atlas-polity-review-workbench.css?v=20260920-polity-composite-v4");
+    polityAssetsPromise = loadScriptOnce("./atlas-polity-browser-reader.js?v=20260920-polity-composite-v4", () => Boolean(window.ATLAS_POLITY_BROWSER_READER))
+      .then(() => loadScriptOnce("./atlas-polity-review-candidates.js?v=20260920-polity-composite-v4", () => Boolean(window.ATLAS_POLITY_REVIEW_CANDIDATES)))
+      .then(() => loadScriptOnce("./atlas-polity-review-workbench.js?v=20260920-polity-composite-v4", () => Boolean(window.ATLAS_POLITY_BROWSER_VIEW)))
+      .then(() => loadScriptOnce("./atlas-polity-review-panel.js?v=20260920-polity-composite-v4", () => Boolean(window.ATLAS_POLITY_REVIEW_PANEL)))
+      .then(() => Object.freeze({ browser: window.ATLAS_POLITY_BROWSER_VIEW, review: window.ATLAS_POLITY_REVIEW_PANEL }))
       .catch((error) => {
         polityAssetsPromise = null;
         throw error;
@@ -182,8 +184,11 @@
     const mount = document.getElementById("atlasPolityMount");
     if (!mount) return;
     mount.innerHTML = '<section class="card" style="padding:24px"><strong>현재 정치체 데이터를 불러오는 중입니다.</strong></section>';
-    ensurePolityAssets().then((workbench) => {
-      if (currentDomain === "polities") workbench?.mount?.(mount);
+    ensurePolityAssets().then((views) => {
+      if (currentDomain !== "polities") return;
+      views?.browser?.mount?.(mount);
+      const reviewMount = document.getElementById("atlasPolityReviewMount");
+      if (reviewMount) views?.review?.mount?.(reviewMount);
     }).catch((error) => {
       console.error(error);
       const currentMount = document.getElementById("atlasPolityMount");
