@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-reviewed-spatial-corrections/v1",
+  "correction_id": "reviewed-state-form-polity-retirement-batch3-20260920",
+  "baseline": "fc3f6404641b905255334d9e365daa308b550679",
+  "reviewed_at": "2026-09-20T07:08:00Z",
+  "changes": [
+    {
+      "polity_id": "29b6b4bd-f767-4995-9e36-d50ecba7db88",
+      "expected": {
+        "region_code": "americas",
+        "subregion_code": "south-america"
+      },
+      "disposition": "remove_relinked_source",
+      "reason": "State of Ecuador is now an Activity-orphan after exact reviewed relink to Republic of Ecuador; the survivor already carries the same South America placement and the 1830-1834 state-form label is preserved as a temporal designation."
+    },
+    {
+      "polity_id": "63c0aa8d-bc0b-42c5-9118-612b6c650646",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "balkans"
+      },
+      "disposition": "remove_relinked_source",
+      "reason": "Kingdom of Romania is now an Activity-orphan after exact reviewed relink to Romania; the survivor already carries the same Balkans placement and the monarchy phase is preserved as a temporal designation."
+    },
+    {
+      "polity_id": "bcb090c2-7906-4c3e-91cf-99b02646764e",
+      "expected": {
+        "review_queue_reason": "Theodoric's pre-493 Ostrogothic confederation was a mobile Balkan warband polity seeking a permanent homeland and then moving into Italy; the territorial Italian kingdom begins only after this activity."
+      },
+      "disposition": "remove_relinked_source",
+      "reason": "Ostrogothic Confederation is now an Activity-orphan after exact reviewed relink to Ostrogothic Kingdom; remove the source-only HOLD while preserving the Activity-specific Balkan-to-Italy timeline on the survivor."
+    }
+  ],
+  "activity_override_rebinds": [
+    {
+      "activity_id": "42b9e5cc-02f9-49d0-9968-9476a24918e7",
+      "expected_polity_id": "bcb090c2-7906-4c3e-91cf-99b02646764e",
+      "next_polity_id": "8cb0aec8-6228-4db6-88ad-584a21925ee1",
+      "expected_start_year": 474,
+      "expected_end_year": 493,
+      "reason": "The Activity UUID and reviewed 474-493 spatial segments are unchanged; only the owning Polity identity moved to the reviewed Ostrogothic Kingdom survivor in #1237."
+    }
+  ]
+}
