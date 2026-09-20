@@ -2,6 +2,7 @@
   "use strict";
 
   const ENDPOINT = "/api/atlas-person-read";
+  const PORTRAIT_ENDPOINT = "/api/atlas-read?__atlas_read_surface=person-portrait";
   const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   const PRIMARY_HISTORICITY_VALUE = "historical";
   const HIDDEN_ORPHAN_PERSON_IDS = new Set([
@@ -220,20 +221,39 @@
     });
   }
 
-  async function readPerson(personId, { fetchImpl = globalThis.fetch } = {}) {
+  function normalizeReadablePersonId(personId) {
     const id = text(personId).trim();
     if (!UUID_PATTERN.test(id) || HIDDEN_ORPHAN_PERSON_IDS.has(id)) {
       const error = new Error("INVALID_PERSON_ID");
       error.code = "INVALID_PERSON_ID";
       throw error;
     }
+    return id;
+  }
+
+  async function readPerson(personId, { fetchImpl = globalThis.fetch } = {}) {
+    const id = normalizeReadablePersonId(personId);
     const payload = await getJson(`${ENDPOINT}?person_id=${encodeURIComponent(id)}`, fetchImpl);
     if (payload.mode !== "detail" || !payload.person) throw new Error("INVALID_PERSON_DETAIL_RESPONSE");
     return Object.freeze({ schema: payload.schema, source: payload.source, person: payload.person });
   }
 
+  async function readPortrait(personId, { fetchImpl = globalThis.fetch } = {}) {
+    const id = normalizeReadablePersonId(personId);
+    const payload = await getJson(`${PORTRAIT_ENDPOINT}&person_id=${encodeURIComponent(id)}`, fetchImpl);
+    if (payload.schema !== "atlas-person-portrait/v1" || payload.person_id !== id || !("portrait" in payload)) {
+      throw new Error("INVALID_PERSON_PORTRAIT_RESPONSE");
+    }
+    return Object.freeze({
+      schema:payload.schema,
+      person_id:id,
+      portrait:payload.portrait || null
+    });
+  }
+
   window.ATLAS_PERSON_BROWSER_READER = Object.freeze({
     ENDPOINT,
+    PORTRAIT_ENDPOINT,
     PRIMARY_HISTORICITY_VALUE,
     UUID_PATTERN,
     historicityGroup,
@@ -247,6 +267,7 @@
     comparePersons,
     preparePersonGroups,
     listPersons,
-    readPerson
+    readPerson,
+    readPortrait
   });
 })();
