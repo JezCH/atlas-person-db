@@ -233,6 +233,8 @@ For a new Person, or for the missing Activity of an existing Person, establish o
 
 Historical research and NamuWiki research **should be performed in parallel** after SCREEN has established that they are necessary. For a batch, review different surviving Persons in parallel as well; do not serialize independent historical/NamuWiki checks.
 
+For NamuWiki review, a direct `namu.wiki` fetch is only one discovery path. If the provider blocks direct automated access, immediately fall back to external search-index evidence, exactly as used during the established NamuWiki linking work. Verify the exact indexed Person document/title (including redirects and disambiguation), then store its canonical `https://namu.wiki/w/...` URL. Do not create a provider-access deferral merely because direct retrieval failed. Deferral is reserved for cases where external-index review is also unavailable or insufficient for an exact `linked` / `not_found` decision.
+
 Do not expand ordinary registration into a repository audit, deployment audit, unrelated Person comparison, whole-DB investigation, source-code inspection, workflow inspection, or capability discovery. Those actions require a concrete failure or ambiguity first.
 
 ### Polity / Role lookup policy
