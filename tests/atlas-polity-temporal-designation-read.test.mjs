@@ -9,8 +9,19 @@ const personRead = require("../server/atlas-person-read-service.js");
 const runtimeRead = require("../server/atlas-runtime-person-read-service.js");
 
 test("A/C: exact and boundary-equal Activity intervals are eligible by inclusive full-containment", () => {
-  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /pd\.valid_from_year is null or pd\.valid_from_year <= pp\.activity_start/);
-  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /pd\.valid_to_year is null or pd\.valid_to_year >= pp\.activity_end/);
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /pd\.valid_from_year is null/);
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /pd\.valid_to_year is null/);
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /pd\.valid_from_year,[\s\S]*coalesce\(pd\.valid_from_month, 1\),[\s\S]*coalesce\(pd\.valid_from_day, 1\)[\s\S]*<= \([\s\S]*pp\.activity_start,[\s\S]*coalesce\(pp\.activity_start_month, 1\),[\s\S]*coalesce\(pp\.activity_start_day, 1\)/);
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /pd\.valid_to_year,[\s\S]*coalesce\(pd\.valid_to_month, 12\),[\s\S]*coalesce\(pd\.valid_to_day, 31\)[\s\S]*>= \([\s\S]*pp\.activity_end,[\s\S]*coalesce\(pp\.activity_end_month, 12\),[\s\S]*coalesce\(pp\.activity_end_day, 31\)/);
+});
+
+test("same-year designation boundaries retain month/day precision instead of collapsing to year-only ambiguity", () => {
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /coalesce\(pd\.valid_from_month, 1\)/);
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /coalesce\(pd\.valid_from_day, 1\)/);
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /coalesce\(pd\.valid_to_month, 12\)/);
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /coalesce\(pd\.valid_to_day, 31\)/);
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /coalesce\(pp\.activity_start_month, 1\)/);
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /coalesce\(pp\.activity_end_month, 12\)/);
 });
 
 test("B/D/E: outside, partial-overlap, unresolved, or absent designation does not get guessed", () => {
