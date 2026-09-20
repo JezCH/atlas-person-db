@@ -30,7 +30,7 @@ test('authority navigation loads the current spacetime renderer without a stale 
   assert.match(spacetimeView, /ATLAS_CLIENT_DATA_STORE/);
   assert.match(spacetimeView, /dataStore\.loadSpatialIndex/);
   assert.match(spacetimeView, /dataStore\.loadPersons/);
-  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260920-range-100-1500/);
+  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260920-canonical-polity-v3/);
 });
 
 test('spacetime topbar suppresses desktop-only explanatory subtitle', () => {
