@@ -39,6 +39,15 @@ test("exact-SHA verifier fails closed and byte-compares the current spacetime/do
   ]) assert.match(verifier, new RegExp(asset.replaceAll(".", "\\.")));
 });
 
+test("Production visual acceptance covers the compact desktop sidecar", () => {
+  const verifier = read("scripts/verify-spacetime-production-visual.mjs");
+  assert.match(verifier, /at500\.sidecarPosition === "sticky"/);
+  assert.match(verifier, /at500\.inspectorPosition === "relative"/);
+  assert.match(verifier, /at500\.sidecarRect\.height <= at500\.scrollHeight \+ 1/);
+  assert.match(verifier, /at500\.minimapSurfaceRect\.height <= 114/);
+  assert.match(verifier, /at500\.inspectorRect\.height <= 78/);
+});
+
 test("Production visual acceptance covers the compact 390px mobile presentation camera", () => {
   const verifier = read("scripts/verify-spacetime-production-visual.mjs");
   assert.match(verifier, /MOBILE_VIEWPORT = Object\.freeze\(\{ width: 390, height: 844/);
