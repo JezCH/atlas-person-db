@@ -155,7 +155,9 @@
     }
 
     async function mutatePortrait(method, payload) {
-      const operation = method === "DELETE" ? "delete_person_portrait" : "set_person_portrait";
+      const operation = method === "DELETE"
+        ? "delete_person_portrait"
+        : method === "PATCH" ? "update_person_portrait_metadata" : "set_person_portrait";
       const auth = await ensureSession();
       if (!auth.ok) return portraitFailure(operation, auth.error, 401);
 
@@ -209,6 +211,12 @@
       setPersonPortrait: (payload) => mutatePortrait("PUT", {
         person_id:String(payload?.person_id || "").trim(),
         image_base64:String(payload?.image_base64 || "").trim(),
+        portrait_kind:String(payload?.portrait_kind || "").trim(),
+        evidence_level:String(payload?.evidence_level || "").trim(),
+        sources:Array.isArray(payload?.sources) ? payload.sources : []
+      }),
+      updatePersonPortraitMetadata: (payload) => mutatePortrait("PATCH", {
+        person_id:String(payload?.person_id || "").trim(),
         portrait_kind:String(payload?.portrait_kind || "").trim(),
         evidence_level:String(payload?.evidence_level || "").trim(),
         sources:Array.isArray(payload?.sources) ? payload.sources : []
