@@ -7,7 +7,6 @@ const EXPECTED_RUNTIME_SHA = process.env.ATLAS_EXPECTED_RUNTIME_SHA || "d8e8fa3f
 const OUT_DIR = process.env.ATLAS_VISUAL_OUT_DIR || "artifacts/spacetime-visual-acceptance";
 const VIEWPORT = Object.freeze({ width: 1600, height: 1000, deviceScaleFactor: 1, mobile: false });
 const MOBILE_VIEWPORT = Object.freeze({ width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
-const EXPECTED_REVIEWED_PLACE_COUNT = 5;
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
 
