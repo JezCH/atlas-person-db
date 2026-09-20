@@ -7,15 +7,15 @@
   "policy": {
     "automatic_role_backfill": false,
     "secondary_domains": false,
-    "decision": "Reviewed maritime-person follow-up. Pirate/privateer and armed-resistance identities are military unless another identity dominates; Francis Drake is exploration because his canonical global representation is the 1577-1580 circumnavigation, while Okinka Pampa is governance as a queen-priestess exercising rule. Existing project comparables are consistent: Benjamin Hornigold and Edward Teach are military; Zheng He, Columbus, and Magellan are exploration."
+    "decision": "Reviewed maritime-person follow-up. Five newly unclassified Persons receive new reviewed decisions here. Existing reviewed decisions are preserved and replayed for Pier Gerlofs Donia (military, batch-067), Ivan Anikeyev (governance, batch-067), and Okinka Pampa (governance, batch-050). Pirate/privateer command is military unless another identity dominates; Francis Drake is exploration because his canonical global representation is the 1577-1580 circumnavigation."
   },
   "review_scope": {
     "task_key": "PERSON-DOMAIN-MARITIME-COHORT-20260920",
     "queue_issue": 977,
-    "assignment_count": 8,
+    "assignment_count": 5,
     "distribution": {
-      "governance": 1,
-      "military": 6,
+      "governance": 0,
+      "military": 4,
       "knowledge": 0,
       "technology": 0,
       "commerce": 0,
@@ -54,24 +54,6 @@
       "canonical_name_en": "Francis Drake",
       "preferred_name_ko": "프랜시스 드레이크",
       "representative_domain": "exploration"
-    },
-    {
-      "person_id": "fc299f9e-a64c-410a-b329-3bfa2cb43ffe",
-      "canonical_name_en": "Pier Gerlofs Donia",
-      "preferred_name_ko": "피어 헤를로프스 도니아",
-      "representative_domain": "military"
-    },
-    {
-      "person_id": "82d5b68a-457c-4cda-b003-e0678039f9ae",
-      "canonical_name_en": "Ivan Anikeyev",
-      "preferred_name_ko": "이반 아니케예프",
-      "representative_domain": "military"
-    },
-    {
-      "person_id": "63f3a079-0a1e-4c46-9cab-beb3bc41d8ef",
-      "canonical_name_en": "Okinka Pampa",
-      "preferred_name_ko": "오킨카 팜파",
-      "representative_domain": "governance"
     }
   ]
 }
