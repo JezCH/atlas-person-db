@@ -34,23 +34,26 @@ When no Person document can be found after the check:
 
 Omission, `unknown`, guessed URLs, non-NamuWiki URLs, and a `not_found` record carrying a title or URL are not valid decisions for a new human-authoring registration.
 
-## Discovery method when direct NamuWiki access is blocked
+## Default discovery method: external search index first
 
-Direct retrieval of `namu.wiki` is not required to complete the review. When direct provider access is blocked, use the same discovery method as the established NamuWiki linking workflow's review lane: search an external web index for the Person, inspect the indexed title/snippet/redirect evidence, and only after the exact Person document is established convert that verified document title to the canonical `https://namu.wiki/w/...` URL used by ATLAS.
+Routine NamuWiki review must use the same successful discovery method as the established NamuWiki linking work: **search an external web index first**, inspect the indexed title/snippet/redirect evidence, and only after the exact Person document is established convert that verified document title to the canonical `https://namu.wiki/w/...` URL used by ATLAS.
+
+Direct retrieval of `namu.wiki` is **not** a normal review step, is not required for acceptance, and should not be attempted merely to prove that the page can be opened. The direct site may block automated access even when a valid document exists, so routine registration must not waste time on that path.
 
 The required decision order is:
 
-1. try normal exact-page review;
-2. if direct NamuWiki retrieval is blocked, search external indexes using the Korean name plus material aliases/disambiguators;
-3. accept `linked` only when indexed evidence identifies the intended Person document rather than a same-name or adjacent-topic page;
-4. use `not_found` only after the search review itself finds no Person document;
-5. use `review_deferrals.namuwiki` only when both direct review and external-index review are unavailable or insufficient to make an exact decision.
+1. search external indexes using the Korean name plus material aliases/disambiguators;
+2. inspect indexed title, snippet, redirect, and disambiguation evidence for the exact historical Person;
+3. accept `linked` only when the indexed evidence identifies the intended Person document rather than a same-name or adjacent-topic page;
+4. convert the verified document title to the canonical `https://namu.wiki/w/...` URL and store it;
+5. use `not_found` only after a reasonable indexed search review finds no Person document;
+6. use `review_deferrals.namuwiki` only when external-index review itself is unavailable or insufficient to make an exact `linked` / `not_found` decision.
 
-A provider block by itself is therefore **not** a reason to defer a registration and must not cause a known indexed NamuWiki document to be left unlinked.
+A direct-site provider block is operationally irrelevant to the normal path and must never, by itself, cause deferral.
 
-## Explicit provider-access deferral for GitHub batches
+## Explicit indexed-review deferral for GitHub batches
 
-When a provider access restriction has been disclosed and the user instructs registration to continue, historical Person/Activity registration may proceed through the existing authenticated GitHub transport while the NamuWiki review remains pending. This exception does not turn a failed search or blocked page into `not_found`.
+When the external search-index review itself is unavailable or insufficient for an exact decision and the user instructs registration to continue, historical Person/Activity registration may proceed through the existing authenticated GitHub transport while the NamuWiki review remains pending. This exception does not turn an unresolved search into `not_found`. A direct `namu.wiki` access block alone does not qualify for deferral.
 
 The reviewed manifest must omit `external_references.namuwiki` and include:
 
