@@ -494,7 +494,8 @@
     return `<figure class="person-detail-portrait" aria-label="${escapeHtml(displayName)} 초상화" title="${escapeHtml(title)}"><img data-person-portrait-image src="${escapeHtml(href)}" alt="${escapeHtml(displayName)} 초상화" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></figure>`;
   }
 
-  function renderDetail(person, portraitResult = null) {
+  function renderDetail(person) {
+    const portraitResult = arguments[1] || null;
     const panel = document.getElementById("personMainDetail");
     if (!panel) return;
     const rawHistoricity = person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity);
