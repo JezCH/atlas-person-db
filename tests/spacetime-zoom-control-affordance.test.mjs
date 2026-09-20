@@ -147,6 +147,22 @@ test("touch pinch inside spacetime controls the internal 100 to 1500 percent cam
   assert.match(viewCss, /\.spacetime-scroll\{height:54vh;min-height:400px;scrollbar-gutter:auto;touch-action:pan-x pan-y\}/);
 });
 
+test("desktop mouse drag pans the spacetime camera without stealing simple clicks", () => {
+  assert.match(viewSource, /function bindMouseCameraPan\(scroll\)/);
+  assert.match(viewSource, /const DRAG_THRESHOLD = 5;/);
+  assert.match(viewSource, /event\.pointerType !== "mouse" \|\| event\.button !== 0/);
+  assert.match(viewSource, /if \(!event\.target\?\.closest\?\.\("\.spacetime-canvas"\)\) return;/);
+  assert.match(viewSource, /if \(interactiveTarget\(event\.target\)\) return;/);
+  assert.match(viewSource, /Math\.hypot\(dx, dy\) < DRAG_THRESHOLD/);
+  assert.match(viewSource, /scroll\.scrollLeft = drag\.start_left - dx;/);
+  assert.match(viewSource, /scroll\.scrollTop = drag\.start_top - dy;/);
+  assert.match(viewSource, /scroll\.classList\.add\("is-mouse-panning"\)/);
+  assert.match(viewSource, /scroll\.addEventListener\("click",[\s\S]*?event\.preventDefault\(\);[\s\S]*?event\.stopPropagation\(\);[\s\S]*?, true\);/);
+  assert.match(viewSource, /bindMouseCameraPan\(scroll\);/);
+  assert.match(viewCss, /@media\(hover:hover\) and \(pointer:fine\)\{\.spacetime-canvas\{cursor:grab\}/);
+  assert.match(viewCss, /\.spacetime-scroll\.is-mouse-panning[^}]*cursor:grabbing!important;user-select:none/);
+});
+
 test("ctrl-wheel remains contained inside spacetime at the viewport-fit camera bound", () => {
   const wheelBlock = viewSource.match(/scroll\.addEventListener\("wheel",[\s\S]*?\}, \{ passive: false \}\);/)?.[0] || "";
   assert.match(wheelBlock, /event\.preventDefault\(\);[\s\S]*?clampCameraZoom\(wheelZoomTarget, scroll\)/);
