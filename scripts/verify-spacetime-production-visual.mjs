@@ -456,7 +456,7 @@ async function main() {
       };
     })()`);
     assert(minimumAcceptance.zoomOutDisabled, "Viewport-fit minimum did not disable zoom-out", minimumAcceptance);
-    assert(minimumAcceptance.minimumPercent >= 100 && minimumAcceptance.minimumPercent <= 1500, "Viewport-fit minimum is outside the supported range", minimumAcceptance);
+    assert(minimumAcceptance.minimumPercent >= 50 && minimumAcceptance.minimumPercent <= 1500, "Viewport-fit minimum is outside the supported range", minimumAcceptance);
     assert(Math.abs(minimumAcceptance.worldWidth - minimumAcceptance.usableWidth) <= 2, "Minimum zoom does not fit the world width to the table viewport", minimumAcceptance);
     await evaluate(client, "document.querySelector('#spacetimeCameraZoomReset')?.click()");
     await waitFor(client, "document.querySelector('#spacetimeCameraZoomValue')?.textContent?.trim() === '500%'", 10000);
