@@ -209,6 +209,7 @@ test('dry-run compile rolls back and does not write activation history', async (
     if (/pg_advisory_xact_lock/.test(sql)) return {};
     if (sql === runtime.AUTHORING_SNAPSHOT_SQL) return {rows:source};
     if (/insert into atlas_v2\.runtime_compile_runs/.test(sql)) return {rowCount:1,rows:[]};
+    if (/from atlas_v2\.runtime_compile_exclusions/.test(sql)) return {rows:[]};
     if (/delete from atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
     if (/insert into atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
     if (/count\(distinct compile_key\)::int as compile_count/.test(sql)) {
@@ -248,6 +249,7 @@ test('committed compile captures pre-existing Runtime baseline once and writes a
     }
     if (sql === runtime.AUTHORING_SNAPSHOT_SQL) return {rows:source};
     if (/insert into atlas_v2\.runtime_compile_runs/.test(sql)) return {rowCount:1,rows:[]};
+    if (/from atlas_v2\.runtime_compile_exclusions/.test(sql)) return {rows:[]};
     if (/delete from atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
     if (/insert into atlas_v2\.runtime_person_politics_v1/.test(sql)) return {};
     if (/min\(compile_key\) as compile_key/.test(sql)) {
