@@ -50,12 +50,13 @@ test("mobile vertical chrome is compact without changing timeline geometry", () 
   assert.match(css, /@media\(max-width:560px\)\{\.spacetime-minimap\{width:100%\}\.spacetime-minimap-surface\{height:84px\}/);
 });
 
-test("mobile 100 to 500 percent overview prioritizes macroregions and defers leaf labels", () => {
+test("mobile and desktop use the same semantic region header layers", () => {
   assert.match(view, /data-spacetime-zoom="\$\{Math\.round\(cameraZoom \* 100\)\}"/);
-  assert.match(view, /data-spacetime-overview="\$\{cameraZoom <= CAMERA_DEFAULT_ZOOM \? "true" : "false"\}"/);
-  assert.match(css, /data-spacetime-overview="true"\] \.spacetime-region-head-layer\.is-macro\{opacity:1!important\}/);
-  assert.match(css, /data-spacetime-overview="true"\] \.spacetime-region-head-layer\.is-subregion\{opacity:0!important\}/);
-  assert.match(css, /data-spacetime-overview="true"\] \.spacetime-subregion-line\{opacity:\.16!important\}/);
+  assert.match(view, /style="opacity:\$\{spaceHeader\.macro_opacity\}"/);
+  assert.match(view, /style="opacity:\$\{spaceHeader\.subregion_opacity\}"/);
+  assert.doesNotMatch(css, /is-mobile-presentation\[data-spacetime-overview="true"\][^\n]*is-macro/);
+  assert.doesNotMatch(css, /is-mobile-presentation\[data-spacetime-overview="true"\][^\n]*is-subregion/);
+  assert.doesNotMatch(css, /is-mobile-presentation\[data-spacetime-overview="true"\][^\n]*spacetime-subregion-line/);
 });
 
 test("mobile status surface keeps only core chips visible until expanded", () => {
