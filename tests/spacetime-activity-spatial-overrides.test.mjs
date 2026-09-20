@@ -26,7 +26,9 @@ const EXPECTED = new Map([
   ["32ad5a54-9dbe-46b4-bfd1-859dab6dca91", ["eb2f8e2e-220b-4754-afe9-25449b1d35ec", 1915, 1915, "west-asia", "levant", "Negev–Sinai Tarabin core"]],
   ["e65edaa4-645a-479f-be81-6414ff2f71ba", ["a602213a-dccb-4a23-96c3-e91dfc300a9f", 1958, 1970, "africa", "nile-valley", "Cairo"]],
   ["f61310eb-65e8-58f9-a09d-a5dcbb8ebfc8", ["a1c6b0b4-ca71-420d-8d9f-502dc7914dd7", -195, -190, "west-asia", "anatolia", "Ephesus–Side / western Seleucid service theatre"]],
-  ["f5d38634-6cc2-4fdb-8b8c-535ee16c5340", ["08a804bf-81c1-4206-85ed-47b139104915", 1983, 1983, "africa", "east-africa", "Mauritius (Chagos Refugees Group)"]]
+  ["f5d38634-6cc2-4fdb-8b8c-535ee16c5340", ["08a804bf-81c1-4206-85ed-47b139104915", 1983, 1983, "africa", "east-africa", "Mauritius (Chagos Refugees Group)"]],
+  ["daf6e79a-a2e7-4c31-8db7-d7063b563463", ["389a3173-9372-4b87-a8ff-38c2a0ca4bef", 1719, 1722, "africa", "west-africa", "West African Atlantic theatre (representative anchor)"]],
+  ["9bdef027-7274-44ec-ad5f-b17f36045a2c", ["f02ae5bc-968c-4f28-a312-4bdc3d353860", 1694, 1696, "south-asia", "northwest-south-asia", "Surat approaches / Arabian Sea (representative anchor)"]]
 ]);
 
 
