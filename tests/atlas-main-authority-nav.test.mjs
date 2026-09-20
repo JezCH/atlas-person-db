@@ -17,7 +17,7 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /dataAtlasDomain|dataset\.atlasDomain|data-atlas-domain="spacetime"/i);
   assert.match(catalog, /spacetime: entry/);
   assert.match(html, /atlas-main-authority-nav\.css\?v=20260919-control-center-v1/);
-  assert.match(html, /atlas-main-authority-nav\\.js\\?v=20260920-polity-composite-v4/);
+  assert.match(html, /atlas-main-authority-nav\.js\?v=20260920-polity-composite-v4/);
   assert.match(nav, /atlasDashboardMount/);
   assert.match(nav, /ATLAS_DASHBOARD/);
   assert.match(nav, /atlasPolityMount/);
@@ -25,7 +25,9 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /ATLAS_POLITY_BROWSER_VIEW/);
   assert.match(nav, /atlas-polity-browser-reader\.js/);
   assert.match(nav, /ATLAS_POLITY_BROWSER_READER/);
-  assert.match(nav, /atlas-polity-review-candidates\.js/);\n  assert.match(nav, /atlas-polity-review-panel\.js/);\n  assert.match(nav, /ATLAS_POLITY_REVIEW_PANEL/);
+  assert.match(nav, /atlas-polity-review-candidates\.js/);
+  assert.match(nav, /atlas-polity-review-panel\.js/);
+  assert.match(nav, /ATLAS_POLITY_REVIEW_PANEL/);
   assert.doesNotMatch(nav, /authority-domain-card/);
 });
 
