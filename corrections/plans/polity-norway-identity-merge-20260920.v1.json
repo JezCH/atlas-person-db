@@ -1,0 +1,379 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_norway_identity_merge_20260920_v1",
+  "as_of": "2026-09-20",
+  "status": "REVIEWED_POLITY_IDENTITY_MERGE_WITH_TEMPORAL_DESIGNATION",
+  "release_order": 610,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY-IDENTITY-REVIEW-16-20260919; Norway exact Production recheck and LQ_CLAIM 5749790436 on 2026-09-20",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-kingdom-of-norway-harald-fairhair-into-norway",
+      "type": "rewrite_activity",
+      "activity_id": "16d183b7-ab71-4103-9a92-fba2fa6f7d04",
+      "baseline_before": {
+        "person_id": "22f64a29-7172-4cc8-9e79-4418a6a37941",
+        "polity_id": "b00cd071-3772-563e-9139-ca4947d5bd9b",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 865,
+        "activity_end": 930,
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "16d183b7-ab71-4103-9a92-fba2fa6f7d04",
+        "person_id": "22f64a29-7172-4cc8-9e79-4418a6a37941",
+        "polity_id": "683037ec-b5e1-4373-986e-c63df8ea75c2",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 865,
+        "activity_end": 930,
+        "activity_start_detail": {
+          "year": 865,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 930,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-norway-gunnhild-into-norway",
+      "type": "rewrite_activity",
+      "activity_id": "3f1570f2-a413-5bf8-90ad-3492cc5a3d62",
+      "baseline_before": {
+        "person_id": "cd9e853d-712c-580d-8077-5a17c9a63a92",
+        "polity_id": "b00cd071-3772-563e-9139-ca4947d5bd9b",
+        "role_id": "1a61ca35-b03a-520b-b175-a12c1251f043",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 930,
+        "activity_end": 970,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "3f1570f2-a413-5bf8-90ad-3492cc5a3d62",
+        "person_id": "cd9e853d-712c-580d-8077-5a17c9a63a92",
+        "polity_id": "683037ec-b5e1-4373-986e-c63df8ea75c2",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "1a61ca35-b03a-520b-b175-a12c1251f043",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 930,
+        "activity_end": 970,
+        "activity_start_detail": {
+          "year": 930,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 970,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-norway-cnut-into-norway",
+      "type": "rewrite_activity",
+      "activity_id": "ca605dc2-bb35-56b4-94bd-0813ada897b8",
+      "baseline_before": {
+        "person_id": "6767baba-82d1-5ba2-9cf3-b5143cd84010",
+        "polity_id": "b00cd071-3772-563e-9139-ca4947d5bd9b",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1028,
+        "activity_end": 1035,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "ca605dc2-bb35-56b4-94bd-0813ada897b8",
+        "person_id": "6767baba-82d1-5ba2-9cf3-b5143cd84010",
+        "polity_id": "683037ec-b5e1-4373-986e-c63df8ea75c2",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1028,
+        "activity_end": 1035,
+        "activity_start_detail": {
+          "year": 1028,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1035,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-norway-harald-hardrada-into-norway",
+      "type": "rewrite_activity",
+      "activity_id": "ec5313b1-e86a-53cf-9e69-c78a099f9dde",
+      "baseline_before": {
+        "person_id": "fdabaa81-4234-568a-b3ba-68f9d8647941",
+        "polity_id": "b00cd071-3772-563e-9139-ca4947d5bd9b",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1046,
+        "activity_end": 1066,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "ec5313b1-e86a-53cf-9e69-c78a099f9dde",
+        "person_id": "fdabaa81-4234-568a-b3ba-68f9d8647941",
+        "polity_id": "683037ec-b5e1-4373-986e-c63df8ea75c2",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1046,
+        "activity_end": 1066,
+        "activity_start_detail": {
+          "year": 1046,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1066,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-norway-haakon-iv-into-norway",
+      "type": "rewrite_activity",
+      "activity_id": "1b7bd255-feb9-4b2b-b134-832279c64992",
+      "baseline_before": {
+        "person_id": "d513e028-50e8-4251-afbe-7f86cecb7811",
+        "polity_id": "b00cd071-3772-563e-9139-ca4947d5bd9b",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1217,
+        "activity_end": 1263,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "1b7bd255-feb9-4b2b-b134-832279c64992",
+        "person_id": "d513e028-50e8-4251-afbe-7f86cecb7811",
+        "polity_id": "683037ec-b5e1-4373-986e-c63df8ea75c2",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1217,
+        "activity_end": 1263,
+        "activity_start_detail": {
+          "year": 1217,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1263,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-norway-margaret-i-into-norway",
+      "type": "rewrite_activity",
+      "activity_id": "9999cc12-12d5-4f7c-97bc-d28988ca6553",
+      "baseline_before": {
+        "person_id": "d5765513-e68f-4eda-a4ac-3c6be2665a80",
+        "polity_id": "b00cd071-3772-563e-9139-ca4947d5bd9b",
+        "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1380,
+        "activity_end": 1397,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "9999cc12-12d5-4f7c-97bc-d28988ca6553",
+        "person_id": "d5765513-e68f-4eda-a4ac-3c6be2665a80",
+        "polity_id": "683037ec-b5e1-4373-986e-c63df8ea75c2",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1380,
+        "activity_end": 1397,
+        "activity_start_detail": {
+          "year": 1380,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1397,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "norway-kingdom-temporal-designation-865-2026",
+      "exact_before": {
+        "designation_absent_id": "93c01181-e9e0-4373-b4d6-15e05de3fd3e"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "93c01181-e9e0-4373-b4d6-15e05de3fd3e",
+          "polity_id": "683037ec-b5e1-4373-986e-c63df8ea75c2",
+          "designation_type": "state_form",
+          "valid_from_year": 865,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "approximate",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 2026,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed state-form designation preserving Kingdom of Norway / 노르웨이 왕국 across the currently modeled Norway Activity span from approximately 865 through 2026. This is a display/history designation on the stable Norway identity and does not collapse distinct union-level Polities such as the Kalmar Union, Denmark-Norway, or Sweden-Norway."
+        },
+        "names": [
+          {
+            "id": "ff5e8415-6c56-4e1c-8f95-f41c017e3289",
+            "polity_designation_id": "93c01181-e9e0-4373-b4d6-15e05de3fd3e",
+            "locale": "en",
+            "name": "Kingdom of Norway",
+            "is_preferred": true
+          },
+          {
+            "id": "179c5f21-ba09-44ad-8317-dfd8a5eb525f",
+            "polity_designation_id": "93c01181-e9e0-4373-b4d6-15e05de3fd3e",
+            "locale": "ko",
+            "name": "노르웨이 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "93c01181-e9e0-4373-b4d6-15e05de3fd3e",
+            "source_id": "14949b5c-8abb-45cf-b16e-3ccaa9bbc49e",
+            "source_locator_key": "https://snl.no/Harald_H%C3%A5rfagre"
+          },
+          {
+            "polity_designation_id": "93c01181-e9e0-4373-b4d6-15e05de3fd3e",
+            "source_id": "9599a898-ecfa-4191-bebf-def59048acf2",
+            "source_locator_key": "https://www.kongehuset.no/monarkiet/historie/kongerekken"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 6,
+    "activity_relinks": 6,
+    "polity_designation_assertions": 1,
+    "production_mutation_authorized": false
+  }
+}
