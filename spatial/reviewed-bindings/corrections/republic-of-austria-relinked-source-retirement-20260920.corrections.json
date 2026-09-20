@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-reviewed-spatial-corrections/v1",
+  "correction_id": "republic-of-austria-relinked-source-retirement-20260920",
+  "baseline": "7dc102dd345e37c77a3836e1fdf2f91103d86faf",
+  "reviewed_at": "2026-09-20T07:39:25Z",
+  "changes": [
+    {
+      "polity_id": "02e66261-7798-4144-b298-9bc41ee2215b",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "central-europe"
+      },
+      "disposition": "remove_relinked_source",
+      "reason": "Republic of Austria is now an Activity-orphan after the exact reviewed relink to Austria; the Austria survivor already carries the same Europe/Central Europe placement and the Republic of Austria labels are preserved as bounded temporal designations."
+    }
+  ]
+}
