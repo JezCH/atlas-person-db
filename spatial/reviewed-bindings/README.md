@@ -93,7 +93,7 @@ The compiler rejects:
 - duplicate shard IDs;
 - malformed baseline or canonical output.
 
-Existing dispositioned UUIDs cannot be silently overridden by a later shard. Corrections to an already reviewed mapping or HOLD require an explicit correction path rather than a backfill shard.
+Existing dispositioned UUIDs cannot be silently overridden by a later shard. Corrections to an already reviewed mapping or HOLD require an explicit correction path rather than a backfill shard. Correction files may form an ordered transition chain only when each later change exactly matches the current reviewed state; stale static mappings, review reasons, Activity UUIDs, expected Polity UUIDs, or intervals fail closed.
 
 
 ## Reviewed correction overlay
@@ -104,7 +104,7 @@ A correction must carry the exact expected current macro/leaf mapping and fails 
 
 - `place_function`: replace a static mapping with reviewed time-dependent political-center/capital functions;
 - `review_queue`: replace a static mapping with an explicit reviewed non-static disposition when a fixed place would create false precision;
-- `remove_orphan`: remove a stale spatial mapping only when exact current Production audit evidence proves that no live Polity with that UUID remains.
+- `remove_orphan`: remove a stale spatial mapping after exact current Production audit proves that the Polity is retired.\n- `remove_relinked_source`: remove a reviewed source-Polity spatial disposition after an exact identity relink leaves that source with zero Activities and its spatial semantics have been preserved on the survivor. This may target either an exact static mapping or an exact `review_queue` reason.\n- `activity_override_rebinds`: exact-match rebind an existing reviewed Activity override from a retired/relinked source Polity UUID to its survivor while preserving the reviewed temporal segments unchanged.
 
 The correction overlay is applied before ordinary shard compilation. Ordinary shards still cannot override an existing binding, place-function disposition, or review-queue disposition. A correction file is therefore not a general escape hatch for duplicate/conflict guards.
 
