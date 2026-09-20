@@ -62,7 +62,9 @@ test("Production visual acceptance covers the compact 390px mobile presentation 
   assert.match(verifier, /mobile\.emptyInspectorRect\.height <= 72/);
   assert.match(verifier, /mobile\.cameraRect\.height <= 40 && mobile\.searchRect\.height <= 40/);
   assert.match(verifier, /mobile\.cameraRect\.top >= mobile\.searchRect\.bottom \+ 2/);
-  assert.match(verifier, /mobile\.macroOpacity > 0\.99 && mobile\.subregionOpacity < 0\.01/);
+  assert.match(verifier, /Math\.abs\(mobile\.macroOpacity - at500\.macroOpacity\) < 0\.001/);
+  assert.match(verifier, /Math\.abs\(mobile\.subregionOpacity - at500\.subregionOpacity\) < 0\.001/);
+  assert.doesNotMatch(verifier, /mobile\.macroOpacity > 0\.99 && mobile\.subregionOpacity < 0\.01/);
   assert.match(verifier, /mobile\.statusSummaryVisible && !mobile\.statusMoreOpen/);
   assert.match(verifier, /spacetime-mobile-390\.png/);
 });

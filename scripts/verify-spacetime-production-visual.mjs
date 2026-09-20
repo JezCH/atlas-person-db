@@ -213,6 +213,8 @@ async function collect500(client) {
       zoom:(q("#spacetimeCameraZoomValue")?.textContent||"").trim(),
       spatialStage:qa(".spacetime-status-row span").map(x=>(x.textContent||"").trim()).find(x=>x.endsWith("공간축"))||null,
       placeOpacity:Number(style(placeLayer).opacity),
+      macroOpacity:Number(style(q(".spacetime-region-head-layer.is-macro")).opacity),
+      subregionOpacity:Number(style(q(".spacetime-region-head-layer.is-subregion")).opacity),
       reviewedPlaceBindingCount:Array.isArray(window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE?.REVIEWED_PLACE_BINDINGS)
         ? window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE.REVIEWED_PLACE_BINDINGS.length
         : 0,
@@ -605,7 +607,12 @@ async function main() {
     assert(!mobile.emptyInspectorRect || mobile.emptyInspectorRect.height <= 72, "Empty mobile inspector is too tall", mobile);
     assert(mobile.cameraRect.height <= 40 && mobile.searchRect.height <= 40, "Mobile controls are taller than the compact contract", mobile);
     assert(mobile.cameraRect.top >= mobile.searchRect.bottom + 2, "Mobile search and zoom controls did not split into separate rows", mobile);
-    assert(mobile.macroOpacity > 0.99 && mobile.subregionOpacity < 0.01, "Mobile 500% header did not prioritize macroregions", mobile);
+    assert(
+      Math.abs(mobile.macroOpacity - at500.macroOpacity) < 0.001 &&
+      Math.abs(mobile.subregionOpacity - at500.subregionOpacity) < 0.001,
+      "Mobile 500% header opacity diverged from the desktop semantic header layers",
+      { desktop500:{ macroOpacity:at500.macroOpacity, subregionOpacity:at500.subregionOpacity }, mobile }
+    );
     assert(mobile.statusSummaryVisible && !mobile.statusMoreOpen, "Mobile secondary status details are not collapsed by default", mobile);
     await screenshot(client, "spacetime-mobile-390.png");
 
