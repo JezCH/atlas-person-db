@@ -13,7 +13,7 @@ const labelEngine = require("../atlas-person-spacetime-label-engine.js");
 const presentationLayout = require("../atlas-person-spacetime-presentation-layout.js");
 
 test("spacetime keeps 500 percent default, 1500 maximum, and a viewport-fit effective minimum", () => {
-  assert.match(view, /const CAMERA_MIN_ZOOM = 1;/);
+  assert.match(view, /const CAMERA_MIN_ZOOM = 0\.5;/);
   assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);
   assert.match(view, /const CAMERA_MAX_ZOOM = 15;/);
   assert.match(view, /let cameraZoom = CAMERA_DEFAULT_ZOOM;/);
@@ -92,8 +92,9 @@ test("retired low-scale overview rendering has no production artifacts", () => {
 test("time projection is globally uniform across the widened zoom range", () => {
   const projection = require("../atlas-person-spacetime-time-projection.js");
   assert.equal(typeof projection.createUniformTimeProjection, "function");
-  assert.equal(projection.MIN_SUPPORTED_ZOOM, 1);
-  assert.throws(() => projection.createUniformTimeProjection(-3000, 2026, 1000, 0.99), /zoom must be >= 1/);
+  assert.equal(projection.MIN_SUPPORTED_ZOOM, 0.5);
+  assert.throws(() => projection.createUniformTimeProjection(-3000, 2026, 1000, 0.49), /zoom must be >= 0.5/);
+  assert.equal(projection.createUniformTimeProjection(-3000, 2026, 10000, 0.985).zoom, 0.985);
   const scale = projection.createUniformTimeProjection(-3000, 2026, 10000, 1);
   const y1800 = scale.yForYear(1800);
   const y1900 = scale.yForYear(1900);
@@ -102,10 +103,10 @@ test("time projection is globally uniform across the widened zoom range", () => 
   assert.equal(scale.mode, "linear_time");
 });
 
-test("LOD remains labels plus rails at the widened 100 percent floor", () => {
+test("LOD remains labels plus rails across the viewport-fit range", () => {
   const lod = require("../atlas-person-spacetime-lod.js");
-  assert.throws(() => lod.lodWeights({ zoom: 0.99 }), /zoom must be >= 1/);
-  const minimum = lod.lodWeights({ zoom: 1 });
+  assert.throws(() => lod.lodWeights({ zoom: 0.49 }), /zoom must be >= 0.5/);
+  const minimum = lod.lodWeights({ zoom: 0.985 });
   assert.equal(minimum.labels, 1);
   assert.equal(minimum.rails, 1);
   assert.equal(Object.hasOwn(minimum, "density"), false);
@@ -113,8 +114,8 @@ test("LOD remains labels plus rails at the widened 100 percent floor", () => {
   assert.equal(lod.representationStage(minimum), "rail");
 });
 
-test("control adapter separates 100 minimum, 500 default, and 1500 maximum", () => {
-  assert.match(control, /const MINIMUM_PERCENT = 100;/);
+test("control adapter keeps only a technical safety floor while viewport-fit owns the UI minimum", () => {
+  assert.match(control, /const MINIMUM_PERCENT = 50;/);
   assert.match(control, /const DEFAULT_PERCENT = 500;/);
   assert.match(control, /const MAXIMUM_PERCENT = 1500;/);
   assert.doesNotMatch(control, /spacetimeHorizontalMode/);
