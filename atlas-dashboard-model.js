@@ -805,31 +805,99 @@
     });
     const runtimeActivityIncompleteIds = personIdsFor((person) => Number(person?.activity_count || 0) <= 0);
 
+    const activityTarget = ({ person, activity, reason }) => Object.freeze({
+      activity_id:text(activity?.id),
+      person_id:text(person?.id),
+      person_display_name:text(person?.display_name || person?.preferred_name_ko || person?.canonical_name_en || person?.id),
+      polity_id:text(activity?.polity?.id),
+      polity_display_name:text(activity?.polity?.display_name || activity?.polity?.preferred_name_ko || activity?.polity?.canonical_name_en || activity?.polity?.id),
+      reason_code:text(reason) || "UNKNOWN"
+    });
+    const sortActivityTargets = (rows) => Object.freeze([...rows].sort((left,right) =>
+      text(left?.person_display_name).localeCompare(text(right?.person_display_name),"ko")
+      || text(left?.activity_id).localeCompare(text(right?.activity_id))
+    ));
+
     const activities = persons.flatMap((person) => (person?.activity_summaries || []).map((activity) => ({ person, activity })));
     let chronologyComplete = 0;
-    for (const { activity } of activities) {
+    const chronologyIncompleteTargets = [];
+    for (const { person, activity } of activities) {
       const interval = spatialModel.activityInterval(activity);
-      if (interval && interval.partial !== true && interval.reversed_input !== true) chronologyComplete += 1;
+      if (interval && interval.partial !== true && interval.reversed_input !== true) {
+        chronologyComplete += 1;
+        continue;
+      }
+      chronologyIncompleteTargets.push(activityTarget({
+        person,
+        activity,
+        reason:!interval
+          ? "CHRONOLOGY_UNRESOLVED"
+          : interval.reversed_input === true
+            ? "CHRONOLOGY_REVERSED"
+            : "CHRONOLOGY_PARTIAL"
+      }));
     }
-    const chronologyIncomplete = Math.max(0,activities.length-chronologyComplete);
-    const provenanceComplete = activities.filter(({ activity }) => Number(activity?.source_count || 0) > 0).length;
-    const provenanceIncomplete = Math.max(0,activities.length-provenanceComplete);
-    const spatial = spatialStatus(personResult,spatialIndex);
+    const chronologyIncomplete = chronologyIncompleteTargets.length;
 
-    const row = ({ code, label, unit, source, available, complete, incomplete, total, personIds = null, unavailableReason = null }) => Object.freeze({
+    const provenanceIncompleteTargets = activities
+      .filter(({ activity }) => Number(activity?.source_count || 0) <= 0)
+      .map(({ person, activity }) => activityTarget({ person, activity, reason:"SOURCE_LINK_MISSING" }));
+    const provenanceIncomplete = provenanceIncompleteTargets.length;
+    const provenanceComplete = Math.max(0,activities.length-provenanceIncomplete);
+
+    const spatial = spatialStatus(personResult,spatialIndex);
+    let spatialIncompleteTargets = null;
+    if (spatialIndex) {
+      const lookup = spatialModel.createSpatialLookup(spatialIndex);
+      spatialIncompleteTargets = activities.flatMap(({ person, activity }) => {
+        const result = spatialModel.resolveActivityPlacement(activity,lookup);
+        if (result?.status === "placed") return [];
+        return [activityTarget({
+          person,
+          activity,
+          reason:text(result?.reason || result?.chronology_reason || result?.status) || "SPATIAL_UNRESOLVED"
+        })];
+      });
+    }
+
+    const row = ({
       code,
       label,
       unit,
       source,
       available,
-      complete:available ? complete : null,
-      incomplete:available ? incomplete : null,
-      total:available ? total : null,
-      percentage:available ? percent(complete,total) : null,
-      person_ids:available && unit === "person" && Array.isArray(personIds) ? Object.freeze([...personIds]) : null,
-      drilldown_available:available && unit === "person" && Array.isArray(personIds),
-      unavailable_reason:available ? null : unavailableReason || "SOURCE_UNAVAILABLE"
-    });
+      complete,
+      incomplete,
+      total,
+      personIds = null,
+      activityTargets = null,
+      unavailableReason = null
+    }) => {
+      const personTargets = available && unit === "person" && Array.isArray(personIds)
+        ? Object.freeze([...personIds])
+        : null;
+      const activityTargetRows = available && unit === "activity" && Array.isArray(activityTargets)
+        ? sortActivityTargets(activityTargets)
+        : null;
+      return Object.freeze({
+        code,
+        label,
+        unit,
+        source,
+        available,
+        complete:available ? complete : null,
+        incomplete:available ? incomplete : null,
+        total:available ? total : null,
+        percentage:available ? percent(complete,total) : null,
+        person_ids:personTargets,
+        activity_targets:activityTargetRows,
+        drilldown_available:Boolean(
+          available
+          && ((personTargets && personTargets.length > 0) || (activityTargetRows && activityTargetRows.length > 0))
+        ),
+        unavailable_reason:available ? null : unavailableReason || "SOURCE_UNAVAILABLE"
+      });
+    };
 
     return Object.freeze({
       rows:Object.freeze([
@@ -875,7 +943,8 @@
           available:true,
           complete:chronologyComplete,
           incomplete:chronologyIncomplete,
-          total:activities.length
+          total:activities.length,
+          activityTargets:chronologyIncompleteTargets
         }),
         row({
           code:"provenance",
@@ -885,7 +954,8 @@
           available:true,
           complete:provenanceComplete,
           incomplete:provenanceIncomplete,
-          total:activities.length
+          total:activities.length,
+          activityTargets:provenanceIncompleteTargets
         }),
         row({
           code:"spatial",
@@ -896,6 +966,7 @@
           complete:spatial.ready,
           incomplete:spatial.unresolved,
           total:spatial.total,
+          activityTargets:spatialIncompleteTargets,
           unavailableReason:"SPATIAL_SOURCE_UNAVAILABLE"
         })
       ]),
