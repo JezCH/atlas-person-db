@@ -257,7 +257,7 @@ function runtimeInsertParams(row) {
 
 function runtimeInsertTuple(rowIndex) {
   const start=2+(rowIndex*24);
-  const p=(offset)=>`${start+offset}`;
+  const p=(offset)=>"$"+String(start+offset);
   return `(
     ${p(0)}::uuid,$1,${p(1)}::uuid,${p(2)}::uuid,${p(3)}::uuid,${p(4)}::uuid,${p(5)}::uuid,
     ${p(6)},${p(7)},${p(8)},${p(9)},${p(10)},${p(11)},${p(12)},${p(13)},${p(14)},${p(15)},${p(16)},${p(17)},
