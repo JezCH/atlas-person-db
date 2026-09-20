@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-reviewed-spatial-corrections/v1",
+  "correction_id": "kingdom-of-denmark-relinked-source-retirement-20260920",
+  "baseline": "b10db60403c2b7239179a588a9f93bbcf685a2e8",
+  "reviewed_at": "2026-09-20T12:06:00Z",
+  "changes": [
+    {
+      "polity_id": "da99e975-fba4-510b-bb1c-6937d443abf5",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "northern-europe"
+      },
+      "disposition": "remove_relinked_source",
+      "reason": "Kingdom of Denmark is now an Activity-orphan after the exact reviewed relink to Denmark; the Denmark survivor already carries the same Europe/Northern Europe placement and Kingdom of Denmark / 덴마크 왕국 is preserved as a reviewed state-form designation."
+    }
+  ]
+}
