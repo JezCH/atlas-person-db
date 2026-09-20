@@ -864,6 +864,20 @@ test("Source Freshness uses the active compile ledger timestamp for Runtime publ
   assert.equal(row.read_at,"2026-09-20T01:05:00.000Z");
 });
 
+test("Source Freshness uses the Runtime exclusion compile timestamp", () => {
+  const freshness=model.buildSourceFreshness({
+    runtimeExclusions:{available:true,compiled_at:"2026-09-20T02:00:00.000Z"},
+    sourceStates:{
+      runtimeExclusions:{label:"Runtime Exclusions",status:"ready",loaded_at:"2026-09-20T02:05:00.000Z"}
+    }
+  });
+  const row=freshness.rows[0];
+  assert.equal(row.key,"runtimeExclusions");
+  assert.equal(row.data_at,"2026-09-20T02:00:00.000Z");
+  assert.equal(row.data_basis,"compiled_at");
+  assert.equal(row.read_at,"2026-09-20T02:05:00.000Z");
+});
+
 test("Source Freshness never promotes loaded_at into canonical data freshness", () => {
   const freshness=model.buildSourceFreshness({
     spatialIndex:null,
@@ -1162,10 +1176,17 @@ test("Runtime Delta/Drift card has explicit drift state and responsive layouts",
   assert.match(dashboardCssSource,/@media\(max-width:430px\)\{\.dashboard-drift-grid\{grid-template-columns:1fr\}\}/);
 });
 
-test("Production browser acceptance permanently verifies Runtime activation history, delta, and drift", () => {
+test("Production browser acceptance permanently verifies Runtime activation history, exclusion targets, delta, and drift", () => {
   const acceptance=fs.readFileSync(new URL("../scripts/verify-dashboard-production-acceptance.mjs", import.meta.url),"utf8");
   assert.match(acceptance,/store\.loadRuntimePublication\(\)/);
+  assert.match(acceptance,/store\.loadRuntimeExclusions\(\)/);
   assert.match(acceptance,/runtimePublicationResult/);
+  assert.match(acceptance,/runtimeExclusionsResult/);
+  assert.match(acceptance,/Expected eight shared Dashboard sources/);
+  assert.match(acceptance,/Runtime exclusion target count differs from active compile/);
+  assert.match(acceptance,/Runtime exclusion Attention is not Activity-actionable/);
+  assert.match(acceptance,/Runtime exclusion target panel did not reveal on click/);
+  assert.match(acceptance,/Rendered Runtime exclusion row count differs from canonical target snapshot/);
   assert.match(acceptance,/runtime_delta_drift:snapshot\.runtime_delta_drift/);
   assert.match(acceptance,/Runtime activation history must expose latest and previous Production activations/);
   assert.match(acceptance,/Latest Runtime activation does not match current projection/);
