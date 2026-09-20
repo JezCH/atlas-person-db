@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zz-israel-polity-split-spatial-20260920",
+  "baseline": "3d14260d9a716d8015b815e926a88fa71bc77998",
+  "reviewed_at": "2026-09-20T05:40:00.000Z",
+  "bindings": [
+    {
+      "polity_id": "14ad524a-01e4-4d70-9c79-9aaa596aa2fa",
+      "region_code": "west-asia",
+      "subregion_code": "levant"
+    },
+    {
+      "polity_id": "8785538e-ec07-4eba-bd05-5c7b3c7903c4",
+      "region_code": "west-asia",
+      "subregion_code": "levant"
+    }
+  ]
+}
