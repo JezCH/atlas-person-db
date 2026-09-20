@@ -35,7 +35,7 @@ function zoomMount(current = "500%") {
   const zoomOut = button();
   const zoomValue = button(current);
   const zoomIn = button();
-  const reset = button("500%");
+  const reset = button("기본");
   const nodes = {
     "#spacetimeCameraZoomOut": zoomOut,
     "#spacetimeCameraZoomValue": zoomValue,
@@ -108,9 +108,16 @@ test("visible bounds stay aligned with the unified renderer camera contract", ()
   assert.equal(Number(minMatch[1]) * 100, 100);
   assert.equal(Number(maxMatch[1]) * 100, 1500);
   assert.equal(Number(adapterMaxMatch[1]), Number(maxMatch[1]) * 100);
-  assert.match(viewSource, /id="spacetimeCameraZoomReset"[^>]*>500%<\/button>/);
+  assert.match(viewSource, /id="spacetimeCameraZoomReset"[^>]*aria-label="500% 기본 배율로 복귀"[^>]*>기본<\/button>/);
   assert.doesNotMatch(viewSource, /spacetimeTimeZoom/);
   assert.doesNotMatch(viewSource, />100%<\/button>/);
+});
+
+test("desktop toolbar uses a compact reset label without parsing it as a percent", () => {
+  assert.doesNotMatch(controlSource, /parsePercent\(reset\.textContent\)/);
+  assert.match(controlSource, /const atDefault = Math\.abs\(currentPercent - DEFAULT_PERCENT\) <= BOUND_EPSILON;/);
+  assert.match(viewCss, /\.spacetime-controls input\{width:180px;height:30px/);
+  assert.match(viewCss, /\.spacetime-camera button,\.spacetime-camera output\{height:30px/);
 });
 
 test("touch pinch inside spacetime controls the internal 100 to 1500 percent camera", () => {
