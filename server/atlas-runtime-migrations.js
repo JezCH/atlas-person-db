@@ -5,7 +5,8 @@ const path = require("node:path");
 const { assertReplaySafeCanonicalMigration } = require("./atlas-replay-migration-safety.js");
 
 const RUNTIME_MIGRATION_PATHS = Object.freeze([
-  path.resolve(__dirname, "../db/migrations/20260906_runtime_person_politics_projection_v1.sql")
+  path.resolve(__dirname, "../db/migrations/20260906_runtime_person_politics_projection_v1.sql"),
+  path.resolve(__dirname, "../db/migrations/20260920_runtime_projection_activation_history_v1.sql")
 ]);
 
 function readRuntimeMigrations({ readFile=fs.readFileSync } = {}) {
