@@ -454,6 +454,74 @@
     ].map(([value,label]) => `<option value="${value}"${selected === value ? " selected" : ""}>${label}</option>`).join("");
   }
 
+  const PORTRAIT_EVIDENCE_ROLE_LABELS = Object.freeze({
+    facial_reference:"얼굴 근거",
+    clothing_reference:"복식 근거",
+    iconography_reference:"도상 근거",
+    textual_description:"문헌 묘사",
+    context_reference:"맥락 참고"
+  });
+
+  function portraitEvidenceRoleOptions(selected = "") {
+    return Object.entries(PORTRAIT_EVIDENCE_ROLE_LABELS)
+      .map(([value,label]) => `<option value="${value}"${selected === value ? " selected" : ""}>${label}</option>`)
+      .join("");
+  }
+
+  function portraitSourceDisplay(source) {
+    const row = source?.source && typeof source.source === "object" ? source.source : source;
+    return row?.citation_text || row?.title || row?.canonical_url || source?.source_id || "출처";
+  }
+
+  function portraitSourceCandidates(person, portrait) {
+    const byId = new Map();
+    for (const source of person?.sources || []) {
+      const id = String(source?.source_id || "").trim();
+      if (id) byId.set(id, source);
+    }
+    for (const link of portrait?.sources || []) {
+      const id = String(link?.source_id || "").trim();
+      if (id && !byId.has(id)) byId.set(id, { source_id:id, ...(link?.source || {}) });
+    }
+    return [...byId.values()].sort((a,b) =>
+      portraitSourceDisplay(a).localeCompare(portraitSourceDisplay(b), "ko")
+    );
+  }
+
+  function portraitProvenanceHtml(person, portrait) {
+    if (!portrait) return "";
+    const personId = escapeHtml(person?.id || "");
+    const links = Array.isArray(portrait.sources) ? portrait.sources : [];
+    const candidates = portraitSourceCandidates(person, portrait);
+    const linked = links.length
+      ? `<div class="person-portrait-source-list">${links.map((link) => {
+          const sourceId = escapeHtml(link?.source_id || "");
+          const role = String(link?.evidence_role || "");
+          return `<form class="person-portrait-source-row" data-person-portrait-operation="source-edit" data-person-id="${personId}" data-source-id="${sourceId}" data-original-role="${escapeHtml(role)}">
+            <span class="person-portrait-source-label">${escapeHtml(portraitSourceDisplay(link))}</span>
+            <select name="evidence_role" aria-label="초상 근거 역할">${portraitEvidenceRoleOptions(role)}</select>
+            <button class="mini-btn edit" type="submit">역할 저장</button>
+            <button class="mini-btn danger delete" type="button" data-person-portrait-source-remove data-person-id="${personId}" data-source-id="${sourceId}" data-evidence-role="${escapeHtml(role)}">연결 해제</button>
+          </form>`;
+        }).join("")}</div>`
+      : '<p class="person-profile-help">연결된 초상 근거 출처가 없습니다.</p>';
+    const candidateOptions = candidates.map((source) =>
+      `<option value="${escapeHtml(source.source_id || "")}">${escapeHtml(portraitSourceDisplay(source))}</option>`
+    ).join("");
+    const add = candidateOptions
+      ? `<form class="person-profile-form person-portrait-source-add" data-person-portrait-operation="source-add" data-person-id="${personId}">
+          <label><span>Person 출처에서 근거 추가</span><select name="source_id" required><option value="" selected disabled>출처 선택</option>${candidateOptions}</select></label>
+          <label><span>근거 역할</span><select name="evidence_role" required>${portraitEvidenceRoleOptions("context_reference")}</select></label>
+          <button class="mini-btn edit" type="submit">근거 연결</button>
+        </form>`
+      : '<p class="person-profile-help">이 Person에 연결된 canonical Source가 없어 여기서 새 근거를 추가할 수 없습니다. Source 생성·Person 연결은 별도 Source authoring 책임으로 유지합니다.</p>';
+    return `<div class="person-portrait-provenance">
+      <div class="person-detail-section-head"><h4>초상 근거</h4><span>${links.length}건</span></div>
+      ${linked}
+      ${add}
+    </div>`;
+  }
+
   function portraitEditorHtml(person, portraitResult = null) {
     const personId = escapeHtml(person?.id || "");
     if (!personId) return "";
@@ -474,6 +542,11 @@
         <div class="person-portrait-actions"><button class="mini-btn edit" type="submit">${portrait ? "초상 교체" : "초상 업로드"}</button>${portrait ? `<button class="mini-btn danger delete" type="button" data-person-portrait-delete data-person-id="${personId}">초상 삭제</button>` : ""}</div>
       </form>
       <p class="person-profile-help">${currentState} · JPG/PNG/WebP 등 일반 이미지는 브라우저에서 WebP로 변환한 뒤 저장합니다.</p>
+      ${portrait ? `<form class="person-profile-form person-portrait-metadata-form" data-person-portrait-operation="metadata" data-person-id="${personId}">
+        <label><span>초상 유형</span><select name="portrait_kind" required>${portraitKindOptions(currentKind)}</select></label>
+        <label><span>근거 수준</span><select name="evidence_level" required>${portraitEvidenceOptions(currentEvidence)}</select></label>
+        <button class="mini-btn edit" type="submit">메타데이터 저장</button>
+      </form>${portraitProvenanceHtml(person, portrait)}` : ""}
     </div>`;
   }
 
