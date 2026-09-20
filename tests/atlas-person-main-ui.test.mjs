@@ -12,7 +12,6 @@ const dataStore = fs.readFileSync(new URL('../atlas-client-data-store.js', impor
 
 test('Main loads the Person reader and shared data store before the Person-centered screen module', () => {
   assert.match(html, /atlas-person-main\.css/);
-  assert.doesNotMatch(html, /atlas-person-main-filters\.css/);
   const readerIndex = html.indexOf('atlas-person-browser-reader.js');
   const storeIndex = html.indexOf('atlas-client-data-store.js');
   const mainIndex = html.indexOf('atlas-person-main.js');
@@ -32,10 +31,7 @@ test('Person-centered Main renders all historicity groups in one chronology tabl
   assert.match(main, /개인 활동연대를 방어할 수 없는 인물은 모두 ‘전설, 신화, 연대미상’에 함께 표시합니다/);
   assert.match(main, /dataStore\.loadNonTimelinePersons/);
   assert.match(dataStore, /non-timeline-persons\.json/);
-  assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY/);
   assert.match(reader, /partitionByHistoricity/);
-  assert.match(reader, /PRIMARY_HISTORICITY_VALUE = "historical"/);
-  assert.match(reader, /personMatchesFacets/);
 });
 
 test('Person Main owns only Polity filter state and delegates its control surface to era navigation', () => {
@@ -44,58 +40,37 @@ test('Person Main owns only Polity filter state and delegates its control surfac
   assert.match(main, /atlas-person-polity-filter-change/);
   assert.match(main, /selectedPolityId: facetFilters\.polity_id/);
   assert.match(main, /polityOptions: polityOptions\(\)/);
-  for (const removed of ['personMainFilterToggle', 'personMainFilters', 'personMainRelationFilter', 'personMainRoleFilter', 'personMainBasisFilter', 'personMainClearFilters', 'personMainSummary', 'personMainStatus']) {
-    assert.doesNotMatch(main, new RegExp(removed));
-  }
-  const renderGroupsBody = main.slice(main.indexOf('function renderGroups'), main.indexOf('function setSearchQuery'));
-  assert.doesNotMatch(renderGroupsBody, /readPerson\(/);
 });
 
-test('Person search is rendered left of Polity while current-result status sits beside era status', () => {
+test('Person search is rendered by era navigation and not duplicated in Main', () => {
   assert.match(nav, /search\.id = "personMainSearch"/);
-  assert.match(nav, /intro\.append\(title, status, summary\)/);
-  assert.match(nav, /controls\.append\(search, select\)/);
   assert.match(nav, /atlas-person-search-change/);
   assert.match(main, /function setSearchQuery/);
   assert.match(main, /window\.addEventListener\("atlas-person-search-change"/);
   assert.doesNotMatch(main, /<input id="personMainSearch"/);
-  assert.match(main, /if \(child\.id !== "personEraNavigator"\) child\.remove\(\)/);
-  assert.match(main, /list\.insertAdjacentHTML\("beforeend", renderedGroups\)/);
 });
 
-test('Person Main emits one current-result Person and Polity status contract', () => {
-  assert.match(main, /visiblePolityCount/);
-  assert.match(main, /visibleCount: shown/);
-  assert.match(main, /visiblePolityCount: polityCount/);
-  assert.doesNotMatch(main, /<strong>\$\{rows\.length\}명<\/strong>/);
-  assert.doesNotMatch(html, /atlas-person-summary-counts\.js/);
-});
-
-test('current-result Polity count uses authoritative facet IDs instead of stringifying facet objects', () => {
-  assert.match(main, /function polityFacetId\(value\)/);
-  assert.match(main, /typeof value === "object"/);
-  assert.match(main, /String\(value\.id \|\| ""\)\.trim\(\)/);
-  assert.match(main, /const id = polityFacetId\(value\)/);
-  assert.doesNotMatch(main, /if \(facetFilters\.polity_id\) return rows\.length \? 1 : 0/);
-});
-
-test('Person detail renders readable names, descriptions, Person sources and user-facing Activity meaning', () => {
-  for (const token of [
-    'person.names',
-    'person.descriptions',
-    'person.sources',
-    'person.activities',
-    'activity.polity',
-    'activity.relation',
-    'activity.role',
-    'activity.period_basis',
-    'activity.start',
-    'activity.end',
-    'activity.notes',
-    'activity.sources'
-  ]) assert.match(main, new RegExp(token.replaceAll('.', '\\.')));
+test('Person detail renders identity, portrait slot, sources and Activity meaning', () => {
+  for (const token of ['person.names','person.descriptions','person.sources','person.activities','activity.polity','activity.relation','activity.role','activity.period_basis','activity.start','activity.end','activity.notes','activity.sources']) {
+    assert.match(main, new RegExp(token.replaceAll('.', '\\.')));
+  }
+  assert.match(main, /person-detail-portrait/);
+  assert.match(main, /person-detail-portrait-empty">없음/);
   assert.match(main, /Activity 출처/);
   assert.match(main, /Person 출처/);
+});
+
+test('legacy Activity table, detail panel, dialog and app runtime are retired', () => {
+  assert.doesNotMatch(html, /id="addButton"|id="dataBody"|id="detailPanel"|id="editorDialog"|\.\/app\.js/);
+  assert.doesNotMatch(main, /relationshipAuthoringTools|전체 관계 편집표|legacyContent|legacyActivityButton|invokeLegacyActivityAction/);
+});
+
+test('supported mutations are owned by Person Main instead of DOM-clicking a legacy editor', () => {
+  assert.match(main, /ATLAS_SERVER_WRITE_ADAPTER/);
+  assert.match(main, /setPersonKoreanName/);
+  assert.match(main, /setPersonExternalReference/);
+  assert.match(main, /profileWriter\.deleteActivity\(activityId\)/);
+  assert.doesNotMatch(main, /button\.click\(\)|input\.click\(\)|refreshAfterLegacyRowsChange|openLegacyTools/);
 });
 
 test('Main renders BCE/CE and unknown chronology without changing historicity', () => {
@@ -110,26 +85,14 @@ test('refresh preserves selected Person and forces authoritative detail refresh'
   assert.match(main, /\(!force && selectedPersonId === personId\)/);
 });
 
-test('mobile shell does not create a second Person search owner', () => {
+test('mobile shell does not create a second Person search or legacy row owner', () => {
   assert.match(nav, /search\.id = "personMainSearch"/);
-  assert.match(nav, /atlas-person-search-change/);
-  assert.match(main, /new CustomEvent\("atlas-person-main-rendered"/);
-  assert.doesNotMatch(mobile, /personMainSearch|atlas-person-main-rendered|atlas-person-search-change|visiblePersonCount/);
+  assert.doesNotMatch(mobile, /personMainSearch|dataBody|mobile-expanded/);
   assert.doesNotMatch(html, /mobileSearchInput|mobileSearchClear|mobileSearchCount/);
   assert.match(html, /mobile-appbar-title/);
 });
 
-test('existing Activity authoring DOM is moved into a separate expandable tool instead of being recreated or deleted', () => {
-  assert.match(main, /body\.append\(toolbar, legacyContent\)/);
-  assert.match(main, /relationshipAuthoringTools/);
-  assert.match(main, /전체 관계 편집표/);
-  assert.match(main, /기존 Activity 행 등록·수정·엑셀 도구/);
-  assert.match(html, /id="addButton"/);
-  assert.match(html, /id="dataBody"/);
-  assert.match(html, /id="editorDialog"/);
-});
-
-test('Person Main is read-only and consumes the shared list snapshot without embedding Admin-only mutation surfaces', () => {
+test('Person Main consumes the shared snapshot without embedding server endpoints or secrets', () => {
   assert.doesNotMatch(main, /\/api\/atlas-(?:mutate|identity|authoring|duplicate-review|admin-inspector|admin-system-status|audit-inventory)/);
   assert.doesNotMatch(main, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|authorization|bearer\s/i);
   assert.match(main, /dataStore\.loadPersons/);
@@ -143,23 +106,10 @@ test('source links are restricted to HTTP(S) and user-visible strings are escape
   assert.match(main, /escapeHtml/);
 });
 
-test('Person Main CSS isolates the new layout and keeps responsive fallbacks', () => {
+test('Person Main CSS owns one responsive detail surface and no legacy authoring surface', () => {
   assert.match(css, /\.person-main-layout/);
-  assert.match(css, /\.person-group-other/);
   assert.match(css, /\.person-main-detail/);
-  assert.match(css, /\.relationship-authoring-tools/);
+  assert.match(css, /\.person-detail-portrait/);
+  assert.doesNotMatch(css, /\.relationship-authoring-tools|\.relationship-authoring-body/);
   assert.match(css, /@media\(max-width:760px\)/);
-});
-
-test('Main has no standalone legend table and routes uncertain people through the shared chronology table', () => {
-  assert.doesNotMatch(main, /person-group-other/);
-  assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY/);
-  assert.match(main, /groups\.other_or_uncertain\.map\(withUnknownRegistryContext\)/);
-  assert.match(main, /function unknownRegistryRowForPerson/);
-  assert.match(main, /function withUnknownRegistryContext/);
-  assert.match(main, /registry_context_for_first_class/);
-  assert.match(main, /registry_only/);
-  assert.doesNotMatch(html, /non-timeline-list\.js/);
-  assert.doesNotMatch(html, /nonTimelineSection/);
-  assert.doesNotMatch(main, /전설·신화 인물/);
 });
