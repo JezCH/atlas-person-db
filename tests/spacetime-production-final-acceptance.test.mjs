@@ -38,6 +38,8 @@ test("exact-SHA verifier fails closed and byte-compares the current spacetime/do
 test("Production visual acceptance covers the compact 390px mobile presentation camera", () => {
   const verifier = read("scripts/verify-spacetime-production-visual.mjs");
   assert.match(verifier, /MOBILE_VIEWPORT = Object\.freeze\(\{ width: 390, height: 844/);
+  assert.match(verifier, /Page\.navigate", \{ url: "about:blank" \}/);
+  assert.match(verifier, /Page\.navigate", \{ url: PRODUCTION_URL \}/);
   assert.match(verifier, /mobile\.presentation === "mobile"/);
   assert.match(verifier, /mobile\.bodyScrollWidth <= mobile\.viewport\.width \+ 1/);
   assert.match(verifier, /Math\.abs\(mobile\.cornerWidth - 80\)/);
