@@ -601,7 +601,7 @@
     });
   }
 
-  function buildSourceFreshness({ spatialIndex = null, recentDelta = null, runtimePublication = null, sourceStates = {} } = {}) {
+  function buildSourceFreshness({ spatialIndex = null, recentDelta = null, runtimePublication = null, runtimeExclusions = null, sourceStates = {} } = {}) {
     const timestampByKey=Object.freeze({
       spatialIndex:Object.freeze({
         data_at:canonicalTimestamp(spatialIndex?.generated_at),
@@ -617,6 +617,13 @@
         data_at:canonicalTimestamp(runtimePublication?.active_compile?.compiled_at),
         basis:"compiled_at",
         missing_reason:runtimePublication ? "RUNTIME_PUBLICATION_NO_COMPILE_RUN" : "RUNTIME_PUBLICATION_SOURCE_UNAVAILABLE"
+      }),
+      runtimeExclusions:Object.freeze({
+        data_at:canonicalTimestamp(runtimeExclusions?.compiled_at),
+        basis:"compiled_at",
+        missing_reason:runtimeExclusions?.available === false
+          ? text(runtimeExclusions?.reason) || "RUNTIME_EXCLUSION_TARGET_SOURCE_UNAVAILABLE"
+          : "RUNTIME_EXCLUSION_COMPILE_TIMESTAMP_NOT_EXPOSED"
       })
     });
     const missingReasonByKey=Object.freeze({
@@ -951,7 +958,7 @@
     const runtimeDeltaDrift = buildRuntimeDeltaDrift(runtimePublicationResult);
     const coverageHeatmap = buildEraRegionHeatmap({ personResult, spatialIndex });
     const completenessMatrix = buildCompletenessMatrix({ personResult, domainResult, spatialIndex });
-    const sourceFreshness = buildSourceFreshness({ spatialIndex, recentDelta, runtimePublication:runtimePublicationResult, sourceStates });
+    const sourceFreshness = buildSourceFreshness({ spatialIndex, recentDelta, runtimePublication:runtimePublicationResult, runtimeExclusions:runtimeExclusionsResult, sourceStates });
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
       key,
