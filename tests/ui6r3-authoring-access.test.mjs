@@ -5,61 +5,33 @@ import fs from 'node:fs';
 const mainSource = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
 const mainCss = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
 const eraSource = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
+const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
-function expectToken(source, token) {
-  assert.ok(source.includes(token), `expected source to contain ${token}`);
-}
-
-test('UI-6R3 keeps primary Person authoring controls before the long Person list', () => {
-  for (const token of [
-    'id="personMainAdd"',
-    '+ 관계 추가',
-    'id="personMainRefresh"',
-    'id="personMainMoreButton"',
-    'id="personMainMoreMenu"',
-    '엑셀 내보내기',
-    '엑셀 불러오기',
-    'href="./admin.html"',
-    '전체 관계 편집표'
-  ]) expectToken(mainSource, token);
-
+test('Person Main exposes only current supported operations before the Person list', () => {
+  for (const token of ['id="personMainRefresh"','id="personMainExcelExport"','⇩ 엑셀 출력','href="./admin.html"']) assert.ok(mainSource.includes(token));
+  for (const retired of ['personMainAdd','personMainExcelImport','personMainMoreButton','relationshipAuthoringTools','전체 관계 편집표']) assert.doesNotMatch(mainSource, new RegExp(retired));
   const toolbarPosition = mainSource.indexOf('person-main-actions');
   const groupPosition = mainSource.indexOf('person-main-layout');
-  assert.ok(toolbarPosition >= 0 && groupPosition > toolbarPosition, 'primary authoring controls must be emitted before the Person list/detail layout');
+  assert.ok(toolbarPosition >= 0 && groupPosition > toolbarPosition);
 });
 
-test('UI-6R3 reuses legacy Activity authoring controls while allowing dedicated Person profile mutations', () => {
-  assert.doesNotMatch(mainSource, /createAdapter\(|createActivity\(|updateActivity\(|deleteActivity\(|importActivities\(/);
+test('Person Main directly owns supported Person profile and Activity delete mutations', () => {
   assert.match(mainSource, /ATLAS_SERVER_WRITE_ADAPTER/);
   assert.match(mainSource, /setPersonKoreanName/);
   assert.match(mainSource, /setPersonExternalReference/);
-  for (const token of [
-    'document.getElementById("addButton")',
-    'document.getElementById("exportButton")',
-    'document.getElementById("importInput")',
-    'button.click()',
-    'input.click()'
-  ]) expectToken(mainSource, token);
+  assert.match(mainSource, /profileWriter\.deleteActivity\(activityId\)/);
+  assert.doesNotMatch(mainSource, /createActivity\(|updateActivity\(|importActivities\(/);
 });
 
-test('UI-6R3 exposes direct edit and delete controls on each authoritative Activity detail card', () => {
-  for (const token of [
-    'data-activity-id="${activityId}"',
-    'data-authoring-action="edit"',
-    'data-authoring-action="delete"',
-    'invokeLegacyActivityAction(actionButton.dataset.activityId, actionButton.dataset.authoringAction)',
-    '#dataBody button.${action}[data-id]'
-  ]) expectToken(mainSource, token);
-  assert.match(mainSource, /String\(button\.dataset\.id\) === String\(activityId\)/);
+test('Activity cards no longer expose the retired inline update path', () => {
+  assert.match(mainSource, /data-authoring-action="delete"/);
+  assert.doesNotMatch(mainSource, /data-authoring-action="edit"/);
+  assert.doesNotMatch(mainSource, /#dataBody|legacyActivityButton|invokeLegacyActivityAction/);
 });
 
-test('UI-6R3 refreshes Person read state after edit/create close and row-changing delete/import operations', () => {
-  for (const token of [
-    'refreshAfterDialogClose',
-    'refreshAfterLegacyRowsChange',
-    'loadPersons({ keepSelection: true })',
-    'new MutationObserver'
-  ]) expectToken(mainSource, token);
+test('legacy Activity authoring DOM and runtime are absent from current Main HTML', () => {
+  assert.doesNotMatch(html, /id="addButton"|id="dataBody"|id="editorDialog"|\.\/app\.js/);
+  assert.doesNotMatch(mainSource, /MutationObserver|relationshipAuthoringTools|legacyContent/);
 });
 
 test('current exploration UI keeps only Polity filtering and places it with era navigation', () => {
@@ -68,13 +40,4 @@ test('current exploration UI keeps only Polity filtering and places it with era 
   assert.match(eraSource, /person-era-polity-filter/);
   assert.match(eraSource, /atlas-person-polity-filter-change/);
   assert.match(mainCss, /@media\(max-width:760px\)/);
-});
-
-test('UI-6R3 keeps the complete legacy relationship table available as an explicit advanced surface', () => {
-  for (const token of [
-    'authoringTools.id = "relationshipAuthoringTools"',
-    'body.append(toolbar, legacyContent)',
-    'tools.open = true',
-    'tools.scrollIntoView'
-  ]) expectToken(mainSource, token);
 });
