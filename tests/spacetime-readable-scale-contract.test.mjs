@@ -23,7 +23,7 @@ test("spacetime keeps 500 percent as default while allowing a wider 300 to 1200 
   assert.equal(spaceAxis.DEFAULT_AXIS_WIDTH, 140);
   assert.match(view, /const AXIS_WIDTH = 140;/);
   assert.match(view, /const CAMERA_HEADER_HEIGHT = 36;/);
-  assert.match(view, /id="spacetimeCameraZoomReset"[^>]*>500%<\/button>/);
+  assert.match(view, /id="spacetimeCameraZoomReset"[^>]*aria-label="500% 기본 배율로 복귀"[^>]*>기본<\/button>/);
   assert.match(view, /return Math\.min\(CAMERA_MAX_ZOOM, Math\.max\(CAMERA_MIN_ZOOM, numeric\)\);/);
   assert.doesNotMatch(view, />100%<\/button>/);
 });
