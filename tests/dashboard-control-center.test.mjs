@@ -1120,3 +1120,10 @@ test("Production browser acceptance permanently verifies Runtime activation hist
   assert.match(acceptance,/runtime_delta_drift:modelState\.runtime_delta_drift/);
 });
 
+test("Dashboard keeps Needs Attention immediately after KPIs and ahead of system telemetry", () => {
+  const kpis=dashboardSource.indexOf("dashboard-kpi-grid");
+  const attention=dashboardSource.indexOf("NEEDS ATTENTION");
+  const system=dashboardSource.indexOf("SYSTEM / PRODUCTION");
+  assert.ok(kpis >= 0 && attention > kpis && system > attention);
+});
+
