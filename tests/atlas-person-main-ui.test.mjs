@@ -7,6 +7,7 @@ const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url)
 const reader = fs.readFileSync(new URL('../atlas-person-browser-reader.js', import.meta.url), 'utf8');
 const nav = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
+const profileCss = fs.readFileSync(new URL('../atlas-person-profile-editor.css', import.meta.url), 'utf8');
 const mobile = fs.readFileSync(new URL('../mobile-ui.js', import.meta.url), 'utf8');
 const dataStore = fs.readFileSync(new URL('../atlas-client-data-store.js', import.meta.url), 'utf8');
 
@@ -107,7 +108,7 @@ test('Person detail renders identity, portrait slot, sources and user-facing Act
   assert.match(main, /Person 출처/);
 });
 
-test('Person detail binds the canonical portrait read surface without adding portrait mutations', () => {
+test('Person detail binds canonical portrait read and authoring controls without direct mutation endpoints', () => {
   assert.match(main, /reader\.readPortrait\(personId\)/);
   assert.match(main, /portrait\.asset_url/);
   assert.match(main, /data-person-portrait-image src=/);
@@ -115,7 +116,29 @@ test('Person detail binds the canonical portrait read surface without adding por
   assert.match(main, /referrerpolicy="no-referrer"/);
   assert.match(main, /초상화 조회 실패/);
   assert.match(main, /person-detail-portrait-empty">없음/);
-  assert.doesNotMatch(main, /image_base64|__atlas_mutation_surface=person-portrait|setPersonPortrait|deletePersonPortrait/);
+  assert.match(main, /data-person-portrait-operation="upload"/);
+  assert.match(main, /name="portrait_file" accept="image\/\*"/);
+  assert.match(main, /name="portrait_kind"/);
+  assert.match(main, /name="evidence_level"/);
+  assert.match(main, /profileWriter\.setPersonPortrait/);
+  assert.match(main, /profileWriter\.deletePersonPortrait/);
+  assert.match(main, /canvas\.toBlob/);
+  assert.match(main, /"image\/webp"/);
+  assert.match(main, /PORTRAIT_OUTPUT_MAX_BYTES = 3 \* 1024 \* 1024/);
+  assert.doesNotMatch(main, /__atlas_mutation_surface=person-portrait/);
+});
+
+test('portrait authoring controls preserve current provenance links during image replacement', () => {
+  assert.match(main, /function preservedPortraitSources\(\)/);
+  assert.match(main, /source_id:String\(row\?\.source_id \|\| ""\)\.trim\(\)/);
+  assert.match(main, /evidence_role:String\(row\?\.evidence_role \|\| ""\)\.trim\(\)/);
+  assert.match(main, /sources:preservedPortraitSources\(\)/);
+});
+
+test('portrait authoring controls have responsive form styling', () => {
+  assert.match(profileCss, /\.person-portrait-form/);
+  assert.match(profileCss, /\.person-portrait-actions/);
+  assert.match(profileCss, /@media\(max-width:760px\)/);
 });
 
 test('Main renders BCE/CE and unknown chronology without changing historicity', () => {

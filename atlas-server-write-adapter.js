@@ -8,6 +8,7 @@
 
   function errorText(body, fallback) {
     if (body?.error) return String(body.error);
+    if (body?.code) return String(body.code);
     const outcome = body?.outcome;
     if (Array.isArray(outcome?.validation_failures) && outcome.validation_failures.length) {
       return outcome.validation_failures.map((item) => item.code || item.field || JSON.stringify(item)).join("; ");
@@ -133,6 +134,50 @@
       return compatibleOutcome(operation, response, body);
     }
 
+    function portraitFailure(operation, message, status = null) {
+      return {
+        schema:"atlas-person-portrait/v1",
+        operation,
+        committed:false,
+        errors:[String(message || "portrait mutation failed")],
+        http_status:status
+      };
+    }
+
+    async function rawPortraitMutation(method, payload) {
+      return fetchImpl(`${mutationEndpoint}?__atlas_mutation_surface=person-portrait`, {
+        method,
+        credentials:"same-origin",
+        cache:"no-store",
+        headers:{ "content-type":"application/json", accept:"application/json" },
+        body:JSON.stringify(payload)
+      });
+    }
+
+    async function mutatePortrait(method, payload) {
+      const operation = method === "DELETE" ? "delete_person_portrait" : "set_person_portrait";
+      const auth = await ensureSession();
+      if (!auth.ok) return portraitFailure(operation, auth.error, 401);
+
+      let response = await rawPortraitMutation(method, payload);
+      if (response.status === 401) {
+        sessionKnown = false;
+        const renewed = await ensureSession({ force:true });
+        if (!renewed.ok) return portraitFailure(operation, renewed.error, 401);
+        response = await rawPortraitMutation(method, payload);
+      }
+      const body = await readJson(response);
+      if (!response.ok || body?.ok !== true || body?.committed !== true) {
+        return portraitFailure(operation, errorText(body, `portrait mutation failed (${response.status})`), response.status);
+      }
+      return {
+        ...body,
+        operation,
+        errors:[],
+        http_status:response.status
+      };
+    }
+
     async function logout() {
       const response = await fetchImpl(sessionEndpoint, {
         method: "DELETE",
@@ -160,6 +205,16 @@
         person_id: String(personId || "").trim(),
         provider: String(provider || "").trim(),
         value: String(value || "").trim()
+      }),
+      setPersonPortrait: (payload) => mutatePortrait("PUT", {
+        person_id:String(payload?.person_id || "").trim(),
+        image_base64:String(payload?.image_base64 || "").trim(),
+        portrait_kind:String(payload?.portrait_kind || "").trim(),
+        evidence_level:String(payload?.evidence_level || "").trim(),
+        sources:Array.isArray(payload?.sources) ? payload.sources : []
+      }),
+      deletePersonPortrait: (personId) => mutatePortrait("DELETE", {
+        person_id:String(personId || "").trim()
       }),
       importActivities: (rows) => mutate("import", rows),
       ensureSession,
