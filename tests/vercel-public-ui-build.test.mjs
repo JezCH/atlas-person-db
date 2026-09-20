@@ -18,7 +18,6 @@ test('Vercel build publishes the root UI into public', () => {
   for (const required of [
     'index.html',
     'styles.css',
-    'app.js',
     'atlas-person-main.js',
     'atlas-person-spacetime-view.js',
     'atlas-polity-spatial-index.json',
@@ -27,6 +26,7 @@ test('Vercel build publishes the root UI into public', () => {
   ]) {
     assert.ok(files.includes(required), `missing public UI asset: ${required}`);
   }
+  assert.equal(files.includes('app.js'), false);
 });
 
 test('private project configuration and package metadata are never copied', () => {
