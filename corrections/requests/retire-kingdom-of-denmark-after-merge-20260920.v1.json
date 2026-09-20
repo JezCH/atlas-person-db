@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:kingdom-of-denmark-after-reviewed-merge:2026-09-20:v1",
+  "release_order": 609,
+  "evidence": {
+    "decision": "Reviewed same-identity generic/formal-name cleanup after exact Activity relink, Kingdom of Denmark temporal designation preservation, reviewed Spatial source removal, and sealed Runtime projection refresh.",
+    "review_claim": "#977 comment 5749642075; parent review comment 5742221773",
+    "relink_merge_sha": "ba2c98bec570921f9501b5b3f49a8256d4e90670",
+    "relink_guard_fix_merge_sha": "b10db60403c2b7239179a588a9f93bbcf685a2e8",
+    "relink_apply_run": "35509540944",
+    "spatial_preservation_merge_sha": "6d1e4d8b34d91f7a8748fdd2bc69c46230225fcb",
+    "runtime_recompile_trigger_merge_sha": "ffefe8f0a14f0ee20fc3ce5db5a9c2d2d47b2a85",
+    "runtime_compile_run": "35509940204",
+    "runtime_compile_sha": "4ab5b4a7fd7a5539f2d977c217e4a93d6219c216",
+    "runtime_compile_result": "SUCCESS: exact descendant of Denmark trigger; runtime_person_politics_v1 committed from 2261 canonical input rows to 2251 output rows with 10 reviewed exclusions.",
+    "production_readback": "Kingdom of Denmark has activity_count=0. Denmark has 12 Activities from 958 through 2024; the five source Activity UUIDs are preserved and all modeled Denmark Activities display Kingdom of Denmark / 덴마크 왕국. Margaret I's Kalmar Union Activity and Cnut's England/Norway Activities remain distinct. Canonical Spatial contains no source UUID and preserves Denmark at europe/northern-europe."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:kingdom-of-denmark-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "da99e975-fba4-510b-bb1c-6937d443abf5",
+        "canonical_key": "Kingdom of Denmark",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Kingdom of Denmark",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "덴마크 왕국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
