@@ -36,7 +36,7 @@
     ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260918-opposition-context", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260920-range-300-1200", "ATLAS_PERSON_SPACETIME_LOD"],
-    ["./atlas-person-spacetime-label-engine.js?v=20260903-cjk-band-zone", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
+    ["./atlas-person-spacetime-label-engine.js?v=20260920-global-name-overlay", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
 
   if (!dataStore || !model || !eraModel) {
@@ -563,65 +563,74 @@
     return searchable;
   }
 
-  function packTrackLabels(projectedTracks, timelineHeight, forceAll) {
+  function packTrackLabels(projectedTracks, timelineHeight, contentWidth, forceAll) {
     const { labelEngine } = runtime();
-    const placed = [];
+    const worldWidth = Number(contentWidth);
     const deferred = [];
-    const groups = new Map();
+    if (!(worldWidth > 0)) {
+      return {
+        placed: [],
+        deferred: (Array.isArray(projectedTracks) ? projectedTracks : []).map((item) => Object.freeze({
+          person_id:item?.track?.person_id || null,
+          track_id:item?.track?.track_id || null,
+          reason:"presentation_world_missing"
+        }))
+      };
+    }
 
+    const labels = [];
     for (const item of projectedTracks) {
-      const bandCode = text(item?.presentation_band_code);
-      const bandLeft = Number(item?.presentation_band_left);
-      const bandRight = Number(item?.presentation_band_right);
-      const zoneLeft = Number(item?.label_zone_left);
-      const zoneRight = Number(item?.label_zone_right);
-      if (!bandCode || !Number.isFinite(bandLeft) || !Number.isFinite(bandRight) || !(bandRight > bandLeft)
-        || !Number.isFinite(zoneLeft) || !Number.isFinite(zoneRight) || !(zoneRight > zoneLeft)) {
-        deferred.push(Object.freeze({ person_id:item?.track?.person_id || null, track_id:item?.track?.track_id || null, reason:"presentation_label_zone_missing" }));
+      const anchorX = Number(item?.x);
+      const anchorY = Number(item?.y);
+      if (!Number.isFinite(anchorX) || !Number.isFinite(anchorY)) {
+        deferred.push(Object.freeze({
+          person_id:item?.track?.person_id || null,
+          track_id:item?.track?.track_id || null,
+          reason:"presentation_anchor_missing"
+        }));
         continue;
       }
-      if (!groups.has(bandCode)) groups.set(bandCode, { bandCode, bandLeft, bandRight, items:[] });
-      groups.get(bandCode).items.push(item);
+
+      const bandCode = text(item?.presentation_band_code) || "world";
+      const rawZoneLeft = Number(item?.label_zone_left);
+      const rawZoneRight = Number(item?.label_zone_right);
+      const hasZone = Number.isFinite(rawZoneLeft) && Number.isFinite(rawZoneRight) && rawZoneRight > rawZoneLeft;
+      const zoneLeft = hasZone ? Math.max(0, Math.min(worldWidth, rawZoneLeft)) : 0;
+      const zoneRight = hasZone ? Math.max(zoneLeft, Math.min(worldWidth, rawZoneRight)) : worldWidth;
+
+      labels.push({
+        person_id:item.track.person_id,
+        track_id:item.track.track_id,
+        text:item.track.display_name,
+        anchor_x:anchorX,
+        anchor_y:anchorY,
+        min_left:zoneLeft,
+        max_right:zoneRight,
+        region_code:bandCode,
+        forced:forceAll || selectedPersonId === item.track.person_id
+      });
     }
 
-    for (const group of groups.values()) {
-      const bandWidth = group.bandRight - group.bandLeft;
-      const labels = group.items.map((item) => {
-        const zoneLeft = Math.max(group.bandLeft, Number(item.label_zone_left));
-        const zoneRight = Math.min(group.bandRight, Number(item.label_zone_right));
-        const zoneWidth = Math.max(0, zoneRight - zoneLeft);
-        const minimum = Math.min(labelEngine.DEFAULT_MIN_LABEL_WIDTH, Math.max(16, zoneWidth));
-        const maximum = Math.max(minimum, Math.min(labelEngine.DEFAULT_MAX_LABEL_WIDTH, Math.max(16, zoneWidth)));
-        return {
-          person_id: item.track.person_id,
-          track_id: item.track.track_id,
-          text: item.track.display_name,
-          anchor_x: item.x - group.bandLeft,
-          anchor_y: item.y,
-          min_left: zoneLeft - group.bandLeft,
-          max_right: zoneRight - group.bandLeft,
-          width: labelEngine.estimateWidth(
-            { text:item.track.display_name },
-            { minLabelWidth:minimum, maxLabelWidth:maximum }
-          ),
-          forced: forceAll || selectedPersonId === item.track.person_id
-        };
-      });
-      const result = labelEngine.packLabels(
-        labels,
-        { width:bandWidth, height:timelineHeight },
-        { maxLabelWidth:Math.min(labelEngine.DEFAULT_MAX_LABEL_WIDTH, bandWidth), maxHorizontalShift:bandWidth }
-      );
-      placed.push(...result.placed.map((label) => ({
+    const result = labelEngine.packLabels(
+      labels,
+      { width:worldWidth, height:timelineHeight },
+      {
+        maxHorizontalShift:worldWidth,
+        borrowHorizontalSpace:true,
+        preserveFullTextWidth:true,
+        gap:labelEngine.DEFAULT_HORIZONTAL_GAP
+      }
+    );
+
+    return {
+      placed:result.placed.map((label) => ({
         ...label,
-        label_x:group.bandLeft + label.label_x,
-        region_code:group.bandCode,
-        region_left:group.bandLeft,
-        region_right:group.bandRight
-      })));
-      deferred.push(...result.deferred.map((label) => ({ ...label, region_code:group.bandCode })));
-    }
-    return { placed, deferred };
+        region_code:label.region_code || "world",
+        region_left:0,
+        region_right:worldWidth
+      })),
+      deferred:[...deferred, ...result.deferred]
+    };
   }
 
   function reasonLabel(reason) {
@@ -1016,7 +1025,7 @@
       const signature = `${personIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${selectedActivityId || ""}|${state.meanwhileOrdinal ?? ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.rails}|${state.lodWeights.activities}`;
 
       if (signature !== lastSignature) {
-        const labelPack = packTrackLabels(personItems, state.timelineHeight, Boolean(state.needle));
+        const labelPack = packTrackLabels(personItems, state.timelineHeight, state.contentWidth, Boolean(state.needle));
         const railLayer = mount.querySelector("#spacetimeRailLayer");
         const uncertaintyLayer = mount.querySelector("#spacetimeUncertaintyLayer");
         const labelLayer = mount.querySelector("#spacetimeLabelLayer");
