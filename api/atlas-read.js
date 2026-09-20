@@ -202,21 +202,33 @@ async function readRuntimePublication(client) {
   const countsResult = await client.query(`
     select
       (select count(*)::int from atlas_v2.person_politics_v2) as authoring_activity_count,
-      (select count(*)::int from atlas_v2.runtime_person_politics_v1) as runtime_activity_count
+      (select count(*)::int from atlas_v2.runtime_person_politics_v1) as runtime_activity_count,
+      (select count(distinct compile_key)::int from atlas_v2.runtime_person_politics_v1) as runtime_compile_key_count,
+      (select min(compile_key) from atlas_v2.runtime_person_politics_v1) as current_compile_key
   `);
   const counts = countsResult.rows?.[0] || {};
   const authoringActivityCount = Number(counts.authoring_activity_count || 0);
   const runtimeActivityCount = Number(counts.runtime_activity_count || 0);
+  const runtimeCompileKeyCount = Number(counts.runtime_compile_key_count || 0);
+  const currentCompileKey = counts.current_compile_key == null ? null : String(counts.current_compile_key);
+  if (runtimeActivityCount > 0 && (runtimeCompileKeyCount !== 1 || !currentCompileKey)) {
+    throw new Error("RUNTIME_PUBLICATION_PROJECTION_IDENTITY_INVALID");
+  }
 
-  const compileResult = await client.query(`
-    select compiler_version, input_row_count, output_row_count, excluded_row_count,
-           exclusion_summary, compiled_at
-      from atlas_v2.runtime_compile_runs
-     order by compiled_at desc, compile_key desc
-     limit 1
-  `);
-  const row = compileResult.rows?.[0] || null;
-  const latestCompile = row ? Object.freeze({
+  let row = null;
+  if (currentCompileKey) {
+    const compileResult = await client.query(`
+      select compiler_version, input_row_count, output_row_count, excluded_row_count,
+             exclusion_summary, compiled_at
+        from atlas_v2.runtime_compile_runs
+       where compile_key=$1
+       limit 1
+    `, [currentCompileKey]);
+    row = compileResult.rows?.[0] || null;
+    if (!row) throw new Error("RUNTIME_PUBLICATION_COMPILE_LEDGER_MISSING");
+  }
+
+  const currentCompile = row ? Object.freeze({
     compiler_version:String(row.compiler_version || ""),
     input_row_count:Number(row.input_row_count || 0),
     output_row_count:Number(row.output_row_count || 0),
@@ -234,9 +246,9 @@ async function readRuntimePublication(client) {
     source:"runtime-compile-ledger",
     current_authoring_activity_count:authoringActivityCount,
     current_runtime_activity_count:runtimeActivityCount,
-    latest_compile:latestCompile,
-    authoring_delta_since_compile:latestCompile == null ? null : authoringActivityCount-latestCompile.input_row_count,
-    projection_matches_latest_compile:latestCompile == null ? null : runtimeActivityCount === latestCompile.output_row_count
+    latest_compile:currentCompile,
+    authoring_delta_since_compile:currentCompile == null ? null : authoringActivityCount-currentCompile.input_row_count,
+    projection_matches_latest_compile:currentCompile == null ? null : runtimeActivityCount === currentCompile.output_row_count
   });
 }
 
