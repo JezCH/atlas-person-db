@@ -66,13 +66,25 @@
     const placed = [];
     const unresolved = [];
     for (const row of rows) {
-      const band = bandsInput?.[row.band_code] || { left: 0, width: Math.max(row.left + row.width, finite(options.canvasWidth)) };
+      const canvasWidth = Math.max(0, finite(options.canvasWidth));
+      const declaredBand = bandsInput?.[row.band_code] || { left: 0, width: Math.max(row.left + row.width, canvasWidth) };
+      const band = options.borrowWorld === true && canvasWidth > 0
+        ? { left: 0, width: canvasWidth }
+        : declaredBand;
       let accepted = null;
-      for (const left of candidateLefts(row, band, options)) {
-        const candidate = { ...row, left };
-        if (placed.some((other) => overlap(candidate, other, options.gap))) continue;
-        accepted = candidate;
-        break;
+      const minLeft = finite(band?.left, 0);
+      const bandWidth = Math.max(0, finite(band?.width, canvasWidth));
+      const maxLeft = Math.max(minLeft, minLeft + bandWidth - row.width);
+      const originalCandidate = { ...row, left:Math.min(maxLeft, Math.max(minLeft, row.left)) };
+      if (!placed.some((other) => overlap(originalCandidate, other, options.gap))) {
+        accepted = originalCandidate;
+      } else {
+        for (const left of candidateLefts(row, band, options)) {
+          const candidate = { ...row, left };
+          if (placed.some((other) => overlap(candidate, other, options.gap))) continue;
+          accepted = candidate;
+          break;
+        }
       }
       if (!accepted) {
         accepted = { ...row };
@@ -134,7 +146,7 @@
       band_code: String(element.dataset.spacetimeBand || "").trim(),
       priority: element.classList.contains("is-selected") ? 0 : element.classList.contains("is-meanwhile-active") ? 1 : 2
     }));
-    const result = resolvePositions(rows, bands, { canvasWidth });
+    const result = resolvePositions(rows, bands, { canvasWidth, borrowWorld:true, maxShift:canvasWidth });
     let shifted = 0;
     labels.forEach((element, index) => {
       const next = result.positions[String(index)];
