@@ -60,8 +60,9 @@ test("subregion context remains available across the widened range", () => {
   assert.doesNotMatch(semanticAxis, /stage: "macroregion"/);
 });
 
-test("spacetime top chrome merges controls legend and integrity status into compact strips", () => {
-  assert.match(view, /<section class="spacetime-toolbar card">[\s\S]*?<div class="spacetime-controls">[\s\S]*?<div class="spacetime-precision-legend">/);
+test("spacetime top chrome keeps compact controls and moves precision guidance behind a disclosure", () => {
+  assert.match(view, /<section class="spacetime-toolbar card">[\s\S]*?<div class="spacetime-controls">[\s\S]*?<details class="spacetime-precision-legend">[\s\S]*?<summary>표시 기준<\/summary>/);
+  assert.match(view, /<div class="spacetime-precision-content">[\s\S]*?공간 배치 정밀도/);
   assert.doesNotMatch(view, /<section class="spacetime-precision-legend card">/);
   assert.doesNotMatch(view, /spacetime-integrity-note/);
   assert.match(view, /spacetime-integrity-status/);
@@ -70,11 +71,12 @@ test("spacetime top chrome merges controls legend and integrity status into comp
   assert.match(view, /spacetimeDeferredLabelCount/);
   assert.match(view, /<section class="spacetime-meanwhile is-empty"/);
   assert.doesNotMatch(view, /spacetime-meanwhile card is-empty/);
-  assert.match(css, /\.spacetime-toolbar\{display:flex;align-items:center;justify-content:flex-start;gap:10px;padding:6px 8px;margin-bottom:4px;overflow-x:auto/);
+  assert.match(css, /\.spacetime-toolbar\{display:flex;align-items:center;justify-content:flex-start;gap:8px;padding:5px 7px;margin-bottom:4px;overflow:visible/);
   assert.match(css, /\.spacetime-status-row\{display:flex;gap:4px;flex-wrap:nowrap;margin-bottom:4px;overflow-x:auto/);
-  assert.match(css, /\.spacetime-controls label\{display:flex;align-items:center/);
+  assert.match(css, /\.spacetime-controls input\{width:180px;height:30px/);
   assert.match(css, /\.spacetime-camera\{display:flex;align-items:center/);
-  assert.match(css, /\.spacetime-precision-legend\{[^}]*flex-wrap:nowrap/);
+  assert.match(css, /\.spacetime-precision-legend\{position:relative;margin-left:auto/);
+  assert.match(css, /\.spacetime-precision-content\{position:absolute;z-index:90/);
 });
 
 test("the timeline remains a map-like camera viewport", () => {
