@@ -10,6 +10,8 @@ const {
   configurationStatus,
   quoteIdentifier,
   exactTableCounts,
+  normalizeExclusionSummary,
+  runtimePublicationDiagnostics,
   duplicateLifecycle
 } = require('../server/atlas-admin-system-status-service.js');
 const {
@@ -104,6 +106,78 @@ test('exact table counts use server-discovered identifiers and preserve exact sa
   assert.match(calls[0], /^select count\(\*\)::bigint as count from atlas_v2\."persons"$/);
 });
 
+test('runtime publication diagnostics follows the active Runtime compile key and validates all ledger balances', async () => {
+  assert.deepEqual(normalizeExclusionSummary({ START_BOUNDARY_UNRESOLVED: 8, PROVENANCE_UNRESOLVED: '5', bad: -1 }), {
+    START_BOUNDARY_UNRESOLVED: 8,
+    PROVENANCE_UNRESOLVED: 5
+  });
+
+  const calls = [];
+  const client = {
+    async query(sql, params) {
+      calls.push({ sql, params });
+      if (/from atlas_v2\.runtime_person_politics_v1/.test(sql)) return { rows: [{
+        runtime_activity_count: 2244,
+        compile_key_count: 1,
+        active_compile_key: 'compile-key-a'
+      }] };
+      if (/from atlas_v2\.runtime_compile_runs/.test(sql)) {
+        assert.deepEqual(params, ['compile-key-a']);
+        return { rows: [{
+          compile_key: 'compile-key-a',
+          compiler_version: 'runtime-person-politics-v1',
+          input_row_count: 2260,
+          output_row_count: 2244,
+          excluded_row_count: 16,
+          exclusion_summary: {
+            START_BOUNDARY_UNRESOLVED: 8,
+            PROVENANCE_UNRESOLVED: 5,
+            END_BOUNDARY_UNRESOLVED: 3
+          },
+          compiled_at: '2026-09-20T01:00:00Z'
+        }] };
+      }
+      throw new Error(`unexpected query ${sql}`);
+    }
+  };
+
+  const status = await runtimePublicationDiagnostics(client, ['runtime_person_politics_v1', 'runtime_compile_runs']);
+  assert.equal(status.available, true);
+  assert.equal(status.runtime_activity_count, 2244);
+  assert.equal(status.active_compile_key, 'compile-key-a');
+  assert.equal(status.active_compile.input_row_count, 2260);
+  assert.equal(status.active_compile.output_row_count, 2244);
+  assert.equal(status.active_compile.excluded_row_count, 16);
+  assert.equal(status.active_compile.exclusion_summary_total, 16);
+  assert.equal(status.projection_matches_compile_output, true);
+  assert.equal(status.compile_balance_valid, true);
+  assert.equal(status.exclusion_summary_matches_excluded, true);
+  assert.equal(calls.length, 2);
+  assert.match(calls[1].sql, /where compile_key=\$1/);
+  assert.doesNotMatch(calls[1].sql, /order by compiled_at desc/i);
+});
+
+test('runtime publication diagnostics fails closed for missing tables or ambiguous Runtime compile identity', async () => {
+  let calls = 0;
+  const missing = await runtimePublicationDiagnostics({ async query() { calls += 1; } }, ['runtime_person_politics_v1']);
+  assert.equal(missing.available, false);
+  assert.equal(missing.reason, 'RUNTIME_PUBLICATION_TABLES_NOT_PRESENT');
+  assert.deepEqual(missing.missing_tables, ['runtime_compile_runs']);
+  assert.equal(calls, 0);
+
+  const ambiguous = await runtimePublicationDiagnostics({
+    async query(sql) {
+      calls += 1;
+      assert.match(sql, /runtime_person_politics_v1/);
+      return { rows: [{ runtime_activity_count: 10, compile_key_count: 2, active_compile_key: 'compile-a' }] };
+    }
+  }, ['runtime_person_politics_v1', 'runtime_compile_runs']);
+  assert.equal(ambiguous.available, false);
+  assert.equal(ambiguous.reason, 'RUNTIME_PROJECTION_COMPILE_KEY_INVALID');
+  assert.equal(ambiguous.compile_key_count, 2);
+  assert.equal(calls, 1);
+});
+
 test('duplicate lifecycle reports aggregate queue/review/merge/requirement state without loading candidate detail', async () => {
   const calls = [];
   const client = {
@@ -141,6 +215,10 @@ test('system status composes authoritative semantic/readiness services and never
   assert.match(serviceSource, /DETECTOR_VERSION/);
   assert.match(serviceSource, /REVALIDATION_SEMANTIC_VERSION/);
   assert.match(serviceSource, /personMergeExecutionState/);
+  assert.match(serviceSource, /runtimePublicationDiagnostics/);
+  assert.match(serviceSource, /projection_matches_compile_output/);
+  assert.match(serviceSource, /compile_balance_valid/);
+  assert.match(serviceSource, /exclusion_summary_matches_excluded/);
   assert.match(serviceSource, /atlas-person-duplicate-revalidation-readiness\.js/);
   assert.match(serviceSource, /github_actions_status_embedded:\s*false/);
   assert.match(serviceSource, /GITHUB_ACTIONS_IS_EXTERNAL_TO_RUNTIME/);
@@ -184,6 +262,7 @@ test('authenticated Admin system status returns a safe snapshot and always close
     counts: { atlas_v2_table_count: 2, tables: { persons: 151, person_politics_v2: 212 } },
     readiness: { authoring: { available: true, value: { ready: true } }, p10_duplicate_revalidation: { available: false, reason: 'not present' } },
     duplicate_lifecycle: { available: true, value: { available: true, summary: { active: 0 } } },
+    runtime_publication: { available: true, value: { available: true, runtime_activity_count: 212, active_compile_key: 'compile-test', active_compile: { input_row_count: 212, output_row_count: 212, excluded_row_count: 0, exclusion_summary: {}, exclusion_summary_total: 0 }, projection_matches_compile_output: true, compile_balance_valid: true, exclusion_summary_matches_excluded: true, reason: null } },
     verification: { github_actions_status_embedded: false, reason: 'GITHUB_ACTIONS_IS_EXTERNAL_TO_RUNTIME' }
   };
   const handler = createAdminSystemStatusHandler({
