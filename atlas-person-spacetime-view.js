@@ -1232,8 +1232,8 @@
       if (!event.ctrlKey && !event.metaKey) return;
       const factor = event.deltaY < 0 ? CAMERA_ZOOM_STEP : 1 / CAMERA_ZOOM_STEP;
       const wheelZoomTarget = cameraZoom * factor;
-      if (Math.abs(clampCameraZoom(wheelZoomTarget, scroll) - cameraZoom) < 1e-9) return;
       event.preventDefault();
+      if (Math.abs(clampCameraZoom(wheelZoomTarget, scroll) - cameraZoom) < 1e-9) return;
       const rect = scroll.getBoundingClientRect();
       requestCameraZoom(mount, wheelZoomTarget, event.clientX - rect.left, event.clientY - rect.top);
     }, { passive: false });
