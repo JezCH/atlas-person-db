@@ -35,11 +35,11 @@
       label: "정치체",
       eyebrow: "정치체 기준 정보",
       status_code: "ready",
-      status_label: "현재 데이터",
-      summary: "현재 canonical Polity 원천에서 정치체 identity·이름·UUID·연결 Person/Activity를 직접 조회합니다.",
-      available: "전체 정치체, 인물 연결/미연결 상태, Activity 통계, 등록 명칭, 현재 연결 인물과 연대를 같은 canonical Polity read에서 검색·필터·상세 확인할 수 있습니다.",
-      missing: "정치체 identity 수정은 이 읽기 화면에서 직접 수행하지 않습니다. merge·retire·split 같은 변경은 검토된 canonical writer를 통해 적용되고, 적용 후 이 화면은 같은 원천을 다시 읽어 즉시 반영합니다.",
-      principle: "정치체 사실의 원천은 하나입니다. 메인 화면은 별도 catalog snapshot을 유지하지 않고 canonical Polity read의 projection만 표시합니다."
+      status_label: "현재 데이터 + 검토",
+      summary: "현재 canonical Polity 목록을 먼저 조회하고, 아래에서 identity 중복·통합·분리·표기 충돌 후보를 같은 live 데이터와 함께 검토합니다.",
+      available: "상단에서 canonical 정치체 목록·통계·연결 Activity를 검색하고, 하단 검토 작업대에서 기존 reviewed candidate와 현재 live 연결 인물·연대를 비교할 수 있습니다.",
+      missing: "검토 작업대의 선택은 Production을 직접 변경하지 않습니다. merge·retire·split은 검토된 canonical writer로 적용하고, 적용 후 상단 canonical 목록과 하단 live context가 함께 갱신됩니다.",
+      principle: "정치체 사실의 원천은 canonical Polity read 하나로 유지합니다. 검토 candidate registry는 판단 대기열이며 사실 원천을 복제하지 않고, live read와 결합해 비교·판정만 제공합니다."
     }),
     places: entry({
       label: "장소",
