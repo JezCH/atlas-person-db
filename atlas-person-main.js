@@ -3,6 +3,7 @@
 
   const reader = window.ATLAS_PERSON_BROWSER_READER;
   const dataStore = window.ATLAS_CLIENT_DATA_STORE;
+  const domainRegistry = window.ATLAS_PERSON_DOMAIN_REGISTRY;
   const externalReferences = window.ATLAS_PERSON_EXTERNAL_REFERENCES;
   const profileWriter = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
   const mainArea = document.querySelector(".main-area");
@@ -21,7 +22,8 @@
   let selectedPersonId = null;
   let query = "";
   let sortOrder = "start-asc";
-  let facetFilters = { polity_id: "" };
+  let facetFilters = { polity_id: "", relation_type_id: "", domain: "" };
+  let personDomainsById = Object.freeze({});
   let dashboardFilter = null;
   let requestSerial = 0;
 
@@ -162,9 +164,10 @@
     };
   }
 
-  function visibleUnknownRegistryPersons() {
+  function visibleUnknownRegistryPersons({ ignoreDomain = false } = {}) {
     if (dashboardFilter) return [];
-    if (facetFilters.polity_id) return [];
+    if (facetFilters.polity_id || facetFilters.relation_type_id) return [];
+    if (facetFilters.domain && !ignoreDomain) return [];
     const firstClassNames = new Set(persons.flatMap(personIdentityKeys));
     const needle = normalizeRegistryText(query);
     return unknownChronologyRegistry
@@ -247,6 +250,58 @@
       .filter((item) => item.id && item.label);
   }
 
+  const RELATION_FILTER_LABELS = Object.freeze({
+    rules:"통치", governs:"통치", serves:"복무", active_in:"활동",
+    opposes:"대립", claims_rule:"통치권 주장"
+  });
+
+  function relationOptions() {
+    return (facetCatalog.relations || [])
+      .map((item) => {
+        const id = String(item?.id || "").trim();
+        const code = String(item?.code || item?.source_label || "").trim();
+        const label = RELATION_FILTER_LABELS[code] || facetLabel(item);
+        return { id, label };
+      })
+      .filter((item) => item.id && item.label);
+  }
+
+  function dashboardMatches(person) {
+    return !dashboardFilter || dashboardFilter.ids.has(String(person?.id || ""));
+  }
+
+  function domainMatches(person) {
+    const selected = String(facetFilters.domain || "").trim();
+    if (!selected) return true;
+    return String(personDomainsById?.[person?.id] || "") === selected;
+  }
+
+  function secondaryMatches(person) {
+    return dashboardMatches(person) && domainMatches(person);
+  }
+
+  function domainFilterCounts() {
+    const baseFilters = {
+      polity_id: facetFilters.polity_id,
+      relation_type_id: facetFilters.relation_type_id
+    };
+    const groups = reader.preparePersonGroups(persons, {
+      query,
+      sortOrder,
+      facetFilters: baseFilters,
+      secondaryPredicate: dashboardMatches
+    });
+    const baseRows = [...groups.historical, ...groups.other_or_uncertain];
+    const counts = { all: baseRows.length + visibleUnknownRegistryPersons({ ignoreDomain:true }).length };
+    const definitions = Array.isArray(domainRegistry?.DEFINITIONS) ? domainRegistry.DEFINITIONS : [];
+    for (const item of definitions) counts[item.code] = 0;
+    for (const person of baseRows) {
+      const code = String(personDomainsById?.[person?.id] || "");
+      if (Object.prototype.hasOwnProperty.call(counts, code)) counts[code] += 1;
+    }
+    return counts;
+  }
+
   function polityFacetId(value) {
     if (value && typeof value === "object") return String(value.id || "").trim();
     return String(value || "").trim();
@@ -270,7 +325,11 @@
         visiblePolityCount: polityCount,
         query,
         selectedPolityId: facetFilters.polity_id,
-        polityOptions: polityOptions()
+        polityOptions: polityOptions(),
+        selectedRelationId: facetFilters.relation_type_id,
+        relationOptions: relationOptions(),
+        selectedDomain: facetFilters.domain,
+        domainCounts: domainFilterCounts()
       }
     }));
   }
@@ -281,8 +340,8 @@
     const groups = reader.preparePersonGroups(persons, {
       query,
       sortOrder,
-      facetFilters,
-      secondaryPredicate:dashboardFilter ? (person) => dashboardFilter.ids.has(String(person?.id || "")) : null
+      facetFilters: { polity_id: facetFilters.polity_id, relation_type_id: facetFilters.relation_type_id },
+      secondaryPredicate: secondaryMatches
     });
     const rows = [
       ...groups.historical,
@@ -319,7 +378,27 @@
     const valid = !requested || polityOptions().some((item) => item.id === requested);
     const next = valid ? requested : "";
     if (facetFilters.polity_id === next) return false;
-    facetFilters = { polity_id: next };
+    facetFilters = { ...facetFilters, polity_id: next };
+    renderGroups();
+    return true;
+  }
+
+  function setRelationFilter(value) {
+    const requested = String(value || "").trim();
+    const valid = !requested || relationOptions().some((item) => item.id === requested);
+    const next = valid ? requested : "";
+    if (facetFilters.relation_type_id === next) return false;
+    facetFilters = { ...facetFilters, relation_type_id: next };
+    renderGroups();
+    return true;
+  }
+
+  function setDomainFilter(value) {
+    const requested = String(value || "").trim();
+    const validCodes = Array.isArray(domainRegistry?.CODES) ? domainRegistry.CODES : [];
+    const next = !requested || validCodes.includes(requested) ? requested : "";
+    if (facetFilters.domain === next) return false;
+    facetFilters = { ...facetFilters, domain: next };
     renderGroups();
     return true;
   }
@@ -333,7 +412,7 @@
       ids:new Set(ids)
     });
     query = "";
-    facetFilters = { polity_id:"" };
+    facetFilters = { polity_id:"", relation_type_id:"", domain:"" };
     renderGroups();
     return true;
   }
@@ -440,15 +519,20 @@
   async function loadPersons({ keepSelection = true, force = false } = {}) {
     const groups = document.getElementById("personMainGroups");
     try {
-      const [result, registryRows] = await Promise.all([
+      const [result, registryRows, domainResult] = await Promise.all([
         dataStore.loadPersons({ force }),
-        dataStore.loadNonTimelinePersons({ force })
+        dataStore.loadNonTimelinePersons({ force }),
+        dataStore.loadPersonDomains({ force }).catch(() => null)
       ]);
       persons = result.persons.slice();
       unknownChronologyRegistry = registryRows.slice();
+      personDomainsById = Object.freeze({ ...(domainResult?.by_person_id || {}) });
       facetCatalog = result.facet_catalog || reader.facetCatalog(persons);
       if (facetFilters.polity_id && !polityOptions().some((item) => item.id === facetFilters.polity_id)) {
-        facetFilters = { polity_id: "" };
+        facetFilters = { ...facetFilters, polity_id: "" };
+      }
+      if (facetFilters.relation_type_id && !relationOptions().some((item) => item.id === facetFilters.relation_type_id)) {
+        facetFilters = { ...facetFilters, relation_type_id: "" };
       }
       if (!keepSelection || !persons.some((person) => person.id === selectedPersonId)) selectedPersonId = null;
       renderGroups();
@@ -688,6 +772,12 @@
     window.addEventListener("atlas-person-polity-filter-change", (event) => {
       setPolityFilter(event?.detail?.polityId);
     });
+    window.addEventListener("atlas-person-relation-filter-change", (event) => {
+      setRelationFilter(event?.detail?.relationId);
+    });
+    window.addEventListener("atlas-person-domain-filter-change", (event) => {
+      setDomainFilter(event?.detail?.domain);
+    });
   }
 
   installShell();
@@ -702,6 +792,11 @@
     setPolityFilter,
     getPolityFilter: () => facetFilters.polity_id,
     getPolityOptions: polityOptions,
+    setRelationFilter,
+    getRelationFilter: () => facetFilters.relation_type_id,
+    getRelationOptions: relationOptions,
+    setDomainFilter,
+    getDomainFilter: () => facetFilters.domain,
     setDashboardFilter,
     clearDashboardFilter,
     getDashboardFilter: () => dashboardFilter ? Object.freeze({ code:dashboardFilter.code, label:dashboardFilter.label, person_ids:Object.freeze([...dashboardFilter.ids]) }) : null,
