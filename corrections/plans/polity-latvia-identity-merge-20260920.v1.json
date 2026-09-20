@@ -1,0 +1,325 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_latvia_identity_merge_20260920_v1",
+  "as_of": "2026-09-20",
+  "status": "REVIEWED_POLITY_IDENTITY_MERGE_WITH_TEMPORAL_DESIGNATION",
+  "release_order": 603,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY-IDENTITY-REVIEW-16-20260919; Latvia exact Production recheck and LQ_CLAIM 5748574187 on 2026-09-20",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-republic-of-latvia-1918-1921-into-latvia",
+      "type": "rewrite_activity",
+      "activity_id": "5642f20e-b81f-47ed-83f6-2ac7d2a7e8dd",
+      "baseline_before": {
+        "person_id": "2585f2b8-d108-4275-89ad-0459a9c28996",
+        "polity_id": "eaa3ad78-bb73-4812-b00a-1b4e160acd69",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1918,
+        "activity_end": 1921,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "5642f20e-b81f-47ed-83f6-2ac7d2a7e8dd",
+        "person_id": "2585f2b8-d108-4275-89ad-0459a9c28996",
+        "polity_id": "3959991c-9512-41ab-8e0e-c718eee53633",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1918,
+        "activity_end": 1921,
+        "activity_start_detail": {
+          "year": 1918,
+          "month": 11,
+          "day": 19,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1921,
+          "month": 6,
+          "day": 18,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-republic-of-latvia-1925-1926-into-latvia",
+      "type": "rewrite_activity",
+      "activity_id": "cb447492-3f8c-4959-a08c-f7c26e7bc9d1",
+      "baseline_before": {
+        "person_id": "2585f2b8-d108-4275-89ad-0459a9c28996",
+        "polity_id": "eaa3ad78-bb73-4812-b00a-1b4e160acd69",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1925,
+        "activity_end": 1926,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "cb447492-3f8c-4959-a08c-f7c26e7bc9d1",
+        "person_id": "2585f2b8-d108-4275-89ad-0459a9c28996",
+        "polity_id": "3959991c-9512-41ab-8e0e-c718eee53633",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1925,
+        "activity_end": 1926,
+        "activity_start_detail": {
+          "year": 1925,
+          "month": 9,
+          "day": 24,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1926,
+          "month": 5,
+          "day": 6,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-republic-of-latvia-1931-into-latvia",
+      "type": "rewrite_activity",
+      "activity_id": "73589765-caa2-468d-968f-cde70b0a13e1",
+      "baseline_before": {
+        "person_id": "2585f2b8-d108-4275-89ad-0459a9c28996",
+        "polity_id": "eaa3ad78-bb73-4812-b00a-1b4e160acd69",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1931,
+        "activity_end": 1931,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "73589765-caa2-468d-968f-cde70b0a13e1",
+        "person_id": "2585f2b8-d108-4275-89ad-0459a9c28996",
+        "polity_id": "3959991c-9512-41ab-8e0e-c718eee53633",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1931,
+        "activity_end": 1931,
+        "activity_start_detail": {
+          "year": 1931,
+          "month": 3,
+          "day": 27,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1931,
+          "month": 12,
+          "day": 5,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-republic-of-latvia-1934-1940-into-latvia",
+      "type": "rewrite_activity",
+      "activity_id": "bffb9f3c-794e-4fb0-8689-f70f11341152",
+      "baseline_before": {
+        "person_id": "2585f2b8-d108-4275-89ad-0459a9c28996",
+        "polity_id": "eaa3ad78-bb73-4812-b00a-1b4e160acd69",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1934,
+        "activity_end": 1940,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "bffb9f3c-794e-4fb0-8689-f70f11341152",
+        "person_id": "2585f2b8-d108-4275-89ad-0459a9c28996",
+        "polity_id": "3959991c-9512-41ab-8e0e-c718eee53633",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1934,
+        "activity_end": 1940,
+        "activity_start_detail": {
+          "year": 1934,
+          "month": 3,
+          "day": 17,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1940,
+          "month": 6,
+          "day": 20,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-republic-of-latvia-acting-president-1936-1940-into-latvia",
+      "type": "rewrite_activity",
+      "activity_id": "f3fc0567-e1e8-4356-b27d-5e3cb843a97c",
+      "baseline_before": {
+        "person_id": "2585f2b8-d108-4275-89ad-0459a9c28996",
+        "polity_id": "eaa3ad78-bb73-4812-b00a-1b4e160acd69",
+        "role_id": "8d560e65-fffd-425a-a7ac-d92bbf13e731",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1936,
+        "activity_end": 1940,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "f3fc0567-e1e8-4356-b27d-5e3cb843a97c",
+        "person_id": "2585f2b8-d108-4275-89ad-0459a9c28996",
+        "polity_id": "3959991c-9512-41ab-8e0e-c718eee53633",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "8d560e65-fffd-425a-a7ac-d92bbf13e731",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1936,
+        "activity_end": 1940,
+        "activity_start_detail": {
+          "year": 1936,
+          "month": 4,
+          "day": 11,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1940,
+          "month": 6,
+          "day": 17,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "latvia-republic-temporal-designation-modeled-1918-1940",
+      "exact_before": {
+        "designation_absent_id": "b010b681-9f7f-5390-aa12-ba8a2f8be4d4"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "b010b681-9f7f-5390-aa12-ba8a2f8be4d4",
+          "polity_id": "3959991c-9512-41ab-8e0e-c718eee53633",
+          "designation_type": "state_form",
+          "valid_from_year": 1918,
+          "valid_from_month": 11,
+          "valid_from_day": 19,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1940,
+          "valid_to_month": 6,
+          "valid_to_day": 20,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form label preserving the existing ATLAS Republic of Latvia label across the currently modeled 1918-1940 Republic of Latvia Activities on the stable Latvia identity. The bounds follow current modeled Activity coverage and do not claim to encode the full constitutional lifetime of the republic."
+        },
+        "names": [
+          {
+            "id": "6c7dca85-125c-50c9-a0b1-26913e59038f",
+            "polity_designation_id": "b010b681-9f7f-5390-aa12-ba8a2f8be4d4",
+            "locale": "en",
+            "name": "Republic of Latvia",
+            "is_preferred": true
+          },
+          {
+            "id": "d66e9d16-8dba-5e09-a0e8-59e269c5ba8f",
+            "polity_designation_id": "b010b681-9f7f-5390-aa12-ba8a2f8be4d4",
+            "locale": "ko",
+            "name": "라트비아 공화국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "b010b681-9f7f-5390-aa12-ba8a2f8be4d4",
+            "source_id": "1b92337b-b09b-4ccc-9d9e-17b41c8a0324",
+            "source_locator_key": "https://www.president.lv/en/karlis-ulmanis"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 5,
+    "activity_relinks": 5,
+    "polity_designation_assertions": 1,
+    "production_mutation_authorized": false
+  }
+}
