@@ -3,7 +3,7 @@ import test from 'node:test';
 import fs from 'node:fs';
 
 const index = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const app = fs.readFileSync(new URL('../app.js', import.meta.url), 'utf8');
+const personMain = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
 const adminHtml = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8');
 const admin = fs.readFileSync(new URL('../admin.js', import.meta.url), 'utf8');
 const adminService = fs.readFileSync(new URL('../atlas-admin-write-service.js', import.meta.url), 'utf8');
@@ -16,19 +16,18 @@ function exists(rel) {
   return fs.existsSync(new URL(`../${rel}`, import.meta.url));
 }
 
-test('authoring app selects only the authenticated server write adapter', () => {
+test('current Person UI selects only the authenticated server write adapter', () => {
   assert.equal(index.includes('atlas-server-write-adapter.js'), true);
+  assert.equal(index.includes('./app.js'), false);
   assert.equal(index.includes('atlas-write-adapter.js'), false);
   assert.equal(index.includes('atlas-write-mode.js'), false);
   assert.equal(index.includes('atlas-v2-shadow-compiler.js'), false);
-  assert.equal(app.includes('window.ATLAS_SERVER_WRITE_ADAPTER'), true);
-  assert.equal(app.includes('window.ATLAS_WRITE_ADAPTER'), false);
-  assert.equal(app.includes('window.ATLAS_WRITE_MODE'), false);
-  assert.equal(app.includes('window.ATLAS_V2_SHADOW_COMPILER'), false);
-  assert.equal(app.includes('outcome.legacy?.committed'), false);
-  assert.equal(app.includes('outcome.v2.normalized_relationship_ids'), true);
+  assert.equal(personMain.includes('window.ATLAS_SERVER_WRITE_ADAPTER'), true);
+  assert.equal(personMain.includes('window.ATLAS_WRITE_ADAPTER'), false);
+  assert.equal(personMain.includes('window.ATLAS_WRITE_MODE'), false);
+  assert.equal(personMain.includes('window.ATLAS_V2_SHADOW_COMPILER'), false);
+  assert.equal(personMain.includes('profileWriter.deleteActivity(activityId)'), true);
 });
-
 test('admin uses direct normalized lookup, shared semantic identity, and never client-writes either store', () => {
   assert.equal(adminHtml.includes('./atlas-activity-semantics.js'), true);
   assert.equal(adminHtml.includes('./atlas-server-write-adapter.js'), true);
