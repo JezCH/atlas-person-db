@@ -235,7 +235,7 @@ async function collect500(client) {
   })()`);
 }
 
-async function collect1200(client, geometry500) {
+async function collect1500(client, geometry500) {
   return evaluate(client, `(() => {
     const q=(s)=>document.querySelector(s);
     const qa=(s)=>[...document.querySelectorAll(s)];
@@ -397,6 +397,15 @@ async function main() {
 
     const defaultAcceptanceZoom = await evaluate(client, "(document.querySelector('#spacetimeCameraZoomValue')?.textContent||'').trim()");
     assert(defaultAcceptanceZoom === "500%", "Production did not remain at the 500% default zoom before acceptance", { defaultAcceptanceZoom });
+    for (let i=0;i<8;i++) {
+      await evaluate(client, "document.querySelector('#spacetimeCameraZoomOut')?.click()");
+      await sleep(180);
+    }
+    await waitFor(client, "document.querySelector('#spacetimeCameraZoomValue')?.textContent?.trim() === '100%'", 10000);
+    const minimumAcceptanceZoom = await evaluate(client, "(document.querySelector('#spacetimeCameraZoomValue')?.textContent||'').trim()");
+    assert(minimumAcceptanceZoom === "100%", "Minimum visual zoom is not 100%", { minimumAcceptanceZoom });
+    await evaluate(client, "document.querySelector('#spacetimeCameraZoomReset')?.click()");
+    await waitFor(client, "document.querySelector('#spacetimeCameraZoomValue')?.textContent?.trim() === '500%'", 10000);
     await sleep(600);
     const at500 = await collect500(client);
     assert(at500.viewport.width === 1600 && at500.viewport.height === 1000, "Unexpected visual acceptance viewport", at500.viewport);
@@ -418,11 +427,11 @@ async function main() {
     assert(at500.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 500%", at500.bandContainment);
     await screenshot(client, "spacetime-500.png");
 
-    for (let i=0;i<4;i++) {
+    for (let i=0;i<5;i++) {
       await evaluate(client, "document.querySelector('#spacetimeCameraZoomIn')?.click()");
       await sleep(350);
     }
-    await waitFor(client, "document.querySelector('#spacetimeCameraZoomValue')?.textContent?.trim() === '1200%'", 10000);
+    await waitFor(client, "document.querySelector('#spacetimeCameraZoomValue')?.textContent?.trim() === '1500%'", 10000);
     await sleep(800);
 
     let uncertaintyCount = await evaluate(client, "document.querySelectorAll('.spacetime-spatial-uncertainty').length");
@@ -438,22 +447,22 @@ async function main() {
       uncertaintyCount = await evaluate(client, "document.querySelectorAll('.spacetime-spatial-uncertainty').length");
     }
 
-    const at1200 = await collect1200(client, { macro:at500.macro, sub:at500.sub });
-    at1200.uncertaintyCount = uncertaintyCount;
-    assert(at1200.zoom === "1200%", "Maximum visual zoom is not 1200%", at1200);
-    assert(at1200.placeOpacity > 0.99, "Reviewed Place layer is not fully visible at 1200%", at1200);
-    assert(at1200.reviewedPlaceBindingCount === at500.reviewedPlaceBindingCount, "Reviewed Place registry changed across camera zoom", { at500, at1200 });
-    assert(at1200.reviewedDisplayPlaceCount === at500.reviewedDisplayPlaceCount, "Reviewed display Place plan changed across camera zoom", { at500, at1200 });
-    assert(at1200.placeMarkerCount === at1200.reviewedDisplayPlaceCount, "Rendered Place marker count does not match the semantic-axis display plan at 1200%", at1200);
-    assert(at1200.placeOverlap.count === 0, "Reviewed Place header markers overlap at 1200%", at1200.placeOverlap);
-    assert(at1200.labelOverlap.count === 0, "Visible Person labels overlap at 1200%", at1200.labelOverlap);
-    assert(at1200.deferredLabelCount === 0, "Person names are deferred at 1200%", at1200);
-    assert(at1200.domLabelCount === at1200.domPersonCount, "Not every viewport Person has a visible name at 1200%", at1200);
-    assert(at1200.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 1200%", at1200.bandContainment);
-    assertNormalizedGeometryInvariant(at500.macro, at1200.macro, "Macroregion");
-    assertNormalizedGeometryInvariant(at500.sub, at1200.sub, "Subregion");
-    assert(at1200.uncertaintyCount > 0, "No C6 spatial uncertainty evidence was rendered in the inspected 1200% viewport", at1200);
-    await screenshot(client, "spacetime-1200.png");
+    const at1500 = await collect1500(client, { macro:at500.macro, sub:at500.sub });
+    at1500.uncertaintyCount = uncertaintyCount;
+    assert(at1500.zoom === "1500%", "Maximum visual zoom is not 1500%", at1500);
+    assert(at1500.placeOpacity > 0.99, "Reviewed Place layer is not fully visible at 1500%", at1500);
+    assert(at1500.reviewedPlaceBindingCount === at500.reviewedPlaceBindingCount, "Reviewed Place registry changed across camera zoom", { at500, at1500 });
+    assert(at1500.reviewedDisplayPlaceCount === at500.reviewedDisplayPlaceCount, "Reviewed display Place plan changed across camera zoom", { at500, at1500 });
+    assert(at1500.placeMarkerCount === at1500.reviewedDisplayPlaceCount, "Rendered Place marker count does not match the semantic-axis display plan at 1500%", at1500);
+    assert(at1500.placeOverlap.count === 0, "Reviewed Place header markers overlap at 1500%", at1500.placeOverlap);
+    assert(at1500.labelOverlap.count === 0, "Visible Person labels overlap at 1500%", at1500.labelOverlap);
+    assert(at1500.deferredLabelCount === 0, "Person names are deferred at 1500%", at1500);
+    assert(at1500.domLabelCount === at1500.domPersonCount, "Not every viewport Person has a visible name at 1500%", at1500);
+    assert(at1500.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 1500%", at1500.bandContainment);
+    assertNormalizedGeometryInvariant(at500.macro, at1500.macro, "Macroregion");
+    assertNormalizedGeometryInvariant(at500.sub, at1500.sub, "Subregion");
+    assert(at1500.uncertaintyCount > 0, "No C6 spatial uncertainty evidence was rendered in the inspected 1500% viewport", at1500);
+    await screenshot(client, "spacetime-1500.png");
 
     await waitFor(client, "document.querySelectorAll('.spacetime-track-label').length > 0", 10000);
     const personSelected = await evaluate(client, `(() => {
@@ -558,13 +567,13 @@ async function main() {
       checked_at:new Date().toISOString(),
       live,
       at_500_percent:at500,
-      at_800_percent:at1200,
+      at_1500_percent:at1500,
       interaction,
       mobile,
       console_errors:filteredConsoleErrors,
       resource_errors:resourceErrors,
       runtime_exceptions:exceptions,
-      screenshots:["spacetime-500.png","spacetime-1200.png","spacetime-activity-meanwhile.png","spacetime-mobile-390.png"],
+      screenshots:["spacetime-500.png","spacetime-1500.png","spacetime-activity-meanwhile.png","spacetime-mobile-390.png"],
       status:"PASS"
     };
     fs.writeFileSync(path.join(OUT_DIR,"visual-acceptance.json"), JSON.stringify(report,null,2)+"\n");
