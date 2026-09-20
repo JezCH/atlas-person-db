@@ -14,7 +14,7 @@ export const CANONICAL_SPATIAL_INDEX_SCHEMA = 'atlas-polity-spatial-index/v2';
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const SHARD_ID_PATTERN = /^[a-z0-9][a-z0-9._-]*$/;
-const CORRECTION_DISPOSITIONS = new Set(['place_function', 'review_queue', 'remove_orphan']);
+const CORRECTION_DISPOSITIONS = new Set(['place_function', 'review_queue', 'remove_orphan', 'remove_relinked_source']);
 const PLACE_FUNCTION_TYPES = new Set(['capital', 'royal_court', 'royal_residence', 'imperial_court_core', 'political_center', 'administrative_center']);
 const PLACE_FUNCTION_CONFIDENCE = new Set(['well_established', 'likely', 'speculative', 'disputed', 'unknown']);
 function fail(code, message) {
@@ -72,6 +72,18 @@ function normalizeReviewDecision(raw, label) {
 
 function normalizeExpectedMapping(raw, label) {
   const expected = asObject(raw, label);
+  const reviewQueueReason = text(expected.review_queue_reason);
+  if (reviewQueueReason) {
+    if (expected.region_code != null || expected.subregion_code != null) {
+      fail('INVALID_SPATIAL_CORRECTION_EXPECTED_STATE', `${label}: review_queue expectation cannot also declare a static mapping`);
+    }
+    return Object.freeze({
+      kind: 'review_queue',
+      region_code: null,
+      subregion_code: null,
+      review_queue_reason: reviewQueueReason
+    });
+  }
   const regionCode = text(expected.region_code);
   const subregionCode = expected.subregion_code == null ? null : text(expected.subregion_code);
   const taxonomy = taxonomyContract();
@@ -81,7 +93,38 @@ function normalizeExpectedMapping(raw, label) {
     if (!parent) fail('UNKNOWN_SPATIAL_SUBREGION', `${label}: ${subregionCode}`);
     if (parent !== regionCode) fail('SPATIAL_SUBREGION_PARENT_MISMATCH', `${label}: ${subregionCode} is not a child of ${regionCode}`);
   }
-  return Object.freeze({ region_code: regionCode, subregion_code: subregionCode });
+  return Object.freeze({
+    kind: 'static',
+    region_code: regionCode,
+    subregion_code: subregionCode,
+    review_queue_reason: null
+  });
+}
+
+function normalizeActivityOverrideRebind(raw, label) {
+  const rebind = asObject(raw, label);
+  const activityId = text(rebind.activity_id);
+  const expectedPolityId = text(rebind.expected_polity_id);
+  const nextPolityId = text(rebind.next_polity_id);
+  const expectedStartYear = Number(rebind.expected_start_year);
+  const expectedEndYear = Number(rebind.expected_end_year);
+  const reason = text(rebind.reason);
+  assertCanonicalUuid(activityId, `${label}.activity_id`);
+  assertCanonicalUuid(expectedPolityId, `${label}.expected_polity_id`);
+  assertCanonicalUuid(nextPolityId, `${label}.next_polity_id`);
+  if (expectedPolityId === nextPolityId) fail('INVALID_SPATIAL_OVERRIDE_REBIND', `${label}: source and target polity IDs must differ`);
+  if (!Number.isInteger(expectedStartYear) || expectedStartYear === 0) fail('INVALID_SPATIAL_OVERRIDE_REBIND', `${label}.expected_start_year must be a historical integer`);
+  if (!Number.isInteger(expectedEndYear) || expectedEndYear === 0) fail('INVALID_SPATIAL_OVERRIDE_REBIND', `${label}.expected_end_year must be a historical integer`);
+  if (expectedStartYear > expectedEndYear) fail('INVALID_SPATIAL_OVERRIDE_REBIND', `${label}: expected_start_year must not exceed expected_end_year`);
+  if (!reason) fail('INVALID_SPATIAL_OVERRIDE_REBIND', `${label}.reason is required`);
+  return Object.freeze({
+    activity_id: activityId,
+    expected_polity_id: expectedPolityId,
+    next_polity_id: nextPolityId,
+    expected_start_year: expectedStartYear,
+    expected_end_year: expectedEndYear,
+    reason
+  });
 }
 
 function normalizeCorrectionFunction(raw, label) {
@@ -126,9 +169,14 @@ function normalizeSpatialCorrectionFile(entry) {
   const reviewedAt = assertIsoInstant(value.reviewed_at, `${source} reviewed_at`);
   const baseline = text(value.baseline);
   if (!baseline) fail('INVALID_SPATIAL_CORRECTION_BASELINE', `${source}: baseline is required`);
-  if (!Array.isArray(value.changes) || !value.changes.length) fail('INVALID_SPATIAL_CORRECTIONS', `${source}: changes must be non-empty`);
+  const rawChanges = value.changes == null ? [] : value.changes;
+  const rawRebinds = value.activity_override_rebinds == null ? [] : value.activity_override_rebinds;
+  if (!Array.isArray(rawChanges)) fail('INVALID_SPATIAL_CORRECTIONS', `${source}: changes must be an array when present`);
+  if (!Array.isArray(rawRebinds)) fail('INVALID_SPATIAL_OVERRIDE_REBINDS', `${source}: activity_override_rebinds must be an array when present`);
+  if (!rawChanges.length && !rawRebinds.length) fail('INVALID_SPATIAL_CORRECTIONS', `${source}: at least one change or activity_override_rebind is required`);
+
   const localSeen = new Set();
-  const changes = value.changes.map((raw, index) => {
+  const changes = rawChanges.map((raw, index) => {
     const change = asObject(raw, `${source} changes[${index}]`);
     const polityId = text(change.polity_id);
     const disposition = text(change.disposition);
@@ -139,6 +187,9 @@ function normalizeSpatialCorrectionFile(entry) {
     if (!CORRECTION_DISPOSITIONS.has(disposition)) fail('INVALID_SPATIAL_CORRECTION_DISPOSITION', `${source} ${polityId}: ${disposition || '(empty)'}`);
     if (!reason) fail('INVALID_SPATIAL_CORRECTION_REASON', `${source} ${polityId}: reason is required`);
     const expected = normalizeExpectedMapping(change.expected, `${source} ${polityId}.expected`);
+    if ((disposition === 'place_function' || disposition === 'review_queue') && expected.kind !== 'static') {
+      fail('INVALID_SPATIAL_CORRECTION_EXPECTED_STATE', `${source} ${polityId}: ${disposition} requires an expected static mapping`);
+    }
     const rawFunctions = change.functions == null ? [] : change.functions;
     if (disposition === 'place_function') {
       if (!Array.isArray(rawFunctions) || !rawFunctions.length) fail('INVALID_SPATIAL_CORRECTION_FUNCTIONS', `${source} ${polityId}: functions must be non-empty`);
@@ -150,7 +201,23 @@ function normalizeSpatialCorrectionFile(entry) {
       : [];
     return Object.freeze({ polity_id: polityId, disposition, reason, expected, functions: Object.freeze(functions) });
   }).sort((left, right) => left.polity_id.localeCompare(right.polity_id, 'en'));
-  return Object.freeze({ source, correction_id: correctionId, reviewed_at: reviewedAt, baseline, changes: Object.freeze(changes) });
+
+  const rebindSeen = new Set();
+  const activityOverrideRebinds = rawRebinds.map((raw, index) => {
+    const rebind = normalizeActivityOverrideRebind(raw, `${source} activity_override_rebinds[${index}]`);
+    if (rebindSeen.has(rebind.activity_id)) fail('DUPLICATE_SPATIAL_OVERRIDE_REBIND', `${source}: duplicate activity_id ${rebind.activity_id}`);
+    rebindSeen.add(rebind.activity_id);
+    return rebind;
+  }).sort((left, right) => left.activity_id.localeCompare(right.activity_id, 'en'));
+
+  return Object.freeze({
+    source,
+    correction_id: correctionId,
+    reviewed_at: reviewedAt,
+    baseline,
+    changes: Object.freeze(changes),
+    activity_override_rebinds: Object.freeze(activityOverrideRebinds)
+  });
 }
 
 function applyNormalizedSpatialCorrections(baseline, corrections) {
@@ -159,30 +226,50 @@ function applyNormalizedSpatialCorrections(baseline, corrections) {
   next.polity_subregions = { ...(baseline.polity_subregions || {}) };
   next.place_function_records = structuredClone(baseline.place_function_records || []);
   next.review_queue = structuredClone(baseline.review_queue || []);
+  next.activity_spatial_overrides = structuredClone(baseline.activity_spatial_overrides || []);
+
   const placeFunctionIds = new Set(next.place_function_records.map((record) => text(record?.polity_id)).filter(Boolean));
   const reviewIds = new Set(next.review_queue.map((record) => text(record?.polity_id)).filter(Boolean));
-  const globallySeen = new Map();
 
   for (const correction of corrections) {
     for (const change of correction.changes) {
-      const previousSource = globallySeen.get(change.polity_id);
-      if (previousSource) fail('DUPLICATE_SPATIAL_CORRECTION_TARGET', `${change.polity_id}: ${previousSource} and ${correction.source}`);
-      globallySeen.set(change.polity_id, correction.source);
-
       const currentRegion = Object.prototype.hasOwnProperty.call(next.polity_geography, change.polity_id)
         ? text(next.polity_geography[change.polity_id])
         : null;
       const currentSubregion = Object.prototype.hasOwnProperty.call(next.polity_subregions, change.polity_id)
         ? text(next.polity_subregions[change.polity_id]) || null
         : null;
-      if (currentRegion !== change.expected.region_code || currentSubregion !== change.expected.subregion_code) {
-        fail(
-          'SPATIAL_CORRECTION_SOURCE_MISMATCH',
-          `${change.polity_id}: expected ${mappingLabel(change.expected)} but found ${currentRegion || '(missing)'}/${currentSubregion || '(macro-only)'}`
-        );
+      const reviewIndex = next.review_queue.findIndex((record) => text(record?.polity_id) === change.polity_id);
+      const reviewRecord = reviewIndex >= 0 ? next.review_queue[reviewIndex] : null;
+      const hasPlaceFunction = placeFunctionIds.has(change.polity_id);
+
+      if (change.expected.kind === 'static') {
+        if (currentRegion !== change.expected.region_code || currentSubregion !== change.expected.subregion_code || reviewRecord || hasPlaceFunction) {
+          fail(
+            'SPATIAL_CORRECTION_SOURCE_MISMATCH',
+            `${change.polity_id}: expected ${mappingLabel(change.expected)} static mapping but found ${currentRegion || '(missing)'}/${currentSubregion || '(macro-only)'}${reviewRecord ? ' + review_queue' : ''}${hasPlaceFunction ? ' + place_function' : ''}`
+          );
+        }
+      } else if (change.expected.kind === 'review_queue') {
+        if (currentRegion != null || currentSubregion != null || hasPlaceFunction || !reviewRecord || text(reviewRecord.reason) !== change.expected.review_queue_reason) {
+          fail(
+            'SPATIAL_CORRECTION_SOURCE_MISMATCH',
+            `${change.polity_id}: expected exact review_queue disposition but current reviewed state differs`
+          );
+        }
+      } else {
+        fail('INVALID_SPATIAL_CORRECTION_EXPECTED_STATE', `${change.polity_id}: unsupported expected state ${change.expected.kind || '(empty)'}`);
       }
-      if (placeFunctionIds.has(change.polity_id) || reviewIds.has(change.polity_id)) {
-        fail('CONFLICTING_SPATIAL_DISPOSITION', `${change.polity_id}: correction target already has temporal/review disposition`);
+
+      const removesDisposition = change.disposition === 'remove_orphan' || change.disposition === 'remove_relinked_source';
+      if (removesDisposition) {
+        delete next.polity_geography[change.polity_id];
+        delete next.polity_subregions[change.polity_id];
+        if (reviewIndex >= 0) {
+          next.review_queue.splice(reviewIndex, 1);
+          reviewIds.delete(change.polity_id);
+        }
+        continue;
       }
 
       delete next.polity_geography[change.polity_id];
@@ -198,6 +285,27 @@ function applyNormalizedSpatialCorrections(baseline, corrections) {
         next.review_queue.push({ polity_id: change.polity_id, reason: change.reason });
         reviewIds.add(change.polity_id);
       }
+    }
+
+    for (const rebind of correction.activity_override_rebinds) {
+      const matching = next.activity_spatial_overrides
+        .map((record, index) => ({ record, index }))
+        .filter(({ record }) => text(record?.activity_id) === rebind.activity_id);
+      if (matching.length !== 1) {
+        fail('SPATIAL_OVERRIDE_REBIND_SOURCE_MISMATCH', `${rebind.activity_id}: expected exactly one Activity spatial override, found ${matching.length}`);
+      }
+      const { record, index } = matching[0];
+      if (
+        text(record?.expected_polity_id) !== rebind.expected_polity_id ||
+        Number(record?.expected_start_year) !== rebind.expected_start_year ||
+        Number(record?.expected_end_year) !== rebind.expected_end_year
+      ) {
+        fail('SPATIAL_OVERRIDE_REBIND_SOURCE_MISMATCH', `${rebind.activity_id}: expected polity/interval no longer matches reviewed source state`);
+      }
+      next.activity_spatial_overrides[index] = {
+        ...record,
+        expected_polity_id: rebind.next_polity_id
+      };
     }
   }
   return next;

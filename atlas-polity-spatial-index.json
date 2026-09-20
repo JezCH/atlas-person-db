@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-20T05:58:00.000Z",
+  "generated_at": "2026-09-20T07:08:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -660,7 +660,6 @@
     "9a26d673-abe1-4d66-b691-3afdaf01a586": "europe",
     "c5c4f6cb-ae44-4256-86e9-4e6f0d7068f4": "europe",
     "f070299a-de6b-4094-b3ad-c5dc24a541c3": "west-asia",
-    "63c0aa8d-bc0b-42c5-9118-612b6c650646": "europe",
     "be139c7d-f43c-4bf6-8542-9a372d64c06d": "europe",
     "ac5b6164-e505-4b2f-96e6-cab9f6f3652e": "central-asia",
     "78744e34-820e-44ab-91b2-c289d41a3802": "europe",
@@ -911,7 +910,6 @@
     "2c9ebf4b-5ac6-4b1f-a2ba-848c58df80c9": "europe",
     "9cb4d640-0b98-4fc1-9365-388398a3d659": "europe",
     "6d89e23a-1eaf-4af3-a310-07ed03e828d6": "africa",
-    "29b6b4bd-f767-4995-9e36-d50ecba7db88": "americas",
     "6596c324-a8e1-49ab-8d1d-cd4cbdfaa634": "americas",
     "33077220-c088-426e-94d3-a438267df4f1": "oceania",
     "80fe6a6d-40c1-4518-a7fc-de3dfb207c1e": "americas",
@@ -1616,10 +1614,6 @@
     {
       "polity_id": "a81055d7-ed0d-45a6-90c6-738e1a9ba94d",
       "reason": "The Roxolani were a nomadic Sarmatian polity whose historical geography shifted across the Pontic-Danubian steppe; the Amage episode does not establish a sufficiently precise fixed capital."
-    },
-    {
-      "polity_id": "bcb090c2-7906-4c3e-91cf-99b02646764e",
-      "reason": "Theodoric's pre-493 Ostrogothic confederation was a mobile Balkan warband polity seeking a permanent homeland and then moving into Italy; the territorial Italian kingdom begins only after this activity."
     }
   ],
   "polity_subregions": {
@@ -2212,7 +2206,6 @@
     "9a26d673-abe1-4d66-b691-3afdaf01a586": "balkans",
     "c5c4f6cb-ae44-4256-86e9-4e6f0d7068f4": "iberia",
     "f070299a-de6b-4094-b3ad-c5dc24a541c3": "anatolia",
-    "63c0aa8d-bc0b-42c5-9118-612b6c650646": "balkans",
     "be139c7d-f43c-4bf6-8542-9a372d64c06d": "central-europe",
     "ac5b6164-e505-4b2f-96e6-cab9f6f3652e": "eastern-central-asia-steppe",
     "78744e34-820e-44ab-91b2-c289d41a3802": "eastern-europe",
@@ -2463,7 +2456,6 @@
     "2c9ebf4b-5ac6-4b1f-a2ba-848c58df80c9": "italy",
     "9cb4d640-0b98-4fc1-9365-388398a3d659": "balkans",
     "6d89e23a-1eaf-4af3-a310-07ed03e828d6": "west-africa",
-    "29b6b4bd-f767-4995-9e36-d50ecba7db88": "south-america",
     "6596c324-a8e1-49ab-8d1d-cd4cbdfaa634": "north-america",
     "33077220-c088-426e-94d3-a438267df4f1": "pacific-islands",
     "80fe6a6d-40c1-4518-a7fc-de3dfb207c1e": "south-america",
@@ -3157,7 +3149,7 @@
     },
     {
       "activity_id": "42b9e5cc-02f9-49d0-9968-9476a24918e7",
-      "expected_polity_id": "bcb090c2-7906-4c3e-91cf-99b02646764e",
+      "expected_polity_id": "8cb0aec8-6228-4db6-88ad-584a21925ee1",
       "expected_start_year": 474,
       "expected_end_year": 493,
       "override_mode": "timeline_segments",
