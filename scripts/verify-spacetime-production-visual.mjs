@@ -216,6 +216,9 @@ async function collect500(client) {
       scrollHeight:rect(scroll).height,
       scrollOverflowX:style(scroll).overflowX,
       scrollOverflowY:style(scroll).overflowY,
+      domPersonCount:Number((q("#spacetimeDomPersonCount")?.textContent||"0").trim())||0,
+      domLabelCount:Number((q("#spacetimeDomLabelCount")?.textContent||"0").trim())||0,
+      deferredLabelCount:Number((q("#spacetimeDeferredLabelCount")?.textContent||"0").trim())||0,
       labelOverlap,
       bandContainment
     };
@@ -242,6 +245,9 @@ async function collect800(client, geometry500) {
       placeMarkerCount:markers.length,
       placeMarkers:markers.map(rect),
       placeOverlap,
+      domPersonCount:Number((q("#spacetimeDomPersonCount")?.textContent||"0").trim())||0,
+      domLabelCount:Number((q("#spacetimeDomLabelCount")?.textContent||"0").trim())||0,
+      deferredLabelCount:Number((q("#spacetimeDeferredLabelCount")?.textContent||"0").trim())||0,
       labelOverlap,
       bandContainment,
       macro,sub,
@@ -383,7 +389,8 @@ async function main() {
     assert(Math.abs(at500.cornerWidth - 140) < 0.75, "Shared axis width drifted from 140px", at500);
     assert(Math.abs(at500.cornerHeight - 36) < 0.75, "Shared corner height drifted from 36px", at500);
     assert(at500.labelOverlap.count === 0, "Visible Person labels overlap at 500%", at500.labelOverlap);
-    assert(at500.bandContainment.label_violation_count === 0, "Person labels escape their reviewed presentation bands at 500%", at500.bandContainment);
+    assert(at500.deferredLabelCount === 0, "Person names are deferred at the 500% readable floor", at500);
+    assert(at500.domLabelCount === at500.domPersonCount, "Not every viewport Person has a visible name at 500%", at500);
     assert(at500.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 500%", at500.bandContainment);
     await screenshot(client, "spacetime-500.png");
 
@@ -414,7 +421,8 @@ async function main() {
     assert(at800.placeMarkerCount === EXPECTED_REVIEWED_PLACE_COUNT, "Unexpected reviewed Place marker count at 800%", at800);
     assert(at800.placeOverlap.count === 0, "Reviewed Place header markers overlap at 800%", at800.placeOverlap);
     assert(at800.labelOverlap.count === 0, "Visible Person labels overlap at 800%", at800.labelOverlap);
-    assert(at800.bandContainment.label_violation_count === 0, "Person labels escape their reviewed presentation bands at 800%", at800.bandContainment);
+    assert(at800.deferredLabelCount === 0, "Person names are deferred at 800%", at800);
+    assert(at800.domLabelCount === at800.domPersonCount, "Not every viewport Person has a visible name at 800%", at800);
     assert(at800.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 800%", at800.bandContainment);
     assertNormalizedGeometryInvariant(at500.macro, at800.macro, "Macroregion");
     assertNormalizedGeometryInvariant(at500.sub, at800.sub, "Subregion");
