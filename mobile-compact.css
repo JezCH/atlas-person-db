@@ -1,6 +1,6 @@
 @media (max-width:760px){
   body{min-width:0;background:#f2f5f8}
-  .mobile-appbar{display:flex;position:sticky;top:0;z-index:40;height:58px;padding:8px 10px;align-items:center;gap:10px;background:rgba(16,24,39,.96);color:#fff;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 6px 18px rgba(8,15,28,.16)}
+  .mobile-appbar {display:flex;position:sticky;top:0;z-index:40;height:58px;padding:8px 10px;align-items:center;gap:10px;background:rgba(16,24,39,.96);color:#fff;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 6px 18px rgba(8,15,28,.16)}
   .mobile-menu-button{width:40px;height:40px;flex:0 0 40px;border:0;border-radius:10px;color:#fff;background:#1e293b;font-size:22px}
   .mobile-appbar-title{min-width:0;flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;line-height:1.08}
   .mobile-appbar-title strong{font-size:14px;font-weight:900;letter-spacing:.01em}
