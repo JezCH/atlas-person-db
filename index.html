@@ -7,9 +7,9 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>ATLAS 편집</title>
-  <link rel="stylesheet" href="./styles.css?v=20260804-mobile-compact-shell" />
-  <link rel="stylesheet" href="./mobile-compact.css?v=20260817-r1-mobile-owner-v1" />
-  <link rel="stylesheet" href="./atlas-person-main.css?v=20260817-era-polity-toolbar-v1" />
+  <link rel="stylesheet" href="./styles.css?v=20260920-single-person-surface" />
+  <link rel="stylesheet" href="./mobile-compact.css?v=20260920-single-person-surface" />
+  <link rel="stylesheet" href="./atlas-person-main.css?v=20260920-single-person-surface" />
   <link rel="stylesheet" href="./atlas-person-spacetime-control-state.css?v=20260920-range-100-1500" />
   <link rel="stylesheet" href="./atlas-person-profile-editor.css?v=20260821-person-profile-v1" />
   <link rel="stylesheet" href="./atlas-person-external-references.css?v=20260821-v1" />
@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="./atlas-person-era-navigation.css?v=20260920-person-facets-sticky-v1" />
   <link rel="stylesheet" href="./atlas-person-table-alignment.css?v=20260817-table-geometry-r2" />
   <link rel="stylesheet" href="./atlas-person-header-sorting.css?v=20260817-header-sort-v2" />
-  <link rel="stylesheet" href="./atlas-main-authority-nav.css?v=20260919-control-center-v1" />
+  <link rel="stylesheet" href="./atlas-main-authority-nav.css?v=20260920-single-person-surface" />
   <link rel="stylesheet" href="./atlas-dashboard.css?v=20260919-control-center-v1" />
   <link rel="stylesheet" href="./atlas-responsive-shell.css?v=20260817-r1-css-owner-v1" />
   <link rel="stylesheet" href="./atlas-domain-surface-owner.css?v=20260818-domain-owner-v1" />
@@ -39,48 +39,29 @@
     <aside class="sidebar"><div class="brand"><div class="brand-mark">A</div><div><strong>ATLAS</strong><span>편집 시스템</span></div></div><nav class="nav-list" aria-label="주요 메뉴"><button class="nav-item" data-atlas-domain="dashboard"><span>▦</span>대시보드<small></small></button><button class="nav-item active" data-atlas-domain="persons"><span>●</span>인물<small></small></button><button class="nav-item" data-atlas-domain="polities"><span>◆</span>정치체<small></small></button><button class="nav-item" data-atlas-domain="places"><span>⌖</span>장소<small></small></button><button class="nav-item" data-atlas-domain="events"><span>◇</span>사건<small></small></button><button class="nav-item" data-atlas-domain="sources"><span>▤</span>출처<small></small></button><button class="nav-item" data-atlas-domain="geometry"><span>▱</span>지리 형상<small></small></button></nav><div class="sidebar-foot">ATLAS 편집 v0.5</div></aside>
     <main class="main-area">
       <header class="topbar"><div><p class="eyebrow">인물 데이터셋</p><h1>인물</h1><p class="subtitle">기본 정렬: 활동 시작연도 과거 → 현재</p></div><span id="connectionStatus" class="status status-warn">연결 확인 중</span></header>
-      <section class="toolbar card">
-        <div class="toolbar-left">
-          <button id="addButton" class="btn btn-primary"><span class="desktop-label">+ 인물 관계 추가</span><span class="mobile-label">+ 추가</span></button>
-          <button id="refreshButton" type="button" class="btn" onclick="window.location.reload()" title="최신 데이터를 다시 불러옵니다"><span class="desktop-label">↻ 새로고침</span><span class="mobile-label">↻</span></button>
-          <button id="exportButton" class="btn desktop-secondary-action">엑셀 내보내기</button>
-          <label class="btn file-button desktop-secondary-action">엑셀 불러오기<input id="importInput" type="file" accept=".xlsx,.xls,.csv" hidden /></label>
-        </div>
-        <div class="filters">
-          <input id="searchInput" type="search" placeholder="인물·정치체·역할 검색" />
-          <select id="politicFilter"><option value="">모든 정치체</option></select>
-          <select id="sortOrder" aria-label="정렬 순서"><option value="start-asc">연도 ↑ 과거→현재</option><option value="start-desc">연도 ↓ 현재→과거</option></select>
-        </div>
-      </section>
-      <section class="content-grid"><div class="table-card card"><div class="table-meta"><strong id="rowCount">0개 행</strong><span>행을 클릭하면 상세정보가 열립니다.</span></div><div class="table-scroll"><table><thead><tr><th>인물</th><th>정치체</th><th class="year">시작</th><th class="year">종료</th><th>역할</th><th>기간 기준</th><th class="actions">관리</th></tr></thead><tbody id="dataBody"></tbody></table></div><div id="emptyState" class="empty-state" hidden>등록된 데이터가 없습니다. ‘인물 관계 추가’를 눌러 첫 행을 만드세요.</div></div>
-        <aside id="detailPanel" class="detail-panel card" aria-live="polite"><div id="detailEmpty" hidden></div><div id="detailContent" hidden><div class="detail-head"><div class="detail-title-block"><p class="eyebrow">선택한 레코드</p><h2 id="detailPerson"></h2><p class="detail-summary"><span id="detailSummaryPolitic"></span><span aria-hidden="true">·</span><span id="detailSummaryStart"></span><span aria-hidden="true">–</span><span id="detailSummaryEnd"></span></p></div><button id="detailEdit" class="btn detail-edit">✎ 수정</button></div><dl class="detail-list"><div><dt>정치체</dt><dd id="detailPolitic"></dd></div><div><dt>역할</dt><dd id="detailRole"></dd></div><div><dt>활동 기간</dt><dd><span id="detailPeriodStart"></span><span aria-hidden="true">–</span><span id="detailPeriodEnd"></span></dd></div><div><dt>기간 기준</dt><dd><span id="detailBasis" class="detail-badge"></span></dd></div><div class="detail-notes"><dt>비고</dt><dd id="detailNotes"></dd></div></dl></div></aside></section>
     </main>
   </div>
-  <dialog id="editorDialog"><form id="editorForm" method="dialog"><div class="dialog-grabber" aria-hidden="true"></div><div class="dialog-head"><div><p class="eyebrow">레코드 편집</p><h2 id="dialogTitle">인물 관계 추가</h2></div><button type="button" id="closeDialog" class="icon-button" aria-label="닫기">×</button></div><input id="recordId" type="hidden" /><div class="form-grid"><label>인물명*<input id="personName" required maxlength="160" /></label><label>정치체*<input id="politicName" required maxlength="160" /></label><label>활동 시작연도*<input id="activityStart" type="number" required min="-10000" max="9999" /></label><label>활동 종료연도*<input id="activityEnd" type="number" required min="-10000" max="9999" /></label><label>역할<input id="role" maxlength="160" placeholder="황제, 장군, 학자 등" /></label><label>기간 기준<select id="periodBasis"><option value="reign">재위</option><option value="term">임기</option><option value="de_facto_rule">실권 장악</option><option value="military_activity">군사 활동</option><option value="religious_activity">종교 활동</option><option value="intellectual_activity">학술 활동</option><option value="artistic_activity">예술 활동</option><option value="general_activity">주요 활동</option></select></label><label class="full-width">비고<textarea id="notes" rows="3" maxlength="1000"></textarea></label></div><p id="formError" class="form-error" hidden></p><div class="dialog-actions"><button type="button" id="cancelButton" class="btn">취소</button><button type="submit" class="btn btn-primary">저장</button></div></form></dialog>
   <div id="toast" class="toast" hidden></div>
-  <script src="./atlas-reader-observability.js?v=20260810-phase9-ui-localized"></script>
-  <script src="./atlas-reader.js?v=20260810-phase9-ui-localized"></script>
   <script src="./atlas-person-browser-reader.js?v=20260815-ui6r4"></script>
   <script src="./atlas-person-domain-registry.js?v=20260919-registry-v1"></script>
   <script src="./atlas-client-data-store.js?v=20260919-shared-store-v1"></script>
   <script src="./atlas-person-external-references.js?v=20260919-shared-store-v1"></script>
   <script src="./atlas-ui-localization.js?v=20260819-ko-r2"></script>
   <script src="./atlas-server-write-adapter.js?v=20260821-person-profile-v1"></script>
-  <script src="./app.js?v=20260810-phase9-ui-localized"></script>
-  <script src="./status-summary.js?v=20260810-phase9-ui-localized"></script>
-  <script src="./mobile-ui.js?v=20260817-r1-mobile-owner-v1"></script>
+  <script src="./status-summary.js?v=20260920-single-person-surface"></script>
+  <script src="./mobile-ui.js?v=20260920-single-person-surface"></script>
   <script src="./atlas-person-era-model.js?v=20260909-era-10-band-v1"></script>
   <script src="./atlas-person-table-view.js?v=20260819-era-model-r2"></script>
   <script src="./atlas-person-header-sorting.js?v=20260817-header-sort-v2"></script>
   <script src="./atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1"></script>
-  <script src="./atlas-person-main.js?v=20260920-person-facets-sticky-v1"></script>
+  <script src="./atlas-person-main.js?v=20260920-single-person-surface"></script>
   <script src="./atlas-person-spacetime-control-state.js?v=20260920-exact-fit-floor"></script>
   <script src="./atlas-responsive-shell.js?v=20260815-ui8-shell-r2"></script>
   <script src="./atlas-ui-authority-catalog.ko.js?v=20260920-polity-composite-v4"></script>
   <script src="./atlas-person-spacetime-model.js?v=20260903-south-asia-r3"></script>
   <script src="./atlas-dashboard-model.js?v=20260919-spatial-resolver-v2"></script>
   <script src="./atlas-dashboard.js?v=20260919-control-center-v1"></script>
-  <script src="./atlas-main-authority-nav.js?v=20260920-polity-composite-exact-fit-floor"></script>
-  <script src="./atlas-domain-surface-owner.js?v=20260920-world-name-overlay"></script>
+  <script src="./atlas-main-authority-nav.js?v=20260920-single-person-surface"></script>
+  <script src="./atlas-domain-surface-owner.js?v=20260920-single-person-surface"></script>
 </body>
 </html>
