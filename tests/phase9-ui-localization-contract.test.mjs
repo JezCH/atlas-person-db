@@ -5,7 +5,8 @@ import test from 'node:test';
 const read = (rel) => fs.readFileSync(new URL(`../${rel}`, import.meta.url), 'utf8');
 const exists = (rel) => fs.existsSync(new URL(`../${rel}`, import.meta.url));
 const contract = JSON.parse(read('migration/phase-9/ui-localization-ko.json'));
-const app = read('app.js');
+const main = read('atlas-person-main.js');
+const eraNavigation = read('atlas-person-era-navigation.js');
 const personReader = read('atlas-person-browser-reader.js');
 const index = read('index.html');
 const readerService = read('server/atlas-normalized-read-service.js');
@@ -36,32 +37,27 @@ test('direct normalized projection separates canonical aliases from Korean displ
   assert.match(readerService, /rn\.locale = 'ko'/);
 });
 
-test('authoring UI defaults to signed chronology order and exposes reverse chronology toggle', () => {
-  assert.match(index, /기본 정렬: 활동 시작연도 과거 → 현재/);
-  assert.match(index, /id="sortOrder"/);
-  assert.match(index, /value="start-asc"/);
-  assert.match(index, /value="start-desc"/);
-  assert.match(app, /Number\(a\.activity_start\) - Number\(b\.activity_start\)/);
-  assert.doesNotMatch(app, /String\(a\.politic_name\).*Number\(a\.activity_start\)/s);
+test('Person UI defaults to signed chronology order and exposes reverse chronology state', () => {
+  assert.match(main, /let sortOrder = "start-asc"/);
+  assert.match(main, /value="start-asc"/);
+  assert.match(main, /value="start-desc"/);
+  assert.match(main, /reader\.comparePersons/);
 });
 
-test('authoring UI displays localized fields while retaining canonical values for bilingual search', () => {
-  assert.match(app, /record\.person_display_name \|\| record\.person_name/);
-  assert.match(app, /record\.politic_display_name \|\| record\.politic_name/);
-  assert.match(app, /record\.role_display_name \|\| record\.role/);
-  assert.match(app, /data-search=/);
-  assert.match(app, /record\.person_name/);
-  assert.match(app, /record\.politic_name/);
+test('Person UI displays normalized localized fields while retaining canonical values for bilingual search', () => {
+  assert.match(main, /person\.display_name \|\| person\.canonical_name_en/);
+  assert.match(main, /person\?\.canonical_name_en/);
   assert.match(personReader, /person\?\.display_name, person\?\.canonical_name_en, person\?\.preferred_name_ko/);
   assert.match(personReader, /item\.display_name/);
   assert.match(personReader, /item\.canonical_name_en/);
+  assert.match(eraNavigation, /personMainSearch/);
 });
 
 test('static browser locale patches are retired from the active page and repository root', () => {
   assert.doesNotMatch(index, /person-locales\.js/);
   assert.doesNotMatch(index, /person-locales-supplement/);
   assert.doesNotMatch(index, /search-index\.js/);
-  assert.doesNotMatch(app, /ATLAS_LOCALES/);
+  assert.doesNotMatch(main, /ATLAS_LOCALES/);
   assert.equal(exists('person-locales.js'), false);
   assert.equal(exists('search-index.js'), false);
 });
