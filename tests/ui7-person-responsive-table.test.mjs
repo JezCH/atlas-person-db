@@ -67,6 +67,7 @@ test('UI7 hides ordinary diagnostics and duplicate single-Activity periods while
 test('UI7 uses one table model on desktop and mobile with sticky Era and Person columns', () => {
   assert.match(tableCss, /overflow-x:auto/);
   assert.match(geometryCss, /--era-band-width:\s*58px/);
+  assert.match(tableCss, /person-table-head\{position:sticky;top:var\(--person-table-sticky-top,0px\)/);
   assert.match(tableCss, /person-era-band\{position:sticky;left:0/);
   assert.match(tableCss, /person-table-identity\{position:sticky;left:var\(--era-band-width\)/);
   assert.match(tableCss, /@media\(max-width:760px\)/);
@@ -81,10 +82,10 @@ test('UI7 keeps presentation separate from canonical geometry ownership', () => 
 });
 
 test('UI7 assets load as a presentation layer after shared era ownership and before Person Main initializes', () => {
-  assert.match(html, /atlas-person-table-view\.css\?v=20260817-era-band-r2/);
+  assert.match(html, /atlas-person-table-view\.css\?v=20260920-person-facets-sticky-v1/);
   assert.match(html, /atlas-person-table-alignment\.css\?v=20260817-table-geometry-r2/);
   assert.match(html, /atlas-person-era-model\.js\?v=20260909-era-10-band-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20260819-era-model-r2/);
   assert.ok(html.indexOf('atlas-person-era-model.js?v=20260909-era-10-band-v1') < html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2'));
-  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2') < html.indexOf('atlas-person-main.js?v=20260919-shared-store-v1'));
+  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2') < html.indexOf('atlas-person-main.js?v=20260920-person-facets-sticky-v1'));
 });

@@ -47,8 +47,8 @@ test('obsolete Person sort dropdown is removed and header controls are responsiv
 test('sorting enhancement loads after table decoration and before era navigation and Person Main', () => {
   const tableJs = 'atlas-person-table-view.js?v=20260819-era-model-r2';
   const sortingJs = 'atlas-person-header-sorting.js?v=20260817-header-sort-v2';
-  const navJs = 'atlas-person-era-navigation.js?v=20260817-era-search-toolbar-v2';
-  const mainJs = 'atlas-person-main.js?v=20260919-shared-store-v1';
+  const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
+  const mainJs = 'atlas-person-main.js?v=20260920-person-facets-sticky-v1';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
   const sortingCss = 'atlas-person-header-sorting.css?v=20260817-header-sort-v2';
 

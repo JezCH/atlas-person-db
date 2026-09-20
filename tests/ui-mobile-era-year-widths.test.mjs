@@ -42,7 +42,7 @@ test('legacy mobile width asset is fully retired', () => {
 });
 
 test('canonical geometry contract loads after the base table with fresh cache keys', () => {
-  const base = 'atlas-person-table-view.css?v=20260817-era-band-r2';
+  const base = 'atlas-person-table-view.css?v=20260920-person-facets-sticky-v1';
   const geometry = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
   assert.ok(html.includes(base));
   assert.ok(html.includes(geometry));

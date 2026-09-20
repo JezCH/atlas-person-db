@@ -6,6 +6,9 @@
   const RENDER_EVENT = "atlas-person-main-rendered";
   const SEARCH_EVENT = "atlas-person-search-change";
   const POLITY_EVENT = "atlas-person-polity-filter-change";
+  const RELATION_EVENT = "atlas-person-relation-filter-change";
+  const DOMAIN_EVENT = "atlas-person-domain-filter-change";
+  const domainRegistry = window.ATLAS_PERSON_DOMAIN_REGISTRY;
   const state = {
     nav: null,
     groups: [],
@@ -18,7 +21,12 @@
     visiblePolityCount: 0,
     query: "",
     selectedPolityId: "",
-    polityOptions: []
+    polityOptions: [],
+    selectedRelationId: "",
+    relationOptions: [],
+    selectedDomain: "",
+    domainCounts: {},
+    resizeObserver: null
   };
 
   function hasDom() {
@@ -91,7 +99,7 @@
     const nav = document.createElement("nav");
     nav.id = NAV_ID;
     nav.className = "person-era-navigator";
-    nav.setAttribute("aria-label", "인물 검색·정치체 필터·시대 이동");
+    nav.setAttribute("aria-label", "인물 검색·정치체·관계·분야 필터·시대 이동");
 
     const top = document.createElement("div");
     top.className = "person-era-nav-top";
@@ -128,7 +136,15 @@
     all.value = "";
     all.textContent = "모든 정치체";
     select.append(all);
-    controls.append(search, select);
+    const relation = document.createElement("select");
+    relation.className = "person-era-relation-filter";
+    relation.dataset.eraRelationFilter = "true";
+    relation.setAttribute("aria-label", "관계 필터");
+    const allRelations = document.createElement("option");
+    allRelations.value = "";
+    allRelations.textContent = "모든 관계";
+    relation.append(allRelations);
+    controls.append(search, select, relation);
     top.append(intro, controls);
 
     const track = document.createElement("div");
@@ -142,7 +158,16 @@
     next.dataset.eraStep = "next";
     track.append(previous, list, next);
 
-    nav.append(top, track);
+    const domains = document.createElement("div");
+    domains.className = "person-domain-filter-row";
+    const domainLabel = document.createElement("strong");
+    domainLabel.textContent = "분야";
+    const domainList = document.createElement("div");
+    domainList.className = "person-domain-filter-list";
+    domainList.setAttribute("aria-label", "대표 분야 필터");
+    domains.append(domainLabel, domainList);
+
+    nav.append(top, track, domains);
     nav.addEventListener("click", onNavigatorClick);
     nav.addEventListener("input", onNavigatorInput);
     nav.addEventListener("change", onNavigatorChange);
@@ -204,11 +229,37 @@
     if (Object.prototype.hasOwnProperty.call(detail, "query")) state.query = String(detail.query ?? "");
     state.selectedPolityId = String(detail.selectedPolityId || "").trim();
     if (Array.isArray(detail.polityOptions)) state.polityOptions = normalizePolityOptions(detail.polityOptions);
+    state.selectedRelationId = String(detail.selectedRelationId || "").trim();
+    if (Array.isArray(detail.relationOptions)) state.relationOptions = normalizePolityOptions(detail.relationOptions);
+    state.selectedDomain = String(detail.selectedDomain || "").trim();
+    if (detail.domainCounts && typeof detail.domainCounts === "object") state.domainCounts = { ...detail.domainCounts };
+  }
+
+  function renderDomainControls(nav) {
+    const list = nav.querySelector(".person-domain-filter-list");
+    if (!list) return;
+    list.replaceChildren();
+    const definitions = Array.isArray(domainRegistry?.DEFINITIONS) ? domainRegistry.DEFINITIONS : [];
+    const items = [{ code:"", label:"전체" }, ...definitions];
+    for (const item of items) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "person-domain-filter";
+      button.dataset.domainFilter = item.code;
+      if (item.code) button.dataset.domain = item.code;
+      const count = Number(state.domainCounts?.[item.code || "all"] || 0);
+      button.innerHTML = `<span>${item.label}</span><em>${count}</em>`;
+      const active = state.selectedDomain === item.code;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+      list.append(button);
+    }
   }
 
   function renderPolityControls(nav) {
     const search = nav.querySelector(".person-era-search");
     const select = nav.querySelector(".person-era-polity-filter");
+    const relation = nav.querySelector(".person-era-relation-filter");
     const summary = nav.querySelector(".person-era-nav-summary");
     if (search && search.value !== state.query) search.value = state.query;
     if (select) {
@@ -226,6 +277,22 @@
       const selectedExists = !state.selectedPolityId || state.polityOptions.some((item) => item.id === state.selectedPolityId);
       select.value = selectedExists ? state.selectedPolityId : "";
     }
+    if (relation) {
+      relation.replaceChildren();
+      const all = document.createElement("option");
+      all.value = "";
+      all.textContent = "모든 관계";
+      relation.append(all);
+      for (const item of state.relationOptions) {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.label;
+        relation.append(option);
+      }
+      const selectedExists = !state.selectedRelationId || state.relationOptions.some((item) => item.id === state.selectedRelationId);
+      relation.value = selectedExists ? state.selectedRelationId : "";
+    }
+    renderDomainControls(nav);
     if (summary) summary.textContent = `인물 ${state.visibleCount}명 · 정치체 ${state.visiblePolityCount}개`;
   }
 
@@ -280,6 +347,11 @@
   }
 
   function onNavigatorClick(event) {
+    const domainButton = event.target?.closest?.("button[data-domain-filter]");
+    if (domainButton) {
+      window.dispatchEvent(new CustomEvent(DOMAIN_EVENT, { detail: { domain: String(domainButton.dataset.domainFilter || "") } }));
+      return;
+    }
     const eraButton = event.target?.closest?.("button[data-era]");
     if (eraButton) {
       jumpToEra(eraButton.dataset.era);
@@ -298,8 +370,12 @@
 
   function onNavigatorChange(event) {
     const select = event.target?.closest?.("select[data-era-polity-filter]");
-    if (!select) return;
-    window.dispatchEvent(new CustomEvent(POLITY_EVENT, { detail: { polityId: String(select.value || "") } }));
+    if (select) {
+      window.dispatchEvent(new CustomEvent(POLITY_EVENT, { detail: { polityId: String(select.value || "") } }));
+      return;
+    }
+    const relation = event.target?.closest?.("select[data-era-relation-filter]");
+    if (relation) window.dispatchEvent(new CustomEvent(RELATION_EVENT, { detail: { relationId: String(relation.value || "") } }));
   }
 
   function onEraListKeyDown(event) {
@@ -370,6 +446,16 @@
     setActiveEra(String(best.dataset?.atlasEra || ""));
   }
 
+  function syncStickyGeometry() {
+    const nav = state.nav;
+    const container = document.querySelector(`#${GROUPS_ID}`);
+    if (!nav?.getBoundingClientRect || !container?.style?.setProperty) return;
+    let stickyTop = 0;
+    try { stickyTop = Number.parseFloat(window.getComputedStyle?.(nav)?.top || "0") || 0; } catch { stickyTop = 0; }
+    const height = Number(nav.getBoundingClientRect().height || 0);
+    container.style.setProperty("--person-table-sticky-top", `${Math.ceil(stickyTop + height + 6)}px`);
+  }
+
   function scheduleViewportUpdate() {
     if (state.framePending) return;
     state.framePending = true;
@@ -381,7 +467,7 @@
     if (state.globalListenersBound || typeof window?.addEventListener !== "function") return;
     state.globalListenersBound = true;
     window.addEventListener("scroll", scheduleViewportUpdate, { passive: true });
-    window.addEventListener("resize", scheduleViewportUpdate, { passive: true });
+    window.addEventListener("resize", () => { syncStickyGeometry(); scheduleViewportUpdate(); }, { passive: true });
   }
 
   function installNavigator(event = null) {
@@ -401,6 +487,12 @@
     state.nav = nav;
     renderPolityControls(nav);
     renderEraButtons(nav, state.entries);
+    syncStickyGeometry();
+    if (typeof ResizeObserver === "function") {
+      state.resizeObserver?.disconnect?.();
+      state.resizeObserver = new ResizeObserver(syncStickyGeometry);
+      state.resizeObserver.observe(nav);
+    }
 
     if (!state.entries.length) {
       state.activeCode = null;

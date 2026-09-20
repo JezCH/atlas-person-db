@@ -62,11 +62,16 @@ test('UI-6R3 refreshes Person read state after edit/create close and row-changin
   ]) expectToken(mainSource, token);
 });
 
-test('current exploration UI keeps only Polity filtering and places it with era navigation', () => {
-  assert.match(mainSource, /let facetFilters = \{ polity_id: "" \}/);
-  assert.doesNotMatch(mainSource, /personMainFilterToggle|personMainRelationFilter|personMainRoleFilter|personMainBasisFilter/);
+test('current exploration UI keeps persistent Polity, Relation, and Person-domain filtering with era navigation', () => {
+  assert.match(mainSource, /let facetFilters = \{ polity_id: "", relation_type_id: "", domain: "" \}/);
+  assert.doesNotMatch(mainSource, /personMainFilterToggle|personMainRoleFilter|personMainBasisFilter/);
   assert.match(eraSource, /person-era-polity-filter/);
+  assert.match(eraSource, /person-era-relation-filter/);
+  assert.match(eraSource, /person-domain-filter-row/);
   assert.match(eraSource, /atlas-person-polity-filter-change/);
+  assert.match(eraSource, /atlas-person-relation-filter-change/);
+  assert.match(eraSource, /atlas-person-domain-filter-change/);
+  assert.match(mainSource, /loadPersonDomains/);
   assert.match(mainCss, /@media\(max-width:760px\)/);
 });
 

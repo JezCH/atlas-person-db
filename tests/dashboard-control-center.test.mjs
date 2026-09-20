@@ -177,7 +177,7 @@ test("attention queue drill-down reuses Person Main instead of creating a duplic
   assert.match(dashboardSource, /data-dashboard-attention/);
   assert.match(dashboardSource, /ATLAS_PERSON_MAIN\?\.setDashboardFilter/);
   assert.match(mainSource, /setDashboardFilter/);
-  assert.match(mainSource, /secondaryPredicate:dashboardFilter/);
+  assert.match(mainSource, /secondaryPredicate: secondaryMatches/);
   assert.match(mainSource, /data-person-dashboard-filter-clear/);
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
 });
