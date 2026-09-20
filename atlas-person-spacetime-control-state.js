@@ -56,12 +56,11 @@
     if (!zoomOut || !zoomValue || !zoomIn || !reset) return false;
 
     const currentPercent = parsePercent(zoomValue.textContent);
-    const resetPercent = parsePercent(reset.textContent);
-    if (currentPercent == null || resetPercent == null) return false;
+    if (currentPercent == null) return false;
 
     const atMinimum = currentPercent <= MINIMUM_PERCENT + BOUND_EPSILON;
     const atMaximum = currentPercent >= MAXIMUM_PERCENT - BOUND_EPSILON;
-    const atDefault = Math.abs(currentPercent - DEFAULT_PERCENT) <= BOUND_EPSILON && Math.abs(resetPercent - DEFAULT_PERCENT) <= BOUND_EPSILON;
+    const atDefault = Math.abs(currentPercent - DEFAULT_PERCENT) <= BOUND_EPSILON;
     setDisabled(zoomOut, atMinimum);
     setDisabled(zoomIn, atMaximum);
     setDisabled(reset, atDefault);
