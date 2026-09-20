@@ -55,7 +55,7 @@ const EXPECTED_COMPLEX = new Map([
     ]
   }],
   ["42b9e5cc-02f9-49d0-9968-9476a24918e7", {
-    polity_id: "bcb090c2-7906-4c3e-91cf-99b02646764e", start: 474, end: 493, mode: "timeline_segments",
+    polity_id: "8cb0aec8-6228-4db6-88ad-584a21925ee1", start: 474, end: 493, mode: "timeline_segments",
     segments: [
       [474, 487, "europe", "balkans", "Macedonia / Roman Balkans"],
       [488, 493, "europe", "italy", "Italian conquest / Ravenna"]
