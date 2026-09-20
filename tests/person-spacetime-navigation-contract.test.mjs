@@ -10,7 +10,7 @@ const indexHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8'
 
 test('spacetime owns a bounded map-like viewport once the incremental time camera is active', () => {
   assert.match(spacetimeCss, /\.spacetime-scroll\{[^}]*overflow:auto/);
-  assert.match(spacetimeCss, /\.spacetime-scroll\{[^}]*height:clamp\(520px,72vh,860px\)/);
+  assert.match(spacetimeCss, /\.spacetime-scroll\{[^}]*height:clamp\(480px,62vh,720px\)/);
   assert.match(spacetimeCss, /\.spacetime-scroll\{[^}]*overscroll-behavior:contain/);
   assert.match(spacetimeView, /function bindCameraViewport\(/);
   assert.match(spacetimeView, /!event\.ctrlKey && !event\.metaKey/);
