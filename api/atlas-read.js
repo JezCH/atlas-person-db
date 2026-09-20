@@ -246,9 +246,9 @@ async function readRuntimePublication(client) {
     source:"runtime-compile-ledger",
     current_authoring_activity_count:authoringActivityCount,
     current_runtime_activity_count:runtimeActivityCount,
-    latest_compile:currentCompile,
+    active_compile:currentCompile,
     authoring_delta_since_compile:currentCompile == null ? null : authoringActivityCount-currentCompile.input_row_count,
-    projection_matches_latest_compile:currentCompile == null ? null : runtimeActivityCount === currentCompile.output_row_count
+    projection_matches_active_compile:currentCompile == null ? null : runtimeActivityCount === currentCompile.output_row_count
   });
 }
 
