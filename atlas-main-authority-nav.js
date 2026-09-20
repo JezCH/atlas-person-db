@@ -64,7 +64,7 @@
 
   let currentDomain = "persons";
   let spacetimeAssetsPromise = null;
-  let polityReviewAssetsPromise = null;
+  let polityAssetsPromise = null;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -86,7 +86,7 @@
     if (!domain) return "";
     if (key === "dashboard") return '<div id="atlasDashboardMount" class="atlas-dashboard-mount"></div>';
     if (key === "spacetime") return '<div id="personSpacetimeMount" class="person-spacetime-mount"></div>';
-    if (key === "polities") return '<div id="atlasPolityReviewMount" class="atlas-polity-review-mount"></div>';
+    if (key === "polities") return '<div id="atlasPolityMount" class="atlas-polity-review-mount"></div>';
     return `<div class="authority-shell-head card">
       <div><p class="eyebrow">${escapeHtml(domain.eyebrow)}</p><h2>${escapeHtml(domain.label)}</h2><p>${escapeHtml(domain.summary)}</p></div>
       <span class="authority-status ${statusClass(domain.status_code)}">${escapeHtml(domain.status_label)}</span>
@@ -154,32 +154,31 @@
     });
   }
 
-  function ensurePolityReviewAssets() {
-    if (window.ATLAS_POLITY_REVIEW_WORKBENCH) return Promise.resolve(window.ATLAS_POLITY_REVIEW_WORKBENCH);
-    if (polityReviewAssetsPromise) return polityReviewAssetsPromise;
-    appendStylesheetOnce("./atlas-polity-review-workbench.css?v=20260919-live-context-v2");
-    polityReviewAssetsPromise = loadScriptOnce("./atlas-polity-browser-reader.js?v=20260919-live-context-v2", () => Boolean(window.ATLAS_POLITY_BROWSER_READER))
-      .then(() => loadScriptOnce("./atlas-polity-review-candidates.js?v=20260919-live-context-v2", () => Boolean(window.ATLAS_POLITY_REVIEW_CANDIDATES)))
-      .then(() => loadScriptOnce("./atlas-polity-review-workbench.js?v=20260919-live-context-v2", () => Boolean(window.ATLAS_POLITY_REVIEW_WORKBENCH)))
-      .then(() => window.ATLAS_POLITY_REVIEW_WORKBENCH)
+  function ensurePolityAssets() {
+    if (window.ATLAS_POLITY_BROWSER_VIEW) return Promise.resolve(window.ATLAS_POLITY_BROWSER_VIEW);
+    if (polityAssetsPromise) return polityAssetsPromise;
+    appendStylesheetOnce("./atlas-polity-review-workbench.css?v=20260920-canonical-polity-v3");
+    polityAssetsPromise = loadScriptOnce("./atlas-polity-browser-reader.js?v=20260920-canonical-polity-v3", () => Boolean(window.ATLAS_POLITY_BROWSER_READER))
+      .then(() => loadScriptOnce("./atlas-polity-review-workbench.js?v=20260920-canonical-polity-v3", () => Boolean(window.ATLAS_POLITY_BROWSER_VIEW)))
+      .then(() => window.ATLAS_POLITY_BROWSER_VIEW)
       .catch((error) => {
-        polityReviewAssetsPromise = null;
+        polityAssetsPromise = null;
         throw error;
       });
-    return polityReviewAssetsPromise;
+    return polityAssetsPromise;
   }
 
-  function activatePolityReview() {
-    const mount = document.getElementById("atlasPolityReviewMount");
+  function activatePolity() {
+    const mount = document.getElementById("atlasPolityMount");
     if (!mount) return;
-    mount.innerHTML = '<section class="card" style="padding:24px"><strong>정치체 검토 작업대를 불러오는 중입니다.</strong></section>';
-    ensurePolityReviewAssets().then((workbench) => {
+    mount.innerHTML = '<section class="card" style="padding:24px"><strong>현재 정치체 데이터를 불러오는 중입니다.</strong></section>';
+    ensurePolityAssets().then((workbench) => {
       if (currentDomain === "polities") workbench?.mount?.(mount);
     }).catch((error) => {
       console.error(error);
-      const currentMount = document.getElementById("atlasPolityReviewMount");
+      const currentMount = document.getElementById("atlasPolityMount");
       if (currentDomain === "polities" && currentMount) {
-        currentMount.innerHTML = `<section class="card" style="padding:24px"><strong>정치체 검토 작업대를 불러오지 못했습니다.</strong><p>${escapeHtml(error?.message || error)}</p></section>`;
+        currentMount.innerHTML = `<section class="card" style="padding:24px"><strong>정치체 데이터를 불러오지 못했습니다.</strong><p>${escapeHtml(error?.message || error)}</p></section>`;
       }
     });
   }
@@ -251,7 +250,7 @@
     }
     window.dispatchEvent(new CustomEvent("atlas-authority-domain-changed", { detail: { domain: next } }));
     if (next === "spacetime") activateSpacetime();
-    if (next === "polities") activatePolityReview();
+    if (next === "polities") activatePolity();
     if (previousDomain !== next) {
       requestAnimationFrame(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
