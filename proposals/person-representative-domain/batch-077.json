@@ -1,0 +1,35 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-20",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "22dbcf367945081b1f0ca72fddfc967582ff209e",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign Emperor Renzong of Song to governance. His canonical ATLAS representative identity is a reigning sovereign of the Song Dynasty; the project rule assigns clear secular supreme rulers to governance even when their reign is also strongly associated with literati culture and institutional development."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SONG-RENZONG-20260920",
+    "queue_issue": 977,
+    "assignment_count": 1,
+    "distribution": {
+      "governance": 1,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "426a4513-7705-4183-9aa3-f0a12fccaf6b",
+      "canonical_name_en": "Emperor Renzong of Song",
+      "preferred_name_ko": "송 인종",
+      "representative_domain": "governance"
+    }
+  ]
+}
