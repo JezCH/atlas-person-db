@@ -4,6 +4,8 @@ const crypto = require("node:crypto");
 
 const COMPILER_VERSION = "runtime-person-politics-v1";
 const LOCK_KEY = "atlas-runtime:person-politics-v1:compile";
+const ACTIVATION_PROJECTION = "runtime_person_politics_v1";
+const SHA40_RE = /^[0-9a-f]{40}$/;
 
 const AUTHORING_SNAPSHOT_SQL = `
 select
@@ -50,6 +52,74 @@ function stableJson(value) {
 
 function sha256(value) {
   return crypto.createHash("sha256").update(stableJson(value)).digest("hex");
+}
+
+function requiredSha(value, code) {
+  const sha = String(value || "").trim().toLowerCase();
+  if (!SHA40_RE.test(sha)) throw new Error(code);
+  return sha;
+}
+
+async function ensureRuntimeActivationBaseline(client) {
+  const history = await client.query(`
+    select count(*)::int as activation_count
+      from atlas_v2.runtime_projection_activations
+     where projection_name=$1
+  `, [ACTIVATION_PROJECTION]);
+  if (Number(history.rows?.[0]?.activation_count || 0) > 0) return null;
+
+  const current = await client.query(`
+    select count(*)::int as row_count,
+           count(distinct compile_key)::int as compile_count,
+           min(compile_key)::text as compile_key
+      from atlas_v2.runtime_person_politics_v1
+  `);
+  const rowCount = Number(current.rows?.[0]?.row_count || 0);
+  if (rowCount === 0) return null;
+  const compileCount = Number(current.rows?.[0]?.compile_count || 0);
+  const compileKey = String(current.rows?.[0]?.compile_key || "").trim();
+  if (compileCount !== 1 || !compileKey) throw new Error("RUNTIME_ACTIVATION_BASELINE_INVALID");
+
+  const inserted = await client.query(`
+    insert into atlas_v2.runtime_projection_activations(
+      projection_name,compile_key,activation_kind,runtime_sha,authoring_sha,row_count
+    ) values($1,$2,'baseline_observed',null,null,$3)
+    returning id::text,activated_at
+  `, [ACTIVATION_PROJECTION, compileKey, rowCount]);
+  return Object.freeze({
+    id:String(inserted.rows?.[0]?.id || ""),
+    projection_name:ACTIVATION_PROJECTION,
+    compile_key:compileKey,
+    activation_kind:"baseline_observed",
+    row_count:rowCount,
+    activated_at:inserted.rows?.[0]?.activated_at ?? null
+  });
+}
+
+async function recordRuntimeActivation(client, { compileKey, rowCount, runtimeSha, authoringSha } = {}) {
+  const normalizedRuntimeSha = requiredSha(runtimeSha, "RUNTIME_ACTIVATION_RUNTIME_SHA_REQUIRED");
+  const normalizedAuthoringSha = requiredSha(authoringSha, "RUNTIME_ACTIVATION_AUTHORING_SHA_REQUIRED");
+  const key = String(compileKey || "").trim();
+  if (!key) throw new Error("RUNTIME_ACTIVATION_COMPILE_KEY_REQUIRED");
+  const count = Number(rowCount);
+  if (!Number.isInteger(count) || count < 0) throw new Error("RUNTIME_ACTIVATION_ROW_COUNT_INVALID");
+
+  const inserted = await client.query(`
+    insert into atlas_v2.runtime_projection_activations(
+      projection_name,compile_key,activation_kind,runtime_sha,authoring_sha,row_count
+    ) values($1,$2,'compile_commit',$3,$4,$5)
+    returning id::text,activated_at
+  `, [ACTIVATION_PROJECTION, key, normalizedRuntimeSha, normalizedAuthoringSha, count]);
+  return Object.freeze({
+    id:String(inserted.rows?.[0]?.id || ""),
+    projection_name:ACTIVATION_PROJECTION,
+    compile_key:key,
+    activation_kind:"compile_commit",
+    runtime_sha:normalizedRuntimeSha,
+    authoring_sha:normalizedAuthoringSha,
+    row_count:count,
+    activated_at:inserted.rows?.[0]?.activated_at ?? null
+  });
 }
 
 function hasKnownBoundary(row, prefix) {
@@ -193,11 +263,14 @@ async function insertRuntimeRow(client, compileKey, row) {
     ]);
 }
 
-async function compileRuntimeProjection(client, { dryRun=false } = {}) {
+async function compileRuntimeProjection(client, { dryRun=false, runtimeSha=null, authoringSha=null } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
+  const normalizedRuntimeSha = requiredSha(runtimeSha, "RUNTIME_ACTIVATION_RUNTIME_SHA_REQUIRED");
+  const normalizedAuthoringSha = requiredSha(authoringSha, "RUNTIME_ACTIVATION_AUTHORING_SHA_REQUIRED");
   await client.query("begin isolation level serializable");
   try {
     await client.query("select pg_advisory_xact_lock(hashtext($1))", [LOCK_KEY]);
+    const baselineActivation = dryRun ? null : await ensureRuntimeActivationBaseline(client);
     const source = await client.query(AUTHORING_SNAPSHOT_SQL);
     const compiled = compileSnapshot(source.rows || []);
     const ledgerReplay = await ensureCompileRun(client, compiled);
@@ -212,10 +285,18 @@ async function compileRuntimeProjection(client, { dryRun=false } = {}) {
       || (compiled.output_row_count > 0 && (Number(verify.rows[0]?.compile_count || 0) !== 1 || verify.rows[0]?.compile_key !== compiled.compile_key))) {
       throw new Error("RUNTIME_COMPILE_POSTCONDITION_FAILED");
     }
+    const activation = dryRun ? null : await recordRuntimeActivation(client, {
+      compileKey:compiled.compile_key,
+      rowCount:compiled.output_row_count,
+      runtimeSha:normalizedRuntimeSha,
+      authoringSha:normalizedAuthoringSha
+    });
     if (dryRun) await client.query("rollback"); else await client.query("commit");
     return Object.freeze({
       marker:"ATLAS_RUNTIME_PERSON_POLITICS_COMPILE_V1",
       dry_run:Boolean(dryRun), committed:!dryRun, ledger_replay:ledgerReplay,
+      activation_baseline_recorded:Boolean(baselineActivation),
+      activation,
       compile_key:compiled.compile_key,
       input_fingerprint:compiled.input_fingerprint,
       output_fingerprint:compiled.output_fingerprint,
@@ -231,8 +312,9 @@ async function compileRuntimeProjection(client, { dryRun=false } = {}) {
 }
 
 module.exports = Object.freeze({
-  COMPILER_VERSION, LOCK_KEY, AUTHORING_SNAPSHOT_SQL,
-  stableJson, sha256, hasKnownBoundary, hasLegacyProvenance,
+  COMPILER_VERSION, LOCK_KEY, ACTIVATION_PROJECTION, SHA40_RE, AUTHORING_SNAPSHOT_SQL,
+  stableJson, sha256, requiredSha, hasKnownBoundary, hasLegacyProvenance,
+  ensureRuntimeActivationBaseline, recordRuntimeActivation,
   classifyReadiness, provenanceSnapshot, runtimeRow, compileSnapshot,
   compileRuntimeProjection
 });
