@@ -107,6 +107,17 @@ test('Person detail renders identity, portrait slot, sources and user-facing Act
   assert.match(main, /Person 출처/);
 });
 
+test('Person detail binds the canonical portrait read surface without adding portrait mutations', () => {
+  assert.match(main, /reader\.readPortrait\(personId\)/);
+  assert.match(main, /portrait\.asset_url/);
+  assert.match(main, /data-person-portrait-image src=/);
+  assert.match(main, /loading="lazy"/);
+  assert.match(main, /referrerpolicy="no-referrer"/);
+  assert.match(main, /초상화 조회 실패/);
+  assert.match(main, /person-detail-portrait-empty">없음/);
+  assert.doesNotMatch(main, /image_base64|__atlas_mutation_surface=person-portrait|setPersonPortrait|deletePersonPortrait/);
+});
+
 test('Main renders BCE/CE and unknown chronology without changing historicity', () => {
   assert.match(main, /return `BC \$\{Math\.abs\(value\)\}`/);
   assert.match(main, /return `AD \$\{value\}`/);

@@ -476,11 +476,30 @@
     </article>`;
   }
 
+  function portraitFrameHtml(person, portraitResult) {
+    const displayName = person?.display_name || person?.canonical_name_en || "인물";
+    if (portraitResult?.error) {
+      return '<figure class="person-detail-portrait" aria-label="초상화 조회 실패" title="초상화 조회 실패"><img data-person-portrait-image alt="" hidden /><span class="person-detail-portrait-empty">오류</span></figure>';
+    }
+    const portrait = portraitResult?.portrait || null;
+    if (!portrait) {
+      return '<figure class="person-detail-portrait" aria-label="초상화 없음" title="초상화 없음"><img data-person-portrait-image alt="" hidden /><span class="person-detail-portrait-empty">없음</span></figure>';
+    }
+    const href = safeHttpUrl(portrait.asset_url);
+    if (!href) {
+      return '<figure class="person-detail-portrait" aria-label="초상화 주소 오류" title="초상화 주소 오류"><img data-person-portrait-image alt="" hidden /><span class="person-detail-portrait-empty">오류</span></figure>';
+    }
+    const meta = [portrait.portrait_kind, portrait.evidence_level].filter(Boolean).join(" · ");
+    const title = meta ? `${displayName} 초상화 · ${meta}` : `${displayName} 초상화`;
+    return `<figure class="person-detail-portrait" aria-label="${escapeHtml(displayName)} 초상화" title="${escapeHtml(title)}"><img data-person-portrait-image src="${escapeHtml(href)}" alt="${escapeHtml(displayName)} 초상화" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></figure>`;
+  }
+
   function renderDetail(person) {
+    const portraitResult = arguments[1] || null;
     const panel = document.getElementById("personMainDetail");
     if (!panel) return;
     const rawHistoricity = person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity);
-    panel.innerHTML = `<div class="person-detail-head"><figure class="person-detail-portrait" aria-label="초상화 없음" title="초상화 없음"><img data-person-portrait-image alt="" hidden /><span class="person-detail-portrait-empty">없음</span></figure><div><p class="eyebrow">PERSON DETAIL</p><div class="person-detail-name-row"><h2>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</h2>${externalLinksHtml(person)}</div><p><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "type 미상")}</span></p></div></div>
+    panel.innerHTML = `<div class="person-detail-head">${portraitFrameHtml(person, portraitResult)}<div><p class="eyebrow">PERSON DETAIL</p><div class="person-detail-name-row"><h2>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</h2>${externalLinksHtml(person)}</div><p><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "type 미상")}</span></p></div></div>
       ${profileEditorHtml(person)}
       <section class="person-detail-section"><h3>이름</h3>${namesHtml(person.names)}</section>
       <section class="person-detail-section"><h3>설명</h3>${descriptionsHtml(person.descriptions)}</section>
@@ -505,9 +524,12 @@
     renderDetailLoading();
     const serial = ++requestSerial;
     try {
-      const result = await reader.readPerson(personId);
+      const [result, portraitResult] = await Promise.all([
+        reader.readPerson(personId),
+        reader.readPortrait(personId).catch((error) => Object.freeze({ error }))
+      ]);
       if (serial !== requestSerial || selectedPersonId !== personId) return;
-      renderDetail(result.person);
+      renderDetail(result.person, portraitResult);
     } catch (error) {
       if (serial !== requestSerial) return;
       renderDetailError(error);

@@ -178,6 +178,64 @@ test('detail reader rejects malformed UUID before fetch and uses UUID query for 
   assert.equal(result.person.id, id);
 });
 
+test('portrait reader uses the consolidated public read surface and preserves explicit no-portrait state', async () => {
+  const reader = loadReader();
+  const id = '11111111-1111-4111-8111-111111111111';
+  let calls = 0;
+  const result = await reader.readPortrait(id, {
+    fetchImpl: async (url, options) => {
+      calls += 1;
+      assert.equal(url, `/api/atlas-read?__atlas_read_surface=person-portrait&person_id=${id}`);
+      assert.equal(options.method, 'GET');
+      assert.equal(options.credentials, 'same-origin');
+      assert.equal(options.cache, 'no-store');
+      return {
+        ok:true,
+        status:200,
+        json:async () => ({
+          ok:true,
+          schema:'atlas-person-portrait/v1',
+          found:true,
+          person_id:id,
+          portrait:null
+        })
+      };
+    }
+  });
+  assert.equal(calls, 1);
+  assert.equal(result.person_id, id);
+  assert.equal(result.portrait, null);
+});
+
+test('portrait reader returns canonical asset metadata without mutating it', async () => {
+  const reader = loadReader();
+  const id = '11111111-1111-4111-8111-111111111111';
+  const assetUrl = 'https://store.public.blob.vercel-storage.com/portraits/' + 'a'.repeat(64) + '.webp';
+  const result = await reader.readPortrait(id, {
+    fetchImpl:async () => ({
+      ok:true,
+      status:200,
+      json:async () => ({
+        ok:true,
+        schema:'atlas-person-portrait/v1',
+        found:true,
+        person_id:id,
+        portrait:{
+          asset_sha256:'a'.repeat(64),
+          asset_pathname:'portraits/' + 'a'.repeat(64) + '.webp',
+          asset_url:assetUrl,
+          portrait_kind:'artwork',
+          evidence_level:'direct',
+          sources:[]
+        }
+      })
+    })
+  });
+  assert.equal(result.portrait.asset_url, assetUrl);
+  assert.equal(result.portrait.portrait_kind, 'artwork');
+  assert.equal(result.portrait.evidence_level, 'direct');
+});
+
 test('browser reader never embeds write endpoints, secrets, or a closed historicity vocabulary', () => {
   assert.doesNotMatch(source, /atlas-mutate|atlas-identity|atlas-authoring|atlas-duplicate-review/);
   assert.doesNotMatch(source, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|authorization|bearer\s/i);
