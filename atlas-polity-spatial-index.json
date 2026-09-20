@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-20T07:08:00.000Z",
+  "generated_at": "2026-09-20T07:39:25.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -60,7 +60,6 @@
     "00e159e1-a188-44be-a1c3-26cbdb7a8c9b": "southeast-asia",
     "00ec4b0c-6002-5791-825c-43465632102d": "south-asia",
     "0200ceec-534a-5604-88a8-e0520a3259a0": "africa",
-    "02e66261-7798-4144-b298-9bc41ee2215b": "europe",
     "031bdca0-d5e8-51e8-9f59-2db5ee51c55f": "southeast-asia",
     "033c244d-d86f-4d44-b284-e21125b72e34": "europe",
     "035158bf-89c8-4ca1-ad06-ae2320bb2c72": "americas",
@@ -1622,7 +1621,6 @@
     "00626a6e-afee-5830-8b0d-c08999857e82": "italy",
     "00e159e1-a188-44be-a1c3-26cbdb7a8c9b": "maritime-southeast-asia",
     "0200ceec-534a-5604-88a8-e0520a3259a0": "nile-valley",
-    "02e66261-7798-4144-b298-9bc41ee2215b": "central-europe",
     "033c244d-d86f-4d44-b284-e21125b72e34": "italy",
     "035158bf-89c8-4ca1-ad06-ae2320bb2c72": "mesoamerica",
     "03eae136-add2-4a17-b9b1-6f04e64a18a2": "russia-volga",
