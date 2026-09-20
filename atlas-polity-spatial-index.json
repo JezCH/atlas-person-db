@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-20T08:20:00.000Z",
+  "generated_at": "2026-09-20T08:44:02.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -591,7 +591,6 @@
     "e796a0f9-7072-5d00-ba32-b0968399ee05": "west-asia",
     "e80bcf5a-0e4f-5af6-b395-b09c1de34c97": "africa",
     "ea997325-953a-5c95-b5ea-3c34b47ceb56": "europe",
-    "eaa3ad78-bb73-4812-b00a-1b4e160acd69": "europe",
     "eac9dcd3-f388-48bc-a89b-8750fa5f7750": "europe",
     "eb26971e-91e7-4736-8448-4644ec516778": "west-asia",
     "eb4fcc9c-f155-5d06-9117-b1a181255e72": "africa",
@@ -2137,7 +2136,6 @@
     "e796a0f9-7072-5d00-ba32-b0968399ee05": "anatolia",
     "e80bcf5a-0e4f-5af6-b395-b09c1de34c97": "west-africa",
     "ea997325-953a-5c95-b5ea-3c34b47ceb56": "italy",
-    "eaa3ad78-bb73-4812-b00a-1b4e160acd69": "eastern-europe",
     "eac9dcd3-f388-48bc-a89b-8750fa5f7750": "balkans",
     "eb26971e-91e7-4736-8448-4644ec516778": "anatolia",
     "eb4fcc9c-f155-5d06-9117-b1a181255e72": "central-africa",
