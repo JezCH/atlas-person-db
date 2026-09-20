@@ -339,9 +339,12 @@
     const rows=(matrix?.rows || []).map((row)=>{
       const known=row?.available === true;
       const incomplete=known ? value(row.incomplete) : "—";
-      const actionable=known && row.unit === "person" && Array.isArray(row.person_ids) && row.person_ids.length > 0;
+      const actionablePerson=known && row.unit === "person" && row.drilldown_available === true && Array.isArray(row.person_ids) && row.person_ids.length > 0;
+      const actionableActivity=known && row.unit === "activity" && row.drilldown_available === true && Array.isArray(row.activity_targets) && row.activity_targets.length > 0;
+      const actionable=actionablePerson || actionableActivity;
+      const activityControls=actionableActivity ? ' aria-controls="dashboardCompletenessActivityTargets" aria-expanded="false"' : "";
       const incompleteCell=actionable
-        ? `<button type="button" data-dashboard-completeness="${escapeHtml(row.code)}" title="${escapeHtml(`${completenessLabel(row)} 미완료 ${row.incomplete}명 보기`)}">${incomplete}</button>`
+        ? `<button type="button" data-dashboard-completeness="${escapeHtml(row.code)}"${activityControls} title="${escapeHtml(`${completenessLabel(row)} 미완료 ${row.incomplete}${unitLabel(row.unit)} 보기`)}">${incomplete}</button>`
         : `<span>${incomplete}</span>`;
       return `<tr data-completeness-unit="${escapeHtml(row.unit)}">
         <th scope="row"><strong>${escapeHtml(completenessLabel(row))}</strong><small>${escapeHtml(sourceDisplayLabel(row.source))}</small></th>
@@ -354,6 +357,24 @@
     }).join("");
     return `<div class="dashboard-completeness-wrap"><table class="dashboard-completeness">
       <thead><tr><th scope="col">항목</th><th scope="col">단위</th><th scope="col">완료</th><th scope="col">미완료</th><th scope="col">완성도</th><th scope="col">전체</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`;
+  }
+
+  function completenessActivityTargetsTable(item) {
+    const targets=Array.isArray(item?.activity_targets) ? item.activity_targets : [];
+    const rows=targets.map((row)=>`<tr>
+      <td><strong>${escapeHtml(reasonLabel(row.reason_code) || row.reason_code || "—")}</strong><small>${escapeHtml(row.reason_code || "")}</small></td>
+      <td><strong>${escapeHtml(row.person_display_name || row.person_id || "—")}</strong><small>${escapeHtml(row.person_id || "")}</small></td>
+      <td><strong>${escapeHtml(row.polity_display_name || row.polity_id || "—")}</strong><small>${escapeHtml(row.polity_id || "")}</small></td>
+      <td><code>${escapeHtml(row.activity_id || "—")}</code></td>
+    </tr>`).join("");
+    return `<div class="dashboard-panel-head dashboard-activity-completeness-head">
+      <div><p class="eyebrow">ACTIVITY COMPLETENESS TARGETS</p><h3>${escapeHtml(completenessLabel(item))} 미완료</h3></div>
+      <span>${value(targets.length)}${escapeHtml(unitLabel("activity"))}</span>
+    </div>
+    <div class="dashboard-runtime-exclusion-wrap"><table class="dashboard-runtime-exclusion-table dashboard-activity-completeness-table">
+      <thead><tr><th scope="col">사유</th><th scope="col">인물</th><th scope="col">정치체</th><th scope="col">Activity UUID</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
   }
@@ -531,6 +552,7 @@
       <section class="dashboard-panel card" aria-label="데이터 완성도 행렬">
         <div class="dashboard-panel-head"><div><p class="eyebrow">COMPLETENESS MATRIX</p><h3>축별 완성도</h3></div><span>인물 3항목 · 활동 3항목</span></div>
         ${completenessTable(completeness)}
+        <div id="dashboardCompletenessActivityTargets" class="dashboard-activity-completeness-targets" hidden aria-live="polite"></div>
         <div class="dashboard-progress-meta">
           <span>인물과 활동 단위는 합산하지 않음</span>
           <span>— = 기준 원본 확인 불가</span>
@@ -604,7 +626,20 @@
     }));
     root.querySelectorAll("[data-dashboard-completeness]").forEach((button) => button.addEventListener("click", () => {
       const item=completeness?.rows?.find((row)=>row.code === button.dataset.dashboardCompleteness);
-      if (!item?.drilldown_available || item.unit !== "person" || !Array.isArray(item.person_ids) || !item.person_ids.length) return;
+      if (!item?.drilldown_available) return;
+      if (item.unit === "activity" && Array.isArray(item.activity_targets) && item.activity_targets.length) {
+        const panel=root.querySelector("#dashboardCompletenessActivityTargets");
+        if (!panel) return;
+        root.querySelectorAll('[data-dashboard-completeness][aria-expanded="true"]').forEach((control)=>control.setAttribute("aria-expanded","false"));
+        panel.innerHTML=completenessActivityTargetsTable(item);
+        panel.hidden=false;
+        button.setAttribute("aria-expanded","true");
+        panel.scrollIntoView?.({ block:"nearest", behavior:"smooth" });
+        return;
+      }
+      if (item.unit !== "person" || !Array.isArray(item.person_ids) || !item.person_ids.length) return;
+      const panel=root.querySelector("#dashboardCompletenessActivityTargets");
+      if (panel) panel.hidden=true;
       window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain?.("persons");
       window.ATLAS_PERSON_MAIN?.setDashboardFilter?.({
         code:`completeness_${item.code}`,
