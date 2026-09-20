@@ -14,7 +14,10 @@
     "runtime_compile_run": "35509940204",
     "runtime_compile_sha": "4ab5b4a7fd7a5539f2d977c217e4a93d6219c216",
     "runtime_compile_result": "SUCCESS: exact descendant of Denmark trigger; runtime_person_politics_v1 committed from 2261 canonical input rows to 2251 output rows with 10 reviewed exclusions.",
-    "production_readback": "Kingdom of Denmark has activity_count=0. Denmark has 12 Activities from 958 through 2024; the five source Activity UUIDs are preserved and all modeled Denmark Activities display Kingdom of Denmark / 덴마크 왕국. Margaret I's Kalmar Union Activity and Cnut's England/Norway Activities remain distinct. Canonical Spatial contains no source UUID and preserves Denmark at europe/northern-europe."
+    "production_readback": "Kingdom of Denmark has activity_count=0. Denmark has 12 Activities from 958 through 2024; the five source Activity UUIDs are preserved and all modeled Denmark Activities display Kingdom of Denmark / 덴마크 왕국. Margaret I's Kalmar Union Activity and Cnut's England/Norway Activities remain distinct. Canonical Spatial contains no source UUID and preserves Denmark at europe/northern-europe.",
+    "first_retirement_apply_run": "35510152044",
+    "first_retirement_result": "FAIL_CLOSED: expected owned_reference_total=2 but exhaustive reference audit lineage shows 4 owned rows: polity_names=2, polity_sources=2.",
+    "owned_reference_guard_correction": "Set expected_owned_reference_total=4; external reference expectation remains exactly 0."
   },
   "operations": [
     {
@@ -39,7 +42,7 @@
           "is_preferred": true
         }
       ],
-      "expected_owned_reference_total": 2,
+      "expected_owned_reference_total": 4,
       "expected_external_reference_total": 0
     }
   ]
