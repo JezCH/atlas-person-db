@@ -3,9 +3,9 @@
 
   const MOUNT_ID = "personSpacetimeMount";
   const BOUND_EPSILON = 0.01;
-  const MINIMUM_PERCENT = 300;
+  const MINIMUM_PERCENT = 100;
   const DEFAULT_PERCENT = 500;
-  const MAXIMUM_PERCENT = 1200;
+  const MAXIMUM_PERCENT = 1500;
 
   function parsePercent(value) {
     const match = String(value ?? "").match(/(-?\d+(?:\.\d+)?)\s*%/);
