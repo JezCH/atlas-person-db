@@ -1,0 +1,283 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_greece_identity_merge_20260920_v1",
+  "as_of": "2026-09-20",
+  "status": "REVIEWED_POLITY_IDENTITY_MERGE_WITH_TEMPORAL_DESIGNATIONS",
+  "release_order": 605,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY-IDENTITY-REVIEW-16-20260919; Greece exact Production recheck and LQ_CLAIM 5749166454 on 2026-09-20",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-kingdom-of-greece-george-ii-first-reign-into-greece",
+      "type": "rewrite_activity",
+      "activity_id": "b735d2ce-e1af-4736-9b2c-a83e809c82c0",
+      "baseline_before": {
+        "person_id": "a6b9190b-e4e9-463e-b407-92c6a2eee1e9",
+        "polity_id": "829b5976-18f4-48e3-a35d-3c141858ce56",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1922,
+        "activity_end": 1924,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "b735d2ce-e1af-4736-9b2c-a83e809c82c0",
+        "person_id": "a6b9190b-e4e9-463e-b407-92c6a2eee1e9",
+        "polity_id": "4dd77aef-9070-448e-b8da-425dfd0f4732",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1922,
+        "activity_end": 1924,
+        "activity_start_detail": {
+          "year": 1922,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1924,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-greece-george-ii-second-reign-into-greece",
+      "type": "rewrite_activity",
+      "activity_id": "bfe39c10-0527-42a9-bc21-5a3cb25bcfca",
+      "baseline_before": {
+        "person_id": "a6b9190b-e4e9-463e-b407-92c6a2eee1e9",
+        "polity_id": "829b5976-18f4-48e3-a35d-3c141858ce56",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1935,
+        "activity_end": 1947,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "bfe39c10-0527-42a9-bc21-5a3cb25bcfca",
+        "person_id": "a6b9190b-e4e9-463e-b407-92c6a2eee1e9",
+        "polity_id": "4dd77aef-9070-448e-b8da-425dfd0f4732",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1935,
+        "activity_end": 1947,
+        "activity_start_detail": {
+          "year": 1935,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1947,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-kingdom-of-greece-plastiras-1951-1952-into-greece",
+      "type": "rewrite_activity",
+      "activity_id": "50a8fef1-d81e-4e3f-b595-f7b9a180c8d8",
+      "baseline_before": {
+        "person_id": "e68a74a8-0ed2-43c9-88cc-7e96a015c5aa",
+        "polity_id": "829b5976-18f4-48e3-a35d-3c141858ce56",
+        "role_id": "db74e4bf-7b23-46b0-a339-428e518969cc",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1951,
+        "activity_end": 1952,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "50a8fef1-d81e-4e3f-b595-f7b9a180c8d8",
+        "person_id": "e68a74a8-0ed2-43c9-88cc-7e96a015c5aa",
+        "polity_id": "4dd77aef-9070-448e-b8da-425dfd0f4732",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "db74e4bf-7b23-46b0-a339-428e518969cc",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1951,
+        "activity_end": 1952,
+        "activity_start_detail": {
+          "year": 1951,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1952,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "greece-kingdom-temporal-designation-1922-1924",
+      "exact_before": {
+        "designation_absent_id": "d45e8ea9-1a0c-5d39-8a13-83bf60477e37"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "d45e8ea9-1a0c-5d39-8a13-83bf60477e37",
+          "polity_id": "4dd77aef-9070-448e-b8da-425dfd0f4732",
+          "designation_type": "state_form",
+          "valid_from_year": 1922,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1924,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form label preserving the existing ATLAS Kingdom of Greece label for George II's modeled 1922-1924 first reign on the stable Greece identity. Bounds follow current year-level Activity coverage and do not claim day-level constitutional transition precision."
+        },
+        "names": [
+          {
+            "id": "b2b992f4-0b7c-5801-bb5d-953e10a3b57a",
+            "polity_designation_id": "d45e8ea9-1a0c-5d39-8a13-83bf60477e37",
+            "locale": "en",
+            "name": "Kingdom of Greece",
+            "is_preferred": true
+          },
+          {
+            "id": "f77d0e0c-d4d0-5a93-866e-936ebeed933a",
+            "polity_designation_id": "d45e8ea9-1a0c-5d39-8a13-83bf60477e37",
+            "locale": "ko",
+            "name": "그리스 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "d45e8ea9-1a0c-5d39-8a13-83bf60477e37",
+            "source_id": "eef1d31b-b0ac-4e52-9804-78c9b5cc5160",
+            "source_locator_key": "https://en.wikipedia.org/wiki/George_II_of_Greece"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "greece-kingdom-temporal-designation-1935-1952",
+      "exact_before": {
+        "designation_absent_id": "cae9f932-6d47-572e-a477-2a798ef686bd"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "cae9f932-6d47-572e-a477-2a798ef686bd",
+          "polity_id": "4dd77aef-9070-448e-b8da-425dfd0f4732",
+          "designation_type": "state_form",
+          "valid_from_year": 1935,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1952,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form label preserving the existing ATLAS Kingdom of Greece label across the currently modeled 1935-1952 monarchy-era Activities on the stable Greece identity. Bounds follow current modeled year-level coverage and do not claim to encode the full constitutional lifetime of the monarchy."
+        },
+        "names": [
+          {
+            "id": "af884204-4673-52bc-912c-d55107b40ee8",
+            "polity_designation_id": "cae9f932-6d47-572e-a477-2a798ef686bd",
+            "locale": "en",
+            "name": "Kingdom of Greece",
+            "is_preferred": true
+          },
+          {
+            "id": "ae49391e-099b-57f5-a59d-caf2f7e8cbec",
+            "polity_designation_id": "cae9f932-6d47-572e-a477-2a798ef686bd",
+            "locale": "ko",
+            "name": "그리스 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "cae9f932-6d47-572e-a477-2a798ef686bd",
+            "source_id": "eef1d31b-b0ac-4e52-9804-78c9b5cc5160",
+            "source_locator_key": "https://en.wikipedia.org/wiki/George_II_of_Greece"
+          },
+          {
+            "polity_designation_id": "cae9f932-6d47-572e-a477-2a798ef686bd",
+            "source_id": "813f14a1-2bfd-4b09-bcca-e951c561846b",
+            "source_locator_key": "Postwar premierships"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 3,
+    "activity_relinks": 3,
+    "polity_designation_assertions": 2,
+    "production_mutation_authorized": false
+  }
+}
