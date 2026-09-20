@@ -86,7 +86,7 @@
     return new Set((person?.facets?.polities || []).map((polity) => text(polity?.id || polity)).filter(Boolean));
   }
 
-  function buildAttentionQueue({ personResult, domainResult = null, spatialIndex = null } = {}) {
+  function buildAttentionQueue({ personResult, domainResult = null, spatialIndex = null, runtimeExclusionsResult = null } = {}) {
     const persons = personResult?.persons || [];
     const domainAvailable = Boolean(domainResult && domainResult.by_person_id && typeof domainResult.by_person_id === "object");
     const domainByPerson = domainAvailable ? domainResult.by_person_id : null;
@@ -108,6 +108,12 @@
       .filter((person) => (person?.activity_summaries || []).some((activity) => Number(activity?.source_count || 0) <= 0))
       .map((person) => text(person?.id))
       .filter(Boolean);
+
+    const runtimeExclusionsAvailable = runtimeExclusionsResult?.available === true && Array.isArray(runtimeExclusionsResult?.targets);
+    const runtimeExclusionTargets = runtimeExclusionsAvailable ? runtimeExclusionsResult.targets : null;
+    const runtimeExclusionPersonIds = runtimeExclusionsAvailable
+      ? [...new Set(runtimeExclusionTargets.map((row) => text(row?.person_id)).filter(Boolean))].sort()
+      : null;
 
     const items = [
       Object.freeze({
@@ -149,13 +155,14 @@
       Object.freeze({
         code:"runtime_exclusion",
         label:"Runtime exclusion",
-        available:false,
-        count:null,
-        unit:"person",
-        person_ids:null,
-        unavailable_reason:"RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED",
-        action_href:"./admin.html#system-status-title",
-        action_label:"관리자 시스템 현황"
+        available:runtimeExclusionsAvailable,
+        count:runtimeExclusionsAvailable ? runtimeExclusionTargets.length : null,
+        unit:"activity",
+        person_ids:runtimeExclusionPersonIds == null ? null : Object.freeze(runtimeExclusionPersonIds),
+        activity_targets:runtimeExclusionTargets == null ? null : Object.freeze([...runtimeExclusionTargets]),
+        unavailable_reason:runtimeExclusionsAvailable ? null : text(runtimeExclusionsResult?.reason) || "RUNTIME_EXCLUSION_TARGET_SOURCE_UNAVAILABLE",
+        action_href:runtimeExclusionsAvailable ? null : "./admin.html#system-status-title",
+        action_label:runtimeExclusionsAvailable ? null : "관리자 시스템 현황"
       }),
       Object.freeze({
         code:"duplicate_review",
@@ -248,7 +255,7 @@
     });
   }
 
-  function buildIncompleteBreakdown({ personResult, domainResult = null, spatialIndex = null } = {}) {
+  function buildIncompleteBreakdown({ personResult, domainResult = null, spatialIndex = null, runtimeExclusionsResult = null } = {}) {
     const persons = personResult?.persons || [];
     const domainAvailable = Boolean(domainResult && domainResult.by_person_id && typeof domainResult.by_person_id === "object");
     const domainByPerson = domainAvailable ? domainResult.by_person_id : {};
@@ -282,6 +289,13 @@
       unavailable_reason:null
     });
 
+    const runtimeAvailable=runtimeExclusionsResult?.available === true && Array.isArray(runtimeExclusionsResult?.targets);
+    const runtimeRows=runtimeAvailable
+      ? Object.entries(runtimeExclusionsResult.reason_summary || {}).map(([code,count]) =>
+          Object.freeze({ code, label:code, count:Number(count || 0), canonical:true })
+        ).sort((a,b)=>b.count-a.count || a.code.localeCompare(b.code))
+      : [];
+
     return Object.freeze({
       domain:Object.freeze({
         available:false,
@@ -305,13 +319,13 @@
       }),
       spatial,
       runtime:Object.freeze({
-        available:false,
-        complete:false,
-        total:null,
+        available:runtimeAvailable,
+        complete:runtimeAvailable,
+        total:runtimeAvailable ? Number(runtimeExclusionsResult.total_count || 0) : null,
         unit:"activity",
-        rows:Object.freeze([]),
-        unattributed_count:null,
-        unavailable_reason:"RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED"
+        rows:Object.freeze(runtimeRows),
+        unattributed_count:runtimeAvailable ? 0 : null,
+        unavailable_reason:runtimeAvailable ? null : text(runtimeExclusionsResult?.reason) || "RUNTIME_EXCLUSION_TARGET_SOURCE_UNAVAILABLE"
       }),
       duplicate:Object.freeze({
         available:false,
@@ -891,6 +905,7 @@
     recentDeltaResult = null,
     systemIdentityResult = null,
     runtimePublicationResult = null,
+    runtimeExclusionsResult = null,
     sourceStates = {}
   } = {}) {
     const persons = personResult?.persons || [];
@@ -926,9 +941,9 @@
     const domainMissing = domainAssigned == null ? null : Math.max(0, totalPersons - domainAssigned);
     const spatial = spatialStatus(personResult, spatialIndex);
     const polityCount = uniquePolityIds(personResult).size;
-    const attentionQueue = buildAttentionQueue({ personResult, domainResult, spatialIndex });
+    const attentionQueue = buildAttentionQueue({ personResult, domainResult, spatialIndex, runtimeExclusionsResult });
     const kpiDrilldown = buildKpiDrilldown({ personResult, attentionQueue });
-    const incompleteBreakdown = buildIncompleteBreakdown({ personResult, domainResult, spatialIndex });
+    const incompleteBreakdown = buildIncompleteBreakdown({ personResult, domainResult, spatialIndex, runtimeExclusionsResult });
     const recentDelta = buildRecentDelta(recentDeltaResult);
     const recentActivityTimeline = buildRecentActivityTimeline(recentDelta);
     const systemStrip = buildSystemStrip(systemIdentityResult, sourceStates);
@@ -970,6 +985,7 @@
       system_strip:systemStrip,
       publication_funnel:publicationFunnel,
       runtime_delta_drift:runtimeDeltaDrift,
+      runtime_exclusions:runtimeExclusionsResult,
       coverage_heatmap:coverageHeatmap,
       completeness_matrix:completenessMatrix,
       source_freshness:sourceFreshness,

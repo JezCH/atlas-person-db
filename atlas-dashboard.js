@@ -53,10 +53,11 @@
     const disabled = unavailable || Number(item?.count || 0) <= 0;
     const diagnosticHref = unavailable ? String(item?.action_href || "").trim() : "";
     const reason = unavailable ? reasonLabel(item?.unavailable_reason) || "원본 확인 불가" : "";
+    const itemUnit = unitLabel(item?.unit || "person");
     const state = unavailable
       ? `${reason}${item?.action_label ? ` · ${item.action_label}` : ""}`
-      : `${value(item.count)}명`;
-    const title = unavailable ? state : `${item.label} 대상 ${value(item.count)}명`;
+      : `${value(item.count)} ${itemUnit}`;
+    const title = unavailable ? state : `${item.label} 대상 ${value(item.count)} ${itemUnit}`;
     const inner = `<span>${escapeHtml(item?.label || item?.code || "확인 필요")}</span><strong>${unavailable ? "—" : value(item.count)}</strong>
       <small>${escapeHtml(state)}</small>`;
     if (diagnosticHref) {
@@ -106,6 +107,7 @@
     if (label === "Recent Delta") return "최근 변경";
     if (label === "Runtime Identity") return "배포 식별";
     if (label === "Runtime Publication") return "게시 파이프라인";
+    if (label === "Runtime Exclusions") return "Runtime 제외 대상";
     return label || "원본";
   }
 
@@ -133,7 +135,10 @@
     if (reason === "RUNTIME_IDENTITY_DATA_TIMESTAMP_NOT_EXPOSED") return "배포 식별 갱신 시각 미제공";
     if (reason === "SOURCE_DATA_TIMESTAMP_NOT_EXPOSED") return "원본 갱신 시각 미제공";
     if (reason === "SOURCE_UNAVAILABLE") return "원본 확인 불가";
-    if (reason === "RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED") return "Runtime 제외 대상 집계는 공개 대시보드에 미노출";
+    if (reason === "RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED") return "Runtime 제외 대상 원본 확인 불가";
+    if (reason === "RUNTIME_EXCLUSION_TARGET_LEDGER_NOT_APPLIED") return "Runtime 제외 대상 원장 migration 미적용";
+    if (reason === "RUNTIME_EXCLUSION_TARGET_SNAPSHOT_INCOMPLETE") return "Runtime 제외 대상 snapshot 불완전";
+    if (reason === "RUNTIME_PROJECTION_EMPTY") return "Runtime projection 비어 있음";
     if (reason === "DUPLICATE_REVIEW_TARGET_SOURCE_REQUIRES_ADMIN_CONTRACT") return "중복 후보 대상은 관리자 인증 영역에서 확인";
     if (reason === "RUNTIME_PUBLICATION_SOURCE_UNAVAILABLE") return "게시 파이프라인 원본 확인 불가";
     if (reason === "RUNTIME_PUBLICATION_NO_COMPILE_RUN") return "Runtime Compile 기록 없음";
@@ -185,6 +190,22 @@
       <span>${escapeHtml(funnel.compiler_version || "compiler 미확인")} · ${escapeHtml(formatTimestamp(funnel.compiled_at))}</span>
     </div>
     <div class="dashboard-timeline-summary dashboard-publication-exclusions">${exclusionRows || "<span>제외 사유 0건</span>"}</div>`;
+  }
+
+  function runtimeExclusionTargetsMarkup(runtimeExclusions) {
+    if (!runtimeExclusions?.available || !Array.isArray(runtimeExclusions.targets)) {
+      return `<div class="dashboard-heatmap-unavailable">${escapeHtml(reasonLabel(runtimeExclusions?.reason) || "Runtime 제외 대상 확인 불가")}</div>`;
+    }
+    const rows=runtimeExclusions.targets.map((row)=>`<tr>
+      <td><span class="dashboard-unit-badge">${escapeHtml(runtimeExclusionLabel(row.reason_code))}</span></td>
+      <td><strong>${escapeHtml(row.person_display_name || row.person_id)}</strong><small>${escapeHtml(row.person_id)}</small></td>
+      <td><strong>${escapeHtml(row.polity_display_name || row.polity_id)}</strong><small>${escapeHtml(row.polity_id)}</small></td>
+      <td><code title="${escapeHtml(row.activity_id)}">${escapeHtml(row.activity_id)}</code></td>
+    </tr>`).join("");
+    return `<div class="dashboard-runtime-exclusion-wrap"><table class="dashboard-runtime-exclusion-table">
+      <thead><tr><th scope="col">제외 사유</th><th scope="col">인물</th><th scope="col">정치체</th><th scope="col">Activity UUID</th></tr></thead>
+      <tbody>${rows || '<tr><td colspan="4">현재 Runtime 제외 Activity가 없습니다.</td></tr>'}</tbody>
+    </table></div>`;
   }
 
   function signedValue(number) {
@@ -389,6 +410,7 @@
     const sys = snapshot.system_strip;
     const publication = snapshot.publication_funnel;
     const runtimeDelta = snapshot.runtime_delta_drift;
+    const runtimeExclusions = snapshot.runtime_exclusions;
     const heatmap = snapshot.coverage_heatmap;
     const completeness = snapshot.completeness_matrix;
     const freshness = snapshot.source_freshness;
@@ -427,6 +449,15 @@
           <span>확인된 미완료 건 <b>${value(a.known_outstanding_checks)}</b></span>
           <span>영향 인물 <b>${value(a.known_affected_persons)}</b></span>
           <span>${a.complete ? "전체 범주 확인됨" : `부분 집계 · ${value(a.available_categories)}/${value(a.total_categories)} 범주만 대상 집합 확인`}</span>
+        </div>
+      </section>
+
+      <section id="dashboardRuntimeExclusionTargets" class="dashboard-panel card dashboard-runtime-exclusion-targets" aria-label="Runtime 제외 Activity 대상" hidden>
+        <div class="dashboard-panel-head"><div><p class="eyebrow">RUNTIME EXCLUSION TARGETS</p><h3>Runtime 제외 Activity</h3></div><span>${runtimeExclusions?.available ? `${value(runtimeExclusions.total_count)} 활동` : "원본 확인 불가"}</span></div>
+        ${runtimeExclusionTargetsMarkup(runtimeExclusions)}
+        <div class="dashboard-progress-meta">
+          <span>현재 활성 Compile의 immutable exclusion snapshot</span>
+          <span>${runtimeExclusions?.compiled_at ? escapeHtml(formatTimestamp(runtimeExclusions.compiled_at)) : "Compile 시각 —"}</span>
         </div>
       </section>
 
@@ -583,7 +614,16 @@
     }));
     root.querySelectorAll("[data-dashboard-attention]").forEach((button) => button.addEventListener("click", () => {
       const item = a.items.find((row) => row.code === button.dataset.dashboardAttention);
-      if (!item?.available || !Array.isArray(item.person_ids) || !item.person_ids.length) return;
+      if (!item?.available) return;
+      if (item.code === "runtime_exclusion" && Array.isArray(item.activity_targets)) {
+        const panel=root.querySelector("#dashboardRuntimeExclusionTargets");
+        if (!panel) return;
+        panel.hidden=false;
+        button.setAttribute("aria-expanded","true");
+        panel.scrollIntoView?.({ block:"nearest", behavior:"smooth" });
+        return;
+      }
+      if (!Array.isArray(item.person_ids) || !item.person_ids.length) return;
       window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain?.("persons");
       window.ATLAS_PERSON_MAIN?.setDashboardFilter?.({
         code:item.code,
@@ -605,14 +645,15 @@
     const serial = ++requestSerial;
     renderLoading(root);
 
-    const [persons, domains, spatial, nonTimeline, recentDelta, systemIdentity, runtimePublication] = await Promise.allSettled([
+    const [persons, domains, spatial, nonTimeline, recentDelta, systemIdentity, runtimePublication, runtimeExclusions] = await Promise.allSettled([
       store.loadPersons({ force }),
       store.loadPersonDomains({ force }),
       store.loadSpatialIndex({ force }),
       store.loadNonTimelinePersons({ force }),
       store.loadRecentDelta({ force }),
       store.loadSystemIdentity({ force }),
-      store.loadRuntimePublication({ force })
+      store.loadRuntimePublication({ force }),
+      store.loadRuntimeExclusions({ force })
     ]);
     if (serial !== requestSerial || root !== mountedRoot || !root.isConnected) return;
 
@@ -631,6 +672,7 @@
       recentDeltaResult:settledValue(recentDelta),
       systemIdentityResult:settledValue(systemIdentity),
       runtimePublicationResult:settledValue(runtimePublication),
+      runtimeExclusionsResult:settledValue(runtimeExclusions),
       sourceStates:store.sourceStates()
     });
     renderSnapshot(root, snapshot);

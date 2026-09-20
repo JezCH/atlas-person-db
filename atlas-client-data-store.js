@@ -14,7 +14,8 @@
     nonTimeline: Object.freeze({ key:"nonTimeline", label:"Non-timeline Registry", url:"./non-timeline-persons.json" }),
     recentDelta: Object.freeze({ key:"recentDelta", label:"Recent Delta", url:"/api/atlas-read?__atlas_read_surface=recent-delta" }),
     systemIdentity: Object.freeze({ key:"systemIdentity", label:"Runtime Identity", url:"/api/atlas-read?__atlas_read_surface=runtime-identity" }),
-    runtimePublication: Object.freeze({ key:"runtimePublication", label:"Runtime Publication", url:"/api/atlas-read?__atlas_read_surface=runtime-publication" })
+    runtimePublication: Object.freeze({ key:"runtimePublication", label:"Runtime Publication", url:"/api/atlas-read?__atlas_read_surface=runtime-publication" }),
+    runtimeExclusions: Object.freeze({ key:"runtimeExclusions", label:"Runtime Exclusions", url:"/api/atlas-read?__atlas_read_surface=runtime-exclusions" })
   });
 
   const cache = new Map();
@@ -342,6 +343,72 @@
     return shared("runtimePublication", async () => normalizeRuntimePublicationPayload(await getJson(SOURCES.runtimePublication.url)), { force });
   }
 
+  function normalizeRuntimeExclusionsPayload(payload) {
+    if (payload?.ok !== true || payload?.schema !== "atlas-runtime-exclusions/v1") {
+      throw new Error("INVALID_RUNTIME_EXCLUSIONS_RESPONSE");
+    }
+    const available=payload.available === true;
+    if (!available) {
+      return Object.freeze({
+        schema:payload.schema,
+        source:payload.source || null,
+        available:false,
+        reason:String(payload.reason || "RUNTIME_EXCLUSION_TARGET_SOURCE_UNAVAILABLE"),
+        active_compile_key:payload.active_compile_key == null ? null : String(payload.active_compile_key).trim() || null,
+        compiled_at:payload.compiled_at == null ? null : String(payload.compiled_at).trim() || null,
+        total_count:null,
+        reason_summary:null,
+        targets:Object.freeze([])
+      });
+    }
+    if (!Array.isArray(payload.targets)) throw new Error("INVALID_RUNTIME_EXCLUSION_TARGETS");
+    const totalCount=Number(payload.total_count);
+    if (!Number.isInteger(totalCount) || totalCount < 0 || totalCount !== payload.targets.length) {
+      throw new Error("INVALID_RUNTIME_EXCLUSION_TARGET_COUNT");
+    }
+    const targets=payload.targets.map((row) => {
+      const normalized=Object.freeze({
+        activity_id:String(row?.activity_id || "").trim(),
+        person_id:String(row?.person_id || "").trim(),
+        person_display_name:String(row?.person_display_name || "").trim(),
+        polity_id:String(row?.polity_id || "").trim(),
+        polity_display_name:String(row?.polity_display_name || "").trim(),
+        reason_code:String(row?.reason_code || "").trim()
+      });
+      if (!normalized.activity_id || !normalized.person_id || !normalized.polity_id || !normalized.reason_code) {
+        throw new Error("INVALID_RUNTIME_EXCLUSION_TARGET");
+      }
+      return normalized;
+    });
+    if (new Set(targets.map((row)=>row.activity_id)).size !== targets.length) {
+      throw new Error("DUPLICATE_RUNTIME_EXCLUSION_ACTIVITY");
+    }
+    const summary=payload.reason_summary && typeof payload.reason_summary === "object" && !Array.isArray(payload.reason_summary)
+      ? Object.freeze(Object.fromEntries(Object.entries(payload.reason_summary).map(([code,count])=>[String(code),Number(count)])))
+      : Object.freeze({});
+    if (Object.values(summary).some((count)=>!Number.isInteger(count) || count < 0)) {
+      throw new Error("INVALID_RUNTIME_EXCLUSION_REASON_SUMMARY");
+    }
+    if (Object.values(summary).reduce((sum,count)=>sum+count,0) !== totalCount) {
+      throw new Error("INVALID_RUNTIME_EXCLUSION_REASON_BALANCE");
+    }
+    return Object.freeze({
+      schema:payload.schema,
+      source:payload.source || null,
+      available:true,
+      reason:null,
+      active_compile_key:String(payload.active_compile_key || "").trim() || null,
+      compiled_at:payload.compiled_at == null ? null : String(payload.compiled_at).trim() || null,
+      total_count:totalCount,
+      reason_summary:summary,
+      targets:Object.freeze(targets)
+    });
+  }
+
+  function loadRuntimeExclusions({ force = false } = {}) {
+    return shared("runtimeExclusions", async () => normalizeRuntimeExclusionsPayload(await getJson(SOURCES.runtimeExclusions.url)), { force });
+  }
+
   function invalidate(key) {
     if (key) {
       cache.delete(key);
@@ -366,6 +433,7 @@
     loadRecentDelta,
     loadSystemIdentity,
     loadRuntimePublication,
+    loadRuntimeExclusions,
     getSourceState,
     sourceStates,
     invalidate
