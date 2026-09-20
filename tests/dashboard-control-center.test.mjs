@@ -429,6 +429,87 @@ test("Dashboard System / Production Strip reports deployed identity without clai
 });
 
 
+test("Runtime publication surface derives the funnel from current Authoring, active Runtime projection, and its exact compile ledger", () => {
+  assert.match(readApiSource, /surface === "runtime-publication"/);
+  const start=readApiSource.indexOf("async function readRuntimePublication");
+  const end=readApiSource.indexOf("function createRuntimePublicationReadHandler",start);
+  const block=readApiSource.slice(start,end);
+  assert.match(block,/atlas_v2\.person_politics_v2/);
+  assert.match(block,/atlas_v2\.runtime_person_politics_v1/);
+  assert.match(block,/count\(distinct compile_key\)/);
+  assert.match(block,/atlas_v2\.runtime_compile_runs/);
+  assert.match(block,/where compile_key=\$1/);
+  assert.match(block,/active_compile:currentCompile/);
+  assert.match(block,/projection_matches_active_compile/);
+  assert.doesNotMatch(block,/order by compiled_at desc/);
+});
+
+test("shared store owns Runtime publication reads and validates the compile balance", () => {
+  assert.match(storeSource,/runtimePublication:[\s\S]*__atlas_read_surface=runtime-publication/);
+  assert.match(storeSource,/function loadRuntimePublication/);
+  assert.match(storeSource,/INVALID_RUNTIME_PUBLICATION_BALANCE/);
+  assert.match(dashboardSource,/store\.loadRuntimePublication\(\{ force \}\)/);
+  assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
+});
+
+test("Publication Funnel keeps current Authoring separate from the active Runtime compile snapshot", () => {
+  const funnel=model.buildPublicationFunnel({
+    current_authoring_activity_count:2263,
+    current_runtime_activity_count:2244,
+    active_compile:{
+      compiler_version:"runtime-person-politics-v1",
+      input_row_count:2260,
+      output_row_count:2244,
+      excluded_row_count:16,
+      exclusion_summary:{START_BOUNDARY_UNRESOLVED:8,PROVENANCE_UNRESOLVED:5,END_BOUNDARY_UNRESOLVED:3},
+      compiled_at:"2026-09-20T01:00:00.000Z"
+    },
+    authoring_delta_since_compile:3,
+    projection_matches_active_compile:true
+  });
+  assert.equal(funnel.available,true);
+  assert.equal(funnel.sealed,true);
+  assert.equal(funnel.current_authoring,2263);
+  assert.equal(funnel.compile_input,2260);
+  assert.equal(funnel.runtime_included,2244);
+  assert.equal(funnel.runtime_excluded,16);
+  assert.equal(funnel.current_runtime,2244);
+  assert.equal(funnel.authoring_delta_since_compile,3);
+  assert.equal(funnel.projection_matches_active_compile,true);
+  assert.deepEqual(funnel.exclusion_rows.map((row)=>[row.code,row.count]),[
+    ["START_BOUNDARY_UNRESOLVED",8],
+    ["PROVENANCE_UNRESOLVED",5],
+    ["END_BOUNDARY_UNRESOLVED",3]
+  ]);
+});
+
+test("Publication Funnel preserves missing compile state as unknown instead of fabricating zero exclusions", () => {
+  const funnel=model.buildPublicationFunnel({
+    current_authoring_activity_count:10,
+    current_runtime_activity_count:0,
+    active_compile:null,
+    authoring_delta_since_compile:null,
+    projection_matches_active_compile:null
+  });
+  assert.equal(funnel.available,true);
+  assert.equal(funnel.sealed,false);
+  assert.equal(funnel.current_authoring,10);
+  assert.equal(funnel.runtime_excluded,null);
+  assert.equal(funnel.unavailable_reason,"RUNTIME_PUBLICATION_NO_COMPILE_RUN");
+});
+
+test("Dashboard renders the publication funnel with Activity units and canonical exclusion reasons", () => {
+  assert.match(dashboardSource,/AUTHORING → COMPILE → RUNTIME/);
+  assert.match(dashboardSource,/현재 Runtime Compile 입력/);
+  assert.match(dashboardSource,/Runtime 제외/);
+  assert.match(dashboardSource,/Runtime 제외는 인물이 아닌 Activity 단위/);
+  assert.match(dashboardSource,/projection_matches_active_compile/);
+  assert.match(dashboardSource,/START_BOUNDARY_UNRESOLVED/);
+  assert.match(dashboardSource,/PROVENANCE_UNRESOLVED/);
+  assert.match(dashboardCssSource,/dashboard-publication-flow/);
+  assert.match(dashboardCssSource,/@media\(max-width:430px\)\{\.dashboard-publication-flow\{grid-template-columns:1fr\}\}/);
+});
+
 test("canonical Person Era model is reusable by Dashboard without a duplicate era taxonomy", () => {
   assert.equal(eraModel.ERAS.length,10);
   assert.deepEqual(model.buildEraRegionHeatmap({personResult:{persons:[]},spatialIndex:null}).eras,eraModel.ERAS);
@@ -705,6 +786,20 @@ test("Source Freshness separates intrinsic source timestamps from browser read t
   assert.equal(byKey.persons.data_at,null);
   assert.equal(byKey.persons.read_at,"2026-09-19T05:00:00.000Z");
   assert.equal(byKey.persons.data_timestamp_unavailable_reason,"PERSON_RUNTIME_DATA_TIMESTAMP_NOT_EXPOSED");
+});
+
+test("Source Freshness uses the active compile ledger timestamp for Runtime publication", () => {
+  const freshness=model.buildSourceFreshness({
+    runtimePublication:{active_compile:{compiled_at:"2026-09-20T01:00:00.000Z"}},
+    sourceStates:{
+      runtimePublication:{label:"Runtime Publication",status:"ready",loaded_at:"2026-09-20T01:05:00.000Z"}
+    }
+  });
+  const row=freshness.rows[0];
+  assert.equal(row.key,"runtimePublication");
+  assert.equal(row.data_at,"2026-09-20T01:00:00.000Z");
+  assert.equal(row.data_basis,"compiled_at");
+  assert.equal(row.read_at,"2026-09-20T01:05:00.000Z");
 });
 
 test("Source Freshness never promotes loaded_at into canonical data freshness", () => {

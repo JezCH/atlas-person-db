@@ -19,6 +19,7 @@ const adminSystemStatusHandler = createAdminSystemStatusHandler({ clientFactory:
 const RECENT_DELTA_SCHEMA = "atlas-recent-delta/v1";
 const RECENT_DELTA_LIMIT = 12;
 const PUBLIC_RUNTIME_IDENTITY_SCHEMA = "atlas-runtime-identity/v1";
+const RUNTIME_PUBLICATION_SCHEMA = "atlas-runtime-publication/v1";
 
 function publicRuntimeIdentity(env = process.env) {
   const runtime = runtimeIdentity(env);
@@ -197,6 +198,94 @@ function createRecentDeltaReadHandler({ clientFactory = createPostgresClient, en
 
 const recentDeltaReadHandler = createRecentDeltaReadHandler();
 
+async function readRuntimePublication(client) {
+  const countsResult = await client.query(`
+    select
+      (select count(*)::int from atlas_v2.person_politics_v2) as authoring_activity_count,
+      (select count(*)::int from atlas_v2.runtime_person_politics_v1) as runtime_activity_count,
+      (select count(distinct compile_key)::int from atlas_v2.runtime_person_politics_v1) as runtime_compile_key_count,
+      (select min(compile_key) from atlas_v2.runtime_person_politics_v1) as current_compile_key
+  `);
+  const counts = countsResult.rows?.[0] || {};
+  const authoringActivityCount = Number(counts.authoring_activity_count || 0);
+  const runtimeActivityCount = Number(counts.runtime_activity_count || 0);
+  const runtimeCompileKeyCount = Number(counts.runtime_compile_key_count || 0);
+  const currentCompileKey = counts.current_compile_key == null ? null : String(counts.current_compile_key);
+  if (runtimeActivityCount > 0 && (runtimeCompileKeyCount !== 1 || !currentCompileKey)) {
+    throw new Error("RUNTIME_PUBLICATION_PROJECTION_IDENTITY_INVALID");
+  }
+
+  let row = null;
+  if (currentCompileKey) {
+    const compileResult = await client.query(`
+      select compiler_version, input_row_count, output_row_count, excluded_row_count,
+             exclusion_summary, compiled_at
+        from atlas_v2.runtime_compile_runs
+       where compile_key=$1
+       limit 1
+    `, [currentCompileKey]);
+    row = compileResult.rows?.[0] || null;
+    if (!row) throw new Error("RUNTIME_PUBLICATION_COMPILE_LEDGER_MISSING");
+  }
+
+  const currentCompile = row ? Object.freeze({
+    compiler_version:String(row.compiler_version || ""),
+    input_row_count:Number(row.input_row_count || 0),
+    output_row_count:Number(row.output_row_count || 0),
+    excluded_row_count:Number(row.excluded_row_count || 0),
+    exclusion_summary:Object.freeze(
+      row.exclusion_summary && typeof row.exclusion_summary === "object" && !Array.isArray(row.exclusion_summary)
+        ? Object.fromEntries(Object.entries(row.exclusion_summary).map(([code,count]) => [String(code),Number(count || 0)]))
+        : {}
+    ),
+    compiled_at:row.compiled_at == null ? null : new Date(row.compiled_at).toISOString()
+  }) : null;
+
+  return Object.freeze({
+    schema:RUNTIME_PUBLICATION_SCHEMA,
+    source:"runtime-compile-ledger",
+    current_authoring_activity_count:authoringActivityCount,
+    current_runtime_activity_count:runtimeActivityCount,
+    active_compile:currentCompile,
+    authoring_delta_since_compile:currentCompile == null ? null : authoringActivityCount-currentCompile.input_row_count,
+    projection_matches_active_compile:currentCompile == null ? null : runtimeActivityCount === currentCompile.output_row_count
+  });
+}
+
+function createRuntimePublicationReadHandler({ clientFactory = createPostgresClient, env = process.env, read = readRuntimePublication } = {}) {
+  return async function runtimePublicationReadHandler(req,res) {
+    if (String(req?.method || "GET").toUpperCase() !== "GET") {
+      sendJson(res,405,{ ok:false, schema:RUNTIME_PUBLICATION_SCHEMA, code:"METHOD_NOT_ALLOWED" });
+      return;
+    }
+    let databaseUrl;
+    try {
+      databaseUrl=requireDatabaseUrl(env);
+    } catch (error) {
+      console.error("ATLAS runtime publication configuration error",error);
+      sendJson(res,503,{ ok:false, schema:RUNTIME_PUBLICATION_SCHEMA, code:"SERVER_CONFIGURATION_ERROR" });
+      return;
+    }
+    let client=null;
+    try {
+      client=await clientFactory(databaseUrl);
+      const publication=await read(client);
+      sendJson(res,200,{ ok:true, ...publication });
+    } catch (error) {
+      console.error("ATLAS runtime publication read failed",error);
+      sendJson(res,client ? 500 : 503,{
+        ok:false,
+        schema:RUNTIME_PUBLICATION_SCHEMA,
+        code:client ? "RUNTIME_PUBLICATION_READ_FAILED" : "DATABASE_UNAVAILABLE"
+      });
+    } finally {
+      if (client && typeof client.end === "function") await client.end();
+    }
+  };
+}
+
+const runtimePublicationReadHandler = createRuntimePublicationReadHandler();
+
 function selectReadSurface(req) {
   const direct = req?.query?.__atlas_read_surface;
   if (Array.isArray(direct)) return direct.length === 1 ? String(direct[0] || "").trim() : "";
@@ -219,6 +308,7 @@ async function consolidatedReadHandler(req, res) {
   if (surface === "catalog") return catalogReadHandler(req, res);
   if (surface === "recent-delta") return recentDeltaReadHandler(req, res);
   if (surface === "runtime-identity") return publicRuntimeIdentityHandler(req, res);
+  if (surface === "runtime-publication") return runtimePublicationReadHandler(req, res);
   if (surface === "admin-inspector") return adminInspectorHandler(req, res);
   if (surface === "admin-system-status") return adminSystemStatusHandler(req, res);
   return normalizedReadHandler(req, res);
@@ -234,3 +324,6 @@ module.exports.createRecentDeltaReadHandler = createRecentDeltaReadHandler;
 module.exports.PUBLIC_RUNTIME_IDENTITY_SCHEMA = PUBLIC_RUNTIME_IDENTITY_SCHEMA;
 module.exports.publicRuntimeIdentity = publicRuntimeIdentity;
 module.exports.createPublicRuntimeIdentityHandler = createPublicRuntimeIdentityHandler;
+module.exports.RUNTIME_PUBLICATION_SCHEMA = RUNTIME_PUBLICATION_SCHEMA;
+module.exports.readRuntimePublication = readRuntimePublication;
+module.exports.createRuntimePublicationReadHandler = createRuntimePublicationReadHandler;
