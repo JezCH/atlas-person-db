@@ -155,3 +155,70 @@ test('subregion must belong to the reviewed macroregion', () => {
     /SPATIAL_SUBREGION_PARENT_MISMATCH/
   );
 });
+
+
+test('reviewed shards can add Activity-specific spatial overrides', () => {
+  const activityId = '00000000-0000-4000-8000-0000000000a1';
+  const compiled = compileSpatialBindings({
+    baseline,
+    shards: [{
+      source: 'activity-override.bindings.json',
+      value: {
+        schema: REVIEWED_BINDING_SHARD_SCHEMA,
+        shard_id: 'activity-override',
+        baseline: 'test-baseline',
+        reviewed_at: '2026-09-20T08:20:00Z',
+        bindings: [],
+        activity_overrides: [{
+          activity_id: activityId,
+          expected_polity_id: IDS.four,
+          expected_start_year: -195,
+          expected_end_year: -190,
+          region_code: 'west-asia',
+          subregion_code: 'anatolia',
+          location_label: 'Ephesus–Side',
+          reason: 'Reviewed Activity-specific placement for a transregional polity',
+          source_refs: ['source-b', 'source-a']
+        }]
+      }
+    }]
+  });
+  const row = compiled.index.activity_spatial_overrides.find((entry) => entry.activity_id === activityId);
+  assert.ok(row);
+  assert.equal(row.expected_polity_id, IDS.four);
+  assert.equal(row.region_code, 'west-asia');
+  assert.equal(row.subregion_code, 'anatolia');
+  assert.deepEqual(row.source_refs, ['source-a', 'source-b']);
+});
+
+test('duplicate Activity overrides fail closed across baseline and reviewed shards', () => {
+  const existing = baseline.activity_spatial_overrides[0];
+  assert.ok(existing?.activity_id);
+  assert.throws(
+    () => compileSpatialBindings({
+      baseline,
+      shards: [{
+        source: 'duplicate-activity.bindings.json',
+        value: {
+          schema: REVIEWED_BINDING_SHARD_SCHEMA,
+          shard_id: 'duplicate-activity',
+          baseline: 'test-baseline',
+          reviewed_at: '2026-09-20T08:21:00Z',
+          bindings: [],
+          activity_overrides: [{
+            activity_id: existing.activity_id,
+            expected_polity_id: existing.expected_polity_id,
+            expected_start_year: existing.expected_start_year,
+            expected_end_year: existing.expected_end_year,
+            region_code: existing.region_code,
+            subregion_code: existing.subregion_code,
+            location_label: existing.location_label,
+            reason: 'duplicate test',
+            source_refs: ['source']
+          }]
+        }
+      }]
+    }),
+    /DUPLICATE_SPATIAL_ACTIVITY_OVERRIDE/
+  );
+});
