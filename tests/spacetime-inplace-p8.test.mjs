@@ -120,7 +120,8 @@ test("single renderer has no low-scale density point lane or card path", () => {
   assert.doesNotThrow(()=>new Function(view));
   assert.match(view,/createUniformTimeProjection\(/);
   assert.match(view,/GLOBAL_EXTENT_COMPRESSION = 0\.748/);
-  assert.match(view,/performance\.cullProjectedItems\(/);
+  assert.match(view,/visibleRailLabelItems\(/);
+  assert.match(view,/performance\.cullTrackSegments\(/);
   assert.match(view,/spacetime-track-label/);
   assert.match(view,/spacetime-track-rail/);
   for(const retired of [/densityField/,/spacetimeDensityCanvas/,/spacetime-person-point/,/horizontalViewMode/,/assignLanes/]) assert.doesNotMatch(view,retired);
