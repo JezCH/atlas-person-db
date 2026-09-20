@@ -1093,7 +1093,7 @@ test("Dashboard renders Runtime activation delta and drift from the shared publi
   assert.match(dashboardSource,/runtimeDeltaDriftMarkup\(runtimeDelta\)/);
   assert.match(dashboardSource,/직전 Production은 Compile 시각이 아닌 Runtime activation 원장 순서로 판정/);
   assert.match(dashboardSource,/같은 Compile 재활성화/);
-  assert.match(dashboardSource,/latest activation과 현재 Runtime projection 불일치/);
+  assert.match(dashboardSource,/최신 activation과 현재 Runtime projection 불일치/);
   assert.match(dashboardSource,/원장 도입 시점 관측 · 배포 SHA 없음/);
   assert.doesNotMatch(dashboardSource,/order by compiled_at|previous compile timestamp/i);
   assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
