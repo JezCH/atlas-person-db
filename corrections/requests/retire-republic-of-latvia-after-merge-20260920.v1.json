@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:republic-of-latvia-after-reviewed-merge:2026-09-20:v1",
+  "release_order": 604,
+  "evidence": {
+    "decision": "Reviewed same-identity generic/formal-name cleanup after exact Activity relink, temporal designation preservation, and reviewed Spatial source removal.",
+    "review_claim": "#977 comment 5748574187",
+    "designation_relink_merge_sha": "160219bbcbc36e825ea1eae75fe24fe7745e40cb",
+    "spatial_preservation_merge_sha": "a4ad5ca13a5618359c220bbc009561107a3a67af",
+    "production_readback": "Republic of Latvia has activity_count=0. Latvia has six Activities; the five Kārlis Ulmanis Activity UUIDs were preserved and now use Latvia with Republic of Latvia / 라트비아 공화국 temporal designation; Jānis Čakste remains on the Latvia survivor and is display-resolved by the same designation. Canonical Spatial output contains no source UUID and preserves survivor at europe/eastern-europe."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:republic-of-latvia-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "eaa3ad78-bb73-4812-b00a-1b4e160acd69",
+        "canonical_key": "Republic of Latvia",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Republic of Latvia",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "라트비아 공화국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
