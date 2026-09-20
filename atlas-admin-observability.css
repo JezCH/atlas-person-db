@@ -1,5 +1,5 @@
 .observability-stack { display: grid; gap: 18px; }
-.obs-summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.obs-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 16px; }
 .obs-summary-grid > div { min-width: 0; border: 1px solid #e0e5ef; border-radius: 12px; padding: 13px; background: #fbfcff; }
 .obs-summary-grid span, .obs-summary-grid small { display: block; color: #6b7486; font-size: 12px; }
 .obs-summary-grid strong { display: block; margin: 5px 0; font-size: 18px; overflow-wrap: anywhere; }
