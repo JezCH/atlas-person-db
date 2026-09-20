@@ -176,6 +176,7 @@ order by pp.activity_start, pp.activity_end, pp.polity_id, pp.id
 
 const PERSON_SOURCE_SQL = `
 select
+  s.id::text as source_id,
   s.source_type,
   s.title,
   s.canonical_url,
@@ -191,6 +192,7 @@ const ACTIVITY_SOURCE_SQL = `
 select
   pps.person_politics_id,
   pps.source_locator_key,
+  s.id::text as source_id,
   s.source_type,
   s.title,
   s.canonical_url,
@@ -320,6 +322,7 @@ function projectSource(row, locator = null) {
   const citationText = row?.citation_text == null ? null : String(row.citation_text);
   const canonicalUrl = row?.canonical_url == null ? null : String(row.canonical_url);
   return Object.freeze({
+    source_id: row?.source_id == null ? null : String(row.source_id),
     title,
     source_type: row?.source_type == null ? null : String(row.source_type),
     canonical_url: canonicalUrl,
