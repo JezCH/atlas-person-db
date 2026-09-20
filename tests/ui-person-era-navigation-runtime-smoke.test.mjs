@@ -21,6 +21,9 @@ function matches(node, selector) {
   if (selector === '.person-era-nav-summary') return hasClass(node, 'person-era-nav-summary');
   if (selector === '.person-era-search') return hasClass(node, 'person-era-search');
   if (selector === '.person-era-polity-filter') return hasClass(node, 'person-era-polity-filter');
+  if (selector === '.person-era-relation-filter') return hasClass(node, 'person-era-relation-filter');
+  if (selector === '.person-domain-filter-list') return hasClass(node, 'person-domain-filter-list');
+  if (selector === '.person-domain-filter') return hasClass(node, 'person-domain-filter');
   if (selector === '.person-era-nav-prev') return hasClass(node, 'person-era-nav-prev');
   if (selector === '.person-era-nav-next') return hasClass(node, 'person-era-nav-next');
   if (selector === 'button[data-era]') return node.tagName === 'BUTTON' && Boolean(node.dataset.era);
@@ -50,6 +53,10 @@ function createNode(tagName = 'div', className = '', textContent = '') {
     parent: null,
     dataset: {},
     attributes: {},
+    style: {
+      values: {},
+      setProperty(name, value) { this.values[name] = String(value); }
+    },
     scrolled: false,
     append(...items) {
       for (const item of items) {
@@ -90,7 +97,7 @@ function createNode(tagName = 'div', className = '', textContent = '') {
       return pool.filter((candidate) => matches(candidate, normalized));
     },
     scrollIntoView() { this.scrolled = true; },
-    getBoundingClientRect() { return this.rect || { top: 0, bottom: 50 }; },
+    getBoundingClientRect() { return this.rect || { top: 0, bottom: 50, height: 50 }; },
     focus() {}
   };
   node.classList = {
@@ -133,10 +140,18 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
     addEventListener() {}
   };
   const window = {
+    ATLAS_PERSON_DOMAIN_REGISTRY: {
+      DEFINITIONS: [
+        { code: 'governance', label: '통치·정치' },
+        { code: 'military', label: '군사' }
+      ],
+      CODES: ['governance', 'military']
+    },
     addEventListener() {},
     requestAnimationFrame(callback) { callback(); },
     setTimeout(callback) { callback(); },
-    matchMedia() { return { matches: false }; }
+    matchMedia() { return { matches: false }; },
+    getComputedStyle() { return { top: '10px' }; }
   };
 
   vm.runInNewContext(source, {
@@ -159,7 +174,11 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
       visiblePolityCount: 2,
       query: 'alexander',
       selectedPolityId: 'rome',
-      polityOptions: [{ id: 'rome', label: '로마 제국' }, { id: 'france', label: '프랑스 왕국' }]
+      polityOptions: [{ id: 'rome', label: '로마 제국' }, { id: 'france', label: '프랑스 왕국' }],
+      selectedRelationId: 'rules',
+      relationOptions: [{ id: 'rules', label: '통치' }, { id: 'serves', label: '복무' }],
+      selectedDomain: 'governance',
+      domainCounts: { all: 5, governance: 3, military: 2 }
     }
   });
 
@@ -175,6 +194,16 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
   assert.equal(politySelect.parent, search.parent);
   assert.equal(politySelect.value, 'rome');
   assert.equal(politySelect.children.length, 3);
+  const relationSelect = nav.querySelector('.person-era-relation-filter');
+  assert.equal(relationSelect.value, 'rules');
+  assert.equal(relationSelect.children.length, 3);
+  const domainList = nav.querySelector('.person-domain-filter-list');
+  assert.equal(domainList.children.length, 3);
+  assert.equal(domainList.children[0].dataset.domainFilter, '');
+  assert.equal(domainList.children[1].dataset.domainFilter, 'governance');
+  assert.ok(hasClass(domainList.children[1], 'is-active'));
+  assert.equal(domainList.children[2].dataset.domainFilter, 'military');
+  assert.equal(container.style.values['--person-table-sticky-top'], '66px');
 
   const buttons = nav.querySelectorAll('button[data-era]');
   assert.equal(buttons.length, 2);
