@@ -8,7 +8,7 @@ const lod = readFileSync(new URL("../atlas-person-spacetime-lod.js", import.meta
 const semanticAxis = readFileSync(new URL("../atlas-person-spacetime-semantic-axis.js", import.meta.url), "utf8");
 
 test("spacetime opens at 500 percent default inside a wider zoom range", () => {
-  assert.match(view, /const CAMERA_MIN_ZOOM = 1;/);
+  assert.match(view, /const CAMERA_MIN_ZOOM = 0\.5;/);
   assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);
   assert.match(view, /const CAMERA_MAX_ZOOM = 15;/);
   assert.match(view, /let cameraZoom = CAMERA_DEFAULT_ZOOM;/);
@@ -31,8 +31,8 @@ test("alternate density overview representations remain physically absent", () =
   assert.doesNotMatch(css, /is-overview/);
 });
 
-test("minimum 100 percent representation remains Person labels plus rails", () => {
-  assert.match(lod, /const MIN_SUPPORTED_ZOOM = 1;/);
+test("viewport-fit minimum representation remains Person labels plus rails", () => {
+  assert.match(lod, /const MIN_SUPPORTED_ZOOM = 0\.5;/);
   assert.match(lod, /labels: 1/);
   assert.match(lod, /rails: 1/);
   assert.doesNotMatch(lod, /density_fade_start/);
