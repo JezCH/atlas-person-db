@@ -136,7 +136,7 @@
 .spacetime-place-head-marker strong{min-width:0;font-size:8px;line-height:11px;color:#3f5575;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .spacetime-time-axis{position:sticky;z-index:28;left:0;width:var(--spacetime-axis-width,140px);margin-top:0}
 .spacetime-era-axis{position:absolute;z-index:2;left:0;top:0;width:var(--spacetime-era-axis-width,68px);height:100%;background:#fff;border-right:1px solid #d7e0ea;transition:opacity .18s ease}
-.spacetime-era-axis>div{position:absolute;left:0;width:var(--spacetime-era-axis-width,68px);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(77,91,110,.15);overflow:hidden}
+.spacetime-era-axis>div{position:absolute;left:0;width:var(--spacetime-era-axis-width,68px);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(77,91,110,.15);overflow:hidden;opacity:var(--spacetime-era-content-opacity,1)}
 .spacetime-era-axis>div span{writing-mode:vertical-rl;text-orientation:upright;transform:none;font-size:12px;font-weight:800;letter-spacing:.08em;line-height:1.35;opacity:.76}
 .spacetime-year-axis{position:absolute;z-index:1;left:var(--spacetime-era-axis-width,68px);top:0;width:var(--spacetime-year-axis-width,72px);height:100%;background:#fff;border-right:1px solid #cfd8e4}
 .spacetime-year-axis span{position:absolute;right:7px;transform:translateY(-50%);font-size:10px;font-variant-numeric:tabular-nums;color:#6b778a;white-space:nowrap}
