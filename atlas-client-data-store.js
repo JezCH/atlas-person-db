@@ -13,7 +13,8 @@
     spatialIndex: Object.freeze({ key:"spatialIndex", label:"Spatial Index", url:"./atlas-polity-spatial-index.json" }),
     nonTimeline: Object.freeze({ key:"nonTimeline", label:"Non-timeline Registry", url:"./non-timeline-persons.json" }),
     recentDelta: Object.freeze({ key:"recentDelta", label:"Recent Delta", url:"/api/atlas-read?__atlas_read_surface=recent-delta" }),
-    systemIdentity: Object.freeze({ key:"systemIdentity", label:"Runtime Identity", url:"/api/atlas-read?__atlas_read_surface=runtime-identity" })
+    systemIdentity: Object.freeze({ key:"systemIdentity", label:"Runtime Identity", url:"/api/atlas-read?__atlas_read_surface=runtime-identity" }),
+    runtimePublication: Object.freeze({ key:"runtimePublication", label:"Runtime Publication", url:"/api/atlas-read?__atlas_read_surface=runtime-publication" })
   });
 
   const cache = new Map();
@@ -203,6 +204,46 @@
     return shared("systemIdentity", async () => normalizeSystemIdentityPayload(await getJson(SOURCES.systemIdentity.url)), { force });
   }
 
+  function normalizeRuntimePublicationPayload(payload) {
+    if (payload?.ok !== true || payload?.schema !== "atlas-runtime-publication/v1") {
+      throw new Error("INVALID_RUNTIME_PUBLICATION_RESPONSE");
+    }
+    const latest = payload.latest_compile;
+    const latestCompile = latest && typeof latest === "object" ? Object.freeze({
+      compiler_version:String(latest.compiler_version || "").trim() || null,
+      input_row_count:Number(latest.input_row_count),
+      output_row_count:Number(latest.output_row_count),
+      excluded_row_count:Number(latest.excluded_row_count),
+      exclusion_summary:Object.freeze({ ...(latest.exclusion_summary || {}) }),
+      compiled_at:latest.compiled_at == null ? null : String(latest.compiled_at).trim() || null
+    }) : null;
+    if (latestCompile) {
+      const counts=[latestCompile.input_row_count,latestCompile.output_row_count,latestCompile.excluded_row_count];
+      if (counts.some((value) => !Number.isInteger(value) || value < 0)) throw new Error("INVALID_RUNTIME_PUBLICATION_COUNTS");
+      if (latestCompile.input_row_count !== latestCompile.output_row_count + latestCompile.excluded_row_count) {
+        throw new Error("INVALID_RUNTIME_PUBLICATION_BALANCE");
+      }
+    }
+    const authoringCount=Number(payload.current_authoring_activity_count);
+    const runtimeCount=Number(payload.current_runtime_activity_count);
+    if (!Number.isInteger(authoringCount) || authoringCount < 0 || !Number.isInteger(runtimeCount) || runtimeCount < 0) {
+      throw new Error("INVALID_RUNTIME_PUBLICATION_CURRENT_COUNTS");
+    }
+    return Object.freeze({
+      schema:payload.schema,
+      source:payload.source || null,
+      current_authoring_activity_count:authoringCount,
+      current_runtime_activity_count:runtimeCount,
+      latest_compile:latestCompile,
+      authoring_delta_since_compile:payload.authoring_delta_since_compile == null ? null : Number(payload.authoring_delta_since_compile),
+      projection_matches_latest_compile:payload.projection_matches_latest_compile == null ? null : payload.projection_matches_latest_compile === true
+    });
+  }
+
+  function loadRuntimePublication({ force = false } = {}) {
+    return shared("runtimePublication", async () => normalizeRuntimePublicationPayload(await getJson(SOURCES.runtimePublication.url)), { force });
+  }
+
   function invalidate(key) {
     if (key) {
       cache.delete(key);
@@ -226,6 +267,7 @@
     loadNonTimelinePersons,
     loadRecentDelta,
     loadSystemIdentity,
+    loadRuntimePublication,
     getSourceState,
     sourceStates,
     invalidate
