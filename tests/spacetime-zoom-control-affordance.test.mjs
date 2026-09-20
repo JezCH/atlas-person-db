@@ -62,7 +62,7 @@ test("production page loads the unified spacetime camera control state", () => {
   assert.doesNotMatch(controlCss, /spacetime-time-camera/);
 });
 
-test("300 percent is minimum and 500 percent remains the reset default", () => {
+test("100 percent is minimum and 500 percent remains the reset default", () => {
   const api = loadControlApi();
   const state = zoomMount("500%");
 
@@ -71,7 +71,7 @@ test("300 percent is minimum and 500 percent remains the reset default", () => {
   assert.equal(state.zoomIn.disabled, false);
   assert.equal(state.reset.disabled, true);
 
-  state.zoomValue.textContent = "300%";
+  state.zoomValue.textContent = "100%";
   assert.equal(api.syncZoomControlState(state.mount), true);
   assert.equal(state.zoomOut.disabled, true);
   assert.equal(state.zoomIn.disabled, false);
@@ -84,9 +84,9 @@ test("300 percent is minimum and 500 percent remains the reset default", () => {
   assert.equal(state.reset.disabled, false);
 });
 
-test("1200 percent is the maximum", () => {
+test("1500 percent is the maximum", () => {
   const api = loadControlApi();
-  const state = zoomMount("1200%");
+  const state = zoomMount("1500%");
   assert.equal(api.syncZoomControlState(state.mount), true);
   assert.equal(state.zoomOut.disabled, false);
   assert.equal(state.zoomIn.disabled, true);
@@ -105,15 +105,15 @@ test("visible bounds stay aligned with the unified renderer camera contract", ()
   assert.ok(minMatch);
   assert.ok(maxMatch);
   assert.ok(adapterMaxMatch);
-  assert.equal(Number(minMatch[1]) * 100, 300);
-  assert.equal(Number(maxMatch[1]) * 100, 1200);
+  assert.equal(Number(minMatch[1]) * 100, 100);
+  assert.equal(Number(maxMatch[1]) * 100, 1500);
   assert.equal(Number(adapterMaxMatch[1]), Number(maxMatch[1]) * 100);
   assert.match(viewSource, /id="spacetimeCameraZoomReset"[^>]*>500%<\/button>/);
   assert.doesNotMatch(viewSource, /spacetimeTimeZoom/);
   assert.doesNotMatch(viewSource, />100%<\/button>/);
 });
 
-test("touch pinch inside spacetime controls the internal 300 to 1200 percent camera", () => {
+test("touch pinch inside spacetime controls the internal 100 to 1500 percent camera", () => {
   assert.match(viewSource, /function bindPinchCameraZoom\(mount\)/);
   assert.match(viewSource, /event\.pointerType !== "touch"/);
   assert.match(viewSource, /event\.target\?\.closest\?\.\("\.spacetime-scroll"\)/);
