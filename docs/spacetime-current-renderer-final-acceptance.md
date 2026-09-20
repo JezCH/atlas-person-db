@@ -4,7 +4,8 @@ This document is the closure contract for the current non-Spatial `시공간 인
 
 ## Invariants that must remain unchanged
 
-- camera minimum: 100%
+- technical camera floor: 100%
+- effective camera minimum: viewport-fit (world width equals the available table viewport width)
 - camera default/reset: 500%
 - camera maximum: 1500%
 - global presentation compression: 0.748

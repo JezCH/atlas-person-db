@@ -40,16 +40,16 @@ test("keyboard navigation keeps panning cycling focus zoom and selection clearin
   assert.doesNotMatch(view, /spacetime-explore-help/);
 });
 
-test("keyboard and modifier-wheel zoom respect the 500 percent bound", () => {
+test("keyboard and modifier-wheel zoom respect the viewport-fit camera bound", () => {
   const keydown = view.indexOf('scroll.addEventListener("keydown"');
   const keyTarget = view.indexOf('const keyboardZoomTarget = command === "zoom-in"', keydown);
-  const keyGuard = view.indexOf('Math.abs(clampCameraZoom(keyboardZoomTarget) - cameraZoom) < 1e-9', keydown);
+  const keyGuard = view.indexOf('Math.abs(clampCameraZoom(keyboardZoomTarget, scroll) - cameraZoom) < 1e-9', keydown);
   const keyRequest = view.indexOf('requestCameraZoom(mount, keyboardZoomTarget);', keydown);
   assert.ok(keyTarget > keydown && keyGuard > keyTarget && keyRequest > keyGuard);
 
   const wheel = view.indexOf('scroll.addEventListener("wheel"');
   const wheelTarget = view.indexOf('const wheelZoomTarget = cameraZoom * factor;', wheel);
-  const wheelGuard = view.indexOf('Math.abs(clampCameraZoom(wheelZoomTarget) - cameraZoom) < 1e-9', wheel);
+  const wheelGuard = view.indexOf('Math.abs(clampCameraZoom(wheelZoomTarget, scroll) - cameraZoom) < 1e-9', wheel);
   const wheelRequest = view.indexOf('requestCameraZoom(mount, wheelZoomTarget, event.clientX - rect.left, event.clientY - rect.top);', wheel);
   assert.ok(wheelTarget > wheel && wheelGuard > wheelTarget && wheelRequest > wheelGuard);
 });

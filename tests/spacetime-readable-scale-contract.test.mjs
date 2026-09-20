@@ -12,7 +12,7 @@ const control = readFileSync(new URL("../atlas-person-spacetime-control-state.js
 const labelEngine = require("../atlas-person-spacetime-label-engine.js");
 const presentationLayout = require("../atlas-person-spacetime-presentation-layout.js");
 
-test("spacetime keeps 500 percent as default while allowing a wider 100 to 1500 range", () => {
+test("spacetime keeps 500 percent default, 1500 maximum, and a viewport-fit effective minimum", () => {
   assert.match(view, /const CAMERA_MIN_ZOOM = 1;/);
   assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);
   assert.match(view, /const CAMERA_MAX_ZOOM = 15;/);
@@ -24,7 +24,9 @@ test("spacetime keeps 500 percent as default while allowing a wider 100 to 1500 
   assert.match(view, /const AXIS_WIDTH = 140;/);
   assert.match(view, /const CAMERA_HEADER_HEIGHT = 36;/);
   assert.match(view, /id="spacetimeCameraZoomReset"[^>]*aria-label="500% 기본 배율로 복귀"[^>]*>기본<\/button>/);
-  assert.match(view, /return Math\.min\(CAMERA_MAX_ZOOM, Math\.max\(CAMERA_MIN_ZOOM, numeric\)\);/);
+  assert.match(view, /const minimum = scroll \? viewportFitMinimumZoom\(scroll, cameraZoom\) : CAMERA_MIN_ZOOM;/);
+  assert.match(view, /return Math\.min\(CAMERA_MAX_ZOOM, Math\.max\(minimum, numeric\)\);/);
+  assert.match(view, /usableWidth \/ worldWidthAtOne/);
   assert.doesNotMatch(view, />100%<\/button>/);
 });
 

@@ -20,12 +20,13 @@ test("time projection is globally linear at every supported camera zoom", () => 
   }
 });
 
-test("camera zoom is bounded to 100-1500 percent with a 500 default", () => {
+test("camera zoom keeps a 100 percent technical floor, viewport-fit effective floor, and 1500 maximum", () => {
   assert.match(view, /const CAMERA_MIN_ZOOM = 1;/);
   assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);
   assert.match(view, /const CAMERA_MAX_ZOOM = 15;/);
   assert.match(view, /const CAMERA_ZOOM_STEP = 1\.25;/);
-  assert.match(view, /Math\.max\(CAMERA_MIN_ZOOM, numeric\)/);
+  assert.match(view, /viewportFitMinimumZoom\(scroll, cameraZoom\)/);
+  assert.match(view, /Math\.max\(minimum, numeric\)/);
   assert.doesNotMatch(view, /TIME_CAMERA_MIN_ZOOM/);
   assert.throws(() => timeProjection.createUniformTimeProjection(-3000, 2026, 1000, 0.99), /zoom must be >= 1/);
 });
