@@ -49,6 +49,7 @@ function semanticRow({
   endCertainty = 'exact',
   confidence = 'reviewed',
   chronologyStatus = 'reviewed',
+  sourceCount = 1,
   notes = 'Court chronicle note'
 } = {}) {
   return {
@@ -84,6 +85,7 @@ function semanticRow({
     activity_end_calendar: 'unspecified_historical',
     confidence,
     chronology_status: chronologyStatus,
+    source_count: sourceCount,
     notes
   };
 }
@@ -106,6 +108,9 @@ test('compact list semantic SQL returns one Activity-shaped tuple including lega
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by pbn\.id\s+limit 1/i);
   // Only the public verification date is extracted; the private JSON payload stays server-side.
   assert.match(PERSON_LIST_SEMANTIC_SQL, /pp\.source_locator->>'ongoing_as_of' as ongoing_as_of/);
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /from atlas_v2\.person_politics_sources pps/i);
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /where pps\.person_politics_id = pp\.id/i);
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /as source_count/i);
   assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL.replace("pp.source_locator->>'ongoing_as_of' as ongoing_as_of", ""), /source_locator|source_key|sha256|bytes|canonical_key/i);
 });
 
@@ -133,8 +138,15 @@ test('compact Activity projection preserves the actual Polity-Relation-Role-Basi
   });
   assert.equal(projected.confidence, 'reviewed');
   assert.equal(projected.chronology_status, 'reviewed');
+  assert.equal(projected.source_count, 1);
   assert.equal(projected.notes, 'Court chronicle note');
   assert.equal('person_id' in projected, false);
+});
+
+test('compact Activity projection preserves zero source links as an explicit provenance debt count', () => {
+  const projected = projectCompactActivity(semanticRow({ sourceCount: 0 }));
+  assert.equal(projected.source_count, 0);
+  assert.equal('sources' in projected, false);
 });
 
 test('list semantics never fabricate a cross-product between independent facets', () => {
