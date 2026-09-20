@@ -1,3 +1,15 @@
+#personDomainRoot{width:100%;min-width:0;max-width:100%}
 #personDomainRoot[hidden]{display:none!important}
 #atlasAuthorityShell .spacetime-scroll{max-height:none!important;overscroll-behavior:auto!important}
 @media(max-width:900px){#atlasAuthorityShell .spacetime-scroll{max-height:none!important}}
+
+@media(max-width:760px){
+  #personDomainRoot{overflow-x:clip}
+  #personDomainRoot .person-main-view,
+  #personDomainRoot .person-main-toolbar,
+  #personDomainRoot .person-main-layout,
+  #personDomainRoot .person-main-groups,
+  #personDomainRoot .person-group,
+  #personDomainRoot .person-card-grid.person-table-grid{width:100%;min-width:0;max-width:100%}
+  #personDomainRoot .person-card-grid.person-table-grid{overflow-x:auto}
+}

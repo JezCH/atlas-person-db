@@ -49,7 +49,7 @@
   .person-era-relation-filter{width:min(150px,22vw);max-width:none}
 }
 @media(max-width:760px){
-  .person-era-navigator{top:64px;z-index:24;max-width:100%;margin:0 -2px;padding:7px 8px;border-radius:10px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  .person-era-navigator{top:64px;z-index:24;max-width:100%;margin:0;padding:7px 8px;border-radius:10px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   .person-era-nav-top{gap:5px}
   .person-era-nav-intro{align-items:baseline;gap:6px}
   .person-era-nav-intro>strong{font-size:10px}
