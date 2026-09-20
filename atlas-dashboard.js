@@ -82,6 +82,7 @@
   function timestampBasisLabel(basis) {
     if (basis === "generated_at") return "생성 시각";
     if (basis === "latest_tracked_mutation") return "최근 추적 변경";
+    if (basis === "compiled_at") return "Compile 시각";
     return "미제공";
   }
 
@@ -103,6 +104,7 @@
     if (label === "Non-timeline Registry") return "비연대표 목록";
     if (label === "Recent Delta") return "최근 변경";
     if (label === "Runtime Identity") return "배포 식별";
+    if (label === "Runtime Publication") return "게시 파이프라인";
     return label || "원본";
   }
 
@@ -131,7 +133,52 @@
     if (reason === "SOURCE_UNAVAILABLE") return "원본 확인 불가";
     if (reason === "RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED") return "Runtime 제외 대상 집계는 공개 대시보드에 미노출";
     if (reason === "DUPLICATE_REVIEW_TARGET_SOURCE_REQUIRES_ADMIN_CONTRACT") return "중복 후보 대상은 관리자 인증 영역에서 확인";
+    if (reason === "RUNTIME_PUBLICATION_SOURCE_UNAVAILABLE") return "게시 파이프라인 원본 확인 불가";
+    if (reason === "RUNTIME_PUBLICATION_NO_COMPILE_RUN") return "Runtime Compile 기록 없음";
     return "세부 사유 미분류";
+  }
+
+  function runtimeExclusionLabel(code) {
+    if (code === "RELATION_TYPE_UNRESOLVED") return "관계 유형 미해결";
+    if (code === "START_BOUNDARY_UNRESOLVED") return "시작 경계 미해결";
+    if (code === "END_BOUNDARY_UNRESOLVED") return "종료 경계 미해결";
+    if (code === "ONGOING_VERIFICATION_UNRESOLVED") return "진행 중 검증 미해결";
+    if (code === "PROVENANCE_UNRESOLVED") return "출처·근거 미해결";
+    return code || "기타 제외";
+  }
+
+  function publicationStage(label, count, detail) {
+    return `<article class="dashboard-publication-stage">
+      <small>${escapeHtml(label)}</small><strong>${value(count)}</strong><span>${escapeHtml(detail || "")}</span>
+    </article>`;
+  }
+
+  function publicationFunnelMarkup(funnel) {
+    if (!funnel?.available) {
+      return `<div class="dashboard-heatmap-unavailable">${escapeHtml(reasonLabel(funnel?.unavailable_reason) || "게시 파이프라인 확인 불가")}</div>`;
+    }
+    if (!funnel?.sealed) {
+      return `<div class="dashboard-publication-flow">
+        ${publicationStage("현재 Authoring",funnel.current_authoring,"authoritative Activity")}
+        ${publicationStage("현재 Runtime",funnel.current_runtime,"sealed projection")}
+      </div>
+      <div class="dashboard-heatmap-unavailable">${escapeHtml(reasonLabel(funnel.unavailable_reason) || "Runtime Compile 기록 없음")}</div>`;
+    }
+    const delta=Number(funnel.authoring_delta_since_compile || 0);
+    const deltaLabel=delta === 0 ? "Compile 이후 Authoring 증감 0" : `Compile 이후 Authoring 증감 ${delta > 0 ? "+" : ""}${value(delta)}`;
+    const exclusionRows=(funnel.exclusion_rows || []).map((row)=>`<span><b>${escapeHtml(runtimeExclusionLabel(row.code))}</b> ${value(row.count)}</span>`).join("");
+    return `<div class="dashboard-publication-flow">
+      ${publicationStage("현재 Authoring",funnel.current_authoring,"현재 canonical Activity")}
+      ${publicationStage("마지막 Compile 입력",funnel.compile_input,"sealed compile snapshot")}
+      ${publicationStage("Runtime 포함",funnel.runtime_included,`현재 Runtime ${value(funnel.current_runtime)}`)}
+      ${publicationStage("Runtime 제외",funnel.runtime_excluded,"Activity 단위")}
+    </div>
+    <div class="dashboard-publication-meta">
+      <span>${escapeHtml(deltaLabel)}</span>
+      <span>${funnel.projection_matches_latest_compile ? "Runtime projection = 마지막 Compile 출력" : "Runtime projection과 마지막 Compile 출력 불일치"}</span>
+      <span>${escapeHtml(funnel.compiler_version || "compiler 미확인")} · ${escapeHtml(formatTimestamp(funnel.compiled_at))}</span>
+    </div>
+    <div class="dashboard-timeline-summary dashboard-publication-exclusions">${exclusionRows || "<span>제외 사유 0건</span>"}</div>`;
   }
 
   function environmentLabel(value) {
@@ -277,6 +324,7 @@
     const rd = snapshot.recent_delta;
     const timeline = snapshot.recent_activity_timeline;
     const sys = snapshot.system_strip;
+    const publication = snapshot.publication_funnel;
     const heatmap = snapshot.coverage_heatmap;
     const completeness = snapshot.completeness_matrix;
     const freshness = snapshot.source_freshness;
@@ -322,6 +370,15 @@
           <p class="eyebrow">SOURCE ISSUES</p>
           <div class="dashboard-source-list">${sourceIssues.map(sourceCard).join("")}</div>
         </div>` : ""}
+      </section>
+
+      <section class="dashboard-panel card" aria-label="Authoring에서 Runtime까지 게시 파이프라인">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">AUTHORING → COMPILE → RUNTIME</p><h3>게시 파이프라인</h3></div><span>${publication?.sealed ? `최근 Compile ${escapeHtml(formatTimestamp(publication.compiled_at))}` : "Compile 상태 확인"}</span></div>
+        ${publicationFunnelMarkup(publication)}
+        <div class="dashboard-progress-meta">
+          <span>현재 Authoring과 마지막 Compile snapshot을 구분해 표시</span>
+          <span>Runtime 제외는 인물이 아닌 Activity 단위</span>
+        </div>
       </section>
 
       <section class="dashboard-panel card" aria-label="기준 원본 갱신 시각과 읽기 시각">
@@ -475,13 +532,14 @@
     const serial = ++requestSerial;
     renderLoading(root);
 
-    const [persons, domains, spatial, nonTimeline, recentDelta, systemIdentity] = await Promise.allSettled([
+    const [persons, domains, spatial, nonTimeline, recentDelta, systemIdentity, runtimePublication] = await Promise.allSettled([
       store.loadPersons({ force }),
       store.loadPersonDomains({ force }),
       store.loadSpatialIndex({ force }),
       store.loadNonTimelinePersons({ force }),
       store.loadRecentDelta({ force }),
-      store.loadSystemIdentity({ force })
+      store.loadSystemIdentity({ force }),
+      store.loadRuntimePublication({ force })
     ]);
     if (serial !== requestSerial || root !== mountedRoot || !root.isConnected) return;
 
@@ -499,6 +557,7 @@
       nonTimelineRows:settledValue(nonTimeline),
       recentDeltaResult:settledValue(recentDelta),
       systemIdentityResult:settledValue(systemIdentity),
+      runtimePublicationResult:settledValue(runtimePublication),
       sourceStates:store.sourceStates()
     });
     renderSnapshot(root, snapshot);
