@@ -419,7 +419,67 @@
     return Number.isFinite(parsed) ? new Date(parsed).toISOString() : null;
   }
 
-  function buildSourceFreshness({ spatialIndex = null, recentDelta = null, sourceStates = {} } = {}) {
+  function buildPublicationFunnel(runtimePublicationResult = null) {
+    if (!runtimePublicationResult || typeof runtimePublicationResult !== "object") return Object.freeze({
+      available:false,
+      sealed:false,
+      current_authoring:null,
+      compile_input:null,
+      runtime_included:null,
+      runtime_excluded:null,
+      current_runtime:null,
+      authoring_delta_since_compile:null,
+      projection_matches_latest_compile:null,
+      compiler_version:null,
+      compiled_at:null,
+      exclusion_rows:Object.freeze([]),
+      unavailable_reason:"RUNTIME_PUBLICATION_SOURCE_UNAVAILABLE"
+    });
+
+    const latest=runtimePublicationResult.latest_compile;
+    const currentAuthoring=Number(runtimePublicationResult.current_authoring_activity_count);
+    const currentRuntime=Number(runtimePublicationResult.current_runtime_activity_count);
+    if (!latest || typeof latest !== "object") return Object.freeze({
+      available:true,
+      sealed:false,
+      current_authoring:Number.isInteger(currentAuthoring) ? currentAuthoring : null,
+      compile_input:null,
+      runtime_included:null,
+      runtime_excluded:null,
+      current_runtime:Number.isInteger(currentRuntime) ? currentRuntime : null,
+      authoring_delta_since_compile:null,
+      projection_matches_latest_compile:null,
+      compiler_version:null,
+      compiled_at:null,
+      exclusion_rows:Object.freeze([]),
+      unavailable_reason:"RUNTIME_PUBLICATION_NO_COMPILE_RUN"
+    });
+
+    const exclusionRows=Object.entries(latest.exclusion_summary || {})
+      .map(([code,count]) => Object.freeze({ code:text(code), count:Number(count || 0) }))
+      .filter((row) => row.code && Number.isInteger(row.count) && row.count >= 0)
+      .sort((left,right) => right.count-left.count || left.code.localeCompare(right.code));
+
+    return Object.freeze({
+      available:true,
+      sealed:true,
+      current_authoring:currentAuthoring,
+      compile_input:Number(latest.input_row_count),
+      runtime_included:Number(latest.output_row_count),
+      runtime_excluded:Number(latest.excluded_row_count),
+      current_runtime:currentRuntime,
+      authoring_delta_since_compile:runtimePublicationResult.authoring_delta_since_compile == null
+        ? currentAuthoring-Number(latest.input_row_count)
+        : Number(runtimePublicationResult.authoring_delta_since_compile),
+      projection_matches_latest_compile:runtimePublicationResult.projection_matches_latest_compile === true,
+      compiler_version:text(latest.compiler_version) || null,
+      compiled_at:canonicalTimestamp(latest.compiled_at),
+      exclusion_rows:Object.freeze(exclusionRows),
+      unavailable_reason:null
+    });
+  }
+
+  function buildSourceFreshness({ spatialIndex = null, recentDelta = null, runtimePublication = null, sourceStates = {} } = {}) {
     const timestampByKey=Object.freeze({
       spatialIndex:Object.freeze({
         data_at:canonicalTimestamp(spatialIndex?.generated_at),
@@ -430,6 +490,11 @@
         data_at:canonicalTimestamp(recentDelta?.latest_at),
         basis:"latest_tracked_mutation",
         missing_reason:recentDelta?.available === false ? "RECENT_DELTA_SOURCE_UNAVAILABLE" : "RECENT_DELTA_HAS_NO_TRACKED_MUTATION"
+      }),
+      runtimePublication:Object.freeze({
+        data_at:canonicalTimestamp(runtimePublication?.latest_compile?.compiled_at),
+        basis:"compiled_at",
+        missing_reason:runtimePublication ? "RUNTIME_PUBLICATION_NO_COMPILE_RUN" : "RUNTIME_PUBLICATION_SOURCE_UNAVAILABLE"
       })
     });
     const missingReasonByKey=Object.freeze({
@@ -705,6 +770,7 @@
     nonTimelineRows = null,
     recentDeltaResult = null,
     systemIdentityResult = null,
+    runtimePublicationResult = null,
     sourceStates = {}
   } = {}) {
     const persons = personResult?.persons || [];
@@ -746,9 +812,10 @@
     const recentDelta = buildRecentDelta(recentDeltaResult);
     const recentActivityTimeline = buildRecentActivityTimeline(recentDelta);
     const systemStrip = buildSystemStrip(systemIdentityResult, sourceStates);
+    const publicationFunnel = buildPublicationFunnel(runtimePublicationResult);
     const coverageHeatmap = buildEraRegionHeatmap({ personResult, spatialIndex });
     const completenessMatrix = buildCompletenessMatrix({ personResult, domainResult, spatialIndex });
-    const sourceFreshness = buildSourceFreshness({ spatialIndex, recentDelta, sourceStates });
+    const sourceFreshness = buildSourceFreshness({ spatialIndex, recentDelta, runtimePublication:runtimePublicationResult, sourceStates });
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
       key,
@@ -780,6 +847,7 @@
       recent_delta:recentDelta,
       recent_activity_timeline:recentActivityTimeline,
       system_strip:systemStrip,
+      publication_funnel:publicationFunnel,
       coverage_heatmap:coverageHeatmap,
       completeness_matrix:completenessMatrix,
       source_freshness:sourceFreshness,
@@ -793,5 +861,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildDashboardSnapshot });
 });
