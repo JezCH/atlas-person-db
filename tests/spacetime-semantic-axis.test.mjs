@@ -39,7 +39,8 @@ test("readable-scale time axis starts at quarter-century detail and advances to 
 });
 
 test("below-100 time stages are rejected", () => {
-  assert.throws(() => semanticAxis.timeStage(0.99), /zoom must be >= 1/);
+  assert.throws(() => semanticAxis.timeStage(0.49), /zoom must be >= 0.5/);
+  assert.equal(typeof semanticAxis.timeStage(0.985), "object");
   assert.equal(semanticAxis.timeStage(3).code, "quarter-century");
   assert.equal(semanticAxis.timeStage(6.5).code, "quarter-century");
   assert.equal(semanticAxis.timeStage(6.5001).code, "decade");
