@@ -191,7 +191,7 @@ async function collect500(client) {
     const style=(el)=>getComputedStyle(el);
     const macro=qa(".spacetime-region-head-layer.is-macro .spacetime-region-head-band").map(el=>({left:parseFloat(el.style.left),width:parseFloat(el.style.width),text:(el.textContent||"").trim()}));
     const sub=qa(".spacetime-region-head-layer.is-subregion .spacetime-region-head-band").map(el=>({left:parseFloat(el.style.left),width:parseFloat(el.style.width),text:(el.textContent||"").trim()}));
-    const workspace=q(".spacetime-workspace"), frame=q(".spacetime-frame"), inspector=q("#spacetimeInspector");
+    const workspace=q(".spacetime-workspace"), frame=q(".spacetime-frame"), sidecar=q(".spacetime-sidecar"), inspector=q("#spacetimeInspector"), minimapSurface=q(".spacetime-minimap-surface");
     const placeLayer=q(".spacetime-region-head-layer.is-place");
     const header=q(".spacetime-region-head"), corner=q(".spacetime-sticky-corner"), scroll=q(".spacetime-scroll");
     const labelOverlap=(${overlapCode})(qa(".spacetime-track-label"));
@@ -217,8 +217,11 @@ async function collect500(client) {
       macro, sub,
       workspaceRect:rect(workspace),
       frameRect:rect(frame),
+      sidecarRect:rect(sidecar),
       inspectorRect:rect(inspector),
+      minimapSurfaceRect:rect(minimapSurface),
       workspaceGrid:style(workspace).gridTemplateColumns,
+      sidecarPosition:style(sidecar).position,
       inspectorPosition:style(inspector).position,
       headerHeight:rect(header).height,
       cornerWidth:rect(corner).width,
@@ -416,8 +419,12 @@ async function main() {
     assert(at500.reviewedPlaceBindingCount >= at500.reviewedDisplayPlaceCount, "Reviewed display Place plan exceeds the source registry at 500%", at500);
     assert(at500.placeMarkerCount === at500.reviewedDisplayPlaceCount, "Rendered Place marker count does not match the semantic-axis display plan at 500%", at500);
     assert(at500.placeVisibleCount === 0, "Reviewed Place markers are visibly leaking into 500%", at500);
-    assert(at500.inspectorPosition === "sticky", "Person/Activity inspector is not sticky", at500);
-    assert(at500.frameRect.right <= at500.inspectorRect.left + 0.5, "Map and inspector overlap at desktop viewport", at500);
+    assert(at500.sidecarPosition === "sticky", "Desktop sidecar is not sticky", at500);
+    assert(at500.inspectorPosition === "relative", "Inspector should scroll inside the sticky sidecar", at500);
+    assert(at500.frameRect.right <= at500.sidecarRect.left + 0.5, "Map and sidecar overlap at desktop viewport", at500);
+    assert(at500.sidecarRect.height <= at500.scrollHeight + 1, "Desktop sidecar exceeds the spacetime viewport height", at500);
+    assert(at500.minimapSurfaceRect.height <= 114, "Desktop minimap is taller than the compact contract", at500);
+    assert(at500.inspectorRect.height <= 78, "Empty desktop inspector is taller than the compact contract", at500);
     assert(Math.abs(at500.headerHeight - 36) < 0.75, "Space header height drifted from 36px", at500);
     assert(Math.abs(at500.cornerWidth - 140) < 0.75, "Shared axis width drifted from 140px", at500);
     assert(Math.abs(at500.cornerHeight - 36) < 0.75, "Shared corner height drifted from 36px", at500);
