@@ -68,6 +68,14 @@ test("desktop sidecar stays compact and expands the inspector only when populate
   assert.match(css, /\.spacetime-sidecar\{position:relative;top:auto;max-height:none;overflow:visible\}/);
 });
 
+test("desktop status and empty meanwhile rows stay compact above the table", () => {
+  assert.match(css, /@media\(min-width:761px\)\{[\s\S]*?\.spacetime-status-row\{align-items:center;overflow:visible;padding-bottom:0;margin-bottom:2px\}/);
+  assert.match(css, /\.spacetime-status-more>summary\{display:inline-flex;align-items:center;height:24px/);
+  assert.match(css, /\.spacetime-status-more-content\{display:none!important;position:absolute;z-index:85/);
+  assert.match(css, /\.spacetime-status-more\[open\]>.spacetime-status-more-content\{display:flex!important/);
+  assert.match(css, /\.spacetime-meanwhile\.is-empty\{min-height:16px;padding:0;margin:0 0 2px\}/);
+});
+
 test("spacetime top chrome keeps compact controls and moves precision guidance behind a disclosure", () => {
   assert.match(view, /<section class="spacetime-toolbar card">[\s\S]*?<div class="spacetime-controls">[\s\S]*?<details class="spacetime-precision-legend">[\s\S]*?<summary>표시 기준<\/summary>/);
   assert.match(view, /<div class="spacetime-precision-content">[\s\S]*?공간 배치 정밀도/);
