@@ -137,6 +137,10 @@
     if (reason === "DUPLICATE_REVIEW_TARGET_SOURCE_REQUIRES_ADMIN_CONTRACT") return "중복 후보 대상은 관리자 인증 영역에서 확인";
     if (reason === "RUNTIME_PUBLICATION_SOURCE_UNAVAILABLE") return "게시 파이프라인 원본 확인 불가";
     if (reason === "RUNTIME_PUBLICATION_NO_COMPILE_RUN") return "Runtime Compile 기록 없음";
+    if (reason === "RUNTIME_ACTIVATION_HISTORY_NOT_EXPOSED") return "Runtime 활성화 이력 미노출";
+    if (reason === "RUNTIME_ACTIVATION_LEDGER_NOT_APPLIED") return "Runtime 활성화 원장 migration 미적용";
+    if (reason === "RUNTIME_ACTIVATION_HISTORY_EMPTY") return "Runtime 활성화 이력 없음";
+    if (reason === "RUNTIME_ACTIVATION_HISTORY_UNAVAILABLE") return "Runtime 활성화 이력 확인 불가";
     return "세부 사유 미분류";
   }
 
@@ -181,6 +185,63 @@
       <span>${escapeHtml(funnel.compiler_version || "compiler 미확인")} · ${escapeHtml(formatTimestamp(funnel.compiled_at))}</span>
     </div>
     <div class="dashboard-timeline-summary dashboard-publication-exclusions">${exclusionRows || "<span>제외 사유 0건</span>"}</div>`;
+  }
+
+  function signedValue(number) {
+    if (number == null || !Number.isFinite(Number(number))) return "—";
+    const numeric=Number(number);
+    return numeric > 0 ? `+${value(numeric)}` : value(numeric);
+  }
+
+  function activationKindLabel(kind) {
+    if (kind === "compile_commit") return "Compile 반영";
+    if (kind === "baseline_observed") return "원장 도입 시점 관측";
+    return "활성화 유형 미확인";
+  }
+
+  function shortSha(sha) {
+    const raw=String(sha || "").trim();
+    return raw ? raw.slice(0,12) : "—";
+  }
+
+  function runtimeDeltaDriftMarkup(delta) {
+    if (!delta?.available) {
+      return `<div class="dashboard-heatmap-unavailable">${escapeHtml(reasonLabel(delta?.unavailable_reason) || "Runtime 활성화 이력을 확인할 수 없습니다.")}</div>`;
+    }
+    const latest=delta.latest;
+    const previous=delta.previous;
+    const reasonRows=(delta.exclusion_delta_rows || []).map((row)=>`<span><b>${escapeHtml(runtimeExclusionLabel(row.code))}</b> ${escapeHtml(signedValue(row.delta))}</span>`).join("");
+    const comparisonLabel=delta.comparison_available
+      ? (delta.compile_key_changed ? "직전과 다른 Compile 활성화" : "같은 Compile 재활성화")
+      : "직전 activation 기록 없음";
+    const projectionLabel=delta.latest_matches_projection
+      ? "최신 activation = 현재 Runtime projection"
+      : "최신 activation과 현재 Runtime projection 불일치";
+    const shaLabel=latest?.activation_kind === "compile_commit"
+      ? `Runtime ${shortSha(latest.runtime_sha)} · Authoring ${shortSha(latest.authoring_sha)}`
+      : "원장 도입 시점 관측 · 배포 SHA 없음";
+    return `<div class="dashboard-drift-grid">
+      <article class="dashboard-drift-card" data-drift-state="${delta.drift ? "drift" : "ready"}">
+        <small>최신 Runtime</small><strong>${value(latest?.row_count)}</strong><span>${escapeHtml(activationKindLabel(latest?.activation_kind))} · ${escapeHtml(formatTimestamp(latest?.activated_at))}</span>
+      </article>
+      <article class="dashboard-drift-card">
+        <small>직전 Runtime</small><strong>${previous ? value(previous.row_count) : "—"}</strong><span>${previous ? `${escapeHtml(activationKindLabel(previous.activation_kind))} · ${escapeHtml(formatTimestamp(previous.activated_at))}` : "비교 이력 없음"}</span>
+      </article>
+      <article class="dashboard-drift-card">
+        <small>Runtime Activity 증감</small><strong>${escapeHtml(signedValue(delta.runtime_activity_delta))}</strong><span>직전 activation 대비</span>
+      </article>
+      <article class="dashboard-drift-card">
+        <small>Runtime 제외 증감</small><strong>${escapeHtml(signedValue(delta.excluded_activity_delta))}</strong><span>현재 제외 ${value(latest?.excluded_activity_count)} Activity</span>
+      </article>
+    </div>
+    <div class="dashboard-publication-meta dashboard-drift-meta">
+      <span>${escapeHtml(comparisonLabel)}</span>
+      <span data-runtime-drift="${delta.drift ? "true" : "false"}">${escapeHtml(projectionLabel)}</span>
+      <span>${escapeHtml(shaLabel)}</span>
+    </div>
+    <div class="dashboard-timeline-summary dashboard-drift-reasons">
+      ${delta.comparison_available ? (reasonRows || "<span>제외 사유별 증감 0건</span>") : "<span>직전 activation이 없어 사유별 증감 비교 불가</span>"}
+    </div>`;
   }
 
   function environmentLabel(value) {
@@ -327,6 +388,7 @@
     const timeline = snapshot.recent_activity_timeline;
     const sys = snapshot.system_strip;
     const publication = snapshot.publication_funnel;
+    const runtimeDelta = snapshot.runtime_delta_drift;
     const heatmap = snapshot.coverage_heatmap;
     const completeness = snapshot.completeness_matrix;
     const freshness = snapshot.source_freshness;
@@ -380,6 +442,15 @@
         <div class="dashboard-progress-meta">
           <span>현재 Authoring과 현재 Runtime Compile snapshot을 구분해 표시</span>
           <span>Runtime 제외는 인물이 아닌 Activity 단위</span>
+        </div>
+      </section>
+
+      <section class="dashboard-panel card" aria-label="Runtime 직전 활성화 대비 변화와 projection drift">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">RUNTIME DELTA / DRIFT</p><h3>직전 활성화 대비 변화</h3></div><span>${runtimeDelta?.available ? (runtimeDelta.drift ? "DRIFT 감지" : runtimeDelta.comparison_available ? "활성화 비교" : "최신 activation 확인") : "활성화 이력 확인"}</span></div>
+        ${runtimeDeltaDriftMarkup(runtimeDelta)}
+        <div class="dashboard-progress-meta">
+          <span>직전 Production은 Compile 시각이 아닌 Runtime activation 원장 순서로 판정</span>
+          <span>증감 단위는 Activity · 재활성화도 별도 activation으로 보존</span>
         </div>
       </section>
 
