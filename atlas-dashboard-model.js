@@ -492,6 +492,101 @@
     });
   }
 
+  function buildRuntimeDeltaDrift(runtimePublicationResult = null) {
+    const history=runtimePublicationResult?.activation_history;
+    if (!history || typeof history !== "object") return Object.freeze({
+      available:false,
+      comparison_available:false,
+      drift:null,
+      latest_matches_projection:null,
+      latest:null,
+      previous:null,
+      runtime_activity_delta:null,
+      excluded_activity_delta:null,
+      compile_key_changed:null,
+      same_compile_reactivation:null,
+      exclusion_delta_rows:Object.freeze([]),
+      unavailable_reason:"RUNTIME_ACTIVATION_HISTORY_NOT_EXPOSED"
+    });
+    if (history.available !== true) return Object.freeze({
+      available:false,
+      comparison_available:false,
+      drift:null,
+      latest_matches_projection:null,
+      latest:null,
+      previous:null,
+      runtime_activity_delta:null,
+      excluded_activity_delta:null,
+      compile_key_changed:null,
+      same_compile_reactivation:null,
+      exclusion_delta_rows:Object.freeze([]),
+      unavailable_reason:text(history.reason) || "RUNTIME_ACTIVATION_HISTORY_UNAVAILABLE"
+    });
+
+    const latest=history.latest_recorded;
+    if (!latest || typeof latest !== "object") return Object.freeze({
+      available:false,
+      comparison_available:false,
+      drift:null,
+      latest_matches_projection:null,
+      latest:null,
+      previous:null,
+      runtime_activity_delta:null,
+      excluded_activity_delta:null,
+      compile_key_changed:null,
+      same_compile_reactivation:null,
+      exclusion_delta_rows:Object.freeze([]),
+      unavailable_reason:"RUNTIME_ACTIVATION_HISTORY_EMPTY"
+    });
+
+    const previous=history.previous_recorded && typeof history.previous_recorded === "object"
+      ? history.previous_recorded
+      : null;
+    const delta=previous && history.delta_from_previous && typeof history.delta_from_previous === "object"
+      ? history.delta_from_previous
+      : null;
+    const latestMatchesProjection=history.latest_matches_projection === true;
+    const exclusionDeltaRows=delta
+      ? Object.entries(delta.exclusion_summary || {})
+        .map(([code,count])=>Object.freeze({ code:text(code), delta:Number(count) }))
+        .filter((row)=>row.code && Number.isInteger(row.delta))
+        .sort((left,right)=>Math.abs(right.delta)-Math.abs(left.delta) || left.code.localeCompare(right.code))
+      : [];
+
+    return Object.freeze({
+      available:true,
+      comparison_available:Boolean(previous && delta),
+      drift:!latestMatchesProjection,
+      latest_matches_projection:latestMatchesProjection,
+      latest:Object.freeze({
+        id:text(latest.id) || null,
+        activation_kind:text(latest.activation_kind) || null,
+        compile_key:text(latest.compile_key) || null,
+        row_count:Number(latest.row_count),
+        activated_at:canonicalTimestamp(latest.activated_at),
+        runtime_sha:text(latest.runtime_sha) || null,
+        authoring_sha:text(latest.authoring_sha) || null,
+        excluded_activity_count:Number(latest.compile?.excluded_row_count)
+      }),
+      previous:previous ? Object.freeze({
+        id:text(previous.id) || null,
+        activation_kind:text(previous.activation_kind) || null,
+        compile_key:text(previous.compile_key) || null,
+        row_count:Number(previous.row_count),
+        activated_at:canonicalTimestamp(previous.activated_at),
+        runtime_sha:text(previous.runtime_sha) || null,
+        authoring_sha:text(previous.authoring_sha) || null,
+        excluded_activity_count:Number(previous.compile?.excluded_row_count)
+      }) : null,
+      runtime_activity_delta:delta ? Number(delta.runtime_activity_count) : null,
+      excluded_activity_delta:delta ? Number(delta.excluded_activity_count) : null,
+      compile_key_changed:delta ? delta.compile_key_changed === true : null,
+      same_compile_reactivation:delta ? delta.compile_key_changed !== true : null,
+      exclusion_delta_rows:Object.freeze(exclusionDeltaRows),
+      unavailable_reason:null
+    });
+  }
+
   function buildSourceFreshness({ spatialIndex = null, recentDelta = null, runtimePublication = null, sourceStates = {} } = {}) {
     const timestampByKey=Object.freeze({
       spatialIndex:Object.freeze({
@@ -838,6 +933,7 @@
     const recentActivityTimeline = buildRecentActivityTimeline(recentDelta);
     const systemStrip = buildSystemStrip(systemIdentityResult, sourceStates);
     const publicationFunnel = buildPublicationFunnel(runtimePublicationResult);
+    const runtimeDeltaDrift = buildRuntimeDeltaDrift(runtimePublicationResult);
     const coverageHeatmap = buildEraRegionHeatmap({ personResult, spatialIndex });
     const completenessMatrix = buildCompletenessMatrix({ personResult, domainResult, spatialIndex });
     const sourceFreshness = buildSourceFreshness({ spatialIndex, recentDelta, runtimePublication:runtimePublicationResult, sourceStates });
@@ -873,6 +969,7 @@
       recent_activity_timeline:recentActivityTimeline,
       system_strip:systemStrip,
       publication_funnel:publicationFunnel,
+      runtime_delta_drift:runtimeDeltaDrift,
       coverage_heatmap:coverageHeatmap,
       completeness_matrix:completenessMatrix,
       source_freshness:sourceFreshness,
@@ -886,5 +983,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildRuntimeDeltaDrift, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildDashboardSnapshot });
 });
