@@ -1345,6 +1345,8 @@
       if (!event.target?.closest?.(".spacetime-canvas")) return;
       if (interactiveTarget(event.target)) return;
 
+      event.preventDefault();
+      scroll.classList.add("is-mouse-pan-armed");
       drag = {
         pointer_id: event.pointerId,
         start_x: event.clientX,
@@ -1381,6 +1383,7 @@
         if (scroll.hasPointerCapture?.(event.pointerId)) scroll.releasePointerCapture(event.pointerId);
       } catch {}
       drag = null;
+      scroll.classList.remove("is-mouse-pan-armed");
       scroll.classList.remove("is-mouse-panning");
       if (!wasActive) suppressClick = false;
     };

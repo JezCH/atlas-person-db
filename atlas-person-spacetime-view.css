@@ -144,7 +144,7 @@
 .spacetime-year-axis[data-axis-stage="decade"] span,.spacetime-year-axis[data-axis-stage="quarter-century"] span{font-size:9px}
 .spacetime-year-axis{cursor:crosshair}
 .spacetime-canvas{position:absolute;left:var(--spacetime-axis-width,140px);top:var(--spacetime-header-height,36px);background:#fff;contain:layout paint style}
-@media(hover:hover) and (pointer:fine){.spacetime-canvas{cursor:grab}.spacetime-scroll.is-mouse-panning,.spacetime-scroll.is-mouse-panning .spacetime-canvas{cursor:grabbing!important;user-select:none}}
+@media(hover:hover) and (pointer:fine){.spacetime-canvas{cursor:grab}.spacetime-scroll.is-mouse-pan-armed,.spacetime-scroll.is-mouse-pan-armed *{user-select:none}.spacetime-scroll.is-mouse-panning,.spacetime-scroll.is-mouse-panning .spacetime-canvas{cursor:grabbing!important}}
 .spacetime-runtime-layer{position:absolute;inset:0;pointer-events:none;contain:layout style}
 .spacetime-runtime-layer button{pointer-events:auto}
 .spacetime-runtime-layer .spacetime-label-connector{pointer-events:none}
