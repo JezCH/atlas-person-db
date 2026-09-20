@@ -98,7 +98,11 @@ function createRuntimeCompileHandler({
     try {
       client = await clientFactory(databaseUrl, { env });
       const migration = await applyMigrations(client);
-      const outcome = await compileProjection(client, { dryRun:payload.dryRun });
+      const outcome = await compileProjection(client, {
+        dryRun:payload.dryRun,
+        runtimeSha:payload.runtimeSha,
+        authoringSha:payload.authoringSha
+      });
       sendJson(res, 200, {
         ok:true,
         marker:RUNTIME_COMPILE_MARKER,
