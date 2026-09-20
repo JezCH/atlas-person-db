@@ -216,13 +216,16 @@ async function collect500(client) {
       scrollHeight:rect(scroll).height,
       scrollOverflowX:style(scroll).overflowX,
       scrollOverflowY:style(scroll).overflowY,
+      domPersonCount:Number((q("#spacetimeDomPersonCount")?.textContent||"0").trim())||0,
+      domLabelCount:Number((q("#spacetimeDomLabelCount")?.textContent||"0").trim())||0,
+      deferredLabelCount:Number((q("#spacetimeDeferredLabelCount")?.textContent||"0").trim())||0,
       labelOverlap,
       bandContainment
     };
   })()`);
 }
 
-async function collect800(client, geometry500) {
+async function collect1200(client, geometry500) {
   return evaluate(client, `(() => {
     const q=(s)=>document.querySelector(s);
     const qa=(s)=>[...document.querySelectorAll(s)];
@@ -242,6 +245,9 @@ async function collect800(client, geometry500) {
       placeMarkerCount:markers.length,
       placeMarkers:markers.map(rect),
       placeOverlap,
+      domPersonCount:Number((q("#spacetimeDomPersonCount")?.textContent||"0").trim())||0,
+      domLabelCount:Number((q("#spacetimeDomLabelCount")?.textContent||"0").trim())||0,
+      deferredLabelCount:Number((q("#spacetimeDeferredLabelCount")?.textContent||"0").trim())||0,
       labelOverlap,
       bandContainment,
       macro,sub,
@@ -383,15 +389,16 @@ async function main() {
     assert(Math.abs(at500.cornerWidth - 140) < 0.75, "Shared axis width drifted from 140px", at500);
     assert(Math.abs(at500.cornerHeight - 36) < 0.75, "Shared corner height drifted from 36px", at500);
     assert(at500.labelOverlap.count === 0, "Visible Person labels overlap at 500%", at500.labelOverlap);
-    assert(at500.bandContainment.label_violation_count === 0, "Person labels escape their reviewed presentation bands at 500%", at500.bandContainment);
+    assert(at500.deferredLabelCount === 0, "Person names are deferred at the 500% readable floor", at500);
+    assert(at500.domLabelCount === at500.domPersonCount, "Not every viewport Person has a visible name at 500%", at500);
     assert(at500.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 500%", at500.bandContainment);
     await screenshot(client, "spacetime-500.png");
 
-    for (let i=0;i<3;i++) {
+    for (let i=0;i<4;i++) {
       await evaluate(client, "document.querySelector('#spacetimeCameraZoomIn')?.click()");
       await sleep(350);
     }
-    await waitFor(client, "document.querySelector('#spacetimeCameraZoomValue')?.textContent?.trim() === '800%'", 10000);
+    await waitFor(client, "document.querySelector('#spacetimeCameraZoomValue')?.textContent?.trim() === '1200%'", 10000);
     await sleep(800);
 
     let uncertaintyCount = await evaluate(client, "document.querySelectorAll('.spacetime-spatial-uncertainty').length");
@@ -407,19 +414,20 @@ async function main() {
       uncertaintyCount = await evaluate(client, "document.querySelectorAll('.spacetime-spatial-uncertainty').length");
     }
 
-    const at800 = await collect800(client, { macro:at500.macro, sub:at500.sub });
-    at800.uncertaintyCount = uncertaintyCount;
-    assert(at800.zoom === "800%", "Maximum visual zoom is not 800%", at800);
-    assert(at800.placeOpacity > 0.99, "Reviewed Place layer is not fully visible at 800%", at800);
-    assert(at800.placeMarkerCount === EXPECTED_REVIEWED_PLACE_COUNT, "Unexpected reviewed Place marker count at 800%", at800);
-    assert(at800.placeOverlap.count === 0, "Reviewed Place header markers overlap at 800%", at800.placeOverlap);
-    assert(at800.labelOverlap.count === 0, "Visible Person labels overlap at 800%", at800.labelOverlap);
-    assert(at800.bandContainment.label_violation_count === 0, "Person labels escape their reviewed presentation bands at 800%", at800.bandContainment);
-    assert(at800.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 800%", at800.bandContainment);
-    assertNormalizedGeometryInvariant(at500.macro, at800.macro, "Macroregion");
-    assertNormalizedGeometryInvariant(at500.sub, at800.sub, "Subregion");
-    assert(at800.uncertaintyCount > 0, "No C6 spatial uncertainty evidence was rendered in the inspected 800% viewport", at800);
-    await screenshot(client, "spacetime-800.png");
+    const at1200 = await collect1200(client, { macro:at500.macro, sub:at500.sub });
+    at1200.uncertaintyCount = uncertaintyCount;
+    assert(at1200.zoom === "800%", "Maximum visual zoom is not 1200%", at1200);
+    assert(at1200.placeOpacity > 0.99, "Reviewed Place layer is not fully visible at 1200%", at1200);
+    assert(at1200.placeMarkerCount === EXPECTED_REVIEWED_PLACE_COUNT, "Unexpected reviewed Place marker count at 1200%", at1200);
+    assert(at1200.placeOverlap.count === 0, "Reviewed Place header markers overlap at 1200%", at1200.placeOverlap);
+    assert(at1200.labelOverlap.count === 0, "Visible Person labels overlap at 1200%", at1200.labelOverlap);
+    assert(at1200.deferredLabelCount === 0, "Person names are deferred at 1200%", at1200);
+    assert(at1200.domLabelCount === at1200.domPersonCount, "Not every viewport Person has a visible name at 1200%", at1200);
+    assert(at1200.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 1200%", at1200.bandContainment);
+    assertNormalizedGeometryInvariant(at500.macro, at1200.macro, "Macroregion");
+    assertNormalizedGeometryInvariant(at500.sub, at1200.sub, "Subregion");
+    assert(at1200.uncertaintyCount > 0, "No C6 spatial uncertainty evidence was rendered in the inspected 1200% viewport", at1200);
+    await screenshot(client, "spacetime-1200.png");
 
     await waitFor(client, "document.querySelectorAll('.spacetime-track-label').length > 0", 10000);
     const personSelected = await evaluate(client, `(() => {
@@ -522,13 +530,13 @@ async function main() {
       checked_at:new Date().toISOString(),
       live,
       at_500_percent:at500,
-      at_800_percent:at800,
+      at_800_percent:at1200,
       interaction,
       mobile,
       console_errors:filteredConsoleErrors,
       resource_errors:resourceErrors,
       runtime_exceptions:exceptions,
-      screenshots:["spacetime-500.png","spacetime-800.png","spacetime-activity-meanwhile.png","spacetime-mobile-390.png"],
+      screenshots:["spacetime-500.png","spacetime-1200.png","spacetime-activity-meanwhile.png","spacetime-mobile-390.png"],
       status:"PASS"
     };
     fs.writeFileSync(path.join(OUT_DIR,"visual-acceptance.json"), JSON.stringify(report,null,2)+"\n");
