@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-20T10:27:00.000Z",
+  "generated_at": "2026-09-20T12:06:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -552,7 +552,6 @@
     "d8ff4c80-e0a5-4257-aa94-ce27f3e6a9ab": "europe",
     "d9173c8d-246d-4147-9a82-69d890e0db7b": "europe",
     "d9e72cdf-abff-58e8-a874-3b977fcd8ef7": "central-asia",
-    "da99e975-fba4-510b-bb1c-6937d443abf5": "europe",
     "db21d06f-3505-4f1c-8cdf-e7810330c3be": "africa",
     "db80bdb8-2d95-43d8-8624-1c59837408a7": "oceania",
     "db8e34c8-bffe-58d9-a3ca-f051c75133db": "europe",
@@ -2098,7 +2097,6 @@
     "d8ff4c80-e0a5-4257-aa94-ce27f3e6a9ab": "balkans",
     "d9173c8d-246d-4147-9a82-69d890e0db7b": "balkans",
     "d9e72cdf-abff-58e8-a874-3b977fcd8ef7": "western-central-asia",
-    "da99e975-fba4-510b-bb1c-6937d443abf5": "northern-europe",
     "db21d06f-3505-4f1c-8cdf-e7810330c3be": "horn-of-africa",
     "db80bdb8-2d95-43d8-8624-1c59837408a7": "pacific-islands",
     "db8e34c8-bffe-58d9-a3ca-f051c75133db": "balkans",
