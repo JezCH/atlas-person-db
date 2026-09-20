@@ -604,7 +604,7 @@
         const y2 = Number(projection?.yForOrdinal?.(segment.end_ordinal));
         if (!Number.isFinite(y1) || !Number.isFinite(y2)) continue;
         const top = Math.min(y1, y2);
-        const bottom = Math.max(y1, y2);
+        const bottom = top + Math.max(2, Math.abs(y2 - y1));
         const overlapTop = Math.max(top, visibleTop);
         const overlapBottom = Math.min(bottom, visibleBottom);
         if (overlapBottom < overlapTop) continue;
