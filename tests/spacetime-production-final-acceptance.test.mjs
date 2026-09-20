@@ -64,7 +64,9 @@ test("Production visual acceptance requires every viewport Person name at 500 an
   assert.match(verifier, /spacetimeCameraZoomReset'\)\?\.click/);
   assert.match(verifier, /at500\.deferredLabelCount === 0/);
   assert.match(verifier, /at500\.domLabelCount === at500\.domPersonCount/);
-  assert.match(verifier, /minimumAcceptanceZoom === "100%"/);
+  assert.match(verifier, /minimumAcceptance\.zoomOutDisabled/);
+  assert.match(verifier, /minimumAcceptance\.minimumPercent >= 100/);
+  assert.match(verifier, /Math\.abs\(minimumAcceptance\.worldWidth - minimumAcceptance\.usableWidth\) <= 2/);
   assert.match(verifier, /at1500\.deferredLabelCount === 0/);
   assert.match(verifier, /at1500\.domLabelCount === at1500\.domPersonCount/);
   assert.match(verifier, /spacetime-1500\.png/);
