@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:republic-of-austria-after-reviewed-merge:2026-09-20:v1",
+  "release_order": 602,
+  "evidence": {
+    "decision": "Reviewed same-identity state-form cleanup after exact Activity relink, temporal designation preservation, and reviewed Spatial source removal.",
+    "review_checkpoint": "#977 comment 5748467847",
+    "designation_relink_merge_sha": "4721d978c587de9dc593b3cba3f76d242b57934f",
+    "correction_apply_run": 35497520639,
+    "spatial_preservation_merge_sha": "e271a3250feecfa6ab2d9c8964c100e615fc0a68",
+    "production_readback": "Republic of Austria has activity_count=0. Austria has three Activities; Dollfuss d380bec7-54de-4f61-bfcb-15dae6a3dcfd and Waldheim f05d4307-7efc-402f-894c-b14035d71d73 preserve Republic of Austria temporal designations, while Karl Renner b1005e47-3599-4244-b000-079ddbbf7c2a remains unchanged. Canonical Spatial output no longer contains the source UUID."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:republic-of-austria-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "02e66261-7798-4144-b298-9bc41ee2215b",
+        "canonical_key": "Republic of Austria",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Republic of Austria",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "오스트리아 공화국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
