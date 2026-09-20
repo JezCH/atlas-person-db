@@ -82,7 +82,7 @@
   function timestampBasisLabel(basis) {
     if (basis === "generated_at") return "생성 시각";
     if (basis === "latest_tracked_mutation") return "최근 추적 변경";
-    if (basis === "compiled_at") return "Compile 시각";
+    if (basis === "compiled_at") return "Compile 원장 시각";
     return "미제공";
   }
 
@@ -175,7 +175,7 @@
     </div>
     <div class="dashboard-publication-meta">
       <span>${escapeHtml(deltaLabel)}</span>
-      <span>${funnel.projection_matches_latest_compile ? "Runtime projection = 현재 Runtime Compile 출력" : "Runtime projection과 현재 Runtime Compile 출력 불일치"}</span>
+      <span>${funnel.projection_matches_active_compile ? "Runtime projection = 현재 Runtime Compile 출력" : "Runtime projection과 현재 Runtime Compile 출력 불일치"}</span>
       <span>${escapeHtml(funnel.compiler_version || "compiler 미확인")} · ${escapeHtml(formatTimestamp(funnel.compiled_at))}</span>
     </div>
     <div class="dashboard-timeline-summary dashboard-publication-exclusions">${exclusionRows || "<span>제외 사유 0건</span>"}</div>`;
@@ -373,7 +373,7 @@
       </section>
 
       <section class="dashboard-panel card" aria-label="Authoring에서 Runtime까지 게시 파이프라인">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">AUTHORING → COMPILE → RUNTIME</p><h3>게시 파이프라인</h3></div><span>${publication?.sealed ? `최근 Compile ${escapeHtml(formatTimestamp(publication.compiled_at))}` : "Compile 상태 확인"}</span></div>
+        <div class="dashboard-panel-head"><div><p class="eyebrow">AUTHORING → COMPILE → RUNTIME</p><h3>게시 파이프라인</h3></div><span>${publication?.sealed ? `Compile 원장 ${escapeHtml(formatTimestamp(publication.compiled_at))}` : "Compile 상태 확인"}</span></div>
         ${publicationFunnelMarkup(publication)}
         <div class="dashboard-progress-meta">
           <span>현재 Authoring과 현재 Runtime Compile snapshot을 구분해 표시</span>
