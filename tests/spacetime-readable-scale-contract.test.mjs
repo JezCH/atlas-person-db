@@ -28,6 +28,11 @@ test("spacetime keeps 500 percent default, 1500 maximum, and a viewport-fit effe
   assert.match(view, /return Math\.min\(CAMERA_MAX_ZOOM, Math\.max\(minimum, numeric\)\);/);
   assert.match(view, /usableWidth \/ worldWidthAtOne/);
   assert.doesNotMatch(view, />100%<\/button>/);
+  assert.match(view, /function visibleRailLabelItems\(/);
+  assert.match(view, /presentationLayout\.geometryForSegment\(presentation, segment\)/);
+  assert.match(view, /viewport_label_anchor: true/);
+  assert.match(view, /packTrackLabels\(personItems, state\.timelineHeight, state\.contentWidth, Boolean\(state\.needle\), cullRect\)/);
+  assert.doesNotMatch(view, /performance\.cullProjectedItems\(state\.projectedTracks, cullRect, forced\)/);
 });
 
 test("reviewed compact label geometry preserves text readability while reducing collision waste", () => {
@@ -43,7 +48,7 @@ test("reviewed compact label geometry preserves text readability while reducing 
   assert.doesNotMatch(css, /@media\(max-width:1100px\)\{\.spacetime-track-label\{font-size:9px\}/);
   assert.match(view, /borrowHorizontalSpace:true/);
   assert.match(view, /preserveFullTextWidth:true/);
-  assert.match(view, /maxHorizontalShift:worldWidth/);
+  assert.match(view, /maxHorizontalShift:packingWidth/);
   assert.doesNotMatch(view, /Math\.max\(38, Math\.min\(156/);
 });
 
@@ -130,15 +135,15 @@ test("presentation geometry owns rail and label pixels without changing global g
   assert.match(view, /data-spacetime-rail-basis=/);
 });
 
-test("label packing keeps each label zone as a preference while borrowing shared world space", () => {
+test("label packing keeps each label zone as a preference while borrowing visible viewport space", () => {
   assert.match(view, /presentation_band_code/);
   assert.match(view, /label_zone_left/);
   assert.match(view, /label_zone_right/);
   assert.match(view, /min_left:/);
   assert.match(view, /max_right:/);
-  assert.match(view, /width:worldWidth/);
+  assert.match(view, /width:packingWidth/);
   assert.match(view, /borrowHorizontalSpace:true/);
   assert.match(view, /preserveFullTextWidth:true/);
-  assert.match(view, /maxHorizontalShift:worldWidth/);
+  assert.match(view, /maxHorizontalShift:packingWidth/);
   assert.doesNotMatch(view, /const groups = new Map\(\)/);
 });

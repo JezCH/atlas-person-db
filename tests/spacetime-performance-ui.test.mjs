@@ -28,7 +28,7 @@ test("only virtualized rail uncertainty label and Activity DOM layers remain", a
   assert.doesNotMatch(view, /spacetimePointLayer/);
   assert.doesNotMatch(view, /spacetimeDensityCanvas/);
   assert.ok(view.includes("performance.viewportWorldRect("));
-  assert.ok(view.includes("performance.cullProjectedItems(state.projectedTracks"));
+  assert.ok(view.includes("visibleRailLabelItems("));
   assert.ok(view.includes("performance.cullTrackSegments(state.visibleTracks"));
   assert.ok(view.includes('scroll.addEventListener("scroll", schedule'));
   assert.ok(view.includes("requestAnimationFrame(refresh)"));

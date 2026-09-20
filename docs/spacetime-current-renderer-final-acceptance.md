@@ -39,20 +39,20 @@ The legacy point-only Person renderer remains prohibited, so the current semanti
 
 ## Shared-world Person name presentation
 
-The historical label engine remains the primary deterministic packer, but Person names are no longer packed as isolated per-band pools. From the 500% default scale upward, every viewport Person is offered one shared horizontal presentation overlay across the stable world width.
+The historical label engine remains the primary deterministic packer, but Person names are no longer packed as isolated per-band pools. From the 500% default scale upward, every Person whose rail actually intersects the visible data viewport is offered one name in the visible viewport presentation layer.
 
-Each Person keeps its reviewed presentation band and label zone as the preferred location nearest its historical/presentation anchor. When that preferred interval cannot hold the complete name without collision, the label may borrow otherwise empty horizontal presentation space outside that band. This is presentation-only borrowing: the Person rail, historical X/Y, Activity chronology, macro/subregion geometry, and world width never move.
+Each Person keeps its reviewed presentation band and label zone as the preferred horizontal origin. When that interval cannot hold the complete name without collision, the label may borrow otherwise empty horizontal space inside the current data viewport. For a rail that crosses the viewport while its former representative midpoint is off-screen, the label anchor is chosen along that same visible Activity rail interval. This is presentation-only anchoring: the Person rail, Activity chronology, normalized historical coordinates, macro/subregion geometry, and world width never move.
 
 The browser-only guard, `atlas-person-spacetime-label-overlap-guard.js`, follows the same rule for rare real-box collisions:
 
-- it never writes label `top`, historical Y, rail Y, Activity chronology, world coordinates, or band geometry;
-- it may move a conflicting Person label only horizontally within the world presentation overlay;
+- it never rewrites rail Y, Activity chronology, world coordinates, or band geometry; the virtualization layer may choose a label-only anchor along the same visible rail interval, while the collision guard remains horizontal-only;
+- it may move a conflicting Person label only horizontally within the current visible data viewport;
 - the declared spatial band remains label metadata and a preferred origin, not a hard clipping boundary;
 - selected and Meanwhile-active labels retain placement priority;
 - connector geometry is updated when a shifted label has a horizontal connector;
 - impossible capacity is reported rather than resolved by vertical displacement, local region expansion, or smaller text.
 
-The completion rule for the default-and-above camera range is: at both 500% and 1500%, browser-visible Person label overlap must be zero, the deferred Person-label count must be zero, and the number of rendered Person names must equal the number of viewport Persons.
+The completion rule for the default-and-above camera range is: at both 500% and 1500%, browser-visible Person label overlap must be zero, the deferred Person-label count must be zero, and the actual visible rail Person ID set must exactly equal the actual visible Person-label ID set.
 
 ## Final exact-SHA Production gate
 

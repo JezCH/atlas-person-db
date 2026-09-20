@@ -32,12 +32,12 @@ test('Person track label rendering remains delegated to the horizontal label eng
   assert.match(block, /labelEngine\.packLabels\(/);
   assert.match(block, /borrowHorizontalSpace:\s*true/);
   assert.match(block, /preserveFullTextWidth:\s*true/);
-  assert.match(block, /width:worldWidth/);
+  assert.match(block, /width:packingWidth/);
   assert.doesNotMatch(block, /const groups = new Map\(\)/);
   assert.doesNotMatch(block, /presentation_label_zone_missing/);
 });
 
-test('virtualized Person packing supplies the full world presentation width', () => {
-  assert.match(view, /packTrackLabels\(personItems, state\.timelineHeight, state\.contentWidth, Boolean\(state\.needle\)\)/);
+test('virtualized Person packing uses the current visible data viewport', () => {
+  assert.match(view, /packTrackLabels\(personItems, state\.timelineHeight, state\.contentWidth, Boolean\(state\.needle\), cullRect\)/);
   assert.match(view, /atlas-person-spacetime-label-engine\.js\?v=20260920-global-name-overlay/);
 });
