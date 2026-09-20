@@ -20,15 +20,16 @@ test("time projection is globally linear at every supported camera zoom", () => 
   }
 });
 
-test("camera zoom keeps a 100 percent technical floor, viewport-fit effective floor, and 1500 maximum", () => {
-  assert.match(view, /const CAMERA_MIN_ZOOM = 1;/);
+test("camera zoom keeps a 50 percent technical safety floor, viewport-fit effective floor, and 1500 maximum", () => {
+  assert.match(view, /const CAMERA_MIN_ZOOM = 0\.5;/);
   assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);
   assert.match(view, /const CAMERA_MAX_ZOOM = 15;/);
   assert.match(view, /const CAMERA_ZOOM_STEP = 1\.25;/);
   assert.match(view, /viewportFitMinimumZoom\(scroll, cameraZoom\)/);
   assert.match(view, /Math\.max\(minimum, numeric\)/);
   assert.doesNotMatch(view, /TIME_CAMERA_MIN_ZOOM/);
-  assert.throws(() => timeProjection.createUniformTimeProjection(-3000, 2026, 1000, 0.99), /zoom must be >= 1/);
+  assert.throws(() => timeProjection.createUniformTimeProjection(-3000, 2026, 1000, 0.49), /zoom must be >= 0.5/);
+  assert.equal(timeProjection.createUniformTimeProjection(-3000, 2026, 1000, 0.985).zoom, 0.985);
 });
 
 test("unified camera owns both screen axes", () => {

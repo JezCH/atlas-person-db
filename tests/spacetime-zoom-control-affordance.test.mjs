@@ -65,7 +65,7 @@ test("production page loads the unified spacetime camera control state", () => {
   assert.doesNotMatch(controlCss, /spacetime-time-camera/);
 });
 
-test("100 percent remains the technical floor while the effective minimum can fit the viewport", () => {
+test("viewport-fit can become the effective minimum on either side of 100 percent", () => {
   const api = loadControlApi();
   const state = zoomMount("500%");
 
@@ -74,7 +74,7 @@ test("100 percent remains the technical floor while the effective minimum can fi
   assert.equal(state.zoomIn.disabled, false);
   assert.equal(state.reset.disabled, true);
 
-  state.zoomValue.textContent = "100%";
+  state.zoomValue.textContent = "50%";
   assert.equal(api.syncZoomControlState(state.mount), true);
   assert.equal(state.zoomOut.disabled, true);
   assert.equal(state.zoomIn.disabled, false);
@@ -116,7 +116,7 @@ test("visible bounds stay aligned with the unified renderer camera contract", ()
   assert.ok(minMatch);
   assert.ok(maxMatch);
   assert.ok(adapterMaxMatch);
-  assert.equal(Number(minMatch[1]) * 100, 100);
+  assert.equal(Number(minMatch[1]) * 100, 50);
   assert.equal(Number(maxMatch[1]) * 100, 1500);
   assert.equal(Number(adapterMaxMatch[1]), Number(maxMatch[1]) * 100);
   assert.match(viewSource, /function viewportFitMinimumZoom\(scroll, referenceZoom = cameraZoom\)/);
@@ -135,7 +135,7 @@ test("desktop toolbar uses a compact reset label without parsing it as a percent
   assert.match(viewCss, /\.spacetime-camera button,\.spacetime-camera output\{height:30px/);
 });
 
-test("touch pinch inside spacetime controls the internal 100 to 1500 percent camera", () => {
+test("touch pinch inside spacetime controls the internal viewport-fit to 1500 percent camera", () => {
   assert.match(viewSource, /function bindPinchCameraZoom\(mount\)/);
   assert.match(viewSource, /event\.pointerType !== "touch"/);
   assert.match(viewSource, /event\.target\?\.closest\?\.\("\.spacetime-scroll"\)/);

@@ -4,9 +4,9 @@ Status: authoritative completion gate for the current Production `시공간 인�
 
 ## Readable-scale decision
 
-The camera supports **100%–1500%**, but the effective UI minimum is **viewport-fit**: the world width must exactly fill the available spacetime table viewport. **500% remains the default/reset scale**.
+The camera uses a **viewport-fit effective minimum up to 1500%**: the world width must exactly fill the available spacetime table viewport at the minimum. **500% remains the default/reset scale**. A 50% internal safety floor exists only so viewport-fit can land slightly below 100% on layouts where that is required; it is not a recommended user zoom.
 
-- technical zoom floor: 100%
+- internal technical safety floor: 50%
 - effective UI minimum: viewport-fit (world width = available table viewport width)
 - default/reset zoom: 500%
 - maximum zoom: 1500%
@@ -17,7 +17,7 @@ The camera supports **100%–1500%**, but the effective UI minimum is **viewport
 - shared axis/header chrome is compacted globally to 140 px / 36 px and may not vary by region or era
 - local density-based compression is forbidden
 - a sparse region or era may not be folded independently
-- no runtime, UI, test, or compatibility path may expose a scale below 100%
+- no runtime, UI, test, or compatibility path may zoom below the viewport-fit minimum; the 50% internal floor is only a safety bound
 
 The 0.748 factor is presentation compression only. It applies uniformly to the whole X and Y extent and never changes normalized historical coordinates. Horizontal base-world sizing is also data-independent: viewport width is clamped to a global 900–1,275 px base before zoom/compression, so large monitors do not create extra world-space. The readable label geometry keeps the 10px font and the exact prior text-content budget while using a 18px label box, a 2px collision gap, and 1px horizontal padding. The outer min/max widths are reduced from 38/156 px to 30/148 px only because per-label horizontal chrome falls from 12 px to 4 px; the usable text area remains 26 px minimum and 144 px maximum. Shared non-world chrome is also globally compact: the fixed left axis is 140px and the sticky region header is 36px high; these dimensions are renderer-owned and identical across all regions and eras.
 
@@ -30,7 +30,7 @@ Person / Activity
   -> Precision-aware Spatial Compile
   -> Person Track Compiler
   -> Stable Spacetime World
-  -> Unified 2D Camera (100%-1500%, default 500%)
+  -> Unified 2D Camera (viewport-fit minimum to 1500%, default 500%)
   -> readable labels + Person rails -> Activity detail
 ```
 
@@ -44,7 +44,7 @@ A reviewed Place point uses a zero-width world range (`x_min = x_anchor = x_max`
 
 ## Spatial semantic LOD
 
-The horizontal world geometry never changes with semantic detail. The 100% value is only a technical floor; the UI does not zoom out far enough to make the world narrower than the table viewport. Mobile presentation keeps macroregion priority through the 500% default range. Above 720%, reviewed Place semantics begin to appear and reach full opacity at 800%.
+The horizontal world geometry never changes with semantic detail. The UI minimum is the exact viewport-fit scale, so the world is neither narrower nor wider than the available table viewport at the minimum. The internal 50% safety floor is not the product minimum. Mobile presentation keeps macroregion priority through the 500% default range. Above 720%, reviewed Place semantics begin to appear and reach full opacity at 800%.
 
 Place semantic markers:
 - come only from `spatialCompile.REVIEWED_PLACE_BINDINGS`;
@@ -81,9 +81,9 @@ Macroregions remain equal stable bands in normalized world space. Subregions are
 
 ## Interaction
 
-The Production surface must provide continuous two-axis camera behavior from the viewport-fit effective minimum up to 1500%, with a 100% technical floor, pointer-centered zoom, Person search/focus, minimap context, inspector evidence, Meanwhile exploration, and reset to 500%.
+The Production surface must provide continuous two-axis camera behavior from the viewport-fit effective minimum up to 1500%, with a 50% internal safety floor, pointer-centered zoom, Person search/focus, minimap context, inspector evidence, Meanwhile exploration, and reset to 500%.
 
-A camera action that produces a scale below 100% or makes the rendered world narrower than the available table viewport is prohibited.
+A camera action that zooms below the viewport-fit minimum or makes the rendered world narrower than the available table viewport is prohibited.
 
 ## Sticky Person / Activity inspector
 
@@ -127,7 +127,7 @@ Permanent dense windows:
 1. Europe, AD 1800–1950.
 2. East Asia, AD 500–1900.
 
-At sufficient zoom: label overlap count = 0, rail/Activity historical Y deviation = 0 px, deferred visible labels = 0, and every visible rail Person has a visible name. Reducing below 100% is never an acceptance strategy.
+At sufficient zoom: label overlap count = 0, rail/Activity historical Y deviation = 0 px, deferred visible labels = 0, and every visible rail Person has a visible name. Reducing below the viewport-fit minimum is never an acceptance strategy.
 
 These two dense-label gates are locked by the reproducible Production snapshot in `tests/fixtures/spacetime-dense-label-snapshot.json`. The snapshot is packed at 800% using the minimum 900 px base world, the shared 0.748 compression, and the production label engine; CI requires zero overlap, zero deferred labels, and zero historical-Y deviation for both permanent dense windows.
 
@@ -196,7 +196,7 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
-Changing the 100% technical floor, viewport-fit effective minimum policy, 500% default/reset, 1500% ceiling, 0.748 shared compression, 900–1,275 px base-world bounds, 140/36 px shared chrome geometry, or prohibition on local compression requires explicit review.
+Changing the 50% internal safety floor, viewport-fit effective minimum policy, 500% default/reset, 1500% ceiling, 0.748 shared compression, 900–1,275 px base-world bounds, 140/36 px shared chrome geometry, or prohibition on local compression requires explicit review.
 
 ## Original-plan reconciliation
 
