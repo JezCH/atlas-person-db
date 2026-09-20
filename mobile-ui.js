@@ -6,7 +6,6 @@
   const menuClose = document.getElementById("mobileMenuClose");
   const drawer = document.getElementById("mobileDrawer");
   const backdrop = document.getElementById("mobileDrawerBackdrop");
-  const dataBody = document.getElementById("dataBody");
 
   function setMenu(open) {
     if (!drawer || !backdrop || !menuButton) return;
@@ -30,20 +29,4 @@
     if (!event.matches) setMenu(false);
   });
 
-  dataBody?.addEventListener("click", (event) => {
-    if (!mq.matches || event.target.closest("button[data-id]")) return;
-    const row = event.target.closest("tr[data-id]");
-    if (!row) return;
-
-    event.stopImmediatePropagation();
-    const wasOpen = row.classList.contains("mobile-expanded");
-    dataBody.querySelectorAll("tr.mobile-expanded").forEach((item) => {
-      item.classList.remove("mobile-expanded");
-      item.setAttribute("aria-expanded", "false");
-    });
-    if (!wasOpen) {
-      row.classList.add("mobile-expanded");
-      row.setAttribute("aria-expanded", "true");
-    }
-  }, true);
 })();
