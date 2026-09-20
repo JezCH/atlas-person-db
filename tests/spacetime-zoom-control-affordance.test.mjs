@@ -152,14 +152,19 @@ test("ctrl-wheel remains contained inside spacetime at the viewport-fit camera b
   assert.match(wheelBlock, /event\.preventDefault\(\);[\s\S]*?clampCameraZoom\(wheelZoomTarget, scroll\)/);
 });
 
-test("two-finger gestures inside spacetime suppress simultaneous browser zoom", () => {
-  assert.match(viewSource, /const preventBrowserPinch = \(event\) => \{/);
-  assert.match(viewSource, /if \(!isInsideScroll\(event\.target\)\) return;/);
-  assert.match(viewSource, /if \(event\.touches && event\.touches\.length < 2\) return;/);
-  assert.match(viewSource, /mount\.addEventListener\("touchstart", preventBrowserPinch, \{ passive: false \}\)/);
-  assert.match(viewSource, /mount\.addEventListener\("touchmove", preventBrowserPinch, \{ passive: false \}\)/);
-  assert.match(viewSource, /mount\.addEventListener\("gesturestart"/);
-  assert.match(viewSource, /mount\.addEventListener\("gesturechange"/);
+test("mobile gesture arbiter keeps pan and pinch in separate touch sessions", () => {
+  assert.match(viewSource, /let pinchSessionLocked = false;/);
+  assert.match(viewSource, /const beginPinchTouchSession = \(event\) => \{/);
+  assert.match(viewSource, /if \(!event\.touches \|\| event\.touches\.length < 2\) return;/);
+  assert.match(viewSource, /pinchSessionLocked = true;[\s\S]*?event\.preventDefault\(\);/);
+  assert.match(viewSource, /const guardPinchTouchMove = \(event\) => \{[\s\S]*?if \(!pinchSessionLocked\) return;[\s\S]*?event\.preventDefault\(\);/);
+  assert.match(viewSource, /const finishPinchTouchSession = \(event\) => \{[\s\S]*?if \(event\.touches && event\.touches\.length > 0\) return;[\s\S]*?pinchSessionLocked = false;/);
+  assert.match(viewSource, /mount\.addEventListener\("touchstart", beginPinchTouchSession, \{ passive: false \}\)/);
+  assert.match(viewSource, /mount\.addEventListener\("touchmove", guardPinchTouchMove, \{ passive: false \}\)/);
+  assert.match(viewSource, /mount\.addEventListener\("touchend", finishPinchTouchSession, \{ passive: false \}\)/);
+  assert.match(viewSource, /mount\.addEventListener\("touchcancel", finishPinchTouchSession, \{ passive: false \}\)/);
+  assert.match(viewSource, /if \(pointers\.size === 0\) pinchSessionLocked = false;/);
+  assert.match(viewCss, /\.spacetime-scroll\{height:54vh;min-height:400px;scrollbar-gutter:auto;touch-action:pan-x pan-y\}/);
 });
 
 test("pinch outside spacetime remains browser page zoom", () => {

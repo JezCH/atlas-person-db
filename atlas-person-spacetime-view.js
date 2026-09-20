@@ -1184,6 +1184,7 @@
 
     const pointers = new Map();
     let pinch = null;
+    let pinchSessionLocked = false;
     let animationFrame = 0;
 
     const pairGeometry = () => {
@@ -1225,14 +1226,37 @@
       return Boolean(scroll && mount.contains(scroll));
     };
 
-    const preventBrowserPinch = (event) => {
+    const beginPinchTouchSession = (event) => {
       if (!isInsideScroll(event.target)) return;
-      if (event.touches && event.touches.length < 2) return;
+      if (!event.touches || event.touches.length < 2) return;
+      pinchSessionLocked = true;
       event.preventDefault();
     };
 
-    mount.addEventListener("touchstart", preventBrowserPinch, { passive: false });
-    mount.addEventListener("touchmove", preventBrowserPinch, { passive: false });
+    const guardPinchTouchMove = (event) => {
+      if (!pinchSessionLocked) return;
+      event.preventDefault();
+    };
+
+    const finishPinchTouchSession = (event) => {
+      if (!pinchSessionLocked) return;
+      if (event.cancelable) event.preventDefault();
+      if (event.touches && event.touches.length > 0) return;
+
+      pinchSessionLocked = false;
+      pinch = null;
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+      }
+      for (const pointerId of pointers.keys()) releaseCapture(pointerId);
+      pointers.clear();
+    };
+
+    mount.addEventListener("touchstart", beginPinchTouchSession, { passive: false });
+    mount.addEventListener("touchmove", guardPinchTouchMove, { passive: false });
+    mount.addEventListener("touchend", finishPinchTouchSession, { passive: false });
+    mount.addEventListener("touchcancel", finishPinchTouchSession, { passive: false });
     mount.addEventListener("gesturestart", (event) => {
       if (!isInsideScroll(event.target)) return;
       event.preventDefault();
@@ -1250,6 +1274,7 @@
       pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
       if (pointers.size !== 2) return;
 
+      pinchSessionLocked = true;
       const geometry = pairGeometry();
       if (!geometry || geometry.distance <= 0) return;
       pinch = {
@@ -1296,6 +1321,7 @@
         }
         for (const pointerId of pointers.keys()) releaseCapture(pointerId);
       }
+      if (pointers.size === 0) pinchSessionLocked = false;
     };
 
     mount.addEventListener("pointerup", finishPointer);
