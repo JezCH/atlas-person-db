@@ -22,7 +22,7 @@ test("dashboard model derives progress from canonical snapshots without stored d
   const P1="00000000-0000-4000-8000-000000000001", P2="00000000-0000-4000-8000-000000000002", P3="00000000-0000-4000-8000-000000000003";
   const X="00000000-0000-4000-8000-000000000101", Y="00000000-0000-4000-8000-000000000102", Z="00000000-0000-4000-8000-000000000103";
   const A1="00000000-0000-4000-8000-000000000201", A2="00000000-0000-4000-8000-000000000202", A3="00000000-0000-4000-8000-000000000203";
-  const activity=(id,polity,start,end)=>({id,polity:{id:polity},start:{year:start},end:{year:end}});
+  const activity=(id,polity,start,end,sourceCount=1)=>({id,polity:{id:polity},start:{year:start},end:{year:end},source_count:sourceCount});
   const persons = [
     { id:P1, historicity:"historical", activity_count:2, external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:X}] }, activity_summaries:[activity(A1,X,100,110)] },
     { id:P2, historicity:"historical", activity_count:0, external_references:{ namuwiki:{status:"not_found"} }, facets:{ polities:[{id:Y}] }, activity_summaries:[activity(A2,Y,120,130)] },
@@ -115,7 +115,7 @@ test("attention queue derives Spatial Person targets from the canonical Activity
   const activity=(id,polity,start,end)=>({id,polity:{id:polity},start:{year:start},end:{year:end}});
   const persons = [
     { id:P1, activity_count:2, external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:POLITY_STATIC},{id:POLITY_REVIEW}] }, activity_summaries:[activity(A1,POLITY_STATIC,100,110),activity(A2,POLITY_REVIEW,120,130)] },
-    { id:P2, activity_count:1, external_references:{ namuwiki:{status:"not_found"} }, facets:{ polities:[{id:POLITY_REVIEW}] }, activity_summaries:[activity(A3,POLITY_REVIEW,140,150)] }
+    { id:P2, activity_count:1, external_references:{ namuwiki:{status:"not_found"} }, facets:{ polities:[{id:POLITY_REVIEW}] }, activity_summaries:[activity(A3,POLITY_REVIEW,140,150,0)] }
   ];
   const spatialIndex={
     schema:spatialModel.SPATIAL_INDEX_SCHEMA,
@@ -145,7 +145,9 @@ test("attention queue derives Spatial Person targets from the canonical Activity
   assert.deepEqual(byCode.domain.person_ids,[P2]);
   assert.deepEqual(byCode.namuwiki.person_ids,[]);
   assert.deepEqual(byCode.spatial.person_ids,[P2]);
-  assert.equal(queue.known_outstanding_checks,2);
+  assert.deepEqual(byCode.provenance.person_ids,[P2]);
+  assert.equal(byCode.provenance.count,1);
+  assert.equal(queue.known_outstanding_checks,3);
   assert.equal(queue.known_affected_persons,1);
   assert.equal(queue.complete,false);
   assert.equal(byCode.runtime_exclusion.count,null);
@@ -592,8 +594,8 @@ test("Completeness Matrix keeps Person and Activity units separate and preserves
   const A1="00000000-0000-4000-8000-000000000201";
   const A2="00000000-0000-4000-8000-000000000202";
   const persons=[
-    {id:P1,activity_count:1,external_references:{namuwiki:{status:"linked"}},facets:{polities:[{id:X}]},activity_summaries:[{id:A1,polity:{id:X},start:{year:100},end:{year:120}}]},
-    {id:P2,activity_count:0,external_references:{},facets:{polities:[{id:X}]},activity_summaries:[{id:A2,polity:{id:X},start:{year:130},end:{year:null}}]}
+    {id:P1,activity_count:1,external_references:{namuwiki:{status:"linked"}},facets:{polities:[{id:X}]},activity_summaries:[{id:A1,polity:{id:X},start:{year:100},end:{year:120},source_count:1}]},
+    {id:P2,activity_count:0,external_references:{},facets:{polities:[{id:X}]},activity_summaries:[{id:A2,polity:{id:X},start:{year:130},end:{year:null},source_count:0}]}
   ];
   const matrix=model.buildCompletenessMatrix({
     personResult:{persons},
@@ -602,7 +604,7 @@ test("Completeness Matrix keeps Person and Activity units separate and preserves
   });
   const byCode=Object.fromEntries(matrix.rows.map((row)=>[row.code,row]));
   assert.equal(matrix.person_check_count,3);
-  assert.equal(matrix.activity_check_count,2);
+  assert.equal(matrix.activity_check_count,3);
   assert.equal(byCode.domain.available,false);
   assert.equal(byCode.domain.complete,null);
   assert.equal(byCode.domain.incomplete,null);
@@ -616,6 +618,10 @@ test("Completeness Matrix keeps Person and Activity units separate and preserves
   assert.equal(byCode.chronology.complete,1);
   assert.equal(byCode.chronology.incomplete,1);
   assert.equal(byCode.chronology.person_ids,null);
+  assert.equal(byCode.provenance.unit,"activity");
+  assert.equal(byCode.provenance.complete,1);
+  assert.equal(byCode.provenance.incomplete,1);
+  assert.equal(byCode.provenance.person_ids,null);
   assert.equal(byCode.spatial.available,false);
   assert.equal(byCode.spatial.total,null);
 });
@@ -840,7 +846,7 @@ test("Source Freshness derives from existing sourceStates and canonical payload 
 test("Dashboard operator copy hides implementation jargon while preserving canonical data contracts", () => {
   assert.match(dashboardSource, /기준 원본에서 파생/);
   assert.match(dashboardSource, /확인된 미완료 건/);
-  assert.match(dashboardSource, /인물 3항목 · 활동 2항목/);
+  assert.match(dashboardSource, /인물 3항목 · 활동 3항목/);
   assert.match(dashboardSource, /10개 시대 구간 × Spatial 대권역/);
   assert.match(dashboardSource, /추적 범위 확인 완료/);
   assert.match(dashboardSource, /분야 8색 체계 적용/);
@@ -874,6 +880,8 @@ test("Dashboard completeness and source surfaces use display labels instead of r
   assert.match(dashboardSource, /function completenessLabel\(row\)/);
   assert.match(dashboardSource, /completenessLabel\(row\)/);
   assert.match(dashboardSource, /sourceDisplayLabel\(row\.source\)/);
+  assert.match(dashboardSource, /Person Activity Sources/);
+  assert.match(dashboardSource, /출처 연결/);
   assert.match(dashboardSource, /sourceDisplayLabel\(row\.label\)/);
   assert.match(dashboardSource, /reasonLabel\(row\.data_timestamp_unavailable_reason\)/);
 });
