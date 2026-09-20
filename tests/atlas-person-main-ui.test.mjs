@@ -25,7 +25,7 @@ test('Main loads the Person reader and shared data store before the Person-cente
 
 test('Person-centered Main renders all historicity groups in one chronology table', () => {
   assert.match(main, /reader\.preparePersonGroups\(persons, \{/);
-  assert.match(main, /secondaryPredicate:dashboardFilter/);
+  assert.match(main, /secondaryPredicate: secondaryMatches/);
   assert.match(main, /\.\.\.groups\.historical/);
   assert.match(main, /\.\.\.groups\.other_or_uncertain/);
   assert.match(main, /\.\.\.visibleUnknownRegistryPersons\(\)/);
@@ -38,23 +38,30 @@ test('Person-centered Main renders all historicity groups in one chronology tabl
   assert.match(reader, /personMatchesFacets/);
 });
 
-test('Person Main owns only Polity filter state and delegates its control surface to era navigation', () => {
-  assert.match(main, /let facetFilters = \{ polity_id: "" \}/);
+test('Person Main owns visible Polity, Relation, and domain filter state and delegates controls to era navigation', () => {
+  assert.match(main, /let facetFilters = \\{ polity_id: "", relation_type_id: "", domain: "" \\}/);
   assert.match(main, /function setPolityFilter/);
+  assert.match(main, /function setRelationFilter/);
+  assert.match(main, /function setDomainFilter/);
   assert.match(main, /atlas-person-polity-filter-change/);
+  assert.match(main, /atlas-person-relation-filter-change/);
+  assert.match(main, /atlas-person-domain-filter-change/);
   assert.match(main, /selectedPolityId: facetFilters\.polity_id/);
   assert.match(main, /polityOptions: polityOptions\(\)/);
-  for (const removed of ['personMainFilterToggle', 'personMainFilters', 'personMainRelationFilter', 'personMainRoleFilter', 'personMainBasisFilter', 'personMainClearFilters', 'personMainSummary', 'personMainStatus']) {
+  assert.match(main, /relationOptions: relationOptions\(\)/);
+  assert.match(main, /selectedDomain: facetFilters\.domain/);
+  assert.match(main, /domainCounts: domainFilterCounts\(\)/);
+  for (const removed of ['personMainFilterToggle', 'personMainFilters', 'personMainRoleFilter', 'personMainBasisFilter', 'personMainClearFilters', 'personMainSummary', 'personMainStatus']) {
     assert.doesNotMatch(main, new RegExp(removed));
   }
   const renderGroupsBody = main.slice(main.indexOf('function renderGroups'), main.indexOf('function setSearchQuery'));
   assert.doesNotMatch(renderGroupsBody, /readPerson\(/);
 });
 
-test('Person search is rendered left of Polity while current-result status sits beside era status', () => {
+test('Person search is rendered with visible Polity and Relation controls while status sits beside era status', () => {
   assert.match(nav, /search\.id = "personMainSearch"/);
   assert.match(nav, /intro\.append\(title, status, summary\)/);
-  assert.match(nav, /controls\.append\(search, select\)/);
+  assert.match(nav, /controls\.append\(search, select, relation\)/);
   assert.match(nav, /atlas-person-search-change/);
   assert.match(main, /function setSearchQuery/);
   assert.match(main, /window\.addEventListener\("atlas-person-search-change"/);
