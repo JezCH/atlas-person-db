@@ -196,13 +196,23 @@ function compileSnapshot(authoringRows) {
   const input = (Array.isArray(authoringRows) ? authoringRows : []).map((row) => stableValue(row));
   const inputFingerprint = sha256(input);
   const ready = [];
+  const exclusions = [];
   const exclusionSummary = {};
   for (const row of input) {
     const readiness = classifyReadiness(row);
     if (readiness.ready) ready.push(runtimeRow(row));
-    else exclusionSummary[readiness.code] = (exclusionSummary[readiness.code] || 0) + 1;
+    else {
+      exclusionSummary[readiness.code] = (exclusionSummary[readiness.code] || 0) + 1;
+      exclusions.push(Object.freeze({
+        activity_id:String(row.id),
+        person_id:String(row.person_id),
+        polity_id:String(row.polity_id),
+        reason_code:readiness.code
+      }));
+    }
   }
   ready.sort((a,b) => a.id.localeCompare(b.id));
+  exclusions.sort((a,b) => a.activity_id.localeCompare(b.activity_id));
   const outputFingerprint = sha256(ready);
   return Object.freeze({
     compiler_version:COMPILER_VERSION,
@@ -213,8 +223,45 @@ function compileSnapshot(authoringRows) {
     output_row_count:ready.length,
     excluded_row_count:input.length-ready.length,
     exclusion_summary:Object.freeze(stableValue(exclusionSummary)),
+    exclusions:Object.freeze(exclusions),
     rows:Object.freeze(ready)
   });
+}
+
+async function ensureCompileExclusions(client, compiled) {
+  const existing = await client.query(`
+    select activity_id::text,person_id::text,polity_id::text,reason_code
+      from atlas_v2.runtime_compile_exclusions
+     where compile_key=$1
+     order by activity_id
+  `, [compiled.compile_key]);
+  const normalized=(existing.rows || []).map((row)=>({
+    activity_id:String(row.activity_id),
+    person_id:String(row.person_id),
+    polity_id:String(row.polity_id),
+    reason_code:String(row.reason_code)
+  }));
+  if (normalized.length) {
+    if (stableJson(normalized) !== stableJson(compiled.exclusions)) {
+      throw new Error("RUNTIME_COMPILE_EXCLUSION_LEDGER_DRIFT");
+    }
+    return true;
+  }
+  if (!compiled.exclusions.length) return false;
+  const params=[compiled.compile_key];
+  const tuples=[];
+  compiled.exclusions.forEach((row,index)=>{
+    const base=2+(index*4);
+    const p=(offset)=>"$"+String(base+offset);
+    tuples.push(`($1,${p(0)}::uuid,${p(1)}::uuid,${p(2)}::uuid,${p(3)})`);
+    params.push(row.activity_id,row.person_id,row.polity_id,row.reason_code);
+  });
+  await client.query(`
+    insert into atlas_v2.runtime_compile_exclusions(
+      compile_key,activity_id,person_id,polity_id,reason_code
+    ) values ${tuples.join(",")}
+  `,params);
+  return false;
 }
 
 async function ensureCompileRun(client, compiled) {
@@ -299,6 +346,7 @@ async function compileRuntimeProjection(client, { dryRun=false, runtimeSha=null,
     const source = await client.query(AUTHORING_SNAPSHOT_SQL);
     const compiled = compileSnapshot(source.rows || []);
     const ledgerReplay = await ensureCompileRun(client, compiled);
+    const exclusionLedgerReplay = await ensureCompileExclusions(client, compiled);
     await client.query("delete from atlas_v2.runtime_person_politics_v1");
     await insertRuntimeRows(client, compiled.compile_key, compiled.rows);
     const verify = await client.query(`
@@ -320,6 +368,8 @@ async function compileRuntimeProjection(client, { dryRun=false, runtimeSha=null,
     return Object.freeze({
       marker:"ATLAS_RUNTIME_PERSON_POLITICS_COMPILE_V1",
       dry_run:Boolean(dryRun), committed:!dryRun, ledger_replay:ledgerReplay,
+      exclusion_ledger_replay:exclusionLedgerReplay,
+      exclusion_target_count:compiled.exclusions.length,
       activation_baseline_recorded:Boolean(baselineActivation),
       activation,
       compile_key:compiled.compile_key,
@@ -341,6 +391,7 @@ module.exports = Object.freeze({
   stableJson, sha256, requiredSha, hasKnownBoundary, hasLegacyProvenance,
   ensureRuntimeActivationBaseline, recordRuntimeActivation,
   classifyReadiness, provenanceSnapshot, runtimeRow, compileSnapshot,
+  ensureCompileExclusions,
   runtimeInsertParams, runtimeInsertTuple, insertRuntimeRows,
   compileRuntimeProjection
 });
