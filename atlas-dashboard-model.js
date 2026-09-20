@@ -429,14 +429,14 @@
       runtime_excluded:null,
       current_runtime:null,
       authoring_delta_since_compile:null,
-      projection_matches_latest_compile:null,
+      projection_matches_active_compile:null,
       compiler_version:null,
       compiled_at:null,
       exclusion_rows:Object.freeze([]),
       unavailable_reason:"RUNTIME_PUBLICATION_SOURCE_UNAVAILABLE"
     });
 
-    const latest=runtimePublicationResult.latest_compile;
+    const latest=runtimePublicationResult.active_compile;
     const currentAuthoring=Number(runtimePublicationResult.current_authoring_activity_count);
     const currentRuntime=Number(runtimePublicationResult.current_runtime_activity_count);
     if (!latest || typeof latest !== "object") return Object.freeze({
@@ -448,7 +448,7 @@
       runtime_excluded:null,
       current_runtime:Number.isInteger(currentRuntime) ? currentRuntime : null,
       authoring_delta_since_compile:null,
-      projection_matches_latest_compile:null,
+      projection_matches_active_compile:null,
       compiler_version:null,
       compiled_at:null,
       exclusion_rows:Object.freeze([]),
@@ -471,7 +471,7 @@
       authoring_delta_since_compile:runtimePublicationResult.authoring_delta_since_compile == null
         ? currentAuthoring-Number(latest.input_row_count)
         : Number(runtimePublicationResult.authoring_delta_since_compile),
-      projection_matches_latest_compile:runtimePublicationResult.projection_matches_latest_compile === true,
+      projection_matches_active_compile:runtimePublicationResult.projection_matches_active_compile === true,
       compiler_version:text(latest.compiler_version) || null,
       compiled_at:canonicalTimestamp(latest.compiled_at),
       exclusion_rows:Object.freeze(exclusionRows),
@@ -492,7 +492,7 @@
         missing_reason:recentDelta?.available === false ? "RECENT_DELTA_SOURCE_UNAVAILABLE" : "RECENT_DELTA_HAS_NO_TRACKED_MUTATION"
       }),
       runtimePublication:Object.freeze({
-        data_at:canonicalTimestamp(runtimePublication?.latest_compile?.compiled_at),
+        data_at:canonicalTimestamp(runtimePublication?.active_compile?.compiled_at),
         basis:"compiled_at",
         missing_reason:runtimePublication ? "RUNTIME_PUBLICATION_NO_COMPILE_RUN" : "RUNTIME_PUBLICATION_SOURCE_UNAVAILABLE"
       })
