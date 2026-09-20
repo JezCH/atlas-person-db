@@ -37,4 +37,4 @@
 .dashboard-runtime-exclusion-table code{font-size:9px;overflow-wrap:anywhere}
 .dashboard-runtime-exclusion-table tbody tr:last-child td{border-bottom:0}
 @media(max-width:600px){.dashboard-runtime-exclusion-table{min-width:760px}}
-
+.dashboard-activity-completeness-targets[hidden]{display:none}.dashboard-activity-completeness-targets{margin-top:12px}.dashboard-activity-completeness-head{margin-bottom:10px}
