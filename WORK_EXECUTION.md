@@ -331,3 +331,126 @@ Older rules that impose broader locking, whole-project revalidation, duplicate d
 > Minimum sufficient verification. Maximum safe forward progress.
 
 If a procedure does not materially reduce the risk of the specific change being made, it should not block the work.
+
+
+## 15. Person candidate dual-lane pipeline
+
+Person candidate **review** and canonical **registration/apply** are separate concurrent lanes joined by a reviewed handoff packet.
+
+### Lane A — Candidate Review
+
+Purpose: continuously discover and evaluate candidate people without performing authoritative Person/Activity Production mutation.
+
+Allowed work:
+
+- candidate discovery and de-duplication against current canonical Persons;
+- historicity and timeline/non-timeline judgment;
+- registration-value review;
+- representative_domain review;
+- proposed Activity facts and source gathering;
+- NamuWiki availability review;
+- Polity/spatial-readiness notes;
+- APPROVED / HOLD / REJECTED / DUPLICATE_EXISTING decision.
+
+A review unit normally contains 5–12 candidates. Each completed unit must publish a durable review checkpoint.
+
+An **APPROVED** candidate must leave Lane A as a self-contained reviewed packet. The registration worker must not need to repeat the historical-value review merely to apply it.
+
+Minimum reviewed packet:
+
+```text
+candidate_id
+canonical_name_en
+display_name_ko
+identity_disambiguation
+review_state
+historicity
+timeline_disposition
+representative_domain_decision
+proposed_activities
+sources_and_provenance
+namuwiki_disposition
+polity_spatial_readiness
+review_notes
+review_checkpoint
+```
+
+If a fact is unresolved, record it as unresolved/HOLD; do not invent a value to make the packet complete.
+
+### Lane B — Registration Apply
+
+Purpose: consume only Lane A candidates whose `review_state=APPROVED` and perform authoritative registration using the current canonical writer/contracts.
+
+Before write, Lane B performs only the minimum freshness check needed for safe application:
+
+1. exact duplicate / already-registered check;
+2. stale or conflicting canonical identity check;
+3. current authoring-contract compatibility check.
+
+It does **not** redo the candidate's registration-value review unless new conflicting evidence appears.
+
+Normal completion chain:
+
+```text
+APPROVED reviewed packet
+→ exact duplicate/current-state check
+→ canonical authoring payload
+→ Authoring commit
+→ Authoring read-back
+→ Runtime compile/disposition
+→ Runtime read-back when Runtime-eligible
+→ REGISTERED or VERIFIED_AUTHORING_ONLY
+```
+
+### Independent state axes
+
+Review state and registration state are distinct. Do not overload one status field to represent both.
+
+Review states:
+
+- `PENDING`
+- `IN_REVIEW`
+- `APPROVED`
+- `HOLD`
+- `REJECTED`
+- `DUPLICATE_EXISTING`
+
+Registration states:
+
+- `NOT_READY`
+- `QUEUED`
+- `APPLYING`
+- `REGISTERED`
+- `VERIFIED_AUTHORING_ONLY`
+- `BLOCKED`
+- `NOT_APPLICABLE`
+
+Typical transitions:
+
+```text
+PENDING / NOT_READY
+→ IN_REVIEW / NOT_READY
+→ APPROVED / QUEUED
+→ APPROVED / APPLYING
+→ APPROVED / REGISTERED
+```
+
+`HOLD`, `REJECTED`, and `DUPLICATE_EXISTING` normally pair with `NOT_APPLICABLE`.
+
+### Concurrency rule
+
+Lane A and Lane B are expected to run at the same time.
+
+- Lane A does not wait for the registration backlog to drain.
+- Lane B does not block new review work.
+- Multiple review workers may operate on disjoint candidate sets.
+- Registration workers serialize only where they actually share an authoritative writer/resource.
+- A growing APPROVED backlog is valid queue state, not a reason to stop review.
+
+### Handoff rule
+
+The durable source of truth for a reviewed decision is the Lane A checkpoint referenced by the Lane B queue entry.
+
+Lane B may update registration state and resulting Person UUID, but it must not silently rewrite the reviewed historical judgment. If the judgment changes, create a new review revision/checkpoint and reference that revision.
+
+This dual-lane protocol is the default for future Person candidate work.
