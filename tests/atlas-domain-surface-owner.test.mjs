@@ -45,3 +45,30 @@ test('Person activation and rerender reset document horizontal drift without res
   assert.match(ownerScript, /currentDomain\(\) === "persons"/);
   assert.match(ownerScript, /resetScroll: currentDomain\(\) === "spacetime" \|\| currentDomain\(\) === "persons"/);
 });
+
+test('Person startup keeps spacetime semantic assets dormant until the spacetime domain is active', () => {
+  assert.match(ownerScript, /let personDomainAssetsPromise = null/);
+  assert.match(ownerScript, /let spacetimeDomainAssetsPromise = null/);
+  assert.match(ownerScript, /function ensurePersonDomainAssets\(\)/);
+  assert.match(ownerScript, /function ensureSpacetimeDomainAssets\(\)/);
+  assert.match(ownerScript, /spacetimeDomainAssetsPromise = ensurePersonDomainAssets\(\)/);
+  assert.match(ownerScript, /if \(domain === "spacetime"\) \{[\s\S]*ensureSpacetimeDomainAssets\(\)/);
+  const initStart = ownerScript.indexOf("function init()");
+  const initEnd = ownerScript.indexOf("if (document.readyState", initStart);
+  const initBlock = ownerScript.slice(initStart, initEnd);
+  assert.match(initBlock, /ensurePersonDomainAssets\(\)/);
+  assert.doesNotMatch(initBlock, /ensureSpacetimeDomainAssets\(\)/);
+});
+
+test('domain asset loader attaches listeners before inserting a new script and can retry after failure', () => {
+  const loaderStart = ownerScript.indexOf("function loadScriptOnce(");
+  const loaderEnd = ownerScript.indexOf("function ensurePersonDomainAssets()", loaderStart);
+  const loaderBlock = ownerScript.slice(loaderStart, loaderEnd);
+  assert.match(loaderBlock, /script\.addEventListener\("load"/);
+  assert.match(loaderBlock, /script\.addEventListener\("error"/);
+  assert.match(loaderBlock, /if \(created\) document\.head\.append\(script\)/);
+  assert.ok(loaderBlock.indexOf('script.addEventListener("load"') < loaderBlock.indexOf("document.head.append(script)"));
+  assert.match(loaderBlock, /script\.remove\?\.\(\)/);
+  assert.match(ownerScript, /personDomainAssetsPromise = null/);
+  assert.match(ownerScript, /spacetimeDomainAssetsPromise = null/);
+});
