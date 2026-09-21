@@ -92,9 +92,11 @@ test("person names stay above every temporal and spatial line layer", () => {
   assert.match(viewCss, /\.spacetime-spatial-uncertainty\.is-activity-selected\{z-index:20/);
 });
 
-test("surface owner loads the guard without modifying the core spacetime renderer", () => {
+test("surface owner loads the guard only for spacetime without modifying the core spacetime renderer", () => {
   const owner = fs.readFileSync(path.join(root, "atlas-domain-surface-owner.js"), "utf8");
   const view = fs.readFileSync(path.join(root, "atlas-person-spacetime-view.js"), "utf8");
+  assert.match(owner, /if \(domain === "spacetime"\)/);
+  assert.match(owner, /spacetimeDomainAssetsPromise = ensurePersonDomainAssets\(\)/);
   assert.match(owner, /atlas-person-spacetime-label-overlap-guard\.js\?v=20260920-world-name-overlay/);
   assert.match(view, /const CAMERA_MIN_ZOOM = 0\.5;/);
   assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);

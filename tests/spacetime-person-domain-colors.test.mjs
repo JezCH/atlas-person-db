@@ -83,13 +83,17 @@ test("spacetime CSS reuses canonical palette variables without copying palette h
   assert.match(css, /:not\(\.is-meanwhile-active\)/);
 });
 
-test("domain surface owner loads spacetime semantics after canonical domain UI", () => {
+test("domain surface owner gates spacetime semantics behind the spacetime surface after canonical domain UI", () => {
   const owner = fs.readFileSync(path.join(root, "atlas-domain-surface-owner.js"), "utf8");
   assert.match(owner, /atlas-person-domain-palette\.css/);
   assert.match(owner, /atlas-person-domain-ui\.js/);
+  assert.match(owner, /function ensurePersonDomainAssets\(\)/);
+  assert.match(owner, /function ensureSpacetimeDomainAssets\(\)/);
+  assert.match(owner, /spacetimeDomainAssetsPromise = ensurePersonDomainAssets\(\)/);
   assert.match(owner, /atlas-person-spacetime-domain-colors\.css/);
   assert.match(owner, /atlas-person-spacetime-domain-colors\.js/);
-  assert.match(owner, /script\.addEventListener\("load", ensureSpacetimeDomainAssets/);
+  assert.match(owner, /if \(domain === "spacetime"\)/);
+  assert.doesNotMatch(owner, /script\.addEventListener\("load", ensureSpacetimeDomainAssets/);
 });
 
 test("domain integration does not alter spacetime geometry or camera invariants", () => {
