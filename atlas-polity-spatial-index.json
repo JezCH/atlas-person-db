@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-21T03:12:00.000Z",
+  "generated_at": "2026-09-21T13:45:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -165,7 +165,6 @@
     "2e1f5e56-3aee-5567-b8e9-e8a84cb0a63b": "europe",
     "2f2c6fd4-d828-4dfb-b200-274b1e27c6b4": "europe",
     "2f75de03-b9e7-587a-95e8-812079c37075": "americas",
-    "2fcc634c-9806-5fe8-96fe-e4310124908a": "europe",
     "3050d178-7fea-43e8-ac6a-62e147b47dbb": "east-asia",
     "31f3241a-d772-4fe4-a1d1-870c60470dff": "europe",
     "3268029f-b2b9-52b3-9988-5e98bed20b3e": "west-asia",
@@ -1727,7 +1726,6 @@
     "2e1f5e56-3aee-5567-b8e9-e8a84cb0a63b": "britain-ireland",
     "2f2c6fd4-d828-4dfb-b200-274b1e27c6b4": "western-europe",
     "2f75de03-b9e7-587a-95e8-812079c37075": "north-america",
-    "2fcc634c-9806-5fe8-96fe-e4310124908a": "western-europe",
     "3050d178-7fea-43e8-ac6a-62e147b47dbb": "japan",
     "31f3241a-d772-4fe4-a1d1-870c60470dff": "balkans",
     "3268029f-b2b9-52b3-9988-5e98bed20b3e": "mesopotamia",
