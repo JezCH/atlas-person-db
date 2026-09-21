@@ -39,15 +39,15 @@
     if (typeof ready === "function" && ready()) return Promise.resolve();
 
     let script = document.querySelector(selector);
+    const created = !script;
     if (!script) {
       script = document.createElement("script");
       script.src = src;
       script.async = true;
       script.dataset[datasetKey] = "true";
-      document.head.append(script);
     }
 
-    return new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject) => {
       if (typeof ready === "function" && ready()) {
         resolve();
         return;
@@ -65,6 +65,9 @@
         reject(new Error(`ATLAS_DOMAIN_ASSET_LOAD_FAILED: ${src}`));
       }, { once:true });
     });
+
+    if (created) document.head.append(script);
+    return promise;
   }
 
   function ensurePersonDomainAssets() {
