@@ -52,6 +52,67 @@ test("dashboard model derives progress from canonical snapshots without stored d
   assert.equal(snapshot.quality.non_timeline_registry,1);
 });
 
+test("Data Quality drill-down preserves exact targets for Person, Activity, Polity, and non-timeline registry units", () => {
+  const P1="00000000-0000-4000-8000-000000000001";
+  const P2="00000000-0000-4000-8000-000000000002";
+  const X="00000000-0000-4000-8000-000000000101";
+  const Y="00000000-0000-4000-8000-000000000102";
+  const Z="00000000-0000-4000-8000-000000000103";
+  const A1="00000000-0000-4000-8000-000000000201";
+  const A2="00000000-0000-4000-8000-000000000202";
+  const persons=[
+    {id:P1,display_name:"인물 1",activity_count:1,external_references:{namuwiki:{status:"linked"}},facets:{polities:[{id:X,display_name:"정치체 X"}]},activity_summaries:[{id:A1,polity:{id:X,display_name:"정치체 X"},start:{year:100},end:{year:110},source_count:1}]},
+    {id:P2,display_name:"인물 2",activity_count:0,external_references:{namuwiki:{status:"not_found"}},facets:{polities:[{id:Y,display_name:"정치체 Y"},{id:Z,display_name:"정치체 Z"}]},activity_summaries:[{id:A2,polity:{id:Z,display_name:"정치체 Z"},start:{year:120},end:{year:130},source_count:1}]}
+  ];
+  const spatialIndex={
+    schema:spatialModel.SPATIAL_INDEX_SCHEMA,
+    polity_geography:{[X]:"europe",[Y]:"east-asia"},
+    polity_subregions:{[X]:"western-europe"},
+    place_function_records:[],
+    review_queue:[{polity_id:Y,reason:"activity_specific_review"}],
+    activity_spatial_overrides:[]
+  };
+  const nonTimelineRows=[{person_name:"Legend",display_name_ko:"전설 인물",politic_name:"Legendary Polity",historicity:"legendary",date_basis:"none",reason:"no secure chronology"}];
+  const matrix=model.buildCompletenessMatrix({personResult:{persons},domainResult:{by_person_id:{[P1]:"governance",[P2]:"culture"}},spatialIndex});
+  const quality=model.buildQualityDrilldown({personResult:{persons},spatialIndex,nonTimelineRows,completenessMatrix:matrix});
+
+  assert.deepEqual(quality.no_runtime_activity.person_ids,[P2]);
+  assert.equal(quality.no_runtime_activity.count,1);
+  assert.equal(quality.no_runtime_activity.drilldown_available,true);
+
+  assert.equal(quality.spatial_unresolved.count,1);
+  assert.equal(quality.spatial_unresolved.activity_targets[0].activity_id,A2);
+  assert.equal(quality.spatial_unresolved.activity_targets[0].person_id,P2);
+  assert.equal(quality.spatial_unresolved.activity_targets[0].polity_id,Z);
+
+  assert.equal(quality.spatial_review.count,1);
+  assert.equal(quality.spatial_review.polity_targets[0].polity_id,Y);
+  assert.equal(quality.spatial_review.polity_targets[0].polity_display_name,"정치체 Y");
+  assert.deepEqual(quality.spatial_review.polity_targets[0].affected_person_ids,[P2]);
+  assert.deepEqual(quality.spatial_review.polity_targets[0].reason_codes,["activity_specific_review"]);
+
+  assert.equal(quality.non_timeline_registry.count,1);
+  assert.equal(quality.non_timeline_registry.registry_targets[0].source_index,0);
+  assert.equal(quality.non_timeline_registry.registry_targets[0].display_name_ko,"전설 인물");
+});
+
+test("Dashboard Data Quality uses exact drill-down controls instead of broad route-only buttons", () => {
+  const start=dashboardSource.indexOf("DATA QUALITY");
+  const end=dashboardSource.indexOf("COMPLETENESS MATRIX",start);
+  const block=dashboardSource.slice(start,end);
+  assert.match(block,/data-dashboard-quality="spatial_unresolved"/);
+  assert.match(block,/data-dashboard-quality="spatial_review"/);
+  assert.match(block,/data-dashboard-quality="no_runtime_activity"/);
+  assert.match(block,/data-dashboard-quality="non_timeline_registry"/);
+  assert.match(block,/dashboardQualityTargets/);
+  assert.doesNotMatch(block,/data-dashboard-route="spacetime"/);
+  assert.match(dashboardSource,/QUALITY TARGETS/);
+  assert.match(dashboardSource,/data-quality-target-kind="activity"/);
+  assert.match(dashboardSource,/data-quality-target-kind="polity"/);
+  assert.match(dashboardSource,/data-quality-target-kind="registry"/);
+  assert.match(dashboardSource,/quality_\$\{code\}/);
+});
+
 test("unavailable optional sources remain unknown instead of becoming fabricated zero coverage", () => {
   const snapshot = model.buildDashboardSnapshot({
     personResult:{ persons:[{ id:"p1", historicity:"historical", activity_count:1, external_references:{}, facets:{polities:[]} }] },
@@ -1243,6 +1304,10 @@ test("Production browser acceptance permanently verifies Activity completeness p
   assert.match(acceptance,/Activity completeness drill-down incorrectly navigated away from Dashboard/);
   assert.match(acceptance,/Rendered Activity completeness row count differs from canonical target set/);
   assert.match(acceptance,/Rendered Activity completeness UUIDs differ from canonical target set/);
+  assert.match(acceptance,/Data Quality count differs from canonical exact targets/);
+  assert.match(acceptance,/Data Quality Person filter differs from canonical exact targets/);
+  assert.match(acceptance,/Data Quality target panel did not reveal on click/);
+  assert.match(acceptance,/Rendered Data Quality target ids differ from canonical exact targets/);
   assert.match(acceptance,/Runtime exclusion target count differs from active compile/);
   assert.match(acceptance,/Runtime exclusion Attention is not Activity-actionable/);
   assert.match(acceptance,/Runtime exclusion target panel did not reveal on click/);

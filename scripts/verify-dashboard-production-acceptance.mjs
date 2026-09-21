@@ -212,7 +212,9 @@ async function collectCanonicalSnapshot(client) {
       runtime_delta_drift:snapshot.runtime_delta_drift,
       completeness:snapshot.completeness_matrix,
       attention:snapshot.attention_queue,
-      kpi_drilldown:snapshot.kpi_drilldown
+      kpi_drilldown:snapshot.kpi_drilldown,
+      quality:snapshot.quality,
+      quality_drilldown:snapshot.quality_drilldown
     };
   })()`);
 }
@@ -274,6 +276,13 @@ async function collectDesktopDom(client) {
       freshness_rows:freshnessRows,
       activity_rows:activityRows,
       person_rows:personRows,
+      quality_rows:qa("[data-dashboard-quality]").map((button)=>({
+        code:button.dataset.dashboardQuality || null,
+        count:Number((button.querySelector("strong")?.textContent||"").replace(/,/g,"").trim()),
+        disabled:button.disabled,
+        aria_controls:button.getAttribute("aria-controls"),
+        aria_expanded:button.getAttribute("aria-expanded")
+      })),
       heatmap:{row_count:qa(".dashboard-heatmap tbody tr").length,cell_count:heatmapCells.length,non_zero:heatmapCells.filter((v)=>v>0).length,total:heatmapCells.reduce((a,b)=>a+b,0)},
       timeline:{entry_count:qa(".dashboard-timeline-entry").length,meta:timelineMeta},
       runtime_delta:{present:Boolean(runtimeDeltaPanel),cards:runtimeDeltaCards,meta:runtimeDeltaMeta,reasons:runtimeDeltaReasons},
@@ -386,6 +395,64 @@ async function verifyDrilldowns(client, modelState) {
   results.runtime_exclusion = runtimeExclusion;
 
   await showDashboard(client);
+  const qualityResults={};
+
+  const personQuality=modelState.quality_drilldown?.no_runtime_activity;
+  if (personQuality?.drilldown_available) {
+    const clicked=await evaluate(client, `(() => {
+      const button=document.querySelector('[data-dashboard-quality="no_runtime_activity"]:not(:disabled)');
+      if (!button) return null;
+      button.click();
+      return {code:button.dataset.dashboardQuality};
+    })()`);
+    assert(clicked, "Data Quality Person drill-down button is unavailable");
+    await waitFor(client, "window.ATLAS_MAIN_AUTHORITY_NAV.getDomain() === 'persons'", 15000);
+    const filter=await evaluate(client, "window.ATLAS_PERSON_MAIN?.getDashboardFilter?.() || null");
+    assert(JSON.stringify(filter?.person_ids || []) === JSON.stringify(personQuality.person_ids || []), "Data Quality Person filter differs from canonical exact targets", { filter,personQuality });
+    qualityResults.no_runtime_activity={...clicked,filter};
+  }
+
+  for (const code of ["spatial_unresolved","spatial_review","non_timeline_registry"]) {
+    await showDashboard(client);
+    const item=modelState.quality_drilldown?.[code];
+    if (!item?.drilldown_available) {
+      const disabled=await evaluate(client, `document.querySelector('[data-dashboard-quality="${code}"]')?.disabled === true`);
+      assert(disabled, "Data Quality empty/unavailable target is not disabled", { code,item });
+      qualityResults[code]={disabled:true,count:item?.count ?? null};
+      continue;
+    }
+    const clicked=await evaluate(client, `(() => {
+      const button=document.querySelector('[data-dashboard-quality="${code}"]:not(:disabled)');
+      const panel=document.querySelector("#dashboardQualityTargets");
+      if (!button || !panel) return null;
+      const beforeHidden=panel.hidden;
+      button.click();
+      const table=panel.querySelector("[data-quality-target-kind]");
+      return {
+        code:button.dataset.dashboardQuality,
+        before_hidden:beforeHidden,
+        after_hidden:panel.hidden,
+        aria_expanded:button.getAttribute("aria-expanded"),
+        kind:table?.dataset.qualityTargetKind || null,
+        target_ids:[...panel.querySelectorAll("[data-quality-target-id]")].map((row)=>row.dataset.qualityTargetId),
+        active_domain:window.ATLAS_MAIN_AUTHORITY_NAV?.getDomain?.() || null
+      };
+    })()`);
+    assert(clicked, "Data Quality exact target drill-down button is unavailable", { code,item });
+    const expectedIds=code==="spatial_unresolved"
+      ? (item.activity_targets || []).map((row)=>row.activity_id)
+      : code==="spatial_review"
+        ? (item.polity_targets || []).map((row)=>row.polity_id)
+        : (item.registry_targets || []).map((row)=>String(row.source_index));
+    assert(clicked.before_hidden === true && clicked.after_hidden === false, "Data Quality target panel did not reveal on click", { clicked,item });
+    assert(clicked.aria_expanded === "true", "Data Quality target button did not expose expanded state", { clicked,item });
+    assert(clicked.active_domain === "dashboard", "Data Quality inline drill-down incorrectly navigated away from Dashboard", { clicked,item });
+    assert(JSON.stringify(clicked.target_ids) === JSON.stringify(expectedIds), "Rendered Data Quality target ids differ from canonical exact targets", { clicked,expectedIds,item });
+    qualityResults[code]=clicked;
+  }
+  results.data_quality=qualityResults;
+
+  await showDashboard(client);
   return results;
 }
 
@@ -474,6 +541,18 @@ function verifyCanonicalContracts(modelState, desktopDom) {
   assert(publicationCompiledAt, "Runtime Publication active compile timestamp is missing", publication);
   assert(byKey.runtimePublication?.data_at === publicationCompiledAt, "Runtime Publication freshness is not active compile timestamp", { row:byKey.runtimePublication,publication });
   assert(byKey.runtimePublication?.data_basis === "compiled_at", "Runtime Publication freshness basis mismatch", byKey.runtimePublication);
+
+  const qualityDrilldown=modelState.quality_drilldown || {};
+  const qualityRows=desktopDom.quality_rows || [];
+  const qualityCodes=["spatial_unresolved","spatial_review","no_runtime_activity","non_timeline_registry"];
+  assert(qualityRows.length === qualityCodes.length, "Data Quality DOM row count differs from canonical target model", { qualityRows,qualityDrilldown });
+  for (const code of qualityCodes) {
+    const row=qualityRows.find((item)=>item.code===code);
+    const item=qualityDrilldown[code];
+    assert(row && item, "Data Quality row is missing from DOM or canonical model", { code,row,item });
+    assert(row.count === item.count, "Data Quality count differs from canonical exact targets", { code,row,item });
+    assert(row.disabled === !item.drilldown_available, "Data Quality actionable state differs from canonical exact targets", { code,row,item });
+  }
 
   const runtimeExclusions=modelState.runtime_exclusions;
   assert(runtimeExclusions?.available === true, "Runtime exclusion target snapshot unavailable in Production acceptance", runtimeExclusions);
