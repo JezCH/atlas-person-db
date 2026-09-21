@@ -21,7 +21,8 @@
     .registration-summary-link:disabled{opacity:.55;cursor:wait}
     @media(max-width:760px){
       .admin-nav-link{display:none}
-      .registration-summary{width:100%;max-width:100%;min-width:0;align-items:center;gap:5px;min-height:30px;padding:3px 5px;margin-bottom:4px;border-radius:8px}
+      .registration-summary{width:100%;max-width:100%;min-width:0;align-items:center;gap:5px;min-height:28px;padding:3px 5px;margin-bottom:3px;border-radius:8px}
+      .registration-summary[data-state="ok"]{display:none}
       .registration-summary-main{flex:1 1 auto;min-width:0;align-items:center;gap:6px;overflow:hidden}
       .registration-summary-main>div{display:block;min-width:0;width:100%}
       .registration-summary-dot{width:6px;height:6px;box-shadow:0 0 0 2px #fff3d6}

@@ -88,8 +88,7 @@ test('era navigation is sticky, keeps visible facet status, and pins the table h
   assert.match(navCss, /\.person-era-nav-current\{[^}]*font-size:11px/);
   assert.match(navCss, /\.person-era-jump-label\{[^}]*font-size:13px/);
   assert.match(navCss, /\.person-era-jump-count\{[^}]*font-size:10\.5px/);
-  assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-nav-intro>strong\{font-size:10px\}/);
-  assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-nav-current\{display:none\}/);
+  assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-nav-intro\{display:none\}/);
   assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-jump-label\{font-size:9px\}/);
   assert.match(navCss, /\.person-era-jump-list\{[^}]*overflow-x:auto/);
   assert.match(navCss, /\.person-era-group\{scroll-margin-top:calc\(var\(--person-table-sticky-top/);
@@ -97,7 +96,7 @@ test('era navigation is sticky, keeps visible facet status, and pins the table h
   assert.match(navSource, /ResizeObserver/);
   assert.match(navCss, /@media\(max-width:760px\)/);
   assert.match(navCss, /@media\(max-width:520px\)/);
-  assert.match(navCss, /top:64px/);
+  assert.match(navCss, /top:62px/);
 });
 
 test('mobile Person facet controls stay inside the viewport without browser focus zoom', () => {
@@ -122,7 +121,7 @@ test('era navigation assets load after the shared era model/table grouping and b
   const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
   const mainJs = 'atlas-person-main.js?v=20260920-single-person-surface';
   const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
-  const navCssAsset = 'atlas-person-era-navigation.css?v=20260921-person-density-v2';
+  const navCssAsset = 'atlas-person-era-navigation.css?v=20260921-person-density-v3';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1';
 
   for (const asset of [eraModelJs, tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
