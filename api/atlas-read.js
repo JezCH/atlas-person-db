@@ -1,24 +1,57 @@
 "use strict";
 
-const { createPostgresClient } = require("../server/atlas-postgres-client.js");
-const { createNormalizedReadHandler, requireDatabaseUrl, sendJson } = require("../server/atlas-normalized-read-handler.js");
-const { createPersonReadHandler } = require("../server/atlas-person-read-handler.js");
-const { createPolityReadHandler } = require("../server/atlas-polity-read-handler.js");
-const { createCatalogReadHandler } = require("../server/atlas-catalog-read-handler.js");
-const { createAdminInspectorHandler } = require("../server/atlas-admin-inspector-handler.js");
-const { createAdminSystemStatusHandler } = require("../server/atlas-admin-system-status-handler.js");
-const { runtimeIdentity } = require("../server/atlas-admin-system-status-service.js");
-const { createPersonPortraitHandler } = require("../server/atlas-person-portrait-handler.js");
-const { createPersonPortraitSourceCandidatesHandler } = require("../server/atlas-person-portrait-source-candidates-handler.js");
+const { requireDatabaseUrl, sendJson } = require("../server/atlas-read-http.js");
 
-const normalizedReadHandler = createNormalizedReadHandler({ clientFactory: createPostgresClient });
-const personReadHandler = createPersonReadHandler({ clientFactory: createPostgresClient });
-const polityReadHandler = createPolityReadHandler({ clientFactory: createPostgresClient });
-const catalogReadHandler = createCatalogReadHandler({ clientFactory: createPostgresClient });
-const adminInspectorHandler = createAdminInspectorHandler({ clientFactory: createPostgresClient });
-const adminSystemStatusHandler = createAdminSystemStatusHandler({ clientFactory: createPostgresClient });
-const personPortraitHandler = createPersonPortraitHandler({ clientFactory:createPostgresClient, allowedMethods:["GET"] });
-const personPortraitSourceCandidatesHandler = createPersonPortraitSourceCandidatesHandler({ clientFactory:createPostgresClient });
+let postgresClientFactory = null;
+
+function getPostgresClientFactory() {
+  if (postgresClientFactory) return postgresClientFactory;
+  const { createPostgresClient } = require("../server/atlas-postgres-client.js");
+  postgresClientFactory = createPostgresClient;
+  return postgresClientFactory;
+}
+
+function createLazyHandler(factory) {
+  if (typeof factory !== "function") throw new Error("lazy handler factory is required");
+  let handler = null;
+  return async function lazyHandler(req,res) {
+    if (!handler) handler = factory();
+    return handler(req,res);
+  };
+}
+
+const normalizedReadHandler = createLazyHandler(() => {
+  const { createNormalizedReadHandler } = require("../server/atlas-normalized-read-handler.js");
+  return createNormalizedReadHandler({ clientFactory:getPostgresClientFactory() });
+});
+const personReadHandler = createLazyHandler(() => {
+  const { createPersonReadHandler } = require("../server/atlas-person-read-handler.js");
+  return createPersonReadHandler({ clientFactory:getPostgresClientFactory() });
+});
+const polityReadHandler = createLazyHandler(() => {
+  const { createPolityReadHandler } = require("../server/atlas-polity-read-handler.js");
+  return createPolityReadHandler({ clientFactory:getPostgresClientFactory() });
+});
+const catalogReadHandler = createLazyHandler(() => {
+  const { createCatalogReadHandler } = require("../server/atlas-catalog-read-handler.js");
+  return createCatalogReadHandler({ clientFactory:getPostgresClientFactory() });
+});
+const adminInspectorHandler = createLazyHandler(() => {
+  const { createAdminInspectorHandler } = require("../server/atlas-admin-inspector-handler.js");
+  return createAdminInspectorHandler({ clientFactory:getPostgresClientFactory() });
+});
+const adminSystemStatusHandler = createLazyHandler(() => {
+  const { createAdminSystemStatusHandler } = require("../server/atlas-admin-system-status-handler.js");
+  return createAdminSystemStatusHandler({ clientFactory:getPostgresClientFactory() });
+});
+const personPortraitHandler = createLazyHandler(() => {
+  const { createPersonPortraitHandler } = require("../server/atlas-person-portrait-handler.js");
+  return createPersonPortraitHandler({ clientFactory:getPostgresClientFactory(), allowedMethods:["GET"] });
+});
+const personPortraitSourceCandidatesHandler = createLazyHandler(() => {
+  const { createPersonPortraitSourceCandidatesHandler } = require("../server/atlas-person-portrait-source-candidates-handler.js");
+  return createPersonPortraitSourceCandidatesHandler({ clientFactory:getPostgresClientFactory() });
+});
 
 const RECENT_DELTA_SCHEMA = "atlas-recent-delta/v1";
 const RECENT_DELTA_LIMIT = 12;
@@ -28,6 +61,7 @@ const RUNTIME_EXCLUSIONS_SCHEMA = "atlas-runtime-exclusions/v1";
 const RUNTIME_ACTIVATION_PROJECTION = "runtime_person_politics_v1";
 
 function publicRuntimeIdentity(env = process.env) {
+  const { runtimeIdentity } = require("../server/atlas-admin-system-status-service.js");
   const runtime = runtimeIdentity(env);
   return Object.freeze({
     provider:runtime.provider || null,
@@ -53,7 +87,7 @@ function createPublicRuntimeIdentityHandler({ env = process.env } = {}) {
   };
 }
 
-const publicRuntimeIdentityHandler = createPublicRuntimeIdentityHandler();
+const publicRuntimeIdentityHandler = createLazyHandler(() => createPublicRuntimeIdentityHandler());
 
 async function recentDeltaTableCoverage(client) {
   const result = await client.query(`
@@ -170,7 +204,7 @@ async function readRecentDelta(client, { limit = RECENT_DELTA_LIMIT } = {}) {
   });
 }
 
-function createRecentDeltaReadHandler({ clientFactory = createPostgresClient, env = process.env, read = readRecentDelta } = {}) {
+function createRecentDeltaReadHandler({ clientFactory = getPostgresClientFactory(), env = process.env, read = readRecentDelta } = {}) {
   return async function recentDeltaReadHandler(req,res) {
     if (String(req?.method || "GET").toUpperCase() !== "GET") {
       sendJson(res,405,{ ok:false, schema:RECENT_DELTA_SCHEMA, code:"METHOD_NOT_ALLOWED" });
@@ -202,7 +236,7 @@ function createRecentDeltaReadHandler({ clientFactory = createPostgresClient, en
   };
 }
 
-const recentDeltaReadHandler = createRecentDeltaReadHandler();
+const recentDeltaReadHandler = createLazyHandler(() => createRecentDeltaReadHandler());
 
 function normalizeActivationCompile(row) {
   const exclusionSummary = row?.exclusion_summary && typeof row.exclusion_summary === "object" && !Array.isArray(row.exclusion_summary)
@@ -501,7 +535,7 @@ async function readRuntimeExclusions(client) {
   });
 }
 
-function createRuntimeExclusionsReadHandler({ clientFactory = createPostgresClient, env = process.env, read = readRuntimeExclusions } = {}) {
+function createRuntimeExclusionsReadHandler({ clientFactory = getPostgresClientFactory(), env = process.env, read = readRuntimeExclusions } = {}) {
   return async function runtimeExclusionsReadHandler(req,res) {
     if (String(req?.method || "GET").toUpperCase() !== "GET") {
       sendJson(res,405,{ ok:false, schema:RUNTIME_EXCLUSIONS_SCHEMA, code:"METHOD_NOT_ALLOWED" });
@@ -532,9 +566,9 @@ function createRuntimeExclusionsReadHandler({ clientFactory = createPostgresClie
   };
 }
 
-const runtimeExclusionsReadHandler = createRuntimeExclusionsReadHandler();
+const runtimeExclusionsReadHandler = createLazyHandler(() => createRuntimeExclusionsReadHandler());
 
-function createRuntimePublicationReadHandler({ clientFactory = createPostgresClient, env = process.env, read = readRuntimePublication } = {}) {
+function createRuntimePublicationReadHandler({ clientFactory = getPostgresClientFactory(), env = process.env, read = readRuntimePublication } = {}) {
   return async function runtimePublicationReadHandler(req,res) {
     if (String(req?.method || "GET").toUpperCase() !== "GET") {
       sendJson(res,405,{ ok:false, schema:RUNTIME_PUBLICATION_SCHEMA, code:"METHOD_NOT_ALLOWED" });
@@ -566,7 +600,7 @@ function createRuntimePublicationReadHandler({ clientFactory = createPostgresCli
   };
 }
 
-const runtimePublicationReadHandler = createRuntimePublicationReadHandler();
+const runtimePublicationReadHandler = createLazyHandler(() => createRuntimePublicationReadHandler());
 
 function selectReadSurface(req) {
   const direct = req?.query?.__atlas_read_surface;
