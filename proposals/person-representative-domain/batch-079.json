@@ -1,0 +1,35 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-21",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "7e4e7e6d49be44fda4f3cebd734fd3f617d074e0",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign Hasekura Tsunenaga to exploration. His canonical ATLAS representation is the 1613-1620 Keicho-era Mission to Europe, a seven-year trans-Pacific and trans-Atlantic journey from Sendai to New Spain, Spain and Rome. His office was diplomatic, but his strongest visual-historical identity in ATLAS is the exceptional long-distance journey itself rather than routine governance."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-HASEKURA-TSUNENAGA-20260921",
+    "queue_issue": 977,
+    "assignment_count": 1,
+    "distribution": {
+      "governance": 0,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 1
+    }
+  },
+  "entries": [
+    {
+      "person_id": "c0ded296-4c82-411a-af3e-90869ed79b19",
+      "canonical_name_en": "Hasekura Tsunenaga",
+      "preferred_name_ko": "하세쿠라 쓰네나가",
+      "representative_domain": "exploration"
+    }
+  ]
+}
