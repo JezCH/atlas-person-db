@@ -67,23 +67,35 @@ test("Meanwhile runtime is excluded from core bootstrap and loaded only when a m
 
 test("lazy Meanwhile interactions are race-safe and stale loads cannot restore superseded selection",()=>{
   assert.match(view,/let meanwhileInteractionSerial = 0/);
-  assert.match(view,/const interactionSerial = \+\+meanwhileInteractionSerial/);
+  assert.match(view,/function invalidateMeanwhileInteraction\(\)/);
+  assert.match(view,/meanwhileInteractionSerial \+= 1/);
+  assert.match(view,/const interactionSerial = invalidateMeanwhileInteraction\(\)/);
   assert.match(view,/interactionSerial !== meanwhileInteractionSerial/);
 
   const personStart=view.indexOf("function selectPerson(");
   const personEnd=view.indexOf("\n  async function selectActivity",personStart);
   const personBody=view.slice(personStart,personEnd);
-  assert.match(personBody,/meanwhileInteractionSerial \+= 1/);
+  assert.match(personBody,/invalidateMeanwhileInteraction\(\)/);
 
   const clearStart=view.indexOf("function clearSelection(");
   const clearEnd=view.indexOf("\n  async function setMeanwhileYear",clearStart);
   const clearBody=view.slice(clearStart,clearEnd);
-  assert.match(clearBody,/meanwhileInteractionSerial \+= 1/);
+  assert.match(clearBody,/invalidateMeanwhileInteraction\(\)/);
 
   const manualClearStart=view.indexOf("function clearMeanwhile(");
   const manualClearEnd=view.indexOf("\n  function meanwhileRegionLabel",manualClearStart);
   const manualClearBody=view.slice(manualClearStart,manualClearEnd);
-  assert.match(manualClearBody,/meanwhileInteractionSerial \+= 1/);
+  assert.match(manualClearBody,/invalidateMeanwhileInteraction\(\)/);
+
+  const searchInputStart=view.indexOf('searchInput?.addEventListener("input"');
+  const searchInputEnd=view.indexOf('searchInput?.addEventListener("keydown"',searchInputStart);
+  const searchInputBody=view.slice(searchInputStart,searchInputEnd);
+  assert.match(searchInputBody,/invalidateMeanwhileInteraction\(\)/);
+
+  const activateStart=view.indexOf("async function activate()");
+  const activateEnd=view.indexOf("\n  window.ATLAS_PERSON_SPACETIME_VIEW",activateStart);
+  const activateBody=view.slice(activateStart,activateEnd);
+  assert.match(activateBody,/invalidateMeanwhileInteraction\(\)/);
 });
 
 test("active Meanwhile state remains fail-closed even though its module is optional at startup",()=>{
