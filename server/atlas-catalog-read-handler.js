@@ -1,6 +1,6 @@
 "use strict";
 
-const { requireDatabaseUrl, sendJson } = require("./atlas-normalized-read-handler.js");
+const { requireDatabaseUrl, sendJson } = require("./atlas-read-http.js");
 
 const MAX_QUERY_LENGTH = 120;
 const MAX_RESULTS = 20;
