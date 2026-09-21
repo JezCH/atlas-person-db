@@ -205,7 +205,7 @@
   observer.observe(mainArea, { childList: true });
 
   function init() {
-    ensurePersonDomainAssets();
+    ensurePersonDomainAssets().catch((error) => console.error("ATLAS Person domain assets failed", error));
     applyDomain(currentDomain(), { resetScroll: currentDomain() === "spacetime" || currentDomain() === "persons" });
   }
 
