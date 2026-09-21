@@ -425,6 +425,11 @@
     renderInto(mount);
   }
 
+  function invalidateMeanwhileInteraction() {
+    meanwhileInteractionSerial += 1;
+    return meanwhileInteractionSerial;
+  }
+
   function clearActivityLinkedMeanwhile() {
     if (meanwhileSelectionSource === "activity") {
       meanwhileSelectedOrdinal = null;
@@ -433,7 +438,7 @@
   }
 
   function selectPerson(mount, personId, options = {}) {
-    meanwhileInteractionSerial += 1;
+    invalidateMeanwhileInteraction();
     const nextPersonId = personId || null;
     if (options.preserveActivity !== true || nextPersonId !== selectedPersonId) {
       clearActivityLinkedMeanwhile();
@@ -450,7 +455,7 @@
   }
 
   async function selectActivity(mount, personId, activityId, options = {}) {
-    const interactionSerial = ++meanwhileInteractionSerial;
+    const interactionSerial = invalidateMeanwhileInteraction();
     const { inspector } = runtime();
     const track = compileAtlas().partitioned.tracks.find((item) => item.person_id === personId) || null;
     const activity = inspector.selectedActivity(track, activityId);
@@ -483,7 +488,7 @@
   }
 
   function clearSelection(mount) {
-    meanwhileInteractionSerial += 1;
+    invalidateMeanwhileInteraction();
     clearActivityLinkedMeanwhile();
     selectedPersonId = null;
     selectedActivityId = null;
@@ -512,7 +517,7 @@
   }
 
   function clearMeanwhile(mount) {
-    meanwhileInteractionSerial += 1;
+    invalidateMeanwhileInteraction();
     meanwhileSelectedOrdinal = null;
     meanwhileSelectionSource = null;
     renderInto(mount);
@@ -1673,6 +1678,7 @@
     searchInput?.addEventListener("input", (event) => {
       query = event.target.value || "";
       if (event.isComposing) return;
+      invalidateMeanwhileInteraction();
       renderInto(mount);
       requestAnimationFrame(() => { const input = mount.querySelector("#spacetimeSearch"); input?.focus(); input?.setSelectionRange(query.length, query.length); });
     });
@@ -1686,6 +1692,7 @@
       } else if (event.key === "Escape" && query) {
         event.preventDefault();
         query = "";
+        invalidateMeanwhileInteraction();
         renderInto(mount);
         requestAnimationFrame(() => mount.querySelector("#spacetimeSearch")?.focus());
       }
@@ -1742,6 +1749,7 @@
   async function activate() {
     const mount = document.getElementById("personSpacetimeMount");
     if (!mount) return;
+    invalidateMeanwhileInteraction();
     bindResize();
     if (pendingViewportHorizontalRatio == null) pendingViewportHorizontalRatio = horizontalCameraRatioFromStoredGeometry();
     if (pendingViewportCameraOrdinal == null) pendingViewportCameraOrdinal = cameraCenterOrdinal;
