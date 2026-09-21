@@ -379,6 +379,51 @@
     </table></div>`;
   }
 
+  function qualityLabel(code) {
+    if (code === "no_runtime_activity") return "활동 연결 없음";
+    if (code === "spatial_unresolved") return "Spatial 미해결";
+    if (code === "spatial_review") return "Spatial 검토 대기";
+    if (code === "non_timeline_registry") return "비연대표 등록";
+    return code || "Data Quality";
+  }
+
+  function qualityTargetsTable(code,item) {
+    if (code === "spatial_unresolved") {
+      const targets=Array.isArray(item?.activity_targets) ? item.activity_targets : [];
+      const rows=targets.map((row)=>`<tr data-quality-target-id="${escapeHtml(row.activity_id || "")}">
+        <td><strong>${escapeHtml(reasonLabel(row.reason_code) || row.reason_code || "—")}</strong><small>${escapeHtml(row.reason_code || "")}</small></td>
+        <td><strong>${escapeHtml(row.person_display_name || row.person_id || "—")}</strong><small>${escapeHtml(row.person_id || "")}</small></td>
+        <td><strong>${escapeHtml(row.polity_display_name || row.polity_id || "—")}</strong><small>${escapeHtml(row.polity_id || "")}</small></td>
+        <td><code>${escapeHtml(row.activity_id || "—")}</code></td>
+      </tr>`).join("");
+      return `<div class="dashboard-panel-head dashboard-quality-targets-head"><div><p class="eyebrow">QUALITY TARGETS</p><h3>Spatial 미해결 Activity</h3></div><span>${value(targets.length)}건</span></div>
+        <div class="dashboard-runtime-exclusion-wrap"><table class="dashboard-runtime-exclusion-table dashboard-quality-target-table" data-quality-target-kind="activity"><thead><tr><th scope="col">사유</th><th scope="col">인물</th><th scope="col">정치체</th><th scope="col">Activity UUID</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    }
+    if (code === "spatial_review") {
+      const targets=Array.isArray(item?.polity_targets) ? item.polity_targets : [];
+      const rows=targets.map((row)=>`<tr data-quality-target-id="${escapeHtml(row.polity_id || "")}">
+        <td><strong>${escapeHtml(row.polity_display_name || row.polity_id || "—")}</strong><small>${escapeHtml(row.polity_id || "")}</small></td>
+        <td><strong>${value(row.affected_person_count)}명</strong><small>${escapeHtml((row.affected_person_ids || []).join(", "))}</small></td>
+        <td><code>${escapeHtml((row.reason_codes || []).join(", ") || "—")}</code></td>
+      </tr>`).join("");
+      return `<div class="dashboard-panel-head dashboard-quality-targets-head"><div><p class="eyebrow">QUALITY TARGETS</p><h3>Spatial 검토 대기 Polity</h3></div><span>${value(targets.length)}개</span></div>
+        <div class="dashboard-runtime-exclusion-wrap"><table class="dashboard-runtime-exclusion-table dashboard-quality-target-table" data-quality-target-kind="polity"><thead><tr><th scope="col">정치체</th><th scope="col">영향 인물</th><th scope="col">검토 사유</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    }
+    if (code === "non_timeline_registry") {
+      const targets=Array.isArray(item?.registry_targets) ? item.registry_targets : [];
+      const rows=targets.map((row)=>`<tr data-quality-target-id="${escapeHtml(String(row.source_index ?? ""))}">
+        <td><strong>${escapeHtml(row.display_name_ko || row.person_name || "—")}</strong><small>${escapeHtml(row.person_name || "")}</small></td>
+        <td><strong>${escapeHtml(row.politic_display_name_ko || row.politic_name || "—")}</strong><small>${escapeHtml(row.politic_name || "")}</small></td>
+        <td><strong>${escapeHtml(row.historicity_display_ko || row.historicity || "—")}</strong><small>${escapeHtml(row.historicity || "")}</small></td>
+        <td><code>${escapeHtml(row.date_basis || "—")}</code></td>
+        <td><span>${escapeHtml(row.reason || "—")}</span></td>
+      </tr>`).join("");
+      return `<div class="dashboard-panel-head dashboard-quality-targets-head"><div><p class="eyebrow">QUALITY TARGETS</p><h3>비연대표 Registry</h3></div><span>${value(targets.length)}명</span></div>
+        <div class="dashboard-runtime-exclusion-wrap"><table class="dashboard-runtime-exclusion-table dashboard-quality-target-table dashboard-quality-registry-table" data-quality-target-kind="registry"><thead><tr><th scope="col">인물</th><th scope="col">정치체</th><th scope="col">역사성</th><th scope="col">연대 기준</th><th scope="col">제외 사유</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    }
+    return "";
+  }
+
   function formatTimestamp(value) {
     if (!value) return "—";
     const date=new Date(value);
@@ -423,6 +468,7 @@
     const k = snapshot.kpis;
     const w = snapshot.work;
     const q = snapshot.quality;
+    const qd = snapshot.quality_drilldown || {};
     const a = snapshot.attention_queue;
     const b = snapshot.incomplete_breakdown;
     const kd = snapshot.kpi_drilldown;
@@ -541,11 +587,12 @@
         <article class="dashboard-panel card">
           <div class="dashboard-panel-head"><div><p class="eyebrow">DATA QUALITY</p><h3>구조·예외 상태</h3></div><span>중복 지표 제외</span></div>
           <div class="dashboard-issue-grid">
-            <button type="button" data-dashboard-route="spacetime"><span>Spatial 미해결</span><strong>${value(q.spatial_unresolved)}</strong></button>
-            <button type="button" data-dashboard-route="spacetime"><span>Spatial 검토 대기</span><strong>${value(q.spatial_review)}</strong></button>
-            <button type="button" data-dashboard-route="persons"><span>활동 연결 없음</span><strong>${value(q.no_runtime_activity)}</strong></button>
-            <button type="button" data-dashboard-route="persons"><span>비연대표 등록</span><strong>${value(q.non_timeline_registry)}</strong></button>
+            <button type="button" data-dashboard-quality="spatial_unresolved" aria-controls="dashboardQualityTargets" aria-expanded="false"${qd.spatial_unresolved?.drilldown_available ? "" : " disabled"}><span>Spatial 미해결</span><strong>${value(q.spatial_unresolved)}</strong></button>
+            <button type="button" data-dashboard-quality="spatial_review" aria-controls="dashboardQualityTargets" aria-expanded="false"${qd.spatial_review?.drilldown_available ? "" : " disabled"}><span>Spatial 검토 대기</span><strong>${value(q.spatial_review)}</strong></button>
+            <button type="button" data-dashboard-quality="no_runtime_activity"${qd.no_runtime_activity?.drilldown_available ? "" : " disabled"}><span>활동 연결 없음</span><strong>${value(q.no_runtime_activity)}</strong></button>
+            <button type="button" data-dashboard-quality="non_timeline_registry" aria-controls="dashboardQualityTargets" aria-expanded="false"${qd.non_timeline_registry?.drilldown_available ? "" : " disabled"}><span>비연대표 등록</span><strong>${value(q.non_timeline_registry)}</strong></button>
           </div>
+          <div id="dashboardQualityTargets" class="dashboard-quality-targets" hidden aria-live="polite"></div>
         </article>
       </section>
 
@@ -666,6 +713,28 @@
         personIds:item.person_ids
       });
     }));
+    root.querySelectorAll("[data-dashboard-quality]").forEach((button) => button.addEventListener("click", () => {
+      const code=button.dataset.dashboardQuality;
+      const item=qd?.[code];
+      if (!item?.drilldown_available) return;
+      if (item.unit === "person" && Array.isArray(item.person_ids)) {
+        window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain?.("persons");
+        window.ATLAS_PERSON_MAIN?.setDashboardFilter?.({
+          code:`quality_${code}`,
+          label:qualityLabel(code),
+          personIds:item.person_ids
+        });
+        return;
+      }
+      const panel=root.querySelector("#dashboardQualityTargets");
+      if (!panel) return;
+      root.querySelectorAll('[data-dashboard-quality][aria-expanded]').forEach((other)=>other.setAttribute("aria-expanded","false"));
+      panel.innerHTML=qualityTargetsTable(code,item);
+      panel.hidden=false;
+      button.setAttribute("aria-expanded","true");
+      panel.scrollIntoView?.({ block:"nearest", behavior:"smooth" });
+    }));
+
     root.querySelectorAll("[data-dashboard-route]").forEach((button) => button.addEventListener("click", () => {
       if (button.dataset.dashboardRoute === "persons") window.ATLAS_PERSON_MAIN?.clearDashboardFilter?.();
       window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain?.(button.dataset.dashboardRoute);
