@@ -9,9 +9,8 @@
   .mobile-brand-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:11px;background:#5967d9;font-weight:900}
   .mobile-brand strong,.mobile-brand small{display:block}.mobile-brand small{color:#aeb8ca}
   .workspace-shell{display:block;min-height:calc(100vh - 58px)}.sidebar{display:none}.main-area{padding:5px 8px 28px}
-  .topbar{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-bottom:3px;min-height:20px}
-  .topbar>div{display:none}.topbar .eyebrow,.topbar .subtitle,.topbar h1{display:none}
-  .status{flex:0 0 auto;max-width:132px;padding:4px 7px;border-radius:999px;font-size:9px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar{display:none}
+  .topbar>div,.topbar .eyebrow,.topbar .subtitle,.topbar h1,.topbar .status{display:none}
   .mobile-drawer-backdrop{position:fixed;inset:0;z-index:60;background:rgba(8,15,28,.54)}
   .mobile-drawer{position:fixed;inset:0 auto 0 0;z-index:70;width:min(82vw,310px);padding:18px;background:#101827;color:#fff;transform:translateX(-105%);transition:transform .2s ease;box-shadow:20px 0 50px rgba(0,0,0,.25)}
   .mobile-drawer.open{transform:translateX(0)}
