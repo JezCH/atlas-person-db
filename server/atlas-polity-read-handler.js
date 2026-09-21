@@ -1,7 +1,7 @@
 "use strict";
 
 const { readPolities, readPolityDetail } = require("./atlas-polity-read-service.js");
-const { requireDatabaseUrl, sendJson } = require("./atlas-normalized-read-handler.js");
+const { requireDatabaseUrl, sendJson } = require("./atlas-read-http.js");
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
