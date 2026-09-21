@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Hasekura Tsunenaga",
+    "display_name_ko": "하세쿠라 쓰네나가",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sendai Domain",
+    "display_name_ko": "센다이 번",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Diplomatic envoy and head of the Keicho Embassy",
+    "role_display_name_ko": "게이초 유럽 사절단 대표",
+    "period_basis": "general_activity",
+    "start_year": 1613,
+    "start_month": 10,
+    "start_day": 28,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1620,
+    "end_month": 9,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Date Masamune, lord of the Sendai domain, appointed Hasekura Tsunenaga as leader of the Keicho-era Mission to Europe. The mission departed Tsukinoura on 28 October 1613, travelled via New Spain to Spain and Rome, sought missionary support and a trade relationship with Mexico, and returned to Sendai on 20 September 1620."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Materials Related to the Keicho-era Mission to Europe Japan and Spain — Memory of the World nomination",
+      "canonical_url": "https://media.unesco.org/sites/default/files/webform/mow001/japan_spain_keicho.pdf",
+      "citation_text": "The Japan-Spain nomination identifies Hasekura Tsunenaga as leader of Date Masamune's Keicho-era Mission to Europe, records departure from Tsukinoura on 28 October 1613, its diplomatic and trade purposes, and return to Sendai on 20 September 1620."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Address of John Paul II to a Japanese pilgrimage, 4 March 1985 — Holy See",
+      "canonical_url": "https://www.vatican.va/content/john-paul-ii/en/speeches/1985/march/documents/hf_jp-ii_spe_19850304_pellegrinaggio-giapponese.html",
+      "citation_text": "The Holy See records that Date Masamune sent his personal envoy Hasekura Rokuemon Tsunenaga in 1613 and that Pope Paul V received Hasekura in 1615."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-21"
+    }
+  }
+}
