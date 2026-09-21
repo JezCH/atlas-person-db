@@ -4,6 +4,20 @@ import { createRequire } from 'node:module';
 
 const require=createRequire(import.meta.url);
 const readApi=require('../api/atlas-read.js');
+const publicationService=require('../server/atlas-runtime-publication-read-service.js');
+const publicationHandler=require('../server/atlas-runtime-publication-read-handler.js');
+
+test('atlas-read preserves runtime publication compatibility exports through the extracted modules', () => {
+  assert.equal(readApi.RUNTIME_PUBLICATION_SCHEMA,publicationService.RUNTIME_PUBLICATION_SCHEMA);
+  assert.equal(readApi.RUNTIME_ACTIVATION_PROJECTION,publicationService.RUNTIME_ACTIVATION_PROJECTION);
+  assert.equal(readApi.normalizeActivationCompile,publicationService.normalizeActivationCompile);
+  assert.equal(readApi.normalizeActivationRecord,publicationService.normalizeActivationRecord);
+  assert.equal(readApi.exclusionDelta,publicationService.exclusionDelta);
+  assert.equal(readApi.readRuntimeActivationHistory,publicationService.readRuntimeActivationHistory);
+  assert.equal(readApi.readRuntimePublication,publicationService.readRuntimePublication);
+  assert.equal(readApi.createRuntimePublicationReadHandler,publicationHandler.createRuntimePublicationReadHandler);
+});
+
 
 function activationRow({
   id='2',
