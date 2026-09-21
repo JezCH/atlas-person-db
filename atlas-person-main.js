@@ -24,7 +24,9 @@
   let personDomainsById = Object.freeze({});
   let dashboardFilter = null;
   let requestSerial = 0;
+  let selectedPersonDetail = null;
   let selectedPortrait = null;
+  let selectedPortraitSourceCandidates = null;
   const PORTRAIT_SOURCE_MAX_BYTES = 20 * 1024 * 1024;
   const PORTRAIT_OUTPUT_MAX_BYTES = 3 * 1024 * 1024;
   const PORTRAIT_MAX_SIDE = 1600;
@@ -454,6 +456,76 @@
     ].map(([value,label]) => `<option value="${value}"${selected === value ? " selected" : ""}>${label}</option>`).join("");
   }
 
+  const PORTRAIT_EVIDENCE_ROLE_LABELS = Object.freeze({
+    facial_reference:"얼굴 근거",
+    clothing_reference:"복식 근거",
+    iconography_reference:"도상 근거",
+    textual_description:"문헌 묘사",
+    context_reference:"맥락 참고"
+  });
+
+  function portraitEvidenceRoleOptions(selected = "") {
+    return Object.entries(PORTRAIT_EVIDENCE_ROLE_LABELS)
+      .map(([value,label]) => `<option value="${value}"${selected === value ? " selected" : ""}>${label}</option>`)
+      .join("");
+  }
+
+  function portraitSourceDisplay(source) {
+    const row = source?.source && typeof source.source === "object" ? source.source : source;
+    return row?.citation_text || row?.title || row?.canonical_url || source?.source_id || "출처";
+  }
+
+  function portraitSourceCandidates(_person, portrait) {
+    const byId = new Map();
+    for (const source of selectedPortraitSourceCandidates || []) {
+      const id = String(source?.source_id || "").trim();
+      if (id) byId.set(id, source);
+    }
+    for (const link of portrait?.sources || []) {
+      const id = String(link?.source_id || "").trim();
+      if (id && !byId.has(id)) byId.set(id, { source_id:id, ...(link?.source || {}) });
+    }
+    return [...byId.values()].sort((a,b) =>
+      portraitSourceDisplay(a).localeCompare(portraitSourceDisplay(b), "ko")
+    );
+  }
+
+  function portraitProvenanceHtml(person, portrait) {
+    if (!portrait) return "";
+    const personId = escapeHtml(person?.id || "");
+    const links = Array.isArray(portrait.sources) ? portrait.sources : [];
+    const candidates = portraitSourceCandidates(person, portrait);
+    const linked = links.length
+      ? `<div class="person-portrait-source-list">${links.map((link) => {
+          const sourceId = escapeHtml(link?.source_id || "");
+          const role = String(link?.evidence_role || "");
+          return `<form class="person-portrait-source-row" data-person-portrait-operation="source-edit" data-person-id="${personId}" data-source-id="${sourceId}" data-original-role="${escapeHtml(role)}">
+            <span class="person-portrait-source-label">${escapeHtml(portraitSourceDisplay(link))}</span>
+            <select name="evidence_role" aria-label="초상 근거 역할">${portraitEvidenceRoleOptions(role)}</select>
+            <button class="mini-btn edit" type="submit">역할 저장</button>
+            <button class="mini-btn danger delete" type="button" data-person-portrait-source-remove data-person-id="${personId}" data-source-id="${sourceId}" data-evidence-role="${escapeHtml(role)}">연결 해제</button>
+          </form>`;
+        }).join("")}</div>`
+      : '<p class="person-profile-help">연결된 초상 근거 출처가 없습니다.</p>';
+    const candidateOptions = candidates.map((source) =>
+      `<option value="${escapeHtml(source.source_id || "")}">${escapeHtml(portraitSourceDisplay(source))}</option>`
+    ).join("");
+    const add = selectedPortraitSourceCandidates === null
+      ? `<button class="mini-btn" type="button" data-person-portrait-load-sources data-person-id="${personId}">Person 출처 불러오기</button>`
+      : candidateOptions
+        ? `<form class="person-profile-form person-portrait-source-add" data-person-portrait-operation="source-add" data-person-id="${personId}">
+            <label><span>Person 출처에서 근거 추가</span><select name="source_id" required><option value="" selected disabled>출처 선택</option>${candidateOptions}</select></label>
+            <label><span>근거 역할</span><select name="evidence_role" required>${portraitEvidenceRoleOptions("context_reference")}</select></label>
+            <button class="mini-btn edit" type="submit">근거 연결</button>
+          </form>`
+        : '<p class="person-profile-help">이 Person에 연결된 canonical Source가 없습니다. Source 생성·Person 연결은 별도 Source authoring 책임으로 유지합니다.</p>';
+    return `<div class="person-portrait-provenance">
+      <div class="person-detail-section-head"><h4>초상 근거</h4><span>${links.length}건</span></div>
+      ${linked}
+      ${add}
+    </div>`;
+  }
+
   function portraitEditorHtml(person, portraitResult = null) {
     const personId = escapeHtml(person?.id || "");
     if (!personId) return "";
@@ -474,6 +546,11 @@
         <div class="person-portrait-actions"><button class="mini-btn edit" type="submit">${portrait ? "초상 교체" : "초상 업로드"}</button>${portrait ? `<button class="mini-btn danger delete" type="button" data-person-portrait-delete data-person-id="${personId}">초상 삭제</button>` : ""}</div>
       </form>
       <p class="person-profile-help">${currentState} · JPG/PNG/WebP 등 일반 이미지는 브라우저에서 WebP로 변환한 뒤 저장합니다.</p>
+      ${portrait ? `<form class="person-profile-form person-portrait-metadata-form" data-person-portrait-operation="metadata" data-person-id="${personId}">
+        <label><span>초상 유형</span><select name="portrait_kind" required>${portraitKindOptions(currentKind)}</select></label>
+        <label><span>근거 수준</span><select name="evidence_level" required>${portraitEvidenceOptions(currentEvidence)}</select></label>
+        <button class="mini-btn edit" type="submit">메타데이터 저장</button>
+      </form>${portraitProvenanceHtml(person, portrait)}` : ""}
     </div>`;
   }
 
@@ -566,7 +643,9 @@
   async function selectPerson(personId, { force = false } = {}) {
     if (!personId || (!force && selectedPersonId === personId)) return;
     selectedPersonId = personId;
+    selectedPersonDetail = null;
     selectedPortrait = null;
+    selectedPortraitSourceCandidates = null;
     renderGroups();
     renderDetailLoading();
     const serial = ++requestSerial;
@@ -576,6 +655,7 @@
         reader.readPortrait(personId).catch((error) => Object.freeze({ error }))
       ]);
       if (serial !== requestSerial || selectedPersonId !== personId) return;
+      selectedPersonDetail = result.person;
       selectedPortrait = portraitResult?.portrait || null;
       renderDetail(result.person, portraitResult);
     } catch (error) {
@@ -698,6 +778,123 @@
         evidence_role:String(row?.evidence_role || "").trim()
       }))
       .filter((row) => row.source_id && row.evidence_role);
+  }
+
+  async function loadPortraitSourceCandidates(personId) {
+    const id = String(personId || "").trim();
+    if (!id || id !== selectedPersonId || !selectedPortrait || !selectedPersonDetail) return;
+    if (!profileWriter?.readPersonPortraitSourceCandidates) {
+      return showOperationalMessage("초상 근거 후보 조회 서비스를 사용할 수 없습니다.");
+    }
+    try {
+      const outcome = await profileWriter.readPersonPortraitSourceCandidates(id);
+      if (outcome?.committed !== true || !Array.isArray(outcome?.candidates)) {
+        return showOperationalMessage(outcomeError(outcome, "Person 출처 조회에 실패했습니다."));
+      }
+      selectedPortraitSourceCandidates = outcome.candidates.slice();
+      renderDetail(selectedPersonDetail, { portrait:selectedPortrait });
+      showOperationalMessage(`초상 근거 후보 ${selectedPortraitSourceCandidates.length}건을 불러왔습니다.`);
+    } catch (error) {
+      showOperationalMessage(error?.message || "Person 출처 조회에 실패했습니다.");
+    }
+  }
+
+  async function patchPortraitMetadata(personId, {
+    portraitKind = selectedPortrait?.portrait_kind,
+    evidenceLevel = selectedPortrait?.evidence_level,
+    sources = preservedPortraitSources(),
+    successMessage = "초상 메타데이터를 저장했습니다."
+  } = {}) {
+    const id = String(personId || "").trim();
+    if (!id || id !== selectedPersonId || !selectedPortrait) {
+      return showOperationalMessage("현재 초상화 상태를 다시 불러온 뒤 시도하세요.");
+    }
+    if (!profileWriter?.updatePersonPortraitMetadata) {
+      return showOperationalMessage("초상 근거 편집 서비스를 사용할 수 없습니다.");
+    }
+    const outcome = await profileWriter.updatePersonPortraitMetadata({
+      person_id:id,
+      portrait_kind:String(portraitKind || "").trim(),
+      evidence_level:String(evidenceLevel || "").trim(),
+      sources
+    });
+    if (outcome?.committed !== true) {
+      return showOperationalMessage(outcomeError(outcome, "초상 근거 저장에 실패했습니다."));
+    }
+    await selectPerson(id, { force:true });
+    showOperationalMessage(successMessage);
+  }
+
+  async function handlePortraitMetadataSubmit(event) {
+    const form = event.target.closest?.("form[data-person-portrait-operation][data-person-id]");
+    if (!form) return;
+    const operation = String(form.dataset.personPortraitOperation || "");
+    if (!["metadata","source-add","source-edit"].includes(operation)) return;
+    event.preventDefault();
+    const personId = String(form.dataset.personId || "").trim();
+    if (!personId || personId !== selectedPersonId || !selectedPortrait) {
+      return showOperationalMessage("현재 초상화 상태를 다시 불러온 뒤 시도하세요.");
+    }
+    const controls = [...form.querySelectorAll("button,input,select")];
+    controls.forEach((control) => { control.disabled = true; });
+    try {
+      if (operation === "metadata") {
+        return await patchPortraitMetadata(personId, {
+          portraitKind:form.elements.portrait_kind?.value,
+          evidenceLevel:form.elements.evidence_level?.value,
+          successMessage:"초상 유형과 근거 수준을 저장했습니다."
+        });
+      }
+
+      const links = preservedPortraitSources();
+      if (operation === "source-add") {
+        const sourceId = String(form.elements.source_id?.value || "").trim();
+        const evidenceRole = String(form.elements.evidence_role?.value || "").trim();
+        if (!sourceId || !evidenceRole) return showOperationalMessage("연결할 출처와 근거 역할을 선택하세요.");
+        links.push({ source_id:sourceId, evidence_role:evidenceRole });
+        return await patchPortraitMetadata(personId, {
+          sources:links,
+          successMessage:"초상 근거 출처를 연결했습니다."
+        });
+      }
+
+      const sourceId = String(form.dataset.sourceId || "").trim();
+      const originalRole = String(form.dataset.originalRole || "").trim();
+      const evidenceRole = String(form.elements.evidence_role?.value || "").trim();
+      if (!sourceId || !originalRole || !evidenceRole) return showOperationalMessage("초상 근거 연결 정보가 올바르지 않습니다.");
+      const nextLinks = links.map((row) =>
+        row.source_id === sourceId && row.evidence_role === originalRole
+          ? { source_id:sourceId, evidence_role:evidenceRole }
+          : row
+      );
+      return await patchPortraitMetadata(personId, {
+        sources:nextLinks,
+        successMessage:"초상 근거 역할을 변경했습니다."
+      });
+    } catch (error) {
+      showOperationalMessage(error?.message || "초상 근거 저장에 실패했습니다.");
+    } finally {
+      controls.forEach((control) => { if (control.isConnected) control.disabled = false; });
+    }
+  }
+
+  async function removePortraitSource(personId, sourceId, evidenceRole) {
+    const id = String(personId || "").trim();
+    const sid = String(sourceId || "").trim();
+    const role = String(evidenceRole || "").trim();
+    if (!id || id !== selectedPersonId || !selectedPortrait || !sid || !role) return;
+    if (!window.confirm("이 출처와 초상화의 근거 연결을 해제할까요?")) return;
+    try {
+      const nextLinks = preservedPortraitSources().filter((row) =>
+        !(row.source_id === sid && row.evidence_role === role)
+      );
+      await patchPortraitMetadata(id, {
+        sources:nextLinks,
+        successMessage:"초상 근거 연결을 해제했습니다."
+      });
+    } catch (error) {
+      showOperationalMessage(error?.message || "초상 근거 연결 해제에 실패했습니다.");
+    }
   }
 
   async function handlePortraitSubmit(event) {
@@ -883,7 +1080,18 @@
     });
     detail?.addEventListener("submit", handleProfileSubmit);
     detail?.addEventListener("submit", handlePortraitSubmit);
+    detail?.addEventListener("submit", handlePortraitMetadataSubmit);
     detail?.addEventListener("click", (event) => {
+      const sourceLoad = event.target.closest("[data-person-portrait-load-sources][data-person-id]");
+      if (sourceLoad) {
+        loadPortraitSourceCandidates(sourceLoad.dataset.personId);
+        return;
+      }
+      const sourceRemove = event.target.closest("[data-person-portrait-source-remove][data-person-id]");
+      if (sourceRemove) {
+        removePortraitSource(sourceRemove.dataset.personId, sourceRemove.dataset.sourceId, sourceRemove.dataset.evidenceRole);
+        return;
+      }
       const portraitDelete = event.target.closest("[data-person-portrait-delete][data-person-id]");
       if (portraitDelete) {
         deletePersonPortrait(portraitDelete.dataset.personId);
@@ -934,6 +1142,9 @@
     profileEditorHtml,
     portraitFileToWebpBase64,
     handlePortraitSubmit,
+    handlePortraitMetadataSubmit,
+    loadPortraitSourceCandidates,
+    removePortraitSource,
     deletePersonPortrait,
     deleteActivity,
     exportCurrentExcel

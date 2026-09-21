@@ -9,6 +9,7 @@ const { createAdminInspectorHandler } = require("../server/atlas-admin-inspector
 const { createAdminSystemStatusHandler } = require("../server/atlas-admin-system-status-handler.js");
 const { runtimeIdentity } = require("../server/atlas-admin-system-status-service.js");
 const { createPersonPortraitHandler } = require("../server/atlas-person-portrait-handler.js");
+const { createPersonPortraitSourceCandidatesHandler } = require("../server/atlas-person-portrait-source-candidates-handler.js");
 
 const normalizedReadHandler = createNormalizedReadHandler({ clientFactory: createPostgresClient });
 const personReadHandler = createPersonReadHandler({ clientFactory: createPostgresClient });
@@ -17,6 +18,7 @@ const catalogReadHandler = createCatalogReadHandler({ clientFactory: createPostg
 const adminInspectorHandler = createAdminInspectorHandler({ clientFactory: createPostgresClient });
 const adminSystemStatusHandler = createAdminSystemStatusHandler({ clientFactory: createPostgresClient });
 const personPortraitHandler = createPersonPortraitHandler({ clientFactory:createPostgresClient, allowedMethods:["GET"] });
+const personPortraitSourceCandidatesHandler = createPersonPortraitSourceCandidatesHandler({ clientFactory:createPostgresClient });
 
 const RECENT_DELTA_SCHEMA = "atlas-recent-delta/v1";
 const RECENT_DELTA_LIMIT = 12;
@@ -585,6 +587,7 @@ async function consolidatedReadHandler(req, res) {
   const surface = selectReadSurface(req);
   if (surface === "person") return personReadHandler(req, res);
   if (surface === "person-portrait") return personPortraitHandler(req, res);
+  if (surface === "person-portrait-source-candidates") return personPortraitSourceCandidatesHandler(req, res);
   if (surface === "polity") return polityReadHandler(req, res);
   if (surface === "catalog") return catalogReadHandler(req, res);
   if (surface === "recent-delta") return recentDeltaReadHandler(req, res);

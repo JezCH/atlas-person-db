@@ -29,7 +29,8 @@
     fetchImpl = globalThis.fetch,
     credentialProvider = defaultCredentialProvider,
     sessionEndpoint = "/api/atlas-session",
-    mutationEndpoint = "/api/atlas-mutate"
+    mutationEndpoint = "/api/atlas-mutate",
+    readEndpoint = "/api/atlas-read"
   } = {}) {
     if (typeof fetchImpl !== "function") throw new Error("fetch implementation is required");
     if (typeof credentialProvider !== "function") throw new Error("credentialProvider must be a function");
@@ -155,7 +156,9 @@
     }
 
     async function mutatePortrait(method, payload) {
-      const operation = method === "DELETE" ? "delete_person_portrait" : "set_person_portrait";
+      const operation = method === "DELETE"
+        ? "delete_person_portrait"
+        : method === "PATCH" ? "update_person_portrait_metadata" : "set_person_portrait";
       const auth = await ensureSession();
       if (!auth.ok) return portraitFailure(operation, auth.error, 401);
 
@@ -173,6 +176,42 @@
       return {
         ...body,
         operation,
+        errors:[],
+        http_status:response.status
+      };
+    }
+
+    async function readPersonPortraitSourceCandidates(personId) {
+      const operation = "read_person_portrait_source_candidates";
+      const auth = await ensureSession();
+      if (!auth.ok) return portraitFailure(operation, auth.error, 401);
+      const id = String(personId || "").trim();
+      const url = `${readEndpoint}?__atlas_read_surface=person-portrait-source-candidates&person_id=${encodeURIComponent(id)}`;
+      let response = await fetchImpl(url, {
+        method:"GET",
+        credentials:"same-origin",
+        cache:"no-store",
+        headers:{ accept:"application/json" }
+      });
+      if (response.status === 401) {
+        sessionKnown = false;
+        const renewed = await ensureSession({ force:true });
+        if (!renewed.ok) return portraitFailure(operation, renewed.error, 401);
+        response = await fetchImpl(url, {
+          method:"GET",
+          credentials:"same-origin",
+          cache:"no-store",
+          headers:{ accept:"application/json" }
+        });
+      }
+      const body = await readJson(response);
+      if (!response.ok || body?.ok !== true || !Array.isArray(body?.candidates)) {
+        return portraitFailure(operation, errorText(body, `portrait source read failed (${response.status})`), response.status);
+      }
+      return {
+        ...body,
+        operation,
+        committed:true,
         errors:[],
         http_status:response.status
       };
@@ -213,6 +252,13 @@
         evidence_level:String(payload?.evidence_level || "").trim(),
         sources:Array.isArray(payload?.sources) ? payload.sources : []
       }),
+      updatePersonPortraitMetadata: (payload) => mutatePortrait("PATCH", {
+        person_id:String(payload?.person_id || "").trim(),
+        portrait_kind:String(payload?.portrait_kind || "").trim(),
+        evidence_level:String(payload?.evidence_level || "").trim(),
+        sources:Array.isArray(payload?.sources) ? payload.sources : []
+      }),
+      readPersonPortraitSourceCandidates,
       deletePersonPortrait: (personId) => mutatePortrait("DELETE", {
         person_id:String(personId || "").trim()
       }),
