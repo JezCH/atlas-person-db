@@ -28,7 +28,6 @@
     ["./atlas-person-spacetime-temporal-certainty.js?v=20260906-boundary-certainty", "ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY"],
     ["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"],
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
-    ["./atlas-person-spacetime-meanwhile.js?v=20260902-active-activity", "ATLAS_PERSON_SPACETIME_MEANWHILE"],
     ["./atlas-person-spacetime-data-parity.js?v=20260902-final-parity", "ATLAS_PERSON_SPACETIME_DATA_PARITY"],
     ["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"],
     ["./atlas-person-spacetime-performance.js?v=20260826-p13", "ATLAS_PERSON_SPACETIME_PERFORMANCE"],
@@ -40,6 +39,10 @@
   const RUNTIME_SPACE_AXIS_DEPENDENT_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-spatial-compile.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"]
   ]);
+  const RUNTIME_MEANWHILE_ASSET = Object.freeze([
+    "./atlas-person-spacetime-meanwhile.js?v=20260902-active-activity",
+    "ATLAS_PERSON_SPACETIME_MEANWHILE"
+  ]);
 
   if (!dataStore || !model || !eraModel) {
     console.error("ATLAS spacetime view could not initialize required dependencies");
@@ -47,6 +50,8 @@
   }
 
   let runtimePromise = null;
+  let meanwhileRuntimePromise = null;
+  let meanwhileInteractionSerial = 0;
   let loadPromise = null;
   let dataLoadGeneration = 0;
   let persons = [];
@@ -198,6 +203,25 @@
     return runtimePromise;
   }
 
+  function ensureMeanwhileModule() {
+    const [src, globalName] = RUNTIME_MEANWHILE_ASSET;
+    if (window[globalName]) return Promise.resolve(window[globalName]);
+    if (meanwhileRuntimePromise) return meanwhileRuntimePromise;
+
+    meanwhileRuntimePromise = loadScriptOnce(src, globalName)
+      .catch((error) => {
+        meanwhileRuntimePromise = null;
+        throw error;
+      });
+    return meanwhileRuntimePromise;
+  }
+
+  function meanwhileRuntime() {
+    const api = window.ATLAS_PERSON_SPACETIME_MEANWHILE;
+    if (!api?.summarize) throw new Error("ATLAS_SPACETIME_MEANWHILE_RUNTIME_MISSING");
+    return api;
+  }
+
   function runtime() {
     const api = {
       timeProjection: window.ATLAS_PERSON_SPACETIME_TIME_PROJECTION,
@@ -208,7 +232,6 @@
       temporalCertainty: window.ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY,
       inspector: window.ATLAS_PERSON_SPACETIME_INSPECTOR,
       exploration: window.ATLAS_PERSON_SPACETIME_EXPLORATION,
-      meanwhile: window.ATLAS_PERSON_SPACETIME_MEANWHILE,
       dataParity: window.ATLAS_PERSON_SPACETIME_DATA_PARITY,
       minimap: window.ATLAS_PERSON_SPACETIME_MINIMAP,
       performance: window.ATLAS_PERSON_SPACETIME_PERFORMANCE,
@@ -410,6 +433,7 @@
   }
 
   function selectPerson(mount, personId, options = {}) {
+    meanwhileInteractionSerial += 1;
     const nextPersonId = personId || null;
     if (options.preserveActivity !== true || nextPersonId !== selectedPersonId) {
       clearActivityLinkedMeanwhile();
@@ -425,15 +449,29 @@
     renderInto(mount);
   }
 
-  function selectActivity(mount, personId, activityId, options = {}) {
+  async function selectActivity(mount, personId, activityId, options = {}) {
+    const interactionSerial = ++meanwhileInteractionSerial;
     const { inspector } = runtime();
     const track = compileAtlas().partitioned.tracks.find((item) => item.person_id === personId) || null;
     const activity = inspector.selectedActivity(track, activityId);
     if (!track || !activity) return false;
+
+    const nextTimeOrdinal = activity.midpoint_ordinal;
+    let meanwhileReady = false;
+    if (Number.isInteger(nextTimeOrdinal)) {
+      try {
+        await ensureMeanwhileModule();
+        meanwhileReady = true;
+      } catch (error) {
+        console.error("ATLAS Meanwhile runtime failed", error);
+      }
+      if (interactionSerial !== meanwhileInteractionSerial || !mount?.isConnected) return false;
+    }
+
     selectedPersonId = track.person_id;
     selectedActivityId = activity.activity_id;
-    selectedTimeOrdinal = activity.midpoint_ordinal;
-    if (Number.isInteger(selectedTimeOrdinal)) {
+    selectedTimeOrdinal = nextTimeOrdinal;
+    if (Number.isInteger(selectedTimeOrdinal) && meanwhileReady) {
       meanwhileSelectedOrdinal = selectedTimeOrdinal;
       meanwhileSelectionSource = "activity";
     } else {
@@ -445,6 +483,7 @@
   }
 
   function clearSelection(mount) {
+    meanwhileInteractionSerial += 1;
     clearActivityLinkedMeanwhile();
     selectedPersonId = null;
     selectedActivityId = null;
@@ -453,9 +492,19 @@
     renderInto(mount);
   }
 
-  function setMeanwhileYear(mount, year) {
+  async function setMeanwhileYear(mount, year) {
     const ordinal = model.historicalYearToOrdinal(Number(year));
     if (ordinal == null) return false;
+
+    const interactionSerial = ++meanwhileInteractionSerial;
+    try {
+      await ensureMeanwhileModule();
+    } catch (error) {
+      console.error("ATLAS Meanwhile runtime failed", error);
+      return false;
+    }
+    if (interactionSerial !== meanwhileInteractionSerial || !mount?.isConnected) return false;
+
     meanwhileSelectedOrdinal = ordinal;
     meanwhileSelectionSource = "manual";
     renderInto(mount);
@@ -463,6 +512,7 @@
   }
 
   function clearMeanwhile(mount) {
+    meanwhileInteractionSerial += 1;
     meanwhileSelectedOrdinal = null;
     meanwhileSelectionSource = null;
     renderInto(mount);
@@ -1496,7 +1546,7 @@
 
   function renderInto(mount) {
     const renderFocus = captureRenderFocus(mount);
-    const { timeProjection, spaceAxis, semanticAxis, spatialCompile, exploration, inspector, meanwhile, lod, presentationLayout } = runtime();
+    const { timeProjection, spaceAxis, semanticAxis, spatialCompile, exploration, inspector, lod, presentationLayout } = runtime();
     const timeline = timelineRange();
     const viewportWidth = Number(mount.clientWidth) || window.innerWidth || 1280;
     const responsive = responsivePresentationMetrics(viewportWidth);
@@ -1538,6 +1588,7 @@
       selectedTimeOrdinal = null;
     }
     const meanwhileOrdinal = meanwhileSelectedOrdinal;
+    const meanwhile = meanwhileOrdinal == null ? null : meanwhileRuntime();
     const meanwhileSummary = meanwhileOrdinal == null ? null : meanwhile.summarize(
       compiled.partitioned.tracks,
       meanwhileOrdinal,
