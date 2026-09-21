@@ -133,6 +133,15 @@ CREATE TABLE IF NOT EXISTS atlas_v2.person_portrait_revision_sources (
   )
 );
 
+COMMENT ON TABLE atlas_v2.person_portrait_assets IS
+  'Immutable content-addressed portrait asset identities. Storage location is derived from asset_sha256.';
+COMMENT ON TABLE atlas_v2.person_portrait_generation_runs IS
+  'Non-canonical AI generation attempts and review outcomes. Accepted runs may feed approved portrait revisions.';
+COMMENT ON TABLE atlas_v2.person_portrait_revisions IS
+  'Append-only approved portrait snapshots. Current display remains the compact person_portraits projection.';
+COMMENT ON TABLE atlas_v2.person_portrait_revision_sources IS
+  'Revision-scoped evidence links so historical portrait decisions remain reproducible after later edits.';
+
 ALTER TABLE atlas_v2.person_portraits
   ADD COLUMN IF NOT EXISTS current_revision_id uuid;
 
