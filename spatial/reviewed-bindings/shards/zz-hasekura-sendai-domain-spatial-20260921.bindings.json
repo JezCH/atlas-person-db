@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zz-hasekura-sendai-domain-spatial-20260921",
+  "baseline": "7b09e4e73241a488e73d9f05795fcbdc598df5b1",
+  "reviewed_at": "2026-09-21T03:12:00.000Z",
+  "bindings": [
+    {
+      "polity_id": "25ee0dcc-966c-4cf8-86e1-ff255fc5f7ad",
+      "region_code": "east-asia",
+      "subregion_code": "japan"
+    }
+  ]
+}
