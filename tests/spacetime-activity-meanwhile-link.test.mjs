@@ -41,3 +41,57 @@ test("Meanwhile remains active-Activity based and search-independent",()=>{
   assert.equal(contract.meanwhile_verification.active_activity_source,"primary_spatial_activity_segments");
   assert.equal(contract.meanwhile_verification.search_independent_global_summary,true);
 });
+
+test("Meanwhile runtime is excluded from core bootstrap and loaded only when a moment is requested",()=>{
+  const independentStart=view.indexOf("const RUNTIME_INDEPENDENT_ASSETS");
+  const dependentStart=view.indexOf("const RUNTIME_SPACE_AXIS_DEPENDENT_ASSETS");
+  const independentBlock=view.slice(independentStart,dependentStart);
+  assert.doesNotMatch(independentBlock,/atlas-person-spacetime-meanwhile\.js/);
+  assert.match(view,/const RUNTIME_MEANWHILE_ASSET = Object\.freeze\(/);
+  assert.match(view,/function ensureMeanwhileModule\(\)/);
+  assert.match(view,/if \(meanwhileRuntimePromise\) return meanwhileRuntimePromise/);
+  assert.match(view,/meanwhileRuntimePromise = null/);
+  assert.match(view,/function meanwhileRuntime\(\)/);
+  assert.match(view,/ATLAS_SPACETIME_MEANWHILE_RUNTIME_MISSING/);
+
+  const selectStart=view.indexOf("async function selectActivity(");
+  const selectEnd=view.indexOf("\n  function",selectStart+10);
+  const selectBody=view.slice(selectStart,selectEnd);
+  assert.match(selectBody,/await ensureMeanwhileModule\(\)/);
+
+  const yearStart=view.indexOf("async function setMeanwhileYear(");
+  const yearEnd=view.indexOf("\n  function",yearStart+10);
+  const yearBody=view.slice(yearStart,yearEnd);
+  assert.match(yearBody,/await ensureMeanwhileModule\(\)/);
+});
+
+test("lazy Meanwhile interactions are race-safe and stale loads cannot restore superseded selection",()=>{
+  assert.match(view,/let meanwhileInteractionSerial = 0/);
+  assert.match(view,/const interactionSerial = \+\+meanwhileInteractionSerial/);
+  assert.match(view,/interactionSerial !== meanwhileInteractionSerial/);
+
+  const personStart=view.indexOf("function selectPerson(");
+  const personEnd=view.indexOf("\n  async function selectActivity",personStart);
+  const personBody=view.slice(personStart,personEnd);
+  assert.match(personBody,/meanwhileInteractionSerial \+= 1/);
+
+  const clearStart=view.indexOf("function clearSelection(");
+  const clearEnd=view.indexOf("\n  async function setMeanwhileYear",clearStart);
+  const clearBody=view.slice(clearStart,clearEnd);
+  assert.match(clearBody,/meanwhileInteractionSerial \+= 1/);
+
+  const manualClearStart=view.indexOf("function clearMeanwhile(");
+  const manualClearEnd=view.indexOf("\n  function meanwhileRegionLabel",manualClearStart);
+  const manualClearBody=view.slice(manualClearStart,manualClearEnd);
+  assert.match(manualClearBody,/meanwhileInteractionSerial \+= 1/);
+});
+
+test("active Meanwhile state remains fail-closed even though its module is optional at startup",()=>{
+  assert.match(view,/const meanwhile = meanwhileOrdinal == null \? null : meanwhileRuntime\(\)/);
+  assert.match(view,/meanwhile\.summarize\(\s*compiled\.partitioned\.tracks,\s*meanwhileOrdinal/s);
+  const runtimeStart=view.indexOf("function runtime()");
+  const runtimeEnd=view.indexOf("\n  function viewportFitMinimumZoom",runtimeStart);
+  const runtimeBody=view.slice(runtimeStart,runtimeEnd);
+  assert.doesNotMatch(runtimeBody,/meanwhile:\s*window\.ATLAS_PERSON_SPACETIME_MEANWHILE/);
+  assert.match(runtimeBody,/ATLAS_SPACETIME_RUNTIME_INCOMPLETE/);
+});
