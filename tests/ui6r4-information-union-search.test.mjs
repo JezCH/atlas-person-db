@@ -109,7 +109,7 @@ test('R4 advertises the restored search scope and busts changed Person assets on
   assert.match(mainSource, /atlas-person-search-change/);
   assert.match(html, /atlas-person-browser-reader\.js\?v=20260815-ui6r4/);
   assert.match(html, /atlas-person-main\.js\?v=20260920-single-person-surface/);
-  assert.match(html, /atlas-person-main\.css\?v=20260921-person-density-v2/);
+  assert.match(html, /atlas-person-main\.css\?v=20260921-person-density-v3/);
   assert.match(html, /atlas-person-era-navigation\.js\?v=20260920-person-facets-sticky-v1/);
   assert.doesNotMatch(html, /mobileSearchInput/);
 });
