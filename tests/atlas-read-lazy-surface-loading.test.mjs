@@ -25,7 +25,9 @@ const SURFACE_MODULES = Object.freeze([
   "server/atlas-admin-system-status-handler.js",
   "server/atlas-admin-system-status-service.js",
   "server/atlas-person-portrait-handler.js",
-  "server/atlas-person-portrait-source-candidates-handler.js"
+  "server/atlas-person-portrait-source-candidates-handler.js",
+  "server/atlas-runtime-publication-read-service.js",
+  "server/atlas-runtime-publication-read-handler.js"
 ]);
 
 function cacheProbeScript(action = "") {
@@ -68,7 +70,9 @@ test("Person read request initializes only its own surface dependency graph", ()
     "server/atlas-admin-system-status-handler.js",
     "server/atlas-admin-system-status-service.js",
     "server/atlas-person-portrait-handler.js",
-    "server/atlas-person-portrait-source-candidates-handler.js"
+    "server/atlas-person-portrait-source-candidates-handler.js",
+    "server/atlas-runtime-publication-read-service.js",
+    "server/atlas-runtime-publication-read-handler.js"
   ]) {
     assert.equal(loaded.includes(unrelated), false, unrelated);
   }
@@ -87,6 +91,36 @@ test("public runtime identity stays DB-free while loading only its metadata serv
   assert.equal(loaded.includes("server/atlas-postgres-client.js"), false);
   assert.ok(loaded.includes("server/atlas-admin-system-status-service.js"));
   for (const unrelated of [
+    "server/atlas-person-read-handler.js",
+    "server/atlas-polity-read-handler.js",
+    "server/atlas-catalog-read-handler.js",
+    "server/atlas-admin-inspector-handler.js",
+    "server/atlas-admin-system-status-handler.js",
+    "server/atlas-person-portrait-handler.js",
+    "server/atlas-person-portrait-source-candidates-handler.js",
+    "server/atlas-runtime-publication-read-service.js",
+    "server/atlas-runtime-publication-read-handler.js"
+  ]) {
+    assert.equal(loaded.includes(unrelated), false, unrelated);
+  }
+});
+
+test("runtime publication loads only its extracted service, handler, and DB dependency graph", () => {
+  const loaded = probe(cacheProbeScript(`
+    const res = {
+      statusCode: 0,
+      setHeader() {},
+      end() {}
+    };
+    await api({ method: "POST", query: { __atlas_read_surface: "runtime-publication" } }, res);
+  `));
+
+  assert.ok(loaded.includes("server/atlas-postgres-client.js"));
+  assert.ok(loaded.includes("server/atlas-runtime-publication-read-service.js"));
+  assert.ok(loaded.includes("server/atlas-runtime-publication-read-handler.js"));
+  for (const unrelated of [
+    "server/atlas-normalized-read-handler.js",
+    "server/atlas-normalized-read-service.js",
     "server/atlas-person-read-handler.js",
     "server/atlas-polity-read-handler.js",
     "server/atlas-catalog-read-handler.js",

@@ -17,6 +17,7 @@ const mainSource = fs.readFileSync(new URL("../atlas-person-main.js", import.met
 const spacetimeSource = fs.readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
 const statusSummarySource = fs.readFileSync(new URL("../status-summary.js", import.meta.url), "utf8");
 const readApiSource = fs.readFileSync(new URL("../api/atlas-read.js", import.meta.url), "utf8");
+const runtimePublicationServiceSource = fs.readFileSync(new URL("../server/atlas-runtime-publication-read-service.js", import.meta.url), "utf8");
 
 test("dashboard model derives progress from canonical snapshots without stored dashboard counters", () => {
   const P1="00000000-0000-4000-8000-000000000001", P2="00000000-0000-4000-8000-000000000002", P3="00000000-0000-4000-8000-000000000003";
@@ -555,9 +556,10 @@ test("Dashboard System / Production Strip reports deployed identity without clai
 
 test("Runtime publication surface derives the funnel from current Authoring, active Runtime projection, and its exact compile ledger", () => {
   assert.match(readApiSource, /surface === "runtime-publication"/);
-  const start=readApiSource.indexOf("async function readRuntimePublication");
-  const end=readApiSource.indexOf("function createRuntimePublicationReadHandler",start);
-  const block=readApiSource.slice(start,end);
+  assert.match(readApiSource, /atlas-runtime-publication-read-service\.js/);
+  const start=runtimePublicationServiceSource.indexOf("async function readRuntimePublication");
+  const end=runtimePublicationServiceSource.indexOf("module.exports",start);
+  const block=runtimePublicationServiceSource.slice(start,end);
   assert.match(block,/atlas_v2\.person_politics_v2/);
   assert.match(block,/atlas_v2\.runtime_person_politics_v1/);
   assert.match(block,/count\(distinct compile_key\)/);
