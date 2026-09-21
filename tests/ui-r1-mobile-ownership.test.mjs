@@ -39,6 +39,6 @@ test('mobile appbar is localized shell identity rather than a second search or t
 });
 
 test('mobile ownership assets use the single-surface cache-busted runtime pair', () => {
-  assert.match(html, /mobile-compact\.css\?v=20260920-single-person-surface/);
+  assert.match(html, /mobile-compact\.css\?v=20260921-person-density-v2/);
   assert.match(html, /mobile-ui\.js\?v=20260920-single-person-surface/);
 });
