@@ -95,6 +95,12 @@
   }
 
   function ensureSpacetimeDomainAssets() {
+    ensureStylesheet(
+      'link[data-atlas-person-spacetime-domain-colors="true"]',
+      "./atlas-person-spacetime-domain-colors.css?v=20260912-religion-silver-v5",
+      "atlasPersonSpacetimeDomainColors"
+    );
+
     if (window.ATLAS_PERSON_SPACETIME_DOMAIN_COLORS && window.ATLAS_PERSON_SPACETIME_LABEL_OVERLAP_GUARD) {
       return Promise.resolve(Object.freeze({
         domainColors:window.ATLAS_PERSON_SPACETIME_DOMAIN_COLORS,
@@ -104,13 +110,7 @@
     if (spacetimeDomainAssetsPromise) return spacetimeDomainAssetsPromise;
 
     spacetimeDomainAssetsPromise = ensurePersonDomainAssets()
-      .then(() => {
-        ensureStylesheet(
-          'link[data-atlas-person-spacetime-domain-colors="true"]',
-          "./atlas-person-spacetime-domain-colors.css?v=20260912-religion-silver-v5",
-          "atlasPersonSpacetimeDomainColors"
-        );
-        return Promise.all([
+      .then(() => Promise.all([
           loadScriptOnce(
             'script[data-atlas-person-spacetime-label-overlap-guard="true"]',
             "./atlas-person-spacetime-label-overlap-guard.js?v=20260920-world-name-overlay",
@@ -123,8 +123,7 @@
             "atlasPersonSpacetimeDomainColors",
             () => Boolean(window.ATLAS_PERSON_SPACETIME_DOMAIN_COLORS)
           )
-        ]);
-      })
+        ]))
       .then(() => Object.freeze({
         domainColors:window.ATLAS_PERSON_SPACETIME_DOMAIN_COLORS,
         overlapGuard:window.ATLAS_PERSON_SPACETIME_LABEL_OVERLAP_GUARD
