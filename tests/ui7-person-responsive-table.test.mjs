@@ -73,8 +73,17 @@ test('UI7 keeps the desktop table header viewport-sticky without trapping it in 
   assert.match(tableCss, /person-era-band\{position:sticky;left:0/);
   assert.match(tableCss, /person-table-identity\{position:sticky;left:var\(--era-band-width\)/);
   assert.match(tableCss, /@media\(max-width:760px\)/);
+  assert.match(tableCss, /@media\(max-width:760px\)\{\.person-card-grid\.person-table-grid\{margin:0;overflow-x:visible\}/);
+  assert.match(tableCss, /\.person-table-activity-subhead\{display:none\}/);
   assert.match(tableCss, /@media\(max-width:520px\)/);
-  assert.doesNotMatch(tableCss, /display:\s*none[^}]*person-table/i);
+});
+
+test('UI7 mobile geometry fits the viewport instead of preserving a desktop-sized minimum width', () => {
+  const mobileGeometry = geometryCss.slice(geometryCss.indexOf('@media (max-width: 760px)'));
+  assert.match(mobileGeometry, /--person-data-min-width:\s*0px/);
+  assert.match(mobileGeometry, /--person-table-min-width:\s*0px/);
+  assert.match(mobileGeometry, /--person-activity-columns:\s*minmax\(0, 1fr\)/);
+  assert.doesNotMatch(mobileGeometry, /688px|726px|657px|689px|minmax\(390px|minmax\(375px/);
 });
 
 test('UI7 keeps presentation separate from canonical geometry ownership', () => {
@@ -84,8 +93,8 @@ test('UI7 keeps presentation separate from canonical geometry ownership', () => 
 });
 
 test('UI7 assets load as a presentation layer after shared era ownership and before Person Main initializes', () => {
-  assert.match(html, /atlas-person-table-view\.css\?v=20260920-sticky-ancestor-fix-v2/);
-  assert.match(html, /atlas-person-table-alignment\.css\?v=20260817-table-geometry-r2/);
+  assert.match(html, /atlas-person-table-view\.css\?v=20260921-mobile-card-fit-v1/);
+  assert.match(html, /atlas-person-table-alignment\.css\?v=20260921-mobile-card-fit-v1/);
   assert.match(html, /atlas-person-era-model\.js\?v=20260909-era-10-band-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20260819-era-model-r2/);
   assert.ok(html.indexOf('atlas-person-era-model.js?v=20260909-era-10-band-v1') < html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2'));
