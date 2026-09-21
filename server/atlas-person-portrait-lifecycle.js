@@ -32,16 +32,9 @@ async function portraitHistoryState(client) {
   const result = await client.query(`
     select
       to_regclass('atlas_v2.person_portrait_generation_runs')::text as generation_runs,
-      to_regclass('atlas_v2.person_portrait_revisions')::text as revisions,
-      exists(
-        select 1
-          from pg_constraint
-         where conname='person_portraits_current_revision_person_fkey'
-           and conrelid=to_regclass('atlas_v2.person_portraits')
-      ) as current_revision_fk`);
+      to_regclass('atlas_v2.person_portrait_revisions')::text as revisions`);
   return Object.freeze({
-    present:Boolean(result.rows[0]?.generation_runs && result.rows[0]?.revisions),
-    current_revision_fk_present:Boolean(result.rows[0]?.current_revision_fk)
+    present:Boolean(result.rows[0]?.generation_runs && result.rows[0]?.revisions)
   });
 }
 
@@ -66,9 +59,10 @@ async function reconcilePersonPortraits(client, sourcePersonId, survivorPersonId
   let revisionsMoved = 0;
   const historyState = await portraitHistoryState(client);
   if (historyState.present) {
-    if (historyState.current_revision_fk_present) {
-      await client.query("set constraints person_portraits_current_revision_person_fkey deferred");
-    }
+    // Some staged rehearsal paths rebuild the current projection after authoring
+    // migrations. Defer whatever deferrable constraints are present without
+    // coupling merge logic to one migration-time constraint name.
+    await client.query("set constraints all deferred");
     const generationRuns = await client.query(`
       update atlas_v2.person_portrait_generation_runs
          set person_id=$2::uuid
