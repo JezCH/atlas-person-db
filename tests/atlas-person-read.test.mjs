@@ -279,8 +279,10 @@ test('Person detail exposes authoritative Activity semantics and readable proven
   assert.match(ACTIVITY_DETAIL_SQL, /atlas_v2\.polity_designation_names/);
   assert.match(ACTIVITY_DETAIL_SQL, /pp\.activity_start is not null/);
   assert.match(ACTIVITY_DETAIL_SQL, /pp\.activity_end is not null/);
-  assert.match(ACTIVITY_DETAIL_SQL, /pd\.valid_from_year is null or pd\.valid_from_year <= pp\.activity_start/);
-  assert.match(ACTIVITY_DETAIL_SQL, /pd\.valid_to_year is null or pd\.valid_to_year >= pp\.activity_end/);
+  assert.match(ACTIVITY_DETAIL_SQL, /coalesce\(pd\.valid_from_month, 1\)/);
+  assert.match(ACTIVITY_DETAIL_SQL, /coalesce\(pp\.activity_start_month, 1\)/);
+  assert.match(ACTIVITY_DETAIL_SQL, /coalesce\(pd\.valid_to_month, 12\)/);
+  assert.match(ACTIVITY_DETAIL_SQL, /coalesce\(pp\.activity_end_month, 12\)/);
   for (const field of [
     'relation_type_id',
     'activity_start_month',
