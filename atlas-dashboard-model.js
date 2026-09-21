@@ -975,6 +975,88 @@
     });
   }
 
+  function buildQualityDrilldown({ personResult, spatialIndex = null, nonTimelineRows = null, completenessMatrix = null } = {}) {
+    const persons = personResult?.persons || [];
+    const runtimePersonIds = Object.freeze([...new Set(persons
+      .filter((person) => Number(person?.activity_count || 0) === 0)
+      .map((person) => text(person?.id))
+      .filter(Boolean))].sort());
+
+    const matrix = completenessMatrix || buildCompletenessMatrix({ personResult, spatialIndex });
+    const spatialRow = (matrix?.rows || []).find((row) => row.code === "spatial");
+    const spatialTargets = spatialRow?.available === true && Array.isArray(spatialRow.activity_targets)
+      ? Object.freeze([...spatialRow.activity_targets])
+      : null;
+
+    let polityTargets = null;
+    if (spatialIndex) {
+      const used = uniquePolityIds(personResult);
+      const polityNames = new Map();
+      for (const person of persons) {
+        const polities = [
+          ...(person?.facets?.polities || []),
+          ...(person?.activity_summaries || []).map((activity) => activity?.polity).filter(Boolean)
+        ];
+        for (const polity of polities) {
+          const polityId = text(polity?.id || polity);
+          const displayName = text(polity?.display_name || polity?.preferred_name_ko || polity?.canonical_name_en);
+          if (polityId && displayName && !polityNames.has(polityId)) polityNames.set(polityId, displayName);
+        }
+      }
+
+      const reviewByPolity = new Map();
+      for (const row of spatialIndex.review_queue || []) {
+        const polityId = text(row?.polity_id);
+        if (!polityId || !used.has(polityId)) continue;
+        if (!reviewByPolity.has(polityId)) reviewByPolity.set(polityId, { reasons:new Set(), personIds:new Set() });
+        const reason = text(row?.reason);
+        if (reason) reviewByPolity.get(polityId).reasons.add(reason);
+      }
+      for (const person of persons) {
+        const personId = text(person?.id);
+        if (!personId) continue;
+        for (const polityId of personPolityIds(person)) {
+          if (reviewByPolity.has(polityId)) reviewByPolity.get(polityId).personIds.add(personId);
+        }
+      }
+      polityTargets = Object.freeze([...reviewByPolity.entries()]
+        .sort(([a],[b]) => a.localeCompare(b))
+        .map(([polityId,meta]) => Object.freeze({
+          polity_id:polityId,
+          polity_display_name:polityNames.get(polityId) || polityId,
+          reason_codes:Object.freeze([...meta.reasons].sort()),
+          affected_person_ids:Object.freeze([...meta.personIds].sort()),
+          affected_person_count:meta.personIds.size
+        })));
+    }
+
+    const registryTargets = Array.isArray(nonTimelineRows)
+      ? Object.freeze(nonTimelineRows.map((row,index) => Object.freeze({ source_index:index, ...(row || {}) })))
+      : null;
+
+    const item = ({ code, unit, available, count, personIds = null, activityTargets = null, polityTargets:polities = null, registryTargets:registry = null }) => {
+      const targets = unit === "person" ? personIds : unit === "activity" ? activityTargets : unit === "polity" ? polities : registry;
+      return Object.freeze({
+        code,
+        unit,
+        available,
+        count:available ? count : null,
+        person_ids:unit === "person" && available ? personIds : null,
+        activity_targets:unit === "activity" && available ? activityTargets : null,
+        polity_targets:unit === "polity" && available ? polities : null,
+        registry_targets:unit === "registry" && available ? registry : null,
+        drilldown_available:Boolean(available && Array.isArray(targets) && targets.length > 0)
+      });
+    };
+
+    return Object.freeze({
+      no_runtime_activity:item({ code:"no_runtime_activity", unit:"person", available:true, count:runtimePersonIds.length, personIds:runtimePersonIds }),
+      spatial_unresolved:item({ code:"spatial_unresolved", unit:"activity", available:spatialTargets !== null, count:spatialTargets?.length || 0, activityTargets:spatialTargets }),
+      spatial_review:item({ code:"spatial_review", unit:"polity", available:polityTargets !== null, count:polityTargets?.length || 0, polityTargets }),
+      non_timeline_registry:item({ code:"non_timeline_registry", unit:"registry", available:registryTargets !== null, count:registryTargets?.length || 0, registryTargets })
+    });
+  }
+
   function buildDashboardSnapshot({
     personResult,
     domainResult = null,
@@ -1029,6 +1111,7 @@
     const runtimeDeltaDrift = buildRuntimeDeltaDrift(runtimePublicationResult);
     const coverageHeatmap = buildEraRegionHeatmap({ personResult, spatialIndex });
     const completenessMatrix = buildCompletenessMatrix({ personResult, domainResult, spatialIndex });
+    const qualityDrilldown = buildQualityDrilldown({ personResult, spatialIndex, nonTimelineRows, completenessMatrix });
     const sourceFreshness = buildSourceFreshness({ spatialIndex, recentDelta, runtimePublication:runtimePublicationResult, runtimeExclusions:runtimeExclusionsResult, sourceStates });
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
@@ -1068,14 +1151,15 @@
       completeness_matrix:completenessMatrix,
       source_freshness:sourceFreshness,
       quality:Object.freeze({
-        no_runtime_activity:noActivity,
-        spatial_unresolved:spatial.unresolved,
-        spatial_review:spatial.review,
-        non_timeline_registry:Array.isArray(nonTimelineRows) ? nonTimelineRows.length : null
+        no_runtime_activity:qualityDrilldown.no_runtime_activity.count,
+        spatial_unresolved:qualityDrilldown.spatial_unresolved.count,
+        spatial_review:qualityDrilldown.spatial_review.count,
+        non_timeline_registry:qualityDrilldown.non_timeline_registry.count
       }),
+      quality_drilldown:qualityDrilldown,
       sources:Object.freeze(sourceList)
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildRuntimeDeltaDrift, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildRuntimeDeltaDrift, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildQualityDrilldown, buildDashboardSnapshot });
 });
