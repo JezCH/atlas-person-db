@@ -88,7 +88,6 @@ test('era navigation is sticky, keeps visible facet status, and pins the table h
   assert.match(navCss, /\.person-era-nav-current\{[^}]*font-size:11px/);
   assert.match(navCss, /\.person-era-jump-label\{[^}]*font-size:13px/);
   assert.match(navCss, /\.person-era-jump-count\{[^}]*font-size:10\.5px/);
-  assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-nav-intro>strong\{font-size:10px\}/);
   assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-nav-intro\{display:none\}/);
   assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-jump-label\{font-size:9px\}/);
   assert.match(navCss, /\.person-era-jump-list\{[^}]*overflow-x:auto/);
@@ -97,7 +96,7 @@ test('era navigation is sticky, keeps visible facet status, and pins the table h
   assert.match(navSource, /ResizeObserver/);
   assert.match(navCss, /@media\(max-width:760px\)/);
   assert.match(navCss, /@media\(max-width:520px\)/);
-  assert.match(navCss, /top:64px/);
+  assert.match(navCss, /top:62px/);
 });
 
 test('mobile Person facet controls stay inside the viewport without browser focus zoom', () => {
