@@ -54,7 +54,7 @@ function databaseUrl(env = process.env) {
 function statusForError(error) {
   const code = String(error?.code || error?.message || "");
   if (code === "PERSON_PORTRAIT_TARGET_NOT_FOUND" || code === "PERSON_PORTRAIT_NOT_FOUND") return 404;
-  if (code === "PORTRAIT_BLOB_STORAGE_NOT_CONFIGURED" || code === "PORTRAIT_DATABASE_NOT_CONFIGURED") return 503;
+  if (code === "PORTRAIT_BLOB_STORAGE_NOT_CONFIGURED" || code === "PORTRAIT_DATABASE_NOT_CONFIGURED" || code === "PERSON_PORTRAIT_HISTORY_SCHEMA_REQUIRED") return 503;
   if (code === "PERSON_PORTRAIT_ASSET_DUPLICATE_REVIEW_REQUIRED") return 409;
   if (/REQUIRED|INVALID|TOO_LARGE|TOO_MANY|WEBP_REQUIRED|SOURCE_NOT_FOUND/.test(code)) return 400;
   return 500;
