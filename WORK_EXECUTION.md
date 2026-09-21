@@ -354,28 +354,19 @@ Allowed work:
 
 A review unit normally contains 5–12 candidates. Each completed unit must publish a durable review checkpoint.
 
-An **APPROVED** candidate must leave Lane A as a self-contained reviewed packet. The registration worker must not need to repeat the historical-value review merely to apply it.
+An **APPROVED** candidate does **not** require a separately rewritten registration packet.
 
-Minimum reviewed packet:
+Lane A's durable review checkpoint is the source of truth. Handoff should be nearly zero-cost:
 
 ```text
-candidate_id
-canonical_name_en
-display_name_ko
-identity_disambiguation
-review_state
-historicity
-timeline_disposition
-representative_domain_decision
-proposed_activities
-sources_and_provenance
-namuwiki_disposition
-polity_spatial_readiness
-review_notes
-review_checkpoint
+APPROVED_HANDOFF
+- candidate_id / name
+- review_checkpoint
 ```
 
-If a fact is unresolved, record it as unresolved/HOLD; do not invent a value to make the packet complete.
+If the review checkpoint already contains the reviewed identity, historicity, timeline disposition, domain decision, proposed Activities, sources/provenance, NamuWiki disposition, spatial-readiness notes, and review notes, Lane A MUST NOT copy those fields into a second packet just for Lane B.
+
+Lane B follows the checkpoint reference and reads the reviewed material directly. Unknown facts remain unknown; do not fill gaps merely to make a handoff object look complete.
 
 ### Lane B — Registration Apply
 
@@ -392,7 +383,8 @@ It does **not** redo the candidate's registration-value review unless new confli
 Normal completion chain:
 
 ```text
-APPROVED reviewed packet
+APPROVED candidate + review checkpoint reference
+→ read reviewed checkpoint
 → exact duplicate/current-state check
 → canonical authoring payload
 → Authoring commit
@@ -451,6 +443,8 @@ Lane A and Lane B are expected to run at the same time.
 
 The durable source of truth for a reviewed decision is the Lane A checkpoint referenced by the Lane B queue entry.
 
-Lane B may update registration state and resulting Person UUID, but it must not silently rewrite the reviewed historical judgment. If the judgment changes, create a new review revision/checkpoint and reference that revision.
+The handoff itself should contain only enough information to identify the approved candidate and locate that checkpoint. Do not spend time reformatting or duplicating the review into a second registration document.
+
+Lane B reads the referenced checkpoint, prepares the canonical authoring payload, and may update registration state/resulting Person UUID. It must not silently rewrite the reviewed historical judgment. If the judgment changes, create a new review revision/checkpoint and reference that revision.
 
 This dual-lane protocol is the default for future Person candidate work.
