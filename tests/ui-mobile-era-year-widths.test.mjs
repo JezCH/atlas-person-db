@@ -6,26 +6,25 @@ const geometryCss = fs.readFileSync(new URL('../atlas-person-table-alignment.css
 const tableCss = fs.readFileSync(new URL('../atlas-person-table-view.css', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
-test('canonical geometry contract owns the effective mobile table widths', () => {
-  assert.match(geometryCss, /@media \(max-width: 760px\)/);
-  assert.match(geometryCss, /--era-band-width:\s*38px/);
-  assert.match(geometryCss, /--person-data-columns:\s*124px 108px minmax\(390px, 1fr\) 66px/);
-  assert.match(geometryCss, /--person-data-min-width:\s*688px/);
-  assert.match(geometryCss, /--person-table-min-width:\s*726px/);
-  assert.match(geometryCss, /@media \(max-width: 520px\)/);
-  assert.match(geometryCss, /--era-band-width:\s*32px/);
-  assert.match(geometryCss, /--person-data-columns:\s*116px 104px minmax\(375px, 1fr\) 62px/);
-  assert.match(geometryCss, /--person-data-min-width:\s*657px/);
-  assert.match(geometryCss, /--person-table-min-width:\s*689px/);
-  assert.match(geometryCss, /white-space:\s*nowrap/);
+test('canonical geometry contract owns viewport-fit mobile table widths', () => {
+  const mobile = geometryCss.slice(geometryCss.indexOf('@media (max-width: 760px)'));
+  assert.match(mobile, /--era-band-width:\s*34px/);
+  assert.match(mobile, /--person-data-columns:\s*minmax\(88px, \.95fr\) minmax\(72px, \.72fr\) minmax\(0, 1\.55fr\) 44px/);
+  assert.match(mobile, /--person-data-min-width:\s*0px/);
+  assert.match(mobile, /--person-table-min-width:\s*0px/);
+  assert.match(mobile, /@media \(max-width: 520px\)/);
+  assert.match(mobile, /--era-band-width:\s*30px/);
+  assert.match(mobile, /--person-data-columns:\s*minmax\(82px, \.95fr\) minmax\(68px, \.72fr\) minmax\(0, 1\.55fr\) 38px/);
+  assert.doesNotMatch(mobile, /688px|726px|657px|689px|minmax\(390px|minmax\(375px/);
+  assert.match(mobile, /white-space:\s*normal/);
+  assert.match(mobile, /overflow-wrap:\s*anywhere/);
 });
 
 test('canonical geometry contract owns Activity subcolumns and mobile polity type size', () => {
   assert.match(geometryCss, /--person-activity-columns:\s*minmax\(145px, 1\.15fr\) minmax\(135px, 1fr\) minmax\(125px, \.9fr\)/);
-  assert.match(geometryCss, /--person-activity-columns:\s*120px 105px 100px/);
-  assert.match(geometryCss, /--person-activity-columns:\s*115px 100px 96px/);
+  assert.match(geometryCss, /@media \(max-width: 760px\)[\s\S]*--person-activity-columns:\s*minmax\(0, 1fr\)/);
   assert.match(geometryCss, /\.person-table-activities \.person-card-activity-head b\s*\{[^}]*font-size:\s*14px/s);
-  assert.match(geometryCss, /@media \(max-width: 760px\)[\s\S]*\.person-table-activities \.person-card-activity-head b\s*\{[^}]*font-size:\s*13px/s);
+  assert.match(geometryCss, /@media \(max-width: 760px\)[\s\S]*\.person-table-activities \.person-card-activity-head b\s*\{[^}]*font-size:\s*12px/s);
 });
 
 test('presentation stylesheet no longer carries fallback table geometry', () => {
@@ -42,8 +41,8 @@ test('legacy mobile width asset is fully retired', () => {
 });
 
 test('canonical geometry contract loads after the base table with fresh cache keys', () => {
-  const base = 'atlas-person-table-view.css?v=20260920-sticky-ancestor-fix-v2';
-  const geometry = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
+  const base = 'atlas-person-table-view.css?v=20260921-mobile-card-fit-v1';
+  const geometry = 'atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1';
   assert.ok(html.includes(base));
   assert.ok(html.includes(geometry));
   assert.ok(html.indexOf(base) < html.indexOf(geometry));
