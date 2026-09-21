@@ -12,6 +12,8 @@
   }
 
   let personRoot = null;
+  let personDomainAssetsPromise = null;
+  let spacetimeDomainAssetsPromise = null;
 
   function normalizedHashDomain() {
     const value = String(window.location.hash || "").replace(/^#atlas-/, "").replace(/^#/, "").trim();
@@ -33,26 +35,36 @@
     return link;
   }
 
-  function ensureSpacetimeDomainAssets() {
-    ensureStylesheet(
-      'link[data-atlas-person-spacetime-domain-colors="true"]',
-      "./atlas-person-spacetime-domain-colors.css?v=20260912-religion-silver-v5",
-      "atlasPersonSpacetimeDomainColors"
-    );
-    if (!document.querySelector('script[data-atlas-person-spacetime-label-overlap-guard="true"]')) {
-      const script = document.createElement("script");
-      script.src = "./atlas-person-spacetime-label-overlap-guard.js?v=20260920-world-name-overlay";
+  function loadScriptOnce(selector, src, datasetKey, ready) {
+    if (typeof ready === "function" && ready()) return Promise.resolve();
+
+    let script = document.querySelector(selector);
+    if (!script) {
+      script = document.createElement("script");
+      script.src = src;
       script.async = true;
-      script.dataset.atlasPersonSpacetimeLabelOverlapGuard = "true";
+      script.dataset[datasetKey] = "true";
       document.head.append(script);
     }
-    if (!document.querySelector('script[data-atlas-person-spacetime-domain-colors="true"]')) {
-      const script = document.createElement("script");
-      script.src = "./atlas-person-spacetime-domain-colors.js?v=20260906-final-domain";
-      script.async = true;
-      script.dataset.atlasPersonSpacetimeDomainColors = "true";
-      document.head.append(script);
-    }
+
+    return new Promise((resolve, reject) => {
+      if (typeof ready === "function" && ready()) {
+        resolve();
+        return;
+      }
+      script.addEventListener("load", () => {
+        if (typeof ready !== "function" || ready()) {
+          resolve();
+          return;
+        }
+        script.remove?.();
+        reject(new Error(`ATLAS_DOMAIN_ASSET_MISSING_AFTER_LOAD: ${src}`));
+      }, { once:true });
+      script.addEventListener("error", () => {
+        script.remove?.();
+        reject(new Error(`ATLAS_DOMAIN_ASSET_LOAD_FAILED: ${src}`));
+      }, { once:true });
+    });
   }
 
   function ensurePersonDomainAssets() {
@@ -62,17 +74,64 @@
       "atlasPersonDomainPalette"
     );
 
-    let script = document.querySelector('script[data-atlas-person-domain-ui="true"]');
-    if (!script) {
-      script = document.createElement("script");
-      script.src = "./atlas-person-domain-ui.js?v=20260919-shared-store-v1";
-      script.async = true;
-      script.dataset.atlasPersonDomainUi = "true";
-      document.head.append(script);
-    }
+    if (window.ATLAS_PERSON_DOMAIN_UI) return Promise.resolve(window.ATLAS_PERSON_DOMAIN_UI);
+    if (personDomainAssetsPromise) return personDomainAssetsPromise;
 
-    if (window.ATLAS_PERSON_DOMAIN_UI) ensureSpacetimeDomainAssets();
-    else script.addEventListener("load", ensureSpacetimeDomainAssets, { once: true });
+    personDomainAssetsPromise = loadScriptOnce(
+      'script[data-atlas-person-domain-ui="true"]',
+      "./atlas-person-domain-ui.js?v=20260919-shared-store-v1",
+      "atlasPersonDomainUi",
+      () => Boolean(window.ATLAS_PERSON_DOMAIN_UI)
+    ).then(() => window.ATLAS_PERSON_DOMAIN_UI)
+      .catch((error) => {
+        personDomainAssetsPromise = null;
+        throw error;
+      });
+
+    return personDomainAssetsPromise;
+  }
+
+  function ensureSpacetimeDomainAssets() {
+    if (window.ATLAS_PERSON_SPACETIME_DOMAIN_COLORS && window.ATLAS_PERSON_SPACETIME_LABEL_OVERLAP_GUARD) {
+      return Promise.resolve(Object.freeze({
+        domainColors:window.ATLAS_PERSON_SPACETIME_DOMAIN_COLORS,
+        overlapGuard:window.ATLAS_PERSON_SPACETIME_LABEL_OVERLAP_GUARD
+      }));
+    }
+    if (spacetimeDomainAssetsPromise) return spacetimeDomainAssetsPromise;
+
+    spacetimeDomainAssetsPromise = ensurePersonDomainAssets()
+      .then(() => {
+        ensureStylesheet(
+          'link[data-atlas-person-spacetime-domain-colors="true"]',
+          "./atlas-person-spacetime-domain-colors.css?v=20260912-religion-silver-v5",
+          "atlasPersonSpacetimeDomainColors"
+        );
+        return Promise.all([
+          loadScriptOnce(
+            'script[data-atlas-person-spacetime-label-overlap-guard="true"]',
+            "./atlas-person-spacetime-label-overlap-guard.js?v=20260920-world-name-overlay",
+            "atlasPersonSpacetimeLabelOverlapGuard",
+            () => Boolean(window.ATLAS_PERSON_SPACETIME_LABEL_OVERLAP_GUARD)
+          ),
+          loadScriptOnce(
+            'script[data-atlas-person-spacetime-domain-colors="true"]',
+            "./atlas-person-spacetime-domain-colors.js?v=20260906-final-domain",
+            "atlasPersonSpacetimeDomainColors",
+            () => Boolean(window.ATLAS_PERSON_SPACETIME_DOMAIN_COLORS)
+          )
+        ]);
+      })
+      .then(() => Object.freeze({
+        domainColors:window.ATLAS_PERSON_SPACETIME_DOMAIN_COLORS,
+        overlapGuard:window.ATLAS_PERSON_SPACETIME_LABEL_OVERLAP_GUARD
+      }))
+      .catch((error) => {
+        spacetimeDomainAssetsPromise = null;
+        throw error;
+      });
+
+    return spacetimeDomainAssetsPromise;
   }
 
   function ensurePersonRoot() {
@@ -119,7 +178,10 @@
     root.setAttribute("aria-hidden", String(!isPersons));
     if (!isPersons) closePersonOverlay();
     if (isPersons && resetScroll) requestAnimationFrame(resetDocumentHorizontalScroll);
-    if (domain === "spacetime" && resetScroll) requestAnimationFrame(resetDocumentScroll);
+    if (domain === "spacetime") {
+      ensureSpacetimeDomainAssets().catch((error) => console.error("ATLAS spacetime domain assets failed", error));
+      if (resetScroll) requestAnimationFrame(resetDocumentScroll);
+    }
   }
 
   function onDomainChanged(event) {
