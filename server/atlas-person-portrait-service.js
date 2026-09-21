@@ -14,7 +14,7 @@ const {
   countAssetReferences
 } = require("./atlas-person-portrait-history.js");
 
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{12}$/i;
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const SHA256_RE = /^[0-9a-f]{64}$/;
 const PORTRAIT_KINDS = Object.freeze(["archival", "artwork", "reconstruction", "symbolic"]);
 const EVIDENCE_LEVELS = Object.freeze(["direct", "strong", "contextual", "symbolic"]);
