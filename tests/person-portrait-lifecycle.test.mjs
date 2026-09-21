@@ -118,7 +118,7 @@ test('portrait history follows the surviving Person without discarding revisions
       calls.push({text,params});
       if (text.startsWith('select pp.person_id::text')) return {rowCount:0,rows:[]};
       if (text.startsWith("select to_regclass('atlas_v2.person_portrait_generation_runs')")) {
-        return {rowCount:1,rows:[{generation_runs:'atlas_v2.person_portrait_generation_runs',revisions:'atlas_v2.person_portrait_revisions'}]};
+        return {rowCount:1,rows:[{generation_runs:'atlas_v2.person_portrait_generation_runs',revisions:'atlas_v2.person_portrait_revisions',current_revision_fk:true}]};
       }
       if (text === 'set constraints person_portraits_current_revision_person_fkey deferred') return {rowCount:0,rows:[]};
       if (text.startsWith('update atlas_v2.person_portrait_generation_runs')) {
