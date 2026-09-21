@@ -222,3 +222,62 @@ test('runtime publication additive contract includes activation history without 
   assert.equal(publication.activation_history.latest_matches_projection,true);
   assert.equal(step,4);
 });
+
+
+function publicationResponse() {
+  return {
+    statusCode:0,
+    headers:{},
+    body:"",
+    setHeader(name,value) { this.headers[String(name).toLowerCase()]=value; },
+    end(value="") { this.body=String(value); }
+  };
+}
+
+test('extracted runtime publication handler rejects non-GET before DB access', async () => {
+  let factoryCalls=0;
+  const handler=publicationHandler.createRuntimePublicationReadHandler({
+    env:{ SUPABASE_DB_URL:'postgresql://example.invalid/atlas' },
+    clientFactory:async () => {
+      factoryCalls+=1;
+      throw new Error('must not open database');
+    }
+  });
+  const res=publicationResponse();
+  await handler({ method:'POST' },res);
+  assert.equal(res.statusCode,405);
+  assert.equal(JSON.parse(res.body).schema,'atlas-runtime-publication/v1');
+  assert.equal(JSON.parse(res.body).code,'METHOD_NOT_ALLOWED');
+  assert.equal(factoryCalls,0);
+});
+
+test('extracted runtime publication handler preserves response contract and closes its client', async () => {
+  let ended=false;
+  const payload=Object.freeze({
+    schema:'atlas-runtime-publication/v1',
+    source:'runtime-publication-ledgers',
+    current_authoring_activity_count:103,
+    current_runtime_activity_count:90,
+    active_compile:null,
+    authoring_delta_since_compile:null,
+    projection_matches_active_compile:null,
+    activation_history:Object.freeze({ available:false, reason:'RUNTIME_ACTIVATION_HISTORY_EMPTY' })
+  });
+  const handler=publicationHandler.createRuntimePublicationReadHandler({
+    env:{ SUPABASE_DB_URL:'postgresql://example.invalid/atlas' },
+    clientFactory:async (databaseUrl) => {
+      assert.equal(databaseUrl,'postgresql://example.invalid/atlas');
+      return { async end() { ended=true; } };
+    },
+    read:async () => payload
+  });
+  const res=publicationResponse();
+  await handler({ method:'GET' },res);
+  const body=JSON.parse(res.body);
+  assert.equal(res.statusCode,200);
+  assert.equal(res.headers['cache-control'],'no-store');
+  assert.equal(body.ok,true);
+  assert.equal(body.schema,'atlas-runtime-publication/v1');
+  assert.equal(body.current_runtime_activity_count,90);
+  assert.equal(ended,true);
+});
