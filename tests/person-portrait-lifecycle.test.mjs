@@ -118,9 +118,9 @@ test('portrait history follows the surviving Person without discarding revisions
       calls.push({text,params});
       if (text.startsWith('select pp.person_id::text')) return {rowCount:0,rows:[]};
       if (text.startsWith("select to_regclass('atlas_v2.person_portrait_generation_runs')")) {
-        return {rowCount:1,rows:[{generation_runs:'atlas_v2.person_portrait_generation_runs',revisions:'atlas_v2.person_portrait_revisions',current_revision_fk:true}]};
+        return {rowCount:1,rows:[{generation_runs:'atlas_v2.person_portrait_generation_runs',revisions:'atlas_v2.person_portrait_revisions'}]};
       }
-      if (text === 'set constraints person_portraits_current_revision_person_fkey deferred') return {rowCount:0,rows:[]};
+      if (text === 'set constraints all deferred') return {rowCount:0,rows:[]};
       if (text.startsWith('update atlas_v2.person_portrait_generation_runs')) {
         assert.deepEqual(params,[SOURCE,SURVIVOR]);
         return {rowCount:2,rows:[{id:'1'},{id:'2'}]};
@@ -141,5 +141,5 @@ test('portrait history follows the surviving Person without discarding revisions
     revisions_moved:3,
     survivor_kept:false
   });
-  assert.equal(calls.some(({text}) => text === 'set constraints person_portraits_current_revision_person_fkey deferred'), true);
+  assert.equal(calls.some(({text}) => text === 'set constraints all deferred'), true);
 });
