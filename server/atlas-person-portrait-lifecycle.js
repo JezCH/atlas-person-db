@@ -28,12 +28,25 @@ async function lockPortraits(client, personIds) {
   return (result.rows || []).map(portraitSnapshot);
 }
 
-async function portraitHistoryPresent(client) {
+async function portraitHistoryState(client) {
   const result = await client.query(`
     select
       to_regclass('atlas_v2.person_portrait_generation_runs')::text as generation_runs,
-      to_regclass('atlas_v2.person_portrait_revisions')::text as revisions`);
-  return Boolean(result.rows[0]?.generation_runs && result.rows[0]?.revisions);
+      to_regclass('atlas_v2.person_portrait_revisions')::text as revisions,
+      exists(
+        select 1
+          from pg_constraint
+         where conname='person_portraits_current_revision_person_fkey'
+           and conrelid=to_regclass('atlas_v2.person_portraits')
+      ) as current_revision_fk`);
+  return Object.freeze({
+    present:Boolean(result.rows[0]?.generation_runs && result.rows[0]?.revisions),
+    current_revision_fk_present:Boolean(result.rows[0]?.current_revision_fk)
+  });
+}
+
+async function portraitHistoryPresent(client) {
+  return (await portraitHistoryState(client)).present;
 }
 
 async function reconcilePersonPortraits(client, sourcePersonId, survivorPersonId) {
@@ -51,9 +64,11 @@ async function reconcilePersonPortraits(client, sourcePersonId, survivorPersonId
 
   let generationRunsMoved = 0;
   let revisionsMoved = 0;
-  const hasHistory = await portraitHistoryPresent(client);
-  if (hasHistory) {
-    await client.query("set constraints person_portraits_current_revision_person_fkey deferred");
+  const historyState = await portraitHistoryState(client);
+  if (historyState.present) {
+    if (historyState.current_revision_fk_present) {
+      await client.query("set constraints person_portraits_current_revision_person_fkey deferred");
+    }
     const generationRuns = await client.query(`
       update atlas_v2.person_portrait_generation_runs
          set person_id=$2::uuid
@@ -118,6 +133,7 @@ async function deletePersonPortrait(client, personId) {
 module.exports = Object.freeze({
   portraitSnapshot,
   lockPortraits,
+  portraitHistoryState,
   portraitHistoryPresent,
   reconcilePersonPortraits,
   deletePersonPortrait
