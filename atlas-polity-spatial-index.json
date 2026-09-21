@@ -1201,11 +1201,11 @@
     "83abbfa2-d755-4631-9345-1a98d4553751": "west-asia",
     "a47f57af-8ac2-4724-81b0-43074c64f84c": "europe",
     "1eaa48b6-dc60-49d6-91c4-49db556f4ddf": "europe",
+    "25ee0dcc-966c-4cf8-86e1-ff255fc5f7ad": "east-asia",
     "14ad524a-01e4-4d70-9c79-9aaa596aa2fa": "west-asia",
     "8785538e-ec07-4eba-bd05-5c7b3c7903c4": "west-asia",
     "5a2433b4-6001-434c-abee-0e6077e12f54": "west-asia",
-    "8053a905-8cee-4b43-8f56-c827291f7498": "east-asia",
-    "25ee0dcc-966c-4cf8-86e1-ff255fc5f7ad": "east-asia"
+    "8053a905-8cee-4b43-8f56-c827291f7498": "east-asia"
   },
   "place_function_records": [
     {
@@ -2721,6 +2721,7 @@
     "83abbfa2-d755-4631-9345-1a98d4553751": "levant",
     "a47f57af-8ac2-4724-81b0-43074c64f84c": "northern-europe",
     "1eaa48b6-dc60-49d6-91c4-49db556f4ddf": "western-europe",
+    "25ee0dcc-966c-4cf8-86e1-ff255fc5f7ad": "japan",
     "14ad524a-01e4-4d70-9c79-9aaa596aa2fa": "levant",
     "8785538e-ec07-4eba-bd05-5c7b3c7903c4": "levant",
     "5a2433b4-6001-434c-abee-0e6077e12f54": "anatolia",
@@ -2771,8 +2772,7 @@
     "e146e6ef-15f0-4bca-9e5d-b26672c65018": "eastern-siberia-far-east",
     "e1548cb1-f89d-538b-9fb2-bad02ad87f8e": "japan",
     "e3ca4f3c-3504-4830-b141-f4cdd0157763": "himalayas",
-    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia",
-    "25ee0dcc-966c-4cf8-86e1-ff255fc5f7ad": "japan"
+    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia"
   },
   "activity_spatial_overrides": [
     {
