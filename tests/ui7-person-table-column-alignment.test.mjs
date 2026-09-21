@@ -76,7 +76,7 @@ test('canonical geometry layer loads directly after the table presentation asset
 });
 
 test('era band presentation and geometry use fresh browser cache keys', () => {
-  assert.match(html, /atlas-person-table-view\.css\?v=20260921-mobile-card-fit-v1/);
+  assert.match(html, /atlas-person-table-view\.css\?v=20260921-mobile-sticky-head-v1/);
   assert.match(html, /atlas-person-table-alignment\.css\?v=20260921-mobile-card-fit-v1/);
   assert.match(html, /atlas-person-era-model\.js\?v=20260909-era-10-band-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20260819-era-model-r2/);
