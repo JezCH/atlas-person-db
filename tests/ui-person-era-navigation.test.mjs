@@ -117,7 +117,7 @@ test('era navigation assets load after the shared era model/table grouping and b
   const mainJs = 'atlas-person-main.js?v=20260920-single-person-surface';
   const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
   const navCssAsset = 'atlas-person-era-navigation.css?v=20260920-horizontal-containment-v1';
-  const geometryCss = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
+  const geometryCss = 'atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1';
 
   for (const asset of [eraModelJs, tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
   assert.ok(html.indexOf(eraModelJs) < html.indexOf(tableJs));
