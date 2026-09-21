@@ -353,11 +353,13 @@ test("breakdown UI keeps unavailable reasons visibly unknown and never invents d
 });
 
 
-test("Dashboard loads the canonical spacetime model before its model and does not duplicate spatial resolution rules", () => {
+test("Dashboard lazy-loads after the canonical spacetime model and does not duplicate spatial resolution rules", () => {
   const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
-  const spatialIndex = html.indexOf("atlas-person-spacetime-model.js");
-  const dashboardIndex = html.indexOf("atlas-dashboard-model.js");
-  assert.ok(spatialIndex >= 0 && spatialIndex < dashboardIndex);
+  const navSource = fs.readFileSync(new URL("../atlas-main-authority-nav.js", import.meta.url), "utf8");
+  assert.match(html, /atlas-person-spacetime-model\.js/);
+  assert.doesNotMatch(html, /atlas-dashboard-model\.js/);
+  assert.match(navSource, /loadScriptOnce\("\.\/atlas-dashboard-model\.js/);
+  assert.match(navSource, /loadScriptOnce\("\.\/atlas-dashboard\.js/);
   const dashboardModelSource = fs.readFileSync(new URL("../atlas-dashboard-model.js", import.meta.url), "utf8");
   assert.match(dashboardModelSource, /spatialModel\.resolveActivityPlacement/);
   assert.doesNotMatch(dashboardModelSource, /placeFunctionIds/);
