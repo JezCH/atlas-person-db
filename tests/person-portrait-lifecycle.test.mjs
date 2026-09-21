@@ -23,6 +23,9 @@ test('portrait lifecycle moves a source-only portrait and relies on FK update ca
     async query(sql, params) {
       const text = normalize(sql);
       calls.push({ text, params });
+      if (text.startsWith("select to_regclass('atlas_v2.person_portrait_generation_runs')")) {
+        return {rowCount:1,rows:[{generation_runs:null,revisions:null}]};
+      }
       if (text.startsWith('select pp.person_id::text')) {
         return {
           rowCount:1,
@@ -62,6 +65,9 @@ test('portrait lifecycle refuses to choose between two existing portraits during
   const client = {
     async query(sql) {
       const text = normalize(sql);
+      if (text.startsWith("select to_regclass('atlas_v2.person_portrait_generation_runs')")) {
+        return {rowCount:1,rows:[{generation_runs:null,revisions:null}]};
+      }
       if (text.startsWith('select pp.person_id::text')) {
         return {
           rowCount:2,
@@ -101,4 +107,39 @@ test('portrait hard-delete reports portrait and provenance rows while source obj
   const result = await deletePersonPortrait(client, SOURCE);
   assert.deepEqual(result, {portraits:1,portrait_sources:4});
   assert.equal(calls.some(({text}) => text.includes('delete from atlas_v2.sources')), false);
+});
+
+
+test('portrait history follows the surviving Person without discarding revisions or generation attempts', async () => {
+  const calls = [];
+  const client = {
+    async query(sql, params) {
+      const text = normalize(sql);
+      calls.push({text,params});
+      if (text.startsWith('select pp.person_id::text')) return {rowCount:0,rows:[]};
+      if (text.startsWith("select to_regclass('atlas_v2.person_portrait_generation_runs')")) {
+        return {rowCount:1,rows:[{generation_runs:'atlas_v2.person_portrait_generation_runs',revisions:'atlas_v2.person_portrait_revisions'}]};
+      }
+      if (text === 'set constraints person_portraits_current_revision_person_fkey deferred') return {rowCount:0,rows:[]};
+      if (text.startsWith('update atlas_v2.person_portrait_generation_runs')) {
+        assert.deepEqual(params,[SOURCE,SURVIVOR]);
+        return {rowCount:2,rows:[{id:'1'},{id:'2'}]};
+      }
+      if (text.startsWith('update atlas_v2.person_portrait_revisions')) {
+        assert.deepEqual(params,[SOURCE,SURVIVOR]);
+        return {rowCount:3,rows:[{id:'1'},{id:'2'},{id:'3'}]};
+      }
+      throw new Error(`Unexpected SQL: ${text}`);
+    }
+  };
+
+  const result = await reconcilePersonPortraits(client, SOURCE, SURVIVOR);
+  assert.deepEqual(result, {
+    moved:0,
+    source_links_moved:0,
+    generation_runs_moved:2,
+    revisions_moved:3,
+    survivor_kept:false
+  });
+  assert.equal(calls.some(({text}) => text === 'set constraints person_portraits_current_revision_person_fkey deferred'), true);
 });
