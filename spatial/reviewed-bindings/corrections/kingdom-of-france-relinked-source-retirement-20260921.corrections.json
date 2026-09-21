@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-reviewed-spatial-corrections/v1",
+  "correction_id": "kingdom-of-france-relinked-source-retirement-20260921",
+  "baseline": "13635a31a7ade28b9704f536ac378255159063e1",
+  "reviewed_at": "2026-09-21T13:45:00Z",
+  "changes": [
+    {
+      "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "western-europe"
+      },
+      "disposition": "remove_relinked_source",
+      "reason": "Kingdom of France is now an Activity-orphan after the exact reviewed relink to France; the France survivor already carries the same Europe/Western Europe placement and Kingdom of France / 프랑스 왕국 is preserved through reviewed temporal state-form designations."
+    }
+  ]
+}
