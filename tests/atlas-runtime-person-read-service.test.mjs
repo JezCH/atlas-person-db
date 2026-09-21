@@ -51,8 +51,10 @@ test('runtime Activity display resolves one fully-containing temporal polity des
   assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/atlas_v2\.polity_designation_names/);
   assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/pp\.activity_start is not null/);
   assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/pp\.activity_end is not null/);
-  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/pd\.valid_from_year is null or pd\.valid_from_year\s*<=\s*pp\.activity_start/);
-  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/pd\.valid_to_year is null or pd\.valid_to_year\s*>=\s*pp\.activity_end/);
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/coalesce\(pd\.valid_from_month, 1\)/);
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/coalesce\(pp\.activity_start_month, 1\)/);
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/coalesce\(pd\.valid_to_month, 12\)/);
+  assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/coalesce\(pp\.activity_end_month, 12\)/);
   assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/td_en\.polity_designation_id\s*=\s*td\.id/);
   assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/td_ko\.polity_designation_id\s*=\s*td\.id/);
 });
