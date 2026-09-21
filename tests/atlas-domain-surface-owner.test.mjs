@@ -30,10 +30,11 @@ test('spacetime uses document vertical scrolling instead of a capped nested view
   assert.match(ownerScript, /document\.scrollingElement/);
 });
 
-test('mobile Person surface contains horizontal overflow inside Person-owned scrollers', () => {
+test('mobile Person surface fixes card geometry instead of clipping the document', () => {
   assert.match(ownerCss, /#personDomainRoot\{[^}]*width:100%[^}]*min-width:0[^}]*max-width:100%/);
-  assert.match(ownerCss, /@media\(max-width:760px\)[\s\S]*#personDomainRoot\{overflow-x:clip\}/);
-  assert.match(ownerCss, /#personDomainRoot \.person-card-grid\.person-table-grid\{overflow-x:auto\}/);
+  assert.doesNotMatch(ownerCss, /#personDomainRoot\{overflow-x:clip\}/);
+  assert.match(ownerCss, /#personDomainRoot \.registration-summary,[\s\S]*\.person-era-rows>\.person-card\{width:100%;min-width:0;max-width:100%\}/);
+  assert.match(ownerCss, /#personDomainRoot \.person-card-grid\.person-table-grid\{overflow-x:visible\}/);
 });
 
 test('Person activation and rerender reset document horizontal drift without resetting vertical position', () => {

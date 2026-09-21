@@ -25,9 +25,9 @@ test('ATLAS era bands use the reviewed accessible categorical palette', () => {
 });
 
 test('era palette loads after the base table stylesheet and before canonical geometry', () => {
-  const base = 'atlas-person-table-view.css?v=20260920-sticky-ancestor-fix-v2';
+  const base = 'atlas-person-table-view.css?v=20260921-mobile-card-fit-v1';
   const paletteAsset = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
-  const geometry = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
+  const geometry = 'atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1';
   assert.ok(html.includes(base));
   assert.ok(html.includes(paletteAsset));
   assert.ok(html.includes(geometry));

@@ -21,15 +21,15 @@
     .registration-summary-link:disabled{opacity:.55;cursor:wait}
     @media(max-width:760px){
       .admin-nav-link{display:none}
-      .registration-summary{align-items:center;gap:6px;min-height:34px;padding:5px 6px;margin-bottom:6px;border-radius:9px}
-      .registration-summary-main{align-items:center;gap:7px;overflow:hidden}
-      .registration-summary-main>div{display:flex;align-items:center;gap:7px;min-width:0}
+      .registration-summary{width:100%;max-width:100%;min-width:0;align-items:center;gap:6px;min-height:34px;padding:5px 6px;margin-bottom:6px;border-radius:9px}
+      .registration-summary-main{flex:1 1 auto;min-width:0;align-items:center;gap:7px;overflow:hidden}
+      .registration-summary-main>div{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:7px;min-width:0;width:100%}
       .registration-summary-dot{width:7px;height:7px;box-shadow:0 0 0 2px #fff3d6}
       .registration-summary[data-state="ok"] .registration-summary-dot{box-shadow:0 0 0 2px #e7f6ed}
       .registration-summary[data-state="error"] .registration-summary-dot{box-shadow:0 0 0 2px #fde9eb}
       .registration-summary-title{font-size:11px;line-height:1.1;white-space:nowrap}
-      .registration-summary-detail{margin:0;font-size:9px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 196px)}
-      .registration-summary-actions{flex-direction:row;gap:3px}
+      .registration-summary-detail{min-width:0;max-width:none;margin:0;font-size:9px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .registration-summary-actions{flex:0 0 auto;flex-direction:row;gap:3px}
       .registration-summary-link{display:grid;place-items:center;width:30px;height:30px;padding:0;border-radius:7px;font-size:0;text-align:center}
       #registrationSummaryRefresh::before{content:"↻";font-size:15px}
       .registration-summary-actions a::before{content:"⚙";font-size:13px}
