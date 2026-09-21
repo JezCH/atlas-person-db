@@ -1,0 +1,47 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:kingdom-of-france-after-reviewed-merge:2026-09-21:v1",
+  "release_order": 613,
+  "evidence": {
+    "decision": "Reviewed same-identity generic/state-form cleanup after exact 21-Activity relink, three disjoint Kingdom of France temporal designations, reviewed Spatial source removal, temporal designation precision correction, and sealed Runtime projection refresh.",
+    "review_claim": "#977 comments 5750107930 and 5750115912; parent POLITY-IDENTITY-REVIEW-16-20260919",
+    "relink_merge_sha": "d73400adc49b41ff5c919348111dc319c0eb3862",
+    "relink_apply_run": "35514033793",
+    "temporal_designation_precision_merge_sha": "13635a31a7ade28b9704f536ac378255159063e1",
+    "spatial_preservation_merge_sha": "9acb1c193d8f67430926f7d0c26460cecee0c863",
+    "runtime_compile_run": "35609804488",
+    "runtime_compile_sha": "b27f84801a493665d951b376000e118c4af93223",
+    "runtime_compile_result": "SUCCESS: runtime_person_politics_v1 compiled from 2267 canonical input rows to 2257 output rows with 10 reviewed exclusions; activated projection row_count=2257.",
+    "reference_audit_lineage": "Pre-relink exhaustive Production reference audit recorded exactly 5 source-owned rows (polity_names=2, polity_sources=3) and 42 external rows (person_politics_v2=21, runtime_person_politics_v1=21). Exact Activity relink cleared the 21 canonical Authoring references; sealed Runtime compile cleared the 21 runtime references. Retirement therefore fails closed unless the exact live snapshot is owned=5 and external=0.",
+    "production_readback": "After the reviewed relink and temporal-boundary precision fix, France has 22 Activities and the source Kingdom of France has activity_count=0. All modeled monarchy-era France Activities resolve Kingdom of France / 프랑스 왕국 inside the reviewed 1226-1792, 1814-05-13 through 1815-03-20, and 1815-07-09 through 1830 designation intervals. Canonical Spatial contains no source UUID and preserves France at europe/western-europe.",
+    "latest_main_delta_check": "Current main 80f796e9ee73dc1ea2adef305ba42749104d814c is one commit ahead of the successful Runtime compile SHA and changes only dashboard UI/acceptance files; no France polity, correction, Spatial, Authoring, or Runtime projection source path changed."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:kingdom-of-france-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "canonical_key": "Kingdom of France",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Kingdom of France",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "프랑스 왕국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 5,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
