@@ -4,12 +4,17 @@
 @media(max-width:900px){#atlasAuthorityShell .spacetime-scroll{max-height:none!important}}
 
 @media(max-width:760px){
-  #personDomainRoot{overflow-x:clip}
   #personDomainRoot .person-main-view,
   #personDomainRoot .person-main-toolbar,
   #personDomainRoot .person-main-layout,
   #personDomainRoot .person-main-groups,
   #personDomainRoot .person-group,
-  #personDomainRoot .person-card-grid.person-table-grid{width:100%;min-width:0;max-width:100%}
-  #personDomainRoot .person-card-grid.person-table-grid{overflow-x:auto}
+  #personDomainRoot .person-card-grid.person-table-grid,
+  #personDomainRoot .person-era-navigator,
+  #personDomainRoot .registration-summary,
+  #personDomainRoot .person-table-head,
+  #personDomainRoot .person-era-group,
+  #personDomainRoot .person-era-rows,
+  #personDomainRoot .person-era-rows>.person-card{width:100%;min-width:0;max-width:100%}
+  #personDomainRoot .person-card-grid.person-table-grid{overflow-x:visible}
 }
