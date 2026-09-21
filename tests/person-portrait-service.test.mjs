@@ -70,6 +70,16 @@ function createStateClient({ portrait = null, links = [] } = {}) {
         };
         return { rowCount:1, rows:[] };
       }
+      if (text.startsWith("update atlas_v2.person_portraits set portrait_kind=")) {
+        if (!state.portrait) return { rowCount:0, rows:[] };
+        state.portrait = {
+          ...state.portrait,
+          portrait_kind:params[1],
+          evidence_level:params[2],
+          updated_at:new Date("2026-09-20T01:00:00Z")
+        };
+        return { rowCount:1, rows:[{ person_id:params[0] }] };
+      }
       if (text.startsWith("delete from atlas_v2.person_portrait_sources")) {
         state.links = [];
         return { rowCount:1, rows:[] };
@@ -195,4 +205,55 @@ test("portrait service delete is idempotent and cleans the old content-addressed
   const second = await service.remove(PERSON);
   assert.equal(second.replay, true);
   assert.deepEqual(removed, [SHA]);
+});
+
+
+test("portrait metadata patch updates kind, evidence and provenance without touching Blob storage", async () => {
+  const SHA = "c".repeat(64);
+  const client = createStateClient({
+    portrait:{ person_id:PERSON, asset_sha256:SHA, portrait_kind:"artwork", evidence_level:"direct", updated_at:new Date() },
+    links:[{ source_id:SOURCE, evidence_role:"facial_reference" }]
+  });
+  let putCalls = 0;
+  let removeCalls = 0;
+  const storage = {
+    async put() { putCalls += 1; throw new Error("metadata patch must not upload"); },
+    async remove() { removeCalls += 1; throw new Error("metadata patch must not delete"); },
+    publicUrl:(sha) => `https://blob.example/portraits/${sha}.webp`
+  };
+  const service = createPersonPortraitService({ client, storage });
+  const result = await service.patch({
+    person_id:PERSON,
+    portrait_kind:"reconstruction",
+    evidence_level:"strong",
+    sources:[{ source_id:SOURCE, evidence_role:"context_reference" }]
+  });
+  assert.equal(result.committed, true);
+  assert.equal(result.replay, false);
+  assert.equal(result.storage_unchanged, true);
+  assert.equal(result.portrait.asset_sha256, SHA);
+  assert.equal(result.portrait.portrait_kind, "reconstruction");
+  assert.equal(result.portrait.evidence_level, "strong");
+  assert.equal(result.portrait.sources[0].evidence_role, "context_reference");
+  assert.equal(putCalls, 0);
+  assert.equal(removeCalls, 0);
+});
+
+test("portrait metadata patch fails closed when no portrait exists", async () => {
+  const client = createStateClient();
+  const storage = {
+    async put() { throw new Error("not used"); },
+    async remove() { throw new Error("not used"); },
+    publicUrl:() => null
+  };
+  const service = createPersonPortraitService({ client, storage });
+  await assert.rejects(
+    service.patch({
+      person_id:PERSON,
+      portrait_kind:"symbolic",
+      evidence_level:"symbolic",
+      sources:[]
+    }),
+    /PERSON_PORTRAIT_NOT_FOUND/
+  );
 });

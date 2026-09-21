@@ -105,6 +105,15 @@ function normalizeWritePayload(payload = {}) {
   });
 }
 
+function normalizeMetadataPayload(payload = {}) {
+  return Object.freeze({
+    person_id:normalizePersonId(payload.person_id),
+    portrait_kind:normalizeControlled(payload.portrait_kind, PORTRAIT_KINDS, "PERSON_PORTRAIT_KIND_INVALID"),
+    evidence_level:normalizeControlled(payload.evidence_level, EVIDENCE_LEVELS, "PERSON_PORTRAIT_EVIDENCE_LEVEL_INVALID"),
+    sources:normalizeSourceLinks(payload.sources)
+  });
+}
+
 async function lockPerson(client, personId) {
   await client.query("select pg_advisory_xact_lock(hashtext($1))", [`atlas-person-portrait:${personId}`]);
   const result = await client.query(
@@ -319,6 +328,58 @@ function createPersonPortraitService({ client, storage } = {}) {
     });
   }
 
+  async function patch(payload = {}) {
+    const normalized = normalizeMetadataPayload(payload);
+    let replay = false;
+    await client.query("BEGIN ISOLATION LEVEL SERIALIZABLE");
+    try {
+      await lockPerson(client, normalized.person_id);
+      const before = await currentPortrait(client, normalized.person_id, { forUpdate:true });
+      if (!before) throw codedError("PERSON_PORTRAIT_NOT_FOUND");
+      await validateSourceIds(client, normalized.sources);
+      const currentLinks = await currentSourceLinks(client, normalized.person_id);
+      replay = Boolean(
+        String(before.portrait_kind) === normalized.portrait_kind
+        && String(before.evidence_level) === normalized.evidence_level
+        && sameSourceLinks(currentLinks, normalized.sources)
+      );
+
+      if (!replay) {
+        const updated = await client.query(`
+          update atlas_v2.person_portraits
+             set portrait_kind=$2,
+                 evidence_level=$3,
+                 updated_at=now()
+           where person_id=$1::uuid
+           returning person_id`,
+          [normalized.person_id, normalized.portrait_kind, normalized.evidence_level]
+        );
+        if (updated.rowCount !== 1) throw codedError("PERSON_PORTRAIT_METADATA_UPDATE_FAILED");
+        await replaceSourceLinks(client, normalized.person_id, normalized.sources);
+      }
+
+      await verifyWrittenPortrait(client, {
+        person_id:normalized.person_id,
+        asset_sha256:String(before.asset_sha256),
+        portrait_kind:normalized.portrait_kind,
+        evidence_level:normalized.evidence_level,
+        sources:normalized.sources
+      });
+      await client.query("COMMIT");
+    } catch (error) {
+      try { await client.query("ROLLBACK"); } catch {}
+      throw error;
+    }
+
+    const after = await read(normalized.person_id);
+    return Object.freeze({
+      committed:true,
+      replay,
+      storage_unchanged:true,
+      ...after
+    });
+  }
+
   async function remove(personId) {
     const normalizedId = normalizePersonId(personId);
     let oldSha = null;
@@ -355,7 +416,7 @@ function createPersonPortraitService({ client, storage } = {}) {
     });
   }
 
-  return Object.freeze({ read, put, remove });
+  return Object.freeze({ read, put, patch, remove });
 }
 
 module.exports = Object.freeze({
@@ -369,6 +430,7 @@ module.exports = Object.freeze({
   assertWebp,
   assetSha256,
   normalizeWritePayload,
+  normalizeMetadataPayload,
   readPersonPortrait,
   createPersonPortraitService
 });
