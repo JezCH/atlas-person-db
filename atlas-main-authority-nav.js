@@ -72,6 +72,7 @@
   topbar.insertAdjacentElement("afterend", shell);
 
   let currentDomain = "persons";
+  let spacetimeModelPromise = null;
   let dashboardAssetsPromise = null;
   let spacetimeAssetsPromise = null;
   let polityAssetsPromise = null;
@@ -135,11 +136,24 @@
     });
   }
 
+  function ensureSpacetimeModel() {
+    if (window.ATLAS_PERSON_SPACETIME_MODEL) return Promise.resolve(window.ATLAS_PERSON_SPACETIME_MODEL);
+    if (spacetimeModelPromise) return spacetimeModelPromise;
+    spacetimeModelPromise = loadScriptOnce("./atlas-person-spacetime-model.js?v=20260903-south-asia-r3", () => Boolean(window.ATLAS_PERSON_SPACETIME_MODEL))
+      .then(() => window.ATLAS_PERSON_SPACETIME_MODEL)
+      .catch((error) => {
+        spacetimeModelPromise = null;
+        throw error;
+      });
+    return spacetimeModelPromise;
+  }
+
   function ensureDashboardAssets() {
     if (window.ATLAS_DASHBOARD) return Promise.resolve(window.ATLAS_DASHBOARD);
     if (dashboardAssetsPromise) return dashboardAssetsPromise;
     appendStylesheetOnce("./atlas-dashboard.css?v=20260919-control-center-v1");
-    dashboardAssetsPromise = loadScriptOnce("./atlas-dashboard-model.js?v=20260919-spatial-resolver-v2", () => Boolean(window.ATLAS_DASHBOARD_MODEL))
+    dashboardAssetsPromise = ensureSpacetimeModel()
+      .then(() => loadScriptOnce("./atlas-dashboard-model.js?v=20260919-spatial-resolver-v2", () => Boolean(window.ATLAS_DASHBOARD_MODEL)))
       .then(() => loadScriptOnce("./atlas-dashboard.js?v=20260919-control-center-v1", () => Boolean(window.ATLAS_DASHBOARD)))
       .then(() => window.ATLAS_DASHBOARD)
       .catch((error) => {
@@ -168,7 +182,7 @@
     if (window.ATLAS_PERSON_SPACETIME_VIEW) return Promise.resolve(window.ATLAS_PERSON_SPACETIME_VIEW);
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
     appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260919-top-chrome-v4");
-    spacetimeAssetsPromise = loadScriptOnce("./atlas-person-spacetime-model.js?v=20260903-south-asia-r3", () => Boolean(window.ATLAS_PERSON_SPACETIME_MODEL))
+    spacetimeAssetsPromise = ensureSpacetimeModel()
       .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260920-exact-fit-floor", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
       .catch((error) => {

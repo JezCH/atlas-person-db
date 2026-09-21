@@ -17,7 +17,9 @@ test('spacetime owns a bounded map-like viewport once the incremental time camer
   assert.match(spacetimeView, /event\.preventDefault\(\)/);
 });
 
-test('authority navigation loads the current spacetime renderer without a stale cache key', () => {
+test('authority navigation lazy-loads the canonical spacetime model and current renderer without a stale cache key', () => {
+  assert.doesNotMatch(indexHtml, /atlas-person-spacetime-model\.js/);
+  assert.match(navScript, /function ensureSpacetimeModel\(\)/);
   assert.match(navScript, /atlas-person-spacetime-model\.js\?v=20260903-south-asia-r3/);
   assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20260920-exact-fit-floor/);
   assert.match(navScript, /atlas-person-spacetime-view\.css\?v=20260919-top-chrome-v4/);
