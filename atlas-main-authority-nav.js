@@ -72,6 +72,7 @@
   topbar.insertAdjacentElement("afterend", shell);
 
   let currentDomain = "persons";
+  let dashboardAssetsPromise = null;
   let spacetimeAssetsPromise = null;
   let polityAssetsPromise = null;
 
@@ -131,6 +132,35 @@
       script.addEventListener("load", resolve, { once: true });
       script.addEventListener("error", () => reject(new Error(`ATLAS_ASSET_LOAD_FAILED: ${src}`)), { once: true });
       document.body.append(script);
+    });
+  }
+
+  function ensureDashboardAssets() {
+    if (window.ATLAS_DASHBOARD) return Promise.resolve(window.ATLAS_DASHBOARD);
+    if (dashboardAssetsPromise) return dashboardAssetsPromise;
+    appendStylesheetOnce("./atlas-dashboard.css?v=20260919-control-center-v1");
+    dashboardAssetsPromise = loadScriptOnce("./atlas-dashboard-model.js?v=20260919-spatial-resolver-v2", () => Boolean(window.ATLAS_DASHBOARD_MODEL))
+      .then(() => loadScriptOnce("./atlas-dashboard.js?v=20260919-control-center-v1", () => Boolean(window.ATLAS_DASHBOARD)))
+      .then(() => window.ATLAS_DASHBOARD)
+      .catch((error) => {
+        dashboardAssetsPromise = null;
+        throw error;
+      });
+    return dashboardAssetsPromise;
+  }
+
+  function activateDashboard() {
+    const mount = document.getElementById("atlasDashboardMount");
+    if (!mount) return;
+    mount.innerHTML = '<section class="card" style="padding:24px"><strong>대시보드 모듈 준비 중</strong></section>';
+    ensureDashboardAssets().then((dashboard) => {
+      if (currentDomain === "dashboard") dashboard?.mount?.(mount);
+    }).catch((error) => {
+      console.error(error);
+      const currentMount = document.getElementById("atlasDashboardMount");
+      if (currentDomain === "dashboard" && currentMount) {
+        currentMount.innerHTML = `<section class="card" style="padding:24px"><strong>대시보드를 불러오지 못했습니다.</strong><p>${escapeHtml(error?.message || error)}</p></section>`;
+      }
     });
   }
 
@@ -252,7 +282,7 @@
     personView.hidden = !isPersons;
     shell.hidden = isPersons;
     if (!isPersons) shell.innerHTML = domainHtml(next);
-    if (next === "dashboard") window.ATLAS_DASHBOARD?.mount?.(shell.querySelector("#atlasDashboardMount"));
+    if (next === "dashboard") activateDashboard();
     setNavigationActive(next);
     setTopbar(next);
     setMobileSearchEnabled(isPersons, DOMAINS[next].label);
