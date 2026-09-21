@@ -20,6 +20,14 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(html, /atlas-main-authority-nav\.js\?v=20260920-single-person-surface/);
   assert.match(nav, /atlasDashboardMount/);
   assert.match(nav, /ATLAS_DASHBOARD/);
+  assert.match(nav, /function ensureDashboardAssets\(\)/);
+  assert.match(nav, /atlas-dashboard-model\.js/);
+  assert.match(nav, /atlas-dashboard\.js/);
+  assert.match(nav, /atlas-dashboard\.css/);
+  assert.match(nav, /function activateDashboard\(\)/);
+  assert.doesNotMatch(html, /atlas-dashboard-model\.js/);
+  assert.doesNotMatch(html, /atlas-dashboard\.js/);
+  assert.doesNotMatch(html, /atlas-dashboard\.css/);
   assert.match(nav, /atlasPolityMount/);
   assert.match(nav, /atlasPolityReviewMount/);
   assert.match(nav, /ATLAS_POLITY_BROWSER_VIEW/);
