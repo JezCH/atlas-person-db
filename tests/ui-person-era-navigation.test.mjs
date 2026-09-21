@@ -89,8 +89,8 @@ test('era navigation is sticky, keeps visible facet status, and pins the table h
   assert.match(navCss, /\.person-era-jump-label\{[^}]*font-size:13px/);
   assert.match(navCss, /\.person-era-jump-count\{[^}]*font-size:10\.5px/);
   assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-nav-intro>strong\{font-size:10px\}/);
-  assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-nav-current\{font-size:7\.5px\}/);
-  assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-jump-label\{font-size:9\.5px\}/);
+  assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-nav-current\{display:none\}/);
+  assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-jump-label\{font-size:9px\}/);
   assert.match(navCss, /\.person-era-jump-list\{[^}]*overflow-x:auto/);
   assert.match(navCss, /\.person-era-group\{scroll-margin-top:calc\(var\(--person-table-sticky-top/);
   assert.match(navSource, /--person-table-sticky-top/);
@@ -108,6 +108,12 @@ test('mobile Person facet controls stay inside the viewport without browser focu
   assert.match(mobileCss, /\.person-era-nav-controls\{[^}]*min-width:0[^}]*max-width:100%/);
   assert.match(mobileCss, /\.person-era-search,\.person-era-polity-filter,\.person-era-relation-filter\{[^}]*min-width:0[^}]*max-width:100%[^}]*font-size:16px/);
   assert.doesNotMatch(mobileCss, /\.person-era-search,\.person-era-polity-filter,\.person-era-relation-filter\{[^}]*font-size:8\.5px/);
+  assert.match(mobileCss, /grid-template-columns:minmax\(0,1\.18fr\) minmax\(0,\.9fr\) minmax\(0,\.72fr\)/);
+  const narrowStart = navCss.indexOf('@media(max-width:520px)');
+  const narrowEnd = navCss.indexOf('@media(max-width:390px)');
+  const narrowCss = navCss.slice(narrowStart, narrowEnd);
+  assert.match(narrowCss, /\.person-era-search\{grid-column:auto\}/);
+  assert.doesNotMatch(narrowCss, /\.person-era-search\{grid-column:1\/-1\}/);
 });
 
 test('era navigation assets load after the shared era model/table grouping and before Person Main initializes', () => {
@@ -116,7 +122,7 @@ test('era navigation assets load after the shared era model/table grouping and b
   const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
   const mainJs = 'atlas-person-main.js?v=20260920-single-person-surface';
   const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
-  const navCssAsset = 'atlas-person-era-navigation.css?v=20260920-horizontal-containment-v1';
+  const navCssAsset = 'atlas-person-era-navigation.css?v=20260921-person-density-v2';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1';
 
   for (const asset of [eraModelJs, tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
