@@ -19,7 +19,7 @@
   const MOBILE_HEADER_HEIGHT = 34;
   const MOBILE_PRESENTATION_SCALE = 0.46;
   const FOCUS_DETAIL_ZOOM = 6.5;
-  const RUNTIME_ASSETS = Object.freeze([
+  const RUNTIME_INDEPENDENT_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-time-projection.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
     ["./atlas-person-spacetime-space-axis.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-presentation-layout.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
@@ -32,11 +32,13 @@
     ["./atlas-person-spacetime-data-parity.js?v=20260902-final-parity", "ATLAS_PERSON_SPACETIME_DATA_PARITY"],
     ["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"],
     ["./atlas-person-spacetime-performance.js?v=20260826-p13", "ATLAS_PERSON_SPACETIME_PERFORMANCE"],
-    ["./atlas-person-spacetime-spatial-compile.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
     ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260918-opposition-context", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_LOD"],
     ["./atlas-person-spacetime-label-engine.js?v=20260920-global-name-overlay", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
+  ]);
+  const RUNTIME_SPACE_AXIS_DEPENDENT_ASSETS = Object.freeze([
+    ["./atlas-person-spacetime-spatial-compile.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"]
   ]);
 
   if (!dataStore || !model || !eraModel) {
@@ -142,16 +144,21 @@
 
   function loadScriptOnce(src, globalName) {
     if (window[globalName]) return Promise.resolve(window[globalName]);
-    const existing = document.querySelector(`script[data-atlas-spacetime-runtime="${src}"]`);
-    if (existing) return new Promise((resolve, reject) => {
-      existing.addEventListener("load", () => resolve(window[globalName]), { once: true });
-      existing.addEventListener("error", reject, { once: true });
-    });
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
+
+    let script = document.querySelector(`script[data-atlas-spacetime-runtime="${src}"]`);
+    const created = !script;
+    if (!script) {
+      script = document.createElement("script");
       script.src = src;
-      script.async = false;
+      script.async = true;
       script.dataset.atlasSpacetimeRuntime = src;
+    }
+
+    const promise = new Promise((resolve, reject) => {
+      if (window[globalName]) {
+        resolve(window[globalName]);
+        return;
+      }
       script.addEventListener("load", () => {
         if (window[globalName]) {
           resolve(window[globalName]);
@@ -164,13 +171,26 @@
         script.remove?.();
         reject(new Error(`ATLAS_SPACETIME_RUNTIME_LOAD_FAILED: ${src}`));
       }, { once: true });
-      document.body.appendChild(script);
     });
+
+    if (created) document.body.appendChild(script);
+    return promise;
   }
 
   function ensureRuntimeModules() {
     if (runtimePromise) return runtimePromise;
-    runtimePromise = RUNTIME_ASSETS.reduce((promise, [src, globalName]) => promise.then(() => loadScriptOnce(src, globalName)), Promise.resolve())
+
+    const independentLoads = new Map(RUNTIME_INDEPENDENT_ASSETS.map(([src, globalName]) => [
+      globalName,
+      loadScriptOnce(src, globalName)
+    ]));
+    const spaceAxisReady = independentLoads.get("ATLAS_PERSON_SPACETIME_SPACE_AXIS");
+    const dependentLoad = spaceAxisReady.then(() =>
+      Promise.all(RUNTIME_SPACE_AXIS_DEPENDENT_ASSETS.map(([src, globalName]) => loadScriptOnce(src, globalName)))
+    );
+
+    runtimePromise = Promise.all([...independentLoads.values(), dependentLoad])
+      .then(() => runtime())
       .catch((error) => {
         runtimePromise = null;
         throw error;
@@ -1678,8 +1698,7 @@
     loadPromise = null;
     mount.innerHTML = '<section class="card spacetime-loading"><strong>시공간 인물도 준비 중</strong><p>Person track과 검토된 공간 배치 자료를 읽고 있습니다.</p></section>';
     try {
-      await ensureRuntimeModules();
-      const loaded = await ensureData();
+      const [, loaded] = await Promise.all([ensureRuntimeModules(), ensureData()]);
       if (!loaded || document.getElementById("personSpacetimeMount") !== mount) return;
       renderInto(mount);
     } catch (error) {
