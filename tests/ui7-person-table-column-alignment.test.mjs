@@ -47,8 +47,8 @@ test('era band remains sticky while the geometry contract owns its desktop and m
   assert.match(css, /writing-mode:vertical-rl/);
   assert.doesNotMatch(css, /--era-band-width\s*:/);
   assert.match(alignmentCss, /--era-band-width:\s*58px/);
-  assert.match(alignmentCss, /@media \(max-width: 760px\)[\s\S]*--era-band-width:\s*38px/);
-  assert.match(alignmentCss, /@media \(max-width: 520px\)[\s\S]*--era-band-width:\s*32px/);
+  assert.match(alignmentCss, /@media \(max-width: 760px\)[\s\S]*--era-band-width:\s*34px/);
+  assert.match(alignmentCss, /@media \(max-width: 520px\)[\s\S]*--era-band-width:\s*30px/);
 });
 
 test('header, era groups, Person rows and Activity rows share one effective geometry contract', () => {
@@ -65,19 +65,19 @@ test('header, era groups, Person rows and Activity rows share one effective geom
 
 test('polity label has the same primary type size as the Person name', () => {
   assert.match(alignmentCss, /\.person-table-activities \.person-card-activity-head b\s*\{[^}]*font-size:\s*14px/s);
-  assert.match(alignmentCss, /@media \(max-width: 760px\)[\s\S]*\.person-table-activities \.person-card-activity-head b\s*\{[^}]*font-size:\s*13px/s);
+  assert.match(alignmentCss, /@media \(max-width: 760px\)[\s\S]*\.person-table-activities \.person-card-activity-head b\s*\{[^}]*font-size:\s*12px/s);
 });
 
 test('canonical geometry layer loads directly after the table presentation assets', () => {
-  const tableStyle = html.indexOf('atlas-person-table-view.css?v=20260920-sticky-ancestor-fix-v2');
-  const alignment = html.indexOf('atlas-person-table-alignment.css?v=20260817-table-geometry-r2');
+  const tableStyle = html.indexOf('atlas-person-table-view.css?v=20260921-mobile-card-fit-v1');
+  const alignment = html.indexOf('atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1');
   assert.ok(tableStyle >= 0 && alignment > tableStyle);
   assert.doesNotMatch(html, /atlas-person-mobile-column-widths\.css/);
 });
 
 test('era band presentation and geometry use fresh browser cache keys', () => {
-  assert.match(html, /atlas-person-table-view\.css\?v=20260920-sticky-ancestor-fix-v2/);
-  assert.match(html, /atlas-person-table-alignment\.css\?v=20260817-table-geometry-r2/);
+  assert.match(html, /atlas-person-table-view\.css\?v=20260921-mobile-card-fit-v1/);
+  assert.match(html, /atlas-person-table-alignment\.css\?v=20260921-mobile-card-fit-v1/);
   assert.match(html, /atlas-person-era-model\.js\?v=20260909-era-10-band-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20260819-era-model-r2/);
 });
