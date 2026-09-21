@@ -158,7 +158,8 @@ BEGIN
       ADD CONSTRAINT person_portraits_current_revision_person_fkey
       FOREIGN KEY (current_revision_id, person_id)
       REFERENCES atlas_v2.person_portrait_revisions(id, person_id)
-      ON DELETE RESTRICT;
+      ON DELETE RESTRICT
+      DEFERRABLE INITIALLY IMMEDIATE;
   END IF;
 END
 $$;
