@@ -66,7 +66,13 @@ test('profile external references and portraits are live merge data while profil
   assert.match(readinessSource, /person_profile_mutation_audits\.person_id/);
   assert.match(readinessSource, /portrait_history_present/);
   assert.match(readinessSource, /"person_external_references","person_portraits"/);
-  assert.match(readinessSource, /"person_portrait_sources","person_profile_mutation_audits"/);
+  for (const table of [
+    "person_portrait_sources",
+    "person_portrait_generation_runs",
+    "person_portrait_revisions",
+    "person_portrait_revision_sources",
+    "person_profile_mutation_audits"
+  ]) assert.match(readinessSource, new RegExp(`"${table}"`));
 });
 
 test('physical merge executor requires schema-derived readiness and locks full semantic-key v2 Activity state', () => {
