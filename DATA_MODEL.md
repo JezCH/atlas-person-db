@@ -153,6 +153,33 @@ Source 역시 Activity의 `source_locator` 문자열이 아닙니다. `atlas_v2.
 
 현재 Stage 2 provenance join rehearsal은 source identity와 assertion locator를 분리하는 방향으로 이미 정렬되어 있습니다. Product-level Place/Source editors는 P13에서 완성합니다.
 
+## 7.1 Person portrait architecture
+
+Person portrait data is split by responsibility so current reads stay cheap while historical and AI-generation provenance remain durable.
+
+```text
+person_portrait_assets
+  = immutable content-addressed WebP asset identity
+
+person_portrait_generation_runs
+  = non-canonical AI generation attempt + exact generation/review provenance
+
+person_portrait_revisions
+  = approved append-only portrait decision history
+
+person_portrait_revision_sources
+  = evidence links frozen to each approved revision
+
+person_portraits + person_portrait_sources
+  = compact current projection used by the product read surface
+```
+
+The current projection is not the historical ledger. Replacing or removing the displayed portrait must not erase an older approved revision or its evidence. AI generation attempts do not become canonical merely because an image was generated; acceptance creates an approved revision and only then may advance the current projection.
+
+`portrait_standard_version`, generation provider/model, prompt-template version, request hash, and structured generation spec are preserved so future style/model changes can target only affected generations instead of rewriting the whole portrait corpus. Storage paths remain derived from SHA-256 rather than persisted as mutable identity.
+
+Person merge treats a current portrait conflict as fail-closed, while revision and generation history follows the surviving Person without deletion.
+
 ## 8. Write model
 
 ### Identity writes

@@ -28,21 +28,64 @@ async function lockPortraits(client, personIds) {
   return (result.rows || []).map(portraitSnapshot);
 }
 
+async function portraitHistoryState(client) {
+  const result = await client.query(`
+    select
+      to_regclass('atlas_v2.person_portrait_generation_runs')::text as generation_runs,
+      to_regclass('atlas_v2.person_portrait_revisions')::text as revisions`);
+  return Object.freeze({
+    present:Boolean(result.rows[0]?.generation_runs && result.rows[0]?.revisions)
+  });
+}
+
+async function portraitHistoryPresent(client) {
+  return (await portraitHistoryState(client)).present;
+}
+
 async function reconcilePersonPortraits(client, sourcePersonId, survivorPersonId) {
   const portraits = await lockPortraits(client, [sourcePersonId, survivorPersonId]);
   const source = portraits.find((row) => row.person_id === String(sourcePersonId)) || null;
   const survivor = portraits.find((row) => row.person_id === String(survivorPersonId)) || null;
 
-  if (!source) {
-    return Object.freeze({ moved:0, source_links_moved:0, survivor_kept:Boolean(survivor) });
-  }
-
-  if (survivor) {
+  if (source && survivor) {
     const error = new Error("PERSON_PORTRAIT_MERGE_CONFLICT");
     error.code = "PERSON_PORTRAIT_MERGE_CONFLICT";
     error.source_portrait = source;
     error.survivor_portrait = survivor;
     throw error;
+  }
+
+  let generationRunsMoved = 0;
+  let revisionsMoved = 0;
+  const historyState = await portraitHistoryState(client);
+  if (historyState.present) {
+    // Some staged rehearsal paths rebuild the current projection after authoring
+    // migrations. Defer whatever deferrable constraints are present without
+    // coupling merge logic to one migration-time constraint name.
+    await client.query("set constraints all deferred");
+    const generationRuns = await client.query(`
+      update atlas_v2.person_portrait_generation_runs
+         set person_id=$2::uuid
+       where person_id=$1::uuid
+       returning id`, [sourcePersonId, survivorPersonId]);
+    generationRunsMoved = generationRuns.rowCount;
+
+    const revisions = await client.query(`
+      update atlas_v2.person_portrait_revisions
+         set person_id=$2::uuid
+       where person_id=$1::uuid
+       returning id`, [sourcePersonId, survivorPersonId]);
+    revisionsMoved = revisions.rowCount;
+  }
+
+  if (!source) {
+    return Object.freeze({
+      moved:0,
+      source_links_moved:0,
+      generation_runs_moved:generationRunsMoved,
+      revisions_moved:revisionsMoved,
+      survivor_kept:Boolean(survivor)
+    });
   }
 
   const moved = await client.query(`
@@ -56,6 +99,8 @@ async function reconcilePersonPortraits(client, sourcePersonId, survivorPersonId
   return Object.freeze({
     moved:1,
     source_links_moved:source.source_count,
+    generation_runs_moved:generationRunsMoved,
+    revisions_moved:revisionsMoved,
     survivor_kept:false,
     portrait:Object.freeze({
       person_id:String(moved.rows[0].person_id),
@@ -82,6 +127,8 @@ async function deletePersonPortrait(client, personId) {
 module.exports = Object.freeze({
   portraitSnapshot,
   lockPortraits,
+  portraitHistoryState,
+  portraitHistoryPresent,
   reconcilePersonPortraits,
   deletePersonPortrait
 });

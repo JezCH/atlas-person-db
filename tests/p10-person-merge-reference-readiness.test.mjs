@@ -10,7 +10,7 @@ const mergeSource = fs.readFileSync(new URL('../server/atlas-person-merge-servic
 const readinessSource = fs.readFileSync(new URL('../server/atlas-person-merge-reference-readiness.js', import.meta.url), 'utf8');
 
 test('P10 Person merge reference policy is explicit and includes every reviewed live Person pointer', () => {
-  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v3');
+  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v4');
   assert.deepEqual(readiness.EXPECTED_PERSON_FKS.map((row) => [row.key, row.delete_action]), [
     ['atlas_v2.authoring_manifest_runs.person_id', 'SET NULL'],
     ['atlas_v2.person_descriptions.person_id', 'CASCADE'],
@@ -19,6 +19,8 @@ test('P10 Person merge reference policy is explicit and includes every reviewed 
     ['atlas_v2.person_names.person_id', 'CASCADE'],
     ['atlas_v2.person_people_affiliations.person_id', 'RESTRICT'],
     ['atlas_v2.person_politics_v2.person_id', 'RESTRICT'],
+    ['atlas_v2.person_portrait_generation_runs.person_id', 'RESTRICT'],
+    ['atlas_v2.person_portrait_revisions.person_id', 'RESTRICT'],
     ['atlas_v2.person_portraits.person_id', 'RESTRICT'],
     ['atlas_v2.person_sources.person_id', 'CASCADE']
   ]);
@@ -57,11 +59,20 @@ test('P10-B base snapshots and optional P10-C requirement snapshots are both exp
 
 test('profile external references and portraits are live merge data while profile mutation audits remain immutable historical references', () => {
   assert.match(readinessSource, /person_external_references\.person_id.*RESTRICT/);
+  assert.match(readinessSource, /person_portrait_generation_runs\.person_id.*RESTRICT/);
+  assert.match(readinessSource, /person_portrait_revisions\.person_id.*RESTRICT/);
   assert.match(readinessSource, /person_portraits\.person_id.*RESTRICT/);
   assert.match(readinessSource, /person_portrait_sources\.person_id/);
   assert.match(readinessSource, /person_profile_mutation_audits\.person_id/);
+  assert.match(readinessSource, /portrait_history_present/);
   assert.match(readinessSource, /"person_external_references","person_portraits"/);
-  assert.match(readinessSource, /"person_portrait_sources","person_profile_mutation_audits"/);
+  for (const table of [
+    "person_portrait_sources",
+    "person_portrait_generation_runs",
+    "person_portrait_revisions",
+    "person_portrait_revision_sources",
+    "person_profile_mutation_audits"
+  ]) assert.match(readinessSource, new RegExp(`"${table}"`));
 });
 
 test('physical merge executor requires schema-derived readiness and locks full semantic-key v2 Activity state', () => {
