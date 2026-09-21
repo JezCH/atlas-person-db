@@ -60,3 +60,45 @@ test("virtualized Person interactions use delegation", async () => {
   assert.ok(view.includes('event.target.closest?.("[data-spacetime-person]")'));
   assert.ok(view.includes("selectPerson(mount, target.dataset.spacetimePerson, { focus: false })"));
 });
+
+test("spacetime runtime bootstrap parallelizes only dependency-independent modules", async () => {
+  const view = await fixture(viewUrl);
+
+  const independentStart = view.indexOf("const RUNTIME_INDEPENDENT_ASSETS");
+  const dependentStart = view.indexOf("const RUNTIME_SPACE_AXIS_DEPENDENT_ASSETS");
+  const bootstrapStart = view.indexOf("function ensureRuntimeModules()");
+  assert.ok(independentStart >= 0 && dependentStart > independentStart && bootstrapStart > dependentStart);
+
+  const independentBlock = view.slice(independentStart, dependentStart);
+  const dependentBlock = view.slice(dependentStart, bootstrapStart);
+  assert.match(independentBlock, /atlas-person-spacetime-space-axis\.js/);
+  assert.doesNotMatch(independentBlock, /atlas-person-spacetime-spatial-compile\.js/);
+  assert.match(dependentBlock, /atlas-person-spacetime-spatial-compile\.js/);
+
+  assert.match(view, /const independentLoads = new Map\(RUNTIME_INDEPENDENT_ASSETS\.map/);
+  assert.match(view, /const spaceAxisReady = independentLoads\.get\("ATLAS_PERSON_SPACETIME_SPACE_AXIS"\)/);
+  assert.match(view, /const dependentLoad = spaceAxisReady\.then/);
+  assert.match(view, /Promise\.all\(\[\.\.\.independentLoads\.values\(\), dependentLoad\]\)/);
+  assert.doesNotMatch(view, /RUNTIME_ASSETS\.reduce/);
+});
+
+test("spacetime runtime scripts are concurrently fetchable and preserve retry-safe loading", async () => {
+  const view = await fixture(viewUrl);
+  const loaderStart = view.indexOf("function loadScriptOnce(");
+  const loaderEnd = view.indexOf("function ensureRuntimeModules()", loaderStart);
+  const loader = view.slice(loaderStart, loaderEnd);
+
+  assert.match(loader, /script\.async = true/);
+  assert.match(loader, /script\.addEventListener\("load"/);
+  assert.match(loader, /script\.addEventListener\("error"/);
+  assert.match(loader, /script\.remove\?\.\(\)/);
+  assert.match(loader, /if \(created\) document\.body\.appendChild\(script\)/);
+  assert.ok(loader.indexOf('script.addEventListener("load"') < loader.indexOf("document.body.appendChild(script)"));
+  assert.match(view, /runtimePromise = null/);
+});
+
+test("spacetime begins canonical data reads while runtime modules load", async () => {
+  const view = await fixture(viewUrl);
+  assert.match(view, /const \[, loaded\] = await Promise\.all\(\[ensureRuntimeModules\(\), ensureData\(\)\]\)/);
+  assert.doesNotMatch(view, /await ensureRuntimeModules\(\);\s*const loaded = await ensureData\(\)/);
+});
