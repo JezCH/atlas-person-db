@@ -50,6 +50,21 @@ KO preferred name_type = display
 
 Person과 마찬가지로 이름 자체가 identity는 아닙니다.
 
+### Polity granularity invariant
+
+ATLAS의 Polity는 가능한 모든 정치·행정 단위를 수집하는 분류표가 아니다. 기본값은 **해당 시대의 역사적으로 응집된 국가/상위 정치체 identity를 재사용**하는 것이다. 왕국·제국·공화국·왕조·막부·번·공국·클랜·정부·정권이라는 별도 명칭이 있다는 이유만으로 새 Polity를 만들지 않는다.
+
+하위·구성·비국가 정치체를 별도 Polity로 두는 것은 다음 예외 중 하나가 source-backed하게 필요한 경우로 제한한다.
+
+- 상위 국가 Polity에 연결하면 Person의 실제 정치적 주체·복무관계·통치관계가 실질적으로 틀려지는 경우;
+- 상위 국가 하나로는 동시에 존재한 독립적/준독립적 territorial authority를 표현할 수 없는 경우;
+- 분열·잔존국·후계국 등 catastrophic territorial discontinuity 때문에 하나의 공간적·정치적 객체로 계속 그리는 것이 부자연스러운 경우;
+- 국가로 커버되지 않는 부족연맹·반란국가·해적정치체 등 자체적인 정치행위자 identity가 실제로 필요한 경우.
+
+반대로 단순한 state-form 변화, 왕조/정권명, 행정구역, 영지·번·공국이라는 지위만으로는 분리하지 않는다. 이런 정보는 가능하면 temporal designation, Governance Context, Place/Territory, office/Role 또는 polity-relation으로 보존한다.
+
+신규 Polity authoring 전에는 반드시 **기존 상위 국가/정치체로 정확하게 표현 가능한지 먼저 검토**하고, 새 Polity가 필요하다면 manifest/review evidence에 왜 상위 Polity가 의미를 왜곡하는지 남긴다. 신규 Polity가 생성되면 같은 등록 사이클에서 Spatial disposition도 검토·materialize하여 undispositioned spatial debt를 남기지 않는다.
+
 ## 4. Role vocabulary
 
 `roles.id` UUID와 unique `roles.code`가 vocabulary identity입니다.
