@@ -51,28 +51,26 @@
 
 @media (max-width: 760px) {
   .person-card-grid.person-table-grid {
-    --era-band-width: 38px;
-    --person-data-columns: 124px 108px minmax(390px, 1fr) 66px;
-    --person-data-min-width: 688px;
-    --person-table-min-width: 726px;
-    --person-activity-columns: 120px 105px 100px;
+    --era-band-width: 34px;
+    --person-data-columns: minmax(88px, .95fr) minmax(72px, .72fr) minmax(0, 1.55fr) 44px;
+    --person-data-min-width: 0px;
+    --person-table-min-width: 0px;
+    --person-activity-columns: minmax(0, 1fr);
   }
 
   .person-table-activities .person-card-activity-head b {
-    font-size: 13px;
+    font-size: 12px;
+  }
+
+  .person-table-range {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
 
 @media (max-width: 520px) {
   .person-card-grid.person-table-grid {
-    --era-band-width: 32px;
-    --person-data-columns: 116px 104px minmax(375px, 1fr) 62px;
-    --person-data-min-width: 657px;
-    --person-table-min-width: 689px;
-    --person-activity-columns: 115px 100px 96px;
-  }
-
-  .person-table-range {
-    white-space: nowrap;
+    --era-band-width: 30px;
+    --person-data-columns: minmax(82px, .95fr) minmax(68px, .72fr) minmax(0, 1.55fr) 38px;
   }
 }
