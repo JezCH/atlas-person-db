@@ -9,7 +9,8 @@ test("Activity selection drives the shared Meanwhile ordinal from its midpoint",
   const start=view.indexOf("function selectActivity(");
   const end=view.indexOf("\n  function",start+10);
   const body=view.slice(start,end);
-  assert.match(body,/selectedTimeOrdinal = activity\.midpoint_ordinal/);
+  assert.match(body,/const nextTimeOrdinal = activity\.midpoint_ordinal/);
+  assert.match(body,/selectedTimeOrdinal = nextTimeOrdinal/);
   assert.match(body,/meanwhileSelectedOrdinal = selectedTimeOrdinal/);
   assert.match(body,/meanwhileSelectionSource = "activity"/);
 });
