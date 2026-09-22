@@ -30,8 +30,8 @@
   const PORTRAIT_SOURCE_MAX_BYTES = 20 * 1024 * 1024;
   const PORTRAIT_OUTPUT_MAX_BYTES = 3 * 1024 * 1024;
   const PORTRAIT_MAX_SIDE = 1600;
-  const XLSX_SCRIPT_URL = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
-  let xlsxLoadPromise = null;
+  const PERSON_EXCEL_EXPORT_SCRIPT_URL = "./atlas-person-excel-export.js?v=20260922-feature-split-v1";
+  let personExcelExportModulePromise = null;
   let excelExportInFlight = false;
 
   function escapeHtml(value) {
@@ -1007,44 +1007,44 @@
     }
   }
 
-  function ensureXlsx() {
-    if (window.XLSX?.utils && typeof window.XLSX.writeFile === "function") return Promise.resolve(window.XLSX);
-    if (xlsxLoadPromise) return xlsxLoadPromise;
+  function ensurePersonExcelExportModule() {
+    if (window.ATLAS_PERSON_EXCEL_EXPORT?.exportPersons) {
+      return Promise.resolve(window.ATLAS_PERSON_EXCEL_EXPORT);
+    }
+    if (personExcelExportModulePromise) return personExcelExportModulePromise;
 
-    xlsxLoadPromise = new Promise((resolve, reject) => {
-      let script = document.querySelector('script[data-atlas-xlsx="true"]');
+    personExcelExportModulePromise = new Promise((resolve, reject) => {
+      let script = document.querySelector('script[data-atlas-person-excel-export="true"]');
+      const created = !script;
+      if (!script) {
+        script = document.createElement("script");
+        script.src = PERSON_EXCEL_EXPORT_SCRIPT_URL;
+        script.async = true;
+        script.dataset.atlasPersonExcelExport = "true";
+      }
+
       const finish = () => {
-        if (window.XLSX?.utils && typeof window.XLSX.writeFile === "function") {
-          resolve(window.XLSX);
+        if (window.ATLAS_PERSON_EXCEL_EXPORT?.exportPersons) {
+          resolve(window.ATLAS_PERSON_EXCEL_EXPORT);
           return;
         }
         script?.remove?.();
-        reject(new Error("XLSX_LIBRARY_MISSING_AFTER_LOAD"));
+        reject(new Error("ATLAS_PERSON_EXCEL_EXPORT_MODULE_MISSING"));
       };
       const fail = () => {
         script?.remove?.();
-        reject(new Error("XLSX_LIBRARY_LOAD_FAILED"));
+        reject(new Error("ATLAS_PERSON_EXCEL_EXPORT_MODULE_LOAD_FAILED"));
       };
 
-      if (script) {
-        script.addEventListener("load", finish, { once:true });
-        script.addEventListener("error", fail, { once:true });
-        return;
-      }
-
-      script = document.createElement("script");
-      script.src = XLSX_SCRIPT_URL;
-      script.async = true;
-      script.dataset.atlasXlsx = "true";
       script.addEventListener("load", finish, { once:true });
       script.addEventListener("error", fail, { once:true });
-      document.head.append(script);
+      if (created) document.head.append(script);
     }).catch((error) => {
-      xlsxLoadPromise = null;
+      personExcelExportModulePromise = null;
       throw error;
     });
 
-    return xlsxLoadPromise;
+    return personExcelExportModulePromise;
   }
 
   async function exportCurrentExcel() {
@@ -1054,41 +1054,8 @@
     if (exportButton) exportButton.disabled = true;
 
     try {
-      const xlsx = await ensureXlsx();
-      const rows = [];
-      for (const person of persons) {
-        const activities = Array.isArray(person?.activity_summaries) ? person.activity_summaries : [];
-        if (!activities.length) {
-          rows.push({
-            "인물":person.display_name || person.canonical_name_en || "",
-            "영문명":person.canonical_name_en || "",
-            "정치체":"",
-            "관계":"",
-            "역할":"",
-            "시작":"",
-            "종료":"",
-            "기간 기준":""
-          });
-          continue;
-        }
-        for (const activity of activities) {
-          rows.push({
-            "인물":person.display_name || person.canonical_name_en || "",
-            "영문명":person.canonical_name_en || "",
-            "정치체":activity?.polity?.display_name || activity?.polity?.canonical_name_en || "",
-            "관계":activity?.relation?.code || "",
-            "역할":activity?.role?.display_name || activity?.role?.source_label || "",
-            "시작":boundaryLabel(activity?.start),
-            "종료":boundaryLabel(activity?.end),
-            "기간 기준":activity?.period_basis?.display_name || activity?.period_basis?.code || ""
-          });
-        }
-      }
-      const ws = xlsx.utils.json_to_sheet(rows);
-      ws["!cols"] = [{wch:22},{wch:26},{wch:28},{wch:14},{wch:24},{wch:16},{wch:16},{wch:18}];
-      const wb = xlsx.utils.book_new();
-      xlsx.utils.book_append_sheet(wb, ws, "Persons");
-      xlsx.writeFile(wb, `atlas-persons-${new Date().toISOString().slice(0,10)}.xlsx`);
+      const exporter = await ensurePersonExcelExportModule();
+      await exporter.exportPersons({ persons, boundaryLabel });
     } catch (error) {
       console.error("ATLAS Excel export failed", error);
       showOperationalMessage("엑셀 모듈을 불러오지 못했습니다. 다시 시도해주세요.");
