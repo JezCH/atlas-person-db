@@ -4,7 +4,7 @@ const {
   manifestHash,
   correctionLedgerExists,
   readLedger
-} = require("./atlas-correction-manifest-service.js");
+} = require("./atlas-correction-ledger-service.js");
 
 const MANIFEST_V2 = "atlas-correction-manifest/v2";
 const MARKER_V2 = "ATLAS_CORRECTION_MANIFEST_V2";
