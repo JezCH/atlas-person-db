@@ -4,6 +4,15 @@ import { createRequire } from 'node:module';
 
 const require=createRequire(import.meta.url);
 const readApi=require('../api/atlas-read.js');
+const exclusionsService=require('../server/atlas-runtime-exclusions-read-service.js');
+const exclusionsHandler=require('../server/atlas-runtime-exclusions-read-handler.js');
+
+test('atlas-read preserves runtime exclusions compatibility exports through the extracted modules', () => {
+  assert.equal(readApi.RUNTIME_EXCLUSIONS_SCHEMA,exclusionsService.RUNTIME_EXCLUSIONS_SCHEMA);
+  assert.equal(readApi.readRuntimeExclusions,exclusionsService.readRuntimeExclusions);
+  assert.equal(readApi.createRuntimeExclusionsReadHandler,exclusionsHandler.createRuntimeExclusionsReadHandler);
+});
+
 
 test('Runtime exclusion read returns exact active compile targets with human-readable identities', async () => {
   const key='runtime-person-politics-v1:current';
@@ -49,7 +58,7 @@ test('Runtime exclusion read returns exact active compile targets with human-rea
       }
     ]};
   }};
-  const result=await readApi.readRuntimeExclusions(client);
+  const result=await exclusionsService.readRuntimeExclusions(client);
   assert.equal(result.schema,'atlas-runtime-exclusions/v1');
   assert.equal(result.available,true);
   assert.equal(result.active_compile_key,key);
@@ -80,7 +89,7 @@ test('Runtime exclusion read fails closed when target snapshot does not match co
       reason_code:'START_BOUNDARY_UNRESOLVED'
     }]};
   }};
-  const result=await readApi.readRuntimeExclusions(client);
+  const result=await exclusionsService.readRuntimeExclusions(client);
   assert.equal(result.available,false);
   assert.equal(result.reason,'RUNTIME_EXCLUSION_TARGET_SNAPSHOT_INCOMPLETE');
   assert.equal(result.expected_count,2);
@@ -90,9 +99,70 @@ test('Runtime exclusion read fails closed when target snapshot does not match co
 
 test('Runtime exclusion read preserves migration absence as unavailable instead of zero', async () => {
   const client={async query(){ return {rows:[{exclusion_targets:false}]}; }};
-  const result=await readApi.readRuntimeExclusions(client);
+  const result=await exclusionsService.readRuntimeExclusions(client);
   assert.equal(result.available,false);
   assert.equal(result.reason,'RUNTIME_EXCLUSION_TARGET_LEDGER_NOT_APPLIED');
   assert.equal(result.total_count,null);
   assert.deepEqual(result.targets,[]);
+});
+
+
+function exclusionsResponse() {
+  return {
+    statusCode:0,
+    headers:{},
+    body:"",
+    setHeader(name,value) { this.headers[String(name).toLowerCase()]=value; },
+    end(value="") { this.body=String(value); }
+  };
+}
+
+test('extracted runtime exclusions handler rejects non-GET before DB access', async () => {
+  let factoryCalls=0;
+  const handler=exclusionsHandler.createRuntimeExclusionsReadHandler({
+    env:{ SUPABASE_DB_URL:'postgresql://example.invalid/atlas' },
+    clientFactory:async () => {
+      factoryCalls+=1;
+      throw new Error('must not open database');
+    }
+  });
+  const res=exclusionsResponse();
+  await handler({ method:'POST' },res);
+  const body=JSON.parse(res.body);
+  assert.equal(res.statusCode,405);
+  assert.equal(body.schema,'atlas-runtime-exclusions/v1');
+  assert.equal(body.code,'METHOD_NOT_ALLOWED');
+  assert.equal(factoryCalls,0);
+});
+
+test('extracted runtime exclusions handler preserves response contract and closes its client', async () => {
+  let ended=false;
+  const payload=Object.freeze({
+    schema:'atlas-runtime-exclusions/v1',
+    source:'runtime-compile-exclusion-ledger',
+    available:true,
+    reason:null,
+    active_compile_key:'runtime-person-politics-v1:test',
+    compiled_at:'2026-09-20T08:00:00.000Z',
+    total_count:0,
+    reason_summary:Object.freeze({}),
+    targets:Object.freeze([])
+  });
+  const handler=exclusionsHandler.createRuntimeExclusionsReadHandler({
+    env:{ SUPABASE_DB_URL:'postgresql://example.invalid/atlas' },
+    clientFactory:async (databaseUrl) => {
+      assert.equal(databaseUrl,'postgresql://example.invalid/atlas');
+      return { async end() { ended=true; } };
+    },
+    read:async () => payload
+  });
+  const res=exclusionsResponse();
+  await handler({ method:'GET' },res);
+  const body=JSON.parse(res.body);
+  assert.equal(res.statusCode,200);
+  assert.equal(res.headers['cache-control'],'no-store');
+  assert.equal(body.ok,true);
+  assert.equal(body.schema,'atlas-runtime-exclusions/v1');
+  assert.equal(body.total_count,0);
+  assert.equal(ended,true);
 });
