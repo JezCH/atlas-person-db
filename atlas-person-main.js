@@ -6,6 +6,7 @@
   const domainRegistry = window.ATLAS_PERSON_DOMAIN_REGISTRY;
   const externalReferences = window.ATLAS_PERSON_EXTERNAL_REFERENCES;
   const portraitView = window.ATLAS_PERSON_PORTRAIT_VIEW;
+  const portraitControllerFactory = window.ATLAS_PERSON_PORTRAIT_CONTROLLER;
   const profileWriter = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
