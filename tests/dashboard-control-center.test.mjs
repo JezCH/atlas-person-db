@@ -18,6 +18,7 @@ const spacetimeSource = fs.readFileSync(new URL("../atlas-person-spacetime-view.
 const statusSummarySource = fs.readFileSync(new URL("../status-summary.js", import.meta.url), "utf8");
 const readApiSource = fs.readFileSync(new URL("../api/atlas-read.js", import.meta.url), "utf8");
 const runtimePublicationServiceSource = fs.readFileSync(new URL("../server/atlas-runtime-publication-read-service.js", import.meta.url), "utf8");
+const recentDeltaServiceSource = fs.readFileSync(new URL("../server/atlas-recent-delta-read-service.js", import.meta.url), "utf8");
 
 test("dashboard model derives progress from canonical snapshots without stored dashboard counters", () => {
   const P1="00000000-0000-4000-8000-000000000001", P2="00000000-0000-4000-8000-000000000002", P3="00000000-0000-4000-8000-000000000003";
@@ -468,13 +469,14 @@ test("quality snapshot keeps only non-duplicated structural and exception counte
 
 test("Recent Delta read surface is backed by canonical mutation ledgers and preserves delete coverage as unknown", () => {
   assert.match(readApiSource, /surface === "recent-delta"/);
-  assert.match(readApiSource, /atlas_v2\.authoring_manifest_runs/);
-  assert.match(readApiSource, /atlas_v2\.person_profile_mutation_audits/);
-  assert.match(readApiSource, /atlas_v2\.correction_manifest_runs/);
-  assert.match(readApiSource, /atlas_v2\.person_merge_audits/);
-  assert.match(readApiSource, /delete_person:false/);
-  assert.match(readApiSource, /PERSON_DELETE_IMMUTABLE_AUDIT_NOT_EXPOSED/);
-  assert.doesNotMatch(readApiSource, /select[\s\S]{0,120}request_id[\s\S]{0,120}as occurred_at/i);
+  assert.match(readApiSource, /atlas-recent-delta-read-service\.js/);
+  assert.match(recentDeltaServiceSource, /atlas_v2\.authoring_manifest_runs/);
+  assert.match(recentDeltaServiceSource, /atlas_v2\.person_profile_mutation_audits/);
+  assert.match(recentDeltaServiceSource, /atlas_v2\.correction_manifest_runs/);
+  assert.match(recentDeltaServiceSource, /atlas_v2\.person_merge_audits/);
+  assert.match(recentDeltaServiceSource, /delete_person:false/);
+  assert.match(recentDeltaServiceSource, /PERSON_DELETE_IMMUTABLE_AUDIT_NOT_EXPOSED/);
+  assert.doesNotMatch(recentDeltaServiceSource, /select[\s\S]{0,120}request_id[\s\S]{0,120}as occurred_at/i);
 });
 
 test("shared store owns the Recent Delta fetch and Dashboard only consumes normalized shared state", () => {
