@@ -111,6 +111,6 @@ test('XLSX remains lazy-loaded once inside the feature module and retryable afte
 test('legacy Excel upload and app.js bridge remain retired while export compatibility stays public', () => {
   assert.doesNotMatch(html, /importInput|exportButton|\.\/app\.js/);
   assert.equal(fs.existsSync(new URL('../app.js', import.meta.url)), false);
-  assert.match(html, /atlas-person-main\.js\?v=20260922-portrait-image-split-v1/);
+  assert.match(html, /atlas-person-main\.js\?v=20260922-portrait-view-split-v1/);
   assert.match(personMain, /window\.ATLAS_PERSON_MAIN = Object\.freeze\([\s\S]*exportCurrentExcel/);
 });
