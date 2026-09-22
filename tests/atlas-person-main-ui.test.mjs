@@ -4,6 +4,7 @@ import fs from 'node:fs';
 
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
+const portraitImage = fs.readFileSync(new URL('../atlas-person-portrait-image.js', import.meta.url), 'utf8');
 const reader = fs.readFileSync(new URL('../atlas-person-browser-reader.js', import.meta.url), 'utf8');
 const nav = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
@@ -122,9 +123,11 @@ test('Person detail binds canonical portrait read and authoring controls without
   assert.match(main, /name="evidence_level"/);
   assert.match(main, /profileWriter\.setPersonPortrait/);
   assert.match(main, /profileWriter\.deletePersonPortrait/);
-  assert.match(main, /canvas\.toBlob/);
-  assert.match(main, /"image\/webp"/);
-  assert.match(main, /PORTRAIT_OUTPUT_MAX_BYTES = 3 \* 1024 \* 1024/);
+  assert.match(main, /function ensurePortraitImageModule\(\)/);
+  assert.match(main, /portraitFileToWebpBase64\(file\)/);
+  assert.match(portraitImage, /canvas\.toBlob/);
+  assert.match(portraitImage, /"image\/webp"/);
+  assert.match(portraitImage, /PORTRAIT_OUTPUT_MAX_BYTES = 3 \* 1024 \* 1024/);
   assert.doesNotMatch(main, /__atlas_mutation_surface=person-portrait/);
 });
 

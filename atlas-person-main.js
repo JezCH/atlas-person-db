@@ -27,10 +27,9 @@
   let selectedPersonDetail = null;
   let selectedPortrait = null;
   let selectedPortraitSourceCandidates = null;
-  const PORTRAIT_SOURCE_MAX_BYTES = 20 * 1024 * 1024;
-  const PORTRAIT_OUTPUT_MAX_BYTES = 3 * 1024 * 1024;
-  const PORTRAIT_MAX_SIDE = 1600;
+  const PERSON_PORTRAIT_IMAGE_SCRIPT_URL = "./atlas-person-portrait-image.js?v=20260922-image-pipeline-v1";
   const PERSON_EXCEL_EXPORT_SCRIPT_URL = "./atlas-person-excel-export.js?v=20260922-feature-split-v1";
+  let personPortraitImageModulePromise = null;
   let personExcelExportModulePromise = null;
   let excelExportInFlight = false;
 
@@ -710,67 +709,49 @@
     return outcome?.transaction_failure || fallback;
   }
 
-  function imageElementFromFile(file) {
-    return new Promise((resolve, reject) => {
-      const objectUrl = URL.createObjectURL(file);
-      const image = new Image();
-      image.decoding = "async";
-      image.onload = () => resolve({ image, release:() => URL.revokeObjectURL(objectUrl) });
-      image.onerror = () => {
-        URL.revokeObjectURL(objectUrl);
-        reject(new Error("이미지를 읽을 수 없습니다."));
-      };
-      image.src = objectUrl;
-    });
-  }
-
-  function canvasWebpBlob(canvas, quality) {
-    return new Promise((resolve, reject) => {
-      canvas.toBlob((blob) => {
-        if (!blob || blob.type !== "image/webp") return reject(new Error("이 브라우저는 WebP 변환을 지원하지 않습니다."));
-        resolve(blob);
-      }, "image/webp", quality);
-    });
-  }
-
-  async function blobBase64(blob) {
-    const bytes = new Uint8Array(await blob.arrayBuffer());
-    let binary = "";
-    const chunkSize = 0x8000;
-    for (let offset = 0; offset < bytes.length; offset += chunkSize) {
-      binary += String.fromCharCode(...bytes.subarray(offset, Math.min(bytes.length, offset + chunkSize)));
+  function ensurePortraitImageModule() {
+    if (window.ATLAS_PERSON_PORTRAIT_IMAGE?.portraitFileToWebpBase64) {
+      return Promise.resolve(window.ATLAS_PERSON_PORTRAIT_IMAGE);
     }
-    return btoa(binary);
+    if (personPortraitImageModulePromise) return personPortraitImageModulePromise;
+
+    personPortraitImageModulePromise = new Promise((resolve, reject) => {
+      let script = document.querySelector('script[data-atlas-person-portrait-image="true"]');
+      const created = !script;
+      if (!script) {
+        script = document.createElement("script");
+        script.src = PERSON_PORTRAIT_IMAGE_SCRIPT_URL;
+        script.async = true;
+        script.dataset.atlasPersonPortraitImage = "true";
+      }
+
+      const finish = () => {
+        if (window.ATLAS_PERSON_PORTRAIT_IMAGE?.portraitFileToWebpBase64) {
+          resolve(window.ATLAS_PERSON_PORTRAIT_IMAGE);
+          return;
+        }
+        script?.remove?.();
+        reject(new Error("ATLAS_PERSON_PORTRAIT_IMAGE_MODULE_MISSING"));
+      };
+      const fail = () => {
+        script?.remove?.();
+        reject(new Error("ATLAS_PERSON_PORTRAIT_IMAGE_MODULE_LOAD_FAILED"));
+      };
+
+      script.addEventListener("load", finish, { once:true });
+      script.addEventListener("error", fail, { once:true });
+      if (created) document.head.append(script);
+    }).catch((error) => {
+      personPortraitImageModulePromise = null;
+      throw error;
+    });
+
+    return personPortraitImageModulePromise;
   }
 
   async function portraitFileToWebpBase64(file) {
-    if (!file || !String(file.type || "").startsWith("image/")) throw new Error("이미지 파일을 선택하세요.");
-    if (Number(file.size || 0) > PORTRAIT_SOURCE_MAX_BYTES) throw new Error("원본 이미지는 20MB 이하만 업로드할 수 있습니다.");
-    const loaded = await imageElementFromFile(file);
-    try {
-      const sourceWidth = Number(loaded.image.naturalWidth || loaded.image.width || 0);
-      const sourceHeight = Number(loaded.image.naturalHeight || loaded.image.height || 0);
-      if (!(sourceWidth > 0 && sourceHeight > 0)) throw new Error("이미지 크기를 확인할 수 없습니다.");
-
-      let scale = Math.min(1, PORTRAIT_MAX_SIDE / Math.max(sourceWidth, sourceHeight));
-      const qualities = [0.9, 0.78, 0.66];
-      for (let pass = 0; pass < 4; pass += 1) {
-        const canvas = document.createElement("canvas");
-        canvas.width = Math.max(1, Math.round(sourceWidth * scale));
-        canvas.height = Math.max(1, Math.round(sourceHeight * scale));
-        const context = canvas.getContext("2d");
-        if (!context) throw new Error("이미지 변환 컨텍스트를 만들 수 없습니다.");
-        context.drawImage(loaded.image, 0, 0, canvas.width, canvas.height);
-        for (const quality of qualities) {
-          const blob = await canvasWebpBlob(canvas, quality);
-          if (blob.size <= PORTRAIT_OUTPUT_MAX_BYTES) return blobBase64(blob);
-        }
-        scale *= 0.8;
-      }
-      throw new Error("WebP 변환 후에도 3MB를 초과합니다. 더 작은 이미지를 사용하세요.");
-    } finally {
-      loaded.release();
-    }
+    const converter = await ensurePortraitImageModule();
+    return converter.portraitFileToWebpBase64(file);
   }
 
   function preservedPortraitSources() {
