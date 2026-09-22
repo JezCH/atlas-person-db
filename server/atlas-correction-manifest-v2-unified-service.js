@@ -1,6 +1,6 @@
 "use strict";
 
-const { manifestHash, correctionLedgerExists, readLedger } = require("./atlas-correction-manifest-service.js");
+const { manifestHash, correctionLedgerExists, readLedger } = require("./atlas-correction-ledger-service.js");
 const { sha256 } = require("./atlas-correction-v2-manifest-synthesizer.js");
 const core = require("./atlas-correction-manifest-v2-service.js");
 const assertions = require("./atlas-correction-v2-stage2-assertions.js");
