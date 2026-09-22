@@ -70,7 +70,8 @@ test("portrait renderer preserves upload, metadata, and provenance controls",()=
   assert.match(out,/data-person-portrait-source-remove/);
   assert.match(out,/Source &lt;A&gt;/);
   assert.match(out,/Source B/);
-  assert.doesNotMatch(out,/Duplicate A/);
+  assert.match(out,/Duplicate A/);
+  assert.equal((out.match(/<option value="source-a">/g) || []).length,1);
 });
 
 test("source-candidate state keeps the load button distinct from a loaded empty result",()=>{
