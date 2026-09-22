@@ -6,6 +6,7 @@ const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
 const portraitImage = fs.readFileSync(new URL('../atlas-person-portrait-image.js', import.meta.url), 'utf8');
 const portraitView = fs.readFileSync(new URL('../atlas-person-portrait-view.js', import.meta.url), 'utf8');
+const portraitController = fs.readFileSync(new URL('../atlas-person-portrait-controller.js', import.meta.url), 'utf8');
 const reader = fs.readFileSync(new URL('../atlas-person-browser-reader.js', import.meta.url), 'utf8');
 const nav = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
@@ -19,11 +20,13 @@ test('Main loads the Person reader and shared data store before the Person-cente
   const readerIndex = html.indexOf('atlas-person-browser-reader.js');
   const storeIndex = html.indexOf('atlas-client-data-store.js');
   const portraitViewIndex = html.indexOf('atlas-person-portrait-view.js');
+  const portraitControllerIndex = html.indexOf('atlas-person-portrait-controller.js');
   const mainIndex = html.indexOf('atlas-person-main.js');
   assert.ok(readerIndex >= 0);
   assert.ok(storeIndex > readerIndex);
   assert.ok(portraitViewIndex > storeIndex);
-  assert.ok(mainIndex > portraitViewIndex);
+  assert.ok(portraitControllerIndex > portraitViewIndex);
+  assert.ok(mainIndex > portraitControllerIndex);
   assert.match(main, /ATLAS_PERSON_BROWSER_READER/);
   assert.match(main, /ATLAS_CLIENT_DATA_STORE/);
 });
@@ -126,8 +129,8 @@ test('Person detail binds canonical portrait read and authoring controls without
   assert.match(portraitView, /name="portrait_file" accept="image\/\*"/);
   assert.match(portraitView, /name="portrait_kind"/);
   assert.match(portraitView, /name="evidence_level"/);
-  assert.match(main, /profileWriter\.setPersonPortrait/);
-  assert.match(main, /profileWriter\.deletePersonPortrait/);
+  assert.match(main, /portraitController\.setPortrait/);
+  assert.match(main, /portraitController\.deletePortrait/);
   assert.match(main, /function ensurePortraitImageModule\(\)/);
   assert.match(main, /portraitFileToWebpBase64\(file\)/);
   assert.match(portraitImage, /canvas\.toBlob/);
@@ -136,11 +139,17 @@ test('Person detail binds canonical portrait read and authoring controls without
   assert.doesNotMatch(main, /__atlas_mutation_surface=person-portrait/);
 });
 
-test('portrait authoring controls preserve current provenance links during image replacement', () => {
-  assert.match(main, /function preservedPortraitSources\(\)/);
-  assert.match(main, /source_id:String\(row\?\.source_id \|\| ""\)\.trim\(\)/);
-  assert.match(main, /evidence_role:String\(row\?\.evidence_role \|\| ""\)\.trim\(\)/);
-  assert.match(main, /sources:preservedPortraitSources\(\)/);
+test('portrait authoring delegates provenance-preserving writes to the controller', () => {
+  assert.match(main, /ATLAS_PERSON_PORTRAIT_CONTROLLER/);
+  assert.match(main, /portraitController\.patchMetadata/);
+  assert.match(main, /portraitController\.addSource/);
+  assert.match(main, /portraitController\.editSource/);
+  assert.match(main, /portraitController\.removeSource/);
+  assert.doesNotMatch(main, /function preservedPortraitSources\(\)/);
+  assert.match(portraitController, /function normalizePortraitSources\(portrait\)/);
+  assert.match(portraitController, /source_id:String\(row\?\.source_id \|\| ""\)\.trim\(\)/);
+  assert.match(portraitController, /evidence_role:String\(row\?\.evidence_role \|\| ""\)\.trim\(\)/);
+  assert.match(portraitController, /sources:preservedPortraitSources\(\)/);
 });
 
 test('portrait authoring controls have responsive form styling', () => {
