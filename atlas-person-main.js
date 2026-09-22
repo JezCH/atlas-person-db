@@ -6,11 +6,12 @@
   const domainRegistry = window.ATLAS_PERSON_DOMAIN_REGISTRY;
   const externalReferences = window.ATLAS_PERSON_EXTERNAL_REFERENCES;
   const portraitView = window.ATLAS_PERSON_PORTRAIT_VIEW;
+  const portraitControllerFactory = window.ATLAS_PERSON_PORTRAIT_CONTROLLER;
   const profileWriter = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
 
-  if (!reader || !dataStore || !portraitView?.createRenderer || !mainArea || !topbar) {
+  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitControllerFactory?.createController || !mainArea || !topbar) {
     console.error("ATLAS Person Main could not initialize required dependencies");
     return;
   }
@@ -44,6 +45,12 @@
   }
 
   const portraitRenderer = portraitView.createRenderer({ escapeHtml });
+  const portraitController = portraitControllerFactory.createController({
+    writer:profileWriter,
+    getSelectedPersonId:() => selectedPersonId,
+    getSelectedPortrait:() => selectedPortrait,
+    outcomeError
+  });
 
   function safeHttpUrl(value) {
     const raw = String(value || "").trim();
@@ -647,28 +654,12 @@
     return converter.portraitFileToWebpBase64(file);
   }
 
-  function preservedPortraitSources() {
-    if (!Array.isArray(selectedPortrait?.sources)) return [];
-    return selectedPortrait.sources
-      .map((row) => ({
-        source_id:String(row?.source_id || "").trim(),
-        evidence_role:String(row?.evidence_role || "").trim()
-      }))
-      .filter((row) => row.source_id && row.evidence_role);
-  }
-
   async function loadPortraitSourceCandidates(personId) {
     const id = String(personId || "").trim();
     if (!id || id !== selectedPersonId || !selectedPortrait || !selectedPersonDetail) return;
-    if (!profileWriter?.readPersonPortraitSourceCandidates) {
-      return showOperationalMessage("초상 근거 후보 조회 서비스를 사용할 수 없습니다.");
-    }
     try {
-      const outcome = await profileWriter.readPersonPortraitSourceCandidates(id);
-      if (outcome?.committed !== true || !Array.isArray(outcome?.candidates)) {
-        return showOperationalMessage(outcomeError(outcome, "Person 출처 조회에 실패했습니다."));
-      }
-      selectedPortraitSourceCandidates = outcome.candidates.slice();
+      const { candidates } = await portraitController.loadSourceCandidates(id);
+      selectedPortraitSourceCandidates = candidates;
       renderDetail(selectedPersonDetail, { portrait:selectedPortrait });
       showOperationalMessage(`초상 근거 후보 ${selectedPortraitSourceCandidates.length}건을 불러왔습니다.`);
     } catch (error) {
@@ -676,29 +667,8 @@
     }
   }
 
-  async function patchPortraitMetadata(personId, {
-    portraitKind = selectedPortrait?.portrait_kind,
-    evidenceLevel = selectedPortrait?.evidence_level,
-    sources = preservedPortraitSources(),
-    successMessage = "초상 메타데이터를 저장했습니다."
-  } = {}) {
-    const id = String(personId || "").trim();
-    if (!id || id !== selectedPersonId || !selectedPortrait) {
-      return showOperationalMessage("현재 초상화 상태를 다시 불러온 뒤 시도하세요.");
-    }
-    if (!profileWriter?.updatePersonPortraitMetadata) {
-      return showOperationalMessage("초상 근거 편집 서비스를 사용할 수 없습니다.");
-    }
-    const outcome = await profileWriter.updatePersonPortraitMetadata({
-      person_id:id,
-      portrait_kind:String(portraitKind || "").trim(),
-      evidence_level:String(evidenceLevel || "").trim(),
-      sources
-    });
-    if (outcome?.committed !== true) {
-      return showOperationalMessage(outcomeError(outcome, "초상 근거 저장에 실패했습니다."));
-    }
-    await selectPerson(id, { force:true });
+  async function refreshPortraitAfterWrite(personId, successMessage) {
+    await selectPerson(personId, { force:true });
     showOperationalMessage(successMessage);
   }
 
@@ -716,38 +686,27 @@
     controls.forEach((control) => { control.disabled = true; });
     try {
       if (operation === "metadata") {
-        return await patchPortraitMetadata(personId, {
+        await portraitController.patchMetadata(personId, {
           portraitKind:form.elements.portrait_kind?.value,
-          evidenceLevel:form.elements.evidence_level?.value,
-          successMessage:"초상 유형과 근거 수준을 저장했습니다."
+          evidenceLevel:form.elements.evidence_level?.value
         });
+        return await refreshPortraitAfterWrite(personId, "초상 유형과 근거 수준을 저장했습니다.");
       }
 
-      const links = preservedPortraitSources();
       if (operation === "source-add") {
         const sourceId = String(form.elements.source_id?.value || "").trim();
         const evidenceRole = String(form.elements.evidence_role?.value || "").trim();
         if (!sourceId || !evidenceRole) return showOperationalMessage("연결할 출처와 근거 역할을 선택하세요.");
-        links.push({ source_id:sourceId, evidence_role:evidenceRole });
-        return await patchPortraitMetadata(personId, {
-          sources:links,
-          successMessage:"초상 근거 출처를 연결했습니다."
-        });
+        await portraitController.addSource(personId, sourceId, evidenceRole);
+        return await refreshPortraitAfterWrite(personId, "초상 근거 출처를 연결했습니다.");
       }
 
       const sourceId = String(form.dataset.sourceId || "").trim();
       const originalRole = String(form.dataset.originalRole || "").trim();
       const evidenceRole = String(form.elements.evidence_role?.value || "").trim();
       if (!sourceId || !originalRole || !evidenceRole) return showOperationalMessage("초상 근거 연결 정보가 올바르지 않습니다.");
-      const nextLinks = links.map((row) =>
-        row.source_id === sourceId && row.evidence_role === originalRole
-          ? { source_id:sourceId, evidence_role:evidenceRole }
-          : row
-      );
-      return await patchPortraitMetadata(personId, {
-        sources:nextLinks,
-        successMessage:"초상 근거 역할을 변경했습니다."
-      });
+      await portraitController.editSource(personId, sourceId, originalRole, evidenceRole);
+      return await refreshPortraitAfterWrite(personId, "초상 근거 역할을 변경했습니다.");
     } catch (error) {
       showOperationalMessage(error?.message || "초상 근거 저장에 실패했습니다.");
     } finally {
@@ -762,13 +721,8 @@
     if (!id || id !== selectedPersonId || !selectedPortrait || !sid || !role) return;
     if (!window.confirm("이 출처와 초상화의 근거 연결을 해제할까요?")) return;
     try {
-      const nextLinks = preservedPortraitSources().filter((row) =>
-        !(row.source_id === sid && row.evidence_role === role)
-      );
-      await patchPortraitMetadata(id, {
-        sources:nextLinks,
-        successMessage:"초상 근거 연결을 해제했습니다."
-      });
+      await portraitController.removeSource(id, sid, role);
+      await refreshPortraitAfterWrite(id, "초상 근거 연결을 해제했습니다.");
     } catch (error) {
       showOperationalMessage(error?.message || "초상 근거 연결 해제에 실패했습니다.");
     }
@@ -778,7 +732,6 @@
     const form = event.target.closest?.("form[data-person-portrait-operation='upload'][data-person-id]");
     if (!form) return;
     event.preventDefault();
-    if (!profileWriter?.setPersonPortrait) return showOperationalMessage("초상화 저장 서비스를 사용할 수 없습니다.");
     const personId = String(form.dataset.personId || "").trim();
     if (!personId || selectedPersonId !== personId) return showOperationalMessage("현재 선택한 인물과 초상화 편집 대상이 다릅니다.");
     const file = form.elements.portrait_file?.files?.[0] || null;
@@ -792,16 +745,12 @@
     try {
       showOperationalMessage("초상 이미지를 WebP로 변환 중입니다.");
       const imageBase64 = await portraitFileToWebpBase64(file);
-      const outcome = await profileWriter.setPersonPortrait({
-        person_id:personId,
-        image_base64:imageBase64,
-        portrait_kind:portraitKind,
-        evidence_level:evidenceLevel,
-        sources:preservedPortraitSources()
+      const outcome = await portraitController.setPortrait({
+        personId,
+        imageBase64,
+        portraitKind,
+        evidenceLevel
       });
-      if (outcome?.committed !== true) {
-        return showOperationalMessage(outcomeError(outcome, "초상화 저장에 실패했습니다."));
-      }
       await selectPerson(personId, { force:true });
       if (outcome?.replaced_asset_cleanup?.ok === false) {
         showOperationalMessage("초상화는 교체됐지만 이전 저장 파일 정리에 실패했습니다.");
@@ -818,11 +767,9 @@
   async function deletePersonPortrait(personId) {
     const id = String(personId || "").trim();
     if (!id || id !== selectedPersonId) return;
-    if (!profileWriter?.deletePersonPortrait) return showOperationalMessage("초상화 삭제 서비스를 사용할 수 없습니다.");
     if (!window.confirm("이 인물의 초상화를 삭제할까요?")) return;
     try {
-      const outcome = await profileWriter.deletePersonPortrait(id);
-      if (outcome?.committed !== true) return showOperationalMessage(outcomeError(outcome, "초상화 삭제에 실패했습니다."));
+      const outcome = await portraitController.deletePortrait(id);
       await selectPerson(id, { force:true });
       if (outcome?.storage_cleanup?.ok === false) {
         showOperationalMessage("초상화 DB 연결은 삭제됐지만 저장 파일 정리에 실패했습니다.");

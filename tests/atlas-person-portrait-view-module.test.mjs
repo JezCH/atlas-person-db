@@ -24,9 +24,9 @@ function renderer() {
 
 test("portrait view module loads before Person Main and is an explicit required dependency",()=>{
   const viewAsset="atlas-person-portrait-view.js?v=20260922-portrait-view-v1";
-  const mainAsset="atlas-person-main.js?v=20260922-portrait-view-split-v1";
+  const mainAsset="atlas-person-main.js?v=20260922-portrait-controller-split-v1";
   assert.match(html,/atlas-person-portrait-view\.js\?v=20260922-portrait-view-v1/);
-  assert.match(html,/atlas-person-main\.js\?v=20260922-portrait-view-split-v1/);
+  assert.match(html,/atlas-person-main\.js\?v=20260922-portrait-controller-split-v1/);
   assert.ok(html.indexOf(viewAsset) < html.indexOf(mainAsset));
   assert.match(main,/const portraitView = window\.ATLAS_PERSON_PORTRAIT_VIEW/);
   assert.match(main,/!portraitView\?\.createRenderer/);
