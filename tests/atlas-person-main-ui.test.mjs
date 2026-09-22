@@ -6,6 +6,7 @@ const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
 const portraitImage = fs.readFileSync(new URL('../atlas-person-portrait-image.js', import.meta.url), 'utf8');
 const portraitView = fs.readFileSync(new URL('../atlas-person-portrait-view.js', import.meta.url), 'utf8');
+const portraitSourceLinks = fs.readFileSync(new URL('../atlas-person-portrait-source-links.js', import.meta.url), 'utf8');
 const reader = fs.readFileSync(new URL('../atlas-person-browser-reader.js', import.meta.url), 'utf8');
 const nav = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
@@ -19,11 +20,13 @@ test('Main loads the Person reader and shared data store before the Person-cente
   const readerIndex = html.indexOf('atlas-person-browser-reader.js');
   const storeIndex = html.indexOf('atlas-client-data-store.js');
   const portraitViewIndex = html.indexOf('atlas-person-portrait-view.js');
+  const portraitSourceLinksIndex = html.indexOf('atlas-person-portrait-source-links.js');
   const mainIndex = html.indexOf('atlas-person-main.js');
   assert.ok(readerIndex >= 0);
   assert.ok(storeIndex > readerIndex);
   assert.ok(portraitViewIndex > storeIndex);
-  assert.ok(mainIndex > portraitViewIndex);
+  assert.ok(portraitSourceLinksIndex > portraitViewIndex);
+  assert.ok(mainIndex > portraitSourceLinksIndex);
   assert.match(main, /ATLAS_PERSON_BROWSER_READER/);
   assert.match(main, /ATLAS_CLIENT_DATA_STORE/);
 });
@@ -136,11 +139,14 @@ test('Person detail binds canonical portrait read and authoring controls without
   assert.doesNotMatch(main, /__atlas_mutation_surface=person-portrait/);
 });
 
-test('portrait authoring controls preserve current provenance links during image replacement', () => {
-  assert.match(main, /function preservedPortraitSources\(\)/);
-  assert.match(main, /source_id:String\(row\?\.source_id \|\| ""\)\.trim\(\)/);
-  assert.match(main, /evidence_role:String\(row\?\.evidence_role \|\| ""\)\.trim\(\)/);
-  assert.match(main, /sources:preservedPortraitSources\(\)/);
+test('portrait authoring controls delegate provenance link policy without duplicating normalization logic', () => {
+  assert.match(main, /ATLAS_PERSON_PORTRAIT_SOURCE_LINKS/);
+  assert.match(main, /portraitSourceLinks\.preserve\(selectedPortrait\)/);
+  assert.match(main, /portraitSourceLinks\.add\(links,\{ sourceId,evidenceRole \}\)/);
+  assert.match(main, /portraitSourceLinks\.updateRole\(links,\{ sourceId,originalRole,evidenceRole \}\)/);
+  assert.match(main, /portraitSourceLinks\.remove\(/);
+  assert.doesNotMatch(main, /function preservedPortraitSources\(\)/);
+  assert.match(portraitSourceLinks, /function normalizeLink\(row\)/);
 });
 
 test('portrait authoring controls have responsive form styling', () => {
