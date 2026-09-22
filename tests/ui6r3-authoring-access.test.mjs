@@ -3,6 +3,7 @@ import test from 'node:test';
 import fs from 'node:fs';
 
 const mainSource = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
+const profileEditorSource = fs.readFileSync(new URL('../atlas-person-profile-editor.js', import.meta.url), 'utf8');
 const mainCss = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
 const eraSource = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
@@ -17,10 +18,12 @@ test('Person Main exposes only current supported operations before the Person li
   assert.ok(toolbarPosition >= 0 && groupPosition > toolbarPosition);
 });
 
-test('Person Main directly owns supported Person profile and Activity delete mutations', () => {
+test('current Person surface delegates profile writes while Main retains Activity delete', () => {
   assert.match(mainSource, /ATLAS_SERVER_WRITE_ADAPTER/);
-  assert.match(mainSource, /setPersonKoreanName/);
-  assert.match(mainSource, /setPersonExternalReference/);
+  assert.match(mainSource, /ATLAS_PERSON_PROFILE_EDITOR/);
+  assert.doesNotMatch(mainSource, /profileWriter\.(?:setPersonKoreanName|setPersonExternalReference)/);
+  assert.match(profileEditorSource, /writer\.setPersonKoreanName/);
+  assert.match(profileEditorSource, /writer\.setPersonExternalReference/);
   assert.match(mainSource, /profileWriter\.deleteActivity\(activityId\)/);
   assert.doesNotMatch(mainSource, /createActivity\(|updateActivity\(|importActivities\(/);
 });
