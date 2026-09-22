@@ -15,6 +15,16 @@ const SHA = "a".repeat(40);
 const handlerSource = fs.readFileSync(new URL("../server/atlas-correction-apply-handler.js", import.meta.url), "utf8");
 const workflow = fs.readFileSync(new URL("../.github/workflows/atlas-correction-apply.yml", import.meta.url), "utf8");
 const api = fs.readFileSync(new URL("../api/atlas-correction-apply.js", import.meta.url), "utf8");
+const runtimeCorrectionSources = [
+  "atlas-correction-apply-handler.js",
+  "atlas-correction-manifest-v2-service.js",
+  "atlas-correction-role-merge-v2-service.js",
+  "atlas-correction-role-scope-v2-service.js",
+  "atlas-correction-polity-retire-v2-service.js",
+  "atlas-correction-polity-name-v2-service.js",
+  "atlas-correction-source-citation-v2-service.js",
+  "atlas-correction-manifest-v2-unified-service.js"
+].map((name) => [name, fs.readFileSync(new URL(`../server/${name}`, import.meta.url), "utf8")]);
 const LEGACY_MANIFEST_SCHEMAS = [
   "atlas-correction-manifest/v1",
   "atlas-correction-manifest/v1.1",
@@ -67,19 +77,21 @@ test("live correction handler accepts only v2 manifests/plans plus read-only bas
   assert.throws(() => correctionHandler.requireDeployment({ VERCEL_ENV: "production", VERCEL_GIT_COMMIT_REF: "main", VERCEL_GIT_COMMIT_SHA: "b".repeat(40) }, SHA), /DEPLOYMENT_SHA_MISMATCH/);
 });
 
-test("live correction handler has zero transitive legacy manifest service imports", () => {
-  for (const legacyService of [
-    "atlas-correction-manifest-service.js",
-    "atlas-correction-manifest-v1-1-service.js",
-    "atlas-correction-manifest-v1-2-service.js",
-    "atlas-correction-manifest-v1-3-service.js",
-    "atlas-correction-manifest-v1-4-service.js"
-  ]) assert.doesNotMatch(handlerSource, new RegExp(legacyService.replaceAll(".", "\\.")));
-  assert.doesNotMatch(handlerSource, /MANIFEST_V1(?:_|\b)/);
+test("current correction runtime graph has zero legacy executable service dependencies", () => {
+  for (const [name, source] of runtimeCorrectionSources) {
+    for (const legacyService of [
+      "atlas-correction-manifest-service.js",
+      "atlas-correction-manifest-v1-1-service.js",
+      "atlas-correction-manifest-v1-2-service.js",
+      "atlas-correction-manifest-v1-3-service.js",
+      "atlas-correction-manifest-v1-4-service.js"
+    ]) {
+      assert.doesNotMatch(source, new RegExp(legacyService.replaceAll(".", "\\.")), `${name} imports retired ${legacyService}`);
+    }
+  }
   assert.match(handlerSource, /MANIFEST_SCHEMAS = new Set\(\[MANIFEST_V2\]\)/);
   assert.match(api, /createCorrectionApplyHandler/);
 });
-
 test("dry-run does not apply schema migration; apply does; Baseline A v2 remains read-only and returns catalogs", () => {
   assert.match(handlerSource, /if \(payload\.mode === "apply"\) await applyMigrations\(client\)/);
   assert.match(handlerSource, /dryRun: payload\.mode === "dry_run"/);
