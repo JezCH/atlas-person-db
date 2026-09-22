@@ -7,11 +7,12 @@
   const externalReferences = window.ATLAS_PERSON_EXTERNAL_REFERENCES;
   const portraitView = window.ATLAS_PERSON_PORTRAIT_VIEW;
   const portraitControllerFactory = window.ATLAS_PERSON_PORTRAIT_CONTROLLER;
+  const profileEditorFactory = window.ATLAS_PERSON_PROFILE_EDITOR;
   const profileWriter = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
 
-  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitControllerFactory?.createController || !mainArea || !topbar) {
+  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitControllerFactory?.createController || !profileEditorFactory?.createEditor || !mainArea || !topbar) {
     console.error("ATLAS Person Main could not initialize required dependencies");
     return;
   }
@@ -49,6 +50,11 @@
     writer:profileWriter,
     getSelectedPersonId:() => selectedPersonId,
     getSelectedPortrait:() => selectedPortrait,
+    outcomeError
+  });
+  const profileEditor = profileEditorFactory.createEditor({
+    escapeHtml,
+    writer:profileWriter,
     outcomeError
   });
 
@@ -457,25 +463,9 @@
   }
 
   function profileEditorHtml(person, portraitResult = null) {
-    const personId = escapeHtml(person?.id || "");
-    const koreanName = escapeHtml(person?.preferred_name_ko || "");
-    const namuwiki = person?.external_references?.namuwiki;
-    const namuwikiValue = namuwiki?.status === "linked" ? escapeHtml(namuwiki.url || "") : "";
-    const namuwikiState = namuwiki?.status === "linked"
-      ? `현재 연결: ${escapeHtml(namuwiki.document_title || namuwiki.url || "나무위키")}`
-      : namuwiki?.status === "not_found" ? "현재 연결된 나무위키 문서 없음" : "미등록";
-    return `<section class="person-detail-section person-profile-editor"><div class="person-detail-section-head"><h3>표시 정보 수정</h3><span>Person 전체 화면에 공통 반영</span></div>
-      <form class="person-profile-form" data-person-profile-operation="set_person_korean_name" data-person-id="${personId}">
-        <label><span>한국어 이름</span><input type="text" name="korean_name" value="${koreanName}" maxlength="160" autocomplete="off" placeholder="한국어 표시 이름" required></label>
-        <button class="mini-btn edit" type="submit">이름 저장</button>
-      </form>
-      <form class="person-profile-form" data-person-profile-operation="set_person_external_reference" data-person-id="${personId}">
-        <label><span>나무위키 문서</span><input type="text" name="namuwiki_reference" value="${namuwikiValue}" autocomplete="off" inputmode="url" placeholder="https://namu.wiki/w/... 또는 문서명" required></label>
-        <button class="mini-btn edit" type="submit">등록</button>
-      </form>
-      <p class="person-profile-help">${namuwikiState} · 저장 시 관리자 인증 후 authoritative Person 데이터에 기록됩니다.</p>
-      ${portraitEditorHtml(person, portraitResult)}
-    </section>`;
+    return profileEditor.profileEditorHtml(person, {
+      portraitHtml:portraitEditorHtml(person, portraitResult)
+    });
   }
 
   function activityHtml(activity) {
@@ -785,28 +775,20 @@
     const form = event.target.closest?.("form[data-person-profile-operation][data-person-id]");
     if (!form) return;
     event.preventDefault();
-    if (!profileWriter) return showOperationalMessage("Person 편집 서비스가 초기화되지 않았습니다.");
-    const operation = form.dataset.personProfileOperation;
-    const personId = form.dataset.personId;
+    const operation = String(form.dataset.personProfileOperation || "");
+    const personId = String(form.dataset.personId || "").trim();
     const button = form.querySelector('button[type="submit"]');
     if (button) button.disabled = true;
     try {
-      let outcome;
-      if (operation === "set_person_korean_name") {
-        const value = form.elements.korean_name?.value || "";
-        outcome = await profileWriter.setPersonKoreanName(personId, value);
-      } else if (operation === "set_person_external_reference") {
-        const value = form.elements.namuwiki_reference?.value || "";
-        outcome = await profileWriter.setPersonExternalReference(personId, "namuwiki", value);
-      } else {
-        return showOperationalMessage("지원하지 않는 Person 편집 작업입니다.");
-      }
-      if (outcome?.committed !== true) {
-        return showOperationalMessage(outcomeError(outcome, "Person 정보 저장에 실패했습니다."));
-      }
+      const result = await profileEditor.dispatchWrite({
+        operation,
+        personId,
+        koreanName:form.elements.korean_name?.value || "",
+        namuwikiReference:form.elements.namuwiki_reference?.value || ""
+      });
       await loadPersons({ keepSelection:true, force:true });
-      if (operation === "set_person_external_reference") await externalReferences?.reload?.();
-      showOperationalMessage(operation === "set_person_korean_name" ? "한국어 이름을 전체 화면에 반영했습니다." : "나무위키 문서를 연결했습니다.");
+      if (result.reloadExternalReferences) await externalReferences?.reload?.();
+      showOperationalMessage(result.successMessage);
     } catch (error) {
       showOperationalMessage(error?.message || "Person 정보 저장에 실패했습니다.");
     } finally {
