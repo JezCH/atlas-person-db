@@ -6,11 +6,12 @@
   const domainRegistry = window.ATLAS_PERSON_DOMAIN_REGISTRY;
   const externalReferences = window.ATLAS_PERSON_EXTERNAL_REFERENCES;
   const portraitView = window.ATLAS_PERSON_PORTRAIT_VIEW;
+  const portraitSourceLinks = window.ATLAS_PERSON_PORTRAIT_SOURCE_LINKS;
   const profileWriter = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
 
-  if (!reader || !dataStore || !portraitView?.createRenderer || !mainArea || !topbar) {
+  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitSourceLinks?.preserve || !mainArea || !topbar) {
     console.error("ATLAS Person Main could not initialize required dependencies");
     return;
   }
@@ -647,16 +648,6 @@
     return converter.portraitFileToWebpBase64(file);
   }
 
-  function preservedPortraitSources() {
-    if (!Array.isArray(selectedPortrait?.sources)) return [];
-    return selectedPortrait.sources
-      .map((row) => ({
-        source_id:String(row?.source_id || "").trim(),
-        evidence_role:String(row?.evidence_role || "").trim()
-      }))
-      .filter((row) => row.source_id && row.evidence_role);
-  }
-
   async function loadPortraitSourceCandidates(personId) {
     const id = String(personId || "").trim();
     if (!id || id !== selectedPersonId || !selectedPortrait || !selectedPersonDetail) return;
@@ -679,7 +670,7 @@
   async function patchPortraitMetadata(personId, {
     portraitKind = selectedPortrait?.portrait_kind,
     evidenceLevel = selectedPortrait?.evidence_level,
-    sources = preservedPortraitSources(),
+    sources = portraitSourceLinks.preserve(selectedPortrait),
     successMessage = "초상 메타데이터를 저장했습니다."
   } = {}) {
     const id = String(personId || "").trim();
@@ -723,14 +714,14 @@
         });
       }
 
-      const links = preservedPortraitSources();
+      const links = portraitSourceLinks.preserve(selectedPortrait);
       if (operation === "source-add") {
         const sourceId = String(form.elements.source_id?.value || "").trim();
         const evidenceRole = String(form.elements.evidence_role?.value || "").trim();
         if (!sourceId || !evidenceRole) return showOperationalMessage("연결할 출처와 근거 역할을 선택하세요.");
-        links.push({ source_id:sourceId, evidence_role:evidenceRole });
+        const nextLinks = portraitSourceLinks.add(links,{ sourceId,evidenceRole });
         return await patchPortraitMetadata(personId, {
-          sources:links,
+          sources:nextLinks,
           successMessage:"초상 근거 출처를 연결했습니다."
         });
       }
@@ -739,11 +730,7 @@
       const originalRole = String(form.dataset.originalRole || "").trim();
       const evidenceRole = String(form.elements.evidence_role?.value || "").trim();
       if (!sourceId || !originalRole || !evidenceRole) return showOperationalMessage("초상 근거 연결 정보가 올바르지 않습니다.");
-      const nextLinks = links.map((row) =>
-        row.source_id === sourceId && row.evidence_role === originalRole
-          ? { source_id:sourceId, evidence_role:evidenceRole }
-          : row
-      );
+      const nextLinks = portraitSourceLinks.updateRole(links,{ sourceId,originalRole,evidenceRole });
       return await patchPortraitMetadata(personId, {
         sources:nextLinks,
         successMessage:"초상 근거 역할을 변경했습니다."
@@ -762,8 +749,9 @@
     if (!id || id !== selectedPersonId || !selectedPortrait || !sid || !role) return;
     if (!window.confirm("이 출처와 초상화의 근거 연결을 해제할까요?")) return;
     try {
-      const nextLinks = preservedPortraitSources().filter((row) =>
-        !(row.source_id === sid && row.evidence_role === role)
+      const nextLinks = portraitSourceLinks.remove(
+        portraitSourceLinks.preserve(selectedPortrait),
+        { sourceId:sid, evidenceRole:role }
       );
       await patchPortraitMetadata(id, {
         sources:nextLinks,
@@ -797,7 +785,7 @@
         image_base64:imageBase64,
         portrait_kind:portraitKind,
         evidence_level:evidenceLevel,
-        sources:preservedPortraitSources()
+        sources:portraitSourceLinks.preserve(selectedPortrait)
       });
       if (outcome?.committed !== true) {
         return showOperationalMessage(outcomeError(outcome, "초상화 저장에 실패했습니다."));
