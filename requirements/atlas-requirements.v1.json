@@ -193,8 +193,8 @@
       "status": "COMPLETED",
       "title": "Correction v1 is isolated and dry-run first",
       "evidence_paths": [
-        "server/atlas-correction-manifest-service.js",
-        ".github/workflows/atlas-correction-apply.yml",
+        "corrections/requests/stage2-r0-true-activity-duplicates.json",
+        "docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_EVIDENCE_2026-08-11.md",
         "ARCHITECTURE_INVARIANTS.md"
       ]
     },
@@ -232,8 +232,8 @@
       "status": "COMPLETED",
       "title": "Add bounded correction v1.1 operations",
       "evidence_paths": [
-        "server/atlas-correction-manifest-v1-1-service.js",
-        "corrections/requests/stage2-r1-current-schema-ready-01.json"
+        "corrections/requests/stage2-r1-current-schema-ready-01.json",
+        "corrections/evidence/stage2-r1-current-schema-ready.json"
       ]
     },
     {
