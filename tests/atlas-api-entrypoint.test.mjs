@@ -14,16 +14,20 @@ const mutateApi = fs.readFileSync(new URL('../api/atlas-mutate.js', import.meta.
 const p10ReleaseApi = fs.readFileSync(new URL('../api/atlas-p10-revalidation-release.js', import.meta.url), 'utf8');
 const readApi = fs.readFileSync(new URL('../api/atlas-read.js', import.meta.url), 'utf8');
 const sessionApi = fs.readFileSync(new URL('../api/atlas-session.js', import.meta.url), 'utf8');
-const stage2SchemaReleaseApi = fs.readFileSync(new URL('../api/atlas-stage2-schema-release.js', import.meta.url), 'utf8');
-const stage2Train2ReleaseApi = fs.readFileSync(new URL('../api/atlas-stage2-train2-release.js', import.meta.url), 'utf8');
 const postgresClient = fs.readFileSync(new URL('../server/atlas-postgres-client.js', import.meta.url), 'utf8');
 const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 const vercel = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
 const index = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const admin = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8');
 
-test('Vercel exposes no more than twelve physical ATLAS API functions on Hobby', () => {
-  assert.deepEqual(apiFiles, [
+test('Vercel physical ATLAS API stays within budget and completed Stage2 release endpoints remain retired', () => {
+  assert.ok(apiFiles.length <= 12, `physical API function budget exceeded: ${apiFiles.length}`);
+  for (const retired of [
+    'atlas-stage2-schema-release.js',
+    'atlas-stage2-train2-release.js'
+  ]) assert.equal(apiFiles.includes(retired), false, `retired live endpoint returned: ${retired}`);
+
+  for (const required of [
     'atlas-audit-inventory.js',
     'atlas-authoring-apply.js',
     'atlas-authoring.js',
@@ -33,11 +37,8 @@ test('Vercel exposes no more than twelve physical ATLAS API functions on Hobby',
     'atlas-mutate.js',
     'atlas-p10-revalidation-release.js',
     'atlas-read.js',
-    'atlas-session.js',
-    'atlas-stage2-schema-release.js',
-    'atlas-stage2-train2-release.js'
-  ]);
-  assert.equal(apiFiles.length, 12);
+    'atlas-session.js'
+  ]) assert.equal(apiFiles.includes(required), true, `required current endpoint missing: ${required}`);
 });
 
 test('logical Person, Runtime compile, audit and correction surfaces consolidate onto existing physical functions', () => {
@@ -128,18 +129,6 @@ test('audit inventory and P11 Baseline B share one physical read-only function w
   assert.match(auditInventoryApi, /ATLAS_AUDIT_SURFACE_NOT_FOUND/);
   assert.doesNotMatch(auditInventoryApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
   assert.doesNotMatch(auditInventoryApi, /insert\s+into|\bupdate\b|\bdelete\s+from|\btruncate\b/i);
-});
-
-test('server-only Stage 2 schema release endpoint delegates to its isolated exact-SHA handler', () => {
-  assert.match(stage2SchemaReleaseApi, /atlas-stage2-schema-release-handler\.js/);
-  assert.match(stage2SchemaReleaseApi, /createStage2SchemaReleaseHandler/);
-  assert.doesNotMatch(stage2SchemaReleaseApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
-});
-
-test('server-only Stage 2 Train 2 endpoint delegates to its isolated exact-SHA OIDC handler', () => {
-  assert.match(stage2Train2ReleaseApi, /atlas-stage2-train2-release-handler\.js/);
-  assert.match(stage2Train2ReleaseApi, /createStage2Train2ReleaseHandler/);
-  assert.doesNotMatch(stage2Train2ReleaseApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
 test('server-only P10 release endpoint delegates to its exact-SHA OIDC release handler', () => {

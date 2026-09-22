@@ -5,7 +5,6 @@ import path from "node:path";
 
 const root = process.cwd();
 const readJson = (relativePath) => JSON.parse(fs.readFileSync(path.join(root, relativePath), "utf8"));
-const REQUIRED_INCLUDE_GLOB = "{stage2/**,db/proposals/**}";
 
 function assertExistingRepoPath(relativePath, label) {
   assert.equal(typeof relativePath, "string", `${label} must be a path string`);
@@ -13,17 +12,7 @@ function assertExistingRepoPath(relativePath, label) {
   assert.equal(fs.existsSync(path.join(root, relativePath)), true, `${label} is missing: ${relativePath}`);
 }
 
-test("Stage 2 Production release functions explicitly bundle dynamic release assets", () => {
-  const vercel = readJson("vercel.json");
-  for (const route of [
-    "api/atlas-stage2-schema-release.js",
-    "api/atlas-stage2-train2-release.js"
-  ]) {
-    assert.equal(vercel.functions?.[route]?.includeFiles, REQUIRED_INCLUDE_GLOB);
-  }
-});
-
-test("P5 schema release runtime SQL references exist under the bundled proposal path", () => {
+test("historical P5 schema release evidence retains its six reviewed SQL components", () => {
   const releasePath = "stage2/releases/p5-additive-schema-release.v1.json";
   assertExistingRepoPath(releasePath, "P5 release manifest");
   const release = readJson(releasePath);
@@ -35,7 +24,7 @@ test("P5 schema release runtime SQL references exist under the bundled proposal 
   }
 });
 
-test("Train 2 release selection and prerequisite assets remain inside the bundled Stage 2 tree", () => {
+test("historical Train 2 evidence retains reviewed selection and prerequisite artifacts", () => {
   const releasePath = "stage2/releases/train2-data-p9.v1.json";
   assertExistingRepoPath(releasePath, "Train 2 release manifest");
   const release = readJson(releasePath);
@@ -45,8 +34,6 @@ test("Train 2 release selection and prerequisite assets remain inside the bundle
   assertExistingRepoPath(release.selection.p7_execution_directory, "Train 2 P7 execution directory");
   assert.equal(release.selection?.p7_execution_name_pattern, "p7-*-execution.v1.json");
 
-  const p6Closure = "stage2/integration/p6-effective-prebinding-closure.v1.json";
-  assertExistingRepoPath(p6Closure, "P6 closure prerequisite");
-  const p9Release = "stage2/releases/p9-semantic-key-v2-cutover.v1.json";
-  assertExistingRepoPath(p9Release, "P9 cutover release plan");
+  assertExistingRepoPath("stage2/integration/p6-effective-prebinding-closure.v1.json", "P6 closure prerequisite");
+  assertExistingRepoPath("stage2/releases/p9-semantic-key-v2-cutover.v1.json", "P9 cutover release plan");
 });

@@ -33,33 +33,19 @@ test('v2-authoritative service uses extracted request helpers, not legacy mutati
 
 test('historical C8 workflow manifest remains audit evidence while current workflows stay explicitly bounded', () => {
   assert.ok(Array.isArray(workflowManifest.active_after_c8));
-  const workflows = fs.readdirSync(new URL('../.github/workflows/', import.meta.url))
-    .filter((name) => name.endsWith('.yml') || name.endsWith('.yaml'))
-    .sort();
-  assert.deepEqual(workflows, [
-    'atlas-audit-inventory.yml',
-    'atlas-authoring-apply.yml',
-    'atlas-authoring-schema-bootstrap.yml',
-    'atlas-correction-apply.yml',
-    'atlas-dashboard-production-acceptance.yml',
-    'atlas-human-authoring-operational-parity.yml',
-    'atlas-integrity.yml',
-    'atlas-namuwiki-link.yml',
-    'atlas-p10-person-duplicate-v2-revalidation.yml',
-    'atlas-p10-release-launcher.yml',
-    'atlas-p10-revalidation-release.yml',
-    'atlas-p11-baseline-b-capture.yml',
-    'atlas-p11-baseline-b-readiness.yml',
-    'atlas-p11-semantic-v2-backfill.yml',
-    'atlas-person-domain-apply.yml',
-    'atlas-reviewed-person-merge.yml',
-    'atlas-runtime-compile.yml',
-    'atlas-spacetime-production-visual.yml',
-    'atlas-spatial-candidate-audit.yml',
+  const workflows = new Set(fs.readdirSync(new URL('../.github/workflows/', import.meta.url))
+    .filter((name) => name.endsWith('.yml') || name.endsWith('.yaml')));
+  for (const retired of [
     'atlas-stage2-schema-release.yml',
-    'atlas-stage2-train2-live-parity.yml',
     'atlas-stage2-train2-release.yml'
-  ]);
+  ]) assert.equal(workflows.has(retired), false, `completed migration transport returned: ${retired}`);
+  for (const required of [
+    'atlas-authoring-apply.yml',
+    'atlas-correction-apply.yml',
+    'atlas-integrity.yml',
+    'atlas-p10-revalidation-release.yml',
+    'atlas-p11-baseline-b-capture.yml'
+  ]) assert.equal(workflows.has(required), true, `required current workflow missing: ${required}`);
 
   const correctionWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-correction-apply.yml', import.meta.url), 'utf8');
   assert.match(correctionWorkflow, /^\s*-\s*'corrections\/requests\/\*\.json'\s*$/m);
@@ -125,22 +111,6 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.doesNotMatch(p11CaptureWorkflow, /p11_baseline_b_20260815_v1|ATLAS_P11_BASELINE_B_CAPTURE_V1|atlas-stage2-baseline-b\/v1/);
   assert.doesNotMatch(p11CaptureWorkflow, /SUPABASE_DB_URL|DATABASE_URL/);
   assert.doesNotMatch(p11CaptureWorkflow, /migration_apply|rebuild_candidates|EXECUTE_APPROVED_MERGE|executeApprovedPersonMerge/);
-
-  const stage2SchemaWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-stage2-schema-release.yml', import.meta.url), 'utf8');
-  assert.match(stage2SchemaWorkflow, /workflow_dispatch\s*:/);
-  assert.doesNotMatch(stage2SchemaWorkflow, /^\s*push\s*:/m);
-  assert.doesNotMatch(stage2SchemaWorkflow, /\bpull_request\s*:/m);
-  assert.match(stage2SchemaWorkflow, /environment:\s*production/);
-  assert.doesNotMatch(stage2SchemaWorkflow, /SUPABASE_DB_URL/);
-
-  const train2Workflow = fs.readFileSync(new URL('../.github/workflows/atlas-stage2-train2-release.yml', import.meta.url), 'utf8');
-  assert.match(train2Workflow, /workflow_dispatch\s*:/);
-  assert.doesNotMatch(train2Workflow, /^\s*push\s*:/m);
-  assert.doesNotMatch(train2Workflow, /\bpull_request\s*:/m);
-  assert.match(train2Workflow, /environment:\s*production/);
-  assert.match(train2Workflow, /id-token:\s*write/);
-  assert.match(train2Workflow, /APPLY:\$\{RELEASE_ID\}/);
-  assert.doesNotMatch(train2Workflow, /SUPABASE_DB_URL/);
 
   const personDomainWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-person-domain-apply.yml', import.meta.url), 'utf8');
   assert.match(personDomainWorkflow, /^\s*push\s*:/m);

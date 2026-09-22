@@ -163,6 +163,8 @@ Still forbidden:
 
 The former Stage 2 / Train 1 / Train 2 procedures are retained in Git history as evidence of that migration era.
 
+Historical evidence belongs in Git history, release manifests, migration artifacts, and rehearsal evidence. Completed migration-era release transports must not remain deployed as live Production endpoints or dispatch workflows solely to preserve history.
+
 They are not current general release rules and must not be replayed by new conversations unless a task explicitly investigates that historical migration.
 
 ## 11. Operating rule

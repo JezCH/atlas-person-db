@@ -18,7 +18,6 @@ const ignoreScriptPath = path.join(root, "scripts", "vercel-ignore-build.mjs");
 const correctionWorkflowPath = path.join(root, ".github", "workflows", "atlas-correction-apply.yml");
 const authoringWorkflowPath = path.join(root, ".github", "workflows", "atlas-authoring-apply.yml");
 const auditWorkflowPath = path.join(root, ".github", "workflows", "atlas-audit-inventory.yml");
-const stage2SchemaWorkflowPath = path.join(root, ".github", "workflows", "atlas-stage2-schema-release.yml");
 
 for (const file of [
   releasePath,
@@ -28,8 +27,7 @@ for (const file of [
   ignoreScriptPath,
   correctionWorkflowPath,
   authoringWorkflowPath,
-  auditWorkflowPath,
-  stage2SchemaWorkflowPath
+  auditWorkflowPath
 ]) {
   if (!fs.existsSync(file)) fail(`required file missing: ${path.relative(root, file)}`);
 }
@@ -41,7 +39,6 @@ const vercel = JSON.parse(fs.readFileSync(vercelPath, "utf8"));
 const correctionWorkflow = fs.readFileSync(correctionWorkflowPath, "utf8");
 const authoringWorkflow = fs.readFileSync(authoringWorkflowPath, "utf8");
 const auditWorkflow = fs.readFileSync(auditWorkflowPath, "utf8");
-const stage2SchemaWorkflow = fs.readFileSync(stage2SchemaWorkflowPath, "utf8");
 
 const byId = new Map((requirements.requirements || []).map((item) => [item.id, item]));
 for (const id of ["ATLAS-RQ-0013", "ATLAS-NO-0013"]) {
@@ -72,16 +69,13 @@ if (shouldBuildForChangedPaths(safeSkipExamples)) {
 
 const mustBuildExamples = [
   "api/atlas-correction-apply.js",
-  "api/atlas-stage2-schema-release.js",
   "server/atlas-correction-apply-handler.js",
-  "server/atlas-stage2-schema-release-handler.js",
   "db/migrations/example.sql",
   "corrections/requests/r0.json",
   "corrections/intents/r1.json",
   ".github/workflows/atlas-correction-apply.yml",
   ".github/workflows/atlas-audit-inventory.yml",
   ".github/workflows/atlas-authoring-apply.yml",
-  ".github/workflows/atlas-stage2-schema-release.yml",
   "vercel.json"
 ];
 for (const file of mustBuildExamples) {
@@ -91,6 +85,30 @@ for (const file of mustBuildExamples) {
 }
 if (!shouldBuildForChangedPaths(["docs/research/evidence.md", "server/atlas-correction-apply-handler.js"])) {
   fail("mixed change set must build when any deployment-relevant path exists");
+}
+
+const retiredStage2LiveTransportPaths = [
+  "api/atlas-stage2-schema-release.js",
+  "api/atlas-stage2-train2-release.js",
+  "server/atlas-stage2-schema-release-handler.js",
+  "server/atlas-stage2-schema-release-github-oidc.js",
+  "server/atlas-stage2-train2-release-handler.js",
+  "server/atlas-stage2-train2-github-oidc.js",
+  ".github/workflows/atlas-stage2-schema-release.yml",
+  ".github/workflows/atlas-stage2-train2-release.yml"
+];
+for (const relativePath of retiredStage2LiveTransportPaths) {
+  if (fs.existsSync(path.join(root, relativePath))) {
+    fail(`completed Stage2 live transport must stay retired: ${relativePath}`);
+  }
+}
+for (const route of [
+  "api/atlas-stage2-schema-release.js",
+  "api/atlas-stage2-train2-release.js"
+]) {
+  if (Object.prototype.hasOwnProperty.call(vercel.functions || {}, route)) {
+    fail(`retired Stage2 route must not consume a Vercel function slot: ${route}`);
+  }
 }
 
 for (const [name, workflow] of [
@@ -106,20 +124,6 @@ for (const [name, workflow] of [
   }
 }
 
-// Keep canonical schema-release safety. Lean execution removes duplicate ceremony,
-// not security or fail-closed controls already enforced by the writer/workflow.
-if (!/workflow_dispatch\s*:/m.test(stage2SchemaWorkflow)) fail("Stage 2 schema release must require workflow_dispatch");
-if (/^\s*push\s*:/m.test(stage2SchemaWorkflow) || /\bpull_request\s*:/m.test(stage2SchemaWorkflow)) {
-  fail("Stage 2 schema release must never auto-run on push or pull_request");
-}
-if (!/environment:\s*production/m.test(stage2SchemaWorkflow)) fail("Stage 2 schema release must use the production environment");
-if (!/id-token:\s*write/m.test(stage2SchemaWorkflow)) fail("Stage 2 schema release requires dedicated OIDC");
-if (!/APPLY:\$\{REQUESTED_RELEASE_ID\}/m.test(stage2SchemaWorkflow)) fail("Stage 2 schema release must require explicit typed approval");
-if (!/refs\/heads\/main/m.test(stage2SchemaWorkflow)) fail("Stage 2 schema release must fail closed outside main");
-if (!/preflight/m.test(stage2SchemaWorkflow) || !/call_release apply/m.test(stage2SchemaWorkflow)) {
-  fail("Stage 2 schema release must run live preflight before apply");
-}
-
 const requiredReleaseClauses = [
   "Release controls must be proportional to the actual risk of the change.",
   "Do not convert every merge or data write into a Production release train.",
@@ -128,7 +132,8 @@ const requiredReleaseClauses = [
   "A newer `main` does not invalidate completed review automatically.",
   "One microbatch does not imply one PR, deployment, apply run, or read-back.",
   "Release ownership is resource-scoped.",
-  "The former Stage 2 / Train 1 / Train 2 procedures are retained in Git history as evidence of that migration era."
+  "The former Stage 2 / Train 1 / Train 2 procedures are retained in Git history as evidence of that migration era.",
+  "Completed migration-era release transports must not remain deployed as live Production endpoints or dispatch workflows solely to preserve history."
 ];
 for (const clause of requiredReleaseClauses) {
   if (!release.includes(clause)) fail(`lean release policy clause missing: ${clause}`);
@@ -161,8 +166,6 @@ console.log(JSON.stringify({
   vercel_non_production_builds_skipped: true,
   vercel_production_builds_relevance_gated: true,
   production_workflows_main_scoped: true,
-  stage2_schema_release_manual_dispatch_only: true,
-  stage2_schema_release_explicit_typed_approval: true,
-  stage2_schema_release_live_preflight_required: true,
+  historical_stage2_live_transport_retired: true,
   release_requirements: ["ATLAS-RQ-0013", "ATLAS-NO-0013"]
 }, null, 2));
