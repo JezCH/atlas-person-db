@@ -7,6 +7,7 @@ const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url)
 const portraitImage = fs.readFileSync(new URL('../atlas-person-portrait-image.js', import.meta.url), 'utf8');
 const portraitView = fs.readFileSync(new URL('../atlas-person-portrait-view.js', import.meta.url), 'utf8');
 const portraitController = fs.readFileSync(new URL('../atlas-person-portrait-controller.js', import.meta.url), 'utf8');
+const profileEditor = fs.readFileSync(new URL('../atlas-person-profile-editor.js', import.meta.url), 'utf8');
 const reader = fs.readFileSync(new URL('../atlas-person-browser-reader.js', import.meta.url), 'utf8');
 const nav = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
@@ -21,12 +22,14 @@ test('Main loads the Person reader and shared data store before the Person-cente
   const storeIndex = html.indexOf('atlas-client-data-store.js');
   const portraitViewIndex = html.indexOf('atlas-person-portrait-view.js');
   const portraitControllerIndex = html.indexOf('atlas-person-portrait-controller.js');
+  const profileEditorIndex = html.indexOf('atlas-person-profile-editor.js');
   const mainIndex = html.indexOf('atlas-person-main.js');
   assert.ok(readerIndex >= 0);
   assert.ok(storeIndex > readerIndex);
   assert.ok(portraitViewIndex > storeIndex);
   assert.ok(portraitControllerIndex > portraitViewIndex);
-  assert.ok(mainIndex > portraitControllerIndex);
+  assert.ok(profileEditorIndex > portraitControllerIndex);
+  assert.ok(mainIndex > profileEditorIndex);
   assert.match(main, /ATLAS_PERSON_BROWSER_READER/);
   assert.match(main, /ATLAS_CLIENT_DATA_STORE/);
 });
@@ -156,6 +159,18 @@ test('portrait authoring controls have responsive form styling', () => {
   assert.match(profileCss, /\.person-portrait-form/);
   assert.match(profileCss, /\.person-portrait-actions/);
   assert.match(profileCss, /@media\(max-width:760px\)/);
+});
+
+test('Person profile editor markup and writes are delegated to the extracted feature module', () => {
+  assert.match(main, /ATLAS_PERSON_PROFILE_EDITOR/);
+  assert.match(main, /profileEditor\.profileEditorHtml/);
+  assert.match(main, /portraitHtml:portraitEditorHtml\(person, portraitResult\)/);
+  assert.match(main, /profileEditor\.dispatchWrite/);
+  assert.doesNotMatch(main, /profileWriter\.(?:setPersonKoreanName|setPersonExternalReference)/);
+  assert.match(profileEditor, /data-person-profile-operation="set_person_korean_name"/);
+  assert.match(profileEditor, /data-person-profile-operation="set_person_external_reference"/);
+  assert.match(profileEditor, /writer\.setPersonKoreanName/);
+  assert.match(profileEditor, /writer\.setPersonExternalReference/);
 });
 
 test('Main renders BCE/CE and unknown chronology without changing historicity', () => {
