@@ -10,12 +10,6 @@
     }
   },
   "functions": {
-    "api/atlas-stage2-schema-release.js": {
-      "includeFiles": "{stage2/**,db/proposals/**}"
-    },
-    "api/atlas-stage2-train2-release.js": {
-      "includeFiles": "{stage2/**,db/proposals/**}"
-    },
     "api/atlas-p10-revalidation-release.js": {
       "includeFiles": "migration/phase-10/**/*.sql"
     }
