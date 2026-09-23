@@ -498,7 +498,8 @@
       href ? `<img class="person-detail-portrait-subject" data-person-portrait-image src="${escapeHtml(href)}" alt="${escapeHtml(displayName)} 초상화" loading="lazy" decoding="async" referrerpolicy="no-referrer" />` : "",
       presentation.frame_url ? `<img class="person-detail-portrait-frame" src="${escapeHtml(presentation.frame_url)}" alt="" aria-hidden="true" />` : ""
     ].join("");
-    const state = portraitResult?.error ? "초상화 조회 실패" : (href ? "초상화 등록" : "초상화 미등록");\n    const legacyEmpty = href ? "" : '<span class="person-detail-portrait-empty" hidden>없음</span>';
+    const state = portraitResult?.error ? "초상화 조회 실패" : (href ? "초상화 등록" : "초상화 미등록");
+    const legacyEmpty = href ? "" : '<span class="person-detail-portrait-empty" hidden>없음</span>';
     return `<figure class="person-detail-portrait" data-era="${escapeHtml(presentation.era_code)}" data-domain="${escapeHtml(presentation.domain_code || "")}" aria-label="${escapeHtml(displayName)} · ${escapeHtml(presentation.era_label)} · ${escapeHtml(presentation.domain_label)} · ${state}" title="${escapeHtml(titleParts.join(" · "))}">${layers}${legacyEmpty}<figcaption class="person-detail-portrait-state">${escapeHtml(state)}</figcaption></figure>`;
   }
 
