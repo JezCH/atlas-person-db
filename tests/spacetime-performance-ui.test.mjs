@@ -61,24 +61,34 @@ test("virtualized Person interactions use delegation", async () => {
   assert.ok(view.includes("selectPerson(mount, target.dataset.spacetimePerson, { focus: false })"));
 });
 
-test("spacetime runtime bootstrap parallelizes only dependency-independent modules", async () => {
+test("spacetime runtime bootstrap keeps rendering-critical modules in core and optional UI helpers off the first-render gate", async () => {
   const view = await fixture(viewUrl);
 
-  const independentStart = view.indexOf("const RUNTIME_INDEPENDENT_ASSETS");
+  const coreStart = view.indexOf("const RUNTIME_CORE_INDEPENDENT_ASSETS");
+  const optionalStart = view.indexOf("const RUNTIME_OPTIONAL_ASSETS");
   const dependentStart = view.indexOf("const RUNTIME_SPACE_AXIS_DEPENDENT_ASSETS");
   const bootstrapStart = view.indexOf("function ensureRuntimeModules()");
-  assert.ok(independentStart >= 0 && dependentStart > independentStart && bootstrapStart > dependentStart);
+  assert.ok(coreStart >= 0 && optionalStart > coreStart && dependentStart > optionalStart && bootstrapStart > dependentStart);
 
-  const independentBlock = view.slice(independentStart, dependentStart);
+  const coreBlock = view.slice(coreStart, optionalStart);
+  const optionalBlock = view.slice(optionalStart, dependentStart);
   const dependentBlock = view.slice(dependentStart, bootstrapStart);
-  assert.match(independentBlock, /atlas-person-spacetime-space-axis\.js/);
-  assert.doesNotMatch(independentBlock, /atlas-person-spacetime-spatial-compile\.js/);
+  assert.match(coreBlock, /atlas-person-spacetime-space-axis\.js/);
+  assert.match(coreBlock, /atlas-person-spacetime-exploration\.js/);
+  assert.match(coreBlock, /atlas-person-spacetime-performance\.js/);
+  assert.match(coreBlock, /atlas-person-spacetime-label-engine\.js/);
+  assert.doesNotMatch(coreBlock, /atlas-person-spacetime-minimap\.js|atlas-person-spacetime-inspector\.js/);
+  assert.match(optionalBlock, /atlas-person-spacetime-minimap\.js/);
+  assert.match(optionalBlock, /atlas-person-spacetime-inspector\.js/);
+  assert.doesNotMatch(coreBlock, /atlas-person-spacetime-spatial-compile\.js/);
   assert.match(dependentBlock, /atlas-person-spacetime-spatial-compile\.js/);
 
-  assert.match(view, /const independentLoads = new Map\(RUNTIME_INDEPENDENT_ASSETS\.map/);
+  assert.match(view, /const independentLoads = new Map\(RUNTIME_CORE_INDEPENDENT_ASSETS\.map/);
   assert.match(view, /const spaceAxisReady = independentLoads\.get\("ATLAS_PERSON_SPACETIME_SPACE_AXIS"\)/);
   assert.match(view, /const dependentLoad = spaceAxisReady\.then/);
   assert.match(view, /Promise\.all\(\[\.\.\.independentLoads\.values\(\), dependentLoad\]\)/);
+  assert.match(view, /scheduleOptionalRuntimePrefetch\("minimap"/);
+  assert.match(view, /if \(!selectedTrack\) scheduleOptionalRuntimePrefetch\("inspector"\)/);
   assert.doesNotMatch(view, /RUNTIME_ASSETS\.reduce/);
 });
 
@@ -97,8 +107,12 @@ test("spacetime runtime scripts are concurrently fetchable and preserve retry-sa
   assert.match(view, /runtimePromise = null/);
 });
 
-test("spacetime begins canonical data reads while runtime modules load", async () => {
+test("spacetime begins canonical data reads with core runtime while cold first render does not await optional minimap or inspector", async () => {
   const view = await fixture(viewUrl);
-  assert.match(view, /const \[, loaded\] = await Promise\.all\(\[ensureRuntimeModules\(\), ensureData\(\)\]\)/);
+  assert.match(view, /const prerequisites = \[ensureRuntimeModules\(\), ensureData\(\)\]/);
+  assert.match(view, /if \(selectedPersonId\) prerequisites\.push\(ensureInspectorModule\(\)\)/);
+  assert.match(view, /const results = await Promise\.all\(prerequisites\)/);
+  assert.match(view, /const loaded = results\[1\]/);
+  assert.doesNotMatch(view, /prerequisites = \[[^\]]*ensureMinimapModule/);
   assert.doesNotMatch(view, /await ensureRuntimeModules\(\);\s*const loaded = await ensureData\(\)/);
 });
