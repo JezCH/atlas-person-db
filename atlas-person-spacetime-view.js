@@ -26,6 +26,7 @@
     ["./atlas-person-spacetime-semantic-axis.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
     ["./atlas-person-spacetime-temporal-certainty.js?v=20260906-boundary-certainty", "ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY"],
+    ["./atlas-person-spacetime-control-state.js?v=20260923-spacetime-owner-v1", "ATLAS_PERSON_SPACETIME_CONTROL_STATE"],
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
     ["./atlas-person-spacetime-data-parity.js?v=20260902-final-parity", "ATLAS_PERSON_SPACETIME_DATA_PARITY"],
     ["./atlas-person-spacetime-performance.js?v=20260826-p13", "ATLAS_PERSON_SPACETIME_PERFORMANCE"],

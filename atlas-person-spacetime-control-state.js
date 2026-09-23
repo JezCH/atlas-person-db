@@ -1,7 +1,6 @@
 (() => {
   "use strict";
 
-  const MOUNT_ID = "personSpacetimeMount";
   const BOUND_EPSILON = 0.01;
   const MINIMUM_PERCENT = 50;
   const DEFAULT_PERCENT = 500;
@@ -72,37 +71,6 @@
     setDisabled(reset, atDefault);
     return true;
   }
-
-  function bindMount(mount) {
-    if (!mount) return;
-    if (mount.dataset.atlasSpacetimeZoomBoundState === "1") {
-      syncZoomControlState(mount);
-      return;
-    }
-    mount.dataset.atlasSpacetimeZoomBoundState = "1";
-    const observer = new MutationObserver(() => syncZoomControlState(mount));
-    observer.observe(mount, { childList: true, subtree: true, characterData: true });
-    syncZoomControlState(mount);
-  }
-
-  let activeMount = null;
-
-  function bindCurrentMount() {
-    const mount = document.getElementById(MOUNT_ID);
-    if (mount === activeMount) return;
-    activeMount = mount || null;
-    if (mount) bindMount(mount);
-  }
-
-  function install() {
-    bindCurrentMount();
-    if (typeof MutationObserver !== "function") return;
-    const observer = new MutationObserver(bindCurrentMount);
-    observer.observe(document.documentElement, { childList: true, subtree: true });
-  }
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", install, { once: true });
-  else install();
 
   window.ATLAS_PERSON_SPACETIME_CONTROL_STATE = Object.freeze({
     parsePercent,
