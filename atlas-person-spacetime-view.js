@@ -491,6 +491,15 @@
   async function selectPerson(mount, personId, options = {}) {
     const interactionSerial = invalidateMeanwhileInteraction();
     const nextPersonId = personId || null;
+    if (nextPersonId) {
+      try {
+        await ensureInspectorModule();
+      } catch (error) {
+        console.error("ATLAS inspector runtime failed", error);
+        return false;
+      }
+      if (interactionSerial !== meanwhileInteractionSerial || !mount?.isConnected) return false;
+    }
     if (options.preserveActivity !== true || nextPersonId !== selectedPersonId) {
       clearActivityLinkedMeanwhile();
       selectedActivityId = null;
@@ -501,15 +510,6 @@
     if (selectedPersonId && options.detail) {
       cameraZoom = Math.max(cameraZoom, FOCUS_DETAIL_ZOOM);
       pendingCameraAnchor = null;
-    }
-    if (selectedPersonId) {
-      try {
-        await ensureInspectorModule();
-      } catch (error) {
-        console.error("ATLAS inspector runtime failed", error);
-        return false;
-      }
-      if (interactionSerial !== meanwhileInteractionSerial || !mount?.isConnected) return false;
     }
     renderInto(mount);
     return true;
