@@ -1,6 +1,5 @@
 .person-detail-name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .person-detail-name-row h2{margin:0}
-.person-external-links{display:none}
 .person-main-name-link{color:#4251bd;text-decoration:underline;text-underline-offset:.15em;text-decoration-thickness:.07em;font-weight:inherit}
 .person-main-name-link::after{content:"↗";display:inline-block;margin-left:3px;font-size:.72em;line-height:1;text-decoration:none;opacity:.75}
 .person-main-name-link:hover{color:#3342aa;text-decoration-thickness:.11em}
