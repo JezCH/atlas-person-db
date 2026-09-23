@@ -9,8 +9,9 @@ const presentationSource = fs.readFileSync(new URL("../atlas-person-portrait-pre
 const mainSource = fs.readFileSync(new URL("../atlas-person-main.js", import.meta.url), "utf8");
 
 function loadPresentation() {
-  const context = vm.createContext({ globalThis:null });
+  const context = vm.createContext({ globalThis:null, window:null });
   context.globalThis = context;
+  context.window = context;
   vm.runInContext(eraSource, context, { filename:"atlas-person-era-model.js" });
   vm.runInContext(domainSource, context, { filename:"atlas-person-domain-registry.js" });
   vm.runInContext(presentationSource, context, { filename:"atlas-person-portrait-presentation.js" });
