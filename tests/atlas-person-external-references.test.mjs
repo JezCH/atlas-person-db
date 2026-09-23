@@ -4,6 +4,9 @@ import fs from "node:fs";
 
 const registry = fs.readFileSync(new URL("../atlas-person-external-references.js", import.meta.url), "utf8");
 const main = fs.readFileSync(new URL("../atlas-person-main.js", import.meta.url), "utf8");
+const tableView = fs.readFileSync(new URL("../atlas-person-table-view.js", import.meta.url), "utf8");
+const refsCss = fs.readFileSync(new URL("../atlas-person-external-references.css", import.meta.url), "utf8");
+const profileCss = fs.readFileSync(new URL("../atlas-person-profile-editor.css", import.meta.url), "utf8");
 const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const store = fs.readFileSync(new URL("../atlas-client-data-store.js", import.meta.url), "utf8");
 
@@ -23,22 +26,25 @@ test("external references come from the shared authoritative Person snapshot ins
   assert.doesNotMatch(registry, /display_name_ko|preferred_name_ko|displayNameForPerson/);
 });
 
-test("Person Main keeps authoritative Person display name and renders external links independently", () => {
+test("visible NamuWiki presentation is owned by the Person table while hidden detail-link markup is retired", () => {
   assert.match(main, /person\.display_name \|\| person\.canonical_name_en/);
-  assert.match(main, /externalReferences\?\.linksForPerson/);
-  assert.match(main, /person-external-link/);
-  assert.match(main, /rel="noopener noreferrer"/);
+  assert.match(main, /externalReferences\?\.reload\?\.\(\)/);
+  assert.match(tableView, /externalReferences\?\.linkForPerson/);
+  assert.match(tableView, /person-main-name-link/);
+  assert.doesNotMatch(main, /externalLinksHtml|person-external-links|person-external-link/);
+  assert.doesNotMatch(refsCss, /person-external-links|person-external-link/);
+  assert.doesNotMatch(profileCss, /person-external-links|person-external-link/);
   assert.doesNotMatch(main, /displayNameForPerson/);
 });
 
 test("shared Person store and external-reference assets load before Person Main with fresh cache versions", () => {
-  assert.match(html, /atlas-person-external-references\.css\?v=20260821-v1/);
+  assert.match(html, /atlas-person-external-references\.css\?v=20260924-root-batch2/);
   assert.match(html, /atlas-client-data-store\.js\?v=20260919-shared-store-v1/);
   assert.match(html, /atlas-person-external-references\.js\?v=20260919-shared-store-v1/);
-  assert.match(html, /atlas-person-main\.js\?v=20260922-profile-editor-split-v1/);
+  assert.match(html, /atlas-person-main\.js\?v=20260924-root-batch2/);
   const storeIndex = html.indexOf("atlas-client-data-store.js?v=20260919-shared-store-v1");
   const refsIndex = html.indexOf("atlas-person-external-references.js?v=20260919-shared-store-v1");
-  const mainIndex = html.indexOf("atlas-person-main.js?v=20260922-profile-editor-split-v1");
+  const mainIndex = html.indexOf("atlas-person-main.js?v=20260924-root-batch2");
   assert.ok(storeIndex >= 0 && storeIndex < refsIndex && refsIndex < mainIndex);
   assert.match(html, /atlas-person-era-navigation\.js\?v=20260920-person-facets-sticky-v1/);
 });
