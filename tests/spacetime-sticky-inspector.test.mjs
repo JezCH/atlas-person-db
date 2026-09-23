@@ -130,7 +130,8 @@ test("cold empty inspector can render before optional inspector runtime while Pe
   const selectStart=view.indexOf("async function selectPerson(");
   const selectEnd=view.indexOf("\n  async function selectActivity", selectStart);
   const selectBody=view.slice(selectStart, selectEnd);
-  assert.match(selectBody,/if \(selectedPersonId\)/);
+  assert.match(selectBody,/if \(nextPersonId\)/);
   assert.match(selectBody,/await ensureInspectorModule\(\)/);
+  assert.ok(selectBody.indexOf("await ensureInspectorModule()") < selectBody.indexOf("selectedPersonId = nextPersonId"));
   assert.match(view,/if \(selectedPersonId\) prerequisites\.push\(ensureInspectorModule\(\)\)/);
 });
