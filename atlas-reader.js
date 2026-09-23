@@ -1,8 +1,8 @@
 (() => {
   "use strict";
 
-  const MARKER = "ATLAS_READER_V2_DIRECT";
-  const SOURCE = "v2-direct";
+  const MARKER = "ATLAS_READER_RUNTIME_PERSON_POLITICS_V1";
+  const SOURCE = "runtime-person-politics-v1";
   const DEFAULT_ENDPOINT = "/api/atlas-read";
   const PERIOD_BASES = new Set([
     "reign", "term", "de_facto_rule", "military_activity",

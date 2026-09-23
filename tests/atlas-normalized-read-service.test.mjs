@@ -3,10 +3,12 @@ import test from "node:test";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const { DIRECT_READ_SQL, readPersonPolitics } = require("../server/atlas-normalized-read-service.js");
+const { PUBLIC_ACTIVITY_SOURCE, DIRECT_READ_SQL, readPersonPolitics } = require("../server/atlas-normalized-read-service.js");
 
-test("normalized read SQL references only v2 normalized projection tables", () => {
-  assert.match(DIRECT_READ_SQL, /atlas_v2\.person_politics_v2/);
+test("normalized public read uses the sealed Runtime Activity projection plus live normalized display tables", () => {
+  assert.equal(PUBLIC_ACTIVITY_SOURCE, "runtime-person-politics-v1");
+  assert.match(DIRECT_READ_SQL, /atlas_v2\.runtime_person_politics_v1/);
+  assert.doesNotMatch(DIRECT_READ_SQL, /atlas_v2\.person_politics_v2/);
   assert.match(DIRECT_READ_SQL, /atlas_v2\.person_names/);
   assert.match(DIRECT_READ_SQL, /atlas_v2\.polity_names/);
   assert.match(DIRECT_READ_SQL, /atlas_v2\.polity_designations/);
@@ -35,7 +37,7 @@ test("normalized read SQL preserves English canonical values and prefers Korean 
   assert.match(DIRECT_READ_SQL, /coalesce\(rko\.name, r\.source_label\).*role_display_name/s);
 });
 
-test("normalized read SQL is chronological first and leaves unresolved boundaries last", () => {
+test("normalized Runtime read remains chronological and keeps verified ongoing rows last by open end", () => {
   const order = DIRECT_READ_SQL.split(/order by/i).at(-1);
   assert.match(order, /^\s*pp\.activity_start nulls last,\s*pp\.activity_end nulls last,/s);
 });
@@ -81,20 +83,20 @@ test("normalized read service preserves authoritative id, canonical aliases and 
   }]);
 });
 
-test("normalized read service preserves unresolved boundaries as null instead of fabricating year zero", async () => {
+test("normalized Runtime read preserves a verified ongoing open end without fabricating an end year", async () => {
   const client = {
     async query() {
       return { rows: [{
         id: "33333333-3333-4333-8333-333333333333",
-        person_name: "Unknown Start",
-        person_display_name: "Unknown Start",
+        person_name: "Ongoing Example",
+        person_display_name: "Ongoing Example",
         politic_name: "Example Polity",
         politic_designation_name_en: null,
         politic_designation_name_ko: null,
         politic_display_name: "Example Polity",
-        activity_start: null,
+        activity_start: 2020,
         activity_end: null,
-        chronology_status: "reviewed",
+        chronology_status: "ongoing",
         role: null,
         role_display_name: null,
         period_basis: "general_activity",
@@ -103,9 +105,9 @@ test("normalized read service preserves unresolved boundaries as null instead of
     }
   };
   const [row] = await readPersonPolitics({ client });
-  assert.equal(row.activity_start, null);
+  assert.equal(row.activity_start, 2020);
   assert.equal(row.activity_end, null);
-  assert.equal(Object.hasOwn(row, "chronology_status"), false);
+  assert.equal(row.chronology_status, "ongoing");
 });
 
 test("normalized read service falls back display values to canonical values", async () => {

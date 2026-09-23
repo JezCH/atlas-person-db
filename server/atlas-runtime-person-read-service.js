@@ -4,6 +4,8 @@ const { TEMPORAL_POLITY_DESIGNATION_JOIN_SQL } = require("./atlas-polity-tempora
 
 const authoringRead = require("./atlas-person-read-service.js");
 
+const PUBLIC_ACTIVITY_SOURCE = "runtime-person-politics-v1";
+
 const PERSON_READ_SQL = `
 select
   p.id, p.person_type, p.historicity,
@@ -99,6 +101,7 @@ async function readPersonDetail({ client, personId }={}) {
 }
 
 module.exports=Object.freeze({
+  PUBLIC_ACTIVITY_SOURCE,
   PERSON_READ_SQL,PERSON_DETAIL_SQL,ACTIVITY_DETAIL_SQL,PERSON_SOURCE_SQL,ACTIVITY_SOURCE_SQL,
   readPersons,readPersonDetail
 });

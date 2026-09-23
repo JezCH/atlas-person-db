@@ -1,6 +1,6 @@
 "use strict";
 
-const { readPersonPolitics } = require("./atlas-normalized-read-service.js");
+const { PUBLIC_ACTIVITY_SOURCE, readPersonPolitics } = require("./atlas-normalized-read-service.js");
 const { requireDatabaseUrl, sendJson } = require("./atlas-read-http.js");
 
 function createNormalizedReadHandler({ clientFactory, env = process.env } = {}) {
@@ -26,7 +26,7 @@ function createNormalizedReadHandler({ clientFactory, env = process.env } = {}) 
     try {
       client = await clientFactory(databaseUrl);
       const data = await readPersonPolitics({ client });
-      sendJson(res, 200, { ok: true, source: "v2-direct", data });
+      sendJson(res, 200, { ok: true, source: PUBLIC_ACTIVITY_SOURCE, data });
     } catch (error) {
       console.error("ATLAS normalized read failed", error);
       sendJson(res, client ? 500 : 503, {
