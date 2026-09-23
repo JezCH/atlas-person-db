@@ -16,8 +16,8 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /"dashboard", "persons", "spacetime", "polities", "places", "events", "sources", "geometry"/);
   assert.match(nav, /dataAtlasDomain|dataset\.atlasDomain|data-atlas-domain="spacetime"/i);
   assert.match(catalog, /spacetime: entry/);
-  assert.match(html, /atlas-main-authority-nav\.css\?v=20260920-single-person-surface/);
-  assert.match(html, /atlas-main-authority-nav\.js\?v=20260920-single-person-surface/);
+  assert.match(html, /atlas-main-authority-nav\.css\?v=20260923-root-batch1/);
+  assert.match(html, /atlas-main-authority-nav\.js\?v=20260923-root-batch1/);
   assert.match(nav, /atlasDashboardMount/);
   assert.match(nav, /ATLAS_DASHBOARD/);
   assert.match(nav, /function ensureSpacetimeModel\(\)/);
@@ -77,10 +77,10 @@ test('desktop and mobile navigation stay synchronized and hash-addressable', () 
   }
 });
 
-test('mobile Person search remains fail-closed outside Persons if the legacy shell input exists', () => {
-  assert.match(nav, /mobileSearch\.disabled = !enabled/);
-  assert.match(nav, /독립 검색 기능 준비 전/);
-  assert.match(nav, /setMobileSearchEnabled\(isPersons/);
+test('authority navigation does not retain the retired mobile Person search fallback', () => {
+  assert.doesNotMatch(html, /mobileSearchInput|mobileSearchClear|mobileSearchCount/);
+  assert.doesNotMatch(nav, /mobileSearchInput|mobileSearchClear|mobileSearchCount|setMobileSearchEnabled|독립 검색 기능 준비 전/);
+  assert.doesNotMatch(css, /\.mobile-search input:disabled/);
 });
 
 test('authority shell and control-center Dashboard remain responsive without the retired shortcut grid', () => {

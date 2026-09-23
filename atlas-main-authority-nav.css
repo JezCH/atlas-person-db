@@ -15,7 +15,6 @@
 .authority-state-grid p { margin: 0; color: #657086; line-height: 1.6; }
 .nav-list .nav-item[data-atlas-domain], .mobile-nav button[data-atlas-domain] { cursor: pointer; }
 .nav-list .nav-item[data-atlas-domain] small, .mobile-nav button[data-atlas-domain] small { margin-left: auto; }
-.mobile-search input:disabled { opacity: .65; cursor: not-allowed; }
 @media (max-width: 900px) {
   .authority-state-grid { grid-template-columns: 1fr; }
 }

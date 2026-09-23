@@ -44,9 +44,6 @@
   const topbar = mainArea?.querySelector(":scope > .topbar");
   const personView = document.getElementById("personMainView");
   const connectionStatus = document.getElementById("connectionStatus");
-  const mobileSearch = document.getElementById("mobileSearchInput");
-  const mobileSearchClear = document.getElementById("mobileSearchClear");
-  const mobileSearchCount = document.getElementById("mobileSearchCount");
   const desktopButtons = [...document.querySelectorAll(".nav-list [data-atlas-domain]")];
   const mobileButtons = [...document.querySelectorAll(".mobile-nav [data-atlas-domain]")];
 
@@ -62,7 +59,6 @@
     title: DOMAINS.persons.label,
     subtitle: topbar.querySelector(".subtitle")?.textContent || ""
   });
-  const mobileSearchPlaceholder = mobileSearch?.placeholder || "인물 검색";
 
   const shell = document.createElement("section");
   shell.id = "atlasAuthorityShell";
@@ -181,9 +177,9 @@
   function ensureSpacetimeAssets() {
     if (window.ATLAS_PERSON_SPACETIME_VIEW) return Promise.resolve(window.ATLAS_PERSON_SPACETIME_VIEW);
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
-    appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260919-top-chrome-v4");
+    appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260923-runtime-ownership-v1");
     spacetimeAssetsPromise = ensureSpacetimeModel()
-      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260920-exact-fit-floor", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
+      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260923-runtime-ownership-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
       .catch((error) => {
         spacetimeAssetsPromise = null;
@@ -273,16 +269,6 @@
     if (connectionStatus) connectionStatus.hidden = true;
   }
 
-  function setMobileSearchEnabled(enabled, label) {
-    if (!mobileSearch) return;
-    mobileSearch.disabled = !enabled;
-    mobileSearch.placeholder = enabled ? mobileSearchPlaceholder : `${label}: 독립 검색 기능 준비 전`;
-    if (!enabled) {
-      if (mobileSearchClear) mobileSearchClear.hidden = true;
-      if (mobileSearchCount) mobileSearchCount.textContent = "";
-    }
-  }
-
   function normalizeHash(hash) {
     const value = String(hash || "").replace(/^#/, "").trim().replace(/^atlas-/, "");
     return DOMAIN_ORDER.includes(value) ? value : "persons";
@@ -299,7 +285,6 @@
     if (next === "dashboard") activateDashboard();
     setNavigationActive(next);
     setTopbar(next);
-    setMobileSearchEnabled(isPersons, DOMAINS[next].label);
 
     if (updateHash) {
       const target = `#atlas-${next}`;

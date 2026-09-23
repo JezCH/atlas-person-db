@@ -42,3 +42,7 @@ test('mobile ownership assets use the single-surface cache-busted runtime pair',
   assert.match(html, /mobile-compact\.css\?v=20260921-person-density-v3/);
   assert.match(html, /mobile-ui\.js\?v=20260920-single-person-surface/);
 });
+
+test('root shell does not preload spacetime-only control-state assets', () => {
+  assert.doesNotMatch(html, /atlas-person-spacetime-control-state\.(?:js|css)/);
+});

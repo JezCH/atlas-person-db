@@ -77,6 +77,7 @@ test("spacetime runtime bootstrap keeps rendering-critical modules in core and o
   assert.match(coreBlock, /atlas-person-spacetime-exploration\.js/);
   assert.match(coreBlock, /atlas-person-spacetime-performance\.js/);
   assert.match(coreBlock, /atlas-person-spacetime-label-engine\.js/);
+  assert.match(coreBlock, /atlas-person-spacetime-control-state\.js/);
   assert.doesNotMatch(coreBlock, /atlas-person-spacetime-minimap\.js|atlas-person-spacetime-inspector\.js/);
   assert.match(optionalBlock, /atlas-person-spacetime-minimap\.js/);
   assert.match(optionalBlock, /atlas-person-spacetime-inspector\.js/);

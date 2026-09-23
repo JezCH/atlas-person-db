@@ -4,7 +4,6 @@ import vm from "node:vm";
 import { readFileSync } from "node:fs";
 
 const controlSource = readFileSync(new URL("../atlas-person-spacetime-control-state.js", import.meta.url), "utf8");
-const controlCss = readFileSync(new URL("../atlas-person-spacetime-control-state.css", import.meta.url), "utf8");
 const viewSource = readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
 const viewCss = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
 const indexSource = readFileSync(new URL("../index.html", import.meta.url), "utf8");
@@ -58,11 +57,11 @@ function approximatelyEqual(actual, expected, epsilon = 1e-9) {
   assert.ok(Math.abs(actual - expected) <= epsilon, `expected ${actual} ≈ ${expected}`);
 }
 
-test("production page loads the unified spacetime camera control state", () => {
-  assert.match(indexSource, /atlas-person-spacetime-control-state\.css/);
-  assert.match(indexSource, /atlas-person-spacetime-control-state\.js/);
-  assert.match(controlCss, /\.spacetime-camera button:disabled\{/);
-  assert.doesNotMatch(controlCss, /spacetime-time-camera/);
+test("spacetime renderer owns the unified camera control state instead of the root shell", () => {
+  assert.doesNotMatch(indexSource, /atlas-person-spacetime-control-state\.(?:css|js)/);
+  assert.match(viewSource, /atlas-person-spacetime-control-state\.js\?v=20260923-spacetime-owner-v1/);
+  assert.match(viewCss, /\.spacetime-camera button:disabled\{/);
+  assert.doesNotMatch(viewCss, /spacetime-time-camera/);
 });
 
 test("viewport-fit can become the effective minimum on either side of 100 percent", () => {
@@ -205,10 +204,12 @@ test("normalized horizontal camera center remains stable when the unified world 
   approximatelyEqual(api.horizontalCenterRatio(restored, viewportWidth, axisWidth, worldB), center);
 });
 
-test("control state contains no retired horizontal overview-detail adapter", () => {
+test("control state is a pure spacetime helper with no document-wide self-install observer", () => {
   assert.doesNotMatch(controlSource, /spacetimeHorizontalMode/);
   assert.doesNotMatch(controlSource, /captureHorizontalCamera/);
   assert.doesNotMatch(controlSource, /restoreHorizontalCamera/);
-  assert.match(controlSource, /let activeMount = null;/);
-  assert.match(controlSource, /const observer = new MutationObserver\(bindCurrentMount\)/);
+  assert.doesNotMatch(controlSource, /activeMount|bindCurrentMount|MutationObserver|DOMContentLoaded/);
+  assert.match(controlSource, /syncZoomControlState/);
+  assert.match(controlSource, /horizontalCenterRatio/);
+  assert.match(controlSource, /scrollLeftForHorizontalCenter/);
 });
