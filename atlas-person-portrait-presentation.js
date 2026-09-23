@@ -3,7 +3,7 @@
   const api = factory(root?.ATLAS_PERSON_ERA_MODEL, root?.ATLAS_PERSON_DOMAIN_REGISTRY);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.ATLAS_PERSON_PORTRAIT_PRESENTATION = api;
-})(typeof globalThis !== "undefined" ? globalThis : this, (eraModel, domainRegistry) => {
+})(typeof window !== "undefined" ? window : (typeof globalThis !== "undefined" ? globalThis : this), (eraModel, domainRegistry) => {
   "use strict";
 
   const ASSET_ROOT = "./portrait-assets";
