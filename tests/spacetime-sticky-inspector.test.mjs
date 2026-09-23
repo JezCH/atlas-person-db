@@ -97,6 +97,9 @@ const css=readFileSync(new URL("../atlas-person-spacetime-view.css",import.meta.
 
 test("Production view uses right sticky Person/Activity inspector and distinct Activity selection state",()=>{
   assert.match(view,/atlas-person-spacetime-inspector\.js\?v=20260903-c8/);
+  assert.match(view,/RUNTIME_OPTIONAL_ASSETS/);
+  assert.match(view,/ensureInspectorModule\(\)/);
+  assert.match(view,/function inspectorRuntime\(\)/);
   assert.match(view,/let selectedActivityId = null/);
   assert.match(view,/let selectedTimeOrdinal = null/);
   assert.match(view,/function selectActivity\(/);
@@ -108,11 +111,27 @@ test("Production view uses right sticky Person/Activity inspector and distinct A
   assert.match(css,/\.spacetime-workspace\{[^}]*grid-template-columns/);
 });
 
-test("C8 selection keeps Person and Activity identity distinct while C9 consumes the midpoint",()=>{
-  const start=view.indexOf("function selectActivity(");
+test("C8 selection lazily ensures inspector while keeping Person and Activity identity distinct",()=>{
+  const start=view.indexOf("async function selectActivity(");
   const end=view.indexOf("\n  function",start+10);
   const body=view.slice(start,end);
+  assert.match(body,/await ensureInspectorModule\(\)/);
+  assert.match(body,/const inspector = inspectorRuntime\(\)/);
   assert.match(body,/selectedActivityId/);
   assert.match(body,/selectedTimeOrdinal/);
   assert.match(body,/meanwhileSelectedOrdinal = selectedTimeOrdinal/);
+});
+
+
+test("cold empty inspector can render before optional inspector runtime while Person selection ensures it first",()=>{
+  const emptyGuard=view.indexOf("if (!track) {");
+  const inspectorAccess=view.indexOf("const inspector = inspectorRuntime()", emptyGuard);
+  assert.ok(emptyGuard >= 0 && inspectorAccess > emptyGuard);
+  const selectStart=view.indexOf("async function selectPerson(");
+  const selectEnd=view.indexOf("\n  async function selectActivity", selectStart);
+  const selectBody=view.slice(selectStart, selectEnd);
+  assert.match(selectBody,/if \(nextPersonId\)/);
+  assert.match(selectBody,/await ensureInspectorModule\(\)/);
+  assert.ok(selectBody.indexOf("await ensureInspectorModule()") < selectBody.indexOf("selectedPersonId = nextPersonId"));
+  assert.match(view,/if \(selectedPersonId\) prerequisites\.push\(ensureInspectorModule\(\)\)/);
 });

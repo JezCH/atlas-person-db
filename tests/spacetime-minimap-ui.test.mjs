@@ -17,7 +17,9 @@ test("current spacetime surface loads the P12 minimap in place", async () => {
 
   assert.ok(view.includes("atlas-person-spacetime-minimap.js?v=20260826-p12"));
   assert.ok(view.includes("ATLAS_PERSON_SPACETIME_MINIMAP"));
-  assert.ok(view.includes("minimap: window.ATLAS_PERSON_SPACETIME_MINIMAP"));
+  assert.ok(view.includes('minimap: Object.freeze(["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"])'));
+  assert.ok(view.includes("function minimapRuntime()"));
+  assert.ok(view.includes('scheduleOptionalRuntimePrefetch("minimap"'));
   assert.ok(view.includes("renderMinimap()"));
   assert.ok(view.includes('id="spacetimeMinimapSurface"'));
   assert.ok(view.includes('id="spacetimeMinimapCanvas"'));
@@ -38,8 +40,10 @@ test("minimap preserves whole-world context while search only highlights active 
   assert.doesNotMatch(view, /const allProjectedTracks = visibleTracks/);
 });
 
-test("minimap viewport follows scroll and pointer navigation changes only camera scroll", async () => {
+test("minimap binds after optional runtime readiness and pointer navigation changes only camera scroll", async () => {
   const view = await fixture(viewUrl);
+  assert.ok(view.includes('scheduleOptionalRuntimePrefetch("minimap", () => {'));
+  assert.ok(view.includes('if (!scroll?.isConnected || mount.querySelector(".spacetime-scroll") !== scroll) return;'));
   assert.ok(view.includes("minimap.viewportRect("));
   assert.ok(view.includes('scroll.addEventListener("scroll", () => updateMinimapViewport'));
   assert.ok(view.includes('surface.addEventListener("pointerdown"'));
