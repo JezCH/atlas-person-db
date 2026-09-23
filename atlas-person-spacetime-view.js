@@ -19,23 +19,25 @@
   const MOBILE_HEADER_HEIGHT = 34;
   const MOBILE_PRESENTATION_SCALE = 0.46;
   const FOCUS_DETAIL_ZOOM = 6.5;
-  const RUNTIME_INDEPENDENT_ASSETS = Object.freeze([
+  const RUNTIME_CORE_INDEPENDENT_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-time-projection.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
     ["./atlas-person-spacetime-space-axis.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-presentation-layout.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
     ["./atlas-person-spacetime-temporal-certainty.js?v=20260906-boundary-certainty", "ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY"],
-    ["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"],
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
     ["./atlas-person-spacetime-data-parity.js?v=20260902-final-parity", "ATLAS_PERSON_SPACETIME_DATA_PARITY"],
-    ["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"],
     ["./atlas-person-spacetime-performance.js?v=20260826-p13", "ATLAS_PERSON_SPACETIME_PERFORMANCE"],
     ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260918-opposition-context", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_LOD"],
     ["./atlas-person-spacetime-label-engine.js?v=20260920-global-name-overlay", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
+  const RUNTIME_OPTIONAL_ASSETS = Object.freeze({
+    inspector: Object.freeze(["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"]),
+    minimap: Object.freeze(["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"])
+  });
   const RUNTIME_SPACE_AXIS_DEPENDENT_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-spatial-compile.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"]
   ]);
@@ -50,6 +52,7 @@
   }
 
   let runtimePromise = null;
+  const optionalRuntimePromises = new Map();
   let meanwhileRuntimePromise = null;
   let meanwhileInteractionSerial = 0;
   let loadPromise = null;
@@ -182,10 +185,48 @@
     return promise;
   }
 
+  function ensureOptionalRuntime(key) {
+    const asset = RUNTIME_OPTIONAL_ASSETS[key];
+    if (!asset) return Promise.reject(new Error(`ATLAS_SPACETIME_OPTIONAL_RUNTIME_UNKNOWN: ${key}`));
+    const [src, globalName] = asset;
+    if (window[globalName]) return Promise.resolve(window[globalName]);
+    if (optionalRuntimePromises.has(key)) return optionalRuntimePromises.get(key);
+
+    const promise = loadScriptOnce(src, globalName)
+      .catch((error) => {
+        optionalRuntimePromises.delete(key);
+        throw error;
+      });
+    optionalRuntimePromises.set(key, promise);
+    return promise;
+  }
+
+  function ensureInspectorModule() {
+    return ensureOptionalRuntime("inspector");
+  }
+
+  function ensureMinimapModule() {
+    return ensureOptionalRuntime("minimap");
+  }
+
+  function scheduleOptionalRuntimePrefetch(key, onReady = null) {
+    const load = () => ensureOptionalRuntime(key)
+      .then((api) => {
+        if (typeof onReady === "function") onReady(api);
+        return api;
+      })
+      .catch((error) => console.error(`ATLAS spacetime optional runtime failed: ${key}`, error));
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(load, { timeout: 1200 });
+    } else {
+      window.setTimeout(load, 0);
+    }
+  }
+
   function ensureRuntimeModules() {
     if (runtimePromise) return runtimePromise;
 
-    const independentLoads = new Map(RUNTIME_INDEPENDENT_ASSETS.map(([src, globalName]) => [
+    const independentLoads = new Map(RUNTIME_CORE_INDEPENDENT_ASSETS.map(([src, globalName]) => [
       globalName,
       loadScriptOnce(src, globalName)
     ]));
@@ -230,10 +271,8 @@
       semanticAxis: window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS,
       uncertainty: window.ATLAS_PERSON_SPACETIME_UNCERTAINTY,
       temporalCertainty: window.ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY,
-      inspector: window.ATLAS_PERSON_SPACETIME_INSPECTOR,
       exploration: window.ATLAS_PERSON_SPACETIME_EXPLORATION,
       dataParity: window.ATLAS_PERSON_SPACETIME_DATA_PARITY,
-      minimap: window.ATLAS_PERSON_SPACETIME_MINIMAP,
       performance: window.ATLAS_PERSON_SPACETIME_PERFORMANCE,
       spatialCompile: window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE,
       personTracks: window.ATLAS_PERSON_SPACETIME_PERSON_TRACKS,
@@ -242,6 +281,18 @@
       labelEngine: window.ATLAS_PERSON_SPACETIME_LABEL_ENGINE
     };
     if (Object.values(api).some((value) => !value)) throw new Error("ATLAS_SPACETIME_RUNTIME_INCOMPLETE");
+    return api;
+  }
+
+  function inspectorRuntime() {
+    const api = window.ATLAS_PERSON_SPACETIME_INSPECTOR;
+    if (!api?.groupActivities || !api?.selectedActivity) throw new Error("ATLAS_SPACETIME_INSPECTOR_RUNTIME_MISSING");
+    return api;
+  }
+
+  function minimapRuntime() {
+    const api = window.ATLAS_PERSON_SPACETIME_MINIMAP;
+    if (!api?.viewportRect || !api?.projectItems) throw new Error("ATLAS_SPACETIME_MINIMAP_RUNTIME_MISSING");
     return api;
   }
 
@@ -437,8 +488,8 @@
     }
   }
 
-  function selectPerson(mount, personId, options = {}) {
-    invalidateMeanwhileInteraction();
+  async function selectPerson(mount, personId, options = {}) {
+    const interactionSerial = invalidateMeanwhileInteraction();
     const nextPersonId = personId || null;
     if (options.preserveActivity !== true || nextPersonId !== selectedPersonId) {
       clearActivityLinkedMeanwhile();
@@ -451,12 +502,29 @@
       cameraZoom = Math.max(cameraZoom, FOCUS_DETAIL_ZOOM);
       pendingCameraAnchor = null;
     }
+    if (selectedPersonId) {
+      try {
+        await ensureInspectorModule();
+      } catch (error) {
+        console.error("ATLAS inspector runtime failed", error);
+        return false;
+      }
+      if (interactionSerial !== meanwhileInteractionSerial || !mount?.isConnected) return false;
+    }
     renderInto(mount);
+    return true;
   }
 
   async function selectActivity(mount, personId, activityId, options = {}) {
     const interactionSerial = invalidateMeanwhileInteraction();
-    const { inspector } = runtime();
+    try {
+      await ensureInspectorModule();
+    } catch (error) {
+      console.error("ATLAS inspector runtime failed", error);
+      return false;
+    }
+    if (interactionSerial !== meanwhileInteractionSerial || !mount?.isConnected) return false;
+    const inspector = inspectorRuntime();
     const track = compileAtlas().partitioned.tracks.find((item) => item.person_id === personId) || null;
     const activity = inspector.selectedActivity(track, activityId);
     if (!track || !activity) return false;
@@ -878,7 +946,7 @@
     if (!track) {
       return `<aside class="spacetime-sticky-inspector card is-empty" id="spacetimeInspector" aria-label="Person Activity inspector"><div><small>PERSON INSPECTOR</small><strong>인물을 선택하세요</strong><p>Person을 선택하면 전체 Activity와 ATLAS 시공간 배치 근거·출처를 이 패널에서 확인할 수 있습니다.</p></div></aside>`;
     }
-    const { inspector } = runtime();
+    const inspector = inspectorRuntime();
     const activities = inspector.groupActivities(track);
     const extent = inspector.personExtent(track);
     const canCycle = Number(navigationCount) > 1;
@@ -1032,7 +1100,7 @@
     const surface = mount.querySelector("#spacetimeMinimapSurface");
     const viewport = mount.querySelector("#spacetimeMinimapViewport");
     if (!surface || !viewport || !scroll) return;
-    const { minimap } = runtime();
+    const minimap = minimapRuntime();
     const size = { width: surface.clientWidth, height: surface.clientHeight };
     if (!(size.width > 0) || !(size.height > 0)) return;
     const rect = minimap.viewportRect(
@@ -1055,7 +1123,7 @@
     const canvas = mount.querySelector("#spacetimeMinimapCanvas");
     const selectedMarker = mount.querySelector("#spacetimeMinimapSelected");
     if (!surface || !canvas) return;
-    const { minimap } = runtime();
+    const minimap = minimapRuntime();
     const width = surface.clientWidth;
     const height = surface.clientHeight;
     if (!(width > 0) || !(height > 0)) return;
@@ -1117,7 +1185,8 @@
   function bindMinimap(mount, scroll, projection, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight) {
     const surface = mount.querySelector("#spacetimeMinimapSurface");
     if (!surface || !scroll) return;
-    const { minimap, exploration } = runtime();
+    const { exploration } = runtime();
+    const minimap = minimapRuntime();
     drawMinimap(mount, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight);
     updateMinimapViewport(mount, scroll, contentWidth, timelineHeight);
     scroll.addEventListener("scroll", () => updateMinimapViewport(mount, scroll, contentWidth, timelineHeight), { passive: true });
@@ -1551,7 +1620,7 @@
 
   function renderInto(mount) {
     const renderFocus = captureRenderFocus(mount);
-    const { timeProjection, spaceAxis, semanticAxis, spatialCompile, exploration, inspector, lod, presentationLayout } = runtime();
+    const { timeProjection, spaceAxis, semanticAxis, spatialCompile, exploration, lod, presentationLayout } = runtime();
     const timeline = timelineRange();
     const viewportWidth = Number(mount.clientWidth) || window.innerWidth || 1280;
     const responsive = responsivePresentationMetrics(viewportWidth);
@@ -1587,7 +1656,8 @@
     const ticks = timeAxis.ticks;
     const eras = buildEraBands(timeline, projection);
     const selectedTrack = compiled.partitioned.tracks.find((track) => track.person_id === selectedPersonId) || null;
-    if (selectedTrack && selectedActivityId && !inspector.selectedActivity(selectedTrack, selectedActivityId)) {
+    const selectedInspector = selectedTrack ? inspectorRuntime() : null;
+    if (selectedTrack && selectedActivityId && !selectedInspector.selectedActivity(selectedTrack, selectedActivityId)) {
       clearActivityLinkedMeanwhile();
       selectedActivityId = null;
       selectedTimeOrdinal = null;
@@ -1659,7 +1729,6 @@
 
     bindCameraViewport(mount, projection, navigationItems);
     const scroll = mount.querySelector(".spacetime-scroll");
-    bindMinimap(mount, scroll, projection, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight);
     bindVirtualizedLayers(mount, scroll, {
       projectedTracks,
       visibleTracks,
@@ -1673,6 +1742,12 @@
       meanwhileOrdinal,
       meanwhilePersonIds
     });
+
+    scheduleOptionalRuntimePrefetch("minimap", () => {
+      if (!scroll?.isConnected || mount.querySelector(".spacetime-scroll") !== scroll) return;
+      bindMinimap(mount, scroll, projection, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight);
+    });
+    if (!selectedTrack) scheduleOptionalRuntimePrefetch("inspector");
 
     const searchInput = mount.querySelector("#spacetimeSearch");
     searchInput?.addEventListener("input", (event) => {
@@ -1757,13 +1832,16 @@
     loadPromise = null;
     mount.innerHTML = '<section class="card spacetime-loading"><strong>시공간 인물도 준비 중</strong><p>Person track과 검토된 공간 배치 자료를 읽고 있습니다.</p></section>';
     try {
-      const [, loaded] = await Promise.all([ensureRuntimeModules(), ensureData()]);
+      const prerequisites = [ensureRuntimeModules(), ensureData()];
+      if (selectedPersonId) prerequisites.push(ensureInspectorModule());
+      const results = await Promise.all(prerequisites);
+      const loaded = results[1];
       if (!loaded || document.getElementById("personSpacetimeMount") !== mount) return;
       renderInto(mount);
     } catch (error) {
       console.error(error);
       mount.innerHTML = `<section class="card spacetime-error"><strong>시공간 인물도를 불러오지 못했습니다.</strong><p>${escapeHtml(error?.code || error?.message || "UNKNOWN_ERROR")}</p><button id="spacetimeRetry" type="button" class="btn">다시 시도</button></section>`;
-      mount.querySelector("#spacetimeRetry")?.addEventListener("click", () => { loadPromise = null; runtimePromise = null; activate(); });
+      mount.querySelector("#spacetimeRetry")?.addEventListener("click", () => { loadPromise = null; runtimePromise = null; optionalRuntimePromises.clear(); activate(); });
     }
   }
 
