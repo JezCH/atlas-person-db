@@ -37,13 +37,13 @@ test('historical C8 workflow manifest remains audit evidence while current workf
     .filter((name) => name.endsWith('.yml') || name.endsWith('.yaml')));
   for (const retired of [
     'atlas-stage2-schema-release.yml',
-    'atlas-stage2-train2-release.yml'
+    'atlas-stage2-train2-release.yml',
+    'atlas-p10-revalidation-release.yml'
   ]) assert.equal(workflows.has(retired), false, `completed migration transport returned: ${retired}`);
   for (const required of [
     'atlas-authoring-apply.yml',
     'atlas-correction-apply.yml',
     'atlas-integrity.yml',
-    'atlas-p10-revalidation-release.yml',
     'atlas-p11-baseline-b-capture.yml'
   ]) assert.equal(workflows.has(required), true, `required current workflow missing: ${required}`);
 
@@ -68,20 +68,9 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.match(p10Workflow, /workflow_dispatch\s*:/m);
   assert.match(p10Workflow, /postgres:17/);
   assert.match(p10Workflow, /rehearse-p10-person-duplicate-v2-revalidation\.mjs/);
-  assert.match(p10Workflow, /rehearse-p10-production-revalidation-release\.mjs/);
+  assert.doesNotMatch(p10Workflow, /rehearse-p10-production-revalidation-release\.mjs/);
   assert.doesNotMatch(p10Workflow, /environment:\s*production/);
   assert.doesNotMatch(p10Workflow, /SUPABASE_DB_URL/);
-
-  const p10ReleaseWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-p10-revalidation-release.yml', import.meta.url), 'utf8');
-  assert.match(p10ReleaseWorkflow, /workflow_dispatch\s*:/);
-  assert.doesNotMatch(p10ReleaseWorkflow, /^\s*push\s*:/m);
-  assert.doesNotMatch(p10ReleaseWorkflow, /\bpull_request\s*:/m);
-  assert.match(p10ReleaseWorkflow, /environment:\s*production/);
-  assert.match(p10ReleaseWorkflow, /id-token:\s*write/);
-  assert.match(p10ReleaseWorkflow, /atlas-person-db-p10-revalidation-release/);
-  assert.match(p10ReleaseWorkflow, /call migration_dry_run[\s\S]*call migration_apply[\s\S]*call rebuild_candidates[\s\S]*call final_verify/);
-  assert.doesNotMatch(p10ReleaseWorkflow, /SUPABASE_DB_URL|DATABASE_URL/);
-  assert.doesNotMatch(p10ReleaseWorkflow, /REVIEW_CANDIDATE|EXECUTE_APPROVED_MERGE|executeApprovedPersonMerge/);
 
   const p11Workflow = fs.readFileSync(new URL('../.github/workflows/atlas-p11-baseline-b-readiness.yml', import.meta.url), 'utf8');
   assert.match(p11Workflow, /\bpull_request\s*:/m);

@@ -11,7 +11,6 @@ const correctionApplyApi = fs.readFileSync(new URL('../api/atlas-correction-appl
 const duplicateReviewApi = fs.readFileSync(new URL('../api/atlas-duplicate-review.js', import.meta.url), 'utf8');
 const identityApi = fs.readFileSync(new URL('../api/atlas-identity.js', import.meta.url), 'utf8');
 const mutateApi = fs.readFileSync(new URL('../api/atlas-mutate.js', import.meta.url), 'utf8');
-const p10ReleaseApi = fs.readFileSync(new URL('../api/atlas-p10-revalidation-release.js', import.meta.url), 'utf8');
 const readApi = fs.readFileSync(new URL('../api/atlas-read.js', import.meta.url), 'utf8');
 const sessionApi = fs.readFileSync(new URL('../api/atlas-session.js', import.meta.url), 'utf8');
 const postgresClient = fs.readFileSync(new URL('../server/atlas-postgres-client.js', import.meta.url), 'utf8');
@@ -24,7 +23,8 @@ test('Vercel physical ATLAS API stays within budget and completed Stage2 release
   assert.ok(apiFiles.length <= 12, `physical API function budget exceeded: ${apiFiles.length}`);
   for (const retired of [
     'atlas-stage2-schema-release.js',
-    'atlas-stage2-train2-release.js'
+    'atlas-stage2-train2-release.js',
+    'atlas-p10-revalidation-release.js'
   ]) assert.equal(apiFiles.includes(retired), false, `retired live endpoint returned: ${retired}`);
 
   for (const required of [
@@ -35,7 +35,6 @@ test('Vercel physical ATLAS API stays within budget and completed Stage2 release
     'atlas-duplicate-review.js',
     'atlas-identity.js',
     'atlas-mutate.js',
-    'atlas-p10-revalidation-release.js',
     'atlas-read.js',
     'atlas-session.js'
   ]) assert.equal(apiFiles.includes(required), true, `required current endpoint missing: ${required}`);
@@ -129,12 +128,6 @@ test('audit inventory and P11 Baseline B share one physical read-only function w
   assert.match(auditInventoryApi, /ATLAS_AUDIT_SURFACE_NOT_FOUND/);
   assert.doesNotMatch(auditInventoryApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
   assert.doesNotMatch(auditInventoryApi, /insert\s+into|\bupdate\b|\bdelete\s+from|\btruncate\b/i);
-});
-
-test('server-only P10 release endpoint delegates to its exact-SHA OIDC release handler', () => {
-  assert.match(p10ReleaseApi, /atlas-p10-production-release-handler\.js/);
-  assert.match(p10ReleaseApi, /createP10ProductionReleaseHandler/);
-  assert.doesNotMatch(p10ReleaseApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
 test('session entrypoint remains the only browser authentication endpoint', () => {

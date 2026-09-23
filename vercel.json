@@ -9,11 +9,6 @@
       "**": false
     }
   },
-  "functions": {
-    "api/atlas-p10-revalidation-release.js": {
-      "includeFiles": "migration/phase-10/**/*.sql"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/atlas-reviewed-person-merge",
