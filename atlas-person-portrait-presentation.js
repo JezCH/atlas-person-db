@@ -3,9 +3,11 @@
   const api = factory(root?.ATLAS_PERSON_ERA_MODEL, root?.ATLAS_PERSON_DOMAIN_REGISTRY);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.ATLAS_PERSON_PORTRAIT_PRESENTATION = api;
-})(typeof window !== "undefined" ? window : (typeof globalThis !== "undefined" ? globalThis : this), (eraModel, domainRegistry) => {
+})(typeof window !== "undefined" ? window : (typeof globalThis !== "undefined" ? globalThis : this), (root) => {
   "use strict";
 
+  const eraModel = root?.ATLAS_PERSON_ERA_MODEL;
+  const domainRegistry = root?.ATLAS_PERSON_DOMAIN_REGISTRY;
   const ASSET_ROOT = "./portrait-assets";
   const ERA_FRAME_FILES = Object.freeze({
     "early-civilization":"early-civilization.png",
