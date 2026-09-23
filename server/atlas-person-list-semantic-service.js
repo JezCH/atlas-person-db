@@ -25,11 +25,9 @@ select
   pp.confidence,
   pp.chronology_status,
   pp.source_locator->>'ongoing_as_of' as ongoing_as_of,
-  (
-    select count(*)::int
-    from atlas_v2.person_politics_sources pps
-    where pps.person_politics_id = pp.id
-  ) as source_count,
+  jsonb_array_length(
+    coalesce(pp.provenance_snapshot->'normalized_sources', '[]'::jsonb)
+  )::int as source_count,
   pp.notes,
   prt.code as relation_type_code,
   prt.category as relation_type_category,
@@ -91,8 +89,8 @@ select
     order by pbn.id
     limit 1
   ) as period_basis_name_ko
-from atlas_v2.person_politics_v2 pp
-left join atlas_v2.person_polity_relation_types prt
+from atlas_v2.runtime_person_politics_v1 pp
+join atlas_v2.person_polity_relation_types prt
   on prt.id = pp.relation_type_id
 left join atlas_v2.roles r
   on r.id = pp.role_id
