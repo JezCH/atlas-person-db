@@ -71,7 +71,7 @@ jobs:
             git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'authoring/requests/*.json' > /tmp/atlas-candidates.txt
             # A workflow-only main push is the bounded operator-safe path for re-running the read-only
             # completeness audit; its terminal workflow_run may then trigger the sealed Runtime compile.
-            # This path is also the safe recompile trigger after Runtime compiler-only fixes.
+            # This path is also the safe recompile trigger after Runtime compiler fixes or a public Runtime-read cutover.
             # Runtime exclusion target ledger rollout also uses this workflow-only sealed recompile path.
             # Greece identity cleanup 2026-09-20: refresh stale Runtime polity projection before orphan retirement.
             # Denmark identity cleanup 2026-09-20: refresh stale Runtime polity projection before orphan retirement.
