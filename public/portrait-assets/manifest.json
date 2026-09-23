@@ -1,0 +1,133 @@
+{
+  "version": "1.0",
+  "frames": {
+    "ancient": {
+      "path": "frames/ancient.png",
+      "width": 1002,
+      "height": 1569,
+      "mode": "RGB",
+      "sha256": "ffaf48ff1e82d672b6e548a97a43c43f60d24a5bc460eb05bd3c3e9836fc7a87"
+    },
+    "classical": {
+      "path": "frames/classical.png",
+      "width": 1002,
+      "height": 1569,
+      "mode": "RGB",
+      "sha256": "dba9496c2b83f66d135db4e8ece00cb57a55614e160b3e3ab2f6e4d0c423d666"
+    },
+    "cold-war": {
+      "path": "frames/cold-war.png",
+      "width": 1002,
+      "height": 1569,
+      "mode": "RGB",
+      "sha256": "7aedd3b3a1d86970fd3202bbbe6c375724609711550e8107c64495f182c5c422"
+    },
+    "early-civilization": {
+      "path": "frames/early-civilization.png",
+      "width": 1002,
+      "height": 1569,
+      "mode": "RGB",
+      "sha256": "66230ca9780447af968ad6ba58ab9f01b3be8616401209d6b74cd540f8ef2220"
+    },
+    "early-medieval": {
+      "path": "frames/early-medieval.png",
+      "width": 1002,
+      "height": 1569,
+      "mode": "RGB",
+      "sha256": "0c6a8dc24469894eeeb0a3bf257b7970a36f5ee4bb106bd6143b1e65355b7733"
+    },
+    "early-modern": {
+      "path": "frames/early-modern.png",
+      "width": 1002,
+      "height": 1569,
+      "mode": "RGB",
+      "sha256": "f222d0520629c30c19a665960904b9780f8b41ffaae01c372bc378cbbb1eac78"
+    },
+    "industrial": {
+      "path": "frames/industrial.png",
+      "width": 1002,
+      "height": 1569,
+      "mode": "RGB",
+      "sha256": "92b951f4d14daaf802d539d225ebf91a38fc12ae1c0a7c730c3e0bcaeee3b67a"
+    },
+    "information": {
+      "path": "frames/information.png",
+      "width": 1002,
+      "height": 1569,
+      "mode": "RGB",
+      "sha256": "da72866252d685b76f262456b4c900110e70596e87e3ccd4d6d80d62aa6f916c"
+    },
+    "late-medieval": {
+      "path": "frames/late-medieval.png",
+      "width": 1002,
+      "height": 1569,
+      "mode": "RGB",
+      "sha256": "7591b208427700d4966c06728c7343868feb668d93b705005187f5c7b4a8ca1b"
+    },
+    "world-wars": {
+      "path": "frames/world-wars.png",
+      "width": 1002,
+      "height": 1569,
+      "mode": "RGB",
+      "sha256": "bebfa22fef4c46c5c60f050414c0e3fa7336448161e0bc8602ed6f1956012f33"
+    }
+  },
+  "backgrounds": {
+    "commerce": {
+      "path": "backgrounds/commerce.png",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB",
+      "sha256": "fdc595965f1f51052e377acccafcf4682779f9feedc9e0c31abadc972ca2d7ac"
+    },
+    "culture": {
+      "path": "backgrounds/culture.png",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB",
+      "sha256": "978010db8704a11d657e4a974195074db0faee749a7ed2b0132a073b4416d645"
+    },
+    "exploration": {
+      "path": "backgrounds/exploration.png",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB",
+      "sha256": "689bb907e878b3973f46e8a6aa7d16e1bbe4241dc69ba8bc901964405eab40c3"
+    },
+    "governance": {
+      "path": "backgrounds/governance.png",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB",
+      "sha256": "cfecb5aabcfa31228dd8e2175403ac93d439322e45d644aba2102e20f152b320"
+    },
+    "knowledge": {
+      "path": "backgrounds/knowledge.png",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB",
+      "sha256": "09248009dde741cc5455bf01c13f4b2bbfbe3cf4ae42dd2ce9633d10e9a55aa0"
+    },
+    "military": {
+      "path": "backgrounds/military.png",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB",
+      "sha256": "2ac6e0854e4f6522346018fefadc06881ec67f170168e615e199924fa89f6357"
+    },
+    "religion": {
+      "path": "backgrounds/religion.png",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB",
+      "sha256": "f1854977898dc97e73f69715f3e57adc11ca6749ba80e6a62865cea5b766cbe6"
+    },
+    "technology": {
+      "path": "backgrounds/technology.png",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB",
+      "sha256": "168c6c92f556808e48e4efe90ecb157b34225cfbbbe3e36e0fe1d4eacc2fd341"
+    }
+  }
+}
