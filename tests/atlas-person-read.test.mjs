@@ -12,6 +12,7 @@ const {
   readPersons,
   readPersonDetail
 } = require('../server/atlas-person-read-service.js');
+const runtimeRead = require('../server/atlas-runtime-person-read-service.js');
 const { createPersonReadHandler } = require('../server/atlas-person-read-handler.js');
 
 const PERSON_ID = '00000000-0000-4000-8000-000000000001';
@@ -312,11 +313,11 @@ test('Person read handler supports list and UUID detail modes and rejects malfor
     env: { SUPABASE_DB_URL: 'postgresql://example.invalid/atlas' },
     clientFactory: async () => ({
       async query(sql) {
-        if (sql === PERSON_READ_SQL) return { rows: [] };
-        if (sql === PERSON_DETAIL_SQL) return { rowCount: 1, rows: [detailPersonRow()] };
-        if (sql === ACTIVITY_DETAIL_SQL) return { rowCount: 1, rows: [detailActivityRow()] };
-        if (sql === PERSON_SOURCE_SQL) return { rowCount: 1, rows: [personSourceRow()] };
-        if (sql === ACTIVITY_SOURCE_SQL) return { rowCount: 1, rows: [activitySourceRow()] };
+        if (sql === runtimeRead.PERSON_READ_SQL) return { rows: [] };
+        if (sql === runtimeRead.PERSON_DETAIL_SQL) return { rowCount: 1, rows: [detailPersonRow()] };
+        if (sql === runtimeRead.ACTIVITY_DETAIL_SQL) return { rowCount: 1, rows: [detailActivityRow()] };
+        if (sql === runtimeRead.PERSON_SOURCE_SQL) return { rowCount: 1, rows: [personSourceRow()] };
+        if (sql === runtimeRead.ACTIVITY_SOURCE_SQL) return { rowCount: 1, rows: [activitySourceRow()] };
         throw new Error('unexpected handler query');
       },
       async end() { ended = true; }
@@ -330,6 +331,7 @@ test('Person read handler supports list and UUID detail modes and rejects malfor
   assert.equal(listPayload.ok, true);
   assert.equal(listPayload.schema, 'atlas-person-read/v1');
   assert.equal(listPayload.mode, 'list');
+  assert.equal(listPayload.activity_source, 'runtime-person-politics-v1');
   assert.deepEqual(listPayload.persons, []);
 
   ended = false;
@@ -338,6 +340,7 @@ test('Person read handler supports list and UUID detail modes and rejects malfor
   const detailPayload = JSON.parse(detailRes.body);
   assert.equal(detailRes.statusCode, 200);
   assert.equal(detailPayload.mode, 'detail');
+  assert.equal(detailPayload.activity_source, 'runtime-person-politics-v1');
   assert.equal(detailPayload.person.id, PERSON_ID);
   assert.equal(detailPayload.person.activities[0].relation.code, 'rules');
   assert.equal(detailPayload.person.sources[0].title, 'A History of the Scythians');
@@ -365,7 +368,7 @@ test('Person detail returns 404 for a valid UUID that is not present', async () 
     env: { SUPABASE_DB_URL: 'postgresql://example.invalid/atlas' },
     clientFactory: async () => ({
       async query(sql) {
-        assert.equal(sql, PERSON_DETAIL_SQL);
+        assert.equal(sql, runtimeRead.PERSON_DETAIL_SQL);
         return { rowCount: 0, rows: [] };
       },
       async end() {}
