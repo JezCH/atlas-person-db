@@ -33,18 +33,18 @@ function response(status, body) {
   };
 }
 
-test("browser reader uses one same-origin v2-direct GET with no fallback", async () => {
+test("browser reader uses one same-origin Runtime projection GET with no fallback", async () => {
   const reader = loadReader();
   const calls = [];
   const result = await reader.loadPersonPolitics({
     fetchImpl: async (url, options) => {
       calls.push({ url, options });
-      return response(200, { ok: true, source: "v2-direct", data: [validRow] });
+      return response(200, { ok: true, source: "runtime-person-politics-v1", data: [validRow] });
     }
   });
-  assert.equal(reader.MARKER, "ATLAS_READER_V2_DIRECT");
+  assert.equal(reader.MARKER, "ATLAS_READER_RUNTIME_PERSON_POLITICS_V1");
   assert.equal(result.error, null);
-  assert.equal(result.source, "v2-direct");
+  assert.equal(result.source, "runtime-person-politics-v1");
   assert.deepEqual(JSON.parse(JSON.stringify(result.data)), [validRow]);
   assert.equal(calls.length, 1);
   assert.equal(calls[0].url, "/api/atlas-read");
@@ -62,7 +62,7 @@ test("browser reader fails closed on endpoint failure instead of falling back", 
     }
   });
   assert.equal(calls, 1);
-  assert.equal(result.source, "v2-direct");
+  assert.equal(result.source, "runtime-person-politics-v1");
   assert.match(result.error.message, /synthetic outage/);
   assert.equal(result.data, null);
 });
