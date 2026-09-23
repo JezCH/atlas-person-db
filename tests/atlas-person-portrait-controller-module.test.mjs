@@ -58,9 +58,9 @@ function fixture() {
 
 test("portrait controller loads before Person Main and is a required dependency",()=>{
   const controllerAsset="atlas-person-portrait-controller.js?v=20260922-controller-v1";
-  const mainAsset="atlas-person-main.js?v=20260922-profile-editor-split-v1";
+  const mainAsset=html.match(/atlas-person-main\.js\?v=[^"\'\s>]+/)?.[0] || "";
   assert.match(html,/atlas-person-portrait-controller\.js\?v=20260922-controller-v1/);
-  assert.match(html,/atlas-person-main\.js\?v=20260922-profile-editor-split-v1/);
+  assert.ok(mainAsset, "Person Main must use a cache-busted asset URL");
   assert.ok(html.indexOf(controllerAsset) < html.indexOf(mainAsset));
   assert.match(main,/const portraitControllerFactory = window\.ATLAS_PERSON_PORTRAIT_CONTROLLER/);
   assert.match(main,/portraitControllerFactory\.createController/);
