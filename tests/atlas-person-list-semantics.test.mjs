@@ -99,7 +99,9 @@ test('compact list semantic SQL returns one Activity-shaped tuple including lega
     'role_code', 'role_category', 'role_source_label', 'period_basis_code'
   ]) assert.match(PERSON_LIST_SEMANTIC_SQL, new RegExp(token.replace('.', '\\.')));
 
-  assert.match(PERSON_LIST_SEMANTIC_SQL, /left join atlas_v2\.person_polity_relation_types prt/i);
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /\njoin atlas_v2\.person_polity_relation_types prt/i);
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /from atlas_v2\.runtime_person_politics_v1 pp/i);
+  assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL, /atlas_v2\.person_politics_v2/);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /\njoin atlas_v2\.period_bases pb/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /where pp\.person_id = any\(\$1::uuid\[\]\)/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by pp\.person_id, pp\.activity_start, pp\.activity_end, pp\.polity_id, pp\.id/i);
@@ -108,8 +110,9 @@ test('compact list semantic SQL returns one Activity-shaped tuple including lega
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by pbn\.id\s+limit 1/i);
   // Only the public verification date is extracted; the private JSON payload stays server-side.
   assert.match(PERSON_LIST_SEMANTIC_SQL, /pp\.source_locator->>'ongoing_as_of' as ongoing_as_of/);
-  assert.match(PERSON_LIST_SEMANTIC_SQL, /from atlas_v2\.person_politics_sources pps/i);
-  assert.match(PERSON_LIST_SEMANTIC_SQL, /where pps\.person_politics_id = pp\.id/i);
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /provenance_snapshot->'normalized_sources'/i);
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /jsonb_array_length/i);
+  assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL, /atlas_v2\.person_politics_sources/);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /as source_count/i);
   assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL.replace("pp.source_locator->>'ongoing_as_of' as ongoing_as_of", ""), /source_locator|source_key|sha256|bytes|canonical_key/i);
 });
@@ -143,7 +146,7 @@ test('compact Activity projection preserves the actual Polity-Relation-Role-Basi
   assert.equal('person_id' in projected, false);
 });
 
-test('compact Activity projection preserves zero source links as an explicit provenance debt count', () => {
+test('compact Activity projection preserves zero normalized source links as an explicit count', () => {
   const projected = projectCompactActivity(semanticRow({ sourceCount: 0 }));
   assert.equal(projected.source_count, 0);
   assert.equal('sources' in projected, false);
@@ -216,18 +219,11 @@ test('list semantics never fabricate a cross-product between independent facets'
   assert.equal(person.facets.period_bases.length, 2);
 });
 
-test('unresolved nullable Relation Type keeps the compact Activity and all other resolvable dimensions', () => {
-  const persons = [Object.freeze({ id: PERSON_A, display_name: 'A', activity_count: 1 })];
-  const [person] = attachPersonListSemantics(persons, [semanticRow({ relationId: null })]);
-  assert.equal(person.activity_summaries.length, 1);
-  assert.equal(person.activity_summaries[0].relation, null);
-  assert.equal(person.activity_summaries[0].polity.display_name, 'A 왕국');
-  assert.equal(person.activity_summaries[0].role.display_name, '왕');
-  assert.equal(person.activity_summaries[0].period_basis.code, 'reign');
-  assert.equal(person.facets.relations.length, 0);
-  assert.equal(person.facets.polities.length, 1);
-  assert.equal(person.facets.roles.length, 1);
-  assert.equal(person.facets.period_bases.length, 1);
+test('Runtime list semantic query requires a resolved Relation Type and cannot re-expose Authoring-only unresolved Activities', () => {
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /from atlas_v2\.runtime_person_politics_v1 pp/i);
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /\njoin atlas_v2\.person_polity_relation_types prt/i);
+  assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL, /left join atlas_v2\.person_polity_relation_types prt/i);
+  assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL, /atlas_v2\.person_politics_v2/);
 });
 
 test('list semantic projection fails closed instead of silently hiding an Activity count mismatch', () => {
