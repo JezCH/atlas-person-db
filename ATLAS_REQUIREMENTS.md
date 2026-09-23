@@ -1,13 +1,13 @@
 # ATLAS Requirements Source of Truth v1
 
-> Status: **PRODUCTION THROUGH P9 COMPLETE / P10 CURRENT / P11 REPAIR READY, FINAL PRODUCTION EVIDENCE UNPROVEN**
+> Status: **PRODUCTION THROUGH P10 COMPLETE / P11 REPAIR READY, FINAL PRODUCTION EVIDENCE UNPROVEN**
 >
-> As of: **2026-09-16**  
+> As of: **2026-09-23**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
 > Validator: `scripts/verify-atlas-requirements.mjs`  
 > Execution policy: `WORK_EXECUTION.md`  
 > Release policy: `RELEASE_GOVERNANCE.md`  
-> Current release evidence: `docs/release/STAGE2_CURRENT_STATUS_2026-08-19.md`
+> Current P10 release evidence: `docs/release/P10_PRODUCTION_CLOSURE_2026-09-06.md`
 
 ATLAS의 기준은 **100% traceable**, **0 known contradictions**, **0 silently omitted requirements**, **unknown stays unknown**이다. 역사적 사실은 구현 편의가 아니라 reviewed primary/academic evidence로 판정하며, 근거가 부족하면 unresolved를 보존한다.
 
@@ -130,18 +130,15 @@ Explicit unresolved history may remain Authoring-only; it must never be silently
 
 Production Train 2 run `31806129999` completed successfully. Its fail-closed final verification requires the v2 index present, legacy index absent, zero semantic duplicate groups, and the Person physical-merge interlock still closed at that release point.
 
-### P10 — Person duplicate revalidation / physical merge — CURRENT, NOT COMPLETE
+### P10 — Person duplicate revalidation / physical merge gate — COMPLETED IN PRODUCTION
 
-- `ATLAS-RQ-0220` — **PENDING:** upgrade reconciliation under semantic-key v2 and physically merge only Persons that survive complete reviewed revalidation and require a merge.
+- `ATLAS-RQ-0220` — **COMPLETED:** semantic-v2 Person duplicate revalidation and the governed physical-merge gate were closed against exact Production state.
 
-Current facts:
+The controlled `ATLAS P10 Revalidation Release` run `33981717352` completed successfully on exact Production/main SHA `f738e69f0b2cd218f9554da0332873f018b8ee07`. Immutable final verification recorded zero active requirements, zero active or pending duplicate candidates, zero blockers, and lifecycle `p10-v2-revalidated`. No automatic review or physical Person merge was executed by the closure release because no live candidate required one.
 
-- non-destructive `ATLAS P10 Person Duplicate V2 Revalidation` is repeatedly green on the audited 2026-08-19 current-main cleanup line;
-- the controlled Production P10 revalidation launcher was re-entered after reviewed Suleiman I corrections, but this audit did not recover authoritative final-success evidence for the controlled Production release;
-- therefore a green CI revalidation is **not** an authorization for physical Person merge;
-- physical merge remains fail-closed unless the exact live Production gate succeeds and reviewed candidates require execution.
+The one-shot Production release transport is historical after this completion. The live duplicate-review service, revalidation readiness, durable requirement ledger and Person merge interlock remain active safety contracts; future reviewed duplicate candidates must still satisfy those gates before any physical merge.
 
-P10 must not be marked completed merely because later P11 code exists.
+Durable closure evidence is preserved in `docs/release/P10_PRODUCTION_CLOSURE_2026-09-06.md`.
 
 ### P11 — Baseline B / end-state snapshot — REPAIR/READINESS PRESENT, NOT COMPLETE
 
@@ -177,7 +174,7 @@ Territory/Geometry work must never back-propagate invented identity, chronology 
 
 ## 4. Current project-integrity cleanup lane
 
-This cleanup lane does not change roadmap semantics and does not bypass P10/P11.
+This cleanup lane does not change roadmap semantics and does not bypass the remaining P11 gate or the live duplicate-review/revalidation safety contracts.
 
 A read-only Baseline B audit is now the intended single sweep for:
 
