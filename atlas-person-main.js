@@ -7,12 +7,13 @@
   const externalReferences = window.ATLAS_PERSON_EXTERNAL_REFERENCES;
   const portraitView = window.ATLAS_PERSON_PORTRAIT_VIEW;
   const portraitControllerFactory = window.ATLAS_PERSON_PORTRAIT_CONTROLLER;
+  const portraitPresentation = window.ATLAS_PERSON_PORTRAIT_PRESENTATION;
   const profileEditorFactory = window.ATLAS_PERSON_PROFILE_EDITOR;
   const profileWriter = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
 
-  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitControllerFactory?.createController || !profileEditorFactory?.createEditor || !mainArea || !topbar) {
+  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitControllerFactory?.createController || !portraitPresentation?.presentationFor || !profileEditorFactory?.createEditor || !mainArea || !topbar) {
     console.error("ATLAS Person Main could not initialize required dependencies");
     return;
   }
@@ -482,20 +483,24 @@
 
   function portraitFrameHtml(person, portraitResult) {
     const displayName = person?.display_name || person?.canonical_name_en || "인물";
-    if (portraitResult?.error) {
-      return '<figure class="person-detail-portrait" aria-label="초상화 조회 실패" title="초상화 조회 실패"><img data-person-portrait-image alt="" hidden /><span class="person-detail-portrait-empty">오류</span></figure>';
-    }
-    const portrait = portraitResult?.portrait || null;
-    if (!portrait) {
-      return '<figure class="person-detail-portrait" aria-label="초상화 없음" title="초상화 없음"><img data-person-portrait-image alt="" hidden /><span class="person-detail-portrait-empty">없음</span></figure>';
-    }
-    const href = safeHttpUrl(portrait.asset_url);
-    if (!href) {
-      return '<figure class="person-detail-portrait" aria-label="초상화 주소 오류" title="초상화 주소 오류"><img data-person-portrait-image alt="" hidden /><span class="person-detail-portrait-empty">오류</span></figure>';
-    }
-    const meta = [portrait.portrait_kind, portrait.evidence_level].filter(Boolean).join(" · ");
-    const title = meta ? `${displayName} 초상화 · ${meta}` : `${displayName} 초상화`;
-    return `<figure class="person-detail-portrait" aria-label="${escapeHtml(displayName)} 초상화" title="${escapeHtml(title)}"><img data-person-portrait-image src="${escapeHtml(href)}" alt="${escapeHtml(displayName)} 초상화" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></figure>`;
+    const presentation = portraitPresentation.presentationFor(person, personDomainsById?.[person?.id]);
+    const portrait = portraitResult?.error ? null : (portraitResult?.portrait || null);
+    const href = portrait ? safeHttpUrl(portrait.asset_url) : null;
+    const meta = portrait ? [portrait.portrait_kind, portrait.evidence_level].filter(Boolean).join(" · ") : "";
+    const titleParts = [
+      displayName,
+      presentation.era_label,
+      presentation.domain_label,
+      meta
+    ].filter(Boolean);
+    const layers = [
+      presentation.background_url ? `<img class="person-detail-portrait-background" src="${escapeHtml(presentation.background_url)}" alt="" aria-hidden="true" />` : '<span class="person-detail-portrait-neutral" aria-hidden="true"></span>',
+      href ? `<img class="person-detail-portrait-subject" data-person-portrait-image src="${escapeHtml(href)}" alt="${escapeHtml(displayName)} 초상화" loading="lazy" decoding="async" referrerpolicy="no-referrer" />` : "",
+      presentation.frame_url ? `<img class="person-detail-portrait-frame" src="${escapeHtml(presentation.frame_url)}" alt="" aria-hidden="true" />` : ""
+    ].join("");
+    const state = portraitResult?.error ? "초상화 조회 실패" : (href ? "초상화 등록" : "초상화 미등록");
+    const legacyEmpty = href ? "" : '<span hidden class="person-detail-portrait-empty">없음</span>';
+    return `<figure class="person-detail-portrait" data-era="${escapeHtml(presentation.era_code)}" data-domain="${escapeHtml(presentation.domain_code || "")}" aria-label="${escapeHtml(displayName)} · ${escapeHtml(presentation.era_label)} · ${escapeHtml(presentation.domain_label)} · ${state}" title="${escapeHtml(titleParts.join(" · "))}">${layers}${legacyEmpty}<figcaption class="person-detail-portrait-state">${escapeHtml(state)}</figcaption></figure>`;
   }
 
   function renderDetail(person) {
