@@ -69,17 +69,6 @@
     }
   }
 
-  function externalLinksHtml(person) {
-    const links = externalReferences?.linksForPerson?.(person) || [];
-    const safeLinks = links
-      .map((link) => ({ ...link, href: safeHttpUrl(link?.url) }))
-      .filter((link) => link.href);
-    if (!safeLinks.length) return "";
-    return `<span class="person-external-links">${safeLinks.map((link) =>
-      `<a class="person-external-link" href="${escapeHtml(link.href)}" target="_blank" rel="noopener noreferrer" data-provider="${escapeHtml(link.provider || "external")}">${escapeHtml(link.label || link.provider || "외부 링크")} ↗</a>`
-    ).join("")}</span>`;
-  }
-
   function yearLabel(value) {
     if (!Number.isInteger(value)) return "연도 미상";
     if (value < 0) return `BC ${Math.abs(value)}`;
@@ -514,7 +503,7 @@
     const panel = document.getElementById("personMainDetail");
     if (!panel) return;
     const rawHistoricity = person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity);
-    panel.innerHTML = `<div class="person-detail-head">${portraitFrameHtml(person, portraitResult)}<div><p class="eyebrow">PERSON DETAIL</p><div class="person-detail-name-row"><h2>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</h2>${externalLinksHtml(person)}</div><p><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "type 미상")}</span></p></div></div>
+    panel.innerHTML = `<div class="person-detail-head">${portraitFrameHtml(person, portraitResult)}<div><p class="eyebrow">PERSON DETAIL</p><div class="person-detail-name-row"><h2>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</h2></div><p><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "type 미상")}</span></p></div></div>
       ${profileEditorHtml(person, portraitResult)}
       <section class="person-detail-section"><h3>이름</h3>${namesHtml(person.names)}</section>
       <section class="person-detail-section"><h3>설명</h3>${descriptionsHtml(person.descriptions)}</section>
@@ -964,7 +953,6 @@
     yearLabel,
     boundaryLabel,
     safeHttpUrl,
-    externalLinksHtml,
     profileEditorHtml,
     portraitFileToWebpBase64,
     handlePortraitSubmit,

@@ -24,9 +24,9 @@ function api() {
 
 test("profile editor loads before Person Main and is an explicit dependency",()=>{
   const asset="atlas-person-profile-editor.js?v=20260922-profile-editor-v1";
-  const mainAsset="atlas-person-main.js?v=20260922-profile-editor-split-v1";
+  const mainAsset=html.match(/atlas-person-main\.js\?v=[^"\'\s>]+/)?.[0] || "";
   assert.match(html,/atlas-person-profile-editor\.js\?v=20260922-profile-editor-v1/);
-  assert.match(html,/atlas-person-main\.js\?v=20260922-profile-editor-split-v1/);
+  assert.ok(mainAsset, "Person Main must use a cache-busted asset URL");
   assert.ok(html.indexOf(asset) < html.indexOf(mainAsset));
   assert.match(main,/const profileEditorFactory = window\.ATLAS_PERSON_PROFILE_EDITOR/);
   assert.match(main,/!profileEditorFactory\?\.createEditor/);

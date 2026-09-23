@@ -218,7 +218,8 @@ test('source links are restricted to HTTP(S) and user-visible strings are escape
 
 test('Person Main CSS owns one responsive detail surface and no legacy authoring surface', () => {
   assert.match(css, /\.person-main-layout/);
-  assert.match(css, /\.person-group-other/);
+  assert.doesNotMatch(css, /\.person-group-other/);
+  assert.doesNotMatch(css, /\.person-main-controls input/);
   assert.match(css, /\.person-main-detail/);
   assert.match(css, /\.person-detail-portrait/);
   assert.doesNotMatch(css, /\.relationship-authoring-tools|\.relationship-authoring-body/);
