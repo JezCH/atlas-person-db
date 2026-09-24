@@ -28,7 +28,7 @@ test('runtime compile transport uses a dedicated GitHub OIDC workflow policy', (
   assert.equal(OIDC_POLICY.audience,'atlas-person-db-runtime-compile');
   assert.equal(OIDC_POLICY.workflowRef,'JezCH/atlas-person-db/.github/workflows/atlas-runtime-compile.yml@refs/heads/main');
   assert.equal(OIDC_POLICY.environment,'production');
-  assert.deepEqual([...OIDC_POLICY.allowedEvents].sort(),['workflow_dispatch','workflow_run']);
+  assert.deepEqual([...OIDC_POLICY.allowedEvents].sort(),['push','workflow_dispatch','workflow_run']);
 });
 
 test('runtime compile applies idempotent Runtime migration before deterministic compile', async () => {
