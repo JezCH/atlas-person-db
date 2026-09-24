@@ -67,6 +67,15 @@ test("dedicated payload keeps deployed runtime SHA separate from the OIDC workfl
   assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:NAMUWIKI_URL, operation:"set_person_korean_name" }), /UNEXPECTED_FIELD/);
 });
 
+test("NamuWiki audit request IDs are unique per execution while retaining transition identity", () => {
+  const ref = profile.normalizeNamuWikiInput(NAMUWIKI_URL);
+  const a = handler.requestIdFor(PERSON_ID, ref, null, "attempt-a");
+  const b = handler.requestIdFor(PERSON_ID, ref, null, "attempt-b");
+  assert.notEqual(a, b);
+  assert.match(a, new RegExp("^namuwiki-link:" + PERSON_ID + ":[0-9a-f]{16}:attempt-a$"));
+  assert.match(b, /:attempt-b$/);
+});
+
 test("automation overwrite guard blocks a different linked URL but permits replay and not_found recovery", () => {
   const next = profile.normalizeNamuWikiInput(NAMUWIKI_URL);
   assert.equal(profile.shouldBlockExternalReferenceOverwrite({ provider:"namuwiki", status:"linked", document_title:"다른 문서", url:"https://namu.wiki/w/other" }, next, { preventOverwrite:true }), true);
