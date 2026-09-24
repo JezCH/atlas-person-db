@@ -244,7 +244,7 @@ async function assertStage2AssertionAbsent(client, operation) {
 async function insertStage2AssertionBundle(client, operation) {
   if (operation.type === "assert_source") {
     const row = operation.exact_after.source;
-    await client.query(`insert into atlas_v2.sources(${SOURCE_FIELDS.join(",")}) values(${SOURCE_FIELDS.map((_, i) => `${i + 1}`).join(",")})`, SOURCE_FIELDS.map((field) => row[field]));
+    await client.query(`insert into atlas_v2.sources(${SOURCE_FIELDS.join(",")}) values(${SOURCE_FIELDS.map((_, i) => "$" + (i + 1)).join(",")})`, SOURCE_FIELDS.map((field) => row[field]));
     return;
   }
   if (operation.type === "assert_governance_period") {
