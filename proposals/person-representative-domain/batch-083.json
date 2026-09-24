@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "b6c799f806579c12b10af5ecef5ecca5d401994a",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign all eight SSS+ registration batch 03 Persons to culture, preserving their reviewed primary identities as writers, filmmakers, musicians, or popular-culture creators."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SSSPLUS-BATCH03-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 8,
+    "distribution": {
+      "governance": 0,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 8,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "b8fae22e-19f3-4565-9feb-cbd27579c8cd",
+      "canonical_name_en": "Walt Disney",
+      "preferred_name_ko": "월트 디즈니",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "f8a84918-0637-4d55-96df-eb8d07cd1845",
+      "canonical_name_en": "Charlie Chaplin",
+      "preferred_name_ko": "찰리 채플린",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "b9bf1082-34e6-4337-bd35-0ec5778123a0",
+      "canonical_name_en": "J. R. R. Tolkien",
+      "preferred_name_ko": "J. R. R. 톨킨",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "f538fff4-9658-496b-b807-8bcad963bcbd",
+      "canonical_name_en": "George Orwell",
+      "preferred_name_ko": "조지 오웰",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "7526594e-5ae7-466d-811e-aee445616ecd",
+      "canonical_name_en": "Elvis Presley",
+      "preferred_name_ko": "엘비스 프레슬리",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "e9d538a5-b6c4-4add-9c26-eb7bee0ca5e9",
+      "canonical_name_en": "Louis Armstrong",
+      "preferred_name_ko": "루이 암스트롱",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "89bf99d9-1a09-46ba-a302-8c80a5b118ae",
+      "canonical_name_en": "Michael Jackson",
+      "preferred_name_ko": "마이클 잭슨",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "f519e2b9-19f1-4b44-a298-6b5053269ab3",
+      "canonical_name_en": "John Lennon",
+      "preferred_name_ko": "존 레논",
+      "representative_domain": "culture"
+    }
+  ]
+}
