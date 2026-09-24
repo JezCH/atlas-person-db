@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:norman-borlaug:mexico:agronomist:1956:v1",
+  "person": {
+    "canonical_name_en": "Norman Borlaug",
+    "display_name_ko": "노먼 볼로그",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External-index review did not surface an exact same-person NamuWiki Person-document result sufficient to verify a canonical URL for Norman Borlaug. Registration continues without guessing a link or writing a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Agronomist",
+    "role_display_name_ko": "농학자",
+    "start_year": 1956,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1956,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1956 as Borlaug's representative Mexican scientific-activity year. His wheat-improvement work in Mexico contributed to the country becoming self-sufficient in wheat that year, a key precursor of the Green Revolution."
+  },
+  "sources": [
+    {
+      "title": "Norman Borlaug – Facts — NobelPrize.org",
+      "canonical_url": "https://www.nobelprize.org/prizes/peace/1970/borlaug/facts/",
+      "citation_text": "NobelPrize.org records Borlaug's wheat research in Mexico during the 1940s and 1950s and states that Mexico became self-sufficient in wheat by 1956.",
+      "source_type": "institutional_biography"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-007",
+    "review_checkpoint": "#1374 comment 5815493403",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

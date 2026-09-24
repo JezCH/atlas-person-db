@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:dmitri-mendeleev:russian-empire:chemist:1869:v1",
+  "person": {
+    "canonical_name_en": "Dmitri Mendeleev",
+    "display_name_ko": "드미트리 멘델레예프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External-index review did not surface an exact same-person NamuWiki Person-document result sufficient to verify a canonical URL for Dmitri Mendeleev. Registration continues without guessing a link or writing a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Russian Empire",
+    "display_name_ko": "러시아 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Chemist",
+    "role_display_name_ko": "화학자",
+    "start_year": 1869,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1869,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1869 as Mendeleev's representative Russian scientific-activity year, when he published the periodic law and the periodic system that became the basis of the modern periodic table."
+  },
+  "sources": [
+    {
+      "title": "Development of the periodic table — Royal Society of Chemistry",
+      "canonical_url": "https://periodic-table.rsc.org/about",
+      "citation_text": "The Royal Society of Chemistry identifies February 1869 as the point when Mendeleev discovered the periodic system and notes that his arrangement became the basis of the modern periodic table.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-075",
+    "review_checkpoint": "#1374 comment 5762054597",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

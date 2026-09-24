@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:niels-bohr:denmark:physicist:1913:v1",
+  "person": {
+    "canonical_name_en": "Niels Bohr",
+    "display_name_ko": "닐스 보어",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External-index review did not surface an exact same-person NamuWiki Person-document result sufficient to verify a canonical URL for Niels Bohr. Registration continues without guessing a link or writing a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Denmark",
+    "display_name_ko": "덴마크"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Physicist",
+    "role_display_name_ko": "물리학자",
+    "start_year": 1913,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1913,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1913 as Bohr's representative Danish scientific-activity year. He proposed his quantum theory of the hydrogen atom that year and held a lectureship at Copenhagen University in 1913-1914."
+  },
+  "sources": [
+    {
+      "title": "Niels Bohr – Facts — NobelPrize.org",
+      "canonical_url": "https://www.nobelprize.org/prizes/physics/1922/bohr/facts/",
+      "citation_text": "NobelPrize.org records Bohr's 1913 theory of the hydrogen atom and his Copenhagen-based academic career.",
+      "source_type": "institutional_biography"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-080",
+    "review_checkpoint": "#1374 comment 5762055300",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

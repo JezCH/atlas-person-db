@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:erwin-schrodinger:switzerland:physicist:1926:v1",
+  "person": {
+    "canonical_name_en": "Erwin Schrödinger",
+    "display_name_ko": "에르빈 슈뢰딩거",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External-index review did not surface an exact same-person NamuWiki Person-document result sufficient to verify a canonical URL for Erwin Schrödinger. Registration continues without guessing a link or writing a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Switzerland",
+    "display_name_ko": "스위스"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Physicist",
+    "role_display_name_ko": "물리학자",
+    "start_year": 1926,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1926,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1926 as Schrödinger's representative Swiss scientific-activity year. While Professor of Theoretical Physics at the University of Zurich, he formulated and published the wave equation that became a foundation of quantum mechanics."
+  },
+  "sources": [
+    {
+      "title": "Erwin Schrödinger – Nobel Prize in Physics 1933 — University of Zurich",
+      "canonical_url": "https://www.uzh.ch/en/researchinnovation/excellence/nobelprize/schroedinger.html",
+      "citation_text": "The University of Zurich records Schrödinger as professor there from 1921 to 1927 and identifies the winter of 1925/26 and his 1926 wave-equation papers as his major breakthrough.",
+      "source_type": "institutional_biography"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-004",
+    "review_checkpoint": "#1374 comment 5815493403",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

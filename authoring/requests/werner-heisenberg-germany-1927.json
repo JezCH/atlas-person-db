@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:werner-heisenberg:germany:physicist:1927:v1",
+  "person": {
+    "canonical_name_en": "Werner Heisenberg",
+    "display_name_ko": "베르너 하이젠베르크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External-index review did not surface an exact same-person NamuWiki Person-document result sufficient to verify a canonical URL for Werner Heisenberg. Registration continues without guessing a link or writing a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Germany",
+    "display_name_ko": "독일"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Physicist",
+    "role_display_name_ko": "물리학자",
+    "start_year": 1927,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1927,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1927 as Heisenberg's representative German scientific-activity year. He proposed the uncertainty relation that year and was appointed Professor of Theoretical Physics at the University of Leipzig."
+  },
+  "sources": [
+    {
+      "title": "Werner Heisenberg – Facts — NobelPrize.org",
+      "canonical_url": "https://www.nobelprize.org/prizes/physics/1932/heisenberg/facts/",
+      "citation_text": "NobelPrize.org records Heisenberg's 1927 uncertainty relation; its biographical material also records his 1927 appointment as professor at Leipzig.",
+      "source_type": "institutional_biography"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-082",
+    "review_checkpoint": "#1374 comment 5762055300",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

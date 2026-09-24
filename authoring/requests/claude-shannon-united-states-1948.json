@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:claude-shannon:united-states:mathematician-electrical-engineer:1948:v1",
+  "person": {
+    "canonical_name_en": "Claude Shannon",
+    "display_name_ko": "클로드 섀넌",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External-index review did not surface an exact same-person NamuWiki Person-document result sufficient to verify a canonical URL for Claude Shannon. Registration continues without guessing a link or writing a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician and electrical engineer",
+    "role_display_name_ko": "수학자·전기공학자",
+    "start_year": 1948,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1948,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1948 as Shannon's representative U.S. scientific-activity year, when A Mathematical Theory of Communication was published and established the mathematical foundations of information theory."
+  },
+  "sources": [
+    {
+      "title": "A Mathematical Theory of Communication — Nokia Bell Labs",
+      "canonical_url": "https://www.nokia.com/bell-labs/publications-and-media/publications/a-mathematical-theory-of-communication/",
+      "citation_text": "Nokia Bell Labs preserves Shannon's landmark paper A Mathematical Theory of Communication, dated July 1948, which established the mathematical framework of information theory.",
+      "source_type": "institutional_archive"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-085",
+    "review_checkpoint": "#1374 comment 5762055300",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}
