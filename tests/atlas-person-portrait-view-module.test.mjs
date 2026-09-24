@@ -25,7 +25,7 @@ function renderer() {
 test("portrait view module loads before Person Main and is an explicit required dependency",()=>{
   const viewAsset="atlas-person-portrait-view.js?v=20260924-portrait-upload-v3";
   const mainAsset=html.match(/atlas-person-main\.js\?v=[^"\'\s>]+/)?.[0] || "";
-  assert.match(html,/atlas-person-portrait-view\\.js\\?v=20260924-portrait-upload-v3/);
+  assert.match(html,/atlas-person-portrait-view\.js\?v=20260924-portrait-upload-v3/);
   assert.ok(mainAsset, "Person Main must use a cache-busted asset URL");
   assert.ok(html.indexOf(viewAsset) < html.indexOf(mainAsset));
   assert.match(main,/const portraitView = window\.ATLAS_PERSON_PORTRAIT_VIEW/);
