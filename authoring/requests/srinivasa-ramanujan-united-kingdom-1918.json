@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:srinivasa-ramanujan:united-kingdom:mathematician:1918:v1",
+  "person": {
+    "canonical_name_en": "Srinivasa Ramanujan",
+    "display_name_ko": "스리니바사 라마누잔",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External-index review did not surface an exact same-person NamuWiki Person-document result sufficient to verify a canonical URL for Srinivasa Ramanujan. Registration continues without guessing a link or writing a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": 1918,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1918 as Ramanujan's representative British mathematical-activity year. During his Cambridge period he published major joint work with G. H. Hardy and was elected a Fellow of the Royal Society on 2 May 1918."
+  },
+  "sources": [
+    {
+      "title": "Revisiting Ramanujan — Royal Society",
+      "canonical_url": "https://royalsociety.org/blog/2018/10/revisiting-ramanujan/",
+      "citation_text": "The Royal Society records Ramanujan's Cambridge research, a major 1918 paper with Hardy, and his election as a Fellow of the Royal Society on 2 May 1918.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gplist3-20260921-042",
+    "review_checkpoint": "#1374 comment 5762364540",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}
