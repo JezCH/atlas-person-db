@@ -18,8 +18,8 @@
     }
   },
   "polity": {
-    "canonical_name_en": "Kingdom of France",
-    "display_name_ko": "프랑스 왕국"
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스"
   },
   "activity": {
     "relation_type": "active_in",
@@ -52,7 +52,7 @@
     "candidate_id": "gp-20260921-106",
     "review_checkpoint": "#1374 comment 5762056835",
     "priority_revision": "#1374 comment 5816033742",
-    "representative_domain": "knowledge"
+    "representative_domain": "knowledge",
+    "polity_identity_correction": "Reuses canonical France UUID 1eaa48b6-dc60-49d6-91c4-49db556f4ddf; Kingdom of France is represented by the existing reviewed temporal state-form designation."
   }
 }
-
