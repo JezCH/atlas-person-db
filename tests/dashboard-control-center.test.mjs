@@ -49,6 +49,8 @@ test("dashboard model derives progress from canonical snapshots without stored d
   assert.equal(snapshot.work.domain.done,2);
   assert.equal(snapshot.work.namuwiki.done,2);
   assert.equal(snapshot.work.namuwiki.linked,1);
+  assert.equal(snapshot.work.namuwiki.no_exact_document,1);
+  assert.equal(snapshot.work.namuwiki.related_or_derivative_only,0);
   assert.equal(snapshot.work.namuwiki.confirmed_absent,1);
   assert.equal(snapshot.work.namuwiki.remaining,1);
   assert.equal(snapshot.work.spatial.done,1);
@@ -438,7 +440,7 @@ test("dashboard KPI order keeps actionable coverage ahead of passive counts on n
 
 test("coverage KPIs expose absolute done/total and remaining work", () => {
   assert.match(dashboardSource, /DOMAIN COVERAGE[\s\S]*w\.domain\.done[\s\S]*w\.domain\.total[\s\S]*w\.domain\.remaining/);
-  assert.match(dashboardSource, /NAMUWIKI REVIEW[\s\S]*w\.namuwiki\.linked[\s\S]*w\.namuwiki\.confirmed_absent[\s\S]*w\.namuwiki\.remaining/);
+  assert.match(dashboardSource, /NAMUWIKI REVIEW[\s\S]*w\.namuwiki\.linked[\s\S]*w\.namuwiki\.no_exact_document[\s\S]*w\.namuwiki\.related_or_derivative_only[\s\S]*w\.namuwiki\.remaining/);
   assert.match(dashboardSource, /SPATIAL READY[\s\S]*w\.spatial\.done[\s\S]*w\.spatial\.total[\s\S]*w\.spatial\.remaining/);
 });
 
@@ -1385,6 +1387,10 @@ test("NamuWiki dashboard distinguishes reviewed-unlinked reasons from unreviewed
   const snapshot=model.buildDashboardSnapshot({personResult:{persons}});
   assert.equal(snapshot.work.namuwiki.linked,1);
   assert.equal(snapshot.work.namuwiki.reviewed_unlinked,3);
+  assert.equal(snapshot.work.namuwiki.no_exact_document,1);
+  assert.equal(snapshot.work.namuwiki.related_or_derivative_only,0);
+  assert.equal(snapshot.work.namuwiki.exact_target_url_pending,1);
+  assert.equal(snapshot.work.namuwiki.exact_target_url_verified,0);
   assert.equal(snapshot.work.namuwiki.confirmed_absent,1);
   assert.equal(snapshot.work.namuwiki.target_url_pending,1);
   assert.equal(snapshot.work.namuwiki.reviewed_reason_unrecorded,1);
@@ -1417,11 +1423,55 @@ test("NamuWiki dashboard distinguishes reviewed-unlinked reasons from unreviewed
   ]);
 });
 
+test("NamuWiki work frontier preserves each reviewed-unlinked reason as a separate counter", () => {
+  const reasons=[
+    "no_exact_document",
+    "related_or_derivative_only",
+    "exact_target_url_pending",
+    "exact_target_url_verified",
+    null
+  ];
+  const persons=[
+    {id:"nw-linked",external_references:{namuwiki:{status:"linked"}},facets:{polities:[]},activity_summaries:[]},
+    ...reasons.map((reason,index)=>({
+      id:`nw-reviewed-${index}`,
+      external_references:{namuwiki:{
+        status:"not_found",
+        review_state:"reviewed_absent",
+        ...(reason ? {absence_reason:reason} : {})
+      }},
+      facets:{polities:[]},
+      activity_summaries:[]
+    })),
+    {id:"nw-legacy",external_references:{namuwiki:{status:"not_found",review_state:"legacy_unverified"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"nw-none",external_references:{},facets:{polities:[]},activity_summaries:[]}
+  ];
+  const row=model.buildDashboardSnapshot({personResult:{persons}}).work.namuwiki;
+  assert.equal(row.linked,1);
+  assert.equal(row.no_exact_document,1);
+  assert.equal(row.related_or_derivative_only,1);
+  assert.equal(row.exact_target_url_pending,1);
+  assert.equal(row.exact_target_url_verified,1);
+  assert.equal(row.reviewed_reason_unrecorded,1);
+  assert.equal(row.legacy_unverified,1);
+  assert.equal(row.no_decision,1);
+  assert.equal(row.done,6);
+  assert.equal(row.remaining,2);
+  assert.equal(row.total,8);
+});
+
 test("dashboard NamuWiki copy exposes reviewed-unlinked reason counts with readable breakdown rows", () => {
   assert.match(dashboardSource,/독립 문서 없음/);
   assert.match(dashboardSource,/문서 확인·URL 미확정/);
   assert.match(dashboardSource,/사유 미기록/);
   assert.match(dashboardSource,/미검토·재검증 필요/);
+  assert.match(dashboardSource,/관련·파생 문서만 확인/);
+  assert.match(dashboardSource,/문서·URL 확인 · 연결 대기/);
+  assert.match(dashboardSource,/기존 없음값 · 재검증/);
+  assert.match(dashboardSource,/미검토 · 결정 없음/);
+  assert.match(dashboardSource,/data-namuwiki-segment=/);
+  assert.match(dashboardSource,/dashboard-namuwiki-track/);
+  assert.match(dashboardSource,/dashboard-namuwiki-legend/);
   assert.match(dashboardSource,/NamuWiki 미연결 검토 결과/);
   assert.match(dashboardSource,/data-dashboard-breakdown=/);
   assert.match(dashboardSource,/data-dashboard-breakdown-reason=/);
@@ -1430,4 +1480,8 @@ test("dashboard NamuWiki copy exposes reviewed-unlinked reason counts with reada
   assert.match(dashboardCssSource,/\.dashboard-breakdown-row\{display:grid;grid-template-columns:minmax\(0,1fr\) auto/);
   assert.match(dashboardCssSource,/\.dashboard-breakdown-action\{width:100%;font:inherit;text-align:left;background:#fff/);
   assert.match(dashboardCssSource,/word-break:keep-all/);
+  assert.match(dashboardCssSource,/\.dashboard-namuwiki-track\{display:flex/);
+  assert.match(dashboardCssSource,/data-namuwiki-segment="related_or_derivative_only"/);
+  assert.match(dashboardCssSource,/\.dashboard-namuwiki-legend\{display:grid/);
 });
+
