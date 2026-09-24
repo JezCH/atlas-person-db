@@ -438,7 +438,7 @@ test("dashboard KPI order keeps actionable coverage ahead of passive counts on n
 
 test("coverage KPIs expose absolute done/total and remaining work", () => {
   assert.match(dashboardSource, /DOMAIN COVERAGE[\s\S]*w\.domain\.done[\s\S]*w\.domain\.total[\s\S]*w\.domain\.remaining/);
-  assert.match(dashboardSource, /NAMUWIKI REVIEW[\s\S]*w\.namuwiki\.done[\s\S]*w\.namuwiki\.total[\s\S]*w\.namuwiki\.remaining/);
+  assert.match(dashboardSource, /NAMUWIKI REVIEW[\\s\\S]*w\\.namuwiki\\.linked[\\s\\S]*w\\.namuwiki\\.confirmed_absent[\\s\\S]*w\\.namuwiki\\.remaining/);
   assert.match(dashboardSource, /SPATIAL READY[\s\S]*w\.spatial\.done[\s\S]*w\.spatial\.total[\s\S]*w\.spatial\.remaining/);
 });
 
