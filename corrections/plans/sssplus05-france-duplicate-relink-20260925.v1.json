@@ -1,0 +1,130 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "sssplus05_france_duplicate_relink_20260925_v1",
+  "as_of": "2026-09-25",
+  "status": "REVIEWED_DUPLICATE_POLITY_RECURRENCE_RELINK",
+  "release_order": 690,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "SSS+ superbatch 05 post-apply Spatial Candidate Audit run 36035514193 identified a newly created duplicate Kingdom of France UUID 7e090994-f196-4957-8295-dcfa08c53fba with exactly two Activities. Existing reviewed France identity merge #1357 already establishes France UUID 1eaa48b6-dc60-49d6-91c4-49db556f4ddf as the survivor and preserves Kingdom of France / 프랑스 왕국 through temporal state-form designations covering 1654 and 1762.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "preserve_activity_identity": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "spatial_candidate_audit_run": "36035514193",
+    "duplicate_polity_id": "7e090994-f196-4957-8295-dcfa08c53fba",
+    "survivor_polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+    "prior_reviewed_france_merge_pr": 1357,
+    "prior_france_state_form_designation": "Existing France state-form designation Kingdom of France / 프랑스 왕국 covers 1226–1792, therefore both 1654 and 1762 Activities retain the historically intended display semantics after relink.",
+    "rationale": "Do not spatially legitimize the duplicate polity. Relink the two newly authored intellectual Activities to the established France identity and preserve all Activity UUIDs, chronology, roles, notes, and source links."
+  },
+  "operations": [
+    {
+      "case_id": "sssplus05_blaise_pascal_duplicate_kingdom_of_france_to_france",
+      "type": "rewrite_activity",
+      "activity_id": "b63345ff-f96f-4723-85d6-fe3e7c8c3e27",
+      "baseline_before": {
+        "person_id": "00ee8555-9615-4d8a-a434-70b5de15a357",
+        "polity_id": "7e090994-f196-4957-8295-dcfa08c53fba",
+        "role_id": "66809481-8dec-4e10-827d-74e272159509",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1654,
+        "activity_end": 1654,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "b63345ff-f96f-4723-85d6-fe3e7c8c3e27",
+        "person_id": "00ee8555-9615-4d8a-a434-70b5de15a357",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "66809481-8dec-4e10-827d-74e272159509",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1654,
+        "activity_start_detail": {
+          "year": 1654,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1654,
+        "activity_end_detail": {
+          "year": 1654,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "sssplus05_rousseau_duplicate_kingdom_of_france_to_france",
+      "type": "rewrite_activity",
+      "activity_id": "2c6c5020-ce62-46cb-8eea-4f1dcb3cbfd2",
+      "baseline_before": {
+        "person_id": "add62f50-5dfe-4b74-b8cb-9af003f859b2",
+        "polity_id": "7e090994-f196-4957-8295-dcfa08c53fba",
+        "role_id": "0b558ae1-024e-44e7-af2e-82b22df65eb2",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1762,
+        "activity_end": 1762,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "2c6c5020-ce62-46cb-8eea-4f1dcb3cbfd2",
+        "person_id": "add62f50-5dfe-4b74-b8cb-9af003f859b2",
+        "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "0b558ae1-024e-44e7-af2e-82b22df65eb2",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1762,
+        "activity_start_detail": {
+          "year": 1762,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1762,
+        "activity_end_detail": {
+          "year": 1762,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 2,
+    "production_mutation_authorized": false
+  }
+}
