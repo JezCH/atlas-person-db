@@ -48,7 +48,9 @@
       </div>
       <div class="dashboard-progress-meta">
         <span>연결 <b>${known ? value(row.linked) : "—"}</b></span>
-        <span>없음 확정 <b>${known ? value(row.confirmed_absent) : "—"}</b></span>
+        <span>독립 문서 없음 <b>${known ? value(row.confirmed_absent) : "—"}</b></span>
+        <span>문서 확인·URL 미확정 <b>${known ? value(row.target_url_pending) : "—"}</b></span>
+        <span>사유 미기록 <b>${known ? value(row.reviewed_reason_unrecorded) : "—"}</b></span>
         <span>미검토·재검증 필요 <b>${known ? value(row.remaining) : "—"}</b></span>
       </div>
     </article>`;
@@ -291,15 +293,16 @@
   function breakdownCard(label, item) {
     const total = item?.total == null ? "—" : value(item.total);
     const unit = unitLabel(item?.unit || "person");
-    const rows = (item?.rows || []).map((row) => `<div class="dashboard-domain-row">
+    const eyebrow = item?.eyebrow || "INCOMPLETE REASONS";
+    const rows = (item?.rows || []).map((row) => `<div class="dashboard-breakdown-row">
       <span title="${escapeHtml(row.label || row.code || "")}">${escapeHtml(row.label || row.code || "unknown")}</span><b>${value(row.count)}</b>
     </div>`).join("");
     const unattributed = Number(item?.unattributed_count || 0) > 0
-      ? `<div class="dashboard-domain-row"><span>사유 미확인</span><b>${value(item.unattributed_count)}</b></div>`
+      ? `<div class="dashboard-breakdown-row"><span>사유 미확인</span><b>${value(item.unattributed_count)}</b></div>`
       : "";
     return `<article class="dashboard-panel card">
-      <div class="dashboard-panel-head"><div><p class="eyebrow">INCOMPLETE REASONS</p><h3>${escapeHtml(label)}</h3></div><span>${total} ${unit}</span></div>
-      <div class="dashboard-domain-list">${rows || unattributed ? rows + unattributed : `<div class="dashboard-domain-row"><span>${escapeHtml(reasonLabel(item?.unavailable_reason) || "사유 원본 확인 불가")}</span><b>—</b></div>`}</div>
+      <div class="dashboard-panel-head"><div><p class="eyebrow">${escapeHtml(eyebrow)}</p><h3>${escapeHtml(label)}</h3></div><span>${total} ${unit}</span></div>
+      <div class="dashboard-breakdown-list">${rows || unattributed ? rows + unattributed : `<div class="dashboard-breakdown-row"><span>${escapeHtml(reasonLabel(item?.unavailable_reason) || "사유 원본 확인 불가")}</span><b>—</b></div>`}</div>
     </article>`;
   }
 
@@ -501,6 +504,7 @@
     const incompleteCards = [
       ["Representative Domain",b.domain],
       ["NamuWiki",b.namuwiki],
+      ["NamuWiki 미연결 검토 결과",b.namuwiki_absent],
       ["Spatial",b.spatial],
       ["Runtime Exclusion",b.runtime]
     ].filter(([,item]) => shouldRenderBreakdown(item));
