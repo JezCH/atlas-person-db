@@ -192,7 +192,18 @@ async function setExternalReference(client, personId, rawPayload) {
   const next = normalizeNamuWikiInput(rawPayload?.value);
   const current = await currentExternalReference(client, personId, provider, { forUpdate: true });
   if (sameReference(current, next)) {
-    return Object.freeze({ replay:true, before:{ external_reference:current }, after:{ external_reference:current } });
+    const refreshed = await client.query(`
+      update atlas_v2.person_external_references
+         set checked_at=current_date,updated_at=now()
+       where person_id=$1::uuid and provider=$2
+       returning provider,status,checked_at::text,document_title,url,updated_at`, [personId, provider]);
+    const after = refreshed.rows[0] || current;
+    return Object.freeze({
+      replay:true,
+      review_recorded:true,
+      before:{ external_reference:current },
+      after:{ external_reference:after }
+    });
   }
   if (externalReferenceExpectedCurrentMismatch(current, rawPayload?.expected_current_reference)) {
     throw new Error("PERSON_EXTERNAL_REFERENCE_EXPECTED_CURRENT_MISMATCH");
@@ -258,7 +269,7 @@ function createPersonProfileMutationService({ client } = {}) {
         ? await setKoreanName(client, personId, request.payload?.name)
         : await setExternalReference(client, personId, request.payload);
 
-      if (!change.replay) {
+      if (!change.replay || change.review_recorded === true) {
         await writeAudit(client, { requestId, personId, operation, before:change.before, after:change.after });
       }
 

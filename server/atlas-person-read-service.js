@@ -1,6 +1,7 @@
 "use strict";
 
 const { TEMPORAL_POLITY_DESIGNATION_JOIN_SQL } = require("./atlas-polity-temporal-designation-read.js");
+const namuwikiReview = require("./atlas-namuwiki-review-state.js");
 
 const PERSON_READ_SQL = `
 select
@@ -45,6 +46,7 @@ select
     from atlas_v2.person_external_references per
     where per.person_id = p.id
   ), '{}'::jsonb) as external_references,
+  ${namuwikiReview.NOT_FOUND_REVIEW_AUDIT_SQL} as namuwiki_not_found_reviewed,
   (select count(*)::int from atlas_v2.person_politics_v2 pp where pp.person_id = p.id) as activity_count,
   (select min(pp.activity_start) from atlas_v2.person_politics_v2 pp where pp.person_id = p.id) as first_activity_year,
   (select max(pp.activity_end) from atlas_v2.person_politics_v2 pp where pp.person_id = p.id) as last_activity_year
@@ -94,7 +96,8 @@ select
     )
     from atlas_v2.person_external_references per
     where per.person_id = p.id
-  ), '{}'::jsonb) as external_references
+  ), '{}'::jsonb) as external_references,
+  ${namuwikiReview.NOT_FOUND_REVIEW_AUDIT_SQL} as namuwiki_not_found_reviewed
 from atlas_v2.persons p
 where p.id = $1::uuid
 limit 1
@@ -222,7 +225,7 @@ function normalizeDescriptionRows(value) {
   }));
 }
 
-function normalizeExternalReferences(value) {
+function normalizeExternalReferences(value, { personId = null, notFoundAudited = false } = {}) {
   const empty = Object.freeze({ namuwiki:null });
   if (!value || typeof value !== "object" || Array.isArray(value)) return empty;
   const raw = value.namuwiki;
@@ -230,7 +233,10 @@ function normalizeExternalReferences(value) {
   const status = String(raw.status || "").trim();
   if (status !== "linked" && status !== "not_found") return empty;
   const checkedAt = raw.checked_at == null ? null : String(raw.checked_at);
-  if (status === "not_found") return Object.freeze({ namuwiki:Object.freeze({ status, checked_at:checkedAt }) });
+  if (status === "not_found") {
+    const reviewState = namuwikiReview.stateFor({ personId, status, audited:notFoundAudited });
+    return Object.freeze({ namuwiki:Object.freeze({ status, checked_at:checkedAt, review_state:reviewState }) });
+  }
   const documentTitle = raw.document_title == null ? null : String(raw.document_title);
   const url = raw.url == null ? null : String(raw.url);
   if (!documentTitle || !url) return empty;
@@ -283,7 +289,10 @@ function projectPersonIdentity(row) {
     display_name: displayName,
     names: Object.freeze(names),
     descriptions: Object.freeze(descriptions),
-    external_references:normalizeExternalReferences(row.external_references)
+    external_references:normalizeExternalReferences(row.external_references, {
+      personId:String(row.id),
+      notFoundAudited:Boolean(row.namuwiki_not_found_reviewed)
+    })
   };
 }
 

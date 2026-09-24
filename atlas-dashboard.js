@@ -38,6 +38,22 @@
     </article>`;
   }
 
+  function namuwikiProgressRow(row) {
+    const known = row?.done != null && row?.total != null && row?.percentage != null;
+    return `<article class="dashboard-progress-row">
+      <div class="dashboard-progress-copy"><div><strong>나무위키 검토</strong><span>실제 문서 존재 여부 검증 기준</span></div>
+        <b>${known ? `${value(row.done)} / ${value(row.total)}` : "원본 확인 실패"}</b></div>
+      <div class="dashboard-progress-track" aria-label="나무위키 검토 진행률" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${known ? row.percentage : 0}">
+        <span style="width:${known ? row.percentage : 0}%"></span>
+      </div>
+      <div class="dashboard-progress-meta">
+        <span>연결 <b>${known ? value(row.linked) : "—"}</b></span>
+        <span>없음 확정 <b>${known ? value(row.confirmed_absent) : "—"}</b></span>
+        <span>미검토·재검증 필요 <b>${known ? value(row.remaining) : "—"}</b></span>
+      </div>
+    </article>`;
+  }
+
   function kpiCard({ code, label, primary, detail, drilldown }) {
     const actionable = drilldown?.available === true
       && drilldown?.route === "persons"
@@ -501,7 +517,7 @@
       <section class="dashboard-kpi-grid" aria-label="핵심 통계">
         ${kpiCard({code:"persons",label:"PERSONS",primary:value(k.persons),detail:`historical ${value(k.historical)} · 기타 ${value(k.other_historicity)}`,drilldown:kd.persons})}
         ${kpiCard({code:"domain",label:"DOMAIN COVERAGE",primary:pct(w.domain.percentage),detail:`${value(w.domain.done)} / ${value(w.domain.total)} · 잔여 ${value(w.domain.remaining)}`,drilldown:kd.domain})}
-        ${kpiCard({code:"namuwiki",label:"NAMUWIKI REVIEW",primary:pct(w.namuwiki.percentage),detail:`${value(w.namuwiki.done)} / ${value(w.namuwiki.total)} · 잔여 ${value(w.namuwiki.remaining)}`,drilldown:kd.namuwiki})}
+        ${kpiCard({code:"namuwiki",label:"NAMUWIKI REVIEW",primary:pct(w.namuwiki.percentage),detail:`연결 ${value(w.namuwiki.linked)} · 없음 확정 ${value(w.namuwiki.confirmed_absent)} · 검증 필요 ${value(w.namuwiki.remaining)}`,drilldown:kd.namuwiki})}
         ${kpiCard({code:"spatial",label:"SPATIAL READY",primary:pct(w.spatial.percentage),detail:`${value(w.spatial.done)} / ${value(w.spatial.total)} · 잔여 ${value(w.spatial.remaining)}`,drilldown:kd.spatial})}
         ${kpiCard({code:"activities",label:"RUNTIME ACTIVITIES",primary:value(k.activities),detail:"Person Runtime projection",drilldown:kd.activities})}
         ${kpiCard({code:"polities",label:"USED POLITIES",primary:value(k.polities),detail:"현재 Person Activity에서 참조",drilldown:kd.polities})}
@@ -578,7 +594,7 @@
           <div class="dashboard-panel-head"><div><p class="eyebrow">WORK FRONTIER</p><h3>작업 진행</h3></div><span>실데이터 기준</span></div>
           <div class="dashboard-progress-list">
             ${progressRow("대표 분야 분류", w.domain, "대표 분야 배정")}
-            ${progressRow("나무위키 검토", w.namuwiki, "연결 + 없음 확인")}
+            ${namuwikiProgressRow(w.namuwiki)}
             ${progressRow("Spatial 준비", w.spatial, "활동 위치 배치")}
             ${progressRow("활동 연결", w.runtime_activity, "활동이 1건 이상 연결된 인물")}
           </div>
