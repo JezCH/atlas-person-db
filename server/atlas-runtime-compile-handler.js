@@ -16,7 +16,7 @@ const OIDC_POLICY = Object.freeze({
   ref: "refs/heads/main",
   workflowRef: "JezCH/atlas-person-db/.github/workflows/atlas-runtime-compile.yml@refs/heads/main",
   environment: "production",
-  allowedEvents: new Set(["workflow_run", "workflow_dispatch"])
+  allowedEvents: new Set(["push", "workflow_run", "workflow_dispatch"])
 });
 
 function bearerToken(req) {
