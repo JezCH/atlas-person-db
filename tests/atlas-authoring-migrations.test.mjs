@@ -27,8 +27,8 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(AUTHORING_MIGRATION_PATHS[9], /20260906_p13a_temporal_unknown_boundaries\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[10], /20260906_p13_source_place_objects\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[11], /20260920_person_portraits\.sql$/);
-  assert.match(AUTHORING_MIGRATION_PATHS[12], /20260921_person_portrait_history_v2\\.sql$/);
-  assert.match(AUTHORING_MIGRATION_PATHS[13], /20260924_person_portraits_simple_v3\\.sql$/);
+  assert.match(AUTHORING_MIGRATION_PATHS[12], /20260921_person_portrait_history_v2\.sql$/);
+  assert.match(AUTHORING_MIGRATION_PATHS[13], /20260924_person_portraits_simple_v3\.sql$/);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
