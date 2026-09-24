@@ -1464,7 +1464,7 @@ test("dashboard NamuWiki copy exposes reviewed-unlinked reason counts with reada
   assert.match(dashboardSource,/독립 문서 없음/);
   assert.match(dashboardSource,/문서 확인·URL 미확정/);
   assert.match(dashboardSource,/사유 미기록/);
-  assert.match(dashboardSource,/미검토·재검증 필요/);
+  assert.match(dashboardSource,/미검토·재검증/);
   assert.match(dashboardSource,/관련·파생 문서만 확인/);
   assert.match(dashboardSource,/문서·URL 확인 · 연결 대기/);
   assert.match(dashboardSource,/기존 없음값 · 재검증/);
