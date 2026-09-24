@@ -10,9 +10,104 @@
   })));
 
   window.ATLAS_POLITY_REVIEW_CANDIDATES = Object.freeze({
-    schema: "atlas-polity-review-candidates/v1",
-    generated_at: "2026-09-20",
-    source_scope: "Production /api/atlas-read current canonical Polity read + reviewed identity decisions + 2026-09-20 exhaustive similarity audit",
+    schema: "atlas-polity-review-candidates/v2",
+    generated_at: "2026-09-25",
+    source_scope: "Current canonical Polity read + #977 POLITY_IDENTITY_EXHAUSTIVE_SIMILARITY_AUDIT checkpoint 5748136361 + terminal reconciliation of the prior 16/16 reviewed state-form merge program",
+    active_frontier_source: Object.freeze({
+      issue: 977,
+      checkpoint_comment_id: 5748136361,
+      priority_rule: "confirmed false-merge/relink defects first; resolved/superseded prior cases remain review history instead of active work"
+    }),
+    active_frontier: freezeRows([
+      {
+        id: "later-jin-houjin-houjin-collapse",
+        kind: "repair_review",
+        title: "Later Jin identity 동명이체 과통합",
+        left: { name: "Later Jin", ko: "후진", polity_id: "0c1849ca-e4ae-572b-bfe3-0253aa08d83a" },
+        right: { name: "Later Jin (936–947) / Later Jin (1616–1636)", ko: "후진(後晉) / 후금(後金)" },
+        rationale: "한 UUID가 오대십국의 후진(936–947)과 여진의 후금(1616–1636)을 함께 담고 있습니다. 동명 영문 표기로 생긴 false merge이므로 identity 분리와 명칭 구분이 필요합니다.",
+        suggested_action: "repair",
+        status: "AUDIT_REPAIR_REQUIRED",
+        evidence: ["#977 exhaustive similarity audit confirmed false merge", "후진(後晉)과 후금(後金)은 별도 identity로 분리", "명칭 충돌도 함께 해소"]
+      },
+      {
+        id: "kingdom-of-serbia-medieval-modern-collapse",
+        kind: "repair_review",
+        title: "Kingdom of Serbia identity 시대 과통합",
+        left: { name: "Kingdom of Serbia", ko: "세르비아 왕국", polity_id: "63c4d67f-2190-4b71-bde6-69d1cda80a3f" },
+        right: { name: "Medieval Serbia / modern Kingdom of Serbia", ko: "중세 세르비아 / 근대 세르비아 왕국" },
+        rationale: "중세 Stefan Dušan 시기와 근대 Peter I 시기가 한 UUID에 섞여 있습니다. 중세·근대 identity를 분리한 뒤 중세 Kingdom→Serbian Empire의 state-form 연속성은 별도로 검토해야 합니다.",
+        suggested_action: "repair",
+        status: "AUDIT_REPAIR_REQUIRED",
+        evidence: ["#977 exhaustive similarity audit confirmed false merge", "중세와 근대 세르비아 왕국 분리 필요", "중세 Kingdom→Serbian Empire는 후속 경계 검토"]
+      },
+      {
+        id: "han-han-character-collapse",
+        kind: "repair_review",
+        title: "Han identity 韓 / 漢 오결합",
+        left: { name: "Han", ko: "한", polity_id: "46740a29-a891-5ff8-9804-0f8aba62e71e" },
+        right: { name: "Western Han", ko: "전한" },
+        rationale: "전국시대 한(韓)과 장건이 속한 한 왕조(漢)가 한 UUID에 섞였습니다. 장건 Activity는 기존 Western Han으로 재연결하고 전국시대 한은 독립 identity와 명칭을 유지해야 합니다.",
+        suggested_action: "repair",
+        status: "AUDIT_REPAIR_REQUIRED",
+        evidence: ["#977 exhaustive similarity audit confirmed false relink", "Zhang Qian은 existing Western Han으로 재연결", "韓 / 漢 명칭 구분 필요"]
+      },
+      {
+        id: "egypt-ancient-modern-collapse",
+        kind: "repair_review",
+        title: "Egypt identity 고대·현대 과통합",
+        left: { name: "Egypt", ko: "이집트", polity_id: "8c25246a-3d73-4df9-8e4a-b0c5ca97c241" },
+        right: { name: "Ancient Egypt / modern Egyptian state family", ko: "고대 이집트 / 현대 이집트 국가계열" },
+        rationale: "파라오·프톨레마이오스 선행 계열과 Nasser·Sadat의 현대 국가 Activity가 generic Egypt UUID에 함께 존재합니다. 고대/현대 family를 분리·재연결해야 합니다.",
+        suggested_action: "repair",
+        status: "AUDIT_REPAIR_REQUIRED",
+        evidence: ["#977 exhaustive similarity audit confirmed false merge/relink", "현대 1953–1958 / UAR / post-1971 phases를 고대 Egypt와 분리", "family-level split/relink required"]
+      },
+      {
+        id: "poland-medieval-modern-collapse",
+        kind: "repair_review",
+        title: "Poland identity 중세·현대 과통합",
+        left: { name: "Poland", ko: "폴란드", polity_id: "c6a9be73-8769-4b74-a066-c29555f508ba" },
+        right: { name: "Second Polish Republic / early Poland", ko: "폴란드 제2공화국 / 초기 폴란드" },
+        rationale: "Mieszko I의 중세 행과 Roman Dmowski의 1923년 행이 같은 generic Poland UUID에 섞여 있습니다. Dmowski는 기존 Second Polish Republic으로 재연결하고 중세 행은 별도 초기 폴란드 identity를 검토해야 합니다.",
+        suggested_action: "repair",
+        status: "AUDIT_REPAIR_REQUIRED",
+        evidence: ["#977 exhaustive similarity audit confirmed false merge/relink", "Dmowski → existing Second Polish Republic", "Mieszko I 계열은 별도 reviewed early-Poland identity 필요"]
+      },
+      {
+        id: "germany-pre1945-frg-collapse",
+        kind: "repair_review",
+        title: "Germany identity 전전·현대 과통합",
+        left: { name: "Germany", ko: "독일", polity_id: "5dee6535-9839-4c8b-8de5-b7519d41801d" },
+        right: { name: "Federal Republic of Germany", ko: "독일연방공화국" },
+        rationale: "1933–1945 독일 국가 행과 Angela Merkel 2005–2021 행이 generic Germany UUID에 함께 있고 Federal Republic of Germany가 별도로 존재합니다. Merkel을 FRG로 재조정하고 pre-1945 identity는 별도 검토해야 합니다.",
+        suggested_action: "repair",
+        status: "AUDIT_REPAIR_REQUIRED",
+        evidence: ["#977 exhaustive similarity audit confirmed false merge/relink", "Merkel → existing Federal Republic of Germany", "pre-1945 Germany identity 별도 검토"]
+      },
+      {
+        id: "ireland-prestate-modern-collapse",
+        kind: "repair_review",
+        title: "Ireland identity 전근대·현대 과통합",
+        left: { name: "Ireland", ko: "아일랜드", polity_id: "c9490230-d6cb-4f6b-a3ed-8baa0248c37e" },
+        right: { name: "Irish Free State / modern Ireland", ko: "아일랜드 자유국 / 현대 아일랜드" },
+        rationale: "O'Connell의 pre-state 맥락과 Collins 혁명기, post-1937 국가가 generic Ireland에 섞여 있습니다. 전근대·혁명기 행을 먼저 분리/재연결한 뒤 Irish Free State→Ireland 통합을 검토해야 합니다.",
+        suggested_action: "repair",
+        status: "AUDIT_REPAIR_REQUIRED",
+        evidence: ["#977 exhaustive similarity audit confirmed contamination", "pre-state rows split/relink 선행", "그 후 Irish Free State → modern Ireland state-form merge 검토"]
+      },
+      {
+        id: "kingdom-of-italy-multi-era-collapse",
+        kind: "repair_review",
+        title: "Kingdom of Italy identity 과통합",
+        left: { name: "Kingdom of Italy", ko: "이탈리아 왕국", polity_id: "88921412-76c8-431c-a6e6-8c43d5a8b94a" },
+        right: { name: "Medieval / Napoleonic / 1861–1946 Kingdoms of Italy", ko: "중세·나폴레옹기·근대 이탈리아 왕국" },
+        rationale: "Otto I·Frederick Barbarossa·Napoleon I·Victor Emmanuel II가 같은 UUID에 연결되어 서로 다른 시대의 동명 정치체가 하나로 뭉쳐 있습니다.",
+        suggested_action: "repair",
+        status: "AUDIT_REPAIR_REQUIRED",
+        evidence: ["기존 REVIEWED_SPLIT_REQUIRED를 최신 전수감사에서도 재확인", "관측 범위 951–1946", "중세 / 나폴레옹기 / 1861–1946 세 identity 분리 필요"]
+      }
+    ]),
     decision_options: Object.freeze([
       entry({ code: "merge", label: "병합" }),
       entry({ code: "keep_left", label: "왼쪽 유지" }),
@@ -21,6 +116,7 @@
       entry({ code: "retire_left", label: "왼쪽 폐기" }),
       entry({ code: "retire_right", label: "오른쪽 폐기" }),
       entry({ code: "split_required", label: "분리 필요" }),
+      entry({ code: "repair", label: "재연결·분리 수정" }),
       entry({ code: "hold", label: "보류" })
     ]),
     confirmed_merges: freezeRows([
