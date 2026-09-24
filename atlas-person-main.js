@@ -495,8 +495,7 @@
     ].filter(Boolean);
     const layers = [
       presentation.background_url ? `<img class="person-detail-portrait-background" src="${escapeHtml(presentation.background_url)}" alt="" aria-hidden="true" />` : '<span class="person-detail-portrait-neutral" aria-hidden="true"></span>',
-      href ? `<img class="person-detail-portrait-subject" data-person-portrait-image src="${escapeHtml(href)}" alt="${escapeHtml(displayName)} 초상화" loading="lazy" decoding="async" referrerpolicy="no-referrer" />` : "",
-      presentation.frame_url ? `<img class="person-detail-portrait-frame" src="${escapeHtml(presentation.frame_url)}" alt="" aria-hidden="true" />` : ""
+      href ? `<img class="person-detail-portrait-subject" data-person-portrait-image src="${escapeHtml(href)}" alt="${escapeHtml(displayName)} 초상화" loading="lazy" decoding="async" referrerpolicy="no-referrer" />` : ""
     ].join("");
     const state = portraitResult?.error ? "초상화 조회 실패" : (href ? "초상화 등록" : "초상화 미등록");
     const legacyEmpty = href ? "" : '<span hidden class="person-detail-portrait-empty">없음</span>';
