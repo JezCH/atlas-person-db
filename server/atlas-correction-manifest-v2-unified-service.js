@@ -83,6 +83,7 @@ async function unifiedCounts(client) {
   const result = await client.query(`select
     (select count(*)::int from atlas_v2.person_politics_v2) as activities,
     (select count(*)::int from atlas_v2.person_politics_sources) as activity_sources,
+    (select count(*)::int from atlas_v2.sources) as sources,
     (select count(*)::int from atlas_v2.chronology_claims) as chronology_claims,
     (select count(*)::int from atlas_v2.relationship_descriptions) as relationship_descriptions,
     (select count(*)::int from atlas_v2.polity_relations) as polity_relations,
