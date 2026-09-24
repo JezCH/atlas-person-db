@@ -107,10 +107,6 @@ const personPortraitHandler = createLazyHandler(() => {
   const { createPersonPortraitHandler } = require("../server/atlas-person-portrait-handler.js");
   return createPersonPortraitHandler({ clientFactory:getPostgresClientFactory(), allowedMethods:["GET"] });
 });
-const personPortraitSourceCandidatesHandler = createLazyHandler(() => {
-  const { createPersonPortraitSourceCandidatesHandler } = require("../server/atlas-person-portrait-source-candidates-handler.js");
-  return createPersonPortraitSourceCandidatesHandler({ clientFactory:getPostgresClientFactory() });
-});
 
 const PUBLIC_RUNTIME_IDENTITY_SCHEMA = "atlas-runtime-identity/v1";
 
@@ -177,7 +173,6 @@ async function consolidatedReadHandler(req, res) {
   const surface = selectReadSurface(req);
   if (surface === "person") return personReadHandler(req, res);
   if (surface === "person-portrait") return personPortraitHandler(req, res);
-  if (surface === "person-portrait-source-candidates") return personPortraitSourceCandidatesHandler(req, res);
   if (surface === "polity") return polityReadHandler(req, res);
   if (surface === "catalog") return catalogReadHandler(req, res);
   if (surface === "recent-delta") return recentDeltaReadHandler(req, res);
