@@ -1,0 +1,83 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "27dad6ee610a0303234ecec27ac1db0afdf7ece1",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign the nine newly registered timeline Persons in final SSS+ superbatch 06 to their already-reviewed primary representative domains from #1374. Laozi is already canonical non-timeline and is not duplicated here."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SSSPLUS-FINAL-SUPERBATCH06-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 9,
+    "distribution": {
+      "governance": 0,
+      "military": 0,
+      "knowledge": 4,
+      "technology": 1,
+      "commerce": 0,
+      "culture": 4,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "1003bb71-cd8f-4b3f-a006-5c22a7e87f7c",
+      "canonical_name_en": "Herodotus",
+      "preferred_name_ko": "헤로도토스",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "2fdc0e4a-e311-42d0-9bc2-8597380dda44",
+      "canonical_name_en": "Hippocrates",
+      "preferred_name_ko": "히포크라테스",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "4c773e19-c309-4af5-aec9-e5d9db999416",
+      "canonical_name_en": "Brahmagupta",
+      "preferred_name_ko": "브라마굽타",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "8461b81c-8b06-440a-a07c-81ba9c4f1615",
+      "canonical_name_en": "Pāṇini",
+      "preferred_name_ko": "파니니",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "a9d128fb-7783-4ea2-8393-3db33e1792b2",
+      "canonical_name_en": "Vitruvius",
+      "preferred_name_ko": "비트루비우스",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "b7f3c0c0-c021-4e71-b7c2-0f0006ce2482",
+      "canonical_name_en": "Henrik Ibsen",
+      "preferred_name_ko": "헨리크 입센",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "7b56abcb-c2f7-4515-8940-11e0f812493a",
+      "canonical_name_en": "Victor Hugo",
+      "preferred_name_ko": "빅토르 위고",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "fd06dd4a-c598-4655-adf1-546dd2bee81b",
+      "canonical_name_en": "Cao Xueqin",
+      "preferred_name_ko": "조설근",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "4089c029-e224-4b4e-ad68-ca4fdcee6ddb",
+      "canonical_name_en": "Phidias",
+      "preferred_name_ko": "피디아스",
+      "representative_domain": "culture"
+    }
+  ]
+}
