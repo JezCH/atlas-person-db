@@ -24,6 +24,7 @@ concurrency:
 jobs:
   compile:
     # Compile after every terminal main-branch Authoring Apply, including a failure.
+    # SSS+ Person batch 02 registration 2026-09-25: refresh Runtime after committed 8-person Authoring batch.
     # A workflow-file-only main push is also an operator-safe direct refresh trigger when
     # Authoring is already committed but the legacy full audit path is unnecessarily long.
     # Its OIDC policy admits push only for this exact workflow, main ref, production environment, and exact SHA.

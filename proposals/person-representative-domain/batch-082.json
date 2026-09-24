@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "789e0e5147d313c391e448aaca08446bd6a71b81",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign all eight SSS+ registration batch 02 Persons to knowledge, preserving their reviewed primary identities as scientists, mathematicians, or scientific thinkers."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SSSPLUS-BATCH02-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 8,
+    "distribution": {
+      "governance": 0,
+      "military": 0,
+      "knowledge": 8,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "872a10bf-1779-4cb0-ae8c-ff79471d40c8",
+      "canonical_name_en": "Dmitri Mendeleev",
+      "preferred_name_ko": "드미트리 멘델레예프",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "0e20b282-1708-4f15-b979-12deff85d569",
+      "canonical_name_en": "Niels Bohr",
+      "preferred_name_ko": "닐스 보어",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "dccd4b69-294c-4839-90de-8d48180377fa",
+      "canonical_name_en": "Werner Heisenberg",
+      "preferred_name_ko": "베르너 하이젠베르크",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "e18b67dc-c89a-4f28-8784-0c0e9c49d63b",
+      "canonical_name_en": "John von Neumann",
+      "preferred_name_ko": "존 폰 노이만",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "67e31735-c96f-4c90-a467-77c5653d2e04",
+      "canonical_name_en": "Claude Shannon",
+      "preferred_name_ko": "클로드 섀넌",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "31c7191c-9da5-47d1-9460-8ba9528bf1b7",
+      "canonical_name_en": "Erwin Schrödinger",
+      "preferred_name_ko": "에르빈 슈뢰딩거",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "d78866ad-a877-4a2a-9226-5cf2f73f5cba",
+      "canonical_name_en": "Srinivasa Ramanujan",
+      "preferred_name_ko": "스리니바사 라마누잔",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "0910a2e9-794b-42f1-b45b-0fa268a1f91e",
+      "canonical_name_en": "Norman Borlaug",
+      "preferred_name_ko": "노먼 볼로그",
+      "representative_domain": "knowledge"
+    }
+  ]
+}
