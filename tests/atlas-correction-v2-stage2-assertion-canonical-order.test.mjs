@@ -143,3 +143,47 @@ test("exact duplicate Stage 2 assertion source semantics fail closed", () => {
     }
   }, 1), /SOURCE_LINK_REUSED/);
 });
+
+
+test("reviewed Source assertion normalizes literal bibliographic row", () => {
+  const operation = normalizeStage2AssertionOperation({
+    type: "assert_source",
+    decision_id: "source-unit",
+    exact_before: { source_absent_id: U.sourceB },
+    exact_after: {
+      source: {
+        id: U.sourceB,
+        source_key: "bibliographic:unit:source-b",
+        source_type: "academic_reference",
+        title: "Unit Source B",
+        sha256: null,
+        bytes: null,
+        canonical_url: "https://example.com/source-b",
+        citation_text: "Unit bibliographic citation."
+      }
+    }
+  }, 1);
+  assert.equal(operation.exact_after.source.id, U.sourceB);
+  assert.equal(operation.exact_after.source.sha256, null);
+  assert.equal(operation.exact_after.source.bytes, null);
+});
+
+test("reviewed Source assertion rejects fake materialized hashes", () => {
+  assert.throws(() => normalizeStage2AssertionOperation({
+    type: "assert_source",
+    decision_id: "source-materialized",
+    exact_before: { source_absent_id: U.sourceB },
+    exact_after: {
+      source: {
+        id: U.sourceB,
+        source_key: "bibliographic:unit:bad",
+        source_type: "academic_reference",
+        title: "Bad Unit Source",
+        sha256: "deadbeef",
+        bytes: 4,
+        canonical_url: "https://example.com/bad",
+        citation_text: "Should fail."
+      }
+    }
+  }, 1), /FAKE_MATERIALIZATION_FORBIDDEN/);
+});
