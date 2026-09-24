@@ -1,0 +1,518 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:zero-activity-external-orphans:2026-09-25:batch1-v1",
+  "release_order": 710,
+  "evidence": {
+    "decision": "User-authorized cleanup of the complete current zero-Activity Polity set. Exact Production reference audit proved all 28 targets have external_reference_total=0; repository Spatial index exact-UUID scan found 0 hits. Retirement is fail-closed on exact identity, preferred names, owned counts and continued external-reference zero.",
+    "user_instruction": "연결없음 28개 정리 — 찌꺼기 남기지 말고 오류 만들지 말고",
+    "audit_marker": "ATLAS_POLITY_REFERENCE_AUDIT_V1",
+    "audit_run": 36018478595,
+    "audit_deployment_sha": "23d0c813bcd7c72484b96ca5158187a31e5ab610",
+    "audited_zero_activity_count": 28,
+    "audited_external_orphan_count": 28,
+    "spatial_uuid_hits": 0
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:gaul",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "cfe1faef-3a82-5b6c-b542-cff2bd667c6c",
+        "canonical_key": "Gaul",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Gaul",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "갈리아",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:jiaozhou",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "031bdca0-d5e8-51e8-9f59-2db5ee51c55f",
+        "canonical_key": "Jiaozhou",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Jiaozhou",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "교주",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:nassau-pirate-republic",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "16add357-f450-515d-87d6-fc32835d0e13",
+        "canonical_key": "Nassau Pirate Republic",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Nassau Pirate Republic",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "나소 해적 공화국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:dutch-revolt",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "ba7a7e2d-3ba5-5a54-a98f-88294d3429f7",
+        "canonical_key": "Dutch Revolt",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Dutch Revolt",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "네덜란드 독립전쟁",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:colony-of-newfoundland",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "f299421e-384b-4b52-879d-53c087836c5f",
+        "canonical_key": "Colony of Newfoundland",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Colony of Newfoundland",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "뉴펀들랜드 식민지",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:denmark-norway",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "7d07f3c1-13e3-4e03-8a5a-37f4eb2cb8e6",
+        "canonical_key": "Denmark–Norway",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Denmark–Norway",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "덴마크-노르웨이",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:toyotomi-regime",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "e1548cb1-f89d-538b-9fb2-bad02ad87f8e",
+        "canonical_key": "Toyotomi Regime",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Toyotomi Regime",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "도요토미 정권",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:roman-judaea",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "18f27d4e-a522-59f3-92c3-09ca5202de0d",
+        "canonical_key": "Roman Judaea",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Roman Judaea",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "로마령 유대",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:lydia",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "f32bdfc0-988d-4e59-97a1-c89526236676",
+        "canonical_key": "Lydia",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Lydia",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "리디아",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:reform-uk",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "1ae74846-2a8c-4c45-af6c-8b426cb09279",
+        "canonical_key": "Reform UK",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Reform UK",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "리폼 UK",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:maori",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "769e6a5e-b49b-5fec-9a2b-fa78999763a1",
+        "canonical_key": "Maori",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Maori",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "마오리",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:medina",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "b82ec632-5365-5f62-8aec-550548d63f83",
+        "canonical_key": "Medina",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Medina",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "메디나",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:north-sea-empire",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "fc5e9dc5-f431-530a-bb1e-15539190f13c",
+        "canonical_key": "North Sea Empire",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "North Sea Empire",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "북해 제국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:republic-of-serbia",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "31f3241a-d772-4fe4-a1d1-870c60470dff",
+        "canonical_key": "Republic of Serbia",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Republic of Serbia",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "세르비아 공화국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:shawnee",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "bbe212e8-c68a-533d-b4c0-2736859d4a75",
+        "canonical_key": "Shawnee",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Shawnee",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "쇼니족",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:shtax-heen-kwa-an",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "e5364c89-300d-4bca-9c6f-0296082e41fc",
+        "canonical_key": "Shtax'heen Kwáan",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Shtax'heen Kwáan",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "스타흐힌 콴",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:syria",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "355010ea-aff6-47f7-900c-4334b80da406",
+        "canonical_key": "Syria",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Syria",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "시리아",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:territory-of-alaska",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "59e08a73-2d8a-4ac2-a47c-db88c8065008",
+        "canonical_key": "Territory of Alaska",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Territory of Alaska",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "알래스카 준주",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:state-of-alaska",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "f85308e8-3ec3-4d71-94f4-b5c6eab22ae3",
+        "canonical_key": "State of Alaska",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "State of Alaska",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "알래스카주",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:uk-independence-party",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "b8dc3471-f3d0-41ad-ade9-748a90c1056e",
+        "canonical_key": "UK Independence Party",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "UK Independence Party",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "영국 독립당",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}

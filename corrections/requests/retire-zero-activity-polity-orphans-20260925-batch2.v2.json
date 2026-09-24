@@ -1,0 +1,218 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:zero-activity-external-orphans:2026-09-25:batch2-v1",
+  "release_order": 711,
+  "evidence": {
+    "decision": "User-authorized cleanup of the complete current zero-Activity Polity set. Exact Production reference audit proved all 28 targets have external_reference_total=0; repository Spatial index exact-UUID scan found 0 hits. Retirement is fail-closed on exact identity, preferred names, owned counts and continued external-reference zero.",
+    "user_instruction": "연결없음 28개 정리 — 찌꺼기 남기지 말고 오류 만들지 말고",
+    "audit_marker": "ATLAS_POLITY_REFERENCE_AUDIT_V1",
+    "audit_run": 36018478595,
+    "audit_deployment_sha": "23d0c813bcd7c72484b96ca5158187a31e5ab610",
+    "audited_zero_activity_count": 28,
+    "audited_external_orphan_count": 28,
+    "spatial_uuid_hits": 0
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:oda-clan",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "54433b65-1eb1-5c41-b440-6c4de8e18417",
+        "canonical_key": "Oda Clan",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Oda Clan",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "오다 가문",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:uesugi-clan",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "e07ee32e-e126-5511-9d3d-d29e4444bd9c",
+        "canonical_key": "Uesugi Clan",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Uesugi Clan",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "우에스기 가문",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:ukraine",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "550fabcb-c9d3-47c9-9bce-2556cff130d1",
+        "canonical_key": "Ukraine",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Ukraine",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "우크라이나",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:kingdoms-of-ndongo-and-matamba",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "a127a8aa-6e17-5045-9bd6-de4df7b53390",
+        "canonical_key": "Kingdoms of Ndongo and Matamba",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Kingdoms of Ndongo and Matamba",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "은동고-마탐바 왕국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:iroquois-confederacy",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "1fa78018-e3af-55c3-8b8e-1bf7ad1c4b08",
+        "canonical_key": "Iroquois Confederacy",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Iroquois Confederacy",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "이로쿼이 연맹",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:arab-republic-of-egypt",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "0dd48827-a38d-4723-ab8c-93d4fcc97f4d",
+        "canonical_key": "Arab Republic of Egypt",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Arab Republic of Egypt",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "이집트 아랍 공화국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:umayyad-co-rdoba",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "62815073-7cf1-4716-a7c3-89d9ff782d07",
+        "canonical_key": "Umayyad Córdoba",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Umayyad Córdoba",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "코르도바 후우마이야국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:zero-activity-orphan:captaincy-general-of-the-philippines",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "5cb5c96f-f860-577e-98cc-753d13ef5c03",
+        "canonical_key": "Captaincy General of the Philippines",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Captaincy General of the Philippines",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "필리핀 총독령",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    }
+  ]
+}

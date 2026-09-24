@@ -7,6 +7,7 @@ const {
   OPERATION_TYPE,
   REVIEW_REASON,
   REVIEW_REASON_SAME_IDENTITY_STATE_FORM,
+  REVIEW_REASON_UNREFERENCED_ORPHAN,
   requireManifest,
   createCorrectionPolityRetireV2Service
 } = require("../server/atlas-correction-polity-retire-v2-service.js");
@@ -151,6 +152,13 @@ test("retirement manifest accepts the reviewed same-identity state-form reason w
     operation: { review_reason: REVIEW_REASON_SAME_IDENTITY_STATE_FORM }
   }));
   assert.equal(parsed.operations[0].review_reason, REVIEW_REASON_SAME_IDENTITY_STATE_FORM);
+});
+
+test("retirement manifest accepts the explicitly reviewed unreferenced-orphan cleanup reason", () => {
+  const parsed = requireManifest(manifest({
+    operation: { review_reason: REVIEW_REASON_UNREFERENCED_ORPHAN }
+  }));
+  assert.equal(parsed.operations[0].review_reason, REVIEW_REASON_UNREFERENCED_ORPHAN);
 });
 
 test("retirement manifest rejects unreviewed or unknown review reasons", () => {
