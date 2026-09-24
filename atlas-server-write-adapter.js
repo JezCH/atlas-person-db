@@ -207,7 +207,10 @@
         provider: String(provider || "").trim(),
         value: String(value || "").trim()
       }),
-      setPersonPortrait: (payload) => mutatePortrait("PUT", {\n        person_id:String(payload?.person_id || "").trim(),\n        image_base64:String(payload?.image_base64 || "").trim()\n      }),
+      setPersonPortrait: (payload) => mutatePortrait("PUT", {
+        person_id:String(payload?.person_id || "").trim(),
+        image_base64:String(payload?.image_base64 || "").trim()
+      }),
       deletePersonPortrait: (personId) => mutatePortrait("DELETE", {
         person_id:String(personId || "").trim()
       }),
