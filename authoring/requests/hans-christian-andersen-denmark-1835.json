@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hans-christian-andersen:denmark:writer:1835:v1",
+  "person": {
+    "canonical_name_en": "Hans Christian Andersen",
+    "display_name_ko": "한스 크리스티안 안데르센",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Hans Christian Andersen was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Denmark",
+    "display_name_ko": "덴마크"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Writer",
+    "role_display_name_ko": "작가",
+    "start_year": 1835,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1835,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1835 as Andersen's representative Danish literary breakthrough year, when the first Fairy Tales, Told for Children booklets appeared and began the fairy-tale authorship for which he became globally known."
+  },
+  "sources": [
+    {
+      "title": "The fairy tale author Hans Christian Andersen — Royal Danish Library",
+      "canonical_url": "https://www.kb.dk/en/inspiration/book-festival-royal-danish-library/fairy-tale-author-hans-christian-andersen",
+      "citation_text": "The Royal Danish Library states that Andersen's fairy-tale authorship began in 1835 and that the first Fairy Tales, Told for Children booklets were issued from 1835 onward.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-033",
+    "review_checkpoint": "#1374 comment 5815495564",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

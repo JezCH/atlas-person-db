@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jules-verne:second-french-empire:novelist:1863:v1",
+  "person": {
+    "canonical_name_en": "Jules Verne",
+    "display_name_ko": "쥘 베른",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Jules Verne was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Second French Empire",
+    "display_name_ko": "프랑스 제2제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Novelist",
+    "role_display_name_ko": "소설가",
+    "start_year": 1863,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1863,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1863 as Verne's representative French literary breakthrough year, when Five Weeks in a Balloon received its first Paris edition and launched the career associated with the Voyages extraordinaires."
+  },
+  "sources": [
+    {
+      "title": "Cinq semaines en ballon — Bibliothèque nationale de France",
+      "canonical_url": "https://catalogue.bnf.fr/ark:/12148/cb179930457",
+      "citation_text": "The Bibliothèque nationale de France catalogue dates Five Weeks in a Balloon to 1863 and records its first edition in Paris on 31 January 1863.",
+      "source_type": "institutional_bibliography"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp6-20260922-020",
+    "review_checkpoint": "#1374 comment 5763368019",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

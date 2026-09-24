@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:giotto:republic-of-florence:artist-architect:1334:v1",
+  "person": {
+    "canonical_name_en": "Giotto",
+    "display_name_ko": "조토",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Giotto was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Florence",
+    "display_name_ko": "피렌체 공화국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Artist and architect",
+    "role_display_name_ko": "화가·건축가",
+    "start_year": 1334,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1334,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1334 as Giotto's representative Florentine civic-artistic milestone year, when Florence appointed him to manage the construction site of Santa Maria del Fiore at the height of his fame."
+  },
+  "sources": [
+    {
+      "title": "The heritage of the Opera di Santa Maria del Fiore — Duomo Firenze",
+      "canonical_url": "https://duomo.firenze.it/en/about-us/history/art",
+      "citation_text": "The Opera di Santa Maria del Fiore records that in 1334 the Florentine city fathers appointed Giotto to manage the cathedral construction site.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-018",
+    "review_checkpoint": "#1374 comment 5815494440",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

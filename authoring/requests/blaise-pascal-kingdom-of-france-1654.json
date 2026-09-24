@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:blaise-pascal:kingdom-of-france:mathematician-philosopher:1654:v1",
+  "person": {
+    "canonical_name_en": "Blaise Pascal",
+    "display_name_ko": "블레즈 파스칼",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Blaise Pascal was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician and philosopher",
+    "role_display_name_ko": "수학자·철학자",
+    "start_year": 1654,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1654,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1654 as Pascal's representative French mathematical-activity year, when his correspondence with Pierre de Fermat on games of chance became a foundational milestone in probability theory."
+  },
+  "sources": [
+    {
+      "title": "Blaise Pascal — MacTutor History of Mathematics",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Strick/pascal.pdf",
+      "citation_text": "MacTutor records the 1654 correspondence between Pascal and Fermat, stimulated by problems of games of chance, as the origin of probability theory.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-106",
+    "review_checkpoint": "#1374 comment 5762056835",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

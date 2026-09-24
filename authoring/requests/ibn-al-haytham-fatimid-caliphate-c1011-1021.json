@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ibn-al-haytham:fatimid-caliphate:optics-scholar:c1011-1021:v1",
+  "person": {
+    "canonical_name_en": "Ibn al-Haytham",
+    "display_name_ko": "이븐 알하이삼",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Ibn al-Haytham was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Fatimid Caliphate",
+    "display_name_ko": "파티마 칼리파국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Optics scholar and mathematician",
+    "role_display_name_ko": "광학자·수학자",
+    "start_year": 1011,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1021,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses c.1011-1021 as Ibn al-Haytham's representative Cairo scholarly interval under the Fatimid Caliphate. Modern medical-history scholarship records roughly ten years of confinement ending with al-Hakim's death in 1021, during which Ibn al-Haytham wrote the Book of Optics and other scientific works."
+  },
+  "sources": [
+    {
+      "title": "Ibn Al-Haytham: Father of Modern Optics — PMC",
+      "canonical_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6074172/",
+      "citation_text": "The reviewed scholarly article records about ten years of house arrest until al-Hakim's death in 1021 and states that Ibn al-Haytham wrote the Book of Optics during this period.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-061",
+    "review_checkpoint": "#1374 comment 5762053926",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

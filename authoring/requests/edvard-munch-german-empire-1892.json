@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:edvard-munch:german-empire:painter:1892:v1",
+  "person": {
+    "canonical_name_en": "Edvard Munch",
+    "display_name_ko": "에드바르 뭉크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Edvard Munch was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Painter",
+    "role_display_name_ko": "화가",
+    "start_year": 1892,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1892,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1892 as Munch's representative German breakthrough year, when he was invited to exhibit with the Association of Berlin Artists; the controversial exhibition closed after one week but generated major publicity and anchored his Berlin artistic period."
+  },
+  "sources": [
+    {
+      "title": "Edvard Munch timeline — MUNCH",
+      "canonical_url": "https://www.munch.no/en/edvard-munch/edvard-munch-timeline/",
+      "citation_text": "The Munch Museum timeline records Munch's 1892 invitation to exhibit in Berlin, the show's closure after one week, and the publicity and Berlin circle that followed.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-025",
+    "review_checkpoint": "#1374 comment 5815495564",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}
