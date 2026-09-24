@@ -180,6 +180,12 @@ function shouldBlockExternalReferenceOverwrite(current, next, { preventOverwrite
   return Boolean(preventOverwrite && current?.status === "linked" && !sameReference(current, next));
 }
 
+function externalReferenceExpectedCurrentMismatch(current, expected) {
+  if (!expected) return false;
+  const normalizedExpected = normalizeNamuWikiInput(expected);
+  return !sameReference(current, normalizedExpected);
+}
+
 async function setExternalReference(client, personId, rawPayload) {
   const provider = normalizeExact(rawPayload?.provider || "namuwiki").toLowerCase();
   if (provider !== "namuwiki") throw new Error("PERSON_EXTERNAL_REFERENCE_PROVIDER_UNSUPPORTED");
@@ -187,6 +193,9 @@ async function setExternalReference(client, personId, rawPayload) {
   const current = await currentExternalReference(client, personId, provider, { forUpdate: true });
   if (sameReference(current, next)) {
     return Object.freeze({ replay:true, before:{ external_reference:current }, after:{ external_reference:current } });
+  }
+  if (externalReferenceExpectedCurrentMismatch(current, rawPayload?.expected_current_reference)) {
+    throw new Error("PERSON_EXTERNAL_REFERENCE_EXPECTED_CURRENT_MISMATCH");
   }
   if (shouldBlockExternalReferenceOverwrite(current, next, { preventOverwrite:rawPayload?.prevent_overwrite === true })) {
     throw new Error("PERSON_EXTERNAL_REFERENCE_OVERWRITE_REVIEW_REQUIRED");
@@ -296,5 +305,6 @@ module.exports = Object.freeze({
   PROFILE_OPERATIONS,
   normalizeNamuWikiInput,
   shouldBlockExternalReferenceOverwrite,
+  externalReferenceExpectedCurrentMismatch,
   createPersonProfileMutationService
 });

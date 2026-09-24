@@ -10,7 +10,7 @@ const { bearerToken, requireRuntime } = require("./atlas-authoring-apply-handler
 const MARKER = "ATLAS_NAMUWIKI_LINK_V1";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const SHA_RE = /^[0-9a-f]{40}$/;
-const ALLOWED_BODY_KEYS = new Set(["runtime_sha", "workflow_sha", "person_id", "status", "url"]);
+const ALLOWED_BODY_KEYS = new Set(["runtime_sha", "workflow_sha", "person_id", "status", "url", "expected_current_url"]);
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -54,19 +54,26 @@ function requireNamuWikiLinkPayload(body) {
   if (!UUID_RE.test(personId)) throw new Error("NAMUWIKI_LINK_PERSON_ID_REQUIRED");
   const status = String(body?.status || "linked").trim().toLowerCase();
   let externalReference;
+  let expectedCurrentReference = null;
   if (status === "linked") {
     externalReference = requireCanonicalNamuWikiUrl(body?.url);
+    if (String(body?.expected_current_url || "").trim()) {
+      expectedCurrentReference = requireCanonicalNamuWikiUrl(body.expected_current_url);
+      if (expectedCurrentReference.url === externalReference.url) throw new Error("NAMUWIKI_CORRECTION_URL_MUST_CHANGE");
+    }
   } else if (status === "not_found") {
     if (String(body?.url || "").trim()) throw new Error("NAMUWIKI_NOT_FOUND_URL_FORBIDDEN");
+    if (String(body?.expected_current_url || "").trim()) throw new Error("NAMUWIKI_NOT_FOUND_EXPECTED_CURRENT_URL_FORBIDDEN");
     externalReference = normalizeNamuWikiInput({ status:"not_found", document_title:null, url:null });
   } else {
     throw new Error("NAMUWIKI_LINK_STATUS_UNSUPPORTED");
   }
-  return Object.freeze({ runtimeSha, workflowSha, personId, externalReference });
+  return Object.freeze({ runtimeSha, workflowSha, personId, externalReference, expectedCurrentReference });
 }
 
-function requestIdFor(personId, reference) {
-  const material = reference?.status === "not_found" ? "not_found" : String(reference?.url || "");
+function requestIdFor(personId, reference, expectedCurrentReference = null) {
+  const target = reference?.status === "not_found" ? "not_found" : String(reference?.url || "");
+  const material = expectedCurrentReference ? `${expectedCurrentReference.url}=>${target}` : target;
   const digest = crypto.createHash("sha256").update(material, "utf8").digest("hex").slice(0, 24);
   return `namuwiki-link:${personId}:${digest}`;
 }
@@ -102,6 +109,7 @@ function createNamuWikiLinkHandler({
         runtime_sha:runtime.runtime_sha,
         commands:[
           "/namuwiki-link <person_uuid> <canonical_namuwiki_url>",
+          "/namuwiki-correct <person_uuid> <expected_current_namuwiki_url> <canonical_namuwiki_url>",
           "/namuwiki-not-found <person_uuid>"
         ]
       });
@@ -136,7 +144,7 @@ function createNamuWikiLinkHandler({
       const readiness = await inspectReadiness(client);
       if (!readiness.ready) throw new Error("NAMUWIKI_LINK_PRODUCTION_NOT_READY");
 
-      const requestId = requestIdFor(payload.personId, payload.externalReference);
+      const requestId = requestIdFor(payload.personId, payload.externalReference, payload.expectedCurrentReference);
       const outcome = await createProfileService({ client }).mutate({
         request_id: requestId,
         operation: "set_person_external_reference",
@@ -144,7 +152,8 @@ function createNamuWikiLinkHandler({
           person_id: payload.personId,
           provider: "namuwiki",
           value: payload.externalReference,
-          prevent_overwrite: true
+          expected_current_reference: payload.expectedCurrentReference,
+          prevent_overwrite: payload.expectedCurrentReference == null
         }
       });
 

@@ -15,6 +15,7 @@ const SHA = "a".repeat(40);
 const WORKFLOW_SHA = "b".repeat(40);
 const PERSON_ID = "da0303c2-1faf-40b8-9dc2-1325b77488d7";
 const NAMUWIKI_URL = "https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D";
+const OLD_NAMUWIKI_URL = "https://namu.wiki/w/%EC%9E%98%EB%AA%BB%EB%90%9C%20%EB%AC%B8%EC%84%9C";
 const IMMUTABLE_SUB = "repo:JezCH@281085255/atlas-person-db@1319427399:environment:production";
 const LEGACY_SUB = "repo:JezCH/atlas-person-db:environment:production";
 
@@ -56,6 +57,10 @@ test("dedicated payload keeps deployed runtime SHA separate from the OIDC workfl
   assert.equal(payload.personId, PERSON_ID);
   assert.equal(payload.externalReference.url, NAMUWIKI_URL);
   assert.equal(payload.externalReference.document_title, "임호텝");
+  const correction = handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, expected_current_url:OLD_NAMUWIKI_URL, url:NAMUWIKI_URL });
+  assert.equal(correction.expectedCurrentReference.url, OLD_NAMUWIKI_URL);
+  assert.equal(correction.externalReference.url, NAMUWIKI_URL);
+  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, expected_current_url:NAMUWIKI_URL, url:NAMUWIKI_URL }), /MUST_CHANGE/);
   assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:NAMUWIKI_URL }), /WORKFLOW_SHA_REQUIRED/);
   assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:"https://namu.moe/w/x" }), /CANONICAL_URL_REQUIRED/);
   assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:`${NAMUWIKI_URL}?from=x` }), /CANONICAL_URL_REQUIRED/);
@@ -67,6 +72,14 @@ test("automation overwrite guard blocks a different linked URL but permits repla
   assert.equal(profile.shouldBlockExternalReferenceOverwrite({ provider:"namuwiki", status:"linked", document_title:"다른 문서", url:"https://namu.wiki/w/other" }, next, { preventOverwrite:true }), true);
   assert.equal(profile.shouldBlockExternalReferenceOverwrite({ provider:"namuwiki", status:"linked", document_title:next.document_title, url:next.url }, next, { preventOverwrite:true }), false);
   assert.equal(profile.shouldBlockExternalReferenceOverwrite({ provider:"namuwiki", status:"not_found", document_title:null, url:null }, next, { preventOverwrite:true }), false);
+  assert.equal(profile.externalReferenceExpectedCurrentMismatch(
+    { provider:"namuwiki", status:"linked", document_title:"잘못된 문서", url:OLD_NAMUWIKI_URL },
+    OLD_NAMUWIKI_URL
+  ), false);
+  assert.equal(profile.externalReferenceExpectedCurrentMismatch(
+    { provider:"namuwiki", status:"linked", document_title:"다른 문서", url:"https://namu.wiki/w/other" },
+    OLD_NAMUWIKI_URL
+  ), true);
 });
 
 test("Issue #431 workflow is one-at-a-time, actor-gated and performs Production read-back", () => {
@@ -79,6 +92,8 @@ test("Issue #431 workflow is one-at-a-time, actor-gated and performs Production 
   assert.match(workflow, /issues: write/);
   assert.match(workflow, /atlas-person-db-namuwiki-link/);
   assert.match(workflow, /\/namuwiki-link/);
+  assert.match(workflow, /\/namuwiki-correct/);
+  assert.match(workflow, /expected_current_url/);
   assert.match(workflow, /atlas-namuwiki-link/);
   assert.match(workflow, /atlas-person-read/);
   assert.match(workflow, /external_references\.namuwiki\.url/);
