@@ -36,6 +36,7 @@
   let personPortraitImageModulePromise = null;
   let personExcelExportModulePromise = null;
   let excelExportInFlight = false;
+  let portraitPreviewObjectUrl = null;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -525,8 +526,33 @@
     if (panel) panel.innerHTML = `<p class="person-detail-placeholder is-error">상세정보 조회 실패: ${escapeHtml(error?.code || error?.message || "unknown")}</p>`;
   }
 
+  function clearPortraitPreviewUrl() {
+    if (portraitPreviewObjectUrl) URL.revokeObjectURL(portraitPreviewObjectUrl);
+    portraitPreviewObjectUrl = null;
+  }
+
+  function previewPortraitFile(input) {
+    const file = input?.files?.[0] || null;
+    const form = input?.closest?.("form[data-person-portrait-operation='upload']");
+    const preview = form?.querySelector?.("[data-person-portrait-preview]");
+    const image = preview?.querySelector?.("img");
+    clearPortraitPreviewUrl();
+    if (!file || !preview || !image) {
+      if (preview) preview.hidden = true;
+      return;
+    }
+    if (!String(file.type || "").startsWith("image/")) {
+      preview.hidden = true;
+      return showOperationalMessage("이미지 파일을 선택하세요.");
+    }
+    portraitPreviewObjectUrl = URL.createObjectURL(file);
+    image.src = portraitPreviewObjectUrl;
+    preview.hidden = false;
+  }
+
   async function selectPerson(personId, { force = false } = {}) {
     if (!personId || (!force && selectedPersonId === personId)) return;
+    clearPortraitPreviewUrl();
     selectedPersonId = personId;
     selectedPersonDetail = null;
     selectedPortrait = null;
@@ -900,6 +926,10 @@
     detail?.addEventListener("submit", handleProfileSubmit);
     detail?.addEventListener("submit", handlePortraitSubmit);
     detail?.addEventListener("submit", handlePortraitMetadataSubmit);
+    detail?.addEventListener("change", (event) => {
+      const input = event.target.closest?.("input[name='portrait_file']");
+      if (input) previewPortraitFile(input);
+    });
     detail?.addEventListener("click", (event) => {
       const sourceLoad = event.target.closest("[data-person-portrait-load-sources][data-person-id]");
       if (sourceLoad) {
