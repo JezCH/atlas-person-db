@@ -496,7 +496,7 @@
     ].join("");
     const state = portraitResult?.error ? "초상화 조회 실패" : (href ? "초상화 등록" : "초상화 미등록");
     const legacyEmpty = href ? "" : '<span hidden class="person-detail-portrait-empty">없음</span>';
-    return `<figure class="person-detail-portrait" data-era="${escapeHtml(presentation.era_code)}" data-domain="${escapeHtml(presentation.domain_code || "")}" aria-label="${escapeHtml(displayName)} · ${escapeHtml(presentation.era_label)} · ${escapeHtml(presentation.domain_label)} · ${state}" title="${escapeHtml(titleParts.join(" · "))}">${layers}${legacyEmpty}<figcaption class="person-detail-portrait-state">${escapeHtml(state)}</figcaption></figure>`;
+    return `<figure class="person-detail-portrait${href ? " has-portrait" : ""}" data-era="${escapeHtml(presentation.era_code)}" data-domain="${escapeHtml(presentation.domain_code || "")}" aria-label="${escapeHtml(displayName)} · ${escapeHtml(presentation.era_label)} · ${escapeHtml(presentation.domain_label)} · ${state}" title="${escapeHtml(titleParts.join(" · "))}">${layers}${legacyEmpty}<figcaption class="person-detail-portrait-state">${escapeHtml(state)}</figcaption></figure>`;
   }
 
   function renderDetail(person) {
