@@ -122,7 +122,7 @@ const snapshot = {
   relationship_descriptions: []
 };
 
-test("unified plan synthesizer appends all three literal Stage 2 assertion families and rehashes", () => {
+test("unified plan synthesizer appends all literal Stage 2 assertion families and rehashes", () => {
   const manifest = synthesizeUnifiedCorrectionV2Manifest(plan(), snapshot);
   assert.deepEqual(manifest.operations.map((op) => op.type), [
     "assert_source",
