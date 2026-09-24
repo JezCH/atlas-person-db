@@ -26,7 +26,8 @@ const expectedAuthoringMigrations = [
   '20260906_p13a_temporal_unknown_boundaries.sql',
   '20260906_p13_source_place_objects.sql',
   '20260920_person_portraits.sql',
-  '20260921_person_portrait_history_v2.sql'
+  '20260921_person_portrait_history_v2.sql',
+  '20260924_person_portraits_simple_v3.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -42,7 +43,8 @@ const expectedAuthoringReplayMigrations = [
   '20260906_p13a_temporal_unknown_boundaries.sql',
   '20260906_p13_source_place_objects.sql',
   '20260920_person_portraits.sql',
-  '20260921_person_portrait_history_v2.sql'
+  '20260921_person_portrait_history_v2.sql',
+  '20260924_person_portraits_simple_v3.sql'
 ];
 
 const expectedCorrectionMigrations = [
