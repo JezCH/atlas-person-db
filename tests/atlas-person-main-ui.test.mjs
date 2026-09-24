@@ -141,6 +141,20 @@ test('Person detail binds canonical portrait read and authoring controls without
   assert.doesNotMatch(main, /__atlas_mutation_surface=person-portrait/);
 });
 
+test('portrait depth composition stays presentation-only and reuses canonical domain background plus portrait asset', () => {
+  assert.match(html, /atlas-person-main\.css\?v=20260924-portrait-depth-v9/);
+  assert.match(main, /person-detail-portrait\$\{href \? " has-portrait" : ""\}/);
+  assert.match(main, /portraitPresentation\.presentationFor\(person, personDomainsById\?\.\[person\?\.id\]\)/);
+  assert.match(main, /portrait\.asset_url/);
+  assert.match(css, /--portrait-bg-scale:1\.035/);
+  assert.match(css, /filter:blur\(var\(--portrait-bg-blur\)\) brightness\(var\(--portrait-bg-brightness\)\) saturate\(var\(--portrait-bg-saturation\)\)/);
+  assert.match(css, /\.person-detail-portrait\.has-portrait::after/);
+  assert.match(css, /drop-shadow\(var\(--portrait-shadow-primary\)\) drop-shadow\(var\(--portrait-shadow-secondary\)\)/);
+  assert.match(css, /transform-origin:center bottom/);
+  assert.match(css, /@media\(max-width:760px\)\{\.person-detail-portrait\{--portrait-bg-scale:1\.025/);
+  assert.doesNotMatch(css, /\.person-detail-portrait\[data-domain=/);
+});
+
 test('portrait authoring is structurally limited to upload replace and delete', () => {
   assert.match(main, /ATLAS_PERSON_PORTRAIT_CONTROLLER/);
   assert.match(main, /portraitController\.setPortrait/);
