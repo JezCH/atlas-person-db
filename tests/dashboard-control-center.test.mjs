@@ -1462,7 +1462,7 @@ test("NamuWiki work frontier preserves each reviewed-unlinked reason as a separa
 
 test("dashboard NamuWiki copy exposes reviewed-unlinked reason counts with readable breakdown rows", () => {
   assert.match(dashboardSource,/독립 문서 없음/);
-  assert.match(dashboardSource,/문서 확인·URL 미확정/);
+  assert.match(dashboardSource,/문서 확인\s*·\s*URL 미확정/);
   assert.match(dashboardSource,/사유 미기록/);
   assert.match(dashboardSource,/미검토·재검증/);
   assert.match(dashboardSource,/관련·파생 문서만 확인/);
