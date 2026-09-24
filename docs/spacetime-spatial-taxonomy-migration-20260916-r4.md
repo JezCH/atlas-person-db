@@ -43,11 +43,11 @@ After the r4 hierarchy is verified in Production, reviewed exact-UUID migration 
 5. keep the migrated baseline file physically immutable by applying the migration through the reviewed migration/compiler path.
 
 No UUID migration is part of this Phase-1 document.
-## 2026-09-25 display-order continuity pass
+## 2026-09-25 display-order continuity pass — v2
 
 This pass changes **display order only**. It does not add, remove, rename, re-parent, or rebind any macroregion, leaf subregion, polity UUID, PlaceFunction, or Activity override.
 
-The one-dimensional X axis is optimized as a historical-geographic reading path rather than a strict modern longitude sort. The primary objective is to minimize abrupt jumps both **inside each macroregion** and **across macroregion boundaries** while preserving the existing 9-macro / 45-equal-leaf contract.
+The one-dimensional X axis is a historical reading path rather than a strict modern longitude sort. Ordering priority is **(1) long-term historical/cultural interaction and continuity, (2) geographic adjacency, (3) cross-macro boundary continuity**. When literal map adjacency conflicts with a durable historical interaction zone, the historical/cultural connection takes precedence. The existing 9-macro / 45-equal-leaf contract remains unchanged.
 
 Canonical leaf order after this pass:
 
@@ -72,4 +72,4 @@ The macro-boundary bridge pairs are intentionally:
 - `mainland-southeast-asia → china`;
 - `japan → pacific-islands`.
 
-The display-order revision identifier is `2026-09-25-continuity-v1`. Taxonomy revision remains `2026-09-16-r4` because leaf membership and parentage are unchanged.
+After full 45-leaf re-review, the canonical leaf sequence above is retained unchanged and explicitly re-sealed. `south-america` is the leftmost leaf (`min_space = 0`). The display-order revision identifier is `2026-09-25-continuity-v2`. Taxonomy revision remains `2026-09-16-r4` because leaf membership and parentage are unchanged.

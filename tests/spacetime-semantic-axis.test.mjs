@@ -69,6 +69,9 @@ test("space header is fixed to reviewed subregion hierarchy at the readable floo
 test("spatial hierarchy is leaf-uniform, density-independent, and map-like at the eastern edge", () => {
   const continuum = spaceAxis.createSpatialContinuum();
   assert.equal(continuum.subregions.length, 45);
+  assert.equal(continuum.subregions[0].code, "south-america");
+  assert.equal(continuum.bandForCode("south-america").min_space, 0);
+  assert.ok(continuum.bandForCode("north-america").min_space > continuum.bandForCode("south-america").min_space);
   for (const band of continuum.subregions) {
     assert.ok(Math.abs((band.max_space - band.min_space) - 1/45) < 1e-12);
   }
@@ -120,8 +123,8 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_basis, "atlas_internal_display_taxonomy");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.external_standard, null);
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.width_basis, "equal_leaf_subregion");
-  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.horizontal_order_basis, "historical_geographic_continuity_with_cross_macro_boundary_bridges");
-  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.display_order_revision, "2026-09-25-continuity-v1");
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.horizontal_order_basis, "long_term_historical_cultural_continuity_then_geographic_adjacency_then_cross_macro_bridges");
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.display_order_revision, "2026-09-25-continuity-v2");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.density_weighting, false);
   const flattened=spaceAxis.DEFAULT_SPATIAL_HIERARCHY.flatMap((macro)=>macro.subregions.map((band)=>band.code));
   const adjacent=(left,right)=>{

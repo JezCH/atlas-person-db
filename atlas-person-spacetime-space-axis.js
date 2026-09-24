@@ -20,10 +20,10 @@
     taxonomy_revision: "2026-09-16-r4",
     width_basis: "equal_leaf_subregion",
     macro_width_basis: "sum_of_child_leaf_widths",
-    horizontal_order_basis: "historical_geographic_continuity_with_cross_macro_boundary_bridges",
-    display_order_revision: "2026-09-25-continuity-v1",
+    horizontal_order_basis: "long_term_historical_cultural_continuity_then_geographic_adjacency_then_cross_macro_bridges",
+    display_order_revision: "2026-09-25-continuity-v2",
     density_weighting: false,
-    note: "This hierarchy is an ATLAS historical-display taxonomy. External modern classifications are references only; Person density never determines geography or width."
+    note: "This hierarchy is an ATLAS historical-display taxonomy. On the fixed one-dimensional world path, long-term historical/cultural interaction takes precedence over literal map adjacency when they conflict; geographic adjacency and cross-macro bridges are secondary. External modern classifications are references only; Person density never determines geography or width."
   });
 
   const DEFAULT_SPATIAL_HIERARCHY = Object.freeze([
