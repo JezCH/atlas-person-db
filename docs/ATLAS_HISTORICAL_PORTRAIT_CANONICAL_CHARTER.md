@@ -237,3 +237,97 @@ Every portrait task inherits this charter. No worker may replace it with a prefe
 **ATLAS Portrait System = evidence-maximal reconstruction of the probable real human + one civilization-neutral visual language + explicit uncertainty + dignified historical monumentality.**
 
 The system seeks **truthful reconstruction and historical glory simultaneously**. Glory is created by presentation; truth is never sacrificed to obtain it.
+
+
+## 30. Yi Sun-sin pilot operational locks
+
+The Yi Sun-sin pilot establishes the following production rules as canonical, not person-specific exceptions:
+
+1. Do not generate first and research later. Complete the Research Dossier, evidence weighting and reconstruction decision before image generation.
+2. Facial identity is the primary success criterion. If the face ceases to be recognizably the same person supported by the evidence, the portrait fails even if it is more beautiful.
+3. Famous standard portraits or popular later images are never automatically canonical facial sources.
+4. Armour is a high-risk AI invention surface. Shape, silhouette, colour layout, material, helmet form and ornament density must be evidence-locked before generation.
+5. When person-specific clothing/armour evidence is incomplete, prefer a reconstruction produced, restored, exhibited or documented by a relevant national heritage body, national museum, public research institution or comparably authoritative specialist institution for the same period, region and status. Once adopted, AI must not redesign it for visual appeal.
+6. A cleaner or more monumental result is not less historical merely because it is polished. Penalize polish only when it overwrites identity or material evidence.
+7. Heroic presentation after accuracy is secured is an intended ATLAS rendering stage, not a defect.
+8. The portrait asset should remain reusable and UI-independent; transparent background is the default project-delivery format unless a specific implementation constraint requires otherwise.
+
+## 31. Mandatory five-stage production workflow
+
+Every ATLAS portrait task follows this order:
+
+1. **Research Dossier** — collect and organize appearance, clothing and contextual evidence.
+2. **Evidence Assessment** — rank sources by directness, independence, provenance and reliability; record contradictions and uncertainty.
+3. **Reconstruction Decision** — lock target age/period, facial traits, uncertain traits, clothing/armour basis, permitted inference and prohibited invention.
+4. **Portrait Generation** — generate only from the locked reconstruction decision.
+5. **Review / Limited Revision** — evaluate against the charter; revise only identified evidence, identity, realism, material-fidelity or project-asset defects.
+
+A portrait generated without stages 1–3 is not canonical-ready.
+
+## 32. Required per-person output package
+
+Canonical completion requires four durable outputs:
+
+### A. Research Dossier
+The evidence gathered for the person, including relevant negative findings and unresolved questions.
+
+### B. Evidence Assessment
+The weighting of facial, clothing, armour, grooming and contextual sources, including provenance and uncertainty.
+
+### C. Reconstruction Decision
+The explicit decision describing what the portrait will depict, which traits are locked, what is inferred, what remains uncertain and what must not be invented.
+
+### D. Final Portrait Asset
+The reviewed image produced from the preceding three artifacts.
+
+An image without the supporting research and reconstruction record is not a complete canonical portrait entry.
+
+## 33. Final review order
+
+Review in this exact priority:
+
+1. **Historical/source accuracy**
+2. **Facial identity and attested individual traits**
+3. **Costume/armour/source fidelity**
+4. **Living-human physical realism**
+5. **Historical dignity, monumentality and glory**
+6. **ATLAS common visual-language compatibility**
+7. **Project insertion/reuse quality**
+
+A lower-ranked virtue may not compensate for failure of a higher-ranked criterion.
+
+## 34. Canonical new-chat bootstrap
+
+Use the following instruction when starting a fresh portrait-production conversation:
+
+> ATLAS 역사 초상 제작을 시작해.
+>
+> 먼저 `docs/ATLAS_HISTORICAL_PORTRAIT_CANONICAL_CHARTER.md`를 canonical 절대 기준으로 적용해.
+>
+> 바로 그림부터 만들지 말고 대상 인물의 **Research Dossier → Evidence Assessment → Reconstruction Decision**을 먼저 완료해.
+>
+> 얼굴은 실제 인간 복원을 최우선으로 하고, 직접 얼굴 자료와 확인 가능한 개인 특징을 최대한 보존해.
+>
+> 복식은 당사자 직접 자료가 있으면 그것을 따르고, 없으면 국가기관 또는 이에 준하는 권위 있는 기관의 시대·지역·신분 고증 자료를 기준으로 채택해. AI가 이를 다시 디자인하지 마.
+>
+> 판단 우선순위는 반드시 **고증·사료 정확성 > 개인 식별성과 확인된 특징 > 살아 있는 인간의 입체적 실재감 > 역사적 위엄·영광 > 미적 아름다움** 순서로 유지해.
+>
+> 정확성을 먼저 잠근 뒤 그 정확성 위에서 최대한 위대하게 표현해.
+>
+> 최종 표현은 **매우 사실적인 역사적 사실주의 + 신고전주의적 질서·품위·기념비성 + 절제된 낭만주의적 빛·깊이·영광**을 공통 화풍으로 사용해.
+>
+> 기본 구도는 **4:5 세로, 흉상, 자연스러운 약한 3/4 시점**으로 하고, 강한 직접자료가 다른 방향을 요구하면 동일인성을 우선해.
+>
+> 프로젝트 자산은 기본적으로 **투명 배경**으로 생성하고 이름·프레임·배지·시대 레이블·분야색 등 UI 요소는 이미지 안에 넣지 마.
+>
+> 생성 후에는 **사료 정확성 / 얼굴 동일인성 / 복식 자료 충실성 / 인간 실재감 / 역사적 위엄 / ATLAS 화풍 / 프로젝트 삽입성** 순서로 검수해.
+
+## 35. Operational summary
+
+> **ATLAS reconstructs the historical human, not the historical artwork.**
+>
+> **The face determines identity; clothing and armour prove the historical setting.**
+>
+> **AI may fill evidentiary gaps, but it may never overwrite evidence.**
+>
+> **Lock accuracy first; then express the person as greatly as that accuracy allows.**
