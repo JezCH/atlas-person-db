@@ -26,6 +26,7 @@ jobs:
     # Compile after every terminal main-branch Authoring Apply, including a failure.
     # A workflow-file-only main push is also an operator-safe direct refresh trigger when
     # Authoring is already committed but the legacy full audit path is unnecessarily long.
+    # Its OIDC policy admits push only for this exact workflow, main ref, production environment, and exact SHA.
     # A Human Authoring Apply can commit Authoring data and then fail only because
     # its legacy public read-back is now Runtime-backed. Compiling that committed
     # Authoring state breaks the post-cutover circular dependency without falling
