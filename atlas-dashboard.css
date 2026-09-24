@@ -62,3 +62,49 @@
 .dashboard-namuwiki-legend-item>b small{font-size:8px;font-weight:700;color:#8a93a3}
 .dashboard-namuwiki-legend-item[data-empty="true"]{opacity:.52}
 @media(max-width:600px){.dashboard-namuwiki-legend{grid-template-columns:1fr}.dashboard-namuwiki-track{height:10px}.dashboard-namuwiki-summary{gap:10px}}
+
+/* Era × Region coverage readability */
+.dashboard-heatmap-key{display:flex;align-items:center;flex-wrap:wrap;gap:7px 12px;margin:0 0 8px;color:#687286;font-size:8px;line-height:1.35}
+.dashboard-heatmap-key b{color:#344054}
+.dashboard-heatmap-scale{display:inline-flex;align-items:center;gap:2px}
+.dashboard-heatmap-scale i{display:block;width:15px;height:8px;border-radius:3px;background:#dce8f7}
+.dashboard-heatmap-scale i[data-level="2"]{background:#c5d8f0}
+.dashboard-heatmap-scale i[data-level="3"]{background:#9fbee5}
+.dashboard-heatmap-scale i[data-level="4"]{background:#729dd5}
+.dashboard-heatmap-scale i[data-level="5"]{background:#4276bd}
+.dashboard-heatmap-wrap{overflow-x:hidden}
+.dashboard-heatmap{width:100%;min-width:0;table-layout:fixed;font-size:9px}
+.dashboard-heatmap th,.dashboard-heatmap td{padding:5px 3px;white-space:normal}
+.dashboard-heatmap thead th:first-child,.dashboard-heatmap tbody th,.dashboard-heatmap tfoot th{width:128px}
+.dashboard-heatmap .dashboard-heatmap-total-head,.dashboard-heatmap .dashboard-heatmap-total-cell{width:58px}
+.dashboard-heatmap thead th{line-height:1.25;word-break:keep-all}
+.dashboard-heatmap tbody th{z-index:2}
+.dashboard-heatmap tbody td,.dashboard-heatmap tfoot td{position:relative;height:39px;font-variant-numeric:tabular-nums}
+.dashboard-heatmap tbody td::before{content:"";position:absolute;inset:2px;border-radius:5px;background:#4276bd;opacity:0;pointer-events:none}
+.dashboard-heatmap tbody td[data-heatmap-level="1"]::before{opacity:.10}
+.dashboard-heatmap tbody td[data-heatmap-level="2"]::before{opacity:.20}
+.dashboard-heatmap tbody td[data-heatmap-level="3"]::before{opacity:.36}
+.dashboard-heatmap tbody td[data-heatmap-level="4"]::before{opacity:.55}
+.dashboard-heatmap tbody td[data-heatmap-level="5"]::before{opacity:.76}
+.dashboard-heatmap tbody td>strong,.dashboard-heatmap tbody td>small,.dashboard-heatmap tfoot td>strong,.dashboard-heatmap tfoot td>small{position:relative;z-index:1;display:block;text-align:center}
+.dashboard-heatmap tbody td>strong,.dashboard-heatmap tfoot td>strong{font-size:10px;line-height:1.05;color:#26344d}
+.dashboard-heatmap tbody td>small,.dashboard-heatmap tfoot td>small{margin-top:3px;font-size:7px;line-height:1;color:#7b8798}
+.dashboard-heatmap tbody td[data-heatmap-level="5"]>strong{color:#12233f}
+.dashboard-heatmap tbody td[data-heatmap-level="5"]>small{color:#344d72}
+.dashboard-heatmap-total-cell{background:#f7f9fc}
+.dashboard-heatmap tfoot th,.dashboard-heatmap tfoot td{background:#f8fafc;border-bottom:0;font-weight:800}
+.dashboard-heatmap tfoot th{position:sticky;left:0;z-index:2;text-align:left}
+.dashboard-heatmap tfoot th strong,.dashboard-heatmap tfoot th small{display:block}
+.dashboard-heatmap tfoot th small{margin-top:2px;color:#8a93a3;font-size:7px;font-weight:500}
+.dashboard-heatmap tfoot td{border-top:1px solid #dfe5ee}
+@media(max-width:900px){
+  .dashboard-heatmap thead th:first-child,.dashboard-heatmap tbody th,.dashboard-heatmap tfoot th{width:116px}
+  .dashboard-heatmap .dashboard-heatmap-total-head,.dashboard-heatmap .dashboard-heatmap-total-cell{width:52px}
+  .dashboard-heatmap th,.dashboard-heatmap td{padding:5px 2px}
+  .dashboard-heatmap tbody td>strong,.dashboard-heatmap tfoot td>strong{font-size:9px}
+}
+@media(max-width:600px){
+  .dashboard-heatmap-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .dashboard-heatmap{min-width:760px}
+  .dashboard-heatmap-key{align-items:flex-start}
+}
