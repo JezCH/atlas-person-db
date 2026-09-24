@@ -12,6 +12,7 @@ const U = Object.freeze({
   polityA: "11111111-1111-4111-8111-111111111111",
   polityB: "22222222-2222-4222-8222-222222222222",
   source: "33333333-3333-4333-8333-333333333333",
+  source2: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
   context: "44444444-4444-4444-8444-444444444444",
   governance: "55555555-5555-4555-8555-555555555555",
   designation: "66666666-6666-4666-8666-666666666666",
@@ -43,6 +44,23 @@ function plan() {
     execution_rules: { production_executable: false, production_mutation_authorized: false },
     operations: [],
     stage2_assertions: [
+      {
+        type: "assert_source",
+        decision_id: "s",
+        exact_before: { source_absent_id: U.source2 },
+        exact_after: {
+          source: {
+            id: U.source2,
+            source_key: "bibliographic:unit:source",
+            source_type: "academic_reference",
+            title: "Unit Source",
+            sha256: null,
+            bytes: null,
+            canonical_url: "https://example.com/unit-source",
+            citation_text: "Unit citation."
+          }
+        }
+      },
       {
         type: "assert_governance_period",
         decision_id: "g",
@@ -107,6 +125,7 @@ const snapshot = {
 test("unified plan synthesizer appends all three literal Stage 2 assertion families and rehashes", () => {
   const manifest = synthesizeUnifiedCorrectionV2Manifest(plan(), snapshot);
   assert.deepEqual(manifest.operations.map((op) => op.type), [
+    "assert_source",
     "assert_governance_period",
     "assert_polity_designation",
     "assert_polity_identity_relation"
