@@ -1,7 +1,7 @@
 {
   "schema": "atlas-namuwiki-reviewed-not-found-reasons/v1",
   "issue": 820,
-  "snapshot_date": "2026-09-24",
+  "snapshot_date": "2026-09-25",
   "note": "Conservative reason backfill derived only from explicit Issue #820 review dispositions. Absence of an entry means the reviewed not_found reason is not durably classified here.",
   "categories": {
     "no_exact_document": "Exhaustive review found no independent exact historical Person document.",
@@ -11,8 +11,8 @@
   },
   "counts": {
     "exact_target_url_pending": 81,
-    "related_or_derivative_only": 117,
-    "no_exact_document": 107,
+    "related_or_derivative_only": 120,
+    "no_exact_document": 108,
     "exact_target_url_verified": 43
   },
   "by_person_id": {
@@ -209,6 +209,7 @@
     "8ad3cc83-c69b-4e0d-b11b-ce69dd7ed935": "related_or_derivative_only",
     "8b68b0cd-bcd2-4fde-8d15-f639af432981": "no_exact_document",
     "8c3f7629-d06d-48c5-8aea-bfb7b9cc285c": "exact_target_url_pending",
+    "8d8b6bcc-110d-436c-887b-3471a1b1bd1e": "related_or_derivative_only",
     "8e24ea34-006e-4143-91b2-bbb4443c55f8": "exact_target_url_verified",
     "8e47af37-4308-5cd1-a7af-7354af1c50c6": "related_or_derivative_only",
     "8f4d7038-013d-47f6-b6ff-41ed3bb79243": "exact_target_url_pending",
@@ -328,6 +329,7 @@
     "e94f9359-c526-463f-950d-7759ec0628b9": "exact_target_url_pending",
     "e9d04a4a-5755-4a56-9574-0182911d8203": "exact_target_url_pending",
     "eb55bf10-7321-4578-bb84-d89267864a12": "exact_target_url_pending",
+    "eb5e1992-27b8-42f8-b554-c4ae745aa3a5": "no_exact_document",
     "eb6b2a77-059f-4042-a283-31ec67c6f97f": "exact_target_url_pending",
     "eb8960a3-b96a-4e9e-bb34-56514cbf33bd": "no_exact_document",
     "ec8721f6-0af9-4a62-ad6e-d1d372ac5131": "exact_target_url_verified",
@@ -346,6 +348,7 @@
     "f721488b-4d69-4735-9086-92d2a42ff3e8": "no_exact_document",
     "f7233956-8e2d-465e-94e6-c405c9ff7793": "related_or_derivative_only",
     "f893373c-2b5e-476b-9199-27e7ed92dad9": "exact_target_url_pending",
+    "f8f4d724-1126-4c26-a8cb-306d9308258a": "related_or_derivative_only",
     "f9e43b5c-de96-4553-be3c-b1f4fe626cc5": "exact_target_url_pending",
     "fa0cbc93-bdad-4968-aa7c-5f7beb4912d9": "no_exact_document",
     "fa374536-7763-4259-b52b-c2a718387bab": "exact_target_url_verified",
@@ -361,6 +364,7 @@
     "fe851e7d-0d7c-4d30-a108-84dae2066c90": "exact_target_url_verified",
     "febfbf5c-ab58-45db-85f7-53f54f968d9e": "related_or_derivative_only",
     "feffcd69-852d-492a-8aa7-c55ab04c1c6b": "no_exact_document",
+    "ff0b4949-d77a-4a61-9829-79cd814f9117": "related_or_derivative_only",
     "ff1d3ea3-501e-404b-91b0-3b2e1bbf04b2": "related_or_derivative_only",
     "ff5d5de9-79e6-46ac-8702-c0915333378f": "exact_target_url_verified",
     "ff68de8d-73e4-4096-b731-af0c6b94d39d": "no_exact_document"
