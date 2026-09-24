@@ -71,11 +71,13 @@ function requireNamuWikiLinkPayload(body) {
   return Object.freeze({ runtimeSha, workflowSha, personId, externalReference, expectedCurrentReference });
 }
 
-function requestIdFor(personId, reference, expectedCurrentReference = null) {
+function requestIdFor(personId, reference, expectedCurrentReference = null, nonce = crypto.randomUUID()) {
   const target = reference?.status === "not_found" ? "not_found" : String(reference?.url || "");
-  const material = expectedCurrentReference ? `${expectedCurrentReference.url}=>${target}` : target;
-  const digest = crypto.createHash("sha256").update(material, "utf8").digest("hex").slice(0, 24);
-  return `namuwiki-link:${personId}:${digest}`;
+  const transition = expectedCurrentReference ? `${expectedCurrentReference.url}=>${target}` : target;
+  const digest = crypto.createHash("sha256").update(transition, "utf8").digest("hex").slice(0, 16);
+  const attempt = String(nonce || "").replace(/[^0-9a-z-]/gi, "").slice(0, 36);
+  if (!attempt) throw new Error("NAMUWIKI_LINK_REQUEST_NONCE_REQUIRED");
+  return `namuwiki-link:${personId}:${digest}:${attempt}`;
 }
 
 function statusForError(code) {
