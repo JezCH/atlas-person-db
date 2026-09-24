@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_han_character_repair_zhang_qian_relink_20260925_v1",
+  "as_of": "2026-09-25",
+  "status": "REVIEWED_FALSE_RELINK_REPAIR",
+  "release_order": 901,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY_IDENTITY_EXHAUSTIVE_SIMILARITY_AUDIT comment 5748136361; active frontier #1443; exact Production Person/Polity read rechecked 2026-09-25",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "han-character-repair-relink-zhang-qian-to-western-han",
+      "type": "rewrite_activity",
+      "activity_id": "d0f0408c-e9c7-4a00-9b12-3ad2f78cb6ab",
+      "baseline_before": {
+        "person_id": "deb99909-5476-4de1-ad57-ff9b4bf63001",
+        "polity_id": "46740a29-a891-5ff8-9804-0f8aba62e71e",
+        "role_id": "b1ef936d-6c73-4d62-a35e-bfe4d5d12788",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": -138,
+        "activity_end": -115,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "d0f0408c-e9c7-4a00-9b12-3ad2f78cb6ab",
+        "person_id": "deb99909-5476-4de1-ad57-ff9b4bf63001",
+        "polity_id": "34fac2d0-ba70-53e6-8e5a-47a9cd6ddfec",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "b1ef936d-6c73-4d62-a35e-bfe4d5d12788",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": -138,
+        "activity_start_detail": {
+          "year": -138,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": -115,
+        "activity_end_detail": {
+          "year": -115,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "activity_relinks": 1,
+    "target_existing_polity_id": "34fac2d0-ba70-53e6-8e5a-47a9cd6ddfec",
+    "source_polity_survives": true,
+    "production_mutation_authorized": false
+  }
+}
