@@ -288,18 +288,18 @@
     return value || "—";
   }
 
-  function breakdownCard(label, item) {
+  function breakdownCard(label, item, eyebrow = "INCOMPLETE REASONS") {
     const total = item?.total == null ? "—" : value(item.total);
     const unit = unitLabel(item?.unit || "person");
-    const rows = (item?.rows || []).map((row) => `<div class="dashboard-domain-row">
+    const rows = (item?.rows || []).map((row) => `<div class="dashboard-reason-row">
       <span title="${escapeHtml(row.label || row.code || "")}">${escapeHtml(row.label || row.code || "unknown")}</span><b>${value(row.count)}</b>
     </div>`).join("");
     const unattributed = Number(item?.unattributed_count || 0) > 0
-      ? `<div class="dashboard-domain-row"><span>사유 미확인</span><b>${value(item.unattributed_count)}</b></div>`
+      ? `<div class="dashboard-reason-row"><span>사유 미확인</span><b>${value(item.unattributed_count)}</b></div>`
       : "";
-    return `<article class="dashboard-panel card">
-      <div class="dashboard-panel-head"><div><p class="eyebrow">INCOMPLETE REASONS</p><h3>${escapeHtml(label)}</h3></div><span>${total} ${unit}</span></div>
-      <div class="dashboard-domain-list">${rows || unattributed ? rows + unattributed : `<div class="dashboard-domain-row"><span>${escapeHtml(reasonLabel(item?.unavailable_reason) || "사유 원본 확인 불가")}</span><b>—</b></div>`}</div>
+    return `<article class="dashboard-panel card dashboard-reason-panel">
+      <div class="dashboard-panel-head"><div><p class="eyebrow">${escapeHtml(eyebrow)}</p><h3>${escapeHtml(label)}</h3></div><span>${total} ${unit}</span></div>
+      <div class="dashboard-reason-list">${rows || unattributed ? rows + unattributed : `<div class="dashboard-reason-row"><span>${escapeHtml(reasonLabel(item?.unavailable_reason) || "사유 원본 확인 불가")}</span><b>—</b></div>`}</div>
     </article>`;
   }
 
@@ -487,6 +487,7 @@
     const qd = snapshot.quality_drilldown || {};
     const a = snapshot.attention_queue;
     const b = snapshot.incomplete_breakdown;
+    const namuwikiAbsence = snapshot.namuwiki_absence_breakdown;
     const kd = snapshot.kpi_drilldown;
     const rd = snapshot.recent_delta;
     const timeline = snapshot.recent_activity_timeline;
@@ -652,6 +653,10 @@
         ${incompleteCards.length
           ? incompleteCards.map(([label,item]) => breakdownCard(label,item)).join("")
           : '<article class="dashboard-panel card"><div class="dashboard-panel-head"><div><p class="eyebrow">INCOMPLETE REASONS</p><h3>미완료 원인 없음</h3></div><span>0</span></div></article>'}
+      </section>
+
+      <section class="dashboard-lower-grid" aria-label="나무위키 없음 확정 사유">
+        ${breakdownCard("NamuWiki 없음 확정 사유",namuwikiAbsence,"VERIFIED ABSENCE REASONS")}
       </section>
 
       <section class="dashboard-lower-grid">
