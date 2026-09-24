@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-24",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "7ccf398ea7d62f04feb2c28e5c3d11a9da9727b1",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign the first SSS+ registration batch using the existing reviewed representative-domain decisions from Lane A: Bacon, Hobbes, Hume, Nietzsche, Russell, Linnaeus and Fleming to knowledge; Alfred Nobel to technology."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SSSPLUS-BATCH01-20260924",
+    "queue_issue": 1375,
+    "assignment_count": 8,
+    "distribution": {
+      "governance": 0,
+      "military": 0,
+      "knowledge": 7,
+      "technology": 1,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "b7cb64e7-6bbf-4a3f-8791-c8db642b5d17",
+      "canonical_name_en": "Francis Bacon",
+      "preferred_name_ko": "프랜시스 베이컨",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "a8a7430f-24c4-4da5-93e7-40f480bbe854",
+      "canonical_name_en": "Thomas Hobbes",
+      "preferred_name_ko": "토머스 홉스",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "f7eec894-87d3-4254-835e-245c9e092318",
+      "canonical_name_en": "David Hume",
+      "preferred_name_ko": "데이비드 흄",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "c5676a6d-891b-4d08-8738-d26226e78ae0",
+      "canonical_name_en": "Friedrich Nietzsche",
+      "preferred_name_ko": "프리드리히 니체",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "086a0c88-d4d4-413c-95d7-1821fdf2de51",
+      "canonical_name_en": "Bertrand Russell",
+      "preferred_name_ko": "버트런드 러셀",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "6be066f4-cb44-4302-8157-8804b39ede1f",
+      "canonical_name_en": "Carl Linnaeus",
+      "preferred_name_ko": "칼 린네",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "201df059-fd64-4006-a479-281fdb141244",
+      "canonical_name_en": "Alexander Fleming",
+      "preferred_name_ko": "알렉산더 플레밍",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "651d1013-a4ec-4bf1-9426-3ba94c339433",
+      "canonical_name_en": "Alfred Nobel",
+      "preferred_name_ko": "알프레드 노벨",
+      "representative_domain": "technology"
+    }
+  ]
+}
