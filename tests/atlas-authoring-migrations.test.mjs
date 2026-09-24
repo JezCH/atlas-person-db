@@ -95,7 +95,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   const portraitSimple = migrations[13].sql;
   assert.match(portraitSimple, /DROP COLUMN IF EXISTS portrait_kind/i);
   assert.match(portraitSimple, /DROP COLUMN IF EXISTS evidence_level/i);
-  assert.match(portraitSimple, /DROP TABLE IF EXISTS atlas_v2\\.person_portrait_sources/i);
+  assert.match(portraitSimple, /DROP TABLE IF EXISTS atlas_v2\.person_portrait_sources/i);
 });
 
 test('current clean schema baseline remains the measured pre-lifecycle Production shape', () => {
