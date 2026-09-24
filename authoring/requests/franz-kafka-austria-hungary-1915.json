@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:franz-kafka:austria-hungary:writer:1915:v1",
+  "person": {
+    "canonical_name_en": "Franz Kafka",
+    "display_name_ko": "프란츠 카프카",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Austria-Hungary",
+    "display_name_ko": "오스트리아-헝가리"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Writer",
+    "role_display_name_ko": "작가",
+    "start_year": 1915,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1915,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1915 as Kafka's representative Austro-Hungarian literary-activity year. Kafka was a Prague-based writer within Austria-Hungary, and The Metamorphosis was first published in 1915."
+  },
+  "sources": [
+    {
+      "title": "Biography — Franz Kafka Museum",
+      "canonical_url": "https://kafkamuseum.cz/en/timeline",
+      "citation_text": "The Franz Kafka Museum timeline records the first publication of The Metamorphosis in 1915 and situates Kafka's writing life in Prague.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-035",
+    "review_checkpoint": "#1374 comment 5815496976",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

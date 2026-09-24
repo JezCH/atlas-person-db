@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:richard-wagner:german-empire:composer:1876:v1",
+  "person": {
+    "canonical_name_en": "Richard Wagner",
+    "display_name_ko": "리하르트 바그너",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Composer",
+    "role_display_name_ko": "작곡가",
+    "start_year": 1876,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1876,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1876 as Wagner's representative German artistic milestone year, when the first Bayreuth Festival opened and presented the first complete festival realization of his Ring project."
+  },
+  "sources": [
+    {
+      "title": "Festival History — Bayreuth Festival",
+      "canonical_url": "https://www.bayreuther-festspiele.de/en/festival/history/",
+      "citation_text": "The official Bayreuth Festival history records the opening of the first festival on 13 August 1876 and the three Ring cycles presented at the inaugural festival.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp6-20260922-033",
+    "review_checkpoint": "#1374 comment 5763369008",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

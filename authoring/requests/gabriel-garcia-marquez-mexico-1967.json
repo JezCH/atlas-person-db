@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gabriel-garcia-marquez:mexico:novelist:1967:v1",
+  "person": {
+    "canonical_name_en": "Gabriel García Márquez",
+    "display_name_ko": "가브리엘 가르시아 마르케스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Novelist",
+    "role_display_name_ko": "소설가",
+    "start_year": 1967,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1967,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1967 as García Márquez's representative Mexican literary milestone year. He was living and writing in Mexico City during the creation of One Hundred Years of Solitude, whose 1967 publication transformed him into an internationally celebrated writer."
+  },
+  "sources": [
+    {
+      "title": "Gabriel García Márquez: The Making of a Global Writer — Harry Ransom Center, University of Texas",
+      "canonical_url": "https://www.hrc.utexas.edu/exhibitions/2020/gabriel-garcia-marquez/",
+      "citation_text": "The Harry Ransom Center records García Márquez living in Mexico City in 1965 while writing One Hundred Years of Solitude and identifies its 1967 publication as the breakthrough that made him globally celebrated.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "writers4-20260921-010",
+    "review_checkpoint": "#1374 comment 5762473330",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

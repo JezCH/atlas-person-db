@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:xuanzang:tang-dynasty:buddhist-monk-translator:645:v1",
+  "person": {
+    "canonical_name_en": "Xuanzang",
+    "display_name_ko": "현장",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Tang Dynasty",
+    "display_name_ko": "당나라"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Buddhist monk and translator",
+    "role_display_name_ko": "승려·역경가",
+    "start_year": 645,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 645,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 645 as Xuanzang's representative Tang activity year: after departing Chang'an in 629 for his pilgrimage to India, he returned to Tang China in 645 with Buddhist texts and relics. This single-year Activity represents the culmination of the pilgrimage and the beginning of his major translation work under Tang patronage."
+  },
+  "sources": [
+    {
+      "title": "Central and North Asia, 500–1000 A.D. — The Metropolitan Museum of Art",
+      "canonical_url": "https://82nd-and-fifth.metmuseum.org/toah/ht/06/nc.html",
+      "citation_text": "The Metropolitan Museum of Art chronology records Xuanzang's pilgrimage across Central Asia and India from 629 to 645 and places it in the Tang-period context.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "faith-20260921-xuanzang",
+    "review_checkpoint": "#1374 comment 5763178478",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "religion"
+  }
+}

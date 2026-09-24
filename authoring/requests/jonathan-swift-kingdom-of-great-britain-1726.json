@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jonathan-swift:kingdom-of-great-britain:writer-satirist:1726:v1",
+  "person": {
+    "canonical_name_en": "Jonathan Swift",
+    "display_name_ko": "조너선 스위프트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Great Britain",
+    "display_name_ko": "그레이트브리튼 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Writer and satirist",
+    "role_display_name_ko": "작가·풍자가",
+    "start_year": 1726,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1726,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1726 as Swift's representative British literary milestone year, when Gulliver's Travels was published in London and rapidly became a major success."
+  },
+  "sources": [
+    {
+      "title": "Jonathan Swift: Gulliver's Travels — Writers Inspire, University of Oxford",
+      "canonical_url": "https://writersinspire-new.it.ox.ac.uk/content/jonathan-swift-gullivers-travels",
+      "citation_text": "University of Oxford's Writers Inspire resource discusses the 1726 London publication of Gulliver's Travels and its immediate reception.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-039",
+    "review_checkpoint": "#1374 comment 5815496976",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

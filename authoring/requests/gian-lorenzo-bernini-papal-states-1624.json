@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gian-lorenzo-bernini:papal-states:sculptor-architect:1624:v1",
+  "person": {
+    "canonical_name_en": "Gian Lorenzo Bernini",
+    "display_name_ko": "잔 로렌초 베르니니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Papal States",
+    "display_name_ko": "교황령"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Sculptor and architect",
+    "role_display_name_ko": "조각가·건축가",
+    "start_year": 1624,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1624,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1624 as Bernini's representative papal-Rome artistic milestone year, when he designed the monumental baldacchino of St Peter's as his first architectural commission."
+  },
+  "sources": [
+    {
+      "title": "The Baldacchino and the Altar of the Chair of St. Peter's Basilica — Vatican News",
+      "canonical_url": "https://www.vaticannews.va/en/vatican-city/news/2024-10/baldacchino-and-the-altar-of-the-chair-of-st-peter-basilica.html",
+      "citation_text": "Vatican News states that Bernini designed the St Peter's baldacchino in 1624 as his first architectural commission.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-022",
+    "review_checkpoint": "#1374 comment 5815494440",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}
