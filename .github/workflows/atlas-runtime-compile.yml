@@ -19,7 +19,8 @@ permissions:
 
 concurrency:
   group: atlas-runtime-projection-compile
-  cancel-in-progress: false
+  # A newer main Runtime target supersedes an older run that may be waiting for a deployment SHA that can no longer become the Production alias.
+  cancel-in-progress: true
 
 jobs:
   compile:
