@@ -1,0 +1,59 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hippocrates:kos:physician:c440-c360-bce:v1",
+  "person": {
+    "canonical_name_en": "Hippocrates",
+    "display_name_ko": "히포크라테스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Hippocrates was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kos",
+    "display_name_ko": "코스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Physician",
+    "role_display_name_ko": "의사",
+    "start_year": -440,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -360,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses c.440-c.360 BCE as an explicitly approximate representative medical-activity window for the historical Hippocrates of Kos. The range preserves the uncertainty surrounding his personal chronology and the authorship of the Hippocratic Corpus; it is not asserted as an exact career span."
+  },
+  "sources": [
+    {
+      "title": "Hippocrates: The Forefather of Neurology — PMC",
+      "canonical_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6074172/",
+      "citation_text": "The reviewed medical-history article treats Hippocrates as the historical physician of Kos and discusses an approximate fifth-to-fourth-century BCE chronology while distinguishing him from the broader Hippocratic corpus.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-056",
+    "review_checkpoint": "#1374 comment 5762053926",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:panini:achaemenid-empire:grammarian:c400-bce:v1",
+  "person": {
+    "canonical_name_en": "Pāṇini",
+    "display_name_ko": "파니니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Pāṇini was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Achaemenid Empire",
+    "display_name_ko": "아케메네스 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Grammarian",
+    "role_display_name_ko": "문법학자",
+    "start_year": -400,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -400,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses c.400 BCE as an explicitly approximate representative intellectual-activity point for Pāṇini in Gandhara. Encyclopaedia Iranica notes that Pāṇini used the name Gandhara around 400 BCE, probably hailed from the region, and that Gandhara was an Achaemenid Persian province. This does not claim an exact birth, death, or composition date."
+  },
+  "sources": [
+    {
+      "title": "GANDHĀRA — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/gandhara/",
+      "citation_text": "Encyclopaedia Iranica identifies Gandhara as an Achaemenid province and states that around 400 BCE the grammarian Pāṇini used the name and probably hailed from Gandhara.",
+      "source_type": "academic_encyclopedia"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gplist3-20260921-041",
+    "review_checkpoint": "#1374 comment 5762364540",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

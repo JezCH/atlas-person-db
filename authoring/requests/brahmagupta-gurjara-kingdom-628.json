@@ -1,0 +1,59 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:brahmagupta:gurjara-kingdom:mathematician-astronomer:628:v1",
+  "person": {
+    "canonical_name_en": "Brahmagupta",
+    "display_name_ko": "브라마굽타",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Brahmagupta was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Gurjara Kingdom",
+    "display_name_ko": "구르자라 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician and astronomer",
+    "role_display_name_ko": "수학자·천문학자",
+    "start_year": 628,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 628,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 628 as Brahmagupta's representative scholarly milestone. Brahmagupta states that he composed the Brahmasphutasiddhanta at Bhillamala (Bhinmal), then the capital of lands ruled by the Gurjara dynasty. The polity label is intentionally the seventh-century Gurjara kingdom, not the later Gurjara-Pratihara Empire."
+  },
+  "sources": [
+    {
+      "title": "Brahmagupta — MacTutor History of Mathematics",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Brahmagupta/",
+      "citation_text": "MacTutor records that Brahmagupta wrote the Brahmasphutasiddhanta in 628 at Bhillamala, capital of lands ruled by the Gurjara dynasty.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gplist3-20260921-036",
+    "review_checkpoint": "#1374 comment 5762364540",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

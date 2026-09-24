@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cao-xueqin:qing-dynasty:novelist:1754:v1",
+  "person": {
+    "canonical_name_en": "Cao Xueqin",
+    "display_name_ko": "조설근",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Cao Xueqin was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Qing Dynasty",
+    "display_name_ko": "청나라"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Novelist",
+    "role_display_name_ko": "소설가",
+    "start_year": 1754,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1754,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1754 as a representative Qing literary milestone because Dream of the Red Chamber is documented as circulating in manuscript from that year. The date represents the earliest documented manuscript-circulation milestone and is not asserted as the exact beginning of Cao Xueqin's composition."
+  },
+  "sources": [
+    {
+      "title": "The Text of the Novel — Dream of the Red Chamber, University of Minnesota",
+      "canonical_url": "https://open.lib.umn.edu/redchamber/part/textofthenovel/",
+      "citation_text": "The University of Minnesota resource states that Dream of the Red Chamber circulated in manuscript from 1754 and identifies Cao Xueqin as the author of at least the first eighty chapters.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-032",
+    "review_checkpoint": "#1374 comment 5815495564",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}
