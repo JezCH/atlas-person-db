@@ -78,6 +78,7 @@ jobs:
             # Norway identity cleanup 2026-09-20: refresh stale Runtime polity projection before orphan retirement.
             # France identity cleanup 2026-09-21: refresh stale Runtime polity projection before orphan retirement.
             # Source provenance backfill 2026-09-24: refresh Runtime provenance snapshots after Correction Apply added normalized Activity sources.
+            # Song Zhenzong registration 2026-09-24: refresh Runtime after committed Authoring write raced with a newer main deployment.
             # It may also be used to record a no-content-change Runtime activation for activation-history verification.
             if [[ ! -s /tmp/atlas-candidates.txt ]] && git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- | grep -qx '.github/workflows/atlas-authoring-apply.yml'; then
               audit_all_approved=true
