@@ -85,9 +85,9 @@ test("map-like adjacency decisions remain explicit inside each refined macroregi
   ]));
 
   assert.deepEqual(hierarchy.americas, ["south-america","caribbean","mesoamerica","north-america"]);
-  assert.deepEqual(hierarchy.europe, ["britain-ireland","northern-europe","russia-volga","eastern-europe","balkans","central-europe","italy","western-europe","iberia"]);
+  assert.deepEqual(hierarchy.europe, ["britain-ireland","northern-europe","russia-volga","eastern-europe","balkans","italy","central-europe","western-europe","iberia"]);
   assert.deepEqual(hierarchy.africa, ["maghreb-north-africa","west-africa","central-africa","southern-africa","east-africa","horn-of-africa","nile-valley"]);
-  assert.deepEqual(hierarchy["west-asia"], ["levant","arabia","mesopotamia","anatolia","caucasus","iranian-plateau"]);
+  assert.deepEqual(hierarchy["west-asia"], ["levant","anatolia","caucasus","mesopotamia","arabia","iranian-plateau"]);
   assert.deepEqual(hierarchy["central-asia"], ["western-central-asia","western-siberia","eastern-central-asia-steppe","tibetan-plateau"]);
   assert.deepEqual(hierarchy["south-asia"], ["himalayas","northwest-south-asia","north-india-ganges","deccan-south-india","maldives","sri-lanka"]);
   assert.deepEqual(hierarchy["southeast-asia"], ["maritime-southeast-asia","mainland-southeast-asia"]);

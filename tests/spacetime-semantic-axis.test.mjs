@@ -90,7 +90,7 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "europe").subregions.map((band) => band.code),
-    ["britain-ireland", "northern-europe", "russia-volga", "eastern-europe", "balkans", "central-europe", "italy", "western-europe", "iberia"]
+    ["britain-ireland", "northern-europe", "russia-volga", "eastern-europe", "balkans", "italy", "central-europe", "western-europe", "iberia"]
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "africa").subregions.map((band) => band.code),
@@ -98,7 +98,7 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "west-asia").subregions.map((band) => band.code),
-    ["levant", "arabia", "mesopotamia", "anatolia", "caucasus", "iranian-plateau"]
+    ["levant", "anatolia", "caucasus", "mesopotamia", "arabia", "iranian-plateau"]
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "central-asia").subregions.map((band) => band.code),
@@ -123,8 +123,8 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_basis, "atlas_internal_display_taxonomy");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.external_standard, null);
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.width_basis, "equal_leaf_subregion");
-  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.horizontal_order_basis, "long_term_historical_cultural_continuity_then_geographic_adjacency_then_cross_macro_bridges");
-  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.display_order_revision, "2026-09-25-continuity-v2");
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.horizontal_order_basis, "whole_path_macro_bridge_continuity_avoid_large_backtracking_then_historical_cultural");
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.display_order_revision, "2026-09-25-global-path-v3");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.density_weighting, false);
   const flattened=spaceAxis.DEFAULT_SPATIAL_HIERARCHY.flatMap((macro)=>macro.subregions.map((band)=>band.code));
   const adjacent=(left,right)=>{
@@ -133,8 +133,17 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
     assert.equal(flattened[index+1],right,`${left} should connect directly to ${right}`);
   };
   adjacent("north-america","britain-ireland");
+  adjacent("balkans","italy");
+  adjacent("italy","central-europe");
+  adjacent("central-europe","western-europe");
+  adjacent("western-europe","iberia");
   adjacent("iberia","maghreb-north-africa");
   adjacent("nile-valley","levant");
+  adjacent("levant","anatolia");
+  adjacent("anatolia","caucasus");
+  adjacent("caucasus","mesopotamia");
+  adjacent("mesopotamia","arabia");
+  adjacent("arabia","iranian-plateau");
   adjacent("iranian-plateau","western-central-asia");
   adjacent("tibetan-plateau","himalayas");
   adjacent("sri-lanka","maritime-southeast-asia");

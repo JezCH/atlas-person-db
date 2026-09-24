@@ -21,7 +21,7 @@
   const FOCUS_DETAIL_ZOOM = 6.5;
   const RUNTIME_CORE_INDEPENDENT_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-time-projection.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
-    ["./atlas-person-spacetime-space-axis.js?v=20260925-continuity-v2", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
+    ["./atlas-person-spacetime-space-axis.js?v=20260925-global-path-v3", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-presentation-layout.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260920-exact-fit-floor", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
