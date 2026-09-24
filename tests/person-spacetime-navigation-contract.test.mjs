@@ -21,9 +21,9 @@ test('authority navigation lazy-loads the canonical spacetime model and current 
   assert.doesNotMatch(indexHtml, /atlas-person-spacetime-model\.js/);
   assert.match(navScript, /function ensureSpacetimeModel\(\)/);
   assert.match(navScript, /atlas-person-spacetime-model\.js\?v=20260903-south-asia-r3/);
-  assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20260925-continuity-order-v2/);
+  assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20260925-continuity-order-v3/);
   assert.match(navScript, /atlas-person-spacetime-view\.css\?v=20260923-runtime-ownership-v1/);
-  assert.match(spacetimeView, /atlas-person-spacetime-space-axis\.js\?v=20260925-continuity-v1/);
+  assert.match(spacetimeView, /atlas-person-spacetime-space-axis\.js\?v=20260925-continuity-v2/);
   assert.match(spacetimeView, /atlas-person-spacetime-spatial-compile\.js\?v=20260903-taxonomy-r2/);
   assert.match(spacetimeView, /atlas-person-spacetime-person-tracks\.js\?v=20260902-inspector-evidence/);
   assert.match(spacetimeView, /atlas-person-spacetime-data-parity\.js\?v=20260902-final-parity/);
@@ -33,7 +33,7 @@ test('authority navigation lazy-loads the canonical spacetime model and current 
   assert.match(spacetimeView, /ATLAS_CLIENT_DATA_STORE/);
   assert.match(spacetimeView, /dataStore\.loadSpatialIndex/);
   assert.match(spacetimeView, /dataStore\.loadPersons/);
-  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260925-spatial-continuity-v5/);
+  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260925-spatial-continuity-v6/);
 });
 
 test('spacetime topbar suppresses desktop-only explanatory subtitle', () => {
