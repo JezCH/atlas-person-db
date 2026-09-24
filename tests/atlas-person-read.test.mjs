@@ -9,6 +9,7 @@ const {
   ACTIVITY_DETAIL_SQL,
   PERSON_SOURCE_SQL,
   ACTIVITY_SOURCE_SQL,
+  normalizeExternalReferences,
   readPersons,
   readPersonDetail
 } = require('../server/atlas-person-read-service.js');
@@ -104,6 +105,35 @@ function activitySourceRow() {
     citation_text: 'Example Journal 12 (2025), pp. 40-42.'
   };
 }
+
+test('Person read projects reviewed NamuWiki absence reasons without inventing them for unreviewed rows', () => {
+  const classified = normalizeExternalReferences({
+    namuwiki:{status:'not_found',checked_at:'2026-09-24'}
+  }, {
+    personId:'013b98d1-fe18-4974-996d-ddf491f6cbf6',
+    notFoundAudited:true
+  });
+  assert.equal(classified.namuwiki.review_state,'reviewed_absent');
+  assert.equal(classified.namuwiki.absence_reason,'target_url_pending');
+
+  const unclassified = normalizeExternalReferences({
+    namuwiki:{status:'not_found',checked_at:'2026-09-24'}
+  }, {
+    personId:'ffffffff-ffff-4fff-8fff-ffffffffffff',
+    notFoundAudited:true
+  });
+  assert.equal(unclassified.namuwiki.review_state,'reviewed_absent');
+  assert.equal(unclassified.namuwiki.absence_reason,'reviewed_absent_unclassified');
+
+  const legacy = normalizeExternalReferences({
+    namuwiki:{status:'not_found',checked_at:'2026-09-24'}
+  }, {
+    personId:'ffffffff-ffff-4fff-8fff-ffffffffffff',
+    notFoundAudited:false
+  });
+  assert.equal(legacy.namuwiki.review_state,'legacy_unverified');
+  assert.equal('absence_reason' in legacy.namuwiki,false);
+});
 
 test('Person Main read preserves DB historicity vocabulary instead of inventing a frontend enum', async () => {
   const rows = [
