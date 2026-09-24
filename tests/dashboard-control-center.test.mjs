@@ -27,7 +27,7 @@ test("dashboard model derives progress from canonical snapshots without stored d
   const activity=(id,polity,start,end,sourceCount=1)=>({id,polity:{id:polity},start:{year:start},end:{year:end},source_count:sourceCount});
   const persons = [
     { id:P1, historicity:"historical", activity_count:2, external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:X}] }, activity_summaries:[activity(A1,X,100,110)] },
-    { id:P2, historicity:"historical", activity_count:0, external_references:{ namuwiki:{status:"not_found"} }, facets:{ polities:[{id:Y}] }, activity_summaries:[activity(A2,Y,120,130)] },
+    { id:P2, historicity:"historical", activity_count:0, external_references:{ namuwiki:{status:"not_found",review_state:"reviewed_absent"} }, facets:{ polities:[{id:Y}] }, activity_summaries:[activity(A2,Y,120,130)] },
     { id:P3, historicity:"uncertain", activity_count:1, external_references:{}, facets:{ polities:[{id:Z}] }, activity_summaries:[activity(A3,Z,140,150)] }
   ];
   const snapshot = model.buildDashboardSnapshot({
@@ -48,6 +48,9 @@ test("dashboard model derives progress from canonical snapshots without stored d
   assert.equal(snapshot.kpis.activities,3);
   assert.equal(snapshot.work.domain.done,2);
   assert.equal(snapshot.work.namuwiki.done,2);
+  assert.equal(snapshot.work.namuwiki.linked,1);
+  assert.equal(snapshot.work.namuwiki.confirmed_absent,1);
+  assert.equal(snapshot.work.namuwiki.remaining,1);
   assert.equal(snapshot.work.spatial.done,1);
   assert.equal(snapshot.work.spatial.remaining,2);
   assert.equal(snapshot.quality.no_runtime_activity,1);
@@ -64,7 +67,7 @@ test("Data Quality drill-down preserves exact targets for Person, Activity, Poli
   const A2="00000000-0000-4000-8000-000000000202";
   const persons=[
     {id:P1,display_name:"인물 1",activity_count:1,external_references:{namuwiki:{status:"linked"}},facets:{polities:[{id:X,display_name:"정치체 X"}]},activity_summaries:[{id:A1,polity:{id:X,display_name:"정치체 X"},start:{year:100},end:{year:110},source_count:1}]},
-    {id:P2,display_name:"인물 2",activity_count:0,external_references:{namuwiki:{status:"not_found"}},facets:{polities:[{id:Y,display_name:"정치체 Y"},{id:Z,display_name:"정치체 Z"}]},activity_summaries:[{id:A2,polity:{id:Z,display_name:"정치체 Z"},start:{year:120},end:{year:130},source_count:1}]}
+    {id:P2,display_name:"인물 2",activity_count:0,external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent"}},facets:{polities:[{id:Y,display_name:"정치체 Y"},{id:Z,display_name:"정치체 Z"}]},activity_summaries:[{id:A2,polity:{id:Z,display_name:"정치체 Z"},start:{year:120},end:{year:130},source_count:1}]}
   ];
   const spatialIndex={
     schema:spatialModel.SPATIAL_INDEX_SCHEMA,
@@ -178,7 +181,7 @@ test("attention queue derives Spatial Person targets from the canonical Activity
   const activity=(id,polity,start,end,sourceCount=1)=>({id,polity:{id:polity},start:{year:start},end:{year:end},source_count:sourceCount});
   const persons = [
     { id:P1, activity_count:2, external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:POLITY_STATIC},{id:POLITY_REVIEW}] }, activity_summaries:[activity(A1,POLITY_STATIC,100,110),activity(A2,POLITY_REVIEW,120,130)] },
-    { id:P2, activity_count:1, external_references:{ namuwiki:{status:"not_found"} }, facets:{ polities:[{id:POLITY_REVIEW}] }, activity_summaries:[activity(A3,POLITY_REVIEW,140,150,0)] }
+    { id:P2, activity_count:1, external_references:{ namuwiki:{status:"not_found",review_state:"reviewed_absent"} }, facets:{ polities:[{id:POLITY_REVIEW}] }, activity_summaries:[activity(A3,POLITY_REVIEW,140,150,0)] }
   ];
   const spatialIndex={
     schema:spatialModel.SPATIAL_INDEX_SCHEMA,
@@ -319,7 +322,7 @@ test("incomplete breakdown only exposes reasons supported by canonical state", (
   const persons = [
     { id:P1, external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:X}] }, activity_summaries:[activity(A1,X,100,110)] },
     { id:P2, external_references:{}, facets:{ polities:[{id:Y}] }, activity_summaries:[activity(A2,Y,120,130)] },
-    { id:P3, external_references:{ namuwiki:{status:"not_found"} }, facets:{ polities:[{id:Z}] }, activity_summaries:[activity(A3,Z,140,150)] }
+    { id:P3, external_references:{ namuwiki:{status:"not_found",review_state:"reviewed_absent"} }, facets:{ polities:[{id:Z}] }, activity_summaries:[activity(A3,Z,140,150)] }
   ];
   const result = model.buildIncompleteBreakdown({
     personResult:{ persons },
@@ -389,7 +392,7 @@ test("KPI drill-down preserves metric units and only exposes exact Person target
   const persons = [
     { id:"p1", external_references:{ namuwiki:{status:"linked"} }, facets:{polities:[]}, activity_summaries:[] },
     { id:"p2", external_references:{}, facets:{polities:[]}, activity_summaries:[] },
-    { id:"p3", external_references:{ namuwiki:{status:"not_found"} }, facets:{polities:[]}, activity_summaries:[] }
+    { id:"p3", external_references:{ namuwiki:{status:"not_found",review_state:"reviewed_absent"} }, facets:{polities:[]}, activity_summaries:[] }
   ];
   const attention = model.buildAttentionQueue({
     personResult:{persons},
@@ -767,7 +770,7 @@ test("Completeness Matrix Spatial row reuses the canonical Activity resolver", (
   const X="00000000-0000-4000-8000-000000000101";
   const A1="00000000-0000-4000-8000-000000000201";
   const A2="00000000-0000-4000-8000-000000000202";
-  const persons=[{id:"p1",activity_count:2,external_references:{namuwiki:{status:"not_found"}},facets:{polities:[{id:X}]},activity_summaries:[
+  const persons=[{id:"p1",activity_count:2,external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent"}},facets:{polities:[{id:X}]},activity_summaries:[
     {id:A1,polity:{id:X},start:{year:100},end:{year:120}},
     {id:A2,polity:{id:X},start:{year:130},end:{year:150}}
   ]}];
@@ -1368,3 +1371,35 @@ test("Runtime exclusion Attention renders Activity units instead of person units
   assert.match(dashboardSource,/\$\{value\(item\.count\)\} \$\{itemUnit\}/);
 });
 
+
+
+test("NamuWiki dashboard distinguishes confirmed absent from legacy unverified and never-reviewed Persons", () => {
+  const persons = [
+    {id:"00000000-0000-4000-8000-000000000001",external_references:{namuwiki:{status:"linked"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"00000000-0000-4000-8000-000000000002",external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"00000000-0000-4000-8000-000000000003",external_references:{namuwiki:{status:"not_found",review_state:"legacy_unverified"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"00000000-0000-4000-8000-000000000004",external_references:{},facets:{polities:[]},activity_summaries:[]}
+  ];
+  const snapshot=model.buildDashboardSnapshot({personResult:{persons}});
+  assert.equal(snapshot.work.namuwiki.linked,1);
+  assert.equal(snapshot.work.namuwiki.confirmed_absent,1);
+  assert.equal(snapshot.work.namuwiki.legacy_unverified,1);
+  assert.equal(snapshot.work.namuwiki.no_decision,1);
+  assert.equal(snapshot.work.namuwiki.done,2);
+  assert.equal(snapshot.work.namuwiki.remaining,2);
+  const attention=snapshot.attention_queue.items.find((row)=>row.code==="namuwiki");
+  assert.deepEqual(attention.person_ids,[
+    "00000000-0000-4000-8000-000000000003",
+    "00000000-0000-4000-8000-000000000004"
+  ]);
+  assert.deepEqual(snapshot.incomplete_breakdown.namuwiki.rows.map((row)=>[row.code,row.count]),[
+    ["REFERENCE_ABSENT",1],
+    ["LEGACY_NOT_FOUND_UNVERIFIED",1]
+  ]);
+});
+
+test("dashboard NamuWiki copy exposes linked, confirmed absent, and verification-needed counts", () => {
+  assert.match(dashboardSource,/없음 확정/);
+  assert.match(dashboardSource,/미검토·재검증 필요/);
+  assert.match(dashboardSource,/w\.namuwiki\.confirmed_absent/);
+});
