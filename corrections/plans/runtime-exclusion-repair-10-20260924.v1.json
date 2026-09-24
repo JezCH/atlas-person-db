@@ -1,0 +1,591 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "runtime_exclusion_repair_10_20260924_v1",
+  "as_of": "2026-09-24",
+  "status": "REVIEWED_RUNTIME_EXCLUSION_REPAIR",
+  "release_order": 600,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "Repair all 10 Activities in the active Runtime exclusion snapshot. Add reviewed provenance to the two PROVENANCE_UNRESOLVED Activities and restore explicit year/exact/unspecified_historical boundary metadata to the eight legacy Activities whose years are already present but boundary semantics are null. Preserve Activity UUIDs and all reviewed historical year values.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_activity_identity": true,
+    "preserve_person_polity_relation_role_period_and_year_interval": true,
+    "preserve_existing_normalized_source_links_and_locators": true,
+    "do_not_reinterpret_existing_year_values": true,
+    "boundary_metadata_repair_only_for_eight_start_unresolved_rows": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "production_audit_sha": "5cd4704365aaf57d96132dbffda6e6cdf05e36a3",
+    "production_audit_run": 36004478597,
+    "runtime_exclusion_snapshot": {
+      "total_count": 10,
+      "reason_summary": {
+        "PROVENANCE_UNRESOLVED": 2,
+        "START_BOUNDARY_UNRESOLVED": 8
+      }
+    },
+    "provenance_review": [
+      {
+        "activity_id": "016870c8-e6d2-5c34-a60d-3b259379265f",
+        "decision": "REUSE_EXISTING_REVIEWED_SOURCE",
+        "source_id": "7ac4efc8-06b9-42a9-aea9-017e10813641",
+        "evidence": "Sanguozhi, Wu Shu 4, Shi Xie biography; existing Production Source catalog entry."
+      },
+      {
+        "activity_id": "c3f4681e-9d55-5757-a4bc-92d4fcfe4089",
+        "decision": "ADD_TWO_OFFICIAL_REVIEWED_SOURCES",
+        "evidence": "Royal House of the Netherlands: The Dutch Revolt (leadership from 1572 onwards) and Career (assassination 10 July 1584)."
+      }
+    ]
+  },
+  "operations": [
+    {
+      "case_id": "shi_xie_provenance",
+      "type": "rewrite_activity",
+      "activity_id": "016870c8-e6d2-5c34-a60d-3b259379265f",
+      "baseline_before": {
+        "person_id": "a80ed18e-d531-50ff-abbe-6b400d0340d4",
+        "polity_id": "8768ce4f-26fe-5de9-a501-c19525461fdb",
+        "role_id": "a050fd1c-b14f-5ed1-b676-98fdd20b4cb9",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 210,
+        "activity_end": 226,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 0
+      },
+      "after": {
+        "activity_id": "016870c8-e6d2-5c34-a60d-3b259379265f",
+        "person_id": "a80ed18e-d531-50ff-abbe-6b400d0340d4",
+        "polity_id": "8768ce4f-26fe-5de9-a501-c19525461fdb",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "a050fd1c-b14f-5ed1-b676-98fdd20b4cb9",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 210,
+        "activity_end": 226,
+        "activity_start_detail": {
+          "year": 210,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 226,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": [
+          {
+            "source_id": "7ac4efc8-06b9-42a9-aea9-017e10813641",
+            "source_locator_key": "Sanguozhi, Wu Shu 4, Shi Xie biography: submission to Sun Quan's Jiaozhou authority in 210 and death in 226"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "william_i_orange_provenance",
+      "type": "rewrite_activity",
+      "activity_id": "c3f4681e-9d55-5757-a4bc-92d4fcfe4089",
+      "baseline_before": {
+        "person_id": "91b6365a-4192-5fcb-836e-3250f60d6e02",
+        "polity_id": "588babdd-2ce9-42a9-a9f3-2019c0bd2653",
+        "role_id": "caf6d45b-5d36-5d17-9750-aff653fceb97",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1572,
+        "activity_end": 1584,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 0
+      },
+      "after": {
+        "activity_id": "c3f4681e-9d55-5757-a4bc-92d4fcfe4089",
+        "person_id": "91b6365a-4192-5fcb-836e-3250f60d6e02",
+        "polity_id": "588babdd-2ce9-42a9-a9f3-2019c0bd2653",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "caf6d45b-5d36-5d17-9750-aff653fceb97",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1572,
+        "activity_end": 1584,
+        "activity_start_detail": {
+          "year": 1572,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1584,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": [
+          {
+            "source_id": "b786a663-7b68-520e-82b1-a3c73c613bd0",
+            "source_locator_key": "Royal House of the Netherlands, The Dutch Revolt: William of Orange led the northern provinces' fight from 1572 onwards"
+          },
+          {
+            "source_id": "1e808aff-a806-52bb-a342-0e999a1e2bfc",
+            "source_locator_key": "Royal House of the Netherlands, Career: William of Orange assassinated in Delft on 10 July 1584"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "leonardo_da_vinci_boundary_metadata",
+      "type": "rewrite_activity",
+      "activity_id": "a47f314a-3b0a-5e2c-a188-a8aaf2ecc90d",
+      "baseline_before": {
+        "person_id": "a565511a-c043-5c88-a2e5-dde042ed8959",
+        "polity_id": "00626a6e-afee-5830-8b0d-c08999857e82",
+        "role_id": "f90b0d20-a4ea-515e-8ad0-2c7113b29ff8",
+        "period_basis_id": "7e26c1ed-b4d9-547a-ac42-af523ec12d1b",
+        "activity_start": 1472,
+        "activity_end": 1519,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:9:0f6843d8006b936e",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "a47f314a-3b0a-5e2c-a188-a8aaf2ecc90d",
+        "person_id": "a565511a-c043-5c88-a2e5-dde042ed8959",
+        "polity_id": "00626a6e-afee-5830-8b0d-c08999857e82",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "f90b0d20-a4ea-515e-8ad0-2c7113b29ff8",
+        "period_basis_id": "7e26c1ed-b4d9-547a-ac42-af523ec12d1b",
+        "activity_start": 1472,
+        "activity_end": 1519,
+        "activity_start_detail": {
+          "year": 1472,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1519,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:9:0f6843d8006b936e",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "meng_huo_boundary_metadata",
+      "type": "rewrite_activity",
+      "activity_id": "e4988193-016b-5ca2-ba4a-8a85cbecf6e7",
+      "baseline_before": {
+        "person_id": "a35330e1-cea3-5b9a-925c-d111e5a260f1",
+        "polity_id": "cd8a061a-ac2e-580f-8795-409606aa74d7",
+        "role_id": "8eff75f4-b121-5bc9-b01f-f848141cea56",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 225,
+        "activity_end": 225,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-7.json:19:366021fe2449f2d5",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "e4988193-016b-5ca2-ba4a-8a85cbecf6e7",
+        "person_id": "a35330e1-cea3-5b9a-925c-d111e5a260f1",
+        "polity_id": "cd8a061a-ac2e-580f-8795-409606aa74d7",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "8eff75f4-b121-5bc9-b01f-f848141cea56",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 225,
+        "activity_end": 225,
+        "activity_start_detail": {
+          "year": 225,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 225,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-7.json:19:366021fe2449f2d5",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "brennus_galatia_boundary_metadata",
+      "type": "rewrite_activity",
+      "activity_id": "814f1293-3566-5f7f-a699-acb6249d420e",
+      "baseline_before": {
+        "person_id": "c3fe207e-7a1a-525c-a836-96d448e5e048",
+        "polity_id": "925c43c1-6c00-5dc0-9ca2-0094df722dc4",
+        "role_id": "7309ce45-ec5d-546c-acfd-d5fab6537a02",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": -280,
+        "activity_end": -279,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:25:68d98460de623f5e",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "814f1293-3566-5f7f-a699-acb6249d420e",
+        "person_id": "c3fe207e-7a1a-525c-a836-96d448e5e048",
+        "polity_id": "925c43c1-6c00-5dc0-9ca2-0094df722dc4",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "7309ce45-ec5d-546c-acfd-d5fab6537a02",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": -280,
+        "activity_end": -279,
+        "activity_start_detail": {
+          "year": -280,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": -279,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:25:68d98460de623f5e",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "sacagawea_boundary_metadata",
+      "type": "rewrite_activity",
+      "activity_id": "c73146d6-0558-502f-8e81-11343e41f963",
+      "baseline_before": {
+        "person_id": "d20abd93-4c12-596b-a361-085c50d56a95",
+        "polity_id": "b4661c32-d567-56e3-b61f-d27a77d72897",
+        "role_id": "a5550966-a461-5870-baa0-df9bce5b60e6",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1804,
+        "activity_end": 1806,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:15:c635b3f320096c5a",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "c73146d6-0558-502f-8e81-11343e41f963",
+        "person_id": "d20abd93-4c12-596b-a361-085c50d56a95",
+        "polity_id": "b4661c32-d567-56e3-b61f-d27a77d72897",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "a5550966-a461-5870-baa0-df9bce5b60e6",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1804,
+        "activity_end": 1806,
+        "activity_start_detail": {
+          "year": 1804,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1806,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:15:c635b3f320096c5a",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "edward_teach_boundary_metadata",
+      "type": "rewrite_activity",
+      "activity_id": "b43cfb03-3d45-5566-a7d8-cabb37c93115",
+      "baseline_before": {
+        "person_id": "b258dd75-aeb6-5603-bda8-ccb6fd078327",
+        "polity_id": "aa2811b8-a509-5db2-82e8-5e133d99ae40",
+        "role_id": "f6e3f653-182d-53f1-813e-3d210f05aca7",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1716,
+        "activity_end": 1718,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-4.json:12:e396d4fc2c23db9b",
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "b43cfb03-3d45-5566-a7d8-cabb37c93115",
+        "person_id": "b258dd75-aeb6-5603-bda8-ccb6fd078327",
+        "polity_id": "aa2811b8-a509-5db2-82e8-5e133d99ae40",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "f6e3f653-182d-53f1-813e-3d210f05aca7",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1716,
+        "activity_end": 1718,
+        "activity_start_detail": {
+          "year": 1716,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1718,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-4.json:12:e396d4fc2c23db9b",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "yuan_shao_boundary_metadata",
+      "type": "rewrite_activity",
+      "activity_id": "36a3ade9-b108-5358-8732-be7b3f6637f9",
+      "baseline_before": {
+        "person_id": "2452e991-f4ae-553a-b2a7-abf073d5cd9e",
+        "polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "role_id": "a33083bd-9e14-5381-ab33-2d75738f262c",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 189,
+        "activity_end": 190,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-6.json:5:85e881cd2e6c7bae",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "36a3ade9-b108-5358-8732-be7b3f6637f9",
+        "person_id": "2452e991-f4ae-553a-b2a7-abf073d5cd9e",
+        "polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "a33083bd-9e14-5381-ab33-2d75738f262c",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 189,
+        "activity_end": 190,
+        "activity_start_detail": {
+          "year": 189,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 190,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-6.json:5:85e881cd2e6c7bae",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "liu_yao_boundary_metadata",
+      "type": "rewrite_activity",
+      "activity_id": "989d2115-e02f-53e6-bc68-90cf557bdd17",
+      "baseline_before": {
+        "person_id": "e31458eb-dca8-5fbd-95aa-719fab18121d",
+        "polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "role_id": "a33083bd-9e14-5381-ab33-2d75738f262c",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 194,
+        "activity_end": 198,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-7.json:15:e8377d342570d99e",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "989d2115-e02f-53e6-bc68-90cf557bdd17",
+        "person_id": "e31458eb-dca8-5fbd-95aa-719fab18121d",
+        "polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "a33083bd-9e14-5381-ab33-2d75738f262c",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 194,
+        "activity_end": 198,
+        "activity_start_detail": {
+          "year": 194,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 198,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-7.json:15:e8377d342570d99e",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "ingolfr_arnarson_boundary_metadata",
+      "type": "rewrite_activity",
+      "activity_id": "39615465-6343-5d4e-8718-9e20f3344119",
+      "baseline_before": {
+        "person_id": "8e47af37-4308-5cd1-a7af-7354af1c50c6",
+        "polity_id": "92bb4f6f-3784-5cb2-ae06-d6064f2dedd5",
+        "role_id": "225ff326-c052-51a9-8fa2-b9f82dcfbaa6",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 874,
+        "activity_end": 900,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:20:0ab6a1aca205e86c",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "39615465-6343-5d4e-8718-9e20f3344119",
+        "person_id": "8e47af37-4308-5cd1-a7af-7354af1c50c6",
+        "polity_id": "92bb4f6f-3784-5cb2-ae06-d6064f2dedd5",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "225ff326-c052-51a9-8fa2-b9f82dcfbaa6",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 874,
+        "activity_end": 900,
+        "activity_start_detail": {
+          "year": 874,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 900,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:20:0ab6a1aca205e86c",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "source_royal_house_nl_william_orange_dutch_revolt_1572",
+      "exact_before": {
+        "source_absent_id": "b786a663-7b68-520e-82b1-a3c73c613bd0"
+      },
+      "exact_after": {
+        "source": {
+          "id": "b786a663-7b68-520e-82b1-a3c73c613bd0",
+          "source_key": "bibliographic:royal-house-nl:william-orange-dutch-revolt-1572",
+          "source_type": "government_web",
+          "title": "The Dutch Revolt — Royal House of the Netherlands",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.royal-house.nl/topics/history/william-of-orange-1533-1584/the-dutch-revolt",
+          "citation_text": "Royal House of the Netherlands states that William of Orange led the fight of the northern provinces from 1572 onwards."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "source_royal_house_nl_william_orange_career_1584",
+      "exact_before": {
+        "source_absent_id": "1e808aff-a806-52bb-a342-0e999a1e2bfc"
+      },
+      "exact_after": {
+        "source": {
+          "id": "1e808aff-a806-52bb-a342-0e999a1e2bfc",
+          "source_key": "bibliographic:royal-house-nl:william-orange-career-1584",
+          "source_type": "government_web",
+          "title": "Career — William of Orange (1533–1584) — Royal House of the Netherlands",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.royal-house.nl/topics/history/william-of-orange-1533-1584/career",
+          "citation_text": "Royal House of the Netherlands records that William of Orange was assassinated in Delft on 10 July 1584."
+        }
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 10,
+    "asserted_source_count": 2,
+    "reused_existing_source_count": 1,
+    "expected_activity_source_link_delta": 3,
+    "boundary_metadata_repairs": 8,
+    "expected_runtime_exclusion_count_after_recompile": 0,
+    "production_mutation_authorized": false
+  }
+}
