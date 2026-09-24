@@ -3,7 +3,9 @@
 
   const PORTRAIT_SOURCE_MAX_BYTES = 20 * 1024 * 1024;
   const PORTRAIT_OUTPUT_MAX_BYTES = 3 * 1024 * 1024;
-  const PORTRAIT_MAX_SIDE = 1600;
+  const PORTRAIT_TARGET_WIDTH = 1024;
+  const PORTRAIT_TARGET_HEIGHT = 1280;
+  const PORTRAIT_ASPECT = PORTRAIT_TARGET_WIDTH / PORTRAIT_TARGET_HEIGHT;
 
   function imageElementFromFile(file) {
     return new Promise((resolve, reject) => {
@@ -56,23 +58,49 @@
     try {
       const sourceWidth = Number(loaded.image.naturalWidth || loaded.image.width || 0);
       const sourceHeight = Number(loaded.image.naturalHeight || loaded.image.height || 0);
-      if (!(sourceWidth > 0 && sourceHeight > 0)) {
-        throw new Error("이미지 크기를 확인할 수 없습니다.");
+      if (!(sourceWidth > 0 && sourceHeight > 0)) throw new Error("이미지 크기를 확인할 수 없습니다.");
+
+      const sourceAspect = sourceWidth / sourceHeight;
+      let sx = 0;
+      let sy = 0;
+      let sw = sourceWidth;
+      let sh = sourceHeight;
+      if (sourceAspect > PORTRAIT_ASPECT) {
+        sw = Math.round(sourceHeight * PORTRAIT_ASPECT);
+        sx = Math.floor((sourceWidth - sw) / 2);
+      } else if (sourceAspect < PORTRAIT_ASPECT) {
+        sh = Math.round(sourceWidth / PORTRAIT_ASPECT);
+        sy = Math.floor((sourceHeight - sh) / 2);
       }
 
-      let scale = Math.min(1, PORTRAIT_MAX_SIDE / Math.max(sourceWidth, sourceHeight));
-      const qualities = [0.9, 0.78, 0.66];
+      const outputScale = Math.min(1, PORTRAIT_TARGET_WIDTH / sw, PORTRAIT_TARGET_HEIGHT / sh);
+      let outputWidth = Math.max(4, Math.floor((sw * outputScale) / 4) * 4);
+      let outputHeight = Math.round(outputWidth / PORTRAIT_ASPECT);
+      if (outputHeight > PORTRAIT_TARGET_HEIGHT) {
+        outputHeight = PORTRAIT_TARGET_HEIGHT;
+        outputWidth = PORTRAIT_TARGET_WIDTH;
+      }
+
+      const qualities = [0.9, 0.82, 0.74, 0.66];
+      let scale = 1;
       for (let pass = 0; pass < 4; pass += 1) {
         const canvas = document.createElement("canvas");
-        canvas.width = Math.max(1, Math.round(sourceWidth * scale));
-        canvas.height = Math.max(1, Math.round(sourceHeight * scale));
+        canvas.width = Math.max(4, Math.floor((outputWidth * scale) / 4) * 4);
+        canvas.height = Math.round(canvas.width / PORTRAIT_ASPECT);
         const context = canvas.getContext("2d");
         if (!context) throw new Error("이미지 변환 컨텍스트를 만들 수 없습니다.");
-        context.drawImage(loaded.image, 0, 0, canvas.width, canvas.height);
+        context.drawImage(loaded.image, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
 
         for (const quality of qualities) {
           const blob = await canvasWebpBlob(canvas, quality);
-          if (blob.size <= PORTRAIT_OUTPUT_MAX_BYTES) return blobBase64(blob);
+          if (blob.size <= PORTRAIT_OUTPUT_MAX_BYTES) {
+            return Object.freeze({
+              image_base64:await blobBase64(blob),
+              width_px:canvas.width,
+              height_px:canvas.height,
+              bytes:blob.size
+            });
+          }
         }
         scale *= 0.8;
       }
@@ -85,7 +113,9 @@
   window.ATLAS_PERSON_PORTRAIT_IMAGE = Object.freeze({
     PORTRAIT_SOURCE_MAX_BYTES,
     PORTRAIT_OUTPUT_MAX_BYTES,
-    PORTRAIT_MAX_SIDE,
+    PORTRAIT_TARGET_WIDTH,
+    PORTRAIT_TARGET_HEIGHT,
+    PORTRAIT_ASPECT,
     imageElementFromFile,
     canvasWebpBlob,
     blobBase64,

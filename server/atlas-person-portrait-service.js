@@ -107,6 +107,47 @@ function assetSha256(bytes) {
   return crypto.createHash("sha256").update(bytes).digest("hex");
 }
 
+function webpDimensions(bytes) {
+  assertWebp(bytes);
+  let offset = 12;
+  while (offset + 8 <= bytes.length) {
+    const chunk = bytes.toString("ascii", offset, offset + 4);
+    const size = bytes.readUInt32LE(offset + 4);
+    const data = offset + 8;
+    if (data + size > bytes.length) break;
+    if (chunk === "VP8X" && size >= 10) {
+      return Object.freeze({
+        width_px:1 + bytes.readUIntLE(data + 4, 3),
+        height_px:1 + bytes.readUIntLE(data + 7, 3)
+      });
+    }
+    if (chunk === "VP8 " && size >= 10 && data + 10 <= bytes.length) {
+      return Object.freeze({
+        width_px:bytes.readUInt16LE(data + 6) & 0x3fff,
+        height_px:bytes.readUInt16LE(data + 8) & 0x3fff
+      });
+    }
+    if (chunk === "VP8L" && size >= 5 && bytes[data] === 0x2f) {
+      const b1=bytes[data+1], b2=bytes[data+2], b3=bytes[data+3], b4=bytes[data+4];
+      return Object.freeze({
+        width_px:1 + b1 + ((b2 & 0x3f) << 8),
+        height_px:1 + ((b2 & 0xc0) >> 6) + (b3 << 2) + ((b4 & 0x0f) << 10)
+      });
+    }
+    offset = data + size + (size % 2);
+  }
+  throw codedError("PERSON_PORTRAIT_WEBP_DIMENSIONS_INVALID");
+}
+
+function assertPortraitDimensions(dimensions) {
+  const width = Number(dimensions?.width_px || 0);
+  const height = Number(dimensions?.height_px || 0);
+  if (width < 320 || height < 400) throw codedError("PERSON_PORTRAIT_DIMENSIONS_TOO_SMALL");
+  if (width * 5 !== height * 4) throw codedError("PERSON_PORTRAIT_ASPECT_RATIO_INVALID", { expected:"4:5", width_px:width, height_px:height });
+  return Object.freeze({ width_px:width, height_px:height });
+}
+
+
 function canonicalize(value) {
   if (Array.isArray(value)) return value.map(canonicalize);
   if (value && typeof value === "object") {
@@ -181,6 +222,7 @@ function normalizeWritePayload(payload = {}) {
   const evidenceLevel = normalizeControlled(payload.evidence_level, EVIDENCE_LEVELS, "PERSON_PORTRAIT_EVIDENCE_LEVEL_INVALID");
   const bytes = assertWebp(decodePortraitBase64(payload.image_base64));
   const sha = assetSha256(bytes);
+  const dimensions = assertPortraitDimensions(webpDimensions(bytes));
   const sources = normalizeSourceLinks(payload.sources);
   const portraitStandardVersion = normalizePortraitStandardVersion(payload.portrait_standard_version);
   const generation = normalizeGeneration(payload.generation, portraitStandardVersion);
@@ -202,6 +244,8 @@ function normalizeWritePayload(payload = {}) {
     evidence_level:evidenceLevel,
     asset_sha256:sha,
     bytes,
+    width_px:dimensions.width_px,
+    height_px:dimensions.height_px,
     sources,
     creation_method:creationMethod,
     portrait_standard_version:portraitStandardVersion,
@@ -419,7 +463,9 @@ function createPersonPortraitService({ client, storage } = {}) {
       } else {
         await ensurePortraitAsset(client, {
           assetSha256:normalized.asset_sha256,
-          bytes:normalized.bytes
+          bytes:normalized.bytes,
+          widthPx:normalized.width_px,
+          heightPx:normalized.height_px
         });
         if (normalized.generation) {
           generationRunId = await insertGenerationRun(client, {
@@ -634,6 +680,8 @@ module.exports = Object.freeze({
   decodePortraitBase64,
   assertWebp,
   assetSha256,
+  webpDimensions,
+  assertPortraitDimensions,
   normalizeGeneration,
   normalizeWritePayload,
   normalizeMetadataPayload,
