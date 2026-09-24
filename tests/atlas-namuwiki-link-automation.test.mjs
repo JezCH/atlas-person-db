@@ -67,82 +67,12 @@ test("dedicated payload keeps deployed runtime SHA separate from the OIDC workfl
   assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:NAMUWIKI_URL, operation:"set_person_korean_name" }), /UNEXPECTED_FIELD/);
 });
 
-
 test("NamuWiki audit request IDs are unique per execution while retaining transition identity", () => {
   const ref = profile.normalizeNamuWikiInput(NAMUWIKI_URL);
   const a = handler.requestIdFor(PERSON_ID, ref, null, "attempt-a");
   const b = handler.requestIdFor(PERSON_ID, ref, null, "attempt-b");
   assert.notEqual(a, b);
-  assert.match(a, new RegExp(`^namuwiki-link:${PERSON_ID}:[0-9a-f]{16}:attempt-aimport test from "node:test";
-import assert from "node:assert/strict";
-import fs from "node:fs";
-import { createRequire } from "node:module";
-
-const require = createRequire(import.meta.url);
-const oidc = require("../server/atlas-namuwiki-link-github-oidc.js");
-const handler = require("../server/atlas-namuwiki-link-handler.js");
-const profile = require("../server/atlas-person-profile-service.js");
-
-const workflow = fs.readFileSync(new URL("../.github/workflows/atlas-namuwiki-link.yml", import.meta.url), "utf8");
-const api = fs.readFileSync(new URL("../api/atlas-authoring.js", import.meta.url), "utf8");
-const vercel = JSON.parse(fs.readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
-const SHA = "a".repeat(40);
-const WORKFLOW_SHA = "b".repeat(40);
-const PERSON_ID = "da0303c2-1faf-40b8-9dc2-1325b77488d7";
-const NAMUWIKI_URL = "https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D";
-const OLD_NAMUWIKI_URL = "https://namu.wiki/w/%EC%9E%98%EB%AA%BB%EB%90%9C%20%EB%AC%B8%EC%84%9C";
-const IMMUTABLE_SUB = "repo:JezCH@281085255/atlas-person-db@1319427399:environment:production";
-const LEGACY_SUB = "repo:JezCH/atlas-person-db:environment:production";
-
-function trustedClaims(overrides = {}) {
-  return {
-    iss: oidc.ISSUER,
-    aud: oidc.EXPECTED_AUDIENCE,
-    repository: oidc.EXPECTED_REPOSITORY,
-    repository_id: oidc.EXPECTED_REPOSITORY_ID,
-    ref: oidc.EXPECTED_REF,
-    workflow_ref: oidc.EXPECTED_WORKFLOW_REF,
-    environment: oidc.EXPECTED_ENVIRONMENT,
-    event_name: oidc.EXPECTED_EVENT_NAME,
-    actor: oidc.EXPECTED_ACTOR,
-    sub: oidc.EXPECTED_SUB,
-    sha: SHA,
-    exp: 2000,
-    nbf: 900,
-    ...overrides
-  };
-}
-
-test("dedicated NamuWiki OIDC trust accepts only the immutable Issue-comment workflow context", () => {
-  assert.equal(oidc.EXPECTED_OWNER_ID, "281085255");
-  assert.equal(oidc.EXPECTED_REPOSITORY_ID, "1319427399");
-  assert.equal(oidc.EXPECTED_SUB, IMMUTABLE_SUB);
-  assert.doesNotThrow(() => oidc.verifyClaims(trustedClaims(), SHA, 1000));
-  assert.throws(() => oidc.verifyClaims(trustedClaims({ event_name:"workflow_dispatch" }), SHA, 1000), /CONTEXT_MISMATCH/);
-  assert.throws(() => oidc.verifyClaims(trustedClaims({ actor:"someone-else" }), SHA, 1000), /ACTOR_MISMATCH/);
-  assert.throws(() => oidc.verifyClaims(trustedClaims({ workflow_ref:"JezCH\/atlas-person-db\/.github\/workflows\/atlas-authoring-apply.yml@refs\/heads\/main" }), SHA, 1000), /WORKFLOW_MISMATCH/);
-  assert.throws(() => oidc.verifyClaims(trustedClaims({ sub:LEGACY_SUB }), SHA, 1000), /SUBJECT_MISMATCH/);
-  assert.throws(() => oidc.verifyClaims(trustedClaims({ sub:"repo:JezCH@281085255\/atlas-person-db@1319427399:ref:refs\/heads\/main" }), SHA, 1000), /SUBJECT_MISMATCH/);
-});
-
-test("dedicated payload keeps deployed runtime SHA separate from the OIDC workflow SHA", () => {
-  const payload = handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:NAMUWIKI_URL });
-  assert.equal(payload.runtimeSha, SHA);
-  assert.equal(payload.workflowSha, WORKFLOW_SHA);
-  assert.equal(payload.personId, PERSON_ID);
-  assert.equal(payload.externalReference.url, NAMUWIKI_URL);
-  assert.equal(payload.externalReference.document_title, "임호텝");
-  const correction = handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, expected_current_url:OLD_NAMUWIKI_URL, url:NAMUWIKI_URL });
-  assert.equal(correction.expectedCurrentReference.url, OLD_NAMUWIKI_URL);
-  assert.equal(correction.externalReference.url, NAMUWIKI_URL);
-  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, expected_current_url:NAMUWIKI_URL, url:NAMUWIKI_URL }), /MUST_CHANGE/);
-  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:NAMUWIKI_URL }), /WORKFLOW_SHA_REQUIRED/);
-  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:"https://namu.moe/w/x" }), /CANONICAL_URL_REQUIRED/);
-  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:`${NAMUWIKI_URL}?from=x` }), /CANONICAL_URL_REQUIRED/);
-  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:NAMUWIKI_URL, operation:"set_person_korean_name" }), /UNEXPECTED_FIELD/);
-});
-
-));
+  assert.match(a, new RegExp("^namuwiki-link:" + PERSON_ID + ":[0-9a-f]{16}:attempt-a$"));
   assert.match(b, /:attempt-b$/);
 });
 
