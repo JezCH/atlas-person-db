@@ -550,7 +550,7 @@
       <section class="dashboard-kpi-grid" aria-label="핵심 통계">
         ${kpiCard({code:"persons",label:"PERSONS",primary:value(k.persons),detail:`historical ${value(k.historical)} · 기타 ${value(k.other_historicity)}`,drilldown:kd.persons})}
         ${kpiCard({code:"domain",label:"DOMAIN COVERAGE",primary:pct(w.domain.percentage),detail:`${value(w.domain.done)} / ${value(w.domain.total)} · 잔여 ${value(w.domain.remaining)}`,drilldown:kd.domain})}
-        ${kpiCard({code:"namuwiki",label:"NAMUWIKI REVIEW",primary:pct(w.namuwiki.percentage),detail:`연결 ${value(w.namuwiki.linked)} · 독립 문서 없음 ${value(w.namuwiki.confirmed_absent)} · URL 미확정 ${value(w.namuwiki.target_url_pending)} · 검증 필요 ${value(w.namuwiki.remaining)}`,drilldown:kd.namuwiki})}
+        ${kpiCard({code:"namuwiki",label:"NAMUWIKI REVIEW",primary:pct(w.namuwiki.percentage),detail:`연결 ${value(w.namuwiki.linked)} · 독립 문서 없음 ${value(w.namuwiki.no_exact_document)} · 관련·파생만 ${value(w.namuwiki.related_or_derivative_only)} · URL 대기 ${value(w.namuwiki.target_url_pending)} · 사유 미기록 ${value(w.namuwiki.reviewed_reason_unrecorded)} · 검증 필요 ${value(w.namuwiki.remaining)}`,drilldown:kd.namuwiki})}
         ${kpiCard({code:"spatial",label:"SPATIAL READY",primary:pct(w.spatial.percentage),detail:`${value(w.spatial.done)} / ${value(w.spatial.total)} · 잔여 ${value(w.spatial.remaining)}`,drilldown:kd.spatial})}
         ${kpiCard({code:"activities",label:"RUNTIME ACTIVITIES",primary:value(k.activities),detail:"Person Runtime projection",drilldown:kd.activities})}
         ${kpiCard({code:"polities",label:"USED POLITIES",primary:value(k.polities),detail:"현재 Person Activity에서 참조",drilldown:kd.polities})}
