@@ -100,6 +100,8 @@ jobs:
       # The 2026-09-11 comment-backed backlog was a one-shot recovery path. It is
       # fully materialized and later reviewed HOLD resolutions supersede its historical
       # null decisions, so replaying it on unrelated main pushes is intentionally retired.
+      # Full manifest replay remains the canonical non-bounded recovery check; stale re-keyed
+      # identities are retired in their original batches and recovered by later reviewed batches.
       - name: Acquire dedicated Person domain GitHub OIDC token
         shell: bash
         run: |
