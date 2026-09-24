@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jrr-tolkien:united-kingdom:writer-philologist:1937:v1",
+  "person": {
+    "canonical_name_en": "J. R. R. Tolkien",
+    "display_name_ko": "J. R. R. 톨킨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for J. R. R. Tolkien was not independently verified in this batch. Registration continues without guessing a canonical URL or writing a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Writer and philologist",
+    "role_display_name_ko": "작가·문헌학자",
+    "start_year": 1937,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1937,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1937 as Tolkien's representative British literary-activity year, when The Hobbit was published in the United Kingdom."
+  },
+  "sources": [
+    {
+      "title": "Timeline 1892–1949 — The Tolkien Estate",
+      "canonical_url": "https://www.tolkienestate.com/life/timeline-1892-1949/",
+      "citation_text": "The Tolkien Estate timeline records publication of The Hobbit in 1937 by George Allen & Unwin.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "modern-20260921-jrr-tolkien",
+    "review_checkpoint": "#1374 comment 5762188477",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}
