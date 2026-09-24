@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:victor-hugo:france:writer:1831:v1",
+  "person": {
+    "canonical_name_en": "Victor Hugo",
+    "display_name_ko": "빅토르 위고",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Victor Hugo was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Writer",
+    "role_display_name_ko": "작가",
+    "start_year": 1831,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1831,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1831 as Hugo's representative French literary milestone, when Notre-Dame de Paris was published and consolidated his position as a major Romantic novelist."
+  },
+  "sources": [
+    {
+      "title": "Questions about Victor Hugo's life? — Maisons Victor Hugo",
+      "canonical_url": "https://www.maisonsvictorhugo.paris.fr/en/paris/museum/find-out-more-about-victor-hugo/des-questions-sur-la-vie-de-victor-hugo",
+      "citation_text": "Maisons Victor Hugo records the publication of Notre-Dame de Paris in 1831 and identifies it as a major milestone in Hugo's Romantic literary career.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp6-20260922-021",
+    "review_checkpoint": "#1374 comment 5763368515",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

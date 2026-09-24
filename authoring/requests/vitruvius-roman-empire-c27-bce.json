@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vitruvius:roman-empire:architect-engineer:c27-bce:v1",
+  "person": {
+    "canonical_name_en": "Vitruvius",
+    "display_name_ko": "비트루비우스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Vitruvius was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Architect, engineer and author",
+    "role_display_name_ko": "건축가·공학자·저술가",
+    "start_year": -27,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -27,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses c.27 BCE as a bounded Augustan-era intellectual and engineering milestone for Vitruvius. De architectura is generally dated to the Augustan context and was probably devised sometime after 27 BCE; the year is therefore explicitly approximate rather than a claimed publication date."
+  },
+  "sources": [
+    {
+      "title": "Who was Vitruvius? — King's Visualisation Lab, King's College London",
+      "canonical_url": "https://kvl.cch.kcl.ac.uk/THEATRON/biographys/biovitruvius.html",
+      "citation_text": "King's College London describes Vitruvius as a first-century BCE Roman architect, engineer and author and explains that De architectura was probably devised sometime after 27 BCE in the Augustan context.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-101",
+    "review_checkpoint": "#1374 comment 5762056835",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "technology"
+  }
+}

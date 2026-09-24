@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:phidias:athens:sculptor-artistic-director:c438-bce:v1",
+  "person": {
+    "canonical_name_en": "Phidias",
+    "display_name_ko": "피디아스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Phidias was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Athens",
+    "display_name_ko": "아테네"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Sculptor and artistic director",
+    "role_display_name_ko": "조각가·예술감독",
+    "start_year": -438,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -438,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses c.438 BCE as an explicitly approximate representative Athenian artistic milestone for Phidias. The British Museum identifies him as the artistic director of the Periclean building programme and states that he was certainly active before 438 BCE, when the Athena Parthenos was probably dedicated. The exact chronology of his works remains insecure."
+  },
+  "sources": [
+    {
+      "title": "Pheidias — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG60077",
+      "citation_text": "The British Museum identifies Phidias as a sculptor at Athens and artistic director of the Periclean building programme, noting that he was certainly active before 438 BCE and that the exact chronology of his works is insecure.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "mixed5-20260921-001",
+    "review_checkpoint": "#1374 comment 5762577324",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}
