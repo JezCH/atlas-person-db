@@ -331,3 +331,4 @@ Use the following instruction when starting a fresh portrait-production conversa
 > **AI may fill evidentiary gaps, but it may never overwrite evidence.**
 >
 > **Lock accuracy first; then express the person as greatly as that accuracy allows.**
+<!-- Production Blob store connected 2026-09-24; redeploy checkpoint only. -->
