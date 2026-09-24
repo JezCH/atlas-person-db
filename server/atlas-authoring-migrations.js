@@ -17,7 +17,8 @@ const AUTHORING_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260906_p13a_temporal_unknown_boundaries.sql"),
   path.resolve(__dirname, "../db/migrations/20260906_p13_source_place_objects.sql"),
   path.resolve(__dirname, "../db/migrations/20260920_person_portraits.sql"),
-  path.resolve(__dirname, "../db/migrations/20260921_person_portrait_history_v2.sql")
+  path.resolve(__dirname, "../db/migrations/20260921_person_portrait_history_v2.sql"),
+  path.resolve(__dirname, "../db/migrations/20260924_person_portraits_simple_v3.sql")
 ]);
 
 const AUTHORING_APPLY_MIGRATION_PATHS = Object.freeze([
@@ -33,7 +34,8 @@ const AUTHORING_APPLY_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260906_p13a_temporal_unknown_boundaries.sql"),
   path.resolve(__dirname, "../db/migrations/20260906_p13_source_place_objects.sql"),
   path.resolve(__dirname, "../db/migrations/20260920_person_portraits.sql"),
-  path.resolve(__dirname, "../db/migrations/20260921_person_portrait_history_v2.sql")
+  path.resolve(__dirname, "../db/migrations/20260921_person_portrait_history_v2.sql"),
+  path.resolve(__dirname, "../db/migrations/20260924_person_portraits_simple_v3.sql")
 ]);
 
 function readMigrationPaths(migrationPaths, { readFile = fs.readFileSync } = {}) {
