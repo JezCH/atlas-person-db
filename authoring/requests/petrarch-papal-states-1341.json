@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:petrarch:papal-states:poet-scholar:1341:v1",
+  "person": {
+    "canonical_name_en": "Petrarch",
+    "display_name_ko": "페트라르카",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Petrarch was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Papal States",
+    "display_name_ko": "교황령"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet and scholar",
+    "role_display_name_ko": "시인·학자",
+    "start_year": 1341,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1341,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1341 as Petrarch's representative Roman cultural milestone year, when he was crowned poet laureate in Rome. The Roman milestone is bound to the existing Papal States identity rather than creating a city-only polity."
+  },
+  "sources": [
+    {
+      "title": "Petrarch — Poetry Foundation",
+      "canonical_url": "https://www.poetryfoundation.org/poets/petrarch",
+      "citation_text": "Poetry Foundation records that Petrarch was crowned poet laureate of Rome in 1341.",
+      "source_type": "institutional_biography"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-030",
+    "review_checkpoint": "#1374 comment 5815495564",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

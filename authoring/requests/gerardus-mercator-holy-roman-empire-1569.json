@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gerardus-mercator:holy-roman-empire:cartographer:1569:v1",
+  "person": {
+    "canonical_name_en": "Gerardus Mercator",
+    "display_name_ko": "게라르두스 메르카토르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Gerardus Mercator was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Holy Roman Empire",
+    "display_name_ko": "신성 로마 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Cartographer",
+    "role_display_name_ko": "지도 제작자",
+    "start_year": 1569,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1569,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1569 as Mercator's representative Duisburg cartographic milestone year, when his world map for navigation introduced the projection now bearing his name. Duisburg lay within the Holy Roman Empire; the higher-order existing polity is reused rather than creating a new local polity solely for this Activity."
+  },
+  "sources": [
+    {
+      "title": "Gerhard Mercator — Kultur- und Stadthistorisches Museum Duisburg",
+      "canonical_url": "https://www.stadtmuseum-duisburg.de/schatzkammer/mercator/",
+      "citation_text": "Duisburg's municipal museum records Mercator's move to Duisburg in 1552 and the 1569 publication there of his navigation world map using the projection later named for him.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-104",
+    "review_checkpoint": "#1374 comment 5762056835",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

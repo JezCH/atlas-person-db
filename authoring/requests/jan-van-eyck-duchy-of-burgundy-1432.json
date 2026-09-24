@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jan-van-eyck:duchy-of-burgundy:painter:1432:v1",
+  "person": {
+    "canonical_name_en": "Jan van Eyck",
+    "display_name_ko": "얀 반 에이크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Jan van Eyck was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Burgundy",
+    "display_name_ko": "부르고뉴 공국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Painter",
+    "role_display_name_ko": "화가",
+    "start_year": 1432,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1432,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1432 as van Eyck's representative Burgundian artistic milestone year. He was in the service of Philip the Good, Duke of Burgundy, and by May 1432 had completed the Ghent Altarpiece left unfinished by his brother Hubert."
+  },
+  "sources": [
+    {
+      "title": "Jan van Eyck — National Gallery, London",
+      "canonical_url": "https://www.nationalgallery.org.uk/paintings/catalogues/campbell-1998/jan-van-eyck",
+      "citation_text": "The National Gallery records Jan van Eyck's service to Philip the Good, Duke of Burgundy, and completion of the Ghent Altarpiece before 6 May 1432.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-017",
+    "review_checkpoint": "#1374 comment 5815494440",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

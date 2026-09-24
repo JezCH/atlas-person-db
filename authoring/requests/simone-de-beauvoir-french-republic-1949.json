@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:simone-de-beauvoir:french-republic:philosopher-writer:1949:v1",
+  "person": {
+    "canonical_name_en": "Simone de Beauvoir",
+    "display_name_ko": "시몬 드 보부아르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Simone de Beauvoir was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher and writer",
+    "role_display_name_ko": "철학자·작가",
+    "start_year": 1949,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1949,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1949 as Beauvoir's representative French intellectual-cultural milestone year, when The Second Sex was published in Paris and became one of the twentieth century's most consequential feminist texts."
+  },
+  "sources": [
+    {
+      "title": "Simone de Beauvoir — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/beauvoir/",
+      "citation_text": "Stanford Encyclopedia of Philosophy records The Second Sex as published in Paris in 1949 and describes it as one of the twentieth century's most important feminist texts.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-037",
+    "review_checkpoint": "#1374 comment 5815496976",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}
