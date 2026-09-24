@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:thomas-hobbes:kingdom-of-england:philosopher:1655:v1",
+  "person": {
+    "canonical_name_en": "Thomas Hobbes",
+    "display_name_ko": "토머스 홉스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-24",
+      "reason": "External-index review found Hobbes-related NamuWiki material but did not surface an exact same-person Person-document result sufficient to verify a canonical URL. Registration continues without fabricating linked or not_found status.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher",
+    "role_display_name_ko": "철학자",
+    "start_year": 1655,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1655,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1655 as a conservative representative English intellectual-activity year. Hobbes had returned to England in 1651 and published De Corpore in 1655, one of the major works of his Elements of Philosophy project."
+  },
+  "sources": [
+    {
+      "title": "Thomas Hobbes — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/hobbes/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy records Hobbes's return to England in 1651 and the publication of De Corpore in 1655.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "philosophy-20260922-011",
+    "review_checkpoint": "#1374 comment 5763224562",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}
