@@ -43,18 +43,18 @@ After the r4 hierarchy is verified in Production, reviewed exact-UUID migration 
 5. keep the migrated baseline file physically immutable by applying the migration through the reviewed migration/compiler path.
 
 No UUID migration is part of this Phase-1 document.
-## 2026-09-25 display-order continuity pass — v2
+## 2026-09-25 display-order continuity pass — global path v3
 
 This pass changes **display order only**. It does not add, remove, rename, re-parent, or rebind any macroregion, leaf subregion, polity UUID, PlaceFunction, or Activity override.
 
-The one-dimensional X axis is a historical reading path rather than a strict modern longitude sort. Ordering priority is **(1) long-term historical/cultural interaction and continuity, (2) geographic adjacency, (3) cross-macro boundary continuity**. When literal map adjacency conflicts with a durable historical interaction zone, the historical/cultural connection takes precedence. The existing 9-macro / 45-equal-leaf contract remains unchanged.
+The one-dimensional X axis is evaluated as **one continuous 45-leaf world path**, not as nine independently sorted macroregions. Priority is **(1) preserve strong entry/exit bridges between adjacent macroregions, (2) avoid large-scale directional backtracking inside each macroregion, (3) maximize historical-geographic continuity within those constraints**. Local bends are allowed when they prevent a worse cross-macro jump, and a naturally north-south macroregion such as the Americas is not forced into a longitude sort. The existing 9-macro / 45-equal-leaf contract remains unchanged.
 
 Canonical leaf order after this pass:
 
 1. Americas — `south-america → caribbean → mesoamerica → north-america`
-2. Europe — `britain-ireland → northern-europe → russia-volga → eastern-europe → balkans → central-europe → italy → western-europe → iberia`
+2. Europe — `britain-ireland → northern-europe → russia-volga → eastern-europe → balkans → italy → central-europe → western-europe → iberia`
 3. Africa — `maghreb-north-africa → west-africa → central-africa → southern-africa → east-africa → horn-of-africa → nile-valley`
-4. West Asia — `levant → arabia → mesopotamia → anatolia → caucasus → iranian-plateau`
+4. West Asia — `levant → anatolia → caucasus → mesopotamia → arabia → iranian-plateau`
 5. Central Eurasia — `western-central-asia → western-siberia → eastern-central-asia-steppe → tibetan-plateau`
 6. South Asia — `himalayas → northwest-south-asia → north-india-ganges → deccan-south-india → maldives → sri-lanka`
 7. Southeast Asia — `maritime-southeast-asia → mainland-southeast-asia`
@@ -72,4 +72,4 @@ The macro-boundary bridge pairs are intentionally:
 - `mainland-southeast-asia → china`;
 - `japan → pacific-islands`.
 
-After full 45-leaf re-review, the canonical leaf sequence above is retained unchanged and explicitly re-sealed. `south-america` is the leftmost leaf (`min_space = 0`). The display-order revision identifier is `2026-09-25-continuity-v2`. Taxonomy revision remains `2026-09-16-r4` because leaf membership and parentage are unchanged.
+After whole-path re-review, the Americas, Africa, Central Eurasia, South Asia, Southeast Asia, East Asia, and Oceania retain their v2 order. Europe is locally smoothed to `balkans → italy → central-europe → western-europe → iberia` while keeping the `north-america → britain-ireland` entry and `iberia → maghreb-north-africa` exit. West Asia is reordered to `levant → anatolia → caucasus → mesopotamia → arabia → iranian-plateau`, preserving both `nile-valley → levant` and `iranian-plateau → western-central-asia`. `south-america` remains the leftmost leaf (`min_space = 0`). The display-order revision identifier is `2026-09-25-global-path-v3`. Taxonomy revision remains `2026-09-16-r4` because leaf membership and parentage are unchanged.
