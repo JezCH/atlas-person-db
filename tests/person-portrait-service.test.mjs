@@ -15,12 +15,17 @@ const OTHER_PERSON = "33333333-3333-4333-8333-333333333333";
 const SOURCE = "22222222-2222-4222-8222-222222222222";
 
 function webpBytes(text = "portrait") {
-  return Buffer.concat([
-    Buffer.from("RIFF", "ascii"),
-    Buffer.from([0,0,0,0]),
-    Buffer.from("WEBP", "ascii"),
-    Buffer.from(text)
-  ]);
+  const vp8x = Buffer.alloc(18);
+  vp8x.write("VP8X", 0, "ascii");
+  vp8x.writeUInt32LE(10, 4);
+  vp8x.writeUIntLE(1023, 12, 3);
+  vp8x.writeUIntLE(1279, 15, 3);
+  const payload = Buffer.concat([vp8x, Buffer.from(text)]);
+  const riff = Buffer.alloc(12);
+  riff.write("RIFF", 0, "ascii");
+  riff.writeUInt32LE(payload.length + 4, 4);
+  riff.write("WEBP", 8, "ascii");
+  return Buffer.concat([riff, payload]);
 }
 
 function normalizeSql(sql) {
@@ -97,17 +102,17 @@ function createStateClient({ portrait = null, links = [] } = {}) {
         return owner.length ? { rowCount:1, rows:[{ person_id:owner.sort()[0] }] } : { rowCount:0, rows:[] };
       }
       if (text.startsWith("insert into atlas_v2.person_portrait_assets")) {
-        const [sha,,bytes] = params.length === 3 ? params : [params[0], "image/webp", params[1]];
-        if (!state.assets.has(sha)) state.assets.set(sha, { asset_sha256:sha, media_type:"image/webp", bytes:bytes ?? null });
+        const [sha,bytes,widthPx,heightPx] = params;
+        if (!state.assets.has(sha)) state.assets.set(sha, { asset_sha256:sha, media_type:"image/webp", bytes:bytes ?? null, width_px:widthPx ?? null, height_px:heightPx ?? null });
         return { rowCount:1, rows:[] };
       }
-      if (text.startsWith("select asset_sha256,media_type,bytes from atlas_v2.person_portrait_assets")) {
+      if (text.startsWith("select asset_sha256,media_type,bytes,width_px,height_px from atlas_v2.person_portrait_assets")) {
         const row = state.assets.get(params[0]);
         return row ? { rowCount:1, rows:[row] } : { rowCount:0, rows:[] };
       }
       if (text.startsWith("update atlas_v2.person_portrait_assets set bytes=")) {
         const row = state.assets.get(params[0]);
-        if (row && row.bytes == null) row.bytes = params[1];
+        if (row) { if (row.bytes == null) row.bytes=params[1]; if (row.width_px == null) row.width_px=params[2]; if (row.height_px == null) row.height_px=params[3]; }
         return { rowCount:row ? 1 : 0, rows:[] };
       }
       if (text.startsWith("insert into atlas_v2.person_portrait_generation_runs")) {
