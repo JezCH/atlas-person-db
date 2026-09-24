@@ -1,0 +1,125 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "f140ab8612b9be825713303fbd97a942f17764c1",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign all sixteen SSS+ superbatch 04 Persons to the explicit primary domains already reviewed in #1374; do not infer from role labels and do not add secondary domains."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SSSPLUS-SUPERBATCH04-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 16,
+    "distribution": {
+      "governance": 0,
+      "military": 0,
+      "knowledge": 1,
+      "technology": 2,
+      "commerce": 0,
+      "culture": 12,
+      "religion": 1,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "8e3697c3-694d-4feb-aeb8-6a43bef2249f",
+      "canonical_name_en": "Xuanzang",
+      "preferred_name_ko": "현장",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "1e73d444-828b-423b-8ffd-f30651277f47",
+      "canonical_name_en": "Al-Biruni",
+      "preferred_name_ko": "알비루니",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "bbd13869-4ebb-4be6-8721-3a5ec6136422",
+      "canonical_name_en": "Cai Lun",
+      "preferred_name_ko": "채륜",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "9ef0bb1b-40b9-4fe4-a442-a527b52f2f88",
+      "canonical_name_en": "Li Bai",
+      "preferred_name_ko": "이백",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "a643a787-7278-4b0c-a787-10b3f580c2f0",
+      "canonical_name_en": "Rabindranath Tagore",
+      "preferred_name_ko": "라빈드라나트 타고르",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "2de0b144-3055-4b25-a125-4b1e8442a571",
+      "canonical_name_en": "Gabriel García Márquez",
+      "preferred_name_ko": "가브리엘 가르시아 마르케스",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "41fcf3c7-389c-434f-b020-1c94109f889c",
+      "canonical_name_en": "Franz Kafka",
+      "preferred_name_ko": "프란츠 카프카",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "f3b06c0c-23eb-42e9-b45b-1703b671bd57",
+      "canonical_name_en": "Jonathan Swift",
+      "preferred_name_ko": "조너선 스위프트",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "cb350a00-8b92-47e9-a847-6d92b3075811",
+      "canonical_name_en": "Aristophanes",
+      "preferred_name_ko": "아리스토파네스",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "551c7abe-cf1c-4dc2-b5b2-06abe4343798",
+      "canonical_name_en": "Caravaggio",
+      "preferred_name_ko": "카라바조",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "0c17162d-c62f-4b3d-98fe-6b8d5c60b4fa",
+      "canonical_name_en": "Raphael",
+      "preferred_name_ko": "라파엘로",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "78e9b573-421a-48a5-b421-7173c50f3026",
+      "canonical_name_en": "Johannes Vermeer",
+      "preferred_name_ko": "요하네스 베르메르",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "2112d485-894f-4a74-812d-7229483fc9df",
+      "canonical_name_en": "Gian Lorenzo Bernini",
+      "preferred_name_ko": "잔 로렌초 베르니니",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "7dee3870-de39-445c-b52f-5294efd7e5cd",
+      "canonical_name_en": "Richard Wagner",
+      "preferred_name_ko": "리하르트 바그너",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "11ee564e-3943-4933-bc8f-3bd21f8d8f32",
+      "canonical_name_en": "Jimi Hendrix",
+      "preferred_name_ko": "지미 헨드릭스",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "3a359fe4-8fc4-4772-8ad6-3beef4d0862f",
+      "canonical_name_en": "Frank Lloyd Wright",
+      "preferred_name_ko": "프랭크 로이드 라이트",
+      "representative_domain": "technology"
+    }
+  ]
+}
