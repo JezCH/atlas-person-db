@@ -31,7 +31,7 @@
   let selectedPersonDetail = null;
   let selectedPortrait = null;
   let selectedPortraitSourceCandidates = null;
-  const PERSON_PORTRAIT_IMAGE_SCRIPT_URL = "./atlas-person-portrait-image.js?v=20260922-image-pipeline-v1";
+  const PERSON_PORTRAIT_IMAGE_SCRIPT_URL = "./atlas-person-portrait-image.js?v=20260924-upload-standard-v3";
   const PERSON_EXCEL_EXPORT_SCRIPT_URL = "./atlas-person-excel-export.js?v=20260922-feature-split-v1";
   let personPortraitImageModulePromise = null;
   let personExcelExportModulePromise = null;
@@ -727,10 +727,10 @@
     controls.forEach((control) => { control.disabled = true; });
     try {
       showOperationalMessage("초상 이미지를 WebP로 변환 중입니다.");
-      const imageBase64 = await portraitFileToWebpBase64(file);
+      const converted = await portraitFileToWebpBase64(file);
       const outcome = await portraitController.setPortrait({
         personId,
-        imageBase64,
+        imageBase64:converted.image_base64,
         portraitKind,
         evidenceLevel
       });
@@ -738,7 +738,7 @@
       if (outcome?.replaced_asset_cleanup?.ok === false) {
         showOperationalMessage("초상화는 교체됐지만 이전 저장 파일 정리에 실패했습니다.");
       } else {
-        showOperationalMessage("초상화를 저장했습니다.");
+        showOperationalMessage(`초상화를 저장했습니다. (${converted.width_px}×${converted.height_px} WebP)`);
       }
     } catch (error) {
       showOperationalMessage(error?.message || "초상화 저장에 실패했습니다.");
