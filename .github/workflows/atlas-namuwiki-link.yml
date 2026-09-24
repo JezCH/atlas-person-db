@@ -19,7 +19,7 @@ jobs:
       github.event.issue.number == 431 &&
       !github.event.issue.pull_request &&
       github.actor == 'JezCH' &&
-      (startsWith(github.event.comment.body, '/namuwiki-link') || startsWith(github.event.comment.body, '/namuwiki-not-found') || startsWith(github.event.comment.body, '/namuwiki-batch'))
+      (startsWith(github.event.comment.body, '/namuwiki-link') || startsWith(github.event.comment.body, '/namuwiki-correct') || startsWith(github.event.comment.body, '/namuwiki-not-found') || startsWith(github.event.comment.body, '/namuwiki-batch'))
     runs-on: ubuntu-latest
     environment: production
     env:
@@ -115,6 +115,7 @@ jobs:
             PERSON_ID="$(jq -r '.person_id' <<<"$ITEM")"
             REFERENCE_STATUS="$(jq -r '.status' <<<"$ITEM")"
             NAMUWIKI_URL="$(jq -r '.url // ""' <<<"$ITEM")"
+            EXPECTED_CURRENT_URL="$(jq -r '.expected_current_url // ""' <<<"$ITEM")"
             echo "ATLAS_NAMUWIKI_CURRENT_PERSON_ID=$PERSON_ID" >> "$GITHUB_ENV"
 
             RESPONSE_FILE="$RUNNER_TEMP/atlas-namuwiki-response-${PERSON_ID}.json"
@@ -124,8 +125,13 @@ jobs:
               --arg person_id "$PERSON_ID" \
               --arg status "$REFERENCE_STATUS" \
               --arg url "$NAMUWIKI_URL" \
+              --arg expected_current_url "$EXPECTED_CURRENT_URL" \
               'if $status == "linked" then
-                 {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,url:$url}
+                 if ($expected_current_url | length) > 0 then
+                   {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,url:$url,expected_current_url:$expected_current_url}
+                 else
+                   {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,url:$url}
+                 end
                else
                  {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,status:$status}
                end')"
