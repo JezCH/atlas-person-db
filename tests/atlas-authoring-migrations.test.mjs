@@ -14,7 +14,7 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 13);
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 14);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
@@ -27,7 +27,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(AUTHORING_MIGRATION_PATHS[9], /20260906_p13a_temporal_unknown_boundaries\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[10], /20260906_p13_source_place_objects\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[11], /20260920_person_portraits\.sql$/);
-  assert.match(AUTHORING_MIGRATION_PATHS[12], /20260921_person_portrait_history_v2\.sql$/);
+  assert.match(AUTHORING_MIGRATION_PATHS[12], /20260921_person_portrait_history_v2\\.sql$/);\n  assert.match(AUTHORING_MIGRATION_PATHS[13], /20260924_person_portraits_simple_v3\\.sql$/);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
@@ -91,13 +91,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(personPortraits, /PRIMARY KEY \(person_id\)/i);
   assert.match(personPortraits, /REFERENCES atlas_v2\.sources\(id\) ON DELETE RESTRICT/i);
 
-  const portraitHistory = migrations[12].sql;
-  assert.match(portraitHistory, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_portrait_assets/i);
-  assert.match(portraitHistory, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_portrait_generation_runs/i);
-  assert.match(portraitHistory, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_portrait_revisions/i);
-  assert.match(portraitHistory, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_portrait_revision_sources/i);
-  assert.match(portraitHistory, /ADD COLUMN IF NOT EXISTS current_revision_id uuid/i);
-  assert.match(portraitHistory, /DEFERRABLE INITIALLY IMMEDIATE/i);
+  const portraitSimple = migrations[13].sql;\n  assert.match(portraitSimple, /DROP COLUMN IF EXISTS portrait_kind/i);\n  assert.match(portraitSimple, /DROP COLUMN IF EXISTS evidence_level/i);\n  assert.match(portraitSimple, /DROP TABLE IF EXISTS atlas_v2\\.person_portrait_sources/i);
 });
 
 test('current clean schema baseline remains the measured pre-lifecycle Production shape', () => {
