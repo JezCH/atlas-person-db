@@ -1,6 +1,6 @@
 "use strict";
 
-const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v4";
+const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v5";
 const CONTEXT_POLITY_RELATIONSHIP_FK_KEY = "atlas_v2.person_politics_context_polities.person_politics_id";
 
 const EXPECTED_PERSON_FKS = Object.freeze([
@@ -30,7 +30,6 @@ const EXPECTED_NON_FK_PERSON_UUID_COLUMNS = Object.freeze([
   "atlas_v2.person_duplicate_reviews.person_low_id",
   "atlas_v2.person_merge_audits.source_person_id",
   "atlas_v2.person_merge_audits.survivor_person_id",
-  "atlas_v2.person_portrait_sources.person_id",
   "atlas_v2.person_profile_mutation_audits.person_id"
 ]);
 const P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS = Object.freeze([
