@@ -8,7 +8,7 @@ const imageModule=fs.readFileSync(new URL("../atlas-person-portrait-image.js",im
 
 test("portrait image pipeline is absent from initial HTML and loaded only on first conversion",()=>{
   assert.doesNotMatch(html,/atlas-person-portrait-image\.js/);
-  assert.match(main,/const PERSON_PORTRAIT_IMAGE_SCRIPT_URL = "\.\/atlas-person-portrait-image\.js\?v=20260922-image-pipeline-v1"/);
+  assert.match(main,/const PERSON_PORTRAIT_IMAGE_SCRIPT_URL = "\.\/atlas-person-portrait-image\.js\?v=20260924-upload-standard-v3"/);
   assert.match(main,/function ensurePortraitImageModule\(\)/);
   assert.match(main,/if \(personPortraitImageModulePromise\) return personPortraitImageModulePromise/);
   assert.match(main,/script\.dataset\.atlasPersonPortraitImage = "true"/);
@@ -34,7 +34,10 @@ test("Person Main keeps the public converter API as a thin lazy wrapper",()=>{
 test("extracted portrait image module owns exact upload and output limits",()=>{
   assert.match(imageModule,/PORTRAIT_SOURCE_MAX_BYTES = 20 \* 1024 \* 1024/);
   assert.match(imageModule,/PORTRAIT_OUTPUT_MAX_BYTES = 3 \* 1024 \* 1024/);
-  assert.match(imageModule,/PORTRAIT_TARGET_WIDTH = 1024/);\n  assert.match(imageModule,/PORTRAIT_TARGET_HEIGHT = 1280/);\n  assert.match(imageModule,/PORTRAIT_ASPECT = PORTRAIT_TARGET_WIDTH \/ PORTRAIT_TARGET_HEIGHT/);\n  assert.match(imageModule,/context\.drawImage\(loaded\.image, sx, sy, sw, sh, 0, 0, canvas\.width, canvas\.height\)/);
+  assert.match(imageModule,/PORTRAIT_TARGET_WIDTH = 1024/);
+  assert.match(imageModule,/PORTRAIT_TARGET_HEIGHT = 1280/);
+  assert.match(imageModule,/PORTRAIT_ASPECT = PORTRAIT_TARGET_WIDTH \/ PORTRAIT_TARGET_HEIGHT/);
+  assert.match(imageModule,/context\.drawImage\(loaded\.image, sx, sy, sw, sh, 0, 0, canvas\.width, canvas\.height\)/);
   assert.match(imageModule,/String\(file\.type \|\| ""\)\.startsWith\("image\/"\)/);
   assert.match(imageModule,/const qualities = \[0\.9, 0\.82, 0\.74, 0\.66\]/);
   assert.match(imageModule,/for \(let pass = 0; pass < 4; pass \+= 1\)/);
