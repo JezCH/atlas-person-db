@@ -9,7 +9,7 @@ const { createPersonPortraitHandler } = require("../server/atlas-person-portrait
 const mutationHandler = createVercelMutationHandler({ clientFactory:createPostgresClient });
 const personDomainHandler = createPersonDomainHandler({ clientFactory:createPostgresClient });
 const runtimeCompileHandler = createRuntimeCompileHandler({ clientFactory:createPostgresClient });
-const personPortraitHandler = createPersonPortraitHandler({ clientFactory:createPostgresClient, allowedMethods:["PUT","PATCH","DELETE"] });
+const personPortraitHandler = createPersonPortraitHandler({ clientFactory:createPostgresClient, allowedMethods:["PUT","DELETE"] });
 
 function selectMutationSurface(req) {
   const direct = req?.query?.__atlas_mutation_surface;

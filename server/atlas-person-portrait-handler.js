@@ -74,7 +74,7 @@ function createPersonPortraitHandler({
   authorizer = null,
   storageFactory = createPortraitBlobStorage,
   serviceFactory = createPersonPortraitService,
-  allowedMethods = ["GET", "PUT", "PATCH", "DELETE"]
+  allowedMethods = ["GET", "PUT", "DELETE"]
 } = {}) {
   const allowedMethodSet = new Set((allowedMethods || []).map((value) => String(value || "").toUpperCase()));
   return async function personPortraitHandler(req, res) {
@@ -138,12 +138,6 @@ function createPersonPortraitHandler({
 
       if (method === "PUT") {
         const result = await service.put(body);
-        sendJson(res, 200, { ok:true, schema:PORTRAIT_API_SCHEMA, ...result });
-        return;
-      }
-
-      if (method === "PATCH") {
-        const result = await service.patch(body);
         sendJson(res, 200, { ok:true, schema:PORTRAIT_API_SCHEMA, ...result });
         return;
       }

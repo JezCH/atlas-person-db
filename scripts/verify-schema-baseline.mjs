@@ -26,7 +26,8 @@ const expectedAuthoringMigrations = [
   '20260906_p13a_temporal_unknown_boundaries.sql',
   '20260906_p13_source_place_objects.sql',
   '20260920_person_portraits.sql',
-  '20260921_person_portrait_history_v2.sql'
+  '20260921_person_portrait_history_v2.sql',
+  '20260924_person_portraits_simple_v3.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -42,7 +43,8 @@ const expectedAuthoringReplayMigrations = [
   '20260906_p13a_temporal_unknown_boundaries.sql',
   '20260906_p13_source_place_objects.sql',
   '20260920_person_portraits.sql',
-  '20260921_person_portrait_history_v2.sql'
+  '20260921_person_portrait_history_v2.sql',
+  '20260924_person_portraits_simple_v3.sql'
 ];
 
 const expectedCorrectionMigrations = [
@@ -238,7 +240,7 @@ try {
      where table_schema='atlas_v2'
        and table_name in ('person_portraits','person_portrait_sources')
      order by table_name`);
-  same(portraitTables.rows.map((row) => row.table_name), ['person_portrait_sources','person_portraits'], 'Person portrait canonical tables');
+  same(portraitTables.rows.map((row) => row.table_name), ['person_portraits'], 'Person portrait canonical tables');
 
   const portraitPersonDeleteRule = await client.query(`
     select rc.delete_rule
@@ -255,11 +257,8 @@ try {
      order by rc.constraint_name`);
   same(
     portraitSourceRules.rows.map((row) => `${row.constraint_name}:${row.update_rule}:${row.delete_rule}`),
-    [
-      'person_portrait_sources_person_id_fkey:CASCADE:CASCADE',
-      'person_portrait_sources_source_id_fkey:NO ACTION:RESTRICT'
-    ],
-    'Person portrait provenance reference rules'
+    [],
+    'Person portrait retired provenance reference rules'
   );
 
   const firstCorrectionReplay = await applyCorrectionMigrations(client);

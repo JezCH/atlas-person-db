@@ -61,8 +61,7 @@ async function snapshotPerson(client, personId) {
   const sources = await client.query(`select source_id from atlas_v2.person_sources where person_id=$1 order by source_id`, [personId]);
   const descriptions = await client.query(`select id,locale,content from atlas_v2.person_descriptions where person_id=$1 order by locale,id`, [personId]);
   const externalReferences = await client.query(`select provider,status,checked_at::text,document_title,url from atlas_v2.person_external_references where person_id=$1 order by provider`, [personId]);
-  const portrait = await client.query(`select person_id::text,asset_sha256,portrait_kind,evidence_level from atlas_v2.person_portraits where person_id=$1`, [personId]);
-  const portraitSources = await client.query(`select source_id,evidence_role from atlas_v2.person_portrait_sources where person_id=$1 order by source_id,evidence_role`, [personId]);
+  const portrait = await client.query(`select person_id::text,asset_sha256 from atlas_v2.person_portraits where person_id=$1`, [personId]);
   const relationships = await client.query(`select
       id,person_id,polity_id,relation_type_id,role_id,period_basis_id,
       activity_start,activity_start_month,activity_start_day,activity_start_granularity,activity_start_calendar,activity_start_certainty,
@@ -85,7 +84,6 @@ async function snapshotPerson(client, personId) {
     descriptions: descriptions.rows,
     external_references: externalReferences.rows,
     portrait: portrait.rows[0] || null,
-    portrait_sources: portraitSources.rows,
     relationships: relationships.rows,
     relationship_sources: relationshipSources.rows,
     chronology_claims: chronologyClaims.rows,
@@ -109,8 +107,7 @@ async function globalCounts(client) {
     (select count(*)::int from atlas_v2.person_event_participations) as event_participations,
     (select count(*)::int from atlas_v2.person_event_participation_sources) as event_participation_sources,
     (select count(*)::int from atlas_v2.person_external_references) as external_references,
-    (select count(*)::int from atlas_v2.person_portraits) as portraits,
-    (select count(*)::int from atlas_v2.person_portrait_sources) as portrait_sources`);
+    (select count(*)::int from atlas_v2.person_portraits) as portraits`);
   return result.rows[0];
 }
 
@@ -322,7 +319,6 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       (select count(*)::int from atlas_v2.person_event_participations where person_id=$1) as event_participations,
       (select count(*)::int from atlas_v2.person_external_references where person_id=$1) as external_references,
       (select count(*)::int from atlas_v2.person_portraits where person_id=$1) as portraits,
-      (select count(*)::int from atlas_v2.person_portrait_sources where person_id=$1) as portrait_sources,
       (select count(*)::int from atlas_v2.authoring_manifest_runs where person_id=$1) as authoring_person_pointers,
       (select count(*)::int from atlas_v2.persons where id=$1) as person`, [sides.source_person_id]);
     if (Object.values(remainingSourceRefs.rows[0]).some((value) => Number(value) !== 0)) throw new Error("source person references remain after merge");
@@ -341,7 +337,6 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     if (afterCounts.event_participation_sources !== beforeCounts.event_participation_sources) throw new Error("event participation provenance count changed during person merge");
     if (afterCounts.external_references !== beforeCounts.external_references - externalReferences.collapsed) throw new Error("external reference count changed outside deterministic reference collapse");
     if (afterCounts.portraits !== beforeCounts.portraits) throw new Error("portrait count changed during person merge");
-    if (afterCounts.portrait_sources !== beforeCounts.portrait_sources) throw new Error("portrait provenance count changed during person merge");
 
     const mutationSummary = {
       reference_readiness: { policy_version: referenceReadiness.policy_version, ready: referenceReadiness.ready },

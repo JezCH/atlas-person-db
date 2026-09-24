@@ -30,7 +30,6 @@
   let requestSerial = 0;
   let selectedPersonDetail = null;
   let selectedPortrait = null;
-  let selectedPortraitSourceCandidates = null;
   const PERSON_PORTRAIT_IMAGE_SCRIPT_URL = "./atlas-person-portrait-image.js?v=20260924-upload-standard-v3";
   const PERSON_EXCEL_EXPORT_SCRIPT_URL = "./atlas-person-excel-export.js?v=20260922-feature-split-v1";
   let personPortraitImageModulePromise = null;
@@ -51,7 +50,6 @@
   const portraitController = portraitControllerFactory.createController({
     writer:profileWriter,
     getSelectedPersonId:() => selectedPersonId,
-    getSelectedPortrait:() => selectedPortrait,
     outcomeError
   });
   const profileEditor = profileEditorFactory.createEditor({
@@ -448,9 +446,7 @@
   }
 
   function portraitEditorHtml(person, portraitResult = null) {
-    return portraitRenderer.portraitEditorHtml(person, portraitResult, {
-      sourceCandidates:selectedPortraitSourceCandidates
-    });
+    return portraitRenderer.portraitEditorHtml(person, portraitResult);
   }
 
   function profileEditorHtml(person, portraitResult = null) {
@@ -556,7 +552,6 @@
     selectedPersonId = personId;
     selectedPersonDetail = null;
     selectedPortrait = null;
-    selectedPortraitSourceCandidates = null;
     renderGroups();
     renderDetailLoading();
     const serial = ++requestSerial;
@@ -663,80 +658,6 @@
     return converter.portraitFileToWebpBase64(file);
   }
 
-  async function loadPortraitSourceCandidates(personId) {
-    const id = String(personId || "").trim();
-    if (!id || id !== selectedPersonId || !selectedPortrait || !selectedPersonDetail) return;
-    try {
-      const { candidates } = await portraitController.loadSourceCandidates(id);
-      selectedPortraitSourceCandidates = candidates;
-      renderDetail(selectedPersonDetail, { portrait:selectedPortrait });
-      showOperationalMessage(`초상 근거 후보 ${selectedPortraitSourceCandidates.length}건을 불러왔습니다.`);
-    } catch (error) {
-      showOperationalMessage(error?.message || "Person 출처 조회에 실패했습니다.");
-    }
-  }
-
-  async function refreshPortraitAfterWrite(personId, successMessage) {
-    await selectPerson(personId, { force:true });
-    showOperationalMessage(successMessage);
-  }
-
-  async function handlePortraitMetadataSubmit(event) {
-    const form = event.target.closest?.("form[data-person-portrait-operation][data-person-id]");
-    if (!form) return;
-    const operation = String(form.dataset.personPortraitOperation || "");
-    if (!["metadata","source-add","source-edit"].includes(operation)) return;
-    event.preventDefault();
-    const personId = String(form.dataset.personId || "").trim();
-    if (!personId || personId !== selectedPersonId || !selectedPortrait) {
-      return showOperationalMessage("현재 초상화 상태를 다시 불러온 뒤 시도하세요.");
-    }
-    const controls = [...form.querySelectorAll("button,input,select")];
-    controls.forEach((control) => { control.disabled = true; });
-    try {
-      if (operation === "metadata") {
-        await portraitController.patchMetadata(personId, {
-          portraitKind:form.elements.portrait_kind?.value,
-          evidenceLevel:form.elements.evidence_level?.value
-        });
-        return await refreshPortraitAfterWrite(personId, "초상 유형과 근거 수준을 저장했습니다.");
-      }
-
-      if (operation === "source-add") {
-        const sourceId = String(form.elements.source_id?.value || "").trim();
-        const evidenceRole = String(form.elements.evidence_role?.value || "").trim();
-        if (!sourceId || !evidenceRole) return showOperationalMessage("연결할 출처와 근거 역할을 선택하세요.");
-        await portraitController.addSource(personId, sourceId, evidenceRole);
-        return await refreshPortraitAfterWrite(personId, "초상 근거 출처를 연결했습니다.");
-      }
-
-      const sourceId = String(form.dataset.sourceId || "").trim();
-      const originalRole = String(form.dataset.originalRole || "").trim();
-      const evidenceRole = String(form.elements.evidence_role?.value || "").trim();
-      if (!sourceId || !originalRole || !evidenceRole) return showOperationalMessage("초상 근거 연결 정보가 올바르지 않습니다.");
-      await portraitController.editSource(personId, sourceId, originalRole, evidenceRole);
-      return await refreshPortraitAfterWrite(personId, "초상 근거 역할을 변경했습니다.");
-    } catch (error) {
-      showOperationalMessage(error?.message || "초상 근거 저장에 실패했습니다.");
-    } finally {
-      controls.forEach((control) => { if (control.isConnected) control.disabled = false; });
-    }
-  }
-
-  async function removePortraitSource(personId, sourceId, evidenceRole) {
-    const id = String(personId || "").trim();
-    const sid = String(sourceId || "").trim();
-    const role = String(evidenceRole || "").trim();
-    if (!id || id !== selectedPersonId || !selectedPortrait || !sid || !role) return;
-    if (!window.confirm("이 출처와 초상화의 근거 연결을 해제할까요?")) return;
-    try {
-      await portraitController.removeSource(id, sid, role);
-      await refreshPortraitAfterWrite(id, "초상 근거 연결을 해제했습니다.");
-    } catch (error) {
-      showOperationalMessage(error?.message || "초상 근거 연결 해제에 실패했습니다.");
-    }
-  }
-
   async function handlePortraitSubmit(event) {
     const form = event.target.closest?.("form[data-person-portrait-operation='upload'][data-person-id]");
     if (!form) return;
@@ -744,10 +665,7 @@
     const personId = String(form.dataset.personId || "").trim();
     if (!personId || selectedPersonId !== personId) return showOperationalMessage("현재 선택한 인물과 초상화 편집 대상이 다릅니다.");
     const file = form.elements.portrait_file?.files?.[0] || null;
-    const portraitKind = String(form.elements.portrait_kind?.value || "").trim();
-    const evidenceLevel = String(form.elements.evidence_level?.value || "").trim();
     if (!file) return showOperationalMessage("업로드할 이미지를 선택하세요.");
-    if (!portraitKind || !evidenceLevel) return showOperationalMessage("초상 유형과 근거 수준을 선택하세요.");
 
     const controls = [...form.querySelectorAll("button,input,select")];
     controls.forEach((control) => { control.disabled = true; });
@@ -756,9 +674,7 @@
       const converted = await portraitFileToWebpBase64(file);
       const outcome = await portraitController.setPortrait({
         personId,
-        imageBase64:converted.image_base64,
-        portraitKind,
-        evidenceLevel
+        imageBase64:converted.image_base64
       });
       await selectPerson(personId, { force:true });
       if (outcome?.replaced_asset_cleanup?.ok === false) {
@@ -925,22 +841,11 @@
     });
     detail?.addEventListener("submit", handleProfileSubmit);
     detail?.addEventListener("submit", handlePortraitSubmit);
-    detail?.addEventListener("submit", handlePortraitMetadataSubmit);
     detail?.addEventListener("change", (event) => {
       const input = event.target.closest?.("input[name='portrait_file']");
       if (input) previewPortraitFile(input);
     });
     detail?.addEventListener("click", (event) => {
-      const sourceLoad = event.target.closest("[data-person-portrait-load-sources][data-person-id]");
-      if (sourceLoad) {
-        loadPortraitSourceCandidates(sourceLoad.dataset.personId);
-        return;
-      }
-      const sourceRemove = event.target.closest("[data-person-portrait-source-remove][data-person-id]");
-      if (sourceRemove) {
-        removePortraitSource(sourceRemove.dataset.personId, sourceRemove.dataset.sourceId, sourceRemove.dataset.evidenceRole);
-        return;
-      }
       const portraitDelete = event.target.closest("[data-person-portrait-delete][data-person-id]");
       if (portraitDelete) {
         deletePersonPortrait(portraitDelete.dataset.personId);
@@ -990,9 +895,6 @@
     profileEditorHtml,
     portraitFileToWebpBase64,
     handlePortraitSubmit,
-    handlePortraitMetadataSubmit,
-    loadPortraitSourceCandidates,
-    removePortraitSource,
     deletePersonPortrait,
     deleteActivity,
     exportCurrentExcel

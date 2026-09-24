@@ -130,8 +130,7 @@ test('Person detail binds canonical portrait read and authoring controls without
   assert.match(main, /portraitRenderer\.portraitEditorHtml/);
   assert.match(portraitView, /data-person-portrait-operation="upload"/);
   assert.match(portraitView, /name="portrait_file" accept="image\/jpeg,image\/png,image\/webp,image\/avif"/);
-  assert.match(portraitView, /name="portrait_kind"/);
-  assert.match(portraitView, /name="evidence_level"/);
+  assert.doesNotMatch(portraitView, /portrait_kind|evidence_level|초상 유형|근거 수준/);
   assert.match(main, /portraitController\.setPortrait/);
   assert.match(main, /portraitController\.deletePortrait/);
   assert.match(main, /function ensurePortraitImageModule\(\)/);
@@ -142,19 +141,13 @@ test('Person detail binds canonical portrait read and authoring controls without
   assert.doesNotMatch(main, /__atlas_mutation_surface=person-portrait/);
 });
 
-test('portrait authoring delegates provenance-preserving writes to the controller', () => {
+test('portrait authoring is structurally limited to upload replace and delete', () => {
   assert.match(main, /ATLAS_PERSON_PORTRAIT_CONTROLLER/);
-  assert.match(main, /portraitController\.patchMetadata/);
-  assert.match(main, /portraitController\.addSource/);
-  assert.match(main, /portraitController\.editSource/);
-  assert.match(main, /portraitController\.removeSource/);
-  assert.doesNotMatch(main, /function preservedPortraitSources\(\)/);
-  assert.match(portraitController, /function normalizePortraitSources\(portrait\)/);
-  assert.match(portraitController, /source_id:String\(row\?\.source_id \|\| ""\)\.trim\(\)/);
-  assert.match(portraitController, /evidence_role:String\(row\?\.evidence_role \|\| ""\)\.trim\(\)/);
-  assert.match(portraitController, /sources:preservedPortraitSources\(\)/);
+  assert.match(main, /portraitController\.setPortrait/);
+  assert.match(main, /portraitController\.deletePortrait/);
+  assert.doesNotMatch(main, /patchMetadata|addSource|editSource|removeSource|loadSourceCandidates/);
+  assert.doesNotMatch(portraitController, /portraitKind|evidenceLevel|sources|provenance|metadata/);
 });
-
 test('portrait authoring controls have responsive form styling', () => {
   assert.match(profileCss, /\.person-portrait-form/);
   assert.match(profileCss, /\.person-portrait-actions/);
