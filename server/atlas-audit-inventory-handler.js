@@ -17,13 +17,26 @@ const INVENTORY_SELECT = `
       select pp.id as activity_id,
              pp.person_id,
              pp.polity_id,
+             pp.relation_type_id,
              pp.role_id,
              pp.period_basis_id,
              pp.activity_start,
+             pp.activity_start_month,
+             pp.activity_start_day,
+             pp.activity_start_granularity,
+             pp.activity_start_certainty,
+             pp.activity_start_calendar,
              pp.activity_end,
+             pp.activity_end_month,
+             pp.activity_end_day,
+             pp.activity_end_granularity,
+             pp.activity_end_certainty,
+             pp.activity_end_calendar,
              pp.confidence,
              pp.chronology_status,
              pp.legacy_source_key,
+             pp.source_locator,
+             pp.content_hash,
              pp.notes,
              p.canonical_key as person_canonical_key,
              p.person_type,
@@ -47,6 +60,22 @@ const INVENTORY_SELECT = `
              r.category as role_category,
              r.source_label as role_source_label,
              pb.code as period_basis,
+             prt.code as relation_type_code,
+             prt.category as relation_type_category,
+             coalesce((
+               select jsonb_agg(jsonb_build_object(
+                 'source_id',s.id::text,
+                 'source_key',s.source_key,
+                 'source_type',s.source_type,
+                 'title',s.title,
+                 'canonical_url',s.canonical_url,
+                 'citation_text',s.citation_text,
+                 'source_locator_key',pps.source_locator_key
+               ) order by s.id::text,pps.source_locator_key)
+                 from atlas_v2.person_politics_sources pps
+                 join atlas_v2.sources s on s.id=pps.source_id
+                where pps.person_politics_id=pp.id
+             ), '[]'::jsonb) as normalized_sources,
              (select count(*)::int from atlas_v2.person_politics_sources s where s.person_politics_id=pp.id) as source_count,
              (select count(*)::int from atlas_v2.chronology_claims c where c.person_politics_id=pp.id) as chronology_claim_count,
              (select count(*)::int from atlas_v2.relationship_descriptions d where d.person_politics_id=pp.id) as description_count
@@ -54,7 +83,8 @@ const INVENTORY_SELECT = `
         left join atlas_v2.persons p on p.id=pp.person_id
         left join atlas_v2.polities po on po.id=pp.polity_id
         left join atlas_v2.roles r on r.id=pp.role_id
-        left join atlas_v2.period_bases pb on pb.id=pp.period_basis_id`;
+        left join atlas_v2.period_bases pb on pb.id=pp.period_basis_id
+        left join atlas_v2.person_polity_relation_types prt on prt.id=pp.relation_type_id`;
 
 function json(res, statusCode, body) {
   res.statusCode = statusCode;
