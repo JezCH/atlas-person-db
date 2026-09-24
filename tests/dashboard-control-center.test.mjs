@@ -27,7 +27,7 @@ test("dashboard model derives progress from canonical snapshots without stored d
   const activity=(id,polity,start,end,sourceCount=1)=>({id,polity:{id:polity},start:{year:start},end:{year:end},source_count:sourceCount});
   const persons = [
     { id:P1, historicity:"historical", activity_count:2, external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:X}] }, activity_summaries:[activity(A1,X,100,110)] },
-    { id:P2, historicity:"historical", activity_count:0, external_references:{ namuwiki:{status:"not_found",review_state:"reviewed_absent"} }, facets:{ polities:[{id:Y}] }, activity_summaries:[activity(A2,Y,120,130)] },
+    { id:P2, historicity:"historical", activity_count:0, external_references:{ namuwiki:{status:"not_found",review_state:"reviewed_absent",absence_reason:"no_exact_document"} }, facets:{ polities:[{id:Y}] }, activity_summaries:[activity(A2,Y,120,130)] },
     { id:P3, historicity:"uncertain", activity_count:1, external_references:{}, facets:{ polities:[{id:Z}] }, activity_summaries:[activity(A3,Z,140,150)] }
   ];
   const snapshot = model.buildDashboardSnapshot({
@@ -1373,33 +1373,48 @@ test("Runtime exclusion Attention renders Activity units instead of person units
 
 
 
-test("NamuWiki dashboard distinguishes confirmed absent from legacy unverified and never-reviewed Persons", () => {
+test("NamuWiki dashboard distinguishes reviewed-unlinked reasons from unreviewed Persons", () => {
   const persons = [
     {id:"00000000-0000-4000-8000-000000000001",external_references:{namuwiki:{status:"linked"}},facets:{polities:[]},activity_summaries:[]},
-    {id:"00000000-0000-4000-8000-000000000002",external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent"}},facets:{polities:[]},activity_summaries:[]},
-    {id:"00000000-0000-4000-8000-000000000003",external_references:{namuwiki:{status:"not_found",review_state:"legacy_unverified"}},facets:{polities:[]},activity_summaries:[]},
-    {id:"00000000-0000-4000-8000-000000000004",external_references:{},facets:{polities:[]},activity_summaries:[]}
+    {id:"00000000-0000-4000-8000-000000000002",external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent",absence_reason:"no_exact_document"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"00000000-0000-4000-8000-000000000003",external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent",absence_reason:"exact_target_url_pending"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"00000000-0000-4000-8000-000000000004",external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"00000000-0000-4000-8000-000000000005",external_references:{namuwiki:{status:"not_found",review_state:"legacy_unverified"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"00000000-0000-4000-8000-000000000006",external_references:{},facets:{polities:[]},activity_summaries:[]}
   ];
   const snapshot=model.buildDashboardSnapshot({personResult:{persons}});
   assert.equal(snapshot.work.namuwiki.linked,1);
+  assert.equal(snapshot.work.namuwiki.reviewed_unlinked,3);
   assert.equal(snapshot.work.namuwiki.confirmed_absent,1);
+  assert.equal(snapshot.work.namuwiki.target_url_pending,1);
+  assert.equal(snapshot.work.namuwiki.reviewed_reason_unrecorded,1);
   assert.equal(snapshot.work.namuwiki.legacy_unverified,1);
   assert.equal(snapshot.work.namuwiki.no_decision,1);
-  assert.equal(snapshot.work.namuwiki.done,2);
+  assert.equal(snapshot.work.namuwiki.done,4);
   assert.equal(snapshot.work.namuwiki.remaining,2);
   const attention=snapshot.attention_queue.items.find((row)=>row.code==="namuwiki");
   assert.deepEqual(attention.person_ids,[
-    "00000000-0000-4000-8000-000000000003",
-    "00000000-0000-4000-8000-000000000004"
+    "00000000-0000-4000-8000-000000000005",
+    "00000000-0000-4000-8000-000000000006"
   ]);
   assert.deepEqual(snapshot.incomplete_breakdown.namuwiki.rows.map((row)=>[row.code,row.count]),[
     ["REFERENCE_ABSENT",1],
     ["LEGACY_NOT_FOUND_UNVERIFIED",1]
   ]);
+  assert.deepEqual(snapshot.incomplete_breakdown.namuwiki_absent.rows.map((row)=>[row.code,row.count]),[
+    ["NO_EXACT_DOCUMENT",1],
+    ["EXACT_TARGET_URL_PENDING",1],
+    ["REVIEWED_REASON_UNRECORDED",1]
+  ]);
 });
 
-test("dashboard NamuWiki copy exposes linked, confirmed absent, and verification-needed counts", () => {
-  assert.match(dashboardSource,/없음 확정/);
+test("dashboard NamuWiki copy exposes reviewed-unlinked reason counts with readable breakdown rows", () => {
+  assert.match(dashboardSource,/독립 문서 없음/);
+  assert.match(dashboardSource,/문서 확인·URL 미확정/);
+  assert.match(dashboardSource,/검토 완료·세부사유 미기록/);
   assert.match(dashboardSource,/미검토·재검증 필요/);
-  assert.match(dashboardSource,/w\.namuwiki\.confirmed_absent/);
+  assert.match(dashboardSource,/NamuWiki 미연결 검토 결과/);
+  assert.match(dashboardSource,/dashboard-breakdown-row/);
+  assert.match(dashboardCssSource,/\.dashboard-breakdown-row\{display:grid;grid-template-columns:minmax\(0,1fr\) auto/);
+  assert.match(dashboardCssSource,/word-break:keep-all/);
 });
