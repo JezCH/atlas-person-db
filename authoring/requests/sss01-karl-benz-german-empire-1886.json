@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss01:karl-benz:german-empire:automotive-engineer-inventor:1886:v1",
+  "person": {
+    "canonical_name_en": "Karl Benz",
+    "display_name_ko": "카를 벤츠",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Automotive engineer and inventor",
+    "role_display_name_ko": "자동차 공학자·발명가",
+    "start_year": 1886,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1886,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1886, when Karl Benz applied for the patent for his gas-engine-powered vehicle and publicly demonstrated the Patent Motor Car, as his representative German automotive-engineering milestone."
+  },
+  "sources": [
+    {
+      "title": "Benz Patent Motor Car: The first automobile (1885–1886) — Mercedes-Benz Group",
+      "canonical_url": "https://group.mercedes-benz.com/company/tradition/company-history/1885-1886.html",
+      "citation_text": "Mercedes-Benz records Benz's patent application for the gas-engine-powered vehicle on 29 January 1886 and the vehicle's first public outing that year.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-110",
+    "review_checkpoint": "#1374 comment 5762056835",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "technology"
+  }
+}

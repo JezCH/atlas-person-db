@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss01:andrea-palladio:republic-venice:architect-author:1570:v1",
+  "person": {
+    "canonical_name_en": "Andrea Palladio",
+    "display_name_ko": "안드레아 팔라디오",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Venice",
+    "display_name_ko": "베네치아 공화국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Architect and author",
+    "role_display_name_ko": "건축가·저술가",
+    "start_year": 1570,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1570,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1570, the Venice publication year of I Quattro libri dell'architettura, as Palladio's representative architectural-theory milestone under the Republic of Venice."
+  },
+  "sources": [
+    {
+      "title": "Andrea Palladio, I Quattro libri dell'architettura, Venezia, 1570 — Palladio Museum",
+      "canonical_url": "https://mediateca.palladiomuseum.org/palladio/oggetto.php?id=3",
+      "citation_text": "The Palladio Museum catalogs the first edition of I Quattro libri dell'architettura as published in Venice in 1570.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-105",
+    "review_checkpoint": "#1374 comment 5762056835",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "technology"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss01:leopold-von-ranke:kingdom-prussia:historian:1824:v1",
+  "person": {
+    "canonical_name_en": "Leopold von Ranke",
+    "display_name_ko": "레오폴트 폰 랑케",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Prussia",
+    "display_name_ko": "프로이센 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Historian",
+    "role_display_name_ko": "역사가",
+    "start_year": 1824,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1824,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1824, the publication year of Ranke's History of the Latin and Teutonic Nations, as a representative milestone for his source-critical historiography in Prussia."
+  },
+  "sources": [
+    {
+      "title": "Leopold von Ranke, Excerpts from Selected Works (1824–1881) — German History in Documents and Images",
+      "canonical_url": "https://germanhistorydocs.org/en/from-vormaerz-to-prussian-dominance-1815-1866/ghdi%3Adocument-358",
+      "citation_text": "The source identifies Ranke's History of the Latin and Teutonic Nations and its methodological introduction as dating to 1824.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "hist-20260921-leopold-von-ranke",
+    "review_checkpoint": "#1374 comment 5761766994",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss01:livy:roman-empire:historian:c27-bce:v1",
+  "person": {
+    "canonical_name_en": "Livy",
+    "display_name_ko": "리비우스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Historian",
+    "role_display_name_ko": "역사가",
+    "start_year": -27,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -27,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses c.27 BCE as a bounded representative intellectual-activity point for Livy in Rome, near the beginning of his great historical work. The date is approximate and is not treated as an authorship or life boundary."
+  },
+  "sources": [
+    {
+      "title": "Titus Livius (Livy), Ab Urbe Condita, Introduction — Perseus Digital Library",
+      "canonical_url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0151%3Abook%3Dfront%3Achapter%3D2",
+      "citation_text": "The introduction places Livy in Rome when he began his great historical work at about 27 BCE and notes his long residence there.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "hist-20260921-livy",
+    "review_checkpoint": "#1374 comment 5761699398",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}

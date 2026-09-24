@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss01:tacitus:roman-empire:historian:c98:v1",
+  "person": {
+    "canonical_name_en": "Tacitus",
+    "display_name_ko": "타키투스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Historian",
+    "role_display_name_ko": "역사가",
+    "start_year": 98,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 98,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses c.98 CE as a representative intellectual-activity point for Tacitus, associated with the Agricola and Germania. The date remains approximate and does not flatten his wider senatorial and literary career."
+  },
+  "sources": [
+    {
+      "title": "Tacitus: Agricola, Germania, Dialogus — Bibliotheca Alexandrina / Ktema",
+      "canonical_url": "https://bibliothekai.ktema.org/volumes/369/",
+      "citation_text": "The bibliographic record dates Tacitus's Agricola and Germania to around 98 CE, supporting a bounded representative literary milestone.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "hist-20260921-tacitus",
+    "review_checkpoint": "#1374 comment 5761908625",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}
