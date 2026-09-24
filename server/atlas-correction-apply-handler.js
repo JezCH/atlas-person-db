@@ -24,6 +24,7 @@ const MODES = new Set(["snapshot", "dry_run", "apply", "full_stage2_baseline"]);
 const MANIFEST_SCHEMAS = new Set([MANIFEST_V2]);
 const SNAPSHOT_MARKER = "ATLAS_CORRECTION_SNAPSHOT_V1";
 const BASELINE_MARKER = "ATLAS_CORRECTION_BASELINE_A_V2";
+const TRANSPORT_MARKER = "ATLAS_CORRECTION_TRANSPORT_WORKFLOW_SHA_V2";
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -73,6 +74,8 @@ function requireExecutionPlan(raw) {
 function requirePayload(body) {
   const deploymentSha = String(body?.deployment_sha || "").trim();
   if (!/^[0-9a-f]{40}$/i.test(deploymentSha)) throw new Error("CORRECTION_APPLY_SHA_REQUIRED");
+  const workflowSha = String(body?.workflow_sha || deploymentSha).trim();
+  if (!/^[0-9a-f]{40}$/i.test(workflowSha)) throw new Error("CORRECTION_APPLY_WORKFLOW_SHA_REQUIRED");
   const mode = String(body?.mode || "").trim().toLowerCase();
   if (!MODES.has(mode)) throw new Error("CORRECTION_MODE_REQUIRED");
 
@@ -80,7 +83,7 @@ function requirePayload(body) {
     if (body?.manifest_path != null || body?.intent_path != null || body?.manifest != null || body?.plan != null || body?.activity_ids != null) {
       throw new Error("CORRECTION_BASELINE_INPUTS_FORBIDDEN");
     }
-    return { deploymentSha, sourcePath: null, mode, activityIds: null, manifest: null, schema: null, plan: null };
+    return { deploymentSha, workflowSha, sourcePath: null, mode, activityIds: null, manifest: null, schema: null, plan: null };
   }
 
   const sourcePath = String(body?.manifest_path || body?.plan_path || "").trim();
@@ -88,21 +91,21 @@ function requirePayload(body) {
 
   if (mode === "snapshot") {
     if (body?.plan != null) throw new Error("CORRECTION_PLAN_SNAPSHOT_MODE_FORBIDDEN");
-    return { deploymentSha, sourcePath, mode, activityIds: normalizeSnapshotActivityIds(body?.activity_ids), manifest: null, schema: null, plan: null };
+    return { deploymentSha, workflowSha, sourcePath, mode, activityIds: normalizeSnapshotActivityIds(body?.activity_ids), manifest: null, schema: null, plan: null };
   }
 
   if (body?.plan != null) {
     if (!CORRECTION_PLAN_PATH_RE.test(sourcePath)) throw new Error("CORRECTION_V2_EXECUTION_PLAN_PATH_NOT_ALLOWED");
     if (body?.manifest != null) throw new Error("CORRECTION_PLAN_AND_MANIFEST_MUTUALLY_EXCLUSIVE");
     const plan = requireExecutionPlan(body.plan);
-    return { deploymentSha, sourcePath, mode, activityIds: null, manifest: null, schema: MANIFEST_V2, plan };
+    return { deploymentSha, workflowSha, sourcePath, mode, activityIds: null, manifest: null, schema: MANIFEST_V2, plan };
   }
 
   if (CORRECTION_PLAN_PATH_RE.test(sourcePath)) throw new Error("CORRECTION_V2_EXECUTION_PLAN_OBJECT_REQUIRED");
   if (!body?.manifest || typeof body.manifest !== "object" || Array.isArray(body.manifest)) throw new Error("CORRECTION_MANIFEST_OBJECT_REQUIRED");
   const schema = String(body.manifest.schema || "").trim();
   if (!MANIFEST_SCHEMAS.has(schema)) throw new Error("UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA");
-  return { deploymentSha, sourcePath, mode, manifest: body.manifest, schema, activityIds: null, plan: null };
+  return { deploymentSha, workflowSha, sourcePath, mode, manifest: body.manifest, schema, activityIds: null, plan: null };
 }
 
 function createService(client, schema) {
@@ -136,14 +139,14 @@ function createCorrectionApplyHandler({
       requireDeployment(env, payload.deploymentSha);
     } catch (error) {
       const code = String(error?.message || "DEPLOYMENT_REJECTED");
-      if (code === "DEPLOYMENT_SHA_MISMATCH") return json(res, 409, { ok: false, code, deployed_sha: env?.VERCEL_GIT_COMMIT_SHA || null });
+      if (code === "DEPLOYMENT_SHA_MISMATCH") return json(res, 409, { ok: false, code, deployed_sha: env?.VERCEL_GIT_COMMIT_SHA || null, transport_marker: TRANSPORT_MARKER });
       return json(res, 503, { ok: false, code });
     }
 
     const token = bearerToken(req);
     if (!token) return json(res, 401, { ok: false, code: "GITHUB_OIDC_TOKEN_REQUIRED" });
     try {
-      await verifyOidc(token, { expectedSha: payload.deploymentSha });
+      await verifyOidc(token, { expectedSha: payload.workflowSha });
     } catch (error) {
       return json(res, 403, { ok: false, code: String(error?.message || "GITHUB_OIDC_REJECTED") });
     }
@@ -164,6 +167,7 @@ function createCorrectionApplyHandler({
           read_only: true,
           committed: false,
           deployment_sha: payload.deploymentSha,
+          workflow_sha: payload.workflowSha,
           row_count: baseline.rows.length,
           counts: baseline.counts,
           baseline_digest: baseline.baseline_digest,
@@ -181,6 +185,7 @@ function createCorrectionApplyHandler({
           read_only: snapshot.read_only,
           committed: snapshot.committed,
           deployment_sha: payload.deploymentSha,
+          workflow_sha: payload.workflowSha,
           source_path: payload.sourcePath,
           requested_count: payload.activityIds.length,
           row_count: snapshot.snapshots.length,
@@ -206,6 +211,7 @@ function createCorrectionApplyHandler({
           replay: outcome.replay,
           result: outcome.result,
           deployment_sha: payload.deploymentSha,
+          workflow_sha: payload.workflowSha,
           source_path: payload.sourcePath,
           exact_live_snapshot_digest: snapshot.snapshot_digest,
           manifest_sha256: manifest.manifest_sha256
@@ -251,5 +257,6 @@ module.exports = Object.freeze({
   MODES,
   MANIFEST_SCHEMAS,
   SNAPSHOT_MARKER,
-  BASELINE_MARKER
+  BASELINE_MARKER,
+  TRANSPORT_MARKER
 });
