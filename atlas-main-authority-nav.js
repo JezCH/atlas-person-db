@@ -149,8 +149,8 @@
     if (dashboardAssetsPromise) return dashboardAssetsPromise;
     appendStylesheetOnce("./atlas-dashboard.css?v=20260919-control-center-v1");
     dashboardAssetsPromise = ensureSpacetimeModel()
-      .then(() => loadScriptOnce("./atlas-dashboard-model.js?v=20260919-spatial-resolver-v2", () => Boolean(window.ATLAS_DASHBOARD_MODEL)))
-      .then(() => loadScriptOnce("./atlas-dashboard.js?v=20260919-control-center-v1", () => Boolean(window.ATLAS_DASHBOARD)))
+      .then(() => loadScriptOnce("./atlas-dashboard-model.js?v=20260924-namuwiki-review-state-v1", () => Boolean(window.ATLAS_DASHBOARD_MODEL)))
+      .then(() => loadScriptOnce("./atlas-dashboard.js?v=20260924-namuwiki-review-state-v1", () => Boolean(window.ATLAS_DASHBOARD)))
       .then(() => window.ATLAS_DASHBOARD)
       .catch((error) => {
         dashboardAssetsPromise = null;
