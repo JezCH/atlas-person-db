@@ -120,7 +120,6 @@ async function inspectPersonMergeReferenceReadiness(client) {
       "persons","person_names","person_sources","person_descriptions","person_politics_v2","person_politics_sources",
       "chronology_claims","relationship_descriptions","person_people_affiliations","person_people_affiliation_sources",
       "person_event_participations","person_event_participation_sources","person_external_references","person_portraits",
-      "person_portrait_sources","person_portrait_generation_runs","person_portrait_revisions","person_portrait_revision_sources",
       "person_profile_mutation_audits","authoring_manifest_runs","person_duplicate_revalidation_requirements"
     ]]);
   const allUserTriggers = (triggerResult.rows || []).map((row) => `${row.table_schema}.${row.table_name}.${row.trigger_name}`);
