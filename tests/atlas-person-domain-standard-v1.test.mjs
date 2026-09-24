@@ -252,11 +252,13 @@ test('Pythagoras HOLD history is preserved and retired by the later reviewed kno
   assert.equal(batch67.entries.some((entry) => entry.person_id === pythagoras.person_id && entry.representative_domain === 'knowledge'), true);
 });
 
-test('Person-domain workflow observes future reviewed batch and HOLD files through globs', () => {
+test('Person-domain workflow observes future reviewed manifests and does not replay the completed comment backlog', () => {
   assert.match(workflow, /proposals\/person-representative-domain\/batch-\*\.json/);
   assert.match(workflow, /proposals\/person-representative-domain\/hold-\*\.json/);
   assert.doesNotMatch(workflow, /proposals\/person-representative-domain\/batch-006\.json/);
   assert.doesNotMatch(workflow, /proposals\/person-representative-domain\/hold-001\.json/);
+  assert.doesNotMatch(workflow, /apply-person-domain-comment-backlog/);
+  assert.doesNotMatch(workflow, /comment-backed reviewed backlog/i);
 });
 
 test('governance explicitly covers major political powerholders beyond sovereign rulers', () => {
