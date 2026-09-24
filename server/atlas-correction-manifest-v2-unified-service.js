@@ -102,6 +102,7 @@ function unifiedCountDeltas(operations) {
   const coreOperations = operations.filter((operation) => !assertions.STAGE2_ASSERTION_TYPES.has(operation.type));
   const delta = {
     ...core.expectedCountDeltas(coreOperations),
+    sources: 0,
     governance_periods: 0,
     governance_sources: 0,
     designations: 0,
