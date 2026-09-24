@@ -40,19 +40,44 @@
 
   function namuwikiProgressRow(row) {
     const known = row?.done != null && row?.total != null && row?.percentage != null;
-    return `<article class="dashboard-progress-row">
-      <div class="dashboard-progress-copy"><div><strong>나무위키 검토</strong><span>실제 문서 존재 여부 검증 기준</span></div>
+    const total = known ? Number(row.total || 0) : 0;
+    const segmentPercent = (count) => total > 0
+      ? Math.max(0, Math.min(100, (Number(count || 0) / total) * 100))
+      : 0;
+    const segments = [
+      { key:"linked", label:"연결 완료", count:row?.linked, description:"독립 인물 문서를 확인해 나무위키 링크까지 연결 완료" },
+      { key:"no_exact_document", label:"독립 문서 없음", count:row?.no_exact_document, description:"검색·교차검토 후 안전하게 연결할 독립 인물 문서를 확인하지 못함" },
+      { key:"related_or_derivative_only", label:"관련·파생 문서만 확인", count:row?.related_or_derivative_only, description:"다른 역사·정치체·게임 등 관련 문서에서는 인물이 확인되지만 독립 인물 문서는 없음" },
+      { key:"exact_target_url_pending", label:"문서 확인 · URL 미확정", count:row?.exact_target_url_pending, description:"독립 인물 문서는 확인했지만 정확한 canonical URL을 아직 고정하지 못함" },
+      { key:"exact_target_url_verified", label:"문서·URL 확인 · 연결 대기", count:row?.exact_target_url_verified, description:"독립 문서와 URL은 검증됐지만 Production 링크 반영 전" },
+      { key:"reviewed_reason_unrecorded", label:"사유 미기록", count:row?.reviewed_reason_unrecorded, description:"검토 완료 상태지만 미연결 세부 사유가 아직 원장에 기록되지 않음" },
+      { key:"legacy_unverified", label:"기존 없음값 · 재검증", count:row?.legacy_unverified, description:"기존 not_found 값이지만 최신 검토 상태로 정규화되지 않아 재검증이 필요함" },
+      { key:"no_decision", label:"미검토 · 결정 없음", count:row?.no_decision, description:"아직 나무위키 문서 존재 여부에 대한 검토 결론이 없음" }
+    ];
+    const track = known
+      ? segments.filter((segment) => Number(segment.count || 0) > 0).map((segment) => {
+          const ratio = segmentPercent(segment.count);
+          return `<span class="dashboard-namuwiki-segment" data-namuwiki-segment="${escapeHtml(segment.key)}" style="width:${ratio.toFixed(4)}%" title="${escapeHtml(`${segment.label}: ${value(segment.count)}명 · ${pct(ratio)}`)}" aria-hidden="true"></span>`;
+        }).join("")
+      : "";
+    const legend = segments.map((segment) => {
+      const ratio = known ? segmentPercent(segment.count) : null;
+      const empty = known && Number(segment.count || 0) === 0;
+      return `<span class="dashboard-namuwiki-legend-item" data-namuwiki-segment="${escapeHtml(segment.key)}" data-empty="${empty ? "true" : "false"}" title="${escapeHtml(segment.description)}">
+        <i aria-hidden="true"></i>
+        <span>${escapeHtml(segment.label)}</span>
+        <b>${known ? value(segment.count) : "—"} <small>${known ? pct(ratio) : "—"}</small></b>
+      </span>`;
+    }).join("");
+    return `<article class="dashboard-progress-row dashboard-namuwiki-progress">
+      <div class="dashboard-progress-copy"><div><strong>나무위키 검토</strong><span>연결·미연결 사유·미검토 상태를 전체 인물 대비 표시</span></div>
         <b>${known ? `${value(row.done)} / ${value(row.total)}` : "원본 확인 실패"}</b></div>
-      <div class="dashboard-progress-track" aria-label="나무위키 검토 진행률" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${known ? row.percentage : 0}">
-        <span style="width:${known ? row.percentage : 0}%"></span>
+      <div class="dashboard-namuwiki-track" role="img" aria-label="나무위키 상태 분포">${track}</div>
+      <div class="dashboard-progress-meta dashboard-namuwiki-summary">
+        <span>검토 완료 <b>${known ? pct(row.percentage) : "—"}</b></span>
+        <span>미검토·재검증 <b>${known ? value(row.remaining) : "—"}</b></span>
       </div>
-      <div class="dashboard-progress-meta">
-        <span>연결 <b>${known ? value(row.linked) : "—"}</b></span>
-        <span>독립 문서 없음 <b>${known ? value(row.confirmed_absent) : "—"}</b></span>
-        <span>문서 확인·URL 미확정 <b>${known ? value(row.target_url_pending) : "—"}</b></span>
-        <span>사유 미기록 <b>${known ? value(row.reviewed_reason_unrecorded) : "—"}</b></span>
-        <span>미검토·재검증 필요 <b>${known ? value(row.remaining) : "—"}</b></span>
-      </div>
+      <div class="dashboard-namuwiki-legend" aria-label="나무위키 상태 범례">${legend}</div>
     </article>`;
   }
 
