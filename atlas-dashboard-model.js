@@ -34,6 +34,10 @@
     const state = namuwikiReviewState(person);
     return state === "linked" || state === "reviewed_absent";
   }
+  function namuwikiAbsenceReason(person) {
+    if (namuwikiReviewState(person) !== "reviewed_absent") return null;
+    return text(person?.external_references?.namuwiki?.absence_reason) || "reviewed_reason_unrecorded";
+  }
   function percent(done, total) {
     if (!Number.isFinite(total) || total <= 0) return 0;
     return Math.max(0, Math.min(100, Math.round((Number(done || 0) / total) * 1000) / 10));
@@ -275,12 +279,25 @@
 
     let namuwikiReferenceAbsent = 0;
     let namuwikiLegacyUnverified = 0;
+    const namuwikiReviewedReasonCounts = {
+      no_exact_document:0,
+      related_or_derivative_only:0,
+      exact_target_url_pending:0,
+      exact_target_url_verified:0,
+      reviewed_reason_unrecorded:0
+    };
     for (const person of persons) {
       const state = namuwikiReviewState(person);
       if (state === "not_reviewed") namuwikiReferenceAbsent += 1;
       else if (state === "legacy_unverified") namuwikiLegacyUnverified += 1;
+      else if (state === "reviewed_absent") {
+        const reason = namuwikiAbsenceReason(person);
+        if (Object.hasOwn(namuwikiReviewedReasonCounts,reason)) namuwikiReviewedReasonCounts[reason] += 1;
+        else namuwikiReviewedReasonCounts.reviewed_reason_unrecorded += 1;
+      }
     }
     const namuwikiNotChecked = namuwikiReferenceAbsent + namuwikiLegacyUnverified;
+    const namuwikiReviewedUnlinked = Object.values(namuwikiReviewedReasonCounts).reduce((sum,count) => sum + count,0);
 
     const spatialStatusResult = spatialStatus(personResult, spatialIndex);
     const spatial = !spatialIndex ? Object.freeze({
@@ -328,6 +345,22 @@
         rows:Object.freeze([
           Object.freeze({ code:"REFERENCE_ABSENT", label:"미검토·결정 없음", count:namuwikiReferenceAbsent, canonical:true }),
           Object.freeze({ code:"LEGACY_NOT_FOUND_UNVERIFIED", label:"기존 없음값·재검증 필요", count:namuwikiLegacyUnverified, canonical:true })
+        ].filter((row) => row.count > 0)),
+        unattributed_count:0,
+        unavailable_reason:null
+      }),
+      namuwiki_absent:Object.freeze({
+        available:true,
+        complete:true,
+        total:namuwikiReviewedUnlinked,
+        unit:"person",
+        eyebrow:"REVIEWED UNLINKED REASONS",
+        rows:Object.freeze([
+          Object.freeze({ code:"NO_EXACT_DOCUMENT", label:"독립 인물 문서 없음", count:namuwikiReviewedReasonCounts.no_exact_document, canonical:true }),
+          Object.freeze({ code:"RELATED_OR_DERIVATIVE_ONLY", label:"관련·파생 문서만 확인", count:namuwikiReviewedReasonCounts.related_or_derivative_only, canonical:true }),
+          Object.freeze({ code:"EXACT_TARGET_URL_PENDING", label:"독립 문서 확인·URL 미확정", count:namuwikiReviewedReasonCounts.exact_target_url_pending, canonical:true }),
+          Object.freeze({ code:"EXACT_TARGET_URL_VERIFIED", label:"문서·URL 확인·연결 대기", count:namuwikiReviewedReasonCounts.exact_target_url_verified, canonical:true }),
+          Object.freeze({ code:"REVIEWED_REASON_UNRECORDED", label:"검토 완료·세부사유 미기록", count:namuwikiReviewedReasonCounts.reviewed_reason_unrecorded, canonical:true })
         ].filter((row) => row.count > 0)),
         unattributed_count:0,
         unavailable_reason:null
@@ -1088,17 +1121,25 @@
     const otherHistoricity = Math.max(0, totalPersons - historical);
 
     let namuLinked = 0;
+    let namuReviewedUnlinked = 0;
     let namuConfirmedAbsent = 0;
+    let namuTargetPending = 0;
+    let namuReviewedReasonUnrecorded = 0;
     let namuLegacyUnverified = 0;
     let namuNoDecision = 0;
     for (const person of persons) {
       const state = namuwikiReviewState(person);
       if (state === "linked") namuLinked += 1;
-      else if (state === "reviewed_absent") namuConfirmedAbsent += 1;
-      else if (state === "legacy_unverified") namuLegacyUnverified += 1;
+      else if (state === "reviewed_absent") {
+        namuReviewedUnlinked += 1;
+        const reason = namuwikiAbsenceReason(person);
+        if (reason === "no_exact_document" || reason === "related_or_derivative_only") namuConfirmedAbsent += 1;
+        else if (reason === "exact_target_url_pending" || reason === "exact_target_url_verified") namuTargetPending += 1;
+        else namuReviewedReasonUnrecorded += 1;
+      } else if (state === "legacy_unverified") namuLegacyUnverified += 1;
       else namuNoDecision += 1;
     }
-    const namuReviewed = namuLinked + namuConfirmedAbsent;
+    const namuReviewed = namuLinked + namuReviewedUnlinked;
     const namuUnreviewed = namuLegacyUnverified + namuNoDecision;
 
     const hasDomainData = Boolean(domainResult && domainResult.by_person_id && typeof domainResult.by_person_id === "object");
@@ -1148,7 +1189,20 @@
       }),
       work:Object.freeze({
         domain:Object.freeze({ done:domainAssigned, remaining:domainMissing, total:hasDomainData ? totalPersons : null, percentage:domainAssigned == null ? null : percent(domainAssigned,totalPersons) }),
-        namuwiki:Object.freeze({ done:namuReviewed, remaining:namuUnreviewed, total:totalPersons, percentage:percent(namuReviewed,totalPersons), linked:namuLinked, confirmed_absent:namuConfirmedAbsent, legacy_unverified:namuLegacyUnverified, no_decision:namuNoDecision, not_found:namuConfirmedAbsent + namuLegacyUnverified }),
+        namuwiki:Object.freeze({
+          done:namuReviewed,
+          remaining:namuUnreviewed,
+          total:totalPersons,
+          percentage:percent(namuReviewed,totalPersons),
+          linked:namuLinked,
+          reviewed_unlinked:namuReviewedUnlinked,
+          confirmed_absent:namuConfirmedAbsent,
+          target_url_pending:namuTargetPending,
+          reviewed_reason_unrecorded:namuReviewedReasonUnrecorded,
+          legacy_unverified:namuLegacyUnverified,
+          no_decision:namuNoDecision,
+          not_found:namuReviewedUnlinked + namuLegacyUnverified
+        }),
         spatial:Object.freeze({ done:spatial.ready, remaining:spatial.unresolved, total:spatial.total, percentage:spatial.percentage, review:spatial.review, macro_only:spatial.macro_only }),
         runtime_activity:Object.freeze({ done:Math.max(0,totalPersons-noActivity), remaining:noActivity, total:totalPersons, percentage:percent(Math.max(0,totalPersons-noActivity),totalPersons) })
       }),
@@ -1176,5 +1230,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, namuwikiReviewState, namuwikiReviewed, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildRuntimeDeltaDrift, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildQualityDrilldown, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, namuwikiReviewState, namuwikiReviewed, namuwikiAbsenceReason, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildRuntimeDeltaDrift, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildQualityDrilldown, buildDashboardSnapshot });
 });
