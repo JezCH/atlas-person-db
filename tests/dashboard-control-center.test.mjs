@@ -923,7 +923,7 @@ test("Incomplete Reasons suppresses known zero-work cards but preserves unknown 
   assert.match(dashboardSource, /function shouldRenderBreakdown\(item\)/);
   assert.match(dashboardSource, /item\?\.total == null\) return item\?\.available !== true/);
   assert.match(dashboardSource, /return Number\(item\.total\) > 0/);
-  assert.match(dashboardSource, /incompleteCards\.map\(\(\[label,item\]\) => breakdownCard\(label,item\)\)/);
+  assert.match(dashboardSource, /incompleteCards\.map\(\(\[code,label,item\]\) => breakdownCard\(code,label,item\)\)/);
 });
 
 test("single lower Dashboard panel expands across the full lower grid", () => {
@@ -1401,10 +1401,19 @@ test("NamuWiki dashboard distinguishes reviewed-unlinked reasons from unreviewed
     ["REFERENCE_ABSENT",1],
     ["LEGACY_NOT_FOUND_UNVERIFIED",1]
   ]);
+  assert.deepEqual(snapshot.incomplete_breakdown.namuwiki.rows.map((row)=>[row.code,row.person_ids]),[
+    ["REFERENCE_ABSENT",["00000000-0000-4000-8000-000000000006"]],
+    ["LEGACY_NOT_FOUND_UNVERIFIED",["00000000-0000-4000-8000-000000000005"]]
+  ]);
   assert.deepEqual(snapshot.incomplete_breakdown.namuwiki_absent.rows.map((row)=>[row.code,row.count]),[
     ["NO_EXACT_DOCUMENT",1],
     ["EXACT_TARGET_URL_PENDING",1],
     ["REVIEWED_REASON_UNRECORDED",1]
+  ]);
+  assert.deepEqual(snapshot.incomplete_breakdown.namuwiki_absent.rows.map((row)=>[row.code,row.person_ids]),[
+    ["NO_EXACT_DOCUMENT",["00000000-0000-4000-8000-000000000002"]],
+    ["EXACT_TARGET_URL_PENDING",["00000000-0000-4000-8000-000000000003"]],
+    ["REVIEWED_REASON_UNRECORDED",["00000000-0000-4000-8000-000000000004"]]
   ]);
 });
 
@@ -1414,7 +1423,11 @@ test("dashboard NamuWiki copy exposes reviewed-unlinked reason counts with reada
   assert.match(dashboardSource,/사유 미기록/);
   assert.match(dashboardSource,/미검토·재검증 필요/);
   assert.match(dashboardSource,/NamuWiki 미연결 검토 결과/);
-  assert.match(dashboardSource,/dashboard-breakdown-row/);
+  assert.match(dashboardSource,/data-dashboard-breakdown=/);
+  assert.match(dashboardSource,/data-dashboard-breakdown-reason=/);
+  assert.match(dashboardSource,/breakdown_\$\{groupCode\}_\$\{String\(reasonCode/);
+  assert.match(dashboardSource,/personIds:row\.person_ids/);
   assert.match(dashboardCssSource,/\.dashboard-breakdown-row\{display:grid;grid-template-columns:minmax\(0,1fr\) auto/);
+  assert.match(dashboardCssSource,/\.dashboard-breakdown-action\{width:100%;font:inherit;text-align:left;background:#fff/);
   assert.match(dashboardCssSource,/word-break:keep-all/);
 });

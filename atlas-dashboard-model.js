@@ -277,25 +277,33 @@
       ? persons.filter((person) => !DOMAIN_CODES.includes(text(domainByPerson[person?.id]))).length
       : null;
 
-    let namuwikiReferenceAbsent = 0;
-    let namuwikiLegacyUnverified = 0;
-    const namuwikiReviewedReasonCounts = {
-      no_exact_document:0,
-      related_or_derivative_only:0,
-      exact_target_url_pending:0,
-      exact_target_url_verified:0,
-      reviewed_reason_unrecorded:0
+    const namuwikiReferenceAbsentPersonIds = [];
+    const namuwikiLegacyUnverifiedPersonIds = [];
+    const namuwikiReviewedReasonPersonIds = {
+      no_exact_document:[],
+      related_or_derivative_only:[],
+      exact_target_url_pending:[],
+      exact_target_url_verified:[],
+      reviewed_reason_unrecorded:[]
     };
     for (const person of persons) {
       const state = namuwikiReviewState(person);
-      if (state === "not_reviewed") namuwikiReferenceAbsent += 1;
-      else if (state === "legacy_unverified") namuwikiLegacyUnverified += 1;
-      else if (state === "reviewed_absent") {
+      const personId = text(person?.id);
+      if (state === "not_reviewed") {
+        if (personId) namuwikiReferenceAbsentPersonIds.push(personId);
+      } else if (state === "legacy_unverified") {
+        if (personId) namuwikiLegacyUnverifiedPersonIds.push(personId);
+      } else if (state === "reviewed_absent") {
         const reason = namuwikiAbsenceReason(person);
-        if (Object.hasOwn(namuwikiReviewedReasonCounts,reason)) namuwikiReviewedReasonCounts[reason] += 1;
-        else namuwikiReviewedReasonCounts.reviewed_reason_unrecorded += 1;
+        const reasonKey = Object.hasOwn(namuwikiReviewedReasonPersonIds,reason) ? reason : "reviewed_reason_unrecorded";
+        if (personId) namuwikiReviewedReasonPersonIds[reasonKey].push(personId);
       }
     }
+    const namuwikiReferenceAbsent = namuwikiReferenceAbsentPersonIds.length;
+    const namuwikiLegacyUnverified = namuwikiLegacyUnverifiedPersonIds.length;
+    const namuwikiReviewedReasonCounts = Object.fromEntries(
+      Object.entries(namuwikiReviewedReasonPersonIds).map(([reason,personIds]) => [reason,personIds.length])
+    );
     const namuwikiNotChecked = namuwikiReferenceAbsent + namuwikiLegacyUnverified;
     const namuwikiReviewedUnlinked = Object.values(namuwikiReviewedReasonCounts).reduce((sum,count) => sum + count,0);
 
@@ -343,8 +351,8 @@
         total:namuwikiNotChecked,
         unit:"person",
         rows:Object.freeze([
-          Object.freeze({ code:"REFERENCE_ABSENT", label:"미검토·결정 없음", count:namuwikiReferenceAbsent, canonical:true }),
-          Object.freeze({ code:"LEGACY_NOT_FOUND_UNVERIFIED", label:"기존 없음값·재검증 필요", count:namuwikiLegacyUnverified, canonical:true })
+          Object.freeze({ code:"REFERENCE_ABSENT", label:"미검토·결정 없음", count:namuwikiReferenceAbsent, canonical:true, person_ids:Object.freeze(namuwikiReferenceAbsentPersonIds.slice()) }),
+          Object.freeze({ code:"LEGACY_NOT_FOUND_UNVERIFIED", label:"기존 없음값·재검증 필요", count:namuwikiLegacyUnverified, canonical:true, person_ids:Object.freeze(namuwikiLegacyUnverifiedPersonIds.slice()) })
         ].filter((row) => row.count > 0)),
         unattributed_count:0,
         unavailable_reason:null
@@ -356,11 +364,11 @@
         unit:"person",
         eyebrow:"REVIEWED UNLINKED REASONS",
         rows:Object.freeze([
-          Object.freeze({ code:"NO_EXACT_DOCUMENT", label:"독립 인물 문서 없음", count:namuwikiReviewedReasonCounts.no_exact_document, canonical:true }),
-          Object.freeze({ code:"RELATED_OR_DERIVATIVE_ONLY", label:"관련·파생 문서만 확인", count:namuwikiReviewedReasonCounts.related_or_derivative_only, canonical:true }),
-          Object.freeze({ code:"EXACT_TARGET_URL_PENDING", label:"독립 문서 확인·URL 미확정", count:namuwikiReviewedReasonCounts.exact_target_url_pending, canonical:true }),
-          Object.freeze({ code:"EXACT_TARGET_URL_VERIFIED", label:"문서·URL 확인·연결 대기", count:namuwikiReviewedReasonCounts.exact_target_url_verified, canonical:true }),
-          Object.freeze({ code:"REVIEWED_REASON_UNRECORDED", label:"검토 완료·세부사유 미기록", count:namuwikiReviewedReasonCounts.reviewed_reason_unrecorded, canonical:true })
+          Object.freeze({ code:"NO_EXACT_DOCUMENT", label:"독립 인물 문서 없음", count:namuwikiReviewedReasonCounts.no_exact_document, canonical:true, person_ids:Object.freeze(namuwikiReviewedReasonPersonIds.no_exact_document.slice()) }),
+          Object.freeze({ code:"RELATED_OR_DERIVATIVE_ONLY", label:"관련·파생 문서만 확인", count:namuwikiReviewedReasonCounts.related_or_derivative_only, canonical:true, person_ids:Object.freeze(namuwikiReviewedReasonPersonIds.related_or_derivative_only.slice()) }),
+          Object.freeze({ code:"EXACT_TARGET_URL_PENDING", label:"독립 문서 확인·URL 미확정", count:namuwikiReviewedReasonCounts.exact_target_url_pending, canonical:true, person_ids:Object.freeze(namuwikiReviewedReasonPersonIds.exact_target_url_pending.slice()) }),
+          Object.freeze({ code:"EXACT_TARGET_URL_VERIFIED", label:"문서·URL 확인·연결 대기", count:namuwikiReviewedReasonCounts.exact_target_url_verified, canonical:true, person_ids:Object.freeze(namuwikiReviewedReasonPersonIds.exact_target_url_verified.slice()) }),
+          Object.freeze({ code:"REVIEWED_REASON_UNRECORDED", label:"검토 완료·세부사유 미기록", count:namuwikiReviewedReasonCounts.reviewed_reason_unrecorded, canonical:true, person_ids:Object.freeze(namuwikiReviewedReasonPersonIds.reviewed_reason_unrecorded.slice()) })
         ].filter((row) => row.count > 0)),
         unattributed_count:0,
         unavailable_reason:null
