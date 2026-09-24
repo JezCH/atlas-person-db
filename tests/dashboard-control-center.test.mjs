@@ -1403,3 +1403,47 @@ test("dashboard NamuWiki copy exposes linked, confirmed absent, and verification
   assert.match(dashboardSource,/미검토·재검증 필요/);
   assert.match(dashboardSource,/w\.namuwiki\.confirmed_absent/);
 });
+
+
+test("NamuWiki dashboard separates confirmed absence reasons from exact-target URL pending work", () => {
+  const persons=[
+    {id:"linked",external_references:{namuwiki:{status:"linked"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"none",external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent",review_reason:"no_exact_document"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"related",external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent",review_reason:"related_or_derivative_only"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"classified-later",external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent",review_reason:"reviewed_absent_unclassified"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"url-pending",external_references:{namuwiki:{status:"not_found",review_state:"target_found_url_pending",review_reason:"target_found_url_pending"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"link-pending",external_references:{namuwiki:{status:"not_found",review_state:"target_found_link_pending",review_reason:"target_found_link_pending"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"legacy",external_references:{namuwiki:{status:"not_found",review_state:"legacy_unverified",review_reason:"legacy_unverified"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"missing",external_references:{},facets:{polities:[]},activity_summaries:[]}
+  ];
+  const snapshot=model.buildDashboardSnapshot({personResult:{persons}});
+  assert.equal(snapshot.work.namuwiki.linked,1);
+  assert.equal(snapshot.work.namuwiki.confirmed_absent,3);
+  assert.equal(snapshot.work.namuwiki.target_found_url_pending,1);
+  assert.equal(snapshot.work.namuwiki.target_found_link_pending,1);
+  assert.equal(snapshot.work.namuwiki.pending,2);
+  assert.equal(snapshot.work.namuwiki.done,4);
+  assert.equal(snapshot.work.namuwiki.remaining,4);
+  assert.deepEqual(snapshot.namuwiki_absence_breakdown.rows.map((row)=>[row.code,row.count]),[
+    ["NO_EXACT_DOCUMENT",1],
+    ["RELATED_OR_DERIVATIVE_ONLY",1],
+    ["REVIEWED_ABSENT_UNCLASSIFIED",1]
+  ]);
+  assert.deepEqual(snapshot.incomplete_breakdown.namuwiki.rows.map((row)=>[row.code,row.count]),[
+    ["REFERENCE_ABSENT",1],
+    ["LEGACY_NOT_FOUND_UNVERIFIED",1],
+    ["TARGET_FOUND_URL_PENDING",1],
+    ["TARGET_FOUND_LINK_PENDING",1]
+  ]);
+  const attention=snapshot.attention_queue.items.find((item)=>item.code==="namuwiki");
+  assert.deepEqual(attention.person_ids,["legacy","link-pending","missing","url-pending"]);
+});
+
+test("NamuWiki reason cards keep Korean labels readable instead of using the three-column domain-row grid", () => {
+  assert.match(dashboardSource,/dashboard-reason-list/);
+  assert.match(dashboardSource,/dashboard-reason-row/);
+  assert.match(dashboardSource,/NamuWiki 없음 확정 세부/);
+  assert.match(dashboardSource,/문서 확인·URL 미확정/);
+  assert.match(dashboardCssSource,/dashboard-reason-list\{[^}]*minmax\(220px,1fr\)/);
+  assert.match(dashboardCssSource,/dashboard-reason-row>span\{[^}]*word-break:keep-all/);
+});

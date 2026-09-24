@@ -235,7 +235,13 @@ function normalizeExternalReferences(value, { personId = null, notFoundAudited =
   const checkedAt = raw.checked_at == null ? null : String(raw.checked_at);
   if (status === "not_found") {
     const reviewState = namuwikiReview.stateFor({ personId, status, audited:notFoundAudited });
-    return Object.freeze({ namuwiki:Object.freeze({ status, checked_at:checkedAt, review_state:reviewState }) });
+    const reviewReason = namuwikiReview.reasonFor({ personId, status, audited:notFoundAudited });
+    return Object.freeze({ namuwiki:Object.freeze({
+      status,
+      checked_at:checkedAt,
+      review_state:reviewState,
+      review_reason:reviewReason
+    }) });
   }
   const documentTitle = raw.document_title == null ? null : String(raw.document_title);
   const url = raw.url == null ? null : String(raw.url);
