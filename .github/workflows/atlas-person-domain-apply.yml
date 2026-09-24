@@ -12,8 +12,6 @@ on:
       - 'server/atlas-person-domain-github-oidc.js'
       - 'server/atlas-person-domain-handler.js'
       - 'scripts/apply-person-domain-proposals.mjs'
-      - 'scripts/apply-person-domain-comment-backlog.mjs'
-      - 'scripts/apply-person-domain-comment-backlog-renewable.mjs'
       - 'proposals/person-representative-domain/batch-*.json'
       - 'proposals/person-representative-domain/hold-*.json'
       - 'proposals/person-representative-domain/palette-smoke-001.json'
@@ -52,8 +50,6 @@ jobs:
         run: |
           set -euo pipefail
           node --check scripts/apply-person-domain-proposals.mjs
-          node --check scripts/apply-person-domain-comment-backlog.mjs
-          node --check scripts/apply-person-domain-comment-backlog-renewable.mjs
           node --test tests/atlas-person-domain-github-oidc.test.mjs tests/atlas-person-domain-service.test.mjs tests/atlas-person-domain-standard-v1.test.mjs
 
       - name: Wait for exact Production runtime
@@ -101,15 +97,9 @@ jobs:
           echo "batch_file=$batch_file" >> "$GITHUB_OUTPUT"
           printf '{"bounded":%s,"batch_file":"%s","hold_file_count":%s}\n' "$bounded" "$batch_file" "$hold_file_count" | tee "$ATLAS_EVIDENCE_DIR/scope.json"
 
-      - name: Plan and validate comment-backed reviewed backlog
-        if: ${{ steps.scope.outputs.bounded != 'true' }}
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          node scripts/apply-person-domain-comment-backlog.mjs plan | tee "$ATLAS_EVIDENCE_DIR/comment-backlog-plan.log"
-
+      # The 2026-09-11 comment-backed backlog was a one-shot recovery path. It is
+      # fully materialized and later reviewed HOLD resolutions supersede its historical
+      # null decisions, so replaying it on unrelated main pushes is intentionally retired.
       - name: Acquire dedicated Person domain GitHub OIDC token
         shell: bash
         run: |
@@ -148,13 +138,6 @@ jobs:
           else
             node scripts/apply-person-domain-proposals.mjs batch | tee "$ATLAS_EVIDENCE_DIR/batch.jsonl"
           fi
-
-      - name: Apply and verify comment-backed reviewed backlog with renewable OIDC
-        if: ${{ steps.scope.outputs.bounded != 'true' }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          node scripts/apply-person-domain-comment-backlog-renewable.mjs | tee "$ATLAS_EVIDENCE_DIR/comment-backlog-apply.jsonl"
 
       - name: Final exact public read-back
         shell: bash
