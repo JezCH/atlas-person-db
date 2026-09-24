@@ -19,6 +19,14 @@
   if (!spatialModel) throw new Error("ATLAS_PERSON_SPACETIME_MODEL is required");
   if (!eraModel) throw new Error("ATLAS_PERSON_ERA_MODEL is required");
   const DOMAIN_CODES = domainRegistry.CODES;
+  const NAMUWIKI_ABSENCE_REASON_META = Object.freeze([
+    Object.freeze({ code:"no_exact_document", label:"독립 인물 문서 없음" }),
+    Object.freeze({ code:"related_only", label:"관련·파생 문서만 확인" }),
+    Object.freeze({ code:"target_url_pending", label:"문서 확인 · 원본 URL 미확인" }),
+    Object.freeze({ code:"link_ready", label:"원본 URL 확인 · 링크 반영 대기" }),
+    Object.freeze({ code:"reviewed_absent_unclassified", label:"검토 완료 · 사유 기록 없음" })
+  ]);
+  const NAMUWIKI_ABSENCE_REASON_CODES = new Set(NAMUWIKI_ABSENCE_REASON_META.map((row) => row.code));
 
   function text(value) { return value == null ? "" : String(value).trim(); }
   function namuwikiReviewState(person) {
@@ -33,6 +41,30 @@
   function namuwikiReviewed(person) {
     const state = namuwikiReviewState(person);
     return state === "linked" || state === "reviewed_absent";
+  }
+  function namuwikiAbsenceReason(person) {
+    if (namuwikiReviewState(person) !== "reviewed_absent") return null;
+    const reason = text(person?.external_references?.namuwiki?.absence_reason);
+    return NAMUWIKI_ABSENCE_REASON_CODES.has(reason) ? reason : "reviewed_absent_unclassified";
+  }
+  function buildNamuwikiAbsenceBreakdown(personResult) {
+    const counts = Object.fromEntries(NAMUWIKI_ABSENCE_REASON_META.map((row) => [row.code,0]));
+    for (const person of personResult?.persons || []) {
+      const reason = namuwikiAbsenceReason(person);
+      if (reason) counts[reason] += 1;
+    }
+    const rows = NAMUWIKI_ABSENCE_REASON_META
+      .map((meta) => Object.freeze({ ...meta, count:counts[meta.code], canonical:true }))
+      .filter((row) => row.count > 0);
+    return Object.freeze({
+      available:true,
+      complete:counts.reviewed_absent_unclassified === 0,
+      total:rows.reduce((sum,row) => sum + row.count,0),
+      unit:"person",
+      rows:Object.freeze(rows),
+      unattributed_count:0,
+      unavailable_reason:null
+    });
   }
   function percent(done, total) {
     if (!Number.isFinite(total) || total <= 0) return 0;
@@ -1119,6 +1151,7 @@
     const attentionQueue = buildAttentionQueue({ personResult, domainResult, spatialIndex, runtimeExclusionsResult });
     const kpiDrilldown = buildKpiDrilldown({ personResult, attentionQueue });
     const incompleteBreakdown = buildIncompleteBreakdown({ personResult, domainResult, spatialIndex, runtimeExclusionsResult });
+    const namuwikiAbsenceBreakdown = buildNamuwikiAbsenceBreakdown(personResult);
     const recentDelta = buildRecentDelta(recentDeltaResult);
     const recentActivityTimeline = buildRecentActivityTimeline(recentDelta);
     const systemStrip = buildSystemStrip(systemIdentityResult, sourceStates);
@@ -1156,6 +1189,7 @@
       attention_queue:attentionQueue,
       kpi_drilldown:kpiDrilldown,
       incomplete_breakdown:incompleteBreakdown,
+      namuwiki_absence_breakdown:namuwikiAbsenceBreakdown,
       recent_delta:recentDelta,
       recent_activity_timeline:recentActivityTimeline,
       system_strip:systemStrip,
@@ -1176,5 +1210,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, namuwikiReviewState, namuwikiReviewed, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildRuntimeDeltaDrift, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildQualityDrilldown, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, NAMUWIKI_ABSENCE_REASON_META, percent, namuwikiReviewState, namuwikiReviewed, namuwikiAbsenceReason, buildNamuwikiAbsenceBreakdown, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildRuntimeDeltaDrift, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildQualityDrilldown, buildDashboardSnapshot });
 });
