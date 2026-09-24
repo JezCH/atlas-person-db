@@ -112,12 +112,12 @@
         : "현재 등록된 초상 없음";
       return `<div class="person-portrait-editor">
         <form class="person-profile-form person-portrait-form" data-person-portrait-operation="upload" data-person-id="${personId}">
-          <label class="person-portrait-file"><span>초상 이미지</span><input type="file" name="portrait_file" accept="image/*" required></label>
+          <label class="person-portrait-file"><span>초상 이미지</span><input type="file" name="portrait_file" accept="image/jpeg,image/png,image/webp,image/avif" required></label><div class="person-portrait-upload-preview" data-person-portrait-preview hidden><img alt="업로드 초상 미리보기"><span>4:5 자동 중앙 크롭 미리보기</span></div>
           <label><span>초상 유형</span><select name="portrait_kind" required><option value=""${currentKind ? "" : " selected"} disabled>유형 선택</option>${portraitKindOptions(currentKind)}</select></label>
           <label><span>근거 수준</span><select name="evidence_level" required><option value=""${currentEvidence ? "" : " selected"} disabled>근거 선택</option>${portraitEvidenceOptions(currentEvidence)}</select></label>
           <div class="person-portrait-actions"><button class="mini-btn edit" type="submit">${portrait ? "초상 교체" : "초상 업로드"}</button>${portrait ? `<button class="mini-btn danger delete" type="button" data-person-portrait-delete data-person-id="${personId}">초상 삭제</button>` : ""}</div>
         </form>
-        <p class="person-profile-help">${currentState} · JPG/PNG/WebP 등 일반 이미지는 브라우저에서 WebP로 변환한 뒤 저장합니다.</p>
+        <p class="person-profile-help">${currentState} · JPG/PNG/WebP/AVIF 이미지는 4:5로 중앙 크롭하고 최대 1024×1280 WebP로 변환합니다. 원본은 저장하지 않습니다.</p>
         ${portrait ? `<form class="person-profile-form person-portrait-metadata-form" data-person-portrait-operation="metadata" data-person-id="${personId}">
           <label><span>초상 유형</span><select name="portrait_kind" required>${portraitKindOptions(currentKind)}</select></label>
           <label><span>근거 수준</span><select name="evidence_level" required>${portraitEvidenceOptions(currentEvidence)}</select></label>
