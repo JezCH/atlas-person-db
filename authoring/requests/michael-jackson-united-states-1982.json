@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:michael-jackson:united-states:singer-songwriter:1982:v1",
+  "person": {
+    "canonical_name_en": "Michael Jackson",
+    "display_name_ko": "마이클 잭슨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Michael Jackson was not independently verified in this batch. Registration continues without guessing a canonical URL or writing a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Singer and songwriter",
+    "role_display_name_ko": "가수·송라이터",
+    "start_year": 1982,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1982,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1982 as Jackson's representative U.S. cultural-activity year, when Thriller was released and became the defining work of his solo career."
+  },
+  "sources": [
+    {
+      "title": "Thriller — Michael Jackson Official Site",
+      "canonical_url": "https://www.michaeljackson.com/albums/thriller/",
+      "citation_text": "Michael Jackson's official site dates the release of Thriller to November 1982.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "mixed5-20260921-011",
+    "review_checkpoint": "#1374 comment 5762577324",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

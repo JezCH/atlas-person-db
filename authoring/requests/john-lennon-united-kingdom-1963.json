@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:john-lennon:united-kingdom:musician-songwriter:1963:v1",
+  "person": {
+    "canonical_name_en": "John Lennon",
+    "display_name_ko": "존 레논",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for John Lennon was not independently verified in this batch. Registration continues without guessing a canonical URL or writing a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Musician and songwriter",
+    "role_display_name_ko": "음악가·송라이터",
+    "start_year": 1963,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1963,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1963 as Lennon's representative British cultural breakthrough year: the Beatles released Please Please Me, with Lennon-McCartney originals, and Beatlemania emerged in the United Kingdom."
+  },
+  "sources": [
+    {
+      "title": "Please Please Me — The Beatles",
+      "canonical_url": "https://www.thebeatles.com/please-please-me",
+      "citation_text": "The Beatles' official site records the March 22, 1963 release of Please Please Me and identifies Lennon-McCartney originals among its tracks.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-043",
+    "review_checkpoint": "#1374 comment 5815496976",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

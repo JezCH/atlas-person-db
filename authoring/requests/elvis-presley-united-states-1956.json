@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:elvis-presley:united-states:singer:1956:v1",
+  "person": {
+    "canonical_name_en": "Elvis Presley",
+    "display_name_ko": "엘비스 프레슬리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Elvis Presley was not independently verified in this batch. Registration continues without guessing a canonical URL or writing a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Singer",
+    "role_display_name_ko": "가수",
+    "start_year": 1956,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1956,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1956 as Presley's representative U.S. cultural breakthrough year, when Heartbreak Hotel, his first RCA album, national television appearances, and film career made him an international sensation."
+  },
+  "sources": [
+    {
+      "title": "Elvis Presley Biography — Graceland",
+      "canonical_url": "https://www.graceland.com/biography",
+      "citation_text": "Graceland records that by 1956 Elvis Presley had become an international sensation and a major figure in American music and popular culture.",
+      "source_type": "institutional_biography"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "mixed5-20260921-008",
+    "review_checkpoint": "#1374 comment 5762577324",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}
