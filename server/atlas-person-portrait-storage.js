@@ -6,6 +6,7 @@ const BLOB_API_VERSION = "12";
 const DEFAULT_BLOB_API_URL = "https://vercel.com/api/blob";
 const PORTRAIT_CONTENT_TYPE = "image/webp";
 const PORTRAIT_CACHE_SECONDS = 31536000;
+// Production Blob store is project-connected; auth resolves from Vercel-provided environment variables.
 const SHA256_RE = /^[0-9a-f]{64}$/;
 
 function codedError(code, detail = null) {
