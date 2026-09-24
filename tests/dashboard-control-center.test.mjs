@@ -923,7 +923,7 @@ test("Incomplete Reasons suppresses known zero-work cards but preserves unknown 
   assert.match(dashboardSource, /function shouldRenderBreakdown\(item\)/);
   assert.match(dashboardSource, /item\?\.total == null\) return item\?\.available !== true/);
   assert.match(dashboardSource, /return Number\(item\.total\) > 0/);
-  assert.match(dashboardSource, /incompleteCards\.map\(\(\[label,item\]\) => breakdownCard\(label,item\)\)/);
+  assert.match(dashboardSource, /incompleteCards\.map\(\(\[code,label,item\]\) => breakdownCard\(code,label,item\)\)/);
 });
 
 test("single lower Dashboard panel expands across the full lower grid", () => {
