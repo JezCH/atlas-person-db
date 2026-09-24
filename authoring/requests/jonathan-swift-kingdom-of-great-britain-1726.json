@@ -38,7 +38,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "ATLAS uses 1726 as Swift's representative British literary milestone year, when Gulliver's Travels was published in London and rapidly became a major success."
+    "notes": "ATLAS uses 1726 as Swift's representative British literary milestone year, when Gulliver's Travels was published in London and rapidly became a major success. This manifest is being retried without substantive historical changes after a transient database serialization conflict blocked only this item in superbatch 04 preflight."
   },
   "sources": [
     {
