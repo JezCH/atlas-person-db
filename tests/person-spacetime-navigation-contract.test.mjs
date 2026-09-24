@@ -32,7 +32,7 @@ test('authority navigation lazy-loads the canonical spacetime model and current 
   assert.match(spacetimeView, /ATLAS_CLIENT_DATA_STORE/);
   assert.match(spacetimeView, /dataStore\.loadSpatialIndex/);
   assert.match(spacetimeView, /dataStore\.loadPersons/);
-  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260925-polity-frontier-v2/);
+  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260925-namuwiki-work-frontier-v3/);
 });
 
 test('spacetime topbar suppresses desktop-only explanatory subtitle', () => {
