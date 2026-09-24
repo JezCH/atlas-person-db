@@ -14,7 +14,6 @@ select
   coalesce((select jsonb_agg(jsonb_build_object('locale',pd.locale,'content',pd.content) order by pd.locale,pd.id) from atlas_v2.person_descriptions pd where pd.person_id=p.id),'[]'::jsonb) as descriptions,
   coalesce((select jsonb_object_agg(per.provider,jsonb_strip_nulls(jsonb_build_object('status',per.status,'checked_at',per.checked_at::text,'document_title',per.document_title,'url',per.url)) order by per.provider) from atlas_v2.person_external_references per where per.person_id=p.id),'{}'::jsonb) as external_references,
   ${namuwikiReview.NOT_FOUND_REVIEW_AUDIT_SQL} as namuwiki_not_found_reviewed,
-  ${namuwikiReview.NOT_FOUND_REVIEW_AUDIT_SQL} as namuwiki_not_found_reviewed,
   (select count(*)::int from atlas_v2.runtime_person_politics_v1 pp where pp.person_id=p.id) as activity_count,
   (select min(pp.activity_start) from atlas_v2.runtime_person_politics_v1 pp where pp.person_id=p.id) as first_activity_year,
   (select max(pp.activity_end) from atlas_v2.runtime_person_politics_v1 pp where pp.person_id=p.id and pp.chronology_status<>'ongoing') as last_activity_year
@@ -27,6 +26,7 @@ select
   coalesce((select jsonb_agg(jsonb_build_object('locale',pn.locale,'name',pn.name,'name_type',pn.name_type,'is_preferred',pn.is_preferred) order by pn.is_preferred desc,pn.locale,pn.name_type,pn.name,pn.id) from atlas_v2.person_names pn where pn.person_id=p.id),'[]'::jsonb) as names,
   coalesce((select jsonb_agg(jsonb_build_object('locale',pd.locale,'content',pd.content) order by pd.locale,pd.id) from atlas_v2.person_descriptions pd where pd.person_id=p.id),'[]'::jsonb) as descriptions,
   coalesce((select jsonb_object_agg(per.provider,jsonb_strip_nulls(jsonb_build_object('status',per.status,'checked_at',per.checked_at::text,'document_title',per.document_title,'url',per.url)) order by per.provider) from atlas_v2.person_external_references per where per.person_id=p.id),'{}'::jsonb) as external_references,
+  ${namuwikiReview.NOT_FOUND_REVIEW_AUDIT_SQL} as namuwiki_not_found_reviewed,
   (select count(*)::int from atlas_v2.runtime_person_politics_v1 pp where pp.person_id=p.id) as activity_count,
   (select min(pp.activity_start) from atlas_v2.runtime_person_politics_v1 pp where pp.person_id=p.id) as first_activity_year,
   (select max(pp.activity_end) from atlas_v2.runtime_person_politics_v1 pp where pp.person_id=p.id and pp.chronology_status<>'ongoing') as last_activity_year
