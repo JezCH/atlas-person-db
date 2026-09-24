@@ -1,0 +1,35 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-24",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "b06f6e6cb2e21f95a3bc6d1e287965a343c63953",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign Emperor Zhenzong of Song to governance. His defining ATLAS identity is sovereign rule of the Northern Song from 997 to 1022; the 1005 Chanyuan settlement is part of that political and state-governance legacy rather than a separate military identity."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-EMPEROR-ZHENZONG-OF-SONG-20260924",
+    "queue_issue": 977,
+    "assignment_count": 1,
+    "distribution": {
+      "governance": 1,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "7ceeec26-b44d-4523-8c0d-3c6590060cd5",
+      "canonical_name_en": "Emperor Zhenzong of Song",
+      "preferred_name_ko": "송 진종",
+      "representative_domain": "governance"
+    }
+  ]
+}
