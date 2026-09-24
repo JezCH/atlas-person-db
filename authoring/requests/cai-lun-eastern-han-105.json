@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cai-lun:eastern-han:papermaking-innovator:105:v1",
+  "person": {
+    "canonical_name_en": "Cai Lun",
+    "display_name_ko": "채륜",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Eastern Han",
+    "display_name_ko": "후한"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Papermaking innovator",
+    "role_display_name_ko": "제지 기술 혁신가",
+    "start_year": 105,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 105,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS resolves the prior timeline-review requirement with the securely attested representative year 105 CE. Cai Lun was an Eastern Han court official, and the Hunan provincial government account records his improved papermaking composition and process in 105."
+  },
+  "sources": [
+    {
+      "title": "Cai Lun — Hunan Government",
+      "canonical_url": "https://enghunan.gov.cn/hneng/AboutHunan/HistoryCulture/Celebrities/201806/t20180619_5035364.html",
+      "citation_text": "The Hunan Government biography identifies Cai Lun as an Eastern Han court official and dates his improved papermaking composition and process to 105 CE.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "mixed5-20260921-005",
+    "review_checkpoint": "#1374 comment 5762577324",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "technology"
+  }
+}

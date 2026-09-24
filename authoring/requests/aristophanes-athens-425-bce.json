@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aristophanes:athens:playwright:425-bce:v1",
+  "person": {
+    "canonical_name_en": "Aristophanes",
+    "display_name_ko": "아리스토파네스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Athens",
+    "display_name_ko": "아테네"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Playwright",
+    "role_display_name_ko": "극작가",
+    "start_year": -425,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -425,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 425 BCE as a representative Athenian dramatic-activity year for Aristophanes, when The Acharnians was produced at the Lenaea in Athens. The single-year milestone avoids inventing a continuous career boundary from incomplete ancient evidence."
+  },
+  "sources": [
+    {
+      "title": "Dicaeopolis' Motivations in Aristophanes' Acharnians — Journal of Hellenic Studies",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-hellenic-studies/article/abs/dicaeopolis-motivations-in-aristophanes-acharnians/D8BEE69336F471DB70D6E5CCF2626896",
+      "citation_text": "The Journal of Hellenic Studies article identifies The Acharnians as Aristophanes' play performed at the Lenaea in 425 BCE and discusses its Athenian setting.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-029",
+    "review_checkpoint": "#1374 comment 5815495564",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}

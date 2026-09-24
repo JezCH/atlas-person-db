@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jimi-hendrix:united-states:musician:1967:v1",
+  "person": {
+    "canonical_name_en": "Jimi Hendrix",
+    "display_name_ko": "지미 헨드릭스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Musician",
+    "role_display_name_ko": "음악가",
+    "start_year": 1967,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1967,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1967 as Hendrix's representative American cultural milestone year. After establishing himself in Britain, he returned to the United States and his Monterey International Pop Festival performance made the Jimi Hendrix Experience a major American touring act."
+  },
+  "sources": [
+    {
+      "title": "Jimi — The Official Jimi Hendrix Site",
+      "canonical_url": "https://www.jimihendrix.com/jimi/",
+      "citation_text": "The official Jimi Hendrix biography records his June 1967 return to America and the Monterey International Pop Festival performance that rapidly established the Experience in the United States.",
+      "source_type": "institutional_biography"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-041",
+    "review_checkpoint": "#1374 comment 5815496976",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "culture"
+  }
+}
