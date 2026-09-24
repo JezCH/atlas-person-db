@@ -11,8 +11,8 @@
   },
   "counts": {
     "exact_target_url_pending": 81,
-    "related_or_derivative_only": 115,
-    "no_exact_document": 105,
+    "related_or_derivative_only": 117,
+    "no_exact_document": 107,
     "exact_target_url_verified": 43
   },
   "by_person_id": {
@@ -124,6 +124,7 @@
     "521db252-ba33-4511-ab98-11344383a2d5": "no_exact_document",
     "5222077a-9581-4552-8d13-4d22586686ab": "related_or_derivative_only",
     "52fbb4f5-4587-47f3-b167-46024323ef44": "no_exact_document",
+    "543bb20d-5e4f-488a-8df1-b5feb78489f8": "no_exact_document",
     "55657a4d-277a-4884-9718-d68f2f894678": "exact_target_url_verified",
     "566ed424-5031-41ac-94d4-a4a87f0f9ff8": "related_or_derivative_only",
     "56824918-b7e4-44fa-a292-f683c08a9291": "related_or_derivative_only",
@@ -146,6 +147,7 @@
     "6276bf32-b22c-4960-8c89-24d4242e31a5": "no_exact_document",
     "6331b0c9-a0fc-452f-8af8-8d1e6cd7e320": "related_or_derivative_only",
     "63394963-d7a4-450e-b9ac-d1b29b43c14a": "related_or_derivative_only",
+    "63ae502c-cc46-4f04-8c7b-1be1be9b613b": "no_exact_document",
     "64a73852-6d78-4682-a8cb-48680fc39cf2": "related_or_derivative_only",
     "64bfca45-a895-4404-9220-a1902bd1636b": "exact_target_url_pending",
     "653f4539-2d8d-4ac1-b052-5293c718041d": "related_or_derivative_only",
@@ -170,6 +172,7 @@
     "72d468e0-11cc-4881-9d65-8f404d11ce40": "exact_target_url_pending",
     "72f1beac-1f61-4038-a975-14f3f265fb31": "no_exact_document",
     "7312b2b4-779b-4c68-98e0-d4b7302f2ec6": "no_exact_document",
+    "7338c04d-5325-449f-8d2a-c152800239a6": "related_or_derivative_only",
     "7409aa1e-75aa-49a2-a375-13f85f7920fd": "related_or_derivative_only",
     "74176131-39ae-496c-85a0-2ff2f0edc84d": "exact_target_url_pending",
     "748a8f7a-ffb8-4217-a766-d5c7a2b9c2a6": "no_exact_document",
@@ -318,6 +321,7 @@
     "e344c8af-480d-4c02-a75b-8528ca5681cf": "no_exact_document",
     "e44b880a-0653-4d6c-bbfd-c70da1e2a7ac": "related_or_derivative_only",
     "e48e9215-0824-4a5e-b99b-57488d2f23da": "exact_target_url_pending",
+    "e4b4b4a7-830f-430c-89ae-5e76f5d948b6": "related_or_derivative_only",
     "e64be21d-fc1d-405b-a75c-5692524bbefe": "exact_target_url_pending",
     "e87fa13d-8835-4ce3-a17e-8455575680c6": "exact_target_url_pending",
     "e9046b2f-3e9e-403d-a234-58ea1231c850": "no_exact_document",
