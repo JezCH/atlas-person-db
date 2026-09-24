@@ -11,8 +11,6 @@ const EXPECTED_PERSON_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.person_names.person_id", delete_action: "CASCADE" }),
   Object.freeze({ key: "atlas_v2.person_people_affiliations.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_politics_v2.person_id", delete_action: "RESTRICT" }),
-  Object.freeze({ key: "atlas_v2.person_portrait_generation_runs.person_id", delete_action: "RESTRICT" }),
-  Object.freeze({ key: "atlas_v2.person_portrait_revisions.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_portraits.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_sources.person_id", delete_action: "CASCADE" })
 ]);
@@ -96,21 +94,11 @@ async function inspectPersonMergeReferenceReadiness(client) {
   const requirementLedgerPresent = Boolean(requirementTable.rows[0]?.requirements);
   const contextPolityTable = await client.query(`select to_regclass('atlas_v2.person_politics_context_polities')::text as context_polities`);
   const contextPolityTablePresent = Boolean(contextPolityTable.rows[0]?.context_polities);
-  const portraitHistoryTables = await client.query(`select
-      to_regclass('atlas_v2.person_portrait_generation_runs')::text as generation_runs,
-      to_regclass('atlas_v2.person_portrait_revisions')::text as revisions`);
-  const portraitHistoryPresent = Boolean(
-    portraitHistoryTables.rows[0]?.generation_runs && portraitHistoryTables.rows[0]?.revisions
-  );
   const expectedPersonSnapshots = [
     ...EXPECTED_NON_FK_PERSON_UUID_COLUMNS,
     ...(requirementLedgerPresent ? P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS : [])
   ].sort();
-  const expectedPersonFks = EXPECTED_PERSON_FKS.filter((rule) =>
-    portraitHistoryPresent
-    || !rule.key.startsWith("atlas_v2.person_portrait_generation_runs.")
-       && !rule.key.startsWith("atlas_v2.person_portrait_revisions.")
-  );
+  const expectedPersonFks = EXPECTED_PERSON_FKS;
   const expectedRelationshipFks = EXPECTED_RELATIONSHIP_FKS.filter(
     (rule) => contextPolityTablePresent || rule.key !== CONTEXT_POLITY_RELATIONSHIP_FK_KEY
   );
@@ -153,7 +141,6 @@ async function inspectPersonMergeReferenceReadiness(client) {
     policy_version:PERSON_REFERENCE_POLICY_VERSION,ready:blockers.length===0,blockers:Object.freeze(blockers.sort()),
     requirement_ledger_present:requirementLedgerPresent,
     context_polity_table_present:contextPolityTablePresent,
-    portrait_history_present:portraitHistoryPresent,
     expected_non_fk_person_uuid_columns:Object.freeze(expectedPersonSnapshots),
     person_fks:Object.freeze(personFks),relationship_fks:Object.freeze(relationshipFks),
     non_fk_person_uuid_columns:Object.freeze(nonFkPersonUuidColumns),non_fk_relationship_uuid_columns:Object.freeze(nonFkRelationshipUuidColumns),
