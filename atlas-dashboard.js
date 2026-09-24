@@ -290,13 +290,17 @@
     return value || "—";
   }
 
-  function breakdownCard(label, item) {
+  function breakdownCard(code, label, item) {
     const total = item?.total == null ? "—" : value(item.total);
     const unit = unitLabel(item?.unit || "person");
     const eyebrow = item?.eyebrow || "INCOMPLETE REASONS";
-    const rows = (item?.rows || []).map((row) => `<div class="dashboard-breakdown-row">
-      <span title="${escapeHtml(row.label || row.code || "")}">${escapeHtml(row.label || row.code || "unknown")}</span><b>${value(row.count)}</b>
-    </div>`).join("");
+    const rows = (item?.rows || []).map((row) => {
+      const personIds = Array.isArray(row?.person_ids) ? row.person_ids : [];
+      const actionable = item?.unit === "person" && personIds.length > 0;
+      const inner = `<span title="${escapeHtml(row.label || row.code || "")}">${escapeHtml(row.label || row.code || "unknown")}</span><b>${value(row.count)}</b>`;
+      if (!actionable) return `<div class="dashboard-breakdown-row">${inner}</div>`;
+      return `<button type="button" class="dashboard-breakdown-row dashboard-breakdown-action" data-dashboard-breakdown="${escapeHtml(code)}" data-dashboard-breakdown-reason="${escapeHtml(row.code || "")}" title="${escapeHtml(`${label} · ${row.label || row.code || "미완료 사유"} 대상 ${row.count}명 보기`)}">${inner}</button>`;
+    }).join("");
     const unattributed = Number(item?.unattributed_count || 0) > 0
       ? `<div class="dashboard-breakdown-row"><span>사유 미확인</span><b>${value(item.unattributed_count)}</b></div>`
       : "";
@@ -502,12 +506,12 @@
     const freshness = snapshot.source_freshness;
     const sourceIssues = (snapshot.sources || []).filter((source) => source?.status !== "ready");
     const incompleteCards = [
-      ["Representative Domain",b.domain],
-      ["NamuWiki",b.namuwiki],
-      ["NamuWiki 미연결 검토 결과",b.namuwiki_absent],
-      ["Spatial",b.spatial],
-      ["Runtime Exclusion",b.runtime]
-    ].filter(([,item]) => shouldRenderBreakdown(item));
+      ["domain","Representative Domain",b.domain],
+      ["namuwiki","NamuWiki",b.namuwiki],
+      ["namuwiki_absent","NamuWiki 미연결 검토 결과",b.namuwiki_absent],
+      ["spatial","Spatial",b.spatial],
+      ["runtime","Runtime Exclusion",b.runtime]
+    ].filter(([, , item]) => shouldRenderBreakdown(item));
     const domainRows = model.DOMAIN_CODES.map((code) => `<div class="dashboard-domain-row" data-domain="${escapeHtml(code)}">
       <span class="dashboard-domain-swatch" aria-hidden="true"></span><span>${escapeHtml(domainRegistry.LABELS[code] || code)}</span><b>${value(snapshot.domain_breakdown[code])}</b>
     </div>`).join("");
@@ -654,7 +658,7 @@
 
       <section class="dashboard-lower-grid" aria-label="미완료 사유">
         ${incompleteCards.length
-          ? incompleteCards.map(([label,item]) => breakdownCard(label,item)).join("")
+          ? incompleteCards.map(([code,label,item]) => breakdownCard(code,label,item)).join("")
           : '<article class="dashboard-panel card"><div class="dashboard-panel-head"><div><p class="eyebrow">INCOMPLETE REASONS</p><h3>미완료 원인 없음</h3></div><span>0</span></div></article>'}
       </section>
 
@@ -689,6 +693,19 @@
         code:`kpi_${item.code}`,
         label:item.label,
         personIds:item.person_ids
+      });
+    }));
+    root.querySelectorAll("[data-dashboard-breakdown]").forEach((button) => button.addEventListener("click", () => {
+      const groupCode = button.dataset.dashboardBreakdown;
+      const reasonCode = button.dataset.dashboardBreakdownReason;
+      const item = b?.[groupCode];
+      const row = item?.rows?.find((candidate) => candidate.code === reasonCode);
+      if (item?.unit !== "person" || !Array.isArray(row?.person_ids) || !row.person_ids.length) return;
+      window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain?.("persons");
+      window.ATLAS_PERSON_MAIN?.setDashboardFilter?.({
+        code:`breakdown_${groupCode}_${String(reasonCode || "unknown").toLowerCase()}`,
+        label:row.label || reasonCode || "미완료 사유",
+        personIds:row.person_ids
       });
     }));
     root.querySelectorAll("[data-dashboard-completeness]").forEach((button) => button.addEventListener("click", () => {
