@@ -50,15 +50,15 @@ async function assertPortraitHistorySchema(client) {
   return Object.freeze({ ready:true });
 }
 
-async function ensurePortraitAsset(client, { assetSha256, bytes = null } = {}) {
+async function ensurePortraitAsset(client, { assetSha256, bytes = null, widthPx = null, heightPx = null } = {}) {
   const byteCount = Buffer.isBuffer(bytes) ? bytes.length : bytes == null ? null : Number(bytes);
   await client.query(`
-    insert into atlas_v2.person_portrait_assets(asset_sha256,media_type,bytes)
-    values($1,'image/webp',$2)
-    on conflict (asset_sha256) do nothing`, [assetSha256, byteCount]);
+    insert into atlas_v2.person_portrait_assets(asset_sha256,media_type,bytes,width_px,height_px)
+    values($1,'image/webp',$2,$3,$4)
+    on conflict (asset_sha256) do nothing`, [assetSha256, byteCount, widthPx, heightPx]);
 
   const result = await client.query(`
-    select asset_sha256,media_type,bytes
+    select asset_sha256,media_type,bytes,width_px,height_px
       from atlas_v2.person_portrait_assets
      where asset_sha256=$1`, [assetSha256]);
   if (result.rowCount !== 1) throw codedError("PERSON_PORTRAIT_ASSET_LEDGER_FAILED");
@@ -67,17 +67,22 @@ async function ensurePortraitAsset(client, { assetSha256, bytes = null } = {}) {
   if (byteCount != null && row.bytes != null && Number(row.bytes) !== byteCount) {
     throw codedError("PERSON_PORTRAIT_ASSET_METADATA_CONFLICT");
   }
-  if (byteCount != null && row.bytes == null) {
+  if ((byteCount != null && row.bytes == null) || (widthPx != null && row.width_px == null) || (heightPx != null && row.height_px == null)) {
     await client.query(`
       update atlas_v2.person_portrait_assets
-         set bytes=$2
-       where asset_sha256=$1
-         and bytes is null`, [assetSha256, byteCount]);
+         set bytes=coalesce(bytes,$2),
+             width_px=coalesce(width_px,$3),
+             height_px=coalesce(height_px,$4)
+       where asset_sha256=$1`, [assetSha256, byteCount, widthPx, heightPx]);
   }
+  if (widthPx != null && row.width_px != null && Number(row.width_px) !== Number(widthPx)) throw codedError("PERSON_PORTRAIT_ASSET_METADATA_CONFLICT");
+  if (heightPx != null && row.height_px != null && Number(row.height_px) !== Number(heightPx)) throw codedError("PERSON_PORTRAIT_ASSET_METADATA_CONFLICT");
   return Object.freeze({
     asset_sha256:String(row.asset_sha256),
     media_type:"image/webp",
-    bytes:byteCount ?? (row.bytes == null ? null : Number(row.bytes))
+    bytes:byteCount ?? (row.bytes == null ? null : Number(row.bytes)),
+    width_px:widthPx ?? (row.width_px == null ? null : Number(row.width_px)),
+    height_px:heightPx ?? (row.height_px == null ? null : Number(row.height_px))
   });
 }
 
