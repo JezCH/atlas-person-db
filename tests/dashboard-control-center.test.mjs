@@ -1376,7 +1376,7 @@ test("Runtime exclusion Attention renders Activity units instead of person units
 test("NamuWiki dashboard distinguishes confirmed absent from legacy unverified and never-reviewed Persons", () => {
   const persons = [
     {id:"00000000-0000-4000-8000-000000000001",external_references:{namuwiki:{status:"linked"}},facets:{polities:[]},activity_summaries:[]},
-    {id:"00000000-0000-4000-8000-000000000002",external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent"}},facets:{polities:[]},activity_summaries:[]},
+    {id:"00000000-0000-4000-8000-000000000002",external_references:{namuwiki:{status:"not_found",review_state:"reviewed_absent",absence_reason:"target_url_pending"}},facets:{polities:[]},activity_summaries:[]},
     {id:"00000000-0000-4000-8000-000000000003",external_references:{namuwiki:{status:"not_found",review_state:"legacy_unverified"}},facets:{polities:[]},activity_summaries:[]},
     {id:"00000000-0000-4000-8000-000000000004",external_references:{},facets:{polities:[]},activity_summaries:[]}
   ];
@@ -1396,10 +1396,23 @@ test("NamuWiki dashboard distinguishes confirmed absent from legacy unverified a
     ["REFERENCE_ABSENT",1],
     ["LEGACY_NOT_FOUND_UNVERIFIED",1]
   ]);
+  assert.equal(snapshot.namuwiki_absence_breakdown.total,1);
+  assert.deepEqual(snapshot.namuwiki_absence_breakdown.rows.map((row)=>[row.code,row.count]),[
+    ["target_url_pending",1]
+  ]);
 });
 
 test("dashboard NamuWiki copy exposes linked, confirmed absent, and verification-needed counts", () => {
   assert.match(dashboardSource,/없음 확정/);
   assert.match(dashboardSource,/미검토·재검증 필요/);
   assert.match(dashboardSource,/w\.namuwiki\.confirmed_absent/);
+});
+
+test("dashboard renders reviewed NamuWiki absence reasons with a dedicated horizontal reason layout", () => {
+  assert.match(dashboardSource,/VERIFIED ABSENCE REASONS/);
+  assert.match(dashboardSource,/NamuWiki 없음 확정 사유/);
+  assert.match(dashboardSource,/dashboard-reason-row/);
+  assert.match(dashboardCssSource,/dashboard-reason-list\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+  assert.match(dashboardCssSource,/dashboard-reason-row\{display:grid;grid-template-columns:minmax\(0,1fr\) auto/);
+  assert.match(dashboardCssSource,/word-break:keep-all/);
 });
