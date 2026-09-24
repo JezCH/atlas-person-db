@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss01:filippo-brunelleschi:republic-florence:architect:1420:v1",
+  "person": {
+    "canonical_name_en": "Filippo Brunelleschi",
+    "display_name_ko": "필리포 브루넬레스키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Florence",
+    "display_name_ko": "피렌체 공화국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Architect and engineer",
+    "role_display_name_ko": "건축가·공학자",
+    "start_year": 1420,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1420,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1420, when construction of Brunelleschi's dome for Santa Maria del Fiore officially began, as his representative Florentine architectural-engineering milestone."
+  },
+  "sources": [
+    {
+      "title": "August 7, 1420: The start of construction of the dome — Opera di Santa Maria del Fiore",
+      "canonical_url": "https://duomo.firenze.it/en/opera-magazine/post/5017/august-7-1420-the-start-of-construction-of-the-dome",
+      "citation_text": "The Florence Cathedral authority records the official start of construction of the dome designed by Filippo Brunelleschi on 7 August 1420.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-103",
+    "review_checkpoint": "#1374 comment 5762056835",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "technology"
+  }
+}

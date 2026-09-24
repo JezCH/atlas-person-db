@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss01:andreas-vesalius:republic-venice:anatomist:1543:v1",
+  "person": {
+    "canonical_name_en": "Andreas Vesalius",
+    "display_name_ko": "안드레아스 베살리우스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Venice",
+    "display_name_ko": "베네치아 공화국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Anatomist and physician",
+    "role_display_name_ko": "해부학자·의사",
+    "start_year": 1543,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1543,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1543, the publication year of De humani corporis fabrica after Vesalius's Padua teaching and research, as his representative anatomical-science milestone. Padua is modeled under the existing Republic of Venice polity."
+  },
+  "sources": [
+    {
+      "title": "Andrea Vesalio — University of Padua Heritage",
+      "canonical_url": "https://heritage.unipd.it/en/storia/andrea-vesalio/",
+      "citation_text": "The University of Padua records Vesalius's Padua professorship and the 1543 publication of De humani corporis fabrica.",
+      "source_type": "university_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-069",
+    "review_checkpoint": "#1374 comment 5762054597",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}

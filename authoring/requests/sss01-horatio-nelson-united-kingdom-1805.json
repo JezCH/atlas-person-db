@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss01:horatio-nelson:united-kingdom:admiral:1805:v1",
+  "person": {
+    "canonical_name_en": "Horatio Nelson",
+    "display_name_ko": "호레이쇼 넬슨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Vice-Admiral and fleet commander",
+    "role_display_name_ko": "해군 중장·함대 지휘관",
+    "start_year": 1805,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1805,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1805 and the Trafalgar campaign as Nelson's representative British naval-command milestone. This single point does not replace his earlier Mediterranean, Nile, Copenhagen, or other service periods."
+  },
+  "sources": [
+    {
+      "title": "Battle of Trafalgar background — Royal Museums Greenwich",
+      "canonical_url": "https://www.rmg.co.uk/stories/maritime-history/battle-trafalgar-background",
+      "citation_text": "Royal Museums Greenwich records Nelson's command role in the British fleet at Trafalgar on 21 October 1805.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-039",
+    "review_checkpoint": "#1374 comment 5762052695",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "military"
+  }
+}
