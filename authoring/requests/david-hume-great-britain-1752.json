@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:david-hume:kingdom-of-great-britain:philosopher:1752:v1",
+  "person": {
+    "canonical_name_en": "David Hume",
+    "display_name_ko": "데이비드 흄",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-24",
+      "reason": "External-index review did not surface an exact same-person NamuWiki Person-document result sufficient to verify a canonical URL. Registration continues without converting indirect mentions into a guessed link or false not_found decision.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Great Britain",
+    "display_name_ko": "그레이트브리튼 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher",
+    "role_display_name_ko": "철학자",
+    "start_year": 1752,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1752,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1752 as Hume's representative Scottish Enlightenment activity year: he published Political Discourses and began work as librarian to the Faculty of Advocates in Edinburgh, giving him access to the collection used for his historical work."
+  },
+  "sources": [
+    {
+      "title": "David Hume — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/hume/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy records Hume's Political Discourses in 1752 and his appointment that year as librarian to the Edinburgh Faculty of Advocates.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "philosophy-20260922-013",
+    "review_checkpoint": "#1374 comment 5763224562",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

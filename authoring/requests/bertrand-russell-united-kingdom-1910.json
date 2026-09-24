@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bertrand-russell:united-kingdom:philosopher-logician:1910:v1",
+  "person": {
+    "canonical_name_en": "Bertrand Russell",
+    "display_name_ko": "버트런드 러셀",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-24",
+      "document_title": "버트런드 러셀",
+      "url": "https://namu.wiki/w/%EB%B2%84%ED%8A%B8%EB%9F%B0%EB%93%9C%20%EB%9F%AC%EC%85%80"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher and logician",
+    "role_display_name_ko": "철학자·논리학자",
+    "start_year": 1910,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1910,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1910 as Russell's representative British intellectual-activity year, when the first volume of Principia Mathematica, co-authored with Alfred North Whitehead, was published by Cambridge University Press."
+  },
+  "sources": [
+    {
+      "title": "Principia Mathematica — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/principia-mathematica/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy records the three volumes of Whitehead and Russell's Principia Mathematica as appearing in 1910, 1912 and 1913 and identifies the work as foundational to modern mathematical logic.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "philosophy-20260922-019",
+    "review_checkpoint": "#1374 comment 5763224562",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

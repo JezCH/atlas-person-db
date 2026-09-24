@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alexander-fleming:united-kingdom:bacteriologist:1928:v1",
+  "person": {
+    "canonical_name_en": "Alexander Fleming",
+    "display_name_ko": "알렉산더 플레밍",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-24",
+      "reason": "External-index review confirms NamuWiki references to Alexander Fleming but did not surface the exact Person document itself with sufficient canonical-path evidence. Registration continues without guessing the URL or incorrectly recording not_found.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Bacteriologist",
+    "role_display_name_ko": "세균학자",
+    "start_year": 1928,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1928,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1928 as Fleming's representative British scientific-activity year. While working at St Mary's in London he observed the antibacterial effect of a mould culture and named the active substance penicillin; he was also elected Professor of the School that year."
+  },
+  "sources": [
+    {
+      "title": "Sir Alexander Fleming — Biographical, NobelPrize.org",
+      "canonical_url": "https://www.nobelprize.org/prizes/medicine/1945/fleming/biographical/",
+      "citation_text": "NobelPrize.org records Fleming's work at St Mary's in London, his election as Professor in 1928, and his 1928 observation of the mould effect that led him to name penicillin.",
+      "source_type": "institutional_biography"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "modern-20260921-alexander-fleming",
+    "review_checkpoint": "#1374 comment 5762189009",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

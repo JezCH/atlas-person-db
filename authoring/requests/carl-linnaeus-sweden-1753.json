@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:carl-linnaeus:sweden:botanist:1753:v1",
+  "person": {
+    "canonical_name_en": "Carl Linnaeus",
+    "display_name_ko": "칼 린네",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-24",
+      "document_title": "칼 폰 린네",
+      "url": "https://namu.wiki/w/%EC%B9%BC%20%ED%8F%B0%20%EB%A6%B0%EB%84%A4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Sweden",
+    "display_name_ko": "스웨덴"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Botanist",
+    "role_display_name_ko": "식물학자",
+    "start_year": 1753,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1753,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1753 as Linnaeus's representative Swedish scientific-activity year. He had returned to Sweden and held the botany professorship at Uppsala University; the first edition of Species plantarum appeared in 1753 and became a major basis of modern binomial nomenclature."
+  },
+  "sources": [
+    {
+      "title": "His career and legacy — The Linnean Society",
+      "canonical_url": "https://www.linnean.org/learning/who-was-linnaeus/career-and-legacy",
+      "citation_text": "The Linnean Society records Linnaeus's return to Sweden, his Uppsala botany professorship from 1741, and the first edition of Species plantarum in 1753.",
+      "source_type": "institutional_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "cross-20260921-carl-linnaeus",
+    "review_checkpoint": "#1374 comment 5761901027",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

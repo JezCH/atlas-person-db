@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:friedrich-nietzsche:switzerland:philosopher:1872:v1",
+  "person": {
+    "canonical_name_en": "Friedrich Nietzsche",
+    "display_name_ko": "프리드리히 니체",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-24",
+      "document_title": "프리드리히 니체",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%A6%AC%EB%93%9C%EB%A6%AC%ED%9E%88%20%EB%8B%88%EC%B2%B4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Switzerland",
+    "display_name_ko": "스위스"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher",
+    "role_display_name_ko": "철학자",
+    "start_year": 1872,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1872,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1872 as Nietzsche's representative Swiss intellectual-activity year. He had been teaching classical philology at the University of Basel since 1869 and published his first book, The Birth of Tragedy, in January 1872."
+  },
+  "sources": [
+    {
+      "title": "Nietzsche’s Life and Works — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/nietzsche-life-works/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy records Nietzsche's appointment to the University of Basel in 1869 and the January 1872 publication of The Birth of Tragedy while he remained in his Basel professorship.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "philosophy-20260922-015",
+    "review_checkpoint": "#1374 comment 5763224562",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}

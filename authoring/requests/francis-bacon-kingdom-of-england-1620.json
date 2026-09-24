@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:francis-bacon:kingdom-of-england:philosopher:1620:v1",
+  "person": {
+    "canonical_name_en": "Francis Bacon",
+    "display_name_ko": "프랜시스 베이컨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-24",
+      "document_title": "프랜시스 베이컨",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%9E%9C%EC%8B%9C%EC%8A%A4%20%EB%B2%A0%EC%9D%B4%EC%BB%A8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher",
+    "role_display_name_ko": "철학자",
+    "start_year": 1620,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1620,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1620 as Bacon's representative English intellectual-activity year, when the Instauratio magna containing the Novum organum was published. This bounded year represents his mature program for reforming knowledge rather than his full legal and political career."
+  },
+  "sources": [
+    {
+      "title": "Francis Bacon — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/francis-bacon/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy records Bacon's continued intellectual work through the 1610s and the October 1620 publication of the Instauratio magna, including the Novum organum.",
+      "source_type": "scholarly_web"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "philosophy-20260922-009",
+    "review_checkpoint": "#1374 comment 5763224562",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "knowledge"
+  }
+}
