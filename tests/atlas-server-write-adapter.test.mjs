@@ -146,9 +146,6 @@ test("server adapter uploads Person portrait through authenticated consolidated 
     const body = JSON.parse(options.body);
     assert.equal(body.person_id, "11111111-1111-4111-8111-111111111111");
     assert.equal(body.image_base64, "QUJD");
-    assert.equal(body.portrait_kind, "artwork");
-    assert.equal(body.evidence_level, "direct");
-    assert.deepEqual(body.sources, []);
     return jsonResponse(200, {
       ok:true,
       schema:"atlas-person-portrait/v1",
@@ -161,10 +158,7 @@ test("server adapter uploads Person portrait through authenticated consolidated 
   const adapter = createAdapter({ fetchImpl, credentialProvider:async () => "unused" });
   const result = await adapter.setPersonPortrait({
     person_id:"11111111-1111-4111-8111-111111111111",
-    image_base64:"QUJD",
-    portrait_kind:"artwork",
-    evidence_level:"direct",
-    sources:[]
+    image_base64:"QUJD"
   });
   assert.equal(result.committed, true);
   assert.equal(result.operation, "set_person_portrait");
@@ -214,10 +208,7 @@ test("portrait mutation surfaces server error codes through the same adapter fai
   const adapter = createAdapter({ fetchImpl, credentialProvider:async () => "unused" });
   const result = await adapter.setPersonPortrait({
     person_id:"11111111-1111-4111-8111-111111111111",
-    image_base64:"QUJD",
-    portrait_kind:"artwork",
-    evidence_level:"direct",
-    sources:[]
+    image_base64:"QUJD"
   });
   assert.equal(result.committed, false);
   assert.deepEqual(result.errors, ["PERSON_PORTRAIT_WEBP_REQUIRED"]);
