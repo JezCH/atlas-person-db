@@ -129,7 +129,7 @@ test('Person detail binds canonical portrait read and authoring controls without
   assert.match(main, /ATLAS_PERSON_PORTRAIT_VIEW/);
   assert.match(main, /portraitRenderer\.portraitEditorHtml/);
   assert.match(portraitView, /data-person-portrait-operation="upload"/);
-  assert.match(portraitView, /name="portrait_file" accept="image\/\*"/);
+  assert.match(portraitView, /name="portrait_file" accept="image\/jpeg,image\/png,image\/webp,image\/avif"/);
   assert.match(portraitView, /name="portrait_kind"/);
   assert.match(portraitView, /name="evidence_level"/);
   assert.match(main, /portraitController\.setPortrait/);
