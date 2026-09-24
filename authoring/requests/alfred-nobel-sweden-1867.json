@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alfred-nobel:sweden:inventor:1867:v1",
+  "person": {
+    "canonical_name_en": "Alfred Nobel",
+    "display_name_ko": "알프레드 노벨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-24",
+      "document_title": "알프레드 노벨",
+      "url": "https://namu.wiki/w/%EC%95%8C%ED%94%84%EB%A0%88%EB%93%9C%20%EB%85%B8%EB%B2%A8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Sweden",
+    "display_name_ko": "스웨덴"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Inventor",
+    "role_display_name_ko": "발명가",
+    "start_year": 1867,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1867,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1867 as Nobel's representative Swedish technological milestone year: after developing dynamite from stabilized nitroglycerin, he obtained the Swedish patent for dynamite in 1867. The Activity is bounded to the documented patent milestone rather than treating his multinational industrial career as one polity span."
+  },
+  "sources": [
+    {
+      "title": "The man behind the prize — Alfred Nobel, NobelPrize.org",
+      "canonical_url": "https://www.nobelprize.org/alfred-nobel/",
+      "citation_text": "NobelPrize.org records Nobel's nitroglycerin experiments, the development of dynamite, and his 1867 Swedish patent for dynamite.",
+      "source_type": "institutional_biography"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-002",
+    "review_checkpoint": "#1374 comment 5815493403",
+    "priority_revision": "#1374 comment 5816033742",
+    "representative_domain": "technology"
+  }
+}
