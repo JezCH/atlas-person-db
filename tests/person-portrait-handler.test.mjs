@@ -72,15 +72,19 @@ test("portrait PUT is admin-authenticated and delegates one canonical write payl
     headers:{ cookie:"atlas_admin_session=fake" },
     body:{
       person_id:PERSON,
-      image_base64:"AAAA",
-      portrait_kind:"reconstruction",
-      evidence_level:"strong",
-      sources:[]
+      image_base64:"AAAA"
     }
   }, res);
   assert.equal(res.statusCode, 200);
   assert.equal(res.json().committed, true);
   assert.deepEqual(calls[0], ["put", PERSON, "storage"]);
+});
+
+test("portrait PATCH is not part of the simple API", async () => {
+  const { handler } = harness();
+  const res = makeResponse();
+  await handler({ method:"PATCH", headers:{}, body:{ person_id:PERSON } }, res);
+  assert.equal(res.statusCode, 405);
 });
 
 test("portrait DELETE is admin-authenticated and delegates idempotent removal", async () => {
