@@ -1,0 +1,29 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-name:han-warring-states-character-disambiguation:2026-09-25:v1",
+  "release_order": 902,
+  "evidence": {
+    "decision": "After Zhang Qian is relinked to the existing Western Han identity, preserve polity UUID 46740a29-a891-5ff8-9804-0f8aba62e71e for the Warring States Han (韓) and disambiguate its preferred English/Korean display names. No new Polity identity is created by this name correction.",
+    "polity_id": "46740a29-a891-5ff8-9804-0f8aba62e71e",
+    "identity_rule": "Warring States Han (韓) and Han dynasty (漢) are distinct identities; UUID is preserved for 韓 while Zhang Qian moves to existing Western Han."
+  },
+  "operations": [
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "han-warring-states-en-preferred-name",
+      "polity_id": "46740a29-a891-5ff8-9804-0f8aba62e71e",
+      "locale": "en",
+      "expected_name": "Han",
+      "replacement_name": "Han (Warring States)"
+    },
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "han-warring-states-ko-preferred-name",
+      "polity_id": "46740a29-a891-5ff8-9804-0f8aba62e71e",
+      "locale": "ko",
+      "expected_name": "한나라",
+      "replacement_name": "한(韓)"
+    }
+  ]
+}
