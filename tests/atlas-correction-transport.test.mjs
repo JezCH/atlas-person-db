@@ -66,7 +66,10 @@ test("live correction handler accepts only v2 manifests/plans plus read-only bas
 
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, intent_path: "corrections/intents/legacy.json", mode: "snapshot", activity_ids: ["0d1c9869-1819-4a7a-b523-4d3498719a03"] }), /CORRECTION_SOURCE_PATH_NOT_ALLOWED/);
   assert.deepEqual(correctionHandler.requirePayload({ deployment_sha: SHA, mode: "full_stage2_baseline" }),
-    { deploymentSha: SHA, sourcePath: null, mode: "full_stage2_baseline", activityIds: null, manifest: null, schema: null, plan: null });
+    { deploymentSha: SHA, workflowSha: SHA, sourcePath: null, mode: "full_stage2_baseline", activityIds: null, manifest: null, schema: null, plan: null });
+  const movingPayload = correctionHandler.requirePayload({ deployment_sha: "b".repeat(40), workflow_sha: SHA, mode: "full_stage2_baseline" });
+  assert.equal(movingPayload.deploymentSha, "b".repeat(40));
+  assert.equal(movingPayload.workflowSha, SHA);
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, mode: "full_activity_baseline" }), /CORRECTION_MODE_REQUIRED/);
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "authoring/requests/x.json", mode: "apply", manifest: manifestV2 }), /CORRECTION_SOURCE_PATH_NOT_ALLOWED/);
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/x.json", mode: "delete", manifest: manifestV2 }), /CORRECTION_MODE_REQUIRED/);
@@ -133,6 +136,10 @@ test("correction workflow exposes only reviewed v2 requests/plans and preserves 
   assert.doesNotMatch(workflow, /atlas-correction-manifest\/v1(?:\.[1-4])?(?:"|'|\s|;)/);
   assert.doesNotMatch(workflow, /ATLAS_CORRECTION_MANIFEST_V1(?:_[1-4])?\b/);
   assert.match(workflow, /ATLAS_CORRECTION_AUDIENCE: atlas-person-db-correction-apply/);
+  assert.match(workflow, /cancel-in-progress: true/);
+  assert.match(workflow, /workflow_sha:\$workflow_sha/);
+  assert.match(workflow, /ATLAS_CORRECTION_TRANSPORT_WORKFLOW_SHA_V2/);
+  assert.match(handlerSource, /expectedSha: payload\.workflowSha/);
   assert.match(workflow, /atlas-correction-manifest\/v2/);
   assert.match(workflow, /ATLAS_CORRECTION_MANIFEST_V2/);
   assert.doesNotMatch(workflow, /SUPABASE_DB_URL/);
