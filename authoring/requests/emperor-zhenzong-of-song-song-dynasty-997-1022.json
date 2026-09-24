@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:emperor-zhenzong-of-song:song-dynasty:emperor:997-1022:v1",
+  "person": {
+    "canonical_name_en": "Emperor Zhenzong of Song",
+    "display_name_ko": "송 진종",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-24",
+      "document_title": "진종(북송)",
+      "url": "https://namu.wiki/w/%EC%A7%84%EC%A2%85(%EB%B6%81%EC%86%A1)"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Song Dynasty"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 997,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1022,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Emperor Zhenzong (Zhao Heng) ruled the Northern Song from 997 to 1022. His reign belongs to the dynasty's founding-and-consolidation phase; the 1005 Chanyuan Covenant with the Liao ended decades of Song-Liao warfare and inaugurated a long-lived frontier settlement."
+  },
+  "sources": [
+    {
+      "title": "Founding and Consolidation of the Sung Dynasty under T’ai-tsu (960–976), T’ai-tsung (976–997), and Chen-tsung (997–1022)",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/founding-and-consolidation-of-the-sung-dynasty-under-taitsu-960976-taitsung-976997-and-chentsung-9971022/69C8668AF27659D52EBF293C0412504C",
+      "citation_text": "Lau Nap-yin and Huang K’uan-chung, in The Cambridge History of China, identify Chen-tsung (Emperor Zhenzong) as reigning from 997 to 1022 and treat his reign as part of the Song dynasty's founding and consolidation.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Fragility of Peace: Song China's Northwestern Frontier and Erosion of the Chanyuan Paradigm in the Mid-Eleventh Century",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-chinese-history/article/fragility-of-peace-song-chinas-northwestern-frontier-and-erosion-of-the-chanyuan-paradigm-in-the-mideleventh-century/AF2F19A32A23ED0F304C3DE814851A3F",
+      "citation_text": "Paul Jakov Smith describes the 1005 Chanyuan Covenant between Song Zhenzong and Liao Shengzong as ending twenty-five years of war and establishing a durable political model for Song frontier policy.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
