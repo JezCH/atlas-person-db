@@ -4,6 +4,7 @@
 // Operational no-op: force an exact-SHA Production deployment for reviewed Stage 2 audit evidence.
 // Audit retrigger 2026-09-05: capture exact temporal metadata for the next Yelü Dashi merge blocker.
 // Audit retrigger 2026-09-20: capture exact live Polity references blocking the reviewed Kingdom of Greece retirement.
+// Audit retrigger 2026-09-24: capture the complete current 28-Polity unlinked/orphan reference surface before cleanup.
 const { createAuditInventoryHandler } = require("../server/atlas-audit-inventory-handler.js");
 const { createP11BaselineBCaptureHandler } = require("../server/atlas-p11-baseline-b-capture-handler.js");
 const { createPolityReferenceAuditHandler } = require("../server/atlas-polity-reference-audit-handler.js");

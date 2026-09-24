@@ -211,6 +211,30 @@ jobs:
           jq '{marker,read_only,committed,deployment_sha,complete,reference_model,reference_count,polity_count,external_orphan_count}' polity-reference-audit-response.json | tee polity-reference-audit-summary.json
           jq '.reference_catalog' polity-reference-audit-response.json > polity-reference-catalog.push.json
           jq '[.polities[] | select(.is_external_orphan == true)]' polity-reference-audit-response.json > polity-external-orphans.push.json
+          jq '
+            [ .polities[]
+              | . as $p
+              | ([.external_references[]
+                    | select(.source_schema == "atlas_v2" and .source_table == "person_politics_v2" and .source_column == "polity_id")
+                    | .count][0] // 0) as $activity_refs
+              | select($activity_refs == 0)
+              | {
+                  polity_id,
+                  canonical_key,
+                  names:[.names[] | {locale,name,is_preferred}],
+                  owned_reference_total,
+                  external_reference_total,
+                  nonzero_external_references:[
+                    .external_references[]
+                    | select((.count // 0) > 0)
+                    | {source_schema,source_table,source_column,count}
+                  ]
+                }
+            ]
+          ' polity-reference-audit-response.json | tee polity-zero-activity-reference-audit.push.json
+          jq -e 'length == 28' polity-zero-activity-reference-audit.push.json >/dev/null
+          echo 'ATLAS_ZERO_ACTIVITY_POLITY_REFERENCE_AUDIT_V1'
+          cat polity-zero-activity-reference-audit.push.json
           jq '[.polities[] | select(((.canonical_key // "") + " " + ([.names[]?.name] | join(" "))) | ascii_downcase | test("fifth|kamakura|tokugawa|toyotomi|liao dynasty|ming dynasty|tsardom of russia|empire of japan|shakya|haudenosaunee|swedish empire|qara khitai"))]' polity-reference-audit-response.json | tee polity-reference-candidates.push.json
 
       - name: Upload read-only inventory evidence
@@ -230,6 +254,7 @@ jobs:
             polity-reference-audit-summary.json
             polity-reference-catalog.push.json
             polity-external-orphans.push.json
+            polity-zero-activity-reference-audit.push.json
             polity-reference-candidates.push.json
             p9-completeness-repair-plan.json
             p9-completeness-repair-summary.json
