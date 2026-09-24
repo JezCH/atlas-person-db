@@ -708,12 +708,21 @@ test("Heatmap deduplicates multiple spatial segments of one Activity within the 
   assert.equal(classical.cells[0].count,1);
 });
 
-test("Dashboard heatmap reuses canonical spatial resolver and renders zero as real zero only when source is available", () => {
+test("Dashboard heatmap reuses canonical spatial resolver and renders era-normalized proportions with totals", () => {
   const dashboardModelSource=fs.readFileSync(new URL("../atlas-dashboard-model.js",import.meta.url),"utf8");
   assert.match(dashboardModelSource,/spatialModel\.resolveActivityPlacement/);
   assert.match(dashboardSource,/ERA × REGION COVERAGE/);
   assert.match(dashboardSource,/heatmap\.available/);
+  assert.match(dashboardSource,/function heatmapShare/);
   assert.match(dashboardSource,/data-heatmap-level/);
+  assert.match(dashboardSource,/해당 시대 내/);
+  assert.match(dashboardSource,/dashboard-heatmap-key/);
+  assert.match(dashboardSource,/시대 합계/);
+  assert.match(dashboardSource,/권역 합계/);
+  assert.match(dashboardSource,/시대-권역 셀 기준/);
+  assert.match(dashboardCssSource,/\.dashboard-heatmap\{width:100%;min-width:0;table-layout:fixed/);
+  assert.match(dashboardCssSource,/data-heatmap-level="5"/);
+  assert.match(dashboardCssSource,/\.dashboard-heatmap-key\{display:flex/);
   assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
 });
 
