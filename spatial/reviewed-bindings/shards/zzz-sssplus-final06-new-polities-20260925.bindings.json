@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zzz-sssplus-final06-new-polities-20260925",
+  "baseline": "27dad6ee610a0303234ecec27ac1db0afdf7ece1",
+  "reviewed_at": "2026-09-24T17:27:30.000Z",
+  "bindings": [
+    {
+      "polity_id": "70d9fd6b-cfe4-4da0-ad24-946c6c2ee10e",
+      "region_code": "south-asia",
+      "subregion_code": "northwest-south-asia"
+    },
+    {
+      "polity_id": "976c3aff-5b7c-4968-9914-3c229aa04817",
+      "region_code": "europe",
+      "subregion_code": "balkans"
+    }
+  ]
+}
