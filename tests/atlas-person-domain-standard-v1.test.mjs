@@ -217,6 +217,24 @@ test('Batch 013 contains exactly the reviewed medieval rulers/commanders distrib
   assert.equal(batch13.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
 });
 
+test('Batch 061 retires stale Korean-scholar UUIDs and Batch 062 owns their current canonical identities', () => {
+  const batch61 = JSON.parse(fs.readFileSync(path.join(proposalDir, 'batch-061.json'), 'utf8'));
+  const batch62 = JSON.parse(fs.readFileSync(path.join(proposalDir, 'batch-062.json'), 'utf8'));
+  assert.deepEqual(batch61.entries.map((entry) => entry.person_id), ['d36801fe-ba76-445a-afa3-c0882c24ae9d']);
+  assert.equal(batch61.former_entries.length, 2);
+  const retired = new Map(batch61.former_entries.map((entry) => [entry.canonical_name_en, entry]));
+  assert.equal(retired.get('Jeong Yak-yong').person_id, 'b4b95ce7-f1c6-4b66-ad68-df28e8c8285b');
+  assert.equal(retired.get('Jeong Yak-yong').canonical_person_id, 'b5c9ad45-ead8-44f2-ba57-c1a480419b38');
+  assert.equal(retired.get('Jang Yeong-sil').person_id, 'e19c1fb8-09d5-493b-a5b8-d63659b0d591');
+  assert.equal(retired.get('Jang Yeong-sil').canonical_person_id, 'f36a764f-1e7c-42d4-bbbc-c9b0a7fcb451');
+  assert.equal([...retired.values()].every((entry) => entry.superseded_by === 'batch-062.json'), true);
+  const recovered = new Map(batch62.entries.map((entry) => [entry.canonical_name_en, entry]));
+  assert.equal(recovered.get('Jeong Yak-yong').person_id, 'b5c9ad45-ead8-44f2-ba57-c1a480419b38');
+  assert.equal(recovered.get('Jeong Yak-yong').representative_domain, 'knowledge');
+  assert.equal(recovered.get('Jang Yeong-sil').person_id, 'f36a764f-1e7c-42d4-bbbc-c9b0a7fcb451');
+  assert.equal(recovered.get('Jang Yeong-sil').representative_domain, 'technology');
+});
+
 test('Batch 073 records the user-reviewed Nodira correction and two new governance assignments', () => {
   const batch73 = assertBatchDistribution('batch-073.json', 3, {
     governance:2,
