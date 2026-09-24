@@ -84,13 +84,23 @@ test("map-like adjacency decisions remain explicit inside each refined macroregi
     macro.subregions.map((leaf) => leaf.code)
   ]));
 
-  assert.deepEqual(hierarchy.americas, ["north-america","mesoamerica","caribbean","south-america"]);
-  assert.deepEqual(hierarchy.europe, ["britain-ireland","iberia","western-europe","italy","central-europe","northern-europe","balkans","eastern-europe","russia-volga"]);
-  assert.deepEqual(hierarchy.africa, ["west-africa","maghreb-north-africa","central-africa","southern-africa","east-africa","horn-of-africa","nile-valley"]);
-  assert.deepEqual(hierarchy["west-asia"], ["levant","anatolia","caucasus","mesopotamia","arabia","iranian-plateau"]);
+  assert.deepEqual(hierarchy.americas, ["south-america","caribbean","mesoamerica","north-america"]);
+  assert.deepEqual(hierarchy.europe, ["britain-ireland","northern-europe","russia-volga","eastern-europe","balkans","central-europe","italy","western-europe","iberia"]);
+  assert.deepEqual(hierarchy.africa, ["maghreb-north-africa","west-africa","central-africa","southern-africa","east-africa","horn-of-africa","nile-valley"]);
+  assert.deepEqual(hierarchy["west-asia"], ["levant","arabia","mesopotamia","anatolia","caucasus","iranian-plateau"]);
   assert.deepEqual(hierarchy["central-asia"], ["western-central-asia","western-siberia","eastern-central-asia-steppe","tibetan-plateau"]);
   assert.deepEqual(hierarchy["south-asia"], ["himalayas","northwest-south-asia","north-india-ganges","deccan-south-india","maldives","sri-lanka"]);
-  assert.deepEqual(hierarchy["southeast-asia"], ["mainland-southeast-asia","maritime-southeast-asia"]);
-  assert.deepEqual(hierarchy["east-asia"], ["china","manchuria","korean-peninsula","japan","eastern-siberia-far-east"]);
-  assert.deepEqual(hierarchy.oceania, ["australasia","pacific-islands"]);
+  assert.deepEqual(hierarchy["southeast-asia"], ["maritime-southeast-asia","mainland-southeast-asia"]);
+  assert.deepEqual(hierarchy["east-asia"], ["china","manchuria","eastern-siberia-far-east","korean-peninsula","japan"]);
+  assert.deepEqual(hierarchy.oceania, ["pacific-islands","australasia"]);
+  const flattened = spaceAxis.DEFAULT_SPATIAL_HIERARCHY.flatMap((macro) => macro.subregions.map((leaf) => leaf.code));
+  const pair = (left,right) => assert.equal(flattened[flattened.indexOf(left)+1],right);
+  pair("north-america","britain-ireland");
+  pair("iberia","maghreb-north-africa");
+  pair("nile-valley","levant");
+  pair("iranian-plateau","western-central-asia");
+  pair("tibetan-plateau","himalayas");
+  pair("sri-lanka","maritime-southeast-asia");
+  pair("mainland-southeast-asia","china");
+  pair("japan","pacific-islands");
 });
