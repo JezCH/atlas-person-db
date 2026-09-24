@@ -368,19 +368,55 @@
     </article>`;
   }
 
-  function heatmapLevel(count,maxCount) {
-    if (!Number.isFinite(count) || count <= 0 || !Number.isFinite(maxCount) || maxCount <= 0) return 0;
-    return Math.max(1,Math.min(4,Math.ceil((count / maxCount) * 4)));
+  function heatmapShare(count,total) {
+    if (!Number.isFinite(Number(count)) || Number(count) <= 0 || !Number.isFinite(Number(total)) || Number(total) <= 0) return 0;
+    return Math.max(0,Math.min(100,(Number(count) / Number(total)) * 100));
+  }
+
+  function heatmapLevel(count,total) {
+    const share=heatmapShare(count,total);
+    if (share <= 0) return 0;
+    if (share < 5) return 1;
+    if (share < 15) return 2;
+    if (share < 30) return 3;
+    if (share < 50) return 4;
+    return 5;
   }
 
   function heatmapTable(heatmap) {
     if (!heatmap?.available) return `<div class="dashboard-heatmap-unavailable">${escapeHtml(heatmap?.unavailable_reason || "분포표 확인 불가")}</div>`;
-    const head=heatmap.regions.map((region)=>`<th scope="col" title="${escapeHtml(region.label)}">${escapeHtml(region.label)}</th>`).join("");
+    const regionTotals=Object.fromEntries((heatmap.regions || []).map((region)=>[region.code,0]));
+    for (const row of heatmap.rows || []) {
+      for (const cell of row.cells || []) {
+        regionTotals[cell.region_code]=(regionTotals[cell.region_code] || 0)+Number(cell.count || 0);
+      }
+    }
+    const matrixTotal=(heatmap.rows || []).reduce((sum,row)=>sum+Number(row.total || 0),0);
+    const head=heatmap.regions.map((region)=>`<th scope="col" class="dashboard-heatmap-region-head" title="${escapeHtml(region.label)}">${escapeHtml(region.label)}</th>`).join("");
     const body=heatmap.rows.map((row)=>`<tr>
       <th scope="row"><strong>${escapeHtml(row.era.label)}</strong><small>${escapeHtml(row.era.range)}</small></th>
-      ${row.cells.map((cell)=>`<td data-heatmap-level="${heatmapLevel(cell.count,heatmap.max_count)}" title="${escapeHtml(`${row.era.label} × ${heatmap.regions.find((region)=>region.code===cell.region_code)?.label || cell.region_code}: 활동 ${cell.count}건`)}"><span>${value(cell.count)}</span></td>`).join("")}
+      ${row.cells.map((cell)=>{
+        const regionLabel=heatmap.regions.find((region)=>region.code===cell.region_code)?.label || cell.region_code;
+        const share=heatmapShare(cell.count,row.total);
+        return `<td data-heatmap-level="${heatmapLevel(cell.count,row.total)}" title="${escapeHtml(`${row.era.label} × ${regionLabel}: 활동 ${cell.count}건 · 해당 시대 내 ${pct(share)}`)}"><strong>${value(cell.count)}</strong><small>${cell.count > 0 ? pct(share) : "—"}</small></td>`;
+      }).join("")}
+      <td class="dashboard-heatmap-total-cell" title="${escapeHtml(`${row.era.label} 전체 권역 셀 집계 ${row.total}건`)}"><strong>${value(row.total)}</strong><small>합계</small></td>
     </tr>`).join("");
-    return `<div class="dashboard-heatmap-wrap"><table class="dashboard-heatmap"><thead><tr><th scope="col">시대 \ 권역</th>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+    const foot=heatmap.regions.map((region)=>{
+      const count=Number(regionTotals[region.code] || 0);
+      const share=heatmapShare(count,matrixTotal);
+      return `<td title="${escapeHtml(`${region.label} 시대-권역 셀 합계 ${count}건 · 전체 셀 집계의 ${pct(share)}`)}"><strong>${value(count)}</strong><small>${matrixTotal > 0 ? pct(share) : "—"}</small></td>`;
+    }).join("");
+    return `<div class="dashboard-heatmap-key" aria-label="시공간 활동 분포 범례">
+      <span><b>색 농도</b> = 해당 시대 안에서 권역이 차지하는 비중</span>
+      <span class="dashboard-heatmap-scale" aria-hidden="true"><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i><i data-level="5"></i></span>
+      <span>셀 숫자 = 활동 수 · 작은 % = 시대 내 비중</span>
+    </div>
+    <div class="dashboard-heatmap-wrap"><table class="dashboard-heatmap">
+      <thead><tr><th scope="col">시대</th>${head}<th scope="col" class="dashboard-heatmap-total-head">시대 합계</th></tr></thead>
+      <tbody>${body}</tbody>
+      <tfoot><tr><th scope="row"><strong>권역 합계</strong><small>시대-권역 셀 기준</small></th>${foot}<td class="dashboard-heatmap-total-cell"><strong>${value(matrixTotal)}</strong><small>셀 합계</small></td></tr></tfoot>
+    </table></div>`;
   }
 
   function completenessTable(matrix) {
@@ -659,8 +695,8 @@
         <div class="dashboard-panel-head"><div><p class="eyebrow">ERA × REGION COVERAGE</p><h3>시공간 활동 분포</h3></div><span>${heatmap.available ? `배치 ${value(heatmap.placed_activity_count)} · 미해결 ${value(heatmap.unresolved_activity_count)}` : "원본 확인 불가"}</span></div>
         ${heatmapTable(heatmap)}
         <div class="dashboard-progress-meta">
-          <span>10개 시대 구간 × Spatial 대권역</span>
-          <span>한 활동은 같은 시대·권역에서 구간이 여러 개여도 1회 집계</span>
+          <span>10개 시대 구간 × Spatial 대권역 · 색 농도는 시대별 비중 기준</span>
+          <span>한 활동은 같은 시대·권역에서 1회 집계하며, 여러 시대에 걸치면 각 시대에 각각 집계</span>
         </div>
       </section>
 

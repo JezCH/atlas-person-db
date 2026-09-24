@@ -17,7 +17,7 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /dataAtlasDomain|dataset\.atlasDomain|data-atlas-domain="spacetime"/i);
   assert.match(catalog, /spacetime: entry/);
   assert.match(html, /atlas-main-authority-nav\.css\?v=20260923-root-batch1/);
-  assert.match(html, /atlas-main-authority-nav\.js\?v=20260925-namuwiki-work-frontier-v3/);
+  assert.match(html, /atlas-main-authority-nav\.js\?v=20260925-era-region-coverage-v4/);
   assert.match(nav, /atlasDashboardMount/);
   assert.match(nav, /ATLAS_DASHBOARD/);
   assert.match(nav, /function ensureSpacetimeModel\(\)/);
