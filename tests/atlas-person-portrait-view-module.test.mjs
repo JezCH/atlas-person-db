@@ -23,7 +23,7 @@ function renderer() {
 }
 
 test("portrait view module loads before Person Main and is an explicit required dependency",()=>{
-  const viewAsset="atlas-person-portrait-view.js?v=20260922-portrait-view-v1";
+  const viewAsset="atlas-person-portrait-view.js?v=20260924-portrait-upload-v3";
   const mainAsset=html.match(/atlas-person-main\.js\?v=[^"\'\s>]+/)?.[0] || "";
   assert.match(html,/atlas-person-portrait-view\.js\?v=20260922-portrait-view-v1/);
   assert.ok(mainAsset, "Person Main must use a cache-busted asset URL");
@@ -61,7 +61,7 @@ test("portrait renderer preserves upload, metadata, and provenance controls",()=
   ]});
 
   assert.match(out,/data-person-portrait-operation="upload"/);
-  assert.match(out,/name="portrait_file" accept="image\/\*"/);
+  assert.match(out,/name="portrait_file" accept="image\/jpeg,image\/png,image\/webp,image\/avif"/);
   assert.match(out,/value="artwork" selected/);
   assert.match(out,/value="strong" selected/);
   assert.match(out,/data-person-portrait-operation="metadata"/);
