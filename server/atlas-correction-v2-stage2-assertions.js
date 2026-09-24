@@ -2,6 +2,7 @@
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const STAGE2_ASSERTION_TYPES = new Set([
+  "assert_source",
   "assert_governance_period",
   "assert_polity_designation",
   "assert_polity_identity_relation"
@@ -27,6 +28,7 @@ const IDENTITY_RELATION_FIELDS = Object.freeze([
   "confidence","notes"
 ]);
 const IDENTITY_RELATION_UUID_FIELDS = new Set(["id","predecessor_polity_id","successor_polity_id","relation_type_id"]);
+const SOURCE_FIELDS = Object.freeze(["id","source_key","source_type","title","sha256","bytes","canonical_url","citation_text"]);
 
 function requireUuid(value, code) {
   const id = String(value || "").trim().toLowerCase();
@@ -127,10 +129,32 @@ function normalizeIdentityRelationBundle(raw, label) {
   return { relation: row, source_links: links };
 }
 
+function normalizeSourceBundle(raw, label) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error(`CORRECTION_V2_${label}_SOURCE_REQUIRED`);
+  const row = {};
+  for (const field of SOURCE_FIELDS) row[field] = raw[field] ?? null;
+  row.id = requireUuid(row.id, `CORRECTION_V2_${label}_SOURCE_ID_INVALID`);
+  row.source_key = String(row.source_key || "").trim();
+  row.source_type = String(row.source_type || "").trim();
+  row.title = String(row.title || "").trim();
+  row.canonical_url = String(row.canonical_url || "").trim();
+  row.citation_text = String(row.citation_text || "").trim();
+  if (!row.source_key || !row.source_type || !row.title) throw new Error(`CORRECTION_V2_${label}_SOURCE_METADATA_REQUIRED`);
+  if (row.sha256 !== null || row.bytes !== null) throw new Error(`CORRECTION_V2_${label}_SOURCE_FAKE_MATERIALIZATION_FORBIDDEN`);
+  if (!row.canonical_url.startsWith("https://") || !row.citation_text) throw new Error(`CORRECTION_V2_${label}_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED`);
+  return { source: row };
+}
+
 function normalizeStage2AssertionOperation(raw, index) {
   const type = String(raw?.type || "").trim();
   if (!STAGE2_ASSERTION_TYPES.has(type)) throw new Error("CORRECTION_V2_STAGE2_ASSERTION_OPERATION_UNSUPPORTED");
   const label = `OP${index}`;
+  if (type === "assert_source") {
+    const bundle = normalizeSourceBundle(raw.exact_after?.source, `${label}_SOURCE`);
+    const absent = requireUuid(raw?.exact_before?.source_absent_id, `CORRECTION_V2_${label}_SOURCE_ABSENT_ID_INVALID`);
+    if (absent !== bundle.source.id) throw new Error(`CORRECTION_V2_${label}_SOURCE_ID_MISMATCH`);
+    return { type, decision_id: String(raw.decision_id || ""), exact_before: { source_absent_id: absent }, exact_after: bundle };
+  }
   if (type === "assert_governance_period") {
     const bundle = normalizeGovernanceBundle(raw.exact_after, `${label}_GOVERNANCE`);
     const absent = requireUuid(raw?.exact_before?.period_absent_id, `CORRECTION_V2_${label}_PERIOD_ABSENT_ID_INVALID`);
@@ -147,6 +171,15 @@ function normalizeStage2AssertionOperation(raw, index) {
   const absent = requireUuid(raw?.exact_before?.relation_absent_id, `CORRECTION_V2_${label}_IDENTITY_RELATION_ABSENT_ID_INVALID`);
   if (absent !== bundle.relation.id) throw new Error(`CORRECTION_V2_${label}_IDENTITY_RELATION_ID_MISMATCH`);
   return { type, decision_id: String(raw.decision_id || ""), exact_before: { relation_absent_id: absent }, exact_after: bundle };
+}
+
+async function loadSourceBundle(client, id, { forUpdate = false } = {}) {
+  const row = await client.query(`select id::text,source_key,source_type,title,sha256,bytes,canonical_url,citation_text
+    from atlas_v2.sources where id=$1::uuid${forUpdate ? " for update" : ""}`, [id]);
+  if (!row.rowCount) return null;
+  const source = Object.fromEntries(SOURCE_FIELDS.map((field) => [field, row.rows[0][field] ?? null]));
+  source.id = String(source.id).toLowerCase();
+  return { source };
 }
 
 async function loadGovernanceBundle(client, id, { forUpdate = false } = {}) {
@@ -195,13 +228,25 @@ function exactEqual(left, right) {
 
 async function assertStage2AssertionAbsent(client, operation) {
   let existing;
-  if (operation.type === "assert_governance_period") existing = await loadGovernanceBundle(client, operation.exact_after.period.id, { forUpdate:true });
+  if (operation.type === "assert_source") {
+    existing = await loadSourceBundle(client, operation.exact_after.source.id, { forUpdate:true });
+    if (!existing) {
+      const keyCollision = await client.query(`select id::text from atlas_v2.sources where source_key=$1 limit 1`, [operation.exact_after.source.source_key]);
+      if (keyCollision.rowCount) throw new Error(`CORRECTION_V2_SOURCE_KEY_ALREADY_EXISTS:${operation.decision_id}`);
+    }
+  }
+  else if (operation.type === "assert_governance_period") existing = await loadGovernanceBundle(client, operation.exact_after.period.id, { forUpdate:true });
   else if (operation.type === "assert_polity_designation") existing = await loadDesignationBundle(client, operation.exact_after.designation.id, { forUpdate:true });
   else existing = await loadIdentityRelationBundle(client, operation.exact_after.relation.id, { forUpdate:true });
   if (existing) throw new Error(`CORRECTION_V2_ASSERTION_ID_ALREADY_EXISTS:${operation.decision_id}`);
 }
 
 async function insertStage2AssertionBundle(client, operation) {
+  if (operation.type === "assert_source") {
+    const row = operation.exact_after.source;
+    await client.query(`insert into atlas_v2.sources(${SOURCE_FIELDS.join(",")}) values(${SOURCE_FIELDS.map((_, i) => "$" + (i + 1)).join(",")})`, SOURCE_FIELDS.map((field) => row[field]));
+    return;
+  }
   if (operation.type === "assert_governance_period") {
     const row = operation.exact_after.period;
     await client.query(`insert into atlas_v2.polity_governance_periods(${GOVERNANCE_FIELDS.join(",")}) values(${GOVERNANCE_FIELDS.map((_, i) => `$${i + 1}`).join(",")})`, GOVERNANCE_FIELDS.map((field) => row[field]));
@@ -222,15 +267,18 @@ async function insertStage2AssertionBundle(client, operation) {
 
 async function verifyStage2AssertionApplied(client, operation) {
   let actual;
-  if (operation.type === "assert_governance_period") actual = await loadGovernanceBundle(client, operation.exact_after.period.id, { forUpdate:true });
+  if (operation.type === "assert_source") actual = await loadSourceBundle(client, operation.exact_after.source.id, { forUpdate:true });
+  else if (operation.type === "assert_governance_period") actual = await loadGovernanceBundle(client, operation.exact_after.period.id, { forUpdate:true });
   else if (operation.type === "assert_polity_designation") actual = await loadDesignationBundle(client, operation.exact_after.designation.id, { forUpdate:true });
   else actual = await loadIdentityRelationBundle(client, operation.exact_after.relation.id, { forUpdate:true });
   if (!exactEqual(actual, operation.exact_after)) throw new Error(`CORRECTION_V2_REPLAY_STAGE2_ASSERTION_DRIFT:${operation.decision_id}`);
 }
 
 function stage2AssertionCountDelta(operation) {
-  const delta = { governance_periods:0, governance_sources:0, designations:0, designation_names:0, designation_sources:0, identity_relations:0, identity_relation_sources:0 };
-  if (operation.type === "assert_governance_period") {
+  const delta = { sources:0, governance_periods:0, governance_sources:0, designations:0, designation_names:0, designation_sources:0, identity_relations:0, identity_relation_sources:0 };
+  if (operation.type === "assert_source") {
+    delta.sources = 1;
+  } else if (operation.type === "assert_governance_period") {
     delta.governance_periods = 1;
     delta.governance_sources = operation.exact_after.source_links.length;
   } else if (operation.type === "assert_polity_designation") {
@@ -245,6 +293,7 @@ function stage2AssertionCountDelta(operation) {
 }
 
 function stage2AssertionIdentity(operation) {
+  if (operation.type === "assert_source") return { id:operation.exact_after.source.id, source_links:[], name_ids:[] };
   if (operation.type === "assert_governance_period") return { id:operation.exact_after.period.id, source_links:operation.exact_after.source_links, name_ids:[] };
   if (operation.type === "assert_polity_designation") return { id:operation.exact_after.designation.id, source_links:operation.exact_after.source_links, name_ids:operation.exact_after.names.map((name) => name.id) };
   return { id:operation.exact_after.relation.id, source_links:operation.exact_after.source_links, name_ids:[] };
@@ -252,10 +301,12 @@ function stage2AssertionIdentity(operation) {
 
 module.exports = Object.freeze({
   STAGE2_ASSERTION_TYPES,
+  SOURCE_FIELDS,
   GOVERNANCE_FIELDS,
   DESIGNATION_FIELDS,
   IDENTITY_RELATION_FIELDS,
   normalizeStage2AssertionOperation,
+  loadSourceBundle,
   loadGovernanceBundle,
   loadDesignationBundle,
   loadIdentityRelationBundle,

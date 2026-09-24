@@ -1,0 +1,194 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "source_backfill_khri_srong_lde_btsan_liliuokalani_20260924_v1",
+  "as_of": "2026-09-24",
+  "status": "REVIEWED_PROVENANCE_BACKFILL",
+  "release_order": 590,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "Repair the two Production Activities currently reporting source_count=0 by adding reviewed bibliographic Source rows and linking them to the existing Activity UUIDs. Preserve Person, Polity, relation, Role, period, chronology, notes, and Activity identity.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_activity_identity": true,
+    "preserve_person_polity_relation_role_period_and_interval": true,
+    "preserve_existing_normalized_source_links_and_locators": true,
+    "reviewed_source_addition_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "production_person_read_checked_at": "2026-09-24",
+    "targets": [
+      {
+        "person": "Khri-sRong lDe-bTsan",
+        "person_id": "baca0c4d-2b76-4811-9f20-da070c9dfb64",
+        "activity_id": "606114f8-4d34-4948-9d40-82a8c042240f",
+        "observed_source_count": 0,
+        "source_note": "H. E. Richardson, Journal of the Royal Asiatic Society, 1964; Cambridge Core abstract explicitly identifies the inscription as relating to Khri Srong Lde Brtsan's reign and gives 755-797, documenting the one-year accession variation already noted by ATLAS."
+      },
+      {
+        "person": "Liliʻuokalani",
+        "person_id": "fe12952f-e81a-49dc-be64-96a2d6dc4c12",
+        "activity_id": "c2ba0093-a783-4738-b447-c3ed17f3e1f8",
+        "observed_source_count": 0,
+        "source_note": "State of Hawaiʻi Department of Defense history identifies Liliʻuokalani as the last monarch of the Hawaiian Kingdom and states that she reigned from 1891 to 1893."
+      }
+    ]
+  },
+  "operations": [
+    {
+      "case_id": "khri_srong_lde_btsan_add_reviewed_source",
+      "type": "rewrite_activity",
+      "activity_id": "606114f8-4d34-4948-9d40-82a8c042240f",
+      "baseline_before": {
+        "person_id": "baca0c4d-2b76-4811-9f20-da070c9dfb64",
+        "polity_id": "9639b3f0-9b94-42d3-98b9-273c7a601def",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 756,
+        "activity_end": 797,
+        "confidence": "direct_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "v2-runtime:authoring:person:khri-srong-lde-btsan:756-797:tibetan-empire:emperor:reign:v2:0",
+        "source_count": 0
+      },
+      "after": {
+        "activity_id": "606114f8-4d34-4948-9d40-82a8c042240f",
+        "person_id": "baca0c4d-2b76-4811-9f20-da070c9dfb64",
+        "polity_id": "9639b3f0-9b94-42d3-98b9-273c7a601def",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 756,
+        "activity_end": 797,
+        "activity_start_detail": {
+          "year": 756,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 797,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "direct_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "v2-runtime:authoring:person:khri-srong-lde-btsan:756-797:tibetan-empire:emperor:reign:v2:0",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": [
+          {
+            "source_id": "6a3b4697-4473-5a09-b773-d3c6e1fd6dd7",
+            "source_locator_key": "Richardson 1964, JRAS 96(1), pp. 1-13: Khri Srong Lde Brtsan reign 755-797; provenance for ruler/reign and chronology variation"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "liliuokalani_add_reviewed_source",
+      "type": "rewrite_activity",
+      "activity_id": "c2ba0093-a783-4738-b447-c3ed17f3e1f8",
+      "baseline_before": {
+        "person_id": "fe12952f-e81a-49dc-be64-96a2d6dc4c12",
+        "polity_id": "afee7492-af20-594f-8ad5-4c55fd60b5f3",
+        "role_id": "9b3f7d6e-a39a-584e-ba72-eb946eded022",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1891,
+        "activity_end": 1893,
+        "confidence": "direct_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "v2-runtime:authoring:person:liliuokalani:1891-1893:kingdom-of-hawaii:queen:reign:v1:0",
+        "source_count": 0
+      },
+      "after": {
+        "activity_id": "c2ba0093-a783-4738-b447-c3ed17f3e1f8",
+        "person_id": "fe12952f-e81a-49dc-be64-96a2d6dc4c12",
+        "polity_id": "afee7492-af20-594f-8ad5-4c55fd60b5f3",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "9b3f7d6e-a39a-584e-ba72-eb946eded022",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1891,
+        "activity_end": 1893,
+        "activity_start_detail": {
+          "year": 1891,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1893,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "direct_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "v2-runtime:authoring:person:liliuokalani:1891-1893:kingdom-of-hawaii:queen:reign:v1:0",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": [
+          {
+            "source_id": "50a4a39b-91d7-5248-a51c-7be7d07ff470",
+            "source_locator_key": "State of Hawaiʻi Department of Defense, Hawaiʻi National Guard History: Liliʻuokalani last monarch, reigned 1891-1893"
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "source_cambridge_richardson_khri_srong_1964",
+      "exact_before": {
+        "source_absent_id": "6a3b4697-4473-5a09-b773-d3c6e1fd6dd7"
+      },
+      "exact_after": {
+        "source": {
+          "id": "6a3b4697-4473-5a09-b773-d3c6e1fd6dd7",
+          "source_key": "bibliographic:cambridge:richardson-khri-srong-lde-brtsan-1964",
+          "source_type": "academic_article",
+          "title": "A New Inscription of Khri Srong lde Brtsan",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.cambridge.org/core/journals/journal-of-the-royal-asiatic-society/article/abs/new-inscription-of-khri-srong-lde-brtsan/EDA1A93D20E209F425F78D4E4DAF71C9",
+          "citation_text": "H. E. Richardson, “A New Inscription of Khri Srong lde Brtsan,” Journal of the Royal Asiatic Society 96(1), 1964, pp. 1–13. Cambridge Core states that the inscription relates to the reign of Khri Srong Lde Brtsan (755–797)."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "source_hawaii_dod_liliuokalani_1891_1893",
+      "exact_before": {
+        "source_absent_id": "50a4a39b-91d7-5248-a51c-7be7d07ff470"
+      },
+      "exact_after": {
+        "source": {
+          "id": "50a4a39b-91d7-5248-a51c-7be7d07ff470",
+          "source_key": "bibliographic:hawaii-dod:liliuokalani-1891-1893",
+          "source_type": "official_government_historical_reference",
+          "title": "Hawaiʻi National Guard History",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://dod.hawaii.gov/hawaii-national-guard-history/",
+          "citation_text": "State of Hawaiʻi Department of Defense, Hawaiʻi National Guard History: identifies Liliʻuokalani as the last monarch of the Hawaiian Kingdom and states that she reigned from 1891 to 1893."
+        }
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 2,
+    "asserted_source_count": 2,
+    "expected_activity_source_link_delta": 2,
+    "production_mutation_authorized": false
+  }
+}
