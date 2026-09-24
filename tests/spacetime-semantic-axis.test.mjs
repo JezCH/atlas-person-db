@@ -82,12 +82,20 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   );
   assert.ok(continuum.bandForCode("east-asia").max_space <= continuum.bandForCode("oceania").min_space + 1e-12);
   assert.deepEqual(
+    spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "americas").subregions.map((band) => band.code),
+    ["south-america", "caribbean", "mesoamerica", "north-america"]
+  );
+  assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "europe").subregions.map((band) => band.code),
     ["britain-ireland", "northern-europe", "russia-volga", "eastern-europe", "balkans", "central-europe", "italy", "western-europe", "iberia"]
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "africa").subregions.map((band) => band.code),
     ["maghreb-north-africa", "west-africa", "central-africa", "southern-africa", "east-africa", "horn-of-africa", "nile-valley"]
+  );
+  assert.deepEqual(
+    spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "west-asia").subregions.map((band) => band.code),
+    ["levant", "arabia", "mesopotamia", "anatolia", "caucasus", "iranian-plateau"]
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "central-asia").subregions.map((band) => band.code),
@@ -98,8 +106,16 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
     ["himalayas", "northwest-south-asia", "north-india-ganges", "deccan-south-india", "maldives", "sri-lanka"]
   );
   assert.deepEqual(
+    spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "southeast-asia").subregions.map((band) => band.code),
+    ["maritime-southeast-asia", "mainland-southeast-asia"]
+  );
+  assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "east-asia").subregions.map((band) => band.code),
     ["china", "manchuria", "eastern-siberia-far-east", "korean-peninsula", "japan"]
+  );
+  assert.deepEqual(
+    spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "oceania").subregions.map((band) => band.code),
+    ["pacific-islands", "australasia"]
   );
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_basis, "atlas_internal_display_taxonomy");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.external_standard, null);
