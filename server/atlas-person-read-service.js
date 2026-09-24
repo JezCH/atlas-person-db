@@ -47,7 +47,6 @@ select
     where per.person_id = p.id
   ), '{}'::jsonb) as external_references,
   ${namuwikiReview.NOT_FOUND_REVIEW_AUDIT_SQL} as namuwiki_not_found_reviewed,
-  ${namuwikiReview.NOT_FOUND_REVIEW_AUDIT_SQL} as namuwiki_not_found_reviewed,
   (select count(*)::int from atlas_v2.person_politics_v2 pp where pp.person_id = p.id) as activity_count,
   (select min(pp.activity_start) from atlas_v2.person_politics_v2 pp where pp.person_id = p.id) as first_activity_year,
   (select max(pp.activity_end) from atlas_v2.person_politics_v2 pp where pp.person_id = p.id) as last_activity_year
@@ -97,7 +96,8 @@ select
     )
     from atlas_v2.person_external_references per
     where per.person_id = p.id
-  ), '{}'::jsonb) as external_references
+  ), '{}'::jsonb) as external_references,
+  ${namuwikiReview.NOT_FOUND_REVIEW_AUDIT_SQL} as namuwiki_not_found_reviewed
 from atlas_v2.persons p
 where p.id = $1::uuid
 limit 1
