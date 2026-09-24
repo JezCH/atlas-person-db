@@ -1,0 +1,125 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "f3651c11c501196183fe509d3b99c1159da0f224",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign the sixteen SSS+ registration superbatch 05 Persons to their already-reviewed representative domains from Lane A checkpoints; no role-based inference."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SSSPLUS-SUPERBATCH05-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 16,
+    "distribution": {
+      "governance": 0,
+      "military": 0,
+      "knowledge": 7,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 9,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "b380122b-4ce0-4e81-ba79-18d454a1ba5c",
+      "canonical_name_en": "Thucydides",
+      "preferred_name_ko": "투키디데스",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "add62f50-5dfe-4b74-b8cb-9af003f859b2",
+      "canonical_name_en": "Jean-Jacques Rousseau",
+      "preferred_name_ko": "장자크 루소",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "6c659196-ec7f-4ec8-9efe-a5e2e3ae8e8e",
+      "canonical_name_en": "Ibn al-Haytham",
+      "preferred_name_ko": "이븐 알하이삼",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "e13c2ab2-f8fb-408a-9a65-34bb38223e85",
+      "canonical_name_en": "Carl Friedrich Gauss",
+      "preferred_name_ko": "카를 프리드리히 가우스",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "40c95688-4280-4e7c-a096-a5e356a7181a",
+      "canonical_name_en": "Gerardus Mercator",
+      "preferred_name_ko": "게라르두스 메르카토르",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "00ee8555-9615-4d8a-a434-70b5de15a357",
+      "canonical_name_en": "Blaise Pascal",
+      "preferred_name_ko": "블레즈 파스칼",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "f0b62721-9191-418b-b9a9-ec66b8824fd1",
+      "canonical_name_en": "Michel Foucault",
+      "preferred_name_ko": "미셸 푸코",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "92949632-b9e5-4b6b-985e-f5245be4aa1e",
+      "canonical_name_en": "Jules Verne",
+      "preferred_name_ko": "쥘 베른",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "25117b36-b5ba-4d45-9f9d-a35443814af8",
+      "canonical_name_en": "Petrarch",
+      "preferred_name_ko": "페트라르카",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "12d6c0c9-f727-4358-b6ef-2acb1ff7a27f",
+      "canonical_name_en": "Hans Christian Andersen",
+      "preferred_name_ko": "한스 크리스티안 안데르센",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "0d9c44c2-55d0-4df1-9e42-2393e363a90e",
+      "canonical_name_en": "Salvador Dalí",
+      "preferred_name_ko": "살바도르 달리",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "a73103e4-a4fd-4103-9346-c0c697585966",
+      "canonical_name_en": "Jan van Eyck",
+      "preferred_name_ko": "얀 반 에이크",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "8d8f78e6-4cc8-4433-b6b6-e2a9777a0bc8",
+      "canonical_name_en": "Giotto",
+      "preferred_name_ko": "조토",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "b5cce601-aeca-4e4f-af80-5eda81b073fe",
+      "canonical_name_en": "Edvard Munch",
+      "preferred_name_ko": "에드바르 뭉크",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "9f68b83e-c9e5-43e6-9bf6-0cf38d839bd3",
+      "canonical_name_en": "Marcel Proust",
+      "preferred_name_ko": "마르셀 프루스트",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "e16a3b74-f6f7-4eea-9c59-d796b8859d8c",
+      "canonical_name_en": "Simone de Beauvoir",
+      "preferred_name_ko": "시몬 드 보부아르",
+      "representative_domain": "culture"
+    }
+  ]
+}
