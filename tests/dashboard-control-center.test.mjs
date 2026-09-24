@@ -1411,7 +1411,7 @@ test("NamuWiki dashboard distinguishes reviewed-unlinked reasons from unreviewed
 test("dashboard NamuWiki copy exposes reviewed-unlinked reason counts with readable breakdown rows", () => {
   assert.match(dashboardSource,/독립 문서 없음/);
   assert.match(dashboardSource,/문서 확인·URL 미확정/);
-  assert.match(dashboardSource,/검토 완료·세부사유 미기록/);
+  assert.match(dashboardSource,/사유 미기록/);
   assert.match(dashboardSource,/미검토·재검증 필요/);
   assert.match(dashboardSource,/NamuWiki 미연결 검토 결과/);
   assert.match(dashboardSource,/dashboard-breakdown-row/);
