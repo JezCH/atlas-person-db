@@ -1130,8 +1130,10 @@
 
     let namuLinked = 0;
     let namuReviewedUnlinked = 0;
-    let namuConfirmedAbsent = 0;
-    let namuTargetPending = 0;
+    let namuNoExactDocument = 0;
+    let namuRelatedOrDerivativeOnly = 0;
+    let namuExactTargetUrlPending = 0;
+    let namuExactTargetUrlVerified = 0;
     let namuReviewedReasonUnrecorded = 0;
     let namuLegacyUnverified = 0;
     let namuNoDecision = 0;
@@ -1141,12 +1143,16 @@
       else if (state === "reviewed_absent") {
         namuReviewedUnlinked += 1;
         const reason = namuwikiAbsenceReason(person);
-        if (reason === "no_exact_document" || reason === "related_or_derivative_only") namuConfirmedAbsent += 1;
-        else if (reason === "exact_target_url_pending" || reason === "exact_target_url_verified") namuTargetPending += 1;
+        if (reason === "no_exact_document") namuNoExactDocument += 1;
+        else if (reason === "related_or_derivative_only") namuRelatedOrDerivativeOnly += 1;
+        else if (reason === "exact_target_url_pending") namuExactTargetUrlPending += 1;
+        else if (reason === "exact_target_url_verified") namuExactTargetUrlVerified += 1;
         else namuReviewedReasonUnrecorded += 1;
       } else if (state === "legacy_unverified") namuLegacyUnverified += 1;
       else namuNoDecision += 1;
     }
+    const namuConfirmedAbsent = namuNoExactDocument + namuRelatedOrDerivativeOnly;
+    const namuTargetPending = namuExactTargetUrlPending + namuExactTargetUrlVerified;
     const namuReviewed = namuLinked + namuReviewedUnlinked;
     const namuUnreviewed = namuLegacyUnverified + namuNoDecision;
 
@@ -1204,6 +1210,10 @@
           percentage:percent(namuReviewed,totalPersons),
           linked:namuLinked,
           reviewed_unlinked:namuReviewedUnlinked,
+          no_exact_document:namuNoExactDocument,
+          related_or_derivative_only:namuRelatedOrDerivativeOnly,
+          exact_target_url_pending:namuExactTargetUrlPending,
+          exact_target_url_verified:namuExactTargetUrlVerified,
           confirmed_absent:namuConfirmedAbsent,
           target_url_pending:namuTargetPending,
           reviewed_reason_unrecorded:namuReviewedReasonUnrecorded,
