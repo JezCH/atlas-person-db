@@ -51,7 +51,7 @@
         <span>없음 확정 <b>${known ? value(row.confirmed_absent) : "—"}</b></span>
         <span>문서 확인·URL 미확정 <b>${known ? value(row.target_found_url_pending) : "—"}</b></span>
         <span>링크 반영 대기 <b>${known ? value(row.target_found_link_pending) : "—"}</b></span>
-        <span>미검토·재검증 <b>${known ? value(Number(row.legacy_unverified || 0) + Number(row.no_decision || 0)) : "—"}</b></span>
+        <span>미검토·재검증 필요 <b>${known ? value(Number(row.legacy_unverified || 0) + Number(row.no_decision || 0)) : "—"}</b></span>
       </div>
     </article>`;
   }
