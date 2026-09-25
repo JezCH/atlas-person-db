@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "aae6637a08210ad65b5f5a67d75b1bb7188bc064",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign AoE II SS microbatch 02 exact Person UUIDs to the already-reviewed governance domain from #1374 comment 5825498864 / #1375 comment 5825503112. No regrading or name-only binding."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-AOE2-SS02-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 6,
+    "distribution": {
+      "governance": 6,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "97981e09-e791-49d6-9dea-78d56e472102",
+      "canonical_name_en": "Ashikaga Takauji",
+      "preferred_name_ko": "아시카가 다카우지",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "d783a350-8a31-4d0c-a5a4-cb359b90d7a2",
+      "canonical_name_en": "Ashot I of Armenia",
+      "preferred_name_ko": "아쇼트 1세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "dae93a65-249b-4b12-907c-c49362aedf9a",
+      "canonical_name_en": "Asparukh",
+      "preferred_name_ko": "아스파루흐",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "63d86bed-3570-4dc0-a1d1-7da87484aa48",
+      "canonical_name_en": "Athaulf",
+      "preferred_name_ko": "아타울프",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "25791d75-827e-4317-b161-6592f34bd786",
+      "canonical_name_en": "Bagrat III of Georgia",
+      "preferred_name_ko": "바그라트 3세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "fe5286f4-94fd-4d81-b933-5f76a790d58c",
+      "canonical_name_en": "Baibars",
+      "preferred_name_ko": "바이바르스",
+      "representative_domain": "governance"
+    }
+  ]
+}
