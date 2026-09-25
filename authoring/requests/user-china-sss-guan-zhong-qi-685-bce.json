@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-china-sss:guan-zhong:qi:chief-minister-reformer:685-bce:v1",
+  "person": {
+    "canonical_name_en": "Guan Zhong",
+    "display_name_ko": "관중",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-26",
+      "document_title": "관중(춘추시대)",
+      "url": "https://namu.wiki/w/%EA%B4%80%EC%A4%91%28%EC%B6%98%EC%B6%94%EC%8B%9C%EB%8C%80%29"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Qi",
+    "display_name_ko": "제나라"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Chief minister and reformer",
+    "role_display_name_ko": "재상·개혁가",
+    "start_year": -685,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -685,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 685 BCE marks Guan Zhong's appointment as Duke Huan of Qi's chief minister. ATLAS uses the appointment year as a bounded representative point rather than assigning an uncertain full ministerial interval."
+  },
+  "sources": [
+    {
+      "title": "Spring and Autumn China (722-453) — Indiana University ScholarWorks",
+      "canonical_url": "https://hdl.handle.net/2022/23441",
+      "citation_text": "Robert Eno's Indiana University course text recounts Duke Huan making Guan Zhong prime minister and attributes Qi's subsequent administrative reorganization and rise to hegemony chiefly to Guan Zhong's policies.",
+      "source_type": "university_reference"
+    },
+    {
+      "title": "Guan Zhong — Chinese Text Project Dictionary",
+      "canonical_url": "https://ctext.org/dictionary.pl?did=154&if=en",
+      "citation_text": "The Chinese Text Project identifies Guan Zhong as Qi's chancellor and reformer and gives his appointment as prime minister by Duke Huan in 685 BCE.",
+      "source_type": "digital_text_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "user-20260926-guan-zhong",
+    "review_checkpoint": "#1374 comment 5835171948",
+    "registration_handoff": "#1375 comment 5835173541",
+    "grade": "SSS",
+    "representative_domain": "governance"
+  }
+}

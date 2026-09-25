@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-china-sss:yue-fei:southern-song:general:1140:v1",
+  "person": {
+    "canonical_name_en": "Yue Fei",
+    "display_name_ko": "악비",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-26",
+      "document_title": "악비",
+      "url": "https://namu.wiki/w/%EC%95%85%EB%B9%84"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Southern Song",
+    "display_name_ko": "남송"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "General",
+    "role_display_name_ko": "장군",
+    "start_year": 1140,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1140,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1140 marks Yue Fei's major campaigns against the Jin while serving the Southern Song as a general. ATLAS records this securely documented military milestone rather than using his lifespan as a career rail."
+  },
+  "sources": [
+    {
+      "title": "Poem to be Sung to the Tune of Full River Red — Yue Fei | Asia for Educators, Columbia University",
+      "canonical_url": "https://afe.easia.columbia.edu/main_pop/ps/ps_china-full-river-yuefei.htm",
+      "citation_text": "Columbia's Asia for Educators identifies Yue Fei as a Song officer who rose to general and records his successful campaigns against the Jin in 1140.",
+      "source_type": "university_reference"
+    },
+    {
+      "title": "軍事史적 관점에서 바라본 岳飛의 죽음 — KCI",
+      "canonical_url": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003046054",
+      "citation_text": "The KCI-indexed military-history study describes Yue Fei's 1140 northward campaign against the Jin in the context of Southern Song military strategy.",
+      "source_type": "academic_article"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "user-20260926-yue-fei",
+    "review_checkpoint": "#1374 comment 5835171948",
+    "registration_handoff": "#1375 comment 5835173541",
+    "grade": "SSS",
+    "representative_domain": "military"
+  }
+}
