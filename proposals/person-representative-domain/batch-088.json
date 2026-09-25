@@ -1,0 +1,125 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "4bdb0cb98dcf5ab8fc6931019225c61c24da4604",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign the 16 newly registered SSS SUPERBATCH-02 Persons to the representative domains already reviewed in their referenced #1374 handoff checkpoints; no reclassification is performed here."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SSS-SUPERBATCH02-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 16,
+    "distribution": {
+      "governance": 0,
+      "military": 0,
+      "knowledge": 7,
+      "technology": 3,
+      "commerce": 1,
+      "culture": 5,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "c94d5933-be6b-43e3-a7ca-5f7c9a6b9301",
+      "canonical_name_en": "Al-Battani",
+      "preferred_name_ko": "알바타니",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "5c9d4d8e-1d2d-44d1-b73c-d1343606b32b",
+      "canonical_name_en": "Alfred Russel Wallace",
+      "preferred_name_ko": "앨프리드 러셀 월리스",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "d89db567-f059-4ef4-9529-34892e2fafce",
+      "canonical_name_en": "Arthur C. Clarke",
+      "preferred_name_ko": "아서 C. 클라크",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "b60799c7-4707-42fe-9613-2a2dfb1c960c",
+      "canonical_name_en": "Chien-Shiung Wu",
+      "preferred_name_ko": "우젠슝",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "d3a55a20-50cb-4444-b03a-5c1e3b253df9",
+      "canonical_name_en": "Frederick Banting",
+      "preferred_name_ko": "프레더릭 밴팅",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "7bd4ccad-b602-40d1-b971-df694e550e1e",
+      "canonical_name_en": "George Lucas",
+      "preferred_name_ko": "조지 루커스",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "ae5b60cd-0113-4aea-8bc7-facb989fc2bf",
+      "canonical_name_en": "George Stephenson",
+      "preferred_name_ko": "조지 스티븐슨",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "3a5f0856-8d8b-446a-9e59-379344f8d5ee",
+      "canonical_name_en": "Isaac Asimov",
+      "preferred_name_ko": "아이작 아시모프",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "95431d5a-8728-410e-a49e-5db486b0fbff",
+      "canonical_name_en": "Mark Zuckerberg",
+      "preferred_name_ko": "마크 저커버그",
+      "representative_domain": "commerce"
+    },
+    {
+      "person_id": "c3586f40-8c6d-4d97-a818-da00dc57b22a",
+      "canonical_name_en": "Paul Dirac",
+      "preferred_name_ko": "폴 디랙",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "04e1166c-32bb-4aca-accf-3400c1a767ee",
+      "canonical_name_en": "Robert Goddard",
+      "preferred_name_ko": "로버트 고더드",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "3fef3a33-a97c-4905-b66e-7795093bfc23",
+      "canonical_name_en": "Shigeru Miyamoto",
+      "preferred_name_ko": "미야모토 시게루",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "f28e3e06-1bc3-44c2-8180-813b7ff5ba50",
+      "canonical_name_en": "Shiing-Shen Chern",
+      "preferred_name_ko": "천싱선",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "8fa5444d-6e2a-4734-a7d3-739496955a58",
+      "canonical_name_en": "Stefan Banach",
+      "preferred_name_ko": "스테판 바나흐",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "aa76779b-7d49-423a-bd7a-160977916ec6",
+      "canonical_name_en": "Steven Spielberg",
+      "preferred_name_ko": "스티븐 스필버그",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "1e98d370-753a-462e-a2de-2fc18ca3ccbb",
+      "canonical_name_en": "Wernher von Braun",
+      "preferred_name_ko": "베르너 폰 브라운",
+      "representative_domain": "technology"
+    }
+  ]
+}
