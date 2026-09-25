@@ -245,7 +245,7 @@ async function collectDesktopDom(client) {
         has_person_drilldown:Boolean(button && !activityControls)
       };
     });
-    const heatmapCells=qa(".dashboard-heatmap tbody td").map((td)=>Number((td.textContent||"").replace(/,/g,"").trim())).filter(Number.isFinite);
+    const heatmapCells=qa(".dashboard-heatmap tbody td:not(.dashboard-heatmap-total-cell) strong").map((el)=>Number((el.textContent||"").replace(/,/g,"").trim())).filter(Number.isFinite);
     const panels=qa("#atlasDashboardMount .dashboard-panel");
     const timelinePanel=panels.find((p)=>p.querySelector(".eyebrow")?.textContent?.includes("RECENT DELTA"));
     const timelineMeta=timelinePanel ? [...timelinePanel.querySelectorAll(".dashboard-progress-meta span")].map((x)=>(x.textContent||"").trim()) : [];
@@ -586,6 +586,10 @@ function verifyCanonicalContracts(modelState, desktopDom) {
   assert(heatmap?.available === true, "Era × Region Heatmap source unavailable", heatmap);
   assert(Number(heatmap.placed_activity_count || 0) > 0, "Era × Region Heatmap has no placed real activities", heatmap);
   assert((heatmap.rows || []).some((row)=>(row.cells || []).some((cell)=>Number(cell.count || 0)>0)), "Era × Region Heatmap contains no non-zero real-data cells", heatmap);
+  const expectedHeatmapCellCount=(heatmap.rows || []).reduce((sum,row)=>sum+(row.cells || []).length,0);
+  const expectedHeatmapTotal=(heatmap.rows || []).reduce((sum,row)=>sum+(row.cells || []).reduce((rowSum,cell)=>rowSum+Number(cell.count || 0),0),0);
+  assert(desktopDom.heatmap.cell_count === expectedHeatmapCellCount, "Rendered heatmap cell count differs from canonical model", { dom:desktopDom.heatmap,expectedHeatmapCellCount });
+  assert(desktopDom.heatmap.total === expectedHeatmapTotal, "Rendered heatmap total differs from canonical model", { dom:desktopDom.heatmap,expectedHeatmapTotal });
   assert(desktopDom.heatmap.non_zero > 0 && desktopDom.heatmap.total > 0, "Rendered heatmap has no real data", desktopDom.heatmap);
 
   const timeline=modelState.timeline;
