@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss05:prince:united-states:singer-songwriter-musician:1984:v1",
+  "person": {
+    "canonical_name_en": "Prince",
+    "display_name_ko": "프린스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Singer-songwriter and musician",
+    "role_display_name_ko": "싱어송라이터·음악가",
+    "start_year": 1984,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1984,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1984 marks Purple Rain, the album and soundtrack that launched Prince into global superstardom."
+  },
+  "sources": [
+    {
+      "title": "Purple Rain | Library of Congress",
+      "canonical_url": "https://www.loc.gov/item/96790180/",
+      "citation_text": "The Library of Congress records Prince and the Revolution's Purple Rain as published in 1984.",
+      "source_type": "library_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-044",
+    "review_checkpoint": "#1374 comment 5815496976",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}
