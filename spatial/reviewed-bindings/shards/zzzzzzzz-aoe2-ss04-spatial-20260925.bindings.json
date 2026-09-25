@@ -1,0 +1,28 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zzzzzzzz-aoe2-ss04-spatial-20260925",
+  "baseline": "e2c6f8ebd317664e64c72f4d9213335b76237bd0",
+  "reviewed_at": "2026-09-25T15:14:37.000Z",
+  "bindings": [
+    {
+      "polity_id": "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4",
+      "region_code": "africa",
+      "subregion_code": "maghreb-north-africa"
+    }
+  ],
+  "activity_overrides": [
+    {
+      "activity_id": "0420b69a-d48e-449e-a021-04ef74097771",
+      "expected_polity_id": "2612d649-8aa4-4042-b504-60e47c602944",
+      "expected_start_year": 376,
+      "expected_end_year": 380,
+      "region_code": "europe",
+      "subregion_code": "balkans",
+      "location_label": "Lower Danube–Thrace / Adrianople",
+      "reason": "Fritigern's reviewed 376–380 Tervingi activity covers the Lower Danube crossing into Roman Moesia/Thrace and the 378 victory at Adrianople. An Activity-level Balkan anchor closes this mobile migration-war interval without assigning the Tervingi a misleading permanent static leaf.",
+      "source_refs": [
+        "Oxford Classical Dictionary: Fritigern — leader of the Tervingi from c.376 to c.380, pursued asylum inside the Roman Empire and won at Adrianople in 378"
+      ]
+    }
+  ]
+}
