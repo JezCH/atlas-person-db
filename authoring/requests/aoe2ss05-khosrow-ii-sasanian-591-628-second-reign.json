@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:khosrow-ii:sasanian-empire:shahanshah:591-628:second:v1",
+  "person": {
+    "canonical_name_en": "Khosrow II",
+    "display_name_ko": "호스로 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-26",
+      "document_title": "호스로 2세",
+      "url": "https://namu.wiki/w/%ED%98%B8%EC%8A%A4%EB%A1%9C%202%EC%84%B8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Sasanian Empire",
+    "display_name_ko": "사산 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Shahanshah",
+    "role_display_name_ko": "샤한샤",
+    "start_year": 591,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 628,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Khosrow II regained the Sasanian throne in 591 with Roman support and ruled until his deposition and death in 628. This second reign is intentionally separate from his brief 590 first reign because Bahrām Chōbin's usurpation was a real interruption."
+  },
+  "sources": [
+    {
+      "title": "Byzantine-Iranian Relations — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/byzantine-iranian-relations/",
+      "citation_text": "Encyclopaedia Iranica explicitly lists Khosrow II Parvēz as reigning in 590 and again from 591 to 628.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Chronology of Iranian History Part 1 — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/chronology-of-iranian-history-part-1/",
+      "citation_text": "Iranica records Khosrow II's restoration in 591 and his deposition and execution in 628.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260926-microbatch-05",
+    "source_review_checkpoint": "#1374 comment 5825499804; #1375 comment 5835006903",
+    "dedup_method": "Completed identity-aware Production dedup preserved; immediate bounded Production exact/alias screen on 2026-09-26 found the target identity absent for all six. Broad 'Henry I' matches to Henry II of England and Henry IV of France were explicitly excluded as unrelated persons."
+  }
+}

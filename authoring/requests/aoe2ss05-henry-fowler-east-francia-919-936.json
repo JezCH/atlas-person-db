@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:henry-the-fowler:east-francia:king:919-936:v1",
+  "person": {
+    "canonical_name_en": "Henry the Fowler",
+    "display_name_ko": "하인리히 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-26",
+      "document_title": "하인리히 1세",
+      "url": "https://namu.wiki/w/%ED%95%98%EC%9D%B8%EB%A6%AC%ED%9E%88%201%EC%84%B8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "East Francia",
+    "display_name_ko": "동프랑크 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 919,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 936,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Henry the Fowler was elected king in 919 and ruled until his death in 936. ATLAS attaches the representative reign to the existing East Francia polity, reflecting the East Frankish/German kingship from which the later Ottonian imperial monarchy developed."
+  },
+  "sources": [
+    {
+      "title": "Henry I — king of Germany — Encyclopaedia Britannica",
+      "canonical_url": "https://www.britannica.com/biography/Henry-I-king-of-Germany",
+      "citation_text": "Britannica states that Henry was elected German king in May 919 and ruled until his death on 2 July 936.",
+      "source_type": "encyclopedic_reference"
+    },
+    {
+      "title": "1911 Encyclopædia Britannica — Henry I. 'the Fowler'",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Henry_I._%22the_Fowler%22",
+      "citation_text": "The historical reference records Henry's election in May 919, recognition as king of the East Franks, and death in July 936.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260926-microbatch-05",
+    "source_review_checkpoint": "#1374 comment 5825499804; #1375 comment 5835006903",
+    "dedup_method": "Completed identity-aware Production dedup preserved; immediate bounded Production exact/alias screen on 2026-09-26 found the target identity absent for all six. Broad 'Henry I' matches to Henry II of England and Henry IV of France were explicitly excluded as unrelated persons."
+  }
+}

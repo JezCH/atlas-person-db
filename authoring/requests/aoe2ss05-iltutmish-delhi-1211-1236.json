@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:iltutmish:delhi-sultanate:sultan:1211-1236:v1",
+  "person": {
+    "canonical_name_en": "Iltutmish",
+    "display_name_ko": "일투트미쉬",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-26",
+      "document_title": "일투트미쉬",
+      "url": "https://namu.wiki/w/%EC%9D%BC%ED%88%AC%ED%8A%B8%EB%AF%B8%EC%89%AC"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Delhi Sultanate",
+    "display_name_ko": "델리 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1211,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1236,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shams al-Din Iltutmish succeeded to the Delhi sultanate in 1211 and ruled until 1236. ATLAS reuses the existing Delhi Sultanate polity and records the standard 1211–1236 sultanic reign."
+  },
+  "sources": [
+    {
+      "title": "A History of Islamic Societies — The Indian subcontinent: The Delhi Sultanates and the Mughal Empire",
+      "canonical_url": "https://www.cambridge.org/highereducation/books/a-history-of-islamic-societies/22183D81CFE5E37E5DBED1A0F5AB0FB9/the-indian-subcontinent-the-delhi-sultanates-and-the-mughal-empire/9F9610CDC13644791215C48AC1BF4BED",
+      "citation_text": "Cambridge's history identifies Iltutmish as ruler of the Delhi Sultanate with a reign of 1211–1236.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Mahzar-namas in the Mughal and British Empires",
+      "canonical_url": "https://www.cambridge.org/core/journals/comparative-studies-in-society-and-history/article/mahzarnamas-in-the-mughal-and-british-empires-the-uses-of-an-indoislamic-legal-form/043DCAAC39A0EF07816B80BB63349BE3",
+      "citation_text": "The Cambridge article identifies Shams al-din Iltutmish and gives his reign as 1211–1236.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260926-microbatch-05",
+    "source_review_checkpoint": "#1374 comment 5825499804; #1375 comment 5835006903",
+    "dedup_method": "Completed identity-aware Production dedup preserved; immediate bounded Production exact/alias screen on 2026-09-26 found the target identity absent for all six. Broad 'Henry I' matches to Henry II of England and Henry IV of France were explicitly excluded as unrelated persons."
+  }
+}

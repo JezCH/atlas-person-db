@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:maharana-pratap:kingdom-of-mewar:maharana:1572-1597:v1",
+  "person": {
+    "canonical_name_en": "Maharana Pratap",
+    "display_name_ko": "마하라나 프라탑",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Mewar",
+    "display_name_ko": "메와르 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Maharana",
+    "role_display_name_ko": "마하라나",
+    "start_year": 1572,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1597,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Maharana Pratap (Rana Pratap Singh) ruled Mewar from 1572 until his death in 1597 and is especially associated with continued Mewar resistance to Mughal expansion under Akbar. ATLAS reuses the existing Kingdom of Mewar polity."
+  },
+  "sources": [
+    {
+      "title": "Rana Pratap Singh — Encyclopaedia Britannica",
+      "canonical_url": "https://www.britannica.com/biography/Rana-Pratap-Singh",
+      "citation_text": "Britannica identifies Rana Pratap Singh as the maharaja of Mewar from 1572 to 1597 and records his death on 19 January 1597.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260926-microbatch-05",
+    "source_review_checkpoint": "#1374 comment 5825499804; #1375 comment 5835006903",
+    "dedup_method": "Completed identity-aware Production dedup preserved; immediate bounded Production exact/alias screen on 2026-09-26 found the target identity absent for all six. Broad 'Henry I' matches to Henry II of England and Henry IV of France were explicitly excluded as unrelated persons."
+  }
+}
