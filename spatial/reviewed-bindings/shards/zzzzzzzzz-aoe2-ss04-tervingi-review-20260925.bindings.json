@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zzzzzzzzz-aoe2-ss04-tervingi-review-20260925",
+  "baseline": "1d3d5c2698325091d83d2befd00195c6e7006fbc",
+  "reviewed_at": "2026-09-25T15:23:44.000Z",
+  "bindings": [],
+  "review_queue": [
+    {
+      "polity_id": "2612d649-8aa4-4042-b504-60e47c602944",
+      "reason": "Tervingi in Fritigern's 376–380 interval are a mobile/transregional Gothic grouping rather than a defensible fixed-leaf polity. Keep the polity itself explicitly reviewed/unplaced; the exact Fritigern Activity is resolved separately by its reviewed Lower Danube–Thrace / Adrianople Activity override."
+    }
+  ]
+}

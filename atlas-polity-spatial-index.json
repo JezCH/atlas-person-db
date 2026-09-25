@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-25T15:14:37.000Z",
+  "generated_at": "2026-09-25T15:23:44.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1613,6 +1613,10 @@
     {
       "polity_id": "eb2f8e2e-220b-4754-afe9-25449b1d35ec",
       "reason": "cross_macroregion_tribal_polity_requires_activity_specific_spatial_review"
+    },
+    {
+      "polity_id": "2612d649-8aa4-4042-b504-60e47c602944",
+      "reason": "Tervingi in Fritigern's 376–380 interval are a mobile/transregional Gothic grouping rather than a defensible fixed-leaf polity. Keep the polity itself explicitly reviewed/unplaced; the exact Fritigern Activity is resolved separately by its reviewed Lower Danube–Thrace / Adrianople Activity override."
     },
     {
       "polity_id": "01cd1acd-9321-4d25-bc30-4cbd561bcbd5",
