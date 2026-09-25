@@ -42,17 +42,6 @@
         evidence: ["#977 exhaustive similarity audit confirmed false merge", "중세와 근대 세르비아 왕국 분리 필요", "중세 Kingdom→Serbian Empire는 후속 경계 검토"]
       },
       {
-        id: "han-han-character-collapse",
-        kind: "repair_review",
-        title: "Han identity 韓 / 漢 오결합",
-        left: { name: "Han", ko: "한", polity_id: "46740a29-a891-5ff8-9804-0f8aba62e71e" },
-        right: { name: "Western Han", ko: "전한" },
-        rationale: "전국시대 한(韓)과 장건이 속한 한 왕조(漢)가 한 UUID에 섞였습니다. 장건 Activity는 기존 Western Han으로 재연결하고 전국시대 한은 독립 identity와 명칭을 유지해야 합니다.",
-        suggested_action: "repair",
-        status: "AUDIT_REPAIR_REQUIRED",
-        evidence: ["#977 exhaustive similarity audit confirmed false relink", "Zhang Qian은 existing Western Han으로 재연결", "韓 / 漢 명칭 구분 필요"]
-      },
-      {
         id: "egypt-ancient-modern-collapse",
         kind: "repair_review",
         title: "Egypt identity 고대·현대 과통합",
@@ -106,6 +95,26 @@
         suggested_action: "repair",
         status: "AUDIT_REPAIR_REQUIRED",
         evidence: ["기존 REVIEWED_SPLIT_REQUIRED를 최신 전수감사에서도 재확인", "관측 범위 951–1946", "중세 / 나폴레옹기 / 1861–1946 세 identity 분리 필요"]
+      }
+    ]),
+    resolved_frontier_history: freezeRows([
+      {
+        id: "han-han-character-collapse",
+        kind: "repair_review",
+        title: "Han identity 韓 / 漢 오결합",
+        left: { name: "Han (Warring States)", ko: "한(韓)", polity_id: "46740a29-a891-5ff8-9804-0f8aba62e71e" },
+        right: { name: "Western Han", ko: "전한", polity_id: "34fac2d0-ba70-53e6-8e5a-47a9cd6ddfec" },
+        rationale: "전국시대 한(韓)과 한 왕조(漢)의 잘못된 결합을 수정했습니다. 장건 Activity는 기존 Western Han으로 재연결했고 전국시대 韓는 기존 UUID를 보존하면서 preferred name을 명확히 구분했습니다.",
+        suggested_action: "repair",
+        status: "PRODUCTION_APPLIED_REPAIR",
+        reviewed_decision: "repair",
+        locked: true,
+        evidence: [
+          "#1518 merged as b9bd23c9050ad1707bfc623024324126eb2394e1",
+          "Correction Apply run 36120806758 SUCCESS",
+          "Zhang Qian Activity d0f0408c-e9c7-4a00-9b12-3ad2f78cb6ab → Western Han 34fac2d0-ba70-53e6-8e5a-47a9cd6ddfec",
+          "Warring States Han preferred names → Han (Warring States) / 한(韓)"
+        ]
       }
     ]),
     decision_options: Object.freeze([
