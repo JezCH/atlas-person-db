@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "dfb1dd8a6b04d8f68acbb6be3e0a797337856ce6",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign AoE II SS microbatch 03 exact Person UUIDs to the already-reviewed governance domain from #1374 comment 5825499317 / #1375 comment 5825503112. No regrading or name-only binding."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-AOE2-SS03-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 6,
+    "distribution": {
+      "governance": 6,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "5fdf2ccd-41ce-456c-b687-dcae8ce4b05b",
+      "canonical_name_en": "Bayezid I",
+      "preferred_name_ko": "바예지드 1세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "8d1fad1a-ccb3-4473-96ce-cdf28ffc059c",
+      "canonical_name_en": "Bolesław I the Brave",
+      "preferred_name_ko": "볼레스와프 1세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "d84630bd-adb1-4367-91ea-6b98a1bc0864",
+      "canonical_name_en": "Conrad II",
+      "preferred_name_ko": "콘라트 2세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "ccf0d599-8149-4fba-a9f3-ef784881d80a",
+      "canonical_name_en": "Devapala",
+      "preferred_name_ko": "데바팔라",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "0b98f769-240c-4920-903b-19997483e6a4",
+      "canonical_name_en": "Đinh Bộ Lĩnh",
+      "preferred_name_ko": "딘보린",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "f7e47ad0-c71a-4af4-b3cd-d520e41e4819",
+      "canonical_name_en": "Dmitry Donskoy",
+      "preferred_name_ko": "드미트리 돈스코이",
+      "representative_domain": "governance"
+    }
+  ]
+}
