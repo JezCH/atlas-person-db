@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-25T09:09:12.000Z",
+  "generated_at": "2026-09-25T11:40:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1212,7 +1212,9 @@
     "7594c57e-0b32-49d6-84d0-f65cd46f759e": "europe",
     "7e090994-f196-4957-8295-dcfa08c53fba": "europe",
     "9e89d0fa-a64e-4d9b-b702-70692bcc0cd4": "africa",
-    "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "europe"
+    "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "europe",
+    "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "europe",
+    "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "west-asia"
   },
   "place_function_records": [
     {
@@ -2740,6 +2742,8 @@
     "7e090994-f196-4957-8295-dcfa08c53fba": "western-europe",
     "9e89d0fa-a64e-4d9b-b702-70692bcc0cd4": "west-africa",
     "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "central-europe",
+    "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "iberia",
+    "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "mesopotamia",
     "00ec4b0c-6002-5791-825c-43465632102d": "north-india-ganges",
     "4c3e50cb-d76c-4b7c-b611-222849404142": "eastern-central-asia-steppe",
     "5247c9c0-ca50-452b-9e5a-d7e5585f096d": "western-europe",
