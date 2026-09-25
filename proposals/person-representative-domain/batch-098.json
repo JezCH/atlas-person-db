@@ -1,0 +1,47 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-26",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "9c004ba0ead3ab236e7edeb595a009d09097baad",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign the three user-approved Chinese SSS-or-higher Persons to the manually reviewed domains frozen in #1374 comment 5835171948; no Role-to-Domain inference is used."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-USER-CHINA-SSS-20260926",
+    "queue_issue": 1375,
+    "assignment_count": 3,
+    "distribution": {
+      "governance": 2,
+      "military": 1,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "5fd986e5-a201-4afb-bbab-cf6aba3e7ba7",
+      "canonical_name_en": "Shang Yang",
+      "preferred_name_ko": "상앙",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "6799637f-6746-4f3b-b5c6-40d17120b166",
+      "canonical_name_en": "Guan Zhong",
+      "preferred_name_ko": "관중",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "cace0ed2-21c2-4442-893a-095af712d090",
+      "canonical_name_en": "Yue Fei",
+      "preferred_name_ko": "악비",
+      "representative_domain": "military"
+    }
+  ]
+}
