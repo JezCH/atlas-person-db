@@ -1,0 +1,47 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "afff55a3513c88fbd93946906624e4e24311cab9",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign the three frozen SSS RESIDUAL-06A Persons to the representative domains already reviewed in Lane A and frozen in #1375 comment 5824112295; no reclassification is performed in this apply batch."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SSS-RESIDUAL-06A-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 3,
+    "distribution": {
+      "governance": 1,
+      "military": 1,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 1,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "1b161e34-ba2e-4943-9a70-07c0a32478e7",
+      "canonical_name_en": "Allan Pinkerton",
+      "preferred_name_ko": "앨런 핑커톤",
+      "representative_domain": "commerce"
+    },
+    {
+      "person_id": "ace071bf-feab-44aa-92a6-3fca50a93303",
+      "canonical_name_en": "Julius Rosenberg",
+      "preferred_name_ko": "줄리어스 로젠버그",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "7f52b3c5-60c7-46df-84a1-98fc50c26e40",
+      "canonical_name_en": "Claus von Stauffenberg",
+      "preferred_name_ko": "클라우스 폰 슈타우펜베르크",
+      "representative_domain": "military"
+    }
+  ]
+}
