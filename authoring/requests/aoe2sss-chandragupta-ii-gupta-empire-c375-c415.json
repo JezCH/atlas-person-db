@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:chandragupta-ii:gupta-empire:emperor:c375-c415:v1",
+  "person": {
+    "canonical_name_en": "Chandragupta II",
+    "display_name_ko": "찬드라굽타 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration batch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Gupta Empire",
+    "display_name_ko": "굽타 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 375,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 415,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Chandragupta II's accession and terminal regnal years are not known with exact precision. Modern summaries commonly place his Gupta imperial reign around c.375–c.415, while older reference chronology gives approximately 375–413. ATLAS therefore stores both boundaries as approximate."
+  },
+  "sources": [
+    {
+      "title": "Chandragupta II",
+      "canonical_url": "https://en.wikipedia.org/wiki/Chandragupta_II",
+      "citation_text": "The biographical entry summarizes Chandragupta II as Gupta emperor from approximately 375 to approximately 415.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Gupta — 1911 Encyclopaedia Britannica",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Gupta",
+      "citation_text": "The older Britannica chronology places Chandragupta II at approximately 375–413, supporting explicitly approximate regnal boundaries.",
+      "source_type": "reference_work"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-sss-20260925",
+    "source_review_checkpoint": "#1374 comments 5825488671 and 5825489104",
+    "dedup_method": "identity-aware Production snapshot plus subsequent read-back delta; exact-name-only matching forbidden"
+  }
+}

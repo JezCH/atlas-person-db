@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:boris-i-of-bulgaria:first-bulgarian-empire:knyaz:852-889:v1",
+  "person": {
+    "canonical_name_en": "Boris I of Bulgaria",
+    "display_name_ko": "보리스 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration batch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "First Bulgarian Empire",
+    "display_name_ko": "제1차 불가리아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Knyaz",
+    "role_display_name_ko": "공",
+    "start_year": 852,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 889,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Boris I ruled the First Bulgarian Empire from 852 to 889. He later took the Christian name Michael (Mihail); ATLAS preserves Boris I of Bulgaria as the canonical Person identity and treats 'Boris I Mikhail' as the same historical person."
+  },
+  "sources": [
+    {
+      "title": "History — Ministry of Foreign Affairs of Bulgaria",
+      "canonical_url": "https://new.mfa.bg/en/about_bulgaria/history",
+      "citation_text": "The Bulgarian Ministry of Foreign Affairs dates the rule of knyaz Boris I Mihail to 852–889 and identifies the Christianization of Bulgaria in 864 during his reign.",
+      "source_type": "government_web"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-sss-20260925",
+    "source_review_checkpoint": "#1374 comments 5825488671 and 5825489104",
+    "dedup_method": "identity-aware Production snapshot plus subsequent read-back delta; exact-name-only matching forbidden"
+  }
+}

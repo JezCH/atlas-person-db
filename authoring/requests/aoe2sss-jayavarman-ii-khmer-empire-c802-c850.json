@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jayavarman-ii:khmer-empire:king:c802-c850:v1",
+  "person": {
+    "canonical_name_en": "Jayavarman II",
+    "display_name_ko": "자야바르만 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration batch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Khmer Empire",
+    "display_name_ko": "크메르 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 802,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 850,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Jayavarman II is conventionally treated as the founder-ruler of the Khmer Empire, with a reign commonly summarized as 802–850. Because early Khmer chronology is reconstructed from later inscriptions and older scholarship gives variant terminal dates, ATLAS marks both boundaries approximate."
+  },
+  "sources": [
+    {
+      "title": "Jayavarman II",
+      "canonical_url": "https://en.wikipedia.org/wiki/Jayavarman_II",
+      "citation_text": "The biographical entry identifies Jayavarman II as founder and king of the Khmer Empire and gives the conventional reign 802–850.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-sss-20260925",
+    "source_review_checkpoint": "#1374 comments 5825488671 and 5825489104",
+    "dedup_method": "identity-aware Production snapshot plus subsequent read-back delta; exact-name-only matching forbidden"
+  }
+}

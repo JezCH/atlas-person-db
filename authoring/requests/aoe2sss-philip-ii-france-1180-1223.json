@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philip-ii-of-france:kingdom-of-france:king:1180-1223:v1",
+  "person": {
+    "canonical_name_en": "Philip II of France",
+    "display_name_ko": "필리프 2세 아우구스트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration batch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1180,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1223,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Philip II Augustus ruled France from 1180 to 1223. The AoE-derived 'Philip II Augustus' label is treated as the same identity as Philip II of France."
+  },
+  "sources": [
+    {
+      "title": "Philippe II (1165-1223 ; roi de France) — Bibliothèque nationale de France",
+      "canonical_url": "https://catalogue.bnf.fr/ark:/12148/cb11919570s",
+      "citation_text": "The BnF authority record identifies Philippe II/Philippe Auguste as king of France from 1180 to 1223.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-sss-20260925",
+    "source_review_checkpoint": "#1374 comments 5825488671 and 5825489104",
+    "dedup_method": "identity-aware Production snapshot plus subsequent read-back delta; exact-name-only matching forbidden"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jan-hus:kingdom-of-bohemia:religious-activity:1402-1415:v1",
+  "person": {
+    "canonical_name_en": "Jan Hus",
+    "display_name_ko": "얀 후스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration batch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bohemia",
+    "display_name_ko": "보헤미아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "religious_activity",
+    "role": "Theologian and Reformer",
+    "role_display_name_ko": "신학자·종교개혁가",
+    "start_year": 1402,
+    "start_month": 3,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1415,
+    "end_month": 7,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jan Hus took charge of Prague's Bethlehem Chapel in 1402 and became the leading Czech ecclesiastical reform voice before his execution at Constance on 6 July 1415. ATLAS records this bounded reform/preaching activity in the Kingdom of Bohemia rather than his full lifespan."
+  },
+  "sources": [
+    {
+      "title": "Hus, Jan (c.1369–1415) — Routledge Encyclopedia of Philosophy",
+      "canonical_url": "https://www.rep.routledge.com/articles/biographical/hus-jan-c-1369-1415/v-1",
+      "citation_text": "The Routledge Encyclopedia states that from his appointment as rector of Bethlehem Chapel in Prague in 1402 until his execution in 1415, Hus advanced the Czech ecclesiastical reform movement.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-sss-20260925",
+    "source_review_checkpoint": "#1374 comments 5825488671 and 5825489104",
+    "dedup_method": "identity-aware Production snapshot plus subsequent read-back delta; exact-name-only matching forbidden"
+  }
+}

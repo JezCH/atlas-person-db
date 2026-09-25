@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rajaraja-i:chola-empire:emperor:985-1014:v1",
+  "person": {
+    "canonical_name_en": "Rajaraja I",
+    "display_name_ko": "라자라자 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration batch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Chola Empire",
+    "display_name_ko": "촐라 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 985,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1014,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Rajaraja I ruled the Chola realm from 985 to 1014 and transformed it into a major empire. This Activity ends at Rajendra I's accession as sole emperor in 1014."
+  },
+  "sources": [
+    {
+      "title": "The Cholas — Outlines of Indian History",
+      "canonical_url": "https://ebooks.inflibnet.ac.in/icp01/chapter/the-cholas/",
+      "citation_text": "The INFLIBNET history module identifies Rajaraja I's reign as 985–1014 and describes the consolidation and expansion of Chola power under him.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-sss-20260925",
+    "source_review_checkpoint": "#1374 comments 5825488671 and 5825489104",
+    "dedup_method": "identity-aware Production snapshot plus subsequent read-back delta; exact-name-only matching forbidden"
+  }
+}

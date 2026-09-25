@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:harsha:vardhana-empire:emperor:606-647:v1",
+  "person": {
+    "canonical_name_en": "Harsha",
+    "display_name_ko": "하르샤",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration batch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Vardhana Empire",
+    "display_name_ko": "바르다나 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 606,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 647,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Harsha (Harshavardhana) ruled from 606 to 647 and made Kannauj his imperial capital while extending Vardhana/Pushyabhuti power across much of northern India. The polity is registered as Vardhana Empire rather than conflating the ruler with later post-Harsha Kannauj regimes."
+  },
+  "sources": [
+    {
+      "title": "Harsha — World History Encyclopedia",
+      "canonical_url": "https://www.worldhistory.org/Harsha/",
+      "citation_text": "The reference identifies Harshavardhana as ruler of the Vardhana Empire from 606 to 647 and notes the empire's dissolution after his death.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Harsha",
+      "canonical_url": "https://en.wikipedia.org/wiki/Harsha",
+      "citation_text": "The biographical entry identifies Harsha as emperor of Kannauj from April 606 to 647 and describes Kannauj as his imperial capital.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-sss-20260925",
+    "source_review_checkpoint": "#1374 comments 5825488671 and 5825489104",
+    "dedup_method": "identity-aware Production snapshot plus subsequent read-back delta; exact-name-only matching forbidden"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ivan-iii-of-russia:grand-duchy-of-moscow:grand-prince:1462-1505:v1",
+  "person": {
+    "canonical_name_en": "Ivan III of Russia",
+    "display_name_ko": "이반 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration batch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Grand Duchy of Moscow",
+    "display_name_ko": "모스크바 대공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Prince",
+    "role_display_name_ko": "대공",
+    "start_year": 1462,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1505,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ivan III succeeded Vasily II in 1462 and ruled Moscow until his death in 1505. 'Ivan III the Great' is the same historical identity."
+  },
+  "sources": [
+    {
+      "title": "Ivan III of Russia",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ivan_III_of_Russia",
+      "citation_text": "The biographical entry identifies Ivan III as Grand Prince of Moscow and all Russia from 1462 until 1505.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-sss-20260925",
+    "source_review_checkpoint": "#1374 comments 5825488671 and 5825489104",
+    "dedup_method": "identity-aware Production snapshot plus subsequent read-back delta; exact-name-only matching forbidden"
+  }
+}

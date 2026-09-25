@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:minamoto-no-yoritomo:japan:shogun:1192-1199:v1",
+  "person": {
+    "canonical_name_en": "Minamoto no Yoritomo",
+    "display_name_ko": "미나모토노 요리토모",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration batch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Shogun",
+    "role_display_name_ko": "쇼군",
+    "start_year": 1192,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1199,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Minamoto no Yoritomo established nationwide warrior rule and was appointed shogun in 1192, serving until his death in 1199. Consistent with the existing Ashikaga convention, ATLAS attaches the shogunal office to the higher-order Japan polity rather than creating the bakufu as a separate territorial polity."
+  },
+  "sources": [
+    {
+      "title": "Minamoto no Yoritomo — Japan Search",
+      "canonical_url": "https://jpsearch.go.jp/en/gallery/ndl-KMoVWPr1Nkz",
+      "citation_text": "Japan Search identifies Yoritomo as founder and first shogun of the Kamakura bakufu, appointed shogun in 1192 and dying in 1199.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-sss-20260925",
+    "source_review_checkpoint": "#1374 comments 5825488671 and 5825489104",
+    "dedup_method": "identity-aware Production snapshot plus subsequent read-back delta; exact-name-only matching forbidden"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:arpad:principality-of-hungary:grand-prince:c895-907:v1",
+  "person": {
+    "canonical_name_en": "Árpád",
+    "display_name_ko": "아르파드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration batch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Hungary",
+    "display_name_ko": "헝가리 대공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Prince",
+    "role_display_name_ko": "대공",
+    "start_year": 895,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 907,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Hungarian historical reference lists differ on the exact beginning of Árpád's princely rule, with c.886 and 895 both appearing in modern reference material. ATLAS uses c.895 as a conquest-era representative start and 907 as the conventional terminal year, marking both boundaries approximate."
+  },
+  "sources": [
+    {
+      "title": "Kisokos — A magyar királyok",
+      "canonical_url": "https://mek.oszk.hu/00000/00056/html/240.htm",
+      "citation_text": "The Hungarian Electronic Library ruler list gives Árpád as prince from 895 to 907.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Hungary — Hungarian Electronic Library",
+      "canonical_url": "https://mek.oszk.hu/02000/02085/02085.pdf",
+      "citation_text": "The Hungarian reference lists Árpád as prince approximately 886–907, demonstrating uncertainty in the accession boundary.",
+      "source_type": "government_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-sss-20260925",
+    "source_review_checkpoint": "#1374 comments 5825488671 and 5825489104",
+    "dedup_method": "identity-aware Production snapshot plus subsequent read-back delta; exact-name-only matching forbidden"
+  }
+}
