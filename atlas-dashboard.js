@@ -541,6 +541,47 @@
     </article>`;
   }
 
+  function polityConcentrationRanking(rows, metric) {
+    const source = Array.isArray(rows) ? rows : [];
+    const metricKey = metric === "activities" ? "activity_count" : "person_count";
+    const maxValue = Math.max(0,...source.map((row) => Number(row?.[metricKey] || 0)));
+    const label = metric === "activities" ? "Activity 기준" : "인물 기준";
+    const items = source.map((row,index) => {
+      const metricValue = Number(row?.[metricKey] || 0);
+      const width = maxValue > 0 ? Math.max(3,(metricValue/maxValue)*100) : 0;
+      const disabled = !Array.isArray(row?.person_ids) || row.person_ids.length === 0;
+      return `<button type="button" class="dashboard-polity-row" data-dashboard-polity-id="${escapeHtml(row.polity_id)}" ${disabled ? "disabled" : ""} title="${escapeHtml(`${row.polity_display_name}: 인물 ${value(row.person_count)}명 · Activity ${value(row.activity_count)}건`)}">
+        <span class="dashboard-polity-rank">${index+1}</span>
+        <span class="dashboard-polity-name"><strong>${escapeHtml(row.polity_display_name)}</strong><small>${escapeHtml(row.polity_id)}</small></span>
+        <span class="dashboard-polity-metrics"><b>${value(row.person_count)}명</b><small>${value(row.activity_count)} Activity</small></span>
+        <span class="dashboard-polity-bar" aria-hidden="true"><i style="width:${width.toFixed(2)}%"></i></span>
+      </button>`;
+    }).join("");
+    return `<div class="dashboard-polity-ranking" data-polity-ranking="${metric}" ${metric === "activities" ? "hidden" : ""} aria-label="${label} 상위 정치체">${items || '<div class="dashboard-heatmap-unavailable">집계할 정치체가 없습니다.</div>'}</div>`;
+  }
+
+  function polityConcentrationMarkup(data) {
+    if (!data) return '<div class="dashboard-heatmap-unavailable">정치체 집중도 집계 불가</div>';
+    return `<div class="dashboard-polity-summary" aria-label="정치체 집중도 핵심 지표">
+      <article><small>상위 10 · 인물 연결</small><strong>${pct(data.person_top10_share)}</strong><span>전체 Person–Polity membership 기준</span></article>
+      <article><small>상위 10 · Activity</small><strong>${pct(data.activity_top10_share)}</strong><span>정치체 연결 Activity 기준</span></article>
+      <article><small>1명 연결 정치체</small><strong>${value(data.single_person_polity_count)}</strong><span>사용 정치체 ${value(data.used_polity_count)}개 중</span></article>
+    </div>
+    <div class="dashboard-polity-toolbar">
+      <span>상위 10개 정치체</span>
+      <div role="group" aria-label="정치체 순위 기준">
+        <button type="button" data-polity-sort="persons" aria-pressed="true">인물 기준</button>
+        <button type="button" data-polity-sort="activities" aria-pressed="false">Activity 기준</button>
+      </div>
+    </div>
+    ${polityConcentrationRanking(data.top_by_persons,"persons")}
+    ${polityConcentrationRanking(data.top_by_activities,"activities")}
+    <div class="dashboard-progress-meta">
+      <span>인물 수는 정치체별 distinct Person · 한 인물이 여러 정치체에 연결되면 각각 1회 집계</span>
+      <span>Activity는 각 Activity의 polity를 기준으로 집계</span>
+    </div>`;
+  }
+
   function renderLoading(root) {
     root.innerHTML = `<section class="dashboard-control-center">
       <div class="dashboard-hero card"><div><p class="eyebrow">ATLAS CONTROL CENTER</p><h2>프로젝트 현황을 불러오는 중</h2><p>인물·분야·공간·비연대표 기준 원본을 하나의 공통 데이터 경로에서 읽고 있습니다.</p></div></div>
@@ -564,6 +605,7 @@
     const runtimeExclusions = snapshot.runtime_exclusions;
     const heatmap = snapshot.coverage_heatmap;
     const completeness = snapshot.completeness_matrix;
+    const polityConcentration = snapshot.polity_concentration;
     const freshness = snapshot.source_freshness;
     const sourceIssues = (snapshot.sources || []).filter((source) => source?.status !== "ready");
     const incompleteCards = [
@@ -700,6 +742,11 @@
         </div>
       </section>
 
+      <section class="dashboard-panel card" aria-label="정치체별 인물과 활동 집중도">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">POLITY CONCENTRATION</p><h3>정치체별 인물 집중도</h3></div><span>현재 Person Runtime에서 즉시 파생</span></div>
+        ${polityConcentrationMarkup(polityConcentration)}
+      </section>
+
       <section class="dashboard-panel card" aria-label="최근 프로젝트 변경 타임라인">
         <div class="dashboard-panel-head"><div><p class="eyebrow">RECENT DELTA · RECENT ACTIVITY TIMELINE</p><h3>최근 추적 변경 타임라인</h3></div><span>${timeline.available ? `${value(timeline.event_count)}건 기록 · ${value(timeline.total_change_count)}건 변경` : "원본 확인 불가"}</span></div>
         ${timeline.available
@@ -811,6 +858,26 @@
         personIds:item.person_ids
       });
     }));
+    root.querySelectorAll("[data-polity-sort]").forEach((button) => button.addEventListener("click", () => {
+      const metric=button.dataset.politySort;
+      root.querySelectorAll("[data-polity-sort]").forEach((control) => control.setAttribute("aria-pressed",String(control === button)));
+      root.querySelectorAll("[data-polity-ranking]").forEach((ranking) => {
+        ranking.hidden=ranking.dataset.polityRanking !== metric;
+      });
+    }));
+    root.querySelectorAll("[data-dashboard-polity-id]").forEach((button) => button.addEventListener("click", () => {
+      const polityId=button.dataset.dashboardPolityId;
+      const rows=[...(polityConcentration?.top_by_persons || []),...(polityConcentration?.top_by_activities || [])];
+      const row=rows.find((candidate) => candidate.polity_id === polityId);
+      if (!row || !Array.isArray(row.person_ids) || !row.person_ids.length) return;
+      window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain?.("persons");
+      window.ATLAS_PERSON_MAIN?.setDashboardFilter?.({
+        code:`polity_${row.polity_id}`,
+        label:`${row.polity_display_name} 연결 인물`,
+        personIds:row.person_ids
+      });
+    }));
+
     root.querySelectorAll("[data-dashboard-quality]").forEach((button) => button.addEventListener("click", () => {
       const code=button.dataset.dashboardQuality;
       const item=qd?.[code];
