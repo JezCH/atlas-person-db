@@ -2,8 +2,9 @@
   "use strict";
 
   const READER = window.ATLAS_POLITY_BROWSER_READER;
-  if (!READER?.listPolities) {
-    console.warn("ATLAS canonical Polity reader is unavailable.");
+  const DOSSIER = window.ATLAS_POLITY_DOSSIER_VIEW;
+  if (!READER?.listPolities || !DOSSIER?.createRenderer) {
+    console.warn("ATLAS canonical Polity reader or dossier view is unavailable.");
     return;
   }
 
@@ -22,6 +23,8 @@
   function normalizeText(value) {
     return String(value || "").normalize("NFKC").trim().toLocaleLowerCase("und").replace(/\s+/gu, " ");
   }
+
+  const dossierRenderer = DOSSIER.createRenderer({ escapeHtml });
 
   function formatYear(value) {
     if (!Number.isInteger(value)) return "미상";
@@ -119,17 +122,7 @@
           (unresolved ? '<span><b>' + unresolved + '</b> 연대 미해결</span>' : "") +
         '</div>' +
       '</summary>' +
-      '<div class="polity-browser-detail">' +
-        '<div class="polity-browser-meta">' +
-          '<span><small>canonical key</small><code>' + escapeHtml(polity.canonical_key || "—") + '</code></span>' +
-          '<span><small>type</small><b>' + escapeHtml(polity.polity_type || "—") + '</b></span>' +
-          '<span><small>historicity</small><b>' + escapeHtml(polity.historicity || "—") + '</b></span>' +
-        '</div>' +
-        aliasesHtml(polity) +
-        '<div class="polity-browser-activities"><small>연결 Person · Activity</small>' +
-          (activities ? '<ul>' + activities + '</ul>' : '<p>현재 연결된 Person Activity가 없습니다.</p>') +
-        '</div>' +
-      '</div>' +
+      '<div class="polity-browser-detail">' + dossierRenderer.dossierHtml(polity) + '</div>' +
     '</details>';
   }
 
@@ -290,6 +283,13 @@
     });
 
     root.addEventListener("click", (event) => {
+      const personButton = event.target.closest("[data-polity-person-id]");
+      if (personButton) {
+        const personId = String(personButton.dataset.polityPersonId || "").trim().toLowerCase();
+        if (personId) window.ATLAS_MAIN_AUTHORITY_NAV?.showEntity?.("persons","person",personId);
+        return;
+      }
+
       const summary = event.target.closest("summary");
       const summaryCard = summary?.closest?.("[data-polity-id]");
       if (summaryCard && !summaryCard.open) {
