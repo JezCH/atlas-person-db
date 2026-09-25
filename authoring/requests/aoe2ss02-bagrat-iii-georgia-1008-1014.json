@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bagrat-iii:kingdom-of-georgia:king:1008-1014:v1",
+  "person": {
+    "canonical_name_en": "Bagrat III of Georgia",
+    "display_name_ko": "바그라트 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Georgia",
+    "display_name_ko": "조지아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1008,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1014,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bagrat III had earlier ruled Abkhazia, but the unified Kingdom of Georgia is modeled from 1008, when he inherited his father's lands and became the first ruler of the combined Georgian monarchy. The Oxford Handbook's ruler table gives Bagrat III's Kingdom of Georgia reign as 1008–1014."
+  },
+  "sources": [
+    {
+      "title": "Rulers — The Oxford Handbook of Byzantine Studies",
+      "canonical_url": "https://academic.oup.com/edited-volume/29470/chapter/247165865",
+      "citation_text": "The Oxford rulers table lists Bagrat III as king of Georgia from 1008 to 1014.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Bagrat III — Georgian Encyclopedia",
+      "canonical_url": "https://www.georgianencyclopedia.ge/index.php/en/form/23141",
+      "citation_text": "The Georgian Encyclopedia describes Bagrat III as the first king of united feudal Georgia and explains the 1008 inheritance that consolidated the Georgian monarchy.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-02",
+    "source_review_checkpoint": "#1374 comment 5825498864; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1897-person read-back delta rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
