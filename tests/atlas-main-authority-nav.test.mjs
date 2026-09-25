@@ -68,7 +68,8 @@ test('desktop and mobile navigation stay synchronized and hash-addressable', () 
   assert.match(nav, /\.nav-list \[data-atlas-domain\]/);
   assert.match(nav, /\.mobile-nav \[data-atlas-domain\]/);
   assert.match(nav, /aria-current/);
-  assert.match(nav, /#atlas-/);
+  assert.match(entityRoute, /#atlas-/);
+  assert.match(nav, /routeModel\.domainHash/);
   assert.match(nav, /hashchange/);
   assert.match(nav, /mobileMenuClose/);
   assert.match(nav, /function syncNavigationStatusLabels\(buttons\)/);
