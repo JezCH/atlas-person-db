@@ -1,0 +1,125 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "f9599d038167dda801b3c2cb2b302e4095fbe198",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign the 16 newly registered SSS SUPERBATCH-01 Persons to the representative domains already reviewed in their referenced #1374 handoff checkpoints; no reclassification is performed here."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SSS-SUPERBATCH01-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 16,
+    "distribution": {
+      "governance": 0,
+      "military": 1,
+      "knowledge": 10,
+      "technology": 5,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "632d77e3-8f1a-41fe-9aeb-646d2d7edd62",
+      "canonical_name_en": "Al-Tabari",
+      "preferred_name_ko": "알타바리",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "3d87d42c-6e42-490d-9135-b0f95aaba55a",
+      "canonical_name_en": "Alexander Graham Bell",
+      "preferred_name_ko": "알렉산더 그레이엄 벨",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "56605c8b-1dc1-42db-bce5-ee8e1c902e7a",
+      "canonical_name_en": "Andrea Palladio",
+      "preferred_name_ko": "안드레아 팔라디오",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "bebe0e02-d97a-44ef-9c1a-fd5e2d2e9080",
+      "canonical_name_en": "Andreas Vesalius",
+      "preferred_name_ko": "안드레아스 베살리우스",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "0094adb0-1d76-4803-a295-623af66e372a",
+      "canonical_name_en": "Aryabhata",
+      "preferred_name_ko": "아리아바타",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "75621c54-8bcd-4853-9c8a-ee2ff8be8655",
+      "canonical_name_en": "Edward Gibbon",
+      "preferred_name_ko": "에드워드 기번",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "70294b4e-18ae-44df-9b07-60252cfda913",
+      "canonical_name_en": "Enrico Fermi",
+      "preferred_name_ko": "엔리코 페르미",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "c068e2b4-4204-4de6-a448-d191167e594b",
+      "canonical_name_en": "Filippo Brunelleschi",
+      "preferred_name_ko": "필리포 브루넬레스키",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "4321da0e-2675-4f79-ab13-823c033d2a70",
+      "canonical_name_en": "Francis Crick",
+      "preferred_name_ko": "프랜시스 크릭",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "ced263ec-ec43-46ee-a1fa-1443ec39477a",
+      "canonical_name_en": "Horatio Nelson",
+      "preferred_name_ko": "호레이쇼 넬슨",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "abf94244-9812-4e4c-b63f-bec4a25b486a",
+      "canonical_name_en": "Karl Benz",
+      "preferred_name_ko": "카를 벤츠",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "a9375644-e94f-49fe-b679-53786e6eff06",
+      "canonical_name_en": "Leonardo Fibonacci",
+      "preferred_name_ko": "레오나르도 피보나치",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "725dd4b5-7c80-4d54-ae01-18034fe6c2c3",
+      "canonical_name_en": "Leopold von Ranke",
+      "preferred_name_ko": "레오폴트 폰 랑케",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "6de1758f-807a-4e66-8099-85dd41ca86e6",
+      "canonical_name_en": "Livy",
+      "preferred_name_ko": "리비우스",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "22131e26-b9f3-4e2e-b5e8-bbe5c0ec9ca2",
+      "canonical_name_en": "Nikola Tesla",
+      "preferred_name_ko": "니콜라 테슬라",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "e7d1e88e-b062-465b-b5bd-bec3f2220d42",
+      "canonical_name_en": "Tacitus",
+      "preferred_name_ko": "타키투스",
+      "representative_domain": "knowledge"
+    }
+  ]
+}
