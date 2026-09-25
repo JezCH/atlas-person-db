@@ -55,6 +55,13 @@ test("retired migration workflows have no live repository execution surface", ()
     assert.equal(fs.existsSync(path.join(root, relativePath)), false, `retired live surface must stay absent: ${relativePath}`);
   }
 
+  for (const historicalEvidence of [
+    "stage2/releases/p11-semantic-v2-backfill-release.v1.json",
+    "stage2/contracts/p11-reviewed-semantic-v2-exceptions.v1.json"
+  ]) {
+    assert.equal(fs.existsSync(path.join(root, historicalEvidence)), true, `historical evidence missing: ${historicalEvidence}`);
+  }
+
   const vercel = JSON.parse(fs.readFileSync(path.join(root, "vercel.json"), "utf8"));
   assert.equal(
     vercel.rewrites.some((row) => row.source === "/api/atlas-p11-baseline-b-capture"),
