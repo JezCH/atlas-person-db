@@ -3,6 +3,7 @@ import test from 'node:test';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
+const p9Planner = require('../server/atlas-p9-mutation-planner.js');
 const {
   createVercelMutationHandler,
   createHeaderAuthorizer,
@@ -109,3 +110,18 @@ test('unsupported method is rejected before auth and database connection', async
   assert.equal(JSON.parse(res.body).error,'method not allowed');
   assert.equal(clientFactoryCalls,0);
 });
+
+test('current P9 mutation guard blocks legacy Activity writes but preserves immutable-id delete', () => {
+  for (const operation of ['create', 'update', 'import', 'reconcile']) {
+    const plan = p9Planner.plan(operation, operation === 'import' ? [] : {});
+    assert.equal(plan.commit, false);
+    assert.equal(plan.writes_performed, 0);
+    assert.deepEqual(plan.commands, []);
+    assert.equal(plan.blockers[0]?.code, p9Planner.P9_MUTATION_BLOCK_CODE);
+    assert.equal(plan.blockers[0]?.semantic_version, p9Planner.P9_SEMANTIC_VERSION);
+  }
+
+  const deletion = p9Planner.plan('delete', { id: 'activity-id' });
+  assert.equal(deletion.commands[0]?.type, 'DELETE_PERSON_POLITICS_V2_BY_ID');
+});
+
