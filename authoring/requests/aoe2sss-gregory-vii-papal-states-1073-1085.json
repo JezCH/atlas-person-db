@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pope-gregory-vii:papal-states:pope:1073-1085:v1",
+  "person": {
+    "canonical_name_en": "Pope Gregory VII",
+    "display_name_ko": "그레고리오 7세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration batch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Papal States",
+    "display_name_ko": "교황령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Pope",
+    "role_display_name_ko": "교황",
+    "start_year": 1073,
+    "start_month": 4,
+    "start_day": 22,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1085,
+    "end_month": 5,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gregory VII was elected pope on 22 April 1073 and his pontificate ended with his death on 25 May 1085. ATLAS follows the established Papal States convention used for other medieval popes."
+  },
+  "sources": [
+    {
+      "title": "Gregory VII — The Holy See",
+      "canonical_url": "https://www.vatican.va/content/vatican/en/holy-father/gregorio-vii.html",
+      "citation_text": "The Holy See's official pontiff record gives Gregory VII's pontificate from 22 April 1073 to 25 May 1085.",
+      "source_type": "official_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-sss-20260925",
+    "source_review_checkpoint": "#1374 comments 5825488671 and 5825489104",
+    "dedup_method": "identity-aware Production snapshot plus subsequent read-back delta; exact-name-only matching forbidden"
+  }
+}
