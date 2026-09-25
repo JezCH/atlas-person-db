@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss03:amartya-sen:united-kingdom:economist-philosopher:1981:v1",
+  "person": {
+    "canonical_name_en": "Amartya Sen",
+    "display_name_ko": "아마르티아 센",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Economist and philosopher",
+    "role_display_name_ko": "경제학자·철학자",
+    "start_year": 1981,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1981,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1981, publication year of Poverty and Famines and Sen's Oxford intellectual work on entitlement and famine analysis, as his representative British academic milestone."
+  },
+  "sources": [
+    {
+      "title": "Poverty and Famines: An Essay on Entitlement and Deprivation — Amartya Sen, Harvard University",
+      "canonical_url": "https://sen.scholars.harvard.edu/publications/poverty-and-famines-essay-entitlement-and-deprivation",
+      "citation_text": "Harvard's publication record dates Amartya Sen's Poverty and Famines: An Essay on Entitlement and Deprivation to 1981 and records Oxford's Clarendon Press as publisher.",
+      "source_type": "institutional_academic_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "philosophy-20260922-023",
+    "review_checkpoint": "#1374 comment 5763224562",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}
