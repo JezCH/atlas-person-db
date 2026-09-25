@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zzzz-aoe2-sss-vardhana-20260925",
+  "baseline": "770e0976b8fafcd8c7b58b8033d7e2b3c9777f0f",
+  "reviewed_at": "2026-09-25T09:02:22.000Z",
+  "bindings": [
+    {
+      "polity_id": "3fbc6e9b-781c-46d4-a5c3-09da2f233e02",
+      "region_code": "south-asia",
+      "subregion_code": "north-india-ganges"
+    }
+  ]
+}
