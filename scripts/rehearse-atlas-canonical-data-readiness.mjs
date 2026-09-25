@@ -13,7 +13,7 @@ const { applyP9Cutover } = require('../server/atlas-stage2-p9-db-cutover.js');
 const duplicateReview = require('../server/atlas-duplicate-review-service.js');
 const p10Completion = require('../server/atlas-person-duplicate-revalidation-readiness.js');
 const mergeService = require('../server/atlas-person-merge-service.js');
-const baselineB = require('../server/atlas-baseline-b.js');
+const canonicalReadiness = require('../server/atlas-canonical-data-readiness.js');
 
 const { Client } = pg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -63,10 +63,10 @@ try {
     requestId: 'fixture:canonical-readiness:review:gorgo'
   });
 
-  const p10BeforeMerge = await p10Completion.inspectPersonDuplicateRevalidationReadiness(client);
-  assert.equal(p10BeforeMerge.ready, true, p10BeforeMerge.blockers.join(';'));
+  const revalidationBeforeMerge = await p10Completion.inspectPersonDuplicateRevalidationReadiness(client);
+  assert.equal(revalidationBeforeMerge.ready, true, revalidationBeforeMerge.blockers.join(';'));
 
-  const readinessBeforeMerge = await baselineB.inspectBaselineBReadiness(client);
+  const readinessBeforeMerge = await canonicalReadiness.inspectCanonicalDataReadiness(client);
   assert.equal(readinessBeforeMerge.ready, false);
   assert.ok(readinessBeforeMerge.blockers.includes('APPROVED_PERSON_MERGES_PENDING:1'));
 
@@ -81,7 +81,7 @@ try {
   assert.deepEqual(merged.mutation_summary.revalidation_requirements_retired, [GORGO_REQUIREMENT]);
   assert.equal(merged.mutation_summary.post_merge_revalidation_readiness.ready, true);
 
-  const readinessAfterMerge = await baselineB.inspectBaselineBReadiness(client);
+  const readinessAfterMerge = await canonicalReadiness.inspectCanonicalDataReadiness(client);
   assert.equal(readinessAfterMerge.ready, true, readinessAfterMerge.blockers.join(';'));
   assert.equal(readinessAfterMerge.canonical_schema.expected_table_count, 41);
   assert.equal(readinessAfterMerge.canonical_schema.present_table_count, 41);
@@ -92,7 +92,7 @@ try {
 
   console.log(JSON.stringify({
     marker: 'ATLAS_CANONICAL_DATA_READINESS_OK',
-    identity_review_ready_before_merge: p10BeforeMerge.ready,
+    identity_review_ready_before_merge: revalidationBeforeMerge.ready,
     readiness_blocked_until_physical_merge: true,
     readiness_ready_after_physical_merge: readinessAfterMerge.ready,
     canonical_schema_tables_present: readinessAfterMerge.canonical_schema.present_table_count,

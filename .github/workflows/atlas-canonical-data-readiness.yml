@@ -8,7 +8,7 @@ on:
     paths:
       - '.github/workflows/atlas-canonical-data-readiness.yml'
       - 'scripts/rehearse-atlas-canonical-data-readiness.mjs'
-      - 'server/atlas-baseline-b.js'
+      - 'server/atlas-canonical-data-readiness.js'
       - 'server/atlas-duplicate-review-service.js'
       - 'server/atlas-person-duplicate-revalidation-readiness.js'
       - 'server/atlas-person-merge-service.js'
@@ -29,7 +29,7 @@ on:
     paths:
       - '.github/workflows/atlas-canonical-data-readiness.yml'
       - 'scripts/rehearse-atlas-canonical-data-readiness.mjs'
-      - 'server/atlas-baseline-b.js'
+      - 'server/atlas-canonical-data-readiness.js'
       - 'server/atlas-duplicate-review-service.js'
       - 'server/atlas-person-duplicate-revalidation-readiness.js'
       - 'server/atlas-person-merge-service.js'
