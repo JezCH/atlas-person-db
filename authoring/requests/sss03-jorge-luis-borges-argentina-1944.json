@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss03:jorge-luis-borges:argentina:writer:1944:v1",
+  "person": {
+    "canonical_name_en": "Jorge Luis Borges",
+    "display_name_ko": "호르헤 루이스 보르헤스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Argentina",
+    "display_name_ko": "아르헨티나"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Writer",
+    "role_display_name_ko": "작가",
+    "start_year": 1944,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1944,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1944, publication year of Ficciones, as Borges's representative Argentine literary milestone."
+  },
+  "sources": [
+    {
+      "title": "Jorge Luis Borges — Library of Congress",
+      "canonical_url": "https://www.loc.gov/item/n79007035/jorge-luis-borges-argentina-1899-1986/",
+      "citation_text": "The Library of Congress biography lists Ficciones (Fictions) among Borges's notable works and dates it to 1944.",
+      "source_type": "official_library_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "writers4-20260921-012",
+    "review_checkpoint": "#1374 comment 5762473837",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}
