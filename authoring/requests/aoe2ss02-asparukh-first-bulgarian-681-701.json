@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:asparukh:first-bulgarian-empire:khan:681-701:v1",
+  "person": {
+    "canonical_name_en": "Asparukh",
+    "display_name_ko": "아스파루흐",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "First Bulgarian Empire",
+    "display_name_ko": "제1차 불가리아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 681,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 701,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Asparukh founded the medieval Bulgarian state after the Danubian Bulgar victory over Constantine IV in 680. Modern references differ slightly on the ruler's bounds: Encyclopaedia Iranica gives 679–701, while the conventional state foundation is associated with 681. ATLAS therefore uses c.681–c.701 for his rule of the First Bulgarian Empire and marks both boundaries approximate rather than manufacturing false precision."
+  },
+  "sources": [
+    {
+      "title": "ASPARUKH — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/asparukh-a-middle-iranian-proper-name-attested-in-ancient-georgia-and-early-medieval-bulgaria-grecized-as-asparoukis-app/",
+      "citation_text": "Iranica identifies Asparukh as founder of the medieval Bulgarian state, gives his rule at Pliska as 679–701, and notes his decisive victory over Constantine IV in 680.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "KHAZARS — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/khazars/",
+      "citation_text": "Iranica describes the Bulgar group led by Asparukh as moving west and establishing a conquest state in Byzantine Moesia around 679.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-02",
+    "source_review_checkpoint": "#1374 comment 5825498864; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1897-person read-back delta rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
