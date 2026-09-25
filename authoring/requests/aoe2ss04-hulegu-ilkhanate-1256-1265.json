@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hulegu-khan:ilkhanate:ilkhan:1256-1265:v1",
+  "person": {
+    "canonical_name_en": "Hulegu Khan",
+    "display_name_ko": "훌라구 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Ilkhanate",
+    "display_name_ko": "일 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ilkhan",
+    "role_display_name_ko": "일 칸",
+    "start_year": 1256,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1265,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hülegü (Hulegu/Hulagu) founded the Il-khanid dynasty during the Mongol conquest of Iran and ruled until his death on 8 February 1265. ATLAS reuses the existing Ilkhanate polity and records the standard 1256–1265 sovereign interval."
+  },
+  "sources": [
+    {
+      "title": "HULĀGU KHAN — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/hulagu-khan/",
+      "citation_text": "Encyclopaedia Iranica identifies Hülegü as founder of the Il-khanid dynasty, describes his 1256 campaign against the Ismaʿilis and records his death on 8 February 1265.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Hulegu Khan — biographical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Hulegu_Khan",
+      "citation_text": "The biographical chronology gives Hulegu's reign as 1256 to 8 February 1265 and identifies him as founder of the Ilkhanate in Persia.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-04",
+    "source_review_checkpoint": "#1374 comment 5825499317; #1375 comment 5833905579",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1941-person read-back rechecked before authoring; target identity exact-match absent for all six; Sigismund II Augustus explicitly excluded as a different person"
+  }
+}
