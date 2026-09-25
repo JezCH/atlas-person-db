@@ -256,6 +256,13 @@
       return live.status === "loading" ? true : revealed;
     }
 
+    function clearSelection() {
+      if (!selectedPolityId) return false;
+      selectedPolityId = "";
+      render();
+      return true;
+    }
+
     async function refresh() {
       live = { status: "loading", source: null, summary: null, polities: [], error: null };
       visibleLimit = PAGE_SIZE;
@@ -314,7 +321,7 @@
       }
     });
 
-    const controller = Object.freeze({ selectPolity, refresh });
+    const controller = Object.freeze({ selectPolity, clearSelection, refresh });
     activeController = controller;
     render();
     refresh();
@@ -325,5 +332,9 @@
     return activeController?.selectPolity?.(polityId, options) || false;
   }
 
-  window.ATLAS_POLITY_BROWSER_VIEW = Object.freeze({ mount, selectPolity });
+  function clearSelection() {
+    return activeController?.clearSelection?.() || false;
+  }
+
+  window.ATLAS_POLITY_BROWSER_VIEW = Object.freeze({ mount, selectPolity, clearSelection });
 })();
