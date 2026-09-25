@@ -67,7 +67,11 @@ test("retired migration workflows have no live repository execution surface", ()
     "scripts/rehearse-stage2-p7-charles-de-gaulle-governance.mjs",
     "scripts/rehearse-stage2-p7-hojo-governance.mjs",
     "scripts/rehearse-stage2-p7-tokugawa-ieyasu-governance.mjs",
-    "scripts/rehearse-stage2-p7-toyotomi-hideyoshi-governance.mjs"
+    "scripts/rehearse-stage2-p7-toyotomi-hideyoshi-governance.mjs",
+    "scripts/rehearse-stage2-p7-broad-politic.mjs",
+    "scripts/rehearse-stage2-p7-cunobeline-chronology.mjs",
+    "scripts/rehearse-stage2-p7-provenance-only.mjs",
+    "scripts/rehearse-stage2-p7-tecumseh-chronology.mjs"
   ]) {
     assert.equal(fs.existsSync(path.join(root, relativePath)), false, `retired live surface must stay absent: ${relativePath}`);
   }
