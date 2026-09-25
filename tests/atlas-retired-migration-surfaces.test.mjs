@@ -32,6 +32,9 @@ test("retired migration workflows have no live repository execution surface", ()
     ".github/workflows/atlas-p11-baseline-b-capture.yml",
     ".github/workflows/atlas-p11-semantic-v2-backfill.yml",
     ".github/workflows/atlas-stage2-train2-live-parity.yml",
+    ".github/workflows/atlas-p11-baseline-b-readiness.yml",
+    "scripts/rehearse-p11-baseline-b-readiness.mjs",
+    "server/atlas-p11-baseline-b-production-service.js",
     "server/atlas-p11-baseline-b-capture-handler.js",
     "server/atlas-p11-baseline-b-github-oidc.js"
   ]) {

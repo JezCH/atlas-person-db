@@ -1,40 +1,47 @@
+# Compatibility note: the workflow display name is retained temporarily so any
+# existing required-check configuration continues to resolve. The execution
+# surface itself is current canonical-data readiness, not a P11 release step.
 name: ATLAS P11 Baseline B Readiness
 
 on:
   pull_request:
     paths:
-      - '.github/workflows/atlas-p11-baseline-b-readiness.yml'
-      - 'scripts/rehearse-p11-*.mjs'
+      - '.github/workflows/atlas-canonical-data-readiness.yml'
+      - 'scripts/rehearse-atlas-canonical-data-readiness.mjs'
       - 'server/atlas-baseline-b.js'
-      - 'server/atlas-p11-*.js'
       - 'server/atlas-duplicate-review-service.js'
       - 'server/atlas-person-duplicate-revalidation-readiness.js'
       - 'server/atlas-person-merge-service.js'
+      - 'server/atlas-person-merge-interlock.js'
+      - 'server/atlas-authoring-readiness.js'
       - 'server/atlas-authoring-migrations.js'
       - 'server/atlas-correction-migrations.js'
       - 'server/atlas-stage2-schema-release.js'
       - 'server/atlas-stage2-p9-db-cutover.js'
+      - 'stage2/contracts/p11-reviewed-semantic-v2-exceptions.v1.json'
       - 'db/schema/**'
-      - 'migration/phase-10/**'
+      - 'migration/phase-10/p10-person-duplicate-revalidation-requirements.sql'
       - 'package.json'
       - 'package-lock.json'
   push:
     branches:
       - main
     paths:
-      - '.github/workflows/atlas-p11-baseline-b-readiness.yml'
-      - 'scripts/rehearse-p11-*.mjs'
+      - '.github/workflows/atlas-canonical-data-readiness.yml'
+      - 'scripts/rehearse-atlas-canonical-data-readiness.mjs'
       - 'server/atlas-baseline-b.js'
-      - 'server/atlas-p11-*.js'
       - 'server/atlas-duplicate-review-service.js'
       - 'server/atlas-person-duplicate-revalidation-readiness.js'
       - 'server/atlas-person-merge-service.js'
+      - 'server/atlas-person-merge-interlock.js'
+      - 'server/atlas-authoring-readiness.js'
       - 'server/atlas-authoring-migrations.js'
       - 'server/atlas-correction-migrations.js'
       - 'server/atlas-stage2-schema-release.js'
       - 'server/atlas-stage2-p9-db-cutover.js'
+      - 'stage2/contracts/p11-reviewed-semantic-v2-exceptions.v1.json'
       - 'db/schema/**'
-      - 'migration/phase-10/**'
+      - 'migration/phase-10/p10-person-duplicate-revalidation-requirements.sql'
       - 'package.json'
       - 'package-lock.json'
   workflow_dispatch:
@@ -42,9 +49,8 @@ on:
 permissions:
   contents: read
 
-# This workflow is read-only validation. Newer commits supersede older results.
 concurrency:
-  group: atlas-validation-p11-${{ github.event.pull_request.number || github.ref }}
+  group: atlas-validation-canonical-readiness-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -57,16 +63,16 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: atlas_p11_ci
+          POSTGRES_DB: atlas_canonical_readiness_ci
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U postgres -d atlas_p11_ci"
+          --health-cmd "pg_isready -U postgres -d atlas_canonical_readiness_ci"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
     env:
-      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/atlas_p11_ci
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/atlas_canonical_readiness_ci
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -75,8 +81,8 @@ jobs:
           cache: npm
       - name: Install exact locked dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Rehearse P11 Baseline B readiness and read-only capture
+      - name: Rehearse canonical data readiness invariants
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/rehearse-p11-baseline-b-readiness.mjs
+          node scripts/rehearse-atlas-canonical-data-readiness.mjs

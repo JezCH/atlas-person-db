@@ -94,7 +94,7 @@ test('replaceable validation workflows cancel stale runs', () => {
   for (const relative of [
     '../.github/workflows/atlas-integrity.yml',
     '../.github/workflows/atlas-p10-person-duplicate-v2-revalidation.yml',
-    '../.github/workflows/atlas-p11-baseline-b-readiness.yml',
+    '../.github/workflows/atlas-canonical-data-readiness.yml',
     '../.github/workflows/atlas-human-authoring-operational-parity.yml'
   ]) {
     const workflow = fs.readFileSync(new URL(relative, import.meta.url), 'utf8');

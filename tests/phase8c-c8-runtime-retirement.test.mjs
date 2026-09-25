@@ -42,13 +42,14 @@ test('historical C8 workflow manifest remains audit evidence while current workf
     'atlas-p10-revalidation-release.yml',
     'atlas-p10-release-launcher.yml',
     'atlas-p11-baseline-b-capture.yml',
-    'atlas-p11-semantic-v2-backfill.yml'
+    'atlas-p11-semantic-v2-backfill.yml',
+    'atlas-p11-baseline-b-readiness.yml'
   ]) assert.equal(workflows.has(retired), false, `completed migration transport returned: ${retired}`);
   for (const required of [
     'atlas-authoring-apply.yml',
     'atlas-correction-apply.yml',
     'atlas-integrity.yml',
-    'atlas-p11-baseline-b-readiness.yml'
+    'atlas-canonical-data-readiness.yml'
   ]) assert.equal(workflows.has(required), true, `required current workflow missing: ${required}`);
 
   const correctionWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-correction-apply.yml', import.meta.url), 'utf8');
@@ -76,16 +77,17 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.doesNotMatch(p10Workflow, /environment:\s*production/);
   assert.doesNotMatch(p10Workflow, /SUPABASE_DB_URL/);
 
-  const p11Workflow = fs.readFileSync(new URL('../.github/workflows/atlas-p11-baseline-b-readiness.yml', import.meta.url), 'utf8');
-  assert.match(p11Workflow, /\bpull_request\s*:/m);
-  assert.match(p11Workflow, /^\s*push\s*:/m);
-  assert.match(p11Workflow, /branches:\s*\n\s*- main/);
-  assert.match(p11Workflow, /workflow_dispatch\s*:/m);
-  assert.match(p11Workflow, /permissions:\s*\n\s*contents:\s*read/);
-  assert.match(p11Workflow, /postgres:17/);
-  assert.match(p11Workflow, /rehearse-p11-baseline-b-readiness\.mjs/);
-  assert.doesNotMatch(p11Workflow, /environment:\s*production/);
-  assert.doesNotMatch(p11Workflow, /SUPABASE_DB_URL|id-token:\s*write/);
+  const canonicalReadinessWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-canonical-data-readiness.yml', import.meta.url), 'utf8');
+  assert.match(canonicalReadinessWorkflow, /\bpull_request\s*:/m);
+  assert.match(canonicalReadinessWorkflow, /^\s*push\s*:/m);
+  assert.match(canonicalReadinessWorkflow, /branches:\s*\n\s*- main/);
+  assert.match(canonicalReadinessWorkflow, /workflow_dispatch\s*:/m);
+  assert.match(canonicalReadinessWorkflow, /permissions:\s*\n\s*contents:\s*read/);
+  assert.match(canonicalReadinessWorkflow, /postgres:17/);
+  assert.match(canonicalReadinessWorkflow, /rehearse-atlas-canonical-data-readiness\.mjs/);
+  assert.doesNotMatch(canonicalReadinessWorkflow, /atlas-p11-baseline-b-production-service|captureProductionBaselineB/);
+  assert.doesNotMatch(canonicalReadinessWorkflow, /environment:\s*production/);
+  assert.doesNotMatch(canonicalReadinessWorkflow, /SUPABASE_DB_URL|id-token:\s*write/);
 
   const personDomainWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-person-domain-apply.yml', import.meta.url), 'utf8');
   assert.match(personDomainWorkflow, /^\s*push\s*:/m);

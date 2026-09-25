@@ -14,7 +14,6 @@ const duplicateReview = require('../server/atlas-duplicate-review-service.js');
 const p10Completion = require('../server/atlas-person-duplicate-revalidation-readiness.js');
 const mergeService = require('../server/atlas-person-merge-service.js');
 const baselineB = require('../server/atlas-baseline-b.js');
-const p11Production = require('../server/atlas-p11-baseline-b-production-service.js');
 
 const { Client } = pg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -24,7 +23,7 @@ if (!/^postgres(?:ql)?:\/\//.test(databaseUrl)) throw new Error('DATABASE_URL is
 const GORGO_SURVIVOR = '5136407a-9792-5103-be6f-54c947b255a5';
 const GORGO_DUPLICATE = 'a3367f19-e901-5213-aba6-76c4aef1b730';
 const GORGO_REQUIREMENT = 'p10:gorgo-of-sparta:gorgo:p4-reviewed-same-person';
-const MERGE_REQUEST = 'fixture:p11:gorgo-physical-merge';
+const MERGE_REQUEST = 'fixture:canonical-readiness:gorgo-physical-merge';
 
 const baselineSchema = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 const requirementMigration = fs.readFileSync(path.join(root, 'migration/phase-10/p10-person-duplicate-revalidation-requirements.sql'), 'utf8');
@@ -42,8 +41,8 @@ try {
   await client.query(requirementMigration);
 
   await client.query(`insert into atlas_v2.persons(id,canonical_key,person_type,historicity) values
-    ($1::uuid,'p11-gorgo-of-sparta','historical','historical'),
-    ($2::uuid,'p11-gorgo','historical','historical')`, [GORGO_SURVIVOR, GORGO_DUPLICATE]);
+    ($1::uuid,'canonical-readiness-gorgo-of-sparta','historical','historical'),
+    ($2::uuid,'canonical-readiness-gorgo','historical','historical')`, [GORGO_SURVIVOR, GORGO_DUPLICATE]);
   await client.query(`insert into atlas_v2.person_names(id,person_id,locale,name,name_type,is_preferred) values
     (gen_random_uuid(),$1::uuid,'en','Gorgo of Sparta','preferred',true),
     (gen_random_uuid(),$2::uuid,'en','Gorgo','preferred',true)`, [GORGO_SURVIVOR, GORGO_DUPLICATE]);
@@ -60,16 +59,16 @@ try {
     client,
     candidateId: gorgo.id,
     decision: 'MERGE',
-    rationale: 'P11 fixture closes the durable P10 identity decision before Baseline B capture.',
-    requestId: 'fixture:p11:review:gorgo'
+    rationale: 'Canonical readiness fixture closes the reviewed identity decision before physical merge.',
+    requestId: 'fixture:canonical-readiness:review:gorgo'
   });
 
   const p10BeforeMerge = await p10Completion.inspectPersonDuplicateRevalidationReadiness(client);
   assert.equal(p10BeforeMerge.ready, true, p10BeforeMerge.blockers.join(';'));
 
-  const p11BeforeMerge = await baselineB.inspectBaselineBReadiness(client);
-  assert.equal(p11BeforeMerge.ready, false);
-  assert.ok(p11BeforeMerge.blockers.includes('APPROVED_PERSON_MERGES_PENDING:1'));
+  const readinessBeforeMerge = await baselineB.inspectBaselineBReadiness(client);
+  assert.equal(readinessBeforeMerge.ready, false);
+  assert.ok(readinessBeforeMerge.blockers.includes('APPROVED_PERSON_MERGES_PENDING:1'));
 
   const merged = await mergeService.executeApprovedPersonMerge({
     client,
@@ -82,58 +81,24 @@ try {
   assert.deepEqual(merged.mutation_summary.revalidation_requirements_retired, [GORGO_REQUIREMENT]);
   assert.equal(merged.mutation_summary.post_merge_revalidation_readiness.ready, true);
 
-  const p11AfterMerge = await baselineB.inspectBaselineBReadiness(client);
-  assert.equal(p11AfterMerge.ready, true, p11AfterMerge.blockers.join(';'));
-  assert.equal(p11AfterMerge.canonical_schema.expected_table_count, 41);
-  assert.equal(p11AfterMerge.canonical_schema.present_table_count, 41);
-  assert.deepEqual(p11AfterMerge.canonical_schema.missing_tables, []);
-  assert.equal(p11AfterMerge.duplicate_frontier.approved_merges_pending, 0);
-  assert.equal(p11AfterMerge.duplicate_frontier.unresolved, 0);
-  assert.equal(p11AfterMerge.merge_audit.merged_source_person_still_live, 0);
-
-  const productionReadiness = await p11Production.inspectProductionBaselineBReadiness(client);
-  assert.equal(productionReadiness.read_only, true);
-  assert.equal(productionReadiness.database_write_committed, false);
-  assert.equal(productionReadiness.readiness.ready, true, productionReadiness.readiness.blockers.join(';'));
-  assert.equal(productionReadiness.readiness.canonical_schema.present_table_count, 41);
-
-  const productionCapture = await p11Production.captureProductionBaselineB(client);
-  assert.equal(productionCapture.read_only, true);
-  assert.equal(productionCapture.database_write_committed, false);
-  const capture = productionCapture.baseline;
-  assert.equal(capture.schema, baselineB.BASELINE_B_SCHEMA);
-  assert.equal(capture.semantic_version, baselineB.BASELINE_B_SEMANTIC_VERSION);
-  assert.equal(capture.dataset_count, 41);
-  assert.equal(Object.keys(capture.datasets).length, 41);
-  assert.equal(Object.keys(capture.counts).length, 41);
-  assert.equal(Object.keys(capture.dataset_digests).length, 41);
-  assert.equal(capture.authority.production_mutation_authorized, false);
-  assert.equal(capture.counts.persons, 1);
-  assert.equal(capture.counts.person_names, 2);
-  assert.equal(capture.counts.activities, 0);
-  assert.match(capture.baseline_digest, /^sha256:[0-9a-f]{64}$/);
-  assert.equal(capture.readiness.ready, true);
-
-  const serialized = JSON.parse(JSON.stringify(capture));
-  const rebuiltDocument = baselineB.buildBaselineBDocument({
-    datasets: serialized.datasets,
-    readiness: serialized.readiness
-  });
-  assert.equal(rebuiltDocument.baseline_digest, capture.baseline_digest);
-  assert.deepEqual(rebuiltDocument.dataset_digests, capture.dataset_digests);
+  const readinessAfterMerge = await baselineB.inspectBaselineBReadiness(client);
+  assert.equal(readinessAfterMerge.ready, true, readinessAfterMerge.blockers.join(';'));
+  assert.equal(readinessAfterMerge.canonical_schema.expected_table_count, 41);
+  assert.equal(readinessAfterMerge.canonical_schema.present_table_count, 41);
+  assert.deepEqual(readinessAfterMerge.canonical_schema.missing_tables, []);
+  assert.equal(readinessAfterMerge.duplicate_frontier.approved_merges_pending, 0);
+  assert.equal(readinessAfterMerge.duplicate_frontier.unresolved, 0);
+  assert.equal(readinessAfterMerge.merge_audit.merged_source_person_still_live, 0);
 
   console.log(JSON.stringify({
-    marker: 'ATLAS_P11_BASELINE_B_READINESS_OK',
-    baseline_b_schema: capture.schema,
-    p10_review_ready_before_merge: p10BeforeMerge.ready,
-    p11_blocked_until_physical_merge: true,
-    p11_ready_after_physical_merge: p11AfterMerge.ready,
-    canonical_schema_tables_present: p11AfterMerge.canonical_schema.present_table_count,
-    production_service_read_only: productionCapture.read_only,
-    database_write_committed: productionCapture.database_write_committed,
-    baseline_b_digest: capture.baseline_digest,
-    captured_dataset_count: capture.dataset_count,
-    serialized_round_trip_stable: true,
+    marker: 'ATLAS_CANONICAL_DATA_READINESS_OK',
+    identity_review_ready_before_merge: p10BeforeMerge.ready,
+    readiness_blocked_until_physical_merge: true,
+    readiness_ready_after_physical_merge: readinessAfterMerge.ready,
+    canonical_schema_tables_present: readinessAfterMerge.canonical_schema.present_table_count,
+    approved_merges_pending: readinessAfterMerge.duplicate_frontier.approved_merges_pending,
+    unresolved_duplicate_frontier: readinessAfterMerge.duplicate_frontier.unresolved,
+    merged_source_person_still_live: readinessAfterMerge.merge_audit.merged_source_person_still_live,
     production_mutation_authorized: false
   }, null, 2));
 } catch (error) {
