@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-25T09:02:22.000Z",
+  "generated_at": "2026-09-25T09:09:12.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1207,7 +1207,12 @@
     "8053a905-8cee-4b43-8f56-c827291f7498": "east-asia",
     "70d9fd6b-cfe4-4da0-ad24-946c6c2ee10e": "south-asia",
     "976c3aff-5b7c-4968-9914-3c229aa04817": "europe",
-    "3fbc6e9b-781c-46d4-a5c3-09da2f233e02": "south-asia"
+    "3fbc6e9b-781c-46d4-a5c3-09da2f233e02": "south-asia",
+    "407d91cf-7a97-45e3-81ea-d42a3cbfba35": "east-asia",
+    "7594c57e-0b32-49d6-84d0-f65cd46f759e": "europe",
+    "7e090994-f196-4957-8295-dcfa08c53fba": "europe",
+    "9e89d0fa-a64e-4d9b-b702-70692bcc0cd4": "africa",
+    "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "europe"
   },
   "place_function_records": [
     {
@@ -2730,6 +2735,11 @@
     "70d9fd6b-cfe4-4da0-ad24-946c6c2ee10e": "northwest-south-asia",
     "976c3aff-5b7c-4968-9914-3c229aa04817": "balkans",
     "3fbc6e9b-781c-46d4-a5c3-09da2f233e02": "north-india-ganges",
+    "407d91cf-7a97-45e3-81ea-d42a3cbfba35": "china",
+    "7594c57e-0b32-49d6-84d0-f65cd46f759e": "central-europe",
+    "7e090994-f196-4957-8295-dcfa08c53fba": "western-europe",
+    "9e89d0fa-a64e-4d9b-b702-70692bcc0cd4": "west-africa",
+    "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "central-europe",
     "00ec4b0c-6002-5791-825c-43465632102d": "north-india-ganges",
     "4c3e50cb-d76c-4b7c-b611-222849404142": "eastern-central-asia-steppe",
     "5247c9c0-ca50-452b-9e5a-d7e5585f096d": "western-europe",
@@ -3568,6 +3578,35 @@
       "region_code": "africa",
       "subregion_code": "west-africa",
       "location_label": "West African Atlantic theatre (representative anchor)"
+    },
+    {
+      "activity_id": "87ef772c-a363-4b1a-910b-93c2c90c3106",
+      "expected_polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
+      "expected_start_year": 1072,
+      "expected_end_year": 1092,
+      "region_code": "west-asia",
+      "subregion_code": "iranian-plateau",
+      "location_label": "Isfahan",
+      "reason": "Malik-Shah I's 1072-1092 reign is the reviewed period in which Isfahan served as the principal Seljuk capital/court anchor. This exact Activity override closes the post-1072 place-function gap without converting the transregional Great Seljuk polity into a static leaf.",
+      "source_refs": [
+        "Encyclopaedia Iranica: MALEKŠĀH — Isfahan can be considered the Seljuq capital during Malik Shah's reign",
+        "Encyclopaedia Iranica: NEẒĀM-AL-MOLK — vizier under Alp Arslan and Malik Shah until 1092"
+      ]
+    },
+    {
+      "activity_id": "ca1b40e3-7854-453c-b34e-c854d8b87f53",
+      "expected_polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
+      "expected_start_year": 1040,
+      "expected_end_year": 1063,
+      "region_code": "west-asia",
+      "subregion_code": "iranian-plateau",
+      "location_label": "Nishapur / Ray / Isfahan court sequence",
+      "reason": "Tughril Beg's 1040-1063 rule used successive Iranian court centers rather than one fixed capital: Nishapur after the 1040 conquest, Ray from the early 1040s, and Isfahan from about 1050. All reviewed centers resolve to the same ATLAS Iranian-plateau leaf, so one exact Activity-level leaf binding preserves the spatial fact without inventing a permanent single capital.",
+      "source_refs": [
+        "Encyclopaedia Iranica: CAPITAL CITIES — after Nishapur in 1040, Great Seljuk capitals shifted to Ray and then Isfahan",
+        "Encyclopaedia Iranica: ISFAHAN — Tughril moved his possessions to Isfahan around 1050 as a permanent residence",
+        "Encyclopaedia Iranica: KĀKUYIDS — Tughril came to Ray in the early 1040s and made it his capital for the following years"
+      ]
     }
   ]
 }
