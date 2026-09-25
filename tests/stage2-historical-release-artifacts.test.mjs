@@ -49,13 +49,29 @@ test("historical Train 2 evidence is preserved as passive reviewed artifacts", (
   assert.equal(rolePrerequisite.rules?.activity_mutation_forbidden, true);
 
   const p9 = readJson("stage2/releases/p9-semantic-key-v2-cutover.v1.json");
-  assert.equal(p9.database_rehearsal?.replacement_index, "person_politics_v2_stage2_semantic_identity_uq");
-  assert.equal(p9.database_rehearsal?.retired_index, "atlas_v2.person_politics_v2_null_role_semantic_uidx");
-  assert.equal(p9.rules?.production_mutation_authorized, false);
+  assert.equal(p9.schema, "atlas-stage2-p9-semantic-key-v2-cutover/v1");
+  assert.equal(p9.status, "BRANCH_ONLY_P9_SEMANTIC_KEY_V2_GLOBAL_CUTOVER_COMPLETE_NO_PRODUCTION_MUTATION");
+  assert.equal(p9.prerequisite?.p8_status, "ZERO_KNOWN_BLOCKERS");
+  assert.equal(p9.prerequisite?.p8_effective_blockers, 0);
+  assert.equal(p9.canonical_activity_identity?.module, "server/atlas-activity-semantic-key-v2.js");
+  assertExistingRepoPath(p9.canonical_activity_identity.module, "P9 current semantic-key module");
+  assert.equal(p9.canonical_activity_identity?.version, "atlas-activity-semantic-key/v2");
   assert.ok(p9.canonical_activity_identity?.dimensions?.includes("relation_type_id"));
   assert.ok(p9.canonical_activity_identity?.dimensions?.includes("activity_start_full_temporal_boundary_without_certainty"));
+  assert.ok(p9.canonical_activity_identity?.dimensions?.includes("activity_end_full_temporal_boundary_without_certainty"));
   assert.ok(p9.canonical_activity_identity?.explicitly_non_identity?.includes("activity_start_certainty"));
   assert.ok(p9.canonical_activity_identity?.explicitly_non_identity?.includes("activity_end_certainty"));
+  assert.equal(p9.consumers?.authoring_manifest_v2_new_write, "v2_native");
+  assert.equal(p9.consumers?.legacy_name_based_mutation_create_update_import, "disabled_fail_closed");
+  assert.equal(p9.consumers?.immutable_activity_id_delete, "allowed");
+  assert.equal(p9.consumers?.duplicate_review_relationship_projection, "v2_relation_full_temporal");
+  assert.equal(p9.consumers?.relationship_reconciliation, "v2_relation_full_temporal");
+  assert.equal(p9.database_rehearsal?.replacement_index, "person_politics_v2_stage2_semantic_identity_uq");
+  assert.equal(p9.database_rehearsal?.retired_index, "atlas_v2.person_politics_v2_null_role_semantic_uidx");
+  assert.equal(p9.database_rehearsal?.production_applied, false);
+  assertExistingRepoPath(p9.database_rehearsal.path, "P9 historical DB rehearsal SQL");
+  assert.equal(p9.rules?.historical_authoring_assertions_preserved, true);
+  assert.equal(p9.rules?.production_mutation_authorized, false);
 
   assertExistingRepoPath("docs/stage2/PRODUCTION_TRAIN2_TRANSPORT_2026-08-14.md", "Train 2 transport history");
 });
