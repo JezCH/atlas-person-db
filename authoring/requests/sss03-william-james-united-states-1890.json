@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss03:william-james:united-states:psychologist-philosopher:1890:v1",
+  "person": {
+    "canonical_name_en": "William James",
+    "display_name_ko": "윌리엄 제임스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Psychologist and philosopher",
+    "role_display_name_ko": "심리학자·철학자",
+    "start_year": 1890,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1890,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1890, publication year of the two-volume Principles of Psychology, as William James's representative U.S. intellectual milestone."
+  },
+  "sources": [
+    {
+      "title": "William James — Harvard Department of Psychology",
+      "canonical_url": "https://psychology.fas.harvard.edu/people/william-james",
+      "citation_text": "Harvard's Department of Psychology states that James published the influential two-volume Principles of Psychology in 1890.",
+      "source_type": "institutional_academic_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "philosophy-20260922-016",
+    "review_checkpoint": "#1374 comment 5763224562",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}
