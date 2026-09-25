@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:blaise-pascal:france:mathematician-philosopher:1654:v2",
+  "request_id": "authoring:blaise-pascal:kingdom-of-france:mathematician-philosopher:1654:v1",
   "person": {
     "canonical_name_en": "Blaise Pascal",
     "display_name_ko": "블레즈 파스칼",
