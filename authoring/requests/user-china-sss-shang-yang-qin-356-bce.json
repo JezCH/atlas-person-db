@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-china-sss:shang-yang:qin:chief-administrator-reformer:356-bce:v1",
+  "person": {
+    "canonical_name_en": "Shang Yang",
+    "display_name_ko": "상앙",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-26",
+      "document_title": "상앙",
+      "url": "https://namu.wiki/w/%EC%83%81%EC%95%99"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Qin",
+    "display_name_ko": "진나라"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Chief administrator and reformer",
+    "role_display_name_ko": "최고 행정관·개혁가",
+    "start_year": -356,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -356,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 356 BCE marks the first major round of Shang Yang's reforms in Qin. ATLAS records a bounded reform milestone rather than fabricating a lifespan-scale office rail."
+  },
+  "sources": [
+    {
+      "title": "Institutional Reforms and Reformers during the Warring States Period — The Oxford Handbook of Early China",
+      "canonical_url": "https://academic.oup.com/edited-volume/34296/chapter-abstract/290749611",
+      "citation_text": "Yuri Pines describes the Qin reforms associated with Shang Yang as replacing pedigree-based order with ranks of merit and deepening centralization and bureaucratization, strengthening Qin's capacity to mobilize resources.",
+      "source_type": "academic_handbook"
+    },
+    {
+      "title": "National integration and institution building — Pacific Economic Review",
+      "canonical_url": "https://onlinelibrary.wiley.com/doi/full/10.1111/1468-0106.12419",
+      "citation_text": "The article dates the start of Shang Yang's two rounds of Qin institutional reforms to 356 BCE and summarizes their administrative, military-merit, county, land, and measurement reforms.",
+      "source_type": "academic_article"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "user-20260926-shang-yang",
+    "review_checkpoint": "#1374 comment 5835171948",
+    "registration_handoff": "#1375 comment 5835173541",
+    "grade": "SSS+",
+    "representative_domain": "governance"
+  }
+}
