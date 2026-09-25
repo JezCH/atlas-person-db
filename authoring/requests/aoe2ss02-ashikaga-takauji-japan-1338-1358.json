@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ashikaga-takauji:japan:shogun:1338-1358:v1",
+  "person": {
+    "canonical_name_en": "Ashikaga Takauji",
+    "display_name_ko": "아시카가 다카우지",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Shogun",
+    "role_display_name_ko": "쇼군",
+    "start_year": 1338,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1358,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ashikaga Takauji received the title of shogun in 1338 and founded the Ashikaga/Muromachi shogunate. He remained the first Ashikaga shogun until his death in 1358. ATLAS follows the existing shogun modeling used for Minamoto no Yoritomo by binding the office to the canonical Japan polity rather than creating a duplicate shogunate polity solely for the officeholder."
+  },
+  "sources": [
+    {
+      "title": "National Diet Library Newsletter No. 215 — political situation of the Northern and Southern Courts",
+      "canonical_url": "https://dl.ndl.go.jp/view/prepareDownload?contentNo=1&itemId=info%3Andljp%2Fpid%2F11481256",
+      "citation_text": "The National Diet Library notes that Ashikaga Takauji set up the alternate Northern Court and identifies him as the shogun leading the Muromachi shogunate during the 1352 crisis.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Ashikaga, Takauji, 1305-1358 — Web NDL Authorities",
+      "canonical_url": "https://id.ndl.go.jp/auth/ndlna/00624956",
+      "citation_text": "The National Diet Library authority record identifies Ashikaga Takauji and gives his lifespan as 1305–1358.",
+      "source_type": "government_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-02",
+    "source_review_checkpoint": "#1374 comment 5825498864; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1897-person read-back delta rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
