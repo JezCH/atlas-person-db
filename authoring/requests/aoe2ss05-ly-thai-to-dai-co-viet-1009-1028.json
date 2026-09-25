@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ly-thai-to:dai-co-viet:emperor:1009-1028:v1",
+  "person": {
+    "canonical_name_en": "Lý Thái Tổ",
+    "display_name_ko": "리 태조",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-26",
+      "document_title": "태조(리)",
+      "url": "https://namu.wiki/w/%ED%83%9C%EC%A1%B0(%EB%A6%AC)"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Đại Cồ Việt",
+    "display_name_ko": "대구월",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1009,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1028,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lý Công Uẩn, posthumously Lý Thái Tổ, was enthroned in 1009, founded the Lý dynasty, and ruled until 1028. ATLAS reuses Đại Cồ Việt for this reign; the state name Đại Việt was adopted only later, in 1054."
+  },
+  "sources": [
+    {
+      "title": "Building a scientific dossier to submit to UNESCO to honor historical figure Ly Cong Uan",
+      "canonical_url": "https://www.vietnam.vn/en/xay-dung-ho-so-khoa-hoc-trinh-unesco-vinh-danh-danh-nhan-lich-su-ly-cong-uan",
+      "citation_text": "The Vietnamese cultural article identifies Lý Công Uẩn as Lý Thái Tổ, founder of the Lý dynasty, enthroned in 1009 and ruler of Đại Cồ Việt until his death in 1028.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Lý Thái Tổ — biographical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/L%C3%BD_Th%C3%A1i_T%E1%BB%95",
+      "citation_text": "The biographical chronology gives Lý Thái Tổ's reign as 1009–1028 and identifies him as founder of the Lý dynasty.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260926-microbatch-05",
+    "source_review_checkpoint": "#1374 comment 5825499804; #1375 comment 5835006903",
+    "dedup_method": "Completed identity-aware Production dedup preserved; immediate bounded Production exact/alias screen on 2026-09-26 found the target identity absent for all six. Broad 'Henry I' matches to Henry II of England and Henry IV of France were explicitly excluded as unrelated persons."
+  }
+}

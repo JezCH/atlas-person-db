@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kestutis:grand-duchy-of-lithuania:grand-duke:1381-1382:v1",
+  "person": {
+    "canonical_name_en": "Kęstutis",
+    "display_name_ko": "케스투티스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Grand Duchy of Lithuania",
+    "display_name_ko": "리투아니아 대공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Duke",
+    "role_display_name_ko": "대공",
+    "start_year": 1381,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1382,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Lithuanian encyclopedia records Kęstutis as Grand Duke of Lithuania from late 1381 to mid-1382. ATLAS stores the same reign at year granularity; the 1381–1382 rail does not imply January-to-December boundaries."
+  },
+  "sources": [
+    {
+      "title": "Kęstutis — Visuotinė lietuvių enciklopedija",
+      "canonical_url": "https://www.vle.lt/straipsnis/kestutis/",
+      "citation_text": "The Lithuanian encyclopedia identifies Kęstutis as Grand Duke of Lithuania from late 1381 to mid-1382.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260926-microbatch-05",
+    "source_review_checkpoint": "#1374 comment 5825499804; #1375 comment 5835006903",
+    "dedup_method": "Completed identity-aware Production dedup preserved; immediate bounded Production exact/alias screen on 2026-09-26 found the target identity absent for all six. Broad 'Henry I' matches to Henry II of England and Henry IV of France were explicitly excluded as unrelated persons."
+  }
+}
