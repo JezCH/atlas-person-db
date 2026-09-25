@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss05:luis-de-camoes:kingdom-of-portugal:poet:1572:v1",
+  "person": {
+    "canonical_name_en": "Luís de Camões",
+    "display_name_ko": "루이스 드 카몽이스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Portugal",
+    "display_name_ko": "포르투갈 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet",
+    "role_display_name_ko": "시인",
+    "start_year": 1572,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1572,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1572 marks the first printed edition of Os Lusíadas in Lisbon."
+  },
+  "sources": [
+    {
+      "title": "The Lusiads. Os Lusíadas | Library of Congress",
+      "canonical_url": "https://www.loc.gov/item/2021666936/",
+      "citation_text": "The Library of Congress records the first printed edition of Os Lusíadas as published in Lisbon in 1572.",
+      "source_type": "library_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-031",
+    "review_checkpoint": "#1374 comment 5815495564",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}

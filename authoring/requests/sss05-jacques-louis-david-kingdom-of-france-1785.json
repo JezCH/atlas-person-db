@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss05:jacques-louis-david:kingdom-of-france:painter:1785:v1",
+  "person": {
+    "canonical_name_en": "Jacques-Louis David",
+    "display_name_ko": "자크루이 다비드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Painter",
+    "role_display_name_ko": "화가",
+    "start_year": 1785,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1785,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1785 marks completion and Salon exhibition of The Oath of the Horatii, a royal commission under Louis XVI."
+  },
+  "sources": [
+    {
+      "title": "Le serment des Horaces, entre les mains de leur père | Musée du Louvre",
+      "canonical_url": "https://collections.louvre.fr/ark:/53355/cl010062239",
+      "citation_text": "The Louvre records the royal commission under Louis XVI, completion in July 1785, and exhibition at the Salon of 1785.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-023",
+    "review_checkpoint": "#1374 comment 5815495564",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}

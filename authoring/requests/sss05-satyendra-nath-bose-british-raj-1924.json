@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss05:satyendra-nath-bose:british-raj:physicist:1924:v1",
+  "person": {
+    "canonical_name_en": "Satyendra Nath Bose",
+    "display_name_ko": "사티엔드라 나트 보스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "British Raj",
+    "display_name_ko": "영국령 인도"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Physicist",
+    "role_display_name_ko": "물리학자",
+    "start_year": 1924,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1924,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1924 marks Bose's derivation of Planck's law using indistinguishable light quanta and his correspondence with Einstein."
+  },
+  "sources": [
+    {
+      "title": "This Month in Physics History: Bose and Einstein | American Physical Society",
+      "canonical_url": "https://www.aps.org/apsnews/2005/10/this-month-in-physics-history",
+      "citation_text": "APS records that Bose's 1924 paper derived Planck's law by treating photons as indistinguishable particles and that Einstein forwarded it for publication.",
+      "source_type": "scholarly_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-047",
+    "review_checkpoint": "#1374 comment 5815498501",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}

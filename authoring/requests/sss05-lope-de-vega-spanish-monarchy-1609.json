@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss05:lope-de-vega:spanish-monarchy:playwright-poet:1609:v1",
+  "person": {
+    "canonical_name_en": "Lope de Vega",
+    "display_name_ko": "로페 데 베가",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Spanish Monarchy",
+    "display_name_ko": "스페인 군주국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Playwright and poet",
+    "role_display_name_ko": "극작가·시인",
+    "start_year": 1609,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1609,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1609 marks publication of Arte nuevo de hacer comedias en este tiempo, Lope de Vega's statement of his dramatic practice."
+  },
+  "sources": [
+    {
+      "title": "Cronología de Lope de Vega | Biblioteca Virtual Miguel de Cervantes",
+      "canonical_url": "https://cervantesvirtual.com/portales/lope_de_vega/autor_cronologia/",
+      "citation_text": "The Biblioteca Virtual Miguel de Cervantes chronology records publication of Arte nuevo de hacer comedias in 1609.",
+      "source_type": "library_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-078",
+    "review_checkpoint": "#1374 comment 5815502825",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}
