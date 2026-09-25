@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss05:elinor-ostrom:united-states:political-scientist:2009:v1",
+  "person": {
+    "canonical_name_en": "Elinor Ostrom",
+    "display_name_ko": "엘리너 오스트롬",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Political scientist",
+    "role_display_name_ko": "정치학자",
+    "start_year": 2009,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 2009,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 2009 marks Ostrom's Nobel-recognized work on economic governance, especially the commons."
+  },
+  "sources": [
+    {
+      "title": "The Prize in Economic Sciences 2009 — Press release | NobelPrize.org",
+      "canonical_url": "https://www.nobelprize.org/prizes/economic-sciences/2009/press-release/",
+      "citation_text": "The Royal Swedish Academy of Sciences awarded Elinor Ostrom the 2009 prize for her analysis of economic governance, especially the commons.",
+      "source_type": "award_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-058",
+    "review_checkpoint": "#1374 comment 5815499904",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}
