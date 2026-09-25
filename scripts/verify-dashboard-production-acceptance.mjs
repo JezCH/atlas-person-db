@@ -372,27 +372,45 @@ async function verifyDrilldowns(client, modelState) {
   results.activity_completeness = activityCompleteness;
 
   await showDashboard(client);
-  const runtimeExclusion = await evaluate(client, `(() => {
-    const button=document.querySelector('[data-dashboard-attention="runtime_exclusion"]:not(:disabled)');
+  const expectedRuntimeTargets=Number(modelState.runtime_exclusions?.total_count || 0);
+  const runtimeExclusionState = await evaluate(client, `(() => {
+    const button=document.querySelector('[data-dashboard-attention="runtime_exclusion"]');
     const panel=document.querySelector("#dashboardRuntimeExclusionTargets");
     if (!button || !panel) return null;
-    const beforeHidden=panel.hidden;
-    button.click();
     return {
-      before_hidden:beforeHidden,
-      after_hidden:panel.hidden,
-      aria_expanded:button.getAttribute("aria-expanded"),
-      row_count:panel.querySelectorAll(".dashboard-runtime-exclusion-table tbody tr").length,
-      activity_ids:[...panel.querySelectorAll(".dashboard-runtime-exclusion-table tbody code")].map((el)=>(el.textContent||"").trim())
+      disabled:button.disabled,
+      panel_hidden:panel.hidden,
+      count_text:(button.querySelector("strong")?.textContent || "").trim()
     };
   })()`);
-  assert(runtimeExclusion, "Runtime exclusion Attention drill-down is unavailable");
-  const expectedRuntimeTargets=Number(modelState.runtime_exclusions?.total_count);
-  assert(runtimeExclusion.before_hidden === true && runtimeExclusion.after_hidden === false, "Runtime exclusion target panel did not reveal on click", runtimeExclusion);
-  assert(runtimeExclusion.aria_expanded === "true", "Runtime exclusion button did not expose expanded state", runtimeExclusion);
-  assert(runtimeExclusion.row_count === expectedRuntimeTargets, "Rendered Runtime exclusion row count differs from canonical target snapshot", { runtimeExclusion,expectedRuntimeTargets });
-  assert(runtimeExclusion.activity_ids.length === expectedRuntimeTargets && runtimeExclusion.activity_ids.every(Boolean), "Rendered Runtime exclusion Activity UUIDs are incomplete", runtimeExclusion);
-  results.runtime_exclusion = runtimeExclusion;
+  assert(runtimeExclusionState, "Runtime exclusion Attention control is missing");
+  if (expectedRuntimeTargets <= 0) {
+    assert(runtimeExclusionState.disabled === true, "Zero Runtime exclusions should disable the Attention drill-down", { runtimeExclusionState,expectedRuntimeTargets });
+    assert(runtimeExclusionState.panel_hidden === true, "Zero Runtime exclusions should keep the target panel hidden", { runtimeExclusionState,expectedRuntimeTargets });
+    assert(renderedInteger(runtimeExclusionState.count_text) === 0, "Zero Runtime exclusion Attention count is not rendered as 0", { runtimeExclusionState,expectedRuntimeTargets });
+    results.runtime_exclusion = { disabled:true,count:0 };
+  } else {
+    const runtimeExclusion = await evaluate(client, `(() => {
+      const button=document.querySelector('[data-dashboard-attention="runtime_exclusion"]:not(:disabled)');
+      const panel=document.querySelector("#dashboardRuntimeExclusionTargets");
+      if (!button || !panel) return null;
+      const beforeHidden=panel.hidden;
+      button.click();
+      return {
+        before_hidden:beforeHidden,
+        after_hidden:panel.hidden,
+        aria_expanded:button.getAttribute("aria-expanded"),
+        row_count:panel.querySelectorAll(".dashboard-runtime-exclusion-table tbody tr").length,
+        activity_ids:[...panel.querySelectorAll(".dashboard-runtime-exclusion-table tbody code")].map((el)=>(el.textContent||"").trim())
+      };
+    })()`);
+    assert(runtimeExclusion, "Runtime exclusion Attention drill-down is unavailable");
+    assert(runtimeExclusion.before_hidden === true && runtimeExclusion.after_hidden === false, "Runtime exclusion target panel did not reveal on click", runtimeExclusion);
+    assert(runtimeExclusion.aria_expanded === "true", "Runtime exclusion button did not expose expanded state", runtimeExclusion);
+    assert(runtimeExclusion.row_count === expectedRuntimeTargets, "Rendered Runtime exclusion row count differs from canonical target snapshot", { runtimeExclusion,expectedRuntimeTargets });
+    assert(runtimeExclusion.activity_ids.length === expectedRuntimeTargets && runtimeExclusion.activity_ids.every(Boolean), "Rendered Runtime exclusion Activity UUIDs are incomplete", runtimeExclusion);
+    results.runtime_exclusion = runtimeExclusion;
+  }
 
   await showDashboard(client);
   const qualityResults={};
