@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-25T15:14:37.000Z",
+  "generated_at": "2026-09-25T15:23:44.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1629,6 +1629,10 @@
     {
       "polity_id": "a81055d7-ed0d-45a6-90c6-738e1a9ba94d",
       "reason": "The Roxolani were a nomadic Sarmatian polity whose historical geography shifted across the Pontic-Danubian steppe; the Amage episode does not establish a sufficiently precise fixed capital."
+    },
+    {
+      "polity_id": "2612d649-8aa4-4042-b504-60e47c602944",
+      "reason": "Tervingi in Fritigern's 376–380 interval are a mobile/transregional Gothic grouping rather than a defensible fixed-leaf polity. Keep the polity itself explicitly reviewed/unplaced; the exact Fritigern Activity is resolved separately by its reviewed Lower Danube–Thrace / Adrianople Activity override."
     }
   ],
   "polity_subregions": {
