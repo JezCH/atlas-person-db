@@ -553,24 +553,24 @@
   }
 
   async function selectPerson(personId, { force = false, updateRoute = true } = {}) {
-    const id = String(personId || "").trim().toLowerCase();
-    if (!id || (!force && selectedPersonId === id)) return false;
+    personId = String(personId || "").trim().toLowerCase();
+    if (!personId || (!force && selectedPersonId === personId)) return false;
     clearPortraitPreviewUrl();
-    selectedPersonId = id;
+    selectedPersonId = personId;
     selectedPersonDetail = null;
     selectedPortrait = null;
     renderGroups();
     renderDetailLoading();
     if (updateRoute) {
-      window.dispatchEvent(new CustomEvent("atlas-person-selected", { detail:{ personId:id } }));
+      window.dispatchEvent(new CustomEvent("atlas-person-selected", { detail:{ personId } }));
     }
     const serial = ++requestSerial;
     try {
       const [result, portraitResult] = await Promise.all([
-        reader.readPerson(id),
-        reader.readPortrait(id).catch((error) => Object.freeze({ error }))
+        reader.readPerson(personId),
+        reader.readPortrait(personId).catch((error) => Object.freeze({ error }))
       ]);
-      if (serial !== requestSerial || selectedPersonId !== id) return false;
+      if (serial !== requestSerial || selectedPersonId !== personId) return false;
       selectedPersonDetail = result.person;
       selectedPortrait = portraitResult?.portrait || null;
       renderDetail(result.person, portraitResult);
