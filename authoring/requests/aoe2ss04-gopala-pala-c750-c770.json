@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gopala:pala-empire:emperor:c750-c770:v1",
+  "person": {
+    "canonical_name_en": "Gopala",
+    "display_name_ko": "고팔라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Pala Empire",
+    "display_name_ko": "팔라 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 750,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 770,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Gopala founded the Pala dynasty in Bengal in the mid-eighth century after being selected by regional chiefs. Modern reconstructions of his absolute reign dates vary, so ATLAS uses the common c.750–c.770 bracket with both boundaries marked approximate and reuses the existing Pala Empire polity already used for later Pala rulers."
+  },
+  "sources": [
+    {
+      "title": "Pala Kingdom: Rethinking Lordship in Early Medieval North India — SOAS",
+      "canonical_url": "https://eprints.soas.ac.uk/33700/1/11010463.pdf",
+      "citation_text": "The SOAS study's chronological appendix lists Gopala I as founder and gives an approximate reigning period of 750–770 CE.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Gopala I — Encyclopedia of Buddhism",
+      "canonical_url": "https://encyclopediaofbuddhism.org/wiki/Gopala_I",
+      "citation_text": "The reference identifies Gopala as founder of the Pala dynasty in Bengal and notes his rise in the later eighth century through selection by regional chieftains.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-04",
+    "source_review_checkpoint": "#1374 comment 5825499317; #1375 comment 5833905579",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1941-person read-back rechecked before authoring; target identity exact-match absent for all six; Sigismund II Augustus explicitly excluded as a different person"
+  }
+}

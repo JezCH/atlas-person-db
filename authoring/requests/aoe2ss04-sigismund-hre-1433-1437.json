@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sigismund:holy-roman-empire:emperor:1433-1437:v1",
+  "person": {
+    "canonical_name_en": "Sigismund",
+    "display_name_ko": "지기스문트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Holy Roman Empire",
+    "display_name_ko": "신성 로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Holy Roman Emperor",
+    "role_display_name_ko": "신성 로마 황제",
+    "start_year": 1433,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1437,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sigismund of Luxembourg was crowned Holy Roman Emperor in Rome on 31 May 1433 and remained emperor until his death on 9 December 1437. ATLAS records only the imperial office interval and reuses the existing Holy Roman Empire polity, keeping his longer kingships in Hungary, Germany and Bohemia outside this representative Activity."
+  },
+  "sources": [
+    {
+      "title": "Deutsche Biographie — Sigismund von Luxemburg",
+      "canonical_url": "https://www.deutsche-biographie.de/gnd118614185.html#ndbcontent",
+      "citation_text": "Neue Deutsche Biographie identifies Sigismund as Roman-German king and emperor, records his imperial coronation on 31 May 1433, and his death on 9 December 1437.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Encyclopaedia Britannica 1911 — Sigismund",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Sigismund",
+      "citation_text": "The reference records Sigismund's coronation as emperor at Rome on 31 May 1433 and his death on 9 December 1437.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-04",
+    "source_review_checkpoint": "#1374 comment 5825499317; #1375 comment 5833905579",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1941-person read-back rechecked before authoring; target identity exact-match absent for all six; Sigismund II Augustus explicitly excluded as a different person"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ibn-tumart:almohad-movement:founder-mahdi:c1121-1130:v1",
+  "person": {
+    "canonical_name_en": "Ibn Tumart",
+    "display_name_ko": "이븐 투마르트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Almohad movement",
+    "display_name_ko": "무와히드 운동",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Founder and Mahdi",
+    "role_display_name_ko": "창시자·마흐디",
+    "start_year": 1121,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1130,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Ibn Tumart founded the Almohad (al-Muwaḥḥidūn) reform movement and became its spiritual and political leader, publicly claiming the Mahdi role around 1121 and organizing the movement in the High Atlas before his death in 1130. ATLAS creates the contemporary Almohad movement identity rather than projecting the later Almohad Caliphate backward before the posthumous conquests of ʿAbd al-Muʾmin."
+  },
+  "sources": [
+    {
+      "title": "Muhammad ibn Tumart — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/muhammad-ibn-tumart",
+      "citation_text": "The reference identifies Ibn Tumart as the North African religious revolutionary who founded the Almohad movement and died in 1130.",
+      "source_type": "encyclopedic_reference"
+    },
+    {
+      "title": "Islam in Iran VI: The Concept of Mahdi in Sunni Islam — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/islam-in-iran-vi-the-concept-of-mahdi-in-sunni-islam/",
+      "citation_text": "Encyclopaedia Iranica identifies Ibn Tumart, who died in 1130, as a Sunni Mahdi claimant and founder of the Almohad movement.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-04",
+    "source_review_checkpoint": "#1374 comment 5825499317; #1375 comment 5833905579",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1941-person read-back rechecked before authoring; target identity exact-match absent for all six; Sigismund II Augustus explicitly excluded as a different person"
+  }
+}
