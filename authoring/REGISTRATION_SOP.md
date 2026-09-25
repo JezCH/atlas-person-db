@@ -8,7 +8,7 @@ A second rule is equally important: **ordinary registration must use the already
 
 ## 1. Completion criterion
 
-A registration is complete only when authoritative Production read-back confirms the intended Person and Activity.
+A registration is complete only when authoritative Production read-back confirms the intended Person, Activity, and reviewed NamuWiki state (`linked` or `not_found`, including exact reuse of an already-reviewed live state). A new or previously-unreviewed Person with unresolved NamuWiki review is not a completed registration.
 
 A merged PR, green CI, Vercel deployment, authoring response without read-back, or workflow start is not completion by itself.
 
@@ -135,7 +135,7 @@ During the normal path, do not inspect implementation files merely to remember h
 
 ### 4.2 Batch compilation + Production preflight invariant — build once, probe once, write once
 
-Operational continuation: NamuWiki discovery uses external search indexes as the default path. Do not spend a routine registration attempt trying to open `namu.wiki` directly. Apply the explicit `review_deferrals.namuwiki` GitHub exception in `NAMUWIKI_REGISTRATION_POLICY.md` only when indexed review itself is unavailable or insufficient for an exact decision and the user instructs registration to continue. Its pending-review record replaces the unavailable reference decision for this bounded case; never record an unverified `not_found`. If a direct Admin session is unavailable, the existing authenticated GitHub Authoring Apply workflow performs authoritative `preflight_batch` before any Person/Activity write. Report pre-commit preflight as not performed, and rely on the workflow's actual per-item classifications and canonical verification rather than claiming READY in advance. This changes neither authentication nor the pre-write database checks.
+Operational continuation: NamuWiki discovery uses external search indexes as the default path. Do not spend a routine registration attempt trying to open `namu.wiki` directly. If indexed review itself is unavailable or insufficient for an exact `linked` / `not_found` decision, keep that Person out of COMMIT and leave the registration `QUEUED` or `BLOCKED`; `review_deferrals.namuwiki` is retired for new registration manifests. Never record an unverified `not_found`, and never mark an unresolved NamuWiki case `APPLIED`. If a direct Admin session is unavailable, the existing authenticated GitHub Authoring Apply workflow performs authoritative `preflight_batch` before any Person/Activity write. Report pre-commit preflight as not performed, and rely on the workflow's actual per-item classifications and canonical verification rather than claiming READY in advance. This changes neither authentication nor the pre-write database checks.
 
 After SCREEN and REVIEW finish for a multi-Person request, compile the surviving registrations as one in-memory batch before touching Git.
 
@@ -233,7 +233,7 @@ For a new Person, or for the missing Activity of an existing Person, establish o
 
 Historical research and NamuWiki research **should be performed in parallel** after SCREEN has established that they are necessary. For a batch, review different surviving Persons in parallel as well; do not serialize independent historical/NamuWiki checks.
 
-For NamuWiki review, use external search-index evidence **first and by default**, exactly as in the established NamuWiki linking work. Search the Person's Korean name plus material aliases/disambiguators, verify the exact indexed document title using title/snippet/redirect evidence, then store its canonical `https://namu.wiki/w/...` URL. Do not attempt direct `namu.wiki` retrieval as a routine registration step and do not use direct-site accessibility as a condition of acceptance. Deferral is reserved only for cases where indexed review itself is unavailable or insufficient for an exact `linked` / `not_found` decision.
+For NamuWiki review, use external search-index evidence **first and by default**, exactly as in the established NamuWiki linking work. Search the Person's Korean name plus material aliases/disambiguators, verify the exact indexed document title using title/snippet/redirect evidence, then store its canonical `https://namu.wiki/w/...` URL. Do not attempt direct `namu.wiki` retrieval as a routine registration step and do not use direct-site accessibility as a condition of acceptance. If indexed evidence is still insufficient for an exact `linked` / reviewed `not_found` decision, the Person remains outside COMMIT; registration-time NamuWiki review may not be deferred into a later cleanup pass.
 
 Do not expand ordinary registration into a repository audit, deployment audit, unrelated Person comparison, whole-DB investigation, source-code inspection, workflow inspection, or capability discovery. Those actions require a concrete failure or ambiguity first.
 
@@ -277,7 +277,7 @@ The server is authoritative for:
 
 ### NamuWiki behavior
 
-For a new or previously unreviewed Person, submit exactly one decision at `external_references.namuwiki`:
+For a new or previously unreviewed Person, submit exactly one decision at `external_references.namuwiki`. A new manifest may not use `review_deferrals.namuwiki`; if review is unresolved, do not commit that Person yet:
 
 ```json
 {
