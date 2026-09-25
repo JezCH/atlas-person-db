@@ -622,10 +622,16 @@ function verifyCanonicalContracts(modelState, desktopDom) {
   assert((runtimeDom.meta || []).includes(comparisonLabel), "Rendered Runtime activation comparison label differs from model", { dom:runtimeDom,model:runtimeDelta });
   assert((runtimeDom.meta || []).includes("최신 activation = 현재 Runtime projection"), "Rendered Runtime projection-match label is missing", runtimeDom);
 
-  const renderedReasonDeltas=(runtimeDom.reasons || []).map((row)=>renderedInteger(row.value));
+  const renderedReasonRows=(runtimeDom.reasons || []).filter((row)=>String(row?.label || "").trim());
+  const renderedReasonDeltas=renderedReasonRows.map((row)=>renderedInteger(row.value));
   const expectedReasonDeltas=(runtimeDelta.exclusion_delta_rows || []).map((row)=>row.delta);
-  assert(renderedReasonDeltas.length === expectedReasonDeltas.length, "Rendered Runtime exclusion delta reason count differs from model", { dom:runtimeDom,model:runtimeDelta });
-  assert(renderedReasonDeltas.every((value,index)=>value === expectedReasonDeltas[index]), "Rendered Runtime exclusion reason deltas differ from model", { rendered:renderedReasonDeltas,expected:expectedReasonDeltas,dom:runtimeDom });
+  if (!expectedReasonDeltas.length) {
+    assert(renderedReasonRows.length === 0, "Rendered Runtime exclusion reason rows exist without model deltas", { dom:runtimeDom,model:runtimeDelta });
+    assert((runtimeDom.reasons || []).some((row)=>row.text === "제외 사유별 증감 0건"), "Rendered Runtime zero-delta placeholder is missing", { dom:runtimeDom,model:runtimeDelta });
+  } else {
+    assert(renderedReasonDeltas.length === expectedReasonDeltas.length, "Rendered Runtime exclusion delta reason count differs from model", { dom:runtimeDom,model:runtimeDelta });
+    assert(renderedReasonDeltas.every((value,index)=>value === expectedReasonDeltas[index]), "Rendered Runtime exclusion reason deltas differ from model", { rendered:renderedReasonDeltas,expected:expectedReasonDeltas,dom:runtimeDom });
+  }
 }
 
 async function main() {
