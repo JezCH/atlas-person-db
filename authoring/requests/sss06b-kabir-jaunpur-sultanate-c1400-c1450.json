@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss06b:kabir:jaunpur-sultanate:poet-mystic:c1400-c1450:v1",
+  "person": {
+    "canonical_name_en": "Kabir",
+    "display_name_ko": "카비르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Kabir was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Jaunpur Sultanate",
+    "display_name_ko": "자운푸르 술탄국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet and mystic",
+    "role_display_name_ko": "시인·신비사상가",
+    "start_year": 1400,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1450,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses c.1400–c.1450 as a deliberately broad approximate floruit window, not as exact life dates. Oxford's current biographical reconstruction places Kabir probably in the first half of the fifteenth century (c.1398–1448) in or around Banaras. Banaras lay under the Sharqi/Jaunpur political sphere for much of this period, so the Jaunpur Sultanate association is historical context rather than a claim that Kabir held office or served the state."
+  },
+  "sources": [
+    {
+      "title": "Kabir/Kabir Panth — Oxford Bibliographies in Hinduism",
+      "canonical_url": "https://academic.oup.com/reference/62357/reference-article-abstract/554518400",
+      "citation_text": "Oxford Bibliographies states that, insofar as Kabir can be reconstructed historically, he probably lived in the first half of the fifteenth century, c.1398–1448, in or around Banaras.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "History — District Jaunpur, Government of Uttar Pradesh",
+      "canonical_url": "https://jaunpur.nic.in/history/",
+      "citation_text": "The Government of Uttar Pradesh district history documents the independent Sharqi political order centered on Jaunpur during the relevant fifteenth-century period; ATLAS uses it as polity-identity support.",
+      "source_type": "government_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "writers4-20260921-006",
+    "review_checkpoint": "#1374 comment 5762473330",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}
