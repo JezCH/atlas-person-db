@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:devapala:pala-empire:emperor:c810-c850:v1",
+  "person": {
+    "canonical_name_en": "Devapala",
+    "display_name_ko": "데바팔라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Pala Empire",
+    "display_name_ko": "팔라 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 810,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 850,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Devapala succeeded Dharmapala as a major Pala ruler. Pala inscriptions normally use regnal years without a securely fixed era, and modern reconstructions differ substantially. ATLAS therefore uses the conventional c.810–c.850 CE bracket while explicitly marking both boundaries approximate rather than presenting one reconstruction as exact."
+  },
+  "sources": [
+    {
+      "title": "Everyday Life in the Pala Empire — Asiatic Society of Pakistan Publication No. 23",
+      "canonical_url": "https://ocrdigitalfile.nvli.in/dlirepository/671/Everyday-Life-In-The-Pala-Empire-ocr.pdf",
+      "citation_text": "The historical study notes that a Devapala copper-plate is dated to his 35th or 39th regnal year and places his long reign approximately between 810 and 850 CE.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Somapura Mahavihara — Banglapedia",
+      "canonical_url": "https://en.banglapedia.org/index.php/Somapura_Mahavihara",
+      "citation_text": "Banglapedia identifies Devapala as Dharmapala's successor in the Pala dynasty and discusses building activity during his reign.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-03",
+    "source_review_checkpoint": "#1374 comment 5825499317; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1919-person read-back rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
