@@ -4,6 +4,8 @@ import test from 'node:test';
 
 import humanModule from '../server/atlas-human-authoring-service.js';
 
+const workExecution = fs.readFileSync(new URL('../WORK_EXECUTION.md', import.meta.url), 'utf8');
+
 const {
   resolveNamuWikiReference,
   resolveOrCreateSources,
@@ -142,4 +144,6 @@ test('Admin and SOP encode SCREEN-first and optional re-review rather than the o
   assert.match(sop, /SCREEN\n→ REVIEW\n→ COMMIT\n→ VERIFY/);
   assert.match(sop, /Do not begin full historical research before checking whether the intended Person is already in Production/);
   assert.match(sop, /each logical registration has its own `SERIALIZABLE` transaction/);
+  assert.match(workExecution, /NamuWiki review is a \*\*registration obligation\*\*/);
+  assert.match(workExecution, /MUST NOT be marked `REGISTERED`, `APPLIED`, or `VERIFIED_AUTHORING_ONLY`/);
 });
