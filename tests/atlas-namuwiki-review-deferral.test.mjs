@@ -11,7 +11,7 @@ const validator = fileURLToPath(new URL('../scripts/validate-authoring-request-f
 const deferral = {
   reason_code:'provider_access_blocked',
   attempted_at:'2026-09-02',
-  reason:'Provider access is blocked; user requested registration after the restriction was disclosed.',
+  reason:'Provider access is blocked.',
   authorization:'user_requested_registration_after_disclosed_block'
 };
 function candidate() {
@@ -31,39 +31,39 @@ function validate(value) {
     return spawnSync(process.execPath,[validator,'authoring/requests/candidate.json'],{cwd:dir,encoding:'utf8'});
   } finally { fs.rmSync(dir,{recursive:true,force:true}); }
 }
-test('provider-block deferral validates without inventing a reference decision',()=>{
-  const manifest={...candidate(),review_deferrals:{namuwiki:deferral}};
-  const result=validate(manifest);
-  assert.equal(result.status,0,result.stderr);
-  assert.match(result.stdout,/review deferred/);
-  assert.equal(humanService.normalizeNamuWikiReference(manifest.external_references?.namuwiki,{allowLegacyOmission:true}),null);
-  assert.throws(()=>humanService.normalizeNamuWikiReference(null,{allowLegacyOmission:false}),/NAMUWIKI_REQUIRED/);
+
+test('new GitHub registrations reject NamuWiki review deferral',()=>{
+  const result=validate({...candidate(),review_deferrals:{namuwiki:deferral}});
+  assert.notEqual(result.status,0);
+  assert.match(result.stderr,/review_deferrals\.namuwiki is retired/);
 });
-test('bare omission and unsubstantiated deferrals fail closed',()=>{
+
+test('new registrations require an explicit linked or not_found decision',()=>{
   assert.notEqual(validate(candidate()).status,0);
-  for(const key of ['reason_code','attempted_at','reason','authorization']) {
-    const invalid={...deferral}; delete invalid[key];
-    assert.notEqual(validate({...candidate(),review_deferrals:{namuwiki:invalid}}).status,0,key);
-  }
-  for(const change of [{reason_code:'not_searched'},{attempted_at:'2026-02-30'},{authorization:'assumed'}]) {
-    assert.notEqual(validate({...candidate(),review_deferrals:{namuwiki:{...deferral,...change}}}).status,0);
-  }
+  assert.equal(validate({...candidate(),external_references:{namuwiki:{status:'not_found',checked_at:'2026-09-26'}}}).status,0);
+  assert.equal(validate({...candidate(),external_references:{namuwiki:{
+    status:'linked',
+    checked_at:'2026-09-26',
+    document_title:'Example Person',
+    url:'https://namu.wiki/w/Example%20Person'
+  }}}).status,0);
 });
-test('a pending review cannot disguise an unknown or conflicting reference',()=>{
-  for(const reference of [{status:'unknown'},{status:'not_found',checked_at:'2026-09-02'}]) {
+
+test('a deferral cannot coexist with or replace an explicit reference decision',()=>{
+  for(const reference of [
+    {status:'unknown'},
+    {status:'not_found',checked_at:'2026-09-26'},
+    {status:'linked',checked_at:'2026-09-26',document_title:'Example Person',url:'https://namu.wiki/w/Example%20Person'}
+  ]) {
     assert.notEqual(validate({...candidate(),external_references:{namuwiki:reference},review_deferrals:{namuwiki:deferral}}).status,0);
   }
 });
-test('deferral keeps source and chronology gates',()=>{
-  const manifest={...candidate(),review_deferrals:{namuwiki:deferral}};
-  assert.notEqual(validate({...manifest,sources:[]}).status,0);
-  assert.notEqual(validate({...manifest,activity:{...manifest.activity,start_year:0}}).status,0);
-});
-test('existing linked reference is reused and not downgraded by omitted input',async()=>{
+
+test('legacy service compatibility may still reuse an already reviewed reference',async()=>{
   const existing={status:'linked',checked_at:'2026-08-21',document_title:'Existing Person',url:'https://namu.wiki/w/Existing%20Person'};
   const calls=[];
   const client={query:async(sql)=>{calls.push(sql);return{rows:[existing]};}};
-  const result=await humanService.resolveNamuWikiReference(client,{requestId:'test:deferred',person:{id:'11111111-1111-4111-8111-111111111111'},requested:null,allowLegacyNamuWikiOmission:true});
+  const result=await humanService.resolveNamuWikiReference(client,{requestId:'test:legacy-replay',person:{id:'11111111-1111-4111-8111-111111111111'},requested:null,allowLegacyNamuWikiOmission:true});
   assert.deepEqual(result,existing);
   assert.equal(calls.length,1);
   assert.doesNotMatch(calls[0],/^\s*(insert|update)\b/i);
