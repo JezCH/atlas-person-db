@@ -1,7 +1,8 @@
 (() => {
   "use strict";
 
-  const DOMAIN_ORDER = ["dashboard", "persons", "spacetime", "polities", "places", "events", "sources", "geometry"];
+  const routeModel = window.ATLAS_ENTITY_ROUTE;
+  const DOMAIN_ORDER = routeModel?.DOMAIN_ORDER || ["dashboard", "persons", "spacetime", "polities", "places", "events", "sources", "geometry"];
   const DOMAINS = window.ATLAS_UI_AUTHORITY_CATALOG_KO;
 
   function syncNavigationStatusLabels(buttons) {
@@ -33,8 +34,8 @@
     }
   }
 
-  if (!DOMAINS) {
-    console.warn("ATLAS authority navigation could not initialize localization catalog.");
+  if (!DOMAINS || !routeModel?.parseHash || !routeModel?.domainHash || !routeModel?.entityHash) {
+    console.warn("ATLAS authority navigation could not initialize localization or entity routing.");
     return;
   }
 
@@ -68,6 +69,7 @@
   topbar.insertAdjacentElement("afterend", shell);
 
   let currentDomain = "persons";
+  let lastAppliedHash = null;
   let spacetimeModelPromise = null;
   let dashboardAssetsPromise = null;
   let spacetimeAssetsPromise = null;
@@ -209,7 +211,7 @@
     appendStylesheetOnce("./atlas-polity-review-workbench.css?v=20260925-polity-frontier-v3");
     polityAssetsPromise = loadScriptOnce("./atlas-polity-browser-reader.js?v=20260925-polity-frontier-v3", () => Boolean(window.ATLAS_POLITY_BROWSER_READER))
       .then(() => loadScriptOnce("./atlas-polity-review-candidates.js?v=20260925-polity-frontier-v3", () => Boolean(window.ATLAS_POLITY_REVIEW_CANDIDATES)))
-      .then(() => loadScriptOnce("./atlas-polity-review-workbench.js?v=20260925-polity-frontier-v3", () => Boolean(window.ATLAS_POLITY_BROWSER_VIEW)))
+      .then(() => loadScriptOnce("./atlas-polity-review-workbench.js?v=20260925-deep-link-v1", () => Boolean(window.ATLAS_POLITY_BROWSER_VIEW)))
       .then(() => loadScriptOnce("./atlas-polity-review-panel.js?v=20260925-polity-frontier-v3", () => Boolean(window.ATLAS_POLITY_REVIEW_PANEL)))
       .then(() => Object.freeze({ browser: window.ATLAS_POLITY_BROWSER_VIEW, review: window.ATLAS_POLITY_REVIEW_PANEL }))
       .catch((error) => {
@@ -219,15 +221,21 @@
     return polityAssetsPromise;
   }
 
-  function activatePolity() {
+  function activatePolity(polityId = null) {
     const mount = document.getElementById("atlasPolityMount");
     if (!mount) return;
-    mount.innerHTML = '<section class="card" style="padding:24px"><strong>현재 정치체 데이터를 불러오는 중입니다.</strong></section>';
+    const alreadyMounted = Boolean(mount.querySelector(".polity-browser-shell"));
+    if (!alreadyMounted) mount.innerHTML = '<section class="card" style="padding:24px"><strong>현재 정치체 데이터를 불러오는 중입니다.</strong></section>';
     ensurePolityAssets().then((views) => {
       if (currentDomain !== "polities") return;
-      views?.browser?.mount?.(mount);
-      const reviewMount = document.getElementById("atlasPolityReviewMount");
-      if (reviewMount) views?.review?.mount?.(reviewMount);
+      if (alreadyMounted) {
+        if (polityId) views?.browser?.selectPolity?.(polityId,{ updateRoute:false });
+        else views?.browser?.clearSelection?.();
+      } else {
+        views?.browser?.mount?.(mount,{ initialPolityId:polityId || "" });
+        const reviewMount = document.getElementById("atlasPolityReviewMount");
+        if (reviewMount) views?.review?.mount?.(reviewMount);
+      }
     }).catch((error) => {
       console.error(error);
       const currentMount = document.getElementById("atlasPolityMount");
@@ -269,35 +277,69 @@
     if (connectionStatus) connectionStatus.hidden = true;
   }
 
-  function normalizeHash(hash) {
-    const value = String(hash || "").replace(/^#/, "").trim().replace(/^atlas-/, "");
-    return DOMAIN_ORDER.includes(value) ? value : "persons";
+  function parseRoute(hash) {
+    return routeModel.parseHash(hash);
   }
 
-  function showDomain(domain, { updateHash = false } = {}) {
+  function normalizeHash(hash) {
+    return parseRoute(hash).domain;
+  }
+
+  function writeHash(hash, { replace = false } = {}) {
+    const target = String(hash || "");
+    if (!target || window.location.hash === target) {
+      lastAppliedHash = window.location.hash;
+      return false;
+    }
+    history[replace ? "replaceState" : "pushState"](null, "", target);
+    lastAppliedHash = target;
+    return true;
+  }
+
+  function showDomain(domain, { updateHash = false, route = null } = {}) {
     const next = DOMAIN_ORDER.includes(domain) ? domain : "persons";
     const previousDomain = currentDomain;
+    const resolvedRoute = route?.domain === next
+      ? route
+      : Object.freeze({ domain:next, entity_type:null, entity_id:null, canonical_hash:routeModel.domainHash(next) });
     currentDomain = next;
     const isPersons = next === "persons";
     personView.hidden = !isPersons;
     shell.hidden = isPersons;
-    if (!isPersons) shell.innerHTML = domainHtml(next);
+    if (!isPersons && (previousDomain !== next || !shell.firstElementChild)) shell.innerHTML = domainHtml(next);
     if (next === "dashboard") activateDashboard();
     setNavigationActive(next);
     setTopbar(next);
 
-    if (updateHash) {
-      const target = `#atlas-${next}`;
-      if (window.location.hash !== target) history.pushState(null, "", target);
-    }
+    if (updateHash) writeHash(routeModel.domainHash(next));
     window.dispatchEvent(new CustomEvent("atlas-authority-domain-changed", { detail: { domain: next } }));
+
+    if (next === "persons") {
+      if (resolvedRoute.entity_type === "person" && resolvedRoute.entity_id) {
+        window.ATLAS_PERSON_MAIN?.openPerson?.(resolvedRoute.entity_id,{ updateRoute:false });
+      } else {
+        window.ATLAS_PERSON_MAIN?.clearSelection?.({ updateRoute:false });
+      }
+    }
     if (next === "spacetime") activateSpacetime();
-    if (next === "polities") activatePolity();
+    if (next === "polities") {
+      const polityId = resolvedRoute.entity_type === "polity" ? resolvedRoute.entity_id : null;
+      activatePolity(polityId);
+    }
     if (previousDomain !== next) {
       requestAnimationFrame(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
       });
     }
+  }
+
+  function showEntity(domain, entityType, entityId, { replace = false } = {}) {
+    const target = routeModel.entityHash(domain,entityType,entityId);
+    const route = parseRoute(target);
+    if (!route.entity_id) return false;
+    writeHash(target,{ replace });
+    showDomain(route.domain,{ route });
+    return true;
   }
 
   function handleNavigationClick(event) {
@@ -307,15 +349,42 @@
     if (button.closest(".mobile-nav")) document.getElementById("mobileMenuClose")?.click();
   }
 
+  function applyLocationRoute() {
+    const rawHash = window.location.hash || routeModel.domainHash("persons");
+    if (rawHash === lastAppliedHash) return;
+    const route = parseRoute(rawHash);
+    lastAppliedHash = rawHash;
+    if (rawHash !== route.canonical_hash) {
+      history.replaceState(null, "", route.canonical_hash);
+      lastAppliedHash = route.canonical_hash;
+    }
+    showDomain(route.domain,{ route });
+  }
+
   document.querySelector(".nav-list")?.addEventListener("click", handleNavigationClick);
   document.querySelector(".mobile-nav")?.addEventListener("click", handleNavigationClick);
-  window.addEventListener("hashchange", () => showDomain(normalizeHash(window.location.hash)));
+  window.addEventListener("atlas-person-selected", (event) => {
+    if (currentDomain !== "persons") return;
+    const target = routeModel.entityHash("persons","person",event?.detail?.personId);
+    if (parseRoute(target).entity_id) writeHash(target);
+  });
+  window.addEventListener("atlas-polity-selected", (event) => {
+    if (currentDomain !== "polities") return;
+    const target = routeModel.entityHash("polities","polity",event?.detail?.polityId);
+    if (parseRoute(target).entity_id) writeHash(target);
+  });
+  window.addEventListener("hashchange", applyLocationRoute);
+  window.addEventListener("popstate", applyLocationRoute);
 
-  showDomain(normalizeHash(window.location.hash));
+  applyLocationRoute();
 
   window.ATLAS_MAIN_AUTHORITY_NAV = Object.freeze({
     getDomain: () => currentDomain,
+    getRoute: () => parseRoute(window.location.hash),
     showDomain: (domain) => showDomain(domain, { updateHash: true }),
+    showEntity,
+    parseRoute,
+    normalizeHash,
     domains: DOMAIN_ORDER.slice()
   });
 })();
