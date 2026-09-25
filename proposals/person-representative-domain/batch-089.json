@@ -1,0 +1,125 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "5b274f8195646373a68503ba773b54e0183fe502",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign the 16 newly registered SSS SUPERBATCH-03 Persons to the representative domains already reviewed in Lane A and frozen in #1375 comment 5824112295; no reclassification is performed in this apply batch."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SSS-SUPERBATCH03-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 16,
+    "distribution": {
+      "governance": 0,
+      "military": 0,
+      "knowledge": 7,
+      "technology": 4,
+      "commerce": 0,
+      "culture": 5,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "015197eb-6ddc-454a-8a70-96425fbc4799",
+      "canonical_name_en": "Subrahmanyan Chandrasekhar",
+      "preferred_name_ko": "수브라마니안 찬드라세카르",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "38f194d8-9122-4202-80e4-67d9e5764880",
+      "canonical_name_en": "Su Song",
+      "preferred_name_ko": "소송",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "8b65c04d-c02f-4836-b4b0-5d56a923de0f",
+      "canonical_name_en": "Mimar Sinan",
+      "preferred_name_ko": "미마르 시난",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "899c7d6f-5012-4371-be36-14ccb7459b66",
+      "canonical_name_en": "Abdus Salam",
+      "preferred_name_ko": "압두스 살람",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "25c3d716-a426-406d-90b1-85b67eb136dc",
+      "canonical_name_en": "Saadi",
+      "preferred_name_ko": "사디",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "57f63dfa-18ed-4693-a384-8395064dc10f",
+      "canonical_name_en": "Chinua Achebe",
+      "preferred_name_ko": "치누아 아체베",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "1d913e76-ac79-4e82-90a2-08bbed2e8ef8",
+      "canonical_name_en": "Jorge Luis Borges",
+      "preferred_name_ko": "호르헤 루이스 보르헤스",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "aafc1c6d-ff86-4435-9580-dce055f38249",
+      "canonical_name_en": "Antonio Vivaldi",
+      "preferred_name_ko": "안토니오 비발디",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "5b200bf9-e2af-49d3-9861-b8e2e6eeabdf",
+      "canonical_name_en": "William of Ockham",
+      "preferred_name_ko": "오컴의 윌리엄",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "ad51aa2c-a9f6-4332-ac92-ba1ee7b8d85c",
+      "canonical_name_en": "William James",
+      "preferred_name_ko": "윌리엄 제임스",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "320d1393-721d-4725-8b37-cb17ec7e023b",
+      "canonical_name_en": "Hannah Arendt",
+      "preferred_name_ko": "한나 아렌트",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "6f029958-4714-4295-94c0-6c599aed55bc",
+      "canonical_name_en": "Martin Heidegger",
+      "preferred_name_ko": "마르틴 하이데거",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "c3ff9587-63e8-486f-b489-54d17717338c",
+      "canonical_name_en": "Albert Camus",
+      "preferred_name_ko": "알베르 카뮈",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "0deb2089-e581-4516-9a97-04f024502120",
+      "canonical_name_en": "Amartya Sen",
+      "preferred_name_ko": "아마르티아 센",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "97f308a5-a15f-4c39-a68f-40b201745266",
+      "canonical_name_en": "Sir George Cayley",
+      "preferred_name_ko": "조지 케일리",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "9a8272f7-5bd4-4cf8-80b1-8fc79d3afdd9",
+      "canonical_name_en": "Joseph Marie Jacquard",
+      "preferred_name_ko": "조제프 마리 자카르",
+      "representative_domain": "technology"
+    }
+  ]
+}
