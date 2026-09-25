@@ -285,7 +285,7 @@ A new worker answers "what is active?" from the active board first: full histori
 
 ## 11. Registration completeness without repeated cleanup
 
-When a new canonical obligation exists, new applicable records should handle it in the same registration lifecycle so legacy backfill debt does not keep growing.
+When a new canonical obligation exists, new applicable records must handle it in the same registration lifecycle so legacy backfill debt does not keep growing.
 
 However, this does not require every subsystem to become one giant synchronous transaction.
 
@@ -297,6 +297,21 @@ review once
 → execute each independent writer in the same completion chain
 → batch verification
 ```
+
+### Mandatory NamuWiki closure for every new Person
+
+NamuWiki review is a **registration obligation**, not a later cleanup lane.
+
+For every newly registered Person, and every existing Person whose NamuWiki state has never been reviewed:
+
+- resolve exactly one reviewed NamuWiki disposition during the same registration lifecycle: `linked` or `not_found`;
+- search external indexes first and verify same-person identity; never guess a URL or convert an unchecked state into `not_found`;
+- if Lane A did not already finish this review, Lane B must finish the bounded NamuWiki review before materializing the authoring request;
+- if an exact `linked` / `not_found` decision cannot be made, keep that candidate `QUEUED` or `BLOCKED`; it MUST NOT be marked `REGISTERED`, `APPLIED`, or `VERIFIED_AUTHORING_ONLY`;
+- do not create normal registration debt that requires a separate later NamuWiki linking pass;
+- an existing Person with a live reviewed `linked` or `not_found` state reuses that state without re-searching.
+
+`review_deferrals.namuwiki` is retired for new registration manifests. Historical immutable pre-cutover requests may remain replay-compatible, but they are not templates or authorization for new registrations.
 
 Do not reopen the same Person repeatedly for domain/NamuWiki/Spatial if those decisions were already made during registration.
 
@@ -386,9 +401,10 @@ Normal completion chain:
 APPROVED candidate + review checkpoint reference
 → read reviewed checkpoint
 → exact duplicate/current-state check
+→ ensure reviewed NamuWiki disposition (reuse live reviewed state or finish bounded review)
 → canonical authoring payload
 → Authoring commit
-→ Authoring read-back
+→ Authoring read-back including NamuWiki state
 → Runtime compile/disposition
 → Runtime read-back when Runtime-eligible
 → REGISTERED or VERIFIED_AUTHORING_ONLY
