@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bayezid-i:ottoman-empire:sultan:1389-1402:v1",
+  "person": {
+    "canonical_name_en": "Bayezid I",
+    "display_name_ko": "바예지드 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Ottoman Empire",
+    "display_name_ko": "오스만 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1389,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1402,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bayezid I (Yıldırım, 'the Thunderbolt') ruled the Ottoman state from 1389 until his defeat and capture by Timur at the Battle of Ankara in 1402. ATLAS reuses the existing Ottoman Empire polity and records only the closed sovereign reign interval."
+  },
+  "sources": [
+    {
+      "title": "British Museum Collections Online — Bayezid I",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG118268",
+      "citation_text": "The British Museum identifies Bayezid I as an Ottoman ruler and Sultan from 1389 to 1402.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Bayezid's Cage: A Re-examination of a Venerable Academic Controversy",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-the-royal-asiatic-society/article/abs/bayezids-cage-a-reexamination-of-a-venerable-academic-controversy1/E4A0E15F9B7EB95AAD3592C71AB249FF",
+      "citation_text": "The Cambridge article identifies Ottoman Sultan Bayezid I Yıldırım with reign dates 1389–1402 and places the end of his rule in the context of Timur's victory.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-03",
+    "source_review_checkpoint": "#1374 comment 5825499317; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1919-person read-back rechecked before authoring; exact-name-only matching forbidden"
+  }
+}

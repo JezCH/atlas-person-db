@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:conrad-ii:holy-roman-empire:emperor:1027-1039:v1",
+  "person": {
+    "canonical_name_en": "Conrad II",
+    "display_name_ko": "콘라트 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Holy Roman Empire",
+    "display_name_ko": "신성 로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Holy Roman Emperor",
+    "role_display_name_ko": "신성 로마 황제",
+    "start_year": 1027,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1039,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Conrad II of the Salian dynasty was crowned emperor in Rome on 26 March 1027 and remained Holy Roman Emperor until his death in 1039. ATLAS records the imperial office interval and reuses the existing Holy Roman Empire polity rather than conflating it with his earlier German and Italian kingships."
+  },
+  "sources": [
+    {
+      "title": "Deutsche Biographie — Konrad II. (Salier)",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz57382.html",
+      "citation_text": "Neue Deutsche Biographie identifies Conrad II as Roman-German king and emperor, records his imperial coronation on 26 March 1027, and his death on 4 June 1039.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Nationalmuseets Samlinger Online — Konrad 2 coin",
+      "canonical_url": "https://samlinger.natmus.dk/kmm/object/123410",
+      "citation_text": "The National Museum of Denmark catalog dates the Conrad II imperial coin context to 1027–1039.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-03",
+    "source_review_checkpoint": "#1374 comment 5825499317; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1919-person read-back rechecked before authoring; exact-name-only matching forbidden"
+  }
+}

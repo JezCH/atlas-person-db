@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:dmitry-donskoy:grand-duchy-moscow:grand-prince:1359-1389:v1",
+  "person": {
+    "canonical_name_en": "Dmitry Donskoy",
+    "display_name_ko": "드미트리 돈스코이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Grand Duchy of Moscow",
+    "display_name_ko": "모스크바 대공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Prince",
+    "role_display_name_ko": "대공",
+    "start_year": 1359,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1389,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Dmitry Ivanovich, later called Donskoy after the 1380 victory at Kulikovo, ruled Moscow from 1359 until 1389. ATLAS binds this closed Moscow rulership to the existing Grand Duchy of Moscow polity; his separate Grand Prince of Vladimir title is not duplicated as a second representative Activity here."
+  },
+  "sources": [
+    {
+      "title": "Museums of the Moscow Kremlin — Russian coins from the late 14th–early 16th century",
+      "canonical_url": "https://treasures.kreml.ru/en-Us/showcase-4/view/russkie-monety-kontsa-xiv--nachala-xvi-veka/",
+      "citation_text": "The Moscow Kremlin Museums identify Grand Prince Dmitry Ivanovich (1359–1389), later known as Donskoy after the 1380 Battle of Kulikovo.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Dmitry Donskoy",
+      "canonical_url": "https://en.wikipedia.org/wiki/Dmitry_Donskoy",
+      "citation_text": "The biographical entry gives his Moscow reign from 13 November 1359 to 19 May 1389 and distinguishes his later Grand Principality of Vladimir.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-03",
+    "source_review_checkpoint": "#1374 comment 5825499317; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1919-person read-back rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
