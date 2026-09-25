@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "eda92cd76cedcda131ddde8ca2df61f8614a3dbc",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply the already-reviewed AoE II SS microbatch-01 domain decisions using the exact six newly committed Person UUIDs. Abdallah ibn Yasin and Frumentius are religion; the four sovereign rulers are governance."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-AOE2-SS01-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 6,
+    "distribution": {
+      "governance": 4,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 2,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "c4b0f1e9-722f-4507-8a27-bc4ee86a19de",
+      "canonical_name_en": "Abdallah ibn Yasin",
+      "preferred_name_ko": "압둘라 이븐 야신",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "826ba15d-12dc-45a2-952e-23a9a205163c",
+      "canonical_name_en": "Alauddin Khalji",
+      "preferred_name_ko": "알라우딘 할지",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "7e66a97e-2ebe-454b-8271-970defde582d",
+      "canonical_name_en": "Alboin",
+      "preferred_name_ko": "알보인",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "e0035e50-9f08-4a32-81c2-a9544b65ebde",
+      "canonical_name_en": "Algirdas",
+      "preferred_name_ko": "알기르다스",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "b9747f0d-a4cc-4e8d-a0f2-14e08b7c8656",
+      "canonical_name_en": "Frumentius",
+      "preferred_name_ko": "프루멘티우스",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "186aab39-b7d1-4cba-810b-eb7da6cf7d58",
+      "canonical_name_en": "Ala ad-Din Muhammad II",
+      "preferred_name_ko": "알라 앗딘 무함마드 2세",
+      "representative_domain": "governance"
+    }
+  ]
+}
