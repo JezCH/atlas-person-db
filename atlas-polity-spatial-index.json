@@ -2742,6 +2742,8 @@
     "7e090994-f196-4957-8295-dcfa08c53fba": "western-europe",
     "9e89d0fa-a64e-4d9b-b702-70692bcc0cd4": "west-africa",
     "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "central-europe",
+    "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "iberia",
+    "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "mesopotamia",
     "00ec4b0c-6002-5791-825c-43465632102d": "north-india-ganges",
     "4c3e50cb-d76c-4b7c-b611-222849404142": "eastern-central-asia-steppe",
     "5247c9c0-ca50-452b-9e5a-d7e5585f096d": "western-europe",
@@ -2788,9 +2790,7 @@
     "e146e6ef-15f0-4bca-9e5d-b26672c65018": "eastern-siberia-far-east",
     "e1548cb1-f89d-538b-9fb2-bad02ad87f8e": "japan",
     "e3ca4f3c-3504-4830-b141-f4cdd0157763": "himalayas",
-    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia",
-    "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "iberia",
-    "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "mesopotamia"
+    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia"
   },
   "activity_spatial_overrides": [
     {
