@@ -15,7 +15,7 @@ The operator supplies historical information, not database identifiers:
 - at least one Source title/reference; URL is optional
 - an explicit NamuWiki Person-document outcome: `linked` with the exact document title and canonical URL, or `not_found`, plus the date checked
 
-The NamuWiki outcome is required for normal Person registration. The operator must confirm the exact Person page, including same-name/disambiguation cases. Bare omission and `unknown` are rejected; the system never converts an unchecked state into `not_found`. For a disclosed provider access block followed by a user instruction to continue, the GitHub batch exception in `NAMUWIKI_REGISTRATION_POLICY.md` permits an explicit `review_deferrals.namuwiki` record and leaves the reference unreviewed. This does not claim that reference review is complete.
+The NamuWiki outcome is required for normal Person registration. The operator must confirm the exact Person page, including same-name/disambiguation cases. Bare omission and `unknown` are rejected; the system never converts an unchecked state into `not_found`. `review_deferrals.namuwiki` is retired for new registrations: if external-index review cannot reach an exact `linked` or reviewed `not_found` decision, that Person remains queued/blocked and the registration is not complete. Historical immutable pre-cutover manifests may retain legacy replay compatibility, but they are not templates for new requests.
 
 The browser never asks for Activity granularity. The server derives `year`, `month`, or `day` granularity from the supplied boundary components and keeps signed historical years as historical data rather than converting them through JavaScript `Date`.
 
