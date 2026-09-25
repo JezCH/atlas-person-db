@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "2b56bb05848dca9fa6b317e4cf26f9524a6ddb90",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign AoE II SS microbatch 04 exact Person UUIDs to the already-reviewed domains from #1374 comment 5825499317. No regrading, role inference, or name-only binding."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-AOE2-SS04-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 6,
+    "distribution": {
+      "governance": 4,
+      "military": 1,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 1,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "40098999-60f1-4995-b323-3abc18bbda73",
+      "canonical_name_en": "Sigismund",
+      "preferred_name_ko": "지기스문트",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "775f00b8-8a53-44b3-8bb5-9649fe0e9756",
+      "canonical_name_en": "Fritigern",
+      "preferred_name_ko": "프리티게른",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "28b007d2-95d6-4950-8868-5f30aec02da5",
+      "canonical_name_en": "Fujiwara no Michinaga",
+      "preferred_name_ko": "후지와라노 미치나가",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "e3bd9747-e3b5-4827-8ad9-bd69459e5ffa",
+      "canonical_name_en": "Gopala",
+      "preferred_name_ko": "고팔라",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "e4e46c6c-5c31-4bbe-95d0-3122679110cb",
+      "canonical_name_en": "Hulegu Khan",
+      "preferred_name_ko": "훌라구 칸",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "b055503f-2511-4975-bf40-9d984dc72e40",
+      "canonical_name_en": "Ibn Tumart",
+      "preferred_name_ko": "이븐 투마르트",
+      "representative_domain": "religion"
+    }
+  ]
+}
