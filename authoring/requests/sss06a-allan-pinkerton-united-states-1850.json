@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss06a:allan-pinkerton:united-states:detective-agency-founder:1850:v1",
+  "person": {
+    "canonical_name_en": "Allan Pinkerton",
+    "display_name_ko": "앨런 핑커톤",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Detective agency founder",
+    "role_display_name_ko": "사설 탐정기관 창립자",
+    "start_year": 1850,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1850,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1850 marks Allan Pinkerton's founding of the private detective agency in Chicago that became Pinkerton's National Detective Agency."
+  },
+  "sources": [
+    {
+      "title": "Pinkerton's National Detective Agency records, 1853-1999 | Library of Congress",
+      "canonical_url": "https://www.loc.gov/item/mm75036301/",
+      "citation_text": "The Library of Congress describes Pinkerton's National Detective Agency as a private detective agency founded circa 1850 in Chicago by Allan Pinkerton.",
+      "source_type": "library_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "greatspy-20260924-008",
+    "review_checkpoint": "#1374 comment 5815993620",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "commerce"
+  }
+}
