@@ -7,6 +7,9 @@ const nav = fs.readFileSync(new URL('../atlas-main-authority-nav.js', import.met
 const catalog = fs.readFileSync(new URL('../atlas-ui-authority-catalog.ko.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-main-authority-nav.css', import.meta.url), 'utf8');
 const dashboardCss = fs.readFileSync(new URL('../atlas-dashboard.css', import.meta.url), 'utf8');
+const personMain = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
+const polityView = fs.readFileSync(new URL('../atlas-polity-review-workbench.js', import.meta.url), 'utf8');
+const entityRoute = fs.readFileSync(new URL('../atlas-entity-route.js', import.meta.url), 'utf8');
 
 test('Main navigation exposes all authority domains through static controls plus the current spacetime extension', () => {
   for (const domain of ['dashboard', 'persons', 'polities', 'places', 'events', 'sources', 'geometry']) {
@@ -75,6 +78,37 @@ test('desktop and mobile navigation stay synchronized and hash-addressable', () 
   for (const domain of ['dashboard', 'persons', 'polities', 'places', 'events', 'sources', 'geometry']) {
     assert.match(html, new RegExp(`data-atlas-domain="${domain}"[^>]*>.*?<small><\\/small>`));
   }
+});
+
+
+test('Person and Polity selections have UUID-only shareable deep links with browser-history restoration', () => {
+  const routeIndex=html.indexOf('atlas-entity-route.js');
+  const personIndex=html.indexOf('atlas-person-main.js');
+  const navIndex=html.indexOf('atlas-main-authority-nav.js');
+  assert.ok(routeIndex >= 0 && personIndex > routeIndex && navIndex > routeIndex);
+
+  assert.match(entityRoute, /#atlas-\$\{normalizeDomain\(domain\)\}/);
+  assert.match(entityRoute, /ENTITY_BY_DOMAIN/);
+  assert.match(entityRoute, /UUID_PATTERN/);
+  assert.doesNotMatch(entityRoute, /canonical_name|preferred_name|display_name/);
+
+  assert.match(nav, /routeModel\.parseHash/);
+  assert.match(nav, /routeModel\.entityHash\("persons","person"/);
+  assert.match(nav, /routeModel\.entityHash\("polities","polity"/);
+  assert.match(nav, /addEventListener\("popstate", applyLocationRoute\)/);
+  assert.match(nav, /ATLAS_PERSON_MAIN\?\.openPerson/);
+  assert.match(nav, /browser\?\.selectPolity/);
+  assert.match(nav, /browser\?\.clearSelection/);
+
+  assert.match(personMain, /atlas-person-selected/);
+  assert.match(personMain, /async function openPerson/);
+  assert.match(personMain, /initialLoadPromise/);
+  assert.match(personMain, /function clearSelection/);
+
+  assert.match(polityView, /initialPolityId/);
+  assert.match(polityView, /atlas-polity-selected/);
+  assert.match(polityView, /function selectPolity/);
+  assert.match(polityView, /function clearSelection/);
 });
 
 test('authority navigation does not retain the retired mobile Person search fallback', () => {
