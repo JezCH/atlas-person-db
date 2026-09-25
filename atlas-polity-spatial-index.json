@@ -1207,6 +1207,7 @@
     "8053a905-8cee-4b43-8f56-c827291f7498": "east-asia",
     "70d9fd6b-cfe4-4da0-ad24-946c6c2ee10e": "south-asia",
     "976c3aff-5b7c-4968-9914-3c229aa04817": "europe",
+    "3c8e5829-dcc5-4386-91cd-dcc44e59e952": "southeast-asia",
     "3fbc6e9b-781c-46d4-a5c3-09da2f233e02": "south-asia",
     "407d91cf-7a97-45e3-81ea-d42a3cbfba35": "east-asia",
     "7594c57e-0b32-49d6-84d0-f65cd46f759e": "europe",
@@ -1214,8 +1215,7 @@
     "9e89d0fa-a64e-4d9b-b702-70692bcc0cd4": "africa",
     "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "europe",
     "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "europe",
-    "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "west-asia",
-    "3c8e5829-dcc5-4386-91cd-dcc44e59e952": "southeast-asia"
+    "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "west-asia"
   },
   "place_function_records": [
     {
@@ -2737,6 +2737,7 @@
     "8053a905-8cee-4b43-8f56-c827291f7498": "china",
     "70d9fd6b-cfe4-4da0-ad24-946c6c2ee10e": "northwest-south-asia",
     "976c3aff-5b7c-4968-9914-3c229aa04817": "balkans",
+    "3c8e5829-dcc5-4386-91cd-dcc44e59e952": "mainland-southeast-asia",
     "3fbc6e9b-781c-46d4-a5c3-09da2f233e02": "north-india-ganges",
     "407d91cf-7a97-45e3-81ea-d42a3cbfba35": "china",
     "7594c57e-0b32-49d6-84d0-f65cd46f759e": "central-europe",
@@ -2791,8 +2792,7 @@
     "e146e6ef-15f0-4bca-9e5d-b26672c65018": "eastern-siberia-far-east",
     "e1548cb1-f89d-538b-9fb2-bad02ad87f8e": "japan",
     "e3ca4f3c-3504-4830-b141-f4cdd0157763": "himalayas",
-    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia",
-    "3c8e5829-dcc5-4386-91cd-dcc44e59e952": "mainland-southeast-asia"
+    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia"
   },
   "activity_spatial_overrides": [
     {
