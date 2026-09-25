@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss04:guglielmo-marconi:united-kingdom:inventor-radio-pioneer:1896:v1",
+  "person": {
+    "canonical_name_en": "Guglielmo Marconi",
+    "display_name_ko": "굴리엘모 마르코니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Inventor and radio pioneer",
+    "role_display_name_ko": "발명가·무선통신 선구자",
+    "start_year": 1896,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1896,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1896, when Marconi brought his apparatus to England and received the first patent for a wireless-telegraphy system, as his representative British radio milestone."
+  },
+  "sources": [
+    {
+      "title": "Guglielmo Marconi — Biographical — NobelPrize.org",
+      "canonical_url": "https://www.nobelprize.org/nobel_prizes/physics/laureates/1909/marconi-bio.html",
+      "citation_text": "NobelPrize.org records that Marconi took his apparatus to England in 1896 and received the world's first patent for a wireless telegraphy system later that year.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-011",
+    "review_checkpoint": "#1374 comment 5815493403",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "technology"
+  }
+}
