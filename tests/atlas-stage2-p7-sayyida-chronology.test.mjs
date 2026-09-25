@@ -2,19 +2,19 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { createRequire } from 'node:module';
-
-const require = createRequire(import.meta.url);
-const { readReviewedSourceAuthoringManifest } = require('../server/atlas-stage2-reviewed-source-authoring.js');
 const root = path.resolve(new URL('..', import.meta.url).pathname);
 const sourcePath = path.join(root, 'stage2/authoring/p7-sayyida-al-hurra-chronology-sources.v1.json');
 const planPath = path.join(root, 'stage2/execution/p7-sayyida-al-hurra-chronology-execution.v1.json');
 
 test('Sayyida al-Hurra chronology package is literal, source-backed, and preserves the pre-1519 phase as separate', () => {
-  const { manifest: sources } = readReviewedSourceAuthoringManifest(sourcePath);
+  const sources = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));
   const plan = JSON.parse(fs.readFileSync(planPath, 'utf8'));
   const operation = plan.operations[0];
 
+  assert.equal(sources.schema, 'atlas-stage2-p7-reviewed-relation-sources/v1');
+  assert.equal(sources.status, 'REVIEWED_LITERAL_UUID_ROWS_BRANCH_ONLY_NO_PRODUCTION_MUTATION');
+  assert.equal(sources.rules.literal_uuid_insert_only, true);
+  assert.equal(sources.rules.runtime_title_or_url_resolution_forbidden, true);
   assert.equal(sources.result.source_count, 2);
   assert.deepEqual(sources.sources.map((item) => item.row.id), [
     '3d13ced6-1590-5076-b37e-68cd5ce72b10',
