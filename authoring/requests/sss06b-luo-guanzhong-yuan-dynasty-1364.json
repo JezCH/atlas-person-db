@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss06b:luo-guanzhong:yuan-dynasty:writer-dramatist:1364:v1",
+  "person": {
+    "canonical_name_en": "Luo Guanzhong",
+    "display_name_ko": "나관중",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Luo Guanzhong was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Yuan Dynasty",
+    "display_name_ko": "원나라"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Writer and dramatist",
+    "role_display_name_ko": "작가·극작가",
+    "start_year": 1364,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1364,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1364 is a person-specific contemporary attestation: Jia Zhongming's record of contemporary libretto writers describes a reunion with Luo Guanzhong in 1364. This anchor does not assert an exact birth/death year or an exact composition date for Romance of the Three Kingdoms, whose textual history and attribution remain more complicated."
+  },
+  "sources": [
+    {
+      "title": "Luo Guanzhong — EBSCO Research Starters",
+      "canonical_url": "https://www.ebsco.com/research-starters/biography/luo-guanzhong",
+      "citation_text": "EBSCO summarizes Jia Zhongming's contemporary record describing Luo Guanzhong as an older friend and recording their reunion in 1364.",
+      "source_type": "reference_biography"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "writers4-20260921-015",
+    "review_checkpoint": "#1374 comment 5762473837",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}
