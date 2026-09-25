@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abdallah-ibn-yasin:almoravid-empire:religious-leader:1054-1059:v1",
+  "person": {
+    "canonical_name_en": "Abdallah ibn Yasin",
+    "display_name_ko": "압둘라 이븐 야신",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Almoravid Empire",
+    "display_name_ko": "무라비트 왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "religious_activity",
+    "role": "Spiritual leader and founder",
+    "role_display_name_ko": "정신적 지도자·창건자",
+    "start_year": 1054,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1059,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Abdallah ibn Yasin was the Maliki jurist and founding spiritual leader of the Almoravid movement. ATLAS uses 1054—the securely attested Sijilmasa conquest—as a representative start for the movement's territorial-political phase and 1059, the year of his death, as its end for this Activity. The start is approximate because his religious leadership began earlier than the first securely dated conquest."
+  },
+  "sources": [
+    {
+      "title": "New Evidence on the Life of ‘Abdullāh B. Yāsīn and the Origins of the Almoravid Movement",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-african-history/article/abs/new-evidence-on-the-life-of-abdullah-b-yasin-and-the-origins-of-the-almoravid-movement/9F4C8AD5A2EE319858BA00BE302825D9",
+      "citation_text": "Cambridge's Journal of African History study treats Abdallah ibn Yasin as the central early figure in the rise of the Almoravid movement and records the 1059 death tradition.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Military Jihād against Muslims: ‘Abd Allāh b. Yāsīn and the Foundation of a Saharan Political Unit",
+      "canonical_url": "https://www.tandfonline.com/doi/full/10.1080/09503110.2022.2133479",
+      "citation_text": "The study describes Ibn Yasin as founder of the Almoravid movement, notes the 1054 Sijilmasa phase and his death in 1059, and characterizes the movement as an emerging political unit.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-01",
+    "source_review_checkpoint": "#1374 comment 5825498864; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1891-person read-back delta rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
