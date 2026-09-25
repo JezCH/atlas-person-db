@@ -103,6 +103,81 @@
     return new Set((person?.facets?.polities || []).map((polity) => text(polity?.id || polity)).filter(Boolean));
   }
 
+  function polityDisplayName(polity, fallbackId = "") {
+    if (!polity || typeof polity !== "object") return text(fallbackId || polity);
+    return text(polity.preferred_name_ko)
+      || text(polity.display_name)
+      || text(polity.canonical_name_en)
+      || text(polity.source_label)
+      || text(fallbackId || polity.id);
+  }
+
+  function buildPolityConcentration({ personResult } = {}) {
+    const persons = personResult?.persons || [];
+    const personIdsByPolity = new Map();
+    const activityCounts = new Map();
+    const labels = new Map();
+
+    const observe = (polity) => {
+      const polityId = text(polity?.id || polity);
+      if (!polityId) return "";
+      const label = polityDisplayName(polity, polityId);
+      if (label && (!labels.has(polityId) || labels.get(polityId) === polityId)) labels.set(polityId,label);
+      if (!labels.has(polityId)) labels.set(polityId,polityId);
+      return polityId;
+    };
+
+    for (const person of persons) {
+      const personId = text(person?.id);
+      for (const polity of person?.facets?.polities || []) {
+        const polityId = observe(polity);
+        if (!polityId || !personId) continue;
+        if (!personIdsByPolity.has(polityId)) personIdsByPolity.set(polityId,new Set());
+        personIdsByPolity.get(polityId).add(personId);
+      }
+      for (const activity of person?.activity_summaries || []) {
+        const polityId = observe(activity?.polity);
+        if (!polityId) continue;
+        activityCounts.set(polityId,(activityCounts.get(polityId) || 0) + 1);
+      }
+    }
+
+    const polityIds = new Set([...personIdsByPolity.keys(),...activityCounts.keys()]);
+    const rows = [...polityIds].map((polityId) => Object.freeze({
+      polity_id:polityId,
+      polity_display_name:labels.get(polityId) || polityId,
+      person_count:personIdsByPolity.get(polityId)?.size || 0,
+      activity_count:activityCounts.get(polityId) || 0,
+      person_ids:Object.freeze([...(personIdsByPolity.get(polityId) || [])].sort())
+    }));
+
+    const compareLabel = (left,right) =>
+      left.polity_display_name.localeCompare(right.polity_display_name,"ko") || left.polity_id.localeCompare(right.polity_id);
+    const byPersons = rows.slice().sort((left,right) =>
+      right.person_count-left.person_count || right.activity_count-left.activity_count || compareLabel(left,right));
+    const byActivities = rows.slice().sort((left,right) =>
+      right.activity_count-left.activity_count || right.person_count-left.person_count || compareLabel(left,right));
+    const personRows = byPersons.filter((row) => row.person_count > 0);
+    const activityRows = byActivities.filter((row) => row.activity_count > 0);
+    const totalPersonMemberships = personRows.reduce((sum,row) => sum + row.person_count,0);
+    const totalActivities = activityRows.reduce((sum,row) => sum + row.activity_count,0);
+    const topPersons = Object.freeze(personRows.slice(0,10));
+    const topActivities = Object.freeze(activityRows.slice(0,10));
+    const topPersonMemberships = topPersons.reduce((sum,row) => sum + row.person_count,0);
+    const topActivityCount = topActivities.reduce((sum,row) => sum + row.activity_count,0);
+
+    return Object.freeze({
+      used_polity_count:personRows.length,
+      total_person_memberships:totalPersonMemberships,
+      polity_linked_activity_count:totalActivities,
+      single_person_polity_count:personRows.filter((row) => row.person_count === 1).length,
+      person_top10_share:percent(topPersonMemberships,totalPersonMemberships),
+      activity_top10_share:percent(topActivityCount,totalActivities),
+      top_by_persons:topPersons,
+      top_by_activities:topActivities
+    });
+  }
+
   function buildAttentionQueue({ personResult, domainResult = null, spatialIndex = null, runtimeExclusionsResult = null } = {}) {
     const persons = personResult?.persons || [];
     const domainAvailable = Boolean(domainResult && domainResult.by_person_id && typeof domainResult.by_person_id === "object");
@@ -1183,6 +1258,7 @@
     const completenessMatrix = buildCompletenessMatrix({ personResult, domainResult, spatialIndex });
     const qualityDrilldown = buildQualityDrilldown({ personResult, spatialIndex, nonTimelineRows, completenessMatrix });
     const sourceFreshness = buildSourceFreshness({ spatialIndex, recentDelta, runtimePublication:runtimePublicationResult, runtimeExclusions:runtimeExclusionsResult, sourceStates });
+    const polityConcentration = buildPolityConcentration({ personResult });
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
       key,
@@ -1236,6 +1312,7 @@
       runtime_exclusions:runtimeExclusionsResult,
       coverage_heatmap:coverageHeatmap,
       completeness_matrix:completenessMatrix,
+      polity_concentration:polityConcentration,
       source_freshness:sourceFreshness,
       quality:Object.freeze({
         no_runtime_activity:qualityDrilldown.no_runtime_activity.count,
@@ -1248,5 +1325,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, namuwikiReviewState, namuwikiReviewed, namuwikiAbsenceReason, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildRuntimeDeltaDrift, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildQualityDrilldown, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, namuwikiReviewState, namuwikiReviewed, namuwikiAbsenceReason, uniquePolityIds, spatialStatus, personPolityIds, buildPolityConcentration, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildRuntimeDeltaDrift, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildQualityDrilldown, buildDashboardSnapshot });
 });
