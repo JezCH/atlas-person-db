@@ -10,6 +10,22 @@ Live inputs are limited to:
 - `corrections/requests/*.json` for reviewed v2 manifests;
 - `corrections/plans/*.json` for reviewed v2 execution plans.
 
+### Live namespace hygiene
+
+The live request/plan namespaces must contain only the current executable identity
+for each reviewed correction. In particular:
+
+- one live plan per logical `batch_id`;
+- byte-identical or semantic-equivalent requeue aliases must not be added;
+- filenames matching `*.requeue-N.json` are forbidden in the live plan directory;
+- when `name.v2.json` supersedes `name.v1.json`, only the current revision stays
+  under `corrections/plans/`;
+- use `workflow_dispatch` with the canonical live path when an unchanged reviewed
+  plan must be replayed after transport or ledger infrastructure repair.
+
+Superseded live aliases are preserved by Git history and immutable workflow/audit
+evidence rather than by keeping a second Production-dispatchable file.
+
 `corrections/intents/` and correction manifest schemas v1, v1.1, v1.2, v1.3 and
 v1.4 are historical evidence only. They are not Production execution paths.
 

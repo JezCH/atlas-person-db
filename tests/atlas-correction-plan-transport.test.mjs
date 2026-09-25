@@ -173,10 +173,10 @@ test("plan dry-run snapshots live targets then synthesizes and executes v2 witho
   assert.equal(migrated, 0, "dry-run must not apply correction migrations");
 });
 
-test("reviewed Activity cleanup plan preserves provenance transfer and keeps rewrite targets stable", () => {
-  const plan = JSON.parse(fs.readFileSync(new URL("../corrections/plans/activity-integrity-cleanup-20260816.v1.json", import.meta.url), "utf8"));
+test("canonical Activity cleanup v2 plan preserves provenance transfer and keeps rewrite targets stable", () => {
+  const plan = JSON.parse(fs.readFileSync(new URL("../corrections/plans/activity-integrity-cleanup-20260816.v2.json", import.meta.url), "utf8"));
   assert.equal(plan.schema, "atlas-stage2-correction-v2-execution-plan/v1");
-  assert.equal(plan.batch_id, "activity_integrity_cleanup_20260816_v1");
+  assert.equal(plan.batch_id, "activity_integrity_cleanup_20260816_v2");
   assert.equal(plan.execution_rules.production_executable, false);
   assert.equal(plan.execution_rules.production_mutation_authorized, false);
 
@@ -199,9 +199,9 @@ test("reviewed Activity cleanup plan preserves provenance transfer and keeps rew
   }
 
   const byId = new Map(rewrites.map((operation) => [operation.activity_id, operation]));
-  assert.equal(byId.get("68c203e5-ac61-59ed-853b-365bdf3ed340").after.polity_id, "1160e7db-73ef-5d3a-bd04-483c3094fd03");
-  assert.equal(byId.get("c5085fdb-379a-5710-bf14-c748b5b822da").after.polity_id, "1160e7db-73ef-5d3a-bd04-483c3094fd03");
-  assert.equal(byId.get("57cdefa5-9a5d-533c-b229-47e398f1d07a").after.polity_id, "21ee0e6b-8c7f-5d9d-82f2-140f28a44dec");
+  assert.equal(byId.get("68c203e5-ac61-59ed-853b-365bdf3ed340").after.polity_id, "986380c3-cc31-50d5-bb0d-6cae5fae0660");
+  assert.equal(byId.get("c5085fdb-379a-5710-bf14-c748b5b822da").after.polity_id, "986380c3-cc31-50d5-bb0d-6cae5fae0660");
+  assert.equal(byId.get("57cdefa5-9a5d-533c-b229-47e398f1d07a").after.polity_id, "8e0c3472-867d-5165-89c2-cb7866f6a5ed");
   for (const operation of rewrites) {
     assert.equal(operation.after.activity_id, operation.activity_id);
     assert.equal(operation.after.notes_policy, "PRESERVE_EXACT_LIVE_NOTES");
