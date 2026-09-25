@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:baibars:mamluk-sultanate:sultan:1260-1277:v1",
+  "person": {
+    "canonical_name_en": "Baibars",
+    "display_name_ko": "바이바르스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Mamluk Sultanate",
+    "display_name_ko": "맘루크 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1260,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1277,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Al-Zahir Baybars ruled the Mamluk Sultanate for seventeen years, 1260–1277, and was one of the formative early Mamluk sultans. ATLAS reuses the existing Mamluk Sultanate polity and records the established year-level reign."
+  },
+  "sources": [
+    {
+      "title": "Jerusalem 1000–1400: Every People Under Heaven — Metropolitan Museum of Art",
+      "canonical_url": "https://resources.metmuseum.org/resources/metpublications/pdf/Jerusalem_1000_1400_Every_People_Under_Heaven.pdf",
+      "citation_text": "The Metropolitan Museum publication identifies Baybars as a prominent early Mamluk leader who ruled for seventeen years, 1260–1277, and notes that 1277 was the year of his death.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Islamic Arms and Armor in The Metropolitan Museum of Art",
+      "canonical_url": "https://resources.metmuseum.org/resources/metpublications/pdf/Islamic_Arms_and_Armor_in_The_Metropolitan_Museum_of_Art.pdf",
+      "citation_text": "The Metropolitan Museum publication refers to Mamluk sultan Baybars I with reign dates 1260–1277.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-02",
+    "source_review_checkpoint": "#1374 comment 5825498864; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1897-person read-back delta rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
