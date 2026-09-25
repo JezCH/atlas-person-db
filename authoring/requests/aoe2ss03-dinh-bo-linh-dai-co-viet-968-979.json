@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:dinh-bo-linh:dai-co-viet:emperor:968-979:v1",
+  "person": {
+    "canonical_name_en": "Đinh Bộ Lĩnh",
+    "display_name_ko": "딘보린",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Đại Cồ Việt",
+    "display_name_ko": "대구월",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 968,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 979,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After defeating the Twelve Warlords, Đinh Bộ Lĩnh proclaimed himself emperor in 968, established the state name Đại Cồ Việt and made Hoa Lư its capital. He died in 979. ATLAS creates/reuses the historically specific Đại Cồ Việt polity rather than projecting the later name Đại Việt backward into the Đinh period."
+  },
+  "sources": [
+    {
+      "title": "The Đại Cồ Việt state during the Đinh dynasty (968–980)",
+      "canonical_url": "https://www.vietnam.vn/en/nha-nuoc-dai-co-viet-thoi-dinh-968-980",
+      "citation_text": "The Vietnamese historical article states that in 968 Đinh Bộ Lĩnh ascended as emperor, named the state Đại Cồ Việt and established the capital at Hoa Lư.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Commemoration of the 1,100th anniversary of Emperor Đinh Tiên Hoàng",
+      "canonical_url": "https://www.vietnam.vn/es/phat-hanh-tem-buu-chinh-ve-vi-vua-khai-sinh-nha-nuoc-dai-co-viet",
+      "citation_text": "The public historical notice identifies Đinh Tiên Hoàng (Đinh Bộ Lĩnh) as born in 924, died in 979, and as the ruler who founded Đại Cồ Việt in 968.",
+      "source_type": "government_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-03",
+    "source_review_checkpoint": "#1374 comment 5825499317; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1919-person read-back rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
