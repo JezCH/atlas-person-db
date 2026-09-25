@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zzzzzzz-aoe2-ss02-athaulf-20260925",
+  "baseline": "96e86afe580d526c7d800e4fc2a550c43b70953a",
+  "reviewed_at": "2026-09-25T11:52:09.000Z",
+  "bindings": [],
+  "activity_overrides": [
+    {
+      "activity_id": "c59b8896-b9a0-4fe2-a512-c9b9313eb907",
+      "expected_polity_id": "01cd1acd-9321-4d25-bc30-4cbd561bcbd5",
+      "expected_start_year": 410,
+      "expected_end_year": 415,
+      "override_mode": "timeline_segments",
+      "segments": [
+        {
+          "start_year": 410,
+          "end_year": 411,
+          "region_code": "europe",
+          "subregion_code": "italy",
+          "location_label": "Italy",
+          "source_refs": [
+            "Cambridge University Press: Barbarian Migrations and the Roman West, 376–568 — Athaulf campaigned in Italy for two years after 410 before crossing the Alps into Gaul"
+          ]
+        },
+        {
+          "start_year": 412,
+          "end_year": 414,
+          "region_code": "europe",
+          "subregion_code": "western-europe",
+          "location_label": "Gaul / Narbonne–Bordeaux",
+          "source_refs": [
+            "Cambridge University Press: From Slavery to Feudalism in South-Western Europe — Athaulf and Galla Placidia married at Narbonne on 1 January 414",
+            "Deutsche Biographie: Athaulf — led the Visigoths from Italy to Gaul in 412, later evacuated Narbonne/Bordeaux and moved into Spain; Barcelona became his base before his death in 415"
+          ]
+        },
+        {
+          "start_year": 415,
+          "end_year": 415,
+          "region_code": "europe",
+          "subregion_code": "iberia",
+          "location_label": "Hispania / Barcelona",
+          "source_refs": [
+            "Deutsche Biographie: Athaulf — led the Visigoths from Italy to Gaul in 412, later evacuated Narbonne/Bordeaux and moved into Spain; Barcelona became his base before his death in 415"
+          ]
+        }
+      ],
+      "reason": "Athaulf's 410–415 Visigoth kingship remained mobile rather than capital-based. Reviewed chronology places the court/people in Italy through 411, in Gaul from 412 through 414, and in Hispania with Barcelona as the final base in 415. Timeline segments close only this exact Activity and do not convert the mobile Visigoths polity into a static leaf.",
+      "source_refs": [
+        "Cambridge University Press: Barbarian Migrations and the Roman West, 376–568 — Athaulf campaigned in Italy for two years after 410 before crossing the Alps into Gaul",
+        "Cambridge University Press: From Slavery to Feudalism in South-Western Europe — Athaulf and Galla Placidia married at Narbonne on 1 January 414",
+        "Deutsche Biographie: Athaulf — led the Visigoths from Italy to Gaul in 412, later evacuated Narbonne/Bordeaux and moved into Spain; Barcelona became his base before his death in 415"
+      ]
+    }
+  ]
+}
