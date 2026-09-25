@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zzzz-aoe2-ss03-dai-co-viet-20260925",
+  "baseline": "7a2453f855c7426d24d69d747bba65fb9e69973e",
+  "reviewed_at": "2026-09-25T14:07:47.000Z",
+  "bindings": [
+    {
+      "polity_id": "3c8e5829-dcc5-4386-91cd-dcc44e59e952",
+      "region_code": "southeast-asia",
+      "subregion_code": "mainland-southeast-asia"
+    }
+  ]
+}

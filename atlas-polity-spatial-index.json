@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-25T11:52:09.000Z",
+  "generated_at": "2026-09-25T14:07:47.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1207,6 +1207,7 @@
     "8053a905-8cee-4b43-8f56-c827291f7498": "east-asia",
     "70d9fd6b-cfe4-4da0-ad24-946c6c2ee10e": "south-asia",
     "976c3aff-5b7c-4968-9914-3c229aa04817": "europe",
+    "3c8e5829-dcc5-4386-91cd-dcc44e59e952": "southeast-asia",
     "3fbc6e9b-781c-46d4-a5c3-09da2f233e02": "south-asia",
     "407d91cf-7a97-45e3-81ea-d42a3cbfba35": "east-asia",
     "7594c57e-0b32-49d6-84d0-f65cd46f759e": "europe",
@@ -2736,6 +2737,7 @@
     "8053a905-8cee-4b43-8f56-c827291f7498": "china",
     "70d9fd6b-cfe4-4da0-ad24-946c6c2ee10e": "northwest-south-asia",
     "976c3aff-5b7c-4968-9914-3c229aa04817": "balkans",
+    "3c8e5829-dcc5-4386-91cd-dcc44e59e952": "mainland-southeast-asia",
     "3fbc6e9b-781c-46d4-a5c3-09da2f233e02": "north-india-ganges",
     "407d91cf-7a97-45e3-81ea-d42a3cbfba35": "china",
     "7594c57e-0b32-49d6-84d0-f65cd46f759e": "central-europe",
