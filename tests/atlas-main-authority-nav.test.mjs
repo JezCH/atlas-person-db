@@ -92,6 +92,7 @@ test('authority shell and control-center Dashboard remain responsive without the
   assert.match(dashboardCss, /dashboard-main-grid/);
   assert.match(dashboardCss, /@media\(max-width:900px\)/);
   assert.match(dashboardCss, /@media\(max-width:600px\)/);
+  assert.match(dashboardCss, /\.dashboard-completeness td button,\.dashboard-breakdown-action\{min-width:44px;min-height:44px/);
 });
 
 test('Main authority shell never embeds Admin-only secrets or audit endpoints', () => {
