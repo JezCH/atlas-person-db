@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss03:subrahmanyan-chandrasekhar:united-kingdom:astrophysicist:1930:v1",
+  "person": {
+    "canonical_name_en": "Subrahmanyan Chandrasekhar",
+    "display_name_ko": "수브라마니안 찬드라세카르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Astrophysicist",
+    "role_display_name_ko": "천체물리학자",
+    "start_year": 1930,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1930,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1930 as Chandrasekhar's representative British astrophysics milestone: he left India for postgraduate study at Cambridge and, during the voyage to England, developed the insight that became the Chandrasekhar limit."
+  },
+  "sources": [
+    {
+      "title": "It was written in the stars — University of Chicago Magazine",
+      "canonical_url": "https://mag.uchicago.edu/science-medicine/it-was-written-stars",
+      "citation_text": "The University of Chicago records that Chandrasekhar went to England in 1930 for Cambridge postgraduate study and arrived at his Nobel-winning white-dwarf insight during the voyage.",
+      "source_type": "institutional_academic_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gplist3-20260921-046",
+    "review_checkpoint": "#1374 comment 5762365693",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}
