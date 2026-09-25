@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss04:sandro-botticelli:papal-states:painter:1481-1482:v1",
+  "person": {
+    "canonical_name_en": "Sandro Botticelli",
+    "display_name_ko": "산드로 보티첼리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Papal States",
+    "display_name_ko": "교황령"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Painter",
+    "role_display_name_ko": "화가",
+    "start_year": 1481,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1482,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative 1481–1482 interval records Botticelli's documented participation in the Sistine Chapel fresco campaign in Rome."
+  },
+  "sources": [
+    {
+      "title": "Sistine Chapel – History | Vatican Museums",
+      "canonical_url": "https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/cappella-sistina/storia-cappella-sistina.html",
+      "citation_text": "The Vatican Museums state that Botticelli was among the painters of the Sistine Chapel wall frescoes, whose work began in 1481 and concluded in 1482.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-020",
+    "review_checkpoint": "#1374 comment 5815494440",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}

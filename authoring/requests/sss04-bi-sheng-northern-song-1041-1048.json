@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss04:bi-sheng:northern-song:inventor:1041-1048:v1",
+  "person": {
+    "canonical_name_en": "Bi Sheng",
+    "display_name_ko": "필승",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Northern Song",
+    "display_name_ko": "북송"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Inventor",
+    "role_display_name_ko": "발명가",
+    "start_year": 1041,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1048,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The surviving account dates Bi Sheng's movable-type invention to 1041–1048; ATLAS preserves that interval with approximate boundaries rather than inventing a single exact year."
+  },
+  "sources": [
+    {
+      "title": "The History of Printing in Asia According to Library of Congress Asian Collections – Part 1",
+      "canonical_url": "https://blogs.loc.gov/international-collections/2021/06/the-history-of-printing-in-asia-according-to-library-of-congress-asian-collections-part-1/",
+      "citation_text": "The Library of Congress states that Bi Sheng invented earthenware movable-type printing during the Song dynasty between 1041 and 1048.",
+      "source_type": "library_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-009",
+    "review_checkpoint": "#1374 comment 5815493403",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "technology"
+  }
+}
