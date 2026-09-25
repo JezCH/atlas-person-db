@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss06a:claus-von-stauffenberg:germany:army-officer-resistance-conspirator:1944:v1",
+  "person": {
+    "canonical_name_en": "Claus von Stauffenberg",
+    "display_name_ko": "클라우스 폰 슈타우펜베르크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Germany",
+    "display_name_ko": "독일"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Army officer and July 20 resistance conspirator",
+    "role_display_name_ko": "독일 육군 장교·7월 20일 저항운동 공모자",
+    "start_year": 1944,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1944,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1944 marks Stauffenberg's central role in the military resistance conspiracy and his execution of the July 20 assassination attempt against Adolf Hitler. The Activity is attached to the existing higher-order Germany polity, consistent with ATLAS treatment of the Nazi regime period."
+  },
+  "sources": [
+    {
+      "title": "Stauffenberg and the Assassination Attempt of July 20, 1944 | German Resistance Memorial Center",
+      "canonical_url": "https://www.gdw-berlin.de/en/recess/topics/9-stauffenberg-and-the-assassination-attempt-of-july-20-1944",
+      "citation_text": "The German Resistance Memorial Center documents Stauffenberg's military post, his role in the coup plans, and his execution of the July 20, 1944 assassination attempt.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "greatspy-20260924-013",
+    "review_checkpoint": "#1374 comment 5815993620",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "military"
+  }
+}
