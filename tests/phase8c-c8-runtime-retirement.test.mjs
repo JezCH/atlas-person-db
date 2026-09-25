@@ -38,13 +38,17 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   for (const retired of [
     'atlas-stage2-schema-release.yml',
     'atlas-stage2-train2-release.yml',
-    'atlas-p10-revalidation-release.yml'
+    'atlas-stage2-train2-live-parity.yml',
+    'atlas-p10-revalidation-release.yml',
+    'atlas-p10-release-launcher.yml',
+    'atlas-p11-baseline-b-capture.yml',
+    'atlas-p11-semantic-v2-backfill.yml'
   ]) assert.equal(workflows.has(retired), false, `completed migration transport returned: ${retired}`);
   for (const required of [
     'atlas-authoring-apply.yml',
     'atlas-correction-apply.yml',
     'atlas-integrity.yml',
-    'atlas-p11-baseline-b-capture.yml'
+    'atlas-p11-baseline-b-readiness.yml'
   ]) assert.equal(workflows.has(required), true, `required current workflow missing: ${required}`);
 
   const correctionWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-correction-apply.yml', import.meta.url), 'utf8');
@@ -83,24 +87,6 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.doesNotMatch(p11Workflow, /environment:\s*production/);
   assert.doesNotMatch(p11Workflow, /SUPABASE_DB_URL|id-token:\s*write/);
 
-  const p11CaptureWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-p11-baseline-b-capture.yml', import.meta.url), 'utf8');
-  assert.match(p11CaptureWorkflow, /workflow_dispatch\s*:/m);
-  assert.doesNotMatch(p11CaptureWorkflow, /^\s*push\s*:/m);
-  assert.doesNotMatch(p11CaptureWorkflow, /\bpull_request\s*:/m);
-  assert.match(p11CaptureWorkflow, /permissions:\s*\n\s*contents:\s*read\s*\n\s*id-token:\s*write/);
-  assert.match(p11CaptureWorkflow, /environment:\s*production/);
-  assert.match(p11CaptureWorkflow, /atlas-person-db-p11-baseline-b-capture/);
-  assert.match(p11CaptureWorkflow, /EXPECTED_CAPTURE_ID:\s*p11_baseline_b_20260815_v2/);
-  assert.match(p11CaptureWorkflow, /ATLAS_P11_BASELINE_B_CAPTURE_V2/);
-  assert.match(p11CaptureWorkflow, /atlas-stage2-baseline-b\/v2/);
-  assert.match(p11CaptureWorkflow, /dataset_count == 41/);
-  assert.match(p11CaptureWorkflow, /CAPTURE:\$\{EXPECTED_CAPTURE_ID\}/);
-  assert.match(p11CaptureWorkflow, /call_capture readiness[\s\S]*call_capture capture/);
-  assert.match(p11CaptureWorkflow, /production_mutation_authorized == false/);
-  assert.doesNotMatch(p11CaptureWorkflow, /p11_baseline_b_20260815_v1|ATLAS_P11_BASELINE_B_CAPTURE_V1|atlas-stage2-baseline-b\/v1/);
-  assert.doesNotMatch(p11CaptureWorkflow, /SUPABASE_DB_URL|DATABASE_URL/);
-  assert.doesNotMatch(p11CaptureWorkflow, /migration_apply|rebuild_candidates|EXECUTE_APPROVED_MERGE|executeApprovedPersonMerge/);
-
   const personDomainWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-person-domain-apply.yml', import.meta.url), 'utf8');
   assert.match(personDomainWorkflow, /^\s*push\s*:/m);
   assert.match(personDomainWorkflow, /branches:\s*\n\s*- main/);
@@ -113,13 +99,6 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.match(personDomainWorkflow, /apply-person-domain-proposals\.mjs verify/);
   assert.doesNotMatch(personDomainWorkflow, /SUPABASE_DB_URL|DATABASE_URL|ATLAS_MUTATION_TOKEN/);
 
-  const parityWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-stage2-train2-live-parity.yml', import.meta.url), 'utf8');
-  assert.match(parityWorkflow, /\bpull_request\s*:/m);
-  assert.match(parityWorkflow, /^\s*push\s*:/m);
-  assert.match(parityWorkflow, /branches:\s*\n\s*- main/);
-  assert.doesNotMatch(parityWorkflow, /workflow_dispatch\s*:/);
-  assert.doesNotMatch(parityWorkflow, /environment:\s*production/);
-  assert.doesNotMatch(parityWorkflow, /SUPABASE_DB_URL/);
 });
 
 test('C8 historical manifest records the DB objects that were deferred to C9', () => {

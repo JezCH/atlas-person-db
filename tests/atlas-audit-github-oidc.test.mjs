@@ -11,7 +11,6 @@ const {
   EXPECTED_REPOSITORY_ID,
   EXPECTED_REF,
   EXPECTED_WORKFLOW_REF,
-  P11_SEMANTIC_V2_BACKFILL_WORKFLOW_REF,
   SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF,
   ALLOWED_WORKFLOW_REFS
 } = require('../server/atlas-audit-github-oidc.js');
@@ -43,7 +42,6 @@ test('audit OIDC workflow allowlist is exact and includes spatial candidate audi
   );
   assert.deepEqual(ALLOWED_WORKFLOW_REFS, [
     EXPECTED_WORKFLOW_REF,
-    P11_SEMANTIC_V2_BACKFILL_WORKFLOW_REF,
     SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF
   ]);
   assert.equal(ALLOWED_WORKFLOW_REFS.some((ref) => ref.includes('*')), false);
