@@ -1615,6 +1615,10 @@
       "reason": "cross_macroregion_tribal_polity_requires_activity_specific_spatial_review"
     },
     {
+      "polity_id": "2612d649-8aa4-4042-b504-60e47c602944",
+      "reason": "Tervingi in Fritigern's 376–380 interval are a mobile/transregional Gothic grouping rather than a defensible fixed-leaf polity. Keep the polity itself explicitly reviewed/unplaced; the exact Fritigern Activity is resolved separately by its reviewed Lower Danube–Thrace / Adrianople Activity override."
+    },
+    {
       "polity_id": "01cd1acd-9321-4d25-bc30-4cbd561bcbd5",
       "reason": "Alaric's 395-410 Visigoth polity was mobile from the Balkans into Italy before the later territorial Visigothic kingdom; no single capital is historically defensible for the authored activity."
     },
@@ -1629,10 +1633,6 @@
     {
       "polity_id": "a81055d7-ed0d-45a6-90c6-738e1a9ba94d",
       "reason": "The Roxolani were a nomadic Sarmatian polity whose historical geography shifted across the Pontic-Danubian steppe; the Amage episode does not establish a sufficiently precise fixed capital."
-    },
-    {
-      "polity_id": "2612d649-8aa4-4042-b504-60e47c602944",
-      "reason": "Tervingi in Fritigern's 376–380 interval are a mobile/transregional Gothic grouping rather than a defensible fixed-leaf polity. Keep the polity itself explicitly reviewed/unplaced; the exact Fritigern Activity is resolved separately by its reviewed Lower Danube–Thrace / Adrianople Activity override."
     }
   ],
   "polity_subregions": {
