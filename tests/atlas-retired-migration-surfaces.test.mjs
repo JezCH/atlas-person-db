@@ -36,7 +36,11 @@ test("retired migration workflows have no live repository execution surface", ()
     "scripts/rehearse-p11-baseline-b-readiness.mjs",
     "server/atlas-p11-baseline-b-production-service.js",
     "server/atlas-p11-baseline-b-capture-handler.js",
-    "server/atlas-p11-baseline-b-github-oidc.js"
+    "server/atlas-p11-baseline-b-github-oidc.js",
+    "server/atlas-stage2-reviewed-role-authoring.js",
+    "scripts/build-stage2-train2-correction-plan-list.mjs",
+    "scripts/rehearse-stage2-train2-live-schema-parity.mjs",
+    "docs/stage2/.train2-ci-trigger"
   ]) {
     assert.equal(fs.existsSync(path.join(root, relativePath)), false, `retired live surface must stay absent: ${relativePath}`);
   }
