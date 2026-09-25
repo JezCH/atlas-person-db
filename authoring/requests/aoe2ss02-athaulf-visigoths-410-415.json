@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:athaulf:visigoths:king:410-415:v1",
+  "person": {
+    "canonical_name_en": "Athaulf",
+    "display_name_ko": "아타울프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Visigoths",
+    "display_name_ko": "서고트족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 410,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 415,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Athaulf succeeded Alaric I and ruled the Visigoths from 410 to 415, leading the still-mobile Gothic people from Italy into Gaul before his death at Barcelona in 415. ATLAS therefore reuses the existing Visigoths polity rather than anachronistically projecting the later settled Visigothic Kingdom backward onto his entire reign."
+  },
+  "sources": [
+    {
+      "title": "Athaulf — Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz87039.html?language=en",
+      "citation_text": "Deutsche Biographie identifies Athaulf as king of the Visigoths from 410 to 415, successor of Alaric I, and records his movement from Italy into Gaul before his murder in 415.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-02",
+    "source_review_checkpoint": "#1374 comment 5825498864; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1897-person read-back delta rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
