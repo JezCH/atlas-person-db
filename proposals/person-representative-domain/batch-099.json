@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-26",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "1f743cbadc5f72b7a62cbc1f0564c5ba9b1ab5ef",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign the six AoE II SS MICROBATCH-05 Persons to the manually reviewed governance domain frozen in #1374 comment 5825499804; no Role-to-Domain inference is used."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-AOE2-SS-MICROBATCH-05-20260926",
+    "queue_issue": 1375,
+    "assignment_count": 6,
+    "distribution": {
+      "governance": 6,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "0762e450-7d28-4011-ab89-f8244a24d98a",
+      "canonical_name_en": "Iltutmish",
+      "preferred_name_ko": "일투트미쉬",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "f4fc84a1-c4dd-4036-9f20-bb6d21914061",
+      "canonical_name_en": "Kęstutis",
+      "preferred_name_ko": "케스투티스",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "060ab2bf-9095-4ec4-936d-5e487b1ca53a",
+      "canonical_name_en": "Khosrow II",
+      "preferred_name_ko": "호스로 2세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "c98a61c8-d988-43dc-a278-a659fd272909",
+      "canonical_name_en": "Henry the Fowler",
+      "preferred_name_ko": "하인리히 1세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "7b42b3b7-ba8a-4f12-83ca-43e2f78c70d9",
+      "canonical_name_en": "Lý Thái Tổ",
+      "preferred_name_ko": "리 태조",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "f7866f08-988d-419d-affb-4faff37cc093",
+      "canonical_name_en": "Maharana Pratap",
+      "preferred_name_ko": "마하라나 프라탑",
+      "representative_domain": "governance"
+    }
+  ]
+}
