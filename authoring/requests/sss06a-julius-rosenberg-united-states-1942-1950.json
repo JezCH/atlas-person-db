@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss06a:julius-rosenberg:united-states:soviet-espionage-agent:1942-1950:v1",
+  "person": {
+    "canonical_name_en": "Julius Rosenberg",
+    "display_name_ko": "줄리어스 로젠버그",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Soviet espionage agent",
+    "role_display_name_ko": "소련 첩보원",
+    "start_year": 1942,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1950,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The interval begins with Rosenberg's documented furnishing of industrial secrets to Soviet intelligence in late 1942 and ends with his arrest in July 1950. ATLAS records the historically documented espionage activity rather than using his later trial or execution as the representative Activity."
+  },
+  "sources": [
+    {
+      "title": "National Archives to Open Rosenberg Grand Jury Transcripts | National Archives",
+      "canonical_url": "https://www.archives.gov/press/press-releases/2008-199",
+      "citation_text": "The U.S. National Archives states that Julius Rosenberg began furnishing industrial secrets to the Soviets in late 1942 and describes the subsequent atomic espionage case.",
+      "source_type": "archival_reference"
+    },
+    {
+      "title": "Atom Spy Case/Rosenbergs | FBI",
+      "canonical_url": "https://www.fbi.gov/history/cases-and-criminals/atom-spy-caserosenbergs",
+      "citation_text": "The FBI records that a complaint charging Julius Rosenberg with espionage conspiracy was filed on July 17, 1950 and that he was arrested the same day.",
+      "source_type": "government_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "greatspy-20260924-011",
+    "review_checkpoint": "#1374 comment 5815993620",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "governance"
+  }
+}
