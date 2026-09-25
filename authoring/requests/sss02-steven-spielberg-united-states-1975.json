@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss02:steven-spielberg:united-states:film-director:1975:v1",
+  "person": {
+    "canonical_name_en": "Steven Spielberg",
+    "display_name_ko": "스티븐 스필버그",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Film director",
+    "role_display_name_ko": "영화감독",
+    "start_year": 1975,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1975,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1975, release year of Jaws, as Spielberg's representative U.S. directing milestone."
+  },
+  "sources": [
+    {
+      "title": "Jaws: The Exhibition — Academy Museum of Motion Pictures",
+      "canonical_url": "https://www.academymuseum.org/exhibitions/jaws",
+      "citation_text": "The Academy Museum identifies Jaws as Steven Spielberg's 1975 film and discusses its major impact on the film industry.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "modern-20260921-steven-spielberg",
+    "review_checkpoint": "#1374 comment 5762189664",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}

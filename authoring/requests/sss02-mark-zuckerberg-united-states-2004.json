@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss02:mark-zuckerberg:united-states:entrepreneur:2004:v1",
+  "person": {
+    "canonical_name_en": "Mark Zuckerberg",
+    "display_name_ko": "마크 저커버그",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Entrepreneur",
+    "role_display_name_ko": "기업가",
+    "start_year": 2004,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 2004,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 2004 as Zuckerberg's representative U.S. entrepreneurship milestone, the year he founded Facebook."
+  },
+  "sources": [
+    {
+      "title": "Meta — Leadership & Governance",
+      "canonical_url": "https://investor.atmeta.com/leadership-and-governance/",
+      "citation_text": "Meta's investor relations page identifies Mark Zuckerberg as founder, chairman and CEO and states that he originally founded Facebook in 2004.",
+      "source_type": "corporate_primary_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "modern-20260921-mark-zuckerberg",
+    "review_checkpoint": "#1374 comment 5762189009",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "commerce"
+  }
+}

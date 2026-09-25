@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss02:robert-goddard:united-states:rocket-engineer:1926:v1",
+  "person": {
+    "canonical_name_en": "Robert Goddard",
+    "display_name_ko": "로버트 고더드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Rocket engineer and inventor",
+    "role_display_name_ko": "로켓 공학자·발명가",
+    "start_year": 1926,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1926,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1926 as Robert Goddard's representative U.S. rocketry milestone, when he successfully launched the world's first liquid-fueled rocket in Auburn, Massachusetts."
+  },
+  "sources": [
+    {
+      "title": "95 Years Ago: Goddard’s First Liquid-Fueled Rocket — NASA",
+      "canonical_url": "https://www.nasa.gov/history/95-years-ago-goddards-first-liquid-fueled-rocket/",
+      "citation_text": "NASA records Robert Goddard's successful launch of the first liquid-fueled rocket on 16 March 1926 in Auburn, Massachusetts.",
+      "source_type": "official_government_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-112",
+    "review_checkpoint": "#1374 comment 5762057576",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "technology"
+  }
+}
