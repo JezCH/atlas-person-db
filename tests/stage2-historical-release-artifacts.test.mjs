@@ -240,11 +240,18 @@ test("historical P9 completeness inputs remain passive reviewed evidence", () =>
     .filter((name) => /^p7-explicit-person-relation-decisions-batch\d+\.v1\.json$/.test(name))
     .sort();
   assert.ok(explicitDecisionFiles.length >= 9);
+  const relationCodes = new Set(["rules", "governs", "serves", "active_in", "opposes", "claims_rule"]);
   for (const name of explicitDecisionFiles) {
     const decisions = readJson(`stage2/integration/${name}`);
     assert.equal(decisions.schema, "atlas-stage2-p7-explicit-person-relation-decisions/v1");
-    assert.equal(decisions.rules?.generic_relation_default_forbidden, true);
+    assert.equal(decisions.status, "REVIEWED_BRANCH_ONLY_NO_PRODUCTION_MUTATION");
     assert.equal(decisions.rules?.production_mutation_authorized, false);
+    assert.equal(decisions.result?.production_mutation_authorized, false);
+    assert.equal(decisions.result?.decision_count, decisions.decisions?.length);
+    for (const decision of decisions.decisions || []) {
+      assert.equal(typeof decision.activity_id, "string");
+      assert.ok(relationCodes.has(decision.relation_code));
+    }
   }
 
   assertExistingRepoPath(
