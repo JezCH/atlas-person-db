@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss03:chinua-achebe:nigeria:novelist:1960:v1",
+  "person": {
+    "canonical_name_en": "Chinua Achebe",
+    "display_name_ko": "치누아 아체베",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Nigeria",
+    "display_name_ko": "나이지리아"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Novelist",
+    "role_display_name_ko": "소설가",
+    "start_year": 1960,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1960,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1960, publication year of No Longer at Ease, as Achebe's representative literary milestone within the Nigeria polity."
+  },
+  "sources": [
+    {
+      "title": "Chinua Achebe — University of Bristol",
+      "canonical_url": "https://research-information.bris.ac.uk/en/publications/chinua-achebe/",
+      "citation_text": "The University of Bristol biographical research entry identifies Achebe as a major African novelist and lists No Longer at Ease as published in 1960.",
+      "source_type": "institutional_academic_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "writers4-20260921-009",
+    "review_checkpoint": "#1374 comment 5762473330",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}

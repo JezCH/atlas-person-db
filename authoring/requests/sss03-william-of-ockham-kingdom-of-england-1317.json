@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss03:william-of-ockham:kingdom-of-england:philosopher-theologian:1317:v1",
+  "person": {
+    "canonical_name_en": "William of Ockham",
+    "display_name_ko": "오컴의 윌리엄",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher and theologian",
+    "role_display_name_ko": "철학자·신학자",
+    "start_year": 1317,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1317,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1317, when Ockham began the required Oxford lecture cycle on Peter Lombard's Sentences, as his representative English intellectual milestone."
+  },
+  "sources": [
+    {
+      "title": "William of Ockham — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/ockham/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy states that Ockham began the required two-year cycle of Sentences lectures in 1317 and was studying theology at Oxford by 1318-19.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "philosophy-20260922-008",
+    "review_checkpoint": "#1374 comment 5763224562",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}

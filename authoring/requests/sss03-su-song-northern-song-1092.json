@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss03:su-song:northern-song:engineer-astronomer:1092:v1",
+  "person": {
+    "canonical_name_en": "Su Song",
+    "display_name_ko": "소송",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Northern Song",
+    "display_name_ko": "북송"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Engineer, astronomer and polymath",
+    "role_display_name_ko": "공학자·천문학자·박학자",
+    "start_year": 1092,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1092,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1092 as Su Song's representative Northern Song engineering milestone, associated with the astronomical clock-tower project and the horological treatise Xinyi Xiangfayao."
+  },
+  "sources": [
+    {
+      "title": "Water-powered Armillary Sphere and Celestial Globe Tower — National Museum of Natural Science",
+      "canonical_url": "https://www.nmns.edu.tw/en/exhibitions/galleries/human-cultures-hall/water-powered/index.html",
+      "citation_text": "The National Museum of Natural Science identifies Su Song as a Northern Song scientist who designed the water-powered armillary-sphere and celestial-globe clock tower.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gplist3-20260921-058",
+    "review_checkpoint": "#1374 comment 5762366173",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "technology"
+  }
+}
