@@ -1,0 +1,137 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "975a46677dd03de881a6049de33be4238dc65c20",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign the 18 already-committed AoE II SSS Persons from #1375 comment 5829601145 using exact UUID bindings; Jan Hus and Pope Gregory VII are religion, the remaining 16 governance. No candidate regrading or name-only binding is performed."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-AOE2-SSS18-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 18,
+    "distribution": {
+      "governance": 16,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 2,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "00cac15d-d042-4194-bf74-afa7c8db9fe9",
+      "canonical_name_en": "Árpád",
+      "preferred_name_ko": "아르파드",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "aa1602f7-8c07-4e5a-8195-fd17ad574990",
+      "canonical_name_en": "Boris I of Bulgaria",
+      "preferred_name_ko": "보리스 1세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "b0ac1c8e-d644-48c1-a217-1c6ed8c7e32d",
+      "canonical_name_en": "Chandragupta II",
+      "preferred_name_ko": "찬드라굽타 2세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "366e42d6-90e0-4c02-a02e-9fad4128a76c",
+      "canonical_name_en": "Pope Gregory VII",
+      "preferred_name_ko": "그레고리오 7세",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "83adc9bf-d728-4ac9-9452-cec77fa058bb",
+      "canonical_name_en": "Harsha",
+      "preferred_name_ko": "하르샤",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "478e46ae-cfb6-47c2-b508-ab3c8e704380",
+      "canonical_name_en": "Hongwu Emperor",
+      "preferred_name_ko": "홍무제",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "1a2730fa-d5ff-461b-ab1f-db15b5bb1e88",
+      "canonical_name_en": "Ivan III of Russia",
+      "preferred_name_ko": "이반 3세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "34770660-c98c-4a3c-b540-b4f392184a75",
+      "canonical_name_en": "Jan Hus",
+      "preferred_name_ko": "얀 후스",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "c0a4f8f0-fba3-4a54-a5c7-bffa8fdb5474",
+      "canonical_name_en": "Jayavarman II",
+      "preferred_name_ko": "자야바르만 2세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "e2f4e6d8-bcc3-4e19-ac29-226abc112a35",
+      "canonical_name_en": "Malik-Shah I",
+      "preferred_name_ko": "말리크샤 1세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "bccccaef-fcaf-4a49-ab9b-97d523a5bc49",
+      "canonical_name_en": "Minamoto no Yoritomo",
+      "preferred_name_ko": "미나모토노 요리토모",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "77bb9d94-d3a2-48da-bc7b-2d9161336683",
+      "canonical_name_en": "Mu'awiya I",
+      "preferred_name_ko": "무아위야 1세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "5769844b-86d0-40c5-b6d9-766c9ebfe79b",
+      "canonical_name_en": "Pepin the Short",
+      "preferred_name_ko": "피핀 3세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "fdde853d-4e50-496b-9271-519984301efa",
+      "canonical_name_en": "Philip II of France",
+      "preferred_name_ko": "필리프 2세 아우구스트",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "232cefa4-65b6-446e-a9ca-20b5b0b658fa",
+      "canonical_name_en": "Rajaraja I",
+      "preferred_name_ko": "라자라자 1세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "bb039d57-d5e7-41b8-bbb8-59a8b4b0f2cd",
+      "canonical_name_en": "Theodosius I",
+      "preferred_name_ko": "테오도시우스 1세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "2618fb1f-3cb2-40fc-a353-d135054489c3",
+      "canonical_name_en": "Tughril Beg",
+      "preferred_name_ko": "투그릴 베그",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "e8e9bf8f-13d2-43df-8213-8ec6992fbdeb",
+      "canonical_name_en": "Vladimir the Great",
+      "preferred_name_ko": "블라디미르 1세",
+      "representative_domain": "governance"
+    }
+  ]
+}
