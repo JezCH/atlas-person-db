@@ -83,6 +83,7 @@ test('changed GitHub human-authoring manifests fail closed without a NamuWiki de
   assert.match(validator, /checked_at must be a valid YYYY-MM-DD date/);
   assert.match(validator, /canonical https:\/\/namu\.wiki\/w\/\.\.\. URL/);
   assert.match(validator, /not_found NamuWiki reference must not contain document_title or url/);
+  assert.match(validator, /review_deferrals\.namuwiki is retired/);
   assert.match(validator, /\[NamuWiki\].*document not found/);
 });
 
@@ -183,7 +184,10 @@ test('registration documentation preserves explicit decisions and reviewed-state
     assert.match(source, /나무위키: 문서 없음/);
   }
   assert.match(policy, /same-name/);
+  assert.match(policy, /There is no completed-registration outcome called “deferred”/);
+  assert.match(policy, /do not create a separate normal follow-up task/);
   assert.match(sop, /external_references\.namuwiki/);
+  assert.match(sop, /review_deferrals\.namuwiki.*retired/);
   assert.match(sop, /reuses its live `linked` or `not_found` NamuWiki state without re-searching it/);
   assert.match(humanDoc, /authoring_manifest_runs\.result_snapshot/);
 });
