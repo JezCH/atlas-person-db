@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss05:amerigo-vespucci:kingdom-of-portugal:explorer-navigator:1501-1502:v1",
+  "person": {
+    "canonical_name_en": "Amerigo Vespucci",
+    "display_name_ko": "아메리고 베스푸치",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Portugal",
+    "display_name_ko": "포르투갈 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Explorer and navigator",
+    "role_display_name_ko": "탐험가·항해가",
+    "start_year": 1501,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1502,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The 1501–1502 interval records Vespucci's Portuguese-sponsored voyage from Lisbon along the South American coast; ATLAS preserves the voyage as an interval rather than collapsing it to one year."
+  },
+  "sources": [
+    {
+      "title": "Americo Vespucio—Pioneer Celo-Navigator And Geographer | U.S. Naval Institute",
+      "canonical_url": "https://www.usni.org/magazines/proceedings/1957/april/americo-vespucio-pioneer-celo-navigator-and-geographer",
+      "citation_text": "The U.S. Naval Institute records Vespucci's commission by King Manuel of Portugal and his departure from Lisbon in May 1501.",
+      "source_type": "historical_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-045",
+    "review_checkpoint": "#1374 comment 5815498501",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "exploration"
+  }
+}
