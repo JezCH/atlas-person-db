@@ -1129,7 +1129,7 @@ test("Dashboard actionable motion respects reduced-motion preference", () => {
 });
 
 test("mobile Dashboard exposes 44px touch targets and wraps dense metadata", () => {
-  assert.match(dashboardCssSource, /dashboard-completeness td button\{min-width:44px;min-height:44px;justify-content:center\}/);
+  assert.match(dashboardCssSource, /dashboard-completeness td button,\.dashboard-breakdown-action\{min-width:44px;min-height:44px;justify-content:center\}/);
   assert.match(dashboardCssSource, /dashboard-tool-actions \.btn,#atlasDashboardRefresh\{min-height:44px;display:inline-flex;align-items:center;justify-content:center\}/);
   assert.match(dashboardCssSource, /dashboard-panel-head\{display:grid;gap:4px\}/);
   assert.match(dashboardCssSource, /dashboard-progress-meta\{justify-content:flex-start;flex-wrap:wrap;gap:4px 12px\}/);
