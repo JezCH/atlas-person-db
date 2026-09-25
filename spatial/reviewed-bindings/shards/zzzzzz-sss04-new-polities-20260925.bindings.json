@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zzzzzz-sss04-new-polities-20260925",
+  "baseline": "aae6637a08210ad65b5f5a67d75b1bb7188bc064",
+  "reviewed_at": "2026-09-25T11:40:00.000Z",
+  "bindings": [
+    {
+      "polity_id": "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9",
+      "region_code": "europe",
+      "subregion_code": "iberia"
+    },
+    {
+      "polity_id": "47b5f0d3-992a-4e25-a1df-1dd8140cbcef",
+      "region_code": "west-asia",
+      "subregion_code": "mesopotamia"
+    }
+  ]
+}
