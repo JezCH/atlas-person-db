@@ -341,35 +341,46 @@ async function verifyDrilldowns(client, modelState) {
   assert(completenessFilter && completenessFilter.person_ids?.length > 0, "Completeness Person click did not set a Person filter", results.completeness);
 
   await showDashboard(client);
-  const activityCompleteness = await evaluate(client, `(() => {
-    const button=document.querySelector('[data-completeness-unit="activity"] [data-dashboard-completeness][aria-controls="dashboardCompletenessActivityTargets"]:not(:disabled)');
-    const panel=document.querySelector("#dashboardCompletenessActivityTargets");
-    if (!button || !panel) return null;
-    const row=button.closest("tr");
-    const beforeHidden=panel.hidden;
-    const code=button.dataset.dashboardCompleteness;
-    button.click();
-    return {
-      code,
-      unit:row?.dataset.completenessUnit || null,
-      before_hidden:beforeHidden,
-      after_hidden:panel.hidden,
-      aria_expanded:button.getAttribute("aria-expanded"),
-      row_count:panel.querySelectorAll(".dashboard-activity-completeness-table tbody tr").length,
-      activity_ids:[...panel.querySelectorAll(".dashboard-activity-completeness-table tbody code")].map((el)=>(el.textContent||"").trim()),
-      active_domain:window.ATLAS_MAIN_AUTHORITY_NAV?.getDomain?.() || null
-    };
-  })()`);
-  assert(activityCompleteness, "No actionable Activity completeness drill-down button found");
-  const expectedActivityRow=(modelState.completeness?.rows || []).find((row)=>row.code === activityCompleteness.code);
-  const expectedActivityTargets=expectedActivityRow?.activity_targets || [];
-  assert(activityCompleteness.unit === "activity", "Activity completeness drill-down was not an Activity-unit row", activityCompleteness);
-  assert(activityCompleteness.before_hidden === true && activityCompleteness.after_hidden === false, "Activity completeness target panel did not reveal on click", activityCompleteness);
-  assert(activityCompleteness.aria_expanded === "true", "Activity completeness button did not expose expanded state", activityCompleteness);
-  assert(activityCompleteness.active_domain === "dashboard", "Activity completeness drill-down incorrectly navigated away from Dashboard", activityCompleteness);
-  assert(activityCompleteness.row_count === expectedActivityTargets.length, "Rendered Activity completeness row count differs from canonical target set", { activityCompleteness,expectedActivityTargets });
-  assert(JSON.stringify(activityCompleteness.activity_ids) === JSON.stringify(expectedActivityTargets.map((row)=>row.activity_id)), "Rendered Activity completeness UUIDs differ from canonical target set", { activityCompleteness,expectedActivityTargets });
-  results.activity_completeness = activityCompleteness;
+  const actionableActivityRows=(modelState.completeness?.rows || []).filter((row)=>row.unit === "activity" && row.drilldown_available === true);
+  if (!actionableActivityRows.length) {
+    const activityCompletenessState=await evaluate(client, `(() => ({
+      actionable_count:document.querySelectorAll('[data-completeness-unit="activity"] [data-dashboard-completeness][aria-controls="dashboardCompletenessActivityTargets"]:not(:disabled)').length,
+      panel_hidden:document.querySelector("#dashboardCompletenessActivityTargets")?.hidden ?? null
+    }))()`);
+    assert(activityCompletenessState.actionable_count === 0, "Zero-target Activity completeness exposes an actionable drill-down", { activityCompletenessState,model:modelState.completeness });
+    assert(activityCompletenessState.panel_hidden === true, "Zero-target Activity completeness should keep the target panel hidden", { activityCompletenessState,model:modelState.completeness });
+    results.activity_completeness = { disabled:true,count:0 };
+  } else {
+    const activityCompleteness = await evaluate(client, `(() => {
+      const button=document.querySelector('[data-completeness-unit="activity"] [data-dashboard-completeness][aria-controls="dashboardCompletenessActivityTargets"]:not(:disabled)');
+      const panel=document.querySelector("#dashboardCompletenessActivityTargets");
+      if (!button || !panel) return null;
+      const row=button.closest("tr");
+      const beforeHidden=panel.hidden;
+      const code=button.dataset.dashboardCompleteness;
+      button.click();
+      return {
+        code,
+        unit:row?.dataset.completenessUnit || null,
+        before_hidden:beforeHidden,
+        after_hidden:panel.hidden,
+        aria_expanded:button.getAttribute("aria-expanded"),
+        row_count:panel.querySelectorAll(".dashboard-activity-completeness-table tbody tr").length,
+        activity_ids:[...panel.querySelectorAll(".dashboard-activity-completeness-table tbody code")].map((el)=>(el.textContent||"").trim()),
+        active_domain:window.ATLAS_MAIN_AUTHORITY_NAV?.getDomain?.() || null
+      };
+    })()`);
+    assert(activityCompleteness, "No actionable Activity completeness drill-down button found");
+    const expectedActivityRow=(modelState.completeness?.rows || []).find((row)=>row.code === activityCompleteness.code);
+    const expectedActivityTargets=expectedActivityRow?.activity_targets || [];
+    assert(activityCompleteness.unit === "activity", "Activity completeness drill-down was not an Activity-unit row", activityCompleteness);
+    assert(activityCompleteness.before_hidden === true && activityCompleteness.after_hidden === false, "Activity completeness target panel did not reveal on click", activityCompleteness);
+    assert(activityCompleteness.aria_expanded === "true", "Activity completeness button did not expose expanded state", activityCompleteness);
+    assert(activityCompleteness.active_domain === "dashboard", "Activity completeness drill-down incorrectly navigated away from Dashboard", activityCompleteness);
+    assert(activityCompleteness.row_count === expectedActivityTargets.length, "Rendered Activity completeness row count differs from canonical target set", { activityCompleteness,expectedActivityTargets });
+    assert(JSON.stringify(activityCompleteness.activity_ids) === JSON.stringify(expectedActivityTargets.map((row)=>row.activity_id)), "Rendered Activity completeness UUIDs differ from canonical target set", { activityCompleteness,expectedActivityTargets });
+    results.activity_completeness = activityCompleteness;
+  }
 
   await showDashboard(client);
   const expectedRuntimeTargets=Number(modelState.runtime_exclusions?.total_count || 0);
