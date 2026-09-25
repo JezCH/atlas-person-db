@@ -9,11 +9,12 @@
   const portraitControllerFactory = window.ATLAS_PERSON_PORTRAIT_CONTROLLER;
   const portraitPresentation = window.ATLAS_PERSON_PORTRAIT_PRESENTATION;
   const profileEditorFactory = window.ATLAS_PERSON_PROFILE_EDITOR;
+  const evidenceView = window.ATLAS_PERSON_EVIDENCE_VIEW;
   const profileWriter = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
 
-  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitControllerFactory?.createController || !portraitPresentation?.presentationFor || !profileEditorFactory?.createEditor || !mainArea || !topbar) {
+  if (!reader || !dataStore || !portraitView?.createRenderer || !portraitControllerFactory?.createController || !portraitPresentation?.presentationFor || !profileEditorFactory?.createEditor || !evidenceView?.createRenderer || !mainArea || !topbar) {
     console.error("ATLAS Person Main could not initialize required dependencies");
     return;
   }
@@ -205,6 +206,8 @@
     if (!Array.isArray(sources) || !sources.length) return '<p class="person-empty-inline">연결된 출처 없음</p>';
     return `<ul class="person-source-list">${sources.map(sourceHtml).join("")}</ul>`;
   }
+
+  const evidenceRenderer = evidenceView.createRenderer({ escapeHtml, boundaryLabel, sourceListHtml });
 
   function compactActivityHtml(activity) {
     const polity = activity?.polity?.display_name || activity?.polity?.canonical_name_en || "정치체 미상";
@@ -475,7 +478,7 @@
       </dl>
       ${semanticMeta.length ? `<p class="person-activity-meta">${semanticMeta.map(escapeHtml).join(" · ")}</p>` : ""}
       ${activity.notes ? `<p class="person-activity-notes">${escapeHtml(activity.notes)}</p>` : ""}
-      <div class="person-activity-sources"><strong>Activity 출처</strong>${sourceListHtml(activity.sources)}</div>
+      ${evidenceRenderer.activityEvidenceHtml(activity)}
     </article>`;
   }
 
