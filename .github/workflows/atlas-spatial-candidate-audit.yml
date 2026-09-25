@@ -26,6 +26,7 @@ concurrency:
 
 jobs:
   # SSS SUPERBATCH-05 2026-09-25: exact-SHA closure audit after Authoring/domain apply and Runtime refresh.
+  # SSS RESIDUAL-06A 2026-09-25: exact-SHA closure audit after 3-person Runtime refresh.
   candidates:
     runs-on: ubuntu-latest
     timeout-minutes: 15
