@@ -260,3 +260,51 @@ test("historical P9 completeness inputs remain passive reviewed evidence", () =>
   );
 });
 
+test("historical P7 provenance-only package stays passive and source-preserving", () => {
+  const plan = readJson("stage2/execution/p7-provenance-only-execution.v1.json");
+  const sources = readJson("stage2/authoring/p7-provenance-only-sources.v1.json");
+
+  assert.equal(plan.schema, "atlas-stage2-correction-v2-execution-plan/v1");
+  assert.equal(plan.status, "LITERAL_OPERANDS_COMPLETE_LIVE_BEFORE_SNAPSHOT_REQUIRED");
+  assert.equal(plan.source_authoring, "stage2/authoring/p7-provenance-only-sources.v1.json");
+  assert.equal(plan.execution_rules?.provenance_only_scope, true);
+  assert.equal(plan.execution_rules?.no_structural_chronology_governance_or_entity_migration, true);
+  assert.equal(plan.execution_rules?.preserve_all_existing_normalized_source_links_and_locators, true);
+  assert.equal(plan.execution_rules?.reviewed_source_addition_required, true);
+  assert.equal(plan.execution_rules?.preserve_exact_live_notes, true);
+  assert.equal(plan.execution_rules?.production_executable, false);
+  assert.equal(plan.execution_rules?.production_mutation_authorized, false);
+  assert.equal(plan.operations?.length, 6);
+
+  for (const operation of plan.operations) {
+    assert.equal(operation.type, "rewrite_activity");
+    assert.equal(operation.after?.activity_id, operation.activity_id);
+    assert.equal(operation.after?.person_id, operation.baseline_before?.person_id);
+    assert.equal(operation.after?.polity_id, operation.baseline_before?.polity_id);
+    assert.equal(operation.after?.role_id, operation.baseline_before?.role_id);
+    assert.equal(operation.after?.period_basis_id, operation.baseline_before?.period_basis_id);
+    assert.equal(operation.after?.activity_start, operation.baseline_before?.activity_start);
+    assert.equal(operation.after?.activity_end, operation.baseline_before?.activity_end);
+    assert.equal(operation.after?.notes_policy, "PRESERVE_EXACT_LIVE_NOTES");
+    assert.equal(operation.after?.source_links_policy, "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS");
+    assert.equal(operation.after?.add_source_links?.length, 1);
+  }
+
+  assert.equal(sources.schema, "atlas-stage2-p7-reviewed-relation-sources/v1");
+  assert.equal(sources.status, "REVIEWED_LITERAL_UUID_ROWS_BRANCH_ONLY_NO_PRODUCTION_MUTATION");
+  assert.equal(sources.rules?.literal_uuid_insert_only, true);
+  assert.equal(sources.rules?.runtime_title_or_url_resolution_forbidden, true);
+  assert.equal(sources.rules?.bibliographic_hash_and_bytes_must_be_null, true);
+  assert.equal(sources.rules?.production_mutation_authorized, false);
+  assert.equal(sources.sources?.length, 7);
+  assert.equal(sources.result?.source_count, 7);
+  assert.equal(sources.result?.fake_materialized_hash_count, 0);
+  assert.equal(sources.result?.production_mutation_authorized, false);
+
+  for (const item of sources.sources) {
+    assert.equal(item.row?.source_key, item.candidate_key);
+    assert.equal(item.row?.sha256, null);
+    assert.equal(item.row?.bytes, null);
+  }
+});
+
