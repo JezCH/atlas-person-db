@@ -209,3 +209,54 @@ test("historical reviewed-authoring manifests remain passive, literal, and non-a
   });
 });
 
+test("historical P9 completeness inputs remain passive reviewed evidence", () => {
+  const temporal = readJson("stage2/integration/p9-legacy-temporal-metadata-migration.v1.json");
+  assert.equal(temporal.schema, "atlas-stage2-p9-legacy-temporal-metadata-migration/v1");
+  assert.equal(temporal.status, "REVIEWED_MIGRATION_POLICY_NO_PRODUCTION_MUTATION");
+  assert.equal(temporal.rules?.preserve_existing_start_end_years_exactly, true);
+  assert.equal(temporal.rules?.fabricate_month_or_day_forbidden, true);
+  assert.equal(temporal.rules?.runtime_compile_override_calendar_writeback_forbidden, true);
+  assert.equal(temporal.rules?.unknown_chronology_status_blocks_automatic_migration, true);
+  assert.equal(temporal.rules?.production_mutation_authorized, false);
+  assert.equal(temporal.safety?.production_mutation, false);
+
+  const runtime = readJson("stage2/integration/p7-runtime-readiness-dispositions.v1.json");
+  assert.equal(runtime.schema, "atlas-stage2-p7-runtime-readiness-dispositions/v1");
+  assert.equal(runtime.rules?.historical_accuracy_over_completeness, true);
+  assert.equal(runtime.rules?.runtime_publish_requires_semantic_key_v2_ready, true);
+  assert.equal(runtime.rules?.unknown_or_unresolved_context_must_not_enter_runtime, true);
+  assert.equal(runtime.rules?.production_mutation_authorized, false);
+  assert.equal(runtime.result?.production_mutation_authorized, false);
+
+  const fullRelation = readJson("stage2/integration/p7-full-relation-review-dispositions.v1.json");
+  assert.equal(fullRelation.schema, "atlas-stage2-p7-full-relation-review-dispositions/v1");
+  assert.equal(fullRelation.rules?.structural_or_multiphase_correction_precedes_relation_backfill, true);
+  assert.equal(fullRelation.rules?.generic_relation_default_forbidden, true);
+  assert.equal(fullRelation.result?.relation_review_remaining, 0);
+  assert.equal(fullRelation.result?.production_mutation_authorized, false);
+
+  const integrationDir = path.join(root, "stage2/integration");
+  const explicitDecisionFiles = fs.readdirSync(integrationDir)
+    .filter((name) => /^p7-explicit-person-relation-decisions-batch\d+\.v1\.json$/.test(name))
+    .sort();
+  assert.ok(explicitDecisionFiles.length >= 9);
+  const relationCodes = new Set(["rules", "governs", "serves", "active_in", "opposes", "claims_rule"]);
+  for (const name of explicitDecisionFiles) {
+    const decisions = readJson(`stage2/integration/${name}`);
+    assert.equal(decisions.schema, "atlas-stage2-p7-explicit-person-relation-decisions/v1");
+    assert.equal(decisions.status, "REVIEWED_BRANCH_ONLY_NO_PRODUCTION_MUTATION");
+    assert.equal(decisions.rules?.production_mutation_authorized, false);
+    assert.equal(decisions.result?.production_mutation_authorized, false);
+    assert.equal(decisions.result?.decision_count, decisions.decisions?.length);
+    for (const decision of decisions.decisions || []) {
+      assert.equal(typeof decision.activity_id, "string");
+      assert.ok(relationCodes.has(decision.relation_code));
+    }
+  }
+
+  assertExistingRepoPath(
+    "docs/audits/RELATION_SEMANTICS_CONTRACT_V1_2026-08-12.md",
+    "historical relation semantics contract"
+  );
+});
+

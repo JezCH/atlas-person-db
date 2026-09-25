@@ -61,7 +61,9 @@ test("retired migration workflows have no live repository execution surface", ()
     "tests/atlas-stage2-reviewed-polity-authoring.test.mjs",
     "tests/atlas-stage2-reviewed-source-authoring.test.mjs",
     "scripts/verify-stage2-p9-semantic-key-v2-cutover.mjs",
-    "tests/stage2-p9-semantic-key-v2-cutover.test.mjs"
+    "tests/stage2-p9-semantic-key-v2-cutover.test.mjs",
+    "scripts/build-p9-completeness-repair-plan.mjs",
+    "tests/p9-completeness-repair-plan.test.mjs"
   ]) {
     assert.equal(fs.existsSync(path.join(root, relativePath)), false, `retired live surface must stay absent: ${relativePath}`);
   }
