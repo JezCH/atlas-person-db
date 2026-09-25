@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muhammad-ii:khwarazmian-empire:khwarazmshah:1200-1220:v1",
+  "person": {
+    "canonical_name_en": "Ala ad-Din Muhammad II",
+    "display_name_ko": "알라 앗딘 무함마드 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Khwarazmian Empire",
+    "display_name_ko": "호라즘 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khwarazmshah",
+    "role_display_name_ko": "호라즘샤",
+    "start_year": 1200,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1220,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ala ad-Din Muhammad II succeeded Tekish in 1200 and ruled the Khwarazmian state until 1220. Encyclopaedia Iranica explicitly gives his reign as 596–617 AH / 1200–20, so ATLAS uses those year-level boundaries and reuses the existing Khwarazmian Empire polity."
+  },
+  "sources": [
+    {
+      "title": "ʿALĀʾ-AL-DĪN MOḤAMMAD — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/ala-al-din-abul-fath-mohammad-b/",
+      "citation_text": "Iranica identifies Ala al-Din Muhammad ibn Tekish as Khwarazmshah ruling Khwarazm, Transoxania and Iran in 1200–1220.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "KHWARAZMSHAHS iii. The Line of Anuštigin — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/khwarazmshah/iii-the-line-of-anustigin/",
+      "citation_text": "Iranica's dynastic overview identifies Ala al-Din Muhammad as the ruler whose reign preceded Jalal al-Din's succession in 1220.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-01",
+    "source_review_checkpoint": "#1374 comment 5825498864; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1891-person read-back delta rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
