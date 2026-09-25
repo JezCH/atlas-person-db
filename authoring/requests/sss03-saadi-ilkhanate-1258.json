@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss03:saadi:ilkhanate:poet-prose-writer:1258:v1",
+  "person": {
+    "canonical_name_en": "Saadi",
+    "display_name_ko": "사디",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Ilkhanate",
+    "display_name_ko": "일 칸국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet and prose writer",
+    "role_display_name_ko": "시인·산문가",
+    "start_year": 1258,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1258,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1258, completion year of the Golestan after Saadi's return to Shiraz, as his representative literary milestone. His immediate patron was Salghurid Atabeg Abu Bakr; the existing Ilkhanate polity is used as the broader Mongol-era political context rather than creating a new polity solely to host a literary activity."
+  },
+  "sources": [
+    {
+      "title": "GOLESTĀN-E SAʿDI — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/golestan-e-sadi/",
+      "citation_text": "Encyclopaedia Iranica dates completion of Saadi's Golestan to 656/1258 and records its dedication to the Salghurid Atabeg of Fars, Abu Bakr b. Sa'd, his son, and the vizier.",
+      "source_type": "scholarly_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "writers4-20260921-004",
+    "review_checkpoint": "#1374 comment 5762473330",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}
