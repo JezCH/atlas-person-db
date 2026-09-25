@@ -21,6 +21,7 @@
     REVIEWED_SPLIT_REQUIRED: "분리 판정 완료",
     NEEDS_SPLIT_REVIEW: "분리 추가 검토",
     PRODUCTION_APPLIED_SPLIT: "Production 분리 반영 완료",
+    PRODUCTION_APPLIED_REPAIR: "Production 수정 완료",
     SUPERSEDED_NO_WRITE: "후속 검토로 폐기 · 별도 유지",
     AUDIT_REPAIR_REQUIRED: "전수감사 확정 · 수정 필요",
     REVIEW_HISTORY: "이전 검토 이력"
@@ -44,9 +45,18 @@
     return Array.isArray(DATA.active_frontier) ? DATA.active_frontier.slice() : [];
   }
 
+  function resolvedFrontierHistoryCases() {
+    return Array.isArray(DATA.resolved_frontier_history) ? DATA.resolved_frontier_history.slice() : [];
+  }
+
   function historyCases() {
     const activeIds = new Set(activeCases().map((row) => row.id));
-    return legacyCases().filter((row) => !activeIds.has(row.id));
+    const seen = new Set();
+    return [...resolvedFrontierHistoryCases(), ...legacyCases()].filter((row) => {
+      if (!row?.id || activeIds.has(row.id) || seen.has(row.id)) return false;
+      seen.add(row.id);
+      return true;
+    });
   }
 
   function allKnownCases() {
@@ -288,7 +298,7 @@
     const selected = decision?.decision || defaultDecision(row);
     const note = decision?.note || "";
     const locked = history || Boolean(row.locked);
-    const displayStatus = history && !["PRODUCTION_APPLIED_RETIRED","PRODUCTION_APPLIED_SPLIT","SUPERSEDED_NO_WRITE"].includes(row.status)
+    const displayStatus = history && !["PRODUCTION_APPLIED_RETIRED","PRODUCTION_APPLIED_SPLIT","PRODUCTION_APPLIED_REPAIR","SUPERSEDED_NO_WRITE"].includes(row.status)
       ? "REVIEW_HISTORY"
       : row.status;
     const evidence = (row.evidence || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("");

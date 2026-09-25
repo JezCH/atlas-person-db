@@ -58,14 +58,13 @@ test('restored review panel preserves prior decision workflow and live evidence'
 test('Polity review registry separates current active frontier from the old 28-case review snapshot', () => {
   assert.equal(registry.schema, 'atlas-polity-review-candidates/v2');
   assert.equal(registry.generated_at, '2026-09-25');
-  assert.equal(registry.active_frontier.length, 8);
+  assert.equal(registry.active_frontier.length, 7);
   assert.equal(registry.confirmed_merges.length + registry.review_candidates.length + registry.split_candidates.length, 28);
   assert.deepEqual(
     Array.from(registry.active_frontier, (row) => row.id),
     [
       'later-jin-houjin-houjin-collapse',
       'kingdom-of-serbia-medieval-modern-collapse',
-      'han-han-character-collapse',
       'egypt-ancient-modern-collapse',
       'poland-medieval-modern-collapse',
       'germany-pre1945-frg-collapse',
@@ -73,6 +72,10 @@ test('Polity review registry separates current active frontier from the old 28-c
       'kingdom-of-italy-multi-era-collapse'
     ]
   );
+  assert.equal(registry.resolved_frontier_history.length, 1);
+  assert.equal(registry.resolved_frontier_history[0].id, 'han-han-character-collapse');
+  assert.equal(registry.resolved_frontier_history[0].status, 'PRODUCTION_APPLIED_REPAIR');
+  assert.equal(registry.resolved_frontier_history[0].reviewed_decision, 'repair');
   assert.equal(registry.active_frontier_source.issue, 977);
   assert.equal(registry.active_frontier_source.checkpoint_comment_id, 5748136361);
 });
@@ -80,6 +83,8 @@ test('Polity review registry separates current active frontier from the old 28-c
 test('Polity review UI counts current frontier independently and moves old candidates to review history', () => {
   assert.match(review, /function activeCases\(\)/);
   assert.match(review, /function historyCases\(\)/);
+  assert.match(review, /function resolvedFrontierHistoryCases\(\)/);
+  assert.match(review, /PRODUCTION_APPLIED_REPAIR/);
   assert.match(review, /data-kind-filter="active"/);
   assert.match(review, /data-kind-filter="history"/);
   assert.match(review, /<small>현재 검토<\/small><strong>\$\{activeCases\(\)\.length\}<\/strong>/);
