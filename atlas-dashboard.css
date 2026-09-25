@@ -108,3 +108,38 @@
   .dashboard-heatmap{min-width:760px}
   .dashboard-heatmap-key{align-items:flex-start}
 }
+
+
+/* Polity concentration */
+.dashboard-polity-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.dashboard-polity-summary article{display:grid;gap:4px;padding:12px;border:1px solid #e2e6ed;border-radius:10px;background:#fbfcfe}
+.dashboard-polity-summary small{font-size:9px;font-weight:900;letter-spacing:.04em;color:#7b8494}
+.dashboard-polity-summary strong{font-size:24px;line-height:1.05;color:#182236;font-variant-numeric:tabular-nums}
+.dashboard-polity-summary span{font-size:9px;line-height:1.35;color:#7d8798}
+.dashboard-polity-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.dashboard-polity-toolbar>span{font-size:10px;font-weight:900;color:#4c5669}
+.dashboard-polity-toolbar>div{display:inline-flex;gap:4px;padding:3px;border:1px solid #e2e6ed;border-radius:9px;background:#f7f8fb}
+.dashboard-polity-toolbar button{min-height:34px;padding:6px 10px;border:0;border-radius:7px;background:transparent;color:#687286;font:inherit;font-size:9px;font-weight:900;cursor:pointer}
+.dashboard-polity-toolbar button[aria-pressed="true"]{background:#fff;color:#253049;box-shadow:0 1px 4px rgba(24,34,54,.10)}
+.dashboard-polity-toolbar button:focus-visible,.dashboard-polity-row:focus-visible{outline:2px solid #5e6bd7;outline-offset:2px}
+.dashboard-polity-ranking{display:grid;gap:5px}
+.dashboard-polity-ranking[hidden]{display:none}
+.dashboard-polity-row{position:relative;display:grid;grid-template-columns:28px minmax(0,1fr) auto;grid-template-rows:auto 4px;align-items:center;gap:5px 10px;width:100%;min-height:50px;padding:8px 10px;border:1px solid #e6e9ef;border-radius:9px;background:#fff;color:#253049;text-align:left;cursor:pointer}
+.dashboard-polity-row:hover:not(:disabled){border-color:#bcc5d8;background:#fafbff}
+.dashboard-polity-row:disabled{cursor:default;opacity:.6}
+.dashboard-polity-rank{grid-row:1/3;align-self:center;font-size:11px;font-weight:900;color:#8a93a3;text-align:center;font-variant-numeric:tabular-nums}
+.dashboard-polity-name{display:grid;gap:2px;min-width:0}
+.dashboard-polity-name strong{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dashboard-polity-name small{font-size:7px;color:#98a2b3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dashboard-polity-metrics{display:grid;gap:2px;text-align:right;white-space:nowrap}
+.dashboard-polity-metrics b{font-size:10px}
+.dashboard-polity-metrics small{font-size:8px;color:#7d8798}
+.dashboard-polity-bar{grid-column:2/4;display:block;height:4px;overflow:hidden;border-radius:999px;background:#eef1f5}
+.dashboard-polity-bar i{display:block;height:100%;border-radius:inherit;background:#5e6bd7}
+@media(max-width:600px){
+  .dashboard-polity-summary{grid-template-columns:1fr}
+  .dashboard-polity-toolbar{align-items:stretch;display:grid}
+  .dashboard-polity-toolbar>div{display:grid;grid-template-columns:1fr 1fr}
+  .dashboard-polity-toolbar button,.dashboard-polity-row{min-height:44px}
+  .dashboard-polity-row{grid-template-columns:24px minmax(0,1fr) auto;padding:8px}
+}

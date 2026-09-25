@@ -59,6 +59,52 @@ test("dashboard model derives progress from canonical snapshots without stored d
   assert.equal(snapshot.quality.non_timeline_registry,1);
 });
 
+test("Polity concentration uses distinct Person–Polity memberships and polity-linked Activities with separate denominators", () => {
+  const polityIds=Array.from({length:11},(_,index)=>`polity-${String(index+1).padStart(2,"0")}`);
+  const persons=polityIds.map((polityId,index)=>({
+    id:`p${index+1}`,
+    facets:{polities:[{id:polityId,preferred_name_ko:`정치체 ${index+1}`}]},
+    activity_summaries:[{id:`a${index+1}`,polity:{id:polityId,preferred_name_ko:`정치체 ${index+1}`}}]
+  }));
+  persons.push({
+    id:"p12",
+    facets:{polities:[{id:polityIds[0],preferred_name_ko:"정치체 1"}]},
+    activity_summaries:[
+      {id:"a12-1",polity:{id:polityIds[0],preferred_name_ko:"정치체 1"}},
+      {id:"a12-2",polity:{id:polityIds[0],preferred_name_ko:"정치체 1"}}
+    ]
+  });
+
+  const concentration=model.buildPolityConcentration({personResult:{persons}});
+  assert.equal(concentration.used_polity_count,11);
+  assert.equal(concentration.total_person_memberships,12);
+  assert.equal(concentration.polity_linked_activity_count,13);
+  assert.equal(concentration.single_person_polity_count,10);
+  assert.equal(concentration.person_top10_share,91.7);
+  assert.equal(concentration.activity_top10_share,92.3);
+  assert.equal(concentration.top_by_persons[0].polity_id,polityIds[0]);
+  assert.equal(concentration.top_by_persons[0].person_count,2);
+  assert.deepEqual(concentration.top_by_persons[0].person_ids,["p1","p12"]);
+  assert.equal(concentration.top_by_activities[0].activity_count,3);
+
+  const snapshot=model.buildDashboardSnapshot({personResult:{persons}});
+  assert.deepEqual(snapshot.polity_concentration,concentration);
+});
+
+test("Polity concentration UI stays focused on concentration, supports exact Person drill-down, and preserves mobile touch targets", () => {
+  assert.match(dashboardSource,/POLITY CONCENTRATION/);
+  assert.match(dashboardSource,/정치체별 인물 집중도/);
+  assert.match(dashboardSource,/data-polity-sort="persons"/);
+  assert.match(dashboardSource,/data-polity-sort="activities"/);
+  assert.match(dashboardSource,/data-dashboard-polity-id/);
+  assert.match(dashboardSource,/Person–Polity membership/);
+  assert.match(dashboardSource,/polity_concentration/);
+  assert.match(dashboardSource,/ATLAS_PERSON_MAIN\?\.setDashboardFilter/);
+  assert.match(dashboardCssSource,/dashboard-polity-summary/);
+  assert.match(dashboardCssSource,/dashboard-polity-row/);
+  assert.match(dashboardCssSource,/dashboard-polity-toolbar button,.dashboard-polity-row\{min-height:44px\}/);
+});
+
 test("Data Quality drill-down preserves exact targets for Person, Activity, Polity, and non-timeline registry units", () => {
   const P1="00000000-0000-4000-8000-000000000001";
   const P2="00000000-0000-4000-8000-000000000002";
