@@ -30,6 +30,7 @@
   let requestSerial = 0;
   let selectedPersonDetail = null;
   let selectedPortrait = null;
+  let initialLoadPromise = null;
   const PERSON_PORTRAIT_IMAGE_SCRIPT_URL = "./atlas-person-portrait-image.js?v=20260924-upload-standard-v3";
   const PERSON_EXCEL_EXPORT_SCRIPT_URL = "./atlas-person-excel-export.js?v=20260922-feature-split-v1";
   let personPortraitImageModulePromise = null;
@@ -522,6 +523,11 @@
     if (panel) panel.innerHTML = `<p class="person-detail-placeholder is-error">상세정보 조회 실패: ${escapeHtml(error?.code || error?.message || "unknown")}</p>`;
   }
 
+  function renderDetailPlaceholder() {
+    const panel = document.getElementById("personMainDetail");
+    if (panel) panel.innerHTML = '<p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 Activity 의미를 확인할 수 있습니다.</p>';
+  }
+
   function clearPortraitPreviewUrl() {
     if (portraitPreviewObjectUrl) URL.revokeObjectURL(portraitPreviewObjectUrl);
     portraitPreviewObjectUrl = null;
@@ -546,28 +552,57 @@
     preview.hidden = false;
   }
 
-  async function selectPerson(personId, { force = false } = {}) {
-    if (!personId || (!force && selectedPersonId === personId)) return;
+  async function selectPerson(personId, { force = false, updateRoute = true } = {}) {
+    const id = String(personId || "").trim().toLowerCase();
+    if (!id || (!force && selectedPersonId === id)) return false;
     clearPortraitPreviewUrl();
-    selectedPersonId = personId;
+    selectedPersonId = id;
     selectedPersonDetail = null;
     selectedPortrait = null;
     renderGroups();
     renderDetailLoading();
+    if (updateRoute) {
+      window.dispatchEvent(new CustomEvent("atlas-person-selected", { detail:{ personId:id } }));
+    }
     const serial = ++requestSerial;
     try {
       const [result, portraitResult] = await Promise.all([
-        reader.readPerson(personId),
-        reader.readPortrait(personId).catch((error) => Object.freeze({ error }))
+        reader.readPerson(id),
+        reader.readPortrait(id).catch((error) => Object.freeze({ error }))
       ]);
-      if (serial !== requestSerial || selectedPersonId !== personId) return;
+      if (serial !== requestSerial || selectedPersonId !== id) return false;
       selectedPersonDetail = result.person;
       selectedPortrait = portraitResult?.portrait || null;
       renderDetail(result.person, portraitResult);
+      return true;
     } catch (error) {
-      if (serial !== requestSerial) return;
+      if (serial !== requestSerial) return false;
       renderDetailError(error);
+      return false;
     }
+  }
+
+  async function openPerson(personId, { updateRoute = false } = {}) {
+    const id = String(personId || "").trim().toLowerCase();
+    if (!reader.UUID_PATTERN?.test?.(id)) return false;
+    if (initialLoadPromise) await initialLoadPromise;
+    return selectPerson(id, { force:true, updateRoute });
+  }
+
+  function clearSelection({ updateRoute = false } = {}) {
+    if (!selectedPersonId && !selectedPersonDetail && !selectedPortrait) {
+      renderDetailPlaceholder();
+      return false;
+    }
+    requestSerial += 1;
+    clearPortraitPreviewUrl();
+    selectedPersonId = null;
+    selectedPersonDetail = null;
+    selectedPortrait = null;
+    renderGroups();
+    renderDetailPlaceholder();
+    if (updateRoute) window.dispatchEvent(new CustomEvent("atlas-person-selection-cleared"));
+    return true;
   }
 
   async function loadPersons({ keepSelection = true, force = false } = {}) {
@@ -870,11 +905,14 @@
   }
 
   installShell();
-  loadPersons({ keepSelection: false });
+  initialLoadPromise = loadPersons({ keepSelection: false });
 
   window.ATLAS_PERSON_MAIN = Object.freeze({
     loadPersons,
     selectPerson,
+    openPerson,
+    clearSelection,
+    getSelectedPersonId:() => selectedPersonId,
     renderGroups,
     setSearchQuery,
     getSearchQuery: () => query,
