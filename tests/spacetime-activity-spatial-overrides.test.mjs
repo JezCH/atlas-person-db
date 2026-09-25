@@ -363,11 +363,11 @@ test("invalid Activity override leaf-parent combinations are rejected", () => {
 });
 
 
-test("six complex Activity overrides preserve reviewed multi-anchor or timeline semantics", () => {
+test("seven complex Activity overrides preserve reviewed multi-anchor or timeline semantics", () => {
   const validation = model.validateSpatialIndex(index);
   assert.equal(validation.valid, true, validation.errors.join("\n"));
   const complexRows = index.activity_spatial_overrides.filter((row) => Array.isArray(row.segments) && row.segments.length > 0);
-  assert.equal(complexRows.length, 6);
+  assert.equal(complexRows.length, 7);
   assert.deepEqual(new Set(complexRows.map((row) => row.activity_id)), new Set(EXPECTED_COMPLEX.keys()));
 
   const lookup = model.createSpatialLookup(index);
