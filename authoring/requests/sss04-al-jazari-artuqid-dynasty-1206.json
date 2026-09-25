@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss04:al-jazari:artuqid-dynasty:engineer-inventor:1206:v1",
+  "person": {
+    "canonical_name_en": "Ismail al-Jazari",
+    "display_name_ko": "이스마일 알자자리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Artuqid dynasty",
+    "display_name_ko": "아르투크 왕조"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Engineer and inventor",
+    "role_display_name_ko": "공학자·발명가",
+    "start_year": 1206,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1206,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1206 marks al-Jazari's presentation of the Book of Knowledge of Ingenious Mechanical Devices at the Artuqid court."
+  },
+  "sources": [
+    {
+      "title": "Ismail ibn al-Razzaz al-Jazari | Science Museum Group Collection",
+      "canonical_url": "https://collection.sciencemuseumgroup.org.uk/people/cp52302/ismail-ibn-al-razzaz-al-jazari",
+      "citation_text": "Science Museum Group records that al-Jazari served at the Artuqid court and in 1206 presented his Book of Knowledge of Ingenious Mechanical Devices.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-012",
+    "review_checkpoint": "#1374 comment 5815494440",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "technology"
+  }
+}

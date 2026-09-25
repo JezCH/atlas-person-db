@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss04:john-dalton:united-kingdom:chemist-physicist:1808:v1",
+  "person": {
+    "canonical_name_en": "John Dalton",
+    "display_name_ko": "존 돌턴",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Chemist and physicist",
+    "role_display_name_ko": "화학자·물리학자",
+    "start_year": 1808,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1808,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1808 marks publication of the first volume of A New System of Chemical Philosophy."
+  },
+  "sources": [
+    {
+      "title": "A New System of Chemical Philosophy | Science History Institute",
+      "canonical_url": "https://digital.sciencehistory.org/works/ff365590j",
+      "citation_text": "Science History Institute identifies the 1808 first edition of Dalton's A New System of Chemical Philosophy as the milestone work announcing his atomic theory.",
+      "source_type": "museum_library_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-006",
+    "review_checkpoint": "#1374 comment 5815493403",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}

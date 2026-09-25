@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss04:henry-bessemer:united-kingdom:engineer-steel-manufacturer:1856:v1",
+  "person": {
+    "canonical_name_en": "Henry Bessemer",
+    "display_name_ko": "헨리 베서머",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Engineer and steel manufacturer",
+    "role_display_name_ko": "공학자·제강업자",
+    "start_year": 1856,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1856,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative year 1856 marks Bessemer's public presentation of the steelmaking process that bears his name."
+  },
+  "sources": [
+    {
+      "title": "Henry Bessemer | Science Museum Group Collection",
+      "canonical_url": "https://collection.sciencemuseumgroup.org.uk/people/ap24523/bessemer-henry",
+      "citation_text": "Science Museum Group records Bessemer's 1856 BAAS paper outlining the Bessemer steelmaking process.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp6-20260922-003",
+    "review_checkpoint": "#1374 comment 5763367416",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "technology"
+  }
+}
