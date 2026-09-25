@@ -1,0 +1,125 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-25",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "524422608504dfa607402c40c6123f0b2fc84365",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign the 16 newly registered SSS SUPERBATCH-04 Persons to the representative domains already reviewed in Lane A and frozen in #1375 comment 5824112295; no reclassification is performed in this apply batch."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-SSS-SUPERBATCH04-20260925",
+    "queue_issue": 1375,
+    "assignment_count": 16,
+    "distribution": {
+      "governance": 0,
+      "military": 0,
+      "knowledge": 3,
+      "technology": 5,
+      "commerce": 0,
+      "culture": 5,
+      "religion": 3,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "e17d21f8-7c2e-48b5-93c5-b3e9034ae768",
+      "canonical_name_en": "Ismail al-Jazari",
+      "preferred_name_ko": "이스마일 알자자리",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "fd973933-e383-4fe1-ad36-ca4e2aedcd92",
+      "canonical_name_en": "Abu al-Qasim al-Zahrawi",
+      "preferred_name_ko": "아부 알카심 알자흐라위",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "316d6860-02ed-491d-95ba-9019644a0c4a",
+      "canonical_name_en": "Antonio Canova",
+      "preferred_name_ko": "안토니오 카노바",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "eee4ef8b-9184-41d2-af37-0135fe4e8a5b",
+      "canonical_name_en": "Arthur Conan Doyle",
+      "preferred_name_ko": "아서 코난 도일",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "fd343755-96d6-4b80-a9f8-6a00636dba45",
+      "canonical_name_en": "Bahá'u'lláh",
+      "preferred_name_ko": "바하올라",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "478d978b-2ba0-4b42-b181-1e64fdb1d6b1",
+      "canonical_name_en": "Bi Sheng",
+      "preferred_name_ko": "필승",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "b811a120-602e-4b39-9466-817217072f83",
+      "canonical_name_en": "Edgar Degas",
+      "preferred_name_ko": "에드가 드가",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "7518064d-e841-400a-b3ae-1daaa97d8ee7",
+      "canonical_name_en": "Giacomo Puccini",
+      "preferred_name_ko": "자코모 푸치니",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "ad947f4b-dc3a-4557-b871-54bbbe484d24",
+      "canonical_name_en": "Guglielmo Marconi",
+      "preferred_name_ko": "굴리엘모 마르코니",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "360882b0-d46b-4515-970a-f368712f6ce9",
+      "canonical_name_en": "Henry Bessemer",
+      "preferred_name_ko": "헨리 베서머",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "d51d91b2-cf30-4743-84d2-c9725795418c",
+      "canonical_name_en": "John Dalton",
+      "preferred_name_ko": "존 돌턴",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "ce5a07b6-850e-48e2-a7f8-d43bb79e6c26",
+      "canonical_name_en": "John Harrison",
+      "preferred_name_ko": "존 해리슨",
+      "representative_domain": "technology"
+    },
+    {
+      "person_id": "dca7ca44-0547-4d16-a0df-576e98075906",
+      "canonical_name_en": "John Wesley",
+      "preferred_name_ko": "존 웨슬리",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "733c6ff9-56d6-4036-876c-ae85b1b7ba6a",
+      "canonical_name_en": "Joseph Smith Jr.",
+      "preferred_name_ko": "조지프 스미스 주니어",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "8ffaeb0c-5125-4a92-904d-6b673335667f",
+      "canonical_name_en": "Sandro Botticelli",
+      "preferred_name_ko": "산드로 보티첼리",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "a55eb02b-e452-4ac3-8329-446965ac2b37",
+      "canonical_name_en": "Wilhelm Röntgen",
+      "preferred_name_ko": "빌헬름 뢴트겐",
+      "representative_domain": "knowledge"
+    }
+  ]
+}
