@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:fujiwara-no-michinaga:japan:sessho:1016-1017:v1",
+  "person": {
+    "canonical_name_en": "Fujiwara no Michinaga",
+    "display_name_ko": "후지와라노 미치나가",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Sesshō (Regent)",
+    "role_display_name_ko": "섭정",
+    "start_year": 1016,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1017,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Fujiwara no Michinaga became sesshō (regent) for the young Emperor Go-Ichijō in 1016 and relinquished the regency to his son Yorimichi in 1017. ATLAS uses this short formal regency rather than the much broader but less sharply bounded period of his de facto dominance at the Heian court; he is not mislabeled as kampaku."
+  },
+  "sources": [
+    {
+      "title": "Imperial Visit to the Great Horse Race at the Kaya-no-in Mansion — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/44889",
+      "citation_text": "The Metropolitan Museum identifies Michinaga as the great Heian-court statesman and imperial regent.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Fujiwara no Michinaga — University of Texas at Austin",
+      "canonical_url": "https://laits.utexas.edu/~mr56267/HIST_341K/Heian_pages/Fujiwara_no_Michinaga.html",
+      "citation_text": "The university teaching resource states that Michinaga became sesshō in 1016 and in 1017 transferred the regency to his son Yorimichi.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-04",
+    "source_review_checkpoint": "#1374 comment 5825499317; #1375 comment 5833905579",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1941-person read-back rechecked before authoring; target identity exact-match absent for all six; Sigismund II Augustus explicitly excluded as a different person"
+  }
+}
