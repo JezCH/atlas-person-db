@@ -59,6 +59,14 @@ const EXPECTED_COMPLEX = new Map([
       [408, 410, "europe", "italy", "Italy / Rome campaign"]
     ]
   }],
+  ["c59b8896-b9a0-4fe2-a512-c9b9313eb907", {
+    polity_id: "01cd1acd-9321-4d25-bc30-4cbd561bcbd5", start: 410, end: 415, mode: "timeline_segments",
+    segments: [
+      [410, 411, "europe", "italy", "Italy"],
+      [412, 414, "europe", "western-europe", "Gaul / Narbonne–Bordeaux"],
+      [415, 415, "europe", "iberia", "Hispania / Barcelona"]
+    ]
+  }],
   ["42b9e5cc-02f9-49d0-9968-9476a24918e7", {
     polity_id: "8cb0aec8-6228-4db6-88ad-584a21925ee1", start: 474, end: 493, mode: "timeline_segments",
     segments: [
@@ -355,11 +363,11 @@ test("invalid Activity override leaf-parent combinations are rejected", () => {
 });
 
 
-test("six complex Activity overrides preserve reviewed multi-anchor or timeline semantics", () => {
+test("seven complex Activity overrides preserve reviewed multi-anchor or timeline semantics", () => {
   const validation = model.validateSpatialIndex(index);
   assert.equal(validation.valid, true, validation.errors.join("\n"));
   const complexRows = index.activity_spatial_overrides.filter((row) => Array.isArray(row.segments) && row.segments.length > 0);
-  assert.equal(complexRows.length, 6);
+  assert.equal(complexRows.length, 7);
   assert.deepEqual(new Set(complexRows.map((row) => row.activity_id)), new Set(EXPECTED_COMPLEX.keys()));
 
   const lookup = model.createSpatialLookup(index);
