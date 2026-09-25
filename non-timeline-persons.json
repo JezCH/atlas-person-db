@@ -2389,5 +2389,228 @@
       "batch": "aoem-person-register-20260908",
       "item": 5
     }
+  },
+  {
+    "person_name": "Madhava of Sangamagrama",
+    "politic_name": "Kerala",
+    "display_name_ko": "상가마그라마의 마다바",
+    "politic_display_name_ko": "케랄라",
+    "historicity": "historical_uncertain_chronology",
+    "historicity_display_ko": "역사적 인물·연대 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "kerala_school_tradition_and_approximate_scholarly_dates",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "케랄라 학파의 수학자·천문학자",
+    "reason": "Modern histories of mathematics place Madhava of Sangamagrama in Kerala roughly in the fourteenth to early fifteenth century and identify him as a foundational figure of the Kerala school. His biography is reconstructed largely from later Kerala mathematical and astronomical traditions, however, and ATLAS does not have a defensible single contemporary polity plus person-specific Activity interval that would justify a precise year rail. The Kerala association is therefore preserved without fabricating exact Activity boundaries.",
+    "sources": [
+      {
+        "title": "MacTutor History of Mathematics — Madhava (1350–1425)",
+        "url": "https://mathshistory.st-andrews.ac.uk/Biographies/Madhava/"
+      }
+    ],
+    "map_policy": "Retain in the Person registry; do not display on the historical year timeline until a defensible person-specific chronology and polity binding are separately reviewed.",
+    "request_context": {
+      "candidate_id": "gplist3-20260921-039",
+      "review_checkpoint": "#1374 comment 5762364540",
+      "representative_domain": "knowledge",
+      "priority_revision": "#1375 comment 5824112295"
+    }
+  },
+  {
+    "person_name": "Kabir",
+    "politic_name": "Varanasi / North India",
+    "display_name_ko": "카비르",
+    "politic_display_name_ko": "바라나시·북인도",
+    "historicity": "historical_uncertain_chronology",
+    "historicity_display_ko": "역사적 인물·연대 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "fifteenth_century_banaras_reconstruction_and_hagiographic_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "시인·성자·직조공 전승 인물",
+    "reason": "Current scholarship can reconstruct Kabir as a fifteenth-century poet associated with Banaras/Varanasi, but his biography is heavily layered with later hagiographic traditions and conventional life dates differ. ATLAS therefore preserves the historically grounded North Indian association while declining to convert a broad scholarly reconstruction into exact personal Activity boundaries or a forced contemporary polity.",
+    "sources": [
+      {
+        "title": "Oxford Bibliographies in Hinduism — Kabir/Kabir Panth",
+        "url": "https://academic.oup.com/reference/62357/reference-article-abstract/554518400"
+      }
+    ],
+    "map_policy": "Retain in the Person registry; do not display on the historical year timeline without a separately reviewed person-specific chronology.",
+    "request_context": {
+      "candidate_id": "writers4-20260921-006",
+      "review_checkpoint": "#1374 comment 5762473330",
+      "representative_domain": "culture",
+      "priority_revision": "#1375 comment 5824112295"
+    }
+  },
+  {
+    "person_name": "Thiruvalluvar",
+    "politic_name": "Tamilakam",
+    "display_name_ko": "티루발루바르",
+    "politic_display_name_ko": "타밀라캄",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "tirukkural_authorship_and_contested_tamil_literary_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "《티루쿠랄》 귀속 시인·윤리 사상가",
+    "reason": "Thiruvalluvar is the traditional author of the Tirukkural, but reliable biographical evidence is extremely sparse and both his life and the work's date have been debated across a very wide range. Modern literary scholarship has offered later approximate datings, but these do not establish a secure person-specific Activity year or a single contemporary polity. ATLAS preserves the Tamil literary association without promoting a traditional or scholarly estimate into exact personal chronology.",
+    "sources": [
+      {
+        "title": "Stuart Blackburn, Corruption and Redemption: The Legend of Valluvar and Tamil Literary History, Modern Asian Studies 34.2 (2000)",
+        "url": "https://www.cambridge.org/core/journals/modern-asian-studies/article/abs/corruption-and-redemption-the-legend-of-valluvar-and-tamil-literary-history/578480EEAB1B71821BBC5D2A9B42205F"
+      },
+      {
+        "title": "Journal of Tamil Peraivu — Thiruvalluvar’s Birth, Place of Birth and upto His Demise: A Study",
+        "url": "https://samudera.um.edu.my/index.php/tamilperaivu/article/view/13233"
+      }
+    ],
+    "map_policy": "Retain in the Person registry; do not display on the historical year timeline unless a separately reviewed uncertain-chronology overlay is enabled.",
+    "request_context": {
+      "candidate_id": "writers4-20260921-007",
+      "review_checkpoint": "#1374 comment 5762473330",
+      "representative_domain": "culture",
+      "priority_revision": "#1375 comment 5824112295"
+    }
+  },
+  {
+    "person_name": "Wu Cheng'en",
+    "politic_name": "Ming Dynasty",
+    "display_name_ko": "오승은",
+    "politic_display_name_ko": "명나라",
+    "historicity": "historical_uncertain_literary_attribution",
+    "historicity_display_ko": "역사적 인물·문학 저작 귀속 논쟁",
+    "timeline_status": "excluded",
+    "date_basis": "ming_biography_with_disputed_journey_to_the_west_authorship",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "명대 시인·산문가·《서유기》 전통 귀속 작가",
+    "reason": "Wu Cheng'en is a historical Ming writer with an approximately reconstructable lifetime, but the work that drives this candidate's ATLAS significance, Journey to the West, was published anonymously and its attribution to Wu remains debated. Assigning a single representative literary Activity year would therefore turn an unresolved authorship problem into false precision. ATLAS preserves Wu's Ming association while leaving the year-based Activity rail unresolved.",
+    "sources": [
+      {
+        "title": "Chinese Text Project — Wu Cheng'en",
+        "url": "https://ctext.org/datawiki.pl?if=en&res=307374"
+      },
+      {
+        "title": "EBSCO Research Starters — Wu Chengen",
+        "url": "https://www.ebsco.com/research-starters/history/wu-chengen"
+      }
+    ],
+    "map_policy": "Retain in the Person registry; do not display on the historical year timeline until a defensible representative Activity independent of disputed Journey to the West authorship is reviewed.",
+    "request_context": {
+      "candidate_id": "writers4-20260921-014",
+      "review_checkpoint": "#1374 comment 5762473837",
+      "representative_domain": "culture",
+      "priority_revision": "#1375 comment 5824112295"
+    }
+  },
+  {
+    "person_name": "Luo Guanzhong",
+    "politic_name": "Yuan–Ming transition China",
+    "display_name_ko": "나관중",
+    "politic_display_name_ko": "원·명 교체기 중국",
+    "historicity": "historical_uncertain_biography",
+    "historicity_display_ko": "역사적 인물·전기 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "sparse_late_yuan_early_ming_biography_and_contested_life_dates",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "소설가·극작가·《삼국지연의》 귀속 작가",
+    "reason": "Luo Guanzhong is generally accepted as a historical writer associated with Romance of the Three Kingdoms, but surviving biographical information is sparse and reconstructions of his birth, death, residence and exact Yuan–Ming placement vary. Modern editions commonly give an approximate c.1330–c.1400 lifetime, which is not a defensible exact personal Activity interval. ATLAS therefore preserves the late-Yuan/early-Ming literary association without fabricating a precise year rail.",
+    "sources": [
+      {
+        "title": "University of California Press — Three Kingdoms, A Historical Novel",
+        "url": "https://www.ucpress.edu/books/three-kingdoms-a-historical-novel/paper"
+      },
+      {
+        "title": "University of Washington — The Scholar and the State: Romance of the Three Kingdoms",
+        "url": "https://uw.manifoldapp.org/read/the-scholar-and-the-state-fiction-as-political-discourse-in-late-imperial-china-a1419098-d7a3-4ac1-b2ae-84a90423e4cf/section/b3e11c4a-05ea-47a2-85be-e76ab1dc5d6a"
+      }
+    ],
+    "map_policy": "Retain in the Person registry; do not display on the historical year timeline until a person-specific chronology precise enough for ATLAS Activity placement is separately reviewed.",
+    "request_context": {
+      "candidate_id": "writers4-20260921-015",
+      "review_checkpoint": "#1374 comment 5762473837",
+      "representative_domain": "culture",
+      "priority_revision": "#1375 comment 5824112295"
+    }
+  },
+  {
+    "person_name": "Yājñavalkya",
+    "politic_name": "Videha / late Vedic North India",
+    "display_name_ko": "야즈냐발키야",
+    "politic_display_name_ko": "비데하·후기 베다 북인도",
+    "historicity": "historical_tradition_uncertain_identity_and_chronology",
+    "historicity_display_ko": "역사 전승·동일인 및 연대 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "early_upanishadic_textual_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "우파니샤드 전승의 브라만·철학자",
+    "reason": "Yājñavalkya is a central sage in the Bṛhadāraṇyaka Upaniṣad and related Vedic tradition, including debates associated with King Janaka of Videha. Modern histories place Yājñavalkya and related early Upanishadic thinkers only broadly around the seventh to sixth centuries BCE, while the texts themselves are layered compilations. This does not supply a defensible person-specific Activity interval, so ATLAS preserves the Videha/late-Vedic association without pseudo-exact dates.",
+    "sources": [
+      {
+        "title": "The Oxford Handbook of Indian Philosophy — Timeline: Indian Philosophy in a Hundred Thinkers",
+        "url": "https://academic.oup.com/edited-volume/27982/chapter/211656615"
+      },
+      {
+        "title": "The Journal of Hindu Studies — Narrative Shape of Orthopraxy: Yājñavalkya",
+        "url": "https://academic.oup.com/jhs/article/14/3/326/6499204"
+      }
+    ],
+    "map_policy": "Retain in the Person registry; do not display on the historical year timeline unless a separately reviewed early-Vedic uncertain-chronology overlay is enabled.",
+    "request_context": {
+      "candidate_id": "omitted-20260921-yajnavalkya",
+      "review_checkpoint": "#1374 comment 5762924321",
+      "representative_domain": "knowledge",
+      "priority_revision": "#1375 comment 5824112295"
+    }
+  },
+  {
+    "person_name": "Samson",
+    "politic_name": "Israelites / Philistine frontier",
+    "display_name_ko": "삼손",
+    "politic_display_name_ko": "이스라엘인·블레셋 접경",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전승·역사적 핵심 가능성 논쟁",
+    "timeline_status": "excluded",
+    "date_basis": "judges_13_16_and_iron_age_shephelah_cultural_memory",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "사사기 전승의 전사·영웅",
+    "reason": "Samson is the warrior-hero of Judges 13–16 and is embedded in an Israelite–Philistine frontier narrative. Modern scholarship treats the Samson cycle as layered cultural memory and scribal composition rather than a securely datable personal biography. The biblical statement that Samson judged Israel for twenty years is therefore not converted into invented absolute start/end years. ATLAS preserves the frontier tradition while leaving all personal timeline boundaries unknown.",
+    "sources": [
+      {
+        "title": "Oxford Handbook of the Historical Books of the Hebrew Bible — Samson in Reception History",
+        "url": "https://academic.oup.com/edited-volume/34226/chapter-abstract/290220909"
+      },
+      {
+        "title": "Oxford University Press — Scribal Representations and Social Landscapes of the Iron Age Shephelah, Samson Mosaics",
+        "url": "https://academic.oup.com/book/59002/chapter-abstract/495843035"
+      }
+    ],
+    "map_policy": "Retain in the Person registry; do not display on the historical year timeline unless a separate biblical-tradition or uncertain-chronology overlay is enabled.",
+    "request_context": {
+      "candidate_id": "biblical-20260925-samson",
+      "review_checkpoint": "#1374 comment 5823984077",
+      "representative_domain": "military",
+      "priority_revision": "#1375 comment 5824112295"
+    }
   }
 ]
