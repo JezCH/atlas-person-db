@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:jean-jacques-rousseau:france:philosopher:1762:v2",
+  "request_id": "authoring:jean-jacques-rousseau:kingdom-of-france:philosopher:1762:v1",
   "person": {
     "canonical_name_en": "Jean-Jacques Rousseau",
     "display_name_ko": "장자크 루소",
