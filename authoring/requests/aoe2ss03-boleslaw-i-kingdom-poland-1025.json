@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:boleslaw-i-brave:kingdom-of-poland:king:1025:v1",
+  "person": {
+    "canonical_name_en": "Bolesław I the Brave",
+    "display_name_ko": "볼레스와프 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Poland",
+    "display_name_ko": "폴란드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1025,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1025,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bolesław I the Brave ruled the Piast state as duke from 992 but was crowned the first King of Poland only in 1025, a few months before his death. ATLAS therefore binds the royal Activity specifically to the existing Kingdom of Poland polity for the single year 1025 rather than projecting the later royal title backward across his ducal rule."
+  },
+  "sources": [
+    {
+      "title": "Polish History — The Congress of Gniezno: The first Polish-German summit",
+      "canonical_url": "https://polishhistory.pl/the-congress-of-gniezno-the-first-polish-german-summit/",
+      "citation_text": "The Polish History Museum portal notes that Bolesław the Brave received the royal crown only a few months before his death in 1025.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Bolesław I the Brave",
+      "canonical_url": "https://en.wikipedia.org/wiki/Boles%C5%82aw_I_the_Brave",
+      "citation_text": "The biographical entry distinguishes his ducal rule from 992–1025 from his reign as the first King of Poland in 1025.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-03",
+    "source_review_checkpoint": "#1374 comment 5825499317; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1919-person read-back rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
