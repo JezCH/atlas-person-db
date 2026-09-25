@@ -12,6 +12,8 @@ const EXPECTED = new Map([
   ["19fc5c65-cf80-4409-a0de-86195f46b102", ["01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7", 1064, 1092, "west-asia", "iranian-plateau", "Isfahan"]],
   ["bdd5ba3f-52c5-4461-9476-099918187856", ["01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7", 1074, 1079, "west-asia", "iranian-plateau", "Isfahan"]],
   ["54208459-1778-4a94-bf37-84d4d5c242b8", ["01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7", 1091, 1095, "west-asia", "mesopotamia", "Baghdad"]],
+  ["87ef772c-a363-4b1a-910b-93c2c90c3106", ["01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7", 1072, 1092, "west-asia", "iranian-plateau", "Isfahan"]],
+  ["ca1b40e3-7854-453c-b34e-c854d8b87f53", ["01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7", 1040, 1063, "west-asia", "iranian-plateau", "Nishapur / Ray / Isfahan court sequence"]],
   ["c350d83a-ab5e-4c12-a48a-3157fb76509d", ["6539c314-ec29-42e0-a0c2-90991fb9ffd8", 1405, 1447, "south-asia", "northwest-south-asia", "Herat"]],
   ["747c2472-b051-4412-8f7b-51f551a1ec17", ["68c83ef6-0023-5af9-a6e8-26ccf5b8e116", 1692, 1711, "west-asia", "arabia", "Rustaq"]],
   ["b8bd254a-612a-4a21-a625-ddc55ab9b763", ["a81055d7-ed0d-45a6-90c6-738e1a9ba94d", -165, -140, "europe", "eastern-europe", "Pontic steppe (Dnieper–Don)"]],
