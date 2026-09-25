@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-25T14:07:47.000Z",
+  "generated_at": "2026-09-25T15:14:37.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1215,7 +1215,8 @@
     "9e89d0fa-a64e-4d9b-b702-70692bcc0cd4": "africa",
     "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "europe",
     "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "europe",
-    "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "west-asia"
+    "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "west-asia",
+    "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "africa"
   },
   "place_function_records": [
     {
@@ -2792,7 +2793,8 @@
     "e146e6ef-15f0-4bca-9e5d-b26672c65018": "eastern-siberia-far-east",
     "e1548cb1-f89d-538b-9fb2-bad02ad87f8e": "japan",
     "e3ca4f3c-3504-4830-b141-f4cdd0157763": "himalayas",
-    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia"
+    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia",
+    "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "maghreb-north-africa"
   },
   "activity_spatial_overrides": [
     {
@@ -3659,6 +3661,19 @@
           ]
         }
       ]
+    },
+    {
+      "activity_id": "0420b69a-d48e-449e-a021-04ef74097771",
+      "expected_polity_id": "2612d649-8aa4-4042-b504-60e47c602944",
+      "expected_start_year": 376,
+      "expected_end_year": 380,
+      "reason": "Fritigern's reviewed 376–380 Tervingi activity covers the Lower Danube crossing into Roman Moesia/Thrace and the 378 victory at Adrianople. An Activity-level Balkan anchor closes this mobile migration-war interval without assigning the Tervingi a misleading permanent static leaf.",
+      "source_refs": [
+        "Oxford Classical Dictionary: Fritigern — leader of the Tervingi from c.376 to c.380, pursued asylum inside the Roman Empire and won at Adrianople in 378"
+      ],
+      "region_code": "europe",
+      "subregion_code": "balkans",
+      "location_label": "Lower Danube–Thrace / Adrianople"
     }
   ]
 }
