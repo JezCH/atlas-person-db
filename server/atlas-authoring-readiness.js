@@ -1,8 +1,27 @@
 "use strict";
 
-const { requireP5Schema } = require("./atlas-stage2-reviewed-entity-authoring.js");
 const { inspectP9Cutover } = require("./atlas-stage2-p9-db-cutover.js");
 const { personMergeExecutionState } = require("./atlas-person-merge-interlock.js");
+
+async function requireAdditiveAuthoringSchema(client) {
+  const result = await client.query(`
+    select
+      to_regclass('atlas_v2.person_polity_relation_types') as relation_catalog,
+      to_regclass('atlas_v2.polity_relations') as polity_relations,
+      exists(
+        select 1 from information_schema.columns
+         where table_schema='atlas_v2' and table_name='polity_names' and column_name='semantic_name_kind'
+      ) as semantic_name_kind,
+      exists(
+        select 1 from information_schema.columns
+         where table_schema='atlas_v2' and table_name='sources' and column_name='canonical_url'
+      ) as source_url
+  `);
+  const row = result.rows[0];
+  if (!row?.relation_catalog || !row?.polity_relations || !row?.semantic_name_kind || !row?.source_url) {
+    throw new Error("P5_ADDITIVE_SCHEMA_REQUIRED");
+  }
+}
 
 async function inspectCoreAuthoringSchema(client) {
   const result = await client.query(`
@@ -200,7 +219,7 @@ async function inspectAuthoringReadiness(client) {
 
   let p5Ready = true;
   try {
-    await requireP5Schema(client);
+    await requireAdditiveAuthoringSchema(client);
   } catch (error) {
     if (String(error?.message || "") === "P5_ADDITIVE_SCHEMA_REQUIRED") p5Ready = false;
     else throw error;

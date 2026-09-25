@@ -82,3 +82,114 @@ test("retired Train 2 executable helpers stay out of the active repository surfa
     assert.equal(fs.existsSync(path.join(root, relativePath)), false, `retired Train 2 executable residue returned: ${relativePath}`);
   }
 });
+
+test("historical reviewed-authoring manifests remain passive, literal, and non-authorizing", () => {
+  const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+  const p5 = readJson("stage2/execution/p5-reviewed-identity-source-authoring.v1.json");
+  assert.equal(p5.schema, "atlas-stage2-p5-reviewed-identity-source-authoring/v1");
+  assert.equal(p5.status, "REVIEWED_EXACT_ROWS_BRANCH_ONLY_NO_PRODUCTION_MUTATION");
+  assert.equal(p5.rules?.literal_uuid_insert_only, true);
+  assert.equal(p5.rules?.name_or_url_identity_resolution_forbidden, true);
+  assert.equal(p5.rules?.activity_mutation_forbidden, true);
+  assert.equal(p5.rules?.territory_geometry_mutation_forbidden, true);
+  assert.equal(p5.rules?.production_mutation_authorized, false);
+  assert.equal(p5.polities?.length, 17);
+  assert.equal(p5.sources?.length, 19);
+  assert.equal(p5.result?.new_polity_rows, 17);
+  assert.equal(p5.result?.new_polity_name_rows, 17);
+  assert.equal(p5.result?.new_source_rows, 19);
+  assert.equal(p5.result?.activity_rows_mutated, 0);
+  assert.equal(p5.result?.production_mutation_authorized, false);
+
+  const p5PolityIds = new Set();
+  const p5NameIds = new Set();
+  for (const item of p5.polities) {
+    assert.match(item.polity?.id || "", uuid);
+    assert.match(item.preferred_name?.id || "", uuid);
+    assert.equal(item.preferred_name?.polity_id, item.polity?.id);
+    p5PolityIds.add(item.polity.id.toLowerCase());
+    p5NameIds.add(item.preferred_name.id.toLowerCase());
+  }
+  assert.equal(p5PolityIds.size, 17);
+  assert.equal(p5NameIds.size, 17);
+
+  const p5SourceIds = new Set();
+  const p5SourceKeys = new Set();
+  for (const item of p5.sources) {
+    assert.match(item.row?.id || "", uuid);
+    assert.equal(item.row?.source_key, item.candidate_key);
+    assert.equal(item.row?.sha256, null);
+    assert.equal(item.row?.bytes, null);
+    p5SourceIds.add(item.row.id.toLowerCase());
+    p5SourceKeys.add(item.candidate_key);
+  }
+  assert.equal(p5SourceIds.size, 19);
+  assert.equal(p5SourceKeys.size, 19);
+
+  const governance = readJson("stage2/authoring/p7-reviewed-governance-contexts.v1.json");
+  assert.equal(governance.schema, "atlas-stage2-p7-reviewed-governance-contexts/v1");
+  assert.equal(governance.status, "REVIEWED_LITERAL_UUID_ROWS_BRANCH_ONLY_NO_PRODUCTION_MUTATION");
+  assert.equal(governance.rules?.literal_uuid_insert_only, true);
+  assert.equal(governance.rules?.runtime_name_resolution_forbidden, true);
+  assert.equal(governance.rules?.activity_mutation_forbidden, true);
+  assert.equal(governance.rules?.territory_geometry_mutation_forbidden, true);
+  assert.equal(governance.rules?.production_mutation_authorized, false);
+  assert.equal(governance.contexts?.length, 1);
+  assert.equal(governance.contexts?.[0]?.names?.length, 3);
+  assert.match(governance.contexts?.[0]?.row?.id || "", uuid);
+  for (const name of governance.contexts[0].names) {
+    assert.match(name.id || "", uuid);
+    assert.equal(name.governance_context_id, governance.contexts[0].row.id);
+  }
+  assert.deepEqual(governance.result, {
+    context_count: 1,
+    name_count: 3,
+    production_mutation_authorized: false
+  });
+
+  const polity = readJson("stage2/authoring/p7-charles-de-gaulle-polity.v1.json");
+  assert.equal(polity.schema, "atlas-stage2-p7-reviewed-polities/v1");
+  assert.equal(polity.status, "REVIEWED_LITERAL_UUID_ROWS_BRANCH_ONLY_NO_PRODUCTION_MUTATION");
+  assert.equal(polity.rules?.literal_uuid_insert_only, true);
+  assert.equal(polity.rules?.runtime_name_resolution_forbidden, true);
+  assert.equal(polity.rules?.activity_mutation_forbidden, true);
+  assert.equal(polity.rules?.territory_geometry_mutation_forbidden, true);
+  assert.equal(polity.rules?.production_mutation_authorized, false);
+  assert.equal(polity.polities?.length, 1);
+  assert.equal(polity.polities?.[0]?.names?.length, 3);
+  assert.match(polity.polities?.[0]?.row?.id || "", uuid);
+  for (const name of polity.polities[0].names) {
+    assert.match(name.id || "", uuid);
+    assert.equal(name.polity_id, polity.polities[0].row.id);
+  }
+  assert.deepEqual(polity.result, {
+    polity_count: 1,
+    name_count: 3,
+    production_mutation_authorized: false
+  });
+
+  const solomonSources = readJson("stage2/authoring/p7-solomon-chronology-sources.v1.json");
+  assert.equal(solomonSources.schema, "atlas-stage2-p7-reviewed-relation-sources/v1");
+  assert.equal(solomonSources.status, "REVIEWED_LITERAL_UUID_ROWS_BRANCH_ONLY_NO_PRODUCTION_MUTATION");
+  assert.equal(solomonSources.rules?.literal_uuid_insert_only, true);
+  assert.equal(solomonSources.rules?.runtime_title_or_url_resolution_forbidden, true);
+  assert.equal(solomonSources.rules?.bibliographic_hash_and_bytes_must_be_null, true);
+  assert.equal(solomonSources.rules?.traditional_chronology_must_not_be_promoted_to_exact_fact, true);
+  assert.equal(solomonSources.rules?.maximal_biblical_territory_must_not_be_inferred, true);
+  assert.equal(solomonSources.rules?.production_mutation_authorized, false);
+  assert.equal(solomonSources.sources?.length, 2);
+  for (const item of solomonSources.sources) {
+    assert.match(item.row?.id || "", uuid);
+    assert.equal(item.row?.source_key, item.candidate_key);
+    assert.equal(item.row?.sha256, null);
+    assert.equal(item.row?.bytes, null);
+  }
+  assert.deepEqual(solomonSources.result, {
+    source_count: 2,
+    literal_uuid_count: 2,
+    fake_materialized_hash_count: 0,
+    production_mutation_authorized: false
+  });
+});
+

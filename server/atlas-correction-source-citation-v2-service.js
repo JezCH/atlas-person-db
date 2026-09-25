@@ -9,9 +9,19 @@ const {
   MANIFEST_V2,
   MARKER_V2
 } = require("./atlas-correction-role-merge-v2-service.js");
-const {
-  activityFingerprint
-} = require("./atlas-stage2-reviewed-entity-authoring.js");
+
+async function activityFingerprint(client) {
+  const result = await client.query(`
+    select count(*)::int as row_count,
+           md5(coalesce(string_agg(row_to_json(x)::text, '|' order by x.id::text), '')) as fingerprint
+      from (
+        select id,person_id,polity_id,role_id,period_basis_id,activity_start,activity_end,
+               confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash
+          from atlas_v2.person_politics_v2
+      ) x
+  `);
+  return Object.freeze(result.rows[0]);
+}
 
 const OPERATION_TYPE = "rewrite_source_citation";
 const MAX_OPERATIONS = 20;
