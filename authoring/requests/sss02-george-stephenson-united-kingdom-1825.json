@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss02:george-stephenson:united-kingdom:railway-engineer:1825:v1",
+  "person": {
+    "canonical_name_en": "George Stephenson",
+    "display_name_ko": "조지 스티븐슨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Railway engineer",
+    "role_display_name_ko": "철도 공학자",
+    "start_year": 1825,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1825,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1825, the opening year of the Stockton and Darlington Railway and the service of Stephenson's Locomotion No. 1, as his representative British railway-engineering milestone."
+  },
+  "sources": [
+    {
+      "title": "Steam locomotive No. 1 'Locomotion', Stockton & Darlington Railway — Science Museum Group",
+      "canonical_url": "https://collection.sciencemuseumgroup.org.uk/objects/co205767",
+      "citation_text": "The Science Museum Group identifies George Stephenson as designer of Locomotion No. 1, built in 1825 and used on the Stockton and Darlington Railway's opening day.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-126",
+    "review_checkpoint": "#1374 comment 5762058633",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "technology"
+  }
+}

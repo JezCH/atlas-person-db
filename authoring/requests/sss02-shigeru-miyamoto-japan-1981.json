@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss02:shigeru-miyamoto:japan:game-designer:1981:v1",
+  "person": {
+    "canonical_name_en": "Shigeru Miyamoto",
+    "display_name_ko": "미야모토 시게루",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Game designer",
+    "role_display_name_ko": "게임 디자이너",
+    "start_year": 1981,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1981,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1981 as Miyamoto's representative Japanese game-design milestone, when Donkey Kong was released and introduced the character later known as Mario."
+  },
+  "sources": [
+    {
+      "title": "Nintendo History — Nintendo",
+      "canonical_url": "https://www.nintendo.com/en-gb/Hardware/Nintendo-History/Nintendo-History-625945.html",
+      "citation_text": "Nintendo's corporate history records Shigeru Miyamoto's creation of Donkey Kong and its 1981 arcade release.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "modern-20260921-shigeru-miyamoto",
+    "review_checkpoint": "#1374 comment 5762188477",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}

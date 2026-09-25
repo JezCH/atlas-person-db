@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss02:arthur-c-clarke:united-kingdom:science-fiction-writer:1953:v1",
+  "person": {
+    "canonical_name_en": "Arthur C. Clarke",
+    "display_name_ko": "아서 C. 클라크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Science fiction writer",
+    "role_display_name_ko": "과학소설 작가",
+    "start_year": 1953,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1953,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1953, publication year of Childhood's End, as Clarke's representative British science-fiction milestone before his later move to Sri Lanka."
+  },
+  "sources": [
+    {
+      "title": "Arthur C. Clarke — Encyclopaedia Britannica",
+      "canonical_url": "https://www.britannica.com/biography/Arthur-C-Clarke",
+      "citation_text": "Britannica identifies Childhood's End among Clarke's major novels and dates it to 1953.",
+      "source_type": "encyclopedia_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "modern-20260921-arthur-c-clarke",
+    "review_checkpoint": "#1374 comment 5762188477",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "culture"
+  }
+}

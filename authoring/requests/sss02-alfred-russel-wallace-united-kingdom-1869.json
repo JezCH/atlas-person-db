@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss02:alfred-russel-wallace:united-kingdom:naturalist-author:1869:v1",
+  "person": {
+    "canonical_name_en": "Alfred Russel Wallace",
+    "display_name_ko": "앨프리드 러셀 월리스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Naturalist and author",
+    "role_display_name_ko": "박물학자·저술가",
+    "start_year": 1869,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1869,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1869, publication year of The Malay Archipelago after Wallace's return to Britain, as a representative milestone for his natural-history and biogeographical work."
+  },
+  "sources": [
+    {
+      "title": "The Alfred Russel Wallace collection — Natural History Museum",
+      "canonical_url": "https://www.nhm.ac.uk/our-science/services/library/collections/wallace.html",
+      "citation_text": "The Natural History Museum records Wallace's own copy of The Malay Archipelago as published in 1869 and preserves his scientific and biogeographical papers.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "modern-20260921-alfred-russel-wallace",
+    "review_checkpoint": "#1374 comment 5762189009",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}

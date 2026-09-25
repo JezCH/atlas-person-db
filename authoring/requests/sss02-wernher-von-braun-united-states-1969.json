@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss02:wernher-von-braun:united-states:rocket-engineer:1969:v1",
+  "person": {
+    "canonical_name_en": "Wernher von Braun",
+    "display_name_ko": "베르너 폰 브라운",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Rocket engineer",
+    "role_display_name_ko": "로켓 공학자",
+    "start_year": 1969,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1969,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1969 as von Braun's representative U.S. spaceflight-engineering milestone: as Marshall Space Flight Center director he was chief architect of the Saturn V program whose launch vehicle enabled Apollo 11."
+  },
+  "sources": [
+    {
+      "title": "Wernher von Braun — NASA",
+      "canonical_url": "https://www.nasa.gov/people/wernher-von-braun/",
+      "citation_text": "NASA identifies von Braun as director of Marshall Space Flight Center and chief architect of the Saturn V launch vehicle, with Apollo 11 landing on the Moon in July 1969.",
+      "source_type": "official_government_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-113",
+    "review_checkpoint": "#1374 comment 5762057576",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "technology"
+  }
+}

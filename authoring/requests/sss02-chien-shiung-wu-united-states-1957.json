@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss02:chien-shiung-wu:united-states:experimental-physicist:1957:v1",
+  "person": {
+    "canonical_name_en": "Chien-Shiung Wu",
+    "display_name_ko": "우젠슝",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Experimental physicist",
+    "role_display_name_ko": "실험물리학자",
+    "start_year": 1957,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1957,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1957 as Wu's representative U.S. experimental-physics milestone, when her experiment demonstrated parity violation in weak interactions."
+  },
+  "sources": [
+    {
+      "title": "Chien-Shiung Wu — Columbia University",
+      "canonical_url": "https://c250.columbia.edu/c250_celebrates/remarkable_columbians/chien-shiung_wu.html",
+      "citation_text": "Columbia University records Wu's 1956-57 experiment and the January 1957 announcement that parity conservation failed in weak interactions.",
+      "source_type": "university_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gplist3-20260921-045",
+    "review_checkpoint": "#1374 comment 5762365693",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}

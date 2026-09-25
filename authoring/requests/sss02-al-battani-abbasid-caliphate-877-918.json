@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss02:al-battani:abbasid-caliphate:astronomer:877-918:v1",
+  "person": {
+    "canonical_name_en": "Al-Battani",
+    "display_name_ko": "알바타니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Abbasid Caliphate",
+    "display_name_ko": "아바스 칼리파국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Astronomer and mathematician",
+    "role_display_name_ko": "천문학자·수학자",
+    "start_year": 877,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS records 877-918 as Al-Battani's evidence-bounded astronomical observation interval at Raqqa under the Abbasid Caliphate."
+  },
+  "sources": [
+    {
+      "title": "Al-Battani — MacTutor History of Mathematics",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Al-Battani/",
+      "citation_text": "MacTutor reports that al-Battani observed from 877 to 918 and worked for much of his life at Raqqa.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gplist3-20260921-037",
+    "review_checkpoint": "#1374 comment 5762364540",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}
