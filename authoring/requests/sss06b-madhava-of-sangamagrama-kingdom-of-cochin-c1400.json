@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sss06b:madhava-of-sangamagrama:kingdom-of-cochin:mathematician-astronomer:c1400:v1",
+  "person": {
+    "canonical_name_en": "Madhava of Sangamagrama",
+    "display_name_ko": "상가마그라마의 마다바",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "Exact same-person NamuWiki document path for Madhava of Sangamagrama was not independently verified from an accessible canonical-provider surface in this batch. Registration continues without guessing a canonical URL or recording a false not_found result.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Cochin",
+    "display_name_ko": "코친 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician and astronomer",
+    "role_display_name_ko": "수학자·천문학자",
+    "start_year": 1400,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1400,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses c.1400 as an explicitly approximate representative scholarly-activity point: MacTutor places Madhava's discovery of the sine, cosine and arctangent series around 1400. This is not an exact birth, death, or composition date. The conventional Sangamagrama-near-Cochin localization is used only for the broad historical polity association and is not treated as proof of an exact birthplace."
+  },
+  "sources": [
+    {
+      "title": "Madhava (1350–1425) — MacTutor History of Mathematics",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Madhava/",
+      "citation_text": "MacTutor describes Madhava as a south Indian mathematician from Sangamagrama near Cochin and dates his trigonometric infinite-series discoveries to around 1400.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Cochin State Manual (1911) — Government of Kerala",
+      "canonical_url": "https://printing.kerala.gov.in/wp-content/uploads/2018/07/Cochin-State-Manual-1911.pdf",
+      "citation_text": "The Cochin State Manual records the historical kingdom of Perumpadappu or Cochin as a Kerala polity; ATLAS uses this as polity-identity support rather than as evidence for Madhava's exact locality.",
+      "source_type": "government_historical_reference"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gplist3-20260921-039",
+    "review_checkpoint": "#1374 comment 5762364540",
+    "priority_revision": "#1375 comment 5824112295",
+    "representative_domain": "knowledge"
+  }
+}
