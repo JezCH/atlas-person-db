@@ -50,7 +50,6 @@ test('logical Person, Runtime compile, audit and correction surfaces consolidate
     { source: '/api/atlas-admin-system-status', destination: '/api/atlas-read?__atlas_read_surface=admin-system-status' },
     { source: '/api/atlas-person-domain', destination: '/api/atlas-mutate?__atlas_mutation_surface=person-domain' },
     { source: '/api/atlas-runtime-compile', destination: '/api/atlas-mutate?__atlas_mutation_surface=runtime-compile' },
-    { source: '/api/atlas-p11-baseline-b-capture', destination: '/api/atlas-audit-inventory?__atlas_audit_surface=p11-baseline-b-capture' },
     { source: '/api/atlas-correction-migrations', destination: '/api/atlas-correction-apply?__atlas_correction_surface=migrations' }
   ]);
 });
@@ -119,13 +118,13 @@ test('server-only correction apply endpoint consolidates correction apply and P1
   assert.doesNotMatch(correctionApplyApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
-test('audit inventory and P11 Baseline B share one physical read-only function with isolated handlers', () => {
+test('audit inventory keeps current read-only audit handlers and excludes retired P11 capture', () => {
   assert.match(auditInventoryApi, /atlas-audit-inventory-handler\.js/);
   assert.match(auditInventoryApi, /createAuditInventoryHandler/);
-  assert.match(auditInventoryApi, /atlas-p11-baseline-b-capture-handler\.js/);
-  assert.match(auditInventoryApi, /createP11BaselineBCaptureHandler/);
-  assert.match(auditInventoryApi, /p11-baseline-b-capture/);
+  assert.match(auditInventoryApi, /atlas-polity-reference-audit-handler\.js/);
+  assert.match(auditInventoryApi, /createPolityReferenceAuditHandler/);
   assert.match(auditInventoryApi, /ATLAS_AUDIT_SURFACE_NOT_FOUND/);
+  assert.doesNotMatch(auditInventoryApi, /p11-baseline-b-capture|createP11BaselineBCaptureHandler/);
   assert.doesNotMatch(auditInventoryApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
   assert.doesNotMatch(auditInventoryApi, /insert\s+into|\bupdate\b|\bdelete\s+from|\btruncate\b/i);
 });

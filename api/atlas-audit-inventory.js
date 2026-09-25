@@ -1,18 +1,14 @@
 "use strict";
 
-// Read-only Production audit routing surface; this module performs no mutation.
-// Operational no-op: force an exact-SHA Production deployment for reviewed Stage 2 audit evidence.
+// Read-only Production audit surface for current reviewed evidence; this module performs no mutation.
 // Audit retrigger 2026-09-05: capture exact temporal metadata for the next Yelü Dashi merge blocker.
 // Audit retrigger 2026-09-20: capture exact live Polity references blocking the reviewed Kingdom of Greece retirement.
 // Audit retrigger 2026-09-24: capture the complete current 28-Polity unlinked/orphan reference surface before cleanup.
 const { createAuditInventoryHandler } = require("../server/atlas-audit-inventory-handler.js");
-const { createP11BaselineBCaptureHandler } = require("../server/atlas-p11-baseline-b-capture-handler.js");
 const { createPolityReferenceAuditHandler } = require("../server/atlas-polity-reference-audit-handler.js");
 
 const auditInventoryHandler = createAuditInventoryHandler();
-const p11BaselineBCaptureHandler = createP11BaselineBCaptureHandler();
 const polityReferenceAuditHandler = createPolityReferenceAuditHandler();
-const P11_SURFACE = "p11-baseline-b-capture";
 const POLITY_REFERENCE_SURFACE = "polity-reference-audit";
 const POLITY_EVIDENCE_MARKER = "ATLAS_POLITY_REFERENCE_AUDIT_EVIDENCE_V1";
 const MAX_EVIDENCE_TERMS = 20;
@@ -82,7 +78,6 @@ function withPolityEvidenceLogging(req, res, log = console.log) {
 async function handler(req, res) {
   const surface = normalizedSurface(req);
   if (!surface) return auditInventoryHandler(req, res);
-  if (surface === P11_SURFACE) return p11BaselineBCaptureHandler(req, res);
   if (surface === POLITY_REFERENCE_SURFACE) return polityReferenceAuditHandler(req, withPolityEvidenceLogging(req, res));
 
   res.statusCode = 404;
@@ -92,7 +87,6 @@ async function handler(req, res) {
 }
 
 module.exports = handler;
-module.exports.P11_SURFACE = P11_SURFACE;
 module.exports.POLITY_REFERENCE_SURFACE = POLITY_REFERENCE_SURFACE;
 module.exports.POLITY_EVIDENCE_MARKER = POLITY_EVIDENCE_MARKER;
 module.exports.normalizedSurface = normalizedSurface;
@@ -101,5 +95,4 @@ module.exports.polityEvidenceText = polityEvidenceText;
 module.exports.compactPolityEvidence = compactPolityEvidence;
 module.exports.withPolityEvidenceLogging = withPolityEvidenceLogging;
 module.exports.createAuditInventoryHandler = createAuditInventoryHandler;
-module.exports.createP11BaselineBCaptureHandler = createP11BaselineBCaptureHandler;
 module.exports.createPolityReferenceAuditHandler = createPolityReferenceAuditHandler;
