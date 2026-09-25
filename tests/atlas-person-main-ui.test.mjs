@@ -14,6 +14,7 @@ const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url)
 const profileCss = fs.readFileSync(new URL('../atlas-person-profile-editor.css', import.meta.url), 'utf8');
 const mobile = fs.readFileSync(new URL('../mobile-ui.js', import.meta.url), 'utf8');
 const dataStore = fs.readFileSync(new URL('../atlas-client-data-store.js', import.meta.url), 'utf8');
+const evidenceView = fs.readFileSync(new URL('../atlas-person-evidence-view.js', import.meta.url), 'utf8');
 
 test('Main loads the Person reader and shared data store before the Person-centered screen module', () => {
   assert.match(html, /atlas-person-main\.css/);
@@ -23,15 +24,18 @@ test('Main loads the Person reader and shared data store before the Person-cente
   const portraitViewIndex = html.indexOf('atlas-person-portrait-view.js');
   const portraitControllerIndex = html.indexOf('atlas-person-portrait-controller.js');
   const profileEditorIndex = html.indexOf('atlas-person-profile-editor.js');
+  const evidenceIndex = html.indexOf('atlas-person-evidence-view.js');
   const mainIndex = html.indexOf('atlas-person-main.js');
   assert.ok(readerIndex >= 0);
   assert.ok(storeIndex > readerIndex);
   assert.ok(portraitViewIndex > storeIndex);
   assert.ok(portraitControllerIndex > portraitViewIndex);
   assert.ok(profileEditorIndex > portraitControllerIndex);
-  assert.ok(mainIndex > profileEditorIndex);
+  assert.ok(evidenceIndex > profileEditorIndex);
+  assert.ok(mainIndex > evidenceIndex);
   assert.match(main, /ATLAS_PERSON_BROWSER_READER/);
   assert.match(main, /ATLAS_CLIENT_DATA_STORE/);
+  assert.match(main, /ATLAS_PERSON_EVIDENCE_VIEW/);
 });
 
 test('Person-centered Main renders all historicity groups in one chronology table', () => {
@@ -109,12 +113,16 @@ test('Person detail renders identity, portrait slot, sources and user-facing Act
     'activity.period_basis',
     'activity.start',
     'activity.end',
-    'activity.notes',
-    'activity.sources'
+    'activity.notes'
   ]) assert.match(main, new RegExp(token.replaceAll('.', '\\.')));
   assert.match(main, /person-detail-portrait/);
   assert.match(main, /person-detail-portrait-empty">없음/);
-  assert.match(main, /Activity 출처/);
+  assert.match(main, /evidenceRenderer\.activityEvidenceHtml\(activity\)/);
+  assert.match(evidenceView, /activity\?\.sources/);
+  assert.match(evidenceView, /근거 보기/);
+  assert.match(evidenceView, /연대 상태/);
+  assert.match(evidenceView, /신뢰도/);
+  assert.match(evidenceView, /sourceListHtml\(evidence\.sources\)/);
   assert.match(main, /Person 출처/);
 });
 
