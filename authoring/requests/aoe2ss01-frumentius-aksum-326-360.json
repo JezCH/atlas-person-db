@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frumentius:kingdom-of-aksum:bishop:326-360:v1",
+  "person": {
+    "canonical_name_en": "Frumentius",
+    "display_name_ko": "프루멘티우스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Aksum",
+    "display_name_ko": "악숨 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "religious_activity",
+    "role": "Bishop and missionary",
+    "role_display_name_ko": "주교·선교사",
+    "start_year": 326,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 360,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Frumentius became the first bishop associated with Aksum and helped establish Christianity in the kingdom. The consecration is traditionally dated around 326 (some modern summaries give a slightly later range), while older biographical references place his death around 360. ATLAS therefore records a deliberately approximate 326–360 religious-activity interval rather than false exact episcopal boundaries."
+  },
+  "sources": [
+    {
+      "title": "Frumentius — Encyclopaedia Britannica, 11th ed. (Wikisource)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Frumentius",
+      "citation_text": "The reference identifies Frumentius as founder of the Abyssinian church, says he gained influence at Axum, and dates his episcopal consecration to 326 and his life approximately to c.300-c.360.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Aksum — Britannica",
+      "canonical_url": "https://www.britannica.com/place/Aksum-ancient-kingdom-Africa",
+      "citation_text": "Britannica describes Aksum as the major northeastern African kingdom of the early Christian era and notes the Christianization of its kings in the fourth century.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-01",
+    "source_review_checkpoint": "#1374 comment 5825498864; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1891-person read-back delta rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
