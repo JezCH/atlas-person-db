@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alauddin-khalji:delhi-sultanate:sultan:1296-1316:v1",
+  "person": {
+    "canonical_name_en": "Alauddin Khalji",
+    "display_name_ko": "알라우딘 할지",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Delhi Sultanate",
+    "display_name_ko": "델리 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1296,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1316,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Alauddin Khalji ruled as Sultan of Delhi from 1296 to 1316. ATLAS reuses the existing Delhi Sultanate polity and records the well-established year-level reign rather than his earlier governorship or campaigns."
+  },
+  "sources": [
+    {
+      "title": "ʿALĀʾ-AL-DĪN ḴALJĪ — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/ala-al-din-mohammad-shah-kalji-sultan-of-delhi-r/",
+      "citation_text": "Iranica identifies Ala al-Din Muhammad Shah Khalji as Sultan of Delhi and gives his reign as 1296–1316.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-01",
+    "source_review_checkpoint": "#1374 comment 5825498864; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1891-person read-back delta rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
