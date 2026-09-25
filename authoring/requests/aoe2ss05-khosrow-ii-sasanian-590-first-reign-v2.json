@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:khosrow-ii:sasanian-empire:shahanshah:590:first:v2",
+  "person": {
+    "canonical_name_en": "Khosrow II",
+    "display_name_ko": "호스로 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-26",
+      "document_title": "호스로 2세",
+      "url": "https://namu.wiki/w/%ED%98%B8%EC%8A%A4%EB%A1%9C%202%EC%84%B8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Sasanian Empire",
+    "display_name_ko": "사산 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Shahanshah",
+    "role_display_name_ko": "샤한샤",
+    "start_year": 590,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 590,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Khosrow II first acceded in 590 but lost the throne during Bahrām Chōbin's usurpation. ATLAS preserves this first reign as a separate 590 Activity rather than merging the interruption into a continuous 590–628 rail."
+  },
+  "sources": [
+    {
+      "title": "Encyclopaedia Iranica — ḴOSROW II",
+      "citation_text": "Encyclopaedia Iranica identifies Khosrow II as Sasanian king and describes his loss and recovery of the throne after the 590 accession.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Encyclopaedia Iranica — Chronology of Iranian History, Part 1",
+      "citation_text": "Iranica's chronology records Khosrow II's accession in 590, Bahrām Chōbin's seizure of power in 590, and Khosrow's restoration in 591.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260926-microbatch-05-khosrow-source-repair",
+    "source_review_checkpoint": "#1374 comment 5825499804; #1375 comment 5835006903; Authoring Apply 36157081642",
+    "dedup_method": "Original MICROBATCH-05 Khosrow manifests were BLOCKED before write by HUMAN_AUTHORING_SOURCE_CANONICAL_URL_AMBIGUOUS:2 because the cited canonical URL already resolves to multiple Production Source rows. These v2 manifests preserve the same reviewed chronology and evidence as URL-less bibliographic sources, which the registration SOP explicitly permits."
+  }
+}
