@@ -7,3 +7,47 @@
 @media(max-width:700px){.polity-review-dataset-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.polity-review-dataset-head{align-items:flex-start;flex-direction:column}.polity-review-person-list{max-height:210px}}
 
 .atlas-polity-composite-shell{display:grid;gap:20px}.atlas-polity-review-section{padding-top:4px}.atlas-polity-review-section::before{content:"";display:block;height:1px;background:#dfe4eb;margin:2px 0 18px}
+
+.polity-dossier{display:grid;gap:14px}
+.polity-dossier-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.polity-dossier-overview>div{display:grid;gap:4px;padding:10px;border:1px solid #e6eaf0;border-radius:9px;background:#fff}
+.polity-dossier-overview small{font-size:9px;font-weight:900;color:#7d8798}
+.polity-dossier-overview strong{font-size:14px;color:#263044;overflow-wrap:anywhere}
+.polity-dossier-section{display:grid;gap:9px;padding-top:2px}
+.polity-dossier-section+.polity-dossier-section{padding-top:12px;border-top:1px solid #e7eaf0}
+.polity-dossier-section-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.polity-dossier-section-head>div{display:grid;gap:2px}
+.polity-dossier-section-head small{font-size:9px;font-weight:900;letter-spacing:.05em;color:#8a93a3}
+.polity-dossier-section-head h4{margin:0;font-size:13px;color:#344054}
+.polity-dossier-section-head p{max-width:520px;margin:0;color:#7d8798;font-size:9px;line-height:1.45;text-align:right}
+.polity-dossier-identity{display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:7px}
+.polity-dossier-identity>span{display:grid;gap:4px;padding:8px;border:1px solid #e8ebf1;border-radius:8px;background:#fff}
+.polity-dossier-identity small{font-size:8px;font-weight:900;color:#818a9b}
+.polity-dossier-identity code,.polity-dossier-identity b{font-size:10px;overflow-wrap:anywhere}
+.polity-dossier-name-list{display:flex;flex-wrap:wrap;gap:6px}
+.polity-dossier-name-list>span{display:grid;gap:2px;padding:6px 8px;border-radius:8px;background:#f2f4f7}
+.polity-dossier-name-list b{font-size:10px}
+.polity-dossier-name-list small{font-size:8px;color:#7d8798}
+.polity-dossier-designations{display:grid;gap:6px}
+.polity-dossier-designations article{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:8px 9px;border:1px solid #e8ebf1;border-radius:8px;background:#fff}
+.polity-dossier-designations article>div{display:grid;gap:2px;min-width:0}
+.polity-dossier-designations strong{font-size:11px;overflow-wrap:anywhere}
+.polity-dossier-designations small{font-size:8px;color:#7d8798}
+.polity-dossier-designations article>span{font-size:9px;color:#667085;white-space:nowrap}
+.polity-dossier-people{display:grid;gap:7px}
+.polity-dossier-person{border:1px solid #e5e9ef;border-radius:9px;background:#fff;overflow:hidden}
+.polity-dossier-person>header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 9px;background:#fafbfc}
+.polity-dossier-person>header button{display:grid;gap:2px;min-height:44px;padding:3px 0;border:0;background:transparent;text-align:left;cursor:pointer;color:inherit}
+.polity-dossier-person>header button:hover strong{text-decoration:underline}
+.polity-dossier-person>header button:focus-visible{outline:2px solid #6d78df;outline-offset:2px}
+.polity-dossier-person>header strong{font-size:11px}
+.polity-dossier-person>header small{font-size:7px;color:#98a2b3;overflow-wrap:anywhere}
+.polity-dossier-person>header>span{font-size:9px;color:#667085;text-align:right}
+.polity-dossier-person ul{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.polity-dossier-person li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:10px;padding:7px 9px;border-top:1px solid #edf0f4}
+.polity-dossier-person li b{font-size:9px;color:#465168}
+.polity-dossier-person li span{font-size:9px;color:#667085;line-height:1.45;overflow-wrap:anywhere}
+.polity-dossier-empty{margin:0;padding:8px 9px;border-radius:8px;background:#f7f8fa;color:#8a93a3;font-size:10px}
+@media(max-width:900px){.polity-dossier-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.polity-dossier-identity{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.polity-dossier-section-head{display:grid}.polity-dossier-section-head p{text-align:left}.polity-dossier-designations article{grid-template-columns:1fr}.polity-dossier-designations article>span{white-space:normal}.polity-dossier-person>header{align-items:flex-start;display:grid}.polity-dossier-person>header>span{text-align:left}.polity-dossier-person li{grid-template-columns:1fr}}
+@media(max-width:520px){.polity-dossier-overview,.polity-dossier-identity{grid-template-columns:1fr}.polity-dossier-person>header button{min-height:44px}}

@@ -9,6 +9,7 @@ const review = fs.readFileSync(new URL('../atlas-polity-review-panel.js', import
 const css = fs.readFileSync(new URL('../atlas-polity-review-workbench.css', import.meta.url), 'utf8');
 const reader = fs.readFileSync(new URL('../atlas-polity-browser-reader.js', import.meta.url), 'utf8');
 const nav = fs.readFileSync(new URL('../atlas-main-authority-nav.js', import.meta.url), 'utf8');
+const dossier = fs.readFileSync(new URL('../atlas-polity-dossier-view.js', import.meta.url), 'utf8');
 
 const registryContext = { window:{} };
 vm.runInNewContext(candidates, registryContext);
@@ -25,17 +26,20 @@ test('Polities main surface keeps canonical listing first and restores identity 
   assert.match(nav, /views\?\.review\?\.mount/);
 });
 
-test('canonical Polity listing stays live and compact', () => {
+test('canonical Polity listing stays live while expanded rows render a first-class dossier', () => {
   assert.match(browser, /ATLAS_POLITY_BROWSER_READER/);
+  assert.match(browser, /ATLAS_POLITY_DOSSIER_VIEW/);
   assert.match(browser, /READER\.listPolities\(\)/);
   assert.match(browser, /payload\.polities/);
   assert.match(browser, /CANONICAL POLITY BROWSER/);
   assert.match(browser, /PAGE_SIZE = 12/);
   assert.match(browser, /data-polity-load-more/);
   assert.match(browser, /첫 화면은 12개만 표시/);
-  assert.match(browser, /preferred_name_ko/);
-  assert.match(browser, /canonical_name_en/);
-  assert.match(browser, /polity_designation_name_ko/);
+  assert.match(browser, /dossierRenderer\.dossierHtml\(polity\)/);
+  assert.match(dossier, /정치체 식별 정보/);
+  assert.match(dossier, /Activity에서 관측된 시대 명칭/);
+  assert.match(dossier, /명칭 자체의 존속기간이 아니라/);
+  assert.match(dossier, /동일 인물의 여러 Activity를 한 묶음/);
   assert.match(reader, /\/api\/atlas-polity-read/);
   assert.match(reader, /cache: "no-store"/);
 });
@@ -103,6 +107,19 @@ test('restored registry does not revive known stale Northern Yuan or Israel stat
   assert.match(candidates, /PRODUCTION_APPLIED_SPLIT/);
   assert.match(review, /후속 검토로 폐기 · 별도 유지/);
   assert.match(review, /Production 분리 반영 완료/);
+});
+
+test('Polity Atlas loads dossier before the browser and routes connected Persons through canonical deep links', () => {
+  const dossierIndex=nav.indexOf('atlas-polity-dossier-view.js');
+  const browserIndex=nav.indexOf('atlas-polity-review-workbench.js');
+  assert.ok(dossierIndex >= 0 && browserIndex > dossierIndex);
+  assert.match(nav, /ATLAS_POLITY_DOSSIER_VIEW/);
+  assert.match(browser, /data-polity-person-id/);
+  assert.match(browser, /ATLAS_MAIN_AUTHORITY_NAV\?\.showEntity\?\.\("persons","person",personId\)/);
+  assert.match(css, /polity-dossier-overview/);
+  assert.match(css, /polity-dossier-designations/);
+  assert.match(css, /polity-dossier-person/);
+  assert.match(css, /min-height:44px/);
 });
 
 test('combined polity browser and review layout remains responsive', () => {
