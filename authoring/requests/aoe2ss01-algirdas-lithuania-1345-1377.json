@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:algirdas:grand-duchy-lithuania:grand-duke:1345-1377:v1",
+  "person": {
+    "canonical_name_en": "Algirdas",
+    "display_name_ko": "알기르다스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-25",
+      "reason": "External indexed NamuWiki review returned no usable exact-person result for this registration microbatch; no unverified not_found status or guessed URL is recorded.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Grand Duchy of Lithuania",
+    "display_name_ko": "리투아니아 대공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Duke",
+    "role_display_name_ko": "대공",
+    "start_year": 1345,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1377,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Algirdas became Grand Duke of Lithuania in 1345 and ruled until his death in 1377, expanding the grand duchy substantially eastward. ATLAS reuses the existing Grand Duchy of Lithuania polity and records the established 1345–1377 reign."
+  },
+  "sources": [
+    {
+      "title": "Olgierd — Encyclopaedia Britannica, 11th ed. (Wikisource)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Olgierd",
+      "citation_text": "The Britannica entry identifies Algirdas (Olgierd) as Grand Duke of Lithuania and gives his reign as 1345–1377.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Algirdas",
+      "canonical_url": "https://en.wikipedia.org/wiki/Algirdas",
+      "citation_text": "The biographical entry gives Algirdas's tenure as Grand Duke of Lithuania from 1345 to 1377 and records Kestutis as his co-ruling brother.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "review_context": {
+    "request_batch": "aoe2-ai-ss-20260925-microbatch-01",
+    "source_review_checkpoint": "#1374 comment 5825498864; #1375 comment 5825503112",
+    "dedup_method": "completed identity-aware Production dedup preserved; immediate Production 1891-person read-back delta rechecked before authoring; exact-name-only matching forbidden"
+  }
+}
