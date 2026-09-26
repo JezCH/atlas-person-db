@@ -70,6 +70,9 @@
       canonical_key: value("personCanonicalKey") || null,
       person_type: value("personType") || "historical",
       historicity: value("personHistoricity") || "historical",
+      life_status: value("personLifeStatus") || null,
+      life_status_checked_at: value("personLifeStatusCheckedAt") || null,
+      life_status_basis: value("personLifeStatusBasis") || null,
       allow_display_name_collision: checked("personAllowKoCollision")
     }, event.submitter);
   });
@@ -115,6 +118,10 @@
       <div class="panel-head"><div><p class="status-label">NORMAL AUTHORING · STAGE 2 NATIVE</p><h2 id="human-authoring-title">일반 신규 인물 등록</h2><p>UUID나 JSON을 입력하지 않습니다. 기존 Person·Polity·Role·Source는 정확한 live identity가 있으면 재사용하고, 없으면 같은 트랜잭션 안에서 생성합니다. 신규 Person 또는 나무위키 미검토 Person만 나무위키 판정이 필요하며, 이미 검토된 기존 Person은 비워두면 서버가 기존 값을 재사용합니다.</p></div></div>
       <form id="humanAuthoringForm" class="identity-form">
         <div class="identity-two"><label>인물 영문명<input id="humanPersonEn" required /></label><label>인물 한국어명 <small>신규 Person 생성 시 필수</small><input id="humanPersonKo" /></label></div>
+        <h3>생존 상태 검토</h3>
+        <div class="identity-two"><label>생존 상태<select id="humanLifeStatus"><option value="">기존 Person 재사용 시 생략 가능</option><option value="deceased">사망 확인됨 · deceased</option></select></label><label>검토일<input id="humanLifeStatusCheckedAt" type="date" /></label></div>
+        <label>판정 근거<select id="humanLifeStatusBasis"><option value="">선택</option><option value="documented_death">문헌·공식 기록으로 사망 확인</option><option value="historical_certainty">역사적 연대상 사망이 확실</option></select></label>
+        <p class="identity-help">새 Person은 반드시 deceased 판정이 있어야 합니다. 현재 생존자는 직책·분야와 무관하게 제외하며, 활동 종료연도·ongoing 여부·대표 활동연도는 생존 판정에 사용하지 않습니다.</p>
         <div class="identity-two"><label>정치체 영문명<input id="humanPolityEn" required /></label><label>정치체 한국어명 <small>신규 Polity 생성 시 필수</small><input id="humanPolityKo" /></label></div>
         <div class="identity-two"><label>관계<select id="humanRelation" required><option value="">불러오는 중...</option></select></label><label>Period basis<select id="humanPeriodBasis" required><option value="">불러오는 중...</option></select></label></div>
         <div class="identity-two"><label>Role 영문명 <small>역할이 없으면 비움</small><input id="humanRoleEn" placeholder="예: Sultan" /></label><label>Role 한국어명 <small>신규 Role 생성 시 필수</small><input id="humanRoleKo" placeholder="예: 술탄" /></label></div>
@@ -248,6 +255,10 @@
   function friendlyAuthoringError(code, fallback) {
     return ({
       HUMAN_AUTHORING_NEW_PERSON_KO_REQUIRED: "신규 Person 생성에는 한국어명이 필요합니다. 기존 Person 재사용이면 비워둘 수 있습니다.",
+      PERSON_LIVING_EXCLUDED: "현재 생존 인물은 ATLAS Person DB 등록 대상이 아닙니다.",
+      PERSON_LIFE_STATUS_REVIEW_REQUIRED: "신규 Person 생성에는 사망 확인(deceased) 검토가 필요합니다.",
+      PERSON_LIFE_STATUS_CHECKED_AT_INVALID: "생존 상태 검토일이 올바르지 않습니다.",
+      PERSON_LIFE_STATUS_BASIS_INVALID: "생존 상태 판정 근거는 documented_death 또는 historical_certainty여야 합니다.",
       HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED: "신규 Polity 생성에는 한국어명이 필요합니다. 기존 Polity 재사용이면 비워둘 수 있습니다.",
       HUMAN_AUTHORING_NEW_ROLE_KO_REQUIRED: "신규 Role 생성에는 한국어명이 필요합니다. 기존 Role 재사용이면 비워둘 수 있습니다.",
       HUMAN_AUTHORING_NAMUWIKI_REQUIRED: "신규 Person 또는 나무위키 미검토 Person은 나무위키 확인 결과가 필요합니다.",
@@ -275,7 +286,13 @@
       const payload = {
         schema: "atlas-human-authoring/v1",
         request_id: requestId(),
-        person: { canonical_name_en: value("humanPersonEn"), display_name_ko: value("humanPersonKo") || null },
+        person: {
+          canonical_name_en: value("humanPersonEn"),
+          display_name_ko: value("humanPersonKo") || null,
+          life_status: value("humanLifeStatus") || null,
+          life_status_checked_at: value("humanLifeStatusCheckedAt") || null,
+          life_status_basis: value("humanLifeStatusBasis") || null
+        },
         polity: { canonical_name_en: value("humanPolityEn"), display_name_ko: value("humanPolityKo") || null },
         activity: {
           relation_type: value("humanRelation"),
