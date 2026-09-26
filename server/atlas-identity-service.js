@@ -18,6 +18,31 @@ function sameText(left, right) {
   return String(left ?? "") === String(right ?? "");
 }
 
+const PERSON_LIFE_STATUS_BASES = new Set(["documented_death", "historical_certainty"]);
+
+function validIsoDate(value) {
+  const text = normalizeExact(value);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return false;
+  const parsed = new Date(`${text}T00:00:00Z`);
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === text;
+}
+
+function normalizePersonLifeStatusReview(raw) {
+  const lifeStatus = normalizeExact(raw?.life_status).toLowerCase();
+  const checkedAt = normalizeExact(raw?.life_status_checked_at);
+  const basis = normalizeExact(raw?.life_status_basis).toLowerCase();
+  if (!lifeStatus && !checkedAt && !basis) return null;
+  if (lifeStatus === "living") throw new Error("PERSON_LIVING_EXCLUDED");
+  if (lifeStatus !== "deceased") throw new Error("PERSON_LIFE_STATUS_REVIEW_REQUIRED");
+  if (!validIsoDate(checkedAt)) throw new Error("PERSON_LIFE_STATUS_CHECKED_AT_INVALID");
+  if (!PERSON_LIFE_STATUS_BASES.has(basis)) throw new Error("PERSON_LIFE_STATUS_BASIS_INVALID");
+  return Object.freeze({
+    life_status:"deceased",
+    life_status_checked_at:checkedAt,
+    life_status_basis:basis
+  });
+}
+
 async function advisoryLocks(client, keys) {
   const ordered = [...new Set(keys.map((key) => normalizeExact(key)).filter(Boolean))].sort();
   for (const key of ordered) {
@@ -43,6 +68,7 @@ async function createPerson(client, raw) {
   const canonicalName = required(raw?.canonical_name_en, "canonical_name_en");
   const displayName = required(raw?.display_name_ko, "display_name_ko");
   const canonicalKey = normalizeExact(raw?.canonical_key) || canonicalName;
+  const lifeStatusReview = normalizePersonLifeStatusReview(raw);
   const personType = normalizeExact(raw?.person_type) || "historical";
   const historicity = normalizeExact(raw?.historicity) || "historical";
   const allowDisplayCollision = boolean(raw?.allow_display_name_collision);
@@ -80,6 +106,8 @@ async function createPerson(client, raw) {
     throw new Error("PERSON_DISPLAY_NAME_COLLISION_REVIEW_REQUIRED");
   }
 
+  if (!lifeStatusReview) throw new Error("PERSON_LIFE_STATUS_REVIEW_REQUIRED");
+
   const inserted = await client.query(
     `insert into atlas_v2.persons(id,canonical_key,person_type,historicity) values(gen_random_uuid(),$1,$2,$3) returning id`,
     [canonicalKey, personType, historicity]
@@ -92,7 +120,7 @@ async function createPerson(client, raw) {
       (gen_random_uuid(),$1,'ko',$3,'display',true)`,
     [id, canonicalName, displayName]
   );
-  return { entity: "person", id, canonical_key: canonicalKey, replay: false };
+  return { entity: "person", id, canonical_key: canonicalKey, replay: false, life_status_review: lifeStatusReview };
 }
 
 async function createPolity(client, raw) {
@@ -246,6 +274,8 @@ function createIdentityService({ client } = {}) {
 module.exports = Object.freeze({
   createIdentityService,
   normalizeExact,
+  normalizePersonLifeStatusReview,
+  PERSON_LIFE_STATUS_BASES,
   advisoryLocks,
   createPerson,
   createPolity,
