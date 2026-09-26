@@ -26,7 +26,13 @@ function firstRequest() {
   return {
     schema:'atlas-human-authoring/v1',
     request_id:'fixture:human-operational:first',
-    person:{canonical_name_en:'Human Authoring Fixture Person',display_name_ko:'휴먼 저작 픽스처 인물'},
+    person:{
+      canonical_name_en:'Human Authoring Fixture Person',
+      display_name_ko:'휴먼 저작 픽스처 인물',
+      life_status:'deceased',
+      life_status_checked_at:'2026-09-27',
+      life_status_basis:'historical_certainty'
+    },
     polity:{canonical_name_en:'Human Authoring Fixture Polity',display_name_ko:null},
     activity:{
       relation_type:'active_in',
@@ -221,6 +227,7 @@ try {
     live_relation_catalog:true,
     live_period_basis_catalog:true,
     new_person:true,
+    deceased_status_gate:true,
     existing_polity_reused:true,
     existing_role_reused:true,
     new_role_created:true,
