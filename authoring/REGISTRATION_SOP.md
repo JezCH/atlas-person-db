@@ -30,6 +30,10 @@ Every ordinary registration keeps these invariants:
 
 Historically real discontinuities are separate Activities. Never invent an exact year, month, or day merely to satisfy a request contract.
 
+### Living-person exclusion
+
+ATLAS is a historical-person database. A Person who is alive at review time is excluded regardless of current office, retirement status, profession, or whether the stored representative Activity ended in the past. Birth year is only a screening aid, never proof of death. Confirmed living Persons are classified EXCLUDE; confirmed deceased Persons continue through the normal historicity and chronology gates; unresolved living/death status is not registered.
+
 ## 3. Legendary / mythical / unresolved-chronology routing gate
 
 Before ordinary Timeline authoring, decide whether the requested figure belongs on the historical year timeline at all.
