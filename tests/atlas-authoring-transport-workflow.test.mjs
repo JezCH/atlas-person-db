@@ -89,6 +89,18 @@ test('authoring apply verifies Stage 2-native response and preserves evidence', 
   assert.match(workflow, /retention-days: 90/);
 });
 
+test('read-only completeness audit tolerates only audit-neutral Production runtime advances', () => {
+  assert.match(workflow, /git fetch --no-tags --quiet origin main/);
+  assert.match(workflow, /runtime_descendant/);
+  assert.match(workflow, /git merge-base --is-ancestor "\$GITHUB_SHA" "\$runtime_sha"/);
+  assert.match(workflow, /AUTHORING_COMPLETENESS_RUNTIME_AHEAD_UNSAFE/);
+  assert.match(workflow, /path\.startsWith\('authoring\/requests\/'\)/);
+  assert.match(workflow, /path\.startsWith\('server\/'\)/);
+  assert.match(workflow, /path\.startsWith\('api\/'\)/);
+  assert.match(workflow, /path === 'package-lock\.json'/);
+  assert.match(workflow, /Read-only completeness audit accepted a newer Production runtime/);
+});
+
 test('trusted completeness audit uses the pinned authoring workflow and never enters mutation steps', () => {
   assert.match(workflow, /audit_all_approved:/);
   assert.match(workflow, /Preflight every approved human-authoring manifest read-only/);
