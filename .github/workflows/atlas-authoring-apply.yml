@@ -225,22 +225,55 @@ jobs:
                 done < /tmp/atlas-manifests.txt
               fi
             fi
+            if ! git cat-file -e "${runtime_sha}^{commit}" 2>/dev/null; then
+              if [[ "${ATLAS_AUTHORING_AUDIT_ALL_APPROVED:-false}" == "true" ]]; then
+                git fetch --no-tags --quiet origin main
+              fi
+            fi
             git cat-file -e "${runtime_sha}^{commit}" || { echo "Deployed runtime commit is unavailable in checkout: ${runtime_sha}" >&2; exit 1; }
-            git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || { echo "Deployed runtime is not an ancestor of authoring commit" >&2; exit 1; }
-            git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-authoring-evidence/runtime-diff.txt
+
+            runtime_relation=""
+            if git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA"; then
+              runtime_relation="runtime_ancestor"
+              git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-authoring-evidence/runtime-diff.txt
+            elif [[ "${ATLAS_AUTHORING_AUDIT_ALL_APPROVED:-false}" == "true" ]] && git merge-base --is-ancestor "$GITHUB_SHA" "$runtime_sha"; then
+              runtime_relation="runtime_descendant"
+              git diff --name-only --diff-filter=ACDMRTUXB "$GITHUB_SHA" "$runtime_sha" -- > /tmp/atlas-authoring-evidence/runtime-diff.txt
+            else
+              echo "Deployed runtime and authoring commit are not on an allowed ancestry path." >&2
+              exit 1
+            fi
 
             set +e
-            node --input-type=module <<'NODE'
+            ATLAS_RUNTIME_RELATION="$runtime_relation" node --input-type=module <<'NODE'
           import fs from 'node:fs';
           import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
           const text = fs.readFileSync('/tmp/atlas-authoring-evidence/runtime-diff.txt', 'utf8').trim();
           const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
-          if (shouldBuildForChangedPaths(paths)) {
-            console.error('AUTHORING_RUNTIME_CODE_DRIFT: deployment-relevant changes still exist after the deployed runtime SHA');
-            for (const path of paths) console.error(`  ${path}`);
-            process.exit(1);
+          if (process.env.ATLAS_RUNTIME_RELATION === 'runtime_descendant') {
+            const critical = paths.filter((path) =>
+              path === '.github/workflows/atlas-authoring-apply.yml'
+              || path.startsWith('authoring/requests/')
+              || path.startsWith('server/')
+              || path.startsWith('api/')
+              || path === 'package.json'
+              || path === 'package-lock.json'
+              || path === 'vercel.json'
+            );
+            if (critical.length) {
+              console.error('AUTHORING_COMPLETENESS_RUNTIME_AHEAD_UNSAFE');
+              for (const path of critical) console.error(`  ${path}`);
+              process.exit(1);
+            }
+            console.log(`Read-only completeness audit accepted a newer Production runtime with ${paths.length} audit-neutral path${paths.length === 1 ? '' : 's'}.`);
+          } else {
+            if (shouldBuildForChangedPaths(paths)) {
+              console.error('AUTHORING_RUNTIME_CODE_DRIFT: deployment-relevant changes still exist after the deployed runtime SHA');
+              for (const path of paths) console.error(`  ${path}`);
+              process.exit(1);
+            }
+            console.log(`Authoring delta is deployment-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
           }
-          console.log(`Authoring delta is deployment-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
           NODE
             drift_status=$?
             set -e
@@ -451,22 +484,52 @@ jobs:
               and .readiness.p9.duplicate_groups==0
             ' "$readiness" >/dev/null
             runtime_sha="$(jq -er '.runtime_sha' "$readiness")"
+            if ! git cat-file -e "${runtime_sha}^{commit}" 2>/dev/null; then
+              git fetch --no-tags --quiet origin main
+            fi
             git cat-file -e "${runtime_sha}^{commit}"
-            git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA"
-            git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > "$audit_dir/runtime-refresh-diff.txt"
-            node --input-type=module <<'NODE'
+
+            runtime_relation=""
+            if git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA"; then
+              runtime_relation="runtime_ancestor"
+              git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > "$audit_dir/runtime-refresh-diff.txt"
+            elif git merge-base --is-ancestor "$GITHUB_SHA" "$runtime_sha"; then
+              runtime_relation="runtime_descendant"
+              git diff --name-only --diff-filter=ACDMRTUXB "$GITHUB_SHA" "$runtime_sha" -- > "$audit_dir/runtime-refresh-diff.txt"
+            else
+              echo "Completeness runtime and audit commit diverged." >&2
+              return 1
+            fi
+
+            ATLAS_RUNTIME_RELATION="$runtime_relation" node --input-type=module <<'NODE'
           import fs from 'node:fs';
           import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
           const text = fs.readFileSync('/tmp/atlas-authoring-evidence/completeness/runtime-refresh-diff.txt', 'utf8').trim();
           const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
-          if (shouldBuildForChangedPaths(paths)) {
+          if (process.env.ATLAS_RUNTIME_RELATION === 'runtime_descendant') {
+            const critical = paths.filter((path) =>
+              path === '.github/workflows/atlas-authoring-apply.yml'
+              || path.startsWith('authoring/requests/')
+              || path.startsWith('server/')
+              || path.startsWith('api/')
+              || path === 'package.json'
+              || path === 'package-lock.json'
+              || path === 'vercel.json'
+            );
+            if (critical.length) {
+              console.error('AUTHORING_COMPLETENESS_RUNTIME_AHEAD_UNSAFE');
+              for (const path of critical) console.error(`  ${path}`);
+              process.exit(1);
+            }
+            console.log(`Completeness audit accepted newer runtime ${process.env.ATLAS_RUNTIME_RELATION} with ${paths.length} audit-neutral path${paths.length === 1 ? '' : 's'}.`);
+          } else if (shouldBuildForChangedPaths(paths)) {
             console.error('AUTHORING_COMPLETENESS_RUNTIME_CODE_DRIFT');
             for (const path of paths) console.error(`  ${path}`);
             process.exit(1);
           }
           NODE
             current_runtime_sha="$runtime_sha"
-            echo "Refreshed completeness runtime SHA: ${current_runtime_sha}" >&2
+            echo "Refreshed completeness runtime SHA: ${current_runtime_sha} (${runtime_relation})" >&2
           }
 
           batch_index=0
