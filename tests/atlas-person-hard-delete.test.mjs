@@ -26,6 +26,7 @@ function verificationRow(overrides = {}) {
     portraits: 0,
     portrait_sources: 0,
     activities: 0,
+    runtime_activities: 0,
     people_affiliations: 0,
     event_participations: 0,
     authoring_person_refs: 0,
@@ -35,7 +36,7 @@ function verificationRow(overrides = {}) {
   };
 }
 
-function createFakeClient({ personExists = true, verification = verificationRow(), requirementLedgerPresent = true } = {}) {
+function createFakeClient({ personExists = true, verification = verificationRow(), requirementLedgerPresent = true, runtimeProjectionPresent = true } = {}) {
   const calls = [];
   return {
     calls,
@@ -45,7 +46,14 @@ function createFakeClient({ personExists = true, verification = verificationRow(
 
       if (text.startsWith('begin ') || text === 'commit' || text === 'rollback') return { rowCount: 0, rows: [] };
       if (text.startsWith('select to_regclass')) {
-        return { rowCount: 1, rows: [{ relation: requirementLedgerPresent ? 'atlas_v2.person_duplicate_revalidation_requirements' : null }] };
+        const regclass = String(params[0] || '');
+        if (regclass === 'atlas_v2.person_duplicate_revalidation_requirements') {
+          return { rowCount: 1, rows: [{ relation: requirementLedgerPresent ? regclass : null }] };
+        }
+        if (regclass === 'atlas_v2.runtime_person_politics_v1') {
+          return { rowCount: 1, rows: [{ relation: runtimeProjectionPresent ? regclass : null }] };
+        }
+        return { rowCount: 1, rows: [{ relation: null }] };
       }
       if (text.includes('as active_duplicate_candidates')) return { rowCount: 1, rows: [verification] };
       if (text.startsWith('select count(*)::int as source_count from atlas_v2.person_portrait_sources')) {
@@ -169,6 +177,7 @@ test('successful Person hard-delete removes live references, stales only target 
     'delete from atlas_v2.relationship_descriptions',
     'delete from atlas_v2.person_people_affiliation_sources',
     'delete from atlas_v2.person_event_participation_sources',
+    'delete from atlas_v2.runtime_person_politics_v1',
     'delete from atlas_v2.person_politics_v2',
     'delete from atlas_v2.person_people_affiliations',
     'delete from atlas_v2.person_event_participations',
@@ -179,6 +188,10 @@ test('successful Person hard-delete removes live references, stales only target 
     'delete from atlas_v2.person_names',
     'delete from atlas_v2.persons'
   ]) assert.ok(sql.some((text) => text.startsWith(expected)), `missing ${expected}`);
+
+  const runtimeDeleteIndex = sql.findIndex((text) => text.startsWith('delete from atlas_v2.runtime_person_politics_v1'));
+  const personDeleteIndex = sql.findIndex((text) => text.startsWith('delete from atlas_v2.persons'));
+  assert.ok(runtimeDeleteIndex >= 0 && runtimeDeleteIndex < personDeleteIndex, 'runtime projection must be deleted before Person FK target');
 
   assert.ok(sql.some((text) => text.startsWith('update atlas_v2.person_duplicate_candidates') && text.includes("candidate_state='stale'")));
   assert.ok(sql.some((text) => text.includes('person_duplicate_revalidation_requirements') && text.startsWith('update ')));

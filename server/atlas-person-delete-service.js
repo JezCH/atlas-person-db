@@ -48,12 +48,18 @@ async function tablePresent(client, regclass) {
   return Boolean(result.rows[0]?.relation);
 }
 
-async function verifyNoLiveReferences(client, personId, { requirementLedgerPresent = null } = {}) {
+async function verifyNoLiveReferences(client, personId, { requirementLedgerPresent = null, runtimeProjectionPresent = null } = {}) {
   const hasRequirementLedger = requirementLedgerPresent == null
     ? await tablePresent(client, "atlas_v2.person_duplicate_revalidation_requirements")
     : Boolean(requirementLedgerPresent);
+  const hasRuntimeProjection = runtimeProjectionPresent == null
+    ? await tablePresent(client, "atlas_v2.runtime_person_politics_v1")
+    : Boolean(runtimeProjectionPresent);
   const requirementCountSql = hasRequirementLedger
     ? `(select count(*)::int from atlas_v2.person_duplicate_revalidation_requirements where requirement_state='ACTIVE' and (person_low_id=$1 or person_high_id=$1))`
+    : `0::int`;
+  const runtimeActivityCountSql = hasRuntimeProjection
+    ? `(select count(*)::int from atlas_v2.runtime_person_politics_v1 where person_id=$1)`
     : `0::int`;
   const result = await client.query(`
     select
@@ -65,6 +71,7 @@ async function verifyNoLiveReferences(client, personId, { requirementLedgerPrese
       (select count(*)::int from atlas_v2.person_portraits where person_id=$1) as portraits,
       (select count(*)::int from atlas_v2.person_portrait_sources where person_id=$1) as portrait_sources,
       (select count(*)::int from atlas_v2.person_politics_v2 where person_id=$1) as activities,
+      ${runtimeActivityCountSql} as runtime_activities,
       (select count(*)::int from atlas_v2.person_people_affiliations where person_id=$1) as people_affiliations,
       (select count(*)::int from atlas_v2.person_event_participations where person_id=$1) as event_participations,
       (select count(*)::int from atlas_v2.authoring_manifest_runs where person_id=$1) as authoring_person_refs,
@@ -98,6 +105,7 @@ function createPersonDeleteService({
       // the target Person contains malformed/non-semantic Activity data, so it must not
       // depend on global P10 semantic readiness or a full duplicate-frontier rebuild.
       const requirementLedgerPresent = await tablePresent(client, "atlas_v2.person_duplicate_revalidation_requirements");
+      const runtimeProjectionPresent = await tablePresent(client, "atlas_v2.runtime_person_politics_v1");
       await frontierLock(client);
 
       const person = await client.query(`
@@ -132,6 +140,9 @@ function createPersonDeleteService({
         deleted.authoring_relationship_refs_cleared = 0;
       }
 
+      deleted.runtime_activities = runtimeProjectionPresent
+        ? (await client.query(`delete from atlas_v2.runtime_person_politics_v1 where person_id=$1 returning id`, [personId])).rowCount
+        : 0;
       deleted.activities = (await client.query(`delete from atlas_v2.person_politics_v2 where person_id=$1 returning id`, [personId])).rowCount;
       deleted.people_affiliations = (await client.query(`delete from atlas_v2.person_people_affiliations where person_id=$1 returning id`, [personId])).rowCount;
       deleted.event_participations = (await client.query(`delete from atlas_v2.person_event_participations where person_id=$1 returning id`, [personId])).rowCount;
@@ -165,7 +176,7 @@ function createPersonDeleteService({
       if (personDelete.rowCount !== 1) throw new Error("Person delete did not affect exactly one row");
       deleted.persons = personDelete.rowCount;
 
-      const verification = await verifyNoLiveReferences(client, personId, { requirementLedgerPresent });
+      const verification = await verifyNoLiveReferences(client, personId, { requirementLedgerPresent, runtimeProjectionPresent });
       if (!verification.match) {
         const error = new Error(`PERSON_DELETE_VERIFICATION_FAILED:${JSON.stringify(verification.counts)}`);
         error.code = "PERSON_DELETE_VERIFICATION_FAILED";
