@@ -64,7 +64,7 @@ test('Source URL is optional and selects the bibliographic source type without f
 });
 
 test('normal registration submits one semantic request and session expiry protects the route',()=>{
-  assert.match(ui,/person:\s*\{ canonical_name_en:/);
+  assert.match(ui,/person:\s*\{[\s\S]*canonical_name_en:\s*value\("humanPersonEn"\)/);
   assert.match(ui,/polity:\s*\{ canonical_name_en:/);
   assert.match(ui,/relation_type:\s*value\("humanRelation"\)/);
   assert.match(ui,/period_basis:\s*value\("humanPeriodBasis"\)/);
