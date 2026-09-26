@@ -1,7 +1,7 @@
 {
   "schema": "atlas-namuwiki-reviewed-not-found-reasons/v1",
   "issue": 820,
-  "snapshot_date": "2026-09-26",
+  "snapshot_date": "2026-09-27",
   "note": "Conservative reason backfill derived only from explicit Issue #820 review dispositions. Absence of an entry means the reviewed not_found reason is not durably classified here.",
   "categories": {
     "no_exact_document": "Exhaustive review found no independent exact historical Person document.",
@@ -11,8 +11,8 @@
   },
   "counts": {
     "exact_target_url_pending": 84,
-    "related_or_derivative_only": 135,
-    "no_exact_document": 119,
+    "related_or_derivative_only": 139,
+    "no_exact_document": 121,
     "exact_target_url_verified": 43
   },
   "by_person_id": {
@@ -39,6 +39,7 @@
     "09948493-40e6-41f6-b60d-bcfe16adca41": "exact_target_url_pending",
     "09b544e3-7721-4c28-b045-d9bb943396e4": "exact_target_url_pending",
     "0a20335c-36fc-42b3-a236-6a83e235b4a8": "no_exact_document",
+    "0aa1e5a3-b54b-48ba-a526-e10cfc862012": "related_or_derivative_only",
     "0b882eae-86cb-43d1-8e84-2c812741f4fe": "related_or_derivative_only",
     "0c6e53ee-e72e-49d4-b993-66d72e0e5df9": "no_exact_document",
     "0cd8351b-eac5-4fd6-b1f5-ae3f7a209e5b": "no_exact_document",
@@ -46,12 +47,17 @@
     "0d8e8256-e887-4212-9332-a3f56232ca75": "related_or_derivative_only",
     "0db46050-17ae-4244-ad3e-7996145ea974": "exact_target_url_pending",
     "0e02521a-d50e-4557-a1f0-3a654d1da725": "related_or_derivative_only",
+    "0e3ede84-868c-4bef-a6cd-8191e47ae760": "no_exact_document",
     "0e43ecd9-3c83-4601-a4a9-96c8c080c817": "related_or_derivative_only",
     "0e77ec0e-5d06-4e4f-83fa-9745d7e48283": "exact_target_url_pending",
     "0eaefba8-d1d7-48e6-8b62-206ab394c2bc": "no_exact_document",
+    "0f0b6b0f-b3b6-40b3-806f-2098adbf3575": "no_exact_document",
     "0f264e75-6d6d-424a-81ac-df14f1519281": "no_exact_document",
+    "0fe2761a-d0b6-5428-b732-8c93d80e1b0d": "related_or_derivative_only",
     "1034c034-a3e1-4cc8-a9c4-bf1f6bc4f1f6": "related_or_derivative_only",
     "10735ebb-cf45-4c20-b8ab-9476198f79db": "related_or_derivative_only",
+    "11e18bc5-9e37-4e26-9241-5470be2921e7": "related_or_derivative_only",
+    "127949b3-34e4-4870-b963-015b6442e5e2": "related_or_derivative_only",
     "1374216c-7c38-4b16-b965-875ebd0ad80c": "no_exact_document",
     "1477034f-f4fe-4a5d-9c43-08bc3507450a": "no_exact_document",
     "14ff6356-e481-4b9b-a562-1f55b2c7cb7e": "related_or_derivative_only",
