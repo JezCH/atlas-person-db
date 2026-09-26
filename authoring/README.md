@@ -15,6 +15,8 @@ The repository currently supports **two intentional authoring manifest families*
 
 The `ATLAS Authoring Apply` workflow explicitly accepts both current families. For ordinary historical-Person registration, **follow `REGISTRATION_SOP.md` rather than converting a Human Authoring request into a UUID-bound v2 manifest merely because this README documents the native contract below.**
 
+All new Person identities are also governed by `LIVING_PERSON_POLICY.md`: currently living people are excluded, and a new Person manifest must carry a reviewed `deceased` life-status attestation. Activity dates, ongoing state, office status, representative year, and birth-year cutoffs are not substitutes for current life-status review.
+
 ### Stage 2-native v2 contract
 
 A v2 manifest always declares the Person and Activity. It may declare a new Polity and/or Role identity, or bind existing normalized UUIDs.
@@ -32,6 +34,9 @@ Example shape:
     "canonical_key": null,
     "person_type": "historical",
     "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-27",
+    "life_status_basis": "documented_death",
     "allow_display_name_collision": false
   },
   "polity_identity": {
