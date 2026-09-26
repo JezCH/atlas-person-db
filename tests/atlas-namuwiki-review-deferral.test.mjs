@@ -17,7 +17,12 @@ const deferral = {
 function candidate() {
   return {
     schema:'atlas-human-authoring/v1', review_status:'approved',
-    person:{canonical_name_en:'Example Person'},
+    person:{
+      canonical_name_en:'Example Person',
+      life_status:'deceased',
+      life_status_checked_at:'2026-09-27',
+      life_status_basis:'historical_certainty'
+    },
     polity:{canonical_name_en:'Example Polity'},
     activity:{relation_type:'active_in',period_basis:'general_activity',start_year:1900,end_year:1901,start_certainty:'exact',end_certainty:'exact',confidence:'well_established'},
     sources:[{title:'Reviewed historical evidence'}]
