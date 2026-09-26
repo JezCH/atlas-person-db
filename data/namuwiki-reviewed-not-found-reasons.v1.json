@@ -1,7 +1,7 @@
 {
   "schema": "atlas-namuwiki-reviewed-not-found-reasons/v1",
   "issue": 820,
-  "snapshot_date": "2026-09-25",
+  "snapshot_date": "2026-09-26",
   "note": "Conservative reason backfill derived only from explicit Issue #820 review dispositions. Absence of an entry means the reviewed not_found reason is not durably classified here.",
   "categories": {
     "no_exact_document": "Exhaustive review found no independent exact historical Person document.",
@@ -10,16 +10,22 @@
     "exact_target_url_verified": "An exact Person target and canonical URL were verified/write-ready, but the current row may still be not_found until linking is applied."
   },
   "counts": {
-    "exact_target_url_pending": 81,
+    "exact_target_url_pending": 83,
     "related_or_derivative_only": 133,
-    "no_exact_document": 112,
+    "no_exact_document": 116,
     "exact_target_url_verified": 43
   },
   "by_person_id": {
     "013b98d1-fe18-4974-996d-ddf491f6cbf6": "exact_target_url_pending",
+    "013ba1f0-52e0-484c-9f06-54cf08af663b": "exact_target_url_pending",
+    "015bf9be-c853-4c27-922a-c502d3839af2": "exact_target_url_pending",
     "01abbb6c-8bdd-44a1-b77a-cc23f89c14cd": "exact_target_url_pending",
     "0248f30d-4fc2-461c-8a7c-48adce612cb1": "related_or_derivative_only",
+    "0275b86d-5324-495b-8f97-f4cfbd8e7e50": "no_exact_document",
+    "0483a99e-5050-4010-ac96-99b9a6c856e8": "no_exact_document",
     "0489eda1-b9bb-4240-be8d-7b0e158b4e0e": "related_or_derivative_only",
+    "048d804a-686d-416d-aa23-f379f4bb117d": "no_exact_document",
+    "04dafe82-b93c-4752-9826-6e74a40e4056": "no_exact_document",
     "05ca003b-aea1-4b2c-ae44-6aaaf937a88e": "no_exact_document",
     "07ed4aba-28c5-405d-92c8-aba12b733b33": "related_or_derivative_only",
     "088d326e-0540-493c-86d4-360356197050": "no_exact_document",
