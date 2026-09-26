@@ -35,7 +35,7 @@ concurrency:
 jobs:
   apply:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     environment: production
     env:
       ATLAS_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
@@ -459,6 +459,7 @@ jobs:
           audit_dir="/tmp/atlas-authoring-evidence/completeness"
           : > "$audit_dir/results.jsonl"
           current_runtime_sha="$ATLAS_RUNTIME_SHA"
+          parallel_width=4
 
           request_oidc() {
             curl --fail-with-body --silent --show-error \
@@ -467,7 +468,7 @@ jobs:
           }
 
           refresh_runtime_sha() {
-            local readiness status runtime_sha
+            local readiness status runtime_sha runtime_relation
             readiness="$audit_dir/readiness-refresh.json"
             status="$(curl --silent --show-error --output "$readiness" --write-out '%{http_code}' "$ATLAS_AUTHORING_ENDPOINT")"
             [[ "$status" == "200" ]] || {
@@ -532,58 +533,93 @@ jobs:
             echo "Refreshed completeness runtime SHA: ${current_runtime_sha} (${runtime_relation})" >&2
           }
 
-          batch_index=0
-          for batch in "$audit_dir"/batches/*.json; do
-            [[ -f "$batch" ]] || continue
-            response="$audit_dir/responses/$(printf '%03d' "$batch_index").json"
-            completed=false
+          batches=("$audit_dir"/batches/*.json)
+          [[ -f "${batches[0]:-}" ]] || { echo 'No completeness batches were generated.' >&2; exit 1; }
+
+          for ((wave_start=0; wave_start<${#batches[@]}; wave_start+=parallel_width)); do
+            wave_completed=false
             for attempt in 1 2 3; do
-              oidc_token="$(request_oidc)"
-              payload="$(jq -cn \
-                --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
-                --arg runtime_sha "$current_runtime_sha" \
-                --arg authoring_sha "$GITHUB_SHA" \
-                --slurpfile batch "$batch" \
-                '{operation:"preflight_batch",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_paths:$batch[0].manifest_paths,requests:$batch[0].requests}')"
-              status="$(curl --silent --show-error \
-                --output "$response" \
-                --write-out '%{http_code}' \
-                --request POST \
-                -H 'content-type: application/json' \
-                -H "authorization: Bearer ${oidc_token}" \
-                --data "$payload" \
-                "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
-              code="$(jq -r '.code // ""' "$response" 2>/dev/null || true)"
-              if [[ "$status" == "400" && "$code" == "AUTHORING_RUNTIME_SHA_MISMATCH" && "$attempt" -lt 3 ]]; then
-                echo "Production alias changed during completeness audit; refreshing runtime SHA (attempt ${attempt}/3)." >&2
+              pids=()
+              wave_indexes=()
+              for ((offset=0; offset<parallel_width; offset+=1)); do
+                batch_index=$((wave_start + offset))
+                (( batch_index < ${#batches[@]} )) || break
+                batch="${batches[$batch_index]}"
+                response="$audit_dir/responses/$(printf '%03d' "$batch_index").json"
+                status_file="$audit_dir/responses/$(printf '%03d' "$batch_index").status"
+                oidc_token="$(request_oidc)"
+                payload="$(jq -cn \
+                  --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
+                  --arg runtime_sha "$current_runtime_sha" \
+                  --arg authoring_sha "$GITHUB_SHA" \
+                  --slurpfile batch "$batch" \
+                  '{operation:"preflight_batch",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_paths:$batch[0].manifest_paths,requests:$batch[0].requests}')"
+                (
+                  status="$(curl --silent --show-error \
+                    --output "$response" \
+                    --write-out '%{http_code}' \
+                    --request POST \
+                    -H 'content-type: application/json' \
+                    -H "authorization: Bearer ${oidc_token}" \
+                    --data "$payload" \
+                    "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
+                  printf '%s\n' "$status" > "$status_file"
+                ) &
+                pids+=("$!")
+                wave_indexes+=("$batch_index")
+              done
+
+              worker_failed=false
+              for pid in "${pids[@]}"; do
+                wait "$pid" || worker_failed=true
+              done
+              [[ "$worker_failed" == "false" ]] || { echo "Completeness preflight worker failed in wave ${wave_start}." >&2; exit 1; }
+
+              runtime_mismatch=false
+              for batch_index in "${wave_indexes[@]}"; do
+                response="$audit_dir/responses/$(printf '%03d' "$batch_index").json"
+                status_file="$audit_dir/responses/$(printf '%03d' "$batch_index").status"
+                status="$(cat "$status_file")"
+                code="$(jq -r '.code // ""' "$response" 2>/dev/null || true)"
+                if [[ "$status" == "400" && "$code" == "AUTHORING_RUNTIME_SHA_MISMATCH" ]]; then
+                  runtime_mismatch=true
+                  continue
+                fi
+                [[ "$status" == "200" ]] || {
+                  cat "$response" >&2 || true
+                  echo "Completeness preflight batch ${batch_index} failed: HTTP ${status}, code ${code:-UNKNOWN}" >&2
+                  exit 1
+                }
+              done
+
+              if [[ "$runtime_mismatch" == "true" ]]; then
+                [[ "$attempt" -lt 3 ]] || { echo "Completeness preflight wave ${wave_start} exhausted runtime-race retries." >&2; exit 1; }
+                echo "Production alias changed during completeness audit wave ${wave_start}; refreshing runtime SHA (attempt ${attempt}/3)." >&2
                 refresh_runtime_sha
                 continue
               fi
-              [[ "$status" == "200" ]] || {
-                cat "$response" >&2 || true
-                echo "Completeness preflight batch ${batch_index} failed: HTTP ${status}, code ${code:-UNKNOWN}" >&2
-                exit 1
-              }
-              completed=true
+
+              wave_completed=true
               break
             done
-            [[ "$completed" == "true" ]] || { echo "Completeness preflight batch ${batch_index} exhausted retries." >&2; exit 1; }
+            [[ "$wave_completed" == "true" ]] || { echo "Completeness preflight wave ${wave_start} did not complete." >&2; exit 1; }
 
-            jq -e '
-              .ok==true
-              and .marker=="ATLAS_HUMAN_AUTHORING_BATCH_V1"
-              and .schema=="atlas-human-authoring-batch/v1"
-              and .operation=="preflight_batch"
-              and .committed==false
-              and (.results | type=="array")
-              and (.count == (.results | length))
-              and all(.results[]; .status | IN("READY","ALREADY_PRESENT","BLOCKED"))
-            ' "$response" >/dev/null
-            jq -c '.results[]' "$response" >> "$audit_dir/results.jsonl"
-            batch_index=$((batch_index + 1))
+            for batch_index in "${wave_indexes[@]}"; do
+              response="$audit_dir/responses/$(printf '%03d' "$batch_index").json"
+              jq -e '
+                .ok==true
+                and .marker=="ATLAS_HUMAN_AUTHORING_BATCH_V1"
+                and .schema=="atlas-human-authoring-batch/v1"
+                and .operation=="preflight_batch"
+                and .committed==false
+                and (.results | type=="array")
+                and (.count == (.results | length))
+                and all(.results[]; .status | IN("READY","ALREADY_PRESENT","BLOCKED"))
+              ' "$response" >/dev/null
+              jq -c --arg runtime_sha "$current_runtime_sha" '.results[] + {runtime_sha:$runtime_sha}' "$response" >> "$audit_dir/results.jsonl"
+            done
           done
           echo "ATLAS_COMPLETENESS_RUNTIME_SHA=${current_runtime_sha}" >> "$GITHUB_ENV"
-
       - name: Classify trusted authoring completeness result
         if: env.ATLAS_AUTHORING_AUDIT_ALL_APPROVED == 'true'
         shell: bash
@@ -608,10 +644,12 @@ jobs:
           const ready = results.filter((row) => row.status === 'READY');
           const blocked = results.filter((row) => row.status === 'BLOCKED');
           const resultCountMismatch = results.length !== inventory.approved_human_manifest_count;
+          const runtimeShas = [...new Set(results.map((row) => row.runtime_sha).filter(Boolean))].sort();
           const summary = {
             schema: 'atlas-authoring-completeness-audit/v1',
             authoring_sha: process.env.GITHUB_SHA,
             runtime_sha: process.env.ATLAS_COMPLETENESS_RUNTIME_SHA || process.env.ATLAS_RUNTIME_SHA,
+            runtime_shas: runtimeShas,
             approved_human_manifest_count: inventory.approved_human_manifest_count,
             invalid_manifest_count: inventory.invalid_manifest_count,
             result_count: results.length,

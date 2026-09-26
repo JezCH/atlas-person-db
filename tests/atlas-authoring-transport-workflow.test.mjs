@@ -101,6 +101,19 @@ test('read-only completeness audit tolerates only audit-neutral Production runti
   assert.match(workflow, /Read-only completeness audit accepted a newer Production runtime/);
 });
 
+test('trusted completeness audit runs bounded parallel read-only waves within the workflow timeout', () => {
+  assert.match(workflow, /timeout-minutes:\s*20/);
+  assert.match(workflow, /parallel_width=4/);
+  assert.match(workflow, /wave_start=0/);
+  assert.match(workflow, /pids=\(\)/);
+  assert.match(workflow, /wait "\$pid"/);
+  assert.match(workflow, /runtime_mismatch=true/);
+  assert.match(workflow, /refresh_runtime_sha/);
+  assert.match(workflow, /wave .*exhausted runtime-race retries/);
+  assert.match(workflow, /\.results\[\] \+ \{runtime_sha:\$runtime_sha\}/);
+  assert.match(workflow, /runtime_shas:\s*runtimeShas/);
+});
+
 test('trusted completeness audit uses the pinned authoring workflow and never enters mutation steps', () => {
   assert.match(workflow, /audit_all_approved:/);
   assert.match(workflow, /Preflight every approved human-authoring manifest read-only/);
