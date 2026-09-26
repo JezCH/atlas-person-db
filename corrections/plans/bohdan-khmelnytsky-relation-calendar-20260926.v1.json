@@ -1,0 +1,97 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "bohdan_khmelnytsky_relation_calendar_20260926_v1",
+  "as_of": "2026-09-26",
+  "status": "REVIEWED_RELATION_AND_CALENDAR_CORRECTION",
+  "release_order": 575,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-approved correction on 2026-09-26 after review of the existing Bohdan Khmelnytsky Activity. Preserve the Cossack Hetmanate polity, Hetman role, term basis, 1648 start and 1657-08-06 endpoint, while correcting the Person-Polity relation from governs to rules and the 1657-08-06 endpoint calendar from Julian to Gregorian. The earlier approved legacy intent corrections/intents/bohdan-khmelnytsky-end-calendar-gregorian-20260905.json is historical evidence only; this plan is the current v2 live execution surface.",
+  "baseline": {
+    "registration_authoring_run": 32721305800,
+    "registration_authoring_sha": "f05fb85026874fce5e29002eff61eeac43b698a9",
+    "legacy_calendar_intent": "corrections/intents/bohdan-khmelnytsky-end-calendar-gregorian-20260905.json"
+  },
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "person_name": "Bohdan Khmelnytsky",
+    "person_id": "59c5250a-3f21-4868-b21d-1969055c397a",
+    "activity_id": "4958fcb1-15f8-41a7-b267-6dd2892c78dd",
+    "polity_id": "53eac379-ca08-4cae-b8cd-3f4adcc090e0",
+    "polity": "Cossack Hetmanate",
+    "role_id": "2c3b67d0-4aa0-491d-b52d-2495c516dd4f",
+    "role": "Hetman",
+    "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+    "period_basis": "term",
+    "from_relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+    "from_relation_type": "governs",
+    "to_relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+    "to_relation_type": "rules",
+    "source_id": "9971a4c8-1f00-458b-abf7-f32e0d597de4",
+    "calendar_reason": "The stored endpoint 1657-08-06 corresponds to the new-style/Gregorian representation; the paired old-style/Julian date is 1657-07-27. Preserve the date and correct the calendar metadata.",
+    "relation_reason": "Khmelnytsky was Hetman and supreme head of the Cossack Hetmanate/Zaporozhian Host state. Under the ATLAS relation contract, rules is the sovereign/head-of-polity relation; governs is reserved for top-level government authority that is not the polity's sovereign identity."
+  },
+  "operations": [
+    {
+      "case_id": "bohdan_khmelnytsky_cossack_hetmanate_rules_and_gregorian_end",
+      "type": "rewrite_activity",
+      "activity_id": "4958fcb1-15f8-41a7-b267-6dd2892c78dd",
+      "baseline_before": {
+        "person_id": "59c5250a-3f21-4868-b21d-1969055c397a",
+        "polity_id": "53eac379-ca08-4cae-b8cd-3f4adcc090e0",
+        "role_id": "2c3b67d0-4aa0-491d-b52d-2495c516dd4f",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1648,
+        "activity_end": 1657,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "4958fcb1-15f8-41a7-b267-6dd2892c78dd",
+        "person_id": "59c5250a-3f21-4868-b21d-1969055c397a",
+        "polity_id": "53eac379-ca08-4cae-b8cd-3f4adcc090e0",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2c3b67d0-4aa0-491d-b52d-2495c516dd4f",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1648,
+        "activity_end": 1657,
+        "activity_start_detail": {
+          "year": 1648,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1657,
+          "month": 8,
+          "day": 6,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "production_mutation_authorized": false
+  }
+}
