@@ -69,7 +69,6 @@ async function verifyNoLiveReferences(client, personId, { requirementLedgerPrese
       (select count(*)::int from atlas_v2.person_descriptions where person_id=$1) as person_descriptions,
       (select count(*)::int from atlas_v2.person_external_references where person_id=$1) as external_references,
       (select count(*)::int from atlas_v2.person_portraits where person_id=$1) as portraits,
-      (select count(*)::int from atlas_v2.person_portrait_sources where person_id=$1) as portrait_sources,
       (select count(*)::int from atlas_v2.person_politics_v2 where person_id=$1) as activities,
       ${runtimeActivityCountSql} as runtime_activities,
       (select count(*)::int from atlas_v2.person_people_affiliations where person_id=$1) as people_affiliations,
@@ -151,7 +150,6 @@ function createPersonDeleteService({
       deleted.external_references = await deletePersonExternalReferences(client, personId);
       const portraitDelete = await deletePersonPortrait(client, personId);
       deleted.portraits = portraitDelete.portraits;
-      deleted.portrait_sources = portraitDelete.portrait_sources;
       deleted.person_names = (await client.query(`delete from atlas_v2.person_names where person_id=$1 returning id`, [personId])).rowCount;
       deleted.authoring_person_refs_cleared = (await client.query(`update atlas_v2.authoring_manifest_runs set person_id=null where person_id=$1 returning request_id`, [personId])).rowCount;
 
