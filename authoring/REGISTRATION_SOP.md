@@ -17,6 +17,7 @@ A merged PR, green CI, Vercel deployment, authoring response without read-back, 
 Every ordinary registration keeps these invariants:
 
 - bounded Production Person duplicate screening before expensive historical research;
+- current life-status screening before Person creation: living people are excluded; unresolved life status is HOLD/BLOCKED; only reviewed deceased Persons may be newly created;
 - reviewed historical identity, chronology, relation, Role, Polity, and at least one real Source for every new Activity;
 - NamuWiki review for a new Person or a Person whose NamuWiki status has never been reviewed;
 - an already reviewed existing Person reuses its live `linked` or `not_found` NamuWiki state without re-searching it;
@@ -29,6 +30,30 @@ Every ordinary registration keeps these invariants:
 - authoritative Production read-back after the write.
 
 Historically real discontinuities are separate Activities. Never invent an exact year, month, or day merely to satisfy a request contract.
+
+### Living Person exclusion gate
+
+Before ordinary Timeline or non-timeline registration, resolve the candidate's **current life status**.
+
+- currently living → `EXCLUDE`; do not create a Person identity;
+- deceased → continue through the normal historicity/chronology/registration gates;
+- unresolved current life status → `HOLD` / `BLOCKED` until resolved.
+
+This gate is universal. It applies to rulers, politicians, military figures, CEOs, businesspeople, artists, film directors, scholars, scientists, religious figures, explorers, and every other Person domain. Current or former office is irrelevant.
+
+Do **not** infer survival from `activity_end`, `chronology_status`, `ongoing`, representative Activity year, retirement, or the end of a historically important career. A birth-year threshold such as the old “1926 or later” audit shortcut may prioritize research but is never the final rule; an older person who is still alive is excluded.
+
+Every **new Person** creation must carry:
+
+```json
+{
+  "life_status": "deceased",
+  "life_status_checked_at": "YYYY-MM-DD",
+  "life_status_basis": "documented_death"
+}
+```
+
+Allowed bases are `documented_death` and `historical_certainty`. The latter means present survival is historically impossible; it does not authorize fabricating a death date. Existing Person reuse may omit these fields because it does not create a new identity. See `LIVING_PERSON_POLICY.md`.
 
 ## 3. Legendary / mythical / unresolved-chronology routing gate
 
@@ -143,7 +168,7 @@ The local batch compilation preflight must confirm:
 
 - every Timeline candidate has one complete reviewed Human Authoring manifest;
 - only already-supported Relation Type and Period Basis codes are used unless a bounded catalog lookup has explicitly resolved a new ambiguity;
-- every new Person has its reviewed NamuWiki decision;
+- every new Person has a reviewed `deceased` life-status attestation and its reviewed NamuWiki decision;
 - when an existing Person already has a reviewed live NamuWiki value, copy that exact live value into the GitHub manifest if the current repository validator requires the field; **do not re-search NamuWiki**;
 - all non-timeline additions are folded into one bounded replacement of `non-timeline-persons.json`;
 - no excluded candidate produces a placeholder manifest merely to keep batch cardinality aligned.
