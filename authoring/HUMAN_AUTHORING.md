@@ -5,6 +5,7 @@
 The operator supplies historical information, not database identifiers:
 
 - Person canonical English name; Korean display name is needed only when a new Person must be created
+- for every new Person: reviewed `life_status: deceased`, review date, and life-status basis; currently living Persons are never created
 - Polity canonical English name; Korean display name is needed only when a new Polity must be created
 - relation code selected from the active live Relation Type catalog
 - Role label, when applicable; Korean display name is needed only when a new Role must be created
@@ -60,6 +61,24 @@ The Person list/detail API carries `external_references.namuwiki` when an explic
 - `not_found` → no hyperlink is rendered, while the checked status remains available in Person read data.
 
 No NamuWiki link is added to the Person detail-panel heading. Legacy reviewed mappings may remain as compatibility fallbacks for Persons registered before this contract.
+
+## Living Person exclusion
+
+ATLAS Person DB excludes people who are currently living, regardless of office, occupation, domain, or historical importance. A new Person identity is eligible only after current life status has been reviewed as `deceased`.
+
+New Person requests carry:
+
+- `person.life_status = "deceased"`
+- `person.life_status_checked_at = "YYYY-MM-DD"`
+- `person.life_status_basis = "documented_death" | "historical_certainty"`
+
+The authoritative gate is the canonical Person identity creator. Human Authoring, native authoring, and direct Admin Person creation therefore converge on the same fail-closed rule. Existing Person reuse does not require a new attestation because no Person identity is being created.
+
+Activity chronology is not evidence of death. `activity_end`, `chronology_status`, `ongoing`, representative Activity year, and retirement must not be used to decide whether a Person is living. Birth year is only a research-prioritization aid, not an eligibility rule.
+
+Historical immutable manifests remain audit evidence. If a living Person was hard-deleted, an old manifest cannot recreate that missing Person unless it satisfies the current deceased-status creation contract.
+
+See `LIVING_PERSON_POLICY.md` for the canonical policy.
 
 ## Temporal boundary policy
 
