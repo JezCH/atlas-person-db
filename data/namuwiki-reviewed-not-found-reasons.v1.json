@@ -10,9 +10,9 @@
     "exact_target_url_verified": "An exact Person target and canonical URL were verified/write-ready, but the current row may still be not_found until linking is applied."
   },
   "counts": {
-    "exact_target_url_pending": 83,
-    "related_or_derivative_only": 133,
-    "no_exact_document": 116,
+    "exact_target_url_pending": 84,
+    "related_or_derivative_only": 135,
+    "no_exact_document": 119,
     "exact_target_url_verified": 43
   },
   "by_person_id": {
@@ -26,13 +26,19 @@
     "0489eda1-b9bb-4240-be8d-7b0e158b4e0e": "related_or_derivative_only",
     "048d804a-686d-416d-aa23-f379f4bb117d": "no_exact_document",
     "04dafe82-b93c-4752-9826-6e74a40e4056": "no_exact_document",
+    "051d8137-7191-4a94-94a1-0c38782946ca": "no_exact_document",
+    "0553f890-92af-44de-bef5-a0fad7b8e2e0": "related_or_derivative_only",
     "05ca003b-aea1-4b2c-ae44-6aaaf937a88e": "no_exact_document",
+    "0704d421-b507-4994-9fb5-308fa27ed3dc": "related_or_derivative_only",
+    "0715d47f-3446-4aaa-99d9-78c2f2fbfe39": "no_exact_document",
     "07ed4aba-28c5-405d-92c8-aba12b733b33": "related_or_derivative_only",
     "088d326e-0540-493c-86d4-360356197050": "no_exact_document",
     "0901be36-e2a0-4f03-b004-febf40513820": "exact_target_url_pending",
     "0912bdab-405a-42f9-b63b-791b7a729922": "related_or_derivative_only",
     "095b67ad-0e54-47d4-9427-9141611fa592": "exact_target_url_pending",
     "09948493-40e6-41f6-b60d-bcfe16adca41": "exact_target_url_pending",
+    "09b544e3-7721-4c28-b045-d9bb943396e4": "exact_target_url_pending",
+    "0a20335c-36fc-42b3-a236-6a83e235b4a8": "no_exact_document",
     "0b882eae-86cb-43d1-8e84-2c812741f4fe": "related_or_derivative_only",
     "0c6e53ee-e72e-49d4-b993-66d72e0e5df9": "no_exact_document",
     "0cd8351b-eac5-4fd6-b1f5-ae3f7a209e5b": "no_exact_document",
