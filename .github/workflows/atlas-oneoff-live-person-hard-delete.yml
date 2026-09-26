@@ -9,6 +9,7 @@ on:
       - 'api/atlas-mutate.js'
       - 'server/atlas-person-hard-delete-handler.js'
       - 'server/atlas-person-hard-delete-github-oidc.js'
+      - 'server/atlas-person-delete-service.js'
 
 permissions:
   contents: read
