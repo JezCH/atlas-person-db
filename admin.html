@@ -155,6 +155,13 @@
               <label>Person type<input id="personType" value="historical" required /></label>
               <label>Historicity<input id="personHistoricity" value="historical" required /></label>
             </div>
+            <h3>생존 상태 검토</h3>
+            <div class="identity-two">
+              <label>생존 상태<select id="personLifeStatus" required><option value="">선택</option><option value="deceased">사망 확인됨 · deceased</option></select></label>
+              <label>검토일<input id="personLifeStatusCheckedAt" type="date" required /></label>
+            </div>
+            <label>판정 근거<select id="personLifeStatusBasis" required><option value="">선택</option><option value="documented_death">문헌·공식 기록으로 사망 확인</option><option value="historical_certainty">역사적 연대상 사망이 확실</option></select></label>
+            <p class="identity-help">ATLAS Person DB는 현재 생존 인물을 등록하지 않습니다. 활동 종료연도·ongoing 여부·대표 활동연도는 생존 판정에 사용하지 않습니다.</p>
             <label class="identity-check"><input id="personAllowKoCollision" type="checkbox" /> 동일 한국어 표시명이 다른 Person에 있어도 검토 후 허용</label>
             <button class="button primary" type="submit">Person 생성</button>
           </form>

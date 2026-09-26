@@ -298,6 +298,21 @@ review once
 → batch verification
 ```
 
+### Mandatory deceased-status closure for every new Person
+
+Current life status is a **registration obligation**.
+
+For every candidate that would create a new canonical Person identity:
+
+- verify whether the person is currently living;
+- `living` → `EXCLUDE` / `REJECTED`; no Person write is allowed;
+- `deceased` → carry the reviewed `life_status`, `life_status_checked_at`, and `life_status_basis` into the registration payload;
+- unresolved current life status → keep the candidate `HOLD` / `BLOCKED`; it MUST NOT be marked `REGISTERED`, `APPLIED`, or `VERIFIED_AUTHORING_ONLY`.
+
+Do not substitute Activity chronology for this review. `activity_end`, `ongoing`, representative Activity year, office status, retirement, domain, or a birth-year cutoff do not establish present survival status. A birth-year threshold may only prioritize which candidates are checked first.
+
+Existing Person reuse may continue without a new deceased attestation because it does not create a new Person identity. The canonical Person creator remains fail-closed for every new insert, including Human Authoring, native authoring, and direct Admin identity creation.
+
 ### Mandatory NamuWiki closure for every new Person
 
 NamuWiki review is a **registration obligation**, not a later cleanup lane.

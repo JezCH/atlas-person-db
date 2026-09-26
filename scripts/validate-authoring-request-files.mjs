@@ -13,6 +13,7 @@ const CONFIDENCE = new Set(['well_established','likely','speculative','disputed'
 const CALENDARS = new Set(['gregorian','julian','unspecified_historical','source_calendar']);
 const BINDING_MODES = new Set(['declared','existing']);
 const ROLE_BINDING_MODES = new Set(['declared','existing','none']);
+const PERSON_LIFE_STATUS_BASES = new Set(['documented_death','historical_certainty']);
 
 function fail(file, message) {
   throw new Error(`${file}: ${message}`);
@@ -74,6 +75,25 @@ function canonicalNamuWikiUrl(value) {
   }
 }
 
+function validatePersonLifeStatus(file, manifest) {
+  const person = manifest?.person;
+  if (!person || typeof person !== 'object' || Array.isArray(person)) fail(file, 'person object is required');
+  if (person.life_status !== 'deceased') {
+    fail(file, 'person.life_status must be deceased; living or unresolved Persons are excluded from ATLAS');
+  }
+  if (!validIsoDate(person.life_status_checked_at)) {
+    fail(file, 'person.life_status_checked_at must be a valid YYYY-MM-DD review date');
+  }
+  if (!PERSON_LIFE_STATUS_BASES.has(person.life_status_basis)) {
+    fail(file, 'person.life_status_basis must be documented_death or historical_certainty');
+  }
+  return Object.freeze({
+    life_status:'deceased',
+    life_status_checked_at:person.life_status_checked_at,
+    life_status_basis:person.life_status_basis
+  });
+}
+
 function validateNamuWiki(file, manifest) {
   const reference = manifest?.external_references?.namuwiki;
   const deferral = manifest?.review_deferrals?.namuwiki;
@@ -121,6 +141,7 @@ function validateBoundary(file, activity, prefix) {
 function validateHuman(file, manifest) {
   if (manifest.review_status !== 'approved') fail(file, 'review_status must be approved');
   if (!nonEmptyString(manifest?.person?.canonical_name_en)) fail(file, 'person.canonical_name_en is required');
+  validatePersonLifeStatus(file, manifest);
   if (!nonEmptyString(manifest?.polity?.canonical_name_en)) fail(file, 'polity.canonical_name_en is required');
   const activity = manifest?.activity;
   if (!activity || typeof activity !== 'object' || Array.isArray(activity)) fail(file, 'activity object is required');
@@ -145,6 +166,7 @@ function validateNative(file, manifest) {
   if (manifest.review_status !== 'approved') fail(file, 'review_status must be approved');
   if (!nonEmptyString(manifest.request_id)) fail(file, 'request_id is required');
   if (!nonEmptyString(manifest?.person?.canonical_name_en)) fail(file, 'person.canonical_name_en is required');
+  validatePersonLifeStatus(file, manifest);
   const activity = manifest?.activity;
   if (!activity || typeof activity !== 'object' || Array.isArray(activity)) fail(file, 'activity object is required');
   if (!nonEmptyString(activity.relation_type_id)) fail(file, 'activity.relation_type_id is required');

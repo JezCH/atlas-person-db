@@ -35,7 +35,10 @@ test('person identity locks canonical key and all exact-name collision tokens be
   const client = scriptedClient(responses);
   const outcome = await createIdentityService({ client }).mutate('create_person', {
     canonical_name_en: ' Belisarius ',
-    display_name_ko: ' 벨리사리우스 '
+    display_name_ko: ' 벨리사리우스 ',
+    life_status: 'deceased',
+    life_status_checked_at: '2026-09-27',
+    life_status_basis: 'historical_certainty'
   });
   assert.equal(outcome.committed, true);
   assert.equal(outcome.id, 'person-1');
