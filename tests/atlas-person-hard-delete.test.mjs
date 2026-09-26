@@ -24,7 +24,6 @@ function verificationRow(overrides = {}) {
     person_descriptions: 0,
     external_references: 0,
     portraits: 0,
-    portrait_sources: 0,
     activities: 0,
     runtime_activities: 0,
     people_affiliations: 0,
@@ -198,6 +197,7 @@ test('successful Person hard-delete removes live references, stales only target 
   assert.equal(sql.some((text) => text.includes('delete from atlas_v2.person_duplicate_reviews')), false);
   assert.equal(sql.some((text) => text.includes('delete from atlas_v2.person_merge_audit')), false);
   assert.equal(sql.some((text) => text.includes('delete from atlas_v2.person_duplicate_candidates')), false);
+  assert.equal(sql.some((text) => text.includes('person_portrait_sources')), false);
   assert.equal(sql.at(-1), 'commit');
 });
 
