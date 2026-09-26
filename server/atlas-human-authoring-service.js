@@ -1,6 +1,6 @@
 "use strict";
 
-const { createPerson, createPolity, createRole, normalizeExact } = require("./atlas-identity-service.js");
+const { createPerson, createPolity, createRole, normalizeExact, normalizePersonLifeStatusReview } = require("./atlas-identity-service.js");
 const { createStage2NativeActivityTx, loadStage2NativeActivity } = require("./atlas-stage2-native-activity-service.js");
 const { requiredUuid, historicalYear } = require("./atlas-activity-semantic-key-v2.js");
 const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service.js");
@@ -180,6 +180,7 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
   const roleCategory = optionalText(activity.role_category) || (roleLabel ? roleCategoryForRelation(relationCode) : null);
   const roleCode = optionalText(activity.role_code) || (roleLabel ? roleCodeFromLabel(roleLabel) : null);
   const namuwiki = normalizeNamuWikiReference(request?.external_references?.namuwiki, { allowLegacyOmission:allowLegacyNamuWikiOmission });
+  const lifeStatusReview = normalizePersonLifeStatusReview(person);
   return Object.freeze({
     requestId,
     person:Object.freeze({
@@ -187,7 +188,8 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
       display_name_ko:optionalText(person.display_name_ko),
       canonical_key:optionalText(person.canonical_key),
       person_type:optionalText(person.person_type) || "historical",
-      historicity:optionalText(person.historicity) || "historical"
+      historicity:optionalText(person.historicity) || "historical",
+      ...(lifeStatusReview || {})
     }),
     polity:polity == null ? null : Object.freeze({
       canonical_name_en:requiredText(polity.canonical_name_en, "HUMAN_AUTHORING_POLITY_EN_REQUIRED"),
@@ -242,7 +244,11 @@ async function resolveOrCreatePerson(client, person) {
   if (existing) return Object.freeze({ id:existing, disposition:"reused" });
   if (!person.display_name_ko) throw new Error("HUMAN_AUTHORING_NEW_PERSON_KO_REQUIRED");
   const created = await createPerson(client, { ...person, allow_display_name_collision:false });
-  return Object.freeze({ id:String(created.id).toLowerCase(), disposition:created.replay ? "reused" : "created" });
+  return Object.freeze({
+    id:String(created.id).toLowerCase(),
+    disposition:created.replay ? "reused" : "created",
+    ...(created.life_status_review ? { life_status_review:created.life_status_review } : {})
+  });
 }
 
 async function resolveOrCreatePolity(client, polity) {
