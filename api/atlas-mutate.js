@@ -5,11 +5,13 @@ const { createVercelMutationHandler } = require("../server/atlas-vercel-mutation
 const { createPersonDomainHandler } = require("../server/atlas-person-domain-handler.js");
 const { createRuntimeCompileHandler } = require("../server/atlas-runtime-compile-handler.js");
 const { createPersonPortraitHandler } = require("../server/atlas-person-portrait-handler.js");
+const { createPersonHardDeleteHandler } = require("../server/atlas-person-hard-delete-handler.js");
 
 const mutationHandler = createVercelMutationHandler({ clientFactory:createPostgresClient });
 const personDomainHandler = createPersonDomainHandler({ clientFactory:createPostgresClient });
 const runtimeCompileHandler = createRuntimeCompileHandler({ clientFactory:createPostgresClient });
 const personPortraitHandler = createPersonPortraitHandler({ clientFactory:createPostgresClient, allowedMethods:["PUT","DELETE"] });
+const personHardDeleteHandler = createPersonHardDeleteHandler({ clientFactory:createPostgresClient });
 
 function selectMutationSurface(req) {
   const direct = req?.query?.__atlas_mutation_surface;
@@ -31,6 +33,7 @@ async function consolidatedMutationHandler(req, res) {
   if (surface === "person-domain") return personDomainHandler(req, res);
   if (surface === "person-portrait") return personPortraitHandler(req, res);
   if (surface === "runtime-compile") return runtimeCompileHandler(req, res);
+  if (surface === "person-hard-delete") return personHardDeleteHandler(req, res);
   return mutationHandler(req, res);
 }
 

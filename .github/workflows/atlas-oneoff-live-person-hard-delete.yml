@@ -1,0 +1,161 @@
+name: ATLAS One-off Live Person Hard Delete
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/atlas-oneoff-live-person-hard-delete.yml'
+      - 'api/atlas-mutate.js'
+      - 'server/atlas-person-hard-delete-handler.js'
+      - 'server/atlas-person-hard-delete-github-oidc.js'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  hard_delete:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      API_BASE: https://atlas-person-db.vercel.app
+      HARD_DELETE_URL: https://atlas-person-db.vercel.app/api/atlas-mutate?__atlas_mutation_surface=person-hard-delete
+      OIDC_AUDIENCE: atlas-person-db-live-person-hard-delete
+      TARGET_IDS: |
+        13ad86c1-0e8e-4584-9d49-2a94abb225f8
+        39a15c79-5284-4d31-a31a-8a54cf01a481
+        cb836ed9-4258-4ce2-9167-103da7fc7167
+        aa76779b-7d49-423a-bd7a-160977916ec6
+        75d5ad53-3646-4343-b65c-a115d7027296
+        7f966b50-7a75-4764-9772-2a935500171c
+        7bd4ccad-b602-40d1-b971-df694e550e1e
+        6614745d-c767-4133-911e-02161d087552
+        4057482e-ba8e-43c5-8681-5edda912df15
+        3fef3a33-a97c-4905-b66e-7795093bfc23
+        0deb2089-e581-4516-9a97-04f024502120
+        5174295b-a333-46de-a6c6-18b3270e8f9a
+        f9ac6303-f933-4b82-b661-9812b1be636b
+        786d44c4-6f47-4c04-9e38-8057b67b59ea
+        7b73f803-2a44-559c-acd1-b1fe1b64d0e4
+        03729648-bf35-4b41-9ca6-cbe5414e03c4
+        a87ee025-1cfe-4e6a-97a9-1d36c174c88b
+        19906b24-88bd-4358-bf72-8b245de5c495
+        68dac3a6-315f-4857-b0b7-8703f70a0379
+        0536fa0f-a4ca-4ed9-b293-b9d7a2cf00c8
+        8225a00f-0183-4991-9702-44ba132552b8
+        32c2be44-5efa-42c7-b9de-1442b3fe3ab7
+        132135f2-6937-4a46-ac01-76ed64094208
+        31bbe437-0472-44a1-95e9-31eabe7892cb
+        2957d4f9-c4d4-4515-8e62-461cf2807f68
+        bf42d7a7-8434-4256-92e1-c88f0cd2ae95
+        2465b37b-ad2f-4759-a16c-9de69dd23dfd
+        0fbcbfbf-5190-4edc-8143-05fbcd2d98eb
+        18aec990-63e4-46aa-a9f1-a6aecdd04ba9
+        4ee399e0-b721-4855-81b1-66c7c4d452c5
+        2e5f0a4f-2cf2-43b7-8264-bc919cc4640b
+        fd4dea4d-94ed-43c9-923f-e790e49504d4
+        43a9aeb1-89c1-4e91-bc7d-2bebb66aa548
+        95431d5a-8728-410e-a49e-5db486b0fbff
+        41ea69ff-d9d2-43c2-8a72-46d5c44d877b
+        8937be77-17e2-4e7d-b1a8-8172667a6e41
+        b7f2483b-fa22-455d-b726-17688d7163d6
+        a954e372-2549-4721-b736-c038c0009642
+        29783541-c10b-42d1-b052-94610723327d
+        bcafeb78-74ab-4101-8f2c-56bde95d165e
+        8b814f82-e4bf-438e-9e7e-189905524d43
+        b781f7ff-9830-4456-b428-df3f28f04ce5
+        cebd0cd9-69aa-47d2-ac96-8137b473f2cd
+        5133aac5-5aa5-4356-821c-8c9a3beb1923
+        c0ca5075-8b3d-4daf-992e-76223cf98a48
+        e1c12fec-6665-4cd0-b410-01d4e1683a01
+        b001c035-7e3d-43c2-bb38-f2ba8216efdd
+
+    steps:
+      - name: Wait for exact Production hard-delete runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t target_ids < <(printf '%s\n' "$TARGET_IDS" | sed '/^[[:space:]]*$/d')
+          [[ "${#target_ids[@]}" -eq 47 ]]
+          ready=false
+          for attempt in $(seq 1 90); do
+            status="$(curl --silent --show-error --output /tmp/atlas-hard-delete-readiness.json --write-out '%{http_code}' "$HARD_DELETE_URL")"
+            if [[ "$status" == "200" ]] && jq -e --arg sha "$GITHUB_SHA" '
+              .ok==true and
+              .marker=="ATLAS_PERSON_HARD_DELETE_BATCH_V1" and
+              .target_count==47 and
+              .runtime_sha==$sha
+            ' /tmp/atlas-hard-delete-readiness.json >/dev/null 2>&1; then
+              all_present=true
+              for id in "${target_ids[@]}"; do
+                jq -e --arg id "$id" '.target_person_ids | index($id) != null' /tmp/atlas-hard-delete-readiness.json >/dev/null || all_present=false
+              done
+              if [[ "$all_present" == "true" ]]; then ready=true; break; fi
+            fi
+            sleep 5
+          done
+          [[ "$ready" == "true" ]] || { cat /tmp/atlas-hard-delete-readiness.json >&2 || true; echo 'Exact Production hard-delete runtime not ready.' >&2; exit 1; }
+
+      - name: Hard-delete 47 living Persons and verify Production
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t target_ids < <(printf '%s\n' "$TARGET_IDS" | sed '/^[[:space:]]*$/d')
+          [[ "${#target_ids[@]}" -eq 47 ]]
+
+          before_json="$(curl --fail-with-body --silent --show-error "$API_BASE/api/atlas-person-read")"
+          before_total="$(jq -er '.summary.total' <<<"$before_json")"
+          for id in "${target_ids[@]}"; do
+            count="$(jq -r --arg id "$id" '[.persons[] | select(.id==$id)] | length' <<<"$before_json")"
+            [[ "$count" -eq 1 ]] || { echo "Preflight target missing or duplicated: $id count=$count" >&2; exit 1; }
+          done
+
+          oidc_token="$(curl --fail-with-body --silent --show-error -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${OIDC_AUDIENCE}" | jq -er '.value')"
+          echo "::add-mask::${oidc_token}"
+
+          : > /tmp/atlas-live-person-delete-results.jsonl
+          deleted=0
+          for id in "${target_ids[@]}"; do
+            payload="$(jq -cn --arg id "$id" --arg sha "$GITHUB_SHA" '{person_id:$id,workflow_sha:$sha,request_id:("live-person-delete-"+$sha+"-"+$id)}')"
+            response="/tmp/atlas-delete-${id}.json"
+            status="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' -H 'content-type: application/json' -H "authorization: Bearer $oidc_token" --data "$payload" "$HARD_DELETE_URL")"
+            [[ "$status" == "200" ]] || { cat "$response" >&2 || true; echo "Delete failed for $id HTTP $status" >&2; exit 1; }
+            jq -e --arg id "$id" '
+              .ok==true and
+              .marker=="ATLAS_PERSON_HARD_DELETE_BATCH_V1" and
+              .outcome.marker=="ATLAS_PERSON_DELETE_SERVICE" and
+              .outcome.committed==true and
+              .outcome.v2.committed==true and
+              .outcome.v2.deleted_person_id==$id and
+              .outcome.verification.checked==true and
+              .outcome.verification.match==true and
+              ([.outcome.verification.remaining_live_references[]] | all(. == 0))
+            ' "$response" >/dev/null
+            jq -c --arg id "$id" '{person_id:$id,deleted_counts:.outcome.v2.deleted_counts,verification:.outcome.verification}' "$response" >> /tmp/atlas-live-person-delete-results.jsonl
+            deleted=$((deleted+1))
+            echo "Deleted $deleted/47: $id"
+          done
+
+          after_json="$(curl --fail-with-body --silent --show-error "$API_BASE/api/atlas-person-read")"
+          after_total="$(jq -er '.summary.total' <<<"$after_json")"
+          for id in "${target_ids[@]}"; do
+            jq -e --arg id "$id" '[.persons[] | select(.id==$id)] | length == 0' <<<"$after_json" >/dev/null
+          done
+          [[ "$deleted" -eq 47 ]]
+          [[ "$after_total" -eq "$((before_total - 47))" ]]
+          echo "Production Person total: $before_total -> $after_total"
+          jq -s '{deleted_count:length,results:.}' /tmp/atlas-live-person-delete-results.jsonl > /tmp/atlas-live-person-delete-results.json
+          jq '{deleted_count}' /tmp/atlas-live-person-delete-results.json
+
+      - name: Upload deletion evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-live-person-delete-${{ github.sha }}
+          path: |
+            /tmp/atlas-live-person-delete-results.json
+            /tmp/atlas-live-person-delete-results.jsonl
+          if-no-files-found: warn
+          retention-days: 90
