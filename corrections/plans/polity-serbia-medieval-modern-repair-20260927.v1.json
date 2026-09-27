@@ -1,0 +1,133 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_serbia_medieval_modern_repair_20260927_v1",
+  "as_of": "2026-09-27",
+  "status": "REVIEWED_FALSE_MERGE_REPAIR",
+  "release_order": 940,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY_IDENTITY_EXHAUSTIVE_SIMILARITY_AUDIT comment 5748136361; Production exact read-back 2026-09-27; Cambridge A Concise History of Serbia chapter 2 treats Dušan's 1331-1355 rule as the continuous medieval Serbian state whose state form became imperial in 1346; existing ATLAS temporal designation contract preserves the 1331-1346 Kingdom of Serbia label without retaining the modern 1882-1918 polity UUID on the medieval Activity",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "serbia-relink-stefan-dusan-king-phase-to-medieval-serbian-identity",
+      "type": "rewrite_activity",
+      "activity_id": "b2a26b8e-a4fc-4e8f-90ea-91756dda2321",
+      "baseline_before": {
+        "person_id": "c5a51dc1-7800-4562-9521-bb573a770ce2",
+        "polity_id": "63c4d67f-2190-4b71-bde6-69d1cda80a3f",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1331,
+        "activity_end": 1346,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "b2a26b8e-a4fc-4e8f-90ea-91756dda2321",
+        "person_id": "c5a51dc1-7800-4562-9521-bb573a770ce2",
+        "polity_id": "9a26d673-abe1-4d66-b691-3afdaf01a586",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1331,
+        "activity_start_detail": {
+          "year": 1331,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1346,
+        "activity_end_detail": {
+          "year": 1346,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Stefan Dušan ruled the same medieval Serbian state as king from 1331 until assuming the imperial title in 1346. ATLAS models this as one continuous medieval Serbian polity identity, with a temporal Kingdom of Serbia designation for the 1331–1346 royal phase and the Serbian Empire state-form phase from 1346.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "serbian-medieval-kingdom-temporal-designation-1331-1346",
+      "exact_before": {
+        "designation_absent_id": "f66b73c0-8de2-45e3-a5d6-7e3de41e8d81"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "f66b73c0-8de2-45e3-a5d6-7e3de41e8d81",
+          "polity_id": "9a26d673-abe1-4d66-b691-3afdaf01a586",
+          "designation_type": "state_form",
+          "valid_from_year": 1331,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1346,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "Temporal state-form designation for Stefan Dušan's royal phase. The medieval Serbian polity is modeled continuously across his elevation from King to Emperor in 1346; this designation preserves the historically correct Kingdom of Serbia label for the 1331–1346 Activity without conflating it with the modern 1882–1918 Kingdom of Serbia identity."
+        },
+        "names": [
+          {
+            "id": "a889d1df-2d5c-4e41-899d-48467654c10d",
+            "polity_designation_id": "f66b73c0-8de2-45e3-a5d6-7e3de41e8d81",
+            "locale": "en",
+            "name": "Kingdom of Serbia",
+            "is_preferred": true
+          },
+          {
+            "id": "6607bd38-b7e5-49ff-abbe-4d9f7846cc9b",
+            "polity_designation_id": "f66b73c0-8de2-45e3-a5d6-7e3de41e8d81",
+            "locale": "ko",
+            "name": "세르비아 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "f66b73c0-8de2-45e3-a5d6-7e3de41e8d81",
+            "source_id": "86418066-40d6-4bb6-af9f-c21fe1ac25ef",
+            "source_locator_key": "https://www.iib.ac.rs/ZR/assets/files/ZR9788677431587.G067.pdf"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "activity_relinks": 1,
+    "target_existing_polity_id": "9a26d673-abe1-4d66-b691-3afdaf01a586",
+    "original_activity_uuid_preserved": true,
+    "modern_kingdom_polity_id_preserved": "63c4d67f-2190-4b71-bde6-69d1cda80a3f",
+    "polity_designation_assertions": 1,
+    "production_mutation_authorized": false
+  }
+}
