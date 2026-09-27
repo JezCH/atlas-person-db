@@ -260,8 +260,7 @@ async function resolveOrCreatePolity(client, polity, activity = null) {
   });
   return Object.freeze({
     id:String(created.id).toLowerCase(),
-    disposition:created.replay ? "reused" : "created",
-    resolution:created.resolution || null
+    disposition:created.replay ? "reused" : "created"
   });
 }
 
