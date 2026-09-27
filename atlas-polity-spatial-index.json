@@ -3688,14 +3688,14 @@
       "expected_polity_id": "a602213a-dccb-4a23-96c3-e91dfc300a9f",
       "expected_start_year": 1970,
       "expected_end_year": 1971,
-      "region_code": "africa",
-      "subregion_code": "nile-valley",
-      "location_label": "Egypt",
       "reason": "Sadat's 15 October 1970–1 September 1971 presidency falls after Syria's 1961 secession, when Egypt alone retained the United Arab Republic name. The Activity is therefore placed in Egypt's Nile Valley while the UAR polity itself remains transregional in the review queue.",
       "source_refs": [
         "Encyclopaedia Britannica — Anwar Sadat: president of Egypt from 1970 until 6 October 1981",
         "United Nations — Egypt membership and state-name history: Egypt retained the United Arab Republic name until 2 September 1971"
-      ]
+      ],
+      "region_code": "africa",
+      "subregion_code": "nile-valley",
+      "location_label": "Egypt"
     }
   ]
 }
