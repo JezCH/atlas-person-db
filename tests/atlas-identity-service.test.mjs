@@ -127,12 +127,18 @@ test('polity identity uses deterministic locks and resolves all current identity
 });
 
 test('polity alias resolution reuses the existing UUID without requiring a new KO display label', async () => {
-  const responses=empty(9);
-  responses[5]={ rows:[{
-    polity_id:'polity-1',canonical_key:'Roman Empire',polity_type:'historical_polity',historicity:'historical',
-    locale:'en',name:'Byzantine Empire',name_type:'historiographic_conventional',is_preferred:false
-  }] };
-  const client=scriptedClient(responses);
+  const client={
+    calls:[],
+    async query(sql,params=[]) {
+      const text=String(sql);
+      this.calls.push({sql:text,params});
+      if (/from atlas_v2\.polity_names pn/i.test(text)) return { rows:[{
+        polity_id:'polity-1',canonical_key:'Roman Empire',polity_type:'historical_polity',historicity:'historical',
+        locale:'en',name:'Byzantine Empire',name_type:'historiographic_conventional',is_preferred:false
+      }] };
+      return {rows:[]};
+    }
+  };
   const outcome=await createIdentityService({client}).mutate('create_polity',{
     canonical_name_en:'Byzantine Empire'
   });
