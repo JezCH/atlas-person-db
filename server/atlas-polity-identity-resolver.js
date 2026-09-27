@@ -181,13 +181,22 @@ async function resolvePolityIdentity(client, raw, { temporalContext=null } = {})
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   const canonicalName=normalizeText(raw?.canonical_name_en);
   if (!canonicalName) throw new Error("POLITY_IDENTITY_NAME_REQUIRED");
-  const canonicalKey=normalizeText(raw?.canonical_key) || canonicalName;
+  const explicitCanonicalKey=normalizeText(raw?.canonical_key);
+  const canonicalKey=explicitCanonicalKey || canonicalName;
   const context=normalizeTemporalContext(temporalContext);
   const matches=await loadCurrentPolityMatches(client,{ canonicalName, canonicalKey });
 
-  const stableRows=[...matches.key,...matches.names];
-  const stableIds=uniqueIds(stableRows);
+  const keyIds=uniqueIds(matches.key);
+  const nameIds=uniqueIds(matches.names);
   const designationIds=uniqueIds(matches.designations);
+  if (keyIds.length > 1) throw new Error("POLITY_CANONICAL_KEY_AMBIGUOUS");
+  if (explicitCanonicalKey && explicitCanonicalKey !== canonicalName && keyIds.length === 1) {
+    const keyId=keyIds[0];
+    if (![...nameIds,...designationIds].includes(keyId)) {
+      throw new Error("POLITY_CANONICAL_KEY_CONFLICT");
+    }
+  }
+  const stableIds=[...new Set([...keyIds,...nameIds])].sort();
   const allIds=[...new Set([...stableIds,...designationIds])].sort();
 
   if (allIds.length === 0) {
@@ -207,7 +216,7 @@ async function resolvePolityIdentity(client, raw, { temporalContext=null } = {})
   }
 
   let candidateIds=allIds;
-  let matchedBy="stable_name";
+  let matchedBy=nameIds.length ? "stable_name" : "canonical_key";
   if (stableIds.length === 0) {
     matchedBy="temporal_designation";
     if (!context.complete) throw new Error("POLITY_DESIGNATION_DATE_CONTEXT_REQUIRED");
