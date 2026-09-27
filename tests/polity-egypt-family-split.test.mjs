@@ -18,9 +18,11 @@ test("family repair shape is stable", () => {
   assert.equal(b.operations.filter((x) => x.type === "split_activity").length, 1);
 });
 
-test("newly used polity ids have spatial coverage", () => {
-  for (const id of ["b0996783-df13-4b40-baa5-d5864af3c5f5","a602213a-dccb-4a23-96c3-e91dfc300a9f"]) {
-    assert.equal(s.polity_geography[id], "africa");
-    assert.equal(s.polity_subregions[id], "nile-valley");
-  }
+test("new republic gets leaf placement while the transregional union remains review-queued", () => {
+  const republic = "b0996783-df13-4b40-baa5-d5864af3c5f5";
+  const union = "a602213a-dccb-4a23-96c3-e91dfc300a9f";
+  assert.equal(s.polity_geography[republic], "africa");
+  assert.equal(s.polity_subregions[republic], "nile-valley");
+  assert.equal(s.polity_subregions[union], undefined);
+  assert.equal(s.review_queue.some((row) => row.polity_id === union), true);
 });
