@@ -1,0 +1,130 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_poland_medieval_modern_repair_20260927_v1",
+  "as_of": "2026-09-27",
+  "status": "REVIEWED_FALSE_MERGE_REPAIR",
+  "release_order": 980,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY_IDENTITY_EXHAUSTIVE_SIMILARITY_AUDIT comment 5748136361; Production exact read-back 2026-09-27; reviewed historical evidence distinguishes Mieszko I's tenth-century early Piast polity from the later Kingdom of Poland, while official Polish biographical evidence places Roman Dmowski's bounded Foreign Minister service in 1923 within the restored interwar Polish state represented in ATLAS by the existing Second Polish Republic identity.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "poland-preserve-mieszko-on-early-piast-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "240f78bc-c056-4963-a293-efca7fc54304",
+      "baseline_before": {
+        "person_id": "9e0da3ab-50fb-435c-bdef-e2d819367fd2",
+        "polity_id": "c6a9be73-8769-4b74-a066-c29555f508ba",
+        "role_id": "2d2f3b9c-5518-5469-961b-e9e8f2a15870",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 960,
+        "activity_end": 992,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "240f78bc-c056-4963-a293-efca7fc54304",
+        "person_id": "9e0da3ab-50fb-435c-bdef-e2d819367fd2",
+        "polity_id": "c6a9be73-8769-4b74-a066-c29555f508ba",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2d2f3b9c-5518-5469-961b-e9e8f2a15870",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 960,
+        "activity_start_detail": {
+          "year": 960,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 992,
+        "activity_end_detail": {
+          "year": 992,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Mieszko I is the first historically attested ruler of the tenth-century polity conventionally described in modern scholarship as the Piast state. ATLAS preserves this early polity as a separate identity from the later Kingdom of Poland and from modern Polish republics; the beginning of his rule remains approximate while his death in 992 is recorded at year granularity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "poland-relink-roman-dmowski-to-second-polish-republic",
+      "type": "rewrite_activity",
+      "activity_id": "5363d315-3f93-4b1f-a394-81fe5792fbe5",
+      "baseline_before": {
+        "person_id": "017cf4d6-ccbd-4a4b-9f47-3bd547790003",
+        "polity_id": "c6a9be73-8769-4b74-a066-c29555f508ba",
+        "role_id": "16fcd5d4-df9a-4d1b-b644-39ea1617676b",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1923,
+        "activity_end": 1923,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "5363d315-3f93-4b1f-a394-81fe5792fbe5",
+        "person_id": "017cf4d6-ccbd-4a4b-9f47-3bd547790003",
+        "polity_id": "d196f9f5-059c-411c-af45-af44a53838ff",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "16fcd5d4-df9a-4d1b-b644-39ea1617676b",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1923,
+        "activity_start_detail": {
+          "year": 1923,
+          "month": 10,
+          "day": 27,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1923,
+        "activity_end_detail": {
+          "year": 1923,
+          "month": 12,
+          "day": 14,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Roman Dmowski served as Foreign Minister from 27 October to 14 December 1923 in the restored interwar Polish state represented in ATLAS by the Second Polish Republic identity. His broader nationalist and independence-era diplomacy remains contextual biography rather than an additional fabricated state office.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 2,
+    "activity_relinks": 1,
+    "target_existing_polity_id": "d196f9f5-059c-411c-af45-af44a53838ff",
+    "source_polity_survivor_id": "c6a9be73-8769-4b74-a066-c29555f508ba",
+    "original_activity_uuids_preserved": true,
+    "spatial_mutation_required": false,
+    "production_mutation_authorized": false
+  }
+}
