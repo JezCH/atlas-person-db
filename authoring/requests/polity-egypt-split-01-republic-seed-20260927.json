@@ -38,9 +38,10 @@
   },
   "sources": [
     {
-      "source_type": "government_web",
-      "title": "Gamal Abdel Nasser — Egypt State Information Service",
-      "canonical_url": "https://sis.gov.eg/en/egypt/egyptian-figures/gamal-abdel-nasser/"
+      "source_type": "bibliographic_reference",
+      "title": "U.S. Department of State — Egypt Background Note",
+      "citation_text": "The historical background records the 1953 declaration of the Republic of Egypt and the subsequent 1958 union with Syria as the United Arab Republic.",
+      "locator": "U.S. Department of State historical background note on Egypt, republic declared 1953 and UAR formed 1958."
     }
   ],
   "external_references": {
