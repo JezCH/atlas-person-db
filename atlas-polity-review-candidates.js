@@ -20,17 +20,6 @@
     }),
     active_frontier: freezeRows([
       {
-        id: "kingdom-of-serbia-medieval-modern-collapse",
-        kind: "repair_review",
-        title: "Kingdom of Serbia identity 시대 과통합",
-        left: { name: "Kingdom of Serbia", ko: "세르비아 왕국", polity_id: "63c4d67f-2190-4b71-bde6-69d1cda80a3f" },
-        right: { name: "Medieval Serbia / modern Kingdom of Serbia", ko: "중세 세르비아 / 근대 세르비아 왕국" },
-        rationale: "중세 Stefan Dušan 시기와 근대 Peter I 시기가 한 UUID에 섞여 있습니다. 중세·근대 identity를 분리한 뒤 중세 Kingdom→Serbian Empire의 state-form 연속성은 별도로 검토해야 합니다.",
-        suggested_action: "repair",
-        status: "AUDIT_REPAIR_REQUIRED",
-        evidence: ["#977 exhaustive similarity audit confirmed false merge", "중세와 근대 세르비아 왕국 분리 필요", "중세 Kingdom→Serbian Empire는 후속 경계 검토"]
-      },
-      {
         id: "egypt-ancient-modern-collapse",
         kind: "repair_review",
         title: "Egypt identity 고대·현대 과통합",
@@ -87,6 +76,27 @@
       }
     ]),
     resolved_frontier_history: freezeRows([
+      {
+        id: "kingdom-of-serbia-medieval-modern-collapse",
+        kind: "repair_review",
+        title: "Kingdom of Serbia 중세 / 근대 과통합",
+        left: { name: "Kingdom of Serbia", ko: "세르비아 왕국", polity_id: "63c4d67f-2190-4b71-bde6-69d1cda80a3f" },
+        right: { name: "Serbian Empire", ko: "세르비아 제국", polity_id: "9a26d673-abe1-4d66-b691-3afdaf01a586" },
+        rationale: "근대 Kingdom of Serbia UUID에 잘못 섞여 있던 Stefan Dušan의 1331–1346 왕국기 Activity를 기존 중세 Serbian Empire identity로 재연결하고, 그 구간은 temporal Kingdom of Serbia / 세르비아 왕국 designation으로 보존했습니다. 근대 UUID에는 Peter I의 1903–1918 Activity만 남았습니다.",
+        suggested_action: "repair",
+        status: "PRODUCTION_APPLIED_REPAIR",
+        reviewed_decision: "repair",
+        locked: true,
+        evidence: [
+          "#1593 merged as cfa6f97af6fa7f3ca0eafaf0301b5002ff91ba51",
+          "Correction Apply run 36315801136 SUCCESS",
+          "Runtime Projection Compile run 36315956197 SUCCESS",
+          "Dušan Activity b2a26b8e-a4fc-4e8f-90ea-91756dda2321 UUID preserved and relinked to Serbian Empire polity 9a26d673-abe1-4d66-b691-3afdaf01a586",
+          "1331–1346 display preserved by reviewed Kingdom of Serbia / 세르비아 왕국 temporal designation",
+          "modern Kingdom of Serbia polity 63c4d67f-2190-4b71-bde6-69d1cda80a3f now contains Peter I 1903–1918 only",
+          "both identities retain europe / balkans Spatial placement; no Spatial mutation"
+        ]
+      },
       {
         id: "later-jin-houjin-houjin-collapse",
         kind: "repair_review",
