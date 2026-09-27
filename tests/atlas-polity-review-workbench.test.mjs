@@ -62,12 +62,11 @@ test('restored review panel preserves prior decision workflow and live evidence'
 test('Polity review registry separates current active frontier from the old 28-case review snapshot', () => {
   assert.equal(registry.schema, 'atlas-polity-review-candidates/v2');
   assert.equal(registry.generated_at, '2026-09-27');
-  assert.equal(registry.active_frontier.length, 6);
+  assert.equal(registry.active_frontier.length, 5);
   assert.equal(registry.confirmed_merges.length + registry.review_candidates.length + registry.split_candidates.length, 28);
   assert.deepEqual(
     Array.from(registry.active_frontier, (row) => row.id),
     [
-      'kingdom-of-serbia-medieval-modern-collapse',
       'egypt-ancient-modern-collapse',
       'poland-medieval-modern-collapse',
       'germany-pre1945-frg-collapse',
@@ -75,9 +74,12 @@ test('Polity review registry separates current active frontier from the old 28-c
       'kingdom-of-italy-multi-era-collapse'
     ]
   );
-  assert.equal(registry.resolved_frontier_history.length, 2);
+  assert.equal(registry.resolved_frontier_history.length, 3);
+  const serbia = registry.resolved_frontier_history.find((row) => row.id === 'kingdom-of-serbia-medieval-modern-collapse');
   const laterJin = registry.resolved_frontier_history.find((row) => row.id === 'later-jin-houjin-houjin-collapse');
   const han = registry.resolved_frontier_history.find((row) => row.id === 'han-han-character-collapse');
+  assert.equal(serbia.status, 'PRODUCTION_APPLIED_REPAIR');
+  assert.equal(serbia.reviewed_decision, 'repair');
   assert.equal(laterJin.status, 'PRODUCTION_APPLIED_SPLIT');
   assert.equal(laterJin.reviewed_decision, 'repair');
   assert.equal(han.status, 'PRODUCTION_APPLIED_REPAIR');
