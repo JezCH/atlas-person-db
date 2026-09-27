@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_later_jin_split_relink_nurhaci_20260927_v1",
+  "as_of": "2026-09-27",
+  "status": "REVIEWED_FALSE_MERGE_REPAIR",
+  "release_order": 910,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY_IDENTITY_EXHAUSTIVE_SIMILARITY_AUDIT comment 5748136361; Production exact read-back 2026-09-27; Stage1 PR #1583 created Jurchen survivor polity 2113c54b-b341-43ef-927c-991feebfdcea",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "later-jin-relink-nurhaci-to-jurchen-polity",
+      "type": "rewrite_activity",
+      "activity_id": "584039bb-4f23-552f-a304-99b5faf4d176",
+      "baseline_before": {
+        "person_id": "11eef195-4b20-57dc-8d84-c96b9aff77b5",
+        "polity_id": "0c1849ca-e4ae-572b-bfe3-0253aa08d83a",
+        "role_id": "943e8228-bea3-580a-a102-94bf891cb5dd",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1616,
+        "activity_end": 1626,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "584039bb-4f23-552f-a304-99b5faf4d176",
+        "person_id": "11eef195-4b20-57dc-8d84-c96b9aff77b5",
+        "polity_id": "2113c54b-b341-43ef-927c-991feebfdcea",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "943e8228-bea3-580a-a102-94bf891cb5dd",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1616,
+        "activity_start_detail": {
+          "year": 1616,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1626,
+        "activity_end_detail": {
+          "year": 1626,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "activity_relinks": 1,
+    "target_existing_polity_id": "2113c54b-b341-43ef-927c-991feebfdcea",
+    "original_activity_uuid_preserved": true,
+    "production_mutation_authorized": false
+  }
+}
