@@ -1,0 +1,731 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_egypt_ancient_modern_repair_20260927_v1",
+  "as_of": "2026-09-27",
+  "status": "REVIEWED_FALSE_MERGE_REPAIR",
+  "release_order": 960,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 Egypt ancient/modern collapse; Production exact read-back 2026-09-27; Ancient Egypt, Ptolemaic Kingdom, Republic of Egypt, and United Arab Republic existing identities reviewed; United Nations records UAR official designation through 1971-09-01 and Arab Republic of Egypt from 1971-09-02; Oxford Classical Dictionary sources distinguish Ptolemy I's pre-royal Egyptian satrapy from his later kingship",
+  "new_activity_uuid_allocations": [
+    {
+      "case_id": "egypt-sadat-uar-arab-republic-boundary",
+      "fragment_id": "sadat_uar_1970_1971",
+      "activity_uuid": "e100c855-4559-5431-8c72-61909a8da746",
+      "algorithm": "uuid5",
+      "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+      "name": "correction:activity:cb057be7-43fe-4c0f-921d-1ab41bdcb634:sadat_uar_1970_1971"
+    }
+  ],
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "seed_retirements_release_order_950_951_must_precede_this_plan": true,
+    "one_split_survivor_preserves_original_activity_uuid": true,
+    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+    "no_fabricated_temporal_boundaries": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "egypt-relink-narmer-to-ancient-egypt",
+      "type": "rewrite_activity",
+      "activity_id": "b7452328-354d-4a20-97a7-643d164593c1",
+      "baseline_before": {
+        "person_id": "bf80de09-0474-4e16-bc34-e764339f83e2",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -3150,
+        "activity_end": -3125,
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "b7452328-354d-4a20-97a7-643d164593c1",
+        "person_id": "bf80de09-0474-4e16-bc34-e764339f83e2",
+        "polity_id": "827d3753-154a-4575-aff0-a46048b8fe42",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -3150,
+        "activity_start_detail": {
+          "year": -3150,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": -3125,
+        "activity_end_detail": {
+          "year": -3125,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "egypt-relink-imhotep-to-ancient-egypt",
+      "type": "rewrite_activity",
+      "activity_id": "b7f0f674-4537-4923-a793-326a3e6f6283",
+      "baseline_before": {
+        "person_id": "da0303c2-1faf-40b8-9dc2-1325b77488d7",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "50345070-d3b2-4496-90b0-957a4b61cc0f",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": -2667,
+        "activity_end": -2648,
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "b7f0f674-4537-4923-a793-326a3e6f6283",
+        "person_id": "da0303c2-1faf-40b8-9dc2-1325b77488d7",
+        "polity_id": "827d3753-154a-4575-aff0-a46048b8fe42",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "50345070-d3b2-4496-90b0-957a4b61cc0f",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": -2667,
+        "activity_start_detail": {
+          "year": -2667,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": -2648,
+        "activity_end_detail": {
+          "year": -2648,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "egypt-relink-djoser-to-ancient-egypt",
+      "type": "rewrite_activity",
+      "activity_id": "a9439165-b9ad-4888-ae40-1bc446d88161",
+      "baseline_before": {
+        "person_id": "a761438e-ef97-471e-80f5-7079888fc921",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -2667,
+        "activity_end": -2648,
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "a9439165-b9ad-4888-ae40-1bc446d88161",
+        "person_id": "a761438e-ef97-471e-80f5-7079888fc921",
+        "polity_id": "827d3753-154a-4575-aff0-a46048b8fe42",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -2667,
+        "activity_start_detail": {
+          "year": -2667,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": -2648,
+        "activity_end_detail": {
+          "year": -2648,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "egypt-relink-senusret-iii-to-ancient-egypt",
+      "type": "rewrite_activity",
+      "activity_id": "66291204-38b5-4fad-9d01-11bd43569240",
+      "baseline_before": {
+        "person_id": "d1234380-dd54-4608-90ca-67d0b05cf447",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -1874,
+        "activity_end": -1855,
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "66291204-38b5-4fad-9d01-11bd43569240",
+        "person_id": "d1234380-dd54-4608-90ca-67d0b05cf447",
+        "polity_id": "827d3753-154a-4575-aff0-a46048b8fe42",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -1874,
+        "activity_start_detail": {
+          "year": -1874,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": -1855,
+        "activity_end_detail": {
+          "year": -1855,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "egypt-relink-shoshenq-i-to-ancient-egypt",
+      "type": "rewrite_activity",
+      "activity_id": "8373b743-777a-4ca2-9a04-baf97c960827",
+      "baseline_before": {
+        "person_id": "2916f2e1-12a6-46b2-93a9-8605229baa95",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": -943,
+        "activity_end": -922,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "8373b743-777a-4ca2-9a04-baf97c960827",
+        "person_id": "2916f2e1-12a6-46b2-93a9-8605229baa95",
+        "polity_id": "827d3753-154a-4575-aff0-a46048b8fe42",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": -943,
+        "activity_start_detail": {
+          "year": -943,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": -922,
+        "activity_end_detail": {
+          "year": -922,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "egypt-relink-piye-to-ancient-egypt",
+      "type": "rewrite_activity",
+      "activity_id": "ab628afb-3317-41d9-a034-0e4831b6aee5",
+      "baseline_before": {
+        "person_id": "c8ac5e56-ab74-4479-878b-24e10b65deec",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -728,
+        "activity_end": -716,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "ab628afb-3317-41d9-a034-0e4831b6aee5",
+        "person_id": "c8ac5e56-ab74-4479-878b-24e10b65deec",
+        "polity_id": "827d3753-154a-4575-aff0-a46048b8fe42",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -728,
+        "activity_start_detail": {
+          "year": -728,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": -716,
+        "activity_end_detail": {
+          "year": -716,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "egypt-relink-taharqa-first-to-ancient-egypt",
+      "type": "rewrite_activity",
+      "activity_id": "72b5090a-fdec-43c3-8f6d-717f11a4c042",
+      "baseline_before": {
+        "person_id": "b0962fc1-4cee-4bca-aa96-fc703adf988f",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -690,
+        "activity_end": -671,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "72b5090a-fdec-43c3-8f6d-717f11a4c042",
+        "person_id": "b0962fc1-4cee-4bca-aa96-fc703adf988f",
+        "polity_id": "827d3753-154a-4575-aff0-a46048b8fe42",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -690,
+        "activity_start_detail": {
+          "year": -690,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": -671,
+        "activity_end_detail": {
+          "year": -671,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "egypt-relink-taharqa-return-to-ancient-egypt",
+      "type": "rewrite_activity",
+      "activity_id": "f582ea25-88c2-5adc-be96-d364959d9680",
+      "baseline_before": {
+        "person_id": "b0962fc1-4cee-4bca-aa96-fc703adf988f",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -669,
+        "activity_end": -667,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "f582ea25-88c2-5adc-be96-d364959d9680",
+        "person_id": "b0962fc1-4cee-4bca-aa96-fc703adf988f",
+        "polity_id": "827d3753-154a-4575-aff0-a46048b8fe42",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -669,
+        "activity_start_detail": {
+          "year": -669,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": -667,
+        "activity_end_detail": {
+          "year": -667,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "egypt-relink-necho-ii-to-ancient-egypt",
+      "type": "rewrite_activity",
+      "activity_id": "b5a9d6aa-a641-42dc-9cc4-2e1fb137e02d",
+      "baseline_before": {
+        "person_id": "c22fbb2d-5628-4895-b0a2-947b2ff64a70",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": -610,
+        "activity_end": -595,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "b5a9d6aa-a641-42dc-9cc4-2e1fb137e02d",
+        "person_id": "c22fbb2d-5628-4895-b0a2-947b2ff64a70",
+        "polity_id": "827d3753-154a-4575-aff0-a46048b8fe42",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": -610,
+        "activity_start_detail": {
+          "year": -610,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": -595,
+        "activity_end_detail": {
+          "year": -595,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "egypt-relink-ptolemy-satrapy-to-ptolemaic-identity",
+      "type": "rewrite_activity",
+      "activity_id": "19c869dd-4de8-4a72-85a8-ee4ee06fe3a2",
+      "baseline_before": {
+        "person_id": "a3e78df5-1a41-4f04-8ed4-67d21a392893",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "d5d3af37-c6f1-47d5-b7c5-79a65accddd5",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": -323,
+        "activity_end": -305,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "19c869dd-4de8-4a72-85a8-ee4ee06fe3a2",
+        "person_id": "a3e78df5-1a41-4f04-8ed4-67d21a392893",
+        "polity_id": "4131d480-e71d-59ab-a2b6-45f045547a89",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "d5d3af37-c6f1-47d5-b7c5-79a65accddd5",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": -323,
+        "activity_start_detail": {
+          "year": -323,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": -305,
+        "activity_end_detail": {
+          "year": -305,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "egypt-relink-nasser-to-republic-of-egypt",
+      "type": "rewrite_activity",
+      "activity_id": "038210f2-1f0d-4158-8940-a094a2dcfd8d",
+      "baseline_before": {
+        "person_id": "7b4de6dc-7162-4606-ab2c-2332243ee7b4",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1956,
+        "activity_end": 1958,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "038210f2-1f0d-4158-8940-a094a2dcfd8d",
+        "person_id": "7b4de6dc-7162-4606-ab2c-2332243ee7b4",
+        "polity_id": "b0996783-df13-4b40-baa5-d5864af3c5f5",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1956,
+        "activity_start_detail": {
+          "year": 1956,
+          "month": 6,
+          "day": 23,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1958,
+        "activity_end_detail": {
+          "year": 1958,
+          "month": 2,
+          "day": 21,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "egypt-sadat-uar-arab-republic-boundary",
+      "type": "split_activity",
+      "activity_id": "cb057be7-43fe-4c0f-921d-1ab41bdcb634",
+      "baseline_before": {
+        "person_id": "ce76881b-5167-48d8-bc43-69335a35f990",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1970,
+        "activity_end": 1981,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "cb057be7-43fe-4c0f-921d-1ab41bdcb634",
+          "person_id": "ce76881b-5167-48d8-bc43-69335a35f990",
+          "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+          "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+          "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+          "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+          "activity_start": 1971,
+          "activity_start_detail": {
+            "year": 1971,
+            "month": 9,
+            "day": 2,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1981,
+          "activity_end_detail": {
+            "year": 1981,
+            "month": 10,
+            "day": 6,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Anwar Sadat became president on 15 October 1970 while Egypt still officially bore the United Arab Republic name. On 2 September 1971 the state name changed to Arab Republic of Egypt. This survivor fragment records his presidency under that name through his death on 6 October 1981; the preceding UAR-name phase is preserved as a separate fragment.",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "e100c855-4559-5431-8c72-61909a8da746",
+          "person_id": "ce76881b-5167-48d8-bc43-69335a35f990",
+          "polity_id": "a602213a-dccb-4a23-96c3-e91dfc300a9f",
+          "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+          "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+          "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+          "activity_start": 1970,
+          "activity_start_detail": {
+            "year": 1970,
+            "month": 10,
+            "day": 15,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1971,
+          "activity_end_detail": {
+            "year": 1971,
+            "month": 9,
+            "day": 1,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Anwar Sadat became president on 15 October 1970 while Egypt's official state name remained United Arab Republic. The United Nations records that this official designation continued through 1 September 1971; the state adopted the name Arab Republic of Egypt on 2 September 1971. This fragment preserves the UAR-name phase without extending the UAR identity beyond that boundary.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        }
+      ],
+      "gap_overlap_policy": "CONTIGUOUS_DAY_LEVEL_SPLIT; UAR fragment ends 1971-09-01 and Arab Republic survivor begins 1971-09-02; no overlap or gap."
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "ptolemaic-pre-royal-satrapy-of-egypt-323-305-bce",
+      "exact_before": {
+        "designation_absent_id": "28ded97f-8190-52c0-bee0-ab8df7d7af30"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "28ded97f-8190-52c0-bee0-ab8df7d7af30",
+          "polity_id": "4131d480-e71d-59ab-a2b6-45f045547a89",
+          "designation_type": "state_form",
+          "valid_from_year": -323,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": -305,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "Pre-royal state-form designation for Ptolemy I's Egyptian government as satrap under the Argead kings. The existing Ptolemaic polity identity continues into the royal kingdom phase, but the 323–305 BCE Activity must not display the later kingdom designation."
+        },
+        "names": [
+          {
+            "id": "4bef4af7-b928-5e89-b46f-8462485b4e25",
+            "polity_designation_id": "28ded97f-8190-52c0-bee0-ab8df7d7af30",
+            "locale": "en",
+            "name": "Satrapy of Egypt",
+            "is_preferred": true
+          },
+          {
+            "id": "73cbc4d8-a49c-5567-adf8-061c98d66562",
+            "polity_designation_id": "28ded97f-8190-52c0-bee0-ab8df7d7af30",
+            "locale": "ko",
+            "name": "이집트 총독령",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "28ded97f-8190-52c0-bee0-ab8df7d7af30",
+            "source_id": "6ef739a4-518c-4ca2-8543-9fb18efeddfb",
+            "source_locator_key": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548206937"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "original_polluted_polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+    "ancient_activity_relinks": 9,
+    "ptolemy_activity_relinks": 1,
+    "nasser_activity_relinks": 1,
+    "sadat_split_operations": 1,
+    "sadat_new_activity_fragments": 1,
+    "original_activity_uuids_preserved": true,
+    "target_ancient_egypt_id": "827d3753-154a-4575-aff0-a46048b8fe42",
+    "target_ptolemaic_id": "4131d480-e71d-59ab-a2b6-45f045547a89",
+    "target_republic_of_egypt_id": "b0996783-df13-4b40-baa5-d5864af3c5f5",
+    "target_uar_id": "a602213a-dccb-4a23-96c3-e91dfc300a9f",
+    "ptolemaic_temporal_designation_assertions": 1,
+    "production_mutation_authorized": false
+  }
+}
