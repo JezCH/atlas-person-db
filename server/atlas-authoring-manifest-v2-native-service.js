@@ -1,6 +1,7 @@
 "use strict";
 
 const { createPerson, createPolity, createRole } = require("./atlas-identity-service.js");
+const { temporalContextFromNativeActivity } = require("./atlas-polity-identity-resolver.js");
 const { createStage2NativeActivityTx, loadStage2NativeActivity } = require("./atlas-stage2-native-activity-service.js");
 const { requiredUuid, semanticKey, semanticHash } = require("./atlas-activity-semantic-key-v2.js");
 const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service.js");
@@ -141,7 +142,10 @@ function createNativeAuthoringManifestV2Service({ client } = {}) {
         let polityId;
         let polityDisposition;
         if (manifest.polityBinding.mode === "declared") {
-          const result = await createPolity(client, manifest.polityIdentity);
+          const result = await createPolity(client, {
+            ...manifest.polityIdentity,
+            identity_context:temporalContextFromNativeActivity(manifest.activity)
+          });
           polityId = result.id;
           polityDisposition = result.replay ? "reused" : "created";
         } else {
