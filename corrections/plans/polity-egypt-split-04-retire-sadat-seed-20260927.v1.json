@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_egypt_split_retire_sadat_uar_seed_20260927_v1",
+  "as_of": "2026-09-27",
+  "status": "REVIEWED_SEED_RETIREMENT_WITH_PROVENANCE_TRANSFER",
+  "release_order": 951,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 Egypt ancient/modern false-merge repair; PR #1603 created temporary Sadat/UAR Activity 23970991-5cf1-4f5d-bd3c-19d4e50c2bb2 carrying official UN 1971 state-name boundary evidence; retire seed first and transfer that provenance to original Sadat Activity cb057be7-43fe-4c0f-921d-1ab41bdcb634 before release_order 960 splits the original",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "egypt-retire-sadat-uar-boundary-seed-before-original-split",
+      "type": "retire_activity",
+      "activity_id": "23970991-5cf1-4f5d-bd3c-19d4e50c2bb2",
+      "baseline_before": {
+        "person_id": "ce76881b-5167-48d8-bc43-69335a35f990",
+        "polity_id": "a602213a-dccb-4a23-96c3-e91dfc300a9f",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1970,
+        "activity_end": 1971,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "replacement_activity_ids": [
+        "cb057be7-43fe-4c0f-921d-1ab41bdcb634"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "seed_activities_retired": 1,
+    "replacement_survivor_activity_id": "cb057be7-43fe-4c0f-921d-1ab41bdcb634",
+    "seed_sources_transferred": true,
+    "production_mutation_authorized": false
+  }
+}
