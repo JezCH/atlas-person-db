@@ -5,7 +5,7 @@
   "status": "REVIEWED_FALSE_MERGE_REPAIR",
   "release_order": 910,
   "contract": "stage2/contracts/correction-v2-current.v1.json",
-  "decision_authority": "#977 POLITY_IDENTITY_EXHAUSTIVE_SIMILARITY_AUDIT comment 5748136361; Production exact read-back 2026-09-27; Stage1 PR #1583 created Jurchen survivor polity 2113c54b-b341-43ef-927c-991feebfdcea",
+  "decision_authority": "#977 POLITY_IDENTITY_EXHAUSTIVE_SIMILARITY_AUDIT comment 5748136361; Production exact read-back 2026-09-27; Stage1 PR #1583 created Jurchen survivor polity 2113c54b-b341-43ef-927c-991feebfdcea; exact legacy_source_key recovered from immutable Baseline A artifact run 31582629661 / artifact 9135783402",
   "execution_rules": {
     "exact_live_before_snapshot_required": true,
     "preserve_all_existing_normalized_source_links_and_locators": true,
@@ -28,7 +28,7 @@
         "activity_end": 1626,
         "confidence": "legacy_asserted",
         "chronology_status": "exact_as_recorded",
-        "legacy_source_key": null,
+        "legacy_source_key": "pending-records-supplement-6.json:63:8f38f3b808d4e84a",
         "source_count": 1
       },
       "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
@@ -59,7 +59,7 @@
         },
         "confidence": "legacy_asserted",
         "chronology_status": "exact_as_recorded",
-        "legacy_source_key": null,
+        "legacy_source_key": "pending-records-supplement-6.json:63:8f38f3b808d4e84a",
         "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
         "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
       }
