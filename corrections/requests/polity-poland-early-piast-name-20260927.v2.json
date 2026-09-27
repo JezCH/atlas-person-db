@@ -1,0 +1,29 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-name:poland-early-piast-survivor:2026-09-27:v1",
+  "release_order": 990,
+  "evidence": {
+    "decision": "After Roman Dmowski's 1923 Foreign Minister Activity is relinked to the existing Second Polish Republic identity, preserve polity UUID c6a9be73-8769-4b74-a066-c29555f508ba for Mieszko I's tenth-century early Piast polity and replace its misleading generic modern preferred names.",
+    "polity_id": "c6a9be73-8769-4b74-a066-c29555f508ba",
+    "identity_rule": "Early Piast State is a descriptive scholarly label for the tenth-century polity represented by Mieszko I's Activity, kept separate from the later Kingdom of Poland and from modern Polish republics; it is not asserted as a contemporaneous official state title."
+  },
+  "operations": [
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "poland-early-piast-en-preferred-name",
+      "polity_id": "c6a9be73-8769-4b74-a066-c29555f508ba",
+      "locale": "en",
+      "expected_name": "Poland",
+      "replacement_name": "Early Piast State"
+    },
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "poland-early-piast-ko-preferred-name",
+      "polity_id": "c6a9be73-8769-4b74-a066-c29555f508ba",
+      "locale": "ko",
+      "expected_name": "폴란드",
+      "replacement_name": "초기 피아스트 국가"
+    }
+  ]
+}
