@@ -4,7 +4,7 @@
   "request_id": "polity-name:later-jin-five-dynasties-disambiguation:2026-09-27:v1",
   "release_order": 930,
   "evidence": {
-    "decision": "After Nurhaci is moved to the distinct Jurchen Later Jin identity, preserve polity UUID 0c1849ca-e4ae-572b-bfe3-0253aa08d83a for the Five-Dynasties Later Jin (後晉) and disambiguate its preferred English/Korean display names.",
+    "decision": "After the temporary Jurchen seed transfers provenance and is retired, and the preserved original Nurhaci Activity is relinked to the distinct Jurchen Later Jin identity, preserve polity UUID 0c1849ca-e4ae-572b-bfe3-0253aa08d83a for the Five-Dynasties Later Jin (後晉) and disambiguate its preferred English/Korean display names.",
     "polity_id": "0c1849ca-e4ae-572b-bfe3-0253aa08d83a",
     "identity_rule": "Five-Dynasties Later Jin (後晉, 936–947) and Jurchen Later Jin/후금 (後金, 1616–1636) are distinct polity identities despite the shared English rendering 'Later Jin'."
   },

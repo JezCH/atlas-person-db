@@ -25,7 +25,7 @@ test("Later Jin repair preserves the original Nurhaci Activity UUID while moving
   assert.equal(op.after.source_links_policy, "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS");
 });
 
-test("temporary Jurchen seed retires only after provenance transfers to the preserved original Activity", () => {
+test("temporary Jurchen seed transfers provenance and retires before the preserved original Activity is relinked", () => {
   assert.equal(retire.operations.length, 1);
   const op = retire.operations[0];
   assert.equal(op.type, "retire_activity");
@@ -33,7 +33,8 @@ test("temporary Jurchen seed retires only after provenance transfers to the pres
   assert.deepEqual(op.replacement_activity_ids, [NURHACI_ACTIVITY]);
   assert.equal(op.source_transfer_policy, "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE");
   assert.equal(op.silent_source_drop_forbidden, true);
-  assert.ok(relink.release_order < retire.release_order);
+  assert.ok(retire.release_order < relink.release_order);
+  assert.equal(relink.operations[0].baseline_before.source_count, 3);
 });
 
 test("Five-Dynasties survivor is disambiguated explicitly as 後晉", () => {
@@ -46,7 +47,7 @@ test("Five-Dynasties survivor is disambiguated explicitly as 後晉", () => {
     [byLocale.get("ko").expected_name, byLocale.get("ko").replacement_name],
     ["후진", "후진(後晉)"]
   );
-  assert.ok(retire.release_order < rename.release_order);
+  assert.ok(relink.release_order < rename.release_order);
 });
 
 test("new Jurchen polity has reviewed East Asia / China spatial placement without changing the old polity placement", () => {
