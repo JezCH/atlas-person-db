@@ -38,9 +38,9 @@
   },
   "sources": [
     {
-      "source_type": "government_web",
-      "title": "Gamal Abdel Nasser — Egypt State Information Service",
-      "canonical_url": "https://sis.gov.eg/en/egypt/egyptian-figures/gamal-abdel-nasser/"
+      "source_type": "bibliographic_reference",
+      "title": "United Nations historical information — Egypt / United Arab Republic",
+      "citation_text": "United Nations historical information records the 1958 Egypt–Syria union as the United Arab Republic and the later 1971 change of Egypt's official name to the Arab Republic of Egypt; this seed source is intentionally URL-less to avoid ambiguous reuse of duplicate canonical URL rows."
     }
   ],
   "external_references": {
