@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "polity-egypt-split-20260927:republic-seed",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Gamal Abdel Nasser",
+    "display_name_ko": "가말 압델 나세르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-27",
+    "life_status_basis": "historical_certainty"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Egypt",
+    "display_name_ko": "이집트 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Reviewed seed Activity used only to mint the distinct Republic of Egypt (1953–1958) polity identity. Nasser's canonical original 1956–1958 Activity remains on the contaminated Egypt UUID until the governed correction stage relinks that original UUID and retires this temporary seed with provenance transfer.",
+    "start_year": 1956,
+    "start_month": 6,
+    "start_day": 23,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1958,
+    "end_month": 2,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "government_web",
+      "title": "Gamal Abdel Nasser — Egypt State Information Service",
+      "canonical_url": "https://sis.gov.eg/en/egypt/egyptian-figures/gamal-abdel-nasser/",
+      "citation_text": "Egypt's State Information Service records Nasser's presidency and the transition to the United Arab Republic in 1958."
+    },
+    {
+      "source_type": "government_web",
+      "title": "Egypt — U.S. Department of State Background Note",
+      "canonical_url": "https://2001-2009.state.gov/r/pa/ei/bgn/5309.htm",
+      "citation_text": "The U.S. Department of State historical background records the 1953 declaration of the Egyptian republic before the 1958 union with Syria."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "가말 압델 나세르",
+      "url": "https://namu.wiki/w/%EA%B0%80%EB%A7%90%20%EC%95%95%EB%8D%B8%20%EB%82%98%EC%84%B8%EB%A5%B4"
+    }
+  },
+  "review_context": {
+    "request_batch": "polity-egypt-identity-split-20260927",
+    "requested_item": 1,
+    "decision_authority": "#977 exhaustive polity identity audit comment 5748136361; exact Production read-back 2026-09-27; UN/official state-history verification",
+    "identity_note": "Create a distinct Republic of Egypt / 이집트 공화국 identity for the 1953–1958 republic. Stage 2 will relink the preserved original Nasser Activity to this polity, transfer seed provenance, retire the temporary seed, split Sadat across UAR and Arab Republic of Egypt, move ancient rows out of the contaminated Egypt UUID, and repurpose that survivor UUID as Arab Republic of Egypt."
+  }
+}
