@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "polity-later-jin-split-20260927:jurchen-seed",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nurhaci",
+    "display_name_ko": "누르하치",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-27",
+    "life_status_basis": "historical_certainty"
+  },
+  "polity": {
+    "canonical_name_en": "Later Jin (Jurchen)",
+    "display_name_ko": "후금(後金)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Reviewed seed Activity used only to create the distinct Jurchen Later Jin polity identity. Nurhaci established the Later Jin regime in 1616 and ruled until his death in 1626. The English label 'Later Jin (Jurchen)' is an ATLAS disambiguating conventional label, paired with Korean 후금(後金), and is not used to assert that 後金 was necessarily the regime's uncontested formal self-designation.",
+    "start_year": 1616,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1626,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "bibliographic_reference",
+      "title": "The Journey towards “No Man's Land”: Interpreting the China-Korea Borderland within Imperial and Colonial Contexts",
+      "citation_text": "The Journal of Asian Studies article describes Nurhaci as establishing the “Later Jin” regime (1616–36) after unifying the Jurchen population."
+    },
+    {
+      "source_type": "bibliographic_reference",
+      "title": "Manzhou yuanliu kao and the Formalization of the Manchu Heritage",
+      "citation_text": "Pamela Kyle Crossley's Journal of Asian Studies article distinguishes the Later Jin (1616–35) from the Qing period and provides historical context for the Jurchen/Manchu state."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "천명제",
+      "url": "https://namu.wiki/w/%EC%B2%9C%EB%AA%85%EC%A0%9C"
+    }
+  },
+  "review_context": {
+    "request_batch": "polity-later-jin-identity-split-20260927",
+    "requested_item": 1,
+    "decision_authority": "#977 exhaustive polity identity audit comment 5748136361; user resumed exact Later Jin work unit 2026-09-27",
+    "identity_note": "Create a distinct Jurchen Later Jin / 후금(後金) polity. Reuse the existing Nurhaci Person. A governed correction stage will relink the original Nurhaci Activity to this polity, transfer seed provenance, retire this seed Activity, and disambiguate the surviving Five-Dynasties Later Jin as 後晉."
+  }
+}
