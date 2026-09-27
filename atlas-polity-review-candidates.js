@@ -20,17 +20,6 @@
     }),
     active_frontier: freezeRows([
       {
-        id: "poland-medieval-modern-collapse",
-        kind: "repair_review",
-        title: "Poland identity 중세·현대 과통합",
-        left: { name: "Poland", ko: "폴란드", polity_id: "c6a9be73-8769-4b74-a066-c29555f508ba" },
-        right: { name: "Second Polish Republic / early Poland", ko: "폴란드 제2공화국 / 초기 폴란드" },
-        rationale: "Mieszko I의 중세 행과 Roman Dmowski의 1923년 행이 같은 generic Poland UUID에 섞여 있습니다. Dmowski는 기존 Second Polish Republic으로 재연결하고 중세 행은 별도 초기 폴란드 identity를 검토해야 합니다.",
-        suggested_action: "repair",
-        status: "AUDIT_REPAIR_REQUIRED",
-        evidence: ["#977 exhaustive similarity audit confirmed false merge/relink", "Dmowski → existing Second Polish Republic", "Mieszko I 계열은 별도 reviewed early-Poland identity 필요"]
-      },
-      {
         id: "germany-pre1945-frg-collapse",
         kind: "repair_review",
         title: "Germany identity 전전·현대 과통합",
@@ -65,6 +54,26 @@
       }
     ]),
     resolved_frontier_history: freezeRows([
+      {
+        id: "poland-medieval-modern-collapse",
+        kind: "repair_review",
+        title: "Poland 중세 / 현대 과통합",
+        left: { name: "Early Piast State", ko: "초기 피아스트 국가", polity_id: "c6a9be73-8769-4b74-a066-c29555f508ba" },
+        right: { name: "Second Polish Republic", ko: "폴란드 제2공화국", polity_id: "d196f9f5-059c-411c-af45-af44a53838ff" },
+        rationale: "generic Poland UUID에 섞여 있던 Mieszko I의 960–992 Activity는 동일 UUID를 초기 피아스트 국가라는 학술적 서술 identity로 한정해 보존했고, Roman Dmowski의 1923 외무장관 Activity는 기존 폴란드 제2공화국 identity로 재연결했습니다. 두 Activity UUID와 normalized provenance는 그대로 보존했습니다.",
+        suggested_action: "repair",
+        status: "PRODUCTION_APPLIED_REPAIR",
+        reviewed_decision: "repair",
+        locked: true,
+        evidence: [
+          "#1609 merged as 5249d5e8a6a2b302311f511736bdd168113d8601",
+          "Correction Apply run 36322136177 SUCCESS",
+          "Runtime Projection Compile run 36322190715 SUCCESS",
+          "Mieszko I Activity 240f78bc-c056-4963-a293-efca7fc54304 UUID preserved on Early Piast State / 초기 피아스트 국가 for 960–992",
+          "Roman Dmowski Activity 5363d315-3f93-4b1f-a394-81fe5792fbe5 UUID preserved and relinked to Second Polish Republic d196f9f5-059c-411c-af45-af44a53838ff",
+          "both identities retain europe / central-europe Spatial placement; no Spatial mutation"
+        ]
+      },
       {
         id: "egypt-ancient-modern-collapse",
         kind: "repair_review",
