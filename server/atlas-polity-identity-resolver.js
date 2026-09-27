@@ -72,9 +72,9 @@ async function loadCurrentPolityMatches(client,{ canonicalName, canonicalKey }) 
            pn.locale,pn.name,pn.name_type,pn.is_preferred
       from atlas_v2.polity_names pn
       join atlas_v2.polities p on p.id=pn.polity_id
-     where pn.name=$1
+     where pn.locale='en'
+       and pn.name=$1
      order by p.id::text,pn.is_preferred desc,pn.locale,pn.id
-     limit 20
   `,[canonicalName]);
   const designations=await client.query(`
     select p.id::text as polity_id,p.canonical_key,p.polity_type,p.historicity,
@@ -87,9 +87,9 @@ async function loadCurrentPolityMatches(client,{ canonicalName, canonicalKey }) 
       from atlas_v2.polity_designation_names pdn
       join atlas_v2.polity_designations pd on pd.id=pdn.polity_designation_id
       join atlas_v2.polities p on p.id=pd.polity_id
-     where pdn.name=$1
+     where pdn.locale='en'
+       and pdn.name=$1
      order by p.id::text,pd.id::text,pdn.is_preferred desc,pdn.locale,pdn.id
-     limit 40
   `,[canonicalName]);
   return Object.freeze({
     key:Object.freeze(keys.rows || []),
@@ -138,14 +138,19 @@ async function loadRetiredPolityMatches(client,{ canonicalName, canonicalKey }) 
       op->'removed_polity'->>'historicity' as historicity,
       coalesce(op->'preferred_names','[]'::jsonb) as preferred_names
     from atlas_v2.correction_manifest_runs cmr
-    cross join lateral jsonb_array_elements(cmr.result_snapshot->'operations') op
+    cross join lateral jsonb_array_elements(
+      case
+        when jsonb_typeof(cmr.result_snapshot->'operations')='array' then cmr.result_snapshot->'operations'
+        else '[]'::jsonb
+      end
+    ) op
     where cmr.result_snapshot->>'schema'='atlas-correction-polity-retirement/v1'
       and (
         op->'removed_polity'->>'canonical_key'=$1
         or exists (
           select 1
             from jsonb_array_elements(coalesce(op->'preferred_names','[]'::jsonb)) n
-           where n->>'name'=$2
+           where n->>'locale'='en' and n->>'name'=$2
         )
       )
     order by op->'removed_polity'->>'id'
