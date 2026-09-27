@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zz-later-jin-polity-split-spatial-20260927",
+  "baseline": "f8edb619b3c91d9cc4938dc414fa4b2de040a8d7",
+  "reviewed_at": "2026-09-27T10:00:34.000Z",
+  "bindings": [
+    {
+      "polity_id": "2113c54b-b341-43ef-927c-991feebfdcea",
+      "region_code": "east-asia",
+      "subregion_code": "china"
+    }
+  ]
+}

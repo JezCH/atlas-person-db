@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_later_jin_split_retire_jurchen_seed_20260927_v1",
+  "as_of": "2026-09-27",
+  "status": "REVIEWED_SEED_RETIREMENT_WITH_PROVENANCE_TRANSFER",
+  "release_order": 920,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 Later Jin false-merge repair; Stage1 PR #1583 seed Activity 23157ba3-d0db-4554-a067-26ab2cef562f; preceding release_order 910 preserves original Activity 584039bb-4f23-552f-a304-99b5faf4d176 on the Jurchen polity",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "later-jin-retire-authoring-seed-after-original-relink",
+      "type": "retire_activity",
+      "activity_id": "23157ba3-d0db-4554-a067-26ab2cef562f",
+      "baseline_before": {
+        "person_id": "11eef195-4b20-57dc-8d84-c96b9aff77b5",
+        "polity_id": "2113c54b-b341-43ef-927c-991feebfdcea",
+        "role_id": "943e8228-bea3-580a-a102-94bf891cb5dd",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1616,
+        "activity_end": 1626,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "replacement_activity_ids": [
+        "584039bb-4f23-552f-a304-99b5faf4d176"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "seed_activities_retired": 1,
+    "replacement_survivor_activity_id": "584039bb-4f23-552f-a304-99b5faf4d176",
+    "seed_sources_transferred": true,
+    "production_mutation_authorized": false
+  }
+}
