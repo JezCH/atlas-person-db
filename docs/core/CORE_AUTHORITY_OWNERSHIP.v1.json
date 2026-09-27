@@ -38,7 +38,7 @@
         },
         {
           "path": "server/atlas-human-authoring-service.js",
-          "contains": "createIdentityService({ client }).createPerson"
+          "contains": "const created = await createPerson(client"
         }
       ]
     },
@@ -68,7 +68,7 @@
         },
         {
           "path": "server/atlas-human-authoring-service.js",
-          "contains": "createIdentityService({ client }).createPolity"
+          "contains": "const created = await createPolity(client"
         }
       ]
     },
@@ -105,6 +105,10 @@
         {
           "path": "server/atlas-identity-service.js",
           "contains": "async function createRole"
+        },
+        {
+          "path": "server/atlas-human-authoring-service.js",
+          "contains": "const created = await createRole(client"
         },
         {
           "path": "server/atlas-correction-role-merge-v2-service.js",
