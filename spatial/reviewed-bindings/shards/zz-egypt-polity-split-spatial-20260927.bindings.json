@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zz-egypt-polity-split-spatial-20260927",
+  "baseline": "7f2b9d89622f3d73358b4702070454fa6b1fe634",
+  "reviewed_at": "2026-09-27T12:25:00.000Z",
+  "bindings": [
+    {
+      "polity_id": "b0996783-df13-4b40-baa5-d5864af3c5f5",
+      "region_code": "africa",
+      "subregion_code": "nile-valley"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-27T10:00:34.000Z",
+  "generated_at": "2026-09-27T12:25:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1200,6 +1200,7 @@
     "83abbfa2-d755-4631-9345-1a98d4553751": "west-asia",
     "a47f57af-8ac2-4724-81b0-43074c64f84c": "europe",
     "1eaa48b6-dc60-49d6-91c4-49db556f4ddf": "europe",
+    "b0996783-df13-4b40-baa5-d5864af3c5f5": "africa",
     "25ee0dcc-966c-4cf8-86e1-ff255fc5f7ad": "east-asia",
     "14ad524a-01e4-4d70-9c79-9aaa596aa2fa": "west-asia",
     "8785538e-ec07-4eba-bd05-5c7b3c7903c4": "west-asia",
@@ -2736,6 +2737,7 @@
     "83abbfa2-d755-4631-9345-1a98d4553751": "levant",
     "a47f57af-8ac2-4724-81b0-43074c64f84c": "northern-europe",
     "1eaa48b6-dc60-49d6-91c4-49db556f4ddf": "western-europe",
+    "b0996783-df13-4b40-baa5-d5864af3c5f5": "nile-valley",
     "25ee0dcc-966c-4cf8-86e1-ff255fc5f7ad": "japan",
     "14ad524a-01e4-4d70-9c79-9aaa596aa2fa": "levant",
     "8785538e-ec07-4eba-bd05-5c7b3c7903c4": "levant",

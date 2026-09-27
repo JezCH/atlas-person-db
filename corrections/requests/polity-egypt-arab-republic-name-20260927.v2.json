@@ -1,0 +1,29 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-name:egypt-arab-republic-survivor:2026-09-27:v1",
+  "release_order": 970,
+  "evidence": {
+    "decision": "After ancient, Ptolemaic, and 1953–1958 Republic of Egypt Activities are removed and Sadat's 1970–1971 UAR-name phase is split away, preserve polity UUID 8c25246a-3d73-4df9-8e4a-b0c5ca97c241 as the Arab Republic of Egypt survivor and replace its generic preferred display names.",
+    "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+    "identity_rule": "The contaminated generic Egypt UUID survives only for the post-2 September 1971 Arab Republic of Egypt identity; earlier unrelated historical identities are represented by their own reviewed polity UUIDs."
+  },
+  "operations": [
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "egypt-arab-republic-en-preferred-name",
+      "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+      "locale": "en",
+      "expected_name": "Egypt",
+      "replacement_name": "Arab Republic of Egypt"
+    },
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "egypt-arab-republic-ko-preferred-name",
+      "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+      "locale": "ko",
+      "expected_name": "이집트",
+      "replacement_name": "이집트 아랍 공화국"
+    }
+  ]
+}
