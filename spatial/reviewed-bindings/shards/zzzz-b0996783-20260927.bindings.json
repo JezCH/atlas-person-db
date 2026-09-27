@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "zzzz-b0996783-20260927",
+  "baseline": "96acb5b5946f083f3a66e4b55ffea890bc059aa7",
+  "reviewed_at": "2026-09-27T12:10:00.000Z",
+  "bindings": [
+    {
+      "polity_id": "b0996783-df13-4b40-baa5-d5864af3c5f5",
+      "region_code": "africa",
+      "subregion_code": "nile-valley"
+    }
+  ]
+}
