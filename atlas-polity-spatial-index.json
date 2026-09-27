@@ -1217,7 +1217,9 @@
     "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "europe",
     "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "europe",
     "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "west-asia",
-    "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "africa"
+    "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "africa",
+    "b0996783-df13-4b40-baa5-d5864af3c5f5": "africa",
+    "a602213a-dccb-4a23-96c3-e91dfc300a9f": "africa"
   },
   "place_function_records": [
     {
@@ -2800,7 +2802,9 @@
     "e146e6ef-15f0-4bca-9e5d-b26672c65018": "eastern-siberia-far-east",
     "e1548cb1-f89d-538b-9fb2-bad02ad87f8e": "japan",
     "e3ca4f3c-3504-4830-b141-f4cdd0157763": "himalayas",
-    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia"
+    "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia",
+    "b0996783-df13-4b40-baa5-d5864af3c5f5": "nile-valley",
+    "a602213a-dccb-4a23-96c3-e91dfc300a9f": "nile-valley"
   },
   "activity_spatial_overrides": [
     {
