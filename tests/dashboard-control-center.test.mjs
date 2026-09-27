@@ -997,11 +997,14 @@ test("Dashboard keeps actionable work panels ahead of large analysis surfaces", 
   assert.ok(completeness > quality && heatmap > completeness && timeline > heatmap);
 });
 
-test("mobile Dashboard reduces table travel and caps timeline height without dropping data", () => {
-  assert.match(dashboardCssSource, /@media\(max-width:600px\)\{\.dashboard-heatmap\{min-width:760px;font-size:9px\}/);
+test("mobile Dashboard fits the Era × Region heatmap inside the panel and caps other dense surfaces", () => {
+  assert.match(dashboardCssSource, /\.dashboard-heatmap-wrap\{overflow-x:hidden\}/);
+  assert.match(dashboardCssSource, /\.dashboard-heatmap\{width:100%;min-width:0;font-size:7px\}/);
+  assert.match(dashboardCssSource, /dashboard-heatmap-region-head\{height:56px;line-height:1;writing-mode:vertical-rl;text-orientation:upright/);
+  assert.match(dashboardCssSource, /dashboard-heatmap-total-head,\.dashboard-heatmap \.dashboard-heatmap-total-cell\{width:32px\}/);
+  assert.doesNotMatch(dashboardCssSource, /dashboard-heatmap\{min-width:760px/);
   assert.match(dashboardCssSource, /\.dashboard-completeness\{min-width:540px;font-size:9px\}/);
   assert.match(dashboardCssSource, /\.dashboard-timeline\{max-height:360px;overflow:auto;overscroll-behavior:contain;padding-right:4px\}/);
-  assert.match(dashboardCssSource, /scrollbar-gutter:stable/);
   assert.match(dashboardSource, /timeline\.entries\.map\(recentTimelineEntry\)/);
 });
 
