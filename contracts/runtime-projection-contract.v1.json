@@ -8,7 +8,11 @@
     "runtime_is_a_sealed_snapshot": true,
     "runtime_never_fabricates_unknown_temporal_values": true,
     "admin_authoring_reads_may_retain_unresolved_evidence": true,
-    "public_runtime_reads_must_use_projection": true
+    "public_runtime_reads_must_use_projection": true,
+    "runtime_publication_is_retry_idempotent": true,
+    "activation_is_atomic_with_projection_commit": true,
+    "data_only_canonical_mutation_does_not_require_runtime_redeploy": true,
+    "manual_semantic_refresh_trigger_required": false
   },
   "readiness": {
     "relation_type_required": true,
@@ -20,7 +24,11 @@
       "normalized_source_link",
       "legacy_import_source_with_locator"
     ],
-    "certainty_values_runtime_safe": ["exact", "approximate", "uncertain"]
+    "certainty_values_runtime_safe": [
+      "exact",
+      "approximate",
+      "uncertain"
+    ]
   },
   "exclusion_codes": [
     "RELATION_TYPE_UNRESOLVED",
@@ -30,12 +38,39 @@
     "PROVENANCE_UNRESOLVED"
   ],
   "snapshot": {
-    "input_order": ["activity_id"],
-    "source_order": ["source_id", "source_locator_key"],
+    "input_order": [
+      "activity_id"
+    ],
+    "source_order": [
+      "source_id",
+      "source_locator_key"
+    ],
     "input_fingerprint": "sha256 canonical-json",
     "output_fingerprint": "sha256 canonical-json",
     "runtime_rows_store_authoring_activity_values": true,
     "runtime_rows_store_provenance_snapshot": true,
-    "live_authoring_join_from_runtime_forbidden": true
+    "live_authoring_join_from_runtime_forbidden": true,
+    "current_authoring_match": "compile_key/input_fingerprint exact"
+  },
+  "publication": {
+    "automatic_producers": [
+      "ATLAS Authoring Apply",
+      "ATLAS Correction Apply"
+    ],
+    "runtime_code_change_requires_exact_deployed_runtime_sha": true,
+    "data_only_publication_uses_current_deployed_runtime_sha": true,
+    "authenticated_publication_sha_field": "authoring_sha",
+    "workflow_dispatch_role": "recovery_only",
+    "active_verification_surface": "runtime-publication",
+    "currentness_requires": [
+      "current authoring compile_key equals active Runtime compile_key",
+      "current authoring input_fingerprint equals active compile input_fingerprint",
+      "Runtime row count equals active compile output_row_count",
+      "latest activation points to active compile"
+    ],
+    "dispositions": {
+      "published": "row present in runtime_person_politics_v1 for active compile",
+      "excluded": "exact runtime_compile_exclusions target with reason_code"
+    }
   }
 }

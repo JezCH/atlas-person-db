@@ -171,15 +171,16 @@ test('latest activation drift is surfaced instead of making the read fail', asyn
   assert.equal(history.delta_from_previous,null);
 });
 
-test('runtime publication additive contract includes activation history without changing schema version', async () => {
+test('runtime publication currentness requires the canonical Authoring fingerprint, not only row counts', async () => {
   const currentKey='runtime-person-politics-v1:current';
+  const currentFingerprint='a'.repeat(64);
   let step=0;
   const client={async query(sql,params){
     step+=1;
     if (step===1) {
       assert.match(sql,/person_politics_v2/);
       return {rows:[{
-        authoring_activity_count:103,
+        authoring_activity_count:100,
         runtime_activity_count:90,
         runtime_compile_key_count:1,
         current_compile_key:currentKey
@@ -190,6 +191,8 @@ test('runtime publication additive contract includes activation history without 
       assert.deepEqual(params,[currentKey]);
       return {rows:[{
         compiler_version:'runtime-person-politics-v1',
+        input_fingerprint:currentFingerprint,
+        output_fingerprint:'b'.repeat(64),
         input_row_count:100,
         output_row_count:90,
         excluded_row_count:10,
@@ -198,10 +201,14 @@ test('runtime publication additive contract includes activation history without 
       }]};
     }
     if (step===3) {
+      assert.equal(sql,'AUTHORING_FINGERPRINT_QUERY');
+      return {rows:[{opaque:'authoring'}]};
+    }
+    if (step===4) {
       assert.match(sql,/to_regclass/);
       return {rows:[{activation_history:true}]};
     }
-    assert.equal(step,4);
+    assert.equal(step,5);
     return {rows:[activationRow({
       compileKey:currentKey,
       input:100,
@@ -211,18 +218,62 @@ test('runtime publication additive contract includes activation history without 
     })]};
   }};
 
-  const publication=await readApi.readRuntimePublication(client);
+  const publication=await readApi.readRuntimePublication(client,{
+    authoringSnapshotSql:'AUTHORING_FINGERPRINT_QUERY',
+    compileAuthoring:rows=>{
+      assert.deepEqual(rows,[{opaque:'authoring'}]);
+      return {compile_key:currentKey,input_fingerprint:currentFingerprint};
+    }
+  });
   assert.equal(publication.schema,'atlas-runtime-publication/v1');
-  assert.equal(publication.source,'runtime-publication-ledgers');
-  assert.equal(publication.current_authoring_activity_count,103);
-  assert.equal(publication.current_runtime_activity_count,90);
+  assert.equal(publication.current_authoring_activity_count,100);
+  assert.equal(publication.authoring_delta_since_compile,0);
+  assert.equal(publication.current_authoring_input_fingerprint,currentFingerprint);
+  assert.equal(publication.authoring_matches_active_compile,true);
   assert.equal(publication.projection_matches_active_compile,true);
-  assert.equal(publication.activation_history.available,true);
-  assert.equal(publication.activation_history.latest_recorded.compile_key,currentKey);
+  assert.equal(publication.publication_current,true);
+  assert.equal(publication.active_compile.input_fingerprint,currentFingerprint);
   assert.equal(publication.activation_history.latest_matches_projection,true);
-  assert.equal(step,4);
+  assert.equal(step,5);
 });
 
+test('same Authoring row count with a changed fingerprint is stale publication', async () => {
+  const currentKey='runtime-person-politics-v1:old';
+  let step=0;
+  const client={async query(sql){
+    step+=1;
+    if (step===1) return {rows:[{
+      authoring_activity_count:100,
+      runtime_activity_count:90,
+      runtime_compile_key_count:1,
+      current_compile_key:currentKey
+    }]};
+    if (step===2) return {rows:[{
+      compiler_version:'runtime-person-politics-v1',
+      input_fingerprint:'a'.repeat(64),
+      output_fingerprint:'b'.repeat(64),
+      input_row_count:100,
+      output_row_count:90,
+      excluded_row_count:10,
+      exclusion_summary:{PROVENANCE_UNRESOLVED:10},
+      compiled_at:'2026-09-20T05:59:00Z'
+    }]};
+    if (step===3) return {rows:[{opaque:'changed-in-place'}]};
+    if (step===4) return {rows:[{activation_history:true}]};
+    return {rows:[activationRow({compileKey:currentKey})]};
+  }};
+  const publication=await readApi.readRuntimePublication(client,{
+    authoringSnapshotSql:'AUTHORING_FINGERPRINT_QUERY',
+    compileAuthoring:()=>({
+      compile_key:'runtime-person-politics-v1:new',
+      input_fingerprint:'c'.repeat(64)
+    })
+  });
+  assert.equal(publication.authoring_delta_since_compile,0);
+  assert.equal(publication.authoring_matches_active_compile,false);
+  assert.equal(publication.projection_matches_active_compile,true);
+  assert.equal(publication.publication_current,false);
+});
 
 function publicationResponse() {
   return {
