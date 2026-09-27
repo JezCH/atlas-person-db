@@ -60,17 +60,30 @@
       ],
       "shadow_writers": [],
       "status": "single_writer",
-      "remediation_unit": "UNIT 3",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
           "path": "server/atlas-identity-service.js",
           "contains": "async function createPolity"
         },
         {
+          "path": "server/atlas-identity-service.js",
+          "contains": "await resolvePolityIdentity(client"
+        },
+        {
+          "path": "server/atlas-polity-identity-resolver.js",
+          "contains": "async function resolvePolityIdentity"
+        },
+        {
           "path": "server/atlas-human-authoring-service.js",
-          "contains": "const created = await createPolity(client"
+          "contains": "identity_context:temporalContextFromHumanActivity(activity)"
+        },
+        {
+          "path": "server/atlas-authoring-manifest-v2-native-service.js",
+          "contains": "identity_context:temporalContextFromNativeActivity(manifest.activity)"
         }
-      ]
+      ],
+      "note": "Unit 3 closed: every declared Polity creation reaches the canonical resolver before insertion; stable names/aliases, temporal designations with date context, continuity ambiguity, and retired-identity resurrection are fail-closed."
     },
     {
       "id": "role_identity_creation",
