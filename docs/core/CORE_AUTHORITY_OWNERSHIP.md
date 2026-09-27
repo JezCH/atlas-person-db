@@ -24,7 +24,7 @@ A row marked `multi_writer_debt`, `ownership_gap`, or `duplicate_truth_registry`
 | Resource | Canonical fact | Declared owner | State | Confirmed bypass/shadow paths | Cleanup unit |
 |---|---|---|---|---|---|
 | `person_identity_creation` | Canonical Person identity and initial preferred names | `server/atlas-identity-service.js#createPerson` | **single_writer** | — | — |
-| `polity_identity_creation` | Canonical Polity identity and initial preferred names | `server/atlas-identity-service.js#createPolity` | **single_writer** | — | UNIT 3 |
+| `polity_identity_creation` | Canonical Polity identity and initial preferred names | `server/atlas-identity-service.js#createPolity` | **single_writer** | — | — |
 | `role_identity_creation` | Canonical Role vocabulary identity and preferred names | `server/atlas-identity-service.js#createRole` | **multi_writer_debt** | `server/atlas-correction-role-merge-v2-service.js`<br>`server/atlas-correction-role-scope-v2-service.js` | UNIT 14 / UNIT 16 |
 | `activity_authoring` | Canonical Person–Polity Activity assertion and normalized Activity source links | `server/atlas-stage2-native-activity-service.js#createStage2NativeActivityTx` | **multi_writer_debt** | `server/atlas-correction-manifest-v2-service.js`<br>`server/atlas-person-merge-service.js`<br>`server/atlas-person-delete-service.js` | UNIT 14 / UNIT 16 |
 | `source_identity` | Reusable bibliographic Source identity | `server/atlas-authoring-object-service.js#createSource` | **multi_writer_debt** | `server/atlas-human-authoring-service.js`<br>`server/atlas-correction-v2-stage2-assertions.js`<br>`server/atlas-correction-source-citation-v2-service.js` | UNIT 9 |
@@ -47,6 +47,8 @@ A row marked `multi_writer_debt`, `ownership_gap`, or `duplicate_truth_registry`
 ### Already clean enough to preserve
 
 The current creation primitives for **Person, Polity and Role** converge on `atlas-identity-service.js`. Normal Human Authoring and native manifest orchestration call those primitives instead of maintaining separate identity creation code.
+
+For **Polity**, Unit 3 adds `atlas-polity-identity-resolver.js` in front of `createPolity`. Declared creation now resolves stable names/aliases, date-bounded temporal designations, current continuity relations and retired-identity evidence before insertion. Ambiguous continuity, missing/mismatched temporal context and retired identity resurrection fail closed rather than creating a second UUID.
 
 `atlas-stage2-native-activity-service.js` is the intended canonical Activity writer used by normal authoring. `atlas-authoring-object-service.js` is the intended first-class Source/Place writer. `atlas-person-domain-service.js` is the dedicated representative-domain mutation engine. Runtime projection is generated only through `atlas-runtime-compile-service.js`.
 
