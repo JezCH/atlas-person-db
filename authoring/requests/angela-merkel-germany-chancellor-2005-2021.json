@@ -1,14 +1,14 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:angela-merkel:federal-republic-of-germany:federal-chancellor:2005-2021:v2",
+  "request_id": "authoring:angela-merkel:germany:federal-chancellor:2005-2021:v1",
   "person": {
     "canonical_name_en": "Angela Merkel",
     "display_name_ko": "앙겔라 메르켈"
   },
   "polity": {
-    "canonical_name_en": "Federal Republic of Germany",
-    "display_name_ko": "독일연방공화국"
+    "canonical_name_en": "Germany",
+    "display_name_ko": "독일"
   },
   "activity": {
     "relation_type": "governs",
@@ -27,7 +27,7 @@
     "end_calendar": "gregorian",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Angela Merkel became Federal Chancellor of the Federal Republic of Germany on 22 November 2005 and remained continuously in office through four cabinets until Olaf Scholz was elected and the Chancellery was handed over on 8 December 2021. ATLAS binds this completed chancellorship to the existing Federal Republic of Germany identity rather than the separate 1933-1945 German Reich polity."
+    "notes": "Angela Merkel became Federal Chancellor of Germany on 22 November 2005 and remained continuously in office through four cabinets until Olaf Scholz was elected and the Chancellery was handed over on 8 December 2021. ATLAS models the uninterrupted chancellorship as one governing Activity despite successive parliamentary terms and cabinet formations."
   },
   "sources": [
     {
