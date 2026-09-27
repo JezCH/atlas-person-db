@@ -2,7 +2,7 @@
   "schema": "atlas-requirements/v1",
   "version": 1,
   "finalized": true,
-  "as_of": "2026-09-23",
+  "as_of": "2026-09-27",
   "roadmap": [
     "P0",
     "P1",
@@ -110,6 +110,16 @@
       "id": "ATLAS-RQ-0017",
       "status": "ACTIVE",
       "title": "Unknown Person Activity boundaries must remain representable without fabricated years"
+    },
+    {
+      "id": "ATLAS-RQ-0018",
+      "status": "ACTIVE",
+      "title": "CORE v2 architecture, authority map, invariants and unit topology are governed by docs/core/CORE_V2_MASTER_PLAN.md without duplicate active truth registries"
+    },
+    {
+      "id": "ATLAS-RQ-0019",
+      "status": "ACTIVE",
+      "title": "New canonical Person creation excludes every living person; unresolved current life status fails closed"
     },
     {
       "id": "ATLAS-RQ-0101",
@@ -404,15 +414,23 @@
     },
     {
       "id": "ATLAS-RQ-0221",
-      "status": "PENDING",
-      "title": "Create Baseline B and enforce end-state constraints",
-      "phase": "P11"
+      "status": "COMPLETED",
+      "title": "Seal post-P10 Baseline B and retire its one-shot capture path into durable canonical-data readiness",
+      "evidence_paths": [
+        "server/atlas-canonical-data-readiness.js",
+        ".github/workflows/atlas-canonical-data-readiness.yml",
+        "tests/atlas-canonical-data-readiness.test.mjs"
+      ]
     },
     {
       "id": "ATLAS-RQ-0222",
-      "status": "PENDING",
-      "title": "Remove all reachable legacy and transitional paths",
-      "phase": "P12"
+      "status": "COMPLETED",
+      "title": "Remove reachable legacy correction runtime semantics while preserving historical audit evidence",
+      "evidence_paths": [
+        "server/atlas-correction-apply-handler.js",
+        ".github/workflows/atlas-correction-apply.yml",
+        "tests/atlas-correction-transport.test.mjs"
+      ]
     },
     {
       "id": "ATLAS-RQ-0223",
