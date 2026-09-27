@@ -114,3 +114,4 @@ jobs:
             ' /tmp/atlas-runtime-compile.json >/dev/null
           jq . /tmp/atlas-runtime-compile.json
 # AoE II SS04 2026-09-25: exact-SHA Runtime refresh after committed Authoring and reviewed domain apply.\n# Later Jin 2026-09-27: exact-SHA Runtime refresh after reviewed 後晉/後金 correction.
+# Kingdom of Serbia 2026-09-27: exact-SHA Runtime refresh after reviewed medieval/modern false-merge correction.
