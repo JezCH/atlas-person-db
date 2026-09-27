@@ -133,15 +133,19 @@ test('activation baseline captures only the currently observed Runtime projectio
   assert.doesNotMatch(calls[2].sql,/\$4|\$5/);
 });
 
-test('committed activation records deployment SHAs and permits the same compile key to be activated repeatedly', async () => {
-  let nextId=50;
-  const paramsSeen=[];
+test('committed activation is idempotent for the same compile/runtime/publication tuple', async () => {
+  let inserted=false;
+  const calls=[];
   const client={async query(sql,params){
+    calls.push({sql,params});
+    if (/select id::text,row_count,activated_at/.test(sql)) {
+      if (!inserted) return {rows:[]};
+      return {rows:[{id:'51',row_count:9,activated_at:'2026-09-20T05:10:00Z'}]};
+    }
     assert.match(sql,/insert into atlas_v2\.runtime_projection_activations/);
     assert.match(sql,/compile_commit/);
-    paramsSeen.push(params);
-    nextId+=1;
-    return {rows:[{id:String(nextId),activated_at:'2026-09-20T05:10:00Z'}]};
+    inserted=true;
+    return {rows:[{id:'51',activated_at:'2026-09-20T05:10:00Z'}]};
   }};
   const args={
     compileKey:'runtime-person-politics-v1:same',
@@ -151,12 +155,14 @@ test('committed activation records deployment SHAs and permits the same compile 
   };
   const first=await runtime.recordRuntimeActivation(client,args);
   const second=await runtime.recordRuntimeActivation(client,args);
-  assert.equal(first.compile_key,second.compile_key);
-  assert.notEqual(first.id,second.id);
+  assert.equal(first.id,'51');
+  assert.equal(second.id,'51');
+  assert.equal(first.replay,false);
+  assert.equal(second.replay,true);
   assert.equal(first.runtime_sha,'a'.repeat(40));
   assert.equal(first.authoring_sha,'b'.repeat(40));
-  assert.equal(paramsSeen.length,2);
-  assert.deepEqual(paramsSeen[0],paramsSeen[1]);
+  assert.equal(calls.filter(({sql})=>/insert into atlas_v2\.runtime_projection_activations/.test(sql)).length,1);
+  assert.equal(calls.filter(({sql})=>/select id::text,row_count,activated_at/.test(sql)).length,2);
 });
 
 test('Runtime projection insert placeholders reserve $1 for compile_key across every batched row', () => {
@@ -255,6 +261,10 @@ test('committed compile captures pre-existing Runtime baseline once and writes a
     if (/min\(compile_key\) as compile_key/.test(sql)) {
       return {rows:[{row_count:1,compile_count:1,compile_key:compiled.compile_key}]};
     }
+    if (/select id::text,row_count,activated_at/.test(sql)) {
+      assert.deepEqual(params,[runtime.ACTIVATION_PROJECTION,compiled.compile_key,'3'.repeat(40),'4'.repeat(40)]);
+      return {rows:[]};
+    }
     if (/insert into atlas_v2\.runtime_projection_activations/.test(sql) && /compile_commit/.test(sql)) {
       assert.deepEqual(params,[runtime.ACTIVATION_PROJECTION,compiled.compile_key,'3'.repeat(40),'4'.repeat(40),1]);
       return {rows:[{id:'71',activated_at:'2026-09-20T05:20:00Z'}]};
@@ -271,6 +281,9 @@ test('committed compile captures pre-existing Runtime baseline once and writes a
   assert.equal(out.activation_baseline_recorded,true);
   assert.equal(out.activation.activation_kind,'compile_commit');
   assert.equal(out.activation.id,'71');
+  assert.equal(out.activation.replay,false);
+  assert.equal(out.activation_replay,false);
+  assert.deepEqual(out.disposition_counts,{published:1,excluded:0});
   assert.equal(queries.filter(({sql})=>/insert into atlas_v2\.runtime_projection_activations/.test(sql)).length,2);
   assert.equal(queries.some(({sql})=>/^commit$/i.test(sql.trim())),true);
 });
@@ -278,9 +291,16 @@ test('committed compile captures pre-existing Runtime baseline once and writes a
 test('Runtime contract forbids public live Authoring joins', () => {
   const contract=JSON.parse(fs.readFileSync(new URL('../contracts/runtime-projection-contract.v1.json',import.meta.url),'utf8'));
   assert.equal(contract.principles.public_runtime_reads_must_use_projection,true);
+  assert.equal(contract.principles.runtime_publication_is_retry_idempotent,true);
+  assert.equal(contract.principles.activation_is_atomic_with_projection_commit,true);
+  assert.equal(contract.principles.data_only_canonical_mutation_does_not_require_runtime_redeploy,true);
+  assert.equal(contract.principles.manual_semantic_refresh_trigger_required,false);
   assert.equal(contract.snapshot.live_authoring_join_from_runtime_forbidden,true);
+  assert.equal(contract.snapshot.current_authoring_match,'compile_key/input_fingerprint exact');
   assert.equal(contract.readiness.start_boundary,'known_complete');
   assert.equal(contract.readiness.end_boundary,'known_complete_or_verified_ongoing');
+  assert.deepEqual(contract.publication.automatic_producers,['ATLAS Authoring Apply','ATLAS Correction Apply']);
+  assert.equal(contract.publication.workflow_dispatch_role,'recovery_only');
 });
 
 test('compile snapshot preserves exact excluded Activity targets beside the aggregate summary', () => {

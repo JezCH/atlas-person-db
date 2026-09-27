@@ -105,6 +105,34 @@ async function recordRuntimeActivation(client, { compileKey, rowCount, runtimeSh
   const count = Number(rowCount);
   if (!Number.isInteger(count) || count < 0) throw new Error("RUNTIME_ACTIVATION_ROW_COUNT_INVALID");
 
+  const params = [ACTIVATION_PROJECTION, key, normalizedRuntimeSha, normalizedAuthoringSha];
+  const existing = await client.query(`
+    select id::text,row_count,activated_at
+      from atlas_v2.runtime_projection_activations
+     where projection_name=$1
+       and compile_key=$2
+       and activation_kind='compile_commit'
+       and runtime_sha=$3
+       and authoring_sha=$4
+     order by id desc
+     limit 1
+  `, params);
+  if (existing.rows?.length) {
+    const row = existing.rows[0];
+    if (Number(row.row_count) !== count) throw new Error("RUNTIME_ACTIVATION_REPLAY_ROW_COUNT_DRIFT");
+    return Object.freeze({
+      id:String(row.id || ""),
+      projection_name:ACTIVATION_PROJECTION,
+      compile_key:key,
+      activation_kind:"compile_commit",
+      runtime_sha:normalizedRuntimeSha,
+      authoring_sha:normalizedAuthoringSha,
+      row_count:count,
+      activated_at:row.activated_at ?? null,
+      replay:true
+    });
+  }
+
   const inserted = await client.query(`
     insert into atlas_v2.runtime_projection_activations(
       projection_name,compile_key,activation_kind,runtime_sha,authoring_sha,row_count
@@ -119,7 +147,8 @@ async function recordRuntimeActivation(client, { compileKey, rowCount, runtimeSh
     runtime_sha:normalizedRuntimeSha,
     authoring_sha:normalizedAuthoringSha,
     row_count:count,
-    activated_at:inserted.rows?.[0]?.activated_at ?? null
+    activated_at:inserted.rows?.[0]?.activated_at ?? null,
+    replay:false
   });
 }
 
@@ -370,8 +399,13 @@ async function compileRuntimeProjection(client, { dryRun=false, runtimeSha=null,
       dry_run:Boolean(dryRun), committed:!dryRun, ledger_replay:ledgerReplay,
       exclusion_ledger_replay:exclusionLedgerReplay,
       exclusion_target_count:compiled.exclusions.length,
+      disposition_counts:Object.freeze({
+        published:compiled.output_row_count,
+        excluded:compiled.excluded_row_count
+      }),
       activation_baseline_recorded:Boolean(baselineActivation),
       activation,
+      activation_replay:Boolean(activation?.replay),
       compile_key:compiled.compile_key,
       input_fingerprint:compiled.input_fingerprint,
       output_fingerprint:compiled.output_fingerprint,

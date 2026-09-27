@@ -1,5 +1,7 @@
 "use strict";
 
+const { AUTHORING_SNAPSHOT_SQL, compileSnapshot } = require("./atlas-runtime-compile-service.js");
+
 const RUNTIME_PUBLICATION_SCHEMA = "atlas-runtime-publication/v1";
 const RUNTIME_ACTIVATION_PROJECTION = "runtime_person_politics_v1";
 
@@ -123,7 +125,10 @@ async function readRuntimeActivationHistory(client,{ currentCompileKey=null, run
   });
 }
 
-async function readRuntimePublication(client) {
+async function readRuntimePublication(client, {
+  compileAuthoring = compileSnapshot,
+  authoringSnapshotSql = AUTHORING_SNAPSHOT_SQL
+} = {}) {
   const countsResult = await client.query(`
     select
       (select count(*)::int from atlas_v2.person_politics_v2) as authoring_activity_count,
@@ -143,7 +148,8 @@ async function readRuntimePublication(client) {
   let row = null;
   if (currentCompileKey) {
     const compileResult = await client.query(`
-      select compiler_version, input_row_count, output_row_count, excluded_row_count,
+      select compiler_version, input_fingerprint, output_fingerprint,
+             input_row_count, output_row_count, excluded_row_count,
              exclusion_summary, compiled_at
         from atlas_v2.runtime_compile_runs
        where compile_key=$1
@@ -154,7 +160,10 @@ async function readRuntimePublication(client) {
   }
 
   const currentCompile = row ? Object.freeze({
+    compile_key:currentCompileKey,
     compiler_version:String(row.compiler_version || ""),
+    input_fingerprint:String(row.input_fingerprint || ""),
+    output_fingerprint:String(row.output_fingerprint || ""),
     input_row_count:Number(row.input_row_count || 0),
     output_row_count:Number(row.output_row_count || 0),
     excluded_row_count:Number(row.excluded_row_count || 0),
@@ -166,10 +175,27 @@ async function readRuntimePublication(client) {
     compiled_at:row.compiled_at == null ? null : new Date(row.compiled_at).toISOString()
   }) : null;
 
+  const authoringSnapshot = await client.query(authoringSnapshotSql);
+  const currentAuthoringCompile = compileAuthoring(authoringSnapshot.rows || []);
+  const authoringMatchesActiveCompile = currentCompileKey != null
+    && currentAuthoringCompile.compile_key === currentCompileKey;
+
   const activationHistory=await readRuntimeActivationHistory(client,{
     currentCompileKey,
     runtimeActivityCount
   });
+
+  const projectionMatchesActiveCompile = currentCompile == null
+    ? null
+    : runtimeActivityCount === currentCompile.output_row_count;
+  const publicationCurrent = Boolean(
+    currentCompile
+    && projectionMatchesActiveCompile === true
+    && authoringMatchesActiveCompile
+    && activationHistory.available === true
+    && activationHistory.latest_matches_projection === true
+    && activationHistory.latest_recorded?.compile_key === currentCompileKey
+  );
 
   return Object.freeze({
     schema:RUNTIME_PUBLICATION_SCHEMA,
@@ -177,8 +203,12 @@ async function readRuntimePublication(client) {
     current_authoring_activity_count:authoringActivityCount,
     current_runtime_activity_count:runtimeActivityCount,
     active_compile:currentCompile,
+    current_authoring_input_fingerprint:currentAuthoringCompile.input_fingerprint,
+    current_authoring_compile_key:currentAuthoringCompile.compile_key,
     authoring_delta_since_compile:currentCompile == null ? null : authoringActivityCount-currentCompile.input_row_count,
-    projection_matches_active_compile:currentCompile == null ? null : runtimeActivityCount === currentCompile.output_row_count,
+    authoring_matches_active_compile:currentCompile == null ? null : authoringMatchesActiveCompile,
+    projection_matches_active_compile:projectionMatchesActiveCompile,
+    publication_current:publicationCurrent,
     activation_history:activationHistory
   });
 }

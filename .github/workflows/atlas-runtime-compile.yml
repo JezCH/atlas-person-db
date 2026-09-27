@@ -5,10 +5,19 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/atlas-runtime-compile.yml'
+      - 'server/atlas-runtime-compile-handler.js'
+      - 'server/atlas-runtime-compile-service.js'
+      - 'server/atlas-runtime-migrations.js'
+      - 'server/atlas-runtime-publication-read-service.js'
+      - 'server/atlas-runtime-publication-read-handler.js'
+      - 'db/migrations/20260906_runtime_person_politics_projection_v1.sql'
+      - 'db/migrations/20260920_runtime_projection_activation_history_v1.sql'
+      - 'db/migrations/20260920_runtime_compile_exclusion_targets_v1.sql'
+      - 'contracts/runtime-projection-contract.v1.json'
   workflow_run:
     workflows:
       - ATLAS Authoring Apply
+      - ATLAS Correction Apply
     types:
       - completed
   workflow_dispatch:
@@ -19,29 +28,23 @@ permissions:
 
 concurrency:
   group: atlas-runtime-projection-compile
-  # A newer main Runtime target supersedes an older run that may be waiting for a deployment SHA that can no longer become the Production alias.
+  # Publication is derived from the current canonical DB snapshot. A newer
+  # publication run supersedes an older run that has not committed yet.
   cancel-in-progress: true
 
 jobs:
   compile:
-    # Compile after every terminal main-branch Authoring Apply, including a failure.
-    # SSS+ Person batch 02 registration 2026-09-25: refresh Runtime after committed 8-person Authoring batch.
-    # SSS SUPERBATCH-05 registration 2026-09-25: refresh Runtime after 16 committed Authoring Activities and domain apply.
-    # SSS RESIDUAL-06A registration 2026-09-25: refresh Runtime after 3 committed Authoring Activities and domain apply.
-    # USER-CHINA-SSS registration 2026-09-26: refresh Runtime after 3 committed Authoring Activities and domain apply.
-    # A workflow-file-only main push is also an operator-safe direct refresh trigger when
-    # Authoring is already committed but the legacy full audit path is unnecessarily long.
-    # Its OIDC policy admits push only for this exact workflow, main ref, production environment, and exact SHA.
-    # A Human Authoring Apply can commit Authoring data and then fail only because
-    # its legacy public read-back is now Runtime-backed. Compiling that committed
-    # Authoring state breaks the post-cutover circular dependency without falling
-    # back to raw Authoring reads. A subsequent rerun can then verify Runtime.
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event.workflow_run.head_branch == 'main'
+    # Authoring and Correction are canonical Activity mutation boundaries.
+    # A terminal run triggers publication even when the producer workflow
+    # reports failure because isolated earlier operations may already have
+    # committed. workflow_dispatch is recovery-only, never a semantic trigger.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: production
     env:
-      ATLAS_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
+      ATLAS_RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
+      ATLAS_RUNTIME_PUBLICATION_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-publication
       ATLAS_RUNTIME_COMPILE_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-runtime-compile
       ATLAS_RUNTIME_COMPILE_AUDIENCE: atlas-person-db-runtime-compile
     steps:
@@ -49,69 +52,111 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Wait for exact Production runtime
+      - name: Record publication trigger
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "${{ github.event_name }}" == "workflow_run" ]]; then
+            echo "Canonical producer: ${{ github.event.workflow_run.name }}"
+            echo "Producer head SHA: ${{ github.event.workflow_run.head_sha }}"
+            echo "Producer conclusion: ${{ github.event.workflow_run.conclusion }}"
+          elif [[ "${{ github.event_name }}" == "push" ]]; then
+            echo "Runtime compiler code/contract changed at ${GITHUB_SHA}; exact deployed code is required."
+          else
+            echo "Recovery publication requested at workflow SHA ${GITHUB_SHA}."
+          fi
+
+      - name: Resolve compatible deployed Runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          require_exact_runtime=false
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            require_exact_runtime=true
+          fi
+
           for attempt in $(seq 1 60); do
-            status="$(curl --silent --show-error \
-              --output /tmp/atlas-runtime-readiness.json \
-              --write-out '%{http_code}' \
-              "$ATLAS_AUTHORING_ENDPOINT")"
+            status="$(curl --silent --show-error               --output /tmp/atlas-runtime-identity.json               --write-out '%{http_code}'               "$ATLAS_RUNTIME_IDENTITY_ENDPOINT")"
             if [[ "$status" == "200" ]]; then
-              runtime_sha="$(jq -r '.runtime_sha // ""' /tmp/atlas-runtime-readiness.json)"
-              ready="$(jq -r '.ready // false' /tmp/atlas-runtime-readiness.json)"
-              if [[ "$runtime_sha" == "$GITHUB_SHA" && "$ready" == "true" ]]; then
-                echo "Production authoring runtime is exact target ${GITHUB_SHA}."
-                exit 0
+              runtime_sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/atlas-runtime-identity.json)"
+              runtime_ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/atlas-runtime-identity.json)"
+              if [[ "$runtime_sha" =~ ^[0-9a-f]{40}$ && "$runtime_ref" == "main" ]]; then
+                if [[ "$require_exact_runtime" == "true" && "$runtime_sha" != "$GITHUB_SHA" ]]; then
+                  echo "Runtime code deployment ${runtime_sha} is behind compiler change ${GITHUB_SHA} (attempt ${attempt}/60)."
+                else
+                  echo "ATLAS_RUNTIME_SHA=$runtime_sha" >> "$GITHUB_ENV"
+                  echo "Using deployed Runtime code ${runtime_sha}; publication workflow SHA is ${GITHUB_SHA}."
+                  exit 0
+                fi
+              else
+                echo "Runtime identity is incomplete: sha=${runtime_sha:-unknown}, ref=${runtime_ref:-unknown} (attempt ${attempt}/60)."
               fi
-              echo "Production runtime ${runtime_sha:-unknown}, ready=${ready}; target ${GITHUB_SHA} (attempt ${attempt}/60)."
             else
-              echo "Authoring readiness returned HTTP ${status} (attempt ${attempt}/60)."
+              echo "Runtime identity returned HTTP ${status} (attempt ${attempt}/60)."
             fi
             sleep 10
           done
-          cat /tmp/atlas-runtime-readiness.json >&2 || true
-          echo "PRODUCTION_RUNTIME_NOT_AT_COMPILE_SHA:${GITHUB_SHA}" >&2
+
+          cat /tmp/atlas-runtime-identity.json >&2 || true
+          echo "COMPATIBLE_PRODUCTION_RUNTIME_NOT_AVAILABLE" >&2
           exit 1
 
-      - name: Compile sealed Runtime projection
+      - name: Compile and atomically publish Runtime projection
         shell: bash
         run: |
           set -euo pipefail
-          oidc_token="$(curl --fail-with-body --silent --show-error \
-            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
-            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_RUNTIME_COMPILE_AUDIENCE}" | jq -er '.value')"
-          payload="$(jq -cn \
-            --arg runtime_sha "$GITHUB_SHA" \
-            --arg authoring_sha "$GITHUB_SHA" \
-            '{runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,dry_run:false}')"
-          status="$(curl --silent --show-error \
-            --output /tmp/atlas-runtime-compile.json \
-            --write-out '%{http_code}' \
-            --request POST \
-            -H 'content-type: application/json' \
-            -H "authorization: Bearer ${oidc_token}" \
-            --data "$payload" \
-            "$ATLAS_RUNTIME_COMPILE_ENDPOINT")"
+          oidc_token="$(curl --fail-with-body --silent --show-error             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_RUNTIME_COMPILE_AUDIENCE}" | jq -er '.value')"
+          payload="$(jq -cn             --arg runtime_sha "$ATLAS_RUNTIME_SHA"             --arg authoring_sha "$GITHUB_SHA"             '{runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,dry_run:false}')"
+          status="$(curl --silent --show-error             --output /tmp/atlas-runtime-compile.json             --write-out '%{http_code}'             --request POST             -H 'content-type: application/json'             -H "authorization: Bearer ${oidc_token}"             --data "$payload"             "$ATLAS_RUNTIME_COMPILE_ENDPOINT")"
           if [[ "$status" != "200" ]]; then
             cat /tmp/atlas-runtime-compile.json >&2 || true
             echo "Runtime compile failed: HTTP ${status}" >&2
             exit 1
           fi
-          jq -e \
-            --arg sha "$GITHUB_SHA" '
+          jq -e             --arg runtime "$ATLAS_RUNTIME_SHA"             --arg authoring "$GITHUB_SHA" '
               .ok==true
               and .marker=="ATLAS_RUNTIME_COMPILE_TRANSPORT_V1"
-              and .runtime_sha==$sha
-              and .authoring_sha==$sha
+              and .runtime_sha==$runtime
+              and .authoring_sha==$authoring
               and .outcome.marker=="ATLAS_RUNTIME_PERSON_POLITICS_COMPILE_V1"
               and .outcome.dry_run==false
               and .outcome.committed==true
               and (.outcome.input_fingerprint | test("^[0-9a-f]{64}$"))
               and (.outcome.output_fingerprint | test("^[0-9a-f]{64}$"))
               and (.outcome.input_row_count == (.outcome.output_row_count + .outcome.excluded_row_count))
+              and (.outcome.disposition_counts.published == .outcome.output_row_count)
+              and (.outcome.disposition_counts.excluded == .outcome.excluded_row_count)
+              and .outcome.activation.activation_kind=="compile_commit"
             ' /tmp/atlas-runtime-compile.json >/dev/null
           jq . /tmp/atlas-runtime-compile.json
-# AoE II SS04 2026-09-25: exact-SHA Runtime refresh after committed Authoring and reviewed domain apply.\n# Later Jin 2026-09-27: exact-SHA Runtime refresh after reviewed 後晉/後金 correction.
-# Kingdom of Serbia 2026-09-27: exact-SHA Runtime refresh after reviewed medieval/modern false-merge correction.
+
+      - name: Verify active publication and explicit dispositions
+        shell: bash
+        run: |
+          set -euo pipefail
+          status="$(curl --silent --show-error             --output /tmp/atlas-runtime-publication.json             --write-out '%{http_code}'             "$ATLAS_RUNTIME_PUBLICATION_ENDPOINT")"
+          [[ "$status" == "200" ]] || {
+            cat /tmp/atlas-runtime-publication.json >&2 || true
+            echo "Runtime publication verification failed: HTTP ${status}" >&2
+            exit 1
+          }
+          jq -e             --slurpfile compiled /tmp/atlas-runtime-compile.json             --arg runtime "$ATLAS_RUNTIME_SHA"             --arg authoring "$GITHUB_SHA" '
+              $compiled[0].outcome as $out
+              | .ok==true
+              and .schema=="atlas-runtime-publication/v1"
+              and .projection_matches_active_compile==true
+              and .authoring_matches_active_compile==true
+              and .publication_current==true
+              and .current_authoring_input_fingerprint==$out.input_fingerprint
+              and .active_compile.input_fingerprint==$out.input_fingerprint
+              and .active_compile.output_fingerprint==$out.output_fingerprint
+              and .active_compile.input_row_count==$out.input_row_count
+              and .active_compile.output_row_count==$out.output_row_count
+              and .active_compile.excluded_row_count==$out.excluded_row_count
+              and .activation_history.available==true
+              and .activation_history.latest_matches_projection==true
+              and .activation_history.latest_recorded.compile_key==$out.compile_key
+              and .activation_history.latest_recorded.runtime_sha==$runtime
+              and .activation_history.latest_recorded.authoring_sha==$authoring
+            ' /tmp/atlas-runtime-publication.json >/dev/null
+          jq . /tmp/atlas-runtime-publication.json
