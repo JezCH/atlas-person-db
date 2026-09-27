@@ -20,17 +20,6 @@
     }),
     active_frontier: freezeRows([
       {
-        id: "germany-pre1945-frg-collapse",
-        kind: "repair_review",
-        title: "Germany identity 전전·현대 과통합",
-        left: { name: "Germany", ko: "독일", polity_id: "5dee6535-9839-4c8b-8de5-b7519d41801d" },
-        right: { name: "Federal Republic of Germany", ko: "독일연방공화국" },
-        rationale: "1933–1945 독일 국가 행과 Angela Merkel 2005–2021 행이 generic Germany UUID에 함께 있고 Federal Republic of Germany가 별도로 존재합니다. Merkel을 FRG로 재조정하고 pre-1945 identity는 별도 검토해야 합니다.",
-        suggested_action: "repair",
-        status: "AUDIT_REPAIR_REQUIRED",
-        evidence: ["#977 exhaustive similarity audit confirmed false merge/relink", "Merkel → existing Federal Republic of Germany", "pre-1945 Germany identity 별도 검토"]
-      },
-      {
         id: "ireland-prestate-modern-collapse",
         kind: "repair_review",
         title: "Ireland identity 전근대·현대 과통합",
@@ -54,6 +43,28 @@
       }
     ]),
     resolved_frontier_history: freezeRows([
+      {
+        id: "germany-pre1945-frg-collapse",
+        kind: "repair_review",
+        title: "Germany 전전 / FRG identity 과통합",
+        left: { name: "German Reich (1933–1945)", ko: "독일국(1933–1945)", polity_id: "5dee6535-9839-4c8b-8de5-b7519d41801d" },
+        right: { name: "Weimar Republic / Federal Republic of Germany", ko: "바이마르 공화국 / 독일연방공화국" },
+        rationale: "최신 Production에서는 과거 감사 시점의 Angela Merkel 행이 이미 생존 인물 제외 정책에 따라 존재하지 않았습니다. 현재 live 결함이던 Werner Heisenberg의 1927 Activity를 기존 Weimar Republic으로 재연결하고, 1933–1945의 5개 Activity만 남은 survivor UUID를 German Reich (1933–1945)로 한정했습니다. 기존 Federal Republic of Germany UUID의 한국어 preferred name도 시대 한정 약칭 '서독'에서 공식 국가명 '독일연방공화국'으로 정리했습니다.",
+        suggested_action: "repair",
+        status: "PRODUCTION_APPLIED_REPAIR",
+        reviewed_decision: "repair",
+        locked: true,
+        evidence: [
+          "#1612 merged as 4444ae4edab6b48189e9bab9de21d47ea263b628",
+          "Correction Apply run 36323450109 SUCCESS",
+          "Runtime Projection Compile run 36323510921 SUCCESS",
+          "German Reich survivor 5dee6535-9839-4c8b-8de5-b7519d41801d now contains exactly five 1933–1945 Activities",
+          "Werner Heisenberg Activity 706e4da7-5cce-4cb5-a5ae-3f2d166f7c32 UUID preserved and relinked to Weimar Republic 7594c57e-0b32-49d6-84d0-f65cd46f759e",
+          "Federal Republic of Germany 2a3df3a5-6f18-42c0-8332-3ccaebdf3508 preferred Korean name normalized to 독일연방공화국",
+          "Angela Merkel was not recreated because current registration governance excludes living Persons",
+          "all three polity identities retain europe / central-europe Spatial placement; no Spatial mutation"
+        ]
+      },
       {
         id: "poland-medieval-modern-collapse",
         kind: "repair_review",
