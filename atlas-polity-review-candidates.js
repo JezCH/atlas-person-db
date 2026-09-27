@@ -11,7 +11,7 @@
 
   window.ATLAS_POLITY_REVIEW_CANDIDATES = Object.freeze({
     schema: "atlas-polity-review-candidates/v2",
-    generated_at: "2026-09-25",
+    generated_at: "2026-09-27",
     source_scope: "Current canonical Polity read + #977 POLITY_IDENTITY_EXHAUSTIVE_SIMILARITY_AUDIT checkpoint 5748136361 + terminal reconciliation of the prior 16/16 reviewed state-form merge program",
     active_frontier_source: Object.freeze({
       issue: 977,
@@ -19,17 +19,6 @@
       priority_rule: "confirmed false-merge/relink defects first; resolved/superseded prior cases remain review history instead of active work"
     }),
     active_frontier: freezeRows([
-      {
-        id: "later-jin-houjin-houjin-collapse",
-        kind: "repair_review",
-        title: "Later Jin identity 동명이체 과통합",
-        left: { name: "Later Jin", ko: "후진", polity_id: "0c1849ca-e4ae-572b-bfe3-0253aa08d83a" },
-        right: { name: "Later Jin (936–947) / Later Jin (1616–1636)", ko: "후진(後晉) / 후금(後金)" },
-        rationale: "한 UUID가 오대십국의 후진(936–947)과 여진의 후금(1616–1636)을 함께 담고 있습니다. 동명 영문 표기로 생긴 false merge이므로 identity 분리와 명칭 구분이 필요합니다.",
-        suggested_action: "repair",
-        status: "AUDIT_REPAIR_REQUIRED",
-        evidence: ["#977 exhaustive similarity audit confirmed false merge", "후진(後晉)과 후금(後金)은 별도 identity로 분리", "명칭 충돌도 함께 해소"]
-      },
       {
         id: "kingdom-of-serbia-medieval-modern-collapse",
         kind: "repair_review",
@@ -98,6 +87,26 @@
       }
     ]),
     resolved_frontier_history: freezeRows([
+      {
+        id: "later-jin-houjin-houjin-collapse",
+        kind: "repair_review",
+        title: "Later Jin 後晉 / 後金 오결합",
+        left: { name: "Later Jin (Five Dynasties)", ko: "후진(後晉)", polity_id: "0c1849ca-e4ae-572b-bfe3-0253aa08d83a" },
+        right: { name: "Later Jin (Jurchen)", ko: "후금(後金)", polity_id: "2113c54b-b341-43ef-927c-991feebfdcea" },
+        rationale: "오대십국 후진(後晉)과 여진 후금(後金)이 한 UUID에 섞였던 false merge를 수정했습니다. 기존 오대십국 UUID는 後晉으로 명확히 보존하고, 누르하치의 기존 Activity UUID는 별도 Jurchen Later Jin identity로 재연결했습니다.",
+        suggested_action: "repair",
+        status: "PRODUCTION_APPLIED_SPLIT",
+        reviewed_decision: "repair",
+        locked: true,
+        evidence: [
+          "#1583 created distinct Later Jin (Jurchen) / 후금(後金) identity",
+          "#1589 merged as 2c2d5f587c8e5cc40958dc0566969d287b3d04f5 with seed-retire → relink → rename ordering",
+          "Correction Apply run 36314133552 SUCCESS",
+          "Runtime Projection Compile run 36314353485 SUCCESS",
+          "Nurhaci Activity 584039bb-4f23-552f-a304-99b5faf4d176 → Jurchen polity 2113c54b-b341-43ef-927c-991feebfdcea; temporary seed retired; 3 source links preserved",
+          "Five-Dynasties survivor → Later Jin (Five Dynasties) / 후진(後晉)"
+        ]
+      },
       {
         id: "han-han-character-collapse",
         kind: "repair_review",
