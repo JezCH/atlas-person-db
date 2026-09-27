@@ -1,0 +1,29 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-name:egypt-arab-republic-survivor:2026-09-27:v1",
+  "release_order": 970,
+  "evidence": {
+    "decision": "After non-post-1971 rows are removed from the generic Egypt UUID, preserve that UUID for the state name effective from 2 September 1971.",
+    "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+    "identity_rule": "UN historical records identify the 2 September 1971 change from United Arab Republic to Arab Republic of Egypt."
+  },
+  "operations": [
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "egypt-arab-republic-en",
+      "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+      "locale": "en",
+      "expected_name": "Egypt",
+      "replacement_name": "Arab Republic of Egypt"
+    },
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "egypt-arab-republic-ko",
+      "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+      "locale": "ko",
+      "expected_name": "이집트",
+      "replacement_name": "이집트 아랍 공화국"
+    }
+  ]
+}
