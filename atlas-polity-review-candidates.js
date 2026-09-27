@@ -20,17 +20,6 @@
     }),
     active_frontier: freezeRows([
       {
-        id: "egypt-ancient-modern-collapse",
-        kind: "repair_review",
-        title: "Egypt identity 고대·현대 과통합",
-        left: { name: "Egypt", ko: "이집트", polity_id: "8c25246a-3d73-4df9-8e4a-b0c5ca97c241" },
-        right: { name: "Ancient Egypt / modern Egyptian state family", ko: "고대 이집트 / 현대 이집트 국가계열" },
-        rationale: "파라오·프톨레마이오스 선행 계열과 Nasser·Sadat의 현대 국가 Activity가 generic Egypt UUID에 함께 존재합니다. 고대/현대 family를 분리·재연결해야 합니다.",
-        suggested_action: "repair",
-        status: "AUDIT_REPAIR_REQUIRED",
-        evidence: ["#977 exhaustive similarity audit confirmed false merge/relink", "현대 1953–1958 / UAR / post-1971 phases를 고대 Egypt와 분리", "family-level split/relink required"]
-      },
-      {
         id: "poland-medieval-modern-collapse",
         kind: "repair_review",
         title: "Poland identity 중세·현대 과통합",
@@ -76,6 +65,29 @@
       }
     ]),
     resolved_frontier_history: freezeRows([
+      {
+        id: "egypt-ancient-modern-collapse",
+        kind: "repair_review",
+        title: "Egypt 고대 / 현대 과통합",
+        left: { name: "Arab Republic of Egypt", ko: "이집트 아랍 공화국", polity_id: "8c25246a-3d73-4df9-8e4a-b0c5ca97c241" },
+        right: { name: "Ancient Egypt / Republic of Egypt / United Arab Republic / Ptolemaic identity", ko: "고대 이집트 / 이집트 공화국 / 아랍 연합 공화국 / 프톨레마이오스 계열" },
+        rationale: "generic Egypt UUID에 섞여 있던 고대 9개 Activity를 Ancient Egypt로 재연결하고, Ptolemy I의 323–305 BCE 총독기는 Ptolemaic identity의 Satrapy of Egypt temporal designation으로 보존했습니다. Nasser의 1956–1958 원본 Activity는 Republic of Egypt로 이동했고, Sadat는 UAR 명칭기와 1971-09-02 이후 Arab Republic of Egypt 구간으로 분리했습니다. 기존 generic UUID는 Arab Republic of Egypt survivor로 명칭을 정리했습니다.",
+        suggested_action: "repair",
+        status: "PRODUCTION_APPLIED_REPAIR",
+        reviewed_decision: "repair",
+        locked: true,
+        evidence: [
+          "#1600 created Republic of Egypt / 이집트 공화국 polity b0996783-df13-4b40-baa5-d5864af3c5f5",
+          "#1604 merged as 4bbe29eff4de5ce221f443c3f01c46ce4ef4aa09",
+          "Correction Apply run 36319451643 SUCCESS",
+          "Runtime Projection Compile run 36319594046 SUCCESS",
+          "Ancient Egypt 827d3753-154a-4575-aff0-a46048b8fe42 now contains the nine relinked ancient Activities plus Khufu",
+          "Ptolemy I Activity 19c869dd-4de8-4a72-85a8-ee4ee06fe3a2 now displays Satrapy of Egypt / 이집트 총독령 for 323–305 BCE on Ptolemaic identity 4131d480-e71d-59ab-a2b6-45f045547a89",
+          "Nasser Activity 038210f2-1f0d-4158-8940-a094a2dcfd8d UUID preserved on Republic of Egypt b0996783-df13-4b40-baa5-d5864af3c5f5",
+          "Sadat UAR fragment e100c855-4559-5431-8c72-61909a8da746 = 1970-10-15..1971-09-01; original Activity cb057be7-43fe-4c0f-921d-1ab41bdcb634 preserved as Arab Republic of Egypt 1971-09-02..1981-10-06",
+          "Republic of Egypt is reviewed africa / nile-valley; UAR remains reviewed transregional via the Spatial review queue"
+        ]
+      },
       {
         id: "kingdom-of-serbia-medieval-modern-collapse",
         kind: "repair_review",
