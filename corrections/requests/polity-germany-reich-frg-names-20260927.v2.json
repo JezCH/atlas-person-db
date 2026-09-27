@@ -1,0 +1,38 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-name:germany-reich-frg:2026-09-27:v1",
+  "release_order": 1010,
+  "evidence": {
+    "decision": "After the 1927 Heisenberg Activity is relinked to the existing Weimar Republic, preserve polity UUID 5dee6535-9839-4c8b-8de5-b7519d41801d for the 1933-1945 German state and bound its preferred names to that period. Normalize the existing Federal Republic of Germany UUID to an official-state Korean display that remains valid after 1990 rather than the period-specific shorthand West Germany.",
+    "german_reich_polity_id": "5dee6535-9839-4c8b-8de5-b7519d41801d",
+    "federal_republic_polity_id": "2a3df3a5-6f18-42c0-8332-3ccaebdf3508",
+    "identity_rule": "Weimar Republic (1918-1933), German Reich under National Socialism (1933-1945), and Federal Republic of Germany (since 1949) remain separate ATLAS identities under the reviewed rupture/state-formation model. Nazi Germany is not created as a separate territorial polity from the 1933-1945 German Reich."
+  },
+  "operations": [
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "germany-reich-1933-1945-en-preferred-name",
+      "polity_id": "5dee6535-9839-4c8b-8de5-b7519d41801d",
+      "locale": "en",
+      "expected_name": "Germany",
+      "replacement_name": "German Reich (1933–1945)"
+    },
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "germany-reich-1933-1945-ko-preferred-name",
+      "polity_id": "5dee6535-9839-4c8b-8de5-b7519d41801d",
+      "locale": "ko",
+      "expected_name": "독일",
+      "replacement_name": "독일국(1933–1945)"
+    },
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "federal-republic-germany-ko-preferred-name",
+      "polity_id": "2a3df3a5-6f18-42c0-8332-3ccaebdf3508",
+      "locale": "ko",
+      "expected_name": "서독",
+      "replacement_name": "독일연방공화국"
+    }
+  ]
+}
