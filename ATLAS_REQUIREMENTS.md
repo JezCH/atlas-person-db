@@ -1,13 +1,15 @@
 # ATLAS Requirements Source of Truth v1
 
-> Status: **PRODUCTION THROUGH P10 COMPLETE / P11 REPAIR READY, FINAL PRODUCTION EVIDENCE UNPROVEN**
+> Status: **CORE v2 ACTIVE / P0–P12 HISTORICAL FOUNDATION CLOSED / P13–P14 RESIDUAL WORK REMAPPED INTO CORE v2**
 >
-> As of: **2026-09-23**  
+> As of: **2026-09-27**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
+> CORE architecture / invariants / unit topology: `docs/core/CORE_V2_MASTER_PLAN.md`  
+> Active CORE status: GitHub Issue **#917** body only  
 > Validator: `scripts/verify-atlas-requirements.mjs`  
 > Execution policy: `WORK_EXECUTION.md`  
 > Release policy: `RELEASE_GOVERNANCE.md`  
-> Current P10 release evidence: `docs/release/P10_PRODUCTION_CLOSURE_2026-09-06.md`
+> Historical P10 closure evidence: `docs/release/P10_PRODUCTION_CLOSURE_2026-09-06.md`
 
 ATLAS의 기준은 **100% traceable**, **0 known contradictions**, **0 silently omitted requirements**, **unknown stays unknown**이다. 역사적 사실은 구현 편의가 아니라 reviewed primary/academic evidence로 판정하며, 근거가 부족하면 unresolved를 보존한다.
 
@@ -34,6 +36,8 @@ ATLAS의 기준은 **100% traceable**, **0 known contradictions**, **0 silently 
 | `ATLAS-RQ-0015` | Place and Source are first-class Authoring entities. Place identity is not Polity identity; Source identity is not merely an Activity locator. |
 | `ATLAS-RQ-0016` | Compile emits Runtime-ready state. Unresolved Authoring assertions must never appear as valid Runtime truth merely because they exist in the authoring database. |
 | `ATLAS-RQ-0017` | A known Person–Polity assertion with an **unknown start/end boundary** must remain representable without inventing an endpoint year. |
+| `ATLAS-RQ-0018` | CORE v2의 architecture, authority map, C-01~C-15 invariants, unit topology는 `docs/core/CORE_V2_MASTER_PLAN.md`가 단일 권위다. 동일 내용을 별도 active registry로 복제하지 않는다. |
+| `ATLAS-RQ-0019` | **새 canonical Person 생성은 모든 생존 인물을 제외한다.** 현재 생존 여부가 unresolved이면 추측하지 않고 HOLD/BLOCK하며 Person write를 허용하지 않는다. |
 
 Polity naming follows the current Stage 2 entity-boundary contracts: historical names, historiographic names and explicitly tagged editorial catalog labels are semantically distinct. Editorial labels never become historical self-designations or UUID identity.
 
@@ -47,7 +51,7 @@ The row-oriented Persons screen is a working product surface, not the final onto
 - Source is a reusable evidence object capable of bibliographic/web metadata plus artifact/hash metadata when an ingested file exists. File hash/bytes are not a substitute for citation metadata.
 - AI research follows **candidate → evidence/source/confidence → human review → authoritative authoring**; it never bypasses the normalized writer.
 - Game-specific or presentation-only fields are extensions/crosswalks, not Person/Polity identity.
-- **Roster scope:** a Person who is currently serving in an active political or public office is excluded from ATLAS entirely while that office remains current. Do not keep a partial historical-only Person record, HOLD row, or approved authoring manifest for that Person during the active term. Reconsider registration only after the current office has ended.
+- **Roster scope:** every **living Person is excluded from new canonical Person creation**, regardless of office status. `living` → EXCLUDE/REJECTED with no Person write; `deceased` → reviewed life-status basis is carried into registration; unresolved current life status → HOLD/BLOCKED. Existing canonical Person reuse is not a new identity creation and follows the current registration contract.
 
 Unknown optional profile facts remain absent/unresolved. The system must not require religion, dynasty, gender, media, place or any other optional field merely to make a Person row “complete”. **Person, Place and Source exist as first-class Authoring objects** in the intended end state.
 
@@ -140,19 +144,20 @@ The one-shot Production release transport is historical after this completion. T
 
 Durable closure evidence is preserved in `docs/release/P10_PRODUCTION_CLOSURE_2026-09-06.md`.
 
-### P11 — Baseline B / end-state snapshot — REPAIR/READINESS PRESENT, NOT COMPLETE
+### P11 — Baseline B / end-state snapshot — COMPLETED / HISTORICAL EVIDENCE
 
-- `ATLAS-RQ-0221` — **PENDING:** create the authenticated, read-only, repeatable-read Baseline B and enforce end-state constraints from the actual post-P10 Production state.
+- `ATLAS-RQ-0221` — **COMPLETED:** post-P10 semantic-v2 blocker frontier was closed and the final Baseline B capture checkpoint was sealed in the P11 lineage.
+- Final checkpoint lineage includes PR **#960** / commit `0a951b51bce082c617b274a835a058ef3ef0748f`; the preceding current-delta backfill run recorded by that PR was **34002929679 — SUCCESS** with Baseline-B blocking rows reduced to zero.
+- P11 is **not an active recapture task**. Its one-shot Production backfill/capture transports were subsequently retired by the cleanup lineage (#1484, #1497, #1504).
+- The surviving current contract is generalized **canonical-data readiness**, implemented by `server/atlas-canonical-data-readiness.js`, its workflow and regression tests.
 
-The P11 Baseline B implementation and readiness workflow are on main. Since the 2026-08-16 status, the repository also gained the reviewed legacy semantic-v2 repair path, bounded OIDC authorization, guarded rerun support and file-backed correction payload transport. Current cleanup PRs repeatedly pass `ATLAS P11 Baseline B Readiness`.
+Historical Baseline B evidence remains audit history. Current correctness must be checked through current canonical contracts rather than repeatedly re-running the retired P11 release ceremony.
 
-However, the 2026-08-19 audit did **not** recover authoritative Production evidence proving both the semantic-v2 backfill/post-audit and a subsequent successful authenticated Baseline B v2 capture. No Baseline B artifact may be claimed until that governed evidence actually exists.
+### P12 — Remove reachable legacy/transitional paths — COMPLETED
 
-### P12 — Remove reachable legacy/transitional paths — PENDING
-
-- `ATLAS-RQ-0222` — **PENDING:** after P10/P11 prove the live end state, remove reachable legacy and transitional writers/readers/contracts without destroying historical audit evidence.
-
-Historical files may remain archived as evidence. “Remove” means no active Runtime/Authoring path can resurrect obsolete semantics.
+- `ATLAS-RQ-0222` — **COMPLETED:** current correction runtime accepts only `atlas-correction-manifest/v2` or the reviewed v2 execution-plan path.
+- Live `corrections/intents/` dispatch and correction manifest v1/v1.1/v1.2/v1.3/v1.4 service dispatch are unreachable; current regression tests explicitly reject those schemas and assert zero legacy executable correction-service dependencies.
+- Historical migration/request artifacts may remain as replay/audit evidence. Their presence is not live compatibility.
 
 ### P13 — Full product lifecycle — PENDING
 
@@ -172,37 +177,26 @@ P13 acceptance requires Person, Place and Source exist as first-class Authoring 
 
 Territory/Geometry work must never back-propagate invented identity, chronology or political authority into the Person DB.
 
-## 4. Current project-integrity cleanup lane
+## 4. Project-integrity maintenance surface
 
-This cleanup lane does not change roadmap semantics and does not bypass the remaining P11 gate or the live duplicate-review/revalidation safety contracts.
+The read-only project-integrity audit remains useful maintenance tooling, but it is **not an active P11 gate and does not reopen completed P11/P12 work**.
 
-A read-only Baseline B audit is now the intended single sweep for:
-
-- Korean preferred-name coverage across Person, Polity, Role, Period Basis, Governance Context, Polity Designation, PeopleGroup and HistoricalEvent catalogs;
-- zero-source Activity detection;
-- dangling Activity/Source/reference detection;
-- semantic-key v2 completeness;
-- exact Activity semantic duplicates;
-- Activity-unreferenced Polity/Role/Period Basis candidates;
-- Polity names that look Event-like, as **review signals only**;
-- exact normalized Polity ↔ HistoricalEvent name collisions.
-
-An unused catalog row is not automatically garbage. An Event-looking name is not automatically misclassified. No destructive cleanup is authorized by string heuristics.
-
-Current audit implementation:
+Current implementation:
 
 - `server/atlas-project-integrity-audit.js`
 - `scripts/audit-atlas-project-integrity.mjs`
 - `tests/atlas-project-integrity-audit.test.mjs`
 
-Destructive data cleanup must wait for a fresh governed Production snapshot or use an existing exact correction/authoring path with source/provenance preservation.
+It may be used for Korean preferred-name coverage, zero-source/dangling-reference detection, semantic-key completeness, exact duplicate detection, unreferenced catalog candidates, and Polity/Event collision review signals. An unused catalog row or Event-looking name is never destructive authority by itself.
+
+Confirmed data corrections still use the current provenance-safe canonical correction/authoring path. No string heuristic authorizes destructive cleanup.
 
 ## 5. Superseded requirements — historical only
 
 | ID | State | Replacement |
 |---|---|---|
 | `ATLAS-RQ-0301` | SUPERSEDED | duplicate Person physical merge moved behind `ATLAS-RQ-0212`, `ATLAS-RQ-0219`, `ATLAS-RQ-0220` |
-| `ATLAS-RQ-0302` | SUPERSEDED | Baseline A + future Baseline B (`ATLAS-RQ-0206`, `ATLAS-RQ-0221`) |
+| `ATLAS-RQ-0302` | SUPERSEDED | historical Baseline A + completed Baseline B (`ATLAS-RQ-0206`, `ATLAS-RQ-0221`) |
 | `ATLAS-RQ-0303` | SUPERSEDED | bounded v1.1 plus Correction v2 (`ATLAS-RQ-0204`, `ATLAS-RQ-0216`) |
 | `ATLAS-RQ-0304` | SUPERSEDED | strict Polity/entity boundaries (`ATLAS-RQ-0003`, `ATLAS-RQ-0004`) |
 
@@ -226,18 +220,17 @@ Superseded requirements are retained for traceability and never treated as curre
 | `ATLAS-NO-0012` | No unnecessary deployment churn. |
 | `ATLAS-NO-0013` | No merge-to-main or deploy for branch-only work. |
 
-## 7. Current execution queue
+## 7. CORE v2 execution authority
 
-1. **P10:** recover or freshly prove the exact Production revalidation gate; do not physically merge Persons unless the reviewed live frontier requires it.
-2. **P11:** recover or execute the governed semantic-v2 Production backfill/post-audit and authenticated Baseline B v2 capture after the P10 condition is actually settled.
-3. Run the read-only project-integrity audit against that Baseline B.
-4. Finish current-main UI debt without resurrecting stale branches; confirmed data problems must still use reviewed provenance-safe correction/authoring operations.
-5. **P12:** remove only genuinely reachable legacy/transitional paths proven unnecessary by the captured end state.
-6. **P13:** finish and acceptance-test the first-class Person/Place/Source Authoring → Compile → Runtime lifecycle.
-7. Reconcile the existing `civilization-map-project` product branch and resume its accepted historical-map research workflow.
-8. **P14:** integrate the historical-map contract without weakening the Person/Polity evidence model.
+The old P10→P14 numbered queue is retained above only for requirement traceability. It is **not** the active execution queue.
 
-UI presentation work may proceed independently where it does not alter Authoring identity or Production data semantics.
+Current execution truth is intentionally split so it cannot drift:
+
+- **architecture / invariants / exact unit definitions:** `docs/core/CORE_V2_MASTER_PLAN.md`
+- **current active unit and exact resume point:** GitHub Issue **#917 body only**
+- **execution mechanics / Response Barrier / verification rules:** `WORK_EXECUTION.md`
+
+Historical #917 comments, old P11/P12 release tasks, stale PRs and old P-phase queue prose are audit evidence only. A new CORE turn resumes from #917, completes one unit, advances #917 to the next exact unit, then stops unless the user explicitly requests multiple units.
 
 ## 8. Completion definition
 
@@ -251,4 +244,6 @@ ATLAS is not “done” merely because the current table renders or a migration 
 - no reachable legacy path can recreate v1/v2 split brain;
 - Authoring, Compile and Runtime boundaries are explicit and acceptance-tested;
 - Person, Place and Source exist as first-class Authoring objects;
-- historical map integration consumes the political/territorial model rather than rewriting it for display convenience.
+- historical map integration consumes the political/territorial model rather than rewriting it for display convenience;
+- CORE v2 preserves one canonical authority and one canonical writer per resource, with Authoring/Derived/Runtime boundaries explicit;
+- active operational state is not duplicated into historical documentation or old issue comments.
