@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "polity-egypt-split-20260927:sadat-uar-seed",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Anwar Sadat",
+    "display_name_ko": "안와르 사다트",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-27",
+    "life_status_basis": "historical_certainty"
+  },
+  "polity": {
+    "canonical_name_en": "United Arab Republic",
+    "display_name_ko": "아랍 연합 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Reviewed temporary seed used only to mint official UN provenance for Sadat's 15 October 1970–1 September 1971 presidency while Egypt still officially bore the United Arab Republic name. Stage 2 transfers this source to the preserved original Sadat Activity, retires this seed, then splits the original at the 2 September 1971 change to Arab Republic of Egypt.",
+    "start_year": 1970,
+    "start_month": 10,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1971,
+    "end_month": 9,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "United Nations — Egypt membership and state-name history",
+      "citation_text": "The United Nations records that on 2 September 1971 the United Arab Republic changed its name to the Arab Republic of Egypt.",
+      "locator": "https://www.un.org/en/node/122868"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "안와르 사다트",
+      "url": "https://namu.wiki/w/%EC%95%88%EC%99%80%EB%A5%B4%20%EC%82%AC%EB%8B%A4%ED%8A%B8"
+    }
+  },
+  "review_context": {
+    "request_batch": "polity-egypt-identity-split-20260927",
+    "requested_item": 2,
+    "decision_authority": "United Nations Egypt member-state history; UN Treaty Collection historical information; #977 Egypt ancient/modern collapse",
+    "identity_note": "Temporary provenance seed only. Egypt officially retained United Arab Republic through 1 September 1971 and used Arab Republic of Egypt from 2 September 1971. The seed must not survive Stage 2."
+  }
+}
