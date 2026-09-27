@@ -60,39 +60,37 @@ function uniqueIds(rows) {
 }
 
 async function loadCurrentPolityMatches(client,{ canonicalName, canonicalKey }) {
-  const [keys,names,designations]=await Promise.all([
-    client.query(`
-      select p.id::text as polity_id,p.canonical_key,p.polity_type,p.historicity
-        from atlas_v2.polities p
-       where p.canonical_key=$1
-       order by p.id::text
-       limit 2
-    `,[canonicalKey]),
-    client.query(`
-      select p.id::text as polity_id,p.canonical_key,p.polity_type,p.historicity,
-             pn.locale,pn.name,pn.name_type,pn.is_preferred
-        from atlas_v2.polity_names pn
-        join atlas_v2.polities p on p.id=pn.polity_id
-       where pn.name=$1
-       order by p.id::text,pn.is_preferred desc,pn.locale,pn.id
-       limit 20
-    `,[canonicalName]),
-    client.query(`
-      select p.id::text as polity_id,p.canonical_key,p.polity_type,p.historicity,
-             pd.id::text as designation_id,pd.designation_type,
-             pd.valid_from_year,pd.valid_from_month,pd.valid_from_day,
-             pd.valid_from_granularity,pd.valid_from_certainty,pd.valid_from_calendar,
-             pd.valid_to_year,pd.valid_to_month,pd.valid_to_day,
-             pd.valid_to_granularity,pd.valid_to_certainty,pd.valid_to_calendar,
-             pdn.locale,pdn.name,pdn.is_preferred
-        from atlas_v2.polity_designation_names pdn
-        join atlas_v2.polity_designations pd on pd.id=pdn.polity_designation_id
-        join atlas_v2.polities p on p.id=pd.polity_id
-       where pdn.name=$1
-       order by p.id::text,pd.id::text,pdn.is_preferred desc,pdn.locale,pdn.id
-       limit 40
-    `,[canonicalName])
-  ]);
+  const keys=await client.query(`
+    select p.id::text as polity_id,p.canonical_key,p.polity_type,p.historicity
+      from atlas_v2.polities p
+     where p.canonical_key=$1
+     order by p.id::text
+     limit 2
+  `,[canonicalKey]);
+  const names=await client.query(`
+    select p.id::text as polity_id,p.canonical_key,p.polity_type,p.historicity,
+           pn.locale,pn.name,pn.name_type,pn.is_preferred
+      from atlas_v2.polity_names pn
+      join atlas_v2.polities p on p.id=pn.polity_id
+     where pn.name=$1
+     order by p.id::text,pn.is_preferred desc,pn.locale,pn.id
+     limit 20
+  `,[canonicalName]);
+  const designations=await client.query(`
+    select p.id::text as polity_id,p.canonical_key,p.polity_type,p.historicity,
+           pd.id::text as designation_id,pd.designation_type,
+           pd.valid_from_year,pd.valid_from_month,pd.valid_from_day,
+           pd.valid_from_granularity,pd.valid_from_certainty,pd.valid_from_calendar,
+           pd.valid_to_year,pd.valid_to_month,pd.valid_to_day,
+           pd.valid_to_granularity,pd.valid_to_certainty,pd.valid_to_calendar,
+           pdn.locale,pdn.name,pdn.is_preferred
+      from atlas_v2.polity_designation_names pdn
+      join atlas_v2.polity_designations pd on pd.id=pdn.polity_designation_id
+      join atlas_v2.polities p on p.id=pd.polity_id
+     where pdn.name=$1
+     order by p.id::text,pd.id::text,pdn.is_preferred desc,pdn.locale,pdn.id
+     limit 40
+  `,[canonicalName]);
   return Object.freeze({
     key:Object.freeze(keys.rows || []),
     names:Object.freeze(names.rows || []),
