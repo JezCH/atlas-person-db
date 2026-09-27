@@ -110,3 +110,16 @@ test("Republic of Egypt receives Nile Valley placement while UAR remains transre
   assert.equal(spatial.polity_geography[UAR], undefined);
   assert.equal(spatial.polity_subregions[UAR], undefined);
 });
+
+
+test("Sadat UAR fragment has an Activity-specific Nile Valley override while UAR remains review-queued", () => {
+  const override = spatial.activity_spatial_overrides.find((row) => row.activity_id === "e100c855-4559-5431-8c72-61909a8da746");
+  assert.ok(override);
+  assert.equal(override.expected_polity_id, UAR);
+  assert.equal(override.expected_start_year, 1970);
+  assert.equal(override.expected_end_year, 1971);
+  assert.equal(override.region_code, "africa");
+  assert.equal(override.subregion_code, "nile-valley");
+  assert.equal(spatial.polity_geography[UAR], undefined);
+  assert.equal(spatial.polity_subregions[UAR], undefined);
+});
