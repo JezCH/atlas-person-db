@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_egypt_split_retire_republic_seed_20260927_v1",
+  "as_of": "2026-09-27",
+  "status": "REVIEWED_SEED_RETIREMENT_WITH_PROVENANCE_TRANSFER",
+  "release_order": 950,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 Egypt ancient/modern false-merge repair; Stage1 Republic of Egypt seed Activity b11e1d5a-0641-44dd-b81e-76c716813648 created under PR #1600; retire seed first and transfer its reviewed source to preserved original Nasser Activity 038210f2-1f0d-4158-8940-a094a2dcfd8d before release_order 960 relinks that original to Republic of Egypt, avoiding semantic-identity collision",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "egypt-retire-republic-of-egypt-nasser-seed-before-original-relink",
+      "type": "retire_activity",
+      "activity_id": "b11e1d5a-0641-44dd-b81e-76c716813648",
+      "baseline_before": {
+        "person_id": "7b4de6dc-7162-4606-ab2c-2332243ee7b4",
+        "polity_id": "b0996783-df13-4b40-baa5-d5864af3c5f5",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1956,
+        "activity_end": 1958,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "replacement_activity_ids": [
+        "038210f2-1f0d-4158-8940-a094a2dcfd8d"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "seed_activities_retired": 1,
+    "replacement_survivor_activity_id": "038210f2-1f0d-4158-8940-a094a2dcfd8d",
+    "seed_sources_transferred": true,
+    "production_mutation_authorized": false
+  }
+}
