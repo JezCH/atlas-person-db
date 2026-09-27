@@ -997,13 +997,17 @@ test("Dashboard keeps actionable work panels ahead of large analysis surfaces", 
   assert.ok(completeness > quality && heatmap > completeness && timeline > heatmap);
 });
 
-test("mobile Dashboard fits the Era × Region heatmap inside the panel and caps other dense surfaces", () => {
+test("mobile Dashboard fits the Era × Region heatmap and Completeness Matrix inside their cards", () => {
   assert.match(dashboardCssSource, /\.dashboard-heatmap-wrap\{overflow-x:hidden\}/);
   assert.match(dashboardCssSource, /\.dashboard-heatmap\{width:100%;min-width:0;font-size:7px\}/);
   assert.match(dashboardCssSource, /dashboard-heatmap-region-head\{height:56px;line-height:1;writing-mode:vertical-rl;text-orientation:upright/);
   assert.match(dashboardCssSource, /dashboard-heatmap-total-head,\.dashboard-heatmap \.dashboard-heatmap-total-cell\{width:32px\}/);
   assert.doesNotMatch(dashboardCssSource, /dashboard-heatmap\{min-width:760px/);
-  assert.match(dashboardCssSource, /\.dashboard-completeness\{min-width:540px;font-size:9px\}/);
+  assert.match(dashboardCssSource, /\.dashboard-completeness-wrap\{overflow-x:hidden\}/);
+  assert.match(dashboardCssSource, /\.dashboard-completeness\{width:100%;min-width:0;table-layout:fixed;font-size:8px\}/);
+  assert.match(dashboardCssSource, /dashboard-completeness th:nth-child\(1\),\.dashboard-completeness td:nth-child\(1\)\{width:34%\}/);
+  assert.match(dashboardCssSource, /dashboard-completeness th:nth-child\(4\),\.dashboard-completeness td:nth-child\(4\)\{width:14%\}/);
+  assert.doesNotMatch(dashboardCssSource, /dashboard-completeness\{min-width:540px/);
   assert.match(dashboardCssSource, /\.dashboard-timeline\{max-height:360px;overflow:auto;overscroll-behavior:contain;padding-right:4px\}/);
   assert.match(dashboardSource, /timeline\.entries\.map\(recentTimelineEntry\)/);
 });
