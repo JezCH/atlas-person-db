@@ -253,11 +253,19 @@ async function resolveOrCreatePerson(client, person) {
 }
 
 async function resolveOrCreatePolity(client, polity, activity = null) {
-  const created = await createPolity(client, {
-    ...polity,
-    allow_display_name_collision:false,
-    identity_context:temporalContextFromHumanActivity(activity)
-  });
+  let created;
+  try {
+    created = await createPolity(client, {
+      ...polity,
+      allow_display_name_collision:false,
+      identity_context:temporalContextFromHumanActivity(activity)
+    });
+  } catch (error) {
+    if (String(error?.message || "") === "POLITY_DISPLAY_NAME_REQUIRED") {
+      throw new Error("HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED");
+    }
+    throw error;
+  }
   return Object.freeze({
     id:String(created.id).toLowerCase(),
     disposition:created.replay ? "reused" : "created"
