@@ -736,8 +736,8 @@ async function main() {
     await sleep(500);
     const mobileDom=await collectMobileDom(client);
     assert(mobileDom.global_scroll.overflow_x <= 1, "Mobile Dashboard causes page-level horizontal overflow", mobileDom.global_scroll);
-    assert(mobileDom.heatmap_wrap && mobileDom.heatmap_wrap.overflow_x === "auto", "Mobile Heatmap wrapper is not horizontally scrollable", mobileDom.heatmap_wrap);
-    assert(mobileDom.heatmap_wrap.scroll_width > mobileDom.heatmap_wrap.client_width, "Mobile Heatmap has no horizontal scroll range", mobileDom.heatmap_wrap);
+    assert(mobileDom.heatmap_wrap && mobileDom.heatmap_wrap.overflow_x === "hidden", "Mobile Heatmap wrapper does not use viewport-fit overflow", mobileDom.heatmap_wrap);
+    assert(mobileDom.heatmap_wrap.scroll_width - mobileDom.heatmap_wrap.client_width <= 1, "Mobile Heatmap still requires horizontal scrolling", mobileDom.heatmap_wrap);
     assert(mobileDom.completeness_wrap && mobileDom.completeness_wrap.overflow_x === "auto", "Mobile Completeness wrapper is not horizontally scrollable", mobileDom.completeness_wrap);
     assert(mobileDom.completeness_wrap.scroll_width > mobileDom.completeness_wrap.client_width, "Mobile Completeness has no horizontal scroll range", mobileDom.completeness_wrap);
     assert(mobileDom.timeline && mobileDom.timeline.overflow_y === "auto", "Mobile timeline scroll contract is not active", mobileDom.timeline);
