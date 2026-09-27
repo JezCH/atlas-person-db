@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-27T10:00:34.000Z",
+  "generated_at": "2026-09-27T12:10:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
