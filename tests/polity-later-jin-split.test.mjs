@@ -33,7 +33,8 @@ test("temporary Jurchen seed transfers provenance and retires before the preserv
   assert.deepEqual(op.replacement_activity_ids, [NURHACI_ACTIVITY]);
   assert.equal(op.source_transfer_policy, "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE");
   assert.equal(op.silent_source_drop_forbidden, true);
-  assert.ok(retire.release_order < relink.release_order);\n  assert.equal(relink.operations[0].baseline_before.source_count, 3);
+  assert.ok(retire.release_order < relink.release_order);
+  assert.equal(relink.operations[0].baseline_before.source_count, 3);
 });
 
 test("Five-Dynasties survivor is disambiguated explicitly as 後晉", () => {
