@@ -1,0 +1,32 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-28",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "b3fe0c9cf9366b018536f11ff80f5cac11e82b29",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign knowledge only to the verified Rāmānuja and Madhva registrations; preserve existing non-null Production values and fail closed on conflict."
+  },
+  "review_scope": {
+    "task_key": "PHILOSOPHY-CANON-54-INDIA-BRAHMANICAL-JAIN-01-DOMAIN-20260928",
+    "reviewed_assignments": 2,
+    "reviewed_holds": 0,
+    "rationale": "Both Persons are represented by Vedānta philosophical and theological activity; their Authoring Apply exact Production read-back succeeded."
+  },
+  "entries": [
+    {
+      "person_id": "7aeb78bc-2be1-466b-bb0d-13b5e55a9f9c",
+      "canonical_name_en": "Rāmānuja",
+      "preferred_name_ko": "라마누자",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "a5edffb0-770e-4008-a085-b59747d850b7",
+      "canonical_name_en": "Madhva",
+      "preferred_name_ko": "마드바",
+      "representative_domain": "knowledge"
+    }
+  ]
+}
