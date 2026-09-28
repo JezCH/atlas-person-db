@@ -1,0 +1,34 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-28",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "c579a9078c8b62f7ceecb35331ca11d95028fe01",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign Koerikei to military after authoritative Production read-back confirmed the canonical Person and c.1770–1799 leadership/resistance Activity."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-KOERIKEI-CLOSURE-20260928",
+    "assignment_count": 1,
+    "distribution": {
+      "governance": 0,
+      "military": 1,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "c423eb8a-a790-4d76-a944-20fb76b3b58f",
+      "canonical_name_en": "Koerikei",
+      "preferred_name_ko": "코에리케이",
+      "representative_domain": "military"
+    }
+  ]
+}
