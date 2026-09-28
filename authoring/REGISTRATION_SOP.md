@@ -10,6 +10,26 @@ A second rule is equally important: **ordinary registration must use the already
 
 A registration is complete only when authoritative Production read-back confirms the intended Person, Activity, and reviewed NamuWiki state (`linked` or `not_found`, including exact reuse of an already-reviewed live state). A new or previously-unreviewed Person with unresolved NamuWiki review is not a completed registration.
 
+### Canonical Person registration-value grading
+
+Whenever a task asks whether a historical Person is worth registering, compares candidate registration value, assigns an `SSS/SS/S/A/B/C` tier, or re-grades a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PRV-2.3`).
+
+Required order:
+
+```text
+identity / historicity / duplicate / source / life-status gates
+→ evidence review
+→ C / U / P / B / G independently
+→ TOTAL
+→ deterministic SSS~C grade
+```
+
+Do not choose a desired tier first. Do not use fame, pageviews, Wikipedia size, or modern name recognition as substitute score axes. Insufficient evidence produces `VERIFY/HOLD`, not an artificially low score.
+
+Legacy Lite, Coverage Test, SCI/OFI/MCG/DRS, 54-point counting models, and ad-hoc tiering are historical experiments only and must not be used as active grading rules.
+
+The grading standard does **not** invent a project-wide inclusion cutoff by itself. A task may select candidates by grade only when that task explicitly defines the cutoff; the scoring semantics remain `ATLAS-PRV-2.3`.
+
 A merged PR, green CI, Vercel deployment, authoring response without read-back, or workflow start is not completion by itself.
 
 ## 2. Safety gates that are never removed
