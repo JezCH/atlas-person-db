@@ -10,32 +10,32 @@ A second rule is equally important: **ordinary registration must use the already
 
 A registration is complete only when authoritative Production read-back confirms the intended Person, Activity, and reviewed NamuWiki state (`linked` or `not_found`, including exact reuse of an already-reviewed live state). A new or previously-unreviewed Person with unresolved NamuWiki review is not a completed registration.
 
-### Canonical Person historical fact counting
+### Canonical Person historical fact profile
 
-Whenever a task reviews historical-Person factual coverage, candidate research, or recounts a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFC-3.2`).
+Whenever a task reviews historical-Person factual coverage, candidate research, or a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFP-4.0`).
 
 Required order:
 
 ```text
 identity / historicity / duplicate / source / life-status gates
 → collect source-backed factual claims
-→ classify fixed E / R / T / D / G / S coverage cells
-→ preserve each cell as 1 / 0 / ?
-→ render with formatPersonFactCountResult()
-→ validate with validatePersonFactCountOutput()
-→ emit the validated block first
+→ classify E / R / T / D / S cells as 1 / 0 / ?
+→ preserve G origin/external reception as explicit evidence-backed sets
+→ render with formatPersonFactProfile()
+→ validate with validatePersonFactProfileOutput()
+→ emit the validated profile block first
 → only then explain evidence
 ```
 
-The reviewer does **not** assign qualitative importance, greatness, irreplaceability, prestige, positive/negative impact, or an overall-impression score. The same factual procedure applies regardless of role, profession, office, ideology, or historical domain.
+The reviewer does **not** reduce the profile to an aggregate total, `/36`, overall score, rank, grade, tier, prestige label, or overall-impression judgment. The exact same profile schema applies regardless of role, profession, office, ideology, regime, or historical domain.
 
-`0` means the cell was reviewed but not established in the evidence packet. `?` means unresolved or not yet safely classifiable. **Never convert `?` to `0`.**
+`0` means reviewed but not established in the evidence packet. `?` means unresolved. **Never convert `?` to `0`.**
 
-The elapsed-time persistence axis from v3.0 is retired. Geographic reception uses external UN M49 country/area units, and downstream continuation uses fixed successor-link classes rather than the number of named entities collected.
+Direct activity domains remain eight named cells. Geographic reception remains explicit `ORIGIN_SET`, `EXTERNAL_RECEPTION_SET`, and unresolved claims rather than a capped numeric geographic score. Downstream continuation remains six fixed successor-link classes.
 
-The completed or partial output must be rendered and validated through `server/person-fact-count-output.mjs` and begin with the canonical eight-line result block: `E`, `R`, `T`, `D`, `G`, `S`, `VERIFIED_TOTAL /36`, `UNRESOLVED n`. **Do not hand-author the trusted total.** If the validator rejects preamble, omission, ordering, range, or arithmetic, the review response is incomplete. If unresolved cells remain, keep status `HOLD` after reporting the verified subtotal.
+The completed or partial output must be rendered and validated through `server/person-fact-count-output.mjs`. The validator rejects prose before the profile, malformed or reordered cells, inconsistent HOLD/COMPLETE state, and any legacy aggregate scalar such as `VERIFIED_TOTAL` or `/36`.
 
-Legacy `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, earlier PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only.
+Legacy `ATLAS-PHFC-3.2`, earlier PHFC/PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only.
 
 A merged PR, green CI, Vercel deployment, authoring response without read-back, or workflow start is not completion by itself.
 

@@ -124,7 +124,7 @@
     {
       "id": "ATLAS-RQ-0020",
       "status": "ACTIVE",
-      "title": "Person historical fact counting uses ATLAS-PHFC-3.2 only; canonical formatter computes VERIFIED_TOTAL from E/R/T/D/G/S and canonical validator rejects preamble, omission, order drift, range error, or arithmetic mismatch, with no role-, office-, ideology-, or political-status exception",
+      "title": "Person historical factual profiling uses ATLAS-PHFP-4.0 only: the same E/R/T/D/G/S schema applies to every historical Person; binary cells preserve 1/0/? state; geography preserves explicit evidence-backed sets; aggregate total, /36, overall score, rank, grade, or tier are forbidden",
       "evidence_paths": [
         "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
         "authoring/REGISTRATION_SOP.md",

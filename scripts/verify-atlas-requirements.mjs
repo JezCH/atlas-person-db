@@ -85,16 +85,16 @@ if (!document.includes("100% traceable") || !document.includes("0 known contradi
   fail("human-readable completion principles drifted");
 }
 
-if (!document.includes("ATLAS-PHFC-3.2") || !document.includes("server/person-fact-count-output.mjs")) {
-  fail("PHFC v3.2 machine output contract is missing from human requirements");
+if (!document.includes("ATLAS-PHFP-4.0") || !document.includes("server/person-fact-count-output.mjs")) {
+  fail("PHFP v4.0 machine output contract is missing from human requirements");
 }
 
-const phfcRequirement = byId.get("ATLAS-RQ-0020");
-if (!phfcRequirement || !String(phfcRequirement.title || "").includes("ATLAS-PHFC-3.2")) {
-  fail("ATLAS-RQ-0020 must bind to ATLAS-PHFC-3.2");
+const phfpRequirement = byId.get("ATLAS-RQ-0020");
+if (!phfpRequirement || !String(phfpRequirement.title || "").includes("ATLAS-PHFP-4.0")) {
+  fail("ATLAS-RQ-0020 must bind to ATLAS-PHFP-4.0");
 }
 
-const requiredPhfcEvidence = [
+const requiredPhfpEvidence = [
   "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
   "authoring/REGISTRATION_SOP.md",
   "docs/core/CORE_V2_MASTER_PLAN.md",
@@ -102,33 +102,39 @@ const requiredPhfcEvidence = [
   "scripts/verify-person-fact-count-output.mjs",
   "tests/person-fact-count-output.test.mjs"
 ];
-for (const evidencePath of requiredPhfcEvidence) {
-  if (!(phfcRequirement.evidence_paths || []).includes(evidencePath)) {
-    fail(`ATLAS-RQ-0020 missing PHFC evidence path: ${evidencePath}`);
+for (const evidencePath of requiredPhfpEvidence) {
+  if (!(phfpRequirement.evidence_paths || []).includes(evidencePath)) {
+    fail(`ATLAS-RQ-0020 missing PHFP evidence path: ${evidencePath}`);
   }
   if (!fs.existsSync(path.join(root, evidencePath))) {
-    fail(`PHFC enforcement file missing: ${evidencePath}`);
+    fail(`PHFP enforcement file missing: ${evidencePath}`);
   }
 }
 
-const phfcStandard = fs.readFileSync(path.join(root, "docs", "ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md"), "utf8");
+const phfpStandard = fs.readFileSync(path.join(root, "docs", "ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md"), "utf8");
 for (const phrase of [
-  "ATLAS-PHFC-3.2",
-  "Machine implementation authority",
-  "server/person-fact-count-output.mjs",
+  "ATLAS-PHFP-4.0",
+  "no aggregate total",
+  "same factual profile procedure applies",
   "first substantive output"
 ]) {
-  if (!phfcStandard.includes(phrase)) fail(`PHFC canonical standard drifted: missing ${phrase}`);
+  if (!phfpStandard.includes(phrase)) fail(`PHFP canonical standard drifted: missing ${phrase}`);
 }
 
-const phfcFormatter = fs.readFileSync(path.join(root, "server", "person-fact-count-output.mjs"), "utf8");
+const phfpFormatter = fs.readFileSync(path.join(root, "server", "person-fact-count-output.mjs"), "utf8");
 for (const symbol of [
-  "formatPersonFactCountResult",
-  "validatePersonFactCountOutput",
-  "assertPersonFactCountOutput",
-  "VERIFIED_TOTAL"
+  "formatPersonFactProfile",
+  "validatePersonFactProfileOutput",
+  "assertPersonFactProfileOutput",
+  "aggregate scalar output is forbidden"
 ]) {
-  if (!phfcFormatter.includes(symbol)) fail(`PHFC formatter contract drifted: missing ${symbol}`);
+  if (!phfpFormatter.includes(symbol)) fail(`PHFP formatter contract drifted: missing ${symbol}`);
+}
+if (phfpFormatter.includes("formatPersonFactCountResult") || phfpFormatter.includes("verifiedTotal")) {
+  fail("legacy aggregate PHFC formatter remains reachable");
+}
+if (!phfpFormatter.includes("aggregate scalar output is forbidden") || !phfpFormatter.includes("text.includes('VERIFIED_TOTAL')")) {
+  fail("PHFP validator must explicitly reject legacy aggregate output");
 }
 
 const statusCounts = Object.fromEntries([...allowedStatuses].map((status) => [status, registry.requirements.filter((item) => item.status === status).length]));
