@@ -10,9 +10,9 @@ A second rule is equally important: **ordinary registration must use the already
 
 A registration is complete only when authoritative Production read-back confirms the intended Person, Activity, and reviewed NamuWiki state (`linked` or `not_found`, including exact reuse of an already-reviewed live state). A new or previously-unreviewed Person with unresolved NamuWiki review is not a completed registration.
 
-### Canonical Person registration-value grading
+### Canonical Person registration-value scoring
 
-Whenever a task asks whether a historical Person is worth registering, compares candidate registration value, assigns an `SSS/SS/S/A/B/C` tier, or re-grades a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PRV-2.3`).
+Whenever a task asks whether a historical Person is worth registering, compares candidate registration value, or re-scores a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PRV-2.4`).
 
 Required order:
 
@@ -20,15 +20,16 @@ Required order:
 identity / historicity / duplicate / source / life-status gates
 → evidence review
 → C / U / P / B / G independently
-→ TOTAL
-→ deterministic SSS~C grade
+→ numeric TOTAL 0..30
 ```
 
-Do not choose a desired tier first. Do not use fame, pageviews, Wikipedia size, or modern name recognition as substitute score axes. Insufficient evidence produces `VERIFY/HOLD`, not an artificially low score.
+Do not choose a desired overall status first. Do not use fame, pageviews, Wikipedia size, or modern name recognition as substitute score axes. Insufficient evidence produces `VERIFY/HOLD`, not an artificially low score.
 
-Legacy Lite, Coverage Test, SCI/OFI/MCG/DRS, 54-point counting models, and ad-hoc tiering are historical experiments only and must not be used as active grading rules.
+The canonical output is the five axis scores plus numeric TOTAL only. **Do not derive or store a letter grade, tier, band, class, star level, or other categorical rank from TOTAL.**
 
-The grading standard does **not** invent a project-wide inclusion cutoff by itself. A task may select candidates by grade only when that task explicitly defines the cutoff; the scoring semantics remain `ATLAS-PRV-2.3`.
+Legacy Lite, Coverage Test, SCI/OFI/MCG/DRS, 54-point counting models, and categorical grading experiments are historical only and must not be used as active scoring rules.
+
+If a task needs an inclusion cutoff, define it explicitly as a numeric task rule. That cutoff does not become part of `ATLAS-PRV-2.4`.
 
 A merged PR, green CI, Vercel deployment, authoring response without read-back, or workflow start is not completion by itself.
 
