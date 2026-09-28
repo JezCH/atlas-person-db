@@ -124,7 +124,7 @@
     {
       "id": "ATLAS-RQ-0020",
       "status": "ACTIVE",
-      "title": "Person historical fact counting uses ATLAS-PHFC-3.1 only: E/R/T/D/G/S verified coverage cells sum arithmetically to VERIFIED_TOTAL 0..36; 1/0/? states preserve unresolved evidence; no elapsed-time persistence axis, evaluator-assigned importance, greatness, irreplaceability, political value, grade, or role-based formula",
+      "title": "Person historical fact counting uses ATLAS-PHFC-3.2 only: E/R/T/D/G/S verified coverage cells sum to VERIFIED_TOTAL 0..36; 1/0/? states preserve unresolved evidence; every review must emit the complete canonical result block first, before explanation, with no role-, office-, ideology-, or political-status exception",
       "evidence_paths": [
         "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
         "authoring/REGISTRATION_SOP.md",
