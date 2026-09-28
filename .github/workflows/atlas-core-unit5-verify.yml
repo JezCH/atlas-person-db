@@ -1,0 +1,64 @@
+name: ATLAS CORE Unit 5 Verification
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/atlas-core-unit5-verify.yml'
+      - '.github/workflows/atlas-core-unit5-reconcile.yml'
+      - 'api/atlas-core-unit5-reconcile.js'
+      - 'data/migrations/core-v2-unit5-non-timeline-canonicalization.v1.json'
+      - 'db/migrations/20260928_person_timeline_dispositions.sql'
+      - 'scripts/verify-schema-baseline.mjs'
+      - 'server/atlas-authoring-migrations.js'
+      - 'server/atlas-core-unit5-reconciliation-handler.js'
+      - 'server/atlas-core-unit5-reconciliation-service.js'
+      - 'server/atlas-person-merge-reference-readiness.js'
+      - 'server/atlas-person-merge-service.js'
+      - 'server/atlas-person-profile-service.js'
+      - 'server/atlas-person-timeline-service.js'
+      - 'server/atlas-replay-migration-safety.js'
+      - 'tests/atlas-authoring-migrations.test.mjs'
+      - 'tests/atlas-core-unit5-non-timeline.test.mjs'
+      - 'tests/p10-person-merge-reference-readiness.test.mjs'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: atlas_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d atlas_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/atlas_ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Syntax check Unit 5 code
+        run: |
+          node --check api/atlas-core-unit5-reconcile.js
+          node --check server/atlas-core-unit5-reconciliation-handler.js
+          node --check server/atlas-core-unit5-reconciliation-service.js
+          node --check server/atlas-person-timeline-service.js
+      - name: Run Unit 5 focused contracts
+        run: |
+          node --test             tests/atlas-core-unit5-non-timeline.test.mjs             tests/atlas-authoring-migrations.test.mjs             tests/p10-person-merge-reference-readiness.test.mjs
+      - name: Rebuild schema with Unit 5 migration
+        run: npm run test:schema

@@ -2,9 +2,13 @@
 
 const crypto = require("node:crypto");
 const { normalizeExact } = require("./atlas-identity-service.js");
+const {
+  currentTimelineDisposition,
+  setTimelineDisposition
+} = require("./atlas-person-timeline-service.js");
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const PROFILE_OPERATIONS = new Set(["set_person_korean_name", "set_person_external_reference"]);
+const PROFILE_OPERATIONS = new Set(["set_person_korean_name", "set_person_external_reference", "set_person_timeline_disposition"]);
 const NAMUWIKI_HOST = "namu.wiki";
 
 function outcomeBase({ requestId, operation, committed, v2, verification = null, validationFailures = [], transactionFailure = null, rollback = false, replay = false }) {
@@ -243,6 +247,14 @@ async function verifyMutation(client, { personId, operation, expected }) {
     const row = await currentPreferredKoreanName(client, personId);
     return Object.freeze({ checked:true, match:row?.name === expected.preferred_name_ko, preferred_name_ko:row?.name || null });
   }
+  if (operation === "set_person_timeline_disposition") {
+    const row = await currentTimelineDisposition(client, personId);
+    return Object.freeze({
+      checked:true,
+      match:Boolean(row && JSON.stringify(row) === JSON.stringify(expected.timeline_disposition)),
+      timeline_disposition:row
+    });
+  }
   const row = await currentExternalReference(client, personId, "namuwiki");
   const wanted = expected.external_reference || null;
   return Object.freeze({
@@ -267,7 +279,13 @@ function createPersonProfileMutationService({ client } = {}) {
       await lockPerson(client, personId);
       const change = operation === "set_person_korean_name"
         ? await setKoreanName(client, personId, request.payload?.name)
-        : await setExternalReference(client, personId, request.payload);
+        : operation === "set_person_timeline_disposition"
+          ? (() => setTimelineDisposition(client, personId, request.payload).then((result) => Object.freeze({
+              replay:result.replay,
+              before:{ timeline_disposition:result.before },
+              after:{ timeline_disposition:result.after }
+            })))()
+          : await setExternalReference(client, personId, request.payload);
 
       if (!change.replay || change.review_recorded === true) {
         await writeAudit(client, { requestId, personId, operation, before:change.before, after:change.after });
@@ -288,7 +306,9 @@ function createPersonProfileMutationService({ client } = {}) {
           person_id:personId,
           ...(operation === "set_person_korean_name"
             ? { preferred_name_ko:verification.preferred_name_ko }
-            : { external_reference:verification.external_reference })
+            : operation === "set_person_timeline_disposition"
+              ? { timeline_disposition:verification.timeline_disposition }
+              : { external_reference:verification.external_reference })
         },
         verification
       });

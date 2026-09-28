@@ -15,8 +15,8 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 15);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 15);
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 16);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 16);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
@@ -32,7 +32,8 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.equal(AUTHORING_MIGRATION_PATHS[12].endsWith("20260921_person_portrait_history_v2.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[13].endsWith("20260924_person_portraits_simple_v3.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[14].endsWith("20260928_polity_identity_retirements.sql"), true);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20260928_polity_identity_retirements.sql"), true);
+  assert.equal(AUTHORING_MIGRATION_PATHS[15].endsWith("20260928_person_timeline_dispositions.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20260928_person_timeline_dispositions.sql"), true);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
@@ -108,6 +109,14 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(polityRetirement, /CREATE TABLE IF NOT EXISTS atlas_v2\.polity_identity_retirement_names/i);
   assert.match(polityRetirement, /atlas-correction-polity-retirement\/v1/i);
   assert.match(polityRetirement, /ON CONFLICT \(retired_polity_id\) DO NOTHING/i);
+
+  const timelineDisposition = migrations[15].sql;
+  assert.match(timelineDisposition, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_timeline_dispositions/i);
+  for (const disposition of ['timeline','chronology_unresolved','legendary','mythical','other_reviewed_exclusion']) {
+    assert.match(timelineDisposition, new RegExp(`'${disposition}'`));
+  }
+  assert.match(timelineDisposition, /set_person_timeline_disposition/i);
+  assert.match(timelineDisposition, /REFERENCES atlas_v2\.persons\(id\)[\s\S]*ON DELETE CASCADE/i);
 });
 
 test('current clean schema baseline remains the measured pre-lifecycle Production shape', () => {
