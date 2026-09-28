@@ -121,7 +121,7 @@ test('polity identity uses deterministic locks and resolves all current identity
   assert.match(client.calls[4].sql,/p\.canonical_key=\$1/);
   assert.match(client.calls[5].sql,/polity_names pn/);
   assert.match(client.calls[6].sql,/polity_designation_names pdn/);
-  assert.match(client.calls[7].sql,/correction_manifest_runs cmr/);
+  assert.match(client.calls[7].sql,/polity_identity_retirements r/);
   assert.match(client.calls[10].sql,/insert into atlas_v2\.polities/i);
   assert.match(client.calls.at(-1).sql,/^commit$/i);
 });

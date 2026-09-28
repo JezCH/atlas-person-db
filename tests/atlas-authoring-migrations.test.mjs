@@ -7,6 +7,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const {
   AUTHORING_MIGRATION_PATHS,
+  AUTHORING_APPLY_MIGRATION_PATHS,
   readAuthoringMigrations
 } = require('../server/atlas-authoring-migrations.js');
 
@@ -14,7 +15,8 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 14);
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 15);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 15);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
@@ -29,6 +31,8 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(AUTHORING_MIGRATION_PATHS[11], /20260920_person_portraits\.sql$/);
   assert.equal(AUTHORING_MIGRATION_PATHS[12].endsWith("20260921_person_portrait_history_v2.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[13].endsWith("20260924_person_portraits_simple_v3.sql"), true);
+  assert.equal(AUTHORING_MIGRATION_PATHS[14].endsWith("20260928_polity_identity_retirements.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20260928_polity_identity_retirements.sql"), true);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
@@ -96,6 +100,14 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(portraitSimple, /DROP COLUMN IF EXISTS portrait_kind/i);
   assert.match(portraitSimple, /DROP COLUMN IF EXISTS evidence_level/i);
   assert.match(portraitSimple, /DROP TABLE IF EXISTS atlas_v2\.person_portrait_sources/i);
+
+  const polityRetirement = migrations[14].sql;
+  assert.match(polityRetirement, /CREATE TABLE IF NOT EXISTS atlas_v2\.polity_identity_retirements/i);
+  assert.match(polityRetirement, /survivor_polity_id uuid NULL/i);
+  assert.match(polityRetirement, /REFERENCES atlas_v2\.polities\(id\)[\s\S]*ON DELETE RESTRICT/i);
+  assert.match(polityRetirement, /CREATE TABLE IF NOT EXISTS atlas_v2\.polity_identity_retirement_names/i);
+  assert.match(polityRetirement, /atlas-correction-polity-retirement\/v1/i);
+  assert.match(polityRetirement, /ON CONFLICT \(retired_polity_id\) DO NOTHING/i);
 });
 
 test('current clean schema baseline remains the measured pre-lifecycle Production shape', () => {

@@ -8,7 +8,7 @@ const resolver=require('../server/atlas-polity-identity-resolver.js');
 const A='11111111-1111-4111-8111-111111111111';
 const B='22222222-2222-4222-8222-222222222222';
 
-function clientFor({ key=[], names=[], designations=[], continuity=[], retired=[] }={}) {
+function clientFor({ key=[], names=[], designations=[], continuity=[], retired=[], survivors={} }={}) {
   const calls=[];
   return {
     calls,
@@ -19,7 +19,11 @@ function clientFor({ key=[], names=[], designations=[], continuity=[], retired=[
       if (/from atlas_v2\.polity_names pn/i.test(text)) return {rows:names};
       if (/from atlas_v2\.polity_designation_names pdn/i.test(text)) return {rows:designations};
       if (/from atlas_v2\.polity_identity_relations pir/i.test(text)) return {rows:continuity};
-      if (/from atlas_v2\.correction_manifest_runs cmr/i.test(text)) return {rows:retired};
+      if (/from atlas_v2\.polity_identity_retirements r/i.test(text)) return {rows:retired};
+      if (/from atlas_v2\.polities\s+where id=\$1::uuid/i.test(text)) {
+        const row=survivors[String(params[0] || '').toLowerCase()];
+        return {rows:row ? [row] : []};
+      }
       throw new Error('unexpected query: '+text);
     }
   };
@@ -49,7 +53,7 @@ test('exact alias reuses the existing stable Polity identity', async () => {
   assert.equal(out.matched_by,'stable_name');
   assert.deepEqual(out.match_kinds,['alias']);
   assert.equal(out.create_allowed,false);
-  assert.equal(client.calls.some(({sql})=>/correction_manifest_runs/.test(sql)),false);
+  assert.equal(client.calls.some(({sql})=>/polity_identity_retirements/.test(sql)),false);
 });
 
 test('temporal designation reuses its stable Polity only when Activity date context is contained', async () => {
@@ -159,7 +163,10 @@ test('retired identity evidence blocks silent resurrection when no current ident
       canonical_key:'Old Duplicate Russia',
       polity_type:'historical_polity',
       historicity:'historical',
-      preferred_names:[{locale:'en',name:'Old Duplicate Russia',is_preferred:true}]
+      survivor_polity_id:null,
+      review_reason:'REVIEWED_UNREFERENCED_ORPHAN_CLEANUP',
+      source_request_id:'legacy',
+      source_case_id:'legacy-a'
     }]
   });
   await assert.rejects(
@@ -172,13 +179,49 @@ test('retired identity evidence blocks silent resurrection when no current ident
   );
 });
 
+test('retired identity with an explicit canonical survivor redirects to that live UUID', async () => {
+  const client=clientFor({
+    retired:[{
+      polity_id:A,
+      survivor_polity_id:B,
+      canonical_key:'Kingdom of France',
+      polity_type:'historical_polity',
+      historicity:'historical',
+      review_reason:'REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE',
+      source_request_id:'unit4',
+      source_case_id:'france-redirect'
+    }],
+    survivors:{
+      [B]:{
+        polity_id:B,
+        canonical_key:'France',
+        polity_type:'historical_polity',
+        historicity:'historical'
+      }
+    }
+  });
+  const out=await resolver.resolvePolityIdentity(client,{
+    canonical_name_en:'Kingdom of France',
+    polity_type:'historical_polity',
+    historicity:'historical'
+  });
+  assert.equal(out.status,'resolved');
+  assert.equal(out.id,B);
+  assert.equal(out.canonical_key,'France');
+  assert.equal(out.matched_by,'retired_redirect');
+  assert.deepEqual(out.match_kinds,['retired_redirect']);
+  assert.equal(out.retired_identity.polity_id,A);
+  assert.equal(out.retired_identity.survivor_polity_id,B);
+  assert.equal(out.create_allowed,false);
+});
+
 test('truly unknown identity is the only state that permits creation', async () => {
   const client=clientFor();
   const out=await resolver.resolvePolityIdentity(client,{canonical_name_en:'New Reviewed Polity'});
   assert.equal(out.status,'unresolved');
   assert.equal(out.create_allowed,true);
   assert.equal(out.canonical_key,'New Reviewed Polity');
-  assert.equal(client.calls.some(({sql})=>/correction_manifest_runs/.test(sql)),true);
+  assert.equal(client.calls.some(({sql})=>/polity_identity_retirements/.test(sql)),true);
 });
 
 test('designation containment honors month/day boundaries', () => {

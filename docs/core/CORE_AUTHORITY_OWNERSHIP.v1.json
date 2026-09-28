@@ -1,6 +1,6 @@
 {
   "schema": "atlas-core-authority-ownership/v1",
-  "as_of": "2026-09-27",
+  "as_of": "2026-09-28",
   "authority_rule": "One semantic fact has one canonical authority and one canonical mutation primitive. Transports, workflows, correction plans, registration coordinators, UI, and AI may orchestrate that primitive but are not independent writers.",
   "status_values": [
     "single_writer",
@@ -588,9 +588,10 @@
     },
     {
       "id": "polity_retirement",
-      "semantic_fact": "Polity retirement after zero-external-reference proof and redirect/non-resurrection handling",
+      "semantic_fact": "Durable Polity retirement tombstone/redirect after zero-external-reference proof",
       "canonical_state": [
-        "atlas_v2.polities plus owned children; durable redirect target not yet present"
+        "atlas_v2.polity_identity_retirements",
+        "atlas_v2.polity_identity_retirement_names"
       ],
       "authoritative_writer": {
         "path": "server/atlas-correction-polity-retire-v2-service.js",
@@ -601,17 +602,22 @@
       ],
       "shadow_writers": [],
       "status": "transitional_single_writer",
-      "remediation_unit": "UNIT 4 / UNIT 14",
+      "remediation_unit": "UNIT 14",
       "evidence_anchors": [
         {
           "path": "server/atlas-correction-polity-retire-v2-service.js",
-          "contains": "function createCorrectionPolityRetireV2Service"
+          "contains": "async function recordRetirement"
         },
         {
           "path": "server/atlas-correction-polity-retire-v2-service.js",
           "contains": "delete from atlas_v2.polities"
+        },
+        {
+          "path": "server/atlas-polity-identity-resolver.js",
+          "contains": "from atlas_v2.polity_identity_retirements"
         }
-      ]
+      ],
+      "note": "Unit 4 closed the missing canonical retirement-state gap. Historical correction snapshots are migration evidence only; the durable registry now owns tombstone/redirect lookup. Unit 14 may later generalize this writer into the shared destructive lifecycle primitive."
     }
   ]
 }
