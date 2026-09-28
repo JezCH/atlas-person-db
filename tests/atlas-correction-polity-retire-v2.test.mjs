@@ -175,6 +175,9 @@ function fakeClient({ externalReferences = 0 } = {}) {
       if (lower.includes("from atlas_v2.polity_names") && lower.includes("where polity_id=$1::uuid") && lower.includes("is_preferred=true")) {
         return { rows: state.deleted ? [] : NAMES.map((row) => ({ ...row })) };
       }
+      if (lower.includes("from atlas_v2.polity_names") && lower.includes("where polity_id=$1::uuid")) {
+        return { rows: state.deleted ? [] : NAMES.map((row) => ({ ...row })) };
+      }
       if (lower.includes("from pg_constraint con")) return { rows: structuredClone(FK_ROWS) };
       if (lower.includes("from information_schema.columns c")) return { rows: structuredClone(SEMANTIC_ROWS) };
       if (lower.startsWith("select count(*)::int as reference_count from \"")) {
