@@ -1,6 +1,6 @@
 "use strict";
 
-const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v5";
+const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v6";
 const CONTEXT_POLITY_RELATIONSHIP_FK_KEY = "atlas_v2.person_politics_context_polities.person_politics_id";
 
 const EXPECTED_PERSON_FKS = Object.freeze([
@@ -12,7 +12,8 @@ const EXPECTED_PERSON_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.person_people_affiliations.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_politics_v2.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_portraits.person_id", delete_action: "RESTRICT" }),
-  Object.freeze({ key: "atlas_v2.person_sources.person_id", delete_action: "CASCADE" })
+  Object.freeze({ key: "atlas_v2.person_sources.person_id", delete_action: "CASCADE" }),
+  Object.freeze({ key: "atlas_v2.person_timeline_dispositions.person_id", delete_action: "CASCADE" })
 ]);
 const EXPECTED_RELATIONSHIP_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.authoring_manifest_runs.relationship_id", delete_action: "SET NULL" }),
@@ -120,7 +121,7 @@ async function inspectPersonMergeReferenceReadiness(client) {
       "persons","person_names","person_sources","person_descriptions","person_politics_v2","person_politics_sources",
       "chronology_claims","relationship_descriptions","person_people_affiliations","person_people_affiliation_sources",
       "person_event_participations","person_event_participation_sources","person_external_references","person_portraits",
-      "person_profile_mutation_audits","authoring_manifest_runs","person_duplicate_revalidation_requirements"
+      "person_timeline_dispositions","person_profile_mutation_audits","authoring_manifest_runs","person_duplicate_revalidation_requirements"
     ]]);
   const allUserTriggers = (triggerResult.rows || []).map((row) => `${row.table_schema}.${row.table_name}.${row.trigger_name}`);
   const unreviewedUserTriggers = difference(allUserTriggers,EXPECTED_USER_TRIGGERS);
