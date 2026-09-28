@@ -1,0 +1,3 @@
+CORE v2 Unit 5 Production Reconciliation Trigger
+Date: 2026-09-28
+Purpose: open-only pull_request_target trigger; never merge.
