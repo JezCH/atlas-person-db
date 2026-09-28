@@ -38,6 +38,9 @@ function firstManifest() {
       canonical_key: 'p10-duplicate-fixture-a',
       person_type: 'historical',
       historicity: 'historical',
+      life_status: 'deceased',
+      life_status_checked_at: '2026-09-28',
+      life_status_basis: 'historical_certainty',
       allow_display_name_collision: false
     },
     polity_identity: {
