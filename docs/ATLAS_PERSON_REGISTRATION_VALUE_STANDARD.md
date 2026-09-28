@@ -1,11 +1,11 @@
 # ATLAS Person Historical Fact Count Standard
 
 > **Status:** Canonical  
-> **Version:** 3.1  
-> **Standard ID:** `ATLAS-PHFC-3.1`  
+> **Version:** 3.2  
+> **Standard ID:** `ATLAS-PHFC-3.2`  
 > **Scope:** Historical Person source-backed fact counting / candidate research / legacy recount  
 > **Authority:** This file is the single active authority for ATLAS Person historical fact counting.  
-> **Supersedes:** `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, and all earlier qualitative scoring, grading, tiering, or judgment-based systems. Older results remain audit evidence only.
+> **Supersedes:** `ATLAS-PHFC-3.1`, `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, and all earlier qualitative scoring, grading, tiering, or judgment-based systems. Older results remain audit evidence only.
 
 ---
 
@@ -305,9 +305,11 @@ This rule removes the ambiguity present in v3.0 about “double counting”.
 
 ---
 
-# 11. Final output
+# 11. Mandatory output-first contract
 
-Required output:
+For every completed or partially completed Person fact-count review, the **first substantive output** must be the canonical result block below. Explanations, evidence notes, caveats, ambiguity discussion, historical narrative, and methodological commentary come **after** this block.
+
+Required first block:
 
 ```text
 E x/6
@@ -320,11 +322,29 @@ VERIFIED_TOTAL x/36
 UNRESOLVED y
 ```
 
+Mandatory execution order:
+
+```text
+finish cell classification
+→ calculate E/R/T/D/G/S counts
+→ calculate VERIFIED_TOTAL
+→ calculate UNRESOLVED
+→ emit canonical result block first
+→ only then explain evidence or ambiguous cells
+```
+
+A response is **INCOMPLETE** if any of the following occurs:
+
+- the evidence discussion appears before the canonical result block;
+- any E/R/T/D/G/S group count is omitted;
+- `VERIFIED_TOTAL` is omitted;
+- `UNRESOLVED` is omitted;
+- the arithmetic does not equal the six displayed group counts;
+- the Person's occupation, office, ideology, regime, controversy, or political status changes this output order.
+
 If `UNRESOLVED = 0`, the review is complete.
 
-If `UNRESOLVED > 0`, the numeric verified subtotal is still reported, but the record status remains `HOLD`.
-
-**Never omit `VERIFIED_TOTAL`.**
+If `UNRESOLVED > 0`, the numeric verified subtotal is still reported first, while the record status remains `HOLD`.
 
 The total is arithmetic only.
 
@@ -397,7 +417,7 @@ A role may change which facts exist. It does not change how the facts are counte
 A durable record should preserve:
 
 ```text
-standard: ATLAS-PHFC-3.1
+standard: ATLAS-PHFC-3.2
 person_id / candidate identity
 
 E:
@@ -431,7 +451,7 @@ A `0` means **reviewed but not established in the evidence packet**, not metaphy
 
 # 15. Use in roster work
 
-PHFC 3.1 is a factual coverage instrument.
+PHFC 3.2 is a factual coverage instrument.
 
 It does not itself define:
 
@@ -462,7 +482,7 @@ The following are historical only:
 - SCI/OFI/MCG/DRS experiments;
 - ad-hoc importance or prestige judgments.
 
-Do not convert an old result numerically into PHFC 3.1.
+Do not convert an old result numerically into PHFC 3.2.
 
 Recount from source-backed facts.
 
