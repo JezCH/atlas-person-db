@@ -40,7 +40,7 @@ A row marked `multi_writer_debt`, `ownership_gap`, or `duplicate_truth_registry`
 | `reviewed_candidate_state` | Candidate review revision and APPROVED/HOLD/REJECTED decision | **NONE — gap** | **ownership_gap** | — | UNIT 13 |
 | `registration_execution_state` | Registration obligation/apply state tied to a reviewed candidate and canonical entity/revision | **NONE — gap** | **ownership_gap** | — | UNIT 6 / UNIT 7 / UNIT 13 |
 | `person_destructive_lifecycle` | Person merge and hard-delete dependency-safe lifecycle | **NONE — gap** | **ownership_gap** | `server/atlas-person-merge-service.js`<br>`server/atlas-person-delete-service.js` | UNIT 14 |
-| `polity_retirement` | Polity retirement after zero-external-reference proof and redirect/non-resurrection handling | `server/atlas-correction-polity-retire-v2-service.js#createCorrectionPolityRetireV2Service` | **transitional_single_writer** | — | UNIT 4 / UNIT 14 |
+| `polity_retirement` | Durable Polity retirement tombstone/redirect after zero-external-reference proof | `server/atlas-correction-polity-retire-v2-service.js#createCorrectionPolityRetireV2Service` | **transitional_single_writer** | — | UNIT 14 |
 
 ## Confirmed findings
 
@@ -48,7 +48,7 @@ A row marked `multi_writer_debt`, `ownership_gap`, or `duplicate_truth_registry`
 
 The current creation primitives for **Person, Polity and Role** converge on `atlas-identity-service.js`. Normal Human Authoring and native manifest orchestration call those primitives instead of maintaining separate identity creation code.
 
-For **Polity**, Unit 3 adds `atlas-polity-identity-resolver.js` in front of `createPolity`. Declared creation now resolves stable names/aliases, date-bounded temporal designations, current continuity relations and retired-identity evidence before insertion. Ambiguous continuity, missing/mismatched temporal context and retired identity resurrection fail closed rather than creating a second UUID.
+For **Polity**, Unit 3 adds `atlas-polity-identity-resolver.js` in front of `createPolity`. Declared creation now resolves stable names/aliases, date-bounded temporal designations and current continuity relations before insertion. Unit 4 makes `atlas_v2.polity_identity_retirements` plus `atlas_v2.polity_identity_retirement_names` the durable retired-identity authority: tombstones block resurrection and an explicit survivor UUID redirects resolution without consulting historical correction ledgers.
 
 `atlas-stage2-native-activity-service.js` is the intended canonical Activity writer used by normal authoring. `atlas-authoring-object-service.js` is the intended first-class Source/Place writer. `atlas-person-domain-service.js` is the dedicated representative-domain mutation engine. Runtime projection is generated only through `atlas-runtime-compile-service.js`.
 
