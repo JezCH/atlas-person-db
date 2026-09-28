@@ -1,0 +1,38 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-28",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "d781bf51c55e3dbe824afac5e95b55033092279a",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply only the three explicit human-reviewed knowledge assignments for the verified India Buddhist philosophy trio. Preserve existing non-null Production values and fail closed on conflict."
+  },
+  "review_scope": {
+    "task_key": "PHILOSOPHY-CANON-54-INDIA-BUDDHIST-TRIO-DOMAIN-20260928",
+    "reviewed_assignments": 3,
+    "reviewed_holds": 0,
+    "rationale": "All three Persons are represented in this campaign by philosophical, logical, epistemological, or Buddhist intellectual activity, and their Authoring Apply exact Production read-back succeeded after runtime projection compile."
+  },
+  "entries": [
+    {
+      "person_id": "decf89f2-0156-481c-8dab-8044d7c7797d",
+      "canonical_name_en": "Dignāga",
+      "preferred_name_ko": "디그나가",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "60e1d1ce-a826-49f1-80fc-ec8ea3de335f",
+      "canonical_name_en": "Nāgārjuna",
+      "preferred_name_ko": "나가르주나",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "f23693ac-d1d9-4a34-848f-1e17d7282075",
+      "canonical_name_en": "Vasubandhu",
+      "preferred_name_ko": "바수반두",
+      "representative_domain": "knowledge"
+    }
+  ]
+}
