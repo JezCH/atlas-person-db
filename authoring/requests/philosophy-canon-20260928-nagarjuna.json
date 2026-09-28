@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:philosophy-canon-20260928:nagarjuna:satavahana:v1",
+  "request_id": "authoring:philosophy-canon-20260928:nagarjuna:satavahana:v2",
   "person": {
     "canonical_name_en": "Nāgārjuna",
     "display_name_ko": "나가르주나",
@@ -59,6 +59,7 @@
     "representative_domain": "knowledge",
     "dedup_method": "Prior governed review held Nāgārjuna because no non-invented polity rail had been established. This recovery reopens that HOLD only after source review found a dynasty-level Sātavāhana association; Production preflight remains authoritative.",
     "namuwiki_review": "No guessed URL; exact external-link recovery remains separate.",
-    "polity_inference": "Dynasty/state-level association supported by traditional accounts and modern scholarship; no specific king is asserted because scholarship explicitly rejects that precision."
+    "polity_inference": "Dynasty/state-level association supported by traditional accounts and modern scholarship; no specific king is asserted because scholarship explicitly rejects that precision.",
+    "recovery_note": "Reissued from current main after the prior batch preflight classified this manifest READY but apply was prevented by a concurrent Production runtime alias change; no mutation for this manifest was committed."
   }
 }

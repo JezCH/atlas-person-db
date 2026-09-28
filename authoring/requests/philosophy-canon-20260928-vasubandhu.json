@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:philosophy-canon-20260928:vasubandhu:v2",
+  "request_id": "authoring:philosophy-canon-20260928:vasubandhu:v3",
   "person": {
     "canonical_name_en": "Vasubandhu",
     "display_name_ko": "바수반두",
@@ -50,6 +50,6 @@
     "dedup_method": "Repository-wide current-main identity search found no governed Vasubandhu registration manifest; canonical Production preflight remains authoritative.",
     "namuwiki_review": "No guessed URL; exact external-link recovery remains separate.",
     "schema_recovery_note": "Initial batch selection failed before preflight/write because confidence=probable is not an allowed enum; corrected to canonical likely with no historical-claim change.",
-    "recovery_note": "Reissued from current main after the earlier approved commit was rejected by runtime ancestry safety before preflight/write; no prior Production mutation occurred."
+    "recovery_note": "Reissued from current main after the prior batch preflight classified this manifest READY but apply was prevented by a concurrent Production runtime alias change; no mutation for this manifest was committed."
   }
 }
