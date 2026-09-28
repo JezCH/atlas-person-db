@@ -118,8 +118,16 @@ function preferredName(person,locale) {
   return person.names.find((row)=>row?.locale===locale && row?.is_preferred===true)?.name || null;
 }
 
+function stableValue(value) {
+  if (Array.isArray(value)) return value.map(stableValue);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.keys(value).sort().map((key)=>[key,stableValue(value[key])]));
+  }
+  return value;
+}
+
 function sameJson(left,right) {
-  return JSON.stringify(left)===JSON.stringify(right);
+  return JSON.stringify(stableValue(left))===JSON.stringify(stableValue(right));
 }
 
 function expectedTimelineRow(personId,timeline) {
@@ -185,11 +193,11 @@ function planReconciliation(state,manifest) {
     reused.push(Object.freeze({ id:person.id, item }));
   }
 
-  if (reused.length !== manifest.expected_existing_canonical_count) {
-    throw new Error(`UNIT5_RECONCILIATION_EXISTING_COUNT_DRIFT:${reused.length}`);
-  }
-  if (create.length !== manifest.expected_missing_canonical_count && create.length !== 0) {
-    throw new Error(`UNIT5_RECONCILIATION_MISSING_COUNT_DRIFT:${create.length}`);
+  const initialShape = reused.length === manifest.expected_existing_canonical_count
+    && create.length === manifest.expected_missing_canonical_count;
+  const replayShape = reused.length === manifest.items.length && create.length === 0;
+  if (!initialShape && !replayShape) {
+    throw new Error(`UNIT5_RECONCILIATION_IDENTITY_COUNT_DRIFT:reused=${reused.length}:create=${create.length}`);
   }
 
   for (const person of state.persons) {
