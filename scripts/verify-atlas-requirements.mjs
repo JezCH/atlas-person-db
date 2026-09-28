@@ -85,13 +85,13 @@ if (!document.includes("100% traceable") || !document.includes("0 known contradi
   fail("human-readable completion principles drifted");
 }
 
-if (!document.includes("ATLAS-PHFC-4.1") || !document.includes("VERIFIED_COUNT /36")) {
-  fail("PHFC v4.1 factual coverage count contract is missing from human requirements");
+if (!document.includes("ATLAS-PHFC-4.2") || !document.includes("VERIFIED_COUNT /36") || !document.includes("ZERO_REVIEW_CLOSED")) {
+  fail("PHFC v4.2 bounded factual coverage contract is missing from human requirements");
 }
 
 const phfcRequirement = byId.get("ATLAS-RQ-0020");
-if (!phfcRequirement || !String(phfcRequirement.title || "").includes("ATLAS-PHFC-4.1")) {
-  fail("ATLAS-RQ-0020 must bind to ATLAS-PHFC-4.1");
+if (!phfcRequirement || !String(phfcRequirement.title || "").includes("ATLAS-PHFC-4.2")) {
+  fail("ATLAS-RQ-0020 must bind to ATLAS-PHFC-4.2");
 }
 
 const requiredPhfcEvidence = [
@@ -113,26 +113,32 @@ for (const evidencePath of requiredPhfcEvidence) {
 
 const phfcStandard = fs.readFileSync(path.join(root, "docs", "ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md"), "utf8");
 for (const phrase of [
-  "ATLAS-PHFC-4.1",
+  "ATLAS-PHFC-4.2",
   "VERIFIED_COUNT = E_COUNT + R_COUNT + T_COUNT + D_COUNT + G_COUNT + S_COUNT",
-  "VERIFIED_COUNT x/36",
-  "same schema, evidence rules, arithmetic, and output order apply to every historical Person"
+  "v4.2 **does not count countries**",
+  "ZERO_REVIEW_CLOSED",
+  "one identical factual-coverage procedure to every historical Person"
 ]) {
   if (!phfcStandard.includes(phrase)) fail(`PHFC canonical standard drifted: missing ${phrase}`);
 }
 
 const phfcFormatter = fs.readFileSync(path.join(root, "server", "person-fact-count-output.mjs"), "utf8");
 for (const symbol of [
+  "PHFC_G_MODES",
   "formatPersonFactCountResult",
   "derivePersonFactCounts",
   "validatePersonFactCountOutput",
   "assertPersonFactCountOutput",
+  "zeroReviewClosed",
   "VERIFIED_COUNT"
 ]) {
   if (!phfcFormatter.includes(symbol)) fail(`PHFC formatter contract drifted: missing ${symbol}`);
 }
-if (phfcFormatter.includes("verifiedTotal") || phfcFormatter.includes("importanceScore")) {
-  fail("legacy/evaluative score implementation remains reachable");
+if (phfcFormatter.includes("externalReceptionSet") || phfcFormatter.includes("verifiedTotal") || phfcFormatter.includes("importanceScore")) {
+  fail("legacy country-count or evaluative score implementation remains reachable");
+}
+if (!phfcFormatter.includes("exactObject(input, ['E','R','T','D','G','S','zeroReviewClosed'], 'profile input')") || !phfcFormatter.includes("zeroReviewClosed must exactly match every 0-state cell")) {
+  fail("PHFC role-neutral input boundary or zero-closure invariant drifted");
 }
 
 const statusCounts = Object.fromEntries([...allowedStatuses].map((status) => [status, registry.requirements.filter((item) => item.status === status).length]));
