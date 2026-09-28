@@ -230,6 +230,20 @@ test("retirement manifest rejects unreviewed or unknown review reasons", () => {
   );
 });
 
+test("new same-identity retirement requires an explicit survivor redirect", async () => {
+  const client = fakeClient();
+  const service = createCorrectionPolityRetireV2Service({ client });
+  await assert.rejects(
+    () => service.execute(manifest({
+      operation: { review_reason: REVIEW_REASON_SAME_IDENTITY_STATE_FORM }
+    }), { dryRun: true }),
+    /CORRECTION_POLITY_RETIRE_SURVIVOR_REQUIRED/
+  );
+  assert.equal(client.state.deleted, false);
+  assert.equal(client.state.retirement, null);
+  assert.equal(client.statements.at(-1).sql.trim().toLowerCase(), "rollback");
+});
+
 test("retirement manifest requires a zero external-reference expectation", () => {
   assert.throws(
     () => requireManifest(manifest({ operation: { expected_external_reference_total: 1 } })),
