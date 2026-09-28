@@ -11,6 +11,7 @@ const CORE_CANONICAL_TABLES = Object.freeze(new Set([
   "person_politics_context_polities",
   "person_relationships",
   "person_portraits",
+  "person_timeline_dispositions",
   "polities",
   "polity_names",
   "polity_descriptions",
