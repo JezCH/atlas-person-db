@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:emperor-taisho:japan:emperor:1912-07-30:1926-12-25:v1",
+  "request_id": "authoring:emperor-taisho:japan:emperor:1912-07-30:1926-12-25:v2",
   "person": {
     "canonical_name_en": "Emperor Taishō",
     "display_name_ko": "다이쇼 천황",
@@ -56,6 +56,7 @@
     "request_batch": "single-person-emperor-taisho-20260928",
     "representative_domain": "governance",
     "dedup_method": "Repository identity search on 2026-09-28 found no existing Emperor Taishō / Yoshihito / 大正天皇 / 다이쇼 천황 Person record. Canonical Japan polity is reused; retired Empire of Japan duplicate must not be recreated.",
-    "namuwiki_review": "External indexed search exposed the exact child document '다이쇼 천황/생애' and references to the parent Person document; canonical parent URL recorded as 다이쇼 천황."
+    "namuwiki_review": "External indexed search exposed the exact child document '다이쇼 천황/생애' and references to the parent Person document; canonical parent URL recorded as 다이쇼 천황.",
+    "recovery_note": "Recovery after v1 created the Person identity but Production verification found activity_count=0; v2 must reuse Person bf9c9272-f3a3-449e-a18a-763d85c90628 and create the reviewed reign Activity."
   }
 }
