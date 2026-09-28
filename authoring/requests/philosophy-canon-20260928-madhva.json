@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:madhva:alupa:v1",
+  "person": {
+    "canonical_name_en": "Madhva",
+    "display_name_ko": "마드바",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Alupa dynasty",
+    "display_name_ko": "알루파 왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Vedanta philosopher and theologian",
+    "role_display_name_ko": "베단타 철학자·신학자",
+    "start_year": 1275,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1275,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Representative c.1275 Udupi intellectual point. Madhva's absolute chronology is disputed, commonly given either around 1199–1278 or 1238–1317; c.1275 lies within both broad reconstructions and is not presented as an exact event. Reference sources place Madhva's teaching and institutional activity at Udupi. Government historical survey places South Kanara, including the Udupi area, under Alupa administrative control through this period, with the Alupas acknowledging Hoysala suzerainty. ATLAS therefore uses the more local Alupa polity for active_in while explicitly preserving the overlordship context."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Routledge Encyclopedia of Philosophy — Madhva (1238?–1317?)",
+      "canonical_url": "https://www.rep.routledge.com/articles/biographical/madhva-1238-1317/v-1",
+      "citation_text": "Routledge identifies Madhva as the founder of Dvaita Vedānta and gives the commonly used 1238?–1317? chronology.",
+      "locator": "Article summary"
+    },
+    {
+      "source_type": "encyclopedic_reference",
+      "title": "Encyclopedia.com — Madhva",
+      "canonical_url": "https://www.encyclopedia.com/people/philosophy-and-religion/hinduism-biographies/madhva",
+      "citation_text": "The reference places Madhva at Udupi, describes pupils and teaching there, and records his establishment of the principal Krishna temple at Udupi while noting chronology traditions.",
+      "locator": "Madhva biography; Return to Udupi"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "District Census Handbook, Dakshin Kannad — historical survey",
+      "canonical_url": "https://censusindia.gov.in/nada/index.php/catalog/29160/download/32341/46242_1981_DAK.pdf",
+      "citation_text": "The Government of India district history states that South Kanara remained under Alupa administrative control up to about 1400 and that the Alupas accepted Hoysala suzerainty during the relevant medieval period.",
+      "locator": "Historical survey of Alupa rule"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-INDIA-BRAHMANICAL-JAIN-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Current Production searches for Madhva, Madhvacharya, Madhva Acharya, Anandatirtha, 마드바, and 마드바차리야 returned no Person.",
+    "namuwiki_review": "Exact indexed searches for 마드바/마드바차리야 returned no independent NamuWiki Person document; no guessed URL.",
+    "polity_inference": "Udupi is the grounded activity locus. The Alupas are used as the local administering polity; Hoysala suzerainty is preserved in notes rather than erased or converted into a claim of exclusive sovereignty."
+  }
+}
