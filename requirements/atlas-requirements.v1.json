@@ -124,7 +124,7 @@
     {
       "id": "ATLAS-RQ-0020",
       "status": "ACTIVE",
-      "title": "Person historical factual profiling uses ATLAS-PHFP-4.0 only: the same E/R/T/D/G/S schema applies to every historical Person; binary cells preserve 1/0/? state; geography preserves explicit evidence-backed sets; aggregate total, /36, overall score, rank, grade, or tier are forbidden",
+      "title": "Person historical factual coverage uses ATLAS-PHFC-4.1 only: one identical raw E/R/T/D/G/S profile for every historical Person, machine-derived E/R/T/D/G/S counts and VERIFIED_COUNT /36, unresolved preservation, and no qualitative importance/rank/tier interpretation",
       "evidence_paths": [
         "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
         "authoring/REGISTRATION_SOP.md",

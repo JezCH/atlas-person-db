@@ -85,16 +85,16 @@ if (!document.includes("100% traceable") || !document.includes("0 known contradi
   fail("human-readable completion principles drifted");
 }
 
-if (!document.includes("ATLAS-PHFP-4.0") || !document.includes("server/person-fact-count-output.mjs")) {
-  fail("PHFP v4.0 machine output contract is missing from human requirements");
+if (!document.includes("ATLAS-PHFC-4.1") || !document.includes("VERIFIED_COUNT /36")) {
+  fail("PHFC v4.1 factual coverage count contract is missing from human requirements");
 }
 
-const phfpRequirement = byId.get("ATLAS-RQ-0020");
-if (!phfpRequirement || !String(phfpRequirement.title || "").includes("ATLAS-PHFP-4.0")) {
-  fail("ATLAS-RQ-0020 must bind to ATLAS-PHFP-4.0");
+const phfcRequirement = byId.get("ATLAS-RQ-0020");
+if (!phfcRequirement || !String(phfcRequirement.title || "").includes("ATLAS-PHFC-4.1")) {
+  fail("ATLAS-RQ-0020 must bind to ATLAS-PHFC-4.1");
 }
 
-const requiredPhfpEvidence = [
+const requiredPhfcEvidence = [
   "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
   "authoring/REGISTRATION_SOP.md",
   "docs/core/CORE_V2_MASTER_PLAN.md",
@@ -102,39 +102,37 @@ const requiredPhfpEvidence = [
   "scripts/verify-person-fact-count-output.mjs",
   "tests/person-fact-count-output.test.mjs"
 ];
-for (const evidencePath of requiredPhfpEvidence) {
-  if (!(phfpRequirement.evidence_paths || []).includes(evidencePath)) {
-    fail(`ATLAS-RQ-0020 missing PHFP evidence path: ${evidencePath}`);
+for (const evidencePath of requiredPhfcEvidence) {
+  if (!(phfcRequirement.evidence_paths || []).includes(evidencePath)) {
+    fail(`ATLAS-RQ-0020 missing PHFC evidence path: ${evidencePath}`);
   }
   if (!fs.existsSync(path.join(root, evidencePath))) {
-    fail(`PHFP enforcement file missing: ${evidencePath}`);
+    fail(`PHFC enforcement file missing: ${evidencePath}`);
   }
 }
 
-const phfpStandard = fs.readFileSync(path.join(root, "docs", "ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md"), "utf8");
+const phfcStandard = fs.readFileSync(path.join(root, "docs", "ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md"), "utf8");
 for (const phrase of [
-  "ATLAS-PHFP-4.0",
-  "no aggregate total",
-  "same factual profile procedure applies",
-  "first substantive output"
+  "ATLAS-PHFC-4.1",
+  "VERIFIED_COUNT = E_COUNT + R_COUNT + T_COUNT + D_COUNT + G_COUNT + S_COUNT",
+  "VERIFIED_COUNT x/36",
+  "same schema, evidence rules, arithmetic, and output order apply to every historical Person"
 ]) {
-  if (!phfpStandard.includes(phrase)) fail(`PHFP canonical standard drifted: missing ${phrase}`);
+  if (!phfcStandard.includes(phrase)) fail(`PHFC canonical standard drifted: missing ${phrase}`);
 }
 
-const phfpFormatter = fs.readFileSync(path.join(root, "server", "person-fact-count-output.mjs"), "utf8");
+const phfcFormatter = fs.readFileSync(path.join(root, "server", "person-fact-count-output.mjs"), "utf8");
 for (const symbol of [
-  "formatPersonFactProfile",
-  "validatePersonFactProfileOutput",
-  "assertPersonFactProfileOutput",
-  "aggregate scalar output is forbidden"
+  "formatPersonFactCountResult",
+  "derivePersonFactCounts",
+  "validatePersonFactCountOutput",
+  "assertPersonFactCountOutput",
+  "VERIFIED_COUNT"
 ]) {
-  if (!phfpFormatter.includes(symbol)) fail(`PHFP formatter contract drifted: missing ${symbol}`);
+  if (!phfcFormatter.includes(symbol)) fail(`PHFC formatter contract drifted: missing ${symbol}`);
 }
-if (phfpFormatter.includes("formatPersonFactCountResult") || phfpFormatter.includes("verifiedTotal")) {
-  fail("legacy aggregate PHFC formatter remains reachable");
-}
-if (!phfpFormatter.includes("aggregate scalar output is forbidden") || !phfpFormatter.includes("text.includes('VERIFIED_TOTAL')")) {
-  fail("PHFP validator must explicitly reject legacy aggregate output");
+if (phfcFormatter.includes("verifiedTotal") || phfcFormatter.includes("importanceScore")) {
+  fail("legacy/evaluative score implementation remains reachable");
 }
 
 const statusCounts = Object.fromEntries([...allowedStatuses].map((status) => [status, registry.requirements.filter((item) => item.status === status).length]));

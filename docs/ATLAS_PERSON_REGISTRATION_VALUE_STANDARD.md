@@ -1,30 +1,25 @@
-# ATLAS Person Historical Fact Profile Standard
+# ATLAS Person Historical Fact Coverage Count Standard
 
 > **Status:** Canonical
-> **Version:** 4.0
-> **Standard ID:** `ATLAS-PHFP-4.0`
-> **Scope:** Historical Person source-backed factual profiling / candidate research / legacy re-review
-> **Authority:** This file is the single active authority for ATLAS Person historical factual profiling.
-> **Supersedes:** `ATLAS-PHFC-3.2`, `ATLAS-PHFC-3.1`, `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, and every earlier aggregate scoring, grading, tiering, or judgment system. Older outputs remain audit evidence only.
+> **Version:** 4.1
+> **Standard ID:** `ATLAS-PHFC-4.1`
+> **Scope:** Historical Person source-backed factual coverage review / candidate research / legacy recount
+> **Authority:** This file is the single active authority for ATLAS Person historical fact coverage counting.
+> **Supersedes:** `ATLAS-PHFP-4.0`, `ATLAS-PHFC-3.2`, and all earlier aggregate or qualitative Person systems.
 
 ---
 
 ## 0. Purpose
 
-ATLAS records a source-backed historical fact profile. It does **not** collapse that profile into one scalar score.
+ATLAS records the full source-backed factual profile **and** reports one deterministic arithmetic coverage count.
 
-The canonical procedure is:
+The count answers only:
 
-```text
-collect source-backed factual claims
-→ classify claims into fixed factual dimensions
-→ preserve each cell as VERIFIED / REVIEWED_NOT_ESTABLISHED / UNRESOLVED
-→ preserve geographic reception as explicit source-backed sets
-→ emit the factual profile
-→ explain evidence after the profile
-```
+> **How many predefined factual coverage cells are VERIFIED in this reviewed evidence packet?**
 
-The exact same procedure applies to every historical Person regardless of occupation, office, ideology, regime, reputation, field, or historical role.
+It does not mean greatness, importance, merit, positive impact, moral value, prestige, competence, or political value.
+
+The same schema, evidence rules, arithmetic, and output order apply to every historical Person regardless of occupation, office, ideology, regime, reputation, field, or historical role.
 
 There is no Person-type branch.
 
@@ -32,81 +27,84 @@ There is no Person-type branch.
 
 ## 1. Cell states
 
-Every binary profile cell has exactly one state:
+Every binary cell has exactly one state:
 
-- `1 = VERIFIED` — at least one reliable source satisfies the exact rule.
-- `0 = REVIEWED_NOT_ESTABLISHED` — the cell was actually reviewed and no qualifying fact was established from the reviewed evidence.
-- `? = UNRESOLVED` — research is incomplete, evidence conflicts, or classification cannot yet be resolved.
+- `1 = VERIFIED`
+- `0 = REVIEWED_NOT_ESTABLISHED`
+- `? = UNRESOLVED`
 
-Never silently convert `?` to `0`.
+Never convert `?` to `0`.
 
-A `0` is a review result for the evidence packet, not a metaphysical claim that the fact never existed.
+`0` means not established in the reviewed evidence packet, not proof of metaphysical absence.
 
 ---
 
-## 2. Profile dimensions
+## 2. Canonical count
 
-The active profile contains five fixed binary groups plus explicit geographic sets:
+```text
+VERIFIED_COUNT = E_COUNT + R_COUNT + T_COUNT + D_COUNT + G_COUNT + S_COUNT
+```
 
-| Code | Dimension | Shape |
-|---|---|---|
-| **E** | Direct Entity Classes | 6 binary cells |
-| **R** | Direct Relation Families | 6 binary cells |
-| **T** | Historical Transition Classes | 6 binary cells |
-| **D** | ATLAS Activity Domains | 8 named binary cells |
-| **G** | Geographic Reception | explicit origin + external reception sets |
-| **S** | Successor-Link Classes | 6 binary cells |
+| Group | Raw evidence shape | Count rule | Max |
+|---|---|---:|---:|
+| E | E1..E6 | number of VERIFIED cells | 6 |
+| R | R1..R6 | number of VERIFIED cells | 6 |
+| T | T1..T6 | number of VERIFIED cells | 6 |
+| D | eight named direct-activity domains | min(VERIFIED domains, 6) | 6 |
+| G | explicit external reception country/area set | min(verified external units, 6) | 6 |
+| S | S1..S6 | number of VERIFIED cells | 6 |
+| **TOTAL** |  | arithmetic sum only | **36** |
 
-There is **no aggregate total**, no `/36`, no overall numeric score, no weighted sum, and no hidden scalar derived from the profile.
+The full raw profile is preserved even when D or G exceeds the count cap.
 
-The profile is the output.
+There is no weighting. Every counted unit contributes exactly one.
 
 ---
 
 ## 3. E — Direct Entity Classes
 
-E1. Polity / Government / Regime
-E2. Historical Event / Conflict / Expedition
-E3. Institution / Organization
-E4. Work / Text / Artwork / Composition / Corpus
-E5. Law / Treaty / Standard / Doctrine / Formal System
+E1. Polity / Government / Regime  
+E2. Historical Event / Conflict / Expedition  
+E3. Institution / Organization  
+E4. Work / Text / Artwork / Composition / Corpus  
+E5. Law / Treaty / Standard / Doctrine / Formal System  
 E6. Technology / Discovery / Infrastructure / Route / Material Innovation
 
-A class is VERIFIED when a reliable source directly connects the Person to at least one qualifying named or unambiguous object in that class.
+A cell is VERIFIED only when a reliable source directly connects the Person to at least one qualifying named or unambiguous object.
 
 ---
 
 ## 4. R — Direct Relation Families
 
-R1. formal authority — rule / govern / reign / hold formal office
-R2. command or formal service — command / serve / administer a named military or institutional structure
-R3. create or author — create / found / build / author / compose / produce a named object
-R4. discover or invent — discover / invent / engineer a named discovery, invention, technology, or technical design
-R5. reform or codify — reform / legislate / enact / codify / standardize a named institution, law, or formal system
+R1. formal authority — rule / govern / reign / hold formal office  
+R2. command or formal service — command / serve / administer a named military or institutional structure  
+R3. create or author — create / found / build / author / compose / produce a named object  
+R4. discover or invent — discover / invent / engineer a named discovery, invention, technology, or technical design  
+R5. reform or codify — reform / legislate / enact / codify / standardize a named institution, law, or formal system  
 R6. transmit, explore, or negotiate — teach / transmit / translate / undertake documented exploration / conduct documented diplomatic negotiation
 
-Generic `lead`, generic `resist`, generic `develop`, ceremonial attendance, or mere association do not satisfy a relation cell.
+Generic `lead`, generic `resist`, generic `develop`, ceremonial attendance, or mere association do not qualify.
 
 ---
 
 ## 5. T — Historical Transition Classes
 
-T1. polity/regime transition
-T2. territorial/control transition
-T3. institutional/legal transition
-T4. conflict transition
-T5. named movement/tradition transition
+T1. polity/regime transition  
+T2. territorial/control transition  
+T3. institutional/legal transition  
+T4. conflict transition  
+T5. named movement/tradition transition  
 T6. science/technology/exploration transition
 
-T5 includes named intellectual, religious, artistic, literary, social, and political movements or traditions. The source must connect the Person's action or output to formation or documented transformation; mere eponymous naming or contemporaneity does not count.
+T5 includes named intellectual, religious, artistic, literary, social, and political movements or traditions.
 
-For every T cell, mere presence during a transition is insufficient. The source must connect the Person's action/output to the state change.
+Mere contemporaneity, office-holding during a transition, or eponymous naming is insufficient. The source must connect the Person's action/output to the state change.
 
 ---
 
 ## 6. D — Direct Activity Domains
 
-The canonical domain vocabulary is:
+Raw domain vocabulary:
 
 - governance
 - military
@@ -117,9 +115,9 @@ The canonical domain vocabulary is:
 - religion
 - exploration
 
-Each domain is a separate `1 / 0 / ?` cell. There is no cap and no domain subtotal.
+Each domain is stored as `1 / 0 / ?`.
 
-A domain requires direct source-backed activity:
+Direct-activity predicates:
 
 - governance — personally exercise governing authority or administration;
 - military — personally serve, command, plan, or conduct military activity;
@@ -130,23 +128,23 @@ A domain requires direct source-backed activity:
 - religion — personally found, lead, teach, interpret, or author within a religious tradition/institution;
 - exploration — personally undertake or document exploratory travel/expedition as exploration.
 
-Policy, sponsorship, approval, funding, patronage, commissioning, or consequences in a field do not by themselves create a direct activity-domain cell.
+Policy, sponsorship, approval, funding, patronage, commissioning, or downstream consequences alone do not create a domain.
+
+```text
+D_COUNT = min(number of VERIFIED D domains, 6)
+```
 
 ---
 
 ## 7. G — Geographic Reception
 
-Geographic reception is preserved as evidence-bearing sets, not converted into a score.
-
 ### 7.1 ORIGIN_SET
 
-Build `ORIGIN_SET` from present-day UN M49 country/area units containing source-backed locations of the Person's own direct lifetime activity.
-
-Do not choose a single principal origin by judgment.
+Preserve every present-day UN M49 country/area unit containing source-backed locations of the Person's own direct lifetime activity.
 
 ### 7.2 EXTERNAL_RECEPTION_SET
 
-Record each country/area unit outside `ORIGIN_SET` where a reliable source explicitly establishes at least one of:
+Preserve every country/area outside `ORIGIN_SET` where reliable evidence establishes at least one of:
 
 - formal adoption;
 - institutional use;
@@ -156,9 +154,13 @@ Record each country/area unit outside `ORIGIN_SET` where a reliable source expli
 - legally or technically operative use;
 - a named movement/tradition explicitly receiving the Person or their output.
 
-Do not use a fixed maximum. Preserve every verified unit relevant to the reviewed evidence packet.
+Mere translation, publication availability, tourism, commemoration, museum display, name recognition, or generic unsourced influence is insufficient.
 
-The following alone do not qualify: mere translation, mere publication availability, tourism, commemoration, museum display, name recognition, or generic unsourced "influence".
+```text
+G_COUNT = min(number of verified EXTERNAL_RECEPTION_SET units, 6)
+```
+
+Do not truncate the stored set when more than six units are verified.
 
 Unresolved geographic claims remain explicit in `G_UNRESOLVED`.
 
@@ -166,11 +168,11 @@ Unresolved geographic claims remain explicit in `G_UNRESOLVED`.
 
 ## 8. S — Successor-Link Classes
 
-S1. later polity / government / regime
-S2. later institution / organization
-S3. later law / treaty / standard / formal system
-S4. later work / text / artwork / corpus
-S5. later movement / religion / school / tradition
+S1. later polity / government / regime  
+S2. later institution / organization  
+S3. later law / treaty / standard / formal system  
+S4. later work / text / artwork / corpus  
+S5. later movement / religion / school / tradition  
 S6. later technology / practice / infrastructure
 
 Qualifying relations include adoption, continuation, institutional inheritance, implementation, explicit derivation, explicit response, or explicit documented influence.
@@ -181,7 +183,7 @@ Chronology alone, superficial similarity, generic influence without an identifia
 
 ## 9. Cross-dimension evidence reuse
 
-A source-backed assertion may verify more than one dimension when the dimensions encode different factual properties.
+One source-backed assertion may verify cells in different groups when each group encodes a different factual property.
 
 Example:
 
@@ -191,77 +193,91 @@ Person → codified → named law
 
 may support E5, R5, and T3.
 
-This is not score double-counting because v4.0 has no aggregate score.
-
-Within one exact cell, repeated evidence never creates additional state.
+Within one exact cell, repeated evidence never adds more than one VERIFIED state.
 
 ---
 
 ## 10. Canonical output-first contract
 
-Every completed or partial review must begin with this profile block before explanatory prose:
+Every completed or partial review must begin with this count block:
 
 ```text
-E E1=<1|0|?> E2=<1|0|?> E3=<1|0|?> E4=<1|0|?> E5=<1|0|?> E6=<1|0|?>
-R R1=<1|0|?> R2=<1|0|?> R3=<1|0|?> R4=<1|0|?> R5=<1|0|?> R6=<1|0|?>
-T T1=<1|0|?> T2=<1|0|?> T3=<1|0|?> T4=<1|0|?> T5=<1|0|?> T6=<1|0|?>
+E_COUNT x/6
+R_COUNT x/6
+T_COUNT x/6
+D_COUNT x/6
+G_COUNT x/6
+S_COUNT x/6
+VERIFIED_COUNT x/36
+UNRESOLVED y
+STATUS COMPLETE|HOLD
+```
+
+The count block is followed by the raw profile:
+
+```text
+E E1=<1|0|?> ... E6=<1|0|?>
+R R1=<1|0|?> ... R6=<1|0|?>
+T T1=<1|0|?> ... T6=<1|0|?>
 D governance=<1|0|?> military=<1|0|?> knowledge=<1|0|?> technology=<1|0|?> commerce=<1|0|?> culture=<1|0|?> religion=<1|0|?> exploration=<1|0|?>
-G ORIGIN_SET=[...] EXTERNAL_RECEPTION_SET=[...] G_UNRESOLVED=[...]
-S S1=<1|0|?> S2=<1|0|?> S3=<1|0|?> S4=<1|0|?> S5=<1|0|?> S6=<1|0|?>
-UNRESOLVED=[cell ids / geographic claims]
-STATUS=<COMPLETE|HOLD>
+G_ORIGIN [...]
+G_EXTERNAL [...]
+G_UNRESOLVED [...]
+S S1=<1|0|?> ... S6=<1|0|?>
 ```
 
 Rules:
 
-- no prose before the block;
-- no aggregate total line;
-- no `VERIFIED_TOTAL`;
-- no `/36`;
-- no ranking, grade, tier, prestige band, best/worst label, or other scalar summary;
-- identical output schema for every Person;
-- `STATUS=COMPLETE` only when no `?` cell and no unresolved geographic claim remains;
-- otherwise `STATUS=HOLD`.
+- no prose before the count block;
+- `VERIFIED_COUNT` is calculated by code, never trusted from caller input;
+- `UNRESOLVED` counts unresolved cells plus unresolved geographic claims;
+- `STATUS COMPLETE` only when unresolved count is zero; otherwise `HOLD`;
+- raw profile must agree with all displayed counts;
+- no role, office, ideology, regime, controversy, or political status changes the schema or arithmetic;
+- the count must never be renamed or interpreted as importance, merit, greatness, value, rank, tier, grade, best/worst, or recommendation.
 
 ---
 
 ## 11. Machine implementation authority
 
-The machine contract is enforced by:
+`server/person-fact-count-output.mjs` is the implementation authority.
 
-- `server/person-fact-profile-output.mjs`
-  - `formatPersonFactProfile()`
-  - `validatePersonFactProfileOutput()`
-  - `assertPersonFactProfileOutput()`
-- `server/person-fact-count-output.mjs` is retained only as a compatibility import path and re-exports the v4.0 profile API. It contains no aggregate-total implementation.
-- `scripts/verify-person-fact-profile-output.mjs` validates a rendered profile from file or stdin.
-- `scripts/verify-person-fact-count-output.mjs` is retained as a compatibility CLI wrapper and delegates to the v4.0 profile validator.
-- `tests/person-fact-count-output.test.mjs` permanently verifies:
-  - profile-first output;
-  - exact cell-state shape;
-  - no scalar aggregate;
-  - no `VERIFIED_TOTAL`;
-  - no `/36`;
-  - consistent COMPLETE/HOLD state.
+It must expose:
 
-Any code path that emits a historical Person profile must use the canonical formatter/validator.
+- `formatPersonFactCountResult()`
+- `validatePersonFactCountOutput()`
+- `assertPersonFactCountOutput()`
+- `normalizePersonFactProfile()`
+
+The formatter derives all six group counts, `VERIFIED_COUNT`, unresolved count, and COMPLETE/HOLD from the raw factual profile.
+
+The validator rejects:
+
+- prose before the count block;
+- missing or reordered count lines;
+- caller-supplied arithmetic mismatch;
+- count/profile mismatch;
+- malformed 1/0/? cells;
+- geographic overlap between origin and external reception;
+- incorrect unresolved count;
+- incorrect COMPLETE/HOLD state.
+
+`tests/person-fact-count-output.test.mjs` permanently verifies these invariants.
 
 ---
 
 ## 12. No role-based exceptions
 
-The same factual profile procedure applies to rulers, officeholders, military commanders, religious leaders, scholars, scientists, inventors, artists, writers, musicians, merchants, explorers, and every other historical Person.
+The identical procedure applies to every historical Person.
 
-A Person's role changes which facts are established. It never changes the schema, evidence standard, or output contract.
+A role changes which facts are established. It does not change what is counted or how the count is rendered.
 
 ---
 
-## 13. Review record
-
-A durable record preserves:
+## 13. Durable review record
 
 ```text
-standard: ATLAS-PHFP-4.0
+standard: ATLAS-PHFC-4.1
 person_id / candidate identity
 
 E1..E6: state + evidence
@@ -273,13 +289,20 @@ G.external_reception_set + evidence
 G.unresolved_claims
 S1..S6: state + evidence
 
-unresolved_cells
+E_COUNT
+R_COUNT
+T_COUNT
+D_COUNT
+G_COUNT
+S_COUNT
+VERIFIED_COUNT
+unresolved_count
 status: COMPLETE|HOLD
 sources
 reviewed_at
 ```
 
-No `verified_total`, overall score, rank, grade, tier, or scalar registration value is stored.
+The numeric fields are reproducible derived data, not human-entered judgments.
 
 ---
 
@@ -287,20 +310,19 @@ No `verified_total`, overall score, rank, grade, tier, or scalar registration va
 
 Historical only:
 
+- `ATLAS-PHFP-4.0`;
 - `ATLAS-PHFC-3.2` and earlier PHFC;
 - `ATLAS-PRV-2.4` and earlier PRV;
 - SSS–C grading;
 - Lite H/R/U/F;
 - earlier Coverage Test variants;
-- SCI/OFI/MCG/DRS experiments;
+- SCI/OFI/MCG/DRS;
 - ad-hoc importance or prestige judgments.
 
-Do not numerically convert old totals into v4.0.
-
-Re-review the source-backed facts into the v4.0 profile.
+Do not numerically convert legacy outputs. Re-review source-backed facts into the v4.1 raw profile and let the formatter derive the count.
 
 ---
 
 ## 15. Canonical rule
 
-> **Do not reduce a Person to one number. Verify the same factual dimensions for everyone, preserve the cell states and evidence, and output the profile.**
+> **Verify facts first, preserve the raw profile, then report the deterministic arithmetic coverage count.**

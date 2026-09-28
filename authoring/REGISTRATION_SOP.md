@@ -10,32 +10,33 @@ A second rule is equally important: **ordinary registration must use the already
 
 A registration is complete only when authoritative Production read-back confirms the intended Person, Activity, and reviewed NamuWiki state (`linked` or `not_found`, including exact reuse of an already-reviewed live state). A new or previously-unreviewed Person with unresolved NamuWiki review is not a completed registration.
 
-### Canonical Person historical fact profile
+### Canonical Person historical fact coverage count
 
-Whenever a task reviews historical-Person factual coverage, candidate research, or a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFP-4.0`).
+Whenever a task reviews historical-Person factual coverage, candidate research, or a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFC-4.1`).
 
 Required order:
 
 ```text
 identity / historicity / duplicate / source / life-status gates
 → collect source-backed factual claims
-→ classify E / R / T / D / S cells as 1 / 0 / ?
+→ classify E / R / T / D / S raw cells as 1 / 0 / ?
 → preserve G origin/external reception as explicit evidence-backed sets
-→ render with formatPersonFactProfile()
-→ validate with validatePersonFactProfileOutput()
-→ emit the validated profile block first
+→ render with formatPersonFactCountResult()
+→ validate with validatePersonFactCountOutput()
+→ emit E/R/T/D/G/S counts + VERIFIED_COUNT /36 first
+→ emit raw profile
 → only then explain evidence
 ```
 
-The reviewer does **not** reduce the profile to an aggregate total, `/36`, overall score, rank, grade, tier, prestige label, or overall-impression judgment. The exact same profile schema applies regardless of role, profession, office, ideology, regime, or historical domain.
+`VERIFIED_COUNT` is a deterministic count of verified predefined factual coverage only. It is not importance, greatness, merit, moral value, positive/negative impact, prestige, rank, tier, grade, or recommendation. The exact same factual procedure, arithmetic, and output schema apply regardless of role, profession, office, ideology, regime, or historical domain.
 
 `0` means reviewed but not established in the evidence packet. `?` means unresolved. **Never convert `?` to `0`.**
 
-Direct activity domains remain eight named cells. Geographic reception remains explicit `ORIGIN_SET`, `EXTERNAL_RECEPTION_SET`, and unresolved claims rather than a capped numeric geographic score. Downstream continuation remains six fixed successor-link classes.
+D preserves all eight named direct-activity domains but contributes at most 6 to the count. G preserves the entire source-backed external reception set but contributes at most 6 to the count. S remains six fixed successor-link classes.
 
-The completed or partial output must be rendered and validated through `server/person-fact-count-output.mjs`. The validator rejects prose before the profile, malformed or reordered cells, inconsistent HOLD/COMPLETE state, and any legacy aggregate scalar such as `VERIFIED_TOTAL` or `/36`.
+The completed or partial output must be rendered and validated through `server/person-fact-count-output.mjs`. The validator rejects prose before the count block, malformed/reordered fields, count/profile mismatch, arithmetic mismatch, incorrect unresolved count, and incorrect HOLD/COMPLETE state.
 
-Legacy `ATLAS-PHFC-3.2`, earlier PHFC/PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only.
+Legacy `ATLAS-PHFP-4.0`, `ATLAS-PHFC-3.2`, earlier PHFC/PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only.
 
 A merged PR, green CI, Vercel deployment, authoring response without read-back, or workflow start is not completion by itself.
 
