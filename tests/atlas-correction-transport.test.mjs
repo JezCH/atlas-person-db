@@ -107,23 +107,26 @@ test("dry-run does not apply schema migration; apply does; Baseline A v2 remains
 });
 
 test("correction migration registry remains ordered archival/replay evidence and does not mutate person activities", () => {
-  assert.equal(correctionMigrations.CORRECTION_MIGRATION_PATHS.length, 6);
+  assert.equal(correctionMigrations.CORRECTION_MIGRATION_PATHS.length, 7);
   assert.deepEqual(correctionMigrations.CORRECTION_MIGRATION_PATHS.map((item) => path.basename(item)), [
     "20260811_correction_manifest_runs.sql",
     "20260812_correction_manifest_v1_1.sql",
     "20260813_correction_manifest_v2.sql",
     "20260815_correction_manifest_v1_2.sql",
     "20260821_correction_manifest_v1_3.sql",
-    "20260827_correction_manifest_v1_4.sql"
+    "20260827_correction_manifest_v1_4.sql",
+    "20260928_polity_identity_retirements.sql"
   ]);
   const migrations = correctionMigrations.readCorrectionMigrations();
-  assert.equal(migrations.length, 6);
+  assert.equal(migrations.length, 7);
   assert.match(migrations[0].sql, /create table if not exists atlas_v2\.correction_manifest_runs/i);
   assert.match(migrations[1].sql, /atlas-correction-manifest\/v1\.3/i);
   assert.match(migrations[2].sql, /atlas-correction-manifest\/v1\.3/i);
   assert.match(migrations[3].sql, /atlas-correction-manifest\/v1\.3/i);
   assert.match(migrations[4].sql, /atlas-correction-manifest\/v1\.4/i);
   assert.match(migrations[5].sql, /atlas-correction-manifest\/v1\.4/i);
+  assert.match(migrations[6].sql, /create table if not exists atlas_v2\.polity_identity_retirements/i);
+  assert.match(migrations[6].sql, /atlas-correction-polity-retirement\/v1/i);
   for (const migration of migrations) assert.doesNotMatch(migration.sql, /person_politics_v2\s+set|delete\s+from\s+atlas_v2\.person_politics_v2/i);
 });
 
