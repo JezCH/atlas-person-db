@@ -1,11 +1,11 @@
 # ATLAS Person Historical Fact Count Standard
 
 > **Status:** Canonical  
-> **Version:** 3.1  
-> **Standard ID:** `ATLAS-PHFC-3.1`  
+> **Version:** 3.2  
+> **Standard ID:** `ATLAS-PHFC-3.2`  
 > **Scope:** Historical Person source-backed fact counting / candidate research / legacy recount  
 > **Authority:** This file is the single active authority for ATLAS Person historical fact counting.  
-> **Supersedes:** `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, and all earlier qualitative scoring, grading, tiering, or judgment-based systems. Older results remain audit evidence only.
+> **Supersedes:** `ATLAS-PHFC-3.2`, `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, and all earlier qualitative scoring, grading, tiering, or judgment-based systems. Older results remain audit evidence only.
 
 ---
 
@@ -181,7 +181,7 @@ This prevents a governing career from being mechanically split into every policy
 
 # 7. G — External Geographic Reception /6
 
-v3.0 used UN M49 **subregions**, which was too coarse. v3.1 uses UN M49 **country/area units**.
+v3.0 used UN M49 **subregions**, which was too coarse. v3.2 uses UN M49 **country/area units**.
 
 ## 7.1 Origin set
 
@@ -223,7 +223,7 @@ The receiving country/area is determined by the receiving historical entity or i
 
 # 8. S — Successor-Link Classes /6
 
-v3.0 counted individual later entities and therefore rewarded research volume. v3.1 instead counts **fixed downstream entity classes**.
+v3.0 counted individual later entities and therefore rewarded research volume. v3.2 instead counts **fixed downstream entity classes**.
 
 A downstream relation must occur after the Person's own verified activity and must be explicitly source-backed.
 
@@ -271,7 +271,7 @@ Reason:
 - an ancient Person had more opportunities to fill the axis solely because more time had passed;
 - the metric therefore mixed historical coverage with age of the subject.
 
-v3.1 contains **no elapsed-time score**.
+v3.2 contains **no elapsed-time score**.
 
 Temporal continuation is represented only through source-backed downstream relations in **S**, regardless of whether the Person lived 50, 500, or 2,000 years ago.
 
@@ -305,9 +305,11 @@ This rule removes the ambiguity present in v3.0 about “double counting”.
 
 ---
 
-# 11. Final output
+# 11. Machine-enforced output contract
 
-Required output:
+The canonical result block is **not optional prose**. It is a machine-validatable artifact.
+
+For every completed or partially completed Person fact-count review, the **first substantive output** must be exactly this ordered block:
 
 ```text
 E x/6
@@ -320,24 +322,41 @@ VERIFIED_TOTAL x/36
 UNRESOLVED y
 ```
 
+Required execution order:
+
+```text
+finish cell classification
+→ calculate E/R/T/D/G/S counts
+→ calculate VERIFIED_TOTAL
+→ calculate UNRESOLVED
+→ render canonical result block
+→ validate canonical result block
+→ only then emit evidence explanation or historical prose
+```
+
+The repository implementation authority for this output contract is:
+
+- `server/person-fact-count-output.mjs`
+  - `formatPersonFactCountResult()` computes `VERIFIED_TOTAL` from the six groups; callers do not supply a trusted total.
+  - `validatePersonFactCountOutput()` rejects prose before the result block, missing fields, invalid ranges, and arithmetic mismatch.
+  - `assertPersonFactCountOutput()` fails closed on invalid output.
+- `scripts/verify-person-fact-count-output.mjs` validates a rendered output from a file or stdin and exits non-zero on failure.
+- `tests/person-fact-count-output.test.mjs` is the persistent regression test for this contract.
+
+A review response is **INCOMPLETE** when:
+
+- evidence discussion or explanatory prose appears before the canonical result block;
+- any E/R/T/D/G/S line is absent or out of order;
+- `VERIFIED_TOTAL` is absent;
+- `UNRESOLVED` is absent;
+- displayed `VERIFIED_TOTAL` differs from the arithmetic sum;
+- occupation, office, ideology, regime, controversy, or political status changes the format or order.
+
 If `UNRESOLVED = 0`, the review is complete.
 
-If `UNRESOLVED > 0`, the numeric verified subtotal is still reported, but the record status remains `HOLD`.
+If `UNRESOLVED > 0`, the verified subtotal is still rendered and validated first, while the review status remains `HOLD`.
 
-**Never omit `VERIFIED_TOTAL`.**
-
-The total is arithmetic only.
-
-Do not replace it with:
-
-- high/low;
-- important/unimportant;
-- major/minor;
-- S/A/B/C;
-- stars;
-- prestige bands;
-- best/worst;
-- any other evaluative label.
+The total is arithmetic only and must not be replaced by high/low, important/unimportant, major/minor, grades, stars, prestige bands, or best/worst labels.
 
 ---
 
@@ -397,7 +416,7 @@ A role may change which facts exist. It does not change how the facts are counte
 A durable record should preserve:
 
 ```text
-standard: ATLAS-PHFC-3.1
+standard: ATLAS-PHFC-3.2
 person_id / candidate identity
 
 E:
@@ -431,7 +450,7 @@ A `0` means **reviewed but not established in the evidence packet**, not metaphy
 
 # 15. Use in roster work
 
-PHFC 3.1 is a factual coverage instrument.
+PHFC 3.2 is a factual coverage instrument.
 
 It does not itself define:
 
@@ -462,7 +481,7 @@ The following are historical only:
 - SCI/OFI/MCG/DRS experiments;
 - ad-hoc importance or prestige judgments.
 
-Do not convert an old result numerically into PHFC 3.1.
+Do not convert an old result numerically into PHFC 3.2.
 
 Recount from source-backed facts.
 
