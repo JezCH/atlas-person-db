@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:emperor-taisho:japan:emperor:1912-07-30:1926-12-25:v1",
+  "person": {
+    "canonical_name_en": "Emperor Taishō",
+    "display_name_ko": "다이쇼 천황",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "documented_death"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-28",
+      "document_title": "다이쇼 천황",
+      "url": "https://namu.wiki/w/%EB%8B%A4%EC%9D%B4%EC%87%BC%20%EC%B2%9C%ED%99%A9"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "천황",
+    "start_year": 1912,
+    "start_month": 7,
+    "start_day": 30,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1926,
+    "end_month": 12,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yoshihito, posthumously Emperor Taishō, acceded on 30 July 1912 and reigned until his death on 25 December 1926. Crown Prince Hirohito served as regent from 25 November 1921; this does not terminate Taishō's reign. The Activity reuses the canonical Japan polity; the contemporary imperial state-form is presentation/temporal designation rather than a separate Polity identity."
+  },
+  "sources": [
+    {
+      "title": "Imperial Household Agency chronology (Meiji 3 onward)",
+      "canonical_url": "https://www.kunaicho.go.jp/kunaicho/kunaicho/kunaicho-nenpyo.html",
+      "citation_text": "The Imperial Household Agency chronology records Yoshihito's accession and the change to the Taishō era on 30 July 1912, Crown Prince Hirohito becoming regent on 25 November 1921, and Emperor Taishō's death on 25 December 1926.",
+      "source_type": "official_government_source"
+    }
+  ],
+  "review_context": {
+    "request_batch": "single-person-emperor-taisho-20260928",
+    "representative_domain": "governance",
+    "dedup_method": "Repository identity search on 2026-09-28 found no existing Emperor Taishō / Yoshihito / 大正天皇 / 다이쇼 천황 Person record. Canonical Japan polity is reused; retired Empire of Japan duplicate must not be recreated.",
+    "namuwiki_review": "External indexed search exposed the exact child document '다이쇼 천황/생애' and references to the parent Person document; canonical parent URL recorded as 다이쇼 천황."
+  }
+}
