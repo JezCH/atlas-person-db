@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:nagarjuna:satavahana:v1",
+  "person": {
+    "canonical_name_en": "Nāgārjuna",
+    "display_name_ko": "나가르주나",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "documented_death"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Satavahana",
+    "display_name_ko": "사타바하나",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Buddhist philosopher",
+    "role_display_name_ko": "불교 철학자",
+    "start_year": 200,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 200,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Representative c.200 intellectual point, not an exact biographical event. The polity binding is based on the persistent traditional association of Nāgārjuna with a Sātavāhana king and modern scholarship treating the Nāgārjuna–Sātavāhana conjunction as historically meaningful while explicitly rejecting false precision about the individual king. ATLAS therefore binds only to the dynasty/state, at likely confidence, and does not identify a specific Sātavāhana ruler or political office."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Andrew Ollett — Sātavāhana and Nāgārjuna: Religion and the Sātavāhana State",
+      "canonical_url": "https://poj.peeters-leuven.be/content.php?id=3285748&url=article",
+      "citation_text": "Ollett analyzes the legendary friendship between king Sātakarṇi and monk Nāgārjuna as evidence for the relationship between the Sātavāhana state and Buddhist communities, while warning that the evidence does not permit identification of Nāgārjuna's Sātavāhana with a specific king.",
+      "locator": "JIABS 41 (2018), pp. 421–472"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Joseph Walser — Nāgārjuna in Context",
+      "canonical_url": "https://tibetanbuddhistencyclopedia.com/en/images/8/80/Nagarjuna_in_Context_Mahayana_Buddhism_and_Early_Indian_Culture_%28_PDFDrive_%29.pdf",
+      "citation_text": "Walser's historical reconstruction argues that the best reading of the available traditions points to Nāgārjuna residing in the Deccan during the reign of a Sātavāhana king.",
+      "locator": "Locating Nāgārjuna"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-INDIA-BUDDHIST-02",
+    "representative_domain": "knowledge",
+    "dedup_method": "Prior governed review held Nāgārjuna because no non-invented polity rail had been established. This recovery reopens that HOLD only after source review found a dynasty-level Sātavāhana association; Production preflight remains authoritative.",
+    "namuwiki_review": "No guessed URL; exact external-link recovery remains separate.",
+    "polity_inference": "Dynasty/state-level association supported by traditional accounts and modern scholarship; no specific king is asserted because scholarship explicitly rejects that precision."
+  }
+}

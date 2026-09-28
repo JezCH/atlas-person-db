@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:philosophy-canon-20260928:dignaga:v1",
+  "request_id": "authoring:philosophy-canon-20260928:dignaga:v2",
   "person": {
     "canonical_name_en": "Dignāga",
     "display_name_ko": "디그나가",
@@ -33,7 +33,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "likely",
     "chronology_status": "reviewed",
-    "notes": "Representative circa-500 intellectual point within the late Gupta chronological frame; SEP places Dignāga around 480–540 / fifth-to-sixth century and identifies him as a pivotal classical Indian logician."
+    "notes": "Representative circa-500 intellectual point. Dignāga is dated to the fifth–sixth century; the Gupta binding is a reviewed spatiotemporal attribution to the Nalanda/Magadha intellectual setting during the late Gupta frame, retained at likely rather than well_established confidence and not asserted as political service."
   },
   "sources": [
     {
@@ -49,6 +49,7 @@
     "representative_domain": "knowledge",
     "dedup_method": "Repository-wide current-main identity search found no governed Dignāga registration manifest; canonical Production preflight remains authoritative.",
     "namuwiki_review": "No guessed URL; exact external-link recovery remains separate.",
-    "schema_recovery_note": "Initial batch selection failed before preflight/write because confidence=probable is not an allowed enum; corrected to canonical likely with no historical-claim change."
+    "schema_recovery_note": "Initial batch selection failed before preflight/write because confidence=probable is not an allowed enum; corrected to canonical likely with no historical-claim change.",
+    "recovery_note": "Reissued from current main after the earlier approved commit was rejected by runtime ancestry safety before preflight/write; no prior Production mutation occurred."
   }
 }
