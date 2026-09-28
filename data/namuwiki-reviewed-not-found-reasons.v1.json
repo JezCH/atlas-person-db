@@ -1,7 +1,7 @@
 {
   "schema": "atlas-namuwiki-reviewed-not-found-reasons/v1",
   "issue": 820,
-  "snapshot_date": "2026-09-27",
+  "snapshot_date": "2026-09-28",
   "note": "Conservative reason registry derived from explicit Issue #820 review dispositions and bounded fresh exact-target re-review. Absence of an entry means the reviewed not_found reason is not durably classified here.",
   "categories": {
     "no_exact_document": "Exhaustive review found no independent exact historical Person document.",
@@ -10,9 +10,9 @@
     "exact_target_url_verified": "An exact Person target and canonical URL were verified/write-ready, but the current row may still be not_found until linking is applied."
   },
   "counts": {
-    "exact_target_url_pending": 104,
-    "related_or_derivative_only": 202,
-    "no_exact_document": 186,
+    "exact_target_url_pending": 105,
+    "related_or_derivative_only": 203,
+    "no_exact_document": 192,
     "exact_target_url_verified": 43
   },
   "by_person_id": {
@@ -267,16 +267,24 @@
     "5f14fbd8-dd85-4f3d-8048-2d3b1916ce04": "related_or_derivative_only",
     "5fa3d765-8f81-421e-89ea-d732bcda52fe": "no_exact_document",
     "5fdf2ccd-41ce-456c-b687-dcae8ce4b05b": "exact_target_url_pending",
+    "60085146-18e1-4f76-9dc9-b6746ca57525": "no_exact_document",
     "6038648e-6b7d-4bf4-8bbe-550aecbc3c44": "related_or_derivative_only",
     "606555fb-d18b-440c-83ef-0f387ccede7b": "no_exact_document",
+    "6091f3d5-f501-430c-8b36-412d498e0318": "no_exact_document",
     "612588ba-d77e-4549-a7a3-9b9848751613": "related_or_derivative_only",
+    "61e01cc8-78c8-4934-ba1c-6fdefe269a82": "no_exact_document",
+    "622e4881-01e2-498f-bb56-a1ea67076415": "exact_target_url_pending",
     "624fc9c0-c9b4-46dc-bfa5-0ae858e1f50d": "exact_target_url_verified",
+    "627623e8-96dc-4aca-b8ec-7d0de5498604": "related_or_derivative_only",
     "6276bf32-b22c-4960-8c89-24d4242e31a5": "no_exact_document",
     "632d77e3-8f1a-41fe-9aeb-646d2d7edd62": "no_exact_document",
     "6331b0c9-a0fc-452f-8af8-8d1e6cd7e320": "related_or_derivative_only",
     "63394963-d7a4-450e-b9ac-d1b29b43c14a": "related_or_derivative_only",
+    "635b5f95-a2f0-48dd-8746-b44e2d77fcf8": "no_exact_document",
     "6360e17c-7bee-4f43-a3c7-59aebb1e024d": "related_or_derivative_only",
+    "6399ab54-1005-4287-9b41-9061e57534aa": "no_exact_document",
     "63ae502c-cc46-4f04-8c7b-1be1be9b613b": "no_exact_document",
+    "63f3a079-0a1e-4c46-9cab-beb3bc41d8ef": "no_exact_document",
     "640eb8de-4ff9-4185-94a4-ded37494743b": "related_or_derivative_only",
     "64a73852-6d78-4682-a8cb-48680fc39cf2": "related_or_derivative_only",
     "64bfca45-a895-4404-9220-a1902bd1636b": "exact_target_url_pending",
