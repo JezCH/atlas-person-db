@@ -1,0 +1,32 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-28",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "8d438bce4851ebbf61653c32da8282c29fe00236",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply only the two explicit human-reviewed knowledge assignments for the newly registered philosophy-canon China batch. Preserve existing non-null Production values and fail closed on conflict."
+  },
+  "review_scope": {
+    "task_key": "PHILOSOPHY-CANON-54-CHINA-01-DOMAIN-20260928",
+    "reviewed_assignments": 2,
+    "reviewed_holds": 0,
+    "rationale": "Xunzi and Wang Yangming are represented in this cohort by their philosophical and intellectual activity; representative_domain=knowledge."
+  },
+  "entries": [
+    {
+      "person_id": "6b8282e2-b025-4c2e-9b7f-e78a7546ec2e",
+      "canonical_name_en": "Xunzi",
+      "preferred_name_ko": "순자",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "d9beb4e4-5652-4f67-b373-cadb0e32e4b0",
+      "canonical_name_en": "Wang Yangming",
+      "preferred_name_ko": "왕양명",
+      "representative_domain": "knowledge"
+    }
+  ]
+}
