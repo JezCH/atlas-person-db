@@ -1,7 +1,24 @@
-export const PHFC_STANDARD = 'ATLAS-PHFC-4.2';
+import fs from 'node:fs';
+
+export const PHFC_STANDARD = 'ATLAS-PHFC-4.3';
 export const PHFC_DOMAINS = Object.freeze(['governance','military','knowledge','technology','commerce','culture','religion','exploration']);
 export const PHFC_G_MODES = Object.freeze(['institutional_adoption','formal_teaching','documented_imitation','operative_application','movement_reception','documented_circulation']);
+
+const M49_REGISTRY = JSON.parse(
+  fs.readFileSync(new URL('../data/un-m49-country-area-codes.v1.json', import.meta.url), 'utf8'),
+);
+if (
+  M49_REGISTRY.schema !== 'atlas-un-m49-country-area-codes/v1'
+  || !Array.isArray(M49_REGISTRY.codes)
+  || M49_REGISTRY.count !== M49_REGISTRY.codes.length
+) {
+  throw new Error('Invalid canonical UN M49 country/area registry');
+}
+export const PHFC_M49_COUNTRY_AREA_CODES = Object.freeze([...M49_REGISTRY.codes]);
+const M49_CODE_SET = new Set(PHFC_M49_COUNTRY_AREA_CODES);
+
 const VALID = new Set(['1','0','?']);
+const SOURCE_UUID = /^source:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function exactObject(value, keys, label) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new TypeError(label + ' must be an object');
@@ -31,6 +48,28 @@ function strings(value, label) {
   return out;
 }
 
+function m49Codes(value, label) {
+  const codes = strings(value, label);
+  for (const code of codes) {
+    if (!/^\d{3}$/.test(code) || !M49_CODE_SET.has(code)) {
+      throw new TypeError(label + ' contains non-canonical UN M49 country/area code: ' + code);
+    }
+  }
+  return codes;
+}
+
+function evidenceRef(value, label) {
+  if (SOURCE_UUID.test(value)) return value;
+  if (/^https:\/\/[^\s/]+(?:\/[^\s]*)?$/i.test(value)) return value;
+  throw new TypeError(label + ' must use source:<uuid> or an absolute https:// URL');
+}
+
+function evidenceRefArray(value, label) {
+  const refs = strings(value, label).map((ref) => evidenceRef(ref, label));
+  if (new Set(refs).size !== refs.length) throw new TypeError(label + ' must not contain duplicate normalized references');
+  return refs;
+}
+
 function domains(value) {
   exactObject(value, PHFC_DOMAINS, 'D');
   return Object.fromEntries(PHFC_DOMAINS.map((d) => [d, state(value[d], 'D.' + d)]));
@@ -39,20 +78,24 @@ function domains(value) {
 function geography(value) {
   exactObject(value, ['originSet','modes'], 'G');
   exactObject(value.modes, PHFC_G_MODES, 'G.modes');
-  const originSet = strings(value.originSet, 'G.originSet');
-  const origin = new Set(originSet.map((v) => v.toLowerCase()));
+  const originSet = m49Codes(value.originSet, 'G.originSet');
+  const origin = new Set(originSet);
   const modes = {};
+
   PHFC_G_MODES.forEach((mode, i) => {
     const id = 'G' + (i + 1);
     const entry = value.modes[mode];
     exactObject(entry, ['state','units'], 'G.modes.' + mode);
     const s = state(entry.state, id);
-    const units = strings(entry.units, id + '.units');
-    if (s === '1' && units.length === 0) throw new TypeError(id + ' VERIFIED requires at least one external unit');
+    const units = m49Codes(entry.units, id + '.units');
+
+    if (s === '1' && units.length === 0) throw new TypeError(id + ' VERIFIED requires at least one external M49 unit');
     if (s !== '1' && units.length !== 0) throw new TypeError(id + ' non-VERIFIED state must not store verified units');
-    for (const unit of units) if (origin.has(unit.toLowerCase())) throw new TypeError(id + ' external unit overlaps ORIGIN_SET: ' + unit);
+    for (const unit of units) if (origin.has(unit)) throw new TypeError(id + ' external unit overlaps ORIGIN_SET: ' + unit);
+
     modes[mode] = { state: s, units };
   });
+
   return { originSet, modes };
 }
 
@@ -70,12 +113,33 @@ function closure(value, p) {
   const expected = cellStates(p).filter(([,v]) => v === '0').map(([id]) => id);
   const valid = new Set(cellStates(p).map(([id]) => id));
   for (const id of shown) if (!valid.has(id)) throw new TypeError('zeroReviewClosed contains unknown cell: ' + id);
-  if (JSON.stringify([...shown].sort()) !== JSON.stringify([...expected].sort())) throw new TypeError('zeroReviewClosed must exactly match every 0-state cell');
+  if (JSON.stringify([...shown].sort()) !== JSON.stringify([...expected].sort())) {
+    throw new TypeError('zeroReviewClosed must exactly match every 0-state cell');
+  }
   return expected;
 }
 
+function evidence(value, p) {
+  const ids = cellStates(p).map(([id]) => id);
+  exactObject(value, ids, 'evidenceRefs');
+  const states = new Map(cellStates(p));
+  const out = {};
+
+  for (const id of ids) {
+    const refs = evidenceRefArray(value[id], 'evidenceRefs.' + id);
+    const s = states.get(id);
+    if (s !== '?' && refs.length === 0) {
+      throw new TypeError(id + ' ' + (s === '1' ? 'VERIFIED' : 'REVIEWED_NOT_ESTABLISHED') + ' requires at least one evidence reference');
+    }
+    out[id] = refs;
+  }
+
+  return out;
+}
+
 export function normalizePersonFactProfile(input) {
-  exactObject(input, ['E','R','T','D','G','S','zeroReviewClosed'], 'profile input');
+  exactObject(input, ['E','R','T','D','G','S','zeroReviewClosed','evidenceRefs'], 'profile input');
+
   const p = {
     E: fixed(input.E, 'E'),
     R: fixed(input.R, 'R'),
@@ -84,7 +148,11 @@ export function normalizePersonFactProfile(input) {
     G: geography(input.G),
     S: fixed(input.S, 'S'),
   };
-  return { ...p, zeroReviewClosed: closure(input.zeroReviewClosed, p) };
+
+  const zeroReviewClosed = closure(input.zeroReviewClosed, p);
+  const evidenceRefs = evidence(input.evidenceRefs, p);
+
+  return { ...p, zeroReviewClosed, evidenceRefs };
 }
 
 export function collectPersonFactUnresolved(input) {
@@ -92,7 +160,9 @@ export function collectPersonFactUnresolved(input) {
   return cellStates(p).filter(([,v]) => v === '?').map(([id]) => id);
 }
 
-function ones(values) { return values.filter((v) => v === '1').length; }
+function ones(values) {
+  return values.filter((v) => v === '1').length;
+}
 
 export function derivePersonFactCounts(input) {
   const p = normalizePersonFactProfile(input);
@@ -109,9 +179,17 @@ export function derivePersonFactCounts(input) {
   return { profile: p, counts, verifiedCount, unresolved, status: unresolved.length ? 'HOLD' : 'COMPLETE' };
 }
 
-function groupLine(group, values) { return group + ' ' + values.map((v,i) => group + (i + 1) + '=' + v).join(' '); }
-function gLine(g) { return 'G ' + PHFC_G_MODES.map((m,i) => 'G' + (i + 1) + '=' + g.modes[m].state).join(' '); }
-function gUnits(g) { return Object.fromEntries(PHFC_G_MODES.map((m,i) => ['G' + (i + 1), g.modes[m].units])); }
+function groupLine(group, values) {
+  return group + ' ' + values.map((v,i) => group + (i + 1) + '=' + v).join(' ');
+}
+
+function gLine(g) {
+  return 'G ' + PHFC_G_MODES.map((m,i) => 'G' + (i + 1) + '=' + g.modes[m].state).join(' ');
+}
+
+function gUnits(g) {
+  return Object.fromEntries(PHFC_G_MODES.map((m,i) => ['G' + (i + 1), g.modes[m].units]));
+}
 
 export function formatPersonFactCountResult(input) {
   const r = derivePersonFactCounts(input);
@@ -135,6 +213,7 @@ export function formatPersonFactCountResult(input) {
     'G_UNITS ' + JSON.stringify(gUnits(p.G)),
     groupLine('S', p.S),
     'ZERO_REVIEW_CLOSED ' + JSON.stringify(p.zeroReviewClosed),
+    'EVIDENCE ' + JSON.stringify(p.evidenceRefs),
   ].join('\n');
 }
 
@@ -170,7 +249,9 @@ function parseDomains(line) {
 
 function jsonArrayLine(line, prefix) {
   if (!String(line || '').startsWith(prefix + ' ')) throw new Error(prefix + ' is missing or misplaced');
-  return strings(JSON.parse(line.slice(prefix.length + 1)), prefix);
+  const out = JSON.parse(line.slice(prefix.length + 1));
+  if (!Array.isArray(out)) throw new Error(prefix + ' must be a JSON array');
+  return out;
 }
 
 function jsonObjectLine(line, prefix) {
@@ -182,12 +263,18 @@ function jsonObjectLine(line, prefix) {
 
 function parseG(stateLine, originLine, unitsLine) {
   const states = parseGroup(stateLine, 'G');
-  const originSet = jsonArrayLine(originLine, 'G_ORIGIN');
+  const originSet = m49Codes(jsonArrayLine(originLine, 'G_ORIGIN'), 'G_ORIGIN');
   const units = jsonObjectLine(unitsLine, 'G_UNITS');
   const keys = PHFC_G_MODES.map((_,i) => 'G' + (i + 1));
   exactObject(units, keys, 'G_UNITS');
+
   const modes = {};
-  PHFC_G_MODES.forEach((mode, i) => { modes[mode] = { state: states[i], units: strings(units['G' + (i + 1)], 'G' + (i + 1) + '.units') }; });
+  PHFC_G_MODES.forEach((mode, i) => {
+    modes[mode] = {
+      state: states[i],
+      units: m49Codes(units['G' + (i + 1)], 'G' + (i + 1) + '.units'),
+    };
+  });
   return { originSet, modes };
 }
 
@@ -197,6 +284,7 @@ export function validatePersonFactCountOutput(text) {
   let i = 0;
   while (i < lines.length && lines[i].trim() === '') i += 1;
   if (lines[i] && lines[i].trim().startsWith('```')) i += 1;
+
   try {
     const shown = {
       E: parseCount(lines[i++], 'E_COUNT', 6),
@@ -207,22 +295,31 @@ export function validatePersonFactCountOutput(text) {
       S: parseCount(lines[i++], 'S_COUNT', 6),
     };
     const verifiedCount = parseCount(lines[i++], 'VERIFIED_COUNT', 36);
+
     const u = String(lines[i++] || '').match(/^UNRESOLVED ([0-9]+)$/);
     if (!u) throw new Error('UNRESOLVED is missing or misplaced');
+
     const status = String(lines[i++] || '').match(/^STATUS (COMPLETE|HOLD)$/);
     if (!status) throw new Error('STATUS is missing or misplaced');
+
     const E = parseGroup(lines[i++], 'E');
     const R = parseGroup(lines[i++], 'R');
     const T = parseGroup(lines[i++], 'T');
     const D = parseDomains(lines[i++]);
     const G = parseG(lines[i++], lines[i++], lines[i++]);
     const S = parseGroup(lines[i++], 'S');
-    const zeroReviewClosed = jsonArrayLine(lines[i++], 'ZERO_REVIEW_CLOSED');
-    const d = derivePersonFactCounts({ E, R, T, D, G, S, zeroReviewClosed });
-    for (const group of ['E','R','T','D','G','S']) if (shown[group] !== d.counts[group]) throw new Error(group + '_COUNT does not match raw profile');
+    const zeroReviewClosed = strings(jsonArrayLine(lines[i++], 'ZERO_REVIEW_CLOSED'), 'ZERO_REVIEW_CLOSED');
+    const evidenceRefs = jsonObjectLine(lines[i++], 'EVIDENCE');
+
+    const d = derivePersonFactCounts({ E, R, T, D, G, S, zeroReviewClosed, evidenceRefs });
+
+    for (const group of ['E','R','T','D','G','S']) {
+      if (shown[group] !== d.counts[group]) throw new Error(group + '_COUNT does not match raw profile');
+    }
     if (verifiedCount !== d.verifiedCount) throw new Error('VERIFIED_COUNT arithmetic mismatch');
     if (Number(u[1]) !== d.unresolved.length) throw new Error('UNRESOLVED does not match raw profile');
     if (status[1] !== d.status) throw new Error('STATUS does not match raw profile');
+
     return { ok: true, standard: PHFC_STANDARD, ...d };
   } catch (error) {
     return { ok: false, error: error instanceof Error ? error.message : String(error) };

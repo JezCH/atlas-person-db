@@ -1,11 +1,11 @@
 # ATLAS Person Historical Fact Coverage Count Standard
 
 > **Status:** Canonical
-> **Version:** 4.2
-> **Standard ID:** `ATLAS-PHFC-4.2`
+> **Version:** 4.3
+> **Standard ID:** `ATLAS-PHFC-4.3`
 > **Scope:** Historical Person source-backed factual coverage review / candidate research / legacy recount
 > **Authority:** This file is the single active authority for ATLAS Person historical fact coverage counting.
-> **Supersedes:** `ATLAS-PHFC-4.1`, `ATLAS-PHFP-4.0`, `ATLAS-PHFC-3.2`, and all earlier Person scoring/counting systems.
+> **Supersedes:** `ATLAS-PHFC-4.2`, `ATLAS-PHFC-4.1`, `ATLAS-PHFP-4.0`, `ATLAS-PHFC-3.2`, and all earlier Person scoring/counting systems.
 
 ---
 
@@ -44,6 +44,22 @@ Never silently convert `?` to `0`.
 A `0` is valid only when its cell ID appears in `ZERO_REVIEW_CLOSED`. The machine validator requires the set of zero-state cells and the closure set to match exactly.
 
 This rule prevents a short or shallow evidence packet from producing artificial zeros.
+
+### 1.1 Machine-enforced evidence references
+
+Every decision cell has an `evidenceRefs.<cell_id>` array.
+
+- every `1 = VERIFIED` cell must contain at least one evidence reference;
+- every `0 = REVIEWED_NOT_ESTABLISHED` cell must contain at least one evidence reference **and** appear in `ZERO_REVIEW_CLOSED`;
+- a `? = UNRESOLVED` cell may contain zero or more evidence references;
+- evidence may be reused across cells when the same source directly supports different predicates.
+
+Accepted machine reference forms are:
+
+- `source:<canonical Source UUID>`;
+- an absolute `https://...` source URL.
+
+Free-form strings such as `citation:book` do not satisfy the machine contract. A non-empty reference proves that a review source was recorded; it does **not** make the historical predicate true by itself. Human/source review remains authoritative for claim semantics.
 
 ---
 
@@ -182,11 +198,13 @@ All eight raw D states are still preserved.
 
 ## 8. G — Fixed External Geographic Reception Modes
 
-v4.2 **does not count countries**. Country-counting was too sensitive to research depth.
+v4.3 **does not count countries**. Country-counting was too sensitive to research depth.
 
 ### 8.1 ORIGIN_SET
 
 Preserve every present-day UN M49 country/area unit containing source-backed locations of the Person's own direct lifetime activity.
+
+Geographic identity is stored as the **three-digit M49 code**, not a caller-supplied country label. Only codes in `data/un-m49-country-area-codes.v1.json` are accepted. Aggregate geographic codes such as World/region/subregion codes are not valid country/area units. Display labels are presentation data and must not be trusted as geographic identity.
 
 ### 8.2 Six fixed G cells
 
@@ -287,10 +305,11 @@ R R1=<1|0|?> ... R6=<1|0|?>
 T T1=<1|0|?> ... T6=<1|0|?>
 D governance=<1|0|?> military=<1|0|?> knowledge=<1|0|?> technology=<1|0|?> commerce=<1|0|?> culture=<1|0|?> religion=<1|0|?> exploration=<1|0|?>
 G G1=<1|0|?> ... G6=<1|0|?>
-G_ORIGIN [...]
-G_UNITS {"G1":[...],"G2":[...],"G3":[...],"G4":[...],"G5":[...],"G6":[...]}
+G_ORIGIN ["<M49>",...]
+G_UNITS {"G1":["<M49>",...],"G2":[...],"G3":[...],"G4":[...],"G5":[...],"G6":[...]}
 S S1=<1|0|?> ... S6=<1|0|?>
 ZERO_REVIEW_CLOSED [...]
+EVIDENCE {"E1":["https://..."],...,"S6":["source:<uuid>"]}
 ```
 
 Rules:
@@ -300,6 +319,8 @@ Rules:
 - `UNRESOLVED` is the number of `?` decision cells;
 - `STATUS COMPLETE` only when unresolved count is zero;
 - every zero-state cell must appear in `ZERO_REVIEW_CLOSED`, and no nonzero cell may appear there;
+- every `1` and `0` cell must carry at least one machine-valid evidence reference;
+- G origin/unit values must be canonical three-digit M49 country/area codes from the repository registry;
 - raw profile must agree with all counts;
 - no role, office, ideology, regime, controversy, or political status changes the schema, closure protocol, arithmetic, or output;
 - the count must never be renamed or interpreted as importance, merit, greatness, value, rank, tier, grade, best/worst, or recommendation.
@@ -315,28 +336,31 @@ It must:
 - accept factual-profile input only, not Person-type metadata;
 - validate exact E/R/T/D/G/S shapes;
 - require exact zero-review closure;
+- require machine-valid evidence references for every VERIFIED and REVIEWED_NOT_ESTABLISHED cell;
+- validate G origin/unit identity against `data/un-m49-country-area-codes.v1.json`;
 - derive G_COUNT from fixed G modes rather than country count;
 - derive all group counts and `VERIFIED_COUNT`;
 - reject count/profile mismatch, geographic-origin overlap, missing closure, extra closure, malformed states, and incorrect HOLD/COMPLETE.
 
-`tests/person-fact-count-output.test.mjs` permanently verifies these invariants, including a role-metadata non-branch test.
+`tests/person-fact-count-output.test.mjs` permanently verifies these invariants, including role-metadata non-branching, evidence-reference enforcement, free-text/aggregate-geography rejection, and canonical M49 validation.
 
 ---
 
 ## 13. Durable review record
 
 ```text
-standard: ATLAS-PHFC-4.2
+standard: ATLAS-PHFC-4.3
 person_id / candidate identity
 
 E1..E6: state + evidence
 R1..R6: state + evidence
 T1..T6: state + evidence
 D.<domain>: state + evidence
-G.origin_set
-G1..G6: state + external units + evidence
+G.origin_set: canonical M49 codes
+G1..G6: state + canonical external M49 units + evidence
 S1..S6: state + downstream entity + evidence
 
+EVIDENCE_REFS
 ZERO_REVIEW_CLOSED
 E_COUNT
 R_COUNT
@@ -359,6 +383,7 @@ The numeric fields are reproducible derived data, not human-entered judgments.
 
 Historical only:
 
+- `ATLAS-PHFC-4.2` pre-evidence/M49-hardening contract;
 - `ATLAS-PHFC-4.1` country-count G;
 - `ATLAS-PHFP-4.0`;
 - `ATLAS-PHFC-3.2` and earlier PHFC;
@@ -371,7 +396,7 @@ Historical only:
 
 Do not numerically convert old outputs.
 
-Re-review source-backed facts under v4.2 and let the formatter derive the count.
+Re-review source-backed facts under v4.3 and let the formatter derive the count.
 
 ---
 
