@@ -12,15 +12,16 @@ A registration is complete only when authoritative Production read-back confirms
 
 ### Canonical Person historical fact coverage count
 
-Whenever a task reviews historical-Person factual coverage, candidate research, or a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFC-4.1`).
+Whenever a task reviews historical-Person factual coverage, candidate research, or a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFC-4.2`).
 
 Required order:
 
 ```text
 identity / historicity / duplicate / source / life-status gates
-→ collect source-backed factual claims
-→ classify E / R / T / D / S raw cells as 1 / 0 / ?
-→ preserve G origin/external reception as explicit evidence-backed sets
+→ core synthesis pass
+→ classify E / R / T / D / G / S raw cells as 1 / 0 / ?
+→ targeted closure pass for every still-unverified cell
+→ record every valid 0 in ZERO_REVIEW_CLOSED
 → render with formatPersonFactCountResult()
 → validate with validatePersonFactCountOutput()
 → emit E/R/T/D/G/S counts + VERIFIED_COUNT /36 first
@@ -28,15 +29,17 @@ identity / historicity / duplicate / source / life-status gates
 → only then explain evidence
 ```
 
-`VERIFIED_COUNT` is a deterministic count of verified predefined factual coverage only. It is not importance, greatness, merit, moral value, positive/negative impact, prestige, rank, tier, grade, or recommendation. The exact same factual procedure, arithmetic, and output schema apply regardless of role, profession, office, ideology, regime, or historical domain.
+`VERIFIED_COUNT` is only the deterministic arithmetic count of verified predefined factual coverage. It is not importance, greatness, merit, moral value, positive/negative impact, prestige, rank, tier, grade, recommendation, or political value. **The exact same cells, bounded review, arithmetic, and output schema apply to every historical Person regardless of role, profession, office, ideology, regime, controversy, or historical domain.**
 
-`0` means reviewed but not established in the evidence packet. `?` means unresolved. **Never convert `?` to `0`.**
+`0` means the exact cell was reviewed through the bounded closure pass and no qualifying fact was established. Every zero-state cell must appear in `ZERO_REVIEW_CLOSED`. If closure was not completed, preserve `?`; never silently convert `?` to `0`.
 
-D preserves all eight named direct-activity domains but contributes at most 6 to the count. G preserves the entire source-backed external reception set but contributes at most 6 to the count. S remains six fixed successor-link classes.
+D preserves all eight named direct-activity domains but contributes at most 6. G no longer counts countries: it counts six fixed external-reception modes, while verified external UN M49 country/area units are retained as evidence for each mode. S remains six fixed successor-link classes and stops counting a class after the first qualifying named downstream entity is verified.
 
-The completed or partial output must be rendered and validated through `server/person-fact-count-output.mjs`. The validator rejects prose before the count block, malformed/reordered fields, count/profile mismatch, arithmetic mismatch, incorrect unresolved count, and incorrect HOLD/COMPLETE state.
+For G and S, do not keep searching merely to accumulate more examples after a fixed cell is already VERIFIED. For a cell that is not established by the core synthesis, perform the single targeted closure pass required by the canonical standard; unresolved evidence remains `?`.
 
-Legacy `ATLAS-PHFP-4.0`, `ATLAS-PHFC-3.2`, earlier PHFC/PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only.
+The completed or partial output must be rendered and validated through `server/person-fact-count-output.mjs`. The counting implementation accepts factual-profile fields only; role/person-type metadata is outside the formula input. The validator rejects prose before the count block, malformed/reordered fields, count/profile mismatch, arithmetic mismatch, G origin overlap, invalid G mode evidence, missing/extra zero closure, incorrect unresolved count, and incorrect HOLD/COMPLETE state.
+
+Legacy `ATLAS-PHFC-4.1` country-count G, `ATLAS-PHFP-4.0`, earlier PHFC/PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only.
 
 A merged PR, green CI, Vercel deployment, authoring response without read-back, or workflow start is not completion by itself.
 

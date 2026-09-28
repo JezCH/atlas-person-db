@@ -124,7 +124,7 @@
     {
       "id": "ATLAS-RQ-0020",
       "status": "ACTIVE",
-      "title": "Person historical factual coverage uses ATLAS-PHFC-4.1 only: one identical raw E/R/T/D/G/S profile for every historical Person, machine-derived E/R/T/D/G/S counts and VERIFIED_COUNT /36, unresolved preservation, and no qualitative importance/rank/tier interpretation",
+      "title": "Person historical factual coverage uses ATLAS-PHFC-4.2 only: one identical role-neutral E/R/T/D/G/S bounded-review schema for every historical Person; zero states require explicit closure; G counts six fixed reception modes rather than countries; S remains six fixed successor classes; VERIFIED_COUNT /36 is machine-derived factual coverage only",
       "evidence_paths": [
         "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
         "authoring/REGISTRATION_SOP.md",
