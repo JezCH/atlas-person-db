@@ -12,7 +12,7 @@ A registration is complete only when authoritative Production read-back confirms
 
 ### Canonical Person historical fact counting
 
-Whenever a task reviews historical-Person factual coverage, candidate research, or recounts a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFC-3.1`).
+Whenever a task reviews historical-Person factual coverage, candidate research, or recounts a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFC-3.2`).
 
 Required order:
 
@@ -31,7 +31,7 @@ The reviewer does **not** assign qualitative importance, greatness, irreplaceabi
 
 The elapsed-time persistence axis from v3.0 is retired. Geographic reception uses external UN M49 country/area units, and downstream continuation uses fixed successor-link classes rather than the number of named entities collected.
 
-The completed output must include all six group counts and **must include the arithmetic `VERIFIED_TOTAL /36`**. If unresolved cells remain, also report `UNRESOLVED n` and keep status `HOLD`.
+The completed or partial output must begin with the canonical eight-line result block: `E`, `R`, `T`, `D`, `G`, `S`, `VERIFIED_TOTAL /36`, `UNRESOLVED n`. **This block is emitted before evidence explanation, caveats, ambiguity discussion, or historical narrative.** If the block is absent, incomplete, arithmetically inconsistent, or appears only after prose, the review response is incomplete. If unresolved cells remain, keep status `HOLD` after reporting the verified subtotal.
 
 Legacy `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, earlier PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only.
 
