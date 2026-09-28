@@ -1,6 +1,7 @@
 "use strict";
 
 const { createPerson, createPolity, createRole, normalizeExact, normalizePersonLifeStatusReview } = require("./atlas-identity-service.js");
+const { temporalContextFromHumanActivity } = require("./atlas-polity-identity-resolver.js");
 const { createStage2NativeActivityTx, loadStage2NativeActivity } = require("./atlas-stage2-native-activity-service.js");
 const { requiredUuid, historicalYear } = require("./atlas-activity-semantic-key-v2.js");
 const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service.js");
@@ -251,12 +252,24 @@ async function resolveOrCreatePerson(client, person) {
   });
 }
 
-async function resolveOrCreatePolity(client, polity) {
-  const existing = await exactEntityByPreferredEnglishName(client, { table:"polities", namesTable:"polity_names", ownerColumn:"polity_id", name:polity.canonical_name_en });
-  if (existing) return Object.freeze({ id:existing, disposition:"reused" });
-  if (!polity.display_name_ko) throw new Error("HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED");
-  const created = await createPolity(client, { ...polity, allow_display_name_collision:false });
-  return Object.freeze({ id:String(created.id).toLowerCase(), disposition:created.replay ? "reused" : "created" });
+async function resolveOrCreatePolity(client, polity, activity = null) {
+  let created;
+  try {
+    created = await createPolity(client, {
+      ...polity,
+      allow_display_name_collision:false,
+      identity_context:temporalContextFromHumanActivity(activity)
+    });
+  } catch (error) {
+    if (String(error?.message || "") === "POLITY_DISPLAY_NAME_REQUIRED") {
+      throw new Error("HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED");
+    }
+    throw error;
+  }
+  return Object.freeze({
+    id:String(created.id).toLowerCase(),
+    disposition:created.replay ? "reused" : "created"
+  });
 }
 
 async function resolveOrCreateRole(client, activity) {
@@ -489,7 +502,7 @@ async function applyPreparedWithinTransaction(client, prepared, { transport = nu
   const person = await resolveOrCreatePerson(client, request.person);
   const polity = request.polity == null
     ? Object.freeze({ id:null, disposition:"none" })
-    : await resolveOrCreatePolity(client, request.polity);
+    : await resolveOrCreatePolity(client, request.polity, request.activity);
   const role = await resolveOrCreateRole(client, request.activity);
   const namuwiki = await resolveNamuWikiReference(client, {
     requestId:request.requestId,

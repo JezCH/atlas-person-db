@@ -117,9 +117,26 @@ test('existing Person and Polity reuse succeeds without KO while new identities 
   assert.deepEqual(await resolveOrCreatePerson(existingPersonClient, { canonical_name_en:'Existing Person', display_name_ko:null }), { id:UUIDS.person, disposition:'reused' });
   await assert.rejects(() => resolveOrCreatePerson({ query:async()=>({rows:[]}) }, { canonical_name_en:'New Person', display_name_ko:null }), /HUMAN_AUTHORING_NEW_PERSON_KO_REQUIRED/);
 
-  const existingPolityClient = { query:async()=>({rows:[{id:UUIDS.polity}]}) };
-  assert.deepEqual(await resolveOrCreatePolity(existingPolityClient, { canonical_name_en:'Existing Polity', display_name_ko:null }), { id:UUIDS.polity, disposition:'reused' });
-  await assert.rejects(() => resolveOrCreatePolity({ query:async()=>({rows:[]}) }, { canonical_name_en:'New Polity', display_name_ko:null }), /HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED/);
+  const existingPolityClient = { async query(sql) {
+    const text=String(sql);
+    if (/p\.canonical_key=\$1/.test(text)) return {rows:[{
+      polity_id:UUIDS.polity,
+      canonical_key:'Existing Polity',
+      polity_type:'historical_polity',
+      historicity:'historical'
+    }]};
+    return {rows:[]};
+  }};
+  assert.deepEqual(
+    await resolveOrCreatePolity(existingPolityClient, { canonical_name_en:'Existing Polity', display_name_ko:null }),
+    { id:UUIDS.polity, disposition:'reused' }
+  );
+
+  const newPolityClient={ async query(){ return {rows:[]}; } };
+  await assert.rejects(
+    () => resolveOrCreatePolity(newPolityClient, { canonical_name_en:'New Polity', display_name_ko:null }),
+    /HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED/
+  );
 });
 
 test('existing Role reuse succeeds without KO and a missing new Role KO fails closed', async () => {

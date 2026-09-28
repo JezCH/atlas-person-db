@@ -103,20 +103,50 @@ test('KO display collision requires explicit review override', async () => {
   assert.match(client.calls.at(-1).sql, /^rollback$/i);
 });
 
-test('polity identity uses the same deterministic key/name lock boundary', async () => {
-  const responses = empty(10);
-  responses[7] = { rows: [{ id: 'polity-1' }] };
+test('polity identity uses deterministic locks and resolves all current identity surfaces before creation', async () => {
+  const responses = empty(13);
+  responses[10] = { rows: [{ id: 'polity-1' }] };
   const client = scriptedClient(responses);
   const outcome = await createIdentityService({ client }).mutate('create_polity', {
     canonical_name_en: 'Byzantine Empire', display_name_ko: '비잔티움 제국'
   });
   assert.equal(outcome.entity, 'polity');
-  assert.deepEqual(client.calls[7].params, ['Byzantine Empire', 'historical_polity', 'historical']);
+  assert.equal(outcome.replay,false);
+  assert.deepEqual(client.calls[10].params, ['Byzantine Empire', 'historical_polity', 'historical']);
   assert.deepEqual(new Set(client.calls.slice(1, 4).map((call) => call.params[0])), new Set([
     'atlas-identity:polity:key:Byzantine Empire',
     'atlas-identity:polity:name:Byzantine Empire',
     'atlas-identity:polity:name:비잔티움 제국'
   ]));
+  assert.match(client.calls[4].sql,/p\.canonical_key=\$1/);
+  assert.match(client.calls[5].sql,/polity_names pn/);
+  assert.match(client.calls[6].sql,/polity_designation_names pdn/);
+  assert.match(client.calls[7].sql,/correction_manifest_runs cmr/);
+  assert.match(client.calls[10].sql,/insert into atlas_v2\.polities/i);
+  assert.match(client.calls.at(-1).sql,/^commit$/i);
+});
+
+test('polity alias resolution reuses the existing UUID without requiring a new KO display label', async () => {
+  const client={
+    calls:[],
+    async query(sql,params=[]) {
+      const text=String(sql);
+      this.calls.push({sql:text,params});
+      if (/from atlas_v2\.polity_names pn/i.test(text)) return { rows:[{
+        polity_id:'polity-1',canonical_key:'Roman Empire',polity_type:'historical_polity',historicity:'historical',
+        locale:'en',name:'Byzantine Empire',name_type:'historiographic_conventional',is_preferred:false
+      }] };
+      return {rows:[]};
+    }
+  };
+  const outcome=await createIdentityService({client}).mutate('create_polity',{
+    canonical_name_en:'Byzantine Empire'
+  });
+  assert.equal(outcome.id,'polity-1');
+  assert.equal(outcome.replay,true);
+  assert.deepEqual(outcome.resolution.match_kinds,['alias']);
+  assert.equal(client.calls.some((call)=>/insert into atlas_v2\.polities/i.test(call.sql)),false);
+  assert.match(client.calls.at(-1).sql,/^commit$/i);
 });
 
 test('role identity locks every resolver token and creates exact vocabulary', async () => {

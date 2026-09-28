@@ -25,7 +25,7 @@ test('legacy manifest orchestration remains available only for historical ledger
 test('new manifest v2 owns one transaction and binds created identities directly into Stage 2 native Activity UUID fields', () => {
   assert.match(nativeV2Source, /begin isolation level serializable/i);
   assert.match(nativeV2Source, /createPerson\(client, manifest\.person\)/);
-  assert.match(nativeV2Source, /createPolity\(client, manifest\.polityIdentity\)/);
+  assert.match(nativeV2Source, /createPolity\(client, \{[\s\S]*\.\.\.manifest\.polityIdentity,[\s\S]*identity_context:temporalContextFromNativeActivity\(manifest\.activity\)[\s\S]*\}\)/);
   assert.match(nativeV2Source, /createRole\(client, manifest\.roleIdentity\)/);
   assert.match(nativeV2Source, /createStage2NativeActivityTx\(client\)\.create/);
   assert.match(nativeV2Source, /v2-relation-full-temporal/);

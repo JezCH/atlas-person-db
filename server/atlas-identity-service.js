@@ -1,5 +1,7 @@
 "use strict";
 
+const { resolvePolityIdentity } = require("./atlas-polity-identity-resolver.js");
+
 function normalizeExact(value) {
   return String(value ?? "").normalize("NFC").trim().replace(/\s+/g, " ");
 }
@@ -125,7 +127,7 @@ async function createPerson(client, raw) {
 
 async function createPolity(client, raw) {
   const canonicalName = required(raw?.canonical_name_en, "canonical_name_en");
-  const displayName = required(raw?.display_name_ko, "display_name_ko");
+  const displayName = normalizeExact(raw?.display_name_ko);
   const canonicalKey = normalizeExact(raw?.canonical_key) || canonicalName;
   const polityType = normalizeExact(raw?.polity_type) || "historical_polity";
   const historicity = normalizeExact(raw?.historicity) || "historical";
@@ -134,28 +136,30 @@ async function createPolity(client, raw) {
   await advisoryLocks(client, [
     `atlas-identity:polity:key:${canonicalKey}`,
     `atlas-identity:polity:name:${canonicalName}`,
-    `atlas-identity:polity:name:${displayName}`
+    ...(displayName ? [`atlas-identity:polity:name:${displayName}`] : [])
   ]);
 
-  const existing = await client.query(`
-    select p.id,p.polity_type,p.historicity,
-           en.name as canonical_name_en,ko.name as display_name_ko
-      from atlas_v2.polities p
-      left join atlas_v2.polity_names en on en.polity_id=p.id and en.locale='en' and en.is_preferred=true
-      left join atlas_v2.polity_names ko on ko.polity_id=p.id and ko.locale='ko' and ko.is_preferred=true
-     where p.canonical_key=$1
-     for update of p`, [canonicalKey]);
+  const resolution = await resolvePolityIdentity(client, {
+    canonical_name_en:canonicalName,
+    canonical_key:canonicalKey,
+    polity_type:polityType,
+    historicity
+  }, { temporalContext:raw?.identity_context || null });
 
-  if (existing.rows.length === 1) {
-    const row = existing.rows[0];
-    if (sameText(row.polity_type, polityType)
-      && sameText(row.historicity, historicity)
-      && sameText(row.canonical_name_en, canonicalName)
-      && sameText(row.display_name_ko, displayName)) {
-      return { entity: "polity", id: row.id, canonical_key: canonicalKey, replay: true };
-    }
-    throw new Error("POLITY_CANONICAL_KEY_CONFLICT");
+  if (resolution.status === "resolved") {
+    return {
+      entity:"polity",
+      id:resolution.id,
+      canonical_key:resolution.canonical_key,
+      replay:true,
+      resolution
+    };
   }
+  if (resolution.status !== "unresolved" || resolution.create_allowed !== true) {
+    throw new Error("POLITY_IDENTITY_RESOLUTION_INVARIANT_FAILED");
+  }
+
+  if (!displayName) throw new Error("POLITY_DISPLAY_NAME_REQUIRED");
 
   if (await exactNameCollision(client, "polity_names", "polity_id", canonicalName)) {
     throw new Error("POLITY_CANONICAL_NAME_COLLISION");
@@ -176,9 +180,19 @@ async function createPolity(client, raw) {
       (gen_random_uuid(),$1,'ko',$3,'display',true)`,
     [id, canonicalName, displayName]
   );
-  return { entity: "polity", id, canonical_key: canonicalKey, replay: false };
+  return {
+    entity:"polity",
+    id,
+    canonical_key:canonicalKey,
+    replay:false,
+    resolution:Object.freeze({
+      status:"created",
+      matched_by:null,
+      match_kinds:Object.freeze([]),
+      temporal_context:resolution.temporal_context
+    })
+  };
 }
-
 async function roleCollision(client, value, excludeId = null) {
   const result = await client.query(`
     select r.id
