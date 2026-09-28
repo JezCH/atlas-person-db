@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:dogen:v1",
+  "person": {
+    "canonical_name_en": "Dōgen",
+    "display_name_ko": "도겐",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "documented_death"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Japan"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Zen Buddhist philosopher and teacher",
+    "role_display_name_ko": "선불교 사상가·교육자",
+    "start_year": 1244,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1244,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative teaching-institution milestone: completion of Daibutsuji/Eiheiji in 1244."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "SOTOZEN — Dogen Zenji",
+      "canonical_url": "https://www.sotozen.com/eng/about/Buddha_founders/dogen_zenji.html",
+      "citation_text": "The official Soto Zen biography identifies Dōgen as founder of the Soto Zen School and records completion of his Echizen monastery in 1244, later named Eiheiji.",
+      "locator": "Dogen Zenji"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-JAPAN-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository-wide PR/issue identity search on 2026-09-28 found no prior governed registration evidence; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "Indexed exact-document review on 2026-09-28 produced no independently verifiable NamuWiki Person result; recorded reviewed not_found rather than guessing a URL."
+  }
+}
