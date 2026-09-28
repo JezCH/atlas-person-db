@@ -12,7 +12,7 @@ A registration is complete only when authoritative Production read-back confirms
 
 ### Canonical Person historical fact counting
 
-Whenever a task reviews historical-Person factual coverage, candidate research, or recounts a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFC-3.1`).
+Whenever a task reviews historical-Person factual coverage, candidate research, or recounts a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFC-3.2`).
 
 Required order:
 
@@ -21,8 +21,10 @@ identity / historicity / duplicate / source / life-status gates
 → collect source-backed factual claims
 → classify fixed E / R / T / D / G / S coverage cells
 → preserve each cell as 1 / 0 / ?
-→ sum VERIFIED cells
-→ output VERIFIED_TOTAL /36 + UNRESOLVED count
+→ pass E/R/T/D/G/S + unresolved to formatPersonFactCountResult()
+→ validate the rendered block with validatePersonFactCountOutput()
+→ emit the validated result block first
+→ only then emit evidence explanation
 ```
 
 The reviewer does **not** assign qualitative importance, greatness, irreplaceability, prestige, positive/negative impact, or an overall-impression score. The same factual procedure applies regardless of role, profession, office, ideology, or historical domain.
@@ -31,9 +33,9 @@ The reviewer does **not** assign qualitative importance, greatness, irreplaceabi
 
 The elapsed-time persistence axis from v3.0 is retired. Geographic reception uses external UN M49 country/area units, and downstream continuation uses fixed successor-link classes rather than the number of named entities collected.
 
-The completed output must include all six group counts and **must include the arithmetic `VERIFIED_TOTAL /36`**. If unresolved cells remain, also report `UNRESOLVED n` and keep status `HOLD`.
+The completed or partial output must **begin** with the machine-generated canonical block `E/R/T/D/G/S + VERIFIED_TOTAL /36 + UNRESOLVED`. Use `server/person-fact-count-output.mjs`; do not hand-author a trusted total. Explanation before the block, missing lines, reordered lines, out-of-range values, or arithmetic mismatch make the review incomplete. If unresolved cells remain, report the verified subtotal first and keep status `HOLD`.
 
-Legacy `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, earlier PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only.
+Legacy `ATLAS-PHFC-3.1`, `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, earlier PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only.
 
 A merged PR, green CI, Vercel deployment, authoring response without read-back, or workflow start is not completion by itself.
 
