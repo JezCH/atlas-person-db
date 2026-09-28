@@ -1,31 +1,38 @@
 # ATLAS Person Registration Value Standard
 
 > **Status:** Canonical  
-> **Version:** 2.3  
-> **Standard ID:** `ATLAS-PRV-2.3`  
-> **Scope:** Historical Person candidate inclusion / legacy re-evaluation  
-> **Authority:** This file is the single active authority for ATLAS Person registration-value grading.  
-> **Supersedes:** legacy Lite / Coverage Test / ad-hoc SSS~C scoring rules. Historical records using older rules remain audit evidence only.
+> **Version:** 2.4  
+> **Standard ID:** `ATLAS-PRV-2.4`  
+> **Scope:** Historical Person registration-value scoring / legacy re-evaluation  
+> **Authority:** This file is the single active authority for ATLAS Person registration-value scoring.  
+> **Supersedes:** all prior registration-value scoring and tier/grade experiments. Historical records using older systems remain audit evidence only.
 
 ---
 
 ## 0. Purpose
 
-ATLAS uses one common grading rule to answer:
+ATLAS uses one common scoring rule to answer:
 
 > **How much historical explanatory value does this Person add to ATLAS?**
 
-This is a project registration-value standard, not a moral judgment, popularity ranking, political endorsement, or assessment of personal worth.
+This is a project registration-value measurement, not a moral judgment, popularity ranking, political endorsement, assessment of personal worth, or honor system.
 
 The score measures source-backed historical consequence, irreplaceability, persistence, breadth, and geographic diffusion.
 
-A Person's grade is derived from the axis scores. The grade must never be chosen first and back-filled with convenient scores.
+The output of this standard is:
+
+```text
+C / U / P / B / G
+→ TOTAL 0..30
+```
+
+There is **no derived grade, tier, class, rank label, or letter category**.
 
 ---
 
 ## 1. Hard gates before scoring
 
-Do not grade a candidate until the minimum review basis is sufficient.
+Do not score a candidate until the minimum review basis is sufficient.
 
 Required gates:
 
@@ -57,6 +64,8 @@ TOTAL = C + U + P + B + G
 |  | **TOTAL** | **30** | simple sum; no hidden weighting |
 
 No popularity, pageview, citation-count, language-edition-count, fame, or contemporary recognizability axis exists.
+
+The TOTAL is a continuous project score from **0 to 30**. The standard defines **no categorical interpretation bands**.
 
 ---
 
@@ -96,7 +105,7 @@ Do not inflate C because the Person:
 
 **Question:** If this Person were removed from the historical explanation, how much unique explanatory structure would be lost?
 
-U is the principal protection for a Person who transformed one field so deeply that broad multi-field activity is unnecessary.
+U protects a Person who transformed one field so deeply that broad multi-field activity is unnecessary.
 
 ### Anchors
 
@@ -143,7 +152,7 @@ Modern rediscovery after a long discontinuity does not automatically equal conti
 
 **Question:** Did the Person produce substantial, independently important historical results in more than one genuinely separate field?
 
-B is a **small bonus axis**, never a core route to high rank.
+B is a **small bonus axis**, never a primary route to a high total score.
 
 - **0** — one principal historical field, including its normal subfields and professional activities.
 - **1** — substantial historical results in **two genuinely independent fields**.
@@ -181,26 +190,28 @@ Translation alone is insufficient if it did not amount to meaningful historical 
 
 ---
 
-# 4. Grade derivation
+# 4. TOTAL
 
-Grades are mechanically derived from TOTAL.
+The final score is the simple sum of the five reviewed axes.
 
-| TOTAL | Grade |
-|---:|:---:|
-| **27–30** | **SSS** |
-| **24–26** | **SS** |
-| **21–23** | **S** |
-| **16–20** | **A** |
-| **10–15** | **B** |
-| **0–9** | **C** |
+```text
+0 <= TOTAL <= 30
+```
 
-The grade has no independent discretionary override.
+TOTAL is retained as a numeric measurement only.
+
+Mandatory rules:
+
+- do not convert TOTAL into a letter, word, medal, star count, tier, band, class, or rank label;
+- do not create hidden or UI-only categorical cutoffs;
+- do not use an old categorical label as a proxy for a numeric score;
+- if a task needs an inclusion cutoff, state that cutoff explicitly for that task as a numeric rule; it does not become part of this standard.
 
 ---
 
 # 5. Mandatory operating rules
 
-## 5.1 Score first, grade second
+## 5.1 Score axes independently, then sum
 
 Required order:
 
@@ -208,15 +219,13 @@ Required order:
 review evidence
 → score C / U / P / B / G independently
 → sum TOTAL
-→ derive grade mechanically
 ```
 
 Forbidden:
 
 ```text
-"this Person feels SS"
-→ choose 24+
-→ reverse-engineer axis scores
+choose a desired overall status
+→ reverse-engineer axis scores to reach it
 ```
 
 ## 5.2 Fame is not an axis
@@ -227,7 +236,7 @@ They may be clues for research, never substitutes for C/U/P/G evidence.
 
 ## 5.3 One-field greatness is not penalized
 
-A Person can reach SSS or SS with **B=0**.
+A Person can receive a very high TOTAL with **B=0**.
 
 Breadth is only a small bonus; deep consequence and irreplaceability dominate.
 
@@ -241,24 +250,24 @@ Look for independently evidenced continuation, use, adoption, institutionalizati
 
 If a material score depends on unresolved attribution, disputed authorship, unclear direct influence, uncertain chronology, or weak evidence:
 
-- mark the axis/rating **VERIFY / HOLD**;
+- mark the axis/score **VERIFY / HOLD**;
 - identify the unresolved point;
 - do not solve uncertainty by choosing a convenient midpoint.
 
 ## 5.6 Same rule for new and legacy Persons
 
-New candidates and existing legacy Persons use the same v2.3 standard when they are graded or re-graded.
+New candidates and existing legacy Persons use the same v2.4 standard when they are scored or re-scored.
 
-Older grades may remain as historical audit evidence but are not active authority.
+Older categorical or differently weighted results may remain as historical audit evidence but are not active authority.
 
 ---
 
 # 6. Review record
 
-A durable reviewed grading record should preserve at least:
+A durable reviewed scoring record should preserve at least:
 
 ```text
-standard: ATLAS-PRV-2.3
+standard: ATLAS-PRV-2.4
 person_id / candidate identity
 C: 0..10
 U: 0..9
@@ -266,14 +275,13 @@ P: 0..5
 B: 0..2
 G: 0..4
 total: 0..30
-grade: SSS|SS|S|A|B|C
 status: APPROVED|VERIFY|HOLD
 axis_rationales
 evidence/source references
 reviewed_at
 ```
 
-The grade may be calculated rather than stored, but if materialized it must equal the deterministic threshold mapping above.
+TOTAL may be calculated rather than stored, but if materialized it must equal the deterministic sum of the five axis values.
 
 This document does **not** by itself require a new Production schema column. Storage belongs to the canonical candidate/review lifecycle defined by CORE.
 
@@ -281,16 +289,18 @@ This document does **not** by itself require a new Production schema column. Sto
 
 # 7. Versioning and change control
 
-v2.3 is the canonical baseline.
+v2.4 is the canonical baseline.
+
+v2.4 intentionally removes the discrete categorical grading layer from v2.3. The five axes and 30-point total remain the active measurement model.
 
 Do **not** revise the formula because one individual result feels too high or too low.
 
 A new version is justified only when repeated application across a broad mixed sample demonstrates a **systematic structural error**, such as:
 
-- the same class of Persons is repeatedly over- or under-valued;
+- the same class of Persons is repeatedly over- or under-measured;
 - one axis consistently duplicates another;
 - a score definition produces repeatable ambiguity across reviewers;
-- tier boundaries systematically collapse meaningful distinctions.
+- the weighting systematically collapses meaningful distinctions.
 
 Required change path:
 
@@ -302,19 +312,21 @@ document repeated failure pattern
 → update binding requirement references
 ```
 
-Never silently mutate v2.3 semantics while keeping the same version.
+Never silently mutate v2.4 semantics while keeping the same version.
 
 ---
 
 # 8. Legacy rules
 
-Legacy scoring systems such as prior Lite, Coverage Test, SCI/OFI/MCG/DRS experiments, 54-point counting models, or ad-hoc project tiers are **non-authoritative historical experiments** after this cutover.
+Prior Lite, Coverage Test, SCI/OFI/MCG/DRS experiments, 54-point counting models, categorical grading systems, and ad-hoc project classifications are **non-authoritative historical experiments** after this cutover.
 
 They may be consulted only as audit/research history.
 
 When they conflict with this file:
 
-> **ATLAS-PRV-2.3 wins.**
+> **ATLAS-PRV-2.4 wins.**
+
+No legacy categorical result may be automatically converted into a v2.4 TOTAL. Re-score the five axes from evidence when a current value is needed.
 
 ---
 
@@ -328,15 +340,10 @@ B  2 — independent-field breadth
 G  4 — geographic diffusion
 -------------------------------
    30 total
-
-27–30 SSS
-24–26 SS
-21–23 S
-16–20 A
-10–15 B
- 0– 9 C
 ```
+
+**Canonical output = five axis scores + numeric TOTAL only.**
 
 Core rule:
 
-> **Historical greatness is not how many different things a Person did. It is how much historical structure they changed, how irreplaceable their role was, and how long and how far those consequences persisted.**
+> **Historical explanatory value is measured by how much historical structure a Person changed, how irreplaceable their role was, and how long and how far those consequences persisted.**
