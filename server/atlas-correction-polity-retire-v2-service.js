@@ -155,6 +155,21 @@ async function loadPreferredNames(client, polityId, { forUpdate = false } = {}) 
   })));
 }
 
+async function loadIdentityNames(client, polityId, { forUpdate = false } = {}) {
+  const result = await client.query(
+    `select locale,name,is_preferred
+       from atlas_v2.polity_names
+      where polity_id=$1::uuid
+      order by locale,name${forUpdate ? " for update" : ""}`,
+    [polityId]
+  );
+  return Object.freeze(result.rows.map((row) => Object.freeze({
+    locale: String(row.locale),
+    name: String(row.name),
+    is_preferred: Boolean(row.is_preferred)
+  })));
+}
+
 async function loadRetirement(client, retiredPolityId, { forUpdate = false } = {}) {
   const result = await client.query(
     `select retired_polity_id::text,survivor_polity_id::text,canonical_key,polity_type,historicity,
@@ -214,7 +229,7 @@ async function recordRetirement(client, operation, prepared, requestId) {
   if (insert.rowCount !== 1) {
     throw new Error(`CORRECTION_POLITY_RETIRE_REGISTRY_CONFLICT:${operation.expected_polity.id}`);
   }
-  for (const name of prepared.preferred_names) {
+  for (const name of prepared.identity_names) {
     await client.query(
       `insert into atlas_v2.polity_identity_retirement_names(
          retired_polity_id,locale,name,is_preferred
@@ -286,6 +301,7 @@ async function assertPreflight(client, operation) {
   assertExactPolity(polity, operation.expected_polity, `CORRECTION_POLITY_RETIRE_POLITY_DRIFT:${operation.expected_polity.id}`);
   const preferredNames = await loadPreferredNames(client, operation.expected_polity.id, { forUpdate: true });
   assertExactNames(preferredNames, operation.expected_preferred_names, `CORRECTION_POLITY_RETIRE_PREFERRED_NAMES_DRIFT:${operation.expected_polity.id}`);
+  const identityNames = await loadIdentityNames(client, operation.expected_polity.id, { forUpdate: true });
   const survivor = operation.survivor_polity_id
     ? await loadPolity(client, operation.survivor_polity_id, { forUpdate: true })
     : null;
@@ -305,7 +321,7 @@ async function assertPreflight(client, operation) {
   if (references.owned_reference_total !== operation.expected_owned_reference_total) {
     throw new Error(`CORRECTION_POLITY_RETIRE_OWNED_REFERENCE_TOTAL_DRIFT:${operation.expected_polity.id}`);
   }
-  return Object.freeze({ polity, survivor, preferred_names: preferredNames, references });
+  return Object.freeze({ polity, survivor, preferred_names: preferredNames, identity_names: identityNames, references });
 }
 
 async function applyOperation(client, operation, prepared, requestId) {
@@ -340,7 +356,8 @@ async function verifyRetired(client, operation) {
     if (retirement[key] !== value) throw new Error(`CORRECTION_POLITY_RETIRE_REGISTRY_DRIFT:${operation.expected_polity.id}`);
   }
   const retirementNames = await loadRetirementNames(client, operation.expected_polity.id);
-  assertExactNames(retirementNames, operation.expected_preferred_names, `CORRECTION_POLITY_RETIRE_REGISTRY_NAMES_DRIFT:${operation.expected_polity.id}`);
+  const retiredPreferredNames = retirementNames.filter((row) => row.is_preferred === true);
+  assertExactNames(retiredPreferredNames, operation.expected_preferred_names, `CORRECTION_POLITY_RETIRE_REGISTRY_NAMES_DRIFT:${operation.expected_polity.id}`);
   const references = await loadReferenceCounts(client, operation.expected_polity.id);
   if (references.owned_reference_total !== 0 || references.external_reference_total !== 0) {
     throw new Error(`CORRECTION_POLITY_RETIRE_POSTWRITE_REFERENCE_REAPPEARED:${operation.expected_polity.id}`);
@@ -419,6 +436,7 @@ function createCorrectionPolityRetireV2Service({ client } = {}) {
           survivor_polity_id: operation.survivor_polity_id,
           expected_polity: operation.expected_polity,
           preferred_names: before.preferred_names,
+          retired_names: before.identity_names,
           reference_snapshot: before.references,
           removed_polity: removed
         }));
@@ -484,6 +502,7 @@ module.exports = Object.freeze({
   requireManifest,
   loadPolity,
   loadPreferredNames,
+  loadIdentityNames,
   loadRetirement,
   loadRetirementNames,
   recordRetirement,
