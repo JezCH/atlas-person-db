@@ -11,7 +11,7 @@
   },
   "counts": {
     "exact_target_url_pending": 104,
-    "related_or_derivative_only": 189,
+    "related_or_derivative_only": 191,
     "no_exact_document": 170,
     "exact_target_url_verified": 43
   },
@@ -22,6 +22,7 @@
     "01abbb6c-8bdd-44a1-b77a-cc23f89c14cd": "exact_target_url_pending",
     "0248f30d-4fc2-461c-8a7c-48adce612cb1": "related_or_derivative_only",
     "0275b86d-5324-495b-8f97-f4cfbd8e7e50": "no_exact_document",
+    "02e6975e-5432-4b71-8b9f-451e41bc6b26": "related_or_derivative_only",
     "0483a99e-5050-4010-ac96-99b9a6c856e8": "no_exact_document",
     "0489eda1-b9bb-4240-be8d-7b0e158b4e0e": "related_or_derivative_only",
     "048d804a-686d-416d-aa23-f379f4bb117d": "no_exact_document",
@@ -54,6 +55,7 @@
     "0eaefba8-d1d7-48e6-8b62-206ab394c2bc": "no_exact_document",
     "0f0b6b0f-b3b6-40b3-806f-2098adbf3575": "no_exact_document",
     "0f264e75-6d6d-424a-81ac-df14f1519281": "no_exact_document",
+    "0fc6c8bb-b7f0-48d2-a4db-57c95177955c": "related_or_derivative_only",
     "0fe2761a-d0b6-5428-b732-8c93d80e1b0d": "related_or_derivative_only",
     "1034c034-a3e1-4cc8-a9c4-bf1f6bc4f1f6": "related_or_derivative_only",
     "10735ebb-cf45-4c20-b8ab-9476198f79db": "related_or_derivative_only",
