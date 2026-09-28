@@ -124,14 +124,15 @@
     {
       "id": "ATLAS-RQ-0020",
       "status": "ACTIVE",
-      "title": "Person historical factual coverage uses ATLAS-PHFC-4.2 only: one identical role-neutral E/R/T/D/G/S bounded-review schema for every historical Person; zero states require explicit closure; G counts six fixed reception modes rather than countries; S remains six fixed successor classes; VERIFIED_COUNT /36 is machine-derived factual coverage only",
+      "title": "Person historical factual coverage uses ATLAS-PHFC-4.3 only: one identical role-neutral E/R/T/D/G/S bounded-review schema for every historical Person; zero states require explicit closure; every 1/0 cell requires machine-valid evidenceRefs; G uses only canonical three-digit UN M49 country/area codes and six fixed reception modes; VERIFIED_COUNT /36 remains machine-derived factual coverage only",
       "evidence_paths": [
         "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
         "authoring/REGISTRATION_SOP.md",
         "docs/core/CORE_V2_MASTER_PLAN.md",
         "server/person-fact-count-output.mjs",
         "scripts/verify-person-fact-count-output.mjs",
-        "tests/person-fact-count-output.test.mjs"
+        "tests/person-fact-count-output.test.mjs",
+        "data/un-m49-country-area-codes.v1.json"
       ]
     },
     {

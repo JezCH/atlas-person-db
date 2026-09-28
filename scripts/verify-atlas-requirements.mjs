@@ -85,13 +85,13 @@ if (!document.includes("100% traceable") || !document.includes("0 known contradi
   fail("human-readable completion principles drifted");
 }
 
-if (!document.includes("ATLAS-PHFC-4.2") || !document.includes("VERIFIED_COUNT /36") || !document.includes("ZERO_REVIEW_CLOSED")) {
-  fail("PHFC v4.2 bounded factual coverage contract is missing from human requirements");
+if (!document.includes("ATLAS-PHFC-4.3") || !document.includes("VERIFIED_COUNT /36") || !document.includes("ZERO_REVIEW_CLOSED") || !document.includes("evidenceRefs")) {
+  fail("PHFC v4.3 evidence/M49 contract is missing from human requirements");
 }
 
 const phfcRequirement = byId.get("ATLAS-RQ-0020");
-if (!phfcRequirement || !String(phfcRequirement.title || "").includes("ATLAS-PHFC-4.2")) {
-  fail("ATLAS-RQ-0020 must bind to ATLAS-PHFC-4.2");
+if (!phfcRequirement || !String(phfcRequirement.title || "").includes("ATLAS-PHFC-4.3")) {
+  fail("ATLAS-RQ-0020 must bind to ATLAS-PHFC-4.3");
 }
 
 const requiredPhfcEvidence = [
@@ -100,7 +100,8 @@ const requiredPhfcEvidence = [
   "docs/core/CORE_V2_MASTER_PLAN.md",
   "server/person-fact-count-output.mjs",
   "scripts/verify-person-fact-count-output.mjs",
-  "tests/person-fact-count-output.test.mjs"
+  "tests/person-fact-count-output.test.mjs",
+  "data/un-m49-country-area-codes.v1.json"
 ];
 for (const evidencePath of requiredPhfcEvidence) {
   if (!(phfcRequirement.evidence_paths || []).includes(evidencePath)) {
@@ -113,10 +114,12 @@ for (const evidencePath of requiredPhfcEvidence) {
 
 const phfcStandard = fs.readFileSync(path.join(root, "docs", "ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md"), "utf8");
 for (const phrase of [
-  "ATLAS-PHFC-4.2",
+  "ATLAS-PHFC-4.3",
   "VERIFIED_COUNT = E_COUNT + R_COUNT + T_COUNT + D_COUNT + G_COUNT + S_COUNT",
-  "v4.2 **does not count countries**",
+  "v4.3 **does not count countries**",
   "ZERO_REVIEW_CLOSED",
+  "evidenceRefs.<cell_id>",
+  "three-digit M49 code",
   "one identical factual-coverage procedure to every historical Person"
 ]) {
   if (!phfcStandard.includes(phrase)) fail(`PHFC canonical standard drifted: missing ${phrase}`);
@@ -125,11 +128,13 @@ for (const phrase of [
 const phfcFormatter = fs.readFileSync(path.join(root, "server", "person-fact-count-output.mjs"), "utf8");
 for (const symbol of [
   "PHFC_G_MODES",
+  "PHFC_M49_COUNTRY_AREA_CODES",
   "formatPersonFactCountResult",
   "derivePersonFactCounts",
   "validatePersonFactCountOutput",
   "assertPersonFactCountOutput",
   "zeroReviewClosed",
+  "evidenceRefs",
   "VERIFIED_COUNT"
 ]) {
   if (!phfcFormatter.includes(symbol)) fail(`PHFC formatter contract drifted: missing ${symbol}`);
@@ -137,8 +142,26 @@ for (const symbol of [
 if (phfcFormatter.includes("externalReceptionSet") || phfcFormatter.includes("verifiedTotal") || phfcFormatter.includes("importanceScore")) {
   fail("legacy country-count or evaluative score implementation remains reachable");
 }
-if (!phfcFormatter.includes("exactObject(input, ['E','R','T','D','G','S','zeroReviewClosed'], 'profile input')") || !phfcFormatter.includes("zeroReviewClosed must exactly match every 0-state cell")) {
-  fail("PHFC role-neutral input boundary or zero-closure invariant drifted");
+if (!phfcFormatter.includes("exactObject(input, ['E','R','T','D','G','S','zeroReviewClosed','evidenceRefs'], 'profile input')")) {
+  fail("PHFC role-neutral factual-only input boundary drifted");
+}
+if (!phfcFormatter.includes("zeroReviewClosed must exactly match every 0-state cell")) {
+  fail("PHFC zero-closure invariant drifted");
+}
+if (!phfcFormatter.includes("requires at least one evidence reference")) {
+  fail("PHFC cell-evidence invariant drifted");
+}
+if (!phfcFormatter.includes("non-canonical UN M49 country/area code")) {
+  fail("PHFC M49 geography invariant drifted");
+}
+
+const m49Registry = JSON.parse(fs.readFileSync(path.join(root, "data", "un-m49-country-area-codes.v1.json"), "utf8"));
+if (m49Registry.schema !== "atlas-un-m49-country-area-codes/v1") fail("unexpected PHFC M49 registry schema");
+if (!Array.isArray(m49Registry.codes) || m49Registry.count !== m49Registry.codes.length) fail("invalid PHFC M49 registry count");
+if (m49Registry.codes.length !== 248) fail(`unexpected PHFC M49 country/area count ${m49Registry.codes.length}`);
+if (m49Registry.codes.includes("001") || m49Registry.codes.includes("002")) fail("aggregate M49 geography leaked into PHFC country/area registry");
+if (!m49Registry.codes.includes("840") || !m49Registry.codes.includes("276") || !m49Registry.codes.includes("410")) {
+  fail("PHFC M49 registry missing canonical country/area sentinels");
 }
 
 const statusCounts = Object.fromEntries([...allowedStatuses].map((status) => [status, registry.requirements.filter((item) => item.status === status).length]));
