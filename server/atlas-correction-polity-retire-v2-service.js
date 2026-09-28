@@ -85,6 +85,11 @@ function requireOperation(raw, index) {
   if (!REVIEW_REASONS.has(reviewReason)) throw new Error("CORRECTION_POLITY_RETIRE_REVIEW_REASON_REQUIRED");
   const caseId = String(raw.case_id || "").trim();
   if (!caseId) throw new Error("CORRECTION_POLITY_RETIRE_CASE_ID_REQUIRED");
+  const expectedPolity = requireExpectedPolity(raw.expected_polity, index);
+  const survivorPolityId = raw.survivor_polity_id == null
+    ? null
+    : requireUuid(raw.survivor_polity_id, `CORRECTION_POLITY_RETIRE_OP${index}_SURVIVOR_POLITY_ID_INVALID`);
+  if (survivorPolityId === expectedPolity.id) throw new Error("CORRECTION_POLITY_RETIRE_SURVIVOR_MUST_DIFFER");
   const expectedOwned = Number(raw.expected_owned_reference_total);
   const expectedExternal = Number(raw.expected_external_reference_total);
   if (!Number.isInteger(expectedOwned) || expectedOwned < 0) throw new Error("CORRECTION_POLITY_RETIRE_EXPECTED_OWNED_REFERENCE_TOTAL_INVALID");
@@ -93,13 +98,13 @@ function requireOperation(raw, index) {
     type: OPERATION_TYPE,
     case_id: caseId,
     review_reason: reviewReason,
-    expected_polity: requireExpectedPolity(raw.expected_polity, index),
+    expected_polity: expectedPolity,
+    survivor_polity_id: survivorPolityId,
     expected_preferred_names: requirePreferredNames(raw.expected_preferred_names, index),
     expected_owned_reference_total: expectedOwned,
     expected_external_reference_total: 0
   });
 }
-
 function requireManifest(raw) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("CORRECTION_MANIFEST_OBJECT_REQUIRED");
   if (String(raw.schema || "").trim() !== MANIFEST_V2) throw new Error("UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA");
@@ -149,6 +154,76 @@ async function loadPreferredNames(client, polityId, { forUpdate = false } = {}) 
     is_preferred: Boolean(row.is_preferred)
   })));
 }
+
+async function loadRetirement(client, retiredPolityId, { forUpdate = false } = {}) {
+  const result = await client.query(
+    `select retired_polity_id::text,survivor_polity_id::text,canonical_key,polity_type,historicity,
+            review_reason,source_request_id,source_case_id
+       from atlas_v2.polity_identity_retirements
+      where retired_polity_id=$1::uuid${forUpdate ? " for update" : ""}`,
+    [retiredPolityId]
+  );
+  const row = result.rows[0];
+  if (!row) return null;
+  return Object.freeze({
+    retired_polity_id: String(row.retired_polity_id).toLowerCase(),
+    survivor_polity_id: row.survivor_polity_id == null ? null : String(row.survivor_polity_id).toLowerCase(),
+    canonical_key: String(row.canonical_key),
+    polity_type: String(row.polity_type),
+    historicity: String(row.historicity),
+    review_reason: String(row.review_reason),
+    source_request_id: String(row.source_request_id),
+    source_case_id: String(row.source_case_id)
+  });
+}
+
+async function loadRetirementNames(client, retiredPolityId) {
+  const result = await client.query(
+    `select locale,name,is_preferred
+       from atlas_v2.polity_identity_retirement_names
+      where retired_polity_id=$1::uuid
+      order by locale,name`,
+    [retiredPolityId]
+  );
+  return Object.freeze(result.rows.map((row) => Object.freeze({
+    locale: String(row.locale),
+    name: String(row.name),
+    is_preferred: Boolean(row.is_preferred)
+  })));
+}
+
+async function recordRetirement(client, operation, prepared, requestId) {
+  const insert = await client.query(
+    `insert into atlas_v2.polity_identity_retirements(
+       retired_polity_id,survivor_polity_id,canonical_key,polity_type,historicity,
+       review_reason,source_request_id,source_case_id
+     ) values($1::uuid,$2::uuid,$3,$4,$5,$6,$7,$8)
+     on conflict (retired_polity_id) do nothing
+     returning retired_polity_id::text`,
+    [
+      operation.expected_polity.id,
+      operation.survivor_polity_id,
+      operation.expected_polity.canonical_key,
+      operation.expected_polity.polity_type,
+      operation.expected_polity.historicity,
+      operation.review_reason,
+      requestId,
+      operation.case_id
+    ]
+  );
+  if (insert.rowCount !== 1) {
+    throw new Error(`CORRECTION_POLITY_RETIRE_REGISTRY_CONFLICT:${operation.expected_polity.id}`);
+  }
+  for (const name of prepared.preferred_names) {
+    await client.query(
+      `insert into atlas_v2.polity_identity_retirement_names(
+         retired_polity_id,locale,name,is_preferred
+       ) values($1::uuid,$2,$3,$4)`,
+      [operation.expected_polity.id, name.locale, name.name, name.is_preferred]
+    );
+  }
+}
+
 
 async function loadReferenceCounts(client, polityId) {
   const references = await discoverPolityReferences(client);
@@ -211,6 +286,15 @@ async function assertPreflight(client, operation) {
   assertExactPolity(polity, operation.expected_polity, `CORRECTION_POLITY_RETIRE_POLITY_DRIFT:${operation.expected_polity.id}`);
   const preferredNames = await loadPreferredNames(client, operation.expected_polity.id, { forUpdate: true });
   assertExactNames(preferredNames, operation.expected_preferred_names, `CORRECTION_POLITY_RETIRE_PREFERRED_NAMES_DRIFT:${operation.expected_polity.id}`);
+  const survivor = operation.survivor_polity_id
+    ? await loadPolity(client, operation.survivor_polity_id, { forUpdate: true })
+    : null;
+  if (operation.survivor_polity_id && !survivor) {
+    throw new Error(`CORRECTION_POLITY_RETIRE_SURVIVOR_NOT_FOUND:${operation.survivor_polity_id}`);
+  }
+  if (await loadRetirement(client, operation.expected_polity.id, { forUpdate: true })) {
+    throw new Error(`CORRECTION_POLITY_RETIRE_REGISTRY_CONFLICT:${operation.expected_polity.id}`);
+  }
   const references = await loadReferenceCounts(client, operation.expected_polity.id);
   if (references.external_reference_total !== 0) {
     throw new Error(`CORRECTION_POLITY_RETIRE_EXTERNAL_REFERENCES_PRESENT:${operation.expected_polity.id}`);
@@ -221,10 +305,11 @@ async function assertPreflight(client, operation) {
   if (references.owned_reference_total !== operation.expected_owned_reference_total) {
     throw new Error(`CORRECTION_POLITY_RETIRE_OWNED_REFERENCE_TOTAL_DRIFT:${operation.expected_polity.id}`);
   }
-  return Object.freeze({ polity, preferred_names: preferredNames, references });
+  return Object.freeze({ polity, survivor, preferred_names: preferredNames, references });
 }
 
-async function applyOperation(client, operation) {
+async function applyOperation(client, operation, prepared, requestId) {
+  await recordRetirement(client, operation, prepared, requestId);
   const result = await client.query(
     `delete from atlas_v2.polities
       where id=$1::uuid
@@ -241,6 +326,21 @@ async function verifyRetired(client, operation) {
   if (await loadPolity(client, operation.expected_polity.id, { forUpdate: true })) {
     throw new Error(`CORRECTION_POLITY_RETIRE_TARGET_REAPPEARED:${operation.expected_polity.id}`);
   }
+  const retirement = await loadRetirement(client, operation.expected_polity.id, { forUpdate: true });
+  if (!retirement) throw new Error(`CORRECTION_POLITY_RETIRE_REGISTRY_MISSING:${operation.expected_polity.id}`);
+  const expectedRetirement = {
+    retired_polity_id: operation.expected_polity.id,
+    survivor_polity_id: operation.survivor_polity_id,
+    canonical_key: operation.expected_polity.canonical_key,
+    polity_type: operation.expected_polity.polity_type,
+    historicity: operation.expected_polity.historicity,
+    review_reason: operation.review_reason
+  };
+  for (const [key,value] of Object.entries(expectedRetirement)) {
+    if (retirement[key] !== value) throw new Error(`CORRECTION_POLITY_RETIRE_REGISTRY_DRIFT:${operation.expected_polity.id}`);
+  }
+  const retirementNames = await loadRetirementNames(client, operation.expected_polity.id);
+  assertExactNames(retirementNames, operation.expected_preferred_names, `CORRECTION_POLITY_RETIRE_REGISTRY_NAMES_DRIFT:${operation.expected_polity.id}`);
   const references = await loadReferenceCounts(client, operation.expected_polity.id);
   if (references.owned_reference_total !== 0 || references.external_reference_total !== 0) {
     throw new Error(`CORRECTION_POLITY_RETIRE_POSTWRITE_REFERENCE_REAPPEARED:${operation.expected_polity.id}`);
@@ -310,12 +410,13 @@ function createCorrectionPolityRetireV2Service({ client } = {}) {
       for (let index = 0; index < manifest.operations.length; index += 1) {
         const operation = manifest.operations[index];
         const before = prepared[index];
-        const removed = await applyOperation(client, operation);
+        const removed = await applyOperation(client, operation, before, manifest.requestId);
         await verifyRetired(client, operation);
         outcomes.push(Object.freeze({
           type: operation.type,
           case_id: operation.case_id,
           review_reason: operation.review_reason,
+          survivor_polity_id: operation.survivor_polity_id,
           expected_polity: operation.expected_polity,
           preferred_names: before.preferred_names,
           reference_snapshot: before.references,
@@ -383,6 +484,9 @@ module.exports = Object.freeze({
   requireManifest,
   loadPolity,
   loadPreferredNames,
+  loadRetirement,
+  loadRetirementNames,
+  recordRetirement,
   loadReferenceCounts,
   globalCounts,
   assertPreflight,
