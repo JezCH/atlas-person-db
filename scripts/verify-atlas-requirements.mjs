@@ -61,7 +61,7 @@ for (const requirement of registry.requirements) {
 const mandatoryIds = [
   "ATLAS-RQ-0001", "ATLAS-RQ-0002", "ATLAS-RQ-0003", "ATLAS-RQ-0004", "ATLAS-RQ-0005", "ATLAS-RQ-0006",
   "ATLAS-RQ-0009", "ATLAS-RQ-0010", "ATLAS-RQ-0011", "ATLAS-RQ-0013", "ATLAS-RQ-0014", "ATLAS-RQ-0015",
-  "ATLAS-RQ-0016", "ATLAS-RQ-0017", "ATLAS-RQ-0201", "ATLAS-RQ-0202", "ATLAS-RQ-0203", "ATLAS-RQ-0206",
+  "ATLAS-RQ-0016", "ATLAS-RQ-0017", "ATLAS-RQ-0020", "ATLAS-RQ-0201", "ATLAS-RQ-0202", "ATLAS-RQ-0203", "ATLAS-RQ-0206",
   "ATLAS-RQ-0207", "ATLAS-RQ-0215", "ATLAS-RQ-0218", "ATLAS-RQ-0219", "ATLAS-RQ-0220", "ATLAS-RQ-0221",
   "ATLAS-RQ-0222", "ATLAS-RQ-0223", "ATLAS-RQ-0224", "ATLAS-RQ-0226", "ATLAS-RQ-0227", "ATLAS-RQ-0228",
   "ATLAS-RQ-0229", "ATLAS-RQ-0230", "ATLAS-NO-0001", "ATLAS-NO-0002", "ATLAS-NO-0004", "ATLAS-NO-0005",
@@ -83,6 +83,52 @@ for (const phrase of requiredProductPhrases) {
 
 if (!document.includes("100% traceable") || !document.includes("0 known contradictions") || !document.includes("unknown stays unknown")) {
   fail("human-readable completion principles drifted");
+}
+
+if (!document.includes("ATLAS-PHFC-3.2") || !document.includes("server/person-fact-count-output.mjs")) {
+  fail("PHFC v3.2 machine-enforced output contract is missing from human requirements");
+}
+
+const phfcRequirement = byId.get("ATLAS-RQ-0020");
+if (!phfcRequirement || !String(phfcRequirement.title || "").includes("ATLAS-PHFC-3.2")) {
+  fail("ATLAS-RQ-0020 must bind to ATLAS-PHFC-3.2");
+}
+
+const requiredPhfcEvidence = [
+  "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
+  "authoring/REGISTRATION_SOP.md",
+  "docs/core/CORE_V2_MASTER_PLAN.md",
+  "server/person-fact-count-output.mjs",
+  "scripts/verify-person-fact-count-output.mjs",
+  "tests/person-fact-count-output.test.mjs"
+];
+for (const evidencePath of requiredPhfcEvidence) {
+  if (!(phfcRequirement.evidence_paths || []).includes(evidencePath)) {
+    fail(`ATLAS-RQ-0020 missing PHFC evidence path: ${evidencePath}`);
+  }
+  if (!fs.existsSync(path.join(root, evidencePath))) {
+    fail(`PHFC enforcement file missing: ${evidencePath}`);
+  }
+}
+
+const phfcStandard = fs.readFileSync(path.join(root, "docs", "ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md"), "utf8");
+for (const phrase of [
+  "ATLAS-PHFC-3.2",
+  "Machine-enforced output contract",
+  "server/person-fact-count-output.mjs",
+  "first substantive output"
+]) {
+  if (!phfcStandard.includes(phrase)) fail(`PHFC canonical standard drifted: missing ${phrase}`);
+}
+
+const phfcFormatter = fs.readFileSync(path.join(root, "server", "person-fact-count-output.mjs"), "utf8");
+for (const symbol of [
+  "formatPersonFactCountResult",
+  "validatePersonFactCountOutput",
+  "assertPersonFactCountOutput",
+  "VERIFIED_TOTAL"
+]) {
+  if (!phfcFormatter.includes(symbol)) fail(`PHFC formatter contract drifted: missing ${symbol}`);
 }
 
 const statusCounts = Object.fromEntries([...allowedStatuses].map((status) => [status, registry.requirements.filter((item) => item.status === status).length]));
