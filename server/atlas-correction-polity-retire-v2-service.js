@@ -427,6 +427,13 @@ function createCorrectionPolityRetireV2Service({ client } = {}) {
       await client.query("select pg_advisory_xact_lock(hashtext($1))", [`atlas-correction-manifest:${manifest.requestId}`]);
       await ensurePolityRetirementRegistry(client, { dryRun });
       const ledger = await readLedger(client, manifest.requestId);
+      if (!ledger) {
+        for (const operation of manifest.operations) {
+          if (operation.review_reason === REVIEW_REASON_SAME_IDENTITY_STATE_FORM && !operation.survivor_polity_id) {
+            throw new Error(`CORRECTION_POLITY_RETIRE_SURVIVOR_REQUIRED:${operation.expected_polity.id}`);
+          }
+        }
+      }
       if (ledger) {
         if (ledger.manifest_hash !== hash) throw new Error("CORRECTION_REQUEST_ID_COLLISION");
         if (ledger.manifest_schema !== MANIFEST_V2) throw new Error("CORRECTION_LEDGER_SCHEMA_MISMATCH");
