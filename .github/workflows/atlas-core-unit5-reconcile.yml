@@ -17,6 +17,8 @@ on:
       - 'data/migrations/core-v2-unit5-non-timeline-canonicalization.v1.json'
       - '.github/workflows/atlas-core-unit5-reconcile.yml'
   workflow_dispatch:
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: read
@@ -28,6 +30,11 @@ concurrency:
 
 jobs:
   reconcile:
+    if: >-
+      github.event_name != 'issue_comment' ||
+      (github.event.issue.number == 917 &&
+       github.actor == 'JezCH' &&
+       github.event.comment.body == 'RUN_CORE_V2_UNIT5_RECONCILIATION_20260928')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: production

@@ -129,6 +129,11 @@ test('Unit 5 reconciliation fails closed rather than merging an alias/name colli
 });
 
 
+test('Unit 5 owner-comment dispatch is allowed only inside the same production OIDC policy', () => {
+  assert.equal(unit5Handler.OIDC_POLICY.allowedEvents.has('issue_comment'),true);
+  assert.equal(unit5Handler.OIDC_POLICY.allowedEvents.has('pull_request'),false);
+});
+
 test('Unit 5 OIDC policy-only verifier keeps repository/ref/workflow/environment trust without coupling to deployment SHA', () => {
   const policy=unit5Handler.OIDC_POLICY;
   const payload={

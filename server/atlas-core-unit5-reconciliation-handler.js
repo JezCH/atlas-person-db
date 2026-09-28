@@ -19,7 +19,7 @@ const OIDC_POLICY=Object.freeze({
   ref:"refs/heads/main",
   workflowRef:"JezCH/atlas-person-db/.github/workflows/atlas-core-unit5-reconcile.yml@refs/heads/main",
   environment:"production",
-  allowedEvents:new Set(["push","workflow_dispatch"])
+  allowedEvents:new Set(["push","workflow_dispatch","issue_comment"])
 });
 
 function bearerToken(req) {
