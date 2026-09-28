@@ -348,6 +348,19 @@ If `UNRESOLVED > 0`, the numeric verified subtotal is still reported first, whil
 
 The total is arithmetic only.
 
+### 11.1 Machine implementation authority
+
+The output contract is enforced by code, not by prose alone:
+
+- `server/person-fact-count-output.mjs`
+  - `formatPersonFactCountResult()` computes `VERIFIED_TOTAL` directly from E/R/T/D/G/S.
+  - `validatePersonFactCountOutput()` rejects prose before the result block, missing or reordered fields, invalid ranges, and arithmetic mismatch.
+  - `assertPersonFactCountOutput()` fails closed when the rendered output is invalid.
+- `scripts/verify-person-fact-count-output.mjs` validates a rendered PHFC response from a file or stdin.
+- `tests/person-fact-count-output.test.mjs` permanently tests the output-first, no-omission, and arithmetic-invariant rules.
+
+Where a project code path renders PHFC output, it must call the canonical formatter rather than hand-authoring a trusted total. A generated output that does not pass the canonical validator is not a valid PHFC result.
+
 Do not replace it with:
 
 - high/low;
