@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:ramanuja:hoysala:v1",
+  "person": {
+    "canonical_name_en": "Rāmānuja",
+    "display_name_ko": "라마누자",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Hoysala Empire",
+    "display_name_ko": "호이살라 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Vedanta philosopher and theologian",
+    "role_display_name_ko": "베단타 철학자·신학자",
+    "start_year": 1128,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1128,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Representative c.1128 intellectual/religious activity point, not an assertion that a single Rāmānuja event is exactly dated to 1128. Epigraphic review records a Tonnur inscription granting to a maṭha of Rāmānuja and another inscriptional reference tied to his pre-sannyāsa name, treating these as confirmation of the traditional Tonnur visit. A separate 1128 record places Hoysala king Vishnuvardhana ruling at Yādavapura/Tonnur. ATLAS therefore joins the person-place evidence to the same Hoysala political setting at likely confidence and records active_in rather than royal service. Rāmānuja's absolute lifespan dates remain debated."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Internet Encyclopedia of Philosophy — Rāmānuja",
+      "canonical_url": "https://iep.utm.edu/ramanuja/",
+      "citation_text": "IEP identifies Rāmānuja as the chief exponent of Viśiṣṭādvaita and notes that the traditional 1017–1137 dates compete with a modern 1077–1157 reconstruction.",
+      "locator": "§1 Rāmānuja's Life and Works"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Epigraphia Carnatica / Archaeological Survey discussion of Tonnur inscriptions",
+      "canonical_url": "https://ignca.gov.in/Asi_data/22782.pdf",
+      "citation_text": "The epigraphic discussion notes a Tonnur grant to a maṭha of Rāmānuja and another Rāmānuja-related reference, treating them as confirmation of his Tonnur visit; it also notes a 1128 inscription placing Vishnuvardhana at Yādavapura/Tonnur.",
+      "locator": "discussion around Tonnur inscriptions and Mysore 16 (1128)"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "The Initial and Closing Dates of the Reign of the Hoysala King Vishnuvardhana — JRAS",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-the-royal-asiatic-society/article/abs/initial-and-closing-dates-of-the-reign-of-the-hoysala-king-vishnuvardhana/B3913049E78279C083C08333C63411B2",
+      "citation_text": "The Royal Asiatic Society article establishes the historical regnal framework of Hoysala king Vishnuvardhana used for the Tonnur political attribution.",
+      "locator": "JRAS 47.1 (1915), pp. 152–155"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-INDIA-BRAHMANICAL-JAIN-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Current Production searches for Rāmānuja, Ramanuja, Ramanujacharya, Sri Ramanuja, and 라마누자 found no same-Person canonical record; the Ramanuja substring hit Srinivasa Ramanujan and was excluded as an unrelated identity.",
+    "namuwiki_review": "Exact indexed searches for 라마누자/라마누자차리야 returned no independent NamuWiki Person document; no guessed URL.",
+    "polity_inference": "Spatiotemporal attribution from epigraphically supported Tonnur association plus independently established Hoysala rule there. No claim of political office or king-conversion historicity is required for the rail."
+  }
+}
