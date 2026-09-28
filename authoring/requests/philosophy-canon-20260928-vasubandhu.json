@@ -31,7 +31,7 @@
     "end_year": 400,
     "end_certainty": "approximate",
     "end_calendar": "unspecified_historical",
-    "confidence": "probable",
+    "confidence": "likely",
     "chronology_status": "reviewed",
     "notes": "Representative fourth-century Gupta-period intellectual point; SEP explicitly places Vasubandhu at the height of the Gupta period and reports instruction of the crown prince and queen of Chandragupta II."
   },
@@ -48,6 +48,7 @@
     "request_batch": "PHILOSOPHY-CANON-54-20260928-INDIA-BUDDHIST-01",
     "representative_domain": "knowledge",
     "dedup_method": "Repository-wide current-main identity search found no governed Vasubandhu registration manifest; canonical Production preflight remains authoritative.",
-    "namuwiki_review": "No guessed URL; exact external-link recovery remains separate."
+    "namuwiki_review": "No guessed URL; exact external-link recovery remains separate.",
+    "schema_recovery_note": "Initial batch selection failed before preflight/write because confidence=probable is not an allowed enum; corrected to canonical likely with no historical-claim change."
   }
 }
