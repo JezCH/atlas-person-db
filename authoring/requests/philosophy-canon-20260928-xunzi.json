@@ -49,6 +49,7 @@
     "representative_domain": "knowledge",
     "dedup_method": "Repository PR/issue identity search on 2026-09-28 found no prior Xunzi registration evidence; canonical Production preflight remains authoritative.",
     "namuwiki_review": "External indexed search for an exact NamuWiki Xunzi/순자 Person document returned no verifiable result on 2026-09-28; reviewed not_found.",
-    "identity_note": "Xunzi is Master Xun, Xun Kuang 荀況; chronology intentionally approximate."
+    "identity_note": "Xunzi is Master Xun, Xun Kuang 荀況; chronology intentionally approximate.",
+    "recovery_note": "Initial batch workflow stopped during sibling Wang Yangming manifest validation before any apply step; this semantic-neutral review note reselects Xunzi for governed Authoring Apply."
   }
 }
