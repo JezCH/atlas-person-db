@@ -38,7 +38,7 @@ ATLAS의 기준은 **100% traceable**, **0 known contradictions**, **0 silently 
 | `ATLAS-RQ-0017` | A known Person–Polity assertion with an **unknown start/end boundary** must remain representable without inventing an endpoint year. |
 | `ATLAS-RQ-0018` | CORE v2의 architecture, authority map, C-01~C-15 invariants, unit topology는 `docs/core/CORE_V2_MASTER_PLAN.md`가 단일 권위다. 동일 내용을 별도 active registry로 복제하지 않는다. |
 | `ATLAS-RQ-0019` | **새 canonical Person 생성은 모든 생존 인물을 제외한다.** 현재 생존 여부가 unresolved이면 추측하지 않고 HOLD/BLOCK하며 Person write를 허용하지 않는다. |
-| `ATLAS-RQ-0020` | **Person 비교·등록 검토의 정량 출력은 `ATLAS-PHFC-3.0` 사실 카운트 하나만 사용한다.** 평가자가 중요도·위대함·비대체성 같은 질적 점수를 부여하지 않고, `O6 + R6 + T6 + D6 + P6 + G6 + L6 = 42`의 사전 정의된 검증 사실을 세어 단순 합산한다. 역할·직업·정치성에 따른 별도 경로는 없고, 완료된 검토는 항목별 카운트와 최종 `TOTAL /42`를 출력한다. 과거 `ATLAS-PRV-2.4` 및 이전 등급·질적 점수 체계는 active authority가 아니다. 세부 정의의 단일 권위는 `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md`다. |
+| `ATLAS-RQ-0020` | **Person 역사 사실 집계는 `ATLAS-PHFC-3.1` 하나만 사용한다.** 평가자가 중요도·위대함·비대체성·긍정/부정 영향 같은 질적 점수를 부여하지 않고, `E6 + R6 + T6 + D6 + G6 + S6 = 36`의 사전 정의된 coverage cell을 근거로 검증하여 산술 합산한다. `P` 연대경과축은 폐지하고, G는 UN M49 country/area 단위, S는 고정 downstream class로 집계한다. 모든 cell은 `VERIFIED(1) / REVIEWED_NOT_ESTABLISHED(0) / UNRESOLVED(?)` 중 하나이며 `?`를 0으로 바꾸지 않는다. 역할·직업·공직·이념에 따른 별도 공식은 없고, 출력에는 반드시 `VERIFIED_TOTAL /36`과 unresolved 수를 포함한다. 과거 `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4` 및 이전 등급·질적 점수 체계는 active authority가 아니다. 세부 정의의 단일 권위는 `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md`다. |
 
 Polity naming follows the current Stage 2 entity-boundary contracts: historical names, historiographic names and explicitly tagged editorial catalog labels are semantically distinct. Editorial labels never become historical self-designations or UUID identity.
 

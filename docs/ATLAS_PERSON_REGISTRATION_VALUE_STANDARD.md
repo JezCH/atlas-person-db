@@ -1,83 +1,92 @@
-# ATLAS Person Historical Footprint Count Standard
+# ATLAS Person Historical Fact Count Standard
 
 > **Status:** Canonical  
-> **Version:** 3.0  
-> **Standard ID:** `ATLAS-PHFC-3.0`  
-> **Scope:** Historical Person factual-footprint counting / candidate comparison / legacy re-evaluation  
-> **Authority:** This file is the single active authority for ATLAS Person historical-footprint counting.  
-> **Supersedes:** `ATLAS-PRV-2.4` and all earlier qualitative registration-value scoring, grading, tiering, or judgment-based systems. Older results remain audit evidence only.
+> **Version:** 3.1  
+> **Standard ID:** `ATLAS-PHFC-3.1`  
+> **Scope:** Historical Person source-backed fact counting / candidate research / legacy recount  
+> **Authority:** This file is the single active authority for ATLAS Person historical fact counting.  
+> **Supersedes:** `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, and all earlier qualitative scoring, grading, tiering, or judgment-based systems. Older results remain audit evidence only.
 
 ---
 
 ## 0. Purpose
 
-ATLAS needs a common way to summarize how much **source-backed historical structure is directly connected to a Person** without asking the evaluator to decide whether that Person is “great”, “important”, “good”, “bad”, “better”, “worse”, or “more valuable”.
+ATLAS does **not** ask an evaluator to decide how great, important, good, bad, irreplaceable, prestigious, or politically valuable a Person is.
 
-This standard therefore does **not** assign historical worth.
+ATLAS asks a narrower database question:
 
-It performs a factual count:
+> **Which predefined source-backed historical coverage cells are verified for this Person?**
+
+The procedure is:
 
 ```text
-verify fixed evidence conditions
-→ mark each condition 0/1 or count a fixed unit
-→ sum the verified counts
-→ output one numeric TOTAL
+collect source-backed factual claims
+→ classify claims into fixed coverage cells
+→ mark verified cells
+→ count the verified cells
+→ output the arithmetic total
 ```
 
-The same rule applies to every historical Person regardless of profession, role, domain, office, ideology, reputation, moral evaluation, or type of historical activity.
+The same procedure applies regardless of occupation, office, ideology, reputation, field, or historical role.
 
-The evaluator must never substitute an overall impression for a counted fact.
+The output is a **fact-coverage count**, not a value judgment.
 
 ---
 
-## 1. Hard gates before counting
+## 1. Hard gates and cell states
 
-Do not finalize a count until the review basis is sufficient.
+Before finalizing a review, resolve:
 
-Required gates:
-
-- **IDENTITY** — the historical Person identity is sufficiently resolved.
-- **HISTORICITY** — historicity / legendary / mythical disposition is reviewed.
-- **DUPLICATE** — canonical duplicate/reuse status is reviewed.
-- **SOURCE** — reliable evidence exists for every counted claim.
+- **IDENTITY** — the historical Person identity.
+- **HISTORICITY** — historical / legendary / mythical disposition.
+- **DUPLICATE** — canonical duplicate/reuse status.
+- **SOURCE** — reliable evidence for every positive cell.
 - **LIFE STATUS** — new canonical Person creation follows the living-person exclusion policy.
 
-If an item cannot be established from reliable evidence, mark that item **UNRESOLVED** during research.
+Every coverage cell has exactly one state:
 
-Do not turn missing evidence into a negative factual claim.
+- **1 = VERIFIED** — at least one reliable source satisfies the exact cell rule.
+- **0 = REVIEWED_NOT_ESTABLISHED** — the cell was actually checked and no qualifying fact was established from the reviewed evidence.
+- **? = UNRESOLVED** — research is incomplete, evidence conflicts, or classification cannot yet be resolved.
 
-A final TOTAL is emitted only from the verified items. If unresolved items could materially change the result, preserve the verified subtotal and mark the review **HOLD** rather than guessing.
+Never silently convert `?` to `0`.
+
+The numeric count always reports the number of **VERIFIED** cells. If unresolved cells remain, output their count separately.
 
 ---
 
 ## 2. Canonical formula
 
 ```text
-TOTAL = O + R + T + D + P + G + L
+VERIFIED_TOTAL = E + R + T + D + G + S
 ```
 
-| Code | Count | Max | What is counted |
+| Code | Coverage group | Max | Count rule |
 |---|---|---:|---|
-| **O** | Direct Object Classes | **6** | fixed classes of historical objects directly linked to the Person |
-| **R** | Direct Relation Families | **6** | fixed families of directly sourced Person→object relations |
-| **T** | Historical Transition Types | **6** | fixed types of directly sourced historical state change |
-| **D** | Activity Domains | **6** | distinct ATLAS domains with directly sourced activity |
-| **P** | Persistence Checkpoints | **6** | fixed post-activity time checkpoints with sourced continuation/reception |
-| **G** | Geographic Reception | **6** | distinct external UN M49 subregions with sourced reception/adoption |
-| **L** | Later Linked Entities | **6** | distinct later entities explicitly linked by sources to the Person or their output |
-|  | **TOTAL** | **42** | simple sum; no hidden weighting |
+| **E** | Direct Entity Classes | **6** | one point per verified direct historical-object class |
+| **R** | Direct Relation Families | **6** | one point per verified direct relation family |
+| **T** | Historical Transition Classes | **6** | one point per verified direct transition class |
+| **D** | ATLAS Activity Domains | **6** | number of distinct verified activity domains, capped at 6 |
+| **G** | External Geographic Reception | **6** | number of distinct external UN M49 country/area units with verified reception, capped at 6 |
+| **S** | Successor-Link Classes | **6** | one point per verified downstream entity class |
+|  | **VERIFIED_TOTAL** | **36** | arithmetic sum only |
 
-There is no qualitative weighting, no evaluator-assigned intensity score, and no derived grade or tier.
+There is:
+
+- no qualitative weighting;
+- no “importance” intensity;
+- no irreplaceability judgment;
+- no grade or tier;
+- no role-specific formula;
+- no political/non-political branch.
 
 ---
 
-# 3. Counting rules
+# 3. E — Direct Entity Classes /6
 
-## 3.1 O — Direct Object Classes /6
+Award **1** for each class for which a reliable source directly connects the Person to at least one qualifying object.
 
-Award **1 point per class** when at least one reliable source directly links the Person to an object in that class.
-
-Count each class at most once.
+Each class is binary and counts at most once.
 
 1. **Polity / Government / Regime**
 2. **Historical Event / Conflict / Expedition**
@@ -88,57 +97,61 @@ Count each class at most once.
 
 Examples:
 
-- ten books still count as **one Work class point**;
-- twenty battles still count as **one Event/Conflict class point**;
-- ruling three polities still counts as **one Polity class point**.
+- one book and twenty books both satisfy the **Work** cell once;
+- one battle and fifty battles both satisfy the **Event/Conflict** cell once;
+- ruling one polity or several polities satisfies the **Polity** cell once.
 
-O counts object classes, not quantity or prestige.
-
----
-
-## 3.2 R — Direct Relation Families /6
-
-Award **1 point per relation family** when a reliable source explicitly establishes at least one relation in that family.
-
-Count each family at most once.
-
-1. **rule / govern / hold-office**
-2. **command / serve / administer / organize**
-3. **create / found / build / author / compose**
-4. **discover / invent / develop / formulate**
-5. **reform / legislate / standardize / codify**
-6. **teach / transmit / lead / explore / negotiate / resist**
-
-Do not infer a relation from title, fame, association, chronology, or proximity alone.
-
-A relation must be source-backed and attributable to the Person.
+E measures class coverage only.
 
 ---
 
-## 3.3 T — Historical Transition Types /6
+# 4. R — Direct Relation Families /6
 
-Award **1 point per transition type** when reliable sources directly connect the Person to at least one instance of that transition.
+Award **1** for each relation family when a reliable source explicitly establishes at least one qualifying Person→object relation.
 
-Count each type at most once.
+Each family is binary and counts at most once.
 
-1. **Polity/regime creation, dissolution, succession, or constitutional transformation**
-2. **Territorial or control change**
-3. **Institutional, administrative, legal, or formal-standard change**
-4. **War, revolution, rebellion, or conflict outcome/change**
-5. **Formation or transformation of an intellectual, religious, artistic, literary, or social tradition**
-6. **Scientific, technological, navigational, infrastructural, or exploratory change**
+1. **formal authority** — rule / govern / reign / hold a formal office
+2. **command or formal service** — command / serve / administer a named military or institutional structure
+3. **create or author** — create / found / build / author / compose / produce a named object
+4. **discover or invent** — discover / invent / engineer / formulate a named discovery, technology, or formal intellectual object
+5. **reform or codify** — reform / legislate / enact / codify / standardize a named institution, law, or formal system
+6. **transmit, explore, or negotiate** — teach / transmit / translate / explore / conduct a documented diplomatic negotiation
 
-Do not award a point merely because the Person lived during a transition.
+Removed from v3.0:
 
-The source must connect the Person to the transition.
+- generic `lead`;
+- generic `resist`;
+- unconstrained `develop`.
+
+Those terms were too broad and allowed classification by impression.
+
+A source must establish the relation to a **named or otherwise unambiguously identified object**.
 
 ---
 
-## 3.4 D — Activity Domains /6
+# 5. T — Historical Transition Classes /6
 
-Count the number of distinct ATLAS domains in which reliable evidence establishes direct activity by the Person.
+Award **1** for each transition class when a reliable source directly connects the Person to at least one qualifying state change.
 
-Canonical ATLAS domains:
+Each class is binary and counts at most once.
+
+1. **Polity/regime transition** — creation, dissolution, succession, constitutional or regime-form change
+2. **Territorial/control transition** — acquisition, loss, transfer, occupation, independence, or other documented control change
+3. **Institutional/legal transition** — creation, abolition, restructuring, codification, or formal-standard change
+4. **Conflict transition** — documented war, revolution, rebellion, campaign, or settlement outcome/change
+5. **Tradition/movement transition** — formation or documented transformation of a named intellectual, religious, artistic, literary, or social tradition
+6. **Science/technology/exploration transition** — documented scientific, technological, navigational, infrastructural, or exploratory change
+
+Mere presence during a transition does not count.
+
+The source must connect the Person's action/output to the state change.
+
+---
+
+# 6. D — ATLAS Activity Domains /6
+
+Use the canonical ATLAS domain vocabulary:
 
 - governance
 - military
@@ -149,268 +162,325 @@ Canonical ATLAS domains:
 - religion
 - exploration
 
+Count a domain only when a reliable source establishes a **direct activity**, not merely a consequence of another activity.
+
 ```text
 D = min(number of verified distinct domains, 6)
 ```
 
-This is a count of domain coverage only.
-
-Do not decide that one domain is “more important” than another.
-
-Do not split one activity into multiple domains unless the underlying activities are independently source-supported.
-
----
-
-## 3.5 P — Persistence Checkpoints /6
-
-P uses fixed chronological checkpoints after the end of the Person's principal activity.
-
-Award **1 point for each checkpoint** at which reliable evidence shows that at least one directly attributable work, institution, law, system, practice, tradition, discovery, or downstream consequence continued to be used, practiced, taught, cited, institutionalized, reproduced, or otherwise demonstrably present.
-
-Checkpoints:
-
-1. **+25 years**
-2. **+100 years**
-3. **+300 years**
-4. **+500 years**
-5. **+1000 years**
-6. **present day**
-
 Rules:
 
-- A checkpoint counts only if that amount of time has actually elapsed.
-- A later checkpoint does not automatically prove an earlier checkpoint; each counted checkpoint needs evidence consistent with continuation or documented reception.
-- Mere modern name recognition is insufficient.
-- Rediscovery after a documented long discontinuity may count at the later checkpoint where reception is actually evidenced, but does not retroactively fill missing earlier checkpoints.
+- policy affecting education does not by itself make the Person active in `knowledge`;
+- policy affecting religion does not by itself make the Person active in `religion`;
+- governing trade policy does not by itself make the Person active in `commerce`;
+- a domain requires evidence of direct participation in that domain's activity.
 
-P intentionally records observed temporal footprint, not timeless merit.
+This prevents a governing career from being mechanically split into every policy field it touched.
 
 ---
 
-## 3.6 G — Geographic Reception /6
+# 7. G — External Geographic Reception /6
 
-Identify the Person's principal original activity subregion.
+v3.0 used UN M49 **subregions**, which was too coarse. v3.1 uses UN M49 **country/area units**.
 
-Then count **distinct UN M49 subregions outside that original subregion** in which reliable sources establish meaningful reception, adoption, institutional use, teaching, imitation, implementation, or direct historical consequence of the Person or their output.
+## 7.1 Origin set
+
+First build an `ORIGIN_SET` from present-day UN M49 country/area units containing source-backed locations of the Person's own direct activity during their lifetime.
+
+Do not choose one “principal” origin by judgment.
+
+All verified direct-activity areas belong to the origin set.
+
+## 7.2 External reception
+
+Then count distinct UN M49 country/area units **outside `ORIGIN_SET`** for which a reliable source explicitly establishes at least one of:
+
+- formal adoption;
+- institutional use;
+- curriculum or formal teaching;
+- documented imitation;
+- implementation;
+- legally or technically operative use;
+- a named movement/tradition explicitly receiving the Person or their output.
 
 ```text
-G = min(number of verified external UN M49 subregions, 6)
+G = min(number of verified external country/area units, 6)
 ```
 
-Rules:
+The following alone do **not** qualify:
 
-- the original activity subregion does not count;
-- mere translation, mention, tourism, memorialization, or present-day name recognition does not count unless it demonstrates substantive reception/adoption;
-- repeated evidence within the same M49 subregion still counts once;
-- geography is determined by the receiving entity/location, not by the source publisher's location.
+- mere translation;
+- mere publication availability;
+- tourism;
+- commemoration;
+- museum display;
+- name recognition;
+- an unsourced claim that the Person was “influential”.
+
+The receiving country/area is determined by the receiving historical entity or institution, not by the publisher of the source.
 
 ---
 
-## 3.7 L — Later Linked Entities /6
+# 8. S — Successor-Link Classes /6
 
-Count distinct **later** historical entities for which a reliable source explicitly states a direct relation of:
+v3.0 counted individual later entities and therefore rewarded research volume. v3.1 instead counts **fixed downstream entity classes**.
 
-- adoption,
-- continuation,
-- institutional inheritance,
-- implementation,
-- explicit intellectual/artistic/technical derivation,
-- direct response,
-- or documented influence
+A downstream relation must occur after the Person's own verified activity and must be explicitly source-backed.
 
-from the Person or a directly attributable output of that Person.
+Award **1** for each downstream class with at least one qualifying successor/reception relation:
 
-Eligible later entities include:
+1. **later polity / government / regime**
+2. **later institution / organization**
+3. **later law / treaty / standard / formal system**
+4. **later work / text / artwork / corpus**
+5. **later movement / religion / school / tradition**
+6. **later technology / practice / infrastructure**
 
-- polity/government,
-- institution/organization,
-- law/standard/system,
-- work/corpus,
-- movement/tradition/school,
-- technology/practice/infrastructure.
+Qualifying relation types:
+
+- adoption;
+- continuation;
+- institutional inheritance;
+- implementation;
+- explicit derivation;
+- explicit response;
+- explicit documented influence.
+
+Non-qualifying:
+
+- chronology alone;
+- superficial similarity;
+- generic “influence” without an identifiable downstream entity;
+- later commemoration that does not establish a historical relation.
+
+Each class counts once no matter how many downstream examples are found.
+
+This removes the v3.0 incentive to collect dozens of named successor entities merely to raise the count.
+
+---
+
+# 9. No age-based persistence axis
+
+v3.0 used `+25 / +100 / +300 / +500 / +1000 / present` persistence checkpoints.
+
+That rule is retired.
+
+Reason:
+
+- a Person who lived recently could not possibly satisfy the longer elapsed-time checkpoints;
+- an ancient Person had more opportunities to fill the axis solely because more time had passed;
+- the metric therefore mixed historical coverage with age of the subject.
+
+v3.1 contains **no elapsed-time score**.
+
+Temporal continuation is represented only through source-backed downstream relations in **S**, regardless of whether the Person lived 50, 500, or 2,000 years ago.
+
+---
+
+# 10. Cross-group evidence reuse
+
+A single source-backed historical assertion may legitimately verify more than one group because the groups encode **different properties** of the historical graph.
+
+Example:
 
 ```text
-L = min(number of verified distinct later entities, 6)
+Person → codified → named law
 ```
 
-Rules:
+may verify:
 
-- chronology alone is not influence;
-- similarity alone is not influence;
-- “widely influential” without an identifiable later entity is not a countable unit;
-- the source must name or otherwise unambiguously identify the downstream relation.
+- E: Law/Formal System class;
+- R: reform/codify relation family;
+- T: institutional/legal transition.
+
+This is **intentional**.
+
+Therefore:
+
+> `VERIFIED_TOTAL` is a count of covered predefined cells, **not a count of unique historical events or unique source sentences**.
+
+Within a single group, however, the same fact can never produce more than one count for the same cell.
+
+This rule removes the ambiguity present in v3.0 about “double counting”.
 
 ---
 
-# 4. Final output
+# 11. Final output
 
-The required final output is:
+Required output:
 
 ```text
-O / R / T / D / P / G / L → TOTAL /42
+E x/6
+R x/6
+T x/6
+D x/6
+G x/6
+S x/6
+VERIFIED_TOTAL x/36
+UNRESOLVED y
 ```
 
-Example format:
+If `UNRESOLVED = 0`, the review is complete.
 
-```text
-O 4
-R 3
-T 2
-D 2
-P 5
-G 4
-L 6
-TOTAL 26/42
-```
+If `UNRESOLVED > 0`, the numeric verified subtotal is still reported, but the record status remains `HOLD`.
 
-The TOTAL is the arithmetic sum of verified counts.
+**Never omit `VERIFIED_TOTAL`.**
 
-**The TOTAL must be output when the review is complete.**
+The total is arithmetic only.
 
-Do not replace the TOTAL with prose such as “high”, “low”, “major”, “minor”, “important”, “top-tier”, “S”, “A”, stars, medals, bands, or other evaluative labels.
+Do not replace it with:
 
-Do not sort Persons into a best-to-worst ranking as part of this standard.
+- high/low;
+- important/unimportant;
+- major/minor;
+- S/A/B/C;
+- stars;
+- prestige bands;
+- best/worst;
+- any other evaluative label.
 
 ---
 
-# 5. Anti-judgment rules
+# 12. Anti-judgment rule
 
-The following questions are forbidden as scoring operations:
+Forbidden operations:
 
-- “How great was this Person?”
-- “How important was this Person?”
-- “How irreplaceable was this Person?”
-- “Was this Person good or bad?”
-- “Was the Person's impact positive or negative?”
-- “Does this Person feel like a high scorer?”
-- “Which Person deserves the higher grade?”
+- estimate “how important” the Person was;
+- assign historical greatness;
+- score irreplaceability;
+- assess positive versus negative impact;
+- increase a count because the Person is famous;
+- decrease a count because the Person is controversial;
+- change rules because a resulting total “feels wrong”.
 
-The permitted questions are factual:
+Permitted operations:
 
-- Is there a sourced direct relation?
-- Which fixed relation family is it?
-- Which fixed object class is it?
-- Which fixed transition type is documented?
-- Which ATLAS domain is evidenced?
-- At which fixed time checkpoints is continuation/reception evidenced?
-- In which external M49 subregions is reception evidenced?
-- Which later entity is explicitly linked by a source?
+- verify a named source-backed relation;
+- classify the relation into a predefined cell;
+- verify a documented transition;
+- verify a direct activity domain;
+- identify a receiving UN M49 country/area;
+- identify a source-backed downstream entity class;
+- count the resulting verified cells.
 
-If two reviewers use the same evidence set, disagreement should be traceable to **classification of a concrete claim**, not to an overall impression of the Person.
+If reviewers disagree, the disagreement must be reducible to a concrete factual or classification question.
 
 ---
 
-# 6. No role-based exceptions
+# 13. No role-based exceptions
 
-This standard applies identically to all eligible historical Persons.
+The exact same fact-count procedure applies to every historical Person.
 
-Occupation or role does not create a special scoring path.
+Examples include:
 
-Examples of roles that receive the same factual-count procedure include:
-
-- ruler,
-- officeholder,
-- military commander,
-- religious leader,
-- scholar,
-- scientist,
-- inventor,
-- artist,
-- writer,
-- musician,
-- merchant,
+- ruler;
+- officeholder;
+- military commander;
+- religious leader;
+- scholar;
+- scientist;
+- inventor;
+- artist;
+- writer;
+- musician;
+- merchant;
 - explorer.
 
-A Person's role changes which facts may be found; it does not change the counting rule.
+No occupation, office, ideology, regime, or political status changes the formula.
+
+A role may change which facts exist. It does not change how the facts are counted.
 
 ---
 
-# 7. Review record
+# 14. Review record
 
-A durable review should preserve:
+A durable record should preserve:
 
 ```text
-standard: ATLAS-PHFC-3.0
+standard: ATLAS-PHFC-3.1
 person_id / candidate identity
 
-O:
-  verified classes + evidence
+E:
+  six cell states + evidence
 R:
-  verified relation families + evidence
+  six cell states + evidence
 T:
-  verified transition types + evidence
+  six cell states + evidence
 D:
-  verified domains + evidence
-P:
-  verified checkpoints + evidence
+  verified domains + unresolved domains + evidence
 G:
-  verified external M49 subregions + evidence
-L:
-  verified later entities + evidence
+  origin_set
+  verified external country/area units
+  unresolved geographic claims
+  evidence
+S:
+  six downstream-class states + evidence
 
-total: 0..42
+verified_total: 0..36
+unresolved_count
 status: COMPLETE|HOLD
-unresolved_items
 evidence/source references
 reviewed_at
 ```
 
-Every counted point must be recoverable to at least one source-backed factual claim.
+Every positive cell must trace to at least one source-backed claim.
 
-The project may store the detailed checklist, the derived TOTAL, or both. If TOTAL is materialized, it must equal the simple arithmetic sum.
+A `0` means **reviewed but not established in the evidence packet**, not metaphysical proof that the fact never existed.
 
 ---
 
-# 8. Comparison and registration use
+# 15. Use in roster work
 
-The count may be used as one factual input when ATLAS reviews roster coverage or candidate research priority.
+PHFC 3.1 is a factual coverage instrument.
 
-This standard itself does **not** define:
+It does not itself define:
 
-- a minimum inclusion cutoff;
-- a “good/bad” interpretation;
+- an inclusion cutoff;
 - a grade;
 - a prestige tier;
-- a moral or political judgment;
+- a moral judgment;
+- a political judgment;
 - a best/worst ranking.
 
-If a separate task needs a numeric operational cutoff, that task must state it explicitly and must not silently redefine the meaning of the PHFC count.
+If a separate ATLAS workflow uses the numeric count as one operational input, that workflow must state its rule explicitly.
+
+The PHFC meaning remains:
+
+> **number of predefined historical coverage cells verified from evidence.**
 
 ---
 
-# 9. Legacy cutover
+# 16. Legacy cutover
 
-The following are non-authoritative after this cutover:
+The following are historical only:
 
-- `ATLAS-PRV-2.4` C/U/P/B/G qualitative scoring;
-- `ATLAS-PRV-2.3` and its SSS–C grading;
+- `ATLAS-PHFC-3.0`;
+- `ATLAS-PRV-2.4` and earlier PRV systems;
+- SSS–C grading;
 - Lite H/R/U/F;
 - earlier Coverage Test variants;
 - SCI/OFI/MCG/DRS experiments;
-- ad-hoc prestige or importance judgments.
+- ad-hoc importance or prestige judgments.
 
-Legacy records remain audit evidence only.
-
-Do not convert an old qualitative score directly into PHFC 3.0.
+Do not convert an old result numerically into PHFC 3.1.
 
 Recount from source-backed facts.
 
 ---
 
-# 10. Canonical summary
+# 17. Canonical summary
 
 ```text
-O 6 — direct object classes
-R 6 — direct relation families
-T 6 — historical transition types
-D 6 — activity domains
-P 6 — persistence checkpoints
-G 6 — external M49 reception subregions
-L 6 — explicitly linked later entities
------------------------------------------
- 42 — verified factual count
+E 6 — direct entity-class coverage
+R 6 — direct relation-family coverage
+T 6 — historical transition-class coverage
+D 6 — direct activity-domain coverage
+G 6 — external country/area reception coverage
+S 6 — downstream successor-class coverage
+--------------------------------------------
+ 36 — VERIFIED coverage cells
 ```
 
 Core rule:
 
-> **ATLAS does not ask the evaluator how important a Person is. It counts which predefined, source-backed historical facts are present and outputs their arithmetic total.**
+> **Do not judge the Person. Verify the predefined historical cells, count the verified cells, and output the arithmetic total.**

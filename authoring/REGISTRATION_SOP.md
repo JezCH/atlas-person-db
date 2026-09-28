@@ -10,29 +10,30 @@ A second rule is equally important: **ordinary registration must use the already
 
 A registration is complete only when authoritative Production read-back confirms the intended Person, Activity, and reviewed NamuWiki state (`linked` or `not_found`, including exact reuse of an already-reviewed live state). A new or previously-unreviewed Person with unresolved NamuWiki review is not a completed registration.
 
-### Canonical Person historical-footprint counting
+### Canonical Person historical fact counting
 
-Whenever a task compares historical Persons, reviews candidate coverage, or recounts a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFC-3.0`).
+Whenever a task reviews historical-Person factual coverage, candidate research, or recounts a legacy Person, use **only** `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFC-3.1`).
 
 Required order:
 
 ```text
 identity / historicity / duplicate / source / life-status gates
 → collect source-backed factual claims
-→ mark the fixed O / R / T / D / P / G / L count units
-→ sum the verified units
-→ output TOTAL /42
+→ classify fixed E / R / T / D / G / S coverage cells
+→ preserve each cell as 1 / 0 / ?
+→ sum VERIFIED cells
+→ output VERIFIED_TOTAL /36 + UNRESOLVED count
 ```
 
-The evaluator does **not** assign qualitative importance, greatness, irreplaceability, prestige, positive/negative impact, or an overall impression score. The same fixed counting procedure applies regardless of role, profession, office, ideology, or historical domain.
+The reviewer does **not** assign qualitative importance, greatness, irreplaceability, prestige, positive/negative impact, or an overall-impression score. The same factual procedure applies regardless of role, profession, office, ideology, or historical domain.
 
-The canonical completed output is the seven factual counts plus the arithmetic TOTAL. **Do not omit the final TOTAL once the review is complete.** Do not derive a letter grade, tier, band, class, star level, or best/worst rank from it.
+`0` means the cell was reviewed but not established in the evidence packet. `?` means unresolved or not yet safely classifiable. **Never convert `?` to `0`.**
 
-Every counted unit must trace to a source-backed factual claim. Unresolved evidence remains `HOLD`; do not guess a midpoint or convert lack of research into a negative fact.
+The elapsed-time persistence axis from v3.0 is retired. Geographic reception uses external UN M49 country/area units, and downstream continuation uses fixed successor-link classes rather than the number of named entities collected.
 
-Legacy `ATLAS-PRV-2.4`, earlier PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only and must not be used as active rules.
+The completed output must include all six group counts and **must include the arithmetic `VERIFIED_TOTAL /36`**. If unresolved cells remain, also report `UNRESOLVED n` and keep status `HOLD`.
 
-If a task needs a separate operational inclusion cutoff, define it explicitly for that task. It does not change the meaning of `ATLAS-PHFC-3.0`.
+Legacy `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, earlier PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only.
 
 A merged PR, green CI, Vercel deployment, authoring response without read-back, or workflow start is not completion by itself.
 
