@@ -11,8 +11,8 @@
   },
   "counts": {
     "exact_target_url_pending": 105,
-    "related_or_derivative_only": 203,
-    "no_exact_document": 192,
+    "related_or_derivative_only": 204,
+    "no_exact_document": 194,
     "exact_target_url_verified": 43
   },
   "by_person_id": {
@@ -294,6 +294,7 @@
     "67e8f830-00d0-4d95-8d76-b23e531d7207": "no_exact_document",
     "684a0202-a6d3-4139-bc17-cce6b1232c81": "related_or_derivative_only",
     "6883c6ff-c06f-4ccb-a212-306a9d6c7081": "exact_target_url_verified",
+    "688997c1-188c-4aa0-a7df-c2c42257e4ea": "no_exact_document",
     "69d07f0c-0eef-523c-970c-ee6d82058414": "related_or_derivative_only",
     "6a7bd5eb-76d4-4389-80be-bb9cd2f09a72": "no_exact_document",
     "6af696f3-c027-4017-88d2-27f49f33d944": "exact_target_url_pending",
@@ -314,10 +315,12 @@
     "72f1beac-1f61-4038-a975-14f3f265fb31": "no_exact_document",
     "7312b2b4-779b-4c68-98e0-d4b7302f2ec6": "no_exact_document",
     "7338c04d-5325-449f-8d2a-c152800239a6": "related_or_derivative_only",
+    "733c6ff9-56d6-4036-876c-ae85b1b7ba6a": "no_exact_document",
     "7409aa1e-75aa-49a2-a375-13f85f7920fd": "related_or_derivative_only",
     "74176131-39ae-496c-85a0-2ff2f0edc84d": "exact_target_url_pending",
     "748a8f7a-ffb8-4217-a766-d5c7a2b9c2a6": "no_exact_document",
     "75526e81-e4e9-4123-afaf-a54da1ff4659": "related_or_derivative_only",
+    "75621c54-8bcd-4853-9c8a-ee2ff8be8655": "related_or_derivative_only",
     "765aafd0-2290-4fcc-ab51-dd830c3f6cbc": "related_or_derivative_only",
     "771c3bc9-bc9d-44fd-a711-4824f545af45": "related_or_derivative_only",
     "7798c6ac-3dd1-4d94-9da4-a53b808762e5": "exact_target_url_verified",
