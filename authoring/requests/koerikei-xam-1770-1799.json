@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:koerikei:xam:leader:1770:1799:v1",
+  "request_id": "authoring:koerikei:xam:leader:1770:1799:v2",
   "person": {
     "canonical_name_en": "Koerikei",
     "display_name_ko": "코에리케이",
@@ -34,7 +34,7 @@
     "end_year": 1799,
     "end_certainty": "approximate",
     "end_calendar": "gregorian",
-    "confidence": "probable",
+    "confidence": "likely",
     "chronology_status": "reviewed",
     "notes": "Koerikei was a ǀXam (Cape San) leader in the Sneeuberg/Camdeboo frontier. Robert Jacob Gordon's 1777 journal independently documents him as a famous chief ('capitein') and records his resistance to settler encroachment. The broader c.1770–1799 leadership/resistance interval follows the Camissa Museum synthesis and is therefore represented as approximate rather than exact."
   },
@@ -57,6 +57,7 @@
     "representative_domain": "military",
     "dedup_method": "Repository identity search on 2026-09-28 found no existing Koerikei, Korerikei, Oeswana, Xam, or ǀXam Person record.",
     "namuwiki_review": "External indexed searches for Koerikei and plausible Korean transliterations returned no NamuWiki person document; reviewed as not_found.",
-    "identity_note": "Koerikei is directly attested in Robert Jacob Gordon's 1777 journal. Later sources also spell the name Korerikei. Gordon glosses the name as 'Bullet-dodger'."
+    "identity_note": "Koerikei is directly attested in Robert Jacob Gordon's 1777 journal. Later sources also spell the name Korerikei. Gordon glosses the name as 'Bullet-dodger'.",
+    "recovery_note": "v1 never reached Production because registration validation rejected confidence=probable; v2 uses the supported likely confidence code."
   }
 }
