@@ -14,6 +14,7 @@ const {
   quoteIdentifier,
   referenceKey
 } = require("./atlas-polity-reference-audit-handler.js");
+const { readCorrectionMigrations } = require("./atlas-correction-migrations.js");
 
 const OPERATION_TYPE = "retire_polity_if_orphan";
 const REVIEW_REASON = "GOVERNANCE_CONTEXT_DUPLICATE_POLITY";
@@ -22,6 +23,7 @@ const REVIEW_REASON_UNREFERENCED_ORPHAN = "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP"
 const REVIEW_REASONS = new Set([REVIEW_REASON, REVIEW_REASON_SAME_IDENTITY_STATE_FORM, REVIEW_REASON_UNREFERENCED_ORPHAN]);
 const SNAPSHOT_SCHEMA = "atlas-correction-polity-retirement/v1";
 const MAX_OPERATIONS = 20;
+const RETIREMENT_MIGRATION = "20260928_polity_identity_retirements.sql";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const OWNED_COUNT_KEYS = Object.freeze({
   "atlas_v2.polity_names.polity_id": "polity_names",
@@ -128,6 +130,28 @@ function normalizePolity(row) {
     polity_type: String(row.polity_type),
     historicity: String(row.historicity)
   });
+}
+
+async function polityRetirementRegistryReady(client) {
+  const result = await client.query(
+    "select to_regclass('atlas_v2.polity_identity_retirements') is not null as registry_ready"
+  );
+  return result.rows[0]?.registry_ready === true;
+}
+
+async function ensurePolityRetirementRegistry(client, { dryRun = false } = {}) {
+  if (await polityRetirementRegistryReady(client)) return Object.freeze({ staged:false });
+  if (!dryRun) throw new Error("CORRECTION_POLITY_RETIRE_REGISTRY_SCHEMA_REQUIRED");
+
+  const migration = readCorrectionMigrations()
+    .find((entry) => String(entry.path || "").endsWith(RETIREMENT_MIGRATION));
+  if (!migration) throw new Error("CORRECTION_POLITY_RETIRE_REGISTRY_MIGRATION_REQUIRED");
+
+  await client.query(migration.sql);
+  if (!(await polityRetirementRegistryReady(client))) {
+    throw new Error("CORRECTION_POLITY_RETIRE_REGISTRY_SCHEMA_REQUIRED");
+  }
+  return Object.freeze({ staged:true });
 }
 
 async function loadPolity(client, id, { forUpdate = false } = {}) {
@@ -401,6 +425,7 @@ function createCorrectionPolityRetireV2Service({ client } = {}) {
     await client.query("begin isolation level serializable");
     try {
       await client.query("select pg_advisory_xact_lock(hashtext($1))", [`atlas-correction-manifest:${manifest.requestId}`]);
+      await ensurePolityRetirementRegistry(client, { dryRun });
       const ledger = await readLedger(client, manifest.requestId);
       if (ledger) {
         if (ledger.manifest_hash !== hash) throw new Error("CORRECTION_REQUEST_ID_COLLISION");
@@ -498,8 +523,11 @@ module.exports = Object.freeze({
   REVIEW_REASONS,
   SNAPSHOT_SCHEMA,
   MAX_OPERATIONS,
+  RETIREMENT_MIGRATION,
   OWNED_COUNT_KEYS,
   requireManifest,
+  polityRetirementRegistryReady,
+  ensurePolityRetirementRegistry,
   loadPolity,
   loadPreferredNames,
   loadIdentityNames,
