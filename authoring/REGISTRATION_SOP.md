@@ -21,8 +21,10 @@ identity / historicity / duplicate / source / life-status gates
 → collect source-backed factual claims
 → classify fixed E / R / T / D / G / S coverage cells
 → preserve each cell as 1 / 0 / ?
-→ sum VERIFIED cells
-→ output VERIFIED_TOTAL /36 + UNRESOLVED count
+→ render with formatPersonFactCountResult()
+→ validate with validatePersonFactCountOutput()
+→ emit the validated block first
+→ only then explain evidence
 ```
 
 The reviewer does **not** assign qualitative importance, greatness, irreplaceability, prestige, positive/negative impact, or an overall-impression score. The same factual procedure applies regardless of role, profession, office, ideology, or historical domain.
@@ -31,7 +33,7 @@ The reviewer does **not** assign qualitative importance, greatness, irreplaceabi
 
 The elapsed-time persistence axis from v3.0 is retired. Geographic reception uses external UN M49 country/area units, and downstream continuation uses fixed successor-link classes rather than the number of named entities collected.
 
-The completed or partial output must begin with the canonical eight-line result block: `E`, `R`, `T`, `D`, `G`, `S`, `VERIFIED_TOTAL /36`, `UNRESOLVED n`. **This block is emitted before evidence explanation, caveats, ambiguity discussion, or historical narrative.** If the block is absent, incomplete, arithmetically inconsistent, or appears only after prose, the review response is incomplete. If unresolved cells remain, keep status `HOLD` after reporting the verified subtotal.
+The completed or partial output must be rendered and validated through `server/person-fact-count-output.mjs` and begin with the canonical eight-line result block: `E`, `R`, `T`, `D`, `G`, `S`, `VERIFIED_TOTAL /36`, `UNRESOLVED n`. **Do not hand-author the trusted total.** If the validator rejects preamble, omission, ordering, range, or arithmetic, the review response is incomplete. If unresolved cells remain, keep status `HOLD` after reporting the verified subtotal.
 
 Legacy `ATLAS-PHFC-3.0`, `ATLAS-PRV-2.4`, earlier PRV versions, Lite, earlier Coverage Test variants, SCI/OFI/MCG/DRS, and categorical grading systems are historical only.
 
