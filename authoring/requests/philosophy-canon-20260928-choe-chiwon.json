@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:choe-chiwon:v1",
+  "person": {
+    "canonical_name_en": "Choe Chiwon",
+    "display_name_ko": "최치원",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Silla"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Confucian scholar and reform thinker",
+    "role_display_name_ko": "유학자·개혁사상가",
+    "start_year": 894,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 894,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative intellectual-political milestone: submission of the reform proposals in 894; not a lifespan rail."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "시무십여조 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0032357",
+      "citation_text": "AKS dates Choe Chiwon's submission of the Simu sipyeojo social-reform proposals to Queen Jinseong to 894 and describes their Confucian political ideas and later influence on Goryeo state-building.",
+      "locator": "작성 배경; 내용 요약"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-KOREA-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository-wide PR/issue identity search on 2026-09-28 found no prior governed registration evidence; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "External indexed search for an exact NamuWiki Person document returned no independently verifiable result on 2026-09-28; reviewed not_found rather than guessing a URL."
+  }
+}

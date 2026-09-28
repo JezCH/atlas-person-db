@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:uicheon:v1",
+  "person": {
+    "canonical_name_en": "Uicheon",
+    "display_name_ko": "의천",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "documented_death"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Goryeo"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Buddhist philosopher and teacher",
+    "role_display_name_ko": "불교 사상가·교육자",
+    "start_year": 1097,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1097,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative doctrinal-institutional milestone: establishment of Goryeo Cheontae in 1097."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "의천 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0043423",
+      "citation_text": "AKS identifies Uicheon (1055–1101), Daegak Guksa, and dates his establishment of the Cheontae order at Gukcheongsa to 1097 after extensive doctrinal study, collection, editing and teaching.",
+      "locator": "내용 요약"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-KOREA-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository-wide PR/issue identity search on 2026-09-28 found no prior governed registration evidence; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "External indexed search for an exact NamuWiki Person document returned no independently verifiable result on 2026-09-28; reviewed not_found rather than guessing a URL."
+  }
+}

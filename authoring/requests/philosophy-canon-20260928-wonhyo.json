@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:wonhyo:v1",
+  "person": {
+    "canonical_name_en": "Wonhyo",
+    "display_name_ko": "원효",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Silla"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Buddhist philosopher and teacher",
+    "role_display_name_ko": "불교 사상가·교육자",
+    "start_year": 661,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 686,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bounded mature intellectual-activity interval, not a lifespan rail. Start is approximate because the major surviving works are not all exactly dated."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "원효 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0040908",
+      "citation_text": "AKS identifies Wonhyo (617–686) as a Silla Buddhist thinker and documents his mature activity from the 660s through his death, including major commentaries and the royal Hwangnyongsa lecture on the Vajrasamadhi Sutra.",
+      "locator": "학문과 저술; 환속과 입적"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-KOREA-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository-wide PR/issue identity search on 2026-09-28 found no prior governed registration evidence; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "External indexed search for an exact NamuWiki Person document returned no independently verifiable result on 2026-09-28; reviewed not_found rather than guessing a URL."
+  }
+}
