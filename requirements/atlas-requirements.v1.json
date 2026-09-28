@@ -124,11 +124,14 @@
     {
       "id": "ATLAS-RQ-0020",
       "status": "ACTIVE",
-      "title": "Person historical fact counting uses ATLAS-PHFC-3.2 only: E/R/T/D/G/S verified coverage cells sum to VERIFIED_TOTAL 0..36; 1/0/? states preserve unresolved evidence; every review must emit the complete canonical result block first, before explanation, with no role-, office-, ideology-, or political-status exception",
+      "title": "Person historical fact counting uses ATLAS-PHFC-3.2 only; canonical formatter computes VERIFIED_TOTAL from E/R/T/D/G/S and canonical validator rejects preamble, omission, order drift, range error, or arithmetic mismatch, with no role-, office-, ideology-, or political-status exception",
       "evidence_paths": [
         "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
         "authoring/REGISTRATION_SOP.md",
-        "docs/core/CORE_V2_MASTER_PLAN.md"
+        "docs/core/CORE_V2_MASTER_PLAN.md",
+        "server/person-fact-count-output.mjs",
+        "scripts/verify-person-fact-count-output.mjs",
+        "tests/person-fact-count-output.test.mjs"
       ]
     },
     {
