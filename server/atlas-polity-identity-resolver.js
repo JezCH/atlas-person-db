@@ -132,37 +132,53 @@ async function loadContinuity(client, polityIds) {
 async function loadRetiredPolityMatches(client,{ canonicalName, canonicalKey }) {
   const result=await client.query(`
     select
-      op->'removed_polity'->>'id' as polity_id,
-      op->'removed_polity'->>'canonical_key' as canonical_key,
-      op->'removed_polity'->>'polity_type' as polity_type,
-      op->'removed_polity'->>'historicity' as historicity,
-      coalesce(op->'preferred_names','[]'::jsonb) as preferred_names
-    from atlas_v2.correction_manifest_runs cmr
-    cross join lateral jsonb_array_elements(
-      case
-        when jsonb_typeof(cmr.result_snapshot->'operations')='array' then cmr.result_snapshot->'operations'
-        else '[]'::jsonb
-      end
-    ) op
-    where cmr.result_snapshot->>'schema'='atlas-correction-polity-retirement/v1'
-      and (
-        op->'removed_polity'->>'canonical_key'=$1
-        or exists (
-          select 1
-            from jsonb_array_elements(coalesce(op->'preferred_names','[]'::jsonb)) n
-           where n->>'locale'='en' and n->>'name'=$2
-        )
-      )
-    order by op->'removed_polity'->>'id'
+      r.retired_polity_id::text as polity_id,
+      r.survivor_polity_id::text as survivor_polity_id,
+      r.canonical_key,
+      r.polity_type,
+      r.historicity,
+      r.review_reason,
+      r.source_request_id,
+      r.source_case_id
+    from atlas_v2.polity_identity_retirements r
+    where r.canonical_key=$1
+       or exists (
+         select 1
+           from atlas_v2.polity_identity_retirement_names rn
+          where rn.retired_polity_id=r.retired_polity_id
+            and rn.locale='en'
+            and rn.name=$2
+       )
+    order by r.retired_polity_id::text
     limit 20
   `,[canonicalKey,canonicalName]);
   return Object.freeze((result.rows || []).map((row)=>Object.freeze({
     polity_id:String(row.polity_id || "").toLowerCase(),
+    survivor_polity_id:row.survivor_polity_id == null ? null : String(row.survivor_polity_id).toLowerCase(),
     canonical_key:String(row.canonical_key || ""),
     polity_type:String(row.polity_type || ""),
     historicity:String(row.historicity || ""),
-    preferred_names:Array.isArray(row.preferred_names) ? row.preferred_names : []
+    review_reason:String(row.review_reason || ""),
+    source_request_id:String(row.source_request_id || ""),
+    source_case_id:String(row.source_case_id || "")
   })));
+}
+
+async function loadPolityById(client,id) {
+  const result=await client.query(`
+    select id::text as polity_id,canonical_key,polity_type,historicity
+      from atlas_v2.polities
+     where id=$1::uuid
+     limit 1
+  `,[id]);
+  const row=result.rows?.[0];
+  if (!row) return null;
+  return Object.freeze({
+    polity_id:String(row.polity_id || "").toLowerCase(),
+    canonical_key:String(row.canonical_key || ""),
+    polity_type:String(row.polity_type || ""),
+    historicity:String(row.historicity || "")
+  });
 }
 
 function continuityLinksCandidates(continuity,candidateIds) {
@@ -184,6 +200,8 @@ async function resolvePolityIdentity(client, raw, { temporalContext=null } = {})
   const explicitCanonicalKey=normalizeText(raw?.canonical_key);
   const canonicalKey=explicitCanonicalKey || canonicalName;
   const context=normalizeTemporalContext(temporalContext);
+  const requestedType=normalizeText(raw?.polity_type) || "historical_polity";
+  const requestedHistoricity=normalizeText(raw?.historicity) || "historical";
   const matches=await loadCurrentPolityMatches(client,{ canonicalName, canonicalKey });
 
   const keyIds=uniqueIds(matches.key);
@@ -202,9 +220,40 @@ async function resolvePolityIdentity(client, raw, { temporalContext=null } = {})
   if (allIds.length === 0) {
     const retired=await loadRetiredPolityMatches(client,{ canonicalName, canonicalKey });
     if (retired.length) {
-      const error=new Error("POLITY_RETIRED_IDENTITY_REVIEW_REQUIRED");
-      error.retired_polity_ids=Object.freeze(retired.map((row)=>row.polity_id));
-      throw error;
+      if (retired.length !== 1) {
+        const error=new Error("POLITY_RETIRED_IDENTITY_AMBIGUOUS");
+        error.retired_polity_ids=Object.freeze(retired.map((row)=>row.polity_id));
+        throw error;
+      }
+      const retirement=retired[0];
+      if (!retirement.survivor_polity_id) {
+        const error=new Error("POLITY_RETIRED_IDENTITY_REVIEW_REQUIRED");
+        error.retired_polity_ids=Object.freeze([retirement.polity_id]);
+        throw error;
+      }
+      const survivor=await loadPolityById(client,retirement.survivor_polity_id);
+      if (!survivor) {
+        const error=new Error("POLITY_RETIRED_REDIRECT_TARGET_MISSING");
+        error.retired_polity_id=retirement.polity_id;
+        error.survivor_polity_id=retirement.survivor_polity_id;
+        throw error;
+      }
+      if (survivor.polity_type !== requestedType || survivor.historicity !== requestedHistoricity) {
+        throw new Error("POLITY_IDENTITY_METADATA_CONFLICT");
+      }
+      return Object.freeze({
+        status:"resolved",
+        create_allowed:false,
+        id:survivor.polity_id,
+        canonical_key:survivor.canonical_key,
+        polity_type:survivor.polity_type,
+        historicity:survivor.historicity,
+        matched_by:"retired_redirect",
+        match_kinds:Object.freeze(["retired_redirect"]),
+        retired_identity:Object.freeze({ ...retirement }),
+        temporal_context:context,
+        continuity:Object.freeze([])
+      });
     }
     return Object.freeze({
       status:"unresolved",
@@ -236,8 +285,6 @@ async function resolvePolityIdentity(client, raw, { temporalContext=null } = {})
   const row=representativeRow(matches,id);
   if (!row) throw new Error("POLITY_IDENTITY_RESOLUTION_INVARIANT_FAILED");
 
-  const requestedType=normalizeText(raw?.polity_type) || "historical_polity";
-  const requestedHistoricity=normalizeText(raw?.historicity) || "historical";
   if (String(row.polity_type) !== requestedType || String(row.historicity) !== requestedHistoricity) {
     throw new Error("POLITY_IDENTITY_METADATA_CONFLICT");
   }
@@ -297,6 +344,7 @@ module.exports=Object.freeze({
   loadCurrentPolityMatches,
   loadContinuity,
   loadRetiredPolityMatches,
+  loadPolityById,
   resolvePolityIdentity,
   temporalContextFromHumanActivity,
   temporalContextFromNativeActivity
