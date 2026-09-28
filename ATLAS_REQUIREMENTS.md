@@ -2,7 +2,7 @@
 
 > Status: **CORE v2 ACTIVE / P0–P12 HISTORICAL FOUNDATION CLOSED / P13–P14 RESIDUAL WORK REMAPPED INTO CORE v2**
 >
-> As of: **2026-09-27**  
+> As of: **2026-09-28**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
 > CORE architecture / invariants / unit topology: `docs/core/CORE_V2_MASTER_PLAN.md`  
 > Active CORE status: GitHub Issue **#917** body only  
@@ -38,6 +38,7 @@ ATLAS의 기준은 **100% traceable**, **0 known contradictions**, **0 silently 
 | `ATLAS-RQ-0017` | A known Person–Polity assertion with an **unknown start/end boundary** must remain representable without inventing an endpoint year. |
 | `ATLAS-RQ-0018` | CORE v2의 architecture, authority map, C-01~C-15 invariants, unit topology는 `docs/core/CORE_V2_MASTER_PLAN.md`가 단일 권위다. 동일 내용을 별도 active registry로 복제하지 않는다. |
 | `ATLAS-RQ-0019` | **새 canonical Person 생성은 모든 생존 인물을 제외한다.** 현재 생존 여부가 unresolved이면 추측하지 않고 HOLD/BLOCK하며 Person write를 허용하지 않는다. |
+| `ATLAS-RQ-0020` | **Person 등록가치 평가는 `ATLAS-PRV-2.3` 하나만 사용한다.** `C10 + U9 + P5 + B2 + G4 = 30`, 등급은 `27–30 SSS / 24–26 SS / 21–23 S / 16–20 A / 10–15 B / 0–9 C`로 기계 산출하며, 과거 Lite·Coverage Test·SCI/OFI/MCG/DRS·54점식·임의 티어는 active authority가 아니다. 세부 정의와 변경 규칙의 단일 권위는 `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md`다. |
 
 Polity naming follows the current Stage 2 entity-boundary contracts: historical names, historiographic names and explicitly tagged editorial catalog labels are semantically distinct. Editorial labels never become historical self-designations or UUID identity.
 

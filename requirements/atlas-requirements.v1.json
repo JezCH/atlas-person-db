@@ -2,7 +2,7 @@
   "schema": "atlas-requirements/v1",
   "version": 1,
   "finalized": true,
-  "as_of": "2026-09-27",
+  "as_of": "2026-09-28",
   "roadmap": [
     "P0",
     "P1",
@@ -120,6 +120,16 @@
       "id": "ATLAS-RQ-0019",
       "status": "ACTIVE",
       "title": "New canonical Person creation excludes every living person; unresolved current life status fails closed"
+    },
+    {
+      "id": "ATLAS-RQ-0020",
+      "status": "ACTIVE",
+      "title": "Person registration-value grading uses ATLAS-PRV-2.3 as the single canonical SSS-to-C standard; legacy scoring systems are non-authoritative",
+      "evidence_paths": [
+        "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
+        "authoring/REGISTRATION_SOP.md",
+        "docs/core/CORE_V2_MASTER_PLAN.md"
+      ]
     },
     {
       "id": "ATLAS-RQ-0101",
