@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:asanga:gupta:v1",
+  "person": {
+    "canonical_name_en": "Asaṅga",
+    "display_name_ko": "아상가",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "knowledge"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Gupta Empire",
+    "display_name_ko": "굽타 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Buddhist philosopher",
+    "role_display_name_ko": "불교 철학자",
+    "start_year": 390,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 390,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Representative late-fourth-century intellectual point, not an exact dated event. Oxford places Asaṅga in the fourth century; a recent specialist review of the traditional biographical sources notes Xuanzang's account of Asaṅga's activity at Ayodhya. ATLAS joins that reviewed Ayodhya activity context to the Gupta-period political frame and records active_in, not political office or court service. The c.390 point is deliberately approximate."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Oxford Bibliographies in Buddhism — Asaṅga",
+      "canonical_url": "https://academic.oup.com/reference/62340/reference-article-abstract/554139437",
+      "citation_text": "Oxford describes Asaṅga as probably born in Puruṣapura in the fourth century CE and as a central systematizer of Yogācāra.",
+      "locator": "Introduction"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Asaṅga: Great Systematizer of Yogācāra Thought",
+      "canonical_url": "https://www.jstage.jst.go.jp/article/gbs/1/1/1_4/_html/-char/en",
+      "citation_text": "The specialist review summarizes Xuanzang's account that Asaṅga was active at Ayodhya and taught there.",
+      "locator": "Biographical discussion"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "The Gupta Empire (AD 400–500) — The Cambridge History of Strategy",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-history-of-strategy/gupta-empire-ad-400500/1543448BD694AC35CAAA6644F289D235",
+      "citation_text": "Cambridge characterizes the imperial Guptas as the dominant power in India during the fourth and fifth centuries, providing the political frame used for the reviewed Ayodhya attribution.",
+      "locator": "Chapter summary"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-INDIA-BUDDHIST-04",
+    "dedup_method": "Exact Production searches for Asaṅga, Asanga, 아상가, and 무착 returned zero Persons immediately before authoring.",
+    "namuwiki_review": "Exact indexed searches for 아상가/무착/Asaṅga found no independent NamuWiki Person document; no guessed URL.",
+    "polity_inference": "Spatiotemporal attribution: reviewed traditional source places intellectual activity at Ayodhya in the fourth-century career; Gupta political control is used at dynasty/state level. No political service is asserted."
+  }
+}
