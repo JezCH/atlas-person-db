@@ -1,7 +1,7 @@
 "use strict";
 
 const { createPostgresClient }=require("./atlas-postgres-client.js");
-const { verifyGitHubActionsOidcWithPolicy }=require("./atlas-github-oidc.js");
+const { verifyGitHubActionsOidcWithPolicyOnly }=require("./atlas-github-oidc.js");
 const { applyAuthoringMigrations }=require("./atlas-authoring-migrations.js");
 const {
   createUnit5ReconciliationService,
@@ -47,7 +47,7 @@ function runtimeSha(env) {
 function createUnit5ReconciliationHandler({
   env=process.env,
   clientFactory=createPostgresClient,
-  verifyOidc=verifyGitHubActionsOidcWithPolicy,
+  verifyOidc=verifyGitHubActionsOidcWithPolicyOnly,
   applyMigrations=applyAuthoringMigrations
 }={}) {
   return async function handler(req,res) {
@@ -63,11 +63,10 @@ function createUnit5ReconciliationHandler({
       deployedSha=runtimeSha(env);
       const workflowSha=String(body?.workflow_sha || "").trim().toLowerCase();
       if (!SHA_RE.test(workflowSha)) throw new Error("UNIT5_RECONCILIATION_WORKFLOW_SHA_REQUIRED");
-      if (workflowSha !== deployedSha) throw new Error("UNIT5_RECONCILIATION_RUNTIME_SHA_MISMATCH");
       if (!body.manifest || body.manifest.schema !== MANIFEST_SCHEMA) throw new Error("UNIT5_RECONCILIATION_MANIFEST_REQUIRED");
     } catch(error) {
       const code=String(error?.message || "UNIT5_RECONCILIATION_INVALID_REQUEST");
-      sendJson(res,code==="UNIT5_RECONCILIATION_RUNTIME_SHA_MISMATCH" ? 409 : 400,{ok:false,marker:MARKER,code,runtime_sha:deployedSha || null});
+      sendJson(res,400,{ok:false,marker:MARKER,code,runtime_sha:deployedSha || null});
       return;
     }
 
@@ -76,8 +75,12 @@ function createUnit5ReconciliationHandler({
       sendJson(res,401,{ok:false,marker:MARKER,code:"GITHUB_OIDC_TOKEN_REQUIRED"});
       return;
     }
+    let oidcClaims;
     try {
-      await verifyOidc(token,{expectedSha:deployedSha,policy:OIDC_POLICY});
+      oidcClaims=await verifyOidc(token,{policy:OIDC_POLICY});
+      const workflowSha=String(body.workflow_sha).trim().toLowerCase();
+      const claimSha=String(oidcClaims?.sha || "").trim().toLowerCase();
+      if (!SHA_RE.test(claimSha) || claimSha !== workflowSha) throw new Error("GITHUB_OIDC_SHA_MISMATCH");
     } catch(error) {
       sendJson(res,403,{ok:false,marker:MARKER,code:String(error?.message || "GITHUB_OIDC_REJECTED")});
       return;
@@ -98,6 +101,7 @@ function createUnit5ReconciliationHandler({
         ok:true,
         marker:MARKER,
         runtime_sha:deployedSha,
+        workflow_sha:String(body.workflow_sha).trim().toLowerCase(),
         migration,
         outcome
       });

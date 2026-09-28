@@ -76,6 +76,19 @@ function normalizePolicy(policy = {}) {
   });
 }
 
+function verifyTrustClaimsWithPolicyOnly(payload, policy) {
+  const expected = normalizePolicy(policy);
+  if (payload?.iss !== ISSUER) throw new Error("GITHUB_OIDC_ISSUER_MISMATCH");
+  const audiences = Array.isArray(payload?.aud) ? payload.aud : [payload?.aud];
+  if (!audiences.includes(expected.audience)) throw new Error("GITHUB_OIDC_AUDIENCE_MISMATCH");
+  if (payload?.repository !== expected.repository) throw new Error("GITHUB_OIDC_REPOSITORY_MISMATCH");
+  if (String(payload?.repository_id || "") !== expected.repositoryId) throw new Error("GITHUB_OIDC_REPOSITORY_ID_MISMATCH");
+  if (payload?.ref !== expected.ref) throw new Error("GITHUB_OIDC_REF_MISMATCH");
+  if (payload?.workflow_ref !== expected.workflowRef) throw new Error("GITHUB_OIDC_WORKFLOW_MISMATCH");
+  if (payload?.environment !== expected.environment) throw new Error("GITHUB_OIDC_ENVIRONMENT_MISMATCH");
+  if (!expected.allowedEvents.has(payload?.event_name)) throw new Error("GITHUB_OIDC_EVENT_MISMATCH");
+}
+
 function verifyTrustClaimsWithPolicy(payload, expectedSha, policy) {
   const expected = normalizePolicy(policy);
   if (payload?.iss !== ISSUER) throw new Error("GITHUB_OIDC_ISSUER_MISMATCH");
@@ -125,6 +138,12 @@ async function verifyGitHubActionsOidc(token, { expectedSha, fetchImpl = globalT
   return Object.freeze(payload);
 }
 
+async function verifyGitHubActionsOidcWithPolicyOnly(token, { policy, fetchImpl = globalThis.fetch, now = Date.now } = {}) {
+  const payload = await verifySignedGithubOidcPayload(token, { fetchImpl, now });
+  verifyTrustClaimsWithPolicyOnly(payload, policy);
+  return Object.freeze(payload);
+}
+
 async function verifyGitHubActionsOidcWithPolicy(token, { expectedSha, policy, fetchImpl = globalThis.fetch, now = Date.now } = {}) {
   const sha = requireString(expectedSha, "GITHUB_OIDC_EXPECTED_SHA_REQUIRED");
   const payload = await verifySignedGithubOidcPayload(token, { fetchImpl, now });
@@ -140,8 +159,10 @@ function resetJwksCacheForTests() {
 module.exports = Object.freeze({
   verifyGitHubActionsOidc,
   verifyGitHubActionsOidcWithPolicy,
+  verifyGitHubActionsOidcWithPolicyOnly,
   verifyTrustClaims,
   verifyTrustClaimsWithPolicy,
+  verifyTrustClaimsWithPolicyOnly,
   verifyTemporalClaims,
   normalizePolicy,
   resetJwksCacheForTests,
