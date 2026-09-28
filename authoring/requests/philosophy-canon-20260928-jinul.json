@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:jinul:v1",
+  "person": {
+    "canonical_name_en": "Jinul",
+    "display_name_ko": "지눌",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "documented_death"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Goryeo"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Buddhist philosopher and teacher",
+    "role_display_name_ko": "불교 사상가·교육자",
+    "start_year": 1190,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1190,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative intellectual milestone: 1190 articulation and circulation of the Jeonghye community's program."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "권수정혜결사문 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0006967",
+      "citation_text": "AKS dates Jinul's composition and circulation of Gwon Su Jeonghye Gyeolsamun to 1190, articulating samadhi-prajna cultivation and the ideological basis of the Jeonghye community.",
+      "locator": "편찬 및 간행경위"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-KOREA-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository-wide PR/issue identity search on 2026-09-28 found no prior governed registration evidence; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "External indexed search for an exact NamuWiki Person document returned no independently verifiable result on 2026-09-28; reviewed not_found rather than guessing a URL."
+  }
+}
