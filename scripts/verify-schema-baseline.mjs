@@ -28,7 +28,8 @@ const expectedAuthoringMigrations = [
   '20260920_person_portraits.sql',
   '20260921_person_portrait_history_v2.sql',
   '20260924_person_portraits_simple_v3.sql',
-  '20260928_polity_identity_retirements.sql'
+  '20260928_polity_identity_retirements.sql',
+  '20260928_person_timeline_dispositions.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -46,7 +47,8 @@ const expectedAuthoringReplayMigrations = [
   '20260920_person_portraits.sql',
   '20260921_person_portrait_history_v2.sql',
   '20260924_person_portraits_simple_v3.sql',
-  '20260928_polity_identity_retirements.sql'
+  '20260928_polity_identity_retirements.sql',
+  '20260928_person_timeline_dispositions.sql'
 ];
 
 const expectedCorrectionMigrations = [
@@ -221,6 +223,28 @@ try {
   assertAuthoringMigrationRegistry(firstAuthoringReplay, 'first authoring replay');
   assertAuthoringMigrationRegistry(secondAuthoringReplay, 'second authoring replay');
 
+  const timelineTables = await client.query(`
+    select table_name
+      from information_schema.tables
+     where table_schema='atlas_v2'
+       and table_name='person_timeline_dispositions'
+     order by table_name`);
+  same(timelineTables.rows.map((row) => row.table_name), ['person_timeline_dispositions'], 'Person timeline disposition table');
+
+  const timelineConstraint = await client.query(`
+    select conname
+      from pg_constraint
+     where conrelid='atlas_v2.person_timeline_dispositions'::regclass
+       and conname='person_timeline_dispositions_disposition_check'`);
+  same(timelineConstraint.rows.map((row) => row.conname), ['person_timeline_dispositions_disposition_check'], 'Person timeline disposition vocabulary constraint');
+
+  const timelineIndex = await client.query(`
+    select indexname
+      from pg_indexes
+     where schemaname='atlas_v2'
+       and indexname='person_timeline_dispositions_disposition_idx'`);
+  same(timelineIndex.rows.map((row) => row.indexname), ['person_timeline_dispositions_disposition_idx'], 'Person timeline disposition index');
+
   const profileTables = await client.query(`
     select table_name
       from information_schema.tables
@@ -305,6 +329,7 @@ try {
     authoring_migrations: firstAuthoringReplay.applied.length,
     authoring_migration_replay: true,
     person_profile_authoring_tables: profileTables.rows.length,
+    person_timeline_disposition_table: timelineTables.rows.length,
     p13_place_authoring_tables: placeTables.rows.length,
     p13_source_provenance_restrict: true,
     correction_migrations: firstCorrectionReplay.applied.length,
