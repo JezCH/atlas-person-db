@@ -18,8 +18,8 @@
     "test:stage2-entity-boundaries": "node scripts/verify-stage2-entity-boundaries-rehearsal.mjs",
     "test:stage2-semantic-key-rehearsal": "node scripts/verify-stage2-activity-semantic-key.mjs && node scripts/rehearse-stage2-p7-relation-resolution.mjs",
     "portrait:backfill-history": "node scripts/backfill-person-portrait-history-v2.mjs",
-    "test:phfp-output": "node --test tests/person-fact-count-output.test.mjs",
-    "verify:phfp-output": "node scripts/verify-person-fact-count-output.mjs"
+    "test:phfc-output": "node --test tests/person-fact-count-output.test.mjs",
+    "verify:phfc-output": "node scripts/verify-person-fact-count-output.mjs"
   },
   "engines": {
     "node": "22.x"

@@ -130,7 +130,7 @@ A replacement is incomplete while the replaced executable path remains reachable
 | Product requirements | `requirements/atlas-requirements.v1.json` after Unit 0 | Markdown explanation |
 | Human-readable requirements | aligned/generated `ATLAS_REQUIREMENTS.md` | historical status docs |
 | Person domain vocabulary | existing canonical representative-domain registry | UI colors/CSS |
-| Person historical fact profile | `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFP-4.0`) + `server/person-fact-count-output.mjs` profile formatter/validator | PHFC 3.2 and earlier aggregate totals / legacy PRV qualitative scoring / Lite / earlier Coverage Test / SCI-OFI-MCG-DRS / categorical ranking systems |
+| Person historical fact coverage count | `docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md` (`ATLAS-PHFC-4.1`) + `server/person-fact-count-output.mjs` count formatter/validator | PHFP 4.0 non-scalar experiment / PHFC 3.2 and earlier / legacy PRV qualitative scoring / Lite / earlier Coverage Test / SCI-OFI-MCG-DRS / categorical ranking systems |
 | Candidate review result | one durable reviewed candidate revision | issue prose/pasted handoff |
 | Registration state | one execution state tied to canonical entity/revision | queue prose |
 | Spatial taxonomy/reviewed source | canonical spatial authoring source | compiled spatial index |
