@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "koerikei-xam-southern-africa-20260928",
+  "baseline": "5b9dd2333821b54ccd98f75a0289cf0f8beac9c4",
+  "reviewed_at": "2026-09-28T12:28:00.000Z",
+  "bindings": [
+    {
+      "polity_id": "03275e68-109f-4fc5-9295-61264acec176",
+      "region_code": "africa",
+      "subregion_code": "southern-africa"
+    }
+  ]
+}
