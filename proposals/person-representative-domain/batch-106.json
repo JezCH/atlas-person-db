@@ -1,0 +1,32 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-28",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "54aa8b94b7d57ba9d6369260a5ae430c098463ed",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign knowledge only to Asaṅga and Dharmakīrti after verified Human Authoring registration; preserve existing non-null Production values and fail closed on conflict."
+  },
+  "review_scope": {
+    "task_key": "PHILOSOPHY-CANON-54-INDIA-BUDDHIST-FINAL-TWO-DOMAIN-20260928",
+    "reviewed_assignments": 2,
+    "reviewed_holds": 0,
+    "rationale": "Both Persons are represented in this campaign by philosophical and epistemological activity, and exact Production person/activity read-back is verified."
+  },
+  "entries": [
+    {
+      "person_id": "e762da53-76d6-425f-9baa-ca23735f6bb7",
+      "canonical_name_en": "Asaṅga",
+      "preferred_name_ko": "아상가",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "c98582af-bf05-430c-b675-630d20445c25",
+      "canonical_name_en": "Dharmakīrti",
+      "preferred_name_ko": "다르마키르티",
+      "representative_domain": "knowledge"
+    }
+  ]
+}
