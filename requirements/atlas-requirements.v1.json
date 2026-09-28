@@ -124,7 +124,7 @@
     {
       "id": "ATLAS-RQ-0020",
       "status": "ACTIVE",
-      "title": "Person comparison and registration review uses ATLAS-PHFC-3.0 factual counting only: O/R/T/D/P/G/L verified counts sum to TOTAL 0..42, with no evaluator-assigned importance, greatness, irreplaceability, grade, or role-based exception",
+      "title": "Person historical fact counting uses ATLAS-PHFC-3.1 only: E/R/T/D/G/S verified coverage cells sum arithmetically to VERIFIED_TOTAL 0..36; 1/0/? states preserve unresolved evidence; no elapsed-time persistence axis, evaluator-assigned importance, greatness, irreplaceability, political value, grade, or role-based formula",
       "evidence_paths": [
         "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
         "authoring/REGISTRATION_SOP.md",
