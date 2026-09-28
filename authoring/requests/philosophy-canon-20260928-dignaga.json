@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:dignaga:v1",
+  "person": {
+    "canonical_name_en": "Dignāga",
+    "display_name_ko": "디그나가",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "documented_death"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Gupta Empire"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Buddhist logician and epistemologist",
+    "role_display_name_ko": "불교 논리학자·인식론자",
+    "start_year": 500,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 500,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "probable",
+    "chronology_status": "reviewed",
+    "notes": "Representative circa-500 intellectual point within the late Gupta chronological frame; SEP places Dignāga around 480–540 / fifth-to-sixth century and identifies him as a pivotal classical Indian logician."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Stanford Encyclopedia of Philosophy — Logic in Classical Indian Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/logic-india/",
+      "citation_text": "SEP identifies Dignāga (c. fifth–sixth century CE) as a pivotal figure in the history of Indian logic.",
+      "locator": "§4 Culmination of the Classical Period; §4.1 Dignāga"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-INDIA-BUDDHIST-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository-wide current-main identity search found no governed Dignāga registration manifest; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "No guessed URL; exact external-link recovery remains separate."
+  }
+}

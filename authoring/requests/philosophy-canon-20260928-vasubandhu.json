@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:vasubandhu:v1",
+  "person": {
+    "canonical_name_en": "Vasubandhu",
+    "display_name_ko": "바수반두",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "documented_death"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Gupta Empire"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Buddhist philosopher",
+    "role_display_name_ko": "불교 철학자",
+    "start_year": 400,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 400,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "probable",
+    "chronology_status": "reviewed",
+    "notes": "Representative fourth-century Gupta-period intellectual point; SEP explicitly places Vasubandhu at the height of the Gupta period and reports instruction of the crown prince and queen of Chandragupta II."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Stanford Encyclopedia of Philosophy — Vasubandhu",
+      "canonical_url": "https://plato.stanford.edu/entries/vasubandhu/",
+      "citation_text": "SEP dates Vasubandhu to the fourth-to-fifth century and places him at the height of the Gupta empire, including a tradition that he instructed the royal family of Chandragupta II.",
+      "locator": "§1.1 Biography (Disputed)"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-INDIA-BUDDHIST-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository-wide current-main identity search found no governed Vasubandhu registration manifest; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "No guessed URL; exact external-link recovery remains separate."
+  }
+}

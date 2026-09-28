@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:gautama-buddha:v1",
+  "person": {
+    "canonical_name_en": "Gautama Buddha",
+    "display_name_ko": "석가모니",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "documented_death"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Magadha"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Buddhist teacher and philosopher",
+    "role_display_name_ko": "불교 교사·철학자",
+    "start_year": -450,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -450,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "probable",
+    "chronology_status": "reviewed",
+    "notes": "Conservative representative teaching point. SEP treats the historical Gautama as flourishing circa 450 BCE; exact traditional lifespan dates are intentionally not used."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Stanford Encyclopedia of Philosophy — Buddha",
+      "canonical_url": "https://plato.stanford.edu/archives/spr2014/entries/buddha/",
+      "citation_text": "SEP treats the historical Gautama as the individual whose teachings form the basis of Buddhism and dates his floruit to circa 450 BCE.",
+      "locator": "Buddha; §1 Buddha as Philosopher"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-INDIA-BUDDHIST-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository-wide current-main identity search found no governed Gautama Buddha registration manifest; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "No guessed URL; exact external-link recovery remains separate."
+  }
+}
