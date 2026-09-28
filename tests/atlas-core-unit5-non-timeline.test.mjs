@@ -8,6 +8,8 @@ const require=createRequire(import.meta.url);
 const timeline=require('../server/atlas-person-timeline-service.js');
 const reconcile=require('../server/atlas-core-unit5-reconciliation-service.js');
 const profile=require('../server/atlas-person-profile-service.js');
+const unit5Handler=require('../server/atlas-core-unit5-reconciliation-handler.js');
+const oidc=require('../server/atlas-github-oidc.js');
 
 const root=path.resolve(new URL('..',import.meta.url).pathname);
 const manifest=JSON.parse(fs.readFileSync(
@@ -124,4 +126,90 @@ test('Unit 5 reconciliation fails closed rather than merging an alias/name colli
     ()=>reconcile.planReconciliation(state,parsed),
     /UNIT5_RECONCILIATION_EN_NAME_COLLISION:Dido/
   );
+});
+
+
+test('Unit 5 OIDC policy-only verifier keeps repository/ref/workflow/environment trust without coupling to deployment SHA', () => {
+  const policy=unit5Handler.OIDC_POLICY;
+  const payload={
+    iss:oidc.ISSUER,
+    aud:[unit5Handler.AUDIENCE],
+    repository:'JezCH/atlas-person-db',
+    repository_id:'1319427399',
+    ref:'refs/heads/main',
+    workflow_ref:'JezCH/atlas-person-db/.github/workflows/atlas-core-unit5-reconcile.yml@refs/heads/main',
+    environment:'production',
+    event_name:'push',
+    sha:'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+  };
+  assert.doesNotThrow(()=>oidc.verifyTrustClaimsWithPolicyOnly(payload,policy));
+  assert.throws(
+    ()=>oidc.verifyTrustClaimsWithPolicyOnly({...payload,workflow_ref:'JezCH/atlas-person-db/.github/workflows/other.yml@refs/heads/main'},policy),
+    /GITHUB_OIDC_WORKFLOW_MISMATCH/
+  );
+});
+
+test('Unit 5 handler binds the request workflow SHA to OIDC claims while allowing a newer Production main SHA', async () => {
+  const workflowSha='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+  const runtimeSha='bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb';
+  let verified=false;
+  const handler=unit5Handler.createUnit5ReconciliationHandler({
+    env:{
+      VERCEL_ENV:'production',
+      VERCEL_GIT_COMMIT_REF:'main',
+      VERCEL_GIT_COMMIT_SHA:runtimeSha,
+      SUPABASE_DB_URL:''
+    },
+    verifyOidc:async (_token,{policy})=>{
+      verified=true;
+      assert.equal(policy,unit5Handler.OIDC_POLICY);
+      return {sha:workflowSha};
+    },
+    clientFactory:async()=>{ throw new Error('client must not be reached'); },
+    applyMigrations:async()=>{ throw new Error('migrations must not be reached'); }
+  });
+  let body=null;
+  const res={
+    statusCode:0,
+    headers:{},
+    setHeader(name,value){ this.headers[name]=value; },
+    end(value){ body=JSON.parse(value); }
+  };
+  await handler({
+    method:'POST',
+    headers:{authorization:'Bearer unit-test-token'},
+    body:{workflow_sha:workflowSha,dry_run:true,manifest}
+  },res);
+  assert.equal(verified,true);
+  assert.equal(res.statusCode,503);
+  assert.equal(body.code,'SUPABASE_DB_URL_REQUIRED');
+  assert.equal(body.runtime_sha,undefined);
+});
+
+test('Unit 5 handler rejects a workflow_sha that does not match the signed OIDC claim', async () => {
+  const workflowSha='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+  const handler=unit5Handler.createUnit5ReconciliationHandler({
+    env:{
+      VERCEL_ENV:'production',
+      VERCEL_GIT_COMMIT_REF:'main',
+      VERCEL_GIT_COMMIT_SHA:'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+      SUPABASE_DB_URL:'postgresql://example.invalid/db'
+    },
+    verifyOidc:async()=>({sha:'cccccccccccccccccccccccccccccccccccccccc'}),
+    clientFactory:async()=>{ throw new Error('client must not be reached'); }
+  });
+  let body=null;
+  const res={
+    statusCode:0,
+    headers:{},
+    setHeader(name,value){ this.headers[name]=value; },
+    end(value){ body=JSON.parse(value); }
+  };
+  await handler({
+    method:'POST',
+    headers:{authorization:'Bearer unit-test-token'},
+    body:{workflow_sha:workflowSha,dry_run:true,manifest}
+  },res);
+  assert.equal(res.statusCode,403);
+  assert.equal(body.code,'GITHUB_OIDC_SHA_MISMATCH');
 });
