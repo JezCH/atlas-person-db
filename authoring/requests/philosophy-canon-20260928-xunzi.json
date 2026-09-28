@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:xunzi:v1",
+  "person": {
+    "canonical_name_en": "Xunzi",
+    "display_name_ko": "순자",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Chu"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Confucian philosopher and teacher",
+    "role_display_name_ko": "유가 철학자·교육자",
+    "start_year": -250,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -250,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Representative mid-third-century BCE intellectual-activity point. Xunzi's precise chronology is disputed; SEP establishes his flourishing in the third century BCE, an administrative post in Chu, and survival beyond 238 BCE. This point is not a claimed exact office boundary."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Xunzi — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/xunzi/",
+      "citation_text": "SEP identifies Xunzi/Xun Kuang as a third-century BCE Confucian philosopher, renowned in his day as the most revered of teachers; his precise dates are uncertain and he was alive after 238 BCE.",
+      "locator": "Xunzi and Xunzi; Reception after His Death"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-CHINA-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository PR/issue identity search on 2026-09-28 found no prior Xunzi registration evidence; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "External indexed search for an exact NamuWiki Xunzi/순자 Person document returned no verifiable result on 2026-09-28; reviewed not_found.",
+    "identity_note": "Xunzi is Master Xun, Xun Kuang 荀況; chronology intentionally approximate."
+  }
+}
