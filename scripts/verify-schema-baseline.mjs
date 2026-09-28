@@ -27,7 +27,8 @@ const expectedAuthoringMigrations = [
   '20260906_p13_source_place_objects.sql',
   '20260920_person_portraits.sql',
   '20260921_person_portrait_history_v2.sql',
-  '20260924_person_portraits_simple_v3.sql'
+  '20260924_person_portraits_simple_v3.sql',
+  '20260928_polity_identity_retirements.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -44,7 +45,8 @@ const expectedAuthoringReplayMigrations = [
   '20260906_p13_source_place_objects.sql',
   '20260920_person_portraits.sql',
   '20260921_person_portrait_history_v2.sql',
-  '20260924_person_portraits_simple_v3.sql'
+  '20260924_person_portraits_simple_v3.sql',
+  '20260928_polity_identity_retirements.sql'
 ];
 
 const expectedCorrectionMigrations = [
@@ -53,14 +55,16 @@ const expectedCorrectionMigrations = [
   '20260813_correction_manifest_v2.sql',
   '20260815_correction_manifest_v1_2.sql',
   '20260821_correction_manifest_v1_3.sql',
-  '20260827_correction_manifest_v1_4.sql'
+  '20260827_correction_manifest_v1_4.sql',
+  '20260928_polity_identity_retirements.sql'
 ];
 
 const expectedTables = [
   'authoring_manifest_runs','chronology_claims','correction_manifest_runs','migration_metadata','period_bases','period_basis_names','person_descriptions',
   'person_duplicate_candidates','person_duplicate_reviews','person_merge_audits','person_names',
   'person_politics_sources','person_politics_v2','person_sources','persons','polities','polity_descriptions',
-  'polity_names','polity_sources','relationship_descriptions','role_names','roles','sources'
+  'polity_identity_retirement_names','polity_identity_retirements','polity_names','polity_sources',
+  'relationship_descriptions','role_names','roles','sources'
 ].sort();
 
 const expectedConstraints = [
@@ -78,7 +82,15 @@ const expectedConstraints = [
   'person_names_pkey','person_politics_sources_pkey','person_politics_v2_activity_end_check',
   'person_politics_v2_activity_start_check','person_politics_v2_check','person_politics_v2_pkey',
   'person_politics_v2_legacy_source_key_key','person_sources_pkey','persons_pkey','persons_canonical_key_key',
-  'polities_pkey','polities_canonical_key_key','polity_descriptions_pkey','polity_names_pkey','polity_sources_pkey',
+  'polities_pkey','polities_canonical_key_key','polity_descriptions_pkey',
+  'polity_identity_retirement_names_locale_check','polity_identity_retirement_names_name_check',
+  'polity_identity_retirement_names_pkey','polity_identity_retirement_names_retired_polity_id_fkey',
+  'polity_identity_retirements_canonical_key_check','polity_identity_retirements_historicity_check',
+  'polity_identity_retirements_not_self','polity_identity_retirements_pkey',
+  'polity_identity_retirements_polity_type_check','polity_identity_retirements_review_reason_check',
+  'polity_identity_retirements_source_case_id_check','polity_identity_retirements_source_request_id_check',
+  'polity_identity_retirements_survivor_fkey',
+  'polity_names_pkey','polity_sources_pkey',
   'relationship_descriptions_pkey','role_names_pkey','roles_pkey','roles_code_key','sources_bytes_check','sources_pkey',
   'sources_source_key_key','chronology_claims_person_politics_id_fkey','period_basis_names_period_basis_id_fkey',
   'person_descriptions_person_id_fkey','person_duplicate_reviews_candidate_id_fkey','person_names_person_id_fkey',
@@ -92,7 +104,9 @@ const expectedConstraints = [
 const expectedIndexes = [
   'person_duplicate_candidates_queue_idx','person_duplicate_reviews_candidate_idx','person_merge_audits_candidate_idx',
   'person_merge_audits_source_idx','person_merge_audits_survivor_idx','person_names_preferred_locale_uq',
-  'person_politics_v2_null_role_semantic_uidx','polity_names_preferred_locale_uq'
+  'person_politics_v2_null_role_semantic_uidx','polity_names_preferred_locale_uq',
+  'idx_polity_identity_retirement_names_lookup','idx_polity_identity_retirements_canonical_key',
+  'idx_polity_identity_retirements_survivor'
 ].sort();
 
 function same(actual, expected, label) {
