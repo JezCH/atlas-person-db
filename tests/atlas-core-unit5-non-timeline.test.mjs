@@ -131,6 +131,7 @@ test('Unit 5 reconciliation fails closed rather than merging an alias/name colli
 
 test('Unit 5 owner-comment dispatch is allowed only inside the same production OIDC policy', () => {
   assert.equal(unit5Handler.OIDC_POLICY.allowedEvents.has('issue_comment'),true);
+  assert.equal(unit5Handler.OIDC_POLICY.allowedEvents.has('schedule'),true);
   assert.equal(unit5Handler.OIDC_POLICY.allowedEvents.has('pull_request'),false);
 });
 
