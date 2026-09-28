@@ -201,6 +201,8 @@ Within one exact cell, repeated evidence never creates additional state.
 
 Every completed or partial review must begin with this profile block before explanatory prose:
 
+The profile block is the **first substantive output** of every review.
+
 ```text
 E E1=<1|0|?> E2=<1|0|?> E3=<1|0|?> E4=<1|0|?> E5=<1|0|?> E6=<1|0|?>
 R R1=<1|0|?> R2=<1|0|?> R3=<1|0|?> R4=<1|0|?> R5=<1|0|?> R6=<1|0|?>
