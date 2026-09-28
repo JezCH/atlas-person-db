@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:dharmakirti:vardhana:v1",
+  "person": {
+    "canonical_name_en": "Dharmakīrti",
+    "display_name_ko": "다르마키르티",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "knowledge"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Vardhana Empire",
+    "display_name_ko": "바르다나 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Buddhist logician and epistemologist",
+    "role_display_name_ko": "불교 논리학자·인식론자",
+    "start_year": 630,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 630,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "disputed",
+    "chronology_status": "reviewed",
+    "notes": "Representative c.630 intellectual point under the influential c.600–660 reconstruction, not an asserted exact event or uncontested lifespan date. SEP explicitly warns that sixth- versus seventh-century dating remains debated, while Tibetan sources place Dharmakīrti at Nālandā. Oxford's standard reference chronology gives c.600–660, and Oxford's history of Harsha describes Nālandā as a major Buddhist centre during Harsha's 606–647 reign. ATLAS therefore records a Vardhana Empire active_in rail at disputed confidence so the chronological controversy remains visible rather than being silently resolved."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Stanford Encyclopedia of Philosophy — Dharmakīrti",
+      "canonical_url": "https://plato.stanford.edu/entries/dharmakiirti/",
+      "citation_text": "SEP reports Tibetan traditions placing Dharmakīrti at Nālandā and emphasizes the unresolved sixth-versus-seventh-century dating debate, including both c.600–660 and earlier proposals.",
+      "locator": "Biography and chronology"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Oxford Bibliographies — The Philosophical Works and Influence of Dignāga and Dharmakīrti",
+      "canonical_url": "https://academic.oup.com/reference/62340/reference-article-abstract/571451285",
+      "citation_text": "Oxford's reference introduction gives Dharmakīrti approximately 600–660 CE.",
+      "locator": "Introduction"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Harsha and His Times — India's Ancient Past",
+      "canonical_url": "https://academic.oup.com/book/27690/chapter-abstract/197833951",
+      "citation_text": "Oxford describes Harsha's authority in North India and Nalanda's large Buddhist establishment during Harshavardhana's reign.",
+      "locator": "Chapter 27"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-INDIA-BUDDHIST-04",
+    "dedup_method": "Exact Production searches for Dharmakīrti, Dharmakirti, 다르마키르티, and 법칭 returned zero Persons immediately before authoring.",
+    "namuwiki_review": "Exact indexed searches for 다르마키르티/법칭/Dharmakīrti found no independent NamuWiki Person document; no guessed URL.",
+    "polity_inference": "Explicitly chronology-contingent spatiotemporal attribution. The c.630 point adopts the long-standing c.600–660 reconstruction and Nālandā activity tradition; Vardhana political context is used only at disputed confidence. Earlier sixth-century dating remains recorded in notes."
+  }
+}
