@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:uisang:v1",
+  "person": {
+    "canonical_name_en": "Uisang",
+    "display_name_ko": "의상",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Silla"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Buddhist philosopher and teacher",
+    "role_display_name_ko": "불교 사상가·교육자",
+    "start_year": 670,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 702,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative post-return Hwaeom intellectual and teaching activity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "의상 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0043250",
+      "citation_text": "AKS records Uisang's return to Silla in 670 and his subsequent establishment of the foundations of Korean Hwaeom through temples, disciples, teaching and propagation; he died in 702.",
+      "locator": "귀국 후의 활동"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-KOREA-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository-wide PR/issue identity search on 2026-09-28 found no prior governed registration evidence; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "External indexed search for an exact NamuWiki Person document returned no independently verifiable result on 2026-09-28; reviewed not_found rather than guessing a URL."
+  }
+}
