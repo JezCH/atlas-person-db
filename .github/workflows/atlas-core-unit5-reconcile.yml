@@ -1,0 +1,117 @@
+name: ATLAS CORE Unit 5 Non-Timeline Reconciliation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'db/migrations/20260928_person_timeline_dispositions.sql'
+      - 'server/atlas-authoring-migrations.js'
+      - 'server/atlas-replay-migration-safety.js'
+      - 'server/atlas-person-timeline-service.js'
+      - 'server/atlas-person-profile-service.js'
+      - 'server/atlas-core-unit5-reconciliation-service.js'
+      - 'server/atlas-core-unit5-reconciliation-handler.js'
+      - 'api/atlas-core-unit5-reconcile.js'
+      - 'data/migrations/core-v2-unit5-non-timeline-canonicalization.v1.json'
+      - '.github/workflows/atlas-core-unit5-reconcile.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-core-unit5-non-timeline-reconciliation
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    env:
+      ATLAS_RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
+      ATLAS_UNIT5_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-core-unit5-reconcile
+      ATLAS_UNIT5_AUDIENCE: atlas-person-db-core-unit5
+      ATLAS_UNIT5_MANIFEST: data/migrations/core-v2-unit5-non-timeline-canonicalization.v1.json
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for exact Production deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 60); do
+            status="$(curl --silent --show-error               --output /tmp/atlas-runtime-identity.json               --write-out '%{http_code}'               "$ATLAS_RUNTIME_IDENTITY_ENDPOINT")"
+            if [[ "$status" == "200" ]]; then
+              runtime_sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/atlas-runtime-identity.json)"
+              runtime_ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/atlas-runtime-identity.json)"
+              if [[ "$runtime_sha" == "$GITHUB_SHA" && "$runtime_ref" == "main" ]]; then
+                echo "Exact Production deployment is ready at $runtime_sha"
+                exit 0
+              fi
+              echo "Production is ${runtime_sha:-unknown}; waiting for $GITHUB_SHA (attempt ${attempt}/60)."
+            else
+              echo "Runtime identity HTTP $status (attempt ${attempt}/60)."
+            fi
+            sleep 10
+          done
+          cat /tmp/atlas-runtime-identity.json >&2 || true
+          echo "UNIT5_EXACT_PRODUCTION_DEPLOYMENT_NOT_AVAILABLE" >&2
+          exit 1
+
+      - name: Dry-run and apply canonical reconciliation
+        shell: bash
+        run: |
+          set -euo pipefail
+          oidc_token="$(curl --fail-with-body --silent --show-error             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_UNIT5_AUDIENCE}" | jq -er '.value')"
+
+          call_unit5() {
+            local mode="$1" dry="$2" out="/tmp/unit5-${mode}.json" payload status
+            payload="$(jq -cn               --arg workflow_sha "$GITHUB_SHA"               --argjson dry_run "$dry"               --slurpfile manifest "$ATLAS_UNIT5_MANIFEST"               '{workflow_sha:$workflow_sha,dry_run:$dry_run,manifest:$manifest[0]}')"
+            status="$(curl --silent --show-error               --output "$out"               --write-out '%{http_code}'               --request POST               -H 'content-type: application/json'               -H "authorization: Bearer $oidc_token"               --data "$payload"               "$ATLAS_UNIT5_ENDPOINT")"
+            if [[ "$status" != "200" ]]; then
+              cat "$out" >&2 || true
+              echo "Unit 5 ${mode} failed: HTTP ${status}" >&2
+              exit 1
+            fi
+            jq -e               --arg sha "$GITHUB_SHA"               --argjson dry "$dry" '
+                .ok==true
+                and .marker=="ATLAS_CORE_UNIT5_NON_TIMELINE_RECONCILIATION_V1"
+                and .runtime_sha==$sha
+                and .outcome.schema=="atlas-core-unit5-non-timeline-reconciliation/v1"
+                and .outcome.dry_run==$dry
+                and .outcome.counts.exclusion_count==124
+                and (.outcome.counts.person_count == (.outcome.counts.timeline_count + .outcome.counts.exclusion_count))
+                and (
+                  (.outcome.created_persons==121 and .outcome.reused_persons==3 and .outcome.replay==false)
+                  or
+                  (.outcome.created_persons==0 and .outcome.reused_persons==124 and .outcome.replay==true)
+                )
+              ' "$out" >/dev/null
+            jq . "$out"
+          }
+
+          call_unit5 dry-run true
+          call_unit5 apply false
+
+      - name: Verify canonical Person read-back
+        shell: bash
+        run: |
+          set -euo pipefail
+          status="$(curl --silent --show-error             --output /tmp/unit5-person-read.json             --write-out '%{http_code}'             'https://atlas-person-db.vercel.app/api/atlas-person-read')"
+          [[ "$status" == "200" ]] || {
+            cat /tmp/unit5-person-read.json >&2 || true
+            echo "Person read-back failed: HTTP $status" >&2
+            exit 1
+          }
+          jq -e '
+            .ok==true
+            and .mode=="list"
+            and ([.persons[] | select(.canonical_name_en=="Kupe" and .activity_count==0)] | length)==1
+            and ([.persons[] | select(.canonical_name_en=="Hiawatha" and .activity_count==0)] | length)==1
+            and ([.persons[] | select(.canonical_name_en=="Gush X'\''een" and .activity_count==0)] | length)==1
+            and ([.persons[] | select(.canonical_name_en=="Dido" and .activity_count==0)] | length)==1
+          ' /tmp/unit5-person-read.json >/dev/null
+          jq '{total:.summary.total,checked:["Kupe","Hiawatha","Gush X'\''een","Dido"]}' /tmp/unit5-person-read.json
