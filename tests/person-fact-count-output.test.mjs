@@ -2,75 +2,69 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
-  assertPersonFactCountOutput,
-  formatPersonFactCountResult,
-  validatePersonFactCountOutput,
+  assertPersonFactProfileOutput,
+  formatPersonFactProfile,
+  validatePersonFactProfileOutput,
 } from '../server/person-fact-count-output.mjs';
 
-test('formatter always emits the canonical result block with arithmetic total', () => {
-  const output = formatPersonFactCountResult({
-    E: 5, R: 4, T: 3, D: 2, G: 6, S: 1, unresolved: 4,
-  });
+const base = {
+  E: ['1','1','1','1','1','?'],
+  R: ['1','1','1','0','1','1'],
+  T: ['1','1','1','1','?','0'],
+  D: {
+    governance: '1', military: '1', knowledge: '0', technology: '0',
+    commerce: '0', culture: '?', religion: '0', exploration: '0',
+  },
+  G: {
+    originSet: ['Germany'],
+    externalReceptionSet: ['Netherlands','Sweden'],
+    unresolved: ['France reception classification'],
+  },
+  S: ['0','1','1','?','1','0'],
+};
 
-  assert.equal(output, [
-    'E 5/6',
-    'R 4/6',
-    'T 3/6',
-    'D 2/6',
-    'G 6/6',
-    'S 1/6',
-    'VERIFIED_TOTAL 21/36',
-    'UNRESOLVED 4',
-  ].join('\n'));
-
-  assert.deepEqual(assertPersonFactCountOutput(output), {
-    ok: true,
-    counts: { E: 5, R: 4, T: 3, D: 2, G: 6, S: 1 },
-    verifiedTotal: 21,
-    unresolved: 4,
-  });
+test('formatter emits the canonical fact profile with no scalar total', () => {
+  const output = formatPersonFactProfile(base);
+  assert.doesNotMatch(output, /VERIFIED_TOTAL/);
+  assert.doesNotMatch(output, /\/36/);
+  assert.match(output, /^E E1=1 E2=1 E3=1 E4=1 E5=1 E6=\?/);
+  assert.match(output, /STATUS HOLD$/);
+  const validated = assertPersonFactProfileOutput(output);
+  assert.equal(validated.standard, 'ATLAS-PHFP-4.0');
+  assert.equal(validated.status, 'HOLD');
+  assert.deepEqual(validated.unresolved, ['E6','T5','S4','D.culture','G:France reception classification']);
 });
 
-test('validator rejects prose before the result block', () => {
-  const output = [
-    '먼저 근거를 설명한다.',
-    'E 1/6', 'R 1/6', 'T 1/6', 'D 1/6', 'G 1/6', 'S 1/6',
-    'VERIFIED_TOTAL 6/36', 'UNRESOLVED 0',
-  ].join('\n');
-  assert.equal(validatePersonFactCountOutput(output).ok, false);
+test('validator rejects prose before the profile block', () => {
+  const output = '설명부터 시작\n' + formatPersonFactProfile(base);
+  assert.equal(validatePersonFactProfileOutput(output).ok, false);
 });
 
-test('validator accepts an optional opening code fence but no prose preamble', () => {
-  const output = [
-    '```text',
-    'E 1/6', 'R 2/6', 'T 3/6', 'D 4/6', 'G 5/6', 'S 6/6',
-    'VERIFIED_TOTAL 21/36', 'UNRESOLVED 2',
-    '```', '', '근거 설명은 이 뒤에 온다.',
-  ].join('\n');
-  assert.equal(validatePersonFactCountOutput(output).ok, true);
+test('validator rejects legacy aggregate output', () => {
+  const output = formatPersonFactProfile(base) + '\nVERIFIED_TOTAL 25/36';
+  const result = validatePersonFactProfileOutput(output);
+  assert.equal(result.ok, false);
+  assert.match(result.error, /aggregate scalar output is forbidden/);
 });
 
-test('validator rejects missing total and arithmetic mismatch', () => {
-  const missingTotal = [
-    'E 1/6', 'R 1/6', 'T 1/6', 'D 1/6', 'G 1/6', 'S 1/6',
-    'UNRESOLVED 0',
-  ].join('\n');
-  assert.equal(validatePersonFactCountOutput(missingTotal).ok, false);
-
-  const mismatch = [
-    'E 1/6', 'R 1/6', 'T 1/6', 'D 1/6', 'G 1/6', 'S 1/6',
-    'VERIFIED_TOTAL 5/36', 'UNRESOLVED 0',
-  ].join('\n');
-  assert.match(validatePersonFactCountOutput(mismatch).error, /arithmetic mismatch/);
+test('formatter derives COMPLETE only when every unresolved item is cleared', () => {
+  const complete = structuredClone(base);
+  complete.E[5] = '0';
+  complete.T[4] = '1';
+  complete.D.culture = '0';
+  complete.G.unresolved = [];
+  complete.S[3] = '0';
+  const output = formatPersonFactProfile(complete);
+  assert.match(output, /UNRESOLVED \[\]\nSTATUS COMPLETE$/);
+  assert.equal(validatePersonFactProfileOutput(output).ok, true);
 });
 
-test('formatter refuses invalid values', () => {
-  assert.throws(
-    () => formatPersonFactCountResult({ E: 7, R: 0, T: 0, D: 0, G: 0, S: 0, unresolved: 0 }),
-    /E must be an integer from 0 to 6/,
-  );
-  assert.throws(
-    () => formatPersonFactCountResult({ E: 0, R: 0, T: 0, D: 0, G: 0, S: 0, unresolved: -1 }),
-    /unresolved must be a non-negative integer/,
-  );
+test('formatter rejects malformed state and geographic overlap', () => {
+  const badState = structuredClone(base);
+  badState.E[0] = '2';
+  assert.throws(() => formatPersonFactProfile(badState), /must be 1, 0, or \?/);
+
+  const overlap = structuredClone(base);
+  overlap.G.externalReceptionSet.push('Germany');
+  assert.throws(() => formatPersonFactProfile(overlap), /overlaps ORIGIN_SET/);
 });
