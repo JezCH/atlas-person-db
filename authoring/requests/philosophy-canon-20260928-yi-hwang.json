@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:yi-hwang:v1",
+  "person": {
+    "canonical_name_en": "Yi Hwang",
+    "display_name_ko": "이황",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "documented_death"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Joseon"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Confucian philosopher and teacher",
+    "role_display_name_ko": "유학자·교육자",
+    "start_year": 1568,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1568,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative intellectual milestone: presentation of Seonghak sipdo in 1568."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "성학십도 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0029678",
+      "citation_text": "AKS dates Yi Hwang's presentation of the Ten Diagrams on Sage Learning to King Seonjo to December 1568; SEP identifies Yi Hwang and Yi I as towering figures of early Joseon Neo-Confucianism.",
+      "locator": "개설; 편찬/발간 경위"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-KOREA-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository-wide PR/issue identity search on 2026-09-28 found no prior governed registration evidence; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "External indexed search for an exact NamuWiki Person document returned no independently verifiable result on 2026-09-28; reviewed not_found rather than guessing a URL."
+  }
+}
