@@ -1,0 +1,74 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-28",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "4aa6065c78b4b6a66e511dc6bf2e7956fd7d404e",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply only the nine explicit human-reviewed knowledge assignments for philosophy-canon Japan batch 01. Preserve existing non-null Production values and fail closed on conflict."
+  },
+  "review_scope": {
+    "task_key": "PHILOSOPHY-CANON-54-JAPAN-01-DOMAIN-20260928",
+    "reviewed_assignments": 9,
+    "reviewed_holds": 0,
+    "rationale": "All nine Persons are represented in this campaign by philosophical, doctrinal, or intellectual activity."
+  },
+  "entries": [
+    {
+      "person_id": "a71a1241-0352-475a-916b-c5d817604021",
+      "canonical_name_en": "Dōgen",
+      "preferred_name_ko": "도겐",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "9f26c0d4-db4d-4b0e-9594-ecbaa7503d0b",
+      "canonical_name_en": "Hōnen",
+      "preferred_name_ko": "호넨",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "dd6529c5-de4d-4f20-9ba7-187f552e2d90",
+      "canonical_name_en": "Kūkai",
+      "preferred_name_ko": "구카이",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "d334100f-6b44-46e7-a04a-6f3fbb1b08ac",
+      "canonical_name_en": "Motoori Norinaga",
+      "preferred_name_ko": "모토오리 노리나가",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "7c82b545-ee1a-4810-8ec9-aa4a6710ff85",
+      "canonical_name_en": "Nichiren",
+      "preferred_name_ko": "니치렌",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "57ed9f28-b206-4151-8317-f77659347ee7",
+      "canonical_name_en": "Nishida Kitarō",
+      "preferred_name_ko": "니시다 기타로",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "23dd2f89-ab58-4b6d-9fed-f3db48da28e1",
+      "canonical_name_en": "Ogyū Sorai",
+      "preferred_name_ko": "오규 소라이",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "df30b154-09b3-4a4e-9f35-1591ac30391f",
+      "canonical_name_en": "Saichō",
+      "preferred_name_ko": "사이초",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "1ad440e3-5e17-49a3-bc5e-f163b2733e3e",
+      "canonical_name_en": "Shinran",
+      "preferred_name_ko": "신란",
+      "representative_domain": "knowledge"
+    }
+  ]
+}
