@@ -64,11 +64,12 @@ function manifest(overrides = {}) {
   };
 }
 
-function fakeClient({ externalReferences = 0 } = {}) {
+function fakeClient({ externalReferences = 0, registryReady = true } = {}) {
   const state = {
     deleted: false,
     ledger: null,
     externalReferences,
+    registryReady,
     retirement: null,
     retirementNames: [],
     txSnapshot: null
@@ -96,6 +97,7 @@ function fakeClient({ externalReferences = 0 } = {}) {
         state.txSnapshot = {
           deleted: state.deleted,
           ledger: state.ledger,
+          registryReady: state.registryReady,
           retirement: state.retirement ? { ...state.retirement } : null,
           retirementNames: state.retirementNames.map((row) => ({ ...row }))
         };
@@ -105,6 +107,7 @@ function fakeClient({ externalReferences = 0 } = {}) {
         if (state.txSnapshot) {
           state.deleted = state.txSnapshot.deleted;
           state.ledger = state.txSnapshot.ledger;
+          state.registryReady = state.txSnapshot.registryReady;
           state.retirement = state.txSnapshot.retirement;
           state.retirementNames = state.txSnapshot.retirementNames;
         }
@@ -116,6 +119,14 @@ function fakeClient({ externalReferences = 0 } = {}) {
         return { rows: [] };
       }
       if (lower.includes("pg_advisory_xact_lock")) return { rows: [] };
+      if (lower.includes("to_regclass('atlas_v2.polity_identity_retirements')")) {
+        return { rows: [{ registry_ready: state.registryReady }] };
+      }
+      if (lower.includes("create table if not exists atlas_v2.polity_identity_retirements")) {
+        state.registryReady = true;
+        return { rows: [] };
+      }
+
       if (lower.includes("to_regclass('atlas_v2.correction_manifest_runs')")) {
         return { rows: [{ correction_manifest_runs: "atlas_v2.correction_manifest_runs" }] };
       }
@@ -240,6 +251,22 @@ test("dry-run deletes only inside the serializable transaction and rolls back", 
   assert.equal(client.state.deleted, false);
   assert.equal(client.state.ledger, null);
   assert.equal(client.statements.some(({ sql }) => /^\s*delete from atlas_v2\.polities/i.test(sql)), true);
+  assert.equal(client.statements.at(-1).sql.trim().toLowerCase(), "rollback");
+});
+
+test("dry-run can stage the Unit 4 registry inside its transaction without persisting schema", async () => {
+  const client = fakeClient({ registryReady: false });
+  const service = createCorrectionPolityRetireV2Service({ client });
+  const outcome = await service.execute(manifest(), { dryRun: true });
+
+  assert.equal(outcome.dry_run, true);
+  assert.equal(outcome.committed, false);
+  assert.equal(client.state.registryReady, false);
+  assert.equal(client.state.deleted, false);
+  assert.equal(
+    client.statements.some(({ sql }) => /create table if not exists atlas_v2\.polity_identity_retirements/i.test(sql)),
+    true
+  );
   assert.equal(client.statements.at(-1).sql.trim().toLowerCase(), "rollback");
 });
 
