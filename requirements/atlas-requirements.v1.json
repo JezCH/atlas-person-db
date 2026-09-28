@@ -124,7 +124,7 @@
     {
       "id": "ATLAS-RQ-0020",
       "status": "ACTIVE",
-      "title": "Person registration-value scoring uses ATLAS-PRV-2.4 as the single canonical 30-point numeric standard; no categorical grade or tier is derived",
+      "title": "Person comparison and registration review uses ATLAS-PHFC-3.0 factual counting only: O/R/T/D/P/G/L verified counts sum to TOTAL 0..42, with no evaluator-assigned importance, greatness, irreplaceability, grade, or role-based exception",
       "evidence_paths": [
         "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
         "authoring/REGISTRATION_SOP.md",
