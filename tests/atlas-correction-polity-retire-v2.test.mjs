@@ -17,9 +17,16 @@ const {
 } = require("../server/atlas-correction-manifest-v2-dispatch-service.js");
 
 const POLITY_ID = "46534f7e-9247-5644-b5ad-9525c3d4f5d6";
+const SURVIVOR_ID = "56534f7e-9247-5644-b5ad-9525c3d4f5d6";
 const POLITY = Object.freeze({
   id: POLITY_ID,
   canonical_key: "Tokugawa Shogunate",
+  polity_type: "historical_polity",
+  historicity: "historical"
+});
+const SURVIVOR = Object.freeze({
+  id: SURVIVOR_ID,
+  canonical_key: "Japan",
   polity_type: "historical_polity",
   historicity: "historical"
 });
@@ -62,6 +69,8 @@ function fakeClient({ externalReferences = 0 } = {}) {
     deleted: false,
     ledger: null,
     externalReferences,
+    retirement: null,
+    retirementNames: [],
     txSnapshot: null
   };
   const statements = [];
@@ -84,13 +93,20 @@ function fakeClient({ externalReferences = 0 } = {}) {
       statements.push({ sql: text, params });
 
       if (lower === "begin isolation level serializable") {
-        state.txSnapshot = { deleted: state.deleted, ledger: state.ledger };
+        state.txSnapshot = {
+          deleted: state.deleted,
+          ledger: state.ledger,
+          retirement: state.retirement ? { ...state.retirement } : null,
+          retirementNames: state.retirementNames.map((row) => ({ ...row }))
+        };
         return { rows: [] };
       }
       if (lower === "rollback") {
         if (state.txSnapshot) {
           state.deleted = state.txSnapshot.deleted;
           state.ledger = state.txSnapshot.ledger;
+          state.retirement = state.txSnapshot.retirement;
+          state.retirementNames = state.txSnapshot.retirementNames;
         }
         state.txSnapshot = null;
         return { rows: [] };
@@ -122,7 +138,39 @@ function fakeClient({ externalReferences = 0 } = {}) {
         return { rows: [{ ...POLITY }], rowCount: 1 };
       }
       if (lower.includes("from atlas_v2.polities") && lower.includes("where id=$1::uuid")) {
-        return { rows: state.deleted ? [] : [{ ...POLITY }] };
+        const id = String(params[0] || "").toLowerCase();
+        if (id === SURVIVOR_ID) return { rows: [{ ...SURVIVOR }] };
+        if (id === POLITY_ID) return { rows: state.deleted ? [] : [{ ...POLITY }] };
+        return { rows: [] };
+      }
+      if (lower.startsWith("insert into atlas_v2.polity_identity_retirements")) {
+        if (state.retirement) return { rows: [], rowCount: 0 };
+        state.retirement = {
+          retired_polity_id: String(params[0]).toLowerCase(),
+          survivor_polity_id: params[1] == null ? null : String(params[1]).toLowerCase(),
+          canonical_key: String(params[2]),
+          polity_type: String(params[3]),
+          historicity: String(params[4]),
+          review_reason: String(params[5]),
+          source_request_id: String(params[6]),
+          source_case_id: String(params[7])
+        };
+        return { rows: [{ retired_polity_id: state.retirement.retired_polity_id }], rowCount: 1 };
+      }
+      if (lower.includes("from atlas_v2.polity_identity_retirements") && lower.includes("where retired_polity_id=$1::uuid")) {
+        return { rows: state.retirement ? [{ ...state.retirement }] : [] };
+      }
+      if (lower.startsWith("insert into atlas_v2.polity_identity_retirement_names")) {
+        state.retirementNames.push({
+          retired_polity_id: String(params[0]).toLowerCase(),
+          locale: String(params[1]),
+          name: String(params[2]),
+          is_preferred: Boolean(params[3])
+        });
+        return { rows: [], rowCount: 1 };
+      }
+      if (lower.includes("from atlas_v2.polity_identity_retirement_names") && lower.includes("where retired_polity_id=$1::uuid")) {
+        return { rows: state.retirementNames.map(({ locale, name, is_preferred }) => ({ locale, name, is_preferred })) };
       }
       if (lower.includes("from atlas_v2.polity_names") && lower.includes("where polity_id=$1::uuid") && lower.includes("is_preferred=true")) {
         return { rows: state.deleted ? [] : NAMES.map((row) => ({ ...row })) };
@@ -212,11 +260,34 @@ test("apply writes one correction ledger and replay requires the polity to remai
   assert.equal(first.replay, false);
   assert.equal(client.state.deleted, true);
   assert.equal(client.state.ledger.manifest_schema, "atlas-correction-manifest/v2");
+  assert.equal(client.state.retirement.retired_polity_id, POLITY_ID);
+  assert.equal(client.state.retirement.survivor_polity_id, null);
+  assert.deepEqual(
+    client.state.retirementNames.map(({locale,name,is_preferred})=>({locale,name,is_preferred})),
+    NAMES
+  );
 
   const second = await service.execute(manifest(), { dryRun: false });
   assert.equal(second.committed, true);
   assert.equal(second.replay, true);
   assert.equal(client.state.deleted, true);
+});
+
+test("reviewed same-identity retirement persists an explicit canonical survivor redirect", async () => {
+  const client = fakeClient();
+  const service = createCorrectionPolityRetireV2Service({ client });
+  const input = manifest({
+    operation: {
+      review_reason: REVIEW_REASON_SAME_IDENTITY_STATE_FORM,
+      survivor_polity_id: SURVIVOR_ID
+    }
+  });
+  const outcome = await service.execute(input, { dryRun: false });
+  assert.equal(outcome.committed, true);
+  assert.equal(client.state.deleted, true);
+  assert.equal(client.state.retirement.retired_polity_id, POLITY_ID);
+  assert.equal(client.state.retirement.survivor_polity_id, SURVIVOR_ID);
+  assert.equal(outcome.result.operations[0].survivor_polity_id, SURVIVOR_ID);
 });
 
 test("v2 dispatch isolates Polity retirement from every other correction family", async () => {
