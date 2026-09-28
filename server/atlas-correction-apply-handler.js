@@ -194,7 +194,7 @@ function createCorrectionApplyHandler({
       }
 
       if (payload.plan) {
-        if (payload.mode === "apply" || payload.mode === "dry_run") await applyMigrations(client);
+        if (payload.mode === "apply") await applyMigrations(client);
         const activityIds = requiredV2SnapshotIds(payload.plan);
         const snapshot = await createV2Snapshot(client, activityIds);
         const manifest = synthesizeV2Plan(payload.plan, snapshot);
@@ -218,7 +218,7 @@ function createCorrectionApplyHandler({
         });
       }
 
-      if (payload.mode === "apply" || payload.mode === "dry_run") await applyMigrations(client);
+      if (payload.mode === "apply") await applyMigrations(client);
       const service = createService(client, payload.schema);
       const outcome = await service.execute(payload.manifest, { dryRun: payload.mode === "dry_run" });
       return json(res, 200, {
