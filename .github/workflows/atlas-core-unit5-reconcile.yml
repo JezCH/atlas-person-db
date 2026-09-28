@@ -19,6 +19,8 @@ on:
   workflow_dispatch:
   issue_comment:
     types: [created]
+  pull_request_target:
+    types: [opened]
   schedule:
     - cron: '*/5 * * * *'
 
@@ -33,10 +35,15 @@ concurrency:
 jobs:
   reconcile:
     if: >-
-      github.event_name != 'issue_comment' ||
-      (github.event.issue.number == 917 &&
+      (github.event_name != 'issue_comment' && github.event_name != 'pull_request_target') ||
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.number == 917 &&
        github.actor == 'JezCH' &&
-       github.event.comment.body == 'RUN_CORE_V2_UNIT5_RECONCILIATION_20260928')
+       github.event.comment.body == 'RUN_CORE_V2_UNIT5_RECONCILIATION_20260928') ||
+      (github.event_name == 'pull_request_target' &&
+       github.actor == 'JezCH' &&
+       github.event.pull_request.base.ref == 'main' &&
+       github.event.pull_request.head.ref == 'core-v2-unit5-production-trigger-20260928')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: production
