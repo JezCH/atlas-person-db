@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260928:wang-yangming:v1",
+  "person": {
+    "canonical_name_en": "Wang Yangming",
+    "display_name_ko": "왕양명",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-28",
+    "life_status_basis": "documented_death_1529"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-28"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Ming Dynasty"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Neo-Confucian philosopher and teacher",
+    "role_display_name_ko": "성리학자·교육자",
+    "start_year": 1508,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1508,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative intellectual milestone: SEP dates Wang Yangming's major philosophical awakening during his Guizhou exile to 1508. This is a milestone point, not a lifespan rail."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Wang Yangming — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/wang-yangming/",
+      "citation_text": "SEP identifies Wang Yangming (1472–1529) as a leading Neo-Confucian philosopher and dates his major philosophical awakening in Guizhou to 1508.",
+      "locator": "Life; 1508 philosophical awakening"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260928-CHINA-01",
+    "representative_domain": "knowledge",
+    "dedup_method": "Repository PR/issue identity search on 2026-09-28 found no prior Wang Yangming registration evidence; canonical Production preflight remains authoritative.",
+    "namuwiki_review": "External indexed search for an exact NamuWiki Wang Yangming/왕양명 Person document returned no verifiable result on 2026-09-28; reviewed not_found.",
+    "identity_note": "Wang Shouren 王守仁, commonly known as Wang Yangming; SEP gives 1472–1529."
+  }
+}
