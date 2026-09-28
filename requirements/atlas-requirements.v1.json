@@ -124,11 +124,14 @@
     {
       "id": "ATLAS-RQ-0020",
       "status": "ACTIVE",
-      "title": "Person historical fact counting uses ATLAS-PHFC-3.1 only: E/R/T/D/G/S verified coverage cells sum arithmetically to VERIFIED_TOTAL 0..36; 1/0/? states preserve unresolved evidence; no elapsed-time persistence axis, evaluator-assigned importance, greatness, irreplaceability, political value, grade, or role-based formula",
+      "title": "Person historical fact counting uses ATLAS-PHFC-3.2 only; E/R/T/D/G/S counts are rendered by the canonical machine formatter, VERIFIED_TOTAL is arithmetic-derived, the result block must be first, and validation fails on preamble, omission, order drift, range error, or arithmetic mismatch with no role/office/ideology/political-status exception",
       "evidence_paths": [
         "docs/ATLAS_PERSON_REGISTRATION_VALUE_STANDARD.md",
         "authoring/REGISTRATION_SOP.md",
-        "docs/core/CORE_V2_MASTER_PLAN.md"
+        "docs/core/CORE_V2_MASTER_PLAN.md",
+        "server/person-fact-count-output.mjs",
+        "scripts/verify-person-fact-count-output.mjs",
+        "tests/person-fact-count-output.test.mjs"
       ]
     },
     {
