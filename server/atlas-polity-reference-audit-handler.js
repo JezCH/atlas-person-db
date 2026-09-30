@@ -4,6 +4,7 @@ const {
   verifyGitHubActionsOidc
 } = require("./atlas-audit-github-oidc.js");
 const { createPostgresClient } = require("./atlas-postgres-client.js");
+const { discoverIdentityReferences } = require("./atlas-destructive-lifecycle-service.js");
 const {
   bearerToken,
   requireDeployment
@@ -66,74 +67,26 @@ async function queryPolities(client) {
 }
 
 async function discoverPolityReferences(client) {
-  const fkResult = await client.query(`
-      select src_ns.nspname as source_schema,
-             src.relname as source_table,
-             src_att.attname as source_column,
-             con.conname as constraint_name,
-             tgt_att.attname as target_column,
-             array_length(con.conkey, 1)::int as source_key_count,
-             array_length(con.confkey, 1)::int as target_key_count
-        from pg_constraint con
-        join pg_class src on src.oid = con.conrelid
-        join pg_namespace src_ns on src_ns.oid = src.relnamespace
-        join pg_class tgt on tgt.oid = con.confrelid
-        join pg_namespace tgt_ns on tgt_ns.oid = tgt.relnamespace
-        join lateral unnest(con.conkey) with ordinality src_key(attnum, ord) on true
-        join lateral unnest(con.confkey) with ordinality tgt_key(attnum, ord) on tgt_key.ord = src_key.ord
-        join pg_attribute src_att on src_att.attrelid = src.oid and src_att.attnum = src_key.attnum
-        join pg_attribute tgt_att on tgt_att.attrelid = tgt.oid and tgt_att.attnum = tgt_key.attnum
-       where con.contype = 'f'
-         and tgt_ns.nspname = $1
-         and tgt.relname = $2
-       order by src_ns.nspname, src.relname, src_att.attname, con.conname`, [TARGET_SCHEMA, TARGET_TABLE]);
-
-  const semanticResult = await client.query(`
-      select c.table_schema as source_schema,
-             c.table_name as source_table,
-             c.column_name as source_column
-        from information_schema.columns c
-        join information_schema.tables t
-          on t.table_schema = c.table_schema
-         and t.table_name = c.table_name
-       where c.table_schema = $1
-         and c.column_name = 'polity_id'
-         and t.table_type = 'BASE TABLE'
-       order by c.table_schema, c.table_name, c.column_name`, [TARGET_SCHEMA]);
-
-  const references = new Map();
-  for (const row of fkResult.rows) {
-    if (Number(row.source_key_count) !== 1 || Number(row.target_key_count) !== 1 || row.target_column !== TARGET_COLUMN) {
-      const error = new Error("POLITY_REFERENCE_AUDIT_UNSUPPORTED_FOREIGN_KEY");
-      error.reference = row;
-      throw error;
-    }
+  let discovered;
+  try { discovered = await discoverIdentityReferences(client, {
+    targetTable: TARGET_TABLE,
+    targetColumn: TARGET_COLUMN,
+    semanticColumnPattern: "^polity_id$"
+  }); } catch (error) {
+    if (error?.message === "DESTRUCTIVE_LIFECYCLE_UNSUPPORTED_FOREIGN_KEY") throw new Error("POLITY_REFERENCE_AUDIT_UNSUPPORTED_FOREIGN_KEY");
+    throw error;
+  }
+  const catalog = discovered.map((row) => {
     const ref = {
       source_schema: String(row.source_schema),
       source_table: String(row.source_table),
       source_column: String(row.source_column),
-      constraint_name: String(row.constraint_name),
-      constraint_backed: true
+      constraint_name: row.constraint_name == null ? null : String(row.constraint_name),
+      constraint_backed: Boolean(row.constraint_backed)
     };
     ref.classification = classifyReference(ref);
-    references.set(referenceKey(ref), ref);
-  }
-
-  for (const row of semanticResult.rows) {
-    const key = `${row.source_schema}.${row.source_table}.${row.source_column}`;
-    if (references.has(key)) continue;
-    const ref = {
-      source_schema: String(row.source_schema),
-      source_table: String(row.source_table),
-      source_column: String(row.source_column),
-      constraint_name: null,
-      constraint_backed: false
-    };
-    ref.classification = classifyReference(ref);
-    references.set(key, ref);
-  }
-
-  const catalog = [...references.values()].sort((a, b) => referenceKey(a).localeCompare(referenceKey(b)));
+    return ref;
+  });
   if (!catalog.some((ref) => referenceKey(ref) === "atlas_v2.person_politics_v2.polity_id")) {
     throw new Error("POLITY_REFERENCE_AUDIT_ACTIVITY_REFERENCE_MISSING");
   }

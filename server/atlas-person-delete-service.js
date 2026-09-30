@@ -5,6 +5,7 @@ const { lockPersonDuplicateFrontier } = require("./atlas-person-duplicate-fronti
 const { deletePersonExternalReferences } = require("./atlas-person-external-reference-lifecycle.js");
 const { deletePersonPortrait } = require("./atlas-person-portrait-lifecycle.js");
 
+
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function outcomeBase({ requestId, committed, v2, verification = null, validationFailures = [], transactionFailure = null, rollback = false }) {
@@ -86,7 +87,8 @@ async function verifyNoLiveReferences(client, personId, { requirementLedgerPrese
 
 function createPersonDeleteService({
   client,
-  frontierLock = lockPersonDuplicateFrontier
+  frontierLock = lockPersonDuplicateFrontier,
+  dependencyGuard = null
 } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
   if (typeof frontierLock !== "function") throw new Error("frontierLock must be a function");
@@ -106,6 +108,7 @@ function createPersonDeleteService({
       const requirementLedgerPresent = await tablePresent(client, "atlas_v2.person_duplicate_revalidation_requirements");
       const runtimeProjectionPresent = await tablePresent(client, "atlas_v2.runtime_person_politics_v1");
       await frontierLock(client);
+      if (dependencyGuard) await dependencyGuard(client);
 
       const person = await client.query(`
         select id,canonical_key,person_type,historicity

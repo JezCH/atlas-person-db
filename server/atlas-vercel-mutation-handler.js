@@ -2,6 +2,7 @@
 
 const { createV2AuthoritativeMutationService } = require("./atlas-v2-authoritative-mutation-service.js");
 const { createPersonDeleteService } = require("./atlas-person-delete-service.js");
+const { assertPersonMergeReferenceReadiness } = require("./atlas-person-merge-reference-readiness.js");
 const { createPersonProfileMutationService, PROFILE_OPERATIONS } = require("./atlas-person-profile-service.js");
 const { createMutationTransport, jsonResponse } = require("./atlas-mutation-transport.js");
 const { createV2AuthoritativeTransactionFactory } = require("./atlas-postgres-v2-authoritative-transaction.js");
@@ -53,7 +54,7 @@ function createVercelMutationHandler({ clientFactory, env = process.env, transac
       client = await clientFactory(databaseUrl);
       const { transactionFactory, verificationVerifier } = createV2AuthoritativeTransactionFactory({ client, ...transactionOptions });
       const activityMutationService = createV2AuthoritativeMutationService({ planner, transactionFactory, verificationVerifier });
-      const personDeleteService = createPersonDeleteService({ client });
+      const personDeleteService = createPersonDeleteService({ client, dependencyGuard: assertPersonMergeReferenceReadiness });
       const personProfileService = createPersonProfileMutationService({ client });
       const mutationService = Object.freeze({
         mutate: (mutationRequest) => {
