@@ -1,0 +1,328 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "as_of": "2026-09-30",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-directed Japan polity lineage correction on 2026-09-30; exact Production Baseline A captured at deployed SHA d69db292ab1b6eec14021db4fed85ab93b98d80d. The 1945 boundary uses Japan's signed Instrument of Surrender on 2 September 1945; the occupation-end boundary uses 28 April 1952 when the peace treaties came into force and the Allied Occupation ended.",
+  "baseline": {
+    "deployment_sha": "d69db292ab1b6eec14021db4fed85ab93b98d80d",
+    "baseline_digest": "sha256:7bfe2529126d3663ec977c2e5b9cb6fb58add5c1af2643bc499dbfa8d1d67c4f"
+  },
+  "batch_id": "polity_japan_lineage_empire_relinks_and_1945_end_20260930_v2",
+  "status": "REVIEWED_JAPAN_LINEAGE_REPAIR_V2_EXACT_BASELINE",
+  "release_order": 1190,
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "one_split_survivor_preserves_original_activity_uuid": true,
+    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+    "new_fragment_legacy_source_key_must_be_null": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "japan-lineage-3cdadfa9",
+      "type": "rewrite_activity",
+      "activity_id": "3cdadfa9-634f-5ead-b7cb-1498e9689c6f",
+      "baseline_before": {
+        "person_id": "f14bd56a-8c24-591c-811a-e731bccc4eeb",
+        "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1868,
+        "activity_end": 1912,
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 4
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "3cdadfa9-634f-5ead-b7cb-1498e9689c6f",
+        "person_id": "f14bd56a-8c24-591c-811a-e731bccc4eeb",
+        "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1868,
+        "activity_start_detail": {
+          "year": 1868,
+          "month": 1,
+          "day": 3,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1912,
+        "activity_end_detail": {
+          "year": 1912,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "reviewed_notes": "This Stage-2-native fragment records Emperor Meiji under the post-Restoration imperial-era Japanese state identity from the 3 January 1868 Restoration of Imperial Rule through the end of his recorded reign in 1912. The 1868 boundary does not project the later formal constitutional title 大日本帝国 backward as an official 1868 state name.",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "japan-lineage-fd821434",
+      "type": "rewrite_activity",
+      "activity_id": "fd821434-9c06-4ad8-a3d0-761aca6d2bf7",
+      "baseline_before": {
+        "person_id": "57ed9f28-b206-4151-8317-f77659347ee7",
+        "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+        "role_id": "2e77c959-2ae7-486b-a0d4-fa2736e63a2f",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1911,
+        "activity_end": 1911,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "fd821434-9c06-4ad8-a3d0-761aca6d2bf7",
+        "person_id": "57ed9f28-b206-4151-8317-f77659347ee7",
+        "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "2e77c959-2ae7-486b-a0d4-fa2736e63a2f",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1911,
+        "activity_start_detail": {
+          "year": 1911,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1911,
+        "activity_end_detail": {
+          "year": 1911,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "japan-lineage-19694012",
+      "type": "rewrite_activity",
+      "activity_id": "19694012-f0de-4c54-9f13-0f0c01d8addd",
+      "baseline_before": {
+        "person_id": "bf9c9272-f3a3-449e-a18a-763d85c90628",
+        "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1912,
+        "activity_end": 1926,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "19694012-f0de-4c54-9f13-0f0c01d8addd",
+        "person_id": "bf9c9272-f3a3-449e-a18a-763d85c90628",
+        "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1912,
+        "activity_start_detail": {
+          "year": 1912,
+          "month": 7,
+          "day": 30,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1926,
+        "activity_end_detail": {
+          "year": 1926,
+          "month": 12,
+          "day": 25,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "reviewed_notes": "Yoshihito, posthumously Emperor Taishō, acceded on 30 July 1912 and reigned until his death on 25 December 1926. Crown Prince Hirohito served as regent from 25 November 1921; this does not terminate Taishō's reign. The Activity is attached to the restored Empire of Japan polity.",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "japan-lineage-12f673db",
+      "type": "rewrite_activity",
+      "activity_id": "12f673db-0669-5151-8506-83d52cd4a797",
+      "baseline_before": {
+        "person_id": "60fd935f-37f6-577c-9010-fb590220980f",
+        "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1941,
+        "activity_end": 1944,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:42:e4772ab943499406",
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "12f673db-0669-5151-8506-83d52cd4a797",
+        "person_id": "60fd935f-37f6-577c-9010-fb590220980f",
+        "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1941,
+        "activity_start_detail": {
+          "year": 1941,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1944,
+        "activity_end_detail": {
+          "year": 1944,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:42:e4772ab943499406",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "japan-lineage-2ca12cf5",
+      "type": "rewrite_activity",
+      "activity_id": "2ca12cf5-8956-5524-bb37-0287730ffeeb",
+      "baseline_before": {
+        "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+        "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1926,
+        "activity_end": 1947,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "2ca12cf5-8956-5524-bb37-0287730ffeeb",
+        "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+        "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1926,
+        "activity_start_detail": {
+          "year": 1926,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1945,
+        "activity_end_detail": {
+          "year": 1945,
+          "month": 9,
+          "day": 1,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "This fragment records Hirohito under the restored Empire of Japan polity from the beginning of his recorded reign in 1926 through 1 September 1945. Japan signed the Instrument of Surrender on 2 September 1945, which begins the separately represented Allied occupation phase.",
+        "add_source_links": [
+          {
+            "source_id": "85a3e71f-afad-5533-98cc-b6662325dbdb",
+            "source_locator_key": "National Diet Library: Japan signed the Instrument of Surrender on 2 September 1945, finalizing surrender."
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "japan-occupation-surrender-source",
+      "exact_before": {
+        "source_absent_id": "85a3e71f-afad-5533-98cc-b6662325dbdb"
+      },
+      "exact_after": {
+        "source": {
+          "id": "85a3e71f-afad-5533-98cc-b6662325dbdb",
+          "source_key": "bibliographic:ndl:japan-surrender-1945-09-02",
+          "source_type": "official_institutional_historical_source",
+          "title": "Imperial Rescript on the Signing of the Instrument of Surrender, September 2, 1945",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.ndl.go.jp/constitution/e/shiryo/01/021shoshi.html",
+          "citation_text": "The National Diet Library records that Japan signed the Instrument of Surrender on 2 September 1945, finalizing Japan's surrender."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "japan-occupation-end-source",
+      "exact_before": {
+        "source_absent_id": "3788a5f4-8717-5a24-bc74-fcb0f39f1bff"
+      },
+      "exact_after": {
+        "source": {
+          "id": "3788a5f4-8717-5a24-bc74-fcb0f39f1bff",
+          "source_key": "bibliographic:ndl:japan-occupation-end-1952-04-28",
+          "source_type": "official_institutional_historical_source",
+          "title": "Peace Treaty and the U.S.-Japan Security Treaty",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.ndl.go.jp/modern/e/cha5/description14.html",
+          "citation_text": "The National Diet Library records that the treaties came into force on 28 April 1952; the Allied Occupation ended and Japan's independence was restored."
+        }
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 5,
+    "stage2_assertions": 2,
+    "production_mutation_authorized": false
+  }
+}
