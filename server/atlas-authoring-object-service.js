@@ -20,6 +20,12 @@ function requiredUuid(value, field) {
   return normalized;
 }
 
+async function lockKeys(client, keys) {
+  for (const key of [...new Set(keys.map(text).filter(Boolean))].sort()) {
+    await client.query("select pg_advisory_xact_lock(hashtext($1))", [key]);
+  }
+}
+
 function normalizePlaceSourceLinks(raw) {
   if (!Array.isArray(raw) || raw.length === 0) throw new Error("PLACE_SOURCE_LINKS_REQUIRED");
   const seen = new Set();
