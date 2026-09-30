@@ -31,6 +31,28 @@ test("historical P5 schema release remains passive evidence, not a current relea
   assert.equal(fs.existsSync(path.join(root, "scripts/rehearse-stage2-p5-additive-schema-release.mjs")), false);
 });
 
+test("current schema reconstruction has one ordered orchestration authority", () => {
+  const reconstruction = fs.readFileSync(path.join(root, "server/atlas-current-schema-reconstruction.js"), "utf8");
+  const baseline = reconstruction.indexOf("await applyCurrentBaseline");
+  const correction = reconstruction.indexOf("await applyCurrentCorrectionSchema");
+  const stage2 = reconstruction.indexOf("await applyReviewedStage2SchemaBodies");
+  const p9 = reconstruction.indexOf("await applyCurrentP9Cutover");
+  const authoring = reconstruction.indexOf("await applyCurrentAuthoringSchema");
+  assert.ok(baseline >= 0 && correction > baseline && stage2 > correction && p9 > stage2 && authoring > p9);
+  assert.match(reconstruction, /CURRENT_SCHEMA_PHASES/);
+  assert.doesNotMatch(reconstruction, /applyStage2SchemaRelease|stage2_schema_release_components/);
+
+  for (const relativePath of [
+    "scripts/rehearse-p10-person-duplicate-v2-revalidation.mjs",
+    "scripts/rehearse-atlas-canonical-data-readiness.mjs",
+    "scripts/rehearse-human-authoring-operational-parity.mjs"
+  ]) {
+    const source = fs.readFileSync(path.join(root, relativePath), "utf8");
+    assert.match(source, /reconstructCurrentSchema/);
+    assert.doesNotMatch(source, /applyStage2SchemaRelease|applyAuthoringMigrations|applyCorrectionMigrations/);
+  }
+});
+
 test("historical Train 2 evidence is preserved as passive reviewed artifacts", () => {
   const releasePath = "stage2/releases/train2-data-p9.v1.json";
   assertExistingRepoPath(releasePath, "Train 2 release manifest");
