@@ -91,3 +91,18 @@ Leaving both old and new executable mutation paths reachable is not completion.
 The project now has one explicit current owner decision for every CORE resource inspected by Unit 1, and every exception is classified as a named multi-writer debt, ownership gap, transitional owner, repository-source authority, or duplicate truth registry with an exact downstream cleanup unit.
 
 Unit 1 does **not** repair those later-unit debts. Its purpose is to make them impossible to confuse with valid parallel authorities.
+
+
+## Unit 16 residue closure
+
+Unit 16 removes executable one-shot residue while preserving reviewed request/migration JSON as audit evidence. `non_timeline_person_registry` now means the canonical `atlas_v2.person_timeline_dispositions` state; browser presentation reads it through the consolidated read API rather than a duplicate root JSON registry.
+
+Historical Role merge/scope executors are retired. Normal Activity authoring remains owned by Stage2 native authoring; guarded exact-before Correction v2 maintenance is classified separately as `activity_correction_lifecycle`.
+
+| Resource | Current owner | Status |
+|---|---|---|
+| `activity_authoring` | `server/atlas-stage2-native-activity-service.js#createStage2NativeActivityTx` | **single_writer** |
+| `activity_correction_lifecycle` | `server/atlas-correction-manifest-v2-service.js#createCorrectionManifestV2Service` | **single_writer** |
+| `role_identity_creation` | `server/atlas-identity-service.js#createRole` | **single_writer** |
+| `person_external_reference` | `server/atlas-external-reference-service.js#setNamuWikiDecision` | **single_writer** |
+| `non_timeline_person_registry` | `server/atlas-person-timeline-service.js#setTimelineDisposition` | **single_writer** |
