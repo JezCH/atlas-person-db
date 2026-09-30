@@ -62,11 +62,18 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(personReferences, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_external_references/i);
   assert.match(personReferences, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_profile_mutation_audits/i);
   assert.match(personReferences, /person_id uuid NOT NULL REFERENCES atlas_v2\.persons\(id\) ON DELETE RESTRICT/i);
+  assert.match(personReferences, /ADD COLUMN IF NOT EXISTS review_state text/i);
+  assert.match(personReferences, /ADD COLUMN IF NOT EXISTS review_reason text/i);
+  assert.match(personReferences, /document_title, url, review_state, review_reason/i);
 
   const humanAuthoringReferenceSync = migrations[5].sql;
   assert.match(humanAuthoringReferenceSync, /sync_human_authoring_external_references/i);
   assert.match(humanAuthoringReferenceSync, /person_external_references/i);
   assert.match(humanAuthoringReferenceSync, /checked_at/i);
+  assert.match(humanAuthoringReferenceSync, /ref_review_state/i);
+  assert.match(humanAuthoringReferenceSync, /ref_review_reason/i);
+  assert.match(humanAuthoringReferenceSync, /review_state\s*=\s*EXCLUDED\.review_state/i);
+  assert.match(humanAuthoringReferenceSync, /review_reason\s*=\s*EXCLUDED\.review_reason/i);
 
   const representativeDomain = migrations[7].sql;
   assert.match(representativeDomain, /ADD COLUMN IF NOT EXISTS representative_domain text/i);
@@ -129,4 +136,20 @@ test('current clean schema baseline remains the measured pre-lifecycle Productio
   assert.match(baseline, /CONSTRAINT authoring_manifest_runs_person_id_fkey[\s\S]*?ON DELETE RESTRICT/i);
   assert.match(baseline, /CONSTRAINT authoring_manifest_runs_relationship_id_fkey[\s\S]*?ON DELETE RESTRICT/i);
   assert.doesNotMatch(baseline, /atlas-human-authoring\/v1/);
+});
+
+
+test('pre-Unit 8 external-reference writes remain replay-safe after canonical decision-state cutover', () => {
+  const base = fs.readFileSync(path.join(root, 'db/migrations/20260821_person_external_references.sql'), 'utf8');
+  const sync = fs.readFileSync(path.join(root, 'db/migrations/20260821_human_authoring_external_reference_sync.sql'), 'utf8');
+  const decision = fs.readFileSync(path.join(root, 'db/migrations/20260930_external_reference_decision_state.sql'), 'utf8');
+  assert.match(decision, /ALTER COLUMN review_state SET NOT NULL/i);
+  for (const sql of [base, sync]) {
+    const inserts=[...sql.matchAll(/INSERT INTO atlas_v2\.person_external_references\s*\(([^)]*)\)/gi)];
+    assert.ok(inserts.length > 0);
+    for (const match of inserts) {
+      assert.match(match[1], /review_state/i);
+      assert.match(match[1], /review_reason/i);
+    }
+  }
 });
