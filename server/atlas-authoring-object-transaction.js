@@ -1,13 +1,13 @@
 "use strict";
 
-const { createSource, createPlace } = require("./atlas-authoring-object-service.js");
+const { createSource, createPlace } = require("./atlas-authoring-object-service.js");\nconst { createContextObject, linkPersonContext, linkPolityGovernanceContext } = require("./atlas-context-object-service.js");
 
 function createAuthoringObjectService({ client } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
 
   async function mutate(operation, payload) {
     const op = String(operation || "").trim().toLowerCase();
-    const executors = Object.freeze({ create_source:createSource, create_place:createPlace });
+    const executors = Object.freeze({ create_source:createSource, create_place:createPlace, create_context_object:createContextObject, link_person_context:linkPersonContext, link_polity_governance_context:linkPolityGovernanceContext });
     const execute = executors[op];
     if (!execute) throw new Error("UNSUPPORTED_AUTHORING_OBJECT_OPERATION");
 
