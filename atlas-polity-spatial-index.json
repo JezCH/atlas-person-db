@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-30T14:59:00.000Z",
+  "generated_at": "2026-09-30T15:12:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -213,6 +213,7 @@
     "4571d2d1-b475-400f-90d1-195259a69524": "west-asia",
     "45b5c3f2-f28b-42ea-857d-2d3450132dbe": "east-asia",
     "45ea6210-7f4b-4270-96a3-bec278d65ff9": "africa",
+    "46534f7e-9247-5644-b5ad-9525c3d4f5d6": "east-asia",
     "46740a29-a891-5ff8-9804-0f8aba62e71e": "east-asia",
     "4758cbf5-3f11-4f4d-9cce-489a1b17f8e5": "africa",
     "47f869f7-da91-41f6-b191-093a82c9585c": "west-asia",
@@ -334,6 +335,7 @@
     "7dca5b99-7bb8-42e5-a79f-a6707d5dd6c0": "europe",
     "7e731083-7dc1-47b4-a34e-8ac525f62422": "southeast-asia",
     "7e8213f0-ad28-5d2a-8d3b-629088c5539b": "east-asia",
+    "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6": "east-asia",
     "81abc0e7-367d-48db-853c-2bdd5f76fa04": "south-asia",
     "8208ad7e-4e8e-4425-8801-be17044b735a": "europe",
     "82203ec1-60b7-5f5c-bab2-9b8df1fd8040": "south-asia",
@@ -1219,9 +1221,7 @@
     "d6a72e99-f1f2-42c0-bba3-b8d3207a5f35": "europe",
     "2d3c9101-f215-4eb7-b1d0-1a110d63f8a9": "europe",
     "47b5f0d3-992a-4e25-a1df-1dd8140cbcef": "west-asia",
-    "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "africa",
-    "46534f7e-9247-5644-b5ad-9525c3d4f5d6": "east-asia",
-    "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6": "east-asia"
+    "59ca6fbe-507c-4d97-8edc-a8fbb9d236c4": "africa"
   },
   "place_function_records": [
     {
@@ -1914,6 +1914,7 @@
     "7dca5b99-7bb8-42e5-a79f-a6707d5dd6c0": "italy",
     "7e731083-7dc1-47b4-a34e-8ac525f62422": "maritime-southeast-asia",
     "7e8213f0-ad28-5d2a-8d3b-629088c5539b": "china",
+    "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6": "japan",
     "81abc0e7-367d-48db-853c-2bdd5f76fa04": "maldives",
     "8208ad7e-4e8e-4425-8801-be17044b735a": "central-europe",
     "82671a4d-2f26-47e4-b06b-7992c46d7b76": "northwest-south-asia",
@@ -2807,8 +2808,7 @@
     "e1548cb1-f89d-538b-9fb2-bad02ad87f8e": "japan",
     "e3ca4f3c-3504-4830-b141-f4cdd0157763": "himalayas",
     "f67af5a4-a2f5-492d-9220-92fe401bc167": "western-siberia",
-    "46534f7e-9247-5644-b5ad-9525c3d4f5d6": "japan",
-    "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6": "japan"
+    "46534f7e-9247-5644-b5ad-9525c3d4f5d6": "japan"
   },
   "activity_spatial_overrides": [
     {
