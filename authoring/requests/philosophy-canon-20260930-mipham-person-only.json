@@ -1,0 +1,66 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:mipham:person-only:v1",
+  "person": {
+    "canonical_name_en": "Mipham",
+    "display_name_ko": "미팜 린포체",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Mipham (1846–1912), also known as Mipam Gyatso and Ju Mipham, is a securely historical Tibetan Buddhist philosopher and one of the most influential modern systematizers of Nyingma philosophy. His documented intellectual career spans the Derge/Kham region, several monasteries and teachers, and cross-school study within the Rime milieu. The reviewed evidence therefore does not justify reducing his philosophical activity to one exact canonical polity interval. ATLAS retains the historical Person without manufacturing a single polity-bound Activity rail.",
+    "basis_code": "secure_1846_1912_kham_derge_multitradition_biography_without_single_intellectual_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://academic.oup.com/edited-volume/62249/chapter-abstract/551443761",
+        "https://treasuryoflives.org/biographies/view/Mipham-Gyatso/TBRC_P252"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Mipam — Oxford Research Encyclopedia of Religion",
+      "canonical_url": "https://academic.oup.com/edited-volume/62249/chapter-abstract/551443761",
+      "citation_text": "Oxford identifies Mipam or Mipham (1846–1912) as one of the most influential figures in the Tibetan Buddhist world in the last five hundred years and highlights his systematic contributions to Nyingma philosophy, Madhyamaka, epistemology, and Dzogchen.",
+      "locator": "Abstract"
+    },
+    {
+      "source_type": "scholarly_biographical_reference",
+      "title": "Mipam Gyatso — The Treasury of Lives",
+      "canonical_url": "https://treasuryoflives.org/biographies/view/Mipham-Gyatso/TBRC_P252",
+      "citation_text": "The peer-reviewed Treasury of Lives records Mipam Gyatso, 1846–1912, as a historical Tibetan master born in Derge and associated with multiple Nyingma, Kagyu, Geluk, and Sakya teachers and institutions.",
+      "locator": "Biographical header, birthplace, traditions, teachers"
+    },
+    {
+      "source_type": "bibliographic_reference",
+      "title": "미팜 린포체 저자 페이지 — 예스24",
+      "canonical_url": "https://www.yes24.com/product/author/293312",
+      "citation_text": "Current Korean publishing usage identifies the author in Korean as 미팜 린포체, supporting the preferred Korean display form used by ATLAS.",
+      "locator": "작가파일"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-TIBET",
+    "namuwiki_review": "Exact indexed searches for 미팜/미팜 린포체/미팡 린포체/Mipham/Mipam did not establish an independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "Secure historical identity and life dates retained; no single polity rail forced across Derge/Kham, multiple monasteries, and cross-school intellectual contexts.",
+    "korean_name_review": "Current Korean publishing usage supports 미팜 린포체 as the preferred display form."
+  }
+}
