@@ -204,6 +204,38 @@ async function moveSources(client, sourceId, survivorId) {
   return { inserted: inserted.rowCount, source_rows_removed: removed.rowCount };
 }
 
+async function reconcilePersonPlaceFacts(client, sourceId, survivorId) {
+  const rows=await client.query(`
+    select person_id::text,relation_type,place_id::text,source_id::text,source_locator_key
+      from atlas_v2.person_place_facts
+     where person_id=any($1::uuid[])
+     order by relation_type,person_id
+     for update`, [[sourceId,survivorId]]);
+  const byRelation=new Map();
+  for(const row of rows.rows || []){
+    const key=String(row.relation_type);
+    const list=byRelation.get(key) || [];
+    list.push(row); byRelation.set(key,list);
+  }
+  let moved=0,collapsed=0;
+  for(const [relationType,list] of byRelation){
+    const source=list.find(row=>String(row.person_id)===String(sourceId));
+    if(!source) continue;
+    const survivor=list.find(row=>String(row.person_id)===String(survivorId));
+    if(!survivor){
+      const result=await client.query(`update atlas_v2.person_place_facts set person_id=$2::uuid where person_id=$1::uuid and relation_type=$3 returning relation_type`,[sourceId,survivorId,relationType]);
+      moved+=result.rowCount; continue;
+    }
+    const same=String(source.place_id)===String(survivor.place_id)
+      && String(source.source_id)===String(survivor.source_id)
+      && String(source.source_locator_key)===String(survivor.source_locator_key);
+    if(!same) throw new Error(`person place fact conflict: reconcile before merge:${relationType}`);
+    const result=await client.query(`delete from atlas_v2.person_place_facts where person_id=$1::uuid and relation_type=$2 returning relation_type`,[sourceId,relationType]);
+    collapsed+=result.rowCount;
+  }
+  return {moved,collapsed};
+}
+
 async function reconcilePersonTimelineDisposition(client, sourceId, survivorId) {
   const result = await client.query(`
     select person_id::text,disposition,reason,basis_code,traditional_year,traditional_year_alternative,review_evidence
@@ -345,6 +377,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     const sources = await moveSources(client, sides.source_person_id, sides.survivor_person_id);
     const externalReferences = await reconcilePersonExternalReferences(client, sides.source_person_id, sides.survivor_person_id);
     const timelineDisposition = await reconcilePersonTimelineDisposition(client, sides.source_person_id, sides.survivor_person_id);
+    const placeFacts = await reconcilePersonPlaceFacts(client, sides.source_person_id, sides.survivor_person_id);
     const descriptions = await client.query(`update atlas_v2.person_descriptions set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
     const relationships = await client.query(`update atlas_v2.person_politics_v2 set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
     const peopleAffiliations = await client.query(`update atlas_v2.person_people_affiliations set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
@@ -365,6 +398,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       (select count(*)::int from atlas_v2.person_people_affiliations where person_id=$1) as people_affiliations,
       (select count(*)::int from atlas_v2.person_event_participations where person_id=$1) as event_participations,
       (select count(*)::int from atlas_v2.person_external_references where person_id=$1) as external_references,
+      (select count(*)::int from atlas_v2.person_place_facts where person_id=$1) as place_facts,
       (select count(*)::int from atlas_v2.person_portraits where person_id=$1) as portraits,
       (select count(*)::int from atlas_v2.person_timeline_dispositions where person_id=$1) as timeline_dispositions,
       (select count(*)::int from atlas_v2.authoring_manifest_runs where person_id=$1) as authoring_person_pointers,
