@@ -342,6 +342,57 @@ jobs:
             ' "$response" >/dev/null
           jq . "$response"
 
+      - name: Verify canonical NamuWiki review reasons after bootstrap
+        if: env.ATLAS_AUTHORING_SELECTED == 'true' && env.ATLAS_AUTHORING_BOOTSTRAP_ONLY == 'true' && env.ATLAS_AUTHORING_AUDIT_ALL_APPROVED != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          readback="/tmp/atlas-authoring-evidence/namuwiki-review-readback.json"
+          status="$(curl --silent --show-error \
+            --output "$readback" \
+            --write-out '%{http_code}' \
+            "$ATLAS_PERSON_READ_ENDPOINT?__atlas_read_surface=person")"
+          if [[ "$status" != "200" ]]; then
+            cat "$readback" >&2 || true
+            echo "NamuWiki review-state read-back failed: HTTP ${status}" >&2
+            exit 1
+          fi
+          node <<'NODE'
+          'use strict';
+          const fs=require('node:fs');
+          const payload=JSON.parse(fs.readFileSync('/tmp/atlas-authoring-evidence/namuwiki-review-readback.json','utf8'));
+          if (payload?.ok !== true || !Array.isArray(payload?.persons)) throw new Error('NAMUWIKI_REVIEW_READBACK_INVALID');
+          const migration=fs.readFileSync('db/migrations/20260930_external_reference_decision_state.sql','utf8');
+          const classified=[...migration.matchAll(/\('([0-9a-f-]{36})'::uuid,'(no_exact_document|related_or_derivative_only|exact_target_url_pending|exact_target_url_verified)'\)/g)]
+            .map((match)=>({person_id:match[1],reason:match[2]}));
+          if (classified.length < 600) throw new Error('NAMUWIKI_REASON_REGISTRY_PARSE_INCOMPLETE');
+          const byId=new Map(payload.persons.map((person)=>[String(person?.id || '').toLowerCase(),person]));
+          const current={};
+          let present=0, linked=0, reviewedAbsent=0, missingPersons=0;
+          const failures=[];
+          for (const row of classified) {
+            const person=byId.get(row.person_id);
+            if (!person) { missingPersons += 1; continue; }
+            present += 1;
+            const ref=person?.external_references?.namuwiki;
+            if (ref?.status === 'linked') { linked += 1; continue; }
+            if (ref?.status !== 'not_found') {
+              failures.push({person_id:row.person_id,expected:row.reason,actual_status:ref?.status || null,actual_state:ref?.review_state || null});
+              continue;
+            }
+            if (ref?.review_state !== 'reviewed_absent' || ref?.absence_reason !== row.reason) {
+              failures.push({person_id:row.person_id,expected:row.reason,actual_status:ref.status,actual_state:ref.review_state || null,actual_reason:ref.absence_reason || null});
+              continue;
+            }
+            reviewedAbsent += 1;
+            current[row.reason]=(current[row.reason] || 0) + 1;
+          }
+          const summary={classified:classified.length,present,missing_persons:missingPersons,linked,reviewed_absent:reviewedAbsent,current_reason_counts:current,failures:failures.slice(0,20)};
+          fs.writeFileSync('/tmp/atlas-authoring-evidence/namuwiki-review-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if (failures.length) throw new Error(`NAMUWIKI_REVIEW_REASON_READBACK_MISMATCH:${failures.length}`);
+          NODE
+
       - name: Build immutable approved human-authoring audit batches
         if: env.ATLAS_AUTHORING_AUDIT_ALL_APPROVED == 'true'
         shell: bash
