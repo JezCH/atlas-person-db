@@ -1,10 +1,12 @@
-# ATLAS Work Execution Protocol — Lean v1
+# ATLAS Work Execution Protocol — Optimistic Concurrency v2
 
 > Status: authoritative project-wide execution rule.
 >
-> Goal: preserve historical/data/runtime safety while removing procedural work that does not directly reduce risk.
+> Goal: maximize safe parallel throughput while making stale, conflicting, duplicated, or ambiguous authoritative writes fail closed at the narrowest possible resource boundary.
 >
-> This file supersedes older queue/release/process rules wherever they conflict. It does **not** weaken fail-closed security or invariants already enforced by a canonical writer/endpoint.
+> This file supersedes older queue/release/process/single-writer/linear-gate rules wherever they conflict. It does **not** weaken fail-closed security or invariants already enforced by a canonical writer/endpoint.
+>
+> **Project concurrency maxim:** work is parallel; authority is singular; commit is resource-scoped.
 
 ## 1. Default behavior: do the work, not the ceremony
 
@@ -44,45 +46,139 @@ Hard rule:
 
 If the exact path is unknown, search for the exact symbol/file contract and proceed once found. Do not keep expanding the search surface after the implementation location is known.
 
-## 3. Queue only at a real shared-write boundary
+## 3. Parallel by default; a work unit is not a lock
 
-Research, review, local reasoning, branch work, manifests, migrations, code, tests, and CI preparation do NOT require queue ownership.
+No task, issue, lane, CORE unit, PR, branch, writer family, or conversation receives exclusive project ownership merely by starting work.
 
-Queue/claim is required only for an actual conflicting shared mutation such as:
+Research, review, local reasoning, branch work, manifests, migrations, code, tests, CI preparation, and independent writer calls proceed concurrently by default.
 
-- merge/update of the same repository resource where concurrent changes would conflict;
-- schema migration;
-- Production/runtime mutation using the same writer or table contract;
-- release/freeze operation that must be exclusive.
+Hard rules:
 
-A task lifetime is never a lock.
+- **a work unit is a completion boundary, not a concurrency boundary;**
+- task lifetime is never a lock;
+- `same repository`, `same main branch`, `same issue`, `same CORE unit`, `same table`, or `same writer family` is not by itself a conflict;
+- no worker waits merely because another worker is active;
+- no STANDBY, WAITING, global claim, queue ownership, or repeated lock polling;
+- if useful non-conflicting work exists, continue it.
 
-If another worker owns a conflicting shared mutation:
+A conflict exists only when concurrent mutations can invalidate the same concrete resource, semantic identity, schema/runtime contract, repository update precondition, or explicitly declared dependency.
+
+### Active artifact pointer, not task ownership
+
+For substantial work, the current-state surface MAY expose one lightweight pointer:
 
 ```text
-enqueue/update exact task
-→ continue non-conflicting prework
-→ checkpoint when no more useful prework exists
+task_key
+→ active artifact / branch / PR
+→ base revision
+→ touch-set summary
 ```
 
-No STANDBY, WAITING, or repeated lock polling.
+The pointer exists to prevent accidental duplicate reconstruction. It is **not a lock** and does not prohibit other workers from reviewing, testing, or contributing.
 
-## 4. Resource-scoped concurrency
+If a replacement artifact becomes authoritative, update the pointer atomically and mark the older artifact `SUPERSEDED` or otherwise non-active. A stale artifact never blocks current work merely because its branch or PR still exists.
 
-The project does not have one global NONCORE writer.
+## 4. Optimistic resource-scoped commit protocol
 
-Independent resources may progress concurrently. Typical resource classes include:
+Every authoritative mutation follows this sequence:
 
-- Person/Activity authoring
-- representative_domain
-- NamuWiki external references
-- Spatial taxonomy/index
-- UI/product code
-- CORE schema/runtime infrastructure
+```text
+PARALLEL PREPARE
+→ RESOURCE PREFLIGHT
+→ SHORT ATOMIC COMMIT
+→ ONE COMPLETION VERIFY
+```
 
-Two tasks block each other only when they mutate the same concrete resource/contract or when one explicitly depends on the result of the other.
+### Phase A — PARALLEL PREPARE
 
-`both touch main` is not a conflict by itself.
+Do all useful research, review, implementation, test preparation, and payload construction without a shared-work lock.
+
+Before authoritative mutation, declare the smallest practical **touch set** and the state the change was prepared against.
+
+Examples:
+
+- canonical data: exact UUIDs plus semantic identity keys/direct dependencies;
+- repository change: exact paths plus current blob/base SHA;
+- schema change: exact migration objects/contracts;
+- Runtime activation: exact projection/version/activation pointer.
+
+Do not widen a touch set to a whole subsystem merely because that is easier to describe.
+
+### Phase B — RESOURCE PREFLIGHT
+
+Immediately before mutation, compare the prepared expectation with current authoritative state.
+
+Use the strongest existing resource-appropriate precondition, such as:
+
+- exact reviewed before-state;
+- row/revision/version/digest;
+- UUID + semantic-key uniqueness state;
+- file blob SHA / expected branch head;
+- schema object/version state;
+- compiler/runtime generation or activation revision.
+
+Where a governed operation can detect multiple independent blockers safely, preflight SHOULD aggregate and return all detectable blockers in one dry run instead of forcing one Production round-trip per blocker.
+
+Preflight acquires no task-lifetime lock.
+
+Result:
+
+```text
+MATCH
+→ commit
+
+MISMATCH
+→ do not write
+→ refresh only the conflicting resource/direct dependency
+→ preserve all unrelated completed work
+→ re-preflight
+```
+
+A mismatch must never trigger whole-project replay, full historical re-review, or automatic branch reconstruction.
+
+### Phase C — SHORT ATOMIC COMMIT
+
+The canonical writer must re-check the mutation precondition at the actual write boundary, inside the same transaction when possible or immediately before an atomic repository/ref update.
+
+Required properties where applicable:
+
+- fail closed on stale/mismatched expected state;
+- deterministic resource lock ordering;
+- stable idempotency/request key for the same approved semantic change;
+- same idempotency key + same payload = replay/no duplicate effect;
+- same idempotency key + different payload = fail closed;
+- no partial authoritative mutation after a failed precondition.
+
+Only the overlapping concrete resource is serialized, and only for the shortest mutation window required by the underlying database/repository/runtime primitive.
+
+If an existing canonical writer has a stricter safety contract, keep it. If a writer cannot yet enforce stale-write safety at its mutation boundary, that is architectural debt, not justification for a project-wide single-writer queue.
+
+### Phase D — ONE COMPLETION VERIFY
+
+Read back or otherwise prove the changed invariant once at the boundary that owns it, preferably in a batch.
+
+Release the resource immediately after commit. No worker retains ownership while waiting for CI, deployment, human review, or unrelated follow-up.
+
+### What may serialize
+
+Examples:
+
+- the same Person/Polity/Activity UUID or semantic identity being changed incompatibly;
+- the same exact repository path/ref update with incompatible expected SHA;
+- the same schema object/migration boundary;
+- the same Runtime activation pointer/generation;
+- a destructive lifecycle operation and another mutation of the same dependent resource set.
+
+### What must not serialize globally
+
+Examples:
+
+- different Persons through the same canonical writer when the writer supports independent safe transactions;
+- unrelated Polities;
+- Person review while Person apply is running;
+- UI work while canonical data work is running;
+- two branches that touch disjoint files/contracts;
+- research/design/test preparation during another worker's commit.
 
 ## 5. Delta-only integration
 
@@ -117,6 +213,8 @@ Default unit examples:
 - one feature plus its focused verification;
 - one audit slice with a durable result;
 - one correction plus exact read-back.
+
+The chosen work unit limits what one worker promises to finish before reporting. It does **not** reserve that task, subsystem, writer, issue, branch, or resource against other workers.
 
 Execution rule:
 
@@ -250,38 +348,30 @@ Examples:
 
 Do not repeatedly re-prove completed layers that the task did not alter.
 
-## 10. Active-only operational boards and historical archive
+## 10. Active-only operational state and historical archive
 
-GitHub issue comments and merged PRs are durable audit history. They are **not** the operational status surface.
+GitHub issue comments, closed issues, merged/closed PRs, and old branches are durable audit history. They are **not** current work authority.
 
-For #917 and #977, the issue body is the authoritative **ACTIVE ONLY** board:
+For CORE, **#917 body is the only active CORE status surface**. The former #977 NONCORE board is closed historical evidence and MUST NOT be treated as a live queue, claim surface, or blocker.
 
-- list only genuinely non-terminal work and exact dependencies;
-- remove a task from the body in the same transition that makes it `DONE`, `SUCCESS`, `SUPERSEDED`, or `CANCELLED`;
-- never maintain a growing "completed work" section in the active body;
-- preserve completion evidence in the historical comment/PR record instead of copying it forward;
-- keep blocked work only when the blocker is still current and exact.
+For any other work board, treat it as operational only when the issue is currently open **and** its current body explicitly declares itself active/current. Historical comments cannot grant ownership or reactivate work.
 
-Each active board SHOULD carry an `Archive cutoff` comment ID. During normal status discovery:
+Active current-state surfaces should contain only genuinely non-terminal work, exact dependencies, and—when useful—the current active artifact pointer.
 
-- do not scan comments at or before that cutoff;
-- follow older evidence only when an active row explicitly references it or the body is proven inconsistent with current state;
-- an old `READY`, `BLOCKED`, `CLAIMED`, or `IN_PROGRESS` comment cannot reactivate a task after later terminal/superseding evidence;
-- re-entry requires the exact task/case plus new current evidence, then an explicit current-board update.
+Rules:
 
-Open PR inventory follows the same rule: close historical diagnostic, superseded, or replaced PRs once their useful evidence is preserved elsewhere. An old open PR must not remain as a false signal of active work.
+- remove terminal work from an active body in the same transition that makes it `DONE`, `SUCCESS`, `SUPERSEDED`, or `CANCELLED`;
+- never maintain a growing completed-work ledger in the active body;
+- preserve completion evidence in PRs/Git history/comments instead;
+- an old `READY`, `BLOCKED`, `CLAIMED`, `IN_PROGRESS`, queue position, or single-writer comment cannot block or reactivate current work;
+- re-entry requires fresh current evidence plus an explicit active-state update;
+- do not scan hundreds of historical comments when the active body/checkpoint is coherent.
 
-Branch inventory is **historical storage, not a work queue**. During normal status discovery:
+Open PR inventory follows the same rule. Exactly one artifact should be marked active for one task key when duplicate reconstruction would otherwise cause confusion. Other overlapping artifacts must be explicitly classified as review-only, parked, or superseded; their mere existence is never ownership.
 
-- inspect only the head branches of currently open PRs or branches explicitly referenced by an ACTIVE board row;
-- do not enumerate historical branch names to reconstruct project status;
-- a merged/closed/discarded branch does not represent active work merely because its ref still exists;
-- when branch deletion is unavailable, a conclusively disposable merged/temporary branch may be normalized to exact current `main` so it carries zero hidden code delta;
-- never normalize or discard a branch whose unique commits have not been positively classified as obsolete or already materialized elsewhere.
+Branch inventory is historical storage, not a work queue. Inspect only branches referenced by current active artifacts or exact task evidence. Never reconstruct project status from branch names.
 
-Closed `REFERENCE ARCHIVE`, `CLOSED ARCHIVE`, and explicitly parked/non-active issues are also not status surfaces. Reopen or promote them only when fresh evidence creates a concrete actionable task.
-
-A new worker answers "what is active?" from the active board first: full historical fold is exceptional recovery work, not normal bootstrap.
+A new worker answers “what is active?” from current authoritative state first. Historical folding is exceptional recovery work.
 
 ## 11. Registration completeness without repeated cleanup
 
@@ -336,8 +426,11 @@ Do not:
 
 - replay hundreds of queue comments when a valid checkpoint exists;
 - re-audit the entire DB/repo after unrelated `main` changes;
-- wait for a global writer when the resource is independent;
-- hold queue ownership while only researching or waiting for CI;
+- create or revive a task-level/global single-writer gate;
+- wait merely because another worker uses the same issue, CORE unit, writer family, table, repository, or `main` branch;
+- hold claim/queue ownership while only researching or waiting for CI;
+- rebuild an already active task artifact from scratch when its current delta can be reused;
+- let stale/superseded PRs or old queue comments act as blockers;
 - create one PR/release per 5–12 reviewed records by default;
 - add deployment/SHA proof beyond the canonical writer's own required gate;
 - repeatedly poll writer/deployment state;
@@ -352,13 +445,13 @@ Use this precedence:
 1. historical/data correctness and no-fabrication rules;
 2. security plus destructive/schema/runtime safety controls enforced by canonical code/contracts;
 3. this Lean execution protocol;
-4. older queue/release/process wording.
+4. older queue/release/process/single-writer/linear-gate wording.
 
-Older rules that impose broader locking, whole-project revalidation, duplicate deployment proof, or mandatory full event replay are superseded.
+Older rules that impose task-level ownership, broader locking, global/CORE/NONCORE single-writer gates, whole-project revalidation, duplicate deployment proof, mandatory full event replay, or wait-for-your-turn semantics are superseded. Historical documents may preserve those rules as evidence but cannot govern current execution.
 
 ## 14. Operating maxim
 
-> Minimum sufficient verification. Maximum safe forward progress.
+> Work is parallel. Authority is singular. Commit is resource-scoped. Minimum sufficient verification; maximum safe forward progress.
 
 If a procedure does not materially reduce the risk of the specific change being made, it should not block the work.
 
@@ -467,7 +560,7 @@ Lane A and Lane B are expected to run at the same time.
 - Lane A does not wait for the registration backlog to drain.
 - Lane B does not block new review work.
 - Multiple review workers may operate on disjoint candidate sets.
-- Registration workers serialize only where they actually share an authoritative writer/resource.
+- Registration workers do not serialize merely because they call the same writer. They serialize only for overlapping concrete resources or a narrower safety constraint that the canonical writer itself must enforce.
 - A growing APPROVED backlog is valid queue state, not a reason to stop review.
 
 ### Handoff rule
