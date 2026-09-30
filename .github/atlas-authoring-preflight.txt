@@ -1,1 +1,1 @@
-apply authoring/requests/philosophy-canon-20260930-kundakunda-person-only.json
+apply authoring/requests/philosophy-canon-20260930-sakya-pandita-person-only.json
