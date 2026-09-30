@@ -1,0 +1,66 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:longchenpa:person-only:v1",
+  "person": {
+    "canonical_name_en": "Longchenpa",
+    "display_name_ko": "롱첸파",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Longchenpa (1308–1364), also known as Longchen Rabjam, is a securely historical Tibetan Buddhist philosopher and major Nyingma/Dzogchen systematizer. His documented life spans Central Tibetan institutions and a period of political exile and activity in Bhutan, while the evidence reviewed here does not support compressing his philosophical career into one exact canonical polity interval. ATLAS therefore retains the historical Person without manufacturing a single polity-bound Activity rail.",
+    "basis_code": "secure_1308_1364_biography_spanning_central_tibet_and_bhutan_without_single_intellectual_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://treasuryoflives.org/biographies/view/Longchenpa-Drime-Wozer/",
+        "https://research.monash.edu/en/publications/the-man-from-samye-longchenpa-on-praxis-its-negation-and-liberati/",
+        "https://journaloftibetanliterature.org/index.php/jtl/article/view/69"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "scholarly_biographical_reference",
+      "title": "Longchenpa — The Treasury of Lives",
+      "canonical_url": "https://treasuryoflives.org/biographies/view/Longchenpa-Drime-Wozer/",
+      "citation_text": "The peer-reviewed Treasury of Lives identifies Longchenpa as a historical Tibetan master, 1308–1364, and records his associations with multiple Central Tibetan institutions as well as Bhutan.",
+      "locator": "Biographical header, institutions, bibliography"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "The Man From Samye: Longchenpa On Praxis, Its Negation And Liberation",
+      "canonical_url": "https://research.monash.edu/en/publications/the-man-from-samye-longchenpa-on-praxis-its-negation-and-liberati/",
+      "citation_text": "The Monash research record describes Longchen Rabjampa (1308–1364) as one of Tibet's major thinkers and studies his philosophical critique of praxis and liberation.",
+      "locator": "Abstract"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "The Origins of the Dzogchen Eleven Words and Meanings",
+      "canonical_url": "https://journaloftibetanliterature.org/index.php/jtl/article/view/69",
+      "citation_text": "The Journal of Tibetan Literature treats Longchen Rabjam (1308–1364) as a major later Dzogchen thinker whose work shaped the development of the Nyingthik tradition.",
+      "locator": "Abstract"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-TIBET",
+    "namuwiki_review": "Exact indexed searches for 롱첸파/롱첸 랍잠/Longchenpa/Longchen Rabjam did not establish an independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "Secure historical identity and life dates retained; no single polity rail forced across Central Tibetan intellectual life and the documented Bhutan exile/activity period."
+  }
+}
