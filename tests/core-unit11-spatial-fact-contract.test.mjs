@@ -27,7 +27,7 @@ test('Unit 11 new Polity registration cannot finish with silent spatial debt',()
 });
 
 test('Unit 11 registration obligation is a materialized handshake, not post-registration debt',()=>{
-  const p=fs.readFileSync(new URL('../authoring/REGISTRATION_INGEST_POLICY.md',import.meta.url),'utf8');
+  const p=fs.readFileSync(new URL('../authoring/HUMAN_AUTHORING.md',import.meta.url),'utf8');
   assert.match(p,/Spatial registration handshake/);
   assert.match(p,/new Polity.*DONE/is);
   assert.match(p,/reviewed_hold/);
