@@ -155,3 +155,37 @@
   .dashboard-polity-toolbar button,.dashboard-polity-row{min-height:44px}
   .dashboard-polity-row{grid-template-columns:24px minmax(0,1fr) auto;padding:8px}
 }
+
+
+/* Work frontier itemized status breakdowns */
+.dashboard-work-detail-progress{gap:8px}
+.dashboard-work-segment-track{display:flex;width:100%;height:12px;overflow:hidden;border-radius:999px;background:#eef1f5;box-shadow:inset 0 0 0 1px rgba(119,130,151,.08)}
+.dashboard-work-segment{display:block;height:100%;min-width:0;background:#98a2b3;box-shadow:inset -1px 0 rgba(255,255,255,.82)}
+.dashboard-work-detail-summary{justify-content:flex-start;gap:10px 16px;flex-wrap:wrap}
+.dashboard-work-detail-summary b{color:#4c5669}
+.dashboard-work-segment-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.dashboard-work-segment-item{display:grid;grid-template-columns:9px minmax(0,1fr) auto;align-items:center;gap:7px;min-width:0;padding:6px 8px;border:1px solid #e6e9ef;border-radius:8px;background:#fbfcfe;color:#505b70}
+.dashboard-work-segment-item>i{width:9px;height:9px;border-radius:999px;background:#98a2b3}
+.dashboard-work-segment-item>span{min-width:0;font-size:9px;line-height:1.3;overflow-wrap:anywhere;word-break:keep-all}
+.dashboard-work-segment-item>b{display:inline-flex;align-items:baseline;gap:5px;font-size:10px;color:#344054;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dashboard-work-segment-item>b small{font-size:8px;font-weight:700;color:#8a93a3}
+.dashboard-work-segment-item[data-empty="true"]{opacity:.52}
+.dashboard-work-segment[data-work-segment="domain-governance"],.dashboard-work-segment-item[data-work-segment="domain-governance"]>i{background:var(--atlas-person-domain-governance)}
+.dashboard-work-segment[data-work-segment="domain-military"],.dashboard-work-segment-item[data-work-segment="domain-military"]>i{background:var(--atlas-person-domain-military)}
+.dashboard-work-segment[data-work-segment="domain-knowledge"],.dashboard-work-segment-item[data-work-segment="domain-knowledge"]>i{background:var(--atlas-person-domain-knowledge)}
+.dashboard-work-segment[data-work-segment="domain-technology"],.dashboard-work-segment-item[data-work-segment="domain-technology"]>i{background:var(--atlas-person-domain-technology)}
+.dashboard-work-segment[data-work-segment="domain-commerce"],.dashboard-work-segment-item[data-work-segment="domain-commerce"]>i{background:var(--atlas-person-domain-commerce)}
+.dashboard-work-segment[data-work-segment="domain-culture"],.dashboard-work-segment-item[data-work-segment="domain-culture"]>i{background:var(--atlas-person-domain-culture)}
+.dashboard-work-segment[data-work-segment="domain-religion"],.dashboard-work-segment-item[data-work-segment="domain-religion"]>i{background:var(--atlas-person-domain-religion)}
+.dashboard-work-segment[data-work-segment="domain-exploration"],.dashboard-work-segment-item[data-work-segment="domain-exploration"]>i{background:var(--atlas-person-domain-exploration)}
+.dashboard-work-segment[data-work-segment="domain-unassigned"],.dashboard-work-segment-item[data-work-segment="domain-unassigned"]>i{background:#cbd3df}
+.dashboard-work-segment[data-work-segment="spatial-ready"],.dashboard-work-segment-item[data-work-segment="spatial-ready"]>i,.dashboard-work-segment[data-work-segment="activity-linked"],.dashboard-work-segment-item[data-work-segment="activity-linked"]>i{background:#5e6bd7}
+.dashboard-work-segment[data-work-segment="spatial-chronology"],.dashboard-work-segment-item[data-work-segment="spatial-chronology"]>i{background:#657184}
+.dashboard-work-segment[data-work-segment="spatial-override"],.dashboard-work-segment-item[data-work-segment="spatial-override"]>i{background:#c44750}
+.dashboard-work-segment[data-work-segment="spatial-polity"],.dashboard-work-segment-item[data-work-segment="spatial-polity"]>i{background:#7b61d9}
+.dashboard-work-segment[data-work-segment="spatial-missing"],.dashboard-work-segment-item[data-work-segment="spatial-missing"]>i{background:#b86f3f}
+.dashboard-work-segment[data-work-segment="spatial-macro"],.dashboard-work-segment-item[data-work-segment="spatial-macro"]>i{background:#d39a22}
+.dashboard-work-segment[data-work-segment="spatial-period"],.dashboard-work-segment-item[data-work-segment="spatial-period"]>i{background:#2f7fb9}
+.dashboard-work-segment[data-work-segment="spatial-conflict"],.dashboard-work-segment-item[data-work-segment="spatial-conflict"]>i{background:#9a5ba5}
+.dashboard-work-segment[data-work-segment="spatial-other"],.dashboard-work-segment-item[data-work-segment="spatial-other"]>i,.dashboard-work-segment[data-work-segment="activity-missing"],.dashboard-work-segment-item[data-work-segment="activity-missing"]>i{background:#cbd3df}
+@media(max-width:600px){.dashboard-work-segment-legend{grid-template-columns:1fr}.dashboard-work-segment-track{height:10px}.dashboard-work-detail-summary{gap:6px 10px}}
