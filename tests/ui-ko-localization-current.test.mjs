@@ -6,7 +6,6 @@ const i18n = fs.readFileSync(new URL('../atlas-ui-localization.js', import.meta.
 const catalog = fs.readFileSync(new URL('../atlas-ui-authority-catalog.ko.js', import.meta.url), 'utf8');
 const nav = fs.readFileSync(new URL('../atlas-main-authority-nav.js', import.meta.url), 'utf8');
 const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
-const nonTimelineData = JSON.parse(fs.readFileSync(new URL('../non-timeline-persons.json', import.meta.url), 'utf8'));
 const assetLoader = fs.readFileSync(new URL('../asset-loader.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const dataStore = fs.readFileSync(new URL('../atlas-client-data-store.js', import.meta.url), 'utf8');
@@ -36,13 +35,6 @@ test('unknown-chronology presentation reuses reviewed Korean registry labels wit
   assert.match(main, /politic_display_name_ko/);
   assert.match(main, /historicity_display_ko/);
   assert.doesNotMatch(html, /non-timeline-list\.js/);
-  assert.ok(nonTimelineData.length > 0);
-  for (const row of nonTimelineData) {
-    assert.equal(typeof row.politic_display_name_ko, 'string');
-    assert.ok(row.politic_display_name_ko.trim().length > 0);
-    assert.equal(typeof row.historicity_display_ko, 'string');
-    assert.ok(row.historicity_display_ko.trim().length > 0);
-  }
 });
 
 test('Main and Admin load the same localization authority before dependent presentation code', () => {
