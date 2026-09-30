@@ -1,120 +1,119 @@
 {
-  "schema": "atlas-correction-manifest/v2",
-  "review_status": "approved",
-  "request_id": "polity-restore:japan-lineage-superseded-retirements:2026-09-30:v1",
-  "release_order": 1170,
-  "evidence": {
-    "decision": "Supersede three earlier Japan identity retirements after the reviewed polity-lineage re-evaluation. Restore the exact retired UUIDs for Toyotomi Regime, Tokugawa Shogunate, and Empire of Japan before relinking Activities. Restoration reuses durable UUID identity and requires reviewed existing Source rows.",
-    "user_instruction": "Rebuild Japan with real historical polity/regime identities rather than the fabricated Pre-Meiji Japan / Imperial Japan / Meiji Government umbrella labels."
-  },
-  "operations": [
-    {
-      "type": "restore_retired_polity",
-      "case_id": "restore-toyotomi-regime-as-reviewed-polity",
-      "expected_retirement": {
-        "retired_polity_id": "e1548cb1-f89d-538b-9fb2-bad02ad87f8e",
-        "survivor_polity_id": null,
-        "canonical_key": "Toyotomi Regime",
-        "polity_type": "historical_polity",
-        "historicity": "historical",
-        "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
-        "source_request_id": "polity-retirement:zero-activity-external-orphans:2026-09-25:batch1-v1",
-        "source_case_id": "polity-retire:zero-activity-orphan:toyotomi-regime"
-      },
-      "restore_preferred_names": [
-        {
-          "id": "7a03a865-128f-56be-b075-5b8670fd0d74",
-          "polity_id": "e1548cb1-f89d-538b-9fb2-bad02ad87f8e",
-          "locale": "en",
-          "name": "Toyotomi Regime",
-          "name_type": "canonical",
-          "is_preferred": true
-        },
-        {
-          "id": "8fa29265-89e1-5979-a313-8798457bbe40",
-          "polity_id": "e1548cb1-f89d-538b-9fb2-bad02ad87f8e",
-          "locale": "ko",
-          "name": "도요토미 정권",
-          "name_type": "display",
-          "is_preferred": true
-        }
-      ],
-      "restore_source_ids": [
-        "2a2e1f1f-3bba-561b-9cf6-4d88ede72cb7"
-      ]
+    "schema": "atlas-correction-manifest/v2",
+    "review_status": "approved",
+    "request_id": "polity-restore:japan-lineage-superseded-retirements:2026-09-30:v1",
+    "release_order": 1170,
+    "evidence": {
+        "decision": "Supersede three earlier Japan identity retirements after the reviewed polity-lineage re-evaluation. Restore the exact retired UUIDs for Toyotomi Regime, Tokugawa Shogunate, and Empire of Japan before relinking Activities. Restoration reuses durable UUID identity and requires reviewed existing Source rows.",
+        "user_instruction": "Rebuild Japan with real historical polity/regime identities rather than the fabricated Pre-Meiji Japan / Imperial Japan / Meiji Government umbrella labels."
     },
-    {
-      "type": "restore_retired_polity",
-      "case_id": "restore-tokugawa-shogunate-as-reviewed-polity",
-      "expected_retirement": {
-        "retired_polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
-        "survivor_polity_id": null,
-        "canonical_key": "Tokugawa Shogunate",
-        "polity_type": "historical_polity",
-        "historicity": "historical",
-        "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
-        "source_request_id": "polity-retirement:governance-context-duplicates:2026-08-21:v1",
-        "source_case_id": "polity-retire:tokugawa-shogunate"
-      },
-      "restore_preferred_names": [
+    "operations": [
         {
-          "id": "c7dd6396-b8e4-55f4-a895-20986b5638f8",
-          "polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
-          "locale": "en",
-          "name": "Tokugawa Shogunate",
-          "name_type": "canonical",
-          "is_preferred": true
+            "type": "restore_retired_polity",
+            "case_id": "restore-toyotomi-regime-as-reviewed-polity",
+            "expected_retirement": {
+                "retired_polity_id": "e1548cb1-f89d-538b-9fb2-bad02ad87f8e",
+                "survivor_polity_id": null,
+                "canonical_key": "Toyotomi Regime",
+                "polity_type": "historical_polity",
+                "historicity": "historical",
+                "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+                "source_request_id": "polity-retirement:zero-activity-external-orphans:2026-09-25:batch1-v1",
+                "source_case_id": "polity-retire:zero-activity-orphan:toyotomi-regime"
+            },
+            "restore_preferred_names": [
+                {
+                    "id": "7a03a865-128f-56be-b075-5b8670fd0d74",
+                    "polity_id": "e1548cb1-f89d-538b-9fb2-bad02ad87f8e",
+                    "locale": "en",
+                    "name": "Toyotomi Regime",
+                    "name_type": "canonical",
+                    "is_preferred": true
+                },
+                {
+                    "id": "8fa29265-89e1-5979-a313-8798457bbe40",
+                    "polity_id": "e1548cb1-f89d-538b-9fb2-bad02ad87f8e",
+                    "locale": "ko",
+                    "name": "도요토미 정권",
+                    "name_type": "display",
+                    "is_preferred": true
+                }
+            ],
+            "restore_source_ids": [
+                "2a2e1f1f-3bba-561b-9cf6-4d88ede72cb7"
+            ]
         },
         {
-          "id": "9c6ed3f9-8c37-5c80-93ec-87ded725a01a",
-          "polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
-          "locale": "ko",
-          "name": "도쿠가와 막부",
-          "name_type": "display",
-          "is_preferred": true
-        }
-      ],
-      "restore_source_ids": [
-        "a04aae2d-ce8f-40be-b4a9-fa764bcc3010",
-        "e45a3aa1-bc34-4be2-af12-6858d3e5c512"
-      ]
-    },
-    {
-      "type": "restore_retired_polity",
-      "case_id": "restore-empire-of-japan-as-reviewed-polity",
-      "expected_retirement": {
-        "retired_polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
-        "survivor_polity_id": null,
-        "canonical_key": "Empire of Japan",
-        "polity_type": "historical_polity",
-        "historicity": "historical",
-        "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
-        "source_request_id": "polity-retirement:confirmed-identity-duplicates:2026-09-19:v1",
-        "source_case_id": "polity-retire:empire-of-japan-state-form-duplicate"
-      },
-      "restore_preferred_names": [
-        {
-          "id": "6864c3e0-ca57-599d-9c3a-c0f18019bc12",
-          "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
-          "locale": "en",
-          "name": "Empire of Japan",
-          "name_type": "canonical",
-          "is_preferred": true
+            "type": "restore_retired_polity",
+            "case_id": "restore-tokugawa-shogunate-as-reviewed-polity",
+            "expected_retirement": {
+                "retired_polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
+                "survivor_polity_id": null,
+                "canonical_key": "Tokugawa Shogunate",
+                "polity_type": "historical_polity",
+                "historicity": "historical",
+                "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+                "source_request_id": "polity-retirement:governance-context-duplicates:2026-08-21:v1",
+                "source_case_id": "polity-retire:tokugawa-shogunate"
+            },
+            "restore_preferred_names": [
+                {
+                    "id": "c7dd6396-b8e4-55f4-a895-20986b5638f8",
+                    "polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
+                    "locale": "en",
+                    "name": "Tokugawa Shogunate",
+                    "name_type": "canonical",
+                    "is_preferred": true
+                },
+                {
+                    "id": "9c6ed3f9-8c37-5c80-93ec-87ded725a01a",
+                    "polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
+                    "locale": "ko",
+                    "name": "도쿠가와 막부",
+                    "name_type": "display",
+                    "is_preferred": true
+                }
+            ],
+            "restore_source_ids": [
+                "a04aae2d-ce8f-40be-b4a9-fa764bcc3010",
+                "e45a3aa1-bc34-4be2-af12-6858d3e5c512"
+            ]
         },
         {
-          "id": "4705b664-9bd8-53c5-ae79-91f524b57d41",
-          "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
-          "locale": "ko",
-          "name": "일본 제국",
-          "name_type": "display",
-          "is_preferred": true
+            "type": "restore_retired_polity",
+            "case_id": "restore-empire-of-japan-as-reviewed-polity",
+            "expected_retirement": {
+                "retired_polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+                "survivor_polity_id": null,
+                "canonical_key": "Empire of Japan",
+                "polity_type": "historical_polity",
+                "historicity": "historical",
+                "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+                "source_request_id": "polity-retirement:confirmed-identity-duplicates:2026-09-19:v1",
+                "source_case_id": "polity-retire:empire-of-japan-state-form-duplicate"
+            },
+            "restore_preferred_names": [
+                {
+                    "id": "6864c3e0-ca57-599d-9c3a-c0f18019bc12",
+                    "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+                    "locale": "en",
+                    "name": "Empire of Japan",
+                    "name_type": "canonical",
+                    "is_preferred": true
+                },
+                {
+                    "id": "4705b664-9bd8-53c5-ae79-91f524b57d41",
+                    "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+                    "locale": "ko",
+                    "name": "일본 제국",
+                    "name_type": "display",
+                    "is_preferred": true
+                }
+            ],
+            "restore_source_ids": [
+                "2f699634-e810-4cb6-b8a2-f83111d5ad90",
+                "49edf48b-5ce9-47c2-84fe-a311e695133e"
+            ]
         }
-      ],
-      "restore_source_ids": [
-        "2f699634-e810-4cb6-b8a2-f83111d5ad90",
-        "49edf48b-5ce9-47c2-84fe-a311e695133e"
-      ]
-    }
-  ]
+    ]
 }
-
