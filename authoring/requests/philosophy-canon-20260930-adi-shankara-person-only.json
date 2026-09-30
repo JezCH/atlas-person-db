@@ -1,0 +1,85 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:adi-shankara:person-only:v1",
+  "person": {
+    "canonical_name_en": "Adi Shankara",
+    "display_name_ko": "아디 샹카라",
+    "person_type": "historical",
+    "historicity": "historical_uncertain_biography",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Śaṅkara is securely treated by modern scholarship as a major historical Advaita Vedānta philosopher of the eighth century. Oxford's Handbook of Indian Philosophy gives a representative floruit around 710 CE, while other scholarly reconstructions range from the late seventh or early eighth century through 700–750 or the traditional 788–820 chronology. However, dependable historical records of his life are extremely sparse; the familiar birthplace, itineraries, monastery foundations and many biographical details come from hagiographies written centuries later. ATLAS therefore preserves him as a historical figure associated with early medieval India but does not fabricate a single contemporary kingdom or a precise year-based Activity rail from later biographical tradition.",
+    "basis_code": "eighth_century_scholarly_floruit_without_secure_person_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "provenance": "legacy_non_timeline_registry_migration",
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "legacy_record": {
+        "person_name": "Adi Shankara",
+        "display_name_ko": "아디 샹카라",
+        "politic_name": "Early medieval India",
+        "politic_display_name_ko": "중세 초기 인도",
+        "historicity": "historical_uncertain_biography",
+        "historicity_display_ko": "역사적 인물·전기 불확실",
+        "timeline_status": "excluded",
+        "date_basis": "eighth_century_scholarly_floruit_without_secure_person_polity_binding",
+        "traditional_year": null,
+        "traditional_year_alternative": null,
+        "activity_start": null,
+        "activity_end": null,
+        "role_ko": "아드바이타 베단타 철학자·종교 사상가",
+        "reason": "Śaṅkara is securely treated by modern scholarship as a major historical Advaita Vedānta philosopher of the eighth century. Oxford's Handbook of Indian Philosophy gives a representative floruit around 710 CE, while other scholarly reconstructions range from the late seventh or early eighth century through 700–750 or the traditional 788–820 chronology. However, dependable historical records of his life are extremely sparse; the familiar birthplace, itineraries, monastery foundations and many biographical details come from hagiographies written centuries later. ATLAS therefore preserves him as a historical figure associated with early medieval India but does not fabricate a single contemporary kingdom or a precise year-based Activity rail from later biographical tradition.",
+        "sources": [
+          {
+            "title": "Śaṅkara — Stanford Encyclopedia of Philosophy",
+            "url": "https://plato.stanford.edu/entries/shankara/"
+          },
+          {
+            "title": "Śaṅkara — Oxford Bibliographies in Hinduism",
+            "url": "https://academic.oup.com/reference/62357/reference-article-abstract/554514321"
+          },
+          {
+            "title": "Timeline: Indian Philosophy in a Hundred Thinkers — The Oxford Handbook of Indian Philosophy",
+            "url": "https://academic.oup.com/edited-volume/27982/chapter/211656615"
+          }
+        ],
+        "map_policy": "Retain in the Person registry; do not display on the historical year timeline until a defensible person-specific polity/location binding is reviewed. A separate uncertain-biography overlay may display the eighth-century scholarly floruit."
+      }
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Śaṅkara — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/shankara/",
+      "citation_text": "SEP treats Śaṅkara as a major historical Advaita Vedānta philosopher while emphasizing the limits of secure biographical reconstruction.",
+      "locator": "biography and chronology"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Timeline: Indian Philosophy in a Hundred Thinkers — The Oxford Handbook of Indian Philosophy",
+      "canonical_url": "https://academic.oup.com/edited-volume/27982/chapter/211656615",
+      "citation_text": "Oxford Handbook timeline supplies the representative scholarly floruit used in the existing ATLAS chronology-unresolved decision.",
+      "locator": "Śaṅkara timeline entry"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-INDIA-BRAHMANICAL-JAIN-CLOSURE",
+    "disposition": "reuse existing canonical Person; preserve canonical non-timeline decision",
+    "namuwiki_review": "Exact indexed searches for 아디 샹카라/샹카라 found no independent NamuWiki Person document; no guessed URL."
+  }
+}
