@@ -49,6 +49,16 @@ async function inspectCoreAuthoringSchema(client) {
            and a.attname='review_evidence'
            and not a.attisdropped
       ) as person_timeline_review_evidence_type,
+      coalesce((
+        select jsonb_object_agg(a.attname,format_type(a.atttypid,a.atttypmod) order by a.attnum)
+          from pg_attribute a
+         where a.attrelid=to_regclass('atlas_v2.person_timeline_dispositions')
+           and a.attname in (
+             'person_id','disposition','reason','basis_code','traditional_year',
+             'traditional_year_alternative','review_evidence','updated_at'
+           )
+           and not a.attisdropped
+      ),'{}'::jsonb) as person_timeline_column_types,
       (
         select count(*)::int
           from pg_trigger t
@@ -235,6 +245,11 @@ async function inspectCoreAuthoringSchema(client) {
     person_reference_tables_ready: personReferenceTablesReady,
     person_timeline_table_ready:Boolean(row.person_timeline_dispositions),
     person_timeline_review_evidence_type:row.person_timeline_review_evidence_type == null ? null : String(row.person_timeline_review_evidence_type),
+    person_timeline_column_types:Object.freeze(
+      row.person_timeline_column_types && typeof row.person_timeline_column_types === "object" && !Array.isArray(row.person_timeline_column_types)
+        ? Object.fromEntries(Object.entries(row.person_timeline_column_types).map(([key,value]) => [String(key),String(value)]))
+        : {}
+    ),
     person_timeline_trigger_count:Number(row.person_timeline_trigger_count || 0),
     person_timeline_trigger_names:Object.freeze(Array.isArray(row.person_timeline_trigger_names) ? row.person_timeline_trigger_names.map(String) : []),
     person_reference_columns_ready: personReferenceColumnsReady,
