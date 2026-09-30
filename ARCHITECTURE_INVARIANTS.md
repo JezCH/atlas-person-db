@@ -170,6 +170,7 @@ full boundary에는 year/month/day/granularity/calendar interpretation이 포함
 
 - `db/schema/atlas_v2.current.sql`이 clean-db base baseline입니다.
 - 완전한 현재 구조의 재구성 contract는 **`clean baseline → current correction registry → reviewed Stage 2 schema bodies → P9 semantic-key cutover → current authoring registry`** 한 경로입니다.
+- 이 순서의 단일 실행 권위는 `server/atlas-current-schema-reconstruction.js`입니다. fresh-schema CI와 disposable PostgreSQL rehearsals는 이 모듈의 phase primitive를 사용하며 자체 bootstrap 순서를 복제하지 않습니다.
 - baseline은 기존 `atlas_v2` DB에 적용하지 않습니다.
 - 역사적 P5 release manifest와 `db/proposals/stage2_*.rehearsal.sql` 6개는 byte/hash가 고정된 **schema evidence**로만 보존합니다. current clean-db reconstruction은 그 SQL body를 직접 materialize하며 과거 release ledger/advisory-lock/retry ceremony를 재실행하지 않습니다.
 - `server/atlas-stage2-schema-release.js`는 역사적 component를 검증·읽기만 하며 Production/schema mutation primitive를 노출하지 않습니다.
