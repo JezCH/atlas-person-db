@@ -123,3 +123,14 @@ test('trusted completeness audit uses the pinned authoring workflow and never en
   assert.match(workflow, /ATLAS_AUTHORING_AUDIT_ALL_APPROVED != 'true'/);
   assert.doesNotMatch(workflow, /atlas-authoring-completeness-audit\.yml/);
 });
+
+
+test('bootstrap verifies canonical NamuWiki reason readback before reporting success', () => {
+  assert.match(workflow, /Verify canonical NamuWiki review reasons after bootstrap/);
+  assert.match(workflow, /namuwiki-review-readback\.json/);
+  assert.match(workflow, /20260930_external_reference_decision_state\.sql/);
+  assert.match(workflow, /reviewed_absent/);
+  assert.match(workflow, /absence_reason/);
+  assert.match(workflow, /NAMUWIKI_REASON_REGISTRY_PARSE_INCOMPLETE/);
+  assert.match(workflow, /NAMUWIKI_REVIEW_REASON_READBACK_MISMATCH/);
+});
