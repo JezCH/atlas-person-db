@@ -8,7 +8,7 @@
     "baseline_digest": "sha256:506c8a263b251eec08cab567101d63c618882511ae34cd1f29ca6d6d5345208d"
   },
   "batch_id": "polity_japan_imperial_postwar_boundary_repair_20260930_v1",
-  "status": "REVIEWED_IMPERIAL_POSTWAR_BOUNDARY",
+  "status": "REVIEWED_IMPERIAL_POSTWAR_BOUNDARY_RETRY_AFTER_1140_SCHEMA_FIX",
   "release_order": 1150,
   "new_activity_uuid_allocations": [
     {

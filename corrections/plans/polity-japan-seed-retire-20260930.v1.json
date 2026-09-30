@@ -2,7 +2,7 @@
   "schema": "atlas-stage2-correction-v2-execution-plan/v1",
   "batch_id": "polity_japan_seed_retire_after_identity_repair_20260930_v1",
   "as_of": "2026-09-30",
-  "status": "REVIEWED_SEED_RETIREMENT_AFTER_IDENTITY_REPAIR",
+  "status": "REVIEWED_SEED_RETIREMENT_RETRY_AFTER_1140_SCHEMA_FIX",
   "release_order": 1160,
   "contract": "stage2/contracts/correction-v2-current.v1.json",
   "decision_authority": "Stage 1 PR #1691 created temporary seed Activities only to mint distinct pre-Meiji and imperial Japan polity UUIDs. Release-order 1100 relinks/splits the original Activities first; these seeds must then be retired with all normalized provenance transferred to the preserved/reviewed Activities.",
