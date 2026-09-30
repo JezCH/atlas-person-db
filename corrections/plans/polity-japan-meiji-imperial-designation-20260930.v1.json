@@ -8,7 +8,7 @@
     "baseline_digest": "sha256:506c8a263b251eec08cab567101d63c618882511ae34cd1f29ca6d6d5345208d"
   },
   "batch_id": "polity_japan_meiji_imperial_designation_repair_20260930_v1",
-  "status": "REVIEWED_MEIJI_BOUNDARY_AND_DESIGNATION",
+  "status": "REVIEWED_MEIJI_BOUNDARY_AND_DESIGNATION_SCHEMA_FIXED",
   "release_order": 1140,
   "new_activity_uuid_allocations": [
     {
@@ -233,7 +233,7 @@
         "designation": {
           "id": "1f9c843f-cdc7-5e2d-9963-1ced563894d7",
           "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
-          "designation_type": "government_period",
+          "designation_type": "historiographic_period",
           "valid_from_year": 1868,
           "valid_from_month": 1,
           "valid_from_day": 3,
@@ -284,7 +284,7 @@
         "designation": {
           "id": "8cdee6c3-8c2d-5dce-8b7f-96814112dc34",
           "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
-          "designation_type": "constitutional_state_designation",
+          "designation_type": "official_name",
           "valid_from_year": 1889,
           "valid_from_month": 2,
           "valid_from_day": 11,
