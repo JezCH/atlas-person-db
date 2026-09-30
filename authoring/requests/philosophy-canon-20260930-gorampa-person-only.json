@@ -1,0 +1,59 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:gorampa:person-only:v1",
+  "person": {
+    "canonical_name_en": "Gorampa Sonam Senge",
+    "display_name_ko": "고람파",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Gorampa Sonam Senge (1429–1489) is a securely historical Sakya philosopher whose documented intellectual and monastic career spans eastern and central Tibet, multiple teachers and institutions, and later service as the sixth Ngor Khenchen. The reviewed evidence establishes his life and philosophical importance but does not justify reducing that career to one exact canonical polity interval. ATLAS therefore retains the historical Person without manufacturing a single polity-bound Activity rail.",
+    "basis_code": "secure_1429_1489_sakya_biography_without_single_intellectual_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/archives/spr2026/entries/gorampa/",
+        "https://treasuryoflives.org/biographies/view/Gorampa/TBRC_P1042"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Gorampa — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/archives/spr2026/entries/gorampa/",
+      "citation_text": "SEP identifies Gorampa Sonam Senge (1429–1489) as one of the most widely studied philosophers of the Sakya school and details his Madhyamaka philosophy and Central Tibetan studies.",
+      "locator": "Introduction and Life and Works"
+    },
+    {
+      "source_type": "scholarly_biographical_reference",
+      "title": "Gorampa Sonam Sengge — The Treasury of Lives",
+      "canonical_url": "https://treasuryoflives.org/biographies/view/Gorampa/TBRC_P1042",
+      "citation_text": "The Treasury of Lives records Gorampa Sonam Sengge as a historical Sakya master, 1429–1489, associated with several institutions and teachers and later serving as the sixth Ngor Khenchen.",
+      "locator": "Biographical header, Institution, Offices Held"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-TIBET",
+    "namuwiki_review": "Exact indexed searches for 고람파/고람빠/Gorampa/Gorampa Sonam Senge did not establish an independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "Secure historical identity and life dates retained; no single polity rail forced across eastern/central Tibetan study, teaching, institutional, and philosophical contexts.",
+    "korean_name_review": "Current Korean Buddhist-studies material uses 고람파 for Go-rams-pa; short display form retained."
+  }
+}
