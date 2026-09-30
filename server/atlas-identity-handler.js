@@ -4,7 +4,7 @@ const { createIdentityService } = require("./atlas-identity-service.js");
 const { createAuthoringObjectService } = require("./atlas-authoring-object-transaction.js");
 const { createMutationAuthorizer } = require("./atlas-session-auth.js");
 
-const AUTHORING_OBJECT_OPERATIONS = new Set(["create_source", "create_place"]);
+const AUTHORING_OBJECT_OPERATIONS = new Set(["create_source", "create_place", "create_context_object", "link_person_context", "link_polity_governance_context"]);
 
 function sendJson(res, status, body) {
   res.statusCode = status;
