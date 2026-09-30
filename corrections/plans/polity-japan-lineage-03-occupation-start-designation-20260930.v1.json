@@ -1,150 +1,150 @@
 {
-  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
-  "as_of": "2026-09-30",
-  "contract": "stage2/contracts/correction-v2-current.v1.json",
-  "decision_authority": "User-directed Japan polity lineage correction on 2026-09-30; exact Production Baseline A captured at deployed SHA d69db292ab1b6eec14021db4fed85ab93b98d80d. The 1945 boundary uses Japan's signed Instrument of Surrender on 2 September 1945; the occupation-end boundary uses 28 April 1952 when the peace treaties came into force and the Allied Occupation ended.",
-  "baseline": {
-    "deployment_sha": "d69db292ab1b6eec14021db4fed85ab93b98d80d",
-    "baseline_digest": "sha256:7bfe2529126d3663ec977c2e5b9cb6fb58add5c1af2643bc499dbfa8d1d67c4f"
-  },
-  "batch_id": "polity_japan_lineage_occupation_start_and_designation_20260930_v1",
-  "status": "REVIEWED_JAPAN_LINEAGE_REPAIR",
-  "release_order": 1191,
-  "execution_rules": {
-    "exact_live_before_snapshot_required": true,
-    "preserve_all_existing_normalized_source_links_and_locators": true,
-    "one_split_survivor_preserves_original_activity_uuid": true,
-    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
-    "new_fragment_legacy_source_key_must_be_null": true,
-    "territory_geometry_mutation_forbidden": true,
-    "physical_person_merge_forbidden": true,
-    "production_executable": false,
-    "production_mutation_authorized": false
-  },
-  "operations": [
-    {
-      "case_id": "japan-lineage-hirohito-japan-occupation-start-1945-09-02",
-      "type": "rewrite_activity",
-      "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
-      "baseline_before": {
-        "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
-        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
-        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
-        "activity_start": 1947,
-        "activity_end": 1989,
-        "confidence": "well_established",
-        "chronology_status": "reviewed",
-        "legacy_source_key": null,
-        "source_count": 1
-      },
-      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
-      "after": {
-        "survivor": true,
-        "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
-        "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
-        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
-        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
-        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
-        "activity_start": 1945,
-        "activity_start_detail": {
-          "year": 1945,
-          "month": 9,
-          "day": 2,
-          "granularity": "day",
-          "certainty": "exact",
-          "calendar": "gregorian"
-        },
-        "activity_end": 1989,
-        "activity_end_detail": {
-          "year": 1989,
-          "month": null,
-          "day": null,
-          "granularity": "year",
-          "certainty": "exact",
-          "calendar": "gregorian"
-        },
-        "confidence": "well_established",
-        "chronology_status": "reviewed",
-        "legacy_source_key": null,
-        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
-        "reviewed_notes": "This Japan Activity begins on 2 September 1945, when Japan signed the Instrument of Surrender and entered the Allied occupation period. A subsequent correction splits the occupation interval from sovereign post-occupation Japan at 28 April 1952 while preserving Hirohito's continuous personal reign.",
-        "add_source_links": [
-          {
-            "source_id": "85a3e71f-afad-5533-98cc-b6662325dbdb",
-            "source_locator_key": "National Diet Library: Japan signed the Instrument of Surrender on 2 September 1945, finalizing surrender."
-          },
-          {
-            "source_id": "3788a5f4-8717-5a24-bc74-fcb0f39f1bff",
-            "source_locator_key": "National Diet Library: the peace treaties came into force on 28 April 1952; the Allied Occupation ended and Japan regained independence."
-          }
-        ]
-      }
+    "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+    "as_of": "2026-09-30",
+    "contract": "stage2/contracts/correction-v2-current.v1.json",
+    "decision_authority": "User-directed Japan polity lineage correction on 2026-09-30; exact Production Baseline A captured at deployed SHA d69db292ab1b6eec14021db4fed85ab93b98d80d. The 1945 boundary uses Japan's signed Instrument of Surrender on 2 September 1945; the occupation-end boundary uses 28 April 1952 when the peace treaties came into force and the Allied Occupation ended.",
+    "baseline": {
+        "deployment_sha": "d69db292ab1b6eec14021db4fed85ab93b98d80d",
+        "baseline_digest": "sha256:7bfe2529126d3663ec977c2e5b9cb6fb58add5c1af2643bc499dbfa8d1d67c4f"
+    },
+    "batch_id": "polity_japan_lineage_occupation_start_and_designation_20260930_v1",
+    "status": "REVIEWED_JAPAN_LINEAGE_REPAIR",
+    "release_order": 1191,
+    "execution_rules": {
+        "exact_live_before_snapshot_required": true,
+        "preserve_all_existing_normalized_source_links_and_locators": true,
+        "one_split_survivor_preserves_original_activity_uuid": true,
+        "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+        "new_fragment_legacy_source_key_must_be_null": true,
+        "territory_geometry_mutation_forbidden": true,
+        "physical_person_merge_forbidden": true,
+        "production_executable": false,
+        "production_mutation_authorized": false
+    },
+    "operations": [
+        {
+            "case_id": "japan-lineage-hirohito-japan-occupation-start-1945-09-02",
+            "type": "rewrite_activity",
+            "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
+            "baseline_before": {
+                "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+                "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+                "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+                "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+                "activity_start": 1947,
+                "activity_end": 1989,
+                "confidence": "well_established",
+                "chronology_status": "reviewed",
+                "legacy_source_key": null,
+                "source_count": 1
+            },
+            "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+            "after": {
+                "survivor": true,
+                "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
+                "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+                "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+                "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+                "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+                "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+                "activity_start": 1945,
+                "activity_start_detail": {
+                    "year": 1945,
+                    "month": 9,
+                    "day": 2,
+                    "granularity": "day",
+                    "certainty": "exact",
+                    "calendar": "gregorian"
+                },
+                "activity_end": 1989,
+                "activity_end_detail": {
+                    "year": 1989,
+                    "month": null,
+                    "day": null,
+                    "granularity": "year",
+                    "certainty": "exact",
+                    "calendar": "gregorian"
+                },
+                "confidence": "well_established",
+                "chronology_status": "reviewed",
+                "legacy_source_key": null,
+                "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+                "reviewed_notes": "This Japan Activity begins on 2 September 1945, when Japan signed the Instrument of Surrender and entered the Allied occupation period. A subsequent correction splits the occupation interval from sovereign post-occupation Japan at 28 April 1952 while preserving Hirohito's continuous personal reign.",
+                "add_source_links": [
+                    {
+                        "source_id": "85a3e71f-afad-5533-98cc-b6662325dbdb",
+                        "source_locator_key": "National Diet Library: Japan signed the Instrument of Surrender on 2 September 1945, finalizing surrender."
+                    },
+                    {
+                        "source_id": "3788a5f4-8717-5a24-bc74-fcb0f39f1bff",
+                        "source_locator_key": "National Diet Library: the peace treaties came into force on 28 April 1952; the Allied Occupation ended and Japan regained independence."
+                    }
+                ]
+            }
+        }
+    ],
+    "stage2_assertions": [
+        {
+            "type": "assert_polity_designation",
+            "decision_id": "japan-allied-occupation-temporal-designation",
+            "exact_before": {
+                "designation_absent_id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b"
+            },
+            "exact_after": {
+                "designation": {
+                    "id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b",
+                    "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+                    "designation_type": "occupation_period",
+                    "valid_from_year": 1945,
+                    "valid_from_month": 9,
+                    "valid_from_day": 2,
+                    "valid_from_granularity": "day",
+                    "valid_from_certainty": "exact",
+                    "valid_from_calendar": "gregorian",
+                    "valid_to_year": 1952,
+                    "valid_to_month": 4,
+                    "valid_to_day": 27,
+                    "valid_to_granularity": "day",
+                    "valid_to_certainty": "exact",
+                    "valid_to_calendar": "gregorian",
+                    "confidence": "reviewed",
+                    "notes": "ATLAS temporal designation for Japan during the Allied occupation. The interval begins with the signed Instrument of Surrender on 2 September 1945 and ends the day before the peace treaties came into force on 28 April 1952, when the Occupation ended and Japan's independence was restored."
+                },
+                "names": [
+                    {
+                        "id": "c2d5fba4-f983-555e-8d92-88df6c81e616",
+                        "polity_designation_id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b",
+                        "locale": "en",
+                        "name": "Allied-occupied Japan",
+                        "is_preferred": true
+                    },
+                    {
+                        "id": "10bc86dc-e44f-5b1c-b81f-cbe80f0c37cd",
+                        "polity_designation_id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b",
+                        "locale": "ko",
+                        "name": "연합군 점령하 일본",
+                        "is_preferred": true
+                    }
+                ],
+                "source_links": [
+                    {
+                        "polity_designation_id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b",
+                        "source_id": "85a3e71f-afad-5533-98cc-b6662325dbdb",
+                        "source_locator_key": "National Diet Library: surrender finalized on 2 September 1945."
+                    },
+                    {
+                        "polity_designation_id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b",
+                        "source_id": "3788a5f4-8717-5a24-bc74-fcb0f39f1bff",
+                        "source_locator_key": "National Diet Library: Allied Occupation ended and independence was restored on 28 April 1952."
+                    }
+                ]
+            }
+        }
+    ],
+    "polity_relation_assertions": [],
+    "result": {
+        "activity_targets": 1,
+        "stage2_assertions": 1,
+        "production_mutation_authorized": false
     }
-  ],
-  "stage2_assertions": [
-    {
-      "type": "assert_polity_designation",
-      "decision_id": "japan-allied-occupation-temporal-designation",
-      "exact_before": {
-        "designation_absent_id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b"
-      },
-      "exact_after": {
-        "designation": {
-          "id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b",
-          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-          "designation_type": "occupation_period",
-          "valid_from_year": 1945,
-          "valid_from_month": 9,
-          "valid_from_day": 2,
-          "valid_from_granularity": "day",
-          "valid_from_certainty": "exact",
-          "valid_from_calendar": "gregorian",
-          "valid_to_year": 1952,
-          "valid_to_month": 4,
-          "valid_to_day": 27,
-          "valid_to_granularity": "day",
-          "valid_to_certainty": "exact",
-          "valid_to_calendar": "gregorian",
-          "confidence": "reviewed",
-          "notes": "ATLAS temporal designation for Japan during the Allied occupation. The interval begins with the signed Instrument of Surrender on 2 September 1945 and ends the day before the peace treaties came into force on 28 April 1952, when the Occupation ended and Japan's independence was restored."
-        },
-        "names": [
-          {
-            "id": "c2d5fba4-f983-555e-8d92-88df6c81e616",
-            "polity_designation_id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b",
-            "locale": "en",
-            "name": "Allied-occupied Japan",
-            "is_preferred": true
-          },
-          {
-            "id": "10bc86dc-e44f-5b1c-b81f-cbe80f0c37cd",
-            "polity_designation_id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b",
-            "locale": "ko",
-            "name": "연합군 점령하 일본",
-            "is_preferred": true
-          }
-        ],
-        "source_links": [
-          {
-            "polity_designation_id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b",
-            "source_id": "85a3e71f-afad-5533-98cc-b6662325dbdb",
-            "source_locator_key": "National Diet Library: surrender finalized on 2 September 1945."
-          },
-          {
-            "polity_designation_id": "a6107a33-a763-5bfb-a740-dc1d9a5d0f7b",
-            "source_id": "3788a5f4-8717-5a24-bc74-fcb0f39f1bff",
-            "source_locator_key": "National Diet Library: Allied Occupation ended and independence was restored on 28 April 1952."
-          }
-        ]
-      }
-    }
-  ],
-  "polity_relation_assertions": [],
-  "result": {
-    "activity_targets": 1,
-    "stage2_assertions": 1,
-    "production_mutation_authorized": false
-  }
 }
