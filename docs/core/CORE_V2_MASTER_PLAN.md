@@ -7,7 +7,7 @@
 >
 > **Active CORE status is NOT stored here.** The only active-status authority is GitHub Issue **#917 — ATLAS CORE — ACTIVE WORK ONLY**.
 >
-> **Execution mechanics are NOT duplicated here.** `WORK_EXECUTION.md` remains authoritative for resume-first, resource-scoped concurrency, delta-only integration, minimum-sufficient verification, Response Barrier, and checkpoint behavior.
+> **Execution mechanics are NOT duplicated here.** `WORK_EXECUTION.md` remains authoritative for resume-first, parallel-by-default preparation, optimistic resource-scoped commit, delta-only integration, minimum-sufficient verification, Response Barrier, and checkpoint behavior.
 
 ---
 
@@ -58,6 +58,8 @@ CORE exists to permanently establish, for every important ATLAS fact and lifecyc
 - no duplicated truth registry,
 - no recurring “register now, backfill later” debt,
 - minimum sufficient verification,
+- no project/CORE/NONCORE task-level single-writer bottleneck,
+- stale-write rejection at real shared-mutation boundaries,
 - and a residue-free cutover.
 
 The target is not “bugs can never exist.” The target is:
@@ -116,6 +118,9 @@ A replacement is incomplete while the replaced executable path remains reachable
 
 ## C-15 — Active State Is Not Audit History
 #917 body is active CORE only. Historical comments/PRs/releases are evidence only and cannot reactivate work.
+
+## C-16 — Parallel Work, Conflict-Scoped Commit
+A work unit is a completion/reporting boundary, never an ownership lock. Preparation proceeds concurrently. Authoritative mutation uses the narrowest practical touch set, current-state preconditions, idempotency, and fail-closed stale-write detection; only overlapping concrete resources may serialize for the commit window. No project-wide, CORE-wide, NONCORE-wide, issue-wide, task-lifetime, or writer-family single-writer gate is valid merely for coordination convenience.
 
 ---
 
@@ -596,7 +601,7 @@ Generalize merge/retire/delete dependency safety.
 Seal Territory/Geometry interfaces only; no bulk GIS content.
 
 ## UNIT 16 — CORE-RESIDUE-CLEANUP
-Sweep old writers/routes/workflows/launchers/compat services/duplicate registries/stale tests/dead flags/temporary helpers.
+Sweep old writers/routes/workflows/launchers/compat services/duplicate registries/stale tests/dead flags/temporary helpers. This includes executable or operational residue that encodes obsolete project/CORE/NONCORE single-writer queues, task-lifetime claims, wait-for-turn semantics, or duplicate active-status authority. Historical evidence may remain only when it is clearly non-authoritative. Unit 16 must not reintroduce global serialization as a cleanup shortcut.
 
 ## UNIT 17 — CORE-FINAL-ACCEPTANCE
 Required end-state:
@@ -616,6 +621,9 @@ Required end-state:
 - provenance preservation = PASS
 - AI authoritative bypass = 0
 - obsolete CORE execution code = 0
+- project/CORE/NONCORE task-level single-writer dependency = 0
+- stale authoritative overwrite paths without resource-level precondition/fail-closed protection = 0
+- active task keys with multiple unclassified authoritative artifacts = 0
 
 ---
 
@@ -626,18 +634,21 @@ Every unit:
 ```text
 1. Read #917 active unit.
 2. Read only exact current-main paths/direct dependencies.
-3. Determine smallest complete vertical architectural delta.
-4. Implement.
-5. Focused verification only.
-6. Merge/apply only where required.
-7. Remove/retire residue superseded by the unit.
-8. Durable checkpoint.
-9. Update #917 to exact next resume point.
-10. STOP.
+3. Declare the smallest practical touch set and current-state basis for the intended mutation.
+4. Determine smallest complete vertical architectural delta.
+5. Implement in parallel with unrelated work.
+6. Focused verification only.
+7. Merge/apply through the optimistic resource-scoped preflight/commit protocol in `WORK_EXECUTION.md`.
+8. Remove/retire residue superseded by the unit.
+9. Durable checkpoint.
+10. Update #917 to exact next resume point.
+11. STOP.
 ```
 
 ## Response Barrier
 Default: **one work unit = one user turn**.
+
+This is a response/completion rule only. It does not reserve the unit, CORE area, writer, branch, or touched subsystem against other workers.
 
 Complete the unit fully when feasible, then report completion/verification/next resume point and do not open, claim, or prepare the next unit.
 
