@@ -20,7 +20,6 @@
   }
 
   let persons = [];
-  let unknownChronologyRegistry = [];
   let facetCatalog = Object.freeze({ polities: [], relations: [], roles: [], period_bases: [] });
   let selectedPersonId = null;
   let query = "";
@@ -98,95 +97,20 @@
     return label;
   }
 
-  function normalizeRegistryText(value) {
-    return String(value ?? "").trim().toLocaleLowerCase("ko");
-  }
+  const TIMELINE_DISPOSITION_LABELS = Object.freeze({
+    chronology_unresolved:"개인 활동연대 미상",
+    legendary:"전설 인물",
+    mythical:"신화 인물",
+    other_reviewed_exclusion:"연표 제외"
+  });
 
-  function personIdentityKeys(person) {
-    const names = Array.isArray(person?.names) ? person.names.map((row) => row?.name) : [];
-    return [person?.display_name, person?.canonical_name_en, person?.preferred_name_ko, ...names]
-      .map(normalizeRegistryText)
-      .filter(Boolean);
-  }
-
-  function registryIdentityKeys(row) {
-    return [row?.person_name, row?.display_name_ko]
-      .map(normalizeRegistryText)
-      .filter(Boolean);
-  }
-
-  function registrySearchText(row) {
-    return [
-      row?.person_name,
-      row?.display_name_ko,
-      row?.politic_name,
-      row?.politic_display_name_ko,
-      row?.role_ko,
-      row?.historicity,
-      row?.historicity_display_ko
-    ].map((value) => String(value ?? "")).join("\n").toLocaleLowerCase("ko");
-  }
-
-  function registryPerson(row) {
-    const displayName = row?.display_name_ko || row?.person_name || "이름 미상";
-    const polity = row?.politic_display_name_ko || row?.politic_name || "정치체 미상";
-    const role = row?.role_ko || row?.historicity_display_ko || "역할 미상";
-    return {
-      id: null,
-      registry_only: true,
-      person_type: "연대 미상 등록",
-      historicity: row?.historicity || "uncertain",
-      historicity_display_ko: row?.historicity_display_ko || null,
-      display_name: displayName,
-      canonical_name_en: row?.person_name || displayName,
-      preferred_name_ko: row?.display_name_ko || null,
-      names: [],
-      first_activity_year: null,
-      last_activity_year: null,
-      activity_count: 0,
-      activity_summaries: [{
-        id: "",
-        registry_only: true,
-        polity: { display_name: polity, canonical_name_en: row?.politic_name || polity },
-        relation: { code: "연대 미상" },
-        role: { display_name: role },
-        period_basis: { display_name: "개인 활동연대 미상" },
-        start: null,
-        end: null
-      }],
-      facets: { polities: [], relations: [], roles: [], period_bases: [] }
-    };
-  }
-
-  function unknownRegistryRowForPerson(person) {
-    const keys = new Set(personIdentityKeys(person));
-    if (!keys.size) return null;
-    return unknownChronologyRegistry.find((row) => registryIdentityKeys(row).some((key) => keys.has(key))) || null;
-  }
-
-  function withUnknownRegistryContext(person) {
-    if (!person || String(person.historicity || "") === "historical") return person;
-    if (Array.isArray(person.activity_summaries) && person.activity_summaries.length) return person;
-    const row = unknownRegistryRowForPerson(person);
-    if (!row) return person;
-    const context = registryPerson(row).activity_summaries[0];
-    return {
-      ...person,
-      historicity_display_ko: row.historicity_display_ko || person.historicity_display_ko || null,
-      activity_summaries: [{ ...context, registry_context_for_first_class: true }]
-    };
-  }
-
-  function visibleUnknownRegistryPersons({ ignoreDomain = false } = {}) {
-    if (dashboardFilter) return [];
-    if (facetFilters.polity_id || facetFilters.relation_type_id) return [];
-    if (facetFilters.domain && !ignoreDomain) return [];
-    const firstClassNames = new Set(persons.flatMap(personIdentityKeys));
-    const needle = normalizeRegistryText(query);
-    return unknownChronologyRegistry
-      .filter((row) => !registryIdentityKeys(row).some((key) => firstClassNames.has(key)))
-      .filter((row) => !needle || registrySearchText(row).includes(needle))
-      .map(registryPerson);
+  function timelineDispositionLabel(person) {
+    const row = person?.timeline_disposition;
+    const disposition = String(row?.disposition || "").trim();
+    if (!disposition || disposition === "timeline") return null;
+    const label = TIMELINE_DISPOSITION_LABELS[disposition] || "연표 제외";
+    const reason = String(row?.reason || "").trim();
+    return reason ? `${label} · ${reason}` : label;
   }
 
   function boundaryMeta(boundary) {
@@ -224,7 +148,10 @@
 
   function compactActivitiesHtml(person) {
     const activities = Array.isArray(person?.activity_summaries) ? person.activity_summaries : [];
-    if (!activities.length) return '<span class="person-card-activities is-empty">등록된 Activity 없음</span>';
+    if (!activities.length) {
+      const timelineLabel = timelineDispositionLabel(person);
+      return `<span class="person-card-activities is-empty">${escapeHtml(timelineLabel || "등록된 Activity 없음")}</span>`;
+    }
     return `<span class="person-card-activities">${activities.map(compactActivityHtml).join("")}</span>`;
   }
 
@@ -233,11 +160,9 @@
       || (person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity));
     const canonical = person?.canonical_name_en && person.canonical_name_en !== person.display_name
       ? `<small class="person-card-canonical">${escapeHtml(person.canonical_name_en)}</small>` : "";
-    const selectedClass = !person?.registry_only && selectedPersonId === person.id ? " is-selected" : "";
-    const open = person?.registry_only
-      ? `<div class="person-card${selectedClass}" data-unknown-chronology-registry="true">`
-      : `<button class="person-card${selectedClass}" type="button" data-person-id="${escapeHtml(person.id)}">`;
-    const close = person?.registry_only ? "</div>" : "</button>";
+    const selectedClass = selectedPersonId === person.id ? " is-selected" : "";
+    const open = `<button class="person-card${selectedClass}" type="button" data-person-id="${escapeHtml(person.id)}">`;
+    const close = "</button>";
     return `${open}
       <span class="person-card-top"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span>${escapeHtml(person.person_type || "type 미상")}</span></span>
       <strong>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</strong>
@@ -307,7 +232,7 @@
       secondaryPredicate: dashboardMatches
     });
     const baseRows = [...groups.historical, ...groups.other_or_uncertain];
-    const counts = { all: baseRows.length + visibleUnknownRegistryPersons({ ignoreDomain:true }).length };
+    const counts = { all: baseRows.length };
     const definitions = Array.isArray(domainRegistry?.DEFINITIONS) ? domainRegistry.DEFINITIONS : [];
     for (const item of definitions) counts[item.code] = 0;
     for (const person of baseRows) {
@@ -360,8 +285,7 @@
     });
     const rows = [
       ...groups.historical,
-      ...groups.other_or_uncertain.map(withUnknownRegistryContext),
-      ...visibleUnknownRegistryPersons()
+      ...groups.other_or_uncertain
     ].sort((left, right) => reader.comparePersons(left, right, sortOrder));
     const shown = rows.length;
     const renderedGroups = groupSection({
@@ -611,13 +535,11 @@
   async function loadPersons({ keepSelection = true, force = false } = {}) {
     const groups = document.getElementById("personMainGroups");
     try {
-      const [result, registryRows, domainResult] = await Promise.all([
+      const [result, domainResult] = await Promise.all([
         dataStore.loadPersons({ force }),
-        dataStore.loadNonTimelinePersons({ force }),
         dataStore.loadPersonDomains({ force }).catch(() => null)
       ]);
       persons = result.persons.slice();
-      unknownChronologyRegistry = registryRows.slice();
       personDomainsById = Object.freeze({ ...(domainResult?.by_person_id || {}) });
       facetCatalog = result.facet_catalog || reader.facetCatalog(persons);
       if (facetFilters.polity_id && !polityOptions().some((item) => item.id === facetFilters.polity_id)) {

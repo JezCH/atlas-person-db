@@ -1,6 +1,6 @@
 {
   "schema": "atlas-core-authority-ownership/v1",
-  "as_of": "2026-09-28",
+  "as_of": "2026-09-30",
   "authority_rule": "One semantic fact has one canonical authority and one canonical mutation primitive. Transports, workflows, correction plans, registration coordinators, UI, and AI may orchestrate that primitive but are not independent writers.",
   "status_values": [
     "single_writer",
@@ -100,20 +100,9 @@
         "server/atlas-human-authoring-service.js",
         "server/atlas-authoring-manifest-v2-native-service.js"
       ],
-      "shadow_writers": [
-        {
-          "path": "server/atlas-correction-role-merge-v2-service.js",
-          "reason": "Directly rewrites Activity role bindings and deletes Role rows instead of invoking a shared Role lifecycle primitive.",
-          "cleanup_unit": "UNIT 14 / UNIT 16"
-        },
-        {
-          "path": "server/atlas-correction-role-scope-v2-service.js",
-          "reason": "Directly rewrites Activity role bindings and deletes Role rows instead of invoking a shared Role lifecycle primitive.",
-          "cleanup_unit": "UNIT 14 / UNIT 16"
-        }
-      ],
-      "status": "multi_writer_debt",
-      "remediation_unit": "UNIT 14 / UNIT 16",
+      "shadow_writers": [],
+      "status": "single_writer",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
           "path": "server/atlas-identity-service.js",
@@ -122,16 +111,9 @@
         {
           "path": "server/atlas-human-authoring-service.js",
           "contains": "const created = await createRole(client"
-        },
-        {
-          "path": "server/atlas-correction-role-merge-v2-service.js",
-          "contains": "delete from atlas_v2.roles"
-        },
-        {
-          "path": "server/atlas-correction-role-scope-v2-service.js",
-          "contains": "delete from atlas_v2.roles"
         }
-      ]
+      ],
+      "note": "Unit 16 retired the historical case/scope Role correction executors. Role creation remains on createRole; reviewed historical request JSON remains audit evidence only."
     },
     {
       "id": "activity_authoring",
@@ -150,25 +132,9 @@
         "server/atlas-human-authoring-service.js",
         "server/atlas-authoring-manifest-v2-native-service.js"
       ],
-      "shadow_writers": [
-        {
-          "path": "server/atlas-correction-manifest-v2-service.js",
-          "reason": "Correction v2 directly inserts/updates/deletes Activity rows and source links, duplicating the canonical Activity mutation semantics.",
-          "cleanup_unit": "UNIT 14 / UNIT 16"
-        },
-        {
-          "path": "server/atlas-person-merge-service.js",
-          "reason": "Person merge directly rewrites/coalesces/deletes Activity rows as a destructive lifecycle operation.",
-          "cleanup_unit": "UNIT 14"
-        },
-        {
-          "path": "server/atlas-person-delete-service.js",
-          "reason": "Hard delete directly removes Activity rows as a destructive lifecycle operation.",
-          "cleanup_unit": "UNIT 14"
-        }
-      ],
-      "status": "multi_writer_debt",
-      "remediation_unit": "UNIT 14 / UNIT 16",
+      "shadow_writers": [],
+      "status": "single_writer",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
           "path": "server/atlas-stage2-native-activity-service.js",
@@ -186,7 +152,44 @@
           "path": "server/atlas-person-delete-service.js",
           "contains": "delete from atlas_v2.person_politics_v2"
         }
-      ]
+      ],
+      "note": "Normal Activity authoring is owned by createStage2NativeActivityTx. Exact-before reviewed correction and destructive Person lifecycle are distinct lifecycle resources, not parallel normal-authoring writers."
+    },
+    {
+      "id": "activity_correction_lifecycle",
+      "semantic_fact": "Reviewed exact-before Activity rewrite/split/retire lifecycle distinct from normal Activity authoring",
+      "canonical_state": [
+        "atlas_v2.person_politics_v2",
+        "atlas_v2.person_politics_sources",
+        "atlas_v2.chronology_claims",
+        "atlas_v2.relationship_descriptions"
+      ],
+      "authoritative_writer": {
+        "path": "server/atlas-correction-manifest-v2-service.js",
+        "symbol": "createCorrectionManifestV2Service"
+      },
+      "orchestrators": [
+        "server/atlas-correction-manifest-v2-dispatch-service.js",
+        "server/atlas-correction-apply-handler.js"
+      ],
+      "shadow_writers": [],
+      "status": "single_writer",
+      "remediation_unit": null,
+      "evidence_anchors": [
+        {
+          "path": "server/atlas-correction-manifest-v2-service.js",
+          "contains": "function createCorrectionManifestV2Service"
+        },
+        {
+          "path": "server/atlas-correction-manifest-v2-service.js",
+          "contains": "const OPERATION_TYPES = new Set([\"rewrite_activity\", \"split_activity\", \"retire_activity\", \"assert_polity_relation\"])"
+        },
+        {
+          "path": "server/atlas-correction-manifest-v2-dispatch-service.js",
+          "contains": "createCorrectionManifestV2Service"
+        }
+      ],
+      "note": "Correction v2 is intentionally fail-closed exact-before maintenance. It is not a second normal-authoring API."
     },
     {
       "id": "source_identity",
@@ -263,41 +266,35 @@
         "atlas_v2.person_external_references"
       ],
       "authoritative_writer": {
-        "path": "server/atlas-person-profile-service.js",
-        "symbol": "setExternalReference"
+        "path": "server/atlas-external-reference-service.js",
+        "symbol": "setNamuWikiDecision"
       },
       "orchestrators": [
-        "server/atlas-namuwiki-link-handler.js",
-        "server/atlas-vercel-mutation-handler.js"
+        "server/atlas-person-profile-service.js",
+        "server/atlas-human-authoring-service.js"
       ],
-      "shadow_writers": [
-        {
-          "path": "server/atlas-human-authoring-service.js",
-          "reason": "Human registration independently upserts NamuWiki state and writes profile audit rows.",
-          "cleanup_unit": "UNIT 8 / UNIT 7"
-        },
-        {
-          "path": "db/migrations/20260821_human_authoring_external_reference_sync.sql",
-          "reason": "A live DB trigger also projects authoring ledger snapshots into the same current-reference table, creating a second write path.",
-          "cleanup_unit": "UNIT 8"
-        }
-      ],
-      "status": "multi_writer_debt",
-      "remediation_unit": "UNIT 8",
+      "shadow_writers": [],
+      "status": "single_writer",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
-          "path": "server/atlas-person-profile-service.js",
-          "contains": "async function setExternalReference"
+          "path": "server/atlas-external-reference-service.js",
+          "contains": "async function setNamuWikiDecision"
         },
         {
           "path": "server/atlas-human-authoring-service.js",
-          "contains": "async function resolveNamuWikiReference"
+          "contains": "result = await setNamuWikiDecision"
         },
         {
-          "path": "db/migrations/20260821_human_authoring_external_reference_sync.sql",
-          "contains": "CREATE TRIGGER authoring_manifest_runs_external_reference_sync"
+          "path": "server/atlas-person-profile-service.js",
+          "contains": "const result = await setNamuWikiDecision"
+        },
+        {
+          "path": "db/migrations/20260930_unit16_retire_external_reference_sync_trigger.sql",
+          "contains": "DROP TRIGGER IF EXISTS authoring_manifest_runs_external_reference_sync"
         }
-      ]
+      ],
+      "note": "Human Authoring and profile mutation delegate to setNamuWikiDecision. Unit 16 drops the historical authoring-ledger projection trigger, removing the second executable writer."
     },
     {
       "id": "person_representative_domain",
@@ -315,7 +312,7 @@
       ],
       "shadow_writers": [],
       "status": "single_writer",
-      "remediation_unit": "UNIT 7",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
           "path": "server/atlas-person-domain-service.js",
@@ -342,8 +339,8 @@
         "server/atlas-correction-manifest-v2-dispatch-service.js"
       ],
       "shadow_writers": [],
-      "status": "transitional_single_writer",
-      "remediation_unit": "UNIT 3 / UNIT 12",
+      "status": "single_writer",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
           "path": "server/atlas-correction-manifest-v2-service.js",
@@ -367,8 +364,8 @@
         "server/atlas-correction-manifest-v2-unified-service.js"
       ],
       "shadow_writers": [],
-      "status": "transitional_single_writer",
-      "remediation_unit": "UNIT 3 / UNIT 4 / UNIT 12",
+      "status": "single_writer",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
           "path": "server/atlas-correction-v2-stage2-assertions.js",
@@ -474,7 +471,7 @@
       ],
       "shadow_writers": [],
       "status": "derived_single_writer",
-      "remediation_unit": "UNIT 2",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
           "path": "server/atlas-runtime-compile-service.js",
@@ -488,27 +485,36 @@
     },
     {
       "id": "non_timeline_person_registry",
-      "semantic_fact": "Persons excluded from timeline because chronology is unresolved/legendary/mythical/other reviewed reason",
+      "semantic_fact": "Canonical reviewed Person timeline disposition, including chronology-unresolved/legendary/mythical/other reviewed exclusions",
       "canonical_state": [
-        "non-timeline-persons.json"
+        "atlas_v2.person_timeline_dispositions"
       ],
       "authoritative_writer": {
-        "path": "non-timeline-persons.json",
-        "symbol": null
+        "path": "server/atlas-person-timeline-service.js",
+        "symbol": "setTimelineDisposition"
       },
       "orchestrators": [
-        "reviewed repository changes"
+        "server/atlas-person-profile-service.js",
+        "server/atlas-human-authoring-service.js"
       ],
       "shadow_writers": [],
-      "status": "duplicate_truth_registry",
-      "remediation_unit": "UNIT 5",
+      "status": "single_writer",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
-          "path": "non-timeline-persons.json",
-          "contains": "timeline_status"
+          "path": "server/atlas-person-timeline-service.js",
+          "contains": "async function setTimelineDisposition"
+        },
+        {
+          "path": "server/atlas-runtime-person-read-service.js",
+          "contains": "person_timeline_dispositions ptd"
+        },
+        {
+          "path": "server/atlas-human-authoring-service.js",
+          "contains": "setTimelineDisposition(client"
         }
       ],
-      "note": "This is independently authoritative beside atlas_v2 Person identity today and must be reconciled into one Person identity world."
+      "note": "Unit 5 migrated reviewed exclusions into canonical Person identity. Unit 16 removes the legacy non-timeline-persons.json duplicate registry and all active UI/validator dependencies."
     },
     {
       "id": "reviewed_candidate_state",

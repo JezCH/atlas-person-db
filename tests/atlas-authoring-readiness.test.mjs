@@ -23,7 +23,7 @@ function clientFor({
   humanSchemaAllowed = true,
   humanPersonSchemaAllowed = true,
   personReferenceSchemaReady = true,
-  personReferenceSyncReady = true,
+  legacyPersonReferenceProjectionPresent = false,
   p5Ready = true
 } = {}) {
   return {
@@ -65,8 +65,8 @@ function clientFor({
           person_external_reference_checks: personReferenceSchemaReady,
           person_profile_mutation_audit_pkey: personReferenceSchemaReady,
           person_profile_mutation_audit_checks: personReferenceSchemaReady,
-          person_external_reference_sync_function: personReferenceSyncReady ? 'atlas_v2.sync_human_authoring_external_references()' : null,
-          person_external_reference_sync_trigger: personReferenceSyncReady
+          legacy_person_external_reference_sync_function: legacyPersonReferenceProjectionPresent ? 'atlas_v2.sync_human_authoring_external_references()' : null,
+          legacy_person_external_reference_sync_trigger: legacyPersonReferenceProjectionPresent
         }] };
       }
       if (text.includes('from pg_indexes')) {
@@ -80,7 +80,7 @@ function clientFor({
   };
 }
 
-test('authoring readiness requires P5, core Stage 2 schema, human-compatible ledger, Person profile schema, NamuWiki sync, completed P9 and current P10 merge contract', async () => {
+test('authoring readiness requires P5, core Stage 2 schema, human-compatible ledger, Person profile schema, retired legacy NamuWiki projection, completed P9 and current P10 merge contract', async () => {
   const result = await inspectAuthoringReadiness(clientFor());
   assert.equal(result.ready, true);
   assert.equal(result.bootstrap_ready, true);
@@ -98,9 +98,9 @@ test('authoring readiness requires P5, core Stage 2 schema, human-compatible led
   assert.equal(result.core.person_reference_tables_ready, true);
   assert.equal(result.core.person_reference_columns_ready, true);
   assert.equal(result.core.person_reference_constraints_ready, true);
-  assert.equal(result.core.person_external_reference_sync_function_ready, true);
-  assert.equal(result.core.person_external_reference_sync_trigger_ready, true);
-  assert.equal(result.core.person_external_reference_sync_ready, true);
+  assert.equal(result.core.legacy_person_external_reference_sync_function_present, false);
+  assert.equal(result.core.legacy_person_external_reference_sync_trigger_present, false);
+  assert.equal(result.core.person_external_reference_projection_retired, true);
   assert.equal(result.core.person_reference_contract_ready, true);
   assert.equal(result.p9.old_index_present, false);
   assert.equal(result.p9.new_index_present, true);
@@ -121,7 +121,7 @@ test('missing authoring ledger schema is explicitly bootstrappable without weake
   assert.equal(missingColumns.core.columns.ledger_manifest_schema, false);
   assert.equal(missingColumns.core.columns.ledger_result_snapshot, false);
 
-  const missingLedger = await inspectAuthoringReadiness(clientFor({ ledgerTableReady: false, ledgerColumnsReady: false, personReferenceSyncReady: false }));
+  const missingLedger = await inspectAuthoringReadiness(clientFor({ ledgerTableReady: false, ledgerColumnsReady: false }));
   assert.equal(missingLedger.ready, false);
   assert.equal(missingLedger.bootstrap_ready, true);
   assert.equal(missingLedger.bootstrap_required, true);
@@ -129,28 +129,28 @@ test('missing authoring ledger schema is explicitly bootstrappable without weake
 });
 
 test('missing Person external-reference/profile-audit schema is explicitly bootstrappable', async () => {
-  const result = await inspectAuthoringReadiness(clientFor({ personReferenceSchemaReady: false, personReferenceSyncReady: false }));
+  const result = await inspectAuthoringReadiness(clientFor({ personReferenceSchemaReady: false }));
   assert.equal(result.ready, false);
   assert.equal(result.bootstrap_ready, true);
   assert.equal(result.bootstrap_required, true);
   assert.equal(result.core.person_reference_tables_ready, false);
   assert.equal(result.core.person_reference_columns_ready, false);
   assert.equal(result.core.person_reference_constraints_ready, false);
-  assert.equal(result.core.person_external_reference_sync_ready, false);
+  assert.equal(result.core.person_external_reference_projection_retired, true);
   assert.equal(result.core.person_reference_contract_ready, false);
 });
 
-test('missing NamuWiki external-reference sync trigger is explicitly bootstrappable', async () => {
-  const result = await inspectAuthoringReadiness(clientFor({ personReferenceSyncReady: false }));
+test('legacy NamuWiki projection trigger/function is rejected as obsolete duplicate-writer residue', async () => {
+  const result = await inspectAuthoringReadiness(clientFor({ legacyPersonReferenceProjectionPresent: true }));
   assert.equal(result.ready, false);
   assert.equal(result.bootstrap_ready, true);
   assert.equal(result.bootstrap_required, true);
   assert.equal(result.core.person_reference_tables_ready, true);
   assert.equal(result.core.person_reference_columns_ready, true);
   assert.equal(result.core.person_reference_constraints_ready, true);
-  assert.equal(result.core.person_external_reference_sync_function_ready, false);
-  assert.equal(result.core.person_external_reference_sync_trigger_ready, false);
-  assert.equal(result.core.person_external_reference_sync_ready, false);
+  assert.equal(result.core.legacy_person_external_reference_sync_function_present, true);
+  assert.equal(result.core.legacy_person_external_reference_sync_trigger_present, true);
+  assert.equal(result.core.person_external_reference_projection_retired, false);
   assert.equal(result.core.person_reference_contract_ready, false);
 });
 

@@ -43,10 +43,11 @@ test('Person-centered Main renders all historicity groups in one chronology tabl
   assert.match(main, /secondaryPredicate: secondaryMatches/);
   assert.match(main, /\.\.\.groups\.historical/);
   assert.match(main, /\.\.\.groups\.other_or_uncertain/);
-  assert.match(main, /\.\.\.visibleUnknownRegistryPersons\(\)/);
+  assert.match(main, /timelineDispositionLabel\(person\)/);
+  assert.match(main, /chronology_unresolved:"개인 활동연대 미상"/);
   assert.match(main, /개인 활동연대를 방어할 수 없는 인물은 모두 ‘전설, 신화, 연대미상’에 함께 표시합니다/);
-  assert.match(main, /dataStore\.loadNonTimelinePersons/);
-  assert.match(dataStore, /non-timeline-persons\.json/);
+  assert.doesNotMatch(main, /loadNonTimelinePersons|visibleUnknownRegistryPersons|unknownRegistryRowForPerson/);
+  assert.doesNotMatch(dataStore, /non-timeline-persons\.json|nonTimeline/);
   assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY/);
   assert.match(reader, /partitionByHistoricity/);
   assert.match(reader, /PRIMARY_HISTORICITY_VALUE = "historical"/);
@@ -244,11 +245,10 @@ test('Person Main CSS owns one responsive detail surface and no legacy authoring
 test('Main has no standalone legend table and routes uncertain people through the shared chronology table', () => {
   assert.doesNotMatch(main, /person-group-other/);
   assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY/);
-  assert.match(main, /groups\.other_or_uncertain\.map\(withUnknownRegistryContext\)/);
-  assert.match(main, /function unknownRegistryRowForPerson/);
-  assert.match(main, /function withUnknownRegistryContext/);
-  assert.match(main, /registry_context_for_first_class/);
-  assert.match(main, /registry_only/);
+  assert.match(main, /\.\.\.groups\.other_or_uncertain/);
+  assert.match(main, /timelineDispositionLabel\(person\)/);
+  assert.match(main, /TIMELINE_DISPOSITION_LABELS/);
+  assert.doesNotMatch(main, /withUnknownRegistryContext|unknownRegistryRowForPerson|registry_context_for_first_class|registry_only/);
   assert.doesNotMatch(html, /non-timeline-list\.js/);
   assert.doesNotMatch(html, /nonTimelineSection/);
   assert.doesNotMatch(main, /전설·신화 인물/);

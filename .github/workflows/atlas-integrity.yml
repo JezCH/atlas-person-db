@@ -112,9 +112,6 @@ jobs:
             node scripts/validate-authoring-request-files.mjs "${manifests[@]}"
           fi
 
-          if git diff --name-only --diff-filter=ACMRTUXB "$base_sha" "$head_sha" -- | grep -qx 'non-timeline-persons.json'; then
-            node scripts/validate-non-timeline-persons.mjs non-timeline-persons.json
-          fi
 
   governance_validation:
     needs: classify

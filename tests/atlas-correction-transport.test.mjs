@@ -18,8 +18,6 @@ const api = fs.readFileSync(new URL("../api/atlas-correction-apply.js", import.m
 const runtimeCorrectionSources = [
   "atlas-correction-apply-handler.js",
   "atlas-correction-manifest-v2-service.js",
-  "atlas-correction-role-merge-v2-service.js",
-  "atlas-correction-role-scope-v2-service.js",
   "atlas-correction-polity-retire-v2-service.js",
   "atlas-correction-polity-name-v2-service.js",
   "atlas-correction-source-citation-v2-service.js",
@@ -81,6 +79,8 @@ test("live correction handler accepts only v2 manifests/plans plus read-only bas
 });
 
 test("current correction runtime graph has zero legacy executable service dependencies", () => {
+  assert.equal(fs.existsSync(new URL("../server/atlas-correction-role-merge-v2-service.js", import.meta.url)), false);
+  assert.equal(fs.existsSync(new URL("../server/atlas-correction-role-scope-v2-service.js", import.meta.url)), false);
   for (const [name, source] of runtimeCorrectionSources) {
     for (const legacyService of [
       "atlas-correction-manifest-service.js",
