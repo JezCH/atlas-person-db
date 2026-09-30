@@ -1,5 +1,7 @@
 "use strict";
 
+const { rewriteSourceCitation } = require("./atlas-source-service.js");
+
 const {
   manifestHash,
   correctionLedgerExists,
@@ -136,22 +138,20 @@ async function assertPreflight(client, operation) {
 }
 
 async function applyOperation(client, operation) {
-  const result = await client.query(
-    `update atlas_v2.sources
-        set citation_text=$1
-      where id=$2::uuid
-        and canonical_url=$3
-        and citation_text=$4
-      returning id::text,canonical_url,citation_text`,
-    [
-      operation.replacement_citation_text,
-      operation.source_id,
-      operation.expected_canonical_url,
-      operation.expected_citation_text
-    ]
-  );
-  if (result.rowCount !== 1) throw new Error(`CORRECTION_SOURCE_CITATION_UPDATE_COUNT_DRIFT:${operation.source_id}`);
-  return normalizeSource(result.rows[0]);
+  try {
+    return await rewriteSourceCitation(client, {
+      source_id:operation.source_id,
+      expected_canonical_url:operation.expected_canonical_url,
+      expected_citation_text:operation.expected_citation_text,
+      replacement_citation_text:operation.replacement_citation_text
+    });
+  } catch (error) {
+    const code=String(error?.message || "");
+    if (code === `SOURCE_CITATION_UPDATE_COUNT_DRIFT:${operation.source_id}`) {
+      throw new Error(`CORRECTION_SOURCE_CITATION_UPDATE_COUNT_DRIFT:${operation.source_id}`);
+    }
+    throw error;
+  }
 }
 
 async function verifyAppliedOperation(client, operation, { forUpdate = false } = {}) {

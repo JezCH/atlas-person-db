@@ -5,6 +5,7 @@ const { temporalContextFromHumanActivity } = require("./atlas-polity-identity-re
 const { createStage2NativeActivityTx, loadStage2NativeActivity } = require("./atlas-stage2-native-activity-service.js");
 const { requiredUuid, historicalYear } = require("./atlas-activity-semantic-key-v2.js");
 const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service.js");
+const { createSource } = require("./atlas-source-service.js");
 
 const { EMPTY_END, validateOngoingActivity } = require("./atlas-ongoing-activity.js");
 const {
@@ -305,29 +306,28 @@ async function resolveOrCreateSources(client, requestId, sources) {
       results.push(Object.freeze({ id:source.source_id, locator:source.locator, disposition:"reused" }));
       continue;
     }
-    if (source.canonical_url) {
-      const exact = await client.query(`
-        select id::text
-          from atlas_v2.sources
-         where canonical_url=$1
-         order by id::text
-         limit 2`, [source.canonical_url]);
-      if (exact.rows.length > 1) throw new Error(`HUMAN_AUTHORING_SOURCE_CANONICAL_URL_AMBIGUOUS:${index + 1}`);
-      if (exact.rows.length === 1) {
-        results.push(Object.freeze({ id:String(exact.rows[0].id).toLowerCase(), locator:source.locator, disposition:"reused" }));
-        continue;
-      }
-    }
     const sourceKey = `human-authoring:${requestId}:${index + 1}`;
-    const collision = await client.query(`select id::text from atlas_v2.sources where source_key=$1 limit 1`, [sourceKey]);
-    if (collision.rows.length) throw new Error(`HUMAN_AUTHORING_SOURCE_KEY_COLLISION:${index + 1}`);
-    const inserted = await client.query(`
-      insert into atlas_v2.sources(id,source_key,source_type,title,sha256,bytes,canonical_url,citation_text)
-      values(gen_random_uuid(),$1,$2,$3,null,null,$4,$5)
-      returning id::text`, [sourceKey, source.source_type, source.title, source.canonical_url, source.citation_text]);
-    const id = String(inserted.rows[0]?.id || "").toLowerCase();
-    if (!id) throw new Error(`HUMAN_AUTHORING_SOURCE_CREATE_FAILED:${index + 1}`);
-    results.push(Object.freeze({ id, locator:source.locator, disposition:"created" }));
+    let outcome;
+    try {
+      outcome = await createSource(client, {
+        source_key:sourceKey,
+        source_type:source.source_type,
+        title:source.title,
+        canonical_url:source.canonical_url,
+        citation_text:source.citation_text
+      }, { lock:false, keyCollision:"error" });
+    } catch (error) {
+      const code=String(error?.message || "");
+      if (code === "SOURCE_CANONICAL_URL_AMBIGUOUS_REVIEW_REQUIRED") throw new Error(`HUMAN_AUTHORING_SOURCE_CANONICAL_URL_AMBIGUOUS:${index + 1}`);
+      if (code === "SOURCE_KEY_CONFLICT") throw new Error(`HUMAN_AUTHORING_SOURCE_KEY_COLLISION:${index + 1}`);
+      if (code === "SOURCE_CREATE_FAILED") throw new Error(`HUMAN_AUTHORING_SOURCE_CREATE_FAILED:${index + 1}`);
+      throw error;
+    }
+    results.push(Object.freeze({
+      id:String(outcome.id).toLowerCase(),
+      locator:source.locator,
+      disposition:outcome.replay ? "reused" : "created"
+    }));
   }
   return Object.freeze(results);
 }

@@ -1,5 +1,7 @@
 "use strict";
 
+const { insertExactSource } = require("./atlas-source-service.js");
+
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const STAGE2_ASSERTION_TYPES = new Set([
   "assert_source",
@@ -243,8 +245,7 @@ async function assertStage2AssertionAbsent(client, operation) {
 
 async function insertStage2AssertionBundle(client, operation) {
   if (operation.type === "assert_source") {
-    const row = operation.exact_after.source;
-    await client.query(`insert into atlas_v2.sources(${SOURCE_FIELDS.join(",")}) values(${SOURCE_FIELDS.map((_, i) => "$" + (i + 1)).join(",")})`, SOURCE_FIELDS.map((field) => row[field]));
+    await insertExactSource(client, operation.exact_after.source);
     return;
   }
   if (operation.type === "assert_governance_period") {
