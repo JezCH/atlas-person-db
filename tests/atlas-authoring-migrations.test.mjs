@@ -15,8 +15,8 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 19);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 19);
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 20);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 20);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
@@ -36,7 +36,8 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.equal(AUTHORING_MIGRATION_PATHS[16].endsWith("20260930_external_reference_decision_state.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[17].endsWith("20260930_source_bibliographic_completion.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[18].endsWith("20260930_place_historical_relations.sql"), true);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20260930_place_historical_relations.sql"), true);
+  assert.equal(AUTHORING_MIGRATION_PATHS[19].endsWith("20260930_human_person_authoring_manifest_schema.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20260930_human_person_authoring_manifest_schema.sql"), true);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
@@ -58,6 +59,12 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(humanSchema, /atlas-human-authoring\/v1/);
   assert.match(humanSchema, /AUTHORING_MANIFEST_SCHEMA_CHECK_DRIFT/);
   assert.match(humanSchema, /HUMAN_AUTHORING_MANIFEST_SCHEMA_NOT_ALLOWED/);
+
+  const personOnlySchema = migrations[19].sql;
+  assert.match(personOnlySchema, /pg_advisory_xact_lock/i);
+  assert.match(personOnlySchema, /authoring_manifest_runs_manifest_schema_check/i);
+  assert.match(personOnlySchema, /atlas-human-person-authoring\/v1/);
+  assert.match(personOnlySchema, /AUTHORING_MANIFEST_SCHEMA_CHECK_DRIFT/);
 
   const personReferences = migrations[4].sql;
   assert.match(personReferences, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_external_references/i);
