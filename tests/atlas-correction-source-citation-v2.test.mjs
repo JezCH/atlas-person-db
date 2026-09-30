@@ -74,11 +74,14 @@ test("checked-in Gracchi manifest parses as one exact Source-only rewrite", () =
   assert.deepEqual(manifest.operations[0], validOperation());
 });
 
-test("v2 dispatcher forbids mixing Source citation rewrite with another operation family", () => {
+test("v2 dispatcher forbids mixing Source citation rewrite with another operation family", async () => {
   const client = { query: async () => { throw new Error("query must not be reached"); } };
   const service = createCorrectionManifestV2DispatchService({ client });
-  assert.throws(
-    () => service.execute({ operations: [validOperation(), { type: "standard-operation-for-mixed-family-test" }] }, { dryRun: true }),
+  await assert.rejects(
+    () => service.execute(
+      { operations: [validOperation(), { type: "standard-operation-for-mixed-family-test" }] },
+      { dryRun: true }
+    ),
     /CORRECTION_V2_SOURCE_CITATION_MIXED_OPERATION_FAMILY_FORBIDDEN/
   );
 });
