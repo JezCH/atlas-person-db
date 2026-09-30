@@ -1,20 +1,10 @@
 {
-  "schema": "atlas-namuwiki-reviewed-not-found-reasons/v1",
-  "issue": 820,
-  "snapshot_date": "2026-09-28",
-  "note": "Conservative reason registry derived from explicit Issue #820 review dispositions and bounded fresh exact-target re-review. Absence of an entry means the reviewed not_found reason is not durably classified here.",
-  "categories": {
-    "no_exact_document": "Exhaustive review found no independent exact historical Person document.",
-    "related_or_derivative_only": "Only related, group, fictionalized, derivative, or otherwise non-exact material was verified.",
-    "exact_target_url_pending": "An exact Person document/subject was verified, but an original canonical namu.wiki URL was not independently observed.",
-    "exact_target_url_verified": "An exact Person target and canonical URL were verified/write-ready, but the current row may still be not_found until linking is applied."
-  },
-  "counts": {
-    "exact_target_url_pending": 116,
-    "related_or_derivative_only": 215,
-    "no_exact_document": 222,
-    "exact_target_url_verified": 43
-  },
+  "9a023053-82a4-480b-b224-18a038e285c6": "no_exact_document",
+  "9e2b36ad-953d-457b-8622-279e399414b9": "no_exact_document",
+  "9f26c0d4-db4d-4b0e-9594-ecbaa7503d0b": "related_or_derivative_only",
+  "a4419315-7ee9-4ee5-bdcd-ec53f3b5f4c2": "no_exact_document",
+  "a5edffb0-770e-4008-a085-b59747d850b7": "related_or_derivative_only",
+  "a6b9190b-e4e9-463e-b407-92c6a2eee1e9": "exact_target_url_pending",
   "by_person_id": {
     "013b98d1-fe18-4974-996d-ddf491f6cbf6": "exact_target_url_pending",
     "013ba1f0-52e0-484c-9f06-54cf08af663b": "exact_target_url_pending",
@@ -612,5 +602,21 @@
     "ff1d3ea3-501e-404b-91b0-3b2e1bbf04b2": "related_or_derivative_only",
     "ff5d5de9-79e6-46ac-8702-c0915333378f": "exact_target_url_verified",
     "ff68de8d-73e4-4096-b731-af0c6b94d39d": "no_exact_document"
-  }
+  },
+  "categories": {
+    "no_exact_document": "Exhaustive review found no independent exact historical Person document.",
+    "related_or_derivative_only": "Only related, group, fictionalized, derivative, or otherwise non-exact material was verified.",
+    "exact_target_url_pending": "An exact Person document/subject was verified, but an original canonical namu.wiki URL was not independently observed.",
+    "exact_target_url_verified": "An exact Person target and canonical URL were verified/write-ready, but the current row may still be not_found until linking is applied."
+  },
+  "counts": {
+    "exact_target_url_pending": 116,
+    "related_or_derivative_only": 215,
+    "no_exact_document": 222,
+    "exact_target_url_verified": 43
+  },
+  "issue": 820,
+  "note": "Conservative reason registry derived from explicit Issue #820 review dispositions and bounded fresh exact-target re-review. Absence of an entry means the reviewed not_found reason is not durably classified here.",
+  "schema": "atlas-namuwiki-reviewed-not-found-reasons/v1",
+  "snapshot_date": "2026-09-28"
 }
