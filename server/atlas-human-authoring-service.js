@@ -623,6 +623,18 @@ function personOnlyOutcome(requestId, replay, snapshot) {
   });
 }
 
+async function assertPersonOnlyTargetHasNoActivities(client, personId) {
+  const result = await client.query(
+    `select count(*)::int as activity_count
+       from atlas_v2.person_politics_v2
+      where person_id=$1::uuid`,
+    [personId]
+  );
+  const count = Number(result.rows?.[0]?.activity_count || 0);
+  if (count !== 0) throw new Error("HUMAN_PERSON_AUTHORING_EXISTING_ACTIVITY_CONFLICT");
+  return count;
+}
+
 async function applyPersonOnlyPreparedWithinTransaction(client, prepared, { transport = null, allowLegacyNamuWikiOmission = false } = {}) {
   const { request, hash } = prepared;
   const ledger = await readLedger(client, request.requestId);
@@ -633,6 +645,7 @@ async function applyPersonOnlyPreparedWithinTransaction(client, prepared, { tran
   }
 
   const person = await resolveOrCreatePerson(client, request.person);
+  await assertPersonOnlyTargetHasNoActivities(client, person.id);
   const namuwiki = await resolveNamuWikiReference(client, {
     requestId:request.requestId,
     person,
@@ -923,6 +936,7 @@ module.exports = Object.freeze({
   resolveNamuWikiReference,
   applyPreparedWithinTransaction,
   applyPersonOnlyPreparedWithinTransaction,
+  assertPersonOnlyTargetHasNoActivities,
   verifyPersonOnlyReplay,
   lockRequestIds,
   createHumanAuthoringService,
