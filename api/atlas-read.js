@@ -149,6 +149,11 @@ const runtimeExclusionsReadHandler = createLazyHandler(() => {
   return createRuntimeExclusionsReadHandler({ clientFactory:getPostgresClientFactory() });
 });
 
+const nonTimelineReadHandler = createLazyHandler(() => {
+  const { createNonTimelineReadHandler } = require("../server/atlas-non-timeline-read-handler.js");
+  return createNonTimelineReadHandler({ clientFactory:getPostgresClientFactory() });
+});
+
 const runtimePublicationReadHandler = createLazyHandler(() => {
   const { createRuntimePublicationReadHandler } = getRuntimePublicationHandlerModule();
   return createRuntimePublicationReadHandler({ clientFactory:getPostgresClientFactory() });
@@ -179,6 +184,7 @@ async function consolidatedReadHandler(req, res) {
   if (surface === "runtime-identity") return publicRuntimeIdentityHandler(req, res);
   if (surface === "runtime-publication") return runtimePublicationReadHandler(req, res);
   if (surface === "runtime-exclusions") return runtimeExclusionsReadHandler(req, res);
+  if (surface === "non-timeline-persons") return nonTimelineReadHandler(req, res);
   if (surface === "admin-inspector") return adminInspectorHandler(req, res);
   if (surface === "admin-system-status") return adminSystemStatusHandler(req, res);
   return normalizedReadHandler(req, res);
