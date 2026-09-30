@@ -1,6 +1,7 @@
 "use strict";
 
-const { createSource, createPlace } = require("./atlas-authoring-object-service.js");\nconst { createContextObject, linkPersonContext, linkPolityGovernanceContext } = require("./atlas-context-object-service.js");
+const { createSource, createPlace } = require("./atlas-authoring-object-service.js");
+const { createContextObject, linkPersonContext, linkPolityGovernanceContext } = require("./atlas-context-object-service.js");
 
 function createAuthoringObjectService({ client } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
