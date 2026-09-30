@@ -66,7 +66,9 @@ function normalizeNamuWikiReference(raw, { allowLegacyOmission = true } = {}) {
       status:normalized.status,
       checked_at:normalized.checked_at,
       document_title:normalized.document_title,
-      url:normalized.url
+      url:normalized.url,
+      review_state:normalized.review_state,
+      review_reason:normalized.review_reason
     });
   } catch (error) {
     const code=String(error?.message || "");
@@ -337,7 +339,9 @@ async function currentNamuWikiReference(client, personId, { forUpdate = false } 
     status:String(row.status),
     checked_at:row.checked_at == null ? null : String(row.checked_at),
     document_title:row.document_title == null ? null : String(row.document_title),
-    url:row.url == null ? null : String(row.url)
+    url:row.url == null ? null : String(row.url),
+    review_state:row.review_state == null ? null : String(row.review_state),
+    review_reason:row.review_reason == null ? null : String(row.review_reason)
   });
 }
 
