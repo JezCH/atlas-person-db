@@ -1,0 +1,66 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:phagpa:person-only:v1",
+  "person": {
+    "canonical_name_en": "Phagpa",
+    "display_name_ko": "파스파",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Phagpa (1235–1280) is a securely historical Sakya lama, scholar, and imperial preceptor whose documented career spans Sakya/Tibetan religious leadership, the Mongol and Yuan courts, and the creation of the Phagpa script. The reviewed evidence does not justify compressing those distinct religious, intellectual, and court contexts into one canonical polity-bound Activity rail.",
+    "basis_code": "secure_1235_1280_biography_spanning_sakya_and_mongol_yuan_contexts_without_single_intellectual_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://treasuryoflives.org/biographies/view/Pakpa-Lodro-Gyeltsen/TBRC_p1048",
+        "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002737146",
+        "https://encykorea.aks.ac.kr/Article/E0078703"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "scholarly_biographical_reference",
+      "title": "Chogyel Pakpa — The Treasury of Lives",
+      "canonical_url": "https://treasuryoflives.org/biographies/view/Pakpa-Lodro-Gyeltsen/TBRC_p1048",
+      "citation_text": "The Treasury of Lives records Pakpa Lodro Gyeltsen / Chogyel Pakpa as a historical Sakya figure born in 1235 and deceased in 1280, nephew and disciple of Sakya Paṇḍita, with a career spanning Tibet and the Mongol court.",
+      "locator": "Biographical header and early life"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Preceptor of the Great Khan: Life and times of Phagpa ('Phags pa, Ch. 八思巴, 1235-1280)",
+      "canonical_url": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002737146",
+      "citation_text": "The peer-reviewed study treats Phagpa as a central thirteenth-century Sakya figure at Khubilai's court and discusses his Tibetan, Yuan-court, and script-creation roles.",
+      "locator": "Abstract"
+    },
+    {
+      "source_type": "scholarly_reference",
+      "title": "파스파 문자 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0078703",
+      "citation_text": "The Academy of Korean Studies uses the Korean form 파스파 for Phags-pa, gives 1235–1280, and identifies him as the Tibetan lama commissioned by Khubilai to create the script later known as 파스파 문자.",
+      "locator": "정의·개설·주1"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-TIBET",
+    "namuwiki_review": "NamuWiki `파스파` resolves to the concept article `파스파 문자` rather than an independent Person document. Exact Person-document searches for 파스파/팍빠/Phagpa/Pakpa did not establish a standalone Person page; therefore reviewed not_found is used and no guessed URL is stored.",
+    "timeline_decision": "Secure historical identity and life dates retained; no single polity rail forced across Sakya/Tibetan leadership, Mongol/Yuan court service, and intellectual/script work."
+  }
+}
