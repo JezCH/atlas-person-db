@@ -1,5 +1,7 @@
 "use strict";
 
+const { isDeepStrictEqual } = require("node:util");
+
 const DISPOSITIONS = Object.freeze([
   "timeline",
   "chronology_unresolved",
@@ -98,7 +100,7 @@ function sameTimelineDisposition(left, right) {
     && left.basis_code === right.basis_code
     && left.traditional_year === right.traditional_year
     && left.traditional_year_alternative === right.traditional_year_alternative
-    && JSON.stringify(left.review_evidence || {}) === JSON.stringify(right.review_evidence || {});
+    && isDeepStrictEqual(left.review_evidence || {}, right.review_evidence || {});
 }
 
 async function setTimelineDisposition(client, personId, raw) {
