@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch07:stilicho:western-roman:395-408:v1",
+  "person": {
+    "canonical_name_en": "Stilicho",
+    "display_name_ko": "스틸리코",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-01",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Western Roman Empire",
+    "display_name_ko": "서로마 제국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Magister militum",
+    "role_display_name_ko": "군 최고사령관",
+    "start_year": 395,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 408,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Stilicho had already risen to supreme western military command under Theodosius before 395. This representative Activity is deliberately bounded to the Western Roman Empire from the permanent imperial division in 395 through Stilicho's execution in 408."
+  },
+  "sources": [
+    {
+      "source_type": "encyclopedic_reference",
+      "title": "Stilicho — World History Encyclopedia",
+      "canonical_url": "https://www.worldhistory.org/Stilicho/",
+      "citation_text": "World History Encyclopedia identifies Stilicho as a Roman army commander, chief of the western army, and regent to Honorius; he died in 408.",
+      "locator": "Early Career and Regency"
+    }
+  ],
+  "review_context": {
+    "review_checkpoint": "#1374 comment 5825500359",
+    "registration_frontier": "#1375 comment 5920773289",
+    "grade": "SS",
+    "candidate_id": "aoe2-ss-20260925-stilicho",
+    "namuwiki_review": "Related NamuWiki material exists, but an exact independent historical Person target was not established during the bounded review; no guessed URL.",
+    "chronology_decision": "Use 395–408 to bind the representative military service specifically to the Western Roman Empire; do not backdate this polity Activity into the unified empire."
+  }
+}

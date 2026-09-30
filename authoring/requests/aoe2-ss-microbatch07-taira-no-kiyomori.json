@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch07:taira-no-kiyomori:japan:1167:v1",
+  "person": {
+    "canonical_name_en": "Taira no Kiyomori",
+    "display_name_ko": "타이라노 키요모리",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-01",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Daijō-daijin",
+    "role_display_name_ko": "태정대신",
+    "start_year": 1167,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1167,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kiyomori became Daijō-daijin in 1167 and resigned only about three months later. ATLAS records that formal office as a one-year-granularity Activity instead of converting his broader Taira political dominance into an invented formal reign."
+  },
+  "sources": [
+    {
+      "source_type": "reference",
+      "title": "Taira no Kiyomori — Japanese Wiki Corpus",
+      "canonical_url": "https://www.japanesewiki.com/person/TAIRA%20no%20Kiyomori.html",
+      "citation_text": "Japanese Wiki Corpus records Kiyomori's appointment as Daijō-daijin in March 1167 and his resignation roughly three months later.",
+      "locator": "Career around 1167"
+    }
+  ],
+  "review_context": {
+    "review_checkpoint": "#1374 comment 5825500359",
+    "registration_frontier": "#1375 comment 5920773289",
+    "grade": "SS",
+    "candidate_id": "aoe2-ss-20260925-taira-kiyomori",
+    "namuwiki_review": "Related NamuWiki material confirms the historical name in context, but no independently verified exact Person target URL was established; no guessed link.",
+    "chronology_decision": "Represent the documented formal Daijō-daijin term at year granularity in 1167; do not broaden it into a de facto reign."
+  }
+}

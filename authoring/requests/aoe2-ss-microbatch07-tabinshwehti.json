@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch07:tabinshwehti:toungoo:1531-1550:v1",
+  "person": {
+    "canonical_name_en": "Tabinshwehti",
+    "display_name_ko": "타빈슈웨티",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-01",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Toungoo Empire",
+    "display_name_ko": "통구 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1531,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1550,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cambridge scholarship summarizes Tabinshwehti's reign as 1531–1550, while chronicle-derived modern references place his accession in late 1530. ATLAS therefore stores the opening year as approximate and the 1550 death/end boundary as exact."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Ethnic Hatred and Universal Benevolence: Ethnicity and Loyalty in Precolonial Myanmar, and Britain",
+      "canonical_url": "https://www.cambridge.org/core/journals/comparative-studies-in-society-and-history/article/ethnic-hatred-and-universal-benevolence-ethnicity-and-loyalty-in-precolonial-myanmar-and-britain/0F96BB022327E8D95C5A280E320FC503",
+      "citation_text": "Cambridge scholarship identifies the Toungoo ruler Tabin-shwei-hti and gives his reign as 1531–1550.",
+      "locator": "Burmese Ascendancy under the Toungoo Kings"
+    },
+    {
+      "source_type": "reference",
+      "title": "에이지 오브 엠파이어 2/유닛/영웅 — NamuWiki mirror",
+      "canonical_url": "https://m.namu.moe/w/%EC%97%90%EC%9D%B4%EC%A7%80%20%EC%98%A4%EB%B8%8C%20%EC%97%A0%ED%8C%8C%EC%9D%B4%EC%96%B4%202/%EC%9C%A0%EB%8B%9B/%EC%98%81%EC%9B%85",
+      "citation_text": "The Korean Age of Empires hero page verifies the localized spelling 타빈슈웨티 but is a derivative game page, not an independent historical Person article.",
+      "locator": "Tabinshwehti hero section"
+    }
+  ],
+  "review_context": {
+    "review_checkpoint": "#1374 comment 5825500359",
+    "registration_frontier": "#1375 comment 5920773289",
+    "grade": "SS",
+    "candidate_id": "aoe2-ss-20260925-tabinshwehti",
+    "namuwiki_review": "A derivative AoE II hero entry verifies the Korean spelling, but no independent exact historical Person article was established; status remains reviewed not_found.",
+    "chronology_decision": "Preserve the scholarly 1531 opening as approximate because precise accession-year conventions differ; end at 1550."
+  }
+}
