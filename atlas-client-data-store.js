@@ -11,7 +11,7 @@
     persons: Object.freeze({ key:"persons", label:"Person Runtime", url:personReader.ENDPOINT }),
     personDomains: Object.freeze({ key:"personDomains", label:"Person Domain", url:"/api/atlas-person-domain" }),
     spatialIndex: Object.freeze({ key:"spatialIndex", label:"Spatial Index", url:"./atlas-polity-spatial-index.json" }),
-    nonTimeline: Object.freeze({ key:"nonTimeline", label:"Non-timeline Registry", url:"./non-timeline-persons.json" }),
+    nonTimeline: Object.freeze({ key:"nonTimeline", label:"Non-timeline Registry", url:"/api/atlas-read?__atlas_read_surface=non-timeline-persons" }),
     recentDelta: Object.freeze({ key:"recentDelta", label:"Recent Delta", url:"/api/atlas-read?__atlas_read_surface=recent-delta" }),
     systemIdentity: Object.freeze({ key:"systemIdentity", label:"Runtime Identity", url:"/api/atlas-read?__atlas_read_surface=runtime-identity" }),
     runtimePublication: Object.freeze({ key:"runtimePublication", label:"Runtime Publication", url:"/api/atlas-read?__atlas_read_surface=runtime-publication" }),
