@@ -410,12 +410,16 @@
       "remediation_unit": null,
       "evidence_anchors": [
         {
-          "path": "server/atlas-canonical-data-readiness.js",
-          "contains": "\"people_groups\""
+          "path": "server/atlas-context-object-service.js",
+          "contains": "async function createContextObject"
         },
         {
-          "path": "server/atlas-canonical-data-readiness.js",
-          "contains": "\"historical_events\""
+          "path": "server/atlas-context-object-service.js",
+          "contains": "async function linkPersonContext"
+        },
+        {
+          "path": "server/atlas-context-object-service.js",
+          "contains": "async function linkPolityGovernanceContext"
         }
       ],
       "note": "Unit 12 closes the context-object ownership gap: PeopleGroup, HistoricalEvent and GovernanceContext are independently source-backed identities, with supported Person affiliation/event participation and Polity governance-period links. They are not Polities and the writer never creates a Polity as a substitute."
