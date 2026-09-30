@@ -66,7 +66,7 @@ test("CORE authority ownership registry is structurally complete", () => {
     "non_timeline_person_registry",
     "reviewed_candidate_state",
     "registration_execution_state",
-    "person_destructive_lifecycle"
+    "person_destructive_lifecycle",\n    "activity_correction_lifecycle"
   ]) {
     assert.ok(ids.has(required), `required CORE resource missing: ${required}`);
   }
@@ -84,22 +84,7 @@ test("every ownership claim is anchored to current executable/source evidence", 
   }
 });
 
-test("known Unit 1 shadow-writer debts stay explicit until their owning cleanup units remove them", () => {
-  const byId = new Map(registry.resources.map((resource) => [resource.id, resource]));
-  assert.equal(byId.get("source_identity").status, "single_writer");
-  assert.deepEqual(byId.get("source_identity").shadow_writers, []);
-  assert.deepEqual(
-    byId.get("person_external_reference").shadow_writers.map((item) => item.path).sort(),
-    [
-      "db/migrations/20260821_human_authoring_external_reference_sync.sql",
-      "server/atlas-human-authoring-service.js"
-    ].sort()
-  );
-  assert.ok(byId.get("activity_authoring").shadow_writers.some((item) => item.path === "server/atlas-correction-manifest-v2-service.js"));
-  assert.equal(byId.get("non_timeline_person_registry").status, "duplicate_truth_registry");
-  assert.equal(byId.get("context_objects").status, "single_writer");
-  assert.deepEqual(byId.get("context_objects").shadow_writers, []);
-});
+test("Unit 16 closes registered multi-writer and duplicate-truth CORE debt",()=>{const byId=new Map(registry.resources.map(x=>[x.id,x]));assert.deepEqual(registry.resources.filter(x=>x.status==="multi_writer_debt"||x.status==="duplicate_truth_registry"),[]);for(const id of ["role_identity_creation","activity_authoring","activity_correction_lifecycle","person_external_reference","non_timeline_person_registry"])assert.equal(byId.get(id).status,"single_writer");});
 
 test("derived/runtime and repository spatial outputs are not mislabeled as historical authoring authority", () => {
   const byId = new Map(registry.resources.map((resource) => [resource.id, resource]));
