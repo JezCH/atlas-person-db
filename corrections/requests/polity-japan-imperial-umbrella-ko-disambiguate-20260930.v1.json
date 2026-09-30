@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-name:imperial-japan-umbrella-ko-disambiguate:2026-09-30:v1",
+  "release_order": 1165,
+  "decision_authority": "User-directed Japan polity lineage repair. Before restoring the retired Empire of Japan identity, remove the exact Korean preferred-name collision on the temporary Imperial Japan umbrella by reverting that umbrella to its original seed display label. The umbrella is retired later in the same serialized correction chain.",
+  "operations": [
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "japan-disambiguate-temporary-imperial-umbrella-ko-before-restore",
+      "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+      "locale": "ko",
+      "expected_name": "일본 제국",
+      "replacement_name": "일본 제국기(1868–1947)"
+    }
+  ]
+}
