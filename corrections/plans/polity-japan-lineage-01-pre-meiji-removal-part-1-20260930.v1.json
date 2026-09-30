@@ -1,232 +1,232 @@
 {
-  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
-  "as_of": "2026-09-30",
-  "contract": "stage2/contracts/correction-v2-current.v1.json",
-  "decision_authority": "User-directed Japan polity lineage correction on 2026-09-30 after rejecting fabricated umbrella labels Pre-Meiji Japan / Imperial Japan / Meiji Government; exact Production Baseline A captured after restoration runtime deployment.",
-  "baseline": {
-    "deployment_sha": "d69db292ab1b6eec14021db4fed85ab93b98d80d",
-    "baseline_digest": "sha256:7bfe2529126d3663ec977c2e5b9cb6fb58add5c1af2643bc499dbfa8d1d67c4f"
-  },
-  "batch_id": "polity_japan_lineage_pre_meiji_umbrella_removal_part_1_20260930_v1",
-  "status": "REVIEWED_JAPAN_LINEAGE_REPAIR",
-  "release_order": 1180,
-  "execution_rules": {
-    "exact_live_before_snapshot_required": true,
-    "preserve_all_existing_normalized_source_links_and_locators": true,
-    "one_split_survivor_preserves_original_activity_uuid": true,
-    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
-    "new_fragment_legacy_source_key_must_be_null": true,
-    "territory_geometry_mutation_forbidden": true,
-    "physical_person_merge_forbidden": true,
-    "production_executable": false,
-    "production_mutation_authorized": false
-  },
-  "operations": [
-    {
-      "case_id": "japan-lineage-rewrite-088b8387",
-      "type": "rewrite_activity",
-      "activity_id": "088b8387-d758-4011-87b6-4f8bdeea0395",
-      "baseline_before": {
-        "person_id": "23dd2f89-ab58-4b6d-9fed-f3db48da28e1",
-        "polity_id": "7dc78052-3cef-4e39-addc-599fe8b6c309",
-        "role_id": "d1047109-bdda-4756-a9f8-610a80f467f8",
-        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
-        "activity_start": 1706,
-        "activity_end": 1727,
-        "confidence": "well_established",
-        "chronology_status": "reviewed",
-        "legacy_source_key": null,
-        "source_count": 1
-      },
-      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
-      "after": {
-        "activity_id": "088b8387-d758-4011-87b6-4f8bdeea0395",
-        "person_id": "23dd2f89-ab58-4b6d-9fed-f3db48da28e1",
-        "polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
-        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
-        "role_id": "d1047109-bdda-4756-a9f8-610a80f467f8",
-        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
-        "activity_start": 1706,
-        "activity_start_detail": {
-          "year": 1706,
-          "month": null,
-          "day": null,
-          "granularity": "year",
-          "certainty": "exact",
-          "calendar": "unspecified_historical"
-        },
-        "activity_end": 1727,
-        "activity_end_detail": {
-          "year": 1727,
-          "month": null,
-          "day": null,
-          "granularity": "year",
-          "certainty": "exact",
-          "calendar": "unspecified_historical"
-        },
-        "confidence": "well_established",
-        "chronology_status": "reviewed",
-        "legacy_source_key": null,
-        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
-        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
-        "add_source_links": []
-      }
+    "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+    "as_of": "2026-09-30",
+    "contract": "stage2/contracts/correction-v2-current.v1.json",
+    "decision_authority": "User-directed Japan polity lineage correction on 2026-09-30 after rejecting fabricated umbrella labels Pre-Meiji Japan / Imperial Japan / Meiji Government; exact Production Baseline A captured after restoration runtime deployment.",
+    "baseline": {
+        "deployment_sha": "d69db292ab1b6eec14021db4fed85ab93b98d80d",
+        "baseline_digest": "sha256:7bfe2529126d3663ec977c2e5b9cb6fb58add5c1af2643bc499dbfa8d1d67c4f"
     },
-    {
-      "case_id": "japan-lineage-rewrite-133540d6",
-      "type": "rewrite_activity",
-      "activity_id": "133540d6-c46d-49e6-b3f4-d4be353f947e",
-      "baseline_before": {
-        "person_id": "a71a1241-0352-475a-916b-c5d817604021",
-        "polity_id": "7dc78052-3cef-4e39-addc-599fe8b6c309",
-        "role_id": "c655646f-7cc0-4545-9bac-7b516805f6ab",
-        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
-        "activity_start": 1244,
-        "activity_end": 1244,
-        "confidence": "well_established",
-        "chronology_status": "reviewed",
-        "legacy_source_key": null,
-        "source_count": 1
-      },
-      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
-      "after": {
-        "activity_id": "133540d6-c46d-49e6-b3f4-d4be353f947e",
-        "person_id": "a71a1241-0352-475a-916b-c5d817604021",
-        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
-        "role_id": "c655646f-7cc0-4545-9bac-7b516805f6ab",
-        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
-        "activity_start": 1244,
-        "activity_start_detail": {
-          "year": 1244,
-          "month": null,
-          "day": null,
-          "granularity": "year",
-          "certainty": "exact",
-          "calendar": "unspecified_historical"
-        },
-        "activity_end": 1244,
-        "activity_end_detail": {
-          "year": 1244,
-          "month": null,
-          "day": null,
-          "granularity": "year",
-          "certainty": "exact",
-          "calendar": "unspecified_historical"
-        },
-        "confidence": "well_established",
-        "chronology_status": "reviewed",
-        "legacy_source_key": null,
-        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
-        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
-        "add_source_links": []
-      }
+    "batch_id": "polity_japan_lineage_pre_meiji_umbrella_removal_part_1_20260930_v1",
+    "status": "REVIEWED_JAPAN_LINEAGE_REPAIR",
+    "release_order": 1180,
+    "execution_rules": {
+        "exact_live_before_snapshot_required": true,
+        "preserve_all_existing_normalized_source_links_and_locators": true,
+        "one_split_survivor_preserves_original_activity_uuid": true,
+        "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+        "new_fragment_legacy_source_key_must_be_null": true,
+        "territory_geometry_mutation_forbidden": true,
+        "physical_person_merge_forbidden": true,
+        "production_executable": false,
+        "production_mutation_authorized": false
     },
-    {
-      "case_id": "japan-lineage-rewrite-1694ac47",
-      "type": "rewrite_activity",
-      "activity_id": "1694ac47-d0bd-4829-b915-e774ebead11a",
-      "baseline_before": {
-        "person_id": "97981e09-e791-49d6-9dea-78d56e472102",
-        "polity_id": "7dc78052-3cef-4e39-addc-599fe8b6c309",
-        "role_id": "f3209386-250a-4d7a-be79-0d34c2588672",
-        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
-        "activity_start": 1338,
-        "activity_end": 1358,
-        "confidence": "well_established",
-        "chronology_status": "reviewed",
-        "legacy_source_key": null,
-        "source_count": 2
-      },
-      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
-      "after": {
-        "activity_id": "1694ac47-d0bd-4829-b915-e774ebead11a",
-        "person_id": "97981e09-e791-49d6-9dea-78d56e472102",
-        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
-        "role_id": "f3209386-250a-4d7a-be79-0d34c2588672",
-        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
-        "activity_start": 1338,
-        "activity_start_detail": {
-          "year": 1338,
-          "month": null,
-          "day": null,
-          "granularity": "year",
-          "certainty": "exact",
-          "calendar": "unspecified_historical"
+    "operations": [
+        {
+            "case_id": "japan-lineage-rewrite-088b8387",
+            "type": "rewrite_activity",
+            "activity_id": "088b8387-d758-4011-87b6-4f8bdeea0395",
+            "baseline_before": {
+                "person_id": "23dd2f89-ab58-4b6d-9fed-f3db48da28e1",
+                "polity_id": "7dc78052-3cef-4e39-addc-599fe8b6c309",
+                "role_id": "d1047109-bdda-4756-a9f8-610a80f467f8",
+                "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+                "activity_start": 1706,
+                "activity_end": 1727,
+                "confidence": "well_established",
+                "chronology_status": "reviewed",
+                "legacy_source_key": null,
+                "source_count": 1
+            },
+            "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+            "after": {
+                "activity_id": "088b8387-d758-4011-87b6-4f8bdeea0395",
+                "person_id": "23dd2f89-ab58-4b6d-9fed-f3db48da28e1",
+                "polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
+                "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+                "role_id": "d1047109-bdda-4756-a9f8-610a80f467f8",
+                "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+                "activity_start": 1706,
+                "activity_start_detail": {
+                    "year": 1706,
+                    "month": null,
+                    "day": null,
+                    "granularity": "year",
+                    "certainty": "exact",
+                    "calendar": "unspecified_historical"
+                },
+                "activity_end": 1727,
+                "activity_end_detail": {
+                    "year": 1727,
+                    "month": null,
+                    "day": null,
+                    "granularity": "year",
+                    "certainty": "exact",
+                    "calendar": "unspecified_historical"
+                },
+                "confidence": "well_established",
+                "chronology_status": "reviewed",
+                "legacy_source_key": null,
+                "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+                "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+                "add_source_links": []
+            }
         },
-        "activity_end": 1358,
-        "activity_end_detail": {
-          "year": 1358,
-          "month": null,
-          "day": null,
-          "granularity": "year",
-          "certainty": "exact",
-          "calendar": "unspecified_historical"
+        {
+            "case_id": "japan-lineage-rewrite-133540d6",
+            "type": "rewrite_activity",
+            "activity_id": "133540d6-c46d-49e6-b3f4-d4be353f947e",
+            "baseline_before": {
+                "person_id": "a71a1241-0352-475a-916b-c5d817604021",
+                "polity_id": "7dc78052-3cef-4e39-addc-599fe8b6c309",
+                "role_id": "c655646f-7cc0-4545-9bac-7b516805f6ab",
+                "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+                "activity_start": 1244,
+                "activity_end": 1244,
+                "confidence": "well_established",
+                "chronology_status": "reviewed",
+                "legacy_source_key": null,
+                "source_count": 1
+            },
+            "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+            "after": {
+                "activity_id": "133540d6-c46d-49e6-b3f4-d4be353f947e",
+                "person_id": "a71a1241-0352-475a-916b-c5d817604021",
+                "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+                "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+                "role_id": "c655646f-7cc0-4545-9bac-7b516805f6ab",
+                "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+                "activity_start": 1244,
+                "activity_start_detail": {
+                    "year": 1244,
+                    "month": null,
+                    "day": null,
+                    "granularity": "year",
+                    "certainty": "exact",
+                    "calendar": "unspecified_historical"
+                },
+                "activity_end": 1244,
+                "activity_end_detail": {
+                    "year": 1244,
+                    "month": null,
+                    "day": null,
+                    "granularity": "year",
+                    "certainty": "exact",
+                    "calendar": "unspecified_historical"
+                },
+                "confidence": "well_established",
+                "chronology_status": "reviewed",
+                "legacy_source_key": null,
+                "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+                "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+                "add_source_links": []
+            }
         },
-        "confidence": "well_established",
-        "chronology_status": "reviewed",
-        "legacy_source_key": null,
-        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
-        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
-        "add_source_links": []
-      }
-    },
-    {
-      "case_id": "japan-lineage-rewrite-1ec2e778",
-      "type": "rewrite_activity",
-      "activity_id": "1ec2e778-d646-4148-be91-7a312d1dcae4",
-      "baseline_before": {
-        "person_id": "7198c2c0-e9d6-419e-bfee-cc0c7036d874",
-        "polity_id": "7dc78052-3cef-4e39-addc-599fe8b6c309",
-        "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
-        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
-        "activity_start": 593,
-        "activity_end": 622,
-        "confidence": "likely",
-        "chronology_status": "reviewed",
-        "legacy_source_key": null,
-        "source_count": 2
-      },
-      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
-      "after": {
-        "activity_id": "1ec2e778-d646-4148-be91-7a312d1dcae4",
-        "person_id": "7198c2c0-e9d6-419e-bfee-cc0c7036d874",
-        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
-        "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
-        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
-        "activity_start": 593,
-        "activity_start_detail": {
-          "year": 593,
-          "month": null,
-          "day": null,
-          "granularity": "year",
-          "certainty": "approximate",
-          "calendar": "unspecified_historical"
+        {
+            "case_id": "japan-lineage-rewrite-1694ac47",
+            "type": "rewrite_activity",
+            "activity_id": "1694ac47-d0bd-4829-b915-e774ebead11a",
+            "baseline_before": {
+                "person_id": "97981e09-e791-49d6-9dea-78d56e472102",
+                "polity_id": "7dc78052-3cef-4e39-addc-599fe8b6c309",
+                "role_id": "f3209386-250a-4d7a-be79-0d34c2588672",
+                "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+                "activity_start": 1338,
+                "activity_end": 1358,
+                "confidence": "well_established",
+                "chronology_status": "reviewed",
+                "legacy_source_key": null,
+                "source_count": 2
+            },
+            "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+            "after": {
+                "activity_id": "1694ac47-d0bd-4829-b915-e774ebead11a",
+                "person_id": "97981e09-e791-49d6-9dea-78d56e472102",
+                "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+                "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+                "role_id": "f3209386-250a-4d7a-be79-0d34c2588672",
+                "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+                "activity_start": 1338,
+                "activity_start_detail": {
+                    "year": 1338,
+                    "month": null,
+                    "day": null,
+                    "granularity": "year",
+                    "certainty": "exact",
+                    "calendar": "unspecified_historical"
+                },
+                "activity_end": 1358,
+                "activity_end_detail": {
+                    "year": 1358,
+                    "month": null,
+                    "day": null,
+                    "granularity": "year",
+                    "certainty": "exact",
+                    "calendar": "unspecified_historical"
+                },
+                "confidence": "well_established",
+                "chronology_status": "reviewed",
+                "legacy_source_key": null,
+                "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+                "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+                "add_source_links": []
+            }
         },
-        "activity_end": 622,
-        "activity_end_detail": {
-          "year": 622,
-          "month": null,
-          "day": null,
-          "granularity": "year",
-          "certainty": "exact",
-          "calendar": "unspecified_historical"
-        },
-        "confidence": "likely",
-        "chronology_status": "reviewed",
-        "legacy_source_key": null,
-        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
-        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
-        "add_source_links": []
-      }
+        {
+            "case_id": "japan-lineage-rewrite-1ec2e778",
+            "type": "rewrite_activity",
+            "activity_id": "1ec2e778-d646-4148-be91-7a312d1dcae4",
+            "baseline_before": {
+                "person_id": "7198c2c0-e9d6-419e-bfee-cc0c7036d874",
+                "polity_id": "7dc78052-3cef-4e39-addc-599fe8b6c309",
+                "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
+                "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+                "activity_start": 593,
+                "activity_end": 622,
+                "confidence": "likely",
+                "chronology_status": "reviewed",
+                "legacy_source_key": null,
+                "source_count": 2
+            },
+            "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+            "after": {
+                "activity_id": "1ec2e778-d646-4148-be91-7a312d1dcae4",
+                "person_id": "7198c2c0-e9d6-419e-bfee-cc0c7036d874",
+                "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+                "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+                "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
+                "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+                "activity_start": 593,
+                "activity_start_detail": {
+                    "year": 593,
+                    "month": null,
+                    "day": null,
+                    "granularity": "year",
+                    "certainty": "approximate",
+                    "calendar": "unspecified_historical"
+                },
+                "activity_end": 622,
+                "activity_end_detail": {
+                    "year": 622,
+                    "month": null,
+                    "day": null,
+                    "granularity": "year",
+                    "certainty": "exact",
+                    "calendar": "unspecified_historical"
+                },
+                "confidence": "likely",
+                "chronology_status": "reviewed",
+                "legacy_source_key": null,
+                "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+                "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+                "add_source_links": []
+            }
+        }
+    ],
+    "stage2_assertions": [],
+    "polity_relation_assertions": [],
+    "result": {
+        "activity_targets": 4,
+        "production_mutation_authorized": false
     }
-  ],
-  "stage2_assertions": [],
-  "polity_relation_assertions": [],
-  "result": {
-    "activity_targets": 4,
-    "production_mutation_authorized": false
-  }
 }
