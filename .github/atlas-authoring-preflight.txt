@@ -1,1 +1,1 @@
-apply authoring/requests/philosophy-canon-20260930-mipham-person-only.json
+apply authoring/requests/philosophy-canon-20260930-al-farabi-person-only.json
