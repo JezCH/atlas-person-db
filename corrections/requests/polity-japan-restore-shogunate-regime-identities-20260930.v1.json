@@ -1,0 +1,113 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-restore:japan-shogunate-regime-identities:2026-09-30:v1",
+  "release_order": 1200,
+  "evidence": {
+    "decision": "Reverse three earlier no-survivor retirements after the Japan polity review determined these governance/state structures must again be addressable as distinct historical Polity identities. Restore the original UUIDs rather than minting duplicates.",
+    "restoration_scope": [
+      "Kamakura Shogunate",
+      "Tokugawa Shogunate",
+      "Toyotomi Regime"
+    ],
+    "safety": "Only tombstones with survivor_polity_id=NULL and exact retirement metadata may be restored. Preferred names are recreated with deterministic UUID5 rows; Activities are relinked by later release-ordered plans."
+  },
+  "operations": [
+    {
+      "type": "restore_retired_polity",
+      "case_id": "restore-kamakura-shogunate",
+      "expected_retirement": {
+        "retired_polity_id": "53943675-7711-5053-9f2e-f149f727aa54",
+        "survivor_polity_id": null,
+        "canonical_key": "Kamakura Shogunate",
+        "polity_type": "historical_polity",
+        "historicity": "historical",
+        "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+        "source_request_id": "polity-retirement:governance-context-duplicates:2026-08-21:v1",
+        "source_case_id": "polity-retire:kamakura-shogunate"
+      },
+      "restore_preferred_names": [
+        {
+          "id": "ecb1b90a-1b4d-534b-bb73-3bb2bc1561a1",
+          "polity_id": "53943675-7711-5053-9f2e-f149f727aa54",
+          "locale": "en",
+          "name": "Kamakura Shogunate",
+          "name_type": "canonical",
+          "is_preferred": true
+        },
+        {
+          "id": "8fa12e85-78a7-5ab2-8fce-44f542729be7",
+          "polity_id": "53943675-7711-5053-9f2e-f149f727aa54",
+          "locale": "ko",
+          "name": "가마쿠라 막부",
+          "name_type": "display",
+          "is_preferred": true
+        }
+      ]
+    },
+    {
+      "type": "restore_retired_polity",
+      "case_id": "restore-tokugawa-shogunate",
+      "expected_retirement": {
+        "retired_polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
+        "survivor_polity_id": null,
+        "canonical_key": "Tokugawa Shogunate",
+        "polity_type": "historical_polity",
+        "historicity": "historical",
+        "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+        "source_request_id": "polity-retirement:governance-context-duplicates:2026-08-21:v1",
+        "source_case_id": "polity-retire:tokugawa-shogunate"
+      },
+      "restore_preferred_names": [
+        {
+          "id": "c7dd6396-b8e4-55f4-a895-20986b5638f8",
+          "polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
+          "locale": "en",
+          "name": "Tokugawa Shogunate",
+          "name_type": "canonical",
+          "is_preferred": true
+        },
+        {
+          "id": "9c6ed3f9-8c37-5c80-93ec-87ded725a01a",
+          "polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
+          "locale": "ko",
+          "name": "도쿠가와 막부",
+          "name_type": "display",
+          "is_preferred": true
+        }
+      ]
+    },
+    {
+      "type": "restore_retired_polity",
+      "case_id": "restore-toyotomi-regime",
+      "expected_retirement": {
+        "retired_polity_id": "e1548cb1-f89d-538b-9fb2-bad02ad87f8e",
+        "survivor_polity_id": null,
+        "canonical_key": "Toyotomi Regime",
+        "polity_type": "historical_polity",
+        "historicity": "historical",
+        "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+        "source_request_id": "polity-retirement:zero-activity-external-orphans:2026-09-25:batch1-v1",
+        "source_case_id": "polity-retire:zero-activity-orphan:toyotomi-regime"
+      },
+      "restore_preferred_names": [
+        {
+          "id": "7a03a865-128f-56be-b075-5b8670fd0d74",
+          "polity_id": "e1548cb1-f89d-538b-9fb2-bad02ad87f8e",
+          "locale": "en",
+          "name": "Toyotomi Regime",
+          "name_type": "canonical",
+          "is_preferred": true
+        },
+        {
+          "id": "8fa29265-89e1-5979-a313-8798457bbe40",
+          "polity_id": "e1548cb1-f89d-538b-9fb2-bad02ad87f8e",
+          "locale": "ko",
+          "name": "도요토미 정권",
+          "name_type": "display",
+          "is_preferred": true
+        }
+      ]
+    }
+  ]
+}

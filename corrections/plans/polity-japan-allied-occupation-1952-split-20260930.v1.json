@@ -1,0 +1,324 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "as_of": "2026-09-30",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "Model Allied-occupied Japan as a temporal designation of Japan from formal surrender on 2 September 1945 through 27 April 1952, immediately before the Treaty of Peace with Japan entered into force on 28 April 1952. Split cross-boundary Activities so runtime designation resolution remains unambiguous.",
+  "baseline": {
+    "deployment_sha": "13a54d7e019ea1826412fd00938c3cd42066aebe",
+    "baseline_digest": "LIVE_SNAPSHOT_AT_EXECUTION"
+  },
+  "batch_id": "polity_japan_allied_occupation_designation_and_1952_split_20260930_v1",
+  "status": "REVIEWED_ALLIED_OCCUPATION_DISPLAY_BOUNDARY",
+  "release_order": 1270,
+  "new_activity_uuid_allocations": [
+    {
+      "case_id": "hirohito-occupation-1952-split",
+      "fragment_id": "occupied_1945_1952",
+      "activity_uuid": "d25e5fdd-5c25-5966-96c8-b19913bd7802",
+      "algorithm": "uuid5",
+      "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+      "name": "correction:activity:d770812f-b9ab-41f2-9751-01d7a7931bb8:occupied_1945_1952"
+    },
+    {
+      "case_id": "yoshida-occupation-1952-split",
+      "fragment_id": "occupied_1948_1952",
+      "activity_uuid": "efac5a04-08c0-52f2-8160-7769dd3f547c",
+      "algorithm": "uuid5",
+      "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+      "name": "correction:activity:23a9fd92-eaad-5a7a-bc09-fd47137e536c:occupied_1948_1952"
+    }
+  ],
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "one_split_survivor_preserves_original_activity_uuid": true,
+    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+    "new_fragment_legacy_source_key_must_be_null": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "hirohito-occupation-1952-split",
+      "type": "split_activity",
+      "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
+      "baseline_before": {
+        "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1945,
+        "activity_end": 1989,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
+          "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1952,
+          "activity_start_detail": {
+            "year": 1952,
+            "month": 4,
+            "day": 28,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1989,
+          "activity_end_detail": {
+            "year": 1989,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This survivor fragment records Hirohito from 28 April 1952, when the Treaty of Peace with Japan entered into force and the Allied occupation ended, through the end of his recorded reign in 1989.",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "d25e5fdd-5c25-5966-96c8-b19913bd7802",
+          "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1945,
+          "activity_start_detail": {
+            "year": 1945,
+            "month": 9,
+            "day": 2,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1952,
+          "activity_end_detail": {
+            "year": 1952,
+            "month": 4,
+            "day": 27,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This fragment records Hirohito during Allied-occupied Japan from the formal surrender on 2 September 1945 through 27 April 1952, the day before the peace treaty entered into force.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        }
+      ],
+      "gap_overlap_policy": "EXACT_DAY_BOUNDARY_OCCUPIED_FRAGMENT_ENDS_1952_04_27_AND_POST_OCCUPATION_SURVIVOR_STARTS_1952_04_28"
+    },
+    {
+      "case_id": "yoshida-occupation-1952-split",
+      "type": "split_activity",
+      "activity_id": "23a9fd92-eaad-5a7a-bc09-fd47137e536c",
+      "baseline_before": {
+        "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1948,
+        "activity_end": 1954,
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed_stage2_phase",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "23a9fd92-eaad-5a7a-bc09-fd47137e536c",
+          "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+          "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+          "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+          "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+          "activity_start": 1952,
+          "activity_start_detail": {
+            "year": 1952,
+            "month": 4,
+            "day": 28,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1954,
+          "activity_end_detail": {
+            "year": 1954,
+            "month": 12,
+            "day": 10,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed_stage2_phase",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Yoshida Shigeru remained prime minister after the Treaty of Peace with Japan entered into force on 28 April 1952. This survivor fragment records the sovereign post-occupation portion of his 1948–1954 tenure.",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "efac5a04-08c0-52f2-8160-7769dd3f547c",
+          "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+          "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+          "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+          "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+          "activity_start": 1948,
+          "activity_start_detail": {
+            "year": 1948,
+            "month": 10,
+            "day": 15,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1952,
+          "activity_end_detail": {
+            "year": 1952,
+            "month": 4,
+            "day": 27,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed_stage2_phase",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This fragment records Yoshida Shigeru's 1948–1952 prime-ministerial service during Allied-occupied Japan through 27 April 1952.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        }
+      ],
+      "gap_overlap_policy": "EXACT_DAY_BOUNDARY_OCCUPIED_FRAGMENT_ENDS_1952_04_27_AND_POST_OCCUPATION_SURVIVOR_STARTS_1952_04_28"
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "japan-allied-occupation-start-source",
+      "exact_before": {
+        "source_absent_id": "1655179a-2536-5808-b9e1-95c91dc961a4"
+      },
+      "exact_after": {
+        "source": {
+          "id": "1655179a-2536-5808-b9e1-95c91dc961a4",
+          "source_key": "japan-allied-occupation-start-ndl-scapin-1",
+          "source_type": "official_government_reference",
+          "title": "Supreme Commander for the Allied Powers Directives to the Japanese Government (SCAPINs)",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://ndlsearch.ndl.go.jp/en/rnavi/occupation/SCA_1",
+          "citation_text": "National Diet Library records SCAPIN-1, General Order No. 1, dated 2 September 1945, as initial instructions to the Japanese Government implementing the surrender terms."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "japan-allied-occupation-end-source",
+      "exact_before": {
+        "source_absent_id": "2157789a-8bea-51ac-8019-fe008c348bfa"
+      },
+      "exact_after": {
+        "source": {
+          "id": "2157789a-8bea-51ac-8019-fe008c348bfa",
+          "source_key": "japan-allied-occupation-end-mofa-peace-treaty",
+          "source_type": "official_government_reference",
+          "title": "Treaty of Peace with Japan",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.mofa.go.jp/mofaj/gaiko/treaty/pdfs/B-S38-P2-795_1.pdf",
+          "citation_text": "Japan's Ministry of Foreign Affairs records that the Treaty of Peace with Japan entered into force on 28 April 1952."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "japan-allied-occupation-designation",
+      "exact_before": {
+        "designation_absent_id": "32b5e8f6-d232-5481-87d2-81e1ad55494a"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "32b5e8f6-d232-5481-87d2-81e1ad55494a",
+          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+          "designation_type": "occupation_period",
+          "valid_from_year": 1945,
+          "valid_from_month": 9,
+          "valid_from_day": 2,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1952,
+          "valid_to_month": 4,
+          "valid_to_day": 27,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "ATLAS temporal designation for Japan under Allied occupation. The interval begins with the formal surrender and SCAP directives on 2 September 1945 and ends the day before the Treaty of Peace with Japan entered into force on 28 April 1952."
+        },
+        "names": [
+          {
+            "id": "b6604f8c-66a2-5cb8-9858-7597d1d87f2f",
+            "polity_designation_id": "32b5e8f6-d232-5481-87d2-81e1ad55494a",
+            "locale": "en",
+            "name": "Allied-occupied Japan",
+            "is_preferred": true
+          },
+          {
+            "id": "6e9af4f2-0afb-5dd5-a6ce-dc75b868306d",
+            "polity_designation_id": "32b5e8f6-d232-5481-87d2-81e1ad55494a",
+            "locale": "ko",
+            "name": "연합군 점령하 일본",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "32b5e8f6-d232-5481-87d2-81e1ad55494a",
+            "source_id": "1655179a-2536-5808-b9e1-95c91dc961a4",
+            "source_locator_key": "SCAPIN-1 is dated 2 September 1945 and implements the terms of surrender."
+          },
+          {
+            "polity_designation_id": "32b5e8f6-d232-5481-87d2-81e1ad55494a",
+            "source_id": "2157789a-8bea-51ac-8019-fe008c348bfa",
+            "source_locator_key": "The Treaty of Peace with Japan entered into force on 28 April 1952."
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "split_operations": 2,
+    "new_activity_fragments": 2,
+    "designation_assertions": 1,
+    "source_assertions": 2,
+    "production_mutation_authorized": false
+  }
+}

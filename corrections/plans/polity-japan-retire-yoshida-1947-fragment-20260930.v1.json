@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "as_of": "2026-09-30",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "After restoring Yoshida Shigeru's first cabinet to one continuous Japan Activity, retire the artificial 1946–2 May 1947 imperial fragment and transfer all normalized provenance to the survivor.",
+  "baseline": {
+    "deployment_sha": "13a54d7e019ea1826412fd00938c3cd42066aebe",
+    "baseline_digest": "LIVE_SNAPSHOT_AT_EXECUTION"
+  },
+  "batch_id": "polity_japan_retire_yoshida_1947_artificial_fragment_20260930_v1",
+  "status": "REVIEWED_RETIRE_ARTIFICIAL_1947_FRAGMENT",
+  "release_order": 1260,
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "retire_source_transfer_before_delete_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "retire-yoshida-imperial-fragment-6be0e940",
+      "type": "retire_activity",
+      "activity_id": "6be0e940-54b0-54e7-b53a-399c82959001",
+      "baseline_before": {
+        "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+        "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1946,
+        "activity_end": 1947,
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "replacement_activity_ids": [
+        "0c084a88-58be-52e8-81bb-b73bf0a11bb1"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retired_activity_count": 1,
+    "replacement_survivor_count": 1,
+    "production_mutation_authorized": false
+  }
+}
