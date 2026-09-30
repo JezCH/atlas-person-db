@@ -63,6 +63,7 @@
     "registration_frontier": "#1375 comment 5855612708",
     "grade": "SS",
     "namuwiki_review": "Independent indexed NamuWiki-mirror Person document verified at exact title 오도아케르; canonical namu.wiki path preserved.",
-    "polity_decision": "Create the precise 476–493 Kingdom of Odoacer identity; do not bind Odoacer to the known multi-era Kingdom of Italy false merge."
+    "polity_decision": "Create the precise 476–493 Kingdom of Odoacer identity; do not bind Odoacer to the known multi-era Kingdom of Italy false merge.",
+    "execution_retry": "2026-10-01 replay-safe authoring bootstrap retry after Production audit-operation constraint blocker"
   }
 }

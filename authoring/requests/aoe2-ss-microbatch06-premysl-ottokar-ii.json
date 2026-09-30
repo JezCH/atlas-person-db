@@ -60,6 +60,7 @@
     "review_checkpoint": "#1374 comment 5825499804",
     "registration_frontier": "#1375 comment 5855612708",
     "grade": "SS",
-    "namuwiki_review": "Independent indexed NamuWiki-mirror Person document verified at exact title 오타카르 2세; canonical namu.wiki path preserved."
+    "namuwiki_review": "Independent indexed NamuWiki-mirror Person document verified at exact title 오타카르 2세; canonical namu.wiki path preserved.",
+    "execution_retry": "2026-10-01 replay-safe authoring bootstrap retry after Production audit-operation constraint blocker"
   }
 }
