@@ -25,3 +25,13 @@ test('schema bootstrap dispatcher has only the permissions needed to read code a
   assert.match(workflow, /permissions:\s*\n\s*contents: read\s*\n\s*actions: write/);
   assert.doesNotMatch(workflow, /id-token: write/);
 });
+
+
+test('schema bootstrap dispatcher requires the dispatched child apply run to succeed', () => {
+  assert.match(workflow, /gh run list/);
+  assert.match(workflow, /child_run_id/);
+  assert.match(workflow, /AUTHORING_BOOTSTRAP_CHILD_RUN_NOT_FOUND/);
+  assert.match(workflow, /gh run watch "\$child_run_id"/);
+  assert.match(workflow, /--exit-status/);
+  assert.match(workflow, /timeout-minutes:\s*30/);
+});
