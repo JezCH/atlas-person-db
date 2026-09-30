@@ -195,50 +195,33 @@
         "atlas_v2.sources"
       ],
       "authoritative_writer": {
-        "path": "server/atlas-authoring-object-service.js",
-        "symbol": "createSource"
+        "path": "server/atlas-source-service.js",
+        "symbol": "createSource / insertExactSource / rewriteSourceCitation"
       },
       "orchestrators": [
-        "server/atlas-authoring-object-transaction.js",
-        "server/atlas-identity-handler.js"
+        "server/atlas-authoring-object-service.js",
+        "server/atlas-human-authoring-service.js",
+        "server/atlas-correction-v2-stage2-assertions.js",
+        "server/atlas-correction-source-citation-v2-service.js"
       ],
-      "shadow_writers": [
-        {
-          "path": "server/atlas-human-authoring-service.js",
-          "reason": "Human registration has an independent resolve/create Source implementation with its own key and URL collision semantics.",
-          "cleanup_unit": "UNIT 9 / UNIT 7"
-        },
-        {
-          "path": "server/atlas-correction-v2-stage2-assertions.js",
-          "reason": "Stage2 correction assertions can insert Source rows directly.",
-          "cleanup_unit": "UNIT 9"
-        },
-        {
-          "path": "server/atlas-correction-source-citation-v2-service.js",
-          "reason": "Source citation correction updates Source rows directly rather than using one Source mutation primitive.",
-          "cleanup_unit": "UNIT 9 / UNIT 16"
-        }
-      ],
-      "status": "multi_writer_debt",
-      "remediation_unit": "UNIT 9",
+      "shadow_writers": [],
+      "status": "single_writer",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
-          "path": "server/atlas-authoring-object-service.js",
+          "path": "server/atlas-source-service.js",
           "contains": "async function createSource"
         },
         {
-          "path": "server/atlas-human-authoring-service.js",
-          "contains": "async function resolveOrCreateSources"
+          "path": "server/atlas-source-service.js",
+          "contains": "async function insertExactSource"
         },
         {
-          "path": "server/atlas-correction-v2-stage2-assertions.js",
-          "contains": "insert into atlas_v2.sources"
-        },
-        {
-          "path": "server/atlas-correction-source-citation-v2-service.js",
-          "contains": "update atlas_v2.sources"
+          "path": "server/atlas-source-service.js",
+          "contains": "async function rewriteSourceCitation"
         }
-      ]
+      ],
+      "note": "Unit 9 closed: existing Source UUIDs remain stable while reusable bibliographic metadata, identity creation/reuse, exact reviewed insertion, and guarded citation mutation share one canonical executable writer."
     },
     {
       "id": "place_identity",
