@@ -59,6 +59,7 @@ Hard rules:
 - `same repository`, `same main branch`, `same issue`, `same CORE unit`, `same table`, or `same writer family` is not by itself a conflict;
 - no worker waits merely because another worker is active;
 - no STANDBY, WAITING, global claim, queue ownership, or repeated lock polling;
+- The project does not have one global NONCORE writer.
 - if useful non-conflicting work exists, continue it.
 
 A conflict exists only when concurrent mutations can invalidate the same concrete resource, semantic identity, schema/runtime contract, repository update precondition, or explicitly declared dependency.
@@ -135,6 +136,8 @@ MISMATCH
 ```
 
 A mismatch must never trigger whole-project replay, full historical re-review, or automatic branch reconstruction.
+
+A full historical fold is exceptional recovery work, not normal bootstrap.
 
 ### Phase C — SHORT ATOMIC COMMIT
 
