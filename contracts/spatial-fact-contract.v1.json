@@ -1,0 +1,31 @@
+{
+  "schema": "atlas-spatial-fact-contract/v1",
+  "historical_fact": {
+    "entity": "PolityPlaceFunction",
+    "identity": ["polity_id", "function_type", "place_id", "start_year", "end_year"],
+    "required": ["polity_id", "function_type", "place_id", "confidence", "source_refs"],
+    "function_types": ["capital", "royal_court", "royal_residence", "imperial_court_core", "political_center", "administrative_center"],
+    "rules": {
+      "place_id_must_reference_first_class_place": true,
+      "source_refs_are_provenance_not_display_placement": true,
+      "macroregion_subregion_are_not_historical_fact_fields": true,
+      "unknown_boundary_may_be_null": true
+    }
+  },
+  "display_disposition": {
+    "entity": "SpatialDisplayDisposition",
+    "allowed_kinds": ["static_geography", "review_queue", "activity_override"],
+    "fields": ["region_code", "subregion_code", "location_label", "reason"],
+    "rules": {
+      "must_not_masquerade_as_polity_place_function": true,
+      "review_queue_is_explicit_hold": true,
+      "activity_override_is_display_only": true
+    }
+  },
+  "registration_handshake": {
+    "applies_when": "new_polity",
+    "required_terminal_states": ["existing_disposition", "reviewed_static", "reviewed_place_function", "reviewed_hold"],
+    "silent_omission_forbidden": true,
+    "done_requires_materialized_reviewed_disposition": true
+  }
+}
