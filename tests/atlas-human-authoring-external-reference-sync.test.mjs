@@ -12,6 +12,10 @@ test('human-authoring ledger writes synchronize first-class NamuWiki references'
   assert.match(migration, /INSERT INTO atlas_v2\.person_external_references/);
   assert.match(migration, /ON CONFLICT \(person_id, provider\) DO UPDATE/);
   assert.match(migration, /EXCLUDED\.checked_at >= atlas_v2\.person_external_references\.checked_at/);
+  assert.match(migration, /ref_review_state/);
+  assert.match(migration, /ref_review_reason/);
+  assert.match(migration, /review_state\s*=\s*EXCLUDED\.review_state/);
+  assert.match(migration, /review_reason\s*=\s*EXCLUDED\.review_reason/);
 });
 
 test('sync migration backfills pre-trigger immutable authoring snapshots', () => {
