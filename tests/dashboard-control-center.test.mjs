@@ -191,7 +191,42 @@ test("shared store owns repeated Person/domain/spatial reads and the duplicate n
   assert.match(storeSource, /\/api\/atlas-person-domain/);
   assert.match(storeSource, /atlas-polity-spatial-index\.json/);
   assert.doesNotMatch(storeSource, /non-timeline-persons\.json|nonTimeline/);
+  assert.doesNotMatch(dashboardSource, /loadNonTimelinePersons/);
+  assert.match(dashboardModelSource, /buildCanonicalNonTimelineRows/);
+  assert.match(dashboardModelSource, /timeline_disposition/);
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
+});
+
+test("Dashboard derives non-timeline quality targets from canonical Person timeline disposition", () => {
+  const rows=model.buildCanonicalNonTimelineRows({
+    persons:[
+      {
+        id:"11111111-1111-4111-8111-111111111111",
+        canonical_name_en:"Kupe",
+        preferred_name_ko:"쿠페",
+        historicity:"legendary_possible_historical_core",
+        timeline_disposition:{
+          disposition:"legendary",
+          basis_code:"Maori_oral_traditions_uncertain_chronology",
+          reason:"No secure datable personal activity interval.",
+          review_evidence:{legacy_record:{politic_name:"Maori",politic_display_name_ko:"마오리",historicity_display_ko:"전설·역사적 핵심 가능"}}
+        }
+      },
+      {
+        id:"22222222-2222-4222-8222-222222222222",
+        canonical_name_en:"Timeline Person",
+        preferred_name_ko:"연표 인물",
+        historicity:"historical",
+        timeline_disposition:{disposition:"timeline"}
+      }
+    ]
+  });
+  assert.equal(rows.length,1);
+  assert.equal(rows[0].person_id,"11111111-1111-4111-8111-111111111111");
+  assert.equal(rows[0].display_name_ko,"쿠페");
+  assert.equal(rows[0].disposition,"legendary");
+  assert.equal(rows[0].date_basis,"Maori_oral_traditions_uncertain_chronology");
+  assert.equal(rows[0].politic_display_name_ko,"마오리");
 });
 
 test("existing Person, external-reference and spacetime surfaces consume shared store", () => {

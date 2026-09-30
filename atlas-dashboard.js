@@ -1012,11 +1012,10 @@
     const serial = ++requestSerial;
     renderLoading(root);
 
-    const [persons, domains, spatial, nonTimeline, recentDelta, systemIdentity, runtimePublication, runtimeExclusions] = await Promise.allSettled([
+    const [persons, domains, spatial, recentDelta, systemIdentity, runtimePublication, runtimeExclusions] = await Promise.allSettled([
       store.loadPersons({ force }),
       store.loadPersonDomains({ force }),
       store.loadSpatialIndex({ force }),
-      store.loadNonTimelinePersons({ force }),
       store.loadRecentDelta({ force }),
       store.loadSystemIdentity({ force }),
       store.loadRuntimePublication({ force }),
@@ -1035,7 +1034,6 @@
       personResult,
       domainResult:settledValue(domains),
       spatialIndex:settledValue(spatial),
-      nonTimelineRows:settledValue(nonTimeline),
       recentDeltaResult:settledValue(recentDelta),
       systemIdentityResult:settledValue(systemIdentity),
       runtimePublicationResult:settledValue(runtimePublication),

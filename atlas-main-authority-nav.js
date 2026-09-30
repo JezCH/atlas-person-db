@@ -149,10 +149,10 @@
   function ensureDashboardAssets() {
     if (window.ATLAS_DASHBOARD) return Promise.resolve(window.ATLAS_DASHBOARD);
     if (dashboardAssetsPromise) return dashboardAssetsPromise;
-    appendStylesheetOnce("./atlas-dashboard.css?v=20260925-era-region-coverage-v5");
+    appendStylesheetOnce("./atlas-dashboard.css?v=20261001-canonical-nontimeline-v1");
     dashboardAssetsPromise = ensureSpacetimeModel()
-      .then(() => loadScriptOnce("./atlas-dashboard-model.js?v=20260925-era-region-coverage-v5", () => Boolean(window.ATLAS_DASHBOARD_MODEL)))
-      .then(() => loadScriptOnce("./atlas-dashboard.js?v=20260925-era-region-coverage-v5", () => Boolean(window.ATLAS_DASHBOARD)))
+      .then(() => loadScriptOnce("./atlas-dashboard-model.js?v=20261001-canonical-nontimeline-v1", () => Boolean(window.ATLAS_DASHBOARD_MODEL)))
+      .then(() => loadScriptOnce("./atlas-dashboard.js?v=20261001-canonical-nontimeline-v1", () => Boolean(window.ATLAS_DASHBOARD)))
       .then(() => window.ATLAS_DASHBOARD)
       .catch((error) => {
         dashboardAssetsPromise = null;

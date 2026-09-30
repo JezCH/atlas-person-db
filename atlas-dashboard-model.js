@@ -1103,6 +1103,45 @@
     });
   }
 
+  function buildCanonicalNonTimelineRows(personResult) {
+    const persons = Array.isArray(personResult?.persons) ? personResult.persons : [];
+    const rows = persons
+      .filter((person) => {
+        const disposition = text(person?.timeline_disposition?.disposition);
+        return disposition && disposition !== "timeline";
+      })
+      .sort((a,b) => {
+        const left = text(a?.preferred_name_ko || a?.display_name || a?.canonical_name_en || a?.id);
+        const right = text(b?.preferred_name_ko || b?.display_name || b?.canonical_name_en || b?.id);
+        return left.localeCompare(right, "ko") || text(a?.id).localeCompare(text(b?.id));
+      })
+      .map((person,index) => {
+        const disposition = person?.timeline_disposition || {};
+        const evidence = disposition?.review_evidence && typeof disposition.review_evidence === "object" && !Array.isArray(disposition.review_evidence)
+          ? disposition.review_evidence
+          : {};
+        const legacy = evidence?.legacy_record && typeof evidence.legacy_record === "object" && !Array.isArray(evidence.legacy_record)
+          ? evidence.legacy_record
+          : {};
+        return Object.freeze({
+          source_index:index,
+          person_id:text(person?.id) || null,
+          person_name:text(person?.canonical_name_en || legacy?.person_name) || null,
+          display_name_ko:text(person?.preferred_name_ko || person?.display_name || legacy?.display_name_ko) || null,
+          politic_name:text(legacy?.politic_name) || null,
+          politic_display_name_ko:text(legacy?.politic_display_name_ko) || null,
+          historicity:text(person?.historicity || legacy?.historicity) || null,
+          historicity_display_ko:text(legacy?.historicity_display_ko) || null,
+          disposition:text(disposition?.disposition) || null,
+          date_basis:text(disposition?.basis_code || legacy?.date_basis) || null,
+          reason:text(disposition?.reason || legacy?.reason) || null,
+          traditional_year:Number.isInteger(disposition?.traditional_year) ? disposition.traditional_year : null,
+          traditional_year_alternative:Number.isInteger(disposition?.traditional_year_alternative) ? disposition.traditional_year_alternative : null
+        });
+      });
+    return Object.freeze(rows);
+  }
+
   function buildQualityDrilldown({ personResult, spatialIndex = null, nonTimelineRows = null, completenessMatrix = null } = {}) {
     const persons = personResult?.persons || [];
     const runtimePersonIds = Object.freeze([...new Set(persons
@@ -1189,7 +1228,6 @@
     personResult,
     domainResult = null,
     spatialIndex = null,
-    nonTimelineRows = null,
     recentDeltaResult = null,
     systemIdentityResult = null,
     runtimePublicationResult = null,
@@ -1256,7 +1294,8 @@
     const runtimeDeltaDrift = buildRuntimeDeltaDrift(runtimePublicationResult);
     const coverageHeatmap = buildEraRegionHeatmap({ personResult, spatialIndex });
     const completenessMatrix = buildCompletenessMatrix({ personResult, domainResult, spatialIndex });
-    const qualityDrilldown = buildQualityDrilldown({ personResult, spatialIndex, nonTimelineRows, completenessMatrix });
+    const canonicalNonTimelineRows = buildCanonicalNonTimelineRows(personResult);
+    const qualityDrilldown = buildQualityDrilldown({ personResult, spatialIndex, nonTimelineRows:canonicalNonTimelineRows, completenessMatrix });
     const sourceFreshness = buildSourceFreshness({ spatialIndex, recentDelta, runtimePublication:runtimePublicationResult, runtimeExclusions:runtimeExclusionsResult, sourceStates });
     const polityConcentration = buildPolityConcentration({ personResult });
 
@@ -1325,5 +1364,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, namuwikiReviewState, namuwikiReviewed, namuwikiAbsenceReason, uniquePolityIds, spatialStatus, personPolityIds, buildPolityConcentration, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildRuntimeDeltaDrift, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildQualityDrilldown, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, namuwikiReviewState, namuwikiReviewed, namuwikiAbsenceReason, uniquePolityIds, spatialStatus, personPolityIds, buildPolityConcentration, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildPublicationFunnel, buildRuntimeDeltaDrift, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildCanonicalNonTimelineRows, buildQualityDrilldown, buildDashboardSnapshot });
 });

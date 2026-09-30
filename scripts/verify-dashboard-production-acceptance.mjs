@@ -171,7 +171,7 @@ async function dashboardReady(client) {
   await waitFor(client, "document.readyState === 'complete'", 45000);
   await waitFor(client, "Boolean(window.ATLAS_MAIN_AUTHORITY_NAV && window.ATLAS_DASHBOARD && window.ATLAS_CLIENT_DATA_STORE && window.ATLAS_DASHBOARD_MODEL)", 45000);
   await waitFor(client, "document.querySelectorAll('#atlasDashboardMount .dashboard-kpi').length >= 6", 90000);
-  await waitFor(client, "document.querySelectorAll('.dashboard-source-freshness tbody tr').length >= 8", 90000);
+  await waitFor(client, "document.querySelectorAll('.dashboard-source-freshness tbody tr').length >= 7", 90000);
 }
 
 async function showDashboard(client) {
@@ -183,18 +183,17 @@ async function collectCanonicalSnapshot(client) {
   return evaluate(client, `(async () => {
     const store=window.ATLAS_CLIENT_DATA_STORE;
     const model=window.ATLAS_DASHBOARD_MODEL;
-    const [personResult,domainResult,spatialIndex,nonTimelineRows,recentDeltaResult,systemIdentityResult,runtimePublicationResult,runtimeExclusionsResult]=await Promise.all([
+    const [personResult,domainResult,spatialIndex,recentDeltaResult,systemIdentityResult,runtimePublicationResult,runtimeExclusionsResult]=await Promise.all([
       store.loadPersons(),
       store.loadPersonDomains(),
       store.loadSpatialIndex(),
-      store.loadNonTimelinePersons(),
       store.loadRecentDelta(),
       store.loadSystemIdentity(),
       store.loadRuntimePublication(),
       store.loadRuntimeExclusions()
     ]);
     const snapshot=model.buildDashboardSnapshot({
-      personResult,domainResult,spatialIndex,nonTimelineRows,recentDeltaResult,systemIdentityResult,runtimePublicationResult,runtimeExclusionsResult,
+      personResult,domainResult,spatialIndex,recentDeltaResult,systemIdentityResult,runtimePublicationResult,runtimeExclusionsResult,
       sourceStates:store.sourceStates()
     });
     return {
@@ -533,7 +532,7 @@ function verifyCanonicalContracts(modelState, desktopDom) {
   assert(modelState.system_identity?.git_commit_sha === EXPECTED_RUNTIME_SHA, "Dashboard Runtime Identity SHA mismatch", modelState.system_identity);
 
   const freshness = modelState.source_freshness;
-  assert(freshness?.total_sources === 8, "Expected eight shared Dashboard sources", freshness);
+  assert(freshness?.total_sources === 7, "Expected seven shared Dashboard sources", freshness);
   const byKey = Object.fromEntries((freshness.rows || []).map((row)=>[row.key,row]));
   const spatialExpected = canonicalTimestamp(modelState.spatial_generated_at);
   assert(spatialExpected, "Spatial Index generated_at is missing or invalid", { generated_at:modelState.spatial_generated_at });
@@ -596,7 +595,7 @@ function verifyCanonicalContracts(modelState, desktopDom) {
   assert(byKey.runtimeExclusions?.data_at === exclusionCompiledAt, "Runtime exclusion freshness is not compile timestamp", { row:byKey.runtimeExclusions,runtimeExclusions });
   assert(byKey.runtimeExclusions?.data_basis === "compiled_at", "Runtime exclusion freshness basis mismatch", byKey.runtimeExclusions);
 
-  for (const key of ["persons","personDomains","nonTimeline","systemIdentity"]) {
+  for (const key of ["persons","personDomains","systemIdentity"]) {
     assert(byKey[key]?.data_at == null, `${key} incorrectly exposes a source timestamp`, byKey[key]);
     assert(byKey[key]?.data_timestamp_known === false, `${key} incorrectly marks source timestamp known`, byKey[key]);
     assert(byKey[key]?.read_at, `${key} should still expose LAST READ`, byKey[key]);
