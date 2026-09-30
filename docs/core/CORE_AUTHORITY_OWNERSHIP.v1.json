@@ -574,35 +574,32 @@
       "canonical_state": [
         "atlas_v2.persons and all Person-owned/referencing dependencies"
       ],
-      "authoritative_writer": null,
+      "authoritative_writer": {
+        "path": "server/atlas-destructive-lifecycle-service.js + existing Person lifecycle executors",
+        "symbol": "discoverIdentityReferences / snapshotIdentityDependencies / verifyIdentityAbsent"
+      },
       "orchestrators": [
         "server/atlas-person-merge-service.js",
         "server/atlas-person-delete-service.js"
       ],
-      "shadow_writers": [
-        {
-          "path": "server/atlas-person-merge-service.js",
-          "reason": "Merge is a direct multi-table mutation engine.",
-          "cleanup_unit": "UNIT 14"
-        },
-        {
-          "path": "server/atlas-person-delete-service.js",
-          "reason": "Hard delete is a second direct multi-table mutation engine.",
-          "cleanup_unit": "UNIT 14"
-        }
-      ],
-      "status": "ownership_gap",
-      "remediation_unit": "UNIT 14",
+      "shadow_writers": [],
+      "status": "single_dependency_boundary",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
-          "path": "server/atlas-person-merge-service.js",
-          "contains": "async function executeApprovedPersonMerge"
+          "path": "server/atlas-destructive-lifecycle-service.js",
+          "contains": "async function discoverIdentityReferences"
+        },
+        {
+          "path": "server/atlas-person-merge-reference-readiness.js",
+          "contains": "lifecycle_person_references"
         },
         {
           "path": "server/atlas-person-delete-service.js",
-          "contains": "function createPersonDeleteService"
+          "contains": "await assertPersonMergeReferenceReadiness(client)"
         }
-      ]
+      ],
+      "note": "Unit 14 closes the destructive dependency gap: Person merge and hard-delete share the same schema-introspected Person reference readiness boundary; portrait and other reviewed dependencies remain explicit lifecycle handlers, while new Person reference surfaces fail closed before mutation."
     },
     {
       "id": "polity_retirement",
@@ -619,23 +616,23 @@
         "server/atlas-correction-manifest-v2-dispatch-service.js"
       ],
       "shadow_writers": [],
-      "status": "transitional_single_writer",
-      "remediation_unit": "UNIT 14",
+      "status": "single_writer",
+      "remediation_unit": null,
       "evidence_anchors": [
+        {
+          "path": "server/atlas-destructive-lifecycle-service.js",
+          "contains": "async function discoverIdentityReferences"
+        },
+        {
+          "path": "server/atlas-polity-reference-audit-handler.js",
+          "contains": "discoverIdentityReferences(client"
+        },
         {
           "path": "server/atlas-correction-polity-retire-v2-service.js",
           "contains": "async function recordRetirement"
-        },
-        {
-          "path": "server/atlas-correction-polity-retire-v2-service.js",
-          "contains": "delete from atlas_v2.polities"
-        },
-        {
-          "path": "server/atlas-polity-identity-resolver.js",
-          "contains": "from atlas_v2.polity_identity_retirements"
         }
       ],
-      "note": "Unit 4 closed the missing canonical retirement-state gap. Historical correction snapshots are migration evidence only; the durable registry now owns tombstone/redirect lookup. Unit 14 may later generalize this writer into the shared destructive lifecycle primitive."
+      "note": "Unit 14 generalizes Polity retirement dependency discovery through the shared destructive lifecycle guard while preserving the Unit 4 durable retirement/tombstone writer and no-resurrection semantics."
     }
   ]
 }
