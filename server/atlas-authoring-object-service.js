@@ -14,6 +14,12 @@ function required(value, field) {
   return valueText;
 }
 
+function requiredUuid(value, field) {
+  const normalized = text(value).toLowerCase();
+  if (!UUID_RE.test(normalized)) throw new Error(`${field} must be a UUID`);
+  return normalized;
+}
+
 function normalizePlaceSourceLinks(raw) {
   if (!Array.isArray(raw) || raw.length === 0) throw new Error("PLACE_SOURCE_LINKS_REQUIRED");
   const seen = new Set();
