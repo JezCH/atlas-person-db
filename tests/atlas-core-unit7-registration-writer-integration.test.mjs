@@ -75,3 +75,27 @@ test('Unit 7 preserves explicit HOLD and never advances to later phases', async 
   assert.equal(result.hold,'IDENTITY_REVIEW_REQUIRED');
   assert.equal(compileCalls,0);
 });
+
+
+test('Unit 7 closes new-Polity spatial disposition and included Runtime read-back through their owning writers', async () => {
+  const c=coordinator.createRegistrationCoordinator({
+    writers:{
+      polity_identity:writer('authoring',['polity.continuity_identity_resolution','polity.designation_collision_reuse_review'],[]),
+      spatial_authoring:writer('companion_writers',['polity.spatial_disposition'],[]),
+      registration_coordinator:writer('authoring_readback',['publication.authoring_verified'],[]),
+      runtime_publication:{
+        phases:['compile','runtime_readback'],
+        async run(input) {
+          const completed=input.obligation_keys.filter((key)=>[
+            'publication.compile_disposition','publication.runtime_verified'
+          ].includes(key));
+          return { completed_obligations:completed, canonical_ref:'publication:opaque' };
+        }
+      }
+    }
+  });
+  const result=await c.execute({ scopes:['new_polity','publication'] });
+  assert.equal(result.status,'COMPLETE');
+  assert.deepEqual(result.pending_obligations,[]);
+  assert.deepEqual(result.trace.filter((item)=>item.writer==='runtime_publication').map((item)=>item.phase),['compile','runtime_readback']);
+});
