@@ -122,3 +122,17 @@ test('Unit 8 pre-decision external-reference migrations remain replay-safe after
   assert.match(sync,/review_reason\s*=\s*EXCLUDED\.review_reason/);
   assert.match(sync,/review_state,\s*review_reason/);
 });
+
+
+test('Unit 8 migration restores classified reason rows that are missing from the live reference table', () => {
+  const fs=require('node:fs');
+  const migration=fs.readFileSync(new URL('../db/migrations/20260930_external_reference_decision_state.sql',import.meta.url),'utf8');
+  const classified=[...migration.matchAll(/\('([0-9a-f-]{36})'::uuid,'(no_exact_document|related_or_derivative_only|exact_target_url_pending|exact_target_url_verified)'\)/g)];
+  assert.equal(classified.length,616);
+  assert.match(migration,/insert_missing_reason_rows AS/i);
+  assert.match(migration,/INSERT INTO atlas_v2\.person_external_references\([\s\S]*review_state,review_reason/);
+  assert.match(migration,/DATE '2026-09-30'/);
+  assert.match(migration,/'reviewed_absent'/);
+  assert.match(migration,/WHERE NOT EXISTS \([\s\S]*provider='namuwiki'/i);
+  assert.match(migration,/SET review_state='reviewed_absent',[\s\S]*review_reason=r\.review_reason/);
+});
