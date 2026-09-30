@@ -1,0 +1,280 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "as_of": "2026-09-30",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-approved Japan polity identity re-review 2026-09-30; exact Production Baseline A captured at deployment 6b4e94741cd3feddc5d4260880e4a1556f0fa5c0; National Diet Library records 3 January 1868 as the Restoration of Imperial Rule establishing the new Meiji government, the Constitution of the Empire of Japan was promulgated 11 February 1889, and the Constitution of Japan entered into force 3 May 1947.",
+  "baseline": {
+    "deployment_sha": "6b4e94741cd3feddc5d4260880e4a1556f0fa5c0",
+    "baseline_digest": "sha256:506c8a263b251eec08cab567101d63c618882511ae34cd1f29ca6d6d5345208d"
+  },
+  "batch_id": "polity_japan_imperial_postwar_boundary_repair_20260930_v1",
+  "status": "REVIEWED_IMPERIAL_POSTWAR_BOUNDARY",
+  "release_order": 1150,
+  "new_activity_uuid_allocations": [
+    {
+      "case_id": "japan-hirohito-1947-constitution-boundary-split",
+      "fragment_id": "imperial_1926_1947",
+      "activity_uuid": "2ca12cf5-8956-5524-bb37-0287730ffeeb",
+      "algorithm": "uuid5",
+      "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+      "name": "correction:activity:d770812f-b9ab-41f2-9751-01d7a7931bb8:imperial_1926_1947"
+    },
+    {
+      "case_id": "japan-yoshida-first-cabinet-1947-constitution-boundary-split",
+      "fragment_id": "imperial_1946_1947",
+      "activity_uuid": "6be0e940-54b0-54e7-b53a-399c82959001",
+      "algorithm": "uuid5",
+      "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+      "name": "correction:activity:0c084a88-58be-52e8-81bb-b73bf0a11bb1:imperial_1946_1947"
+    }
+  ],
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "one_split_survivor_preserves_original_activity_uuid": true,
+    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+    "new_fragment_legacy_source_key_must_be_null": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "japan-hirohito-1947-constitution-boundary-split",
+      "type": "split_activity",
+      "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
+      "baseline_before": {
+        "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1926,
+        "activity_end": 1989,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
+          "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1947,
+          "activity_start_detail": {
+            "year": 1947,
+            "month": 5,
+            "day": 3,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1989,
+          "activity_end_detail": {
+            "year": 1989,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This survivor fragment records Hirohito under postwar constitutional Japan from 3 May 1947, when the Constitution of Japan came into force, through the end of his recorded reign in 1989. His earlier reign under the imperial-era state identity is retained separately.",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "2ca12cf5-8956-5524-bb37-0287730ffeeb",
+          "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+          "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1926,
+          "activity_start_detail": {
+            "year": 1926,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1947,
+          "activity_end_detail": {
+            "year": 1947,
+            "month": 5,
+            "day": 2,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This Stage-2-native fragment records Hirohito under the imperial-era Japanese state identity from the beginning of his recorded reign in 1926 through 2 May 1947. The Constitution of Japan entered into force the following day, which begins the separately modeled postwar Japan fragment.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        }
+      ],
+      "gap_overlap_policy": "EXACT_DAY_BOUNDARY_IMPERIAL_FRAGMENT_ENDS_1947_05_02_AND_POSTWAR_JAPAN_SURVIVOR_STARTS_1947_05_03_NO_GAP_OR_OVERLAP"
+    },
+    {
+      "case_id": "japan-imperial-relink-hideki-tojo-12f673db",
+      "type": "rewrite_activity",
+      "activity_id": "12f673db-0669-5151-8506-83d52cd4a797",
+      "baseline_before": {
+        "person_id": "60fd935f-37f6-577c-9010-fb590220980f",
+        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1941,
+        "activity_end": 1944,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:42:e4772ab943499406",
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "12f673db-0669-5151-8506-83d52cd4a797",
+        "person_id": "60fd935f-37f6-577c-9010-fb590220980f",
+        "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1941,
+        "activity_start_detail": {
+          "year": 1941,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1944,
+        "activity_end_detail": {
+          "year": 1944,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:42:e4772ab943499406",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "japan-yoshida-first-cabinet-1947-constitution-boundary-split",
+      "type": "split_activity",
+      "activity_id": "0c084a88-58be-52e8-81bb-b73bf0a11bb1",
+      "baseline_before": {
+        "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1946,
+        "activity_end": 1947,
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed_stage2_phase",
+        "legacy_source_key": "pending-records-supplement-5.json:43:f5b5dc86513dd85e",
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "0c084a88-58be-52e8-81bb-b73bf0a11bb1",
+          "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+          "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+          "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+          "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+          "activity_start": 1947,
+          "activity_start_detail": {
+            "year": 1947,
+            "month": 5,
+            "day": 3,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1947,
+          "activity_end_detail": {
+            "year": 1947,
+            "month": 5,
+            "day": 24,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed",
+          "legacy_source_key": "pending-records-supplement-5.json:43:f5b5dc86513dd85e",
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Yoshida Shigeru remained prime minister after the Constitution of Japan entered into force on 3 May 1947. This survivor fragment records the final postwar-constitutional portion of his first cabinet through 24 May 1947; the preceding 1946–2 May 1947 phase is modeled under the imperial-era state identity.",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "6be0e940-54b0-54e7-b53a-399c82959001",
+          "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+          "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+          "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+          "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+          "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+          "activity_start": 1946,
+          "activity_start_detail": {
+            "year": 1946,
+            "month": 5,
+            "day": 22,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1947,
+          "activity_end_detail": {
+            "year": 1947,
+            "month": 5,
+            "day": 2,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This Stage-2-native fragment records Yoshida Shigeru’s first cabinet from 22 May 1946 through 2 May 1947 under the imperial-era Japanese state identity. The Constitution of Japan entered into force on 3 May 1947; the remaining days of the same cabinet are retained as a separate postwar Japan fragment.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        }
+      ],
+      "gap_overlap_policy": "EXACT_DAY_BOUNDARY_IMPERIAL_FRAGMENT_ENDS_1947_05_02_AND_POSTWAR_JAPAN_SURVIVOR_STARTS_1947_05_03_NO_GAP_OR_OVERLAP"
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 3,
+    "simple_relinks": 1,
+    "split_operations": 2,
+    "new_activity_fragments": 2,
+    "production_mutation_authorized": false
+  }
+}
