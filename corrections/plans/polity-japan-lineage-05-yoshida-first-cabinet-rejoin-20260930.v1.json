@@ -1,91 +1,89 @@
 {
-  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
-  "as_of": "2026-09-30",
-  "contract": "stage2/contracts/correction-v2-current.v1.json",
-  "decision_authority": "User-directed Japan polity lineage correction on 2026-09-30; exact Production Baseline A captured at deployed SHA d69db292ab1b6eec14021db4fed85ab93b98d80d. The 1945 boundary uses Japan's signed Instrument of Surrender on 2 September 1945; the occupation-end boundary uses 28 April 1952 when the peace treaties came into force and the Allied Occupation ended.",
-  "baseline": {
-    "deployment_sha": "d69db292ab1b6eec14021db4fed85ab93b98d80d",
-    "baseline_digest": "sha256:7bfe2529126d3663ec977c2e5b9cb6fb58add5c1af2643bc499dbfa8d1d67c4f"
-  },
-  "batch_id": "polity_japan_lineage_yoshida_first_cabinet_rejoin_20260930_v1",
-  "status": "REVIEWED_JAPAN_LINEAGE_REPAIR",
-  "release_order": 1200,
-  "execution_rules": {
-    "exact_live_before_snapshot_required": true,
-    "preserve_all_existing_normalized_source_links_and_locators": true,
-    "one_split_survivor_preserves_original_activity_uuid": true,
-    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
-    "new_fragment_legacy_source_key_must_be_null": true,
-    "territory_geometry_mutation_forbidden": true,
-    "physical_person_merge_forbidden": true,
-    "production_executable": false,
-    "production_mutation_authorized": false
-  },
-  "operations": [
-    {
-      "case_id": "japan-lineage-yoshida-first-cabinet-rejoin-1946-1947",
-      "type": "rewrite_activity",
-      "activity_id": "0c084a88-58be-52e8-81bb-b73bf0a11bb1",
-      "baseline_before": {
-        "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
-        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
-        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
-        "activity_start": 1947,
-        "activity_end": 1947,
-        "confidence": "legacy_asserted",
-        "chronology_status": "reviewed",
-        "legacy_source_key": "pending-records-supplement-5.json:43:f5b5dc86513dd85e",
-        "source_count": 2
-      },
-      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
-      "after": {
-        "survivor": true,
-        "activity_id": "0c084a88-58be-52e8-81bb-b73bf0a11bb1",
-        "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
-        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
-        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
-        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
-        "activity_start": 1946,
-        "activity_start_detail": {
-          "year": 1946,
-          "month": 5,
-          "day": 22,
-          "granularity": "day",
-          "certainty": "exact",
-          "calendar": "gregorian"
-        },
-        "activity_end": 1947,
-        "activity_end_detail": {
-          "year": 1947,
-          "month": 5,
-          "day": 24,
-          "granularity": "day",
-          "certainty": "exact",
-          "calendar": "gregorian"
-        },
-        "confidence": "legacy_asserted",
-        "chronology_status": "reviewed",
-        "legacy_source_key": "pending-records-supplement-5.json:43:f5b5dc86513dd85e",
-        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
-        "reviewed_notes": "Yoshida Shigeru's first prime-ministerial period ran continuously from 22 May 1946 to 24 May 1947 during the Allied occupation of Japan. The prior artificial split at the 3 May 1947 constitutional boundary has been removed; this survivor preserves the original Activity UUID for the full first cabinet.",
-        "add_source_links": [
-          {
-            "source_id": "85a3e71f-afad-5533-98cc-b6662325dbdb",
-            "source_locator_key": "National Diet Library: Japan signed the Instrument of Surrender on 2 September 1945, establishing the occupation-period boundary used by ATLAS."
-          }
-        ]
-      }
+    "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+    "as_of": "2026-09-30",
+    "contract": "stage2/contracts/correction-v2-current.v1.json",
+    "decision_authority": "User-directed Japan polity lineage correction on 2026-09-30; exact Production Baseline A captured at deployed SHA d69db292ab1b6eec14021db4fed85ab93b98d80d. The 1945 boundary uses Japan's signed Instrument of Surrender on 2 September 1945; the occupation-end boundary uses 28 April 1952 when the peace treaties came into force and the Allied Occupation ended.",
+    "baseline": {
+        "deployment_sha": "d69db292ab1b6eec14021db4fed85ab93b98d80d",
+        "baseline_digest": "sha256:7bfe2529126d3663ec977c2e5b9cb6fb58add5c1af2643bc499dbfa8d1d67c4f"
+    },
+    "batch_id": "polity_japan_lineage_yoshida_first_cabinet_rejoin_20260930_v1",
+    "status": "REVIEWED_JAPAN_LINEAGE_REPAIR",
+    "release_order": 1200,
+    "execution_rules": {
+        "exact_live_before_snapshot_required": true,
+        "preserve_all_existing_normalized_source_links_and_locators": true,
+        "one_split_survivor_preserves_original_activity_uuid": true,
+        "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+        "new_fragment_legacy_source_key_must_be_null": true,
+        "territory_geometry_mutation_forbidden": true,
+        "physical_person_merge_forbidden": true,
+        "production_executable": false,
+        "production_mutation_authorized": false
+    },
+    "operations": [
+        {
+            "case_id": "japan-lineage-yoshida-first-cabinet-rejoin-1946-1947",
+            "type": "rewrite_activity",
+            "activity_id": "0c084a88-58be-52e8-81bb-b73bf0a11bb1",
+            "baseline_before": {
+                "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+                "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+                "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+                "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+                "activity_start": 1947,
+                "activity_end": 1947,
+                "confidence": "legacy_asserted",
+                "chronology_status": "reviewed",
+                "legacy_source_key": "pending-records-supplement-5.json:43:f5b5dc86513dd85e",
+                "source_count": 2
+            },
+            "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+            "after": {
+                "survivor": true,
+                "activity_id": "0c084a88-58be-52e8-81bb-b73bf0a11bb1",
+                "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+                "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+                "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+                "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+                "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+                "activity_start": 1946,
+                "activity_start_detail": {
+                    "year": 1946,
+                    "month": 5,
+                    "day": 22,
+                    "granularity": "day",
+                    "certainty": "exact",
+                    "calendar": "gregorian"
+                },
+                "activity_end": 1947,
+                "activity_end_detail": {
+                    "year": 1947,
+                    "month": 5,
+                    "day": 24,
+                    "granularity": "day",
+                    "certainty": "exact",
+                    "calendar": "gregorian"
+                },
+                "confidence": "legacy_asserted",
+                "chronology_status": "reviewed",
+                "legacy_source_key": "pending-records-supplement-5.json:43:f5b5dc86513dd85e",
+                "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+                "reviewed_notes": "Yoshida Shigeru's first prime-ministerial period ran continuously from 22 May 1946 to 24 May 1947 during the Allied occupation of Japan. The prior artificial split at the 3 May 1947 constitutional boundary has been removed; this survivor preserves the original Activity UUID for the full first cabinet.",
+                "add_source_links": [
+                    {
+                        "source_id": "85a3e71f-afad-5533-98cc-b6662325dbdb",
+                        "source_locator_key": "National Diet Library: Japan signed the Instrument of Surrender on 2 September 1945, establishing the occupation-period boundary used by ATLAS."
+                    }
+                ]
+            }
+        }
+    ],
+    "stage2_assertions": [],
+    "polity_relation_assertions": [],
+    "result": {
+        "activity_targets": 1,
+        "stage2_assertions": 0,
+        "production_mutation_authorized": false
     }
-  ],
-  "stage2_assertions": [],
-  "polity_relation_assertions": [],
-  "result": {
-    "activity_targets": 1,
-    "stage2_assertions": 0,
-    "production_mutation_authorized": false
-  }
 }
-
-
