@@ -514,47 +514,59 @@
       "id": "reviewed_candidate_state",
       "semantic_fact": "Candidate review revision and APPROVED/HOLD/REJECTED decision",
       "canonical_state": [
-        "GitHub Issue #1374 comments/checkpoints"
+        "atlas_v2.person_candidate_review_revisions"
       ],
-      "authoritative_writer": null,
+      "authoritative_writer": {
+        "path": "server/atlas-reviewed-candidate-service.js",
+        "symbol": "recordReviewRevision"
+      },
       "orchestrators": [
         "Lane A review process"
       ],
       "shadow_writers": [],
-      "status": "ownership_gap",
-      "remediation_unit": "UNIT 13",
+      "status": "single_writer",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
-          "path": "WORK_EXECUTION.md",
-          "contains": "Lane A — Candidate Review"
+          "path": "server/atlas-reviewed-candidate-service.js",
+          "contains": "async function recordReviewRevision"
         }
-      ]
+      ],
+      "note": "Unit 13 closes the human-authorization boundary: an APPROVED review revision is immutable and valid only when explicitly human_authorized; AI/review workers cannot convert candidate material directly into registration authority."
     },
     {
       "id": "registration_execution_state",
-      "semantic_fact": "Registration obligation/apply state tied to a reviewed candidate and canonical entity/revision",
+      "semantic_fact": "Registration state bound to one immutable human-approved candidate review revision and resulting canonical Person/apply result",
       "canonical_state": [
-        "atlas_v2.authoring_manifest_runs",
-        "GitHub Issue #1375 queue state"
+        "atlas_v2.person_candidate_registration_states",
+        "atlas_v2.authoring_manifest_runs"
       ],
-      "authoritative_writer": null,
+      "authoritative_writer": {
+        "path": "server/atlas-reviewed-candidate-service.js + server/atlas-human-authoring-service.js",
+        "symbol": "queueApprovedRevision / setRegistrationState + authoring manifest ledger"
+      },
       "orchestrators": [
-        "Human Authoring apply",
-        "Lane B registration process"
+        "Lane B registration process",
+        "Human Authoring apply"
       ],
       "shadow_writers": [],
-      "status": "ownership_gap",
-      "remediation_unit": "UNIT 6 / UNIT 7 / UNIT 13",
+      "status": "single_writer",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
-          "path": "WORK_EXECUTION.md",
-          "contains": "Registration states:"
+          "path": "server/atlas-reviewed-candidate-service.js",
+          "contains": "async function queueApprovedRevision"
+        },
+        {
+          "path": "server/atlas-reviewed-candidate-service.js",
+          "contains": "REGISTRATION_REQUIRES_HUMAN_APPROVED_REVISION"
         },
         {
           "path": "server/atlas-human-authoring-service.js",
           "contains": "insert into atlas_v2.authoring_manifest_runs"
         }
-      ]
+      ],
+      "note": "Unit 13 makes review state and registration state independent canonical axes. QUEUED/APPLYING/REGISTERED/VERIFIED_AUTHORING_ONLY require an exact immutable human-approved review revision; registration results do not rewrite the reviewed judgment."
     },
     {
       "id": "person_destructive_lifecycle",
