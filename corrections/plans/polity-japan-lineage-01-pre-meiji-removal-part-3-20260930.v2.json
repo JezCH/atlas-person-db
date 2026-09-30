@@ -2,13 +2,13 @@
   "schema": "atlas-stage2-correction-v2-execution-plan/v1",
   "as_of": "2026-09-30",
   "contract": "stage2/contracts/correction-v2-current.v1.json",
-  "decision_authority": "User-directed Japan polity lineage correction on 2026-09-30 after rejecting fabricated umbrella labels Pre-Meiji Japan / Imperial Japan / Meiji Government; exact Production Baseline A captured after restoration runtime deployment.",
+  "decision_authority": "Resume the reviewed Japan polity-lineage correction after release orders 1180–1181 were committed and the original 1182 plan failed closed on Sakamoto Ryōma source-count drift. Fresh Production Baseline A at deployment 66cef82d8f235cf523818a499c57fa0e8310440f proves source_count=3 for Activity 556bbfbe-4c27-40a1-ae26-206bbc6724c4; the other three part-3 targets exactly match the prior reviewed tuple.",
   "baseline": {
-    "deployment_sha": "d69db292ab1b6eec14021db4fed85ab93b98d80d",
-    "baseline_digest": "sha256:7bfe2529126d3663ec977c2e5b9cb6fb58add5c1af2643bc499dbfa8d1d67c4f"
+    "deployment_sha": "66cef82d8f235cf523818a499c57fa0e8310440f",
+    "baseline_digest": "sha256:ea587a7326a1622a1d087b9d23f5e0aa0938ec0de17c78b97f345a5d850ad38c"
   },
-  "batch_id": "polity_japan_lineage_pre_meiji_umbrella_removal_part_3_20260930_v1",
-  "status": "REVIEWED_JAPAN_LINEAGE_REPAIR",
+  "batch_id": "polity_japan_lineage_pre_meiji_umbrella_removal_part_3_20260930_v2",
+  "status": "REVIEWED_JAPAN_LINEAGE_REPAIR_V2_EXACT_POST_PARTIAL_BASELINE",
   "release_order": 1182,
   "execution_rules": {
     "exact_live_before_snapshot_required": true,
@@ -185,7 +185,7 @@
         "confidence": "well_established",
         "chronology_status": "reviewed",
         "legacy_source_key": null,
-        "source_count": 1
+        "source_count": 3
       },
       "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
       "after": {
@@ -229,5 +229,3 @@
     "production_mutation_authorized": false
   }
 }
-
-
