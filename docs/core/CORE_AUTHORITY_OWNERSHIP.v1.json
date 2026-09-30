@@ -225,33 +225,36 @@
     },
     {
       "id": "place_identity",
-      "semantic_fact": "First-class historical Place identity, preferred names, and Source provenance",
+      "semantic_fact": "First-class historical Place identity, preferred names, Source provenance, and supported Person life-fact relations",
       "canonical_state": [
         "atlas_v2.places",
         "atlas_v2.place_names",
-        "atlas_v2.place_sources"
+        "atlas_v2.place_sources",
+        "atlas_v2.person_place_facts"
       ],
       "authoritative_writer": {
-        "path": "server/atlas-authoring-object-service.js",
-        "symbol": "createPlace"
+        "path": "server/atlas-authoring-object-service.js + server/atlas-place-relation-service.js",
+        "symbol": "createPlace / resolvePersonPlaceFacts"
       },
       "orchestrators": [
         "server/atlas-authoring-object-transaction.js",
-        "server/atlas-identity-handler.js"
+        "server/atlas-identity-handler.js",
+        "server/atlas-human-authoring-service.js"
       ],
       "shadow_writers": [],
       "status": "single_writer",
-      "remediation_unit": "UNIT 10",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
           "path": "server/atlas-authoring-object-service.js",
           "contains": "async function createPlace"
         },
         {
-          "path": "server/atlas-authoring-object-service.js",
-          "contains": "insert into atlas_v2.place_sources"
+          "path": "server/atlas-place-relation-service.js",
+          "contains": "async function resolvePersonPlaceFacts"
         }
-      ]
+      ],
+      "note": "Unit 10 closed: Place remains independently authored and source-backed; only supported evidence-backed Person birth/death Place facts are connected. No placeholder Place or generic Activity→Place semantics are introduced."
     },
     {
       "id": "person_external_reference",
