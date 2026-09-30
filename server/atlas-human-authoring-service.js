@@ -368,13 +368,25 @@ async function resolveNamuWikiReference(client, { requestId, person, requested, 
     if (code === "EXTERNAL_REFERENCE_VERIFICATION_FAILED") throw new Error("HUMAN_AUTHORING_NAMUWIKI_VERIFICATION_FAILED");
     throw error;
   }
+  const after = result.after == null ? null : Object.freeze({
+    status:String(result.after.status),
+    checked_at:result.after.checked_at == null ? null : String(result.after.checked_at),
+    document_title:result.after.document_title == null ? null : String(result.after.document_title),
+    url:result.after.url == null ? null : String(result.after.url)
+  });
   if (!result.replay) {
+    const before = result.before == null ? null : Object.freeze({
+      status:String(result.before.status),
+      checked_at:result.before.checked_at == null ? null : String(result.before.checked_at),
+      document_title:result.before.document_title == null ? null : String(result.before.document_title),
+      url:result.before.url == null ? null : String(result.before.url)
+    });
     await client.query(`
       insert into atlas_v2.person_profile_mutation_audits(request_id,person_id,operation,before_snapshot,after_snapshot)
       values($1,$2::uuid,'set_person_external_reference',$3::jsonb,$4::jsonb)`,
-      [`${requestId}:namuwiki`, person.id, JSON.stringify({ external_reference:result.before }), JSON.stringify({ external_reference:result.after })]);
+      [`${requestId}:namuwiki`, person.id, JSON.stringify({ external_reference:before }), JSON.stringify({ external_reference:after })]);
   }
-  return result.after;
+  return after;
 }
 
 function activityPayload({ personId, polityId, roleId, relation, periodBasis, activity, sources }) {
