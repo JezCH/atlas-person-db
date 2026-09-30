@@ -2,7 +2,7 @@
   "schema": "atlas-stage2-correction-v2-execution-plan/v1",
   "as_of": "2026-09-30",
   "contract": "stage2/contracts/correction-v2-current.v1.json",
-  "decision_authority": "User-approved Japan polity identity re-review 2026-09-30; exact Production Baseline A captured at deployment 6b4e94741cd3feddc5d4260880e4a1556f0fa5c0; National Diet Library records 3 January 1868 as the Restoration of Imperial Rule establishing the new Meiji government, the Constitution of the Empire of Japan was promulgated 11 February 1889, and the Constitution of Japan entered into force 3 May 1947. Seed retirement release 1090 precedes this plan, so the original Sakamoto Activity baseline includes the two transferred NDL seed source links in addition to its original source.",
+  "decision_authority": "User-approved Japan polity identity re-review 2026-09-30; exact Production Baseline A captured at deployment 6b4e94741cd3feddc5d4260880e4a1556f0fa5c0; National Diet Library records 3 January 1868 as the Restoration of Imperial Rule establishing the new Meiji government, the Constitution of the Empire of Japan was promulgated 11 February 1889, and the Constitution of Japan entered into force 3 May 1947.",
   "baseline": {
     "deployment_sha": "6b4e94741cd3feddc5d4260880e4a1556f0fa5c0",
     "baseline_digest": "sha256:506c8a263b251eec08cab567101d63c618882511ae34cd1f29ca6d6d5345208d"
@@ -19,8 +19,7 @@
     "territory_geometry_mutation_forbidden": true,
     "physical_person_merge_forbidden": true,
     "production_executable": false,
-    "production_mutation_authorized": false,
-    "seed_retirement_release_1090_must_precede_this_plan": true
+    "production_mutation_authorized": false
   },
   "operations": [
     {
@@ -233,7 +232,7 @@
         "confidence": "well_established",
         "chronology_status": "reviewed",
         "legacy_source_key": null,
-        "source_count": 3
+        "source_count": 1
       },
       "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
       "after": {
