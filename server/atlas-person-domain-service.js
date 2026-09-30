@@ -146,6 +146,7 @@ module.exports = Object.freeze({
   DOMAIN_CODES,
   normalizePersonId,
   normalizeDomain,
+  currentDomain,
   listRepresentativeDomains,
   setRepresentativeDomainTx,
   setRepresentativeDomain
