@@ -23,7 +23,8 @@ const AUTHORING_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260928_person_timeline_dispositions.sql"),
   path.resolve(__dirname, "../db/migrations/20260930_external_reference_decision_state.sql"),
   path.resolve(__dirname, "../db/migrations/20260930_source_bibliographic_completion.sql"),
-  path.resolve(__dirname, "../db/migrations/20260930_place_historical_relations.sql")
+  path.resolve(__dirname, "../db/migrations/20260930_place_historical_relations.sql"),
+  path.resolve(__dirname, "../db/migrations/20260930_human_person_authoring_manifest_schema.sql")
 ]);
 
 const AUTHORING_APPLY_MIGRATION_PATHS = Object.freeze([
@@ -45,7 +46,8 @@ const AUTHORING_APPLY_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260928_person_timeline_dispositions.sql"),
   path.resolve(__dirname, "../db/migrations/20260930_external_reference_decision_state.sql"),
   path.resolve(__dirname, "../db/migrations/20260930_source_bibliographic_completion.sql"),
-  path.resolve(__dirname, "../db/migrations/20260930_place_historical_relations.sql")
+  path.resolve(__dirname, "../db/migrations/20260930_place_historical_relations.sql"),
+  path.resolve(__dirname, "../db/migrations/20260930_human_person_authoring_manifest_schema.sql")
 ]);
 
 function readMigrationPaths(migrationPaths, { readFile = fs.readFileSync } = {}) {
