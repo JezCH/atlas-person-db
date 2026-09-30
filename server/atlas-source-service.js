@@ -82,9 +82,9 @@ async function lockKeys(client, keys) {
   }
 }
 
-async function createSource(client, raw) {
+async function createSource(client, raw, { lock = true, keyCollision = "replay" } = {}) {
   const source = normalizeBibliographicSource(raw);
-  await lockKeys(client, [
+  if (lock) await lockKeys(client, [
     `atlas-source:key:${source.source_key}`,
     ...(source.canonical_url ? [`atlas-source:url:${source.canonical_url}`] : [])
   ]);
@@ -111,6 +111,7 @@ async function createSource(client, raw) {
      where source_key=$1
      for update`, [source.source_key]);
   if (byKey.rows.length === 1) {
+    if (keyCollision === "error") throw new Error("SOURCE_KEY_CONFLICT");
     const row = byKey.rows[0];
     const exact = SOURCE_FIELDS.filter((field) => field !== "id").every((field) => {
       const left = row[field] ?? null;
