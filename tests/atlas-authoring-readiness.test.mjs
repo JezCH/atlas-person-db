@@ -21,6 +21,7 @@ function clientFor({
   activityColumnsReady = true,
   ledgerColumnsReady = true,
   humanSchemaAllowed = true,
+  humanPersonSchemaAllowed = true,
   personReferenceSchemaReady = true,
   personReferenceSyncReady = true,
   p5Ready = true
@@ -51,6 +52,7 @@ function clientFor({
           ledger_manifest_schema: ledgerTableReady && ledgerColumnsReady,
           ledger_result_snapshot: ledgerTableReady && ledgerColumnsReady,
           ledger_human_authoring_schema_allowed: ledgerTableReady && ledgerColumnsReady && humanSchemaAllowed,
+          ledger_human_person_authoring_schema_allowed: ledgerTableReady && ledgerColumnsReady && humanPersonSchemaAllowed,
           relation_type_id: activityColumnsReady,
           activity_start_granularity: activityColumnsReady,
           activity_end_granularity: activityColumnsReady,
@@ -90,6 +92,7 @@ test('authoring readiness requires P5, core Stage 2 schema, human-compatible led
   assert.equal(result.core.activity_columns_ready, true);
   assert.equal(result.core.ledger_columns_ready, true);
   assert.equal(result.core.ledger_human_authoring_schema_allowed, true);
+  assert.equal(result.core.ledger_human_person_authoring_schema_allowed, true);
   assert.equal(result.core.ledger_contract_ready, true);
   assert.equal(result.core.columns_ready, true);
   assert.equal(result.core.person_reference_tables_ready, true);
@@ -158,6 +161,17 @@ test('legacy authoring ledger CHECK without human schema is bootstrappable, not 
   assert.equal(result.bootstrap_required, true);
   assert.equal(result.core.ledger_columns_ready, true);
   assert.equal(result.core.ledger_human_authoring_schema_allowed, false);
+  assert.equal(result.core.ledger_contract_ready, false);
+});
+
+test('ledger CHECK without person-only human schema is bootstrappable, not ready', async () => {
+  const result = await inspectAuthoringReadiness(clientFor({ humanPersonSchemaAllowed: false }));
+  assert.equal(result.ready, false);
+  assert.equal(result.bootstrap_ready, true);
+  assert.equal(result.bootstrap_required, true);
+  assert.equal(result.core.ledger_columns_ready, true);
+  assert.equal(result.core.ledger_human_authoring_schema_allowed, true);
+  assert.equal(result.core.ledger_human_person_authoring_schema_allowed, false);
   assert.equal(result.core.ledger_contract_ready, false);
 });
 
