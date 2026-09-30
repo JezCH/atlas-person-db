@@ -10,9 +10,10 @@ const mergeSource = fs.readFileSync(new URL('../server/atlas-person-merge-servic
 const readinessSource = fs.readFileSync(new URL('../server/atlas-person-merge-reference-readiness.js', import.meta.url), 'utf8');
 
 test('P10 Person merge reference policy is explicit and includes every reviewed live Person pointer', () => {
-  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v8');
+  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v9');
   assert.deepEqual(readiness.EXPECTED_PERSON_FKS.map((row) => [row.key, row.delete_action]), [
     ['atlas_v2.authoring_manifest_runs.person_id', 'SET NULL'],
+    ['atlas_v2.person_candidate_registration_states.person_id', 'RESTRICT'],
     ['atlas_v2.person_descriptions.person_id', 'CASCADE'],
     ['atlas_v2.person_event_participations.person_id', 'RESTRICT'],
     ['atlas_v2.person_external_references.person_id', 'RESTRICT'],
@@ -62,7 +63,10 @@ test('profile external references and the single current portrait are live merge
   assert.match(readinessSource, /person_portraits\.person_id.*RESTRICT/);
   assert.match(readinessSource, /person_profile_mutation_audits\.person_id/);
   assert.match(readinessSource, /person_timeline_dispositions\.person_id.*CASCADE/);
+  assert.match(readinessSource, /person_candidate_registration_states\.person_id.*RESTRICT/);
   assert.match(mergeSource, /reconcilePersonTimelineDisposition/);
+  assert.match(mergeSource, /update atlas_v2\.person_candidate_registration_states[\s\S]*set person_id=\$2::uuid/);
+  assert.match(mergeSource, /candidate_registration_states_moved/);
   assert.match(mergeSource, /person timeline disposition conflict: reconcile before merge/);
   assert.doesNotMatch(readinessSource, /person_portrait_sources|person_portrait_generation_runs|person_portrait_revisions|portrait_history_present/);
 });

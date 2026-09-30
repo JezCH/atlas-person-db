@@ -34,6 +34,7 @@ const expectedAuthoringMigrations = [
   '20260930_source_bibliographic_completion.sql',
   '20260930_place_historical_relations.sql',
   '20260930_human_person_authoring_manifest_schema.sql',
+  '20260930_reviewed_candidate_boundary.sql',
   '20260930_unit16_retire_external_reference_sync_trigger.sql'
 ];
 
@@ -58,6 +59,7 @@ const expectedAuthoringReplayMigrations = [
   '20260930_source_bibliographic_completion.sql',
   '20260930_place_historical_relations.sql',
   '20260930_human_person_authoring_manifest_schema.sql',
+  '20260930_reviewed_candidate_boundary.sql',
   '20260930_unit16_retire_external_reference_sync_trigger.sql'
 ];
 
@@ -268,6 +270,59 @@ try {
      where schemaname='atlas_v2' and indexname='person_profile_mutation_audits_person_idx'`);
   same(profileAuditIndex.rows.map((row) => row.indexname), ['person_profile_mutation_audits_person_idx'], 'person profile audit index');
 
+  const candidateTables = await client.query(`
+    select table_name
+      from information_schema.tables
+     where table_schema='atlas_v2'
+       and table_name in ('person_candidate_review_revisions','person_candidate_registration_states')
+     order by table_name`);
+  same(
+    candidateTables.rows.map((row) => row.table_name),
+    ['person_candidate_registration_states','person_candidate_review_revisions'],
+    'reviewed candidate boundary tables'
+  );
+
+  const candidateChecks = await client.query(`
+    select conname
+      from pg_constraint
+     where connamespace='atlas_v2'::regnamespace
+       and conname in (
+         'person_candidate_review_state_ck',
+         'person_candidate_review_human_approval_ck',
+         'person_candidate_registration_state_ck'
+       )
+     order by conname`);
+  same(
+    candidateChecks.rows.map((row) => row.conname),
+    [
+      'person_candidate_registration_state_ck',
+      'person_candidate_review_human_approval_ck',
+      'person_candidate_review_state_ck'
+    ],
+    'reviewed candidate state constraints'
+  );
+
+  const candidateRevisionFk = await client.query(`
+    select pg_get_constraintdef(oid) as definition
+      from pg_constraint
+     where conrelid='atlas_v2.person_candidate_registration_states'::regclass
+       and contype='f'
+       and pg_get_constraintdef(oid) ilike '%(candidate_id, review_revision)%person_candidate_review_revisions(candidate_id, revision)%'`);
+  if (candidateRevisionFk.rows.length !== 1) {
+    throw new Error(`reviewed candidate revision FK mismatch: ${JSON.stringify(candidateRevisionFk.rows)}`);
+  }
+
+  const candidatePayloadIndex = await client.query(`
+    select indexname
+      from pg_indexes
+     where schemaname='atlas_v2'
+       and indexname='person_candidate_review_payload_hash_uq'`);
+  same(
+    candidatePayloadIndex.rows.map((row) => row.indexname),
+    ['person_candidate_review_payload_hash_uq'],
+    'reviewed candidate immutable payload index'
+  );
+
   const placeTables = await client.query(`
     select table_name
       from information_schema.tables
@@ -339,6 +394,7 @@ try {
     authoring_migrations: firstAuthoringReplay.applied.length,
     authoring_migration_replay: true,
     person_profile_authoring_tables: profileTables.rows.length,
+    reviewed_candidate_boundary_tables: candidateTables.rows.length,
     person_timeline_disposition_table: timelineTables.rows.length,
     p13_place_authoring_tables: placeTables.rows.length,
     p13_source_provenance_restrict: true,

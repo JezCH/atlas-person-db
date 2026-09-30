@@ -24,6 +24,7 @@ const GORGO_SURVIVOR = '5136407a-9792-5103-be6f-54c947b255a5';
 const GORGO_DUPLICATE = 'a3367f19-e901-5213-aba6-76c4aef1b730';
 const GORGO_REQUIREMENT = 'p10:gorgo-of-sparta:gorgo:p4-reviewed-same-person';
 const MERGE_REQUEST = 'fixture:canonical-readiness:gorgo-physical-merge';
+const CANDIDATE_REGISTRATION_ID = 'fixture:canonical-readiness:gorgo-registration';
 
 const baselineSchema = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 const requirementMigration = fs.readFileSync(path.join(root, 'migration/phase-10/p10-person-duplicate-revalidation-requirements.sql'), 'utf8');
@@ -46,6 +47,17 @@ try {
   await client.query(`insert into atlas_v2.person_names(id,person_id,locale,name,name_type,is_preferred) values
     (gen_random_uuid(),$1::uuid,'en','Gorgo of Sparta','preferred',true),
     (gen_random_uuid(),$2::uuid,'en','Gorgo','preferred',true)`, [GORGO_SURVIVOR, GORGO_DUPLICATE]);
+
+  await client.query(`
+    insert into atlas_v2.person_candidate_review_revisions(
+      candidate_id,revision,review_state,review_checkpoint,reviewed_payload,payload_hash,human_authorized
+    ) values($1,1,'APPROVED','fixture:canonical-readiness', $2::jsonb, $3, true)
+  `, [CANDIDATE_REGISTRATION_ID, JSON.stringify({ canonical_name_en:'Gorgo' }), 'fixture-gorgo-registration-v1']);
+  await client.query(`
+    insert into atlas_v2.person_candidate_registration_states(
+      candidate_id,review_revision,registration_state,person_id,authoring_request_id,result_snapshot
+    ) values($1,1,'REGISTERED',$2::uuid,'fixture:canonical-readiness:gorgo-authoring',$3::jsonb)
+  `, [CANDIDATE_REGISTRATION_ID, GORGO_DUPLICATE, JSON.stringify({ person_id:GORGO_DUPLICATE })]);
 
   const rebuilt = await duplicateReview.rebuildCandidates({ client });
   assert.equal(rebuilt.detected, 1);
@@ -81,6 +93,14 @@ try {
   assert.deepEqual(merged.mutation_summary.revalidation_requirements_retired, [GORGO_REQUIREMENT]);
   assert.equal(merged.mutation_summary.post_merge_revalidation_readiness.ready, true);
 
+  const candidateRegistration = await client.query(`
+    select person_id::text
+      from atlas_v2.person_candidate_registration_states
+     where candidate_id=$1
+  `, [CANDIDATE_REGISTRATION_ID]);
+  assert.equal(candidateRegistration.rows[0]?.person_id, GORGO_SURVIVOR);
+  assert.equal(merged.mutation_summary.candidate_registration_states_moved, 1);
+
   const readinessAfterMerge = await canonicalReadiness.inspectCanonicalDataReadiness(client);
   assert.equal(readinessAfterMerge.ready, true, readinessAfterMerge.blockers.join(';'));
   assert.equal(readinessAfterMerge.canonical_schema.expected_table_count, 41);
@@ -99,6 +119,7 @@ try {
     approved_merges_pending: readinessAfterMerge.duplicate_frontier.approved_merges_pending,
     unresolved_duplicate_frontier: readinessAfterMerge.duplicate_frontier.unresolved,
     merged_source_person_still_live: readinessAfterMerge.merge_audit.merged_source_person_still_live,
+    candidate_registration_pointer_remapped: candidateRegistration.rows[0]?.person_id === GORGO_SURVIVOR,
     production_mutation_authorized: false
   }, null, 2));
 } catch (error) {

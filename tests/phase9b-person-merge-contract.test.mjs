@@ -80,6 +80,7 @@ test('source person deletion occurs only after every authoritative Person refere
   const relationshipMove = mergeService.indexOf('update atlas_v2.person_politics_v2 set person_id=$2');
   const peopleMove = mergeService.indexOf('update atlas_v2.person_people_affiliations set person_id=$2');
   const eventMove = mergeService.indexOf('update atlas_v2.person_event_participations set person_id=$2');
+  const candidateRegistrationMove = mergeService.indexOf('update atlas_v2.person_candidate_registration_states');
   const deleteSource = mergeService.indexOf('delete from atlas_v2.persons where id=$1 returning id');
   assert.ok(
     reconciliation >= 0
@@ -89,12 +90,14 @@ test('source person deletion occurs only after every authoritative Person refere
       && relationshipMove > descriptionMove
       && peopleMove > relationshipMove
       && eventMove > peopleMove
-      && deleteSource > eventMove
+      && candidateRegistrationMove > eventMove
+      && deleteSource > candidateRegistrationMove
   );
   assert.match(mergeService, /source person references remain after merge/);
   assert.match(mergeService, /authoring_person_pointers/);
   assert.match(mergeService, /people_affiliations/);
   assert.match(mergeService, /event_participations/);
+  assert.match(mergeService, /candidate_registration_states/);
   assert.match(mergeService, /person count did not decrease by exactly one/);
 });
 

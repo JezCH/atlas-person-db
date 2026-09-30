@@ -81,6 +81,12 @@ async function snapshotPerson(client, personId) {
   const peopleAffiliationSources = await client.query(`select s.person_people_affiliation_id,s.source_id,s.source_locator_key from atlas_v2.person_people_affiliation_sources s join atlas_v2.person_people_affiliations a on a.id=s.person_people_affiliation_id where a.person_id=$1 order by s.person_people_affiliation_id,s.source_id,s.source_locator_key`, [personId]);
   const eventParticipations = await client.query(`select id,historical_event_id,participation_type,role_label,valid_from_year,valid_from_month,valid_from_day,valid_from_granularity,valid_from_certainty,valid_from_calendar,valid_to_year,valid_to_month,valid_to_day,valid_to_granularity,valid_to_certainty,valid_to_calendar,confidence,notes from atlas_v2.person_event_participations where person_id=$1 order by id`, [personId]);
   const eventParticipationSources = await client.query(`select s.person_event_participation_id,s.source_id,s.source_locator_key from atlas_v2.person_event_participation_sources s join atlas_v2.person_event_participations p on p.id=s.person_event_participation_id where p.person_id=$1 order by s.person_event_participation_id,s.source_id,s.source_locator_key`, [personId]);
+  const candidateRegistrationStates = await client.query(`
+    select candidate_id,review_revision,registration_state,person_id::text,authoring_request_id,result_snapshot,updated_at
+      from atlas_v2.person_candidate_registration_states
+     where person_id=$1
+     order by candidate_id
+  `, [personId]);
   if (person.rowCount !== 1) throw new Error("merge person not found");
   return {
     person: person.rows[0],
@@ -97,7 +103,8 @@ async function snapshotPerson(client, personId) {
     people_affiliations: peopleAffiliations.rows,
     people_affiliation_sources: peopleAffiliationSources.rows,
     event_participations: eventParticipations.rows,
-    event_participation_sources: eventParticipationSources.rows
+    event_participation_sources: eventParticipationSources.rows,
+    candidate_registration_states: candidateRegistrationStates.rows
   };
 }
 
@@ -114,7 +121,8 @@ async function globalCounts(client) {
     (select count(*)::int from atlas_v2.person_event_participation_sources) as event_participation_sources,
     (select count(*)::int from atlas_v2.person_external_references) as external_references,
     (select count(*)::int from atlas_v2.person_portraits) as portraits,
-    (select count(*)::int from atlas_v2.person_timeline_dispositions) as timeline_dispositions`);
+    (select count(*)::int from atlas_v2.person_timeline_dispositions) as timeline_dispositions,
+    (select count(*)::int from atlas_v2.person_candidate_registration_states) as candidate_registration_states`);
   return result.rows[0];
 }
 
@@ -382,6 +390,12 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     const relationships = await client.query(`update atlas_v2.person_politics_v2 set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
     const peopleAffiliations = await client.query(`update atlas_v2.person_people_affiliations set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
     const eventParticipations = await client.query(`update atlas_v2.person_event_participations set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
+    const candidateRegistrationStates = await client.query(`
+      update atlas_v2.person_candidate_registration_states
+         set person_id=$2::uuid,updated_at=now()
+       where person_id=$1::uuid
+       returning candidate_id
+    `, [sides.source_person_id, sides.survivor_person_id]);
     const retiredRequirements = await client.query(`
       update atlas_v2.person_duplicate_revalidation_requirements
          set requirement_state='RETIRED',updated_at=now()
@@ -401,6 +415,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       (select count(*)::int from atlas_v2.person_place_facts where person_id=$1) as place_facts,
       (select count(*)::int from atlas_v2.person_portraits where person_id=$1) as portraits,
       (select count(*)::int from atlas_v2.person_timeline_dispositions where person_id=$1) as timeline_dispositions,
+      (select count(*)::int from atlas_v2.person_candidate_registration_states where person_id=$1) as candidate_registration_states,
       (select count(*)::int from atlas_v2.authoring_manifest_runs where person_id=$1) as authoring_person_pointers,
       (select count(*)::int from atlas_v2.persons where id=$1) as person`, [sides.source_person_id]);
     if (Object.values(remainingSourceRefs.rows[0]).some((value) => Number(value) !== 0)) throw new Error("source person references remain after merge");
@@ -422,6 +437,9 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     if (afterCounts.timeline_dispositions !== beforeCounts.timeline_dispositions - timelineDisposition.collapsed) {
       throw new Error("timeline disposition count changed outside deterministic reconciliation");
     }
+    if (afterCounts.candidate_registration_states !== beforeCounts.candidate_registration_states) {
+      throw new Error("candidate registration state count changed during person merge");
+    }
 
     const mutationSummary = {
       reference_readiness: { policy_version: referenceReadiness.policy_version, ready: referenceReadiness.ready },
@@ -436,6 +454,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       relationships_moved: relationships.rowCount,
       people_affiliations_moved: peopleAffiliations.rowCount,
       event_participations_moved: eventParticipations.rowCount,
+      candidate_registration_states_moved: candidateRegistrationStates.rowCount,
       authoring_person_pointers_cleared_by_lifecycle_fk: Number(authoringPersonPointersBefore.rows[0]?.count || 0),
       revalidation_requirements_retired: retiredRequirements.rows.map((row) => String(row.requirement_key)),
       candidate_frontier_refresh: {
