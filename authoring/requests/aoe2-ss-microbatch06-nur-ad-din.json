@@ -1,0 +1,66 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch06:nur-ad-din:zengid:1146-1174:v1",
+  "person": {
+    "canonical_name_en": "Nur ad-Din Zengi",
+    "display_name_ko": "누르 앗 딘",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-01",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Zengid Dynasty",
+    "display_name_ko": "장기 왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Atabeg of Aleppo and Damascus",
+    "role_display_name_ko": "알레포·다마스쿠스 아타베그",
+    "start_year": 1146,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1174,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nur ad-Din's rule begins with his accession in Aleppo after Imad ad-Din Zengi's death in 1146 and ends with his death in 1174. The polity is stored as the Zengid dynastic state rather than modern Syria; no anachronistic modern-state identity is created."
+  },
+  "sources": [
+    {
+      "source_type": "scholarly_reference",
+      "title": "NÛREDDİN ZENGÎ, Mahmud — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/nureddin-zengi-mahmud",
+      "citation_text": "TDV identifies Nur al-Din Mahmud Zengi as atabeg of Damascus and Aleppo from 1146 to 1174 and describes his accession at Aleppo after his father's death.",
+      "locator": "Header and early reign"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Nūr al-Dīn and Saladin, 1146–1193 — The Cambridge History of the Crusades",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-history-of-the-crusades/nur-aldin-and-saladin-11461193/EE57D0D5165E3C4DDDE620DA382B58AB",
+      "citation_text": "Cambridge treats Nur al-Din's accession in 1146 as the start of the documented political period preceding Saladin and situates him within the Zangid dynasty.",
+      "locator": "Chapter summary"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "aoe2-ss-20260925-nur-ad-din",
+    "review_checkpoint": "#1374 comment 5825499804",
+    "registration_frontier": "#1375 comment 5855612708",
+    "grade": "SS",
+    "namuwiki_review": "Indexed searches for 누르 앗 딘 / 누르 알 딘 / Nur ad-Din found broader Zengid-dynasty material but did not establish an independent NamuWiki Person document; no guessed URL."
+  }
+}

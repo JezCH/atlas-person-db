@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch06:qutb-ud-din-aibak:delhi:1206-1210:v1",
+  "person": {
+    "canonical_name_en": "Qutb-ud-Din Aibak",
+    "display_name_ko": "쿠트브 웃 딘 아이바크",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-01",
+      "document_title": "쿠트브 웃 딘 아이바크",
+      "url": "https://namu.wiki/w/%EC%BF%A0%ED%8A%B8%EB%B8%8C%20%EC%9B%83%20%EB%94%98%20%EC%95%84%EC%9D%B4%EB%B0%94%ED%81%AC"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Delhi Sultanate",
+    "display_name_ko": "델리 술탄국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ruler of Delhi",
+    "role_display_name_ko": "델리 통치자",
+    "start_year": 1206,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1210,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Records Aibak's independent/de facto paramount rule in north India from 1206 to 1210. The Role is phrased as Ruler of Delhi rather than forcing the formal title Sultan because New Cambridge notes numismatic evidence that he may have borne no higher title than malik."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Muslim India: the Delhi sultanate — The New Cambridge History of Islam",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/new-cambridge-history-of-islam/muslim-india-the-delhi-sultanate/00F9AADB1BF5258492E3FCFCCCD330E8",
+      "citation_text": "New Cambridge describes Qutb al-Din Aybak's de facto autonomy after 1206, his paramount rule in Muslim India, and his death in 1210, while noting numismatic evidence concerning his formal title.",
+      "locator": "Summary"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "The expansion of Turkic power, 1180–1350 — India before Europe",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/india-before-europe/expansion-of-turkic-power-11801350/2EAA07B929D0F2ED1ACEC806CB40434D",
+      "citation_text": "Cambridge treats 1206 as the watershed when Qutb al-Din Aibak seized control of the occupying armies and founded the first Delhi Sultanate dynasty.",
+      "locator": "Chapter summary"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "aoe2-ss-20260925-qutb-aibak",
+    "review_checkpoint": "#1374 comment 5825499804",
+    "registration_frontier": "#1375 comment 5855612708",
+    "grade": "SS",
+    "namuwiki_review": "Independent indexed NamuWiki-mirror Person document verified at exact title 쿠트브 웃 딘 아이바크; canonical namu.wiki path preserved."
+  }
+}

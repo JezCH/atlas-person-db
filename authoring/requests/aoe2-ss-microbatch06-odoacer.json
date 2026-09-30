@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch06:odoacer:kingdom-of-odoacer:476-493:v1",
+  "person": {
+    "canonical_name_en": "Odoacer",
+    "display_name_ko": "오도아케르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-01",
+      "document_title": "오도아케르",
+      "url": "https://namu.wiki/w/%EC%98%A4%EB%8F%84%EC%95%84%EC%BC%80%EB%A5%B4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Odoacer",
+    "display_name_ko": "오도아케르 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Italy",
+    "role_display_name_ko": "이탈리아 국왕",
+    "start_year": 476,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 493,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses a distinct Kingdom of Odoacer identity for Odoacer's 476–493 regime. It deliberately does not reuse the currently contaminated multi-era generic Kingdom of Italy record that is under separate polity-identity repair."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Odoacer — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/549695457",
+      "citation_text": "Oxford identifies Odoacer as ruler of Italy from 476 to 493, after deposing Romulus Augustulus in 476.",
+      "locator": "Extract"
+    },
+    {
+      "source_type": "encyclopedic_reference",
+      "title": "Odoacre — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/odoacre/",
+      "citation_text": "Treccani describes Odoacer as the first ruler to hold royal power in Italy after the deposition of Romulus Augustulus and records his death in 493.",
+      "locator": "Vita e attività"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "aoe2-ss-20260925-odoacer",
+    "review_checkpoint": "#1374 comment 5825499804",
+    "registration_frontier": "#1375 comment 5855612708",
+    "grade": "SS",
+    "namuwiki_review": "Independent indexed NamuWiki-mirror Person document verified at exact title 오도아케르; canonical namu.wiki path preserved.",
+    "polity_decision": "Create the precise 476–493 Kingdom of Odoacer identity; do not bind Odoacer to the known multi-era Kingdom of Italy false merge."
+  }
+}
