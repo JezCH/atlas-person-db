@@ -31,7 +31,7 @@ test('authority copy is externalized and includes the canonical spacetime place-
 
 test('unknown-chronology presentation reuses reviewed Korean registry labels without a standalone legend UI', () => {
   assert.match(main, /dataStore\.loadNonTimelinePersons/);
-  assert.match(dataStore, /non-timeline-persons\.json/);
+  assert.match(dataStore, /__atlas_read_surface=non-timeline-persons/);
   assert.match(main, /politic_display_name_ko/);
   assert.match(main, /historicity_display_ko/);
   assert.doesNotMatch(html, /non-timeline-list\.js/);
