@@ -39,6 +39,18 @@ function createCorrectionManifestV2DispatchService({ client } = {}) {
       const hasPolityRestore = types.includes(POLITY_RESTORE_OPERATION_TYPE);
       const hasSourceCitation = types.includes(SOURCE_CITATION_OPERATION_TYPE);
 
+      if (hasPolityRetire && !types.every((type) => type === POLITY_RETIRE_OPERATION_TYPE)) {
+        throw new Error("CORRECTION_V2_POLITY_RETIRE_MIXED_OPERATION_FAMILY_FORBIDDEN");
+      }
+      if (hasPolityName && !types.every((type) => type === POLITY_NAME_OPERATION_TYPE)) {
+        throw new Error("CORRECTION_V2_POLITY_NAME_MIXED_OPERATION_FAMILY_FORBIDDEN");
+      }
+      if (hasPolityRestore && !types.every((type) => type === POLITY_RESTORE_OPERATION_TYPE)) {
+        throw new Error("CORRECTION_V2_POLITY_RESTORE_MIXED_OPERATION_FAMILY_FORBIDDEN");
+      }
+      if (hasSourceCitation && !types.every((type) => type === SOURCE_CITATION_OPERATION_TYPE)) {
+        throw new Error("CORRECTION_V2_SOURCE_CITATION_MIXED_OPERATION_FAMILY_FORBIDDEN");
+      }
 
       if (hasPolityRetire) return polityRetireService.execute(rawManifest, options);
       if (hasPolityName) return polityNameService.execute(rawManifest, options);
