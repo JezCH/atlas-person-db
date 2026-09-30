@@ -473,15 +473,15 @@ test("KPI cards reuse Person Main drill-down without converting Activity or Poli
 });
 
 
-test("dashboard KPI order keeps actionable coverage ahead of passive counts on narrow layouts", () => {
+test("dashboard KPI order groups inventory scale before completion coverage", () => {
   const persons = dashboardSource.indexOf('code:"persons"');
+  const activities = dashboardSource.indexOf('code:"activities"');
+  const polities = dashboardSource.indexOf('code:"polities"');
   const domain = dashboardSource.indexOf('code:"domain"');
   const namuwiki = dashboardSource.indexOf('code:"namuwiki"');
   const spatial = dashboardSource.indexOf('code:"spatial"');
-  const activities = dashboardSource.indexOf('code:"activities"');
-  const polities = dashboardSource.indexOf('code:"polities"');
-  assert.ok(persons >= 0 && domain > persons && namuwiki > domain && spatial > namuwiki);
-  assert.ok(activities > spatial && polities > activities);
+  assert.ok(persons >= 0 && activities > persons && polities > activities);
+  assert.ok(domain > polities && namuwiki > domain && spatial > namuwiki);
 });
 
 test("coverage KPIs expose absolute done/total and remaining work", () => {
@@ -987,14 +987,23 @@ test("single lower Dashboard panel expands across the full lower grid", () => {
   assert.match(dashboardCssSource, /dashboard-lower-grid>\.dashboard-panel:only-child\{grid-column:1\/-1\}/);
 });
 
-test("Dashboard keeps actionable work panels ahead of large analysis surfaces", () => {
+test("Dashboard follows operator priority from work status through analysis to system telemetry", () => {
   const work = dashboardSource.indexOf("WORK FRONTIER");
   const quality = dashboardSource.indexOf("DATA QUALITY");
   const completeness = dashboardSource.indexOf("COMPLETENESS MATRIX");
-  const heatmap = dashboardSource.indexOf("ERA × REGION COVERAGE");
+  const incomplete = dashboardSource.indexOf('aria-label="미완료 사유"');
   const timeline = dashboardSource.indexOf("RECENT DELTA · RECENT ACTIVITY TIMELINE");
-  assert.ok(work >= 0 && quality > work);
-  assert.ok(completeness > quality && heatmap > completeness && timeline > heatmap);
+  const domains = dashboardSource.indexOf("PERSON DOMAINS");
+  const heatmap = dashboardSource.indexOf("ERA × REGION COVERAGE");
+  const polity = dashboardSource.indexOf("POLITY CONCENTRATION");
+  const system = dashboardSource.indexOf("SYSTEM / PRODUCTION");
+  const publication = dashboardSource.indexOf("AUTHORING → COMPILE → RUNTIME");
+  const drift = dashboardSource.indexOf("RUNTIME DELTA / DRIFT");
+  const freshness = dashboardSource.indexOf("SOURCE FRESHNESS");
+  const workspace = dashboardSource.indexOf("WORKSPACE");
+  assert.ok(work >= 0 && quality > work && completeness > quality && incomplete > completeness);
+  assert.ok(timeline > incomplete && domains > timeline && heatmap > domains && polity > heatmap);
+  assert.ok(system > polity && publication > system && drift > publication && freshness > drift && workspace > freshness);
 });
 
 test("mobile Dashboard fits the Era × Region heatmap and Completeness Matrix inside their cards", () => {
@@ -1398,11 +1407,12 @@ test("Production browser acceptance permanently verifies Activity completeness p
   assert.match(acceptance,/runtime_delta_drift:modelState\.runtime_delta_drift/);
 });
 
-test("Dashboard keeps Needs Attention immediately after KPIs and ahead of system telemetry", () => {
+test("Dashboard keeps Needs Attention immediately after KPIs and before work and system telemetry", () => {
   const kpis=dashboardSource.indexOf("dashboard-kpi-grid");
   const attention=dashboardSource.indexOf("NEEDS ATTENTION");
+  const work=dashboardSource.indexOf("WORK FRONTIER");
   const system=dashboardSource.indexOf("SYSTEM / PRODUCTION");
-  assert.ok(kpis >= 0 && attention > kpis && system > attention);
+  assert.ok(kpis >= 0 && attention > kpis && work > attention && system > work);
 });
 
 test("shared store owns and validates Runtime exclusion target reads", () => {
