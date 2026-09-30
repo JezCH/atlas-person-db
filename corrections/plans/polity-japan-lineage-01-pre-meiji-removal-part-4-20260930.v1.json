@@ -4,8 +4,8 @@
   "contract": "stage2/contracts/correction-v2-current.v1.json",
   "decision_authority": "User-directed Japan polity lineage correction on 2026-09-30 after rejecting fabricated umbrella labels Pre-Meiji Japan / Imperial Japan / Meiji Government; exact Production Baseline A captured after restoration runtime deployment.",
   "baseline": {
-    "deployment_sha": "d69db292ab1b6eec14021db4fed85ab93b98d80d",
-    "baseline_digest": "sha256:7bfe2529126d3663ec977c2e5b9cb6fb58add5c1af2643bc499dbfa8d1d67c4f"
+    "deployment_sha": "19ce1e0a6a084db0c4737dde2117916e91387b04",
+    "baseline_digest": "sha256:fc55f653b449018e831f21028771a5c90c0788dce1932dfe72bd588d126ca7c0"
   },
   "batch_id": "polity_japan_lineage_pre_meiji_umbrella_removal_part_4_20260930_v1",
   "status": "REVIEWED_JAPAN_LINEAGE_REPAIR",
@@ -232,5 +232,3 @@
     "production_mutation_authorized": false
   }
 }
-
-
