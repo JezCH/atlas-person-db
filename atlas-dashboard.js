@@ -81,6 +81,77 @@
     </article>`;
   }
 
+  function spatialReasonLabel(code) {
+    const labels = {
+      missing_boundaries:"연대 경계 없음",
+      incomplete_boundary:"연대 경계 불완전",
+      reversed_boundaries:"연대 경계 역전",
+      activity_override_polity_mismatch:"Activity override 정치체 불일치",
+      activity_override_interval_mismatch:"Activity override 기간 불일치",
+      polity_unresolved:"정치체 미확정",
+      placement_missing:"Spatial 배치 없음",
+      macroregion_only_unresolved:"대권역만 배치",
+      place_function_period_gap:"장소 기능 기간 공백",
+      place_function_region_conflict:"장소 기능 권역 충돌",
+      chronology_unresolved:"연대 미해결",
+      spatial_unresolved:"Spatial 미해결"
+    };
+    return labels[code] || code || "기타 미해결";
+  }
+
+  function spatialSegmentTone(code) {
+    if (["missing_boundaries","incomplete_boundary","reversed_boundaries","chronology_unresolved"].includes(code)) return "spatial-chronology";
+    if (["activity_override_polity_mismatch","activity_override_interval_mismatch"].includes(code)) return "spatial-override";
+    if (code === "polity_unresolved") return "spatial-polity";
+    if (code === "placement_missing") return "spatial-missing";
+    if (code === "macroregion_only_unresolved") return "spatial-macro";
+    if (code === "place_function_period_gap") return "spatial-period";
+    if (code === "place_function_region_conflict") return "spatial-conflict";
+    return "spatial-other";
+  }
+
+  function segmentedProgressRow(label, row, detail, segments, {
+    doneLabel = "완료",
+    remainingLabel = "잔여",
+    extraMeta = []
+  } = {}) {
+    const known = row?.done != null && row?.total != null && row?.percentage != null;
+    const total = known ? Number(row.total || 0) : 0;
+    const normalizedSegments = Array.isArray(segments) ? segments : [];
+    const segmentPercent = (count) => total > 0
+      ? Math.max(0, Math.min(100, (Number(count || 0) / total) * 100))
+      : 0;
+    const track = known
+      ? normalizedSegments.filter((segment) => Number(segment.count || 0) > 0).map((segment) => {
+          const ratio = segmentPercent(segment.count);
+          return `<span class="dashboard-work-segment" data-work-segment="${escapeHtml(segment.key)}" style="width:${ratio.toFixed(4)}%" title="${escapeHtml(`${segment.label}: ${value(segment.count)} · ${pct(ratio)}`)}" aria-hidden="true"></span>`;
+        }).join("")
+      : "";
+    const legend = normalizedSegments.map((segment) => {
+      const ratio = known ? segmentPercent(segment.count) : null;
+      const empty = known && Number(segment.count || 0) === 0;
+      return `<span class="dashboard-work-segment-item" data-work-segment="${escapeHtml(segment.key)}" data-empty="${empty ? "true" : "false"}" title="${escapeHtml(segment.description || segment.label || "")}">
+        <i aria-hidden="true"></i>
+        <span>${escapeHtml(segment.label || segment.key || "상태")}</span>
+        <b>${known ? value(segment.count) : "—"} <small>${known ? pct(ratio) : "—"}</small></b>
+      </span>`;
+    }).join("");
+    const extra = (extraMeta || []).map((item) =>
+      `<span>${escapeHtml(item.label)} <b>${item.value == null ? "—" : value(item.value)}</b>${item.unit ? ` ${escapeHtml(item.unit)}` : ""}</span>`
+    ).join("");
+    return `<article class="dashboard-progress-row dashboard-work-detail-progress">
+      <div class="dashboard-progress-copy"><div><strong>${escapeHtml(label)}</strong><span>${escapeHtml(detail || "")}</span></div>
+        <b>${known ? `${value(row.done)} / ${value(row.total)}` : "원본 확인 실패"}</b></div>
+      <div class="dashboard-work-segment-track" role="img" aria-label="${escapeHtml(label)} 상태 분포">${track}</div>
+      <div class="dashboard-progress-meta dashboard-work-detail-summary">
+        <span>${escapeHtml(doneLabel)} <b>${known ? pct(row.percentage) : "—"}</b></span>
+        <span>${escapeHtml(remainingLabel)} <b>${known ? value(row.remaining) : "—"}</b></span>
+        ${extra}
+      </div>
+      <div class="dashboard-work-segment-legend" aria-label="${escapeHtml(label)} 상태 범례">${legend}</div>
+    </article>`;
+  }
+
   function kpiCard({ code, label, primary, detail, drilldown }) {
     const actionable = drilldown?.available === true
       && drilldown?.route === "persons"
@@ -618,6 +689,28 @@
     const domainRows = model.DOMAIN_CODES.map((code) => `<div class="dashboard-domain-row" data-domain="${escapeHtml(code)}">
       <span class="dashboard-domain-swatch" aria-hidden="true"></span><span>${escapeHtml(domainRegistry.LABELS[code] || code)}</span><b>${value(snapshot.domain_breakdown[code])}</b>
     </div>`).join("");
+    const domainWorkSegments = [
+      ...model.DOMAIN_CODES.map((code) => ({
+        key:`domain-${code}`,
+        label:domainRegistry.LABELS[code] || code,
+        count:snapshot.domain_breakdown?.[code],
+        description:`${domainRegistry.LABELS[code] || code} 대표 분야로 배정된 인물`
+      })),
+      { key:"domain-unassigned", label:"미분류", count:w.domain?.remaining, description:"대표 분야가 아직 배정되지 않은 인물" }
+    ];
+    const spatialWorkSegments = [
+      { key:"spatial-ready", label:"배치 완료", count:w.spatial?.done, description:"현재 canonical Spatial resolver에서 활동 위치가 배치됨" },
+      ...(b.spatial?.rows || []).map((item) => ({
+        key:spatialSegmentTone(item.code),
+        label:spatialReasonLabel(item.code),
+        count:item.count,
+        description:`Spatial 미해결 사유 · ${item.code}`
+      }))
+    ];
+    const activityWorkSegments = [
+      { key:"activity-linked", label:"활동 1건 이상 연결", count:w.runtime_activity?.done, description:"Runtime에서 Activity가 1건 이상 연결된 인물" },
+      { key:"activity-missing", label:"활동 연결 없음", count:w.runtime_activity?.remaining, description:"Runtime에서 연결된 Activity가 없는 인물" }
+    ];
 
     root.innerHTML = `<section class="dashboard-control-center">
       <header class="dashboard-hero card">
@@ -704,10 +797,17 @@
         <article class="dashboard-panel card">
           <div class="dashboard-panel-head"><div><p class="eyebrow">WORK FRONTIER</p><h3>작업 진행</h3></div><span>실데이터 기준</span></div>
           <div class="dashboard-progress-list">
-            ${progressRow("대표 분야 분류", w.domain, "대표 분야 배정")}
+            ${segmentedProgressRow("대표 분야 분류", w.domain, "8개 대표 분야 + 미분류 상태를 전체 인물 대비 표시", domainWorkSegments, { doneLabel:"배정 완료", remainingLabel:"미분류" })}
             ${namuwikiProgressRow(w.namuwiki)}
-            ${progressRow("Spatial 준비", w.spatial, "활동 위치 배치")}
-            ${progressRow("활동 연결", w.runtime_activity, "활동이 1건 이상 연결된 인물")}
+            ${segmentedProgressRow("Spatial 준비", w.spatial, "배치 완료와 미해결 사유를 전체 Activity 대비 표시", spatialWorkSegments, {
+              doneLabel:"배치 완료",
+              remainingLabel:"미해결",
+              extraMeta:[
+                { label:"검토 대기", value:w.spatial?.review, unit:"정치체" },
+                { label:"대권역만", value:w.spatial?.macro_only, unit:"정치체" }
+              ]
+            })}
+            ${segmentedProgressRow("활동 연결", w.runtime_activity, "Activity 연결 유무를 전체 인물 대비 표시", activityWorkSegments, { doneLabel:"연결 완료", remainingLabel:"미연결" })}
           </div>
         </article>
 
