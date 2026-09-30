@@ -82,5 +82,5 @@ test("designation-retirement manifest rejects an unsupported review reason",()=>
 test("designation-retirement manifest rejects a mismatched name owner",()=>{
   const bad=manifest();
   bad.operations[0].exact_before.names[0].polity_designation_id="8cdee6c3-8c2d-5dce-8b7f-96814112dc34";
-  assert.throws(()=>requireManifest(bad),/DESIGNATION_ID_MISMATCH/);
+  assert.throws(()=>requireManifest(bad),/NAME_PARENT_MISMATCH/);
 });
