@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:saadia-gaon:person-only:v1",
+  "person": {
+    "canonical_name_en": "Saadia Gaon",
+    "display_name_ko": "사디아 가온",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Saadia Gaon (882–942) is a securely historical Jewish philosopher, theologian and rabbi. SEP records his birth in Fayyum in Egypt, later rabbinic leadership at the Sura Academy, and death in Baghdad. This transregional religious and intellectual career is not reduced to one canonical polity-bound Activity rail.",
+    "basis_code": "secure_882_942_egypt_sura_baghdad_biography_without_single_intellectual_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/archives/spr2022/entries/saadya/"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Saadya [Saadiah] — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/archives/spr2022/entries/saadya/",
+      "citation_text": "SEP records Saadya Gaon (882–942), born in Fayyum in Upper Egypt and deceased in Baghdad, as a theologian, philosopher and rabbi whose career included leadership at the Sura Academy.",
+      "locator": "Life"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-FINAL-FIVE",
+    "namuwiki_review": "Exact indexed searches for 사디아 가온/Saadia Gaon/Saadya did not establish an independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "No single polity rail forced across Egyptian origin and later Babylonian rabbinic-intellectual leadership."
+  }
+}
