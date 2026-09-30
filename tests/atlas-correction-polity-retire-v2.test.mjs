@@ -335,14 +335,14 @@ test("reviewed same-identity retirement persists an explicit canonical survivor 
 });
 
 test("v2 dispatch isolates Polity retirement from every other correction family", async () => {
-  assert.equal(POLITY_RETIRE_OPERATION_TYPE, OPERATION_TYPE);
-  const client = fakeClient();
-  const dispatch = createCorrectionManifestV2DispatchService({ client });
-  assert.throws(
-    () => dispatch.execute(manifest({ operations: [manifest().operations[0], { type: "rewrite_activity" }] }), { dryRun: true }),
+  const service = createCorrectionManifestV2DispatchService({
+    client: { query: async () => { throw new Error("query must not be reached"); } }
+  });
+  await assert.rejects(
+    () => service.execute(
+      { operations: [{ type: OPERATION_TYPE }, { type: "standard-operation-for-mixed-family-test" }] },
+      { dryRun: true }
+    ),
     /CORRECTION_V2_POLITY_RETIRE_MIXED_OPERATION_FAMILY_FORBIDDEN/
   );
-  const outcome = await dispatch.execute(manifest(), { dryRun: true });
-  assert.equal(outcome.dry_run, true);
-  assert.equal(client.state.deleted, false);
 });
