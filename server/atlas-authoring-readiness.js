@@ -41,6 +41,26 @@ async function inspectCoreAuthoringSchema(client) {
       to_regclass('atlas_v2.authoring_manifest_runs') as authoring_ledger,
       to_regclass('atlas_v2.person_external_references') as person_external_references,
       to_regclass('atlas_v2.person_profile_mutation_audits') as person_profile_mutation_audits,
+      to_regclass('atlas_v2.person_timeline_dispositions') as person_timeline_dispositions,
+      (
+        select format_type(a.atttypid,a.atttypmod)
+          from pg_attribute a
+         where a.attrelid=to_regclass('atlas_v2.person_timeline_dispositions')
+           and a.attname='review_evidence'
+           and not a.attisdropped
+      ) as person_timeline_review_evidence_type,
+      (
+        select count(*)::int
+          from pg_trigger t
+         where t.tgrelid=to_regclass('atlas_v2.person_timeline_dispositions')
+           and not t.tgisinternal
+      ) as person_timeline_trigger_count,
+      coalesce((
+        select array_agg(t.tgname order by t.tgname)
+          from pg_trigger t
+         where t.tgrelid=to_regclass('atlas_v2.person_timeline_dispositions')
+           and not t.tgisinternal
+      ),'{}'::text[]) as person_timeline_trigger_names,
       exists(
         select 1 from information_schema.columns
          where table_schema='atlas_v2' and table_name='authoring_manifest_runs' and column_name='manifest_schema'
@@ -213,6 +233,10 @@ async function inspectCoreAuthoringSchema(client) {
     ledger_contract_ready: ledgerContractReady,
     columns_ready: activityColumnsReady && ledgerColumnsReady,
     person_reference_tables_ready: personReferenceTablesReady,
+    person_timeline_table_ready:Boolean(row.person_timeline_dispositions),
+    person_timeline_review_evidence_type:row.person_timeline_review_evidence_type == null ? null : String(row.person_timeline_review_evidence_type),
+    person_timeline_trigger_count:Number(row.person_timeline_trigger_count || 0),
+    person_timeline_trigger_names:Object.freeze(Array.isArray(row.person_timeline_trigger_names) ? row.person_timeline_trigger_names.map(String) : []),
     person_reference_columns_ready: personReferenceColumnsReady,
     person_reference_constraints_ready: personReferenceConstraintsReady,
     person_external_reference_sync_function_ready: personExternalReferenceSyncFunctionReady,
