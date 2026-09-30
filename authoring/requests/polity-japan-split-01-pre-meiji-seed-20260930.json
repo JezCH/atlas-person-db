@@ -57,5 +57,12 @@
     "requested_item": 1,
     "decision_authority": "User-approved Japan identity re-review on 2026-09-30 under the current catastrophic-rupture polity rule; exact Production read-back showed one Japan UUID spanning 593–2020.",
     "identity_note": "Stage 1 seed only. Stage 2 must relink all pre-1868 Japan Activities here, split Emperor Meiji at the 1868 Restoration boundary, preserve provenance, and remove the seed Activity. More granular bakufu/regime contexts may remain separate governance-context work; this identity is the reviewed higher-order pre-Meiji side of the rupture."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31",
+      "review_state": "reviewed_absent"
+    }
   }
 }
