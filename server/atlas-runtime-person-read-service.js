@@ -8,7 +8,15 @@ const PUBLIC_ACTIVITY_SOURCE = "runtime-person-politics-v1";
 
 const PERSON_READ_SQL = `
 select
-  p.id, p.person_type, p.historicity,
+  p.id, p.person_type, p.historicity, p.representative_domain,
+  (select jsonb_strip_nulls(jsonb_build_object(
+    'disposition',ptd.disposition,
+    'reason',ptd.reason,
+    'basis_code',ptd.basis_code,
+    'traditional_year',ptd.traditional_year,
+    'traditional_year_alternative',ptd.traditional_year_alternative,
+    'review_evidence',ptd.review_evidence
+  )) from atlas_v2.person_timeline_dispositions ptd where ptd.person_id=p.id) as timeline_disposition,
   coalesce((select jsonb_agg(jsonb_build_object('locale',pn.locale,'name',pn.name,'name_type',pn.name_type,'is_preferred',pn.is_preferred) order by pn.is_preferred desc,pn.locale,pn.name_type,pn.name,pn.id) from atlas_v2.person_names pn where pn.person_id=p.id),'[]'::jsonb) as names,
   coalesce((select jsonb_agg(jsonb_build_object('locale',pd.locale,'content',pd.content) order by pd.locale,pd.id) from atlas_v2.person_descriptions pd where pd.person_id=p.id),'[]'::jsonb) as descriptions,
   coalesce((select jsonb_object_agg(per.provider,jsonb_strip_nulls(jsonb_build_object('status',per.status,'checked_at',per.checked_at::text,'document_title',per.document_title,'url',per.url,'review_state',per.review_state,'review_reason',per.review_reason)) order by per.provider) from atlas_v2.person_external_references per where per.person_id=p.id),'{}'::jsonb) as external_references,
@@ -20,7 +28,15 @@ order by p.id`;
 
 const PERSON_DETAIL_SQL = `
 select
-  p.id, p.person_type, p.historicity,
+  p.id, p.person_type, p.historicity, p.representative_domain,
+  (select jsonb_strip_nulls(jsonb_build_object(
+    'disposition',ptd.disposition,
+    'reason',ptd.reason,
+    'basis_code',ptd.basis_code,
+    'traditional_year',ptd.traditional_year,
+    'traditional_year_alternative',ptd.traditional_year_alternative,
+    'review_evidence',ptd.review_evidence
+  )) from atlas_v2.person_timeline_dispositions ptd where ptd.person_id=p.id) as timeline_disposition,
   coalesce((select jsonb_agg(jsonb_build_object('locale',pn.locale,'name',pn.name,'name_type',pn.name_type,'is_preferred',pn.is_preferred) order by pn.is_preferred desc,pn.locale,pn.name_type,pn.name,pn.id) from atlas_v2.person_names pn where pn.person_id=p.id),'[]'::jsonb) as names,
   coalesce((select jsonb_agg(jsonb_build_object('locale',pd.locale,'content',pd.content) order by pd.locale,pd.id) from atlas_v2.person_descriptions pd where pd.person_id=p.id),'[]'::jsonb) as descriptions,
   coalesce((select jsonb_object_agg(per.provider,jsonb_strip_nulls(jsonb_build_object('status',per.status,'checked_at',per.checked_at::text,'document_title',per.document_title,'url',per.url,'review_state',per.review_state,'review_reason',per.review_reason)) order by per.provider) from atlas_v2.person_external_references per where per.person_id=p.id),'{}'::jsonb) as external_references,
