@@ -21,7 +21,7 @@
     width_basis: "equal_leaf_subregion",
     macro_width_basis: "sum_of_child_leaf_widths",
     horizontal_order_basis: "whole_path_macro_bridge_continuity_avoid_large_backtracking_then_historical_cultural",
-    display_order_revision: "2026-09-25-global-path-v3",
+    display_order_revision: "2026-10-01-east-asia-v4",
     density_weighting: false,
     note: "This hierarchy is an ATLAS historical-display taxonomy. The 45 leaves are evaluated as one continuous world path: preserve strong macro entry/exit bridges, avoid large-scale directional backtracking, and allow local bends when they preserve stronger historical-geographic continuity. A macroregion may follow its natural north-south axis when that is more coherent than forcing longitude order. External modern classifications are references only; Person density never determines geography or width."
   });
@@ -82,9 +82,9 @@
     Object.freeze({ code: "east-asia", label: "동아시아", subregions: Object.freeze([
       Object.freeze({ code: "china", label: "중국권" }),
       Object.freeze({ code: "manchuria", label: "만주" }),
-      Object.freeze({ code: "eastern-siberia-far-east", label: "동시베리아·극동" }),
       Object.freeze({ code: "korean-peninsula", label: "한반도" }),
-      Object.freeze({ code: "japan", label: "일본열도" })
+      Object.freeze({ code: "japan", label: "일본열도" }),
+      Object.freeze({ code: "eastern-siberia-far-east", label: "동시베리아·극동" })
     ]) }),
     Object.freeze({ code: "oceania", label: "오세아니아", subregions: Object.freeze([
       Object.freeze({ code: "pacific-islands", label: "태평양 도서" }),
