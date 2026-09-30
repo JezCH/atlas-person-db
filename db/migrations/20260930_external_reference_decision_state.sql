@@ -8,7 +8,7 @@ ALTER TABLE atlas_v2.person_external_references
   DROP CONSTRAINT IF EXISTS person_external_references_review_state_check;
 ALTER TABLE atlas_v2.person_external_references
   ADD CONSTRAINT person_external_references_review_state_check
-  CHECK (review_state IN ('reviewed','legacy_unverified'));
+  CHECK (review_state IN ('reviewed','reviewed_absent','legacy_unverified'));
 
 -- Linked rows are intrinsically reviewed. For historical not_found rows, preserve
 -- the prior bounded review evidence (audit/backfill/reason classifications) before
@@ -761,7 +761,7 @@ WITH reviewed_ids(person_id) AS (
   UNION SELECT person_id FROM reason_ids
 )
 UPDATE atlas_v2.person_external_references per
-   SET review_state='reviewed'
+   SET review_state='reviewed_absent'
   FROM all_reviewed ar
  WHERE per.person_id=ar.person_id
    AND per.provider='namuwiki'
@@ -1398,7 +1398,7 @@ UPDATE atlas_v2.person_external_references per
  WHERE per.person_id=r.person_id
    AND per.provider='namuwiki'
    AND per.status='not_found'
-   AND per.review_state='reviewed';
+   AND per.review_state='reviewed_absent';
 
 UPDATE atlas_v2.person_external_references
    SET review_reason=NULL
