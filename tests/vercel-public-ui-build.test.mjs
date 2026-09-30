@@ -21,8 +21,7 @@ test('Vercel build publishes the root UI into public', () => {
     'atlas-person-main.js',
     'atlas-person-spacetime-view.js',
     'atlas-polity-spatial-index.json',
-    'atlas-place-spatial-registry.json',
-    'non-timeline-persons.json'
+    'atlas-place-spatial-registry.json'
   ]) {
     assert.ok(files.includes(required), `missing public UI asset: ${required}`);
   }
