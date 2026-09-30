@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch07:shashanka:gauda:600-625:v1",
+  "person": {
+    "canonical_name_en": "Shashanka",
+    "display_name_ko": "샤샹카",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-01",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Gauda Kingdom",
+    "display_name_ko": "가우다 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 600,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 625,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Banglapedia describes Shashanka as the first important king of ancient Bengal and places his rule approximately between 600 and 625. ATLAS preserves both boundaries as approximate rather than fabricating exact accession or death dates."
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "materialized": true,
+    "evidence": "Reviewed registration hold: Gauda is a valid historical polity, but this registration does not invent a canonical static geography or first-class capital binding. Spatial placement requires a dedicated reviewed polity-spatial unit."
+  },
+  "sources": [
+    {
+      "source_type": "encyclopedic_reference",
+      "title": "Shashanka — Banglapedia",
+      "canonical_url": "https://en.banglapedia.org/index.php/Shashanka",
+      "citation_text": "Banglapedia identifies Shashanka as the first important king of ancient Bengal and states that he is generally believed to have ruled approximately from 600 to 625.",
+      "locator": "Biographical opening"
+    }
+  ],
+  "review_context": {
+    "review_checkpoint": "#1374 comment 5825500359",
+    "registration_frontier": "#1375 comment 5920773289",
+    "grade": "SS",
+    "candidate_id": "aoe2-ss-20260925-shashanka",
+    "namuwiki_review": "No independently verifiable exact NamuWiki Person document was established; no guessed URL.",
+    "chronology_decision": "Use Banglapedia's approximate c.600–625 reign and preserve uncertainty at both boundaries."
+  }
+}

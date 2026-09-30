@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch07:sima-yi:cao-wei:239-251:v1",
+  "person": {
+    "canonical_name_en": "Sima Yi",
+    "display_name_ko": "사마의",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-01",
+      "document_title": "사마의",
+      "url": "https://namu.wiki/w/%EC%82%AC%EB%A7%88%EC%9D%98"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Cao Wei",
+    "display_name_ko": "조위"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent of Cao Wei",
+    "role_display_name_ko": "조위 섭정",
+    "start_year": 239,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 251,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sima Yi was appointed with Cao Shuang to the regency for the child emperor Cao Fang in 239. His political position changed sharply after the 249 coup, but the reviewed Activity records the bounded regency/governing interval through Sima Yi's death in 251 rather than splitting one representative record into factional sub-phases."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Introduction — The Poetry of Ruan Ji and Xi Kang",
+      "canonical_url": "https://www.degruyterbrill.com/document/doi/10.1515/9781501503870-008/pdf?licenseType=open-access",
+      "citation_text": "The academic introduction describes Sima Yi and Cao Shuang as the two co-regents chosen after Cao Rui's death in 239 and records Sima Yi's seizure of the capital in 249.",
+      "locator": "Introduction, discussion of the Wei regency"
+    },
+    {
+      "source_type": "encyclopedic_reference",
+      "title": "사마의 — NamuWiki mirror verification",
+      "canonical_url": "https://www.namu.moe/w/%EC%82%AC%EB%A7%88%EC%9D%98",
+      "citation_text": "The indexed mirror verifies the independent historical Person article titled 사마의, including his 179–251 lifespan and Cao Wei career.",
+      "locator": "Article header and overview"
+    }
+  ],
+  "review_context": {
+    "review_checkpoint": "#1374 comment 5825500359",
+    "registration_frontier": "#1375 comment 5920773289",
+    "grade": "SS",
+    "candidate_id": "aoe2-ss-20260925-sima-yi",
+    "namuwiki_review": "Independent historical Person document verified at exact title 사마의; canonical namu.wiki path preserved.",
+    "chronology_decision": "Use the formal regency boundary 239 through his death in 251; note the major 249 change in political control without inventing a second Activity."
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch07:vardan-mamikonian:sasanian-context:451:v1",
+  "person": {
+    "canonical_name_en": "Vardan Mamikonian",
+    "display_name_ko": "바르단 마미코니안",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-01",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Sasanian Empire",
+    "display_name_ko": "사산 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "Sparapet",
+    "role_display_name_ko": "아르메니아군 총사령관",
+    "start_year": 451,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 451,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Vardan Mamikonian was the Armenian sparapet and leader of the anti-Sasanian Armenian struggle, dying at Avarayr in 451. Because primary 'opposes' relations are not allowed in Human Authoring and 'serves' would invert the historical meaning, ATLAS uses the neutral `active_in` relation to the Sasanian imperial context for the decisive 451 military Activity."
+  },
+  "sources": [
+    {
+      "source_type": "government_reference",
+      "title": "Vardan Mamikonian — Central Bank of Armenia collector coin",
+      "canonical_url": "https://www.cba.am/en/collector-coins/241/",
+      "citation_text": "The Central Bank of Armenia identifies Vardan Mamikonian as Armenian Sparapet, supreme commander, and leader of the struggle against the Persian Sassanid Empire; he died at Avarayr in 451.",
+      "locator": "Historical description"
+    },
+    {
+      "source_type": "encyclopedic_reference",
+      "title": "Vardan, Mamikonian, St. — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/vardan-mamikonian-st",
+      "citation_text": "The encyclopedia identifies Vardan as an Armenian noble and leader of the uprising against Yazdgard II, with death at Avarair in 451.",
+      "locator": "Biographical entry"
+    }
+  ],
+  "review_context": {
+    "review_checkpoint": "#1374 comment 5825500359",
+    "registration_frontier": "#1375 comment 5920773289",
+    "grade": "SS",
+    "candidate_id": "aoe2-ss-20260925-vardan-mamikonian",
+    "namuwiki_review": "No independently verifiable exact NamuWiki historical Person document was established; no guessed URL.",
+    "relation_decision": "Use neutral active_in for the Sasanian imperial context. Do not write serves, which would contradict his anti-Sasanian leadership, and primary opposes is intentionally unavailable in the Human Authoring contract."
+  }
+}
