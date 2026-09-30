@@ -28,6 +28,7 @@ const intendedApiRoutes = [
   'api/atlas-authoring-apply.js',
   'api/atlas-authoring.js',
   'api/atlas-correction-apply.js',
+  'api/atlas-core-unit5-reconcile.js',
   'api/atlas-duplicate-review.js',
   'api/atlas-identity.js',
   'api/atlas-mutate.js',
