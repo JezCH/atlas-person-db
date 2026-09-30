@@ -7,6 +7,7 @@ const { requiredUuid, historicalYear } = require("./atlas-activity-semantic-key-
 const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service.js");
 const { createSource } = require("./atlas-source-service.js");
 const { normalizePersonPlaceFacts, resolvePersonPlaceFacts } = require("./atlas-place-relation-service.js");
+const { normalizeSpatialRegistrationHandshake } = require("./atlas-spatial-fact-contract.js");
 const {
   normalizeTimelineDisposition,
   currentTimelineDisposition,
@@ -215,7 +216,8 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
       notes:optionalText(activity.notes)
     }),
     sources:Object.freeze(normalizeSources(request.sources)),
-    external_references:Object.freeze({ namuwiki })
+    external_references:Object.freeze({ namuwiki }),
+    raw_spatial_disposition:request.spatial_disposition == null ? null : request.spatial_disposition
   });
 }
 
@@ -692,9 +694,10 @@ async function applyPreparedWithinTransaction(client, prepared, { transport = nu
   });
   const sources = await resolveOrCreateSources(client, request.requestId, request.sources);
   const placeFacts = await resolvePersonPlaceFacts(client, { personId:person.id, facts:request.person.place_facts });
+  const spatialDisposition = normalizeSpatialRegistrationHandshake(request.raw_spatial_disposition, { polityDisposition:polity.disposition });
   const payload = activityPayload({ personId:person.id, polityId:polity.id, roleId:role.id, relation, periodBasis, activity:request.activity, sources });
   const created = await createStage2NativeActivityTx(client).create(payload, { requestId:request.requestId });
-  const snapshot = Object.freeze({ ...buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:Object.freeze({ namuwiki }) }), person_place_facts:placeFacts });
+  const snapshot = Object.freeze({ ...buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:Object.freeze({ namuwiki }) }), person_place_facts:placeFacts, spatial_disposition:spatialDisposition });
   await client.query(`insert into atlas_v2.authoring_manifest_runs(request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot) values($1,$2,$3,$4::uuid,$5::uuid,$6::jsonb)`, [request.requestId, hash, HUMAN_AUTHORING_SCHEMA, person.id, created.id, JSON.stringify(snapshot)]);
   return outcome(request.requestId, false, snapshot);
 }
