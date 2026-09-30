@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:sakya-pandita:person-only:v1",
+  "person": {
+    "canonical_name_en": "Sakya Paṇḍita",
+    "display_name_ko": "사캬 판디타",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Sakya Paṇḍita (1182–1251) is a securely historical Tibetan philosopher and Sakya scholar, but the reviewed evidence spans monastic, intellectual, and later Mongol-court contexts rather than one defensible canonical polity interval for his philosophical activity. ATLAS therefore preserves the historical Person without manufacturing a single polity-bound Activity rail.",
+    "basis_code": "secure_1182_1251_biography_without_single_polity_intellectual_activity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/entries/sakya-pandita/index.html",
+        "https://treasuryoflives.org/biographies/view/Sakya-Pa%E1%B9%87%E1%B8%8Dita-Kunga-Gyeltsen/2137"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Sakya Paṇḍita — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/sakya-pandita/index.html",
+      "citation_text": "SEP identifies Sakya Paṇḍita (1182–1251) as a major Tibetan philosopher, especially influential in epistemology, philosophy of language, debate, grammar, lexicography and poetics.",
+      "locator": "Introduction and life overview"
+    },
+    {
+      "source_type": "scholarly_biographical_reference",
+      "title": "Sakya Paṇḍita Kunga Gyeltsen — The Treasury of Lives",
+      "canonical_url": "https://treasuryoflives.org/biographies/view/Sakya-Pa%E1%B9%87%E1%B8%8Dita-Kunga-Gyeltsen/2137",
+      "citation_text": "The Treasury of Lives records Sakya Paṇḍita Kunga Gyeltsen as a historical Tibetan scholar, 1182–1251, associated with Sakya Monastery and serving as the sixth Sakya Trizin.",
+      "locator": "Biographical header and offices held"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-TIBET",
+    "namuwiki_review": "Exact indexed searches for 사캬 판디타/사키야 판디타/사꺄 빤디따 and Sakya Pandita returned no independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "Secure historical identity and life dates retained; no single polity rail forced across distinct Tibetan monastic/intellectual and later Mongol-court contexts."
+  }
+}
