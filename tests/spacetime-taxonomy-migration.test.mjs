@@ -91,7 +91,7 @@ test("map-like adjacency decisions remain explicit inside each refined macroregi
   assert.deepEqual(hierarchy["central-asia"], ["western-central-asia","western-siberia","eastern-central-asia-steppe","tibetan-plateau"]);
   assert.deepEqual(hierarchy["south-asia"], ["himalayas","northwest-south-asia","north-india-ganges","deccan-south-india","maldives","sri-lanka"]);
   assert.deepEqual(hierarchy["southeast-asia"], ["maritime-southeast-asia","mainland-southeast-asia"]);
-  assert.deepEqual(hierarchy["east-asia"], ["china","manchuria","eastern-siberia-far-east","korean-peninsula","japan"]);
+  assert.deepEqual(hierarchy["east-asia"], ["china","manchuria","korean-peninsula","japan","eastern-siberia-far-east"]);
   assert.deepEqual(hierarchy.oceania, ["pacific-islands","australasia"]);
   const flattened = spaceAxis.DEFAULT_SPATIAL_HIERARCHY.flatMap((macro) => macro.subregions.map((leaf) => leaf.code));
   const pair = (left,right) => assert.equal(flattened[flattened.indexOf(left)+1],right);
@@ -102,5 +102,6 @@ test("map-like adjacency decisions remain explicit inside each refined macroregi
   pair("tibetan-plateau","himalayas");
   pair("sri-lanka","maritime-southeast-asia");
   pair("mainland-southeast-asia","china");
-  pair("japan","pacific-islands");
+  pair("japan","eastern-siberia-far-east");
+  pair("eastern-siberia-far-east","pacific-islands");
 });

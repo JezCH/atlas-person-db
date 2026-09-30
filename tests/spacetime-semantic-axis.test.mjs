@@ -114,7 +114,7 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "east-asia").subregions.map((band) => band.code),
-    ["china", "manchuria", "eastern-siberia-far-east", "korean-peninsula", "japan"]
+    ["china", "manchuria", "korean-peninsula", "japan", "eastern-siberia-far-east"]
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "oceania").subregions.map((band) => band.code),
@@ -124,7 +124,7 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.external_standard, null);
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.width_basis, "equal_leaf_subregion");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.horizontal_order_basis, "whole_path_macro_bridge_continuity_avoid_large_backtracking_then_historical_cultural");
-  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.display_order_revision, "2026-09-25-global-path-v3");
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.display_order_revision, "2026-10-01-east-asia-v4");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.density_weighting, false);
   const flattened=spaceAxis.DEFAULT_SPATIAL_HIERARCHY.flatMap((macro)=>macro.subregions.map((band)=>band.code));
   const adjacent=(left,right)=>{
@@ -148,7 +148,8 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   adjacent("tibetan-plateau","himalayas");
   adjacent("sri-lanka","maritime-southeast-asia");
   adjacent("mainland-southeast-asia","china");
-  adjacent("japan","pacific-islands");
+  adjacent("japan","eastern-siberia-far-east");
+  adjacent("eastern-siberia-far-east","pacific-islands");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_revision, "2026-09-16-r4");
   assert.match(spaceAxis.SPATIAL_HIERARCHY_POLICY.migration_document, /spacetime-spatial-taxonomy-migration-20260916-r4\.md$/);
   assert.match(spaceAxis.SPATIAL_HIERARCHY_POLICY.audit_document, /spacetime-spatial-hierarchy-audit-20260903\.md$/);
