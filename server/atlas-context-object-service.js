@@ -37,4 +37,12 @@ async function linkPersonContext(client,{personId,context,link}){
  for(const src of sources)await client.query(`insert into atlas_v2.${st}(${sf},source_id,source_locator_key) values($1::uuid,$2::uuid,$3) on conflict do nothing`,[linkId,src.source_id,src.source_locator_key]);
  return Object.freeze({context:ctx,link_id:text(linkId).toLowerCase(),link_type:type});
 }
-module.exports=Object.freeze({TYPES,normalizeContextObject,createContextObject,linkPersonContext});
+async function linkPolityGovernanceContext(client,{polityId,context,period}){
+ if(!UUID_RE.test(text(polityId)))throw new Error("CONTEXT_POLITY_ID_INVALID");if(context?.kind!=="governance_context")throw new Error("CONTEXT_GOVERNANCE_KIND_REQUIRED");
+ const ctx=await createContextObject(client,context);const confidence=text(period?.confidence)||"well_established";
+ const existing=await client.query(`select id::text from atlas_v2.polity_governance_periods where polity_id=$1::uuid and governance_context_id=$2::uuid and valid_from_year is not distinct from $3::integer and valid_to_year is not distinct from $4::integer limit 1`,[polityId,ctx.id,period?.valid_from_year??null,period?.valid_to_year??null]);
+ let periodId=existing.rows[0]?.id;if(!periodId){const q=await client.query(`insert into atlas_v2.polity_governance_periods(id,polity_id,governance_context_id,valid_from_year,valid_to_year,confidence,notes) values(gen_random_uuid(),$1::uuid,$2::uuid,$3,$4,$5,$6) returning id::text`,[polityId,ctx.id,period?.valid_from_year??null,period?.valid_to_year??null,confidence,text(period?.notes)||null]);periodId=q.rows[0].id}
+ for(const src of normalizeContextObject(context).sources)await client.query("insert into atlas_v2.polity_governance_period_sources(polity_governance_period_id,source_id,source_locator_key) values($1::uuid,$2::uuid,$3) on conflict do nothing",[periodId,src.source_id,src.source_locator_key]);
+ return Object.freeze({context:ctx,period_id:text(periodId).toLowerCase()});
+}
+module.exports=Object.freeze({TYPES,normalizeContextObject,createContextObject,linkPersonContext,linkPolityGovernanceContext});
