@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch06:premysl-ottokar-ii:bohemia:1253-1278:v1",
+  "person": {
+    "canonical_name_en": "Přemysl Ottokar II",
+    "display_name_ko": "오타카르 2세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-01",
+      "document_title": "오타카르 2세",
+      "url": "https://namu.wiki/w/%EC%98%A4%ED%83%80%EC%B9%B4%EB%A5%B4%202%EC%84%B8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bohemia",
+    "display_name_ko": "보헤미아 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1253,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1278,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Records Přemysl Ottokar II's Bohemian kingship only. His additional Austrian, Styrian, Carinthian and Carniolan titles are not collapsed into this single Activity and may be represented separately if later required."
+  },
+  "sources": [
+    {
+      "source_type": "encyclopedic_reference",
+      "title": "Otakar II. — Hrvatska enciklopedija",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/otakar-ii",
+      "citation_text": "The Croatian Encyclopedia identifies Otakar II as Czech/Bohemian king from 1253 and records his death in 1278.",
+      "locator": "Biographical entry"
+    },
+    {
+      "source_type": "encyclopedic_reference",
+      "title": "Ottocar II — The Columbia Encyclopedia",
+      "canonical_url": "https://www.encyclopedia.com/reference/encyclopedias-almanacs-transcripts-and-maps/ottocar-ii",
+      "citation_text": "The Columbia Encyclopedia identifies Přemysl Ottocar II as king of Bohemia from 1253 to 1278 and son and successor of Wenceslaus I.",
+      "locator": "Entry"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "aoe2-ss-20260925-ottokar-ii",
+    "review_checkpoint": "#1374 comment 5825499804",
+    "registration_frontier": "#1375 comment 5855612708",
+    "grade": "SS",
+    "namuwiki_review": "Independent indexed NamuWiki-mirror Person document verified at exact title 오타카르 2세; canonical namu.wiki path preserved."
+  }
+}

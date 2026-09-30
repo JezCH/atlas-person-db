@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch06:musa-ibn-nusayr:umayyad-ifriqiya:698-714:v1",
+  "person": {
+    "canonical_name_en": "Musa ibn Nusayr",
+    "display_name_ko": "무사 이븐 누사이르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-01",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Umayyad Caliphate",
+    "display_name_ko": "우마이야 칼리파국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Governor of Ifriqiya",
+    "role_display_name_ko": "이프리키야 총독",
+    "start_year": 698,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 714,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "TDV reports 698 as the prevalent appointment date for Musa's governorship of Ifriqiya and records his departure from al-Andalus for Damascus in 714 after the western conquests. Other reference traditions place the formal governorship later, so ATLAS preserves 698 as approximate rather than fabricating false precision. The relation is service under the Umayyad Caliphate; representative_domain remains the reviewed military classification."
+  },
+  "sources": [
+    {
+      "source_type": "scholarly_reference",
+      "title": "MÛSÂ b. NUSAYR — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/musa-b-nusayr",
+      "citation_text": "TDV identifies Musa ibn Nusayr as a leading Umayyad commander, gives 698 as the prevalent date of his appointment over Ifriqiya and the Maghreb, and records his recall from al-Andalus in 714.",
+      "locator": "Biography and governorship sections"
+    },
+    {
+      "source_type": "university_reference",
+      "title": "Musa ibn Nusayr — Repertorium Saracenorum, University of Cologne",
+      "canonical_url": "https://saraceni.uni-koeln.de/wiki/Musa_ibn_Nusayr",
+      "citation_text": "The University of Cologne repertory identifies Musa ibn Nusayr as an Arab military commander and governor in Ifriqiya and preserves the variant chronology around his governorship.",
+      "locator": "Person record"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "aoe2-ss-20260925-musa-ibn-nusayr",
+    "review_checkpoint": "#1374 comment 5825499804",
+    "registration_frontier": "#1375 comment 5855612708",
+    "grade": "SS",
+    "namuwiki_review": "Exact indexed searches for 무사 이븐 누사이르 / 무사 빈 누사이르 / Musa ibn Nusayr did not establish an independent NamuWiki Person document; no guessed URL.",
+    "chronology_decision": "Use the prevalent 698 appointment as approximate and the documented 714 recall/departure boundary; do not resolve the historiographic appointment-date variation by invention."
+  }
+}

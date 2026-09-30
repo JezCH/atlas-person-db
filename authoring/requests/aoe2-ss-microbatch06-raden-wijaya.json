@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aoe2-ss-microbatch06:raden-wijaya:majapahit:1293-1309:v1",
+  "person": {
+    "canonical_name_en": "Raden Wijaya",
+    "display_name_ko": "라덴 위자야",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-01",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-01",
+      "document_title": "라덴 위자야",
+      "url": "https://namu.wiki/w/%EB%9D%BC%EB%8D%B4%20%EC%9C%84%EC%9E%90%EC%95%BC"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Majapahit Empire",
+    "display_name_ko": "마자파힛 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1293,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1309,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Records Raden Wijaya (Kertarajasa Jayawardhana) as founder and first ruler of Majapahit, 1293–1309. The existing canonical Majapahit polity is reused rather than recreated."
+  },
+  "sources": [
+    {
+      "source_type": "government_cultural_reference",
+      "title": "Kampanye Digital Objek Pemajuan Kebudayaan 'Tari Tribuana Tunggadewi' — Balai Pelestarian Kebudayaan Wilayah XI",
+      "canonical_url": "https://kebudayaan.kemdikbud.go.id/bpkw11/kampanye-digital-objek-pemajuan-kebudayaan-tari-tribuana-tunggadewi/",
+      "citation_text": "Indonesia's cultural preservation office identifies Dyah Wijaya, commonly known as Raden Wijaya, as founder of Majapahit and gives his reign as 1293–1309.",
+      "locator": "Historical background"
+    },
+    {
+      "source_type": "government_cultural_reference",
+      "title": "Candi Simping — Balai Pelestarian Kebudayaan Wilayah XI",
+      "canonical_url": "https://kebudayaan.kemdikbud.go.id/bpkw11/candi-simping/",
+      "citation_text": "The Indonesian cultural preservation office identifies Kertarajasa Jayawardhana/Raden Wijaya as the first king of Majapahit and records his death in 1309.",
+      "locator": "Site historical significance"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "aoe2-ss-20260925-raden-wijaya",
+    "review_checkpoint": "#1374 comment 5825499804",
+    "registration_frontier": "#1375 comment 5855612708",
+    "grade": "SS",
+    "namuwiki_review": "Independent indexed NamuWiki-mirror Person document verified at exact title 라덴 위자야; canonical namu.wiki path preserved."
+  }
+}
