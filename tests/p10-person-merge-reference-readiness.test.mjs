@@ -10,7 +10,7 @@ const mergeSource = fs.readFileSync(new URL('../server/atlas-person-merge-servic
 const readinessSource = fs.readFileSync(new URL('../server/atlas-person-merge-reference-readiness.js', import.meta.url), 'utf8');
 
 test('P10 Person merge reference policy is explicit and includes every reviewed live Person pointer', () => {
-  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v6');
+  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v7');
   assert.deepEqual(readiness.EXPECTED_PERSON_FKS.map((row) => [row.key, row.delete_action]), [
     ['atlas_v2.authoring_manifest_runs.person_id', 'SET NULL'],
     ['atlas_v2.person_descriptions.person_id', 'CASCADE'],
@@ -18,6 +18,7 @@ test('P10 Person merge reference policy is explicit and includes every reviewed 
     ['atlas_v2.person_external_references.person_id', 'RESTRICT'],
     ['atlas_v2.person_names.person_id', 'CASCADE'],
     ['atlas_v2.person_people_affiliations.person_id', 'RESTRICT'],
+    ['atlas_v2.person_place_facts.person_id', 'CASCADE'],
     ['atlas_v2.person_politics_v2.person_id', 'RESTRICT'],
     ['atlas_v2.person_portraits.person_id', 'RESTRICT'],
     ['atlas_v2.person_sources.person_id', 'CASCADE'],

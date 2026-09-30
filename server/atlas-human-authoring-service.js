@@ -6,6 +6,7 @@ const { createStage2NativeActivityTx, loadStage2NativeActivity } = require("./at
 const { requiredUuid, historicalYear } = require("./atlas-activity-semantic-key-v2.js");
 const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service.js");
 const { createSource } = require("./atlas-source-service.js");
+const { normalizePersonPlaceFacts, resolvePersonPlaceFacts } = require("./atlas-place-relation-service.js");
 
 const { EMPTY_END, validateOngoingActivity } = require("./atlas-ongoing-activity.js");
 const {
@@ -176,7 +177,8 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
       canonical_key:optionalText(person.canonical_key),
       person_type:optionalText(person.person_type) || "historical",
       historicity:optionalText(person.historicity) || "historical",
-      ...(lifeStatusReview || {})
+      ...(lifeStatusReview || {}),
+      place_facts:normalizePersonPlaceFacts(person.place_facts)
     }),
     polity:polity == null ? null : Object.freeze({
       canonical_name_en:requiredText(polity.canonical_name_en, "HUMAN_AUTHORING_POLITY_EN_REQUIRED"),
@@ -490,9 +492,10 @@ async function applyPreparedWithinTransaction(client, prepared, { transport = nu
     allowLegacyNamuWikiOmission
   });
   const sources = await resolveOrCreateSources(client, request.requestId, request.sources);
+  const placeFacts = await resolvePersonPlaceFacts(client, { personId:person.id, facts:request.person.place_facts });
   const payload = activityPayload({ personId:person.id, polityId:polity.id, roleId:role.id, relation, periodBasis, activity:request.activity, sources });
   const created = await createStage2NativeActivityTx(client).create(payload, { requestId:request.requestId });
-  const snapshot = buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:Object.freeze({ namuwiki }) });
+  const snapshot = Object.freeze({ ...buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:Object.freeze({ namuwiki }) }), person_place_facts:placeFacts });
   await client.query(`insert into atlas_v2.authoring_manifest_runs(request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot) values($1,$2,$3,$4::uuid,$5::uuid,$6::jsonb)`, [request.requestId, hash, HUMAN_AUTHORING_SCHEMA, person.id, created.id, JSON.stringify(snapshot)]);
   return outcome(request.requestId, false, snapshot);
 }

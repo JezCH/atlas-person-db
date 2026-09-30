@@ -9,6 +9,7 @@ const {
   ACTIVITY_DETAIL_SQL,
   PERSON_SOURCE_SQL,
   ACTIVITY_SOURCE_SQL,
+  PERSON_PLACE_FACT_SQL,
   readPersons,
   readPersonDetail
 } = require('../server/atlas-person-read-service.js');
@@ -205,6 +206,7 @@ test('Person detail exposes authoritative Activity semantics and readable proven
       if (sql === ACTIVITY_DETAIL_SQL) return { rowCount: 1, rows: [detailActivityRow()] };
       if (sql === PERSON_SOURCE_SQL) return { rowCount: 1, rows: [personSourceRow()] };
       if (sql === ACTIVITY_SOURCE_SQL) return { rowCount: 1, rows: [activitySourceRow()] };
+      if (sql === PERSON_PLACE_FACT_SQL) return { rowCount: 0, rows: [] };
       throw new Error('unexpected Person detail query');
     }
   };
