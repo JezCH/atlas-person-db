@@ -1,5 +1,6 @@
 name: ATLAS Audit Inventory
-# 2026-09-30: capture exact Production baseline during reviewed Japan polity lineage repair; refreshed after partial apply stopped at release order 1182.
+# Japan lineage baseline refresh 2026-09-30
+# 2026-09-30: capture exact Production baseline before the reviewed Japan polity lineage repair.
 
 on:
   push:
