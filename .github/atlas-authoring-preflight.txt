@@ -1,1 +1,1 @@
-authoring/requests/philosophy-canon-20260930-kumarila-bhatta-person-only.json
+apply authoring/requests/philosophy-canon-20260930-kumarila-bhatta-person-only.json
