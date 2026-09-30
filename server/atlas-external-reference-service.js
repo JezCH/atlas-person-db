@@ -80,7 +80,7 @@ function sameDecision(left, right, { includeCheckedAt = false } = {}) {
 
 async function currentExternalReference(client, personId, provider = NAMUWIKI_PROVIDER, { forUpdate = false } = {}) {
   const result = await client.query(`
-    select provider,status,checked_at::text,document_title,url,review_state,review_reason,updated_at
+    select status,checked_at::text,document_title,url,review_state,review_reason,updated_at
       from atlas_v2.person_external_references
      where person_id=$1::uuid and provider=$2${forUpdate ? " for update" : ""}`, [personId, provider]);
   if (result.rows.length > 1) throw new Error("EXTERNAL_REFERENCE_AMBIGUOUS");
@@ -115,12 +115,12 @@ async function setNamuWikiDecision(client, personId, rawDecision, {
   const checkedAtSql = checkedAtRequired ? "$3::date" : "coalesce($3::date,current_date)";
   const saved = await client.query(`
     insert into atlas_v2.person_external_references(person_id,provider,status,checked_at,document_title,url,review_state,review_reason,updated_at)
-    values($1::uuid,$2,$3,${checkedAtSql},$4,$5,'reviewed',$7,now())
+    values($1::uuid,'namuwiki',$2,${checkedAtSql},$4,$5,'reviewed',$6,now())
     on conflict (person_id,provider) do update
       set status=excluded.status,checked_at=excluded.checked_at,document_title=excluded.document_title,url=excluded.url,
           review_state='reviewed',review_reason=excluded.review_reason,updated_at=now()
     returning provider,status,checked_at::text,document_title,url,review_state,review_reason,updated_at`,
-    [personId, NAMUWIKI_PROVIDER, next.status, next.document_title, next.url, next.checked_at, next.review_reason]);
+    [personId, next.status, next.checked_at, next.document_title, next.url, next.review_reason]);
 
   const after = saved.rows[0] || null;
   if (!after || !sameDecision(after, next) || (checkedAtRequired && after.checked_at !== next.checked_at)) {
