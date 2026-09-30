@@ -58,12 +58,14 @@ test('NamuWiki normalizer accepts only explicit linked/not_found decisions', () 
       status:'linked',
       checked_at:'2026-08-21',
       document_title:'임호텝',
-      url:'https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D'
+      url:'https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D',
+      review_state:'reviewed',
+      review_reason:null
     }
   );
   assert.deepEqual(
     normalizeNamuWikiReference({ status:'not_found', checked_at:'2026-08-21' }, { allowLegacyOmission:false }),
-    { status:'not_found', checked_at:'2026-08-21', document_title:null, url:null }
+    { status:'not_found', checked_at:'2026-08-21', document_title:null, url:null, review_state:'reviewed_absent', review_reason:null }
   );
   assert.throws(() => normalizeNamuWikiReference(null, { allowLegacyOmission:false }), /HUMAN_AUTHORING_NAMUWIKI_REQUIRED/);
   assert.throws(() => normalizeNamuWikiReference({ status:'unknown', checked_at:'2026-08-21' }, { allowLegacyOmission:false }), /HUMAN_AUTHORING_NAMUWIKI_STATUS_INVALID/);
@@ -147,6 +149,8 @@ test('Person read surfaces normalized stored external references without authori
   assert.match(personRead, /'status', per\.status/);
   assert.match(personRead, /'document_title', per\.document_title/);
   assert.match(personRead, /'url', per\.url/);
+  assert.match(personRead, /'review_state', per\.review_state/);
+  assert.match(personRead, /'review_reason', per\.review_reason/);
   assert.match(personRead, /external_references:normalizeExternalReferences/);
   assert.doesNotMatch(personRead, /authoring_manifest_runs amr|result_snapshot->'external_references'/);
 });
