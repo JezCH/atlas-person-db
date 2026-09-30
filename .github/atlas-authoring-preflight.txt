@@ -1,1 +1,1 @@
-apply authoring/requests/philosophy-canon-20260930-phagpa-person-only.json
+apply authoring/requests/philosophy-canon-20260930-longchenpa-person-only.json
