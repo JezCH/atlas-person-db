@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:gersonides:person-only:v1",
+  "person": {
+    "canonical_name_en": "Gersonides",
+    "display_name_ko": "게르소니데스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Gersonides (Levi ben Gerson, 1288–1344) is a securely historical Jewish philosopher, mathematician and astronomer, but SEP explicitly describes his biography as sketchy. It places him in Provence, probably Orange, with trips to Avignon. Given the sparse person-specific chronology and changing medieval jurisdictional context, ATLAS does not force a single canonical polity-bound Activity rail.",
+    "basis_code": "secure_1288_1344_provence_biography_with_sparse_person_specific_chronology_and_no_single_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/archives/sum2017/entries/gersonides/"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Gersonides — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/archives/sum2017/entries/gersonides/",
+      "citation_text": "SEP identifies Gersonides (Levi ben Gerson, 1288–1344) as a major medieval Jewish thinker; his biography is sparse, with residence chiefly in Orange in Provence and several trips to Avignon.",
+      "locator": "Biography"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-FINAL-FIVE",
+    "namuwiki_review": "Exact indexed searches for 게르소니데스/Gersonides/Levi ben Gerson did not establish an independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "Sparse biography and medieval jurisdictional ambiguity make a single polity Activity rail less defensible than person-only retention."
+  }
+}
