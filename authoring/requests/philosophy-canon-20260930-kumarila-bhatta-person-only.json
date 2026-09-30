@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:kumarila-bhatta:person-only:v1",
+  "person": {
+    "canonical_name_en": "Kumārila Bhaṭṭa",
+    "display_name_ko": "쿠마릴라 밧타",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Modern scholarship securely places Kumārila Bhaṭṭa in the later seventh century, with a representative floruit around 660 CE, but dependable person-specific geographic and political biography is not securely established. Traditional accounts of study, travel and debate are hagiographic and are not used to fabricate a single polity-bound Activity rail.",
+    "basis_code": "seventh_century_floruit_without_secure_person_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/entries/kumaarila/"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Kumārila — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/kumaarila/",
+      "citation_text": "SEP states that Kumārila Bhaṭṭa flourished around 660 CE and warns that his biography is known largely through stylized traditional hagiographies.",
+      "locator": "Life, works, and influence"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-INDIA-BRAHMANICAL-JAIN-CLOSURE",
+    "namuwiki_review": "Exact indexed searches for 쿠마릴라 밧타/쿠마릴라 returned no independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "Historical Person retained without a fabricated polity rail."
+  }
+}

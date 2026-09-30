@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:gangesa:person-only:v1",
+  "person": {
+    "canonical_name_en": "Gaṅgeśa",
+    "display_name_ko": "강게샤",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Gaṅgeśa is securely placed in Mithilā in the first half of the fourteenth century, with scholarly termini of roughly 1300–1350. That interval spans a politically transitional period in Mithilā, and the evidence reviewed here does not justify assigning his intellectual activity to one exact canonical polity. ATLAS therefore preserves the historical Person without manufacturing a single polity-bound rail.",
+    "basis_code": "mithila_1300_1350_without_secure_single_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/entries/gangesa/",
+        "https://academic.oup.com/edited-volume/27982/chapter/211656615"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Gaṅgeśa — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/gangesa/",
+      "citation_text": "SEP places Gaṅgeśa in Mithilā in the first half of the fourteenth century and reports scholarly termini 1300–1350 for his flourishing.",
+      "locator": "Historical particulars"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Timeline: Indian Philosophy in a Hundred Thinkers — The Oxford Handbook of Indian Philosophy",
+      "canonical_url": "https://academic.oup.com/edited-volume/27982/chapter/211656615",
+      "citation_text": "Oxford Handbook timeline provides a representative c.1325 placement for Gaṅgeśa within Indian philosophical history.",
+      "locator": "Gaṅgeśa timeline entry"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-INDIA-BRAHMANICAL-JAIN-CLOSURE",
+    "namuwiki_review": "Exact indexed searches for 강게샤/간게샤 returned no independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "Historical Person retained; no forced polity across the 1300–1350 Mithilā transition."
+  }
+}
