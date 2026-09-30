@@ -18,6 +18,7 @@ test('P10 Person merge reference policy is explicit and includes every reviewed 
     ['atlas_v2.person_external_references.person_id', 'RESTRICT'],
     ['atlas_v2.person_names.person_id', 'CASCADE'],
     ['atlas_v2.person_people_affiliations.person_id', 'RESTRICT'],
+    ['atlas_v2.person_place_facts.person_id', 'CASCADE'],
     ['atlas_v2.person_politics_v2.person_id', 'RESTRICT'],
     ['atlas_v2.person_portraits.person_id', 'RESTRICT'],
     ['atlas_v2.person_sources.person_id', 'CASCADE'],
