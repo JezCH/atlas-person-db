@@ -112,7 +112,7 @@ async function setNamuWikiDecision(client, personId, rawDecision, {
     return Object.freeze({ replay:true, before:current, after:refreshed.rows[0] || current });
   }
 
-  const checkedAtSql = checkedAtRequired ? "$6::date" : "coalesce($6::date,current_date)";
+  const checkedAtSql = checkedAtRequired ? "$3::date" : "coalesce($3::date,current_date)";
   const saved = await client.query(`
     insert into atlas_v2.person_external_references(person_id,provider,status,checked_at,document_title,url,review_state,review_reason,updated_at)
     values($1::uuid,$2,$3,${checkedAtSql},$4,$5,'reviewed',$7,now())
