@@ -7,6 +7,7 @@ on:
     paths:
       - 'authoring/requests/*.json'
       - '.github/workflows/atlas-authoring-apply.yml'
+      - '.github/atlas-authoring-preflight.txt'
   workflow_dispatch:
     inputs:
       manifest:
@@ -57,8 +58,15 @@ jobs:
           : > /tmp/atlas-manifests.txt
           bootstrap_only=false
           audit_all_approved=false
+          preflight_only=false
 
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.audit_all_approved }}" == "true" ]]; then
+          if [[ "${{ github.event_name }}" == "push" ]] && git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- | grep -qx '.github/atlas-authoring-preflight.txt'; then
+            manifest="$(tr -d '\r\n' < .github/atlas-authoring-preflight.txt)"
+            [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected preflight-only manifest path: $manifest" >&2; exit 1; }
+            preflight_only=true
+            printf '%s\n' "$manifest" > /tmp/atlas-candidates.txt
+            echo "Trusted preflight-only request selected: $manifest"
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.audit_all_approved }}" == "true" ]]; then
             [[ "${{ inputs.bootstrap_only }}" != "true" ]] || { echo 'audit_all_approved and bootstrap_only are mutually exclusive' >&2; exit 1; }
             [[ -z "${{ inputs.manifest }}" ]] || { echo 'audit_all_approved does not accept a single manifest' >&2; exit 1; }
             audit_all_approved=true
@@ -158,6 +166,7 @@ jobs:
           cp /tmp/atlas-manifests.txt /tmp/atlas-authoring-evidence/manifests.txt
           echo "ATLAS_AUTHORING_BOOTSTRAP_ONLY=${bootstrap_only}" >> "$GITHUB_ENV"
           echo "ATLAS_AUTHORING_AUDIT_ALL_APPROVED=${audit_all_approved}" >> "$GITHUB_ENV"
+          echo "ATLAS_AUTHORING_PREFLIGHT_ONLY=${preflight_only}" >> "$GITHUB_ENV"
           if [[ "$audit_all_approved" == "true" ]]; then
             echo 'ATLAS_AUTHORING_SELECTED=true' >> "$GITHUB_ENV"
             echo 'Trusted read-only completeness audit selected.'
@@ -883,6 +892,13 @@ jobs:
             blocked_count="$(jq -r '.blocked_count' "$preflight_response")"
             ready_count="$(jq -r '.ready_count' "$preflight_response")"
             already_present_count="$(jq -r '.already_present_count' "$preflight_response")"
+
+            if [[ "${ATLAS_AUTHORING_PREFLIGHT_ONLY:-false}" == "true" ]]; then
+              echo "Human Authoring preflight-only summary: READY=${ready_count}, ALREADY_PRESENT=${already_present_count}, BLOCKED=${blocked_count}"
+              echo 'Preflight-only mode complete; no Person or Activity manifest will be applied.'
+              exit 0
+            fi
+
             ready_indexes="$(jq -c '[.results[] | select(.status=="READY") | .index]' "$preflight_response")"
             ready_paths="$(jq -cn --argjson all "$manifest_paths" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
             ready_requests="$(jq -cn --argjson all "$requests" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
