@@ -1,0 +1,1 @@
+apply authoring/requests/philosophy-canon-20260930-dolpopa-person-only.json

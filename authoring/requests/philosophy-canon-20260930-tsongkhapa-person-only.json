@@ -1,0 +1,59 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:tsongkhapa:person-only:v1",
+  "person": {
+    "canonical_name_en": "Tsongkhapa",
+    "display_name_ko": "쫑카파",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-30",
+      "document_title": "재 쫑카파",
+      "url": "https://namu.wiki/w/%EC%9E%AC%20%EC%AB%91%EC%B9%B4%ED%8C%8C"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Tsongkhapa (1357–1419) is a securely historical Tibetan religious philosopher whose mature intellectual and institutional career unfolded across multiple Central Tibetan monasteries and teaching networks before the foundation of Ganden. The reviewed evidence establishes his life and philosophical importance but does not require a single exact canonical polity interval for that intellectual activity. ATLAS therefore retains the historical Person without manufacturing a polity-bound Activity rail.",
+    "basis_code": "secure_1357_1419_central_tibetan_biography_without_single_intellectual_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/entries/tsongkhapa/",
+        "https://treasuryoflives.org/biographies/view/Tsongkhapa-Lobzang-Drakpa-/"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Tsongkhapa — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/tsongkhapa/",
+      "citation_text": "SEP identifies Tsongkhapa Losang Drakpa (1357–1419) as a major Tibetan religious philosopher and one of the most influential and innovative scholars and practitioners in Tibetan Buddhist history.",
+      "locator": "Introduction and Life"
+    },
+    {
+      "source_type": "scholarly_biographical_reference",
+      "title": "Tsongkhapa — The Treasury of Lives",
+      "canonical_url": "https://treasuryoflives.org/biographies/view/Tsongkhapa-Lobzang-Drakpa-/",
+      "citation_text": "The Treasury of Lives records Tsongkhapa, 1357–1419, as a historical Geluk/Kadam master and the first Ganden Tripa, with extensive study and teaching across Tibetan traditions.",
+      "locator": "Biographical header, traditions, offices held"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-TIBET",
+    "namuwiki_review": "Independent exact NamuWiki Person document confirmed at `재 쫑카파`; linked canonical URL stored rather than reviewed not_found.",
+    "timeline_decision": "Secure historical identity and life dates retained; no single polity rail forced across a multi-institution Central Tibetan philosophical career."
+  }
+}
