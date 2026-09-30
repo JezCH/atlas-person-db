@@ -27,7 +27,9 @@ test('Unit 12 writer reuses exact canonical identity and fails closed on type co
  await assert.rejects(()=>createContextObject(client,{...base,kind:'people_group',type:'cultural_people'}),/CANONICAL_KEY_CONFLICT/);
 });
 test('Unit 12 writer targets the existing Stage 2 schema for all three context identities and Person link surfaces',()=>{
- const sql=fs.readFileSync(new URL('../db/proposals/stage2_entity_boundaries.rehearsal.sql',import.meta.url),'utf8');
- for(const table of ['governance_contexts','people_groups','historical_events','person_people_affiliations','person_event_participations'])assert.match(sql,new RegExp('CREATE TABLE atlas_v2\\.'+table,'i'));
- assert.doesNotMatch(sql,/insert into atlas_v2\.polities/i);
+ const entitySql=fs.readFileSync(new URL('../db/proposals/stage2_entity_boundaries.rehearsal.sql',import.meta.url),'utf8');
+ const semanticSql=fs.readFileSync(new URL('../db/proposals/stage2_semantic_extensions.rehearsal.sql',import.meta.url),'utf8');
+ assert.match(semanticSql,/CREATE TABLE atlas_v2\.governance_contexts/i);
+ for(const table of ['people_groups','historical_events','person_people_affiliations','person_event_participations']) assert.match(entitySql,new RegExp('CREATE TABLE atlas_v2\\.'+table,'i'));
+ assert.doesNotMatch(entitySql,/insert into atlas_v2\.polities/i);
 });
