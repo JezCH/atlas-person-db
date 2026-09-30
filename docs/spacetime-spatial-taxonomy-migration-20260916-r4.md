@@ -73,3 +73,17 @@ The macro-boundary bridge pairs are intentionally:
 - `japan → pacific-islands`.
 
 After whole-path re-review, the Americas, Africa, Central Eurasia, South Asia, Southeast Asia, East Asia, and Oceania retain their v2 order. Europe is locally smoothed to `balkans → italy → central-europe → western-europe → iberia` while keeping the `north-america → britain-ireland` entry and `iberia → maghreb-north-africa` exit. West Asia is reordered to `levant → anatolia → caucasus → mesopotamia → arabia → iranian-plateau`, preserving both `nile-valley → levant` and `iranian-plateau → western-central-asia`. `south-america` remains the leftmost leaf (`min_space = 0`). The display-order revision identifier is `2026-09-25-global-path-v3`. Taxonomy revision remains `2026-09-16-r4` because leaf membership and parentage are unchanged.
+
+## 2026-10-01 East Asia display-order correction — v4
+
+This correction changes **display order only**. It does not change the 9-macro / 45-leaf taxonomy, leaf membership, parentage, widths, bindings, polity UUIDs, PlaceFunctions, or Activity overrides.
+
+Only East Asia changes relative to `2026-09-25-global-path-v3`:
+
+- before: `china → manchuria → eastern-siberia-far-east → korean-peninsula → japan`
+- after: `china → manchuria → korean-peninsula → japan → eastern-siberia-far-east`
+
+All other macroregion and leaf ordering from global path v3 remains unchanged. The East Asia order is restored to the order published with r4. Consequently, the East Asia → Oceania boundary is now `eastern-siberia-far-east → pacific-islands` rather than `japan → pacific-islands`.
+
+The display-order revision identifier is `2026-10-01-east-asia-v4`. Taxonomy revision remains `2026-09-16-r4`.
+
