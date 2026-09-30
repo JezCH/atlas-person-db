@@ -168,14 +168,18 @@ full boundary에는 year/month/day/granularity/calendar interpretation이 포함
 
 ## 12. Schema governance
 
-- `db/schema/atlas_v2.current.sql`이 clean-db baseline입니다.
-- 완전한 현재 구조의 재구성 contract는 `clean baseline + ordered reviewed migration registries`입니다.
+- `db/schema/atlas_v2.current.sql`이 clean-db base baseline입니다.
+- 완전한 현재 구조의 재구성 contract는 **`clean baseline → current correction registry → reviewed Stage 2 schema bodies → P9 semantic-key cutover → current authoring registry`** 한 경로입니다.
 - baseline은 기존 `atlas_v2` DB에 적용하지 않습니다.
+- 역사적 P5 release manifest와 `db/proposals/stage2_*.rehearsal.sql` 6개는 byte/hash가 고정된 **schema evidence**로만 보존합니다. current clean-db reconstruction은 그 SQL body를 직접 materialize하며 과거 release ledger/advisory-lock/retry ceremony를 재실행하지 않습니다.
+- `server/atlas-stage2-schema-release.js`는 역사적 component를 검증·읽기만 하며 Production/schema mutation primitive를 노출하지 않습니다.
+- P9 semantic-key cutover는 `server/atlas-stage2-p9-db-cutover.js`의 deterministic/replay-safe primitive로 current reconstruction에 포함합니다.
 - structural DB change는 reviewed migration으로 적용하고 ordered registry에 포함합니다.
 - authoring migration source of truth: `server/atlas-authoring-migrations.js`.
 - correction migration source of truth: `server/atlas-correction-migrations.js`.
-- fresh-schema CI는 baseline과 모든 current ordered migrations를 적용한 뒤 exact final table/constraint surface와 migration replay를 검증해야 합니다.
-- reviewed migrations는 운영 이력을 보존합니다. maintenance 시점에 current baseline을 새 구조로 refresh할 수 있으나 migration evidence를 임의 삭제하지 않습니다.
+- Authoring migrations는 Stage 2 temporal schema와 P9 identity cutover 뒤에 적용되어야 하며, `20260906_p13a_temporal_unknown_boundaries.sql`이 missing Stage 2 columns 때문에 조용히 defer된 상태를 current reconstruction으로 인정하지 않습니다.
+- `scripts/verify-schema-baseline.mjs`는 위 한 경로를 clean PostgreSQL에 적용하고 Stage 2 tables/source model, P9 indexes, unknown-boundary constraints, migration replay와 legacy-object 부재를 read-back합니다.
+- reviewed migrations와 역사적 schema evidence는 운영 이력을 보존합니다. maintenance 시점에 current baseline을 새 구조로 refresh할 수 있으나 migration evidence를 임의 삭제하지 않습니다.
 - data row count는 schema invariant가 아닙니다.
 
 ## 13. CI governance
