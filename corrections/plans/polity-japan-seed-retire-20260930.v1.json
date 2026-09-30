@@ -1,0 +1,76 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_japan_seed_retire_after_identity_repair_20260930_v1",
+  "as_of": "2026-09-30",
+  "status": "REVIEWED_SEED_RETIREMENT_AFTER_IDENTITY_REPAIR",
+  "release_order": 1160,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "Stage 1 PR #1691 created temporary seed Activities only to mint distinct pre-Meiji and imperial Japan polity UUIDs. Release-order 1100 relinks/splits the original Activities first; these seeds must then be retired with all normalized provenance transferred to the preserved/reviewed Activities.",
+  "baseline": {
+    "deployment_sha": "6b4e94741cd3feddc5d4260880e4a1556f0fa5c0",
+    "baseline_digest": "sha256:506c8a263b251eec08cab567101d63c618882511ae34cd1f29ca6d6d5345208d"
+  },
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "retire_source_transfer_before_delete_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false,
+    "all_japan_identity_repair_release_orders_1100_through_1150_must_precede_this_plan": true
+  },
+  "operations": [
+    {
+      "case_id": "japan-retire-pre-meiji-sakamoto-seed",
+      "type": "retire_activity",
+      "activity_id": "a4ab68cb-6166-4cbb-971d-83dc530b85ee",
+      "baseline_before": {
+        "person_id": "c3a35ac3-c3d2-4b69-85cc-8a8c7c4f3e7f",
+        "polity_id": "7dc78052-3cef-4e39-addc-599fe8b6c309",
+        "role_id": "90c982cc-0546-4658-84ff-5bdde1ce3ce9",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1862,
+        "activity_end": 1867,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "replacement_activity_ids": [
+        "556bbfbe-4c27-40a1-ae26-206bbc6724c4"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    },
+    {
+      "case_id": "japan-retire-imperial-meiji-seed",
+      "type": "retire_activity",
+      "activity_id": "5723f178-818c-45e5-bede-008aac924c96",
+      "baseline_before": {
+        "person_id": "f14bd56a-8c24-591c-811a-e731bccc4eeb",
+        "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1868,
+        "activity_end": 1912,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "replacement_activity_ids": [
+        "3cdadfa9-634f-5ead-b7cb-1498e9689c6f"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "seed_retirements": 2,
+    "provenance_transfer_required": true,
+    "production_mutation_authorized": false
+  }
+}
