@@ -1547,3 +1547,25 @@ test("dashboard NamuWiki copy exposes reviewed-unlinked reason counts with reada
   assert.match(dashboardCssSource,/\.dashboard-namuwiki-legend\{display:grid/);
 });
 
+
+
+test("Work Frontier itemizes domain, Spatial, and Activity status distributions", () => {
+  assert.match(dashboardSource,/segmentedProgressRow\("대표 분야 분류"/);
+  assert.match(dashboardSource,/8개 대표 분야 \+ 미분류 상태를 전체 인물 대비 표시/);
+  assert.match(dashboardSource,/key:`domain-\$\{code\}`/);
+  assert.match(dashboardSource,/key:"domain-unassigned"/);
+  assert.match(dashboardSource,/segmentedProgressRow\("Spatial 준비"/);
+  assert.match(dashboardSource,/\.\.\.\(b\.spatial\?\.rows \|\| \[\]\)\.map/);
+  assert.match(dashboardSource,/spatialReasonLabel\(item\.code\)/);
+  assert.match(dashboardSource,/검토 대기/);
+  assert.match(dashboardSource,/대권역만/);
+  assert.match(dashboardSource,/segmentedProgressRow\("활동 연결"/);
+  assert.match(dashboardSource,/key:"activity-linked"/);
+  assert.match(dashboardSource,/key:"activity-missing"/);
+  assert.match(dashboardCssSource,/\.dashboard-work-segment-track\{display:flex/);
+  assert.match(dashboardCssSource,/data-work-segment="domain-governance"/);
+  assert.match(dashboardCssSource,/var\(--atlas-person-domain-governance\)/);
+  assert.match(dashboardCssSource,/data-work-segment="spatial-missing"/);
+  assert.match(dashboardCssSource,/data-work-segment="activity-missing"/);
+  assert.match(dashboardCssSource,/@media\(max-width:600px\)\{\.dashboard-work-segment-legend\{grid-template-columns:1fr\}/);
+});
