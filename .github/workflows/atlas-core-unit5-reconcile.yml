@@ -90,10 +90,11 @@ jobs:
           oidc_token="$(curl --fail-with-body --silent --show-error             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_UNIT5_AUDIENCE}" | jq -er '.value')"
 
           call_unit5() {
-            local mode="$1" dry="$2" payload status
+            local mode="$1" dry="$2" status
             local out="/tmp/unit5-${mode}.json"
-            payload="$(jq -cn               --arg workflow_sha "$GITHUB_SHA"               --argjson dry_run "$dry"               --slurpfile manifest "$ATLAS_UNIT5_MANIFEST"               '{workflow_sha:$workflow_sha,dry_run:$dry_run,manifest:$manifest[0]}')"
-            status="$(curl --silent --show-error               --output "$out"               --write-out '%{http_code}'               --request POST               -H 'content-type: application/json'               -H "authorization: Bearer $oidc_token"               --data "$payload"               "$ATLAS_UNIT5_ENDPOINT")"
+            local payload_file="/tmp/unit5-${mode}-payload.json"
+            jq -cn               --arg workflow_sha "$GITHUB_SHA"               --argjson dry_run "$dry"               --slurpfile manifest "$ATLAS_UNIT5_MANIFEST"               '{workflow_sha:$workflow_sha,dry_run:$dry_run,manifest:$manifest[0]}' > "$payload_file"
+            status="$(curl --silent --show-error               --output "$out"               --write-out '%{http_code}'               --request POST               -H 'content-type: application/json'               -H "authorization: Bearer $oidc_token"               --data-binary "@$payload_file"               "$ATLAS_UNIT5_ENDPOINT")"
             if [[ "$status" != "200" ]]; then
               cat "$out" >&2 || true
               echo "Unit 5 ${mode} failed: HTTP ${status}" >&2
