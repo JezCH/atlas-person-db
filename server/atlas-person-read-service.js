@@ -191,6 +191,22 @@ where ps.person_id = $1::uuid
 order by s.title, s.source_type, s.id
 `;
 
+const PERSON_PLACE_FACT_SQL = `
+select
+  ppf.relation_type,
+  ppf.place_id::text,
+  en.name as canonical_name_en,
+  ko.name as display_name_ko,
+  ppf.source_id::text,
+  ppf.source_locator_key
+from atlas_v2.person_place_facts ppf
+join atlas_v2.places p on p.id=ppf.place_id
+left join atlas_v2.place_names en on en.place_id=p.id and en.locale='en' and en.is_preferred=true
+left join atlas_v2.place_names ko on ko.place_id=p.id and ko.locale='ko' and ko.is_preferred=true
+where ppf.person_id=$1::uuid
+order by ppf.relation_type,ppf.place_id
+`;
+
 const ACTIVITY_SOURCE_SQL = `
 select
   pps.person_politics_id,
@@ -437,6 +453,7 @@ async function readPersonDetail({ client, personId } = {}) {
   const activityResult = await client.query(ACTIVITY_DETAIL_SQL, [personId]);
   const personSourceResult = await client.query(PERSON_SOURCE_SQL, [personId]);
   const activitySourceResult = await client.query(ACTIVITY_SOURCE_SQL, [personId]);
+  const personPlaceFactResult = await client.query(PERSON_PLACE_FACT_SQL, [personId]);
   const baseActivities = Object.freeze((activityResult.rows || []).map(projectActivity));
   const activities = attachActivitySources(baseActivities, activitySourceResult.rows || []);
   const sources = Object.freeze((personSourceResult.rows || []).map((row) => projectSource(row)));
@@ -444,6 +461,17 @@ async function readPersonDetail({ client, personId } = {}) {
     ...projectPersonIdentity(personResult.rows[0]),
     ...summarizeActivities(activities),
     sources,
+    place_facts:Object.freeze((personPlaceFactResult.rows || []).map((row)=>Object.freeze({
+      relation_type:String(row.relation_type),
+      place:Object.freeze({
+        id:String(row.place_id),
+        canonical_name_en:row.canonical_name_en == null ? null : String(row.canonical_name_en),
+        preferred_name_ko:row.display_name_ko == null ? null : String(row.display_name_ko),
+        display_name:displayValue(row.display_name_ko == null ? null : String(row.display_name_ko),row.canonical_name_en == null ? null : String(row.canonical_name_en),String(row.place_id))
+      }),
+      source_id:String(row.source_id),
+      source_locator_key:String(row.source_locator_key)
+    }))),
     activities
   });
 }
@@ -454,6 +482,7 @@ module.exports = Object.freeze({
   ACTIVITY_DETAIL_SQL,
   PERSON_SOURCE_SQL,
   ACTIVITY_SOURCE_SQL,
+  PERSON_PLACE_FACT_SQL,
   normalizeNameRows,
   normalizeDescriptionRows,
   normalizeExternalReferences,
