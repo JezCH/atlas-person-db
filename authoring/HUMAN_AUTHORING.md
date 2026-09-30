@@ -136,3 +136,10 @@ The reviewed `20260902_ongoing_activity_terms.sql` migration is required before
 these writes. The authenticated authoring workflow bootstraps the bounded
 migration when a selected ongoing request needs it. Existing registration,
 source, transaction, idempotency, NamuWiki and readback requirements still apply.
+
+
+## Spatial registration handshake
+
+A newly created Polity cannot reach registration **DONE** with silent spatial debt. The reviewed request must carry a materialized spatial disposition handshake whose terminal state is one of `existing_disposition`, `reviewed_static`, `reviewed_place_function`, or `reviewed_hold`. `reviewed_hold` is an explicit reviewed disposition, not an omitted review.
+
+Historical `PolityPlaceFunction` and display placement are separate contracts. A historical function identifies an existing first-class Place and provenance. Macroregion/subregion, location labels, review-queue reasons, and Activity display overrides are display/disposition state and must not masquerade as historical polity-place facts. See `contracts/spatial-fact-contract.v1.json`.

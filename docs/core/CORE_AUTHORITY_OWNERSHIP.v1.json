@@ -408,10 +408,12 @@
     },
     {
       "id": "spatial_reviewed_facts",
-      "semantic_fact": "Reviewed polity/activity spatial disposition source facts",
+      "semantic_fact": "Reviewed spatial display dispositions, with historical PolityPlaceFunction semantics governed separately by contracts/spatial-fact-contract.v1.json",
       "canonical_state": [
         "spatial/reviewed-bindings/0000-migrated-baseline.index.json",
-        "spatial/reviewed-bindings/shards/*.json"
+        "spatial/reviewed-bindings/shards/*.json",
+        "spatial/reviewed-bindings/corrections/*.json",
+        "contracts/spatial-fact-contract.v1.json"
       ],
       "authoritative_writer": {
         "path": "scripts/compile-spatial-bindings.mjs",
@@ -422,7 +424,7 @@
       ],
       "shadow_writers": [],
       "status": "repository_source_authority",
-      "remediation_unit": "UNIT 11",
+      "remediation_unit": null,
       "evidence_anchors": [
         {
           "path": "scripts/compile-spatial-bindings.mjs",
@@ -433,7 +435,7 @@
           "contains": "atlas-polity-spatial-index.json"
         }
       ],
-      "note": "The compiler is the single deterministic publication boundary for the repository-backed reviewed facts; atlas-polity-spatial-index.json is derived compatibility output, not authoring authority."
+      "note": "Unit 11 closed the semantic boundary: repository spatial shards/corrections own reviewed display disposition publication; PolityPlaceFunction is explicitly a historical Place+provenance fact and cannot contain display geography. New Polity Human Authoring requires a materialized reviewed spatial-disposition handshake before DONE. atlas-polity-spatial-index.json remains derived compatibility output only."
     },
     {
       "id": "runtime_projection",
