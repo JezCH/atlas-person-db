@@ -92,6 +92,50 @@ function urlLessRequest() {
   };
 }
 
+function personOnlyRequest() {
+  return {
+    schema:'atlas-human-person-authoring/v1',
+    review_status:'approved',
+    request_id:'fixture:human-operational:person-only',
+    person:{
+      canonical_name_en:'Human Authoring Person-Only Fixture',
+      display_name_ko:'휴먼 저작 인물 전용 픽스처',
+      person_type:'historical',
+      historicity:'historical',
+      life_status:'deceased',
+      life_status_checked_at:'2026-09-30',
+      life_status_basis:'historical_certainty'
+    },
+    external_references:{
+      namuwiki:{
+        status:'not_found',
+        checked_at:'2026-09-30',
+        review_reason:'no_exact_document'
+      }
+    },
+    timeline_disposition:{
+      disposition:'chronology_unresolved',
+      reason:'Reviewed historical identity without a defensible person-specific Activity interval.',
+      basis_code:'reviewed_person_specific_chronology_unresolved',
+      traditional_year:null,
+      traditional_year_alternative:null,
+      review_evidence:{
+        authority_scope:'timeline_disposition_review_evidence_only',
+        sources:['https://example.test/person-only-source'],
+        reviewed_at:'2026-09-30'
+      }
+    },
+    representative_domain:'knowledge',
+    sources:[{
+      source_type:'academic_reference',
+      title:'Person-only fixture source',
+      canonical_url:'https://example.test/person-only-source',
+      citation_text:'Person-only operational parity fixture.',
+      locator:'fixture'
+    }]
+  };
+}
+
 const client=new Client({connectionString:databaseUrl});
 await client.connect();
 try {
@@ -213,6 +257,20 @@ try {
   unknownRelation.activity={...unknownRelation.activity,relation_type:'not_in_live_catalog',start_year:124,end_year:125,role:'Fixture Scholar',role_display_name_ko:null};
   await assert.rejects(()=>service.apply(unknownRelation),/HUMAN_AUTHORING_RELATION_TYPE_UNRESOLVED/);
 
+  const personOnlyRaw=personOnlyRequest();
+  const personOnly=await service.apply(personOnlyRaw,{transport:{kind:'fresh_postgres_rehearsal'}});
+  assert.equal(personOnly.replay,false);
+  assert.equal(personOnly.result.semantic_version,'person-only-canonical-v1');
+  assert.equal(personOnly.result.person.disposition,'created');
+  assert.equal(personOnly.relationship_id,null);
+  assert.equal(personOnly.result.timeline_disposition.disposition,'chronology_unresolved');
+  assert.equal(personOnly.result.representative_domain,'knowledge');
+  const personOnlyActivityCount=Number((await client.query(
+    `select count(*)::int as count from atlas_v2.person_politics_v2 where person_id=$1::uuid`,
+    [personOnly.person_id]
+  )).rows[0].count);
+  assert.equal(personOnlyActivityCount,0);
+
   const counts=(await client.query(`select
     (select count(*)::int from atlas_v2.persons p join atlas_v2.person_names n on n.person_id=p.id where n.locale='en' and n.is_preferred=true and n.name='Human Authoring Fixture Person') as fixture_persons,
     (select count(*)::int from atlas_v2.polities p join atlas_v2.polity_names n on n.polity_id=p.id where n.locale='en' and n.is_preferred=true and n.name='Human Authoring Fixture Polity') as fixture_polities,
@@ -240,6 +298,8 @@ try {
     missing_new_polity_ko_rejected:true,
     source_less_write_rejected:true,
     unknown_relation_rejected_by_live_catalog:true,
+    person_only_authoring:true,
+    person_only_zero_activity:true,
     production_mutation_authorized:false
   },null,2));
 } catch (error) {
