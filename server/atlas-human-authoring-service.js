@@ -340,8 +340,8 @@ async function currentNamuWikiReference(client, personId, { forUpdate = false } 
     checked_at:row.checked_at == null ? null : String(row.checked_at),
     document_title:row.document_title == null ? null : String(row.document_title),
     url:row.url == null ? null : String(row.url),
-    review_state:row.review_state == null ? null : String(row.review_state),
-    review_reason:row.review_reason == null ? null : String(row.review_reason)
+    ...(row.review_state == null ? {} : { review_state:String(row.review_state) }),
+    ...(row.review_reason == null ? {} : { review_reason:String(row.review_reason) })
   });
 }
 
