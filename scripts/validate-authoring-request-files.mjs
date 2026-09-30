@@ -5,6 +5,7 @@ import path from 'node:path';
 const { validateOngoingActivity } = ongoingActivity;
 
 const HUMAN_SCHEMA = 'atlas-human-authoring/v1';
+const PERSON_ONLY_SCHEMA = 'atlas-human-person-authoring/v1';
 const NATIVE_SCHEMA = 'atlas-authoring-manifest/v2';
 const REQUEST_PATH = /^authoring\/requests\/[A-Za-z0-9._-]+\.json$/;
 const RELATIONS = new Set(['rules','governs','serves','active_in','opposes','claims_rule']);
@@ -14,6 +15,8 @@ const CALENDARS = new Set(['gregorian','julian','unspecified_historical','source
 const BINDING_MODES = new Set(['declared','existing']);
 const ROLE_BINDING_MODES = new Set(['declared','existing','none']);
 const PERSON_LIFE_STATUS_BASES = new Set(['documented_death','historical_certainty']);
+const PERSON_ONLY_DISPOSITIONS = new Set(['chronology_unresolved','legendary','mythical','other_reviewed_exclusion']);
+const REPRESENTATIVE_DOMAINS = new Set(['governance','military','knowledge','technology','commerce','culture','religion','exploration']);
 
 function fail(file, message) {
   throw new Error(`${file}: ${message}`);
@@ -40,7 +43,7 @@ function automaticHumanRequestId(manifest) {
 
 function resolvedRequestId(file, manifest) {
   if (nonEmptyString(manifest.request_id)) return manifest.request_id.trim();
-  if (manifest.schema === HUMAN_SCHEMA) return automaticHumanRequestId(manifest);
+  if (manifest.schema === HUMAN_SCHEMA || manifest.schema === PERSON_ONLY_SCHEMA) return automaticHumanRequestId(manifest);
   fail(file, 'request_id is required');
 }
 
@@ -150,6 +153,11 @@ function validateHuman(file, manifest) {
   validateBoundary(file, activity, 'start');
   validateBoundary(file, activity, 'end');
   if (!CONFIDENCE.has(activity.confidence)) fail(file, 'activity.confidence is invalid');
+  validateSources(file, manifest);
+  return validateNamuWiki(file, manifest);
+}
+
+function validateSources(file, manifest) {
   if (!Array.isArray(manifest.sources) || manifest.sources.length === 0) fail(file, 'at least one source is required');
   for (const [index, source] of manifest.sources.entries()) {
     if (!source || typeof source !== 'object' || Array.isArray(source)) fail(file, `sources[${index}] must be an object`);
@@ -159,6 +167,34 @@ function validateHuman(file, manifest) {
       fail(file, `sources[${index}].title is required for a new source`);
     }
   }
+}
+
+function validatePersonOnly(file, manifest) {
+  if (manifest.review_status !== 'approved') fail(file, 'review_status must be approved');
+  if (!nonEmptyString(manifest?.person?.canonical_name_en)) fail(file, 'person.canonical_name_en is required');
+  if (!nonEmptyString(manifest?.person?.display_name_ko)) fail(file, 'person.display_name_ko is required');
+  validatePersonLifeStatus(file, manifest);
+
+  const disposition = manifest?.timeline_disposition;
+  if (!disposition || typeof disposition !== 'object' || Array.isArray(disposition)) {
+    fail(file, 'timeline_disposition object is required');
+  }
+  if (!PERSON_ONLY_DISPOSITIONS.has(disposition.disposition)) {
+    fail(file, 'timeline_disposition.disposition must be a reviewed non-timeline disposition');
+  }
+  if (!nonEmptyString(disposition.reason)) fail(file, 'timeline_disposition.reason is required');
+  for (const key of ['traditional_year','traditional_year_alternative']) {
+    if (disposition[key] != null && !historicalYear(disposition[key])) {
+      fail(file, `timeline_disposition.${key} must be null or a non-zero integer historical year`);
+    }
+  }
+  if (disposition.traditional_year_alternative != null && disposition.traditional_year == null) {
+    fail(file, 'timeline_disposition.traditional_year_alternative requires traditional_year');
+  }
+  if (!REPRESENTATIVE_DOMAINS.has(manifest.representative_domain)) {
+    fail(file, 'representative_domain is invalid');
+  }
+  validateSources(file, manifest);
   return validateNamuWiki(file, manifest);
 }
 
@@ -212,13 +248,14 @@ for (const file of files) {
   if (!manifest || typeof manifest !== 'object' || Array.isArray(manifest)) fail(file, 'manifest root must be an object');
   let namuwiki = null;
   if (manifest.schema === HUMAN_SCHEMA) namuwiki = validateHuman(file, manifest);
+  else if (manifest.schema === PERSON_ONLY_SCHEMA) namuwiki = validatePersonOnly(file, manifest);
   else if (manifest.schema === NATIVE_SCHEMA) validateNative(file, manifest);
   else fail(file, `unsupported schema ${String(manifest.schema || '')}`);
 
   const requestId = resolvedRequestId(file, manifest);
   if (requestIds.has(requestId)) fail(file, `duplicate effective request_id also used by ${requestIds.get(requestId)}`);
   requestIds.set(requestId, file);
-  if (!nonEmptyString(manifest.request_id) && manifest.schema === HUMAN_SCHEMA) {
+  if (!nonEmptyString(manifest.request_id) && (manifest.schema === HUMAN_SCHEMA || manifest.schema === PERSON_ONLY_SCHEMA)) {
     console.log(`[request_id] ${manifest.person.canonical_name_en}: generated ${requestId}`);
   }
 
