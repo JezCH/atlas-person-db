@@ -7,6 +7,19 @@ select
   p.id,
   p.person_type,
   p.historicity,
+  p.representative_domain,
+  (
+    select jsonb_strip_nulls(jsonb_build_object(
+      'disposition',ptd.disposition,
+      'reason',ptd.reason,
+      'basis_code',ptd.basis_code,
+      'traditional_year',ptd.traditional_year,
+      'traditional_year_alternative',ptd.traditional_year_alternative,
+      'review_evidence',ptd.review_evidence
+    ))
+    from atlas_v2.person_timeline_dispositions ptd
+    where ptd.person_id=p.id
+  ) as timeline_disposition,
   coalesce((
     select jsonb_agg(
       jsonb_build_object(
@@ -59,6 +72,19 @@ select
   p.id,
   p.person_type,
   p.historicity,
+  p.representative_domain,
+  (
+    select jsonb_strip_nulls(jsonb_build_object(
+      'disposition',ptd.disposition,
+      'reason',ptd.reason,
+      'basis_code',ptd.basis_code,
+      'traditional_year',ptd.traditional_year,
+      'traditional_year_alternative',ptd.traditional_year_alternative,
+      'review_evidence',ptd.review_evidence
+    ))
+    from atlas_v2.person_timeline_dispositions ptd
+    where ptd.person_id=p.id
+  ) as timeline_disposition,
   coalesce((
     select jsonb_agg(
       jsonb_build_object(
@@ -266,6 +292,24 @@ function normalizeExternalReferences(value) {
   return Object.freeze({ namuwiki:Object.freeze({ status, checked_at:checkedAt, document_title:documentTitle, url }) });
 }
 
+function normalizeTimelineDispositionProjection(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const disposition = String(value.disposition || "").trim();
+  if (!disposition) return null;
+  return Object.freeze({
+    disposition,
+    reason:value.reason == null ? null : String(value.reason),
+    basis_code:value.basis_code == null ? null : String(value.basis_code),
+    traditional_year:value.traditional_year == null ? null : Number(value.traditional_year),
+    traditional_year_alternative:value.traditional_year_alternative == null ? null : Number(value.traditional_year_alternative),
+    review_evidence:Object.freeze(
+      value.review_evidence && typeof value.review_evidence === "object" && !Array.isArray(value.review_evidence)
+        ? { ...value.review_evidence }
+        : {}
+    )
+  });
+}
+
 function preferredName(names, locale) {
   return names.find((row) => row.locale === locale && row.is_preferred)?.name || null;
 }
@@ -307,6 +351,8 @@ function projectPersonIdentity(row) {
     id: String(row.id),
     person_type: row.person_type == null ? null : String(row.person_type),
     historicity: row.historicity == null ? null : String(row.historicity),
+    representative_domain:row.representative_domain == null ? null : String(row.representative_domain),
+    timeline_disposition:normalizeTimelineDispositionProjection(row.timeline_disposition),
     canonical_name_en: canonicalNameEn,
     preferred_name_ko: preferredNameKo,
     display_name: displayName,
