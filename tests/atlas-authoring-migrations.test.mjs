@@ -88,6 +88,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(representativeDomain, /ADD COLUMN IF NOT EXISTS representative_domain text/i);
   assert.match(representativeDomain, /persons_representative_domain_check/i);
   assert.match(representativeDomain, /set_person_representative_domain/i);
+  assert.match(representativeDomain, /set_person_timeline_disposition/i);
   assert.doesNotMatch(representativeDomain, /CREATE TABLE\s+atlas_v2\.person_representative_domains/i);
 
   const representativeDomainStandard = migrations[8].sql;
@@ -134,6 +135,10 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
     assert.match(timelineDisposition, new RegExp(`'${disposition}'`));
   }
   assert.match(timelineDisposition, /set_person_timeline_disposition/i);
+  for (const operation of ['set_person_korean_name','set_person_external_reference','set_person_representative_domain','set_person_timeline_disposition']) {
+    assert.match(representativeDomain, new RegExp(`'${operation}'`));
+    assert.match(timelineDisposition, new RegExp(`'${operation}'`));
+  }
   assert.match(timelineDisposition, /REFERENCES atlas_v2\.persons\(id\)[\s\S]*ON DELETE CASCADE/i);
 
   const unit16Retirement = migrations[20].sql;

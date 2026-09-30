@@ -31,6 +31,8 @@ CREATE INDEX IF NOT EXISTS persons_representative_domain_idx
   ON atlas_v2.persons(representative_domain, id)
   WHERE representative_domain IS NOT NULL;
 
+-- Replay must never narrow the audit operation contract after later migrations
+-- have already written timeline-disposition audit rows in Production.
 ALTER TABLE atlas_v2.person_profile_mutation_audits
   DROP CONSTRAINT IF EXISTS person_profile_mutation_audits_operation_check;
 
@@ -39,7 +41,8 @@ ALTER TABLE atlas_v2.person_profile_mutation_audits
     operation IN (
       'set_person_korean_name',
       'set_person_external_reference',
-      'set_person_representative_domain'
+      'set_person_representative_domain',
+      'set_person_timeline_disposition'
     )
   );
 

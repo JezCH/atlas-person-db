@@ -60,6 +60,7 @@
     "registration_frontier": "#1375 comment 5855612708",
     "grade": "SS",
     "namuwiki_review": "Exact indexed searches for 무사 이븐 누사이르 / 무사 빈 누사이르 / Musa ibn Nusayr did not establish an independent NamuWiki Person document; no guessed URL.",
-    "chronology_decision": "Use the prevalent 698 appointment as approximate and the documented 714 recall/departure boundary; do not resolve the historiographic appointment-date variation by invention."
+    "chronology_decision": "Use the prevalent 698 appointment as approximate and the documented 714 recall/departure boundary; do not resolve the historiographic appointment-date variation by invention.",
+    "execution_retry": "2026-10-01 replay-safe authoring bootstrap retry after Production audit-operation constraint blocker"
   }
 }
