@@ -29,7 +29,7 @@ test('Unit 8 keeps reviewed not_found explicit and rejects linked overwrite unde
   const queries=[];
   const client={ async query(sql,args){
     queries.push({sql,args});
-    if (/select provider,status/.test(sql)) return {rows:[{provider:'namuwiki',status:'linked',checked_at:'2026-09-01',document_title:'A',url:'https://namu.wiki/w/A',updated_at:null}]};
+    if (String(sql).includes('from atlas_v2.person_external_references')) return {rows:[{provider:'namuwiki',status:'linked',checked_at:'2026-09-01',document_title:'A',url:'https://namu.wiki/w/A',updated_at:null}]};
     throw new Error('unexpected mutation');
   }};
   await assert.rejects(
