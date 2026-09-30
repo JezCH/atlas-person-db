@@ -1,8 +1,8 @@
 # ATLAS Requirements Source of Truth v1
 
-> Status: **CORE v2 ACTIVE / P0–P12 HISTORICAL FOUNDATION CLOSED / P13–P14 RESIDUAL WORK REMAPPED INTO CORE v2**
+> Status: **CORE RE-ENTRY ACTIVE / VERIFIED CLOSED WORK PRESERVED / P13 LIFECYCLE ACCEPTANCE REOPENED**
 >
-> As of: **2026-09-28**  
+> As of: **2026-10-01**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
 > CORE architecture / invariants / unit topology: `docs/core/CORE_V2_MASTER_PLAN.md`  
 > Active CORE status: GitHub Issue **#917** body only  
@@ -56,13 +56,13 @@ The row-oriented Persons screen is a working product surface, not the final onto
 
 Unknown optional profile facts remain absent/unresolved. The system must not require religion, dynasty, gender, media, place or any other optional field merely to make a Person row “complete”. **Person, Place and Source exist as first-class Authoring objects** in the intended end state.
 
-## 2. Completed foundations — do not rebuild
+## 2. Foundations — preserve verified work; repair only reopened invariants
 
 | ID | State | Foundation |
 |---|---|---|
 | `ATLAS-RQ-0101` | COMPLETED | normalized `atlas_v2` authority |
 | `ATLAS-RQ-0102` | COMPLETED | normalized identity authoring |
-| `ATLAS-RQ-0103` | COMPLETED | reconstructible current schema |
+| `ATLAS-RQ-0103` | ACTIVE | reconstructible current schema — reopened after current-schema reconstruction audit |
 | `ATLAS-RQ-0104` | COMPLETED | centralized ATLAS Integrity |
 | `ATLAS-RQ-0105` | COMPLETED | shared deterministic PostgreSQL client |
 | `ATLAS-RQ-0106` | COMPLETED | dedicated admin session secret role |
@@ -160,18 +160,18 @@ Historical Baseline B evidence remains audit history. Current correctness must b
 - Live `corrections/intents/` dispatch and correction manifest v1/v1.1/v1.2/v1.3/v1.4 service dispatch are unreachable; current regression tests explicitly reject those schemas and assert zero legacy executable correction-service dependencies.
 - Historical migration/request artifacts may remain as replay/audit evidence. Their presence is not live compatibility.
 
-### P13 — Full product lifecycle — COMPLETED
+### P13 — Full product lifecycle — REOPENED FOR TARGETED REMEDIATION
 
-- `ATLAS-RQ-0223` — **COMPLETED:** pass full Production product lifecycle acceptance.
+- `ATLAS-RQ-0223` — **PENDING:** full Production product lifecycle acceptance is reopened because the post-closure audit found integration gaps that Unit 17 did not exercise end-to-end.
 - `ATLAS-RQ-0226` — **COMPLETED:** complete first-class Person object authoring without forcing unknown optional profile facts.
 - `ATLAS-RQ-0227` — **COMPLETED:** complete Place and bibliographic Source authoring as independent objects.
 - `ATLAS-RQ-0228` — **COMPLETED:** implement explicit Compile → Runtime projection and readiness filtering.
 - `ATLAS-RQ-0229` — **COMPLETED:** represent unresolved Person Activity boundaries without fabricated endpoints.
-- `ATLAS-RQ-0230` — **COMPLETED:** complete source-backed AI candidate → human review → authoritative authoring workflow.
+- `ATLAS-RQ-0230` — **PENDING:** source-backed AI candidate → human review → authoritative authoring is not complete until the reviewed-candidate schema and live registration path are wired into the active current-schema/Production lifecycle.
 
 P13 acceptance requires Person, Place and Source exist as first-class Authoring objects, the normalized writer remains authoritative, and Runtime cannot publish unresolved Authoring data as if it were settled fact.
 
-CORE v2 Unit 17 closes this P13 lifecycle contract through the final acceptance matrix in `docs/core/CORE_V2_FINAL_ACCEPTANCE.md` and its machine-readable regression gate. P14 historical-map content and research integration remain pending and are not implied complete by CORE v2 closure.
+CORE v2 Unit 17 remains historical acceptance evidence, but its terminal closure was superseded by the 2026-10-01 re-entry audit for the specifically reopened invariants above. Verified completed requirements remain closed; P14 historical-map content and research integration remain separately pending.
 
 ### P14 — Historical map contract — PENDING
 
