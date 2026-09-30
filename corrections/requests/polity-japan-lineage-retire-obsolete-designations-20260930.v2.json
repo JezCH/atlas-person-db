@@ -1,0 +1,119 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-designation-retirement:japan-obsolete-umbrella-designations:2026-09-30:v2",
+  "release_order": 1210,
+  "decision_authority": "User-directed Japan polity lineage repair. Retire the two obsolete temporal designations from the temporary Imperial Japan umbrella only after all relevant Activities have moved to the reviewed historical lineage. Exact-before bundles are copied from the actually applied creation plan, including the live designation_type values historiographic_period and official_name.",
+  "operations": [
+    {
+      "type": "retire_polity_designation",
+      "case_id": "japan-retire-meiji-government-designation-v2",
+      "review_reason": "OBSOLETE_EDITORIAL_DESIGNATION",
+      "exact_before": {
+        "designation": {
+          "id": "1f9c843f-cdc7-5e2d-9963-1ced563894d7",
+          "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+          "designation_type": "historiographic_period",
+          "valid_from_year": 1868,
+          "valid_from_month": 1,
+          "valid_from_day": 3,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1889,
+          "valid_to_month": 2,
+          "valid_to_day": 10,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "ATLAS historiographic government-period designation for the imperial-era identity before the 1889 Meiji Constitution. National Diet Library evidence identifies 3 January 1868 as the Restoration of Imperial Rule establishing the new Meiji government. The 1889 cutoff is a conservative display boundary immediately before promulgation of the Constitution of the Empire of Japan; it is not a claim that the phrase 大日本帝国 had never appeared earlier."
+        },
+        "names": [
+          {
+            "id": "b77dc210-be1d-55c3-85a8-87ebc293e5d3",
+            "polity_designation_id": "1f9c843f-cdc7-5e2d-9963-1ced563894d7",
+            "locale": "en",
+            "name": "Meiji Government",
+            "is_preferred": true
+          },
+          {
+            "id": "dca88dd5-2d3c-5ac7-b580-2d6a8ff7eee7",
+            "polity_designation_id": "1f9c843f-cdc7-5e2d-9963-1ced563894d7",
+            "locale": "ko",
+            "name": "메이지 정부",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "1f9c843f-cdc7-5e2d-9963-1ced563894d7",
+            "source_id": "49edf48b-5ce9-47c2-84fe-a311e695133e",
+            "source_locator_key": "The National Diet Library states that the 3 January 1868 Restoration of Imperial Rule established the new Meiji government centered on the imperial court."
+          }
+        ]
+      }
+    },
+    {
+      "type": "retire_polity_designation",
+      "case_id": "japan-retire-old-imperial-umbrella-designation-v2",
+      "review_reason": "OBSOLETE_UMBRELLA_POLITY_DESIGNATION",
+      "exact_before": {
+        "designation": {
+          "id": "8cdee6c3-8c2d-5dce-8b7f-96814112dc34",
+          "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+          "designation_type": "official_name",
+          "valid_from_year": 1889,
+          "valid_from_month": 2,
+          "valid_from_day": 11,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1947,
+          "valid_to_month": 5,
+          "valid_to_day": 2,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Conservative ATLAS constitutional-designation interval. The Constitution of the Empire of Japan (大日本帝国憲法) was promulgated on 11 February 1889, providing direct official evidence for the Empire of Japan / 大日本帝国 designation. The Constitution of Japan entered into force on 3 May 1947, so this display interval ends on 2 May 1947. The start boundary is the first directly evidenced constitutional boundary used here, not a claim about first-ever historical use of the phrase."
+        },
+        "names": [
+          {
+            "id": "30ed3618-ac98-56c5-8f6b-acdaacdbb80f",
+            "polity_designation_id": "8cdee6c3-8c2d-5dce-8b7f-96814112dc34",
+            "locale": "en",
+            "name": "Empire of Japan",
+            "is_preferred": true
+          },
+          {
+            "id": "608db061-c355-58dc-98d0-eca727a99b09",
+            "polity_designation_id": "8cdee6c3-8c2d-5dce-8b7f-96814112dc34",
+            "locale": "ko",
+            "name": "대일본제국",
+            "is_preferred": true
+          },
+          {
+            "id": "f9f7414e-965c-587d-8330-c900b4164c61",
+            "polity_designation_id": "8cdee6c3-8c2d-5dce-8b7f-96814112dc34",
+            "locale": "ja",
+            "name": "大日本帝国",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "8cdee6c3-8c2d-5dce-8b7f-96814112dc34",
+            "source_id": "2f699634-e810-4cb6-b8a2-f83111d5ad90",
+            "source_locator_key": "The 1889 Constitution is titled Constitution of the Empire of Japan; Article 1 identifies the Empire of Japan, providing the formal 大日本帝国-era designation evidence."
+          },
+          {
+            "polity_designation_id": "8cdee6c3-8c2d-5dce-8b7f-96814112dc34",
+            "source_id": "aa15c7fa-55b0-4518-b151-4d0f3805dee9",
+            "source_locator_key": "The National Diet Library records that the Constitution of Japan came into force on 3 May 1947, the constitutional boundary used by ATLAS between the imperial-era and modern Japan identities."
+          }
+        ]
+      }
+    }
+  ]
+}
