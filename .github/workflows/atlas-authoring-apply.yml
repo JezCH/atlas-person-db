@@ -132,6 +132,21 @@ jobs:
                 and (.activity.confidence | IN("well_established","likely","speculative","disputed","unknown"))
                 and (.sources | type == "array" and length > 0)
               ' "$manifest" >/dev/null || { echo "Rejected human authoring request: $manifest" >&2; exit 1; }
+            elif [[ "$schema" == "atlas-human-person-authoring/v1" ]]; then
+              jq -e '
+                .review_status == "approved"
+                and ((.request_id == null) or (.request_id | type == "string" and length > 0))
+                and (.person.canonical_name_en | type == "string" and length > 0)
+                and (.person.display_name_ko | type == "string" and length > 0)
+                and (.person.life_status == "deceased")
+                and (.person.life_status_checked_at | type == "string" and test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$"))
+                and (.person.life_status_basis | IN("documented_death","historical_certainty"))
+                and (.timeline_disposition.disposition | IN("chronology_unresolved","legendary","mythical","other_reviewed_exclusion"))
+                and (.timeline_disposition.reason | type == "string" and length > 0)
+                and (.representative_domain | IN("governance","military","knowledge","technology","commerce","culture","religion","exploration"))
+                and (.sources | type == "array" and length > 0)
+                and (.external_references.namuwiki.status | IN("linked","not_found"))
+              ' "$manifest" >/dev/null || { echo "Rejected person-only human authoring request: $manifest" >&2; exit 1; }
             else
               echo "Rejected unsupported authoring schema in $manifest: $schema" >&2
               exit 1
@@ -424,7 +439,7 @@ jobs:
               invalid.push({ manifest_path: manifestPath, code: 'INVALID_JSON', detail: String(error.message || error) });
               continue;
             }
-            if (raw?.schema !== 'atlas-human-authoring/v1' || raw?.review_status !== 'approved') continue;
+            if (!['atlas-human-authoring/v1','atlas-human-person-authoring/v1'].includes(raw?.schema) || raw?.review_status !== 'approved') continue;
             try {
               const resolved = withResolvedHumanRequestId(raw);
               rows.push({
@@ -834,7 +849,8 @@ jobs:
           mapfile -t manifests < /tmp/atlas-manifests.txt
           all_human=true
           for manifest in "${manifests[@]}"; do
-            [[ "$(jq -r '.schema' "$manifest")" == "atlas-human-authoring/v1" ]] || {
+            schema="$(jq -r '.schema' "$manifest")"
+            [[ "$schema" == "atlas-human-authoring/v1" || "$schema" == "atlas-human-person-authoring/v1" ]] || {
               all_human=false
               break
             }
@@ -902,9 +918,12 @@ jobs:
                   and (.results | type=="array" and length==$count)
                   and all(.results[];
                     .marker=="ATLAS_HUMAN_AUTHORING_V1"
-                    and .schema=="atlas-human-authoring/v1"
                     and .committed==true
-                    and .result.semantic_version=="v2-relation-full-temporal"
+                    and (
+                      (.schema=="atlas-human-authoring/v1" and .result.semantic_version=="v2-relation-full-temporal")
+                      or
+                      (.schema=="atlas-human-person-authoring/v1" and .result.semantic_version=="person-only-canonical-v1")
+                    )
                   )
                 ' "$response" >/dev/null
               elif [[ "$status" == "409" ]]; then
@@ -953,48 +972,80 @@ jobs:
                 verify_failed=true
                 continue
               fi
-              if ! jq -e \
-                --slurpfile manifest "$manifest_path" \
-                --arg person_id "$person_id" \
-                --arg relationship_id "$relationship_id" '
-                  $manifest[0] as $m
-                  | .ok==true
-                  and .mode=="detail"
-                  and .person.id==$person_id
-                  and any(.person.activities[];
-                    .id==$relationship_id
-                    and (.polity.canonical_name_en // null)==($m.polity.canonical_name_en // null)
-                    and (.relation.code // null)==($m.activity.relation_type // null)
-                    and (.period_basis.code // null)==($m.activity.period_basis // null)
-                    and .start.year==$m.activity.start_year
-                    and (.start.month // null)==($m.activity.start_month // null)
-                    and (.start.day // null)==($m.activity.start_day // null)
-                    and (.start.certainty // null)==($m.activity.start_certainty // null)
-                    and (.start.calendar // null)==($m.activity.start_calendar // "unspecified_historical")
-                    and .end.year==$m.activity.end_year
-                    and (if $m.activity.chronology_status=="ongoing" then .end.status=="ongoing" and .end.as_of==$m.activity.ongoing_as_of else true end)
-                    and (.end.month // null)==($m.activity.end_month // null)
-                    and (.end.day // null)==($m.activity.end_day // null)
-                    and (.end.certainty // null)==($m.activity.end_certainty // null)
-                    and (.end.calendar // null)==(if $m.activity.chronology_status=="ongoing" then null else ($m.activity.end_calendar // "unspecified_historical") end)
+              manifest_schema="$(jq -r '.schema' "$manifest_path")"
+              if [[ "$manifest_schema" == "atlas-human-person-authoring/v1" ]]; then
+                if ! jq -e \
+                  --slurpfile manifest "$manifest_path" \
+                  --arg person_id "$person_id" '
+                    $manifest[0] as $m
+                    | .ok==true
+                    and .mode=="detail"
+                    and .person.id==$person_id
+                    and .person.activity_count==0
+                    and (.person.representative_domain // null)==$m.representative_domain
+                    and (.person.timeline_disposition.disposition // null)==$m.timeline_disposition.disposition
+                    and (.person.timeline_disposition.reason // null)==$m.timeline_disposition.reason
+                    and (.person.timeline_disposition.basis_code // null)==($m.timeline_disposition.basis_code // null)
                     and (
-                      if ($m.activity.role // null)==null then .role==null
-                      else
-                        ((.role.source_label // .role.canonical_name_en // "") | ascii_downcase | gsub("[^a-z0-9]"; ""))
-                        == (($m.activity.role // "") | ascii_downcase | gsub("[^a-z0-9]"; ""))
-                      end
+                      (.person.external_references.namuwiki.status // null)==($m.external_references.namuwiki.status // null)
+                      and (.person.external_references.namuwiki.document_title // null)==($m.external_references.namuwiki.document_title // null)
+                      and (.person.external_references.namuwiki.url // null)==($m.external_references.namuwiki.url // null)
                     )
-                  )
-                  and (
-                    (.person.external_references.namuwiki.status // null)==($m.external_references.namuwiki.status // null)
-                    and (.person.external_references.namuwiki.document_title // null)==($m.external_references.namuwiki.document_title // null)
-                    and (.person.external_references.namuwiki.url // null)==($m.external_references.namuwiki.url // null)
-                  )
-                ' "$readback" >/dev/null; then
-                echo "Production read-back mismatch for ${request_id}" >&2
-                cat "$readback" >&2 || true
-                verify_failed=true
-                continue
+                    and all($m.sources[];
+                      . as $s
+                      | any(.person.sources[]; (.canonical_url // null)==($s.canonical_url // null) and (.title // null)==($s.title // null))
+                    )
+                  ' "$readback" >/dev/null; then
+                  echo "Production person-only read-back mismatch for ${request_id}" >&2
+                  cat "$readback" >&2 || true
+                  verify_failed=true
+                  continue
+                fi
+              else
+                  if ! jq -e \
+                  --slurpfile manifest "$manifest_path" \
+                  --arg person_id "$person_id" \
+                  --arg relationship_id "$relationship_id" '
+                    $manifest[0] as $m
+                    | .ok==true
+                    and .mode=="detail"
+                    and .person.id==$person_id
+                    and any(.person.activities[];
+                      .id==$relationship_id
+                      and (.polity.canonical_name_en // null)==($m.polity.canonical_name_en // null)
+                      and (.relation.code // null)==($m.activity.relation_type // null)
+                      and (.period_basis.code // null)==($m.activity.period_basis // null)
+                      and .start.year==$m.activity.start_year
+                      and (.start.month // null)==($m.activity.start_month // null)
+                      and (.start.day // null)==($m.activity.start_day // null)
+                      and (.start.certainty // null)==($m.activity.start_certainty // null)
+                      and (.start.calendar // null)==($m.activity.start_calendar // "unspecified_historical")
+                      and .end.year==$m.activity.end_year
+                      and (if $m.activity.chronology_status=="ongoing" then .end.status=="ongoing" and .end.as_of==$m.activity.ongoing_as_of else true end)
+                      and (.end.month // null)==($m.activity.end_month // null)
+                      and (.end.day // null)==($m.activity.end_day // null)
+                      and (.end.certainty // null)==($m.activity.end_certainty // null)
+                      and (.end.calendar // null)==(if $m.activity.chronology_status=="ongoing" then null else ($m.activity.end_calendar // "unspecified_historical") end)
+                      and (
+                        if ($m.activity.role // null)==null then .role==null
+                        else
+                          ((.role.source_label // .role.canonical_name_en // "") | ascii_downcase | gsub("[^a-z0-9]"; ""))
+                          == (($m.activity.role // "") | ascii_downcase | gsub("[^a-z0-9]"; ""))
+                        end
+                      )
+                    )
+                    and (
+                      (.person.external_references.namuwiki.status // null)==($m.external_references.namuwiki.status // null)
+                      and (.person.external_references.namuwiki.document_title // null)==($m.external_references.namuwiki.document_title // null)
+                      and (.person.external_references.namuwiki.url // null)==($m.external_references.namuwiki.url // null)
+                    )
+                  ' "$readback" >/dev/null; then
+                  echo "Production read-back mismatch for ${request_id}" >&2
+                  cat "$readback" >&2 || true
+                  verify_failed=true
+                  continue
+                fi
+
               fi
               echo "Production read-back VERIFIED: ${request_id}"
             done < "$verify_queue"
@@ -1024,7 +1075,7 @@ jobs:
             schema="$(jq -r '.schema' "$manifest")"
             oidc_token="$(request_oidc)"
             response="/tmp/atlas-authoring-evidence/responses/$(basename "$manifest" .json).json"
-            if [[ "$schema" == "atlas-human-authoring/v1" ]]; then
+            if [[ "$schema" == "atlas-human-authoring/v1" || "$schema" == "atlas-human-person-authoring/v1" ]]; then
               payload="$(jq -cn \
                 --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
                 --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
@@ -1049,9 +1100,12 @@ jobs:
                 .ok==true
                 and .auth_method=="github_oidc"
                 and .marker=="ATLAS_HUMAN_AUTHORING_V1"
-                and .schema=="atlas-human-authoring/v1"
                 and .committed==true
-                and .result.semantic_version=="v2-relation-full-temporal"
+                and (
+                  (.schema=="atlas-human-authoring/v1" and .result.semantic_version=="v2-relation-full-temporal")
+                  or
+                  (.schema=="atlas-human-person-authoring/v1" and .result.semantic_version=="person-only-canonical-v1")
+                )
               ' "$response" >/dev/null
             else
               payload="$(jq -cn \
