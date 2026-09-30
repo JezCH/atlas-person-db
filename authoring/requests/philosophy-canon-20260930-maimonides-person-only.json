@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:maimonides:person-only:v1",
+  "person": {
+    "canonical_name_en": "Maimonides",
+    "display_name_ko": "마이모니데스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Maimonides (1138–1204) is a securely historical Jewish philosopher, rabbinic authority and physician. SEP documents birth in Cordova, forced migration through Fez, and later settlement and mature work in Fustat, Egypt. Because his life and intellectual production span distinct political and geographic contexts, ATLAS does not manufacture one polity-bound Activity rail.",
+    "basis_code": "secure_1138_1204_cordova_fez_fustat_biography_without_single_intellectual_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/entries/maimonides/"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Maimonides — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/maimonides/",
+      "citation_text": "SEP identifies Maimonides (1138–1204) as the leading medieval Jewish philosopher, born in Cordova, later moving through Fez and eventually settling in Fustat, Egypt.",
+      "locator": "Introduction; Life and Works"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-FINAL-FIVE",
+    "namuwiki_review": "Exact indexed searches for 마이모니데스/Maimonides/Moses ben Maimon did not establish an independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "No single polity rail forced across Cordovan, Moroccan and Egyptian phases."
+  }
+}
