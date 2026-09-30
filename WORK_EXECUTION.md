@@ -59,6 +59,7 @@ Hard rules:
 - `same repository`, `same main branch`, `same issue`, `same CORE unit`, `same table`, or `same writer family` is not by itself a conflict;
 - no worker waits merely because another worker is active;
 - no STANDBY, WAITING, global claim, queue ownership, or repeated lock polling;
+- The project does not have one global NONCORE writer.
 - if useful non-conflicting work exists, continue it.
 
 A conflict exists only when concurrent mutations can invalidate the same concrete resource, semantic identity, schema/runtime contract, repository update precondition, or explicitly declared dependency.
@@ -136,6 +137,8 @@ MISMATCH
 
 A mismatch must never trigger whole-project replay, full historical re-review, or automatic branch reconstruction.
 
+A full historical fold is exceptional recovery work, not normal bootstrap.
+
 ### Phase C — SHORT ATOMIC COMMIT
 
 The canonical writer must re-check the mutation precondition at the actual write boundary, inside the same transaction when possible or immediately before an atomic repository/ref update.
@@ -160,6 +163,8 @@ Read back or otherwise prove the changed invariant once at the boundary that own
 Release the resource immediately after commit. No worker retains ownership while waiting for CI, deployment, human review, or unrelated follow-up.
 
 ### What may serialize
+
+**Queue only at a real shared-write boundary.**
 
 Examples:
 
