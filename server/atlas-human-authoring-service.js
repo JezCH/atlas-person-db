@@ -7,6 +7,12 @@ const { requiredUuid, historicalYear } = require("./atlas-activity-semantic-key-
 const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service.js");
 
 const { EMPTY_END, validateOngoingActivity } = require("./atlas-ongoing-activity.js");
+const {
+  normalizeNamuWikiDecision,
+  currentExternalReference,
+  sameDecision,
+  setNamuWikiDecision
+} = require("./atlas-external-reference-service.js");
 
 const HUMAN_AUTHORING_SCHEMA = "atlas-human-authoring/v1";
 const HUMAN_AUTHORING_MARKER = "ATLAS_HUMAN_AUTHORING_V1";
@@ -49,47 +55,26 @@ function roleCategoryForRelation(relationCode) {
   })[relationCode] || "activity";
 }
 
-function validIsoDate(value) {
-  const text = String(value || "").trim();
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return false;
-  const parsed = new Date(`${text}T00:00:00Z`);
-  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === text;
-}
-
-function canonicalNamuWikiUrl(value) {
-  const text = optionalText(value);
-  if (!text) return null;
-  try {
-    const url = new URL(text);
-    if (url.protocol !== "https:" || url.hostname !== "namu.wiki") return null;
-    if (!url.pathname.startsWith("/w/") || url.pathname.length <= 3) return null;
-    if (url.username || url.password) return null;
-    url.search = "";
-    url.hash = "";
-    return url.href;
-  } catch {
-    return null;
-  }
-}
-
 function normalizeNamuWikiReference(raw, { allowLegacyOmission = true } = {}) {
   if (raw == null) {
     if (allowLegacyOmission) return null;
     throw new Error("HUMAN_AUTHORING_NAMUWIKI_REQUIRED");
   }
-  const reference = requiredObject(raw, "HUMAN_AUTHORING_NAMUWIKI_INVALID");
-  const status = requiredText(reference.status, "HUMAN_AUTHORING_NAMUWIKI_STATUS_REQUIRED");
-  if (status !== "linked" && status !== "not_found") throw new Error("HUMAN_AUTHORING_NAMUWIKI_STATUS_INVALID");
-  const checkedAt = requiredText(reference.checked_at, "HUMAN_AUTHORING_NAMUWIKI_CHECKED_AT_REQUIRED");
-  if (!validIsoDate(checkedAt)) throw new Error("HUMAN_AUTHORING_NAMUWIKI_CHECKED_AT_INVALID");
-  if (status === "not_found") {
-    if (reference.document_title != null || reference.url != null) throw new Error("HUMAN_AUTHORING_NAMUWIKI_NOT_FOUND_FIELDS_INVALID");
-    return Object.freeze({ status, checked_at:checkedAt, document_title:null, url:null });
+  try {
+    const normalized = normalizeNamuWikiDecision(raw, { checkedAtRequired:true });
+    return Object.freeze({
+      status:normalized.status,
+      checked_at:normalized.checked_at,
+      document_title:normalized.document_title,
+      url:normalized.url,
+      review_state:normalized.review_state,
+      review_reason:normalized.review_reason
+    });
+  } catch (error) {
+    const code=String(error?.message || "");
+    const mapped=code.replace(/^EXTERNAL_REFERENCE_/, "HUMAN_AUTHORING_");
+    throw new Error(mapped || "HUMAN_AUTHORING_NAMUWIKI_INVALID");
   }
-  const documentTitle = requiredText(reference.document_title, "HUMAN_AUTHORING_NAMUWIKI_DOCUMENT_TITLE_REQUIRED");
-  const url = canonicalNamuWikiUrl(reference.url);
-  if (!url) throw new Error("HUMAN_AUTHORING_NAMUWIKI_URL_INVALID");
-  return Object.freeze({ status, checked_at:checkedAt, document_title:documentTitle, url });
 }
 
 function normalizeBoundary(raw, prefix) {
@@ -348,26 +333,20 @@ async function resolveOrCreateSources(client, requestId, sources) {
 }
 
 async function currentNamuWikiReference(client, personId, { forUpdate = false } = {}) {
-  const result = await client.query(`
-    select status,checked_at::text,document_title,url
-      from atlas_v2.person_external_references
-     where person_id=$1::uuid and provider='namuwiki'${forUpdate ? " for update" : ""}`, [personId]);
-  if (result.rows.length > 1) throw new Error("HUMAN_AUTHORING_NAMUWIKI_AMBIGUOUS");
-  const row = result.rows[0];
+  const row = await currentExternalReference(client, personId, "namuwiki", { forUpdate });
   if (!row) return null;
   return Object.freeze({
     status:String(row.status),
     checked_at:row.checked_at == null ? null : String(row.checked_at),
     document_title:row.document_title == null ? null : String(row.document_title),
-    url:row.url == null ? null : String(row.url)
+    url:row.url == null ? null : String(row.url),
+    ...(row.review_state == null ? {} : { review_state:String(row.review_state) }),
+    ...(row.review_reason == null ? {} : { review_reason:String(row.review_reason) })
   });
 }
 
 function sameNamuWikiCore(left, right) {
-  return Boolean(left && right)
-    && left.status === right.status
-    && left.document_title === right.document_title
-    && left.url === right.url;
+  return sameDecision(left, right);
 }
 
 async function resolveNamuWikiReference(client, { requestId, person, requested, allowLegacyNamuWikiOmission = false }) {
@@ -377,36 +356,36 @@ async function resolveNamuWikiReference(client, { requestId, person, requested, 
     if (allowLegacyNamuWikiOmission) return null;
     throw new Error("HUMAN_AUTHORING_NAMUWIKI_REQUIRED");
   }
-  if (current?.status === "linked" && !sameNamuWikiCore(current, requested)) {
-    throw new Error("HUMAN_AUTHORING_NAMUWIKI_OVERWRITE_REVIEW_REQUIRED");
+  let result;
+  try {
+    result = await setNamuWikiDecision(client, person.id, requested, {
+      checkedAtRequired:true,
+      preventLinkedOverwrite:true
+    });
+  } catch (error) {
+    const code=String(error?.message || "");
+    if (code === "EXTERNAL_REFERENCE_OVERWRITE_REVIEW_REQUIRED") throw new Error("HUMAN_AUTHORING_NAMUWIKI_OVERWRITE_REVIEW_REQUIRED");
+    if (code === "EXTERNAL_REFERENCE_VERIFICATION_FAILED") throw new Error("HUMAN_AUTHORING_NAMUWIKI_VERIFICATION_FAILED");
+    throw error;
   }
-  if (sameNamuWikiCore(current, requested) && current.checked_at === requested.checked_at) return current;
-
-  const before = current;
-  const saved = await client.query(`
-    insert into atlas_v2.person_external_references(person_id,provider,status,checked_at,document_title,url,updated_at)
-    values($1::uuid,'namuwiki',$2,$3::date,$4,$5,now())
-    on conflict (person_id,provider) do update
-      set status=excluded.status,
-          checked_at=excluded.checked_at,
-          document_title=excluded.document_title,
-          url=excluded.url,
-          updated_at=now()
-    returning status,checked_at::text,document_title,url`,
-    [person.id, requested.status, requested.checked_at, requested.document_title, requested.url]);
-  const after = saved.rows[0] ? Object.freeze({
-    status:String(saved.rows[0].status),
-    checked_at:String(saved.rows[0].checked_at),
-    document_title:saved.rows[0].document_title == null ? null : String(saved.rows[0].document_title),
-    url:saved.rows[0].url == null ? null : String(saved.rows[0].url)
-  }) : null;
-  if (!after || !sameNamuWikiCore(after, requested) || after.checked_at !== requested.checked_at) {
-    throw new Error("HUMAN_AUTHORING_NAMUWIKI_VERIFICATION_FAILED");
+  const after = result.after == null ? null : Object.freeze({
+    status:String(result.after.status),
+    checked_at:result.after.checked_at == null ? null : String(result.after.checked_at),
+    document_title:result.after.document_title == null ? null : String(result.after.document_title),
+    url:result.after.url == null ? null : String(result.after.url)
+  });
+  if (!result.replay) {
+    const before = result.before == null ? null : Object.freeze({
+      status:String(result.before.status),
+      checked_at:result.before.checked_at == null ? null : String(result.before.checked_at),
+      document_title:result.before.document_title == null ? null : String(result.before.document_title),
+      url:result.before.url == null ? null : String(result.before.url)
+    });
+    await client.query(`
+      insert into atlas_v2.person_profile_mutation_audits(request_id,person_id,operation,before_snapshot,after_snapshot)
+      values($1,$2::uuid,'set_person_external_reference',$3::jsonb,$4::jsonb)`,
+      [`${requestId}:namuwiki`, person.id, JSON.stringify({ external_reference:before }), JSON.stringify({ external_reference:after })]);
   }
-  await client.query(`
-    insert into atlas_v2.person_profile_mutation_audits(request_id,person_id,operation,before_snapshot,after_snapshot)
-    values($1,$2::uuid,'set_person_external_reference',$3::jsonb,$4::jsonb)`,
-    [`${requestId}:namuwiki`, person.id, JSON.stringify({ external_reference:before }), JSON.stringify({ external_reference:after })]);
   return after;
 }
 

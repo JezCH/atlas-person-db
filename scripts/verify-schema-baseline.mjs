@@ -29,7 +29,8 @@ const expectedAuthoringMigrations = [
   '20260921_person_portrait_history_v2.sql',
   '20260924_person_portraits_simple_v3.sql',
   '20260928_polity_identity_retirements.sql',
-  '20260928_person_timeline_dispositions.sql'
+  '20260928_person_timeline_dispositions.sql',
+  '20260930_external_reference_decision_state.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -48,7 +49,8 @@ const expectedAuthoringReplayMigrations = [
   '20260921_person_portrait_history_v2.sql',
   '20260924_person_portraits_simple_v3.sql',
   '20260928_polity_identity_retirements.sql',
-  '20260928_person_timeline_dispositions.sql'
+  '20260928_person_timeline_dispositions.sql',
+  '20260930_external_reference_decision_state.sql'
 ];
 
 const expectedCorrectionMigrations = [

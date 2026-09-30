@@ -9,7 +9,7 @@ const {
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const PROFILE_OPERATIONS = new Set(["set_person_korean_name", "set_person_external_reference", "set_person_timeline_disposition"]);
-const NAMUWIKI_HOST = "namu.wiki";
+const { normalizeNamuWikiDecision, currentExternalReference, setNamuWikiDecision, sameDecision } = require("./atlas-external-reference-service.js");
 
 function outcomeBase({ requestId, operation, committed, v2, verification = null, validationFailures = [], transactionFailure = null, rollback = false, replay = false }) {
   return Object.freeze({
@@ -38,58 +38,27 @@ function blocked(requestId, operation, code, detail = null) {
   });
 }
 
-function safeDecode(value) {
-  try { return decodeURIComponent(value); } catch { return value; }
-}
-
 function normalizeNamuWikiInput(value) {
-  if (value && typeof value === "object" && !Array.isArray(value)) {
-    const status = normalizeExact(value.status).toLowerCase();
-    if (status === "not_found") {
-      const documentTitle = normalizeExact(value.document_title);
-      const url = normalizeExact(value.url || value.canonical_url);
-      if (documentTitle || url) throw new Error("PERSON_NAMUWIKI_NOT_FOUND_REFERENCE_MUST_BE_EMPTY");
-      return Object.freeze({
-        provider: "namuwiki",
-        status: "not_found",
-        document_title: null,
-        url: null
-      });
-    }
-    if (status && status !== "linked") throw new Error("PERSON_NAMUWIKI_STATUS_UNSUPPORTED");
-    value = value.url || value.canonical_url || value.document_title;
+  const raw = value && typeof value === "object" && !Array.isArray(value)
+    ? value
+    : (String(value || "").trim().includes("://") ? { status:"linked", url:value } : { status:"linked", document_title:value });
+  let normalized;
+  try {
+    normalized = normalizeNamuWikiDecision(raw, { allowTitleShorthand:true });
+  } catch (error) {
+    const code=String(error?.message || "");
+    if (code === "EXTERNAL_REFERENCE_NAMUWIKI_NOT_FOUND_FIELDS_INVALID") throw new Error("PERSON_NAMUWIKI_NOT_FOUND_REFERENCE_MUST_BE_EMPTY");
+    if (code === "EXTERNAL_REFERENCE_NAMUWIKI_URL_INVALID") throw new Error("PERSON_NAMUWIKI_URL_INVALID");
+    if (code === "EXTERNAL_REFERENCE_NAMUWIKI_DOCUMENT_TITLE_REQUIRED") throw new Error("PERSON_NAMUWIKI_DOCUMENT_TITLE_REQUIRED");
+    if (code === "EXTERNAL_REFERENCE_NAMUWIKI_STATUS_INVALID") throw new Error("PERSON_NAMUWIKI_STATUS_UNSUPPORTED");
+    if (code === "EXTERNAL_REFERENCE_NAMUWIKI_REQUIRED") throw new Error("PERSON_NAMUWIKI_VALUE_REQUIRED");
+    throw error;
   }
-
-  const text = normalizeExact(value);
-  if (!text) throw new Error("PERSON_NAMUWIKI_VALUE_REQUIRED");
-
-  if (/^https?:\/\//i.test(text)) {
-    let parsed;
-    try { parsed = new URL(text); } catch { throw new Error("PERSON_NAMUWIKI_URL_INVALID"); }
-    if (parsed.protocol !== "https:" || parsed.host !== NAMUWIKI_HOST || parsed.username || parsed.password) {
-      throw new Error("PERSON_NAMUWIKI_URL_INVALID");
-    }
-    if (!parsed.pathname.startsWith("/w/") || parsed.pathname.length <= 3) throw new Error("PERSON_NAMUWIKI_URL_INVALID");
-    const encodedTitle = parsed.pathname.slice(3);
-    const documentTitle = normalizeExact(safeDecode(encodedTitle));
-    if (!documentTitle) throw new Error("PERSON_NAMUWIKI_DOCUMENT_TITLE_REQUIRED");
-    parsed.search = "";
-    parsed.hash = "";
-    return Object.freeze({
-      provider: "namuwiki",
-      status: "linked",
-      document_title: documentTitle,
-      url: parsed.href
-    });
-  }
-
-  if (text.includes("://")) throw new Error("PERSON_NAMUWIKI_URL_INVALID");
-  const documentTitle = text;
   return Object.freeze({
-    provider: "namuwiki",
-    status: "linked",
-    document_title: documentTitle,
-    url: `https://${NAMUWIKI_HOST}/w/${encodeURIComponent(documentTitle)}`
+    provider:normalized.provider,
+    status:normalized.status,
+    document_title:normalized.document_title,
+    url:normalized.url
   });
 }
 
@@ -164,74 +133,29 @@ async function setKoreanName(client, personId, rawName) {
   });
 }
 
-async function currentExternalReference(client, personId, provider, { forUpdate = false } = {}) {
-  const result = await client.query(`
-    select provider,status,checked_at::text,document_title,url,updated_at
-      from atlas_v2.person_external_references
-     where person_id=$1::uuid and provider=$2${forUpdate ? " for update" : ""}`, [personId, provider]);
-  return result.rows[0] || null;
-}
-
-function sameReference(row, next) {
-  return Boolean(row)
-    && row.provider === next.provider
-    && row.status === next.status
-    && row.document_title === next.document_title
-    && row.url === next.url;
-}
-
 function shouldBlockExternalReferenceOverwrite(current, next, { preventOverwrite = false } = {}) {
-  return Boolean(preventOverwrite && current?.status === "linked" && !sameReference(current, next));
+  return Boolean(preventOverwrite && current?.status === "linked" && !sameDecision(current, next));
 }
 
 function externalReferenceExpectedCurrentMismatch(current, expected) {
   if (!expected) return false;
-  const normalizedExpected = normalizeNamuWikiInput(expected);
-  return !sameReference(current, normalizedExpected);
+  return !sameDecision(current, normalizeNamuWikiInput(expected));
 }
 
 async function setExternalReference(client, personId, rawPayload) {
   const provider = normalizeExact(rawPayload?.provider || "namuwiki").toLowerCase();
   if (provider !== "namuwiki") throw new Error("PERSON_EXTERNAL_REFERENCE_PROVIDER_UNSUPPORTED");
-  const next = normalizeNamuWikiInput(rawPayload?.value);
-  const current = await currentExternalReference(client, personId, provider, { forUpdate: true });
-  if (sameReference(current, next)) {
-    const refreshed = await client.query(`
-      update atlas_v2.person_external_references
-         set checked_at=current_date,updated_at=now()
-       where person_id=$1::uuid and provider=$2
-       returning provider,status,checked_at::text,document_title,url,updated_at`, [personId, provider]);
-    const after = refreshed.rows[0] || current;
-    return Object.freeze({
-      replay:true,
-      review_recorded:true,
-      before:{ external_reference:current },
-      after:{ external_reference:after }
-    });
-  }
-  if (externalReferenceExpectedCurrentMismatch(current, rawPayload?.expected_current_reference)) {
-    throw new Error("PERSON_EXTERNAL_REFERENCE_EXPECTED_CURRENT_MISMATCH");
-  }
-  if (shouldBlockExternalReferenceOverwrite(current, next, { preventOverwrite:rawPayload?.prevent_overwrite === true })) {
-    throw new Error("PERSON_EXTERNAL_REFERENCE_OVERWRITE_REVIEW_REQUIRED");
-  }
-
-  const saved = await client.query(`
-    insert into atlas_v2.person_external_references(person_id,provider,status,checked_at,document_title,url,updated_at)
-    values($1::uuid,$2,$3,current_date,$4,$5,now())
-    on conflict (person_id,provider) do update
-      set status=excluded.status,
-          checked_at=excluded.checked_at,
-          document_title=excluded.document_title,
-          url=excluded.url,
-          updated_at=now()
-    returning provider,status,checked_at::text,document_title,url,updated_at`,
-    [personId, next.provider, next.status, next.document_title, next.url]);
-
+  const result = await setNamuWikiDecision(client, personId, rawPayload?.value, {
+    allowTitleShorthand:true,
+    preventLinkedOverwrite:rawPayload?.prevent_overwrite === true,
+    expectedCurrent:rawPayload?.expected_current_reference || null,
+    refreshCheckedAtOnReplay:true
+  });
   return Object.freeze({
-    replay:false,
-    before:{ external_reference:current },
-    after:{ external_reference:saved.rows[0] }
+    replay:result.replay,
+    ...(result.replay ? { review_recorded:true } : {}),
+    before:{ external_reference:result.before },
+    after:{ external_reference:result.after }
   });
 }
 
