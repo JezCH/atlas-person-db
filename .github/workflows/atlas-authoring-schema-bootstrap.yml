@@ -60,20 +60,27 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          git fetch --no-tags --quiet origin main
+          dispatch_sha="$(git rev-parse origin/main)"
+          git merge-base --is-ancestor "$GITHUB_SHA" "$dispatch_sha" || {
+            echo "SCHEMA_BOOTSTRAP_MAIN_DIVERGED: parent ${GITHUB_SHA}, dispatch ${dispatch_sha}" >&2
+            exit 1
+          }
+
           before_json="$(gh run list \
             --repo "$GITHUB_REPOSITORY" \
             --workflow atlas-authoring-apply.yml \
             --branch main \
             --event workflow_dispatch \
-            --limit 20 \
+            --limit 30 \
             --json databaseId,headSha,createdAt,status,conclusion)"
-          previous_id="$(jq -r --arg sha "$GITHUB_SHA" '[.[] | select(.headSha==$sha)] | sort_by(.createdAt) | reverse | .[0].databaseId // empty' <<<"$before_json")"
+          before_ids="$(jq -c '[.[].databaseId]' <<<"$before_json")"
 
           gh workflow run atlas-authoring-apply.yml \
             --repo "$GITHUB_REPOSITORY" \
             --ref main \
             -f bootstrap_only=true
-          echo "Dispatched ATLAS Authoring Apply bootstrap-only for ${GITHUB_SHA}."
+          echo "Dispatched ATLAS Authoring Apply bootstrap-only from parent ${GITHUB_SHA}; main at dispatch ${dispatch_sha}."
 
           child_run_id=""
           for attempt in $(seq 1 30); do
@@ -82,16 +89,26 @@ jobs:
               --workflow atlas-authoring-apply.yml \
               --branch main \
               --event workflow_dispatch \
-              --limit 20 \
+              --limit 30 \
               --json databaseId,headSha,createdAt,status,conclusion)"
-            child_run_id="$(jq -r --arg sha "$GITHUB_SHA" --arg previous "$previous_id" '
-              [.[] | select(.headSha==$sha and ((.databaseId|tostring) != $previous))]
-              | sort_by(.createdAt) | reverse | .[0].databaseId // empty
-            ' <<<"$runs_json")"
-            if [[ -n "$child_run_id" ]]; then
-              echo "Bootstrap child run: $child_run_id"
-              break
-            fi
+            mapfile -t candidates < <(jq -r --argjson before "$before_ids" '
+              [.[] | select((.databaseId as $id | ($before | index($id)) == null))]
+              | sort_by(.createdAt) | .[]
+              | "\(.databaseId) \(.headSha)"
+            ' <<<"$runs_json")
+            for candidate in "${candidates[@]}"; do
+              candidate_id="${candidate%% *}"
+              candidate_sha="${candidate#* }"
+              if ! git cat-file -e "${candidate_sha}^{commit}" 2>/dev/null; then
+                git fetch --no-tags --quiet origin "$candidate_sha" || true
+              fi
+              if git cat-file -e "${candidate_sha}^{commit}" 2>/dev/null \
+                 && git merge-base --is-ancestor "$GITHUB_SHA" "$candidate_sha"; then
+                child_run_id="$candidate_id"
+                echo "Bootstrap child run: ${child_run_id} at ${candidate_sha}"
+                break 2
+              fi
+            done
             sleep 2
           done
           [[ -n "$child_run_id" ]] || { echo "AUTHORING_BOOTSTRAP_CHILD_RUN_NOT_FOUND" >&2; exit 1; }
