@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:al-farabi:person-only:v1",
+  "person": {
+    "canonical_name_en": "al-Fārābī",
+    "display_name_ko": "알파라비",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-30",
+      "document_title": "알파라비",
+      "url": "https://namu.wiki/w/%EC%95%8C%ED%8C%8C%EB%9D%BC%EB%B9%84"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "al-Fārābī was a securely historical tenth-century Muslim philosopher, probably born around 870 and certainly deceased in Damascus in 950/951. Reliable biographical evidence places major phases of his intellectual life in Baghdad, Damascus and Aleppo, with a documented visit to Egypt, while the precise circumstances of his origins and some later court associations remain uncertain. The reviewed evidence therefore does not justify compressing his philosophical career into one exact canonical polity interval. ATLAS retains the historical Person without manufacturing a single polity-bound Activity rail.",
+    "basis_code": "secure_tenth_century_biography_spanning_baghdad_syria_egypt_without_single_intellectual_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/entries/al-farabi/",
+        "https://www.iranicaonline.org/articles/farabi-i/"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "al-Farabi — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/al-farabi/",
+      "citation_text": "SEP identifies Abū Naṣr al-Fārābī as a major philosopher and logician, probably born around 870, active in Baghdad before moving to Syria, and deceased in Damascus in 950/951.",
+      "locator": "Life and works"
+    },
+    {
+      "source_type": "scholarly_reference",
+      "title": "FĀRĀBĪ i. Biography — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/farabi-i/",
+      "citation_text": "Encyclopaedia Iranica distinguishes reliable from legendary biography, documents al-Fārābī in Baghdad through 942, then Damascus and Aleppo, a visit to Egypt, and his death in Damascus in 950/951.",
+      "locator": "Biography / Life"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "카자흐스탄 국가 정체성 연구: 알-파라비(al-Farabi)의 음악철학을 중심으로",
+      "canonical_url": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001722612",
+      "citation_text": "A Korean peer-reviewed study uses the Korean form 알-파라비 for al-Farabi and examines his musical philosophy and The Great Book of Music.",
+      "locator": "Title, keywords, abstract"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-ISLAMIC-PERSIAN",
+    "namuwiki_review": "Independent exact NamuWiki Person document confirmed at `알파라비`; `알 파라비` redirects to that canonical document. Linked canonical URL stored.",
+    "timeline_decision": "Reliable biography spans Baghdad, Syria and a documented Egypt visit; no single polity rail is forced across the philosopher's career.",
+    "korean_name_review": "NamuWiki canonical title is 알파라비; Korean scholarship also uses 알-파라비. ATLAS uses the compact canonical display form 알파라비."
+  }
+}
