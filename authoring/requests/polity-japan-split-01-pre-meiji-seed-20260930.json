@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "polity-japan-split-20260930:pre-meiji-seed",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Sakamoto Ryōma",
+    "display_name_ko": "사카모토 료마",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "polity": {
+    "canonical_name_en": "Pre-Meiji Japan",
+    "display_name_ko": "메이지 유신 이전 일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Restoration activist and political mediator",
+    "role_display_name_ko": "유신 활동가·정치 중재자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Reviewed seed Activity used only to mint a distinct pre-Meiji Japan polity identity. ATLAS uses 'Pre-Meiji Japan / 메이지 유신 이전 일본' as an explicit disambiguating umbrella label for the pre-1868 higher-order Japanese polity in this identity repair; it is not asserted as a historical formal self-designation. The National Diet Library records the 3 January 1868 Restoration of Imperial Rule as establishing the new Meiji government, so this 1862–1867 activity remains on the pre-restoration side of the rupture.",
+    "start_year": 1862,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1867,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "bibliographic_reference",
+      "title": "Initial Steps toward a Constitutional State: Outline",
+      "institution": "National Diet Library, Japan",
+      "url": "https://www.ndl.go.jp/modern/e/cha1/index.html",
+      "citation_text": "The National Diet Library describes the 1867 restoration of political authority and the 1868 organization of the new Meiji Government, establishing the rupture used by this ATLAS identity split."
+    },
+    {
+      "source_type": "bibliographic_reference",
+      "title": "NISHI Amane's Conception of a System of Government",
+      "institution": "National Diet Library, Japan",
+      "url": "https://www.ndl.go.jp/modern/e/cha1/description03.html",
+      "citation_text": "The National Diet Library states that the 3 January 1868 Restoration of Imperial Rule established the new Meiji government centered on the imperial court."
+    }
+  ],
+  "review_context": {
+    "request_batch": "polity-japan-identity-split-20260930",
+    "requested_item": 1,
+    "decision_authority": "User-approved Japan identity re-review on 2026-09-30 under the current catastrophic-rupture polity rule; exact Production read-back showed one Japan UUID spanning 593–2020.",
+    "identity_note": "Stage 1 seed only. Stage 2 must relink all pre-1868 Japan Activities here, split Emperor Meiji at the 1868 Restoration boundary, preserve provenance, and remove the seed Activity. More granular bakufu/regime contexts may remain separate governance-context work; this identity is the reviewed higher-order pre-Meiji side of the rupture."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31",
+      "review_state": "reviewed_absent"
+    }
+  }
+}
