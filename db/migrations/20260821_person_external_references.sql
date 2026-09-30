@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS atlas_v2.person_external_references (
   checked_at date NOT NULL,
   document_title text,
   url text,
+  review_state text,
+  review_reason text,
   updated_at timestamptz NOT NULL DEFAULT now(),
   CONSTRAINT person_external_references_pkey PRIMARY KEY (person_id, provider),
   CONSTRAINT person_external_references_provider_check CHECK (provider ~ '^[a-z][a-z0-9_-]*$'),
@@ -17,6 +19,13 @@ CREATE TABLE IF NOT EXISTS atlas_v2.person_external_references (
     (status = 'not_found' AND document_title IS NULL AND url IS NULL)
   )
 );
+
+-- This migration is replayed on already-upgraded Production as well as on a clean schema.
+-- Add decision columns before any historical INSERT so replay remains valid after Unit 8 made
+-- review_state NOT NULL.
+ALTER TABLE atlas_v2.person_external_references
+  ADD COLUMN IF NOT EXISTS review_state text,
+  ADD COLUMN IF NOT EXISTS review_reason text;
 
 CREATE TABLE IF NOT EXISTS atlas_v2.person_profile_mutation_audits (
   request_id text NOT NULL,
@@ -56,11 +65,22 @@ WITH latest_namuwiki AS (
       ELSE CURRENT_DATE
     END AS checked_at,
     CASE WHEN ref->>'status' = 'linked' THEN NULLIF(btrim(ref->>'document_title'), '') ELSE NULL END AS document_title,
-    CASE WHEN ref->>'status' = 'linked' THEN NULLIF(btrim(ref->>'url'), '') ELSE NULL END AS url
+    CASE WHEN ref->>'status' = 'linked' THEN NULLIF(btrim(ref->>'url'), '') ELSE NULL END AS url,
+    CASE
+      WHEN ref->>'status' = 'linked' THEN 'reviewed'
+      WHEN ref->>'review_state' IN ('reviewed_absent','legacy_unverified') THEN ref->>'review_state'
+      ELSE 'reviewed_absent'
+    END AS review_state,
+    CASE
+      WHEN ref->>'status' = 'not_found'
+       AND COALESCE(ref->>'review_state','reviewed_absent') <> 'legacy_unverified'
+      THEN NULLIF(btrim(COALESCE(ref->>'review_reason',ref->>'absence_reason')), '')
+      ELSE NULL
+    END AS review_reason
   FROM latest_namuwiki
 )
-INSERT INTO atlas_v2.person_external_references(person_id, provider, status, checked_at, document_title, url)
-SELECT person_id, 'namuwiki', status, checked_at, document_title, url
+INSERT INTO atlas_v2.person_external_references(person_id, provider, status, checked_at, document_title, url, review_state, review_reason)
+SELECT person_id, 'namuwiki', status, checked_at, document_title, url, review_state, review_reason
 FROM valid_namuwiki
 WHERE status = 'not_found'
    OR (status = 'linked' AND document_title IS NOT NULL AND url IS NOT NULL)
@@ -90,8 +110,8 @@ WITH legacy(person_id, document_title, url) AS (
     ('e116230f-13ee-5a39-82c2-cc9d5bf7edba'::uuid, '부디카', 'https://namu.wiki/w/%EB%B6%80%EB%94%94%EC%B9%B4'),
     ('e727f13f-f80b-42bd-a482-ef9efd87fdac'::uuid, '스파르타쿠스', 'https://namu.wiki/w/%EC%8A%A4%ED%8C%8C%EB%A5%B4%ED%83%80%EC%BF%A0%EC%8A%A4')
 )
-INSERT INTO atlas_v2.person_external_references(person_id, provider, status, checked_at, document_title, url)
-SELECT legacy.person_id, 'namuwiki', 'linked', DATE '2026-08-21', legacy.document_title, legacy.url
+INSERT INTO atlas_v2.person_external_references(person_id, provider, status, checked_at, document_title, url, review_state, review_reason)
+SELECT legacy.person_id, 'namuwiki', 'linked', DATE '2026-08-21', legacy.document_title, legacy.url, 'reviewed', NULL
 FROM legacy
 JOIN atlas_v2.persons p ON p.id = legacy.person_id
 ON CONFLICT (person_id, provider) DO NOTHING;
