@@ -71,7 +71,7 @@ test('Place authoring rejects missing or unresolved provenance', async () => {
 });
 
 test('Source and Place are exposed through the existing governed identity mutation surface', async () => {
-  assert.deepEqual([...AUTHORING_OBJECT_OPERATIONS].sort(),['create_place','create_source']);
+  assert.deepEqual([...AUTHORING_OBJECT_OPERATIONS].sort(),['create_context_object','create_place','create_source','link_person_context','link_polity_governance_context']);
   const calls=[];
   const client={async query(sql,params){
     calls.push(String(sql));
