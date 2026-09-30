@@ -28,6 +28,7 @@ const expected = new Map([
   ['264b069b-994f-4a2c-8af1-7331c631a376', 'eastern-europe'],
   ['29a81993-13e5-4bca-bf9b-d7421913dcd2', 'western-siberia'],
   ['4c3e50cb-d76c-4b7c-b611-222849404142', 'eastern-central-asia-steppe'],
+  ['46534f7e-9247-5644-b5ad-9525c3d4f5d6', 'japan'],
   ['4d4eee6d-389b-4ab6-8bca-fda9314ff796', 'eastern-europe'],
   ['5247c9c0-ca50-452b-9e5a-d7e5585f096d', 'western-europe'],
   ['54433b65-1eb1-5c41-b440-6c4de8e18417', 'japan'],
