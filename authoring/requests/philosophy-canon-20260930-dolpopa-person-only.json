@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:dolpopa:person-only:v1",
+  "person": {
+    "canonical_name_en": "Dolpopa Sherab Gyeltsen",
+    "display_name_ko": "돌포파",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Dolpopa Sherab Gyeltsen (1292–1361) is a securely historical Tibetan Buddhist philosopher associated first with Sakya and later with Jonang, where he became the fourth throne holder and developed the influential zhentong interpretation. His documented career spans multiple monasteries, regions, and institutional contexts, so the reviewed evidence does not justify reducing his philosophical activity to one exact canonical polity interval. ATLAS therefore retains the historical Person without manufacturing a single polity-bound Activity rail.",
+    "basis_code": "secure_1292_1361_sakya_jonang_biography_without_single_intellectual_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://treasuryoflives.org/biographies/view/Dolpopa-Sherab-Gyeltsen/2670",
+        "https://www.kci.go.kr/kciportal/landing/article.kci?arti_id=ART002376342"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "scholarly_biographical_reference",
+      "title": "Dolpopa Sherab Gyeltsen — The Treasury of Lives",
+      "canonical_url": "https://treasuryoflives.org/biographies/view/Dolpopa-Sherab-Gyeltsen/2670",
+      "citation_text": "The Treasury of Lives records Dolpopa Sherab Gyeltsen as a historical Tibetan master, 1292–1361, affiliated with Jonang, Sakya, and other traditions, and as the fourth throne holder of Jonang Monastery.",
+      "locator": "Biographical header, Tradition, Offices Held"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "티베트 불교 타공설(他空說)의 인도 문헌 전거",
+      "canonical_url": "https://www.kci.go.kr/kciportal/landing/article.kci?arti_id=ART002376342",
+      "citation_text": "The peer-reviewed Korean study identifies Dolpopa as the fourteenth-century figure who established the Tibetan Buddhist zhentong doctrine and analyzes the textual basis of his interpretation.",
+      "locator": "Abstract"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-TIBET",
+    "namuwiki_review": "NamuWiki mentions Dolpopa inside the broader `티베트 불교` article, but exact searches for 돌포파/돌뽀빠/Dolpopa did not establish an independent Person document; therefore reviewed not_found is used and no guessed URL is stored.",
+    "timeline_decision": "Secure historical identity and life dates retained; no single polity rail forced across Sakya, Jonang, and wider Tibetan monastic/intellectual contexts."
+  }
+}
