@@ -24,6 +24,13 @@ test("historical P5 schema release evidence retains its six reviewed SQL compone
   }
 });
 
+test("historical P5 schema release remains passive evidence, not a current release executor", () => {
+  const reader = fs.readFileSync(path.join(root, "server/atlas-stage2-schema-release.js"), "utf8");
+  assert.match(reader, /readStage2SchemaRelease/);
+  assert.doesNotMatch(reader, /applyStage2SchemaRelease|pg_advisory_lock|stage2_schema_release_components/);
+  assert.equal(fs.existsSync(path.join(root, "scripts/rehearse-stage2-p5-additive-schema-release.mjs")), false);
+});
+
 test("historical Train 2 evidence is preserved as passive reviewed artifacts", () => {
   const releasePath = "stage2/releases/train2-data-p9.v1.json";
   assertExistingRepoPath(releasePath, "Train 2 release manifest");
