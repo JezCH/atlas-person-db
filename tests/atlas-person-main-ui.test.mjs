@@ -46,7 +46,7 @@ test('Person-centered Main renders all historicity groups in one chronology tabl
   assert.match(main, /\.\.\.visibleUnknownRegistryPersons\(\)/);
   assert.match(main, /개인 활동연대를 방어할 수 없는 인물은 모두 ‘전설, 신화, 연대미상’에 함께 표시합니다/);
   assert.match(main, /dataStore\.loadNonTimelinePersons/);
-  assert.match(dataStore, /non-timeline-persons\.json/);
+  assert.match(dataStore, /__atlas_read_surface=non-timeline-persons/);
   assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY/);
   assert.match(reader, /partitionByHistoricity/);
   assert.match(reader, /PRIMARY_HISTORICITY_VALUE = "historical"/);
