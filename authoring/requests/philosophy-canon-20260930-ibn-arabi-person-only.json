@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:ibn-arabi:person-only:v1",
+  "person": {
+    "canonical_name_en": "Ibn ʿArabī",
+    "display_name_ko": "이븐 아라비",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Ibn ʿArabī (1165–1240) is a securely historical Muslim philosopher and Sufi thinker. SEP documents a life spanning Murcia and al-Andalus, North Africa, Mecca, Iraq, Anatolia, and final settlement in Damascus. Because his intellectual and religious career crosses multiple regions and political contexts, the reviewed evidence does not justify one canonical polity-bound Activity rail.",
+    "basis_code": "secure_1165_1240_andalus_maghrib_mecca_anatolia_damascus_biography_without_single_intellectual_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/entries/ibn-arabi/"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Ibn ‘Arabī — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/ibn-arabi/",
+      "citation_text": "SEP identifies Ibn ʿArabī (1165–1240) as a major Muslim philosopher and thinker, born in Murcia, later traveling through North Africa, Mecca, Iraq and Anatolia before settling in Damascus in 1223.",
+      "locator": "Introduction; Life and Works"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-FINAL-FIVE",
+    "namuwiki_review": "Exact indexed searches for 이븐 아라비/Ibn Arabi/Ibn ʿArabī did not establish an independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "No single polity rail forced across a transregional intellectual and religious career."
+  }
+}
