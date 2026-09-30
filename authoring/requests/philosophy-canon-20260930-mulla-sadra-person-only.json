@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:mulla-sadra:person-only:v1",
+  "person": {
+    "canonical_name_en": "Mullā Ṣadrā",
+    "display_name_ko": "물라 사드라",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Mullā Ṣadrā (c.1571–1636) is a securely historical Safavid-era Persian philosopher. SEP documents successive intellectual phases in Shiraz, Qazvin, Isfahan and later teaching in Shiraz, but the reviewed evidence package does not supply one defensible bounded interval that should stand for his full philosophical career. ATLAS therefore retains the Person without manufacturing a single representative Activity interval.",
+    "basis_code": "secure_1571_1636_safavid_biography_with_multiphase_intellectual_chronology_without_single_bounded_activity_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/archives/spr2021/entries/mulla-sadra/"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Mulla Sadra — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/archives/spr2021/entries/mulla-sadra/",
+      "citation_text": "SEP identifies Mullā Ṣadrā (c.1571–1636) as a major Islamic philosopher and traces his studies from Shiraz to Qazvin and Isfahan and his later teaching career in Shiraz.",
+      "locator": "Introduction; Life and works"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-FINAL-FIVE",
+    "namuwiki_review": "Exact indexed searches for 물라 사드라/몰라 사드라/Mulla Sadra/Mullā Ṣadrā did not establish an independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "Historical person and broad Safavid context are secure, but no single representative bounded intellectual interval is forced."
+  }
+}
