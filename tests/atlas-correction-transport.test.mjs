@@ -17,10 +17,7 @@ const workflow = fs.readFileSync(new URL("../.github/workflows/atlas-correction-
 const api = fs.readFileSync(new URL("../api/atlas-correction-apply.js", import.meta.url), "utf8");
 const runtimeCorrectionSources = [
   "atlas-correction-apply-handler.js",
-  "atlas-correction-manifest-v2-service.js",
-  "atlas-correction-role-merge-v2-service.js",
-  "atlas-correction-role-scope-v2-service.js",
-  "atlas-correction-polity-retire-v2-service.js",
+  "atlas-correction-manifest-v2-service.js",  "atlas-correction-polity-retire-v2-service.js",
   "atlas-correction-polity-name-v2-service.js",
   "atlas-correction-source-citation-v2-service.js",
   "atlas-correction-manifest-v2-unified-service.js"
