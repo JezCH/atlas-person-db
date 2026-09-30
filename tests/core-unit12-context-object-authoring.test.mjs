@@ -24,6 +24,6 @@ test('Unit 12 writer reuses exact canonical identity and fails closed on type co
 });
 test('Unit 12 writer targets the existing Stage 2 schema for all three context identities and Person link surfaces',()=>{
  const sql=fs.readFileSync(new URL('../db/proposals/stage2_entity_boundaries.rehearsal.sql',import.meta.url),'utf8');
- for(const table of ['governance_contexts','people_groups','historical_events','person_people_affiliations','person_event_participations'])assert.match(sql,new RegExp('CREATE TABLE IF NOT EXISTS atlas_v2\\.'+table,'i'));
+ for(const table of ['governance_contexts','people_groups','historical_events','person_people_affiliations','person_event_participations'])assert.match(sql,new RegExp('CREATE TABLE atlas_v2\\.'+table,'i'));
  assert.doesNotMatch(sql,/insert into atlas_v2\.polities/i);
 });
