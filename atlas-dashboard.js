@@ -720,11 +720,11 @@
 
       <section class="dashboard-kpi-grid" aria-label="핵심 통계">
         ${kpiCard({code:"persons",label:"PERSONS",primary:value(k.persons),detail:`historical ${value(k.historical)} · 기타 ${value(k.other_historicity)}`,drilldown:kd.persons})}
+        ${kpiCard({code:"activities",label:"RUNTIME ACTIVITIES",primary:value(k.activities),detail:"Person Runtime projection",drilldown:kd.activities})}
+        ${kpiCard({code:"polities",label:"USED POLITIES",primary:value(k.polities),detail:"현재 Person Activity에서 참조",drilldown:kd.polities})}
         ${kpiCard({code:"domain",label:"DOMAIN COVERAGE",primary:pct(w.domain.percentage),detail:`${value(w.domain.done)} / ${value(w.domain.total)} · 잔여 ${value(w.domain.remaining)}`,drilldown:kd.domain})}
         ${kpiCard({code:"namuwiki",label:"NAMUWIKI REVIEW",primary:pct(w.namuwiki.percentage),detail:`연결 ${value(w.namuwiki.linked)} · 독립 문서 없음 ${value(w.namuwiki.no_exact_document)} · 관련·파생만 ${value(w.namuwiki.related_or_derivative_only)} · URL 대기 ${value(w.namuwiki.target_url_pending)} · 사유 미기록 ${value(w.namuwiki.reviewed_reason_unrecorded)} · 검증 필요 ${value(w.namuwiki.remaining)}`,drilldown:kd.namuwiki})}
         ${kpiCard({code:"spatial",label:"SPATIAL READY",primary:pct(w.spatial.percentage),detail:`${value(w.spatial.done)} / ${value(w.spatial.total)} · 잔여 ${value(w.spatial.remaining)}`,drilldown:kd.spatial})}
-        ${kpiCard({code:"activities",label:"RUNTIME ACTIVITIES",primary:value(k.activities),detail:"Person Runtime projection",drilldown:kd.activities})}
-        ${kpiCard({code:"polities",label:"USED POLITIES",primary:value(k.polities),detail:"현재 Person Activity에서 참조",drilldown:kd.polities})}
       </section>
 
       <section class="dashboard-panel card">
@@ -746,6 +746,88 @@
           <span>현재 활성 Compile의 immutable exclusion snapshot</span>
           <span>${runtimeExclusions?.compiled_at ? escapeHtml(formatTimestamp(runtimeExclusions.compiled_at)) : "Compile 시각 —"}</span>
         </div>
+      </section>
+
+      <section class="dashboard-main-grid">
+        <article class="dashboard-panel card">
+          <div class="dashboard-panel-head"><div><p class="eyebrow">WORK FRONTIER</p><h3>작업 진행</h3></div><span>실데이터 기준</span></div>
+          <div class="dashboard-progress-list">
+            ${segmentedProgressRow("대표 분야 분류", w.domain, "8개 대표 분야 + 미분류 상태를 전체 인물 대비 표시", domainWorkSegments, { doneLabel:"배정 완료", remainingLabel:"미분류" })}
+            ${namuwikiProgressRow(w.namuwiki)}
+            ${segmentedProgressRow("Spatial 준비", w.spatial, "배치 완료와 미해결 사유를 전체 Activity 대비 표시", spatialWorkSegments, {
+              doneLabel:"배치 완료",
+              remainingLabel:"미해결",
+              extraMeta:[
+                { label:"검토 대기", value:w.spatial?.review, unit:"정치체" },
+                { label:"대권역만", value:w.spatial?.macro_only, unit:"정치체" }
+              ]
+            })}
+            ${segmentedProgressRow("활동 연결", w.runtime_activity, "Activity 연결 유무를 전체 인물 대비 표시", activityWorkSegments, { doneLabel:"연결 완료", remainingLabel:"미연결" })}
+          </div>
+        </article>
+
+        <article class="dashboard-panel card">
+          <div class="dashboard-panel-head"><div><p class="eyebrow">DATA QUALITY</p><h3>구조·예외 상태</h3></div><span>중복 지표 제외</span></div>
+          <div class="dashboard-issue-grid">
+            <button type="button" data-dashboard-quality="spatial_unresolved" aria-controls="dashboardQualityTargets" aria-expanded="false"${qd.spatial_unresolved?.drilldown_available ? "" : " disabled"}><span>Spatial 미해결</span><strong>${value(q.spatial_unresolved)}</strong></button>
+            <button type="button" data-dashboard-quality="spatial_review" aria-controls="dashboardQualityTargets" aria-expanded="false"${qd.spatial_review?.drilldown_available ? "" : " disabled"}><span>Spatial 검토 대기</span><strong>${value(q.spatial_review)}</strong></button>
+            <button type="button" data-dashboard-quality="no_runtime_activity"${qd.no_runtime_activity?.drilldown_available ? "" : " disabled"}><span>활동 연결 없음</span><strong>${value(q.no_runtime_activity)}</strong></button>
+            <button type="button" data-dashboard-quality="non_timeline_registry" aria-controls="dashboardQualityTargets" aria-expanded="false"${qd.non_timeline_registry?.drilldown_available ? "" : " disabled"}><span>비연대표 등록</span><strong>${value(q.non_timeline_registry)}</strong></button>
+          </div>
+          <div id="dashboardQualityTargets" class="dashboard-quality-targets" hidden aria-live="polite"></div>
+        </article>
+      </section>
+
+      <section class="dashboard-panel card" aria-label="데이터 완성도 행렬">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">COMPLETENESS MATRIX</p><h3>축별 완성도</h3></div><span>인물 3항목 · 활동 3항목</span></div>
+        ${completenessTable(completeness)}
+        <div id="dashboardCompletenessActivityTargets" class="dashboard-activity-completeness-targets" hidden aria-live="polite"></div>
+        <div class="dashboard-progress-meta">
+          <span>인물과 활동 단위는 합산하지 않음</span>
+          <span>— = 기준 원본 확인 불가</span>
+        </div>
+      </section>
+
+      <section class="dashboard-lower-grid" aria-label="미완료 사유">
+        ${incompleteCards.length
+          ? incompleteCards.map(([code,label,item]) => breakdownCard(code,label,item)).join("")
+          : '<article class="dashboard-panel card"><div class="dashboard-panel-head"><div><p class="eyebrow">INCOMPLETE REASONS</p><h3>미완료 원인 없음</h3></div><span>0</span></div></article>'}
+      </section>
+
+      <section class="dashboard-panel card" aria-label="최근 프로젝트 변경 타임라인">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">RECENT DELTA · RECENT ACTIVITY TIMELINE</p><h3>최근 추적 변경 타임라인</h3></div><span>${timeline.available ? `${value(timeline.event_count)}건 기록 · ${value(timeline.total_change_count)}건 변경` : "원본 확인 불가"}</span></div>
+        ${timeline.available
+          ? (timeline.entries.length
+            ? `<div class="dashboard-timeline">${timeline.entries.map(recentTimelineEntry).join("")}</div>`
+            : '<div class="dashboard-heatmap-unavailable">현재 추적 원장에 표시할 변경이 없습니다.</div>')
+          : '<div class="dashboard-heatmap-unavailable">최근 변경 기준 원본을 확인할 수 없습니다.</div>'}
+        <div class="dashboard-timeline-summary">${timeline.available ? recentTimelineSummary(timeline) : ""}</div>
+        <div class="dashboard-progress-meta">
+          <span>인물 단위 ${timeline.available ? value(timeline.person_scoped_count) : "—"} · 프로젝트 전체 ${timeline.available ? value(timeline.project_wide_count) : "—"}</span>
+          <span>추적 원본 ${escapeHtml((rd.tracked_sources || []).map(mutationKindLabel).join(" · ") || "—")}</span>
+          <span>${rd.gaps?.length ? `추적 누락 · ${escapeHtml(rd.gaps.map(reasonLabel).join(", "))}` : "추적 범위 확인 완료"}</span>
+        </div>
+      </section>
+
+      <section class="dashboard-lower-grid">
+        <article class="dashboard-panel card">
+          <div class="dashboard-panel-head"><div><p class="eyebrow">PERSON DOMAINS</p><h3>대표 분야 분포</h3></div><span>분야 8색 체계 적용</span></div>
+          <div class="dashboard-domain-list">${domainRows}</div>
+        </article>
+      </section>
+
+      <section class="dashboard-panel card" aria-label="시대별·권역별 활동 분포">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">ERA × REGION COVERAGE</p><h3>시공간 활동 분포</h3></div><span>${heatmap.available ? `배치 ${value(heatmap.placed_activity_count)} · 미해결 ${value(heatmap.unresolved_activity_count)}` : "원본 확인 불가"}</span></div>
+        ${heatmapTable(heatmap)}
+        <div class="dashboard-progress-meta">
+          <span>10개 시대 구간 × Spatial 대권역 · 색 농도는 시대별 비중 기준</span>
+          <span>한 활동은 같은 시대·권역에서 1회 집계하며, 여러 시대에 걸치면 각 시대에 각각 집계</span>
+        </div>
+      </section>
+
+      <section class="dashboard-panel card" aria-label="정치체별 인물과 활동 집중도">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">POLITY CONCENTRATION</p><h3>정치체별 인물 집중도</h3></div><span>현재 Person Runtime에서 즉시 파생</span></div>
+        ${polityConcentrationMarkup(polityConcentration)}
       </section>
 
       <section class="dashboard-panel card" aria-label="시스템 및 Production 상태">
@@ -791,90 +873,6 @@
           <span>원본 갱신 시각과 브라우저 마지막 읽기 시각을 구분</span>
           <span>갱신 시각 미제공 원본은 — · 최신/지연 상태를 임의 판정하지 않음</span>
         </div>
-      </section>
-
-      <section class="dashboard-main-grid">
-        <article class="dashboard-panel card">
-          <div class="dashboard-panel-head"><div><p class="eyebrow">WORK FRONTIER</p><h3>작업 진행</h3></div><span>실데이터 기준</span></div>
-          <div class="dashboard-progress-list">
-            ${segmentedProgressRow("대표 분야 분류", w.domain, "8개 대표 분야 + 미분류 상태를 전체 인물 대비 표시", domainWorkSegments, { doneLabel:"배정 완료", remainingLabel:"미분류" })}
-            ${namuwikiProgressRow(w.namuwiki)}
-            ${segmentedProgressRow("Spatial 준비", w.spatial, "배치 완료와 미해결 사유를 전체 Activity 대비 표시", spatialWorkSegments, {
-              doneLabel:"배치 완료",
-              remainingLabel:"미해결",
-              extraMeta:[
-                { label:"검토 대기", value:w.spatial?.review, unit:"정치체" },
-                { label:"대권역만", value:w.spatial?.macro_only, unit:"정치체" }
-              ]
-            })}
-            ${segmentedProgressRow("활동 연결", w.runtime_activity, "Activity 연결 유무를 전체 인물 대비 표시", activityWorkSegments, { doneLabel:"연결 완료", remainingLabel:"미연결" })}
-          </div>
-        </article>
-
-        <article class="dashboard-panel card">
-          <div class="dashboard-panel-head"><div><p class="eyebrow">DATA QUALITY</p><h3>구조·예외 상태</h3></div><span>중복 지표 제외</span></div>
-          <div class="dashboard-issue-grid">
-            <button type="button" data-dashboard-quality="spatial_unresolved" aria-controls="dashboardQualityTargets" aria-expanded="false"${qd.spatial_unresolved?.drilldown_available ? "" : " disabled"}><span>Spatial 미해결</span><strong>${value(q.spatial_unresolved)}</strong></button>
-            <button type="button" data-dashboard-quality="spatial_review" aria-controls="dashboardQualityTargets" aria-expanded="false"${qd.spatial_review?.drilldown_available ? "" : " disabled"}><span>Spatial 검토 대기</span><strong>${value(q.spatial_review)}</strong></button>
-            <button type="button" data-dashboard-quality="no_runtime_activity"${qd.no_runtime_activity?.drilldown_available ? "" : " disabled"}><span>활동 연결 없음</span><strong>${value(q.no_runtime_activity)}</strong></button>
-            <button type="button" data-dashboard-quality="non_timeline_registry" aria-controls="dashboardQualityTargets" aria-expanded="false"${qd.non_timeline_registry?.drilldown_available ? "" : " disabled"}><span>비연대표 등록</span><strong>${value(q.non_timeline_registry)}</strong></button>
-          </div>
-          <div id="dashboardQualityTargets" class="dashboard-quality-targets" hidden aria-live="polite"></div>
-        </article>
-      </section>
-
-      <section class="dashboard-panel card" aria-label="데이터 완성도 행렬">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">COMPLETENESS MATRIX</p><h3>축별 완성도</h3></div><span>인물 3항목 · 활동 3항목</span></div>
-        ${completenessTable(completeness)}
-        <div id="dashboardCompletenessActivityTargets" class="dashboard-activity-completeness-targets" hidden aria-live="polite"></div>
-        <div class="dashboard-progress-meta">
-          <span>인물과 활동 단위는 합산하지 않음</span>
-          <span>— = 기준 원본 확인 불가</span>
-        </div>
-      </section>
-
-      <section class="dashboard-panel card" aria-label="시대별·권역별 활동 분포">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">ERA × REGION COVERAGE</p><h3>시공간 활동 분포</h3></div><span>${heatmap.available ? `배치 ${value(heatmap.placed_activity_count)} · 미해결 ${value(heatmap.unresolved_activity_count)}` : "원본 확인 불가"}</span></div>
-        ${heatmapTable(heatmap)}
-        <div class="dashboard-progress-meta">
-          <span>10개 시대 구간 × Spatial 대권역 · 색 농도는 시대별 비중 기준</span>
-          <span>한 활동은 같은 시대·권역에서 1회 집계하며, 여러 시대에 걸치면 각 시대에 각각 집계</span>
-        </div>
-      </section>
-
-      <section class="dashboard-panel card" aria-label="정치체별 인물과 활동 집중도">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">POLITY CONCENTRATION</p><h3>정치체별 인물 집중도</h3></div><span>현재 Person Runtime에서 즉시 파생</span></div>
-        ${polityConcentrationMarkup(polityConcentration)}
-      </section>
-
-      <section class="dashboard-panel card" aria-label="최근 프로젝트 변경 타임라인">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">RECENT DELTA · RECENT ACTIVITY TIMELINE</p><h3>최근 추적 변경 타임라인</h3></div><span>${timeline.available ? `${value(timeline.event_count)}건 기록 · ${value(timeline.total_change_count)}건 변경` : "원본 확인 불가"}</span></div>
-        ${timeline.available
-          ? (timeline.entries.length
-            ? `<div class="dashboard-timeline">${timeline.entries.map(recentTimelineEntry).join("")}</div>`
-            : '<div class="dashboard-heatmap-unavailable">현재 추적 원장에 표시할 변경이 없습니다.</div>')
-          : '<div class="dashboard-heatmap-unavailable">최근 변경 기준 원본을 확인할 수 없습니다.</div>'}
-        <div class="dashboard-timeline-summary">${timeline.available ? recentTimelineSummary(timeline) : ""}</div>
-        <div class="dashboard-progress-meta">
-          <span>인물 단위 ${timeline.available ? value(timeline.person_scoped_count) : "—"} · 프로젝트 전체 ${timeline.available ? value(timeline.project_wide_count) : "—"}</span>
-          <span>추적 원본 ${escapeHtml((rd.tracked_sources || []).map(mutationKindLabel).join(" · ") || "—")}</span>
-          <span>${rd.gaps?.length ? `추적 누락 · ${escapeHtml(rd.gaps.map(reasonLabel).join(", "))}` : "추적 범위 확인 완료"}</span>
-        </div>
-      </section>
-
-
-
-      <section class="dashboard-lower-grid" aria-label="미완료 사유">
-        ${incompleteCards.length
-          ? incompleteCards.map(([code,label,item]) => breakdownCard(code,label,item)).join("")
-          : '<article class="dashboard-panel card"><div class="dashboard-panel-head"><div><p class="eyebrow">INCOMPLETE REASONS</p><h3>미완료 원인 없음</h3></div><span>0</span></div></article>'}
-      </section>
-
-      <section class="dashboard-lower-grid">
-        <article class="dashboard-panel card">
-          <div class="dashboard-panel-head"><div><p class="eyebrow">PERSON DOMAINS</p><h3>대표 분야 분포</h3></div><span>분야 8색 체계 적용</span></div>
-          <div class="dashboard-domain-list">${domainRows}</div>
-        </article>
       </section>
 
       <section class="dashboard-tools card">
