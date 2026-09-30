@@ -93,14 +93,21 @@ async function currentTimelineDisposition(client, personId, { forUpdate = false 
   return normalizeRow(result.rows?.[0] || null);
 }
 
+function timelineDispositionMismatchFields(left, right) {
+  if (!left || !right) return Object.freeze(["row"]);
+  const fields = [];
+  if (left.person_id !== right.person_id) fields.push("person_id");
+  if (left.disposition !== right.disposition) fields.push("disposition");
+  if (left.reason !== right.reason) fields.push("reason");
+  if (left.basis_code !== right.basis_code) fields.push("basis_code");
+  if (left.traditional_year !== right.traditional_year) fields.push("traditional_year");
+  if (left.traditional_year_alternative !== right.traditional_year_alternative) fields.push("traditional_year_alternative");
+  if (!isDeepStrictEqual(left.review_evidence || {}, right.review_evidence || {})) fields.push("review_evidence");
+  return Object.freeze(fields);
+}
+
 function sameTimelineDisposition(left, right) {
-  if (!left || !right) return false;
-  return left.disposition === right.disposition
-    && left.reason === right.reason
-    && left.basis_code === right.basis_code
-    && left.traditional_year === right.traditional_year
-    && left.traditional_year_alternative === right.traditional_year_alternative
-    && isDeepStrictEqual(left.review_evidence || {}, right.review_evidence || {});
+  return timelineDispositionMismatchFields(left, right).length === 0;
 }
 
 async function setTimelineDisposition(client, personId, raw) {
@@ -147,7 +154,10 @@ async function setTimelineDisposition(client, personId, raw) {
     ]
   );
   const after=normalizeRow(result.rows?.[0]);
-  if (!sameTimelineDisposition(after, nextRow)) throw new Error("PERSON_TIMELINE_VERIFICATION_FAILED");
+  const mismatchFields = timelineDispositionMismatchFields(after, nextRow);
+  if (mismatchFields.length) {
+    throw new Error(`PERSON_TIMELINE_VERIFICATION_FAILED:${mismatchFields.join(",")}`);
+  }
   return Object.freeze({ replay:false, before:current, after });
 }
 
@@ -156,6 +166,7 @@ module.exports=Object.freeze({
   DISPOSITION_SET,
   normalizeTimelineDisposition,
   currentTimelineDisposition,
+  timelineDispositionMismatchFields,
   sameTimelineDisposition,
   setTimelineDisposition
 });
