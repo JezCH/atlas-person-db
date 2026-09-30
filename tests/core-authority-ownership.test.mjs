@@ -86,14 +86,8 @@ test("every ownership claim is anchored to current executable/source evidence", 
 
 test("known Unit 1 shadow-writer debts stay explicit until their owning cleanup units remove them", () => {
   const byId = new Map(registry.resources.map((resource) => [resource.id, resource]));
-  assert.deepEqual(
-    byId.get("source_identity").shadow_writers.map((item) => item.path).sort(),
-    [
-      "server/atlas-correction-source-citation-v2-service.js",
-      "server/atlas-correction-v2-stage2-assertions.js",
-      "server/atlas-human-authoring-service.js"
-    ].sort()
-  );
+  assert.equal(byId.get("source_identity").status, "single_writer");
+  assert.deepEqual(byId.get("source_identity").shadow_writers, []);
   assert.deepEqual(
     byId.get("person_external_reference").shadow_writers.map((item) => item.path).sort(),
     [
