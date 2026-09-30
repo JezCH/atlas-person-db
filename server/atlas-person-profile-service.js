@@ -42,7 +42,18 @@ function normalizeNamuWikiInput(value) {
   const raw = value && typeof value === "object" && !Array.isArray(value)
     ? value
     : (String(value || "").trim().includes("://") ? { status:"linked", url:value } : { status:"linked", document_title:value });
-  const normalized = normalizeNamuWikiDecision(raw, { allowTitleShorthand:true });
+  let normalized;
+  try {
+    normalized = normalizeNamuWikiDecision(raw, { allowTitleShorthand:true });
+  } catch (error) {
+    const code=String(error?.message || "");
+    if (code === "EXTERNAL_REFERENCE_NAMUWIKI_NOT_FOUND_FIELDS_INVALID") throw new Error("PERSON_NAMUWIKI_NOT_FOUND_REFERENCE_MUST_BE_EMPTY");
+    if (code === "EXTERNAL_REFERENCE_NAMUWIKI_URL_INVALID") throw new Error("PERSON_NAMUWIKI_URL_INVALID");
+    if (code === "EXTERNAL_REFERENCE_NAMUWIKI_DOCUMENT_TITLE_REQUIRED") throw new Error("PERSON_NAMUWIKI_DOCUMENT_TITLE_REQUIRED");
+    if (code === "EXTERNAL_REFERENCE_NAMUWIKI_STATUS_INVALID") throw new Error("PERSON_NAMUWIKI_STATUS_UNSUPPORTED");
+    if (code === "EXTERNAL_REFERENCE_NAMUWIKI_REQUIRED") throw new Error("PERSON_NAMUWIKI_VALUE_REQUIRED");
+    throw error;
+  }
   return Object.freeze({
     provider:normalized.provider,
     status:normalized.status,
