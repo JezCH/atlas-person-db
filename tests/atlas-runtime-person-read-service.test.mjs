@@ -58,3 +58,41 @@ test('runtime Activity display resolves one fully-containing temporal polity des
   assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/td_en\.polity_designation_id\s*=\s*td\.id/);
   assert.match(runtimeRead.ACTIVITY_DETAIL_SQL,/td_ko\.polity_designation_id\s*=\s*td\.id/);
 });
+
+
+test('runtime Person reads preserve canonical NamuWiki review state and reason',async()=>{
+  assert.match(runtimeRead.PERSON_READ_SQL,/'review_state',per\.review_state/);
+  assert.match(runtimeRead.PERSON_READ_SQL,/'review_reason',per\.review_reason/);
+  assert.match(runtimeRead.PERSON_DETAIL_SQL,/'review_state',per\.review_state/);
+  assert.match(runtimeRead.PERSON_DETAIL_SQL,/'review_reason',per\.review_reason/);
+
+  const client={async query(sql){
+    assert.equal(sql,runtimeRead.PERSON_READ_SQL);
+    return {rows:[{
+      id:'11111111-1111-4111-8111-111111111111',
+      person_type:'historical',
+      historicity:'historical',
+      names:[{locale:'en',name:'Example',name_type:'canonical',is_preferred:true}],
+      descriptions:[],
+      external_references:{
+        namuwiki:{
+          status:'not_found',
+          checked_at:'2026-09-30',
+          review_state:'reviewed_absent',
+          review_reason:'exact_target_url_pending'
+        }
+      },
+      activity_count:0,
+      first_activity_year:null,
+      last_activity_year:null
+    }]};
+  }};
+
+  const result=await runtimeRead.readPersons({client});
+  assert.deepEqual(result.persons[0].external_references.namuwiki,{
+    status:'not_found',
+    checked_at:'2026-09-30',
+    review_state:'reviewed_absent',
+    absence_reason:'exact_target_url_pending'
+  });
+});
