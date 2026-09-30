@@ -1,6 +1,6 @@
 "use strict";
 
-const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v6";
+const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v7";
 const CONTEXT_POLITY_RELATIONSHIP_FK_KEY = "atlas_v2.person_politics_context_polities.person_politics_id";
 
 const EXPECTED_PERSON_FKS = Object.freeze([
@@ -10,6 +10,7 @@ const EXPECTED_PERSON_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.person_external_references.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_names.person_id", delete_action: "CASCADE" }),
   Object.freeze({ key: "atlas_v2.person_people_affiliations.person_id", delete_action: "RESTRICT" }),
+  Object.freeze({ key: "atlas_v2.person_place_facts.person_id", delete_action: "CASCADE" }),
   Object.freeze({ key: "atlas_v2.person_politics_v2.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_portraits.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_sources.person_id", delete_action: "CASCADE" }),
@@ -120,7 +121,7 @@ async function inspectPersonMergeReferenceReadiness(client) {
      order by n.nspname,c.relname,t.tgname`, [[
       "persons","person_names","person_sources","person_descriptions","person_politics_v2","person_politics_sources",
       "chronology_claims","relationship_descriptions","person_people_affiliations","person_people_affiliation_sources",
-      "person_event_participations","person_event_participation_sources","person_external_references","person_portraits",
+      "person_event_participations","person_event_participation_sources","person_external_references","person_portraits","person_place_facts",
       "person_timeline_dispositions","person_profile_mutation_audits","authoring_manifest_runs","person_duplicate_revalidation_requirements"
     ]]);
   const allUserTriggers = (triggerResult.rows || []).map((row) => `${row.table_schema}.${row.table_name}.${row.trigger_name}`);
