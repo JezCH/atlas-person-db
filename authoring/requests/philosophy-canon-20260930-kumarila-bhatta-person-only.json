@@ -45,6 +45,11 @@
   "review_context": {
     "request_batch": "PHILOSOPHY-CANON-54-20260930-INDIA-BRAHMANICAL-JAIN-CLOSURE",
     "namuwiki_review": "Exact indexed searches for 쿠마릴라 밧타/쿠마릴라 returned no independent NamuWiki Person document; no guessed URL.",
-    "timeline_decision": "Historical Person retained without a fabricated polity rail."
+    "timeline_decision": "Historical Person retained without a fabricated polity rail.",
+    "apply_retry": {
+      "previous_run": 36706797873,
+      "previous_code": "PERSON_TIMELINE_VERIFICATION_FAILED",
+      "resolution": "PR #1709 changed timeline review_evidence verification from JSON string key-order comparison to structural equality; historical review payload is unchanged."
+    }
   }
 }
