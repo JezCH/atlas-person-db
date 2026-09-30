@@ -8,7 +8,7 @@
     "baseline_digest": "LIVE_SNAPSHOT_AT_EXECUTION"
   },
   "batch_id": "polity_japan_allied_occupation_designation_and_1952_split_20260930_v1",
-  "status": "REVIEWED_ALLIED_OCCUPATION_DISPLAY_BOUNDARY",
+  "status": "REVIEWED_ALLIED_OCCUPATION_DISPLAY_BOUNDARY_RETRY_AFTER_RESTORE_SOURCE_BINDING",
   "release_order": 1270,
   "new_activity_uuid_allocations": [
     {

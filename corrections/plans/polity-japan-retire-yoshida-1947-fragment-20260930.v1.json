@@ -8,7 +8,7 @@
     "baseline_digest": "LIVE_SNAPSHOT_AT_EXECUTION"
   },
   "batch_id": "polity_japan_retire_yoshida_1947_artificial_fragment_20260930_v1",
-  "status": "REVIEWED_RETIRE_ARTIFICIAL_1947_FRAGMENT",
+  "status": "REVIEWED_RETIRE_ARTIFICIAL_1947_FRAGMENT_RETRY_AFTER_RESTORE_SOURCE_BINDING",
   "release_order": 1260,
   "execution_rules": {
     "exact_live_before_snapshot_required": true,

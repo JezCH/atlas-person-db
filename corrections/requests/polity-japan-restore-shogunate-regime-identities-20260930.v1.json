@@ -10,7 +10,8 @@
       "Tokugawa Shogunate",
       "Toyotomi Regime"
     ],
-    "safety": "Only tombstones with survivor_polity_id=NULL and exact retirement metadata may be restored. Preferred names are recreated with deterministic UUID5 rows; Activities are relinked by later release-ordered plans."
+    "safety": "Only tombstones with survivor_polity_id=NULL and exact retirement metadata may be restored. Preferred names are recreated with deterministic UUID5 rows; Activities are relinked by later release-ordered plans.",
+    "retry_context": "First Production dry-run rejected the restore manifest because restore_source_ids were absent. No mutation committed. Bind each restored identity to an already-live reviewed historical source and replay the full release chain."
   },
   "operations": [
     {
@@ -43,6 +44,9 @@
           "name_type": "display",
           "is_preferred": true
         }
+      ],
+      "restore_source_ids": [
+        "e20a8f0f-ef96-4b86-8b73-751bd3e3c207"
       ]
     },
     {
@@ -75,6 +79,9 @@
           "name_type": "display",
           "is_preferred": true
         }
+      ],
+      "restore_source_ids": [
+        "a04aae2d-ce8f-40be-b4a9-fa764bcc3010"
       ]
     },
     {
@@ -107,6 +114,9 @@
           "name_type": "display",
           "is_preferred": true
         }
+      ],
+      "restore_source_ids": [
+        "2a2e1f1f-3bba-561b-9cf6-4d88ede72cb7"
       ]
     }
   ]

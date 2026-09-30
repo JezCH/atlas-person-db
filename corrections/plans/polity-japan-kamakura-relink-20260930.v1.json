@@ -8,7 +8,7 @@
     "baseline_digest": "LIVE_SNAPSHOT_AT_EXECUTION"
   },
   "batch_id": "polity_japan_kamakura_relink_20260930_v1",
-  "status": "REVIEWED_KAMAKURA_IDENTITY_REPAIR",
+  "status": "REVIEWED_KAMAKURA_IDENTITY_REPAIR_RETRY_AFTER_RESTORE_SOURCE_BINDING",
   "release_order": 1210,
   "execution_rules": {
     "exact_live_before_snapshot_required": true,

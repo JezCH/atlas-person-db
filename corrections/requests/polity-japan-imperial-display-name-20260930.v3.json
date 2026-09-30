@@ -5,7 +5,8 @@
   "release_order": 1240,
   "evidence": {
     "decision": "Use the historically conventional state label Empire of Japan / 대일본제국 for the imperial-era Japan Polity display. The internal canonical_key remains a stable technical identifier in this correction family; temporal cleanup is handled separately.",
-    "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251"
+    "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+    "retry_context": "Re-selected because the preceding restore request failed before any Production mutation; this request was never reached."
   },
   "operations": [
     {
