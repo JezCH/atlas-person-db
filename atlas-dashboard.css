@@ -186,6 +186,6 @@
 .dashboard-work-segment[data-work-segment="spatial-missing"],.dashboard-work-segment-item[data-work-segment="spatial-missing"]>i{background:#b86f3f}
 .dashboard-work-segment[data-work-segment="spatial-macro"],.dashboard-work-segment-item[data-work-segment="spatial-macro"]>i{background:#d39a22}
 .dashboard-work-segment[data-work-segment="spatial-period"],.dashboard-work-segment-item[data-work-segment="spatial-period"]>i{background:#2f7fb9}
-.dashboard-work-segment[data-work-segment="spatial-conflict"],.dashboard-work-segment-item[data-work-segment="spatial-conflict"]>i{background:#9a5ba5}
+.dashboard-work-segment[data-work-segment="spatial-conflict"],.dashboard-work-segment-item[data-work-segment="spatial-conflict"]>i{background:#8b6f9f}
 .dashboard-work-segment[data-work-segment="spatial-other"],.dashboard-work-segment-item[data-work-segment="spatial-other"]>i,.dashboard-work-segment[data-work-segment="activity-missing"],.dashboard-work-segment-item[data-work-segment="activity-missing"]>i{background:#cbd3df}
 @media(max-width:600px){.dashboard-work-segment-legend{grid-template-columns:1fr}.dashboard-work-segment-track{height:10px}.dashboard-work-detail-summary{gap:6px 10px}}
