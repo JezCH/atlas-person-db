@@ -307,8 +307,6 @@ async function resolveOrCreateSources(client, requestId, sources) {
       continue;
     }
     const sourceKey = `human-authoring:${requestId}:${index + 1}`;
-    const collision = await client.query(`select id::text from atlas_v2.sources where source_key=$1 limit 1`, [sourceKey]);
-    if (collision.rows.length) throw new Error(`HUMAN_AUTHORING_SOURCE_KEY_COLLISION:${index + 1}`);
     let outcome;
     try {
       outcome = await createSource(client, {
@@ -317,10 +315,11 @@ async function resolveOrCreateSources(client, requestId, sources) {
         title:source.title,
         canonical_url:source.canonical_url,
         citation_text:source.citation_text
-      });
+      }, { lock:false, keyCollision:"error" });
     } catch (error) {
       const code=String(error?.message || "");
       if (code === "SOURCE_CANONICAL_URL_AMBIGUOUS_REVIEW_REQUIRED") throw new Error(`HUMAN_AUTHORING_SOURCE_CANONICAL_URL_AMBIGUOUS:${index + 1}`);
+      if (code === "SOURCE_KEY_CONFLICT") throw new Error(`HUMAN_AUTHORING_SOURCE_KEY_COLLISION:${index + 1}`);
       if (code === "SOURCE_CREATE_FAILED") throw new Error(`HUMAN_AUTHORING_SOURCE_CREATE_FAILED:${index + 1}`);
       throw error;
     }
