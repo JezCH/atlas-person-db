@@ -21,7 +21,7 @@ concurrency:
 jobs:
   dispatch:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     env:
       ATLAS_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
     steps:
@@ -54,14 +54,48 @@ jobs:
           echo "PRODUCTION_RUNTIME_NOT_AT_SCHEMA_BOOTSTRAP_SHA:${GITHUB_SHA}" >&2
           exit 1
 
-      - name: Dispatch bounded schema bootstrap
+      - name: Dispatch bounded schema bootstrap and require child success
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
+          before_json="$(gh run list \
+            --repo "$GITHUB_REPOSITORY" \
+            --workflow atlas-authoring-apply.yml \
+            --branch main \
+            --event workflow_dispatch \
+            --limit 20 \
+            --json databaseId,headSha,createdAt,status,conclusion)"
+          previous_id="$(jq -r --arg sha "$GITHUB_SHA" '[.[] | select(.headSha==$sha)] | sort_by(.createdAt) | reverse | .[0].databaseId // empty' <<<"$before_json")"
+
           gh workflow run atlas-authoring-apply.yml \
             --repo "$GITHUB_REPOSITORY" \
             --ref main \
             -f bootstrap_only=true
           echo "Dispatched ATLAS Authoring Apply bootstrap-only for ${GITHUB_SHA}."
+
+          child_run_id=""
+          for attempt in $(seq 1 30); do
+            runs_json="$(gh run list \
+              --repo "$GITHUB_REPOSITORY" \
+              --workflow atlas-authoring-apply.yml \
+              --branch main \
+              --event workflow_dispatch \
+              --limit 20 \
+              --json databaseId,headSha,createdAt,status,conclusion)"
+            child_run_id="$(jq -r --arg sha "$GITHUB_SHA" --arg previous "$previous_id" '
+              [.[] | select(.headSha==$sha and ((.databaseId|tostring) != $previous))]
+              | sort_by(.createdAt) | reverse | .[0].databaseId // empty
+            ' <<<"$runs_json")"
+            if [[ -n "$child_run_id" ]]; then
+              echo "Bootstrap child run: $child_run_id"
+              break
+            fi
+            sleep 2
+          done
+          [[ -n "$child_run_id" ]] || { echo "AUTHORING_BOOTSTRAP_CHILD_RUN_NOT_FOUND" >&2; exit 1; }
+
+          gh run watch "$child_run_id" \
+            --repo "$GITHUB_REPOSITORY" \
+            --exit-status
