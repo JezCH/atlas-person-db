@@ -1,5 +1,5 @@
 name: ATLAS Audit Inventory
-# 2026-09-30: capture exact Production baseline for reviewed Japan polity identity repair.
+# 2026-09-30: capture exact Production baseline before the reviewed Japan polity lineage repair.
 
 on:
   push:
