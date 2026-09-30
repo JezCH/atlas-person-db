@@ -50,7 +50,7 @@ function normalizeNamuWikiDecision(raw, { checkedAtRequired = false, allowTitleS
   if (status === "not_found") {
     if (text(input.document_title) || text(input.url || input.canonical_url)) throw new Error("EXTERNAL_REFERENCE_NAMUWIKI_NOT_FOUND_FIELDS_INVALID");
     const reviewReason = text(input.review_reason) || null;
-    return Object.freeze({ provider:NAMUWIKI_PROVIDER, status, checked_at:checkedAt, document_title:null, url:null, review_state:"reviewed", review_reason:reviewReason });
+    return Object.freeze({ provider:NAMUWIKI_PROVIDER, status, checked_at:checkedAt, document_title:null, url:null, review_state:"reviewed_absent", review_reason:reviewReason });
   }
 
   let url = canonicalNamuWikiUrl(input.url || input.canonical_url);
@@ -106,9 +106,9 @@ async function setNamuWikiDecision(client, personId, rawDecision, {
     if (!refreshCheckedAtOnReplay) return Object.freeze({ replay:true, before:current, after:current });
     const refreshed = await client.query(`
       update atlas_v2.person_external_references
-         set checked_at=current_date,review_state='reviewed',review_reason=$3,updated_at=now()
+         set checked_at=current_date,review_state=$4,review_reason=$3,updated_at=now()
        where person_id=$1::uuid and provider=$2
-       returning provider,status,checked_at::text,document_title,url,review_state,review_reason,updated_at`, [personId, NAMUWIKI_PROVIDER, next.review_reason]);
+       returning provider,status,checked_at::text,document_title,url,review_state,review_reason,updated_at`, [personId, NAMUWIKI_PROVIDER, next.review_reason, next.review_state]);
     return Object.freeze({ replay:true, before:current, after:refreshed.rows[0] || current });
   }
 
@@ -118,7 +118,7 @@ async function setNamuWikiDecision(client, personId, rawDecision, {
     values($1::uuid,'namuwiki',$2,${checkedAtSql},$4,$5,'reviewed',$6,now())
     on conflict (person_id,provider) do update
       set status=excluded.status,checked_at=excluded.checked_at,document_title=excluded.document_title,url=excluded.url,
-          review_state='reviewed',review_reason=excluded.review_reason,updated_at=now()
+          review_state=excluded.review_state,review_reason=excluded.review_reason,updated_at=now()
     returning provider,status,checked_at::text,document_title,url,review_state,review_reason,updated_at`,
     [personId, next.status, next.checked_at, next.document_title, next.url, next.review_reason]);
 
