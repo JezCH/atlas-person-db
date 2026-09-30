@@ -583,7 +583,7 @@
         "server/atlas-person-delete-service.js"
       ],
       "shadow_writers": [],
-      "status": "single_dependency_boundary",
+      "status": "single_writer",
       "remediation_unit": null,
       "evidence_anchors": [
         {
@@ -595,8 +595,8 @@
           "contains": "lifecycle_person_references"
         },
         {
-          "path": "server/atlas-person-delete-service.js",
-          "contains": "await assertPersonMergeReferenceReadiness(client)"
+          "path": "server/atlas-vercel-mutation-handler.js",
+          "contains": "dependencyGuard: assertPersonMergeReferenceReadiness"
         }
       ],
       "note": "Unit 14 closes the destructive dependency gap: Person merge and hard-delete share the same schema-introspected Person reference readiness boundary; portrait and other reviewed dependencies remain explicit lifecycle handlers, while new Person reference surfaces fail closed before mutation."
