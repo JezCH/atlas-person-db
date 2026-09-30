@@ -90,7 +90,8 @@ jobs:
           oidc_token="$(curl --fail-with-body --silent --show-error             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_UNIT5_AUDIENCE}" | jq -er '.value')"
 
           call_unit5() {
-            local mode="$1" dry="$2" out="/tmp/unit5-${mode}.json" payload status
+            local mode="$1" dry="$2" payload status
+            local out="/tmp/unit5-${mode}.json"
             payload="$(jq -cn               --arg workflow_sha "$GITHUB_SHA"               --argjson dry_run "$dry"               --slurpfile manifest "$ATLAS_UNIT5_MANIFEST"               '{workflow_sha:$workflow_sha,dry_run:$dry_run,manifest:$manifest[0]}')"
             status="$(curl --silent --show-error               --output "$out"               --write-out '%{http_code}'               --request POST               -H 'content-type: application/json'               -H "authorization: Bearer $oidc_token"               --data "$payload"               "$ATLAS_UNIT5_ENDPOINT")"
             if [[ "$status" != "200" ]]; then
