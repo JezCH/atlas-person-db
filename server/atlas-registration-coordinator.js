@@ -74,7 +74,10 @@ function createRegistrationCoordinator({ writers, registryLoader = loadRegistry 
       const completed = new Set();
       const trace = [];
       for (const phase of PHASES) {
-        const phaseWriters = Object.entries(writers).filter(([,writer]) => {\n          const phases = Array.isArray(writer?.phases) ? writer.phases : [writer?.phase];\n          return phases.includes(phase);\n        });
+        const phaseWriters = Object.entries(writers).filter(([,writer]) => {
+          const phases = Array.isArray(writer?.phases) ? writer.phases : [writer?.phase];
+          return phases.includes(phase);
+        });
         for (const [writerName, writer] of phaseWriters) {
           if (typeof writer.run !== 'function') throw new Error(`REGISTRATION_COORDINATOR_WRITER_RUN_REQUIRED:${writerName}`);
           const ownedApplicable = obligations.filter((item) => item.applicable && item.owning_writer === writerName);
