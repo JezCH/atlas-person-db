@@ -1,17 +1,21 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import pg from 'pg';
 
 const require = createRequire(import.meta.url);
 const { AUTHORING_MIGRATION_PATHS, AUTHORING_APPLY_MIGRATION_PATHS, applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
 const { CORRECTION_MIGRATION_PATHS, applyCorrectionMigrations } = require('../server/atlas-correction-migrations.js');
-const { readStage2SchemaRelease } = require('../server/atlas-stage2-schema-release.js');
-const { applyP9Cutover, inspectP9Cutover } = require('../server/atlas-stage2-p9-db-cutover.js');
+const {
+  readCurrentBaseline,
+  applyCurrentBaseline,
+  applyCurrentCorrectionSchema,
+  applyReviewedStage2SchemaBodies,
+  applyCurrentP9Cutover,
+  applyCurrentAuthoringSchema
+} = require('../server/atlas-current-schema-reconstruction.js');
+const { inspectP9Cutover } = require('../server/atlas-stage2-p9-db-cutover.js');
 const { Client } = pg;
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const baselinePath = path.join(root, 'db/schema/atlas_v2.current.sql');
 const databaseUrl = String(process.env.DATABASE_URL || '').trim();
 if (!/^postgres(?:ql)?:\/\//.test(databaseUrl)) throw new Error('DATABASE_URL is required for schema baseline verification');
 
@@ -179,7 +183,7 @@ function assertCorrectionMigrationRegistry(result, label) {
   }
 }
 
-const source = fs.readFileSync(baselinePath, 'utf8');
+const source = readCurrentBaseline();
 const ddlWithoutLineComments = source.replace(/^\s*--.*$/gm, '');
 if (/public\.person_politics|atlas_person_politics_compat_v1/i.test(ddlWithoutLineComments)) {
   throw new Error('current baseline DDL must not recreate legacy person-politics objects');
@@ -188,9 +192,9 @@ if (/public\.person_politics|atlas_person_politics_compat_v1/i.test(ddlWithoutLi
 const client = new Client({ connectionString: databaseUrl });
 await client.connect();
 try {
-  await client.query(source);
+  await applyCurrentBaseline(client);
 
-  const initialCorrectionMigration = await applyCorrectionMigrations(client);
+  const initialCorrectionMigration = await applyCurrentCorrectionSchema(client);
   assertCorrectionMigrationRegistry(initialCorrectionMigration, 'initial correction migration');
 
   const tables = await client.query(`
@@ -254,18 +258,8 @@ try {
     }
   }
 
-  // Materialize the immutable reviewed Stage 2 schema bodies on this clean
-  // target. Do not replay the historical release ledger/lock/retry ceremony.
-  const stage2Schema = readStage2SchemaRelease();
-  same(stage2Schema.components.map((component) => component.id), expectedStage2SchemaComponents, 'Stage 2 schema component order');
-  for (const component of stage2Schema.components) {
-    const normalized = component.body.replace(/^\s*--.*$/gm, '');
-    if (/\b(?:delete|update)\s+atlas_v2\.person_politics_v2\b/i.test(normalized) || /\btruncate\b/i.test(normalized) || /\bdrop\s+(?:table|schema)\b/i.test(normalized)) {
-      throw new Error(`Stage 2 current-schema component is destructive: ${component.id}`);
-    }
-    if (/territor|geometry/i.test(normalized)) throw new Error(`P14 content leaked into current-schema component: ${component.id}`);
-    await client.query(component.body);
-  }
+  const stage2Schema = await applyReviewedStage2SchemaBodies(client);
+  same(stage2Schema.components, expectedStage2SchemaComponents, 'Stage 2 schema component order');
 
   const stage2Tables = await client.query(`
     select table_name
@@ -325,17 +319,17 @@ try {
   const polityRelationCatalog = await client.query(`select code from atlas_v2.polity_relation_types order by code`);
   same(polityRelationCatalog.rows.map((row) => row.code), ['colonial_dependency_of','constituent_of','dominion_of','nominally_subordinate_to','vassal_of'], 'Polity relation catalog');
 
-  const firstP9Cutover = await applyP9Cutover(client);
+  const firstP9Cutover = await applyCurrentP9Cutover(client);
   if (firstP9Cutover.replay !== false || firstP9Cutover.after?.old_index_present || !firstP9Cutover.after?.new_index_present) {
     throw new Error(`fresh P9 semantic-key cutover drift: ${JSON.stringify(firstP9Cutover)}`);
   }
-  const secondP9Cutover = await applyP9Cutover(client);
+  const secondP9Cutover = await applyCurrentP9Cutover(client);
   if (secondP9Cutover.replay !== true || secondP9Cutover.after?.old_index_present || !secondP9Cutover.after?.new_index_present) {
     throw new Error(`P9 semantic-key replay drift: ${JSON.stringify(secondP9Cutover)}`);
   }
 
-  const firstAuthoringReplay = await applyAuthoringMigrations(client);
-  const secondAuthoringReplay = await applyAuthoringMigrations(client);
+  const firstAuthoringReplay = await applyCurrentAuthoringSchema(client);
+  const secondAuthoringReplay = await applyCurrentAuthoringSchema(client);
   assertAuthoringMigrationRegistry(firstAuthoringReplay, 'first authoring replay');
   assertAuthoringMigrationRegistry(secondAuthoringReplay, 'second authoring replay');
 
@@ -522,8 +516,8 @@ try {
     'Person portrait retired provenance reference rules'
   );
 
-  const firstCorrectionReplay = await applyCorrectionMigrations(client);
-  const secondCorrectionReplay = await applyCorrectionMigrations(client);
+  const firstCorrectionReplay = await applyCurrentCorrectionSchema(client);
+  const secondCorrectionReplay = await applyCurrentCorrectionSchema(client);
   assertCorrectionMigrationRegistry(firstCorrectionReplay, 'first correction replay');
   assertCorrectionMigrationRegistry(secondCorrectionReplay, 'second correction replay');
 
@@ -536,7 +530,7 @@ try {
 
   let secondApplyRejected = false;
   try {
-    await client.query(source);
+    await applyCurrentBaseline(client);
   } catch (error) {
     secondApplyRejected = /already exists|clean target/i.test(String(error?.message || error));
     try { await client.query('rollback'); } catch {}
