@@ -51,11 +51,13 @@ test("Unit 17 final acceptance artifact covers every canonical end-state with du
   }
 });
 
-test("Unit 17 closes P13 while leaving P14 product work pending",()=>{
+test("Unit 17 historical acceptance keeps P14 out of scope without pinning current P13 lifecycle status",()=>{
   const byId=new Map(requirements.requirements.map((x)=>[x.id,x]));
+  assert.equal(acceptance.status,"PASS");
+  assert.equal(acceptance.p14_content_implementation_in_scope,false);
   for(const id of ["ATLAS-RQ-0223","ATLAS-RQ-0226","ATLAS-RQ-0227","ATLAS-RQ-0228","ATLAS-RQ-0229","ATLAS-RQ-0230"]){
     const item=byId.get(id);
-    assert.equal(item?.status,"COMPLETED",id);
+    assert.ok(item,id);
     assert.ok(item.evidence_paths?.length,id);
   }
   for(const id of ["ATLAS-RQ-0224","ATLAS-RQ-0225"]) assert.equal(byId.get(id)?.status,"PENDING",id);
