@@ -1,5 +1,7 @@
 "use strict";
 
+const { discoverIdentityReferences } = require("./atlas-destructive-lifecycle-service.js");
+
 const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v7";
 const CONTEXT_POLITY_RELATIONSHIP_FK_KEY = "atlas_v2.person_politics_context_polities.person_politics_id";
 
@@ -106,6 +108,7 @@ async function inspectPersonMergeReferenceReadiness(client) {
   );
 
   const personFks = await foreignKeysTo(client,"atlas_v2.persons");
+  const lifecyclePersonReferences = await discoverIdentityReferences(client,{ targetTable:"persons", semanticColumnPattern:"(^|_)person_id$|person_(low|high)_id$" });
   const relationshipFks = await foreignKeysTo(client,"atlas_v2.person_politics_v2");
   const personLikeUuidColumns = await uuidColumns(client,"(^|_)person_id$|person_(low|high)_id$");
   const relationshipLikeUuidColumns = await uuidColumns(client,"person_politics_id$|relationship_id$");
@@ -142,7 +145,7 @@ async function inspectPersonMergeReferenceReadiness(client) {
     policy_version:PERSON_REFERENCE_POLICY_VERSION,ready:blockers.length===0,blockers:Object.freeze(blockers.sort()),
     requirement_ledger_present:requirementLedgerPresent,
     context_polity_table_present:contextPolityTablePresent,
-    expected_non_fk_person_uuid_columns:Object.freeze(expectedPersonSnapshots),
+    expected_non_fk_person_uuid_columns:Object.freeze(expectedPersonSnapshots), lifecycle_person_references:lifecyclePersonReferences,
     person_fks:Object.freeze(personFks),relationship_fks:Object.freeze(relationshipFks),
     non_fk_person_uuid_columns:Object.freeze(nonFkPersonUuidColumns),non_fk_relationship_uuid_columns:Object.freeze(nonFkRelationshipUuidColumns),
     user_triggers:Object.freeze(unreviewedUserTriggers),reviewed_user_triggers:Object.freeze(allUserTriggers.filter((trigger) => EXPECTED_USER_TRIGGERS.includes(trigger)))
