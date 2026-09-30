@@ -160,6 +160,7 @@
       "title": "Current schema is reconstructible",
       "evidence_paths": [
         "db/schema/atlas_v2.current.sql",
+        "server/atlas-current-schema-reconstruction.js",
         "server/atlas-stage2-schema-release.js",
         "server/atlas-stage2-p9-db-cutover.js",
         "server/atlas-correction-migrations.js",
