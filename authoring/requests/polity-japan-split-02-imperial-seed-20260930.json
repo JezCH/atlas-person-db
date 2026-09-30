@@ -64,5 +64,13 @@
     "requested_item": 2,
     "decision_authority": "User-approved Japan identity re-review on 2026-09-30; current ATLAS rupture rule keeps Yuan/Northern Yuan and other catastrophic state-formations separate despite legal or dynastic continuity.",
     "identity_note": "Stage 1 seed only. Stage 2 must split the existing Emperor Meiji Activity at 3 January 1868, relink 1868–1947 Activities to this identity, split cross-boundary Hirohito and Yoshida Activities at 3 May 1947, preserve sources, remove this seed Activity, and retain current Japan UUID for the post-1947 state. Temporal designation should distinguish the early Meiji Government from the later formal Empire of Japan / 大日本帝国 name."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "메이지 천황",
+      "url": "https://namu.wiki/w/%EB%A9%94%EC%9D%B4%EC%A7%80%20%EC%B2%9C%ED%99%A9"
+    }
   }
 }
