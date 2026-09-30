@@ -13,6 +13,8 @@ DECLARE
   ref_checked_at date;
   ref_document_title text;
   ref_url text;
+  ref_review_state text;
+  ref_review_reason text;
 BEGIN
   IF NEW.person_id IS NULL THEN
     RETURN NEW;
@@ -36,12 +38,24 @@ BEGIN
   IF ref_status = 'linked' THEN
     ref_document_title := NULLIF(btrim(ref->>'document_title'), '');
     ref_url := NULLIF(btrim(ref->>'url'), '');
+    ref_review_state := 'reviewed';
+    ref_review_reason := NULL;
     IF ref_document_title IS NULL OR ref_url IS NULL OR ref_url NOT LIKE 'https://namu.wiki/w/%' THEN
       RETURN NEW;
     END IF;
   ELSE
     ref_document_title := NULL;
     ref_url := NULL;
+    IF ref->>'review_state' IN ('reviewed_absent','legacy_unverified') THEN
+      ref_review_state := ref->>'review_state';
+    ELSE
+      ref_review_state := 'reviewed_absent';
+    END IF;
+    IF ref_review_state = 'reviewed_absent' THEN
+      ref_review_reason := NULLIF(btrim(COALESCE(ref->>'review_reason',ref->>'absence_reason')), '');
+    ELSE
+      ref_review_reason := NULL;
+    END IF;
   END IF;
 
   INSERT INTO atlas_v2.person_external_references(
@@ -50,7 +64,9 @@ BEGIN
     status,
     checked_at,
     document_title,
-    url
+    url,
+    review_state,
+    review_reason
   )
   VALUES(
     NEW.person_id,
@@ -58,7 +74,9 @@ BEGIN
     ref_status,
     ref_checked_at,
     ref_document_title,
-    ref_url
+    ref_url,
+    ref_review_state,
+    ref_review_reason
   )
   ON CONFLICT (person_id, provider) DO UPDATE
   SET
@@ -66,6 +84,8 @@ BEGIN
     checked_at = EXCLUDED.checked_at,
     document_title = EXCLUDED.document_title,
     url = EXCLUDED.url,
+    review_state = EXCLUDED.review_state,
+    review_reason = EXCLUDED.review_reason,
     updated_at = now()
   WHERE EXCLUDED.checked_at >= atlas_v2.person_external_references.checked_at;
 
@@ -100,7 +120,18 @@ WITH latest_namuwiki AS (
     ref->>'status' AS status,
     (ref->>'checked_at')::date AS checked_at,
     CASE WHEN ref->>'status' = 'linked' THEN NULLIF(btrim(ref->>'document_title'), '') ELSE NULL END AS document_title,
-    CASE WHEN ref->>'status' = 'linked' THEN NULLIF(btrim(ref->>'url'), '') ELSE NULL END AS url
+    CASE WHEN ref->>'status' = 'linked' THEN NULLIF(btrim(ref->>'url'), '') ELSE NULL END AS url,
+    CASE
+      WHEN ref->>'status' = 'linked' THEN 'reviewed'
+      WHEN ref->>'review_state' IN ('reviewed_absent','legacy_unverified') THEN ref->>'review_state'
+      ELSE 'reviewed_absent'
+    END AS review_state,
+    CASE
+      WHEN ref->>'status' = 'not_found'
+       AND COALESCE(ref->>'review_state','reviewed_absent') <> 'legacy_unverified'
+      THEN NULLIF(btrim(COALESCE(ref->>'review_reason',ref->>'absence_reason')), '')
+      ELSE NULL
+    END AS review_reason
   FROM latest_namuwiki
   WHERE COALESCE(ref->>'checked_at', '') ~ '^\d{4}-\d{2}-\d{2}$'
 )
@@ -110,7 +141,9 @@ INSERT INTO atlas_v2.person_external_references(
   status,
   checked_at,
   document_title,
-  url
+  url,
+  review_state,
+  review_reason
 )
 SELECT
   person_id,
@@ -118,7 +151,9 @@ SELECT
   status,
   checked_at,
   document_title,
-  url
+  url,
+  review_state,
+  review_reason
 FROM valid_namuwiki
 WHERE status = 'not_found'
    OR (
@@ -132,6 +167,8 @@ SET
   checked_at = EXCLUDED.checked_at,
   document_title = EXCLUDED.document_title,
   url = EXCLUDED.url,
+  review_state = EXCLUDED.review_state,
+  review_reason = EXCLUDED.review_reason,
   updated_at = now()
 WHERE EXCLUDED.checked_at >= atlas_v2.person_external_references.checked_at;
 
