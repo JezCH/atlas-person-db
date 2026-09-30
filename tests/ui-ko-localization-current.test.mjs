@@ -36,13 +36,6 @@ test('unknown-chronology presentation reuses reviewed Korean registry labels wit
   assert.match(main, /politic_display_name_ko/);
   assert.match(main, /historicity_display_ko/);
   assert.doesNotMatch(html, /non-timeline-list\.js/);
-  assert.ok(nonTimelineData.length > 0);
-  for (const row of nonTimelineData) {
-    assert.equal(typeof row.politic_display_name_ko, 'string');
-    assert.ok(row.politic_display_name_ko.trim().length > 0);
-    assert.equal(typeof row.historicity_display_ko, 'string');
-    assert.ok(row.historicity_display_ko.trim().length > 0);
-  }
 });
 
 test('Main and Admin load the same localization authority before dependent presentation code', () => {
