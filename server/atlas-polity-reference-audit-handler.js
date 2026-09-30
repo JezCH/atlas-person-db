@@ -67,11 +67,15 @@ async function queryPolities(client) {
 }
 
 async function discoverPolityReferences(client) {
-  const discovered = await discoverIdentityReferences(client, {
+  let discovered;
+  try { discovered = await discoverIdentityReferences(client, {
     targetTable: TARGET_TABLE,
     targetColumn: TARGET_COLUMN,
     semanticColumnPattern: "^polity_id$"
-  });
+  }); } catch (error) {
+    if (error?.message === "DESTRUCTIVE_LIFECYCLE_UNSUPPORTED_FOREIGN_KEY") throw new Error("POLITY_REFERENCE_AUDIT_UNSUPPORTED_FOREIGN_KEY");
+    throw error;
+  }
   const catalog = discovered.map((row) => {
     const ref = {
       source_schema: String(row.source_schema),
