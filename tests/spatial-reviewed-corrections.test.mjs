@@ -27,7 +27,6 @@ const MOBILE_REVIEW = Object.freeze([
   'a81055d7-ed0d-45a6-90c6-738e1a9ba94d'
 ]);
 const STALE_ORPHANS = Object.freeze([
-  '46534f7e-9247-5644-b5ad-9525c3d4f5d6',
   '524642ff-33fb-52f3-8623-e4a877b1997a',
   '53943675-7711-5053-9f2e-f149f727aa54'
 ]);
