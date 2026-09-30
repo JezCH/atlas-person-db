@@ -1,0 +1,204 @@
+{
+  "schema": "atlas-core-final-acceptance/v1",
+  "version": 1,
+  "core_version": "v2",
+  "accepted_as_of": "2026-10-01",
+  "status": "PASS",
+  "scope": "CORE v2 Units 0-17 architecture and publication invariants",
+  "p14_content_implementation_in_scope": false,
+  "criteria": [
+    {
+      "id": "requirements_contradictions_zero",
+      "requirement": "requirements contradictions = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "requirements/atlas-requirements.v1.json",
+        "ATLAS_REQUIREMENTS.md",
+        "scripts/verify-atlas-requirements.mjs",
+        "tests/core-final-acceptance.test.mjs"
+      ]
+    },
+    {
+      "id": "canonical_multi_writer_zero",
+      "requirement": "multi-writer canonical resources = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "docs/core/CORE_AUTHORITY_OWNERSHIP.v1.json",
+        "tests/core-authority-ownership.test.mjs"
+      ]
+    },
+    {
+      "id": "duplicate_truth_registries_zero",
+      "requirement": "duplicate truth registries = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "docs/core/CORE_AUTHORITY_OWNERSHIP.v1.json",
+        "tests/core-residue-cleanup.test.mjs"
+      ]
+    },
+    {
+      "id": "reachable_legacy_writer_runtime_zero",
+      "requirement": "reachable legacy writer/runtime = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "tests/core-residue-cleanup.test.mjs",
+        "tests/atlas-correction-transport.test.mjs",
+        "contracts/runtime-projection-contract.v1.json"
+      ]
+    },
+    {
+      "id": "retired_identity_resurrection_path_zero",
+      "requirement": "retired identity resurrection path = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "server/atlas-polity-identity-resolver.js",
+        "tests/atlas-polity-identity-resolver.test.mjs"
+      ]
+    },
+    {
+      "id": "fake_date_sentinel_dependency_zero",
+      "requirement": "fake date/sentinel dependency = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "contracts/runtime-projection-contract.v1.json",
+        "tests/atlas-human-authoring-service.test.mjs",
+        "tests/person-timeline-disposition.test.mjs"
+      ]
+    },
+    {
+      "id": "unresolved_silent_runtime_publish_zero",
+      "requirement": "unresolved data silently Runtime-published = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "server/atlas-runtime-compile-service.js",
+        "tests/atlas-runtime-compile-service.test.mjs"
+      ]
+    },
+    {
+      "id": "manual_semantic_runtime_refresh_zero",
+      "requirement": "manual semantic Runtime refresh dependency = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "contracts/runtime-projection-contract.v1.json",
+        "tests/atlas-runtime-publication-workflow.test.mjs"
+      ]
+    },
+    {
+      "id": "registration_followup_completeness_debt_zero",
+      "requirement": "normal registration follow-up completeness debt = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "data/core/registration-obligations.v1.json",
+        "server/atlas-registration-coordinator.js",
+        "tests/atlas-core-unit7-registration-writer-integration.test.mjs",
+        "WORK_EXECUTION.md"
+      ]
+    },
+    {
+      "id": "runtime_reproducibility_pass",
+      "requirement": "Runtime reproducibility = PASS",
+      "status": "PASS",
+      "evidence_paths": [
+        "contracts/runtime-projection-contract.v1.json",
+        "tests/atlas-runtime-compile-service.test.mjs"
+      ]
+    },
+    {
+      "id": "compiler_determinism_pass",
+      "requirement": "compiler determinism = PASS",
+      "status": "PASS",
+      "evidence_paths": [
+        "server/atlas-runtime-compile-service.js",
+        "tests/atlas-runtime-compile-service.test.mjs"
+      ]
+    },
+    {
+      "id": "writer_idempotency_pass",
+      "requirement": "writer idempotency = PASS",
+      "status": "PASS",
+      "evidence_paths": [
+        "tests/atlas-runtime-compile-service.test.mjs",
+        "tests/core-unit13-reviewed-candidate-boundary.test.mjs",
+        "tests/core-unit9-source-bibliographic.test.mjs"
+      ]
+    },
+    {
+      "id": "destructive_lifecycle_pass",
+      "requirement": "destructive lifecycle = PASS",
+      "status": "PASS",
+      "evidence_paths": [
+        "server/atlas-destructive-lifecycle-service.js",
+        "tests/core-unit14-destructive-lifecycle.test.mjs"
+      ]
+    },
+    {
+      "id": "provenance_preservation_pass",
+      "requirement": "provenance preservation = PASS",
+      "status": "PASS",
+      "evidence_paths": [
+        "server/atlas-correction-manifest-v2-service.js",
+        "tests/atlas-correction-v2-provenance-executor-contract.test.mjs",
+        "tests/core-unit9-source-bibliographic.test.mjs"
+      ]
+    },
+    {
+      "id": "ai_authoritative_bypass_zero",
+      "requirement": "AI authoritative bypass = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "server/atlas-reviewed-candidate-service.js",
+        "tests/core-unit13-reviewed-candidate-boundary.test.mjs"
+      ]
+    },
+    {
+      "id": "obsolete_core_execution_code_zero",
+      "requirement": "obsolete CORE execution code = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "tests/core-residue-cleanup.test.mjs"
+      ]
+    },
+    {
+      "id": "task_level_single_writer_dependency_zero",
+      "requirement": "project/CORE/NONCORE task-level single-writer dependency = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "WORK_EXECUTION.md",
+        "scripts/verify-release-governance.mjs",
+        "tests/core-residue-cleanup.test.mjs"
+      ]
+    },
+    {
+      "id": "stale_authoritative_overwrite_paths_zero",
+      "requirement": "stale authoritative overwrite paths without resource-level precondition/fail-closed protection = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "WORK_EXECUTION.md",
+        "server/atlas-source-service.js",
+        "server/atlas-reviewed-candidate-service.js",
+        "server/atlas-correction-manifest-v2-service.js"
+      ]
+    },
+    {
+      "id": "active_task_keys_multiple_artifacts_zero",
+      "requirement": "active task keys with multiple unclassified authoritative artifacts = 0",
+      "status": "PASS",
+      "evidence_paths": [
+        "WORK_EXECUTION.md",
+        "docs/core/CORE_V2_FINAL_ACCEPTANCE.md"
+      ]
+    }
+  ],
+  "external_evidence": [
+    {
+      "kind": "active_core_status",
+      "url": "https://github.com/JezCH/atlas-person-db/issues/917",
+      "assertion": "At acceptance, #917 is the sole active CORE status surface and is transitioned to terminal CORE v2 closure."
+    }
+  ],
+  "notes": [
+    "P14 Territory/Geometry content implementation remains a separate pending product phase; Unit 15 sealed only its boundary contract.",
+    "Historical audit artifacts may remain when non-authoritative; executable obsolete CORE paths may not.",
+    "The full repository integrity suite remains the executable regression surface behind this acceptance record."
+  ]
+}
