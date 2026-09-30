@@ -94,7 +94,7 @@ test('person-only authoring allows an Activity-free existing Person target', asy
 });
 
 test('Person read projection exposes representative domain and timeline disposition', () => {
-  const projected=reads.projectPersonIdentity({
+  const projected=reads.projectPerson({
     id:'00000000-0000-4000-8000-000000000001',
     person_type:'historical',
     historicity:'historical',
@@ -110,7 +110,10 @@ test('Person read projection exposes representative domain and timeline disposit
       {locale:'ko',name:'예시',name_type:'display',is_preferred:true}
     ],
     descriptions:[],
-    external_references:{}
+    external_references:{},
+    activity_count:0,
+    first_activity_year:null,
+    last_activity_year:null
   });
   assert.equal(projected.representative_domain,'knowledge');
   assert.equal(projected.timeline_disposition.disposition,'chronology_unresolved');
