@@ -17,6 +17,40 @@ const manifest=JSON.parse(fs.readFileSync(
   'utf8'
 ));
 
+test('timeline disposition comparison ignores JSON object key order while preserving nested values', () => {
+  const left={
+    person_id:'00000000-0000-4000-8000-000000000001',
+    disposition:'chronology_unresolved',
+    reason:'reviewed chronology gap',
+    basis_code:'reviewed_basis',
+    traditional_year:null,
+    traditional_year_alternative:null,
+    review_evidence:{
+      authority_scope:'timeline_disposition_review_evidence_only',
+      sources:['source-a','source-b'],
+      nested:{ alpha:1, beta:2 }
+    }
+  };
+  const right={
+    person_id:left.person_id,
+    disposition:left.disposition,
+    reason:left.reason,
+    basis_code:left.basis_code,
+    traditional_year:null,
+    traditional_year_alternative:null,
+    review_evidence:{
+      nested:{ beta:2, alpha:1 },
+      sources:['source-a','source-b'],
+      authority_scope:'timeline_disposition_review_evidence_only'
+    }
+  };
+  assert.equal(timeline.sameTimelineDisposition(left,right),true);
+  assert.equal(timeline.sameTimelineDisposition(left,{
+    ...right,
+    review_evidence:{...right.review_evidence,nested:{beta:3,alpha:1}}
+  }),false);
+});
+
 test('timeline disposition vocabulary separates Person identity from timeline eligibility', () => {
   assert.deepEqual(timeline.DISPOSITIONS,[
     'timeline',
