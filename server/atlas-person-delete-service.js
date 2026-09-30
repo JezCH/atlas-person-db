@@ -4,6 +4,7 @@ const crypto = require("node:crypto");
 const { lockPersonDuplicateFrontier } = require("./atlas-person-duplicate-frontier-lock.js");
 const { deletePersonExternalReferences } = require("./atlas-person-external-reference-lifecycle.js");
 const { deletePersonPortrait } = require("./atlas-person-portrait-lifecycle.js");
+const { assertPersonMergeReferenceReadiness } = require("./atlas-person-merge-reference-readiness.js");
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -106,6 +107,9 @@ function createPersonDeleteService({
       const requirementLedgerPresent = await tablePresent(client, "atlas_v2.person_duplicate_revalidation_requirements");
       const runtimeProjectionPresent = await tablePresent(client, "atlas_v2.runtime_person_politics_v1");
       await frontierLock(client);
+      // Merge and hard-delete share the same schema-introspected Person dependency boundary.
+      // Any new FK/semantic Person UUID surface blocks destructive mutation until reviewed.
+      await assertPersonMergeReferenceReadiness(client);
 
       const person = await client.query(`
         select id,canonical_key,person_type,historicity
