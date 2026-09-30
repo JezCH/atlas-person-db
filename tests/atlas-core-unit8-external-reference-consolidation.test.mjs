@@ -66,3 +66,59 @@ test('Unit 8 migration preserves legacy review evidence before duplicate registr
   assert.match(migration,/person_profile_mutation_audits/);
   assert.match(migration,/exact_target_url_verified/);
 });
+
+
+test('Unit 8 canonical writer persists reviewed-absence state and reason instead of hard-coding reviewed', async () => {
+  const personId='00000000-0000-4000-8000-000000000001';
+  let mutation=null;
+  const client={ async query(sql,args){
+    const text=String(sql);
+    if (text.includes('from atlas_v2.person_external_references')) return {rows:[]};
+    if (text.includes('insert into atlas_v2.person_external_references')) {
+      mutation={sql:text,args};
+      return {rows:[{
+        status:args[1],
+        checked_at:args[2],
+        document_title:args[3],
+        url:args[4],
+        review_state:args[5],
+        review_reason:args[6],
+        updated_at:null
+      }]};
+    }
+    throw new Error('unexpected query');
+  }};
+  const result=await external.setNamuWikiDecision(client,personId,{
+    status:'not_found',
+    checked_at:'2026-09-30',
+    review_reason:'no_exact_document'
+  },{checkedAtRequired:true});
+  assert.equal(result.replay,false);
+  assert.ok(mutation);
+  assert.match(mutation.sql,/\$6,\$7,now\(\)/);
+  assert.deepEqual(mutation.args,[
+    personId,
+    'not_found',
+    '2026-09-30',
+    null,
+    null,
+    'reviewed_absent',
+    'no_exact_document'
+  ]);
+  assert.equal(result.after.review_state,'reviewed_absent');
+  assert.equal(result.after.review_reason,'no_exact_document');
+});
+
+test('Unit 8 pre-decision external-reference migrations remain replay-safe after review_state becomes NOT NULL', () => {
+  const fs=require('node:fs');
+  const base=fs.readFileSync(new URL('../db/migrations/20260821_person_external_references.sql',import.meta.url),'utf8');
+  const sync=fs.readFileSync(new URL('../db/migrations/20260821_human_authoring_external_reference_sync.sql',import.meta.url),'utf8');
+  assert.match(base,/ADD COLUMN IF NOT EXISTS review_state text/);
+  assert.match(base,/document_title, url, review_state, review_reason/);
+  assert.match(base,/'reviewed', NULL/);
+  assert.match(sync,/ref_review_state text/);
+  assert.match(sync,/ref_review_reason text/);
+  assert.match(sync,/review_state\s*=\s*EXCLUDED\.review_state/);
+  assert.match(sync,/review_reason\s*=\s*EXCLUDED\.review_reason/);
+  assert.match(sync,/review_state,\s*review_reason/);
+});
