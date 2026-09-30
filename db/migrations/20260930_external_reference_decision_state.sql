@@ -1391,14 +1391,42 @@ WITH reasons(person_id,review_reason) AS (
     ('ff1d3ea3-501e-404b-91b0-3b2e1bbf04b2'::uuid,'related_or_derivative_only'),
     ('ff5d5de9-79e6-46ac-8702-c0915333378f'::uuid,'exact_target_url_verified'),
     ('ff68de8d-73e4-4096-b731-af0c6b94d39d'::uuid,'no_exact_document')
+),
+insert_missing_reason_rows AS (
+  -- The retired canonical reason registry was snapshotted on 2026-09-30.
+  -- A classified Person with no live NamuWiki row is still an explicit reviewed
+  -- not_found decision; restore that decision instead of silently degrading it
+  -- to "missing"/unreviewed. Existing linked rows are never overwritten.
+  INSERT INTO atlas_v2.person_external_references(
+    person_id,provider,status,checked_at,document_title,url,review_state,review_reason
+  )
+  SELECT
+    r.person_id,
+    'namuwiki',
+    'not_found',
+    DATE '2026-09-30',
+    NULL,
+    NULL,
+    'reviewed_absent',
+    r.review_reason
+  FROM reasons r
+  JOIN atlas_v2.persons p ON p.id=r.person_id
+  WHERE NOT EXISTS (
+    SELECT 1
+      FROM atlas_v2.person_external_references existing
+     WHERE existing.person_id=r.person_id
+       AND existing.provider='namuwiki'
+  )
+  ON CONFLICT (person_id,provider) DO NOTHING
+  RETURNING person_id
 )
 UPDATE atlas_v2.person_external_references per
-   SET review_reason=r.review_reason
+   SET review_state='reviewed_absent',
+       review_reason=r.review_reason
   FROM reasons r
  WHERE per.person_id=r.person_id
    AND per.provider='namuwiki'
-   AND per.status='not_found'
-   AND per.review_state='reviewed_absent';
+   AND per.status='not_found';
 
 UPDATE atlas_v2.person_external_references
    SET review_reason=NULL
