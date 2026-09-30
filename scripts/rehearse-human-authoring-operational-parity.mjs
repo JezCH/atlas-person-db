@@ -1,25 +1,17 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import assert from 'node:assert/strict';
 import pg from 'pg';
 
 const require=createRequire(import.meta.url);
-const { applyAuthoringMigrations }=require('../server/atlas-authoring-migrations.js');
-const { applyCorrectionMigrations }=require('../server/atlas-correction-migrations.js');
-const { applyStage2SchemaRelease }=require('../server/atlas-stage2-schema-release.js');
-const { applyP9Cutover }=require('../server/atlas-stage2-p9-db-cutover.js');
+const { reconstructCurrentSchema }=require('../server/atlas-current-schema-reconstruction.js');
 const { inspectAuthoringReadiness }=require('../server/atlas-authoring-readiness.js');
 const { createPolity, createRole }=require('../server/atlas-identity-service.js');
 const { createHumanAuthoringService, loadHumanAuthoringCatalogs }=require('../server/atlas-human-authoring-service.js');
 const { loadStage2NativeActivity }=require('../server/atlas-stage2-native-activity-service.js');
 
 const { Client }=pg;
-const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const databaseUrl=String(process.env.DATABASE_URL||'').trim();
 if (!/^postgres(?:ql)?:\/\//.test(databaseUrl)) throw new Error('DATABASE_URL is required');
-const baseline=fs.readFileSync(path.join(root,'db/schema/atlas_v2.current.sql'),'utf8');
 const PERIOD_ID='77777777-7777-4777-8777-777777777777';
 
 function firstRequest() {
@@ -140,15 +132,12 @@ const client=new Client({connectionString:databaseUrl});
 await client.connect();
 try {
   await client.query('DROP SCHEMA IF EXISTS atlas_v2 CASCADE');
-  await client.query(baseline);
-  await applyAuthoringMigrations(client);
-  await applyCorrectionMigrations(client);
-  const p5=await applyStage2SchemaRelease(client);
-  assert.equal(p5.applied.length,6,'human operational rehearsal requires complete P5 additive schema');
-  const p9=await applyP9Cutover(client);
-  assert.equal(p9.after.old_index_present,false);
-  assert.equal(p9.after.new_index_present,true);
-  assert.equal(p9.after.duplicate_groups,0);
+  const reconstruction=await reconstructCurrentSchema(client);
+  assert.deepEqual(reconstruction.phases,['baseline','correction','stage2','p9','authoring']);
+  assert.equal(reconstruction.stage2.components.length,6,'human operational rehearsal requires complete Stage 2 schema');
+  assert.equal(reconstruction.p9.after.old_index_present,false);
+  assert.equal(reconstruction.p9.after.new_index_present,true);
+  assert.equal(reconstruction.p9.after.duplicate_groups,0);
 
   await client.query('begin');
   const existingPolity=await createPolity(client,{
