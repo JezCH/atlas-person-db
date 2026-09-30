@@ -190,7 +190,7 @@ test("shared store is the sole browser owner of repeated Person/domain/spatial/n
   assert.match(storeSource, /personReader\.listPersons\(\)/);
   assert.match(storeSource, /\/api\/atlas-person-domain/);
   assert.match(storeSource, /atlas-polity-spatial-index\.json/);
-  assert.match(storeSource, /non-timeline-persons\.json/);
+  assert.match(storeSource, /__atlas_read_surface=non-timeline-persons/);
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
 });
 
