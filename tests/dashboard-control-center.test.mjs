@@ -11,6 +11,7 @@ const spatialModel = require("../atlas-person-spacetime-model.js");
 const domainUiSource = fs.readFileSync(new URL("../atlas-person-domain-ui.js", import.meta.url), "utf8");
 const storeSource = fs.readFileSync(new URL("../atlas-client-data-store.js", import.meta.url), "utf8");
 const dashboardSource = fs.readFileSync(new URL("../atlas-dashboard.js", import.meta.url), "utf8");
+const dashboardModelSource = fs.readFileSync(new URL("../atlas-dashboard-model.js", import.meta.url), "utf8");
 const dashboardCssSource = fs.readFileSync(new URL("../atlas-dashboard.css", import.meta.url), "utf8");
 const externalSource = fs.readFileSync(new URL("../atlas-person-external-references.js", import.meta.url), "utf8");
 const mainSource = fs.readFileSync(new URL("../atlas-person-main.js", import.meta.url), "utf8");
@@ -28,7 +29,7 @@ test("dashboard model derives progress from canonical snapshots without stored d
   const persons = [
     { id:P1, historicity:"historical", activity_count:2, external_references:{ namuwiki:{status:"linked"} }, facets:{ polities:[{id:X}] }, activity_summaries:[activity(A1,X,100,110)] },
     { id:P2, historicity:"historical", activity_count:0, external_references:{ namuwiki:{status:"not_found",review_state:"reviewed_absent",absence_reason:"no_exact_document"} }, facets:{ polities:[{id:Y}] }, activity_summaries:[activity(A2,Y,120,130)] },
-    { id:P3, historicity:"uncertain", activity_count:1, external_references:{}, facets:{ polities:[{id:Z}] }, activity_summaries:[activity(A3,Z,140,150)] }
+    { id:P3, historicity:"uncertain", activity_count:1, external_references:{}, timeline_disposition:{disposition:"legendary",basis_code:"reviewed_fixture",reason:"fixture exclusion"}, facets:{ polities:[{id:Z}] }, activity_summaries:[activity(A3,Z,140,150)] }
   ];
   const snapshot = model.buildDashboardSnapshot({
     personResult:{ persons },
@@ -41,7 +42,6 @@ test("dashboard model derives progress from canonical snapshots without stored d
       review_queue:[{polity_id:Y,reason:"activity_specific_review"}],
       activity_spatial_overrides:[]
     },
-    nonTimelineRows:[{person_name:"Legend"}],
     sourceStates:{ persons:{label:"Person Runtime",status:"ready"} }
   });
   assert.equal(snapshot.kpis.persons,3);
@@ -171,13 +171,12 @@ test("unavailable optional sources remain unknown instead of becoming fabricated
     personResult:{ persons:[{ id:"p1", historicity:"historical", activity_count:1, external_references:{}, facets:{polities:[]} }] },
     domainResult:null,
     spatialIndex:null,
-    nonTimelineRows:null,
     sourceStates:{ personDomains:{label:"Person Domain",status:"error",error:"unavailable"} }
   });
   assert.equal(snapshot.work.domain.done,null);
   assert.equal(snapshot.work.domain.remaining,null);
   assert.equal(snapshot.work.domain.percentage,null);
-  assert.equal(snapshot.quality.non_timeline_registry,null);
+  assert.equal(snapshot.quality.non_timeline_registry,0);
 });
 
 test("Person domain codes and labels have one canonical registry", () => {
@@ -1416,7 +1415,7 @@ test("Production browser acceptance permanently verifies Activity completeness p
   assert.match(acceptance,/store\.loadRuntimeExclusions\(\)/);
   assert.match(acceptance,/runtimePublicationResult/);
   assert.match(acceptance,/runtimeExclusionsResult/);
-  assert.match(acceptance,/Expected eight shared Dashboard sources/);
+  assert.match(acceptance,/Expected seven shared Dashboard sources/);
   assert.match(acceptance,/Activity completeness DOM row count differs from canonical model/);
   assert.match(acceptance,/Activity completeness drill-down availability differs from canonical target set/);
   assert.match(acceptance,/No actionable Activity completeness drill-down button found/);
