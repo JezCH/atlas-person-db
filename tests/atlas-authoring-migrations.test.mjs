@@ -35,7 +35,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.equal(AUTHORING_MIGRATION_PATHS[15].endsWith("20260928_person_timeline_dispositions.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[16].endsWith("20260930_external_reference_decision_state.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[17].endsWith("20260930_source_bibliographic_completion.sql"), true);
-  assert.equal(AUTHORING_MIGRATION_PATHS[18].endsWith("20260930_context_object_authoring.sql"), true);
+  assert.equal(AUTHORING_MIGRATION_PATHS[18].endsWith("20260930_place_historical_relations.sql"), true);\n  assert.equal(AUTHORING_MIGRATION_PATHS[19].endsWith("20260930_context_object_authoring.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20260930_context_object_authoring.sql"), true);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
