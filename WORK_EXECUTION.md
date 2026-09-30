@@ -161,6 +161,8 @@ Release the resource immediately after commit. No worker retains ownership while
 
 ### What may serialize
 
+**Queue only at a real shared-write boundary.**
+
 Examples:
 
 - the same Person/Polity/Activity UUID or semantic identity being changed incompatibly;
