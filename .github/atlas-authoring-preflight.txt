@@ -1,1 +1,1 @@
-apply authoring/requests/philosophy-canon-20260930-maimonides-person-only.json
+apply authoring/requests/philosophy-canon-20260930-gersonides-person-only.json
