@@ -62,6 +62,12 @@
     "registration_frontier": "#1375 comment 5855612708",
     "grade": "SS",
     "namuwiki_review": "Indexed searches for 누르 앗 딘 / 누르 알 딘 / Nur ad-Din found broader Zengid-dynasty material but did not establish an independent NamuWiki Person document; no guessed URL.",
-    "execution_retry": "2026-10-01 replay-safe authoring bootstrap retry after Production audit-operation constraint blocker"
+    "execution_retry": "2026-10-01 replay-safe authoring bootstrap retry after Production audit-operation constraint blocker",
+    "spatial_handshake": "Reviewed HOLD is the terminal registration disposition; no false static placement or borrowed polity geometry."
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "materialized": true,
+    "evidence": "Reviewed registration hold: the new Zengid polity is historically valid, but a canonical spatial placement is intentionally not fabricated at creation time because Nur ad-Din's polity spans Aleppo and Damascus and requires dedicated spatial review."
   }
 }
