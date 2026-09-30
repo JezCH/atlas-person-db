@@ -1,239 +1,239 @@
 {
-    "schema": "atlas-stage2-correction-v2-execution-plan/v1",
-    "as_of": "2026-09-30",
-    "contract": "stage2/contracts/correction-v2-current.v1.json",
-    "decision_authority": "User-directed Japan polity lineage correction on 2026-09-30; exact Production Baseline A captured at deployed SHA d69db292ab1b6eec14021db4fed85ab93b98d80d. The 1945 boundary uses Japan's signed Instrument of Surrender on 2 September 1945; the occupation-end boundary uses 28 April 1952 when the peace treaties came into force and the Allied Occupation ended.",
-    "baseline": {
-        "deployment_sha": "d69db292ab1b6eec14021db4fed85ab93b98d80d",
-        "baseline_digest": "sha256:7bfe2529126d3663ec977c2e5b9cb6fb58add5c1af2643bc499dbfa8d1d67c4f"
-    },
-    "batch_id": "polity_japan_lineage_occupation_independence_splits_20260930_v2",
-    "status": "REVIEWED_JAPAN_LINEAGE_REPAIR_V2_EXACT_1952_BOUNDARY",
-    "release_order": 1192,
-    "execution_rules": {
-        "exact_live_before_snapshot_required": true,
-        "preserve_all_existing_normalized_source_links_and_locators": true,
-        "one_split_survivor_preserves_original_activity_uuid": true,
-        "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
-        "new_fragment_legacy_source_key_must_be_null": true,
-        "territory_geometry_mutation_forbidden": true,
-        "physical_person_merge_forbidden": true,
-        "production_executable": false,
-        "production_mutation_authorized": false
-    },
-    "operations": [
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "as_of": "2026-09-30",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-directed Japan polity lineage correction on 2026-09-30; exact Production Baseline A captured at deployed SHA d69db292ab1b6eec14021db4fed85ab93b98d80d. The 1945 boundary uses Japan's signed Instrument of Surrender on 2 September 1945; the occupation-end boundary uses 28 April 1952 when the peace treaties came into force and the Allied Occupation ended.",
+  "baseline": {
+    "deployment_sha": "c2a02478b77689717e6ba1cbb5bb95e4174456ea",
+    "baseline_digest": "sha256:452271468f65e4eb9a36e0c42e835f5dab9390902c80a963bb54ed59cde0abaf"
+  },
+  "batch_id": "polity_japan_lineage_occupation_independence_splits_20260930_v2",
+  "status": "REVIEWED_JAPAN_LINEAGE_REPAIR_V2_EXACT_1952_BOUNDARY",
+  "release_order": 1192,
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "one_split_survivor_preserves_original_activity_uuid": true,
+    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+    "new_fragment_legacy_source_key_must_be_null": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "japan-lineage-hirohito-occupation-independence-split",
+      "type": "split_activity",
+      "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
+      "baseline_before": {
+        "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1945,
+        "activity_end": 1989,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments": [
         {
-            "case_id": "japan-lineage-hirohito-occupation-independence-split",
-            "type": "split_activity",
-            "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
-            "baseline_before": {
-                "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
-                "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-                "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
-                "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
-                "activity_start": 1945,
-                "activity_end": 1989,
-                "confidence": "well_established",
-                "chronology_status": "reviewed",
-                "legacy_source_key": null,
-                "source_count": 3
-            },
-            "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
-            "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
-            "fragments": [
-                {
-                    "survivor": true,
-                    "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
-                    "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
-                    "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-                    "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
-                    "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
-                    "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
-                    "activity_start": 1952,
-                    "activity_start_detail": {
-                        "year": 1952,
-                        "month": 4,
-                        "day": 28,
-                        "granularity": "day",
-                        "certainty": "exact",
-                        "calendar": "gregorian"
-                    },
-                    "activity_end": 1989,
-                    "activity_end_detail": {
-                        "year": 1989,
-                        "month": null,
-                        "day": null,
-                        "granularity": "year",
-                        "certainty": "exact",
-                        "calendar": "gregorian"
-                    },
-                    "confidence": "well_established",
-                    "chronology_status": "reviewed",
-                    "legacy_source_key": null,
-                    "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
-                    "reviewed_notes": "This survivor fragment records Hirohito in sovereign post-occupation Japan from 28 April 1952 through the end of his recorded reign in 1989. The preceding 2 September 1945–27 April 1952 interval is retained separately under Japan's Allied-occupation temporal designation.",
-                    "add_source_links": []
-                },
-                {
-                    "survivor": false,
-                    "activity_id": "4148138d-abc1-59aa-9eaf-d4b09c268ea8",
-                    "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
-                    "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-                    "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
-                    "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
-                    "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
-                    "activity_start": 1945,
-                    "activity_start_detail": {
-                        "year": 1945,
-                        "month": 9,
-                        "day": 2,
-                        "granularity": "day",
-                        "certainty": "exact",
-                        "calendar": "gregorian"
-                    },
-                    "activity_end": 1952,
-                    "activity_end_detail": {
-                        "year": 1952,
-                        "month": 4,
-                        "day": 27,
-                        "granularity": "day",
-                        "certainty": "exact",
-                        "calendar": "gregorian"
-                    },
-                    "confidence": "well_established",
-                    "chronology_status": "reviewed",
-                    "legacy_source_key": null,
-                    "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
-                    "reviewed_notes": "This Stage-2-native fragment records Hirohito during the Allied occupation of Japan from 2 September 1945 through 27 April 1952. The peace treaties came into force on 28 April 1952, ending the Occupation and restoring Japan's independence.",
-                    "add_source_links": [],
-                    "source_copy_policy": "COPY_EXISTING"
-                }
-            ],
-            "gap_overlap_policy": "EXACT_DAY_BOUNDARY_OCCUPATION_FRAGMENT_ENDS_1952_04_27_AND_POST_OCCUPATION_SURVIVOR_STARTS_1952_04_28_NO_GAP_OR_OVERLAP"
+          "survivor": true,
+          "activity_id": "d770812f-b9ab-41f2-9751-01d7a7931bb8",
+          "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1952,
+          "activity_start_detail": {
+            "year": 1952,
+            "month": 4,
+            "day": 28,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1989,
+          "activity_end_detail": {
+            "year": 1989,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This survivor fragment records Hirohito in sovereign post-occupation Japan from 28 April 1952 through the end of his recorded reign in 1989. The preceding 2 September 1945–27 April 1952 interval is retained separately under Japan's Allied-occupation temporal designation.",
+          "add_source_links": []
         },
         {
-            "case_id": "japan-lineage-yoshida-1948-1954-occupation-independence-split",
-            "type": "split_activity",
-            "activity_id": "23a9fd92-eaad-5a7a-bc09-fd47137e536c",
-            "baseline_before": {
-                "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
-                "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-                "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
-                "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
-                "activity_start": 1948,
-                "activity_end": 1954,
-                "confidence": "legacy_asserted",
-                "chronology_status": "reviewed_stage2_phase",
-                "legacy_source_key": null,
-                "source_count": 2
-            },
-            "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
-            "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
-            "fragments": [
-                {
-                    "survivor": true,
-                    "activity_id": "23a9fd92-eaad-5a7a-bc09-fd47137e536c",
-                    "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
-                    "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-                    "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
-                    "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
-                    "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
-                    "activity_start": 1952,
-                    "activity_end": 1954,
-                    "activity_start_detail": {
-                        "year": 1952,
-                        "month": 4,
-                        "day": 28,
-                        "granularity": "day",
-                        "certainty": "exact",
-                        "calendar": "gregorian"
-                    },
-                    "activity_end_detail": {
-                        "year": 1954,
-                        "month": 12,
-                        "day": 10,
-                        "granularity": "day",
-                        "certainty": "exact",
-                        "calendar": "gregorian"
-                    },
-                    "confidence": "legacy_asserted",
-                    "chronology_status": "reviewed_stage2_phase",
-                    "legacy_source_key": null,
-                    "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
-                    "reviewed_notes": "Yoshida Shigeru remained prime minister after the peace treaties came into force on 28 April 1952 and the Allied Occupation ended. The original Activity UUID is preserved for the sovereign post-occupation portion of his continuous 1948–1954 tenure.",
-                    "add_source_links": [
-                        {
-                            "source_id": "3788a5f4-8717-5a24-bc74-fcb0f39f1bff",
-                            "source_locator_key": "National Diet Library: the peace treaties came into force on 28 April 1952; the Allied Occupation ended and Japan regained independence."
-                        }
-                    ]
-                },
-                {
-                    "survivor": false,
-                    "activity_id": "3241a5bb-b455-5982-bf7e-98365ff9e57f",
-                    "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
-                    "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
-                    "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
-                    "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
-                    "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
-                    "activity_start": 1948,
-                    "activity_end": 1952,
-                    "activity_start_detail": {
-                        "year": 1948,
-                        "month": 10,
-                        "day": 15,
-                        "granularity": "day",
-                        "certainty": "exact",
-                        "calendar": "gregorian"
-                    },
-                    "activity_end_detail": {
-                        "year": 1952,
-                        "month": 4,
-                        "day": 27,
-                        "granularity": "day",
-                        "certainty": "exact",
-                        "calendar": "gregorian"
-                    },
-                    "confidence": "legacy_asserted",
-                    "chronology_status": "reviewed_stage2_phase",
-                    "legacy_source_key": null,
-                    "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
-                    "reviewed_notes": "This Stage-2-native fragment records Yoshida Shigeru's continuous prime-ministerial tenure from 15 October 1948 through 27 April 1952 during the Allied occupation of Japan.",
-                    "source_copy_policy": "COPY_EXISTING",
-                    "add_source_links": [
-                        {
-                            "source_id": "3788a5f4-8717-5a24-bc74-fcb0f39f1bff",
-                            "source_locator_key": "National Diet Library: the peace treaties came into force on 28 April 1952; the Allied Occupation ended and Japan regained independence."
-                        }
-                    ]
-                }
-            ],
-            "gap_overlap_policy": "EXACT_DAY_BOUNDARY_OCCUPATION_FRAGMENT_ENDS_1952_04_27_AND_POST_OCCUPATION_SURVIVOR_STARTS_1952_04_28_NO_GAP_OR_OVERLAP"
+          "survivor": false,
+          "activity_id": "4148138d-abc1-59aa-9eaf-d4b09c268ea8",
+          "person_id": "0cf5d179-539f-409a-86ae-3dcaf30c0199",
+          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1945,
+          "activity_start_detail": {
+            "year": 1945,
+            "month": 9,
+            "day": 2,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end": 1952,
+          "activity_end_detail": {
+            "year": 1952,
+            "month": 4,
+            "day": 27,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This Stage-2-native fragment records Hirohito during the Allied occupation of Japan from 2 September 1945 through 27 April 1952. The peace treaties came into force on 28 April 1952, ending the Occupation and restoring Japan's independence.",
+          "add_source_links": [],
+          "source_copy_policy": "COPY_EXISTING"
         }
-    ],
-    "stage2_assertions": [],
-    "polity_relation_assertions": [],
-    "result": {
-        "activity_targets": 2,
-        "stage2_assertions": 0,
-        "production_mutation_authorized": false
+      ],
+      "gap_overlap_policy": "EXACT_DAY_BOUNDARY_OCCUPATION_FRAGMENT_ENDS_1952_04_27_AND_POST_OCCUPATION_SURVIVOR_STARTS_1952_04_28_NO_GAP_OR_OVERLAP"
     },
-    "new_activity_uuid_allocations": [
+    {
+      "case_id": "japan-lineage-yoshida-1948-1954-occupation-independence-split",
+      "type": "split_activity",
+      "activity_id": "23a9fd92-eaad-5a7a-bc09-fd47137e536c",
+      "baseline_before": {
+        "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+        "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1948,
+        "activity_end": 1954,
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed_stage2_phase",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments": [
         {
-            "case_id": "japan-lineage-hirohito-occupation-independence-split",
-            "fragment_id": "occupation_1945_1952",
-            "activity_uuid": "4148138d-abc1-59aa-9eaf-d4b09c268ea8",
-            "algorithm": "uuid5",
-            "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
-            "name": "correction:activity:d770812f-b9ab-41f2-9751-01d7a7931bb8:occupation_1945_1952"
+          "survivor": true,
+          "activity_id": "23a9fd92-eaad-5a7a-bc09-fd47137e536c",
+          "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+          "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+          "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+          "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+          "activity_start": 1952,
+          "activity_end": 1954,
+          "activity_start_detail": {
+            "year": 1952,
+            "month": 4,
+            "day": 28,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end_detail": {
+            "year": 1954,
+            "month": 12,
+            "day": 10,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed_stage2_phase",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Yoshida Shigeru remained prime minister after the peace treaties came into force on 28 April 1952 and the Allied Occupation ended. The original Activity UUID is preserved for the sovereign post-occupation portion of his continuous 1948–1954 tenure.",
+          "add_source_links": [
+            {
+              "source_id": "3788a5f4-8717-5a24-bc74-fcb0f39f1bff",
+              "source_locator_key": "National Diet Library: the peace treaties came into force on 28 April 1952; the Allied Occupation ended and Japan regained independence."
+            }
+          ]
         },
         {
-            "case_id": "japan-lineage-yoshida-1948-1954-occupation-independence-split",
-            "fragment_id": "occupation_1948_1952",
-            "activity_uuid": "3241a5bb-b455-5982-bf7e-98365ff9e57f",
-            "algorithm": "uuid5",
-            "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
-            "name": "correction:activity:23a9fd92-eaad-5a7a-bc09-fd47137e536c:occupation_1948_1952"
+          "survivor": false,
+          "activity_id": "3241a5bb-b455-5982-bf7e-98365ff9e57f",
+          "person_id": "6b378414-7043-523a-a890-7e46d5a86c37",
+          "polity_id": "e029b047-544a-52c7-8897-4e494ac72af4",
+          "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+          "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+          "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+          "activity_start": 1948,
+          "activity_end": 1952,
+          "activity_start_detail": {
+            "year": 1948,
+            "month": 10,
+            "day": 15,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end_detail": {
+            "year": 1952,
+            "month": 4,
+            "day": 27,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed_stage2_phase",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This Stage-2-native fragment records Yoshida Shigeru's continuous prime-ministerial tenure from 15 October 1948 through 27 April 1952 during the Allied occupation of Japan.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": [
+            {
+              "source_id": "3788a5f4-8717-5a24-bc74-fcb0f39f1bff",
+              "source_locator_key": "National Diet Library: the peace treaties came into force on 28 April 1952; the Allied Occupation ended and Japan regained independence."
+            }
+          ]
         }
-    ]
+      ],
+      "gap_overlap_policy": "EXACT_DAY_BOUNDARY_OCCUPATION_FRAGMENT_ENDS_1952_04_27_AND_POST_OCCUPATION_SURVIVOR_STARTS_1952_04_28_NO_GAP_OR_OVERLAP"
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 2,
+    "stage2_assertions": 0,
+    "production_mutation_authorized": false
+  },
+  "new_activity_uuid_allocations": [
+    {
+      "case_id": "japan-lineage-hirohito-occupation-independence-split",
+      "fragment_id": "occupation_1945_1952",
+      "activity_uuid": "4148138d-abc1-59aa-9eaf-d4b09c268ea8",
+      "algorithm": "uuid5",
+      "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+      "name": "correction:activity:d770812f-b9ab-41f2-9751-01d7a7931bb8:occupation_1945_1952"
+    },
+    {
+      "case_id": "japan-lineage-yoshida-1948-1954-occupation-independence-split",
+      "fragment_id": "occupation_1948_1952",
+      "activity_uuid": "3241a5bb-b455-5982-bf7e-98365ff9e57f",
+      "algorithm": "uuid5",
+      "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+      "name": "correction:activity:23a9fd92-eaad-5a7a-bc09-fd47137e536c:occupation_1948_1952"
+    }
+  ]
 }
