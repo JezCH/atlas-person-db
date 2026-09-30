@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "polity-japan-split-20260930:imperial-seed",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Emperor Meiji",
+    "display_name_ko": "메이지 천황",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "polity": {
+    "canonical_name_en": "Imperial Japan (1868–1947)",
+    "display_name_ko": "일본 제국기(1868–1947)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Emperor",
+    "role_display_name_ko": "천황",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Reviewed seed Activity used only to mint the distinct 1868–1947 imperial-era Japanese state identity. 'Imperial Japan (1868–1947) / 일본 제국기(1868–1947)' is an ATLAS historiographic identity label, deliberately not a claim that 大日本帝国 was the formal state title from 1868. The new Meiji government was established in 1868; the Constitution of the Empire of Japan (大日本帝国憲法) was promulgated in 1889; the postwar Constitution of Japan entered into force on 3 May 1947 and transferred sovereignty to the people while making the Emperor a symbol without governing powers.",
+    "start_year": 1868,
+    "start_month": 1,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1912,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "bibliographic_reference",
+      "title": "NISHI Amane's Conception of a System of Government",
+      "institution": "National Diet Library, Japan",
+      "url": "https://www.ndl.go.jp/modern/e/cha1/description03.html",
+      "citation_text": "The National Diet Library states that the 3 January 1868 Restoration of Imperial Rule established the new Meiji government centered on the imperial court."
+    },
+    {
+      "source_type": "bibliographic_reference",
+      "title": "The Constitution of the Empire of Japan",
+      "institution": "National Diet Library, Japan",
+      "url": "https://www.ndl.go.jp/constitution/e/etc/c02.html",
+      "citation_text": "The 1889 Constitution is titled Constitution of the Empire of Japan; Article 1 identifies the Empire of Japan, providing the formal 大日本帝国-era designation evidence."
+    },
+    {
+      "source_type": "bibliographic_reference",
+      "title": "Enactment of the Constitution of Japan",
+      "institution": "National Diet Library, Japan",
+      "url": "https://www.ndl.go.jp/constitution/e/outline/05outline.html",
+      "citation_text": "The National Diet Library records that the Constitution of Japan came into force on 3 May 1947, the constitutional boundary used by ATLAS between the imperial-era and modern Japan identities."
+    }
+  ],
+  "review_context": {
+    "request_batch": "polity-japan-identity-split-20260930",
+    "requested_item": 2,
+    "decision_authority": "User-approved Japan identity re-review on 2026-09-30; current ATLAS rupture rule keeps Yuan/Northern Yuan and other catastrophic state-formations separate despite legal or dynastic continuity.",
+    "identity_note": "Stage 1 seed only. Stage 2 must split the existing Emperor Meiji Activity at 3 January 1868, relink 1868–1947 Activities to this identity, split cross-boundary Hirohito and Yoshida Activities at 3 May 1947, preserve sources, remove this seed Activity, and retain current Japan UUID for the post-1947 state. Temporal designation should distinguish the early Meiji Government from the later formal Empire of Japan / 大日本帝国 name."
+  }
+}
