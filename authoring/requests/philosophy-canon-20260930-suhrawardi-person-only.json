@@ -1,0 +1,74 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:suhrawardi:person-only:v1",
+  "person": {
+    "canonical_name_en": "Suhrawardī",
+    "display_name_ko": "수흐라와르디",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Suhrawardī (c.1154–1191) is a securely historical Persian philosopher and founder of the Illuminationist tradition. Reliable biographies place his education in northwestern Iran and Isfahan, extensive travel through Anatolia, and his final years in Ayyubid Aleppo, where he was executed in 1191. Because his philosophical formation and activity span several regions and political contexts, the reviewed evidence does not justify compressing his career into one exact canonical polity interval. ATLAS therefore retains the historical Person without manufacturing a single polity-bound Activity rail.",
+    "basis_code": "secure_1154_1191_iran_anatolia_aleppo_biography_without_single_intellectual_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://plato.stanford.edu/entries/suhrawardi/",
+        "https://www.cambridge.org/core/books/abs/cambridge-companion-to-arabic-philosophy/suhrawardi-and-illuminationism/FF7819A8F1B2137DFB157B38C1399B4E",
+        "https://www.iranicaonline.org/articles/illuminationism/"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Suhrawardi — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/suhrawardi/",
+      "citation_text": "SEP identifies Shihab al-Din al-Suhrawardi (1154–1191) as the founder of the Illuminationist philosophical tradition and traces his education in Iran, travels through Anatolia, arrival in Aleppo in 1183, and death there in 1191.",
+      "locator": "Introduction; Life and Works"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Suhrawardī and Illuminationism — The Cambridge Companion to Arabic Philosophy",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-companion-to-arabic-philosophy/suhrawardi-and-illuminationism/FF7819A8F1B2137DFB157B38C1399B4E",
+      "citation_text": "Cambridge describes Suhrawardī, probably born around 1154 near Zanjān, as a rigorous philosophical critic and creative thinker whose Illuminationism shaped later Islamic philosophy.",
+      "locator": "Chapter 10 summary"
+    },
+    {
+      "source_type": "scholarly_reference",
+      "title": "Illuminationism — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/illuminationism/",
+      "citation_text": "Encyclopaedia Iranica identifies Sohravardi (1155–1191) as the Persian philosopher who constructed the Illuminationist system and records his execution in Aleppo in 1191.",
+      "locator": "Introduction to Sohravardi’s Illuminationism"
+    },
+    {
+      "source_type": "bibliographic_reference",
+      "title": "국립중앙도서관 소장자료 목차 — 이슬람 인물 자료",
+      "canonical_url": "https://www.nl.go.kr/NL/search/printTocPop.do?viewKey=146083355&viewType=AH1",
+      "citation_text": "The National Library of Korea catalogue table of contents uses the Korean form 수흐라와르디 for the philosopher.",
+      "locator": "제8장 철학자·과학자, 070 수흐라와르디"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-ISLAMIC-PERSIAN",
+    "namuwiki_review": "Exact indexed searches for 수흐라와르디/수흐라와디/Suhrawardi/Suhrawardī did not establish an independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "Secure historical identity and life span retained; no single polity rail forced across Iranian education, Anatolian travels, and final Ayyubid-Aleppo period.",
+    "korean_name_review": "Korean National Library catalogue usage supports 수흐라와르디 as the preferred display form."
+  }
+}
