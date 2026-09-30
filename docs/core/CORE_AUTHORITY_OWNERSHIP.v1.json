@@ -633,6 +633,38 @@
         }
       ],
       "note": "Unit 14 generalizes Polity retirement dependency discovery through the shared destructive lifecycle guard while preserving the Unit 4 durable retirement/tombstone writer and no-resurrection semantics."
+    },
+    {
+      "id": "p14_territory_geometry_boundary",
+      "semantic_fact": "Canonical interface separating Polity-owned historical territorial authority from reusable evidence-backed Geometry",
+      "canonical_state": [
+        "contracts/p14-territory-geometry-contract.v1.json"
+      ],
+      "authoritative_writer": {
+        "path": "server/atlas-p14-territory-geometry-contract.js",
+        "symbol": "assertTerritoryRecord / assertGeometry / assertTerritoryGeometryLink"
+      },
+      "orchestrators": [
+        "future reviewed Territory/Geometry authoring only"
+      ],
+      "shadow_writers": [],
+      "status": "repository_source_authority",
+      "remediation_unit": null,
+      "evidence_anchors": [
+        {
+          "path": "contracts/p14-territory-geometry-contract.v1.json",
+          "contains": "Person -> Activity -> Polity -> TerritoryRecord -> Geometry"
+        },
+        {
+          "path": "server/atlas-p14-territory-geometry-contract.js",
+          "contains": "function assertTerritoryRecord"
+        },
+        {
+          "path": "server/atlas-p14-territory-geometry-contract.js",
+          "contains": "function assertGeometry"
+        }
+      ],
+      "note": "Unit 15 seals interfaces only. TerritoryRecord owns control type, boundary certainty, evidence confidence, valid interval and provenance under Polity authority. Geometry owns reusable evidence-backed shape only. Person/Activity-owned geometry, invented geometry and display-derived political authority are forbidden. Actual Territory polygon production remains NONCORE."
     }
   ]
 }

@@ -1,0 +1,39 @@
+{
+  "schema": "atlas-p14-territory-geometry-contract/v1",
+  "chain": ["Person", "Activity", "Polity", "TerritoryRecord", "Geometry"],
+  "territory_record": {
+    "identity": ["polity_id", "geometry_id", "valid_start", "valid_end", "control_type"],
+    "required": ["polity_id", "geometry_id", "control_type", "boundary_certainty", "evidence_confidence", "valid_start", "valid_end", "source_refs"],
+    "control_types": ["sovereign_control", "de_facto_control", "tributary_control", "occupied_control", "contested_control", "administrative_control", "other_reviewed_control"],
+    "boundary_certainty": ["exact", "approximate", "disputed", "partial", "unknown"],
+    "evidence_confidence": ["well_established", "probable", "uncertain"],
+    "rules": {
+      "polity_is_only_political_authority_owner": true,
+      "person_id_forbidden": true,
+      "activity_id_forbidden": true,
+      "display_fields_forbidden": ["region_code", "subregion_code", "location_label"],
+      "year_zero_forbidden": true,
+      "valid_interval_must_be_ordered": true,
+      "source_refs_required": true
+    }
+  },
+  "geometry": {
+    "required": ["geometry_id", "geometry_kind", "geometry_ref", "provenance"],
+    "geometry_kinds": ["point", "line", "polygon", "multipolygon"],
+    "rules": {
+      "historical_authority_forbidden": true,
+      "person_id_forbidden": true,
+      "polity_id_forbidden": true,
+      "geometry_is_reusable_evidence_backed_shape": true,
+      "invented_geometry_forbidden": true,
+      "display_requirement_cannot_create_geometry": true
+    }
+  },
+  "publication": {
+    "historical_authority_path": "Person -> Activity -> Polity -> TerritoryRecord -> Geometry",
+    "person_owned_geometry_forbidden": true,
+    "display_only_spatial_disposition_is_not_territorial_authority": true,
+    "missing_territory_must_remain_missing_or_review_hold": true,
+    "bulk_gis_content_is_noncore": true
+  }
+}
