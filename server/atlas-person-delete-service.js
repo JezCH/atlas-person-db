@@ -108,7 +108,7 @@ function createPersonDeleteService({
       const requirementLedgerPresent = await tablePresent(client, "atlas_v2.person_duplicate_revalidation_requirements");
       const runtimeProjectionPresent = await tablePresent(client, "atlas_v2.runtime_person_politics_v1");
       await frontierLock(client);
-
+      if (dependencyGuard) await dependencyGuard(client);
 
       const person = await client.query(`
         select id,canonical_key,person_type,historicity
