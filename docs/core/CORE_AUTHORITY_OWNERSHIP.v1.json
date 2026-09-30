@@ -435,7 +435,7 @@
           "contains": "atlas-polity-spatial-index.json"
         }
       ],
-      "note": "Unit 11 closed the semantic boundary: repository spatial shards/corrections own reviewed display disposition publication; PolityPlaceFunction is explicitly a historical Place+provenance fact and cannot contain display geography. New Polity Human Authoring requires a materialized reviewed spatial-disposition handshake before DONE."
+      "note": "Unit 11 closed the semantic boundary: repository spatial shards/corrections own reviewed display disposition publication; PolityPlaceFunction is explicitly a historical Place+provenance fact and cannot contain display geography. New Polity Human Authoring requires a materialized reviewed spatial-disposition handshake before DONE. atlas-polity-spatial-index.json remains derived compatibility output only."
     },
     {
       "id": "runtime_projection",
