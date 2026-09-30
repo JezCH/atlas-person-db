@@ -186,11 +186,11 @@ test("Person domain codes and labels have one canonical registry", () => {
   assert.doesNotMatch(dashboardSource, /governance:"통치·정치"/);
 });
 
-test("shared store is the sole browser owner of repeated Person/domain/spatial/non-timeline reads", () => {
+test("shared store owns repeated Person/domain/spatial reads and the duplicate non-timeline source is retired", () => {
   assert.match(storeSource, /personReader\.listPersons\(\)/);
   assert.match(storeSource, /\/api\/atlas-person-domain/);
   assert.match(storeSource, /atlas-polity-spatial-index\.json/);
-  assert.match(storeSource, /non-timeline-persons\.json/);
+  assert.doesNotMatch(storeSource, /non-timeline-persons\.json|nonTimeline/);
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
 });
 

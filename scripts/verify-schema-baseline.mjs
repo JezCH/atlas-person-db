@@ -33,7 +33,8 @@ const expectedAuthoringMigrations = [
   '20260930_external_reference_decision_state.sql',
   '20260930_source_bibliographic_completion.sql',
   '20260930_place_historical_relations.sql',
-  '20260930_human_person_authoring_manifest_schema.sql'
+  '20260930_human_person_authoring_manifest_schema.sql',
+  '20260930_unit16_retire_external_reference_sync_trigger.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -56,7 +57,8 @@ const expectedAuthoringReplayMigrations = [
   '20260930_external_reference_decision_state.sql',
   '20260930_source_bibliographic_completion.sql',
   '20260930_place_historical_relations.sql',
-  '20260930_human_person_authoring_manifest_schema.sql'
+  '20260930_human_person_authoring_manifest_schema.sql',
+  '20260930_unit16_retire_external_reference_sync_trigger.sql'
 ];
 
 const expectedCorrectionMigrations = [

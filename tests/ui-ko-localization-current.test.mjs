@@ -6,7 +6,6 @@ const i18n = fs.readFileSync(new URL('../atlas-ui-localization.js', import.meta.
 const catalog = fs.readFileSync(new URL('../atlas-ui-authority-catalog.ko.js', import.meta.url), 'utf8');
 const nav = fs.readFileSync(new URL('../atlas-main-authority-nav.js', import.meta.url), 'utf8');
 const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
-const nonTimelineData = JSON.parse(fs.readFileSync(new URL('../non-timeline-persons.json', import.meta.url), 'utf8'));
 const assetLoader = fs.readFileSync(new URL('../asset-loader.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const dataStore = fs.readFileSync(new URL('../atlas-client-data-store.js', import.meta.url), 'utf8');
@@ -30,19 +29,17 @@ test('authority copy is externalized and includes the canonical spacetime place-
   assert.doesNotMatch(nav, /검토된 수도를 사용합니다/);
 });
 
-test('unknown-chronology presentation reuses reviewed Korean registry labels without a standalone legend UI', () => {
-  assert.match(main, /dataStore\.loadNonTimelinePersons/);
-  assert.match(dataStore, /non-timeline-persons\.json/);
-  assert.match(main, /politic_display_name_ko/);
+test('unknown-chronology presentation uses canonical timeline-disposition Korean labels without a standalone registry UI', () => {
+  assert.match(main, /TIMELINE_DISPOSITION_LABELS/);
+  assert.match(main, /chronology_unresolved:"개인 활동연대 미상"/);
+  assert.match(main, /legendary:"전설 인물"/);
+  assert.match(main, /mythical:"신화 인물"/);
+  assert.match(main, /other_reviewed_exclusion:"연표 제외"/);
+  assert.match(main, /person\?\.timeline_disposition/);
+  assert.doesNotMatch(main, /loadNonTimelinePersons|politic_display_name_ko/);
   assert.match(main, /historicity_display_ko/);
-  assert.doesNotMatch(html, /non-timeline-list\.js/);
-  assert.ok(nonTimelineData.length > 0);
-  for (const row of nonTimelineData) {
-    assert.equal(typeof row.politic_display_name_ko, 'string');
-    assert.ok(row.politic_display_name_ko.trim().length > 0);
-    assert.equal(typeof row.historicity_display_ko, 'string');
-    assert.ok(row.historicity_display_ko.trim().length > 0);
-  }
+  assert.doesNotMatch(dataStore, /non-timeline-persons\.json|nonTimeline/);
+  assert.doesNotMatch(html, /non-timeline-list\.js|nonTimelineSection/);
 });
 
 test('Main and Admin load the same localization authority before dependent presentation code', () => {

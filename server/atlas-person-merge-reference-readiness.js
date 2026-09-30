@@ -2,7 +2,7 @@
 
 const { discoverIdentityReferences } = require("./atlas-destructive-lifecycle-service.js");
 
-const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v7";
+const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v8";
 const CONTEXT_POLITY_RELATIONSHIP_FK_KEY = "atlas_v2.person_politics_context_polities.person_politics_id";
 
 const EXPECTED_PERSON_FKS = Object.freeze([
@@ -39,9 +39,9 @@ const P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS = Object.freeze([
   "atlas_v2.person_duplicate_revalidation_requirements.person_low_id"
 ]);
 const EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS = Object.freeze([]);
-const EXPECTED_USER_TRIGGERS = Object.freeze([
-  "atlas_v2.authoring_manifest_runs.authoring_manifest_runs_external_reference_sync"
-]);
+// Unit 16 retired the authoring-ledger projection trigger. Any remaining user trigger
+// on the reviewed merge surface is now unexpected residue and must fail closed.
+const EXPECTED_USER_TRIGGERS = Object.freeze([]);
 const DELETE_ACTIONS = Object.freeze({ a:"NO ACTION",r:"RESTRICT",c:"CASCADE",n:"SET NULL",d:"SET DEFAULT" });
 
 function fkKey(row) {

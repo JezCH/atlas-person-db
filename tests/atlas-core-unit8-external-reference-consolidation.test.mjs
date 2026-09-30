@@ -136,3 +136,13 @@ test('Unit 8 migration restores classified reason rows that are missing from the
   assert.match(migration,/WHERE NOT EXISTS \([\s\S]*provider='namuwiki'/i);
   assert.match(migration,/SET review_state='reviewed_absent',[\s\S]*review_reason=r\.review_reason/);
 });
+
+
+test('Unit 16 retires the authoring-ledger external-reference projection trigger', () => {
+  const fs=require('node:fs');
+  const historical=fs.readFileSync(new URL('../db/migrations/20260821_human_authoring_external_reference_sync.sql',import.meta.url),'utf8');
+  const retirement=fs.readFileSync(new URL('../db/migrations/20260930_unit16_retire_external_reference_sync_trigger.sql',import.meta.url),'utf8');
+  assert.match(historical,/CREATE TRIGGER authoring_manifest_runs_external_reference_sync/);
+  assert.match(retirement,/DROP TRIGGER IF EXISTS authoring_manifest_runs_external_reference_sync/);
+  assert.match(retirement,/DROP FUNCTION IF EXISTS atlas_v2\.sync_human_authoring_external_references\(\)/);
+});

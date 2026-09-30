@@ -9,7 +9,6 @@ export const ROOT_FRONTEND_EXTENSIONS = Object.freeze(new Set([".html", ".css", 
 export const ROOT_PUBLIC_JSON = Object.freeze(new Set([
   "atlas-place-spatial-registry.json",
   "atlas-polity-spatial-index.json",
-  "non-timeline-persons.json"
 ]));
 
 export function isPublicUiRootFile(name) {

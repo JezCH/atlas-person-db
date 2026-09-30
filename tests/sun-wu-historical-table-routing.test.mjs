@@ -17,6 +17,7 @@ test("Sun Wu historical correction artifact preserves the reviewed classificatio
 test("ordinary Person Main has one chronology UI and no separate Other / Uncertain section", () => {
   assert.match(main, /\.\.\.groups\.historical/);
   assert.match(main, /\.\.\.groups\.other_or_uncertain/);
-  assert.match(main, /\.\.\.visibleUnknownRegistryPersons\(\)/);
+  assert.match(main, /timelineDispositionLabel\(person\)/);
+  assert.doesNotMatch(main, /visibleUnknownRegistryPersons|loadNonTimelinePersons/);
   assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY|person-group-other/);
 });
