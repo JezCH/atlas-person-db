@@ -45,7 +45,7 @@ jobs:
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-correction-candidates.txt
           else
-            git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- \
+            git diff --name-only --diff-filter=AMR "${{ github.event.before }}" "${{ github.sha }}" -- \
               'corrections/requests/*.json' 'corrections/plans/*.json' > /tmp/atlas-correction-candidates.txt
           fi
 
