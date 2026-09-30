@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:japan-editorial-umbrellas:2026-09-30:v1",
+  "release_order": 1220,
+  "decision_authority": "User-directed Japan polity lineage repair. After all reviewed Activities and temporal designations have been moved away, retire the two editor-authored umbrella identities only if the live complete reference audit sees zero external references. Stage-1 Human Authoring created each Polity with exactly two owned preferred-name rows and no Polity-owned descriptions or source links.",
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:pre-meiji-japan-editorial-umbrella",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "7dc78052-3cef-4e39-addc-599fe8b6c309",
+        "canonical_key": "Pre-Meiji Japan",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": null,
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Pre-Meiji Japan",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "메이지 유신 이전 일본",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:imperial-japan-editorial-umbrella",
+      "review_reason": "REVIEWED_UNREFERENCED_ORPHAN_CLEANUP",
+      "expected_polity": {
+        "id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+        "canonical_key": "Imperial Japan (1868–1947)",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": null,
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Imperial Japan",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "일본 제국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
