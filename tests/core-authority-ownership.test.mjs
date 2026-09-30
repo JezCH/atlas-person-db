@@ -97,7 +97,8 @@ test("known Unit 1 shadow-writer debts stay explicit until their owning cleanup 
   );
   assert.ok(byId.get("activity_authoring").shadow_writers.some((item) => item.path === "server/atlas-correction-manifest-v2-service.js"));
   assert.equal(byId.get("non_timeline_person_registry").status, "duplicate_truth_registry");
-  assert.equal(byId.get("context_objects").status, "ownership_gap");
+  assert.equal(byId.get("context_objects").status, "single_writer");
+  assert.deepEqual(byId.get("context_objects").shadow_writers, []);
 });
 
 test("derived/runtime and repository spatial outputs are not mislabeled as historical authoring authority", () => {
