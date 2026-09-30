@@ -2,7 +2,7 @@
   "schema": "atlas-requirements/v1",
   "version": 1,
   "finalized": true,
-  "as_of": "2026-09-28",
+  "as_of": "2026-10-01",
   "roadmap": [
     "P0",
     "P1",
@@ -448,9 +448,15 @@
     },
     {
       "id": "ATLAS-RQ-0223",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "title": "Pass full Production product lifecycle acceptance",
-      "phase": "P13"
+      "phase": "P13",
+      "evidence_paths": [
+        "docs/core/CORE_V2_FINAL_ACCEPTANCE.md",
+        "data/core/core-v2-final-acceptance.v1.json",
+        "tests/core-final-acceptance.test.mjs",
+        "contracts/runtime-projection-contract.v1.json"
+      ]
     },
     {
       "id": "ATLAS-RQ-0224",
@@ -466,33 +472,64 @@
     },
     {
       "id": "ATLAS-RQ-0226",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "title": "Complete first-class Person object authoring without forcing unknown profile facts",
-      "phase": "P13"
+      "phase": "P13",
+      "evidence_paths": [
+        "server/atlas-human-authoring-service.js",
+        "server/atlas-registration-coordinator.js",
+        "data/core/registration-obligations.v1.json",
+        "tests/atlas-human-person-authoring.test.mjs",
+        "tests/atlas-person-profile-lifecycle-contract.test.mjs"
+      ]
     },
     {
       "id": "ATLAS-RQ-0227",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "title": "Complete Place and bibliographic Source authoring as independent objects",
-      "phase": "P13"
+      "phase": "P13",
+      "evidence_paths": [
+        "server/atlas-source-service.js",
+        "server/atlas-place-relation-service.js",
+        "tests/core-unit9-source-bibliographic.test.mjs",
+        "tests/core-unit10-place-relations.test.mjs"
+      ]
     },
     {
       "id": "ATLAS-RQ-0228",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "title": "Implement explicit Compile to Runtime projection and readiness filtering",
-      "phase": "P13"
+      "phase": "P13",
+      "evidence_paths": [
+        "server/atlas-runtime-compile-service.js",
+        "contracts/runtime-projection-contract.v1.json",
+        "tests/atlas-runtime-compile-service.test.mjs",
+        "tests/atlas-runtime-publication-workflow.test.mjs"
+      ]
     },
     {
       "id": "ATLAS-RQ-0229",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "title": "Represent unresolved Person Activity boundaries in Authoring without fake endpoint years",
-      "phase": "P13"
+      "phase": "P13",
+      "evidence_paths": [
+        "server/atlas-human-authoring-service.js",
+        "server/atlas-stage2-native-activity-service.js",
+        "tests/atlas-human-authoring-service.test.mjs",
+        "tests/atlas-runtime-compile-service.test.mjs"
+      ]
     },
     {
       "id": "ATLAS-RQ-0230",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "title": "Complete source-backed AI candidate to human review to authoring workflow",
-      "phase": "P13"
+      "phase": "P13",
+      "evidence_paths": [
+        "server/atlas-reviewed-candidate-service.js",
+        "server/atlas-registration-coordinator.js",
+        "tests/core-unit13-reviewed-candidate-boundary.test.mjs",
+        "tests/atlas-core-unit7-registration-writer-integration.test.mjs"
+      ]
     },
     {
       "id": "ATLAS-RQ-0301",

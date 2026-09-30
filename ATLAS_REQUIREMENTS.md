@@ -160,16 +160,18 @@ Historical Baseline B evidence remains audit history. Current correctness must b
 - Live `corrections/intents/` dispatch and correction manifest v1/v1.1/v1.2/v1.3/v1.4 service dispatch are unreachable; current regression tests explicitly reject those schemas and assert zero legacy executable correction-service dependencies.
 - Historical migration/request artifacts may remain as replay/audit evidence. Their presence is not live compatibility.
 
-### P13 — Full product lifecycle — PENDING
+### P13 — Full product lifecycle — COMPLETED
 
-- `ATLAS-RQ-0223` — **PENDING:** pass full Production product lifecycle acceptance.
-- `ATLAS-RQ-0226` — **PENDING:** complete first-class Person object authoring without forcing unknown optional profile facts.
-- `ATLAS-RQ-0227` — **PENDING:** complete Place and bibliographic Source authoring as independent objects.
-- `ATLAS-RQ-0228` — **PENDING:** implement explicit Compile → Runtime projection and readiness filtering.
-- `ATLAS-RQ-0229` — **PENDING:** represent unresolved Person Activity boundaries without fabricated endpoints.
-- `ATLAS-RQ-0230` — **PENDING:** complete source-backed AI candidate → human review → authoritative authoring workflow.
+- `ATLAS-RQ-0223` — **COMPLETED:** pass full Production product lifecycle acceptance.
+- `ATLAS-RQ-0226` — **COMPLETED:** complete first-class Person object authoring without forcing unknown optional profile facts.
+- `ATLAS-RQ-0227` — **COMPLETED:** complete Place and bibliographic Source authoring as independent objects.
+- `ATLAS-RQ-0228` — **COMPLETED:** implement explicit Compile → Runtime projection and readiness filtering.
+- `ATLAS-RQ-0229` — **COMPLETED:** represent unresolved Person Activity boundaries without fabricated endpoints.
+- `ATLAS-RQ-0230` — **COMPLETED:** complete source-backed AI candidate → human review → authoritative authoring workflow.
 
 P13 acceptance requires Person, Place and Source exist as first-class Authoring objects, the normalized writer remains authoritative, and Runtime cannot publish unresolved Authoring data as if it were settled fact.
+
+CORE v2 Unit 17 closes this P13 lifecycle contract through the final acceptance matrix in `docs/core/CORE_V2_FINAL_ACCEPTANCE.md` and its machine-readable regression gate. P14 historical-map content and research integration remain pending and are not implied complete by CORE v2 closure.
 
 ### P14 — Historical map contract — PENDING
 
