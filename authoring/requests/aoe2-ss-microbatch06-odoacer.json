@@ -64,6 +64,12 @@
     "grade": "SS",
     "namuwiki_review": "Independent indexed NamuWiki-mirror Person document verified at exact title 오도아케르; canonical namu.wiki path preserved.",
     "polity_decision": "Create the precise 476–493 Kingdom of Odoacer identity; do not bind Odoacer to the known multi-era Kingdom of Italy false merge.",
-    "execution_retry": "2026-10-01 replay-safe authoring bootstrap retry after Production audit-operation constraint blocker"
+    "execution_retry": "2026-10-01 replay-safe authoring bootstrap retry after Production audit-operation constraint blocker",
+    "spatial_handshake": "Reviewed HOLD is the terminal registration disposition; no false static placement or borrowed polity geometry."
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "materialized": true,
+    "evidence": "Reviewed registration hold: the distinct 476–493 Kingdom of Odoacer identity is historically valid, but it is not bound to the contaminated multi-era Kingdom of Italy spatial record; dedicated spatial review must place the new canonical polity after UUID creation."
   }
 }
