@@ -12,7 +12,7 @@ test('Unit 8 canonical NamuWiki normalizer is shared by profile and Human Author
   const fromHuman=human.normalizeNamuWikiReference(decision,{allowLegacyOmission:false});
   const fromProfile=profile.normalizeNamuWikiInput(decision);
   assert.equal(canonical.url,'https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D');
-  assert.deepEqual(fromHuman,{status:canonical.status,checked_at:canonical.checked_at,document_title:canonical.document_title,url:canonical.url});
+  assert.deepEqual(fromHuman,{status:canonical.status,checked_at:canonical.checked_at,document_title:canonical.document_title,url:canonical.url,review_state:'reviewed',review_reason:null});
   assert.deepEqual(fromProfile,{provider:'namuwiki',status:canonical.status,document_title:canonical.document_title,url:canonical.url});
 });
 
@@ -40,6 +40,29 @@ test('Unit 8 keeps reviewed not_found explicit and rejects linked overwrite unde
   );
   assert.equal(queries.length,1);
   assert.deepEqual(external.normalizeNamuWikiDecision({status:'not_found',checked_at:'2026-09-30'},{checkedAtRequired:true}),{
-    provider:'namuwiki',status:'not_found',checked_at:'2026-09-30',document_title:null,url:null
+    provider:'namuwiki',status:'not_found',checked_at:'2026-09-30',document_title:null,url:null,review_state:'reviewed_absent',review_reason:null
   });
+});
+
+
+test('Unit 8 retires Person-ID NamuWiki registries and reads review state from the canonical row', () => {
+  const fs=require('node:fs');
+  assert.equal(fs.existsSync(new URL('../data/namuwiki-reviewed-not-found-backfill.v1.json',import.meta.url)),false);
+  assert.equal(fs.existsSync(new URL('../data/namuwiki-reviewed-not-found-reasons.v1.json',import.meta.url)),false);
+  assert.equal(fs.existsSync(new URL('../server/atlas-namuwiki-review-state.js',import.meta.url)),false);
+  const read=fs.readFileSync(new URL('../server/atlas-person-read-service.js',import.meta.url),'utf8');
+  assert.match(read,/'review_state', per\.review_state/);
+  assert.match(read,/'review_reason', per\.review_reason/);
+  assert.doesNotMatch(read,/person_profile_mutation_audits|namuwiki-reviewed-not-found/);
+});
+
+test('Unit 8 migration preserves legacy review evidence before duplicate registries disappear', () => {
+  const fs=require('node:fs');
+  const migration=fs.readFileSync(new URL('../db/migrations/20260930_external_reference_decision_state.sql',import.meta.url),'utf8');
+  assert.match(migration,/ADD COLUMN IF NOT EXISTS review_state text/);
+  assert.match(migration,/ADD COLUMN IF NOT EXISTS review_reason text/);
+  assert.match(migration,/review_state='reviewed_absent'/);
+  assert.match(migration,/review_state='legacy_unverified'/);
+  assert.match(migration,/person_profile_mutation_audits/);
+  assert.match(migration,/exact_target_url_verified/);
 });
