@@ -239,6 +239,7 @@ jobs:
           jq '[.polities[] | select(((.canonical_key // "") + " " + ([.names[]?.name] | join(" "))) | ascii_downcase | test("fifth|kamakura|tokugawa|toyotomi|liao dynasty|ming dynasty|tsardom of russia|empire of japan|shakya|haudenosaunee|swedish empire|qara khitai"))]' polity-reference-audit-response.json | tee polity-reference-candidates.push.json
 
       - name: Upload read-only inventory evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: atlas-audit-${{ env.ATLAS_AUDIT_MODE }}-${{ github.sha }}
