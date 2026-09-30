@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philosophy-canon-20260930:kundakunda:person-only:v1",
+  "person": {
+    "canonical_name_en": "Kundakunda",
+    "display_name_ko": "쿤다쿤다",
+    "person_type": "historical",
+    "historicity": "historical_uncertain_biography",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-09-30",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Kundakunda is treated as an early foundational Jain philosopher, but the Oxford Handbook timeline places the attributed corpus broadly at about 200–400 CE and explicitly signals attribution uncertainty. That range is not a defensible person-specific Activity interval, and no single polity rail is asserted from it.",
+    "basis_code": "broad_200_400_work_attribution_without_person_specific_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://academic.oup.com/edited-volume/27982/chapter/211656615",
+        "https://academic.oup.com/edited-volume/27982/chapter-abstract/211664346"
+      ],
+      "reviewed_at": "2026-09-30"
+    }
+  },
+  "representative_domain": "knowledge",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Timeline: Indian Philosophy in a Hundred Thinkers — The Oxford Handbook of Indian Philosophy",
+      "canonical_url": "https://academic.oup.com/edited-volume/27982/chapter/211656615",
+      "citation_text": "Oxford Handbook timeline lists “Kundakunda” with a broad working range of 200–400 CE and many attributed works.",
+      "locator": "Kundakunda timeline entry"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "The Philosophy of Mind of Kundakunda and Umāsvāti — The Oxford Handbook of Indian Philosophy",
+      "canonical_url": "https://academic.oup.com/edited-volume/27982/chapter-abstract/211664346",
+      "citation_text": "Oxford Handbook chapter treats Kundakunda as one of the earliest Jain philosophers laying foundations for Jain philosophy of mind.",
+      "locator": "Abstract and chapter scope"
+    }
+  ],
+  "review_context": {
+    "request_batch": "PHILOSOPHY-CANON-54-20260930-INDIA-BRAHMANICAL-JAIN-CLOSURE",
+    "namuwiki_review": "Exact indexed searches for 쿤다쿤다/군다군다/Kundakunda returned no independent NamuWiki Person document; no guessed URL.",
+    "timeline_decision": "Chronology and work attribution are too broad for a person-specific year rail."
+  }
+}
