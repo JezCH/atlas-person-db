@@ -149,7 +149,12 @@ const runtimeExclusionsReadHandler = createLazyHandler(() => {
   return createRuntimeExclusionsReadHandler({ clientFactory:getPostgresClientFactory() });
 });
 
-const nonTimelineReadHandler = createLazyHandler(() => {\n  const { createNonTimelineReadHandler } = require("../server/atlas-non-timeline-read-handler.js");\n  return createNonTimelineReadHandler({ clientFactory:getPostgresClientFactory() });\n});\n\nconst runtimePublicationReadHandler = createLazyHandler(() => {
+const nonTimelineReadHandler = createLazyHandler(() => {
+  const { createNonTimelineReadHandler } = require("../server/atlas-non-timeline-read-handler.js");
+  return createNonTimelineReadHandler({ clientFactory:getPostgresClientFactory() });
+});
+
+const runtimePublicationReadHandler = createLazyHandler(() => {
   const { createRuntimePublicationReadHandler } = getRuntimePublicationHandlerModule();
   return createRuntimePublicationReadHandler({ clientFactory:getPostgresClientFactory() });
 });
