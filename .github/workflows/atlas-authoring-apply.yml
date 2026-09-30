@@ -991,9 +991,10 @@ jobs:
                       and (.person.external_references.namuwiki.document_title // null)==($m.external_references.namuwiki.document_title // null)
                       and (.person.external_references.namuwiki.url // null)==($m.external_references.namuwiki.url // null)
                     )
-                    and all($m.sources[];
+                    and . as $read
+                    | all($m.sources[];
                       . as $s
-                      | any(.person.sources[]; (.canonical_url // null)==($s.canonical_url // null) and (.title // null)==($s.title // null))
+                      | any($read.person.sources[]; (.canonical_url // null)==($s.canonical_url // null) and (.title // null)==($s.title // null))
                     )
                   ' "$readback" >/dev/null; then
                   echo "Production person-only read-back mismatch for ${request_id}" >&2
