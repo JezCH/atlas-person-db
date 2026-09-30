@@ -2,13 +2,13 @@
   "schema": "atlas-stage2-correction-v2-execution-plan/v1",
   "as_of": "2026-09-30",
   "contract": "stage2/contracts/correction-v2-current.v1.json",
-  "decision_authority": "User-approved Japan polity identity re-review 2026-09-30; exact Production Baseline A captured at deployment 6b4e94741cd3feddc5d4260880e4a1556f0fa5c0; National Diet Library records 3 January 1868 as the Restoration of Imperial Rule establishing the new Meiji government, the Constitution of the Empire of Japan was promulgated 11 February 1889, and the Constitution of Japan entered into force 3 May 1947.",
+  "decision_authority": "User-approved Japan polity identity re-review 2026-09-30; exact Production Baseline A captured at deployment 6b4e94741cd3feddc5d4260880e4a1556f0fa5c0; National Diet Library records 3 January 1868 as the Restoration of Imperial Rule establishing the new Meiji government, the Constitution of the Empire of Japan was promulgated 11 February 1889, and the Constitution of Japan entered into force 3 May 1947. Seed retirement release 1090 precedes this plan, transferring the three NDL seed source links to the original Meiji Activity before the exact 1868 split.",
   "baseline": {
     "deployment_sha": "6b4e94741cd3feddc5d4260880e4a1556f0fa5c0",
     "baseline_digest": "sha256:506c8a263b251eec08cab567101d63c618882511ae34cd1f29ca6d6d5345208d"
   },
   "batch_id": "polity_japan_meiji_imperial_designation_repair_20260930_v1",
-  "status": "REVIEWED_MEIJI_BOUNDARY_AND_DESIGNATION_SCHEMA_FIXED",
+  "status": "REVIEWED_MEIJI_BOUNDARY_AND_DESIGNATION",
   "release_order": 1140,
   "new_activity_uuid_allocations": [
     {
@@ -31,7 +31,8 @@
     "territory_geometry_mutation_forbidden": true,
     "physical_person_merge_forbidden": true,
     "production_executable": false,
-    "production_mutation_authorized": false
+    "production_mutation_authorized": false,
+    "seed_retirement_release_1090_must_precede_this_plan": true
   },
   "operations": [
     {
@@ -48,7 +49,7 @@
         "confidence": "legacy_asserted",
         "chronology_status": "exact_as_recorded",
         "legacy_source_key": "pending-records-supplement-5.json:40:075d6eff317d826f",
-        "source_count": 1
+        "source_count": 4
       },
       "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
       "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
@@ -233,7 +234,7 @@
         "designation": {
           "id": "1f9c843f-cdc7-5e2d-9963-1ced563894d7",
           "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
-          "designation_type": "historiographic_period",
+          "designation_type": "government_period",
           "valid_from_year": 1868,
           "valid_from_month": 1,
           "valid_from_day": 3,
@@ -284,7 +285,7 @@
         "designation": {
           "id": "8cdee6c3-8c2d-5dce-8b7f-96814112dc34",
           "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
-          "designation_type": "official_name",
+          "designation_type": "constitutional_state_designation",
           "valid_from_year": 1889,
           "valid_from_month": 2,
           "valid_from_day": 11,

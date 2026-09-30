@@ -1,0 +1,29 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-name:japan-imperial-base:2026-09-30:v1",
+  "release_order": 1085,
+  "evidence": {
+    "decision": "Normalize the Stage-1 minting labels to durable historiographic base names. Keep the identity beginning at the 3 January 1868 Meiji Restoration, but do not back-project the later formal constitutional title as the base name. The exact formal 1889–1947 designation is modeled separately as a temporal polity designation.",
+    "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+    "temporal_designation": "Empire of Japan / 대일본제국 / 大日本帝国 from the reviewed 11 February 1889 constitutional-evidence boundary through 2 May 1947."
+  },
+  "operations": [
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "imperial-japan-en-durable-base-name",
+      "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+      "locale": "en",
+      "expected_name": "Imperial Japan (1868–1947)",
+      "replacement_name": "Imperial Japan"
+    },
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "imperial-japan-ko-durable-base-name",
+      "polity_id": "ee37aba0-fb1a-4896-a6d2-06e32b77b251",
+      "locale": "ko",
+      "expected_name": "일본 제국기(1868–1947)",
+      "replacement_name": "일본 제국"
+    }
+  ]
+}
