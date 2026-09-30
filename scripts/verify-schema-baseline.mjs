@@ -1,11 +1,10 @@
-import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import pg from 'pg';
 
 const require = createRequire(import.meta.url);
-const { AUTHORING_MIGRATION_PATHS, AUTHORING_APPLY_MIGRATION_PATHS, applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
-const { CORRECTION_MIGRATION_PATHS, applyCorrectionMigrations } = require('../server/atlas-correction-migrations.js');
+const { AUTHORING_MIGRATION_PATHS, AUTHORING_APPLY_MIGRATION_PATHS } = require('../server/atlas-authoring-migrations.js');
+const { CORRECTION_MIGRATION_PATHS } = require('../server/atlas-correction-migrations.js');
 const {
   readCurrentBaseline,
   applyCurrentBaseline,
