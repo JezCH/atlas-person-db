@@ -6,7 +6,7 @@ function q(v){const s=String(v||"");if(!IDENT.test(s))throw new Error("DESTRUCTI
 function key(r){return `${r.source_schema}.${r.source_table}.${r.source_column}`}
 async function discoverIdentityReferences(client,{targetTable,targetColumn="id",semanticColumnPattern=null}={}){
  if(!IDENT.test(String(targetTable||"")))throw new Error("DESTRUCTIVE_LIFECYCLE_TARGET_REQUIRED");
- const fk=await client.query(`select ns.nspname source_schema,c.relname source_table,a.attname source_column,con.conname constraint_name,con.confdeltype delete_action_code
+ const fk=await client.query(`select ns.nspname source_schema,c.relname source_table,a.attname source_column,con.conname constraint_name,con.confdeltype delete_action_code,array_length(con.conkey,1)::int source_key_count,array_length(con.confkey,1)::int target_key_count
  from pg_constraint con join pg_class c on c.oid=con.conrelid join pg_namespace ns on ns.oid=c.relnamespace
  join pg_class t on t.oid=con.confrelid join pg_namespace tn on tn.oid=t.relnamespace
  join lateral unnest(con.conkey) with ordinality u(attnum,ord) on true
@@ -14,7 +14,7 @@ async function discoverIdentityReferences(client,{targetTable,targetColumn="id",
  join pg_attribute a on a.attrelid=c.oid and a.attnum=u.attnum join pg_attribute ta on ta.attrelid=t.oid and ta.attnum=v.attnum
  where con.contype='f' and tn.nspname='atlas_v2' and t.relname=$1 and ta.attname=$2
  order by ns.nspname,c.relname,a.attname,con.conname`,[targetTable,targetColumn]);
- const m=new Map((fk.rows||[]).map(r=>[key(r),Object.freeze({...r,constraint_backed:true})]));
+ const m=new Map();for(const r of fk.rows||[]){if(Number(r.source_key_count)!==1||Number(r.target_key_count)!==1){const e=new Error('DESTRUCTIVE_LIFECYCLE_UNSUPPORTED_FOREIGN_KEY');e.reference=r;throw e}m.set(key(r),Object.freeze({...r,constraint_backed:true}))}
  if(semanticColumnPattern){
   const sem=await client.query(`select c.table_schema source_schema,c.table_name source_table,c.column_name source_column
   from information_schema.columns c join information_schema.tables t on t.table_schema=c.table_schema and t.table_name=c.table_name
