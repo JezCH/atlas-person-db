@@ -22,8 +22,8 @@ test('Unit 12 writer reuses exact canonical identity and fails closed on type co
  const out=await createContextObject(client,{...base,kind:'people_group',type:'ethnic_group'});assert.equal(out.disposition,'reused');assert.equal(queries.some(q=>/insert into atlas_v2\.polities/i.test(q)),false);
  await assert.rejects(()=>createContextObject(client,{...base,kind:'people_group',type:'cultural_people'}),/CANONICAL_KEY_CONFLICT/);
 });
-test('Unit 12 migration materializes all three context identities and Person link surfaces',()=>{
- const sql=fs.readFileSync(new URL('../db/migrations/20260930_context_object_authoring.sql',import.meta.url),'utf8');
+test('Unit 12 writer targets the existing Stage 2 schema for all three context identities and Person link surfaces',()=>{
+ const sql=fs.readFileSync(new URL('../db/proposals/stage2_entity_boundaries.rehearsal.sql',import.meta.url),'utf8');
  for(const table of ['governance_contexts','people_groups','historical_events','person_people_affiliations','person_event_participations'])assert.match(sql,new RegExp('CREATE TABLE IF NOT EXISTS atlas_v2\\.'+table,'i'));
  assert.doesNotMatch(sql,/insert into atlas_v2\.polities/i);
 });
