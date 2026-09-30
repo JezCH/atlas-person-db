@@ -1,1 +1,1 @@
-apply authoring/requests/philosophy-canon-20260930-gorampa-person-only.json
+apply authoring/requests/philosophy-canon-20260930-mipham-person-only.json
