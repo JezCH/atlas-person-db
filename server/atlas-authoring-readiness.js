@@ -178,7 +178,7 @@ async function inspectCoreAuthoringSchema(client) {
            and c.contype='c'
       ) as person_profile_mutation_audit_checks,
       to_regprocedure('atlas_v2.sync_human_authoring_external_references()')
-        as person_external_reference_sync_function,
+        as legacy_person_external_reference_sync_function,
       exists(
         select 1
           from pg_trigger t
@@ -186,7 +186,7 @@ async function inspectCoreAuthoringSchema(client) {
            and t.tgname='authoring_manifest_runs_external_reference_sync'
            and not t.tgisinternal
            and t.tgfoid=to_regprocedure('atlas_v2.sync_human_authoring_external_references()')
-      ) as person_external_reference_sync_trigger
+      ) as legacy_person_external_reference_sync_trigger
   `);
   const row = result.rows[0] || {};
   const baseTablesReady = [
@@ -224,13 +224,13 @@ async function inspectCoreAuthoringSchema(client) {
     && row.person_external_reference_checks === true
     && row.person_profile_mutation_audit_pkey === true
     && row.person_profile_mutation_audit_checks === true;
-  const personExternalReferenceSyncFunctionReady = Boolean(row.person_external_reference_sync_function);
-  const personExternalReferenceSyncTriggerReady = row.person_external_reference_sync_trigger === true;
-  const personExternalReferenceSyncReady = personExternalReferenceSyncFunctionReady
-    && personExternalReferenceSyncTriggerReady;
+  const legacyPersonExternalReferenceSyncFunctionPresent = Boolean(row.legacy_person_external_reference_sync_function);
+  const legacyPersonExternalReferenceSyncTriggerPresent = row.legacy_person_external_reference_sync_trigger === true;
+  const personExternalReferenceProjectionRetired = !legacyPersonExternalReferenceSyncFunctionPresent
+    && !legacyPersonExternalReferenceSyncTriggerPresent;
   const personReferenceContractReady = personReferenceColumnsReady
     && personReferenceConstraintsReady
-    && personExternalReferenceSyncReady;
+    && personExternalReferenceProjectionRetired;
   return Object.freeze({
     ongoing_terms_ready: row.ongoing_terms_ready === true,
     base_tables_ready: baseTablesReady,
@@ -254,9 +254,9 @@ async function inspectCoreAuthoringSchema(client) {
     person_timeline_trigger_names:Object.freeze(Array.isArray(row.person_timeline_trigger_names) ? row.person_timeline_trigger_names.map(String) : []),
     person_reference_columns_ready: personReferenceColumnsReady,
     person_reference_constraints_ready: personReferenceConstraintsReady,
-    person_external_reference_sync_function_ready: personExternalReferenceSyncFunctionReady,
-    person_external_reference_sync_trigger_ready: personExternalReferenceSyncTriggerReady,
-    person_external_reference_sync_ready: personExternalReferenceSyncReady,
+    legacy_person_external_reference_sync_function_present: legacyPersonExternalReferenceSyncFunctionPresent,
+    legacy_person_external_reference_sync_trigger_present: legacyPersonExternalReferenceSyncTriggerPresent,
+    person_external_reference_projection_retired: personExternalReferenceProjectionRetired,
     person_reference_contract_ready: personReferenceContractReady,
     columns
   });

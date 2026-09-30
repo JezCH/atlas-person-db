@@ -10,10 +10,6 @@ const GOVERNANCE_PREFIXES = Object.freeze([
   'requirements/'
 ]);
 
-const REGISTRATION_EXACT = new Set([
-  'non-timeline-persons.json'
-]);
-
 const UI_EXACT = new Set([
   'app.js',
   'admin.js',
@@ -51,7 +47,6 @@ export function classifyPath(value) {
   if (!file) return 'full';
 
   if (
-    REGISTRATION_EXACT.has(file) ||
     (/^authoring\/requests\/[A-Za-z0-9._-]+\.json$/).test(file)
   ) {
     return 'registration';

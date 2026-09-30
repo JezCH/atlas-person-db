@@ -10,7 +10,7 @@ const mergeSource = fs.readFileSync(new URL('../server/atlas-person-merge-servic
 const readinessSource = fs.readFileSync(new URL('../server/atlas-person-merge-reference-readiness.js', import.meta.url), 'utf8');
 
 test('P10 Person merge reference policy is explicit and includes every reviewed live Person pointer', () => {
-  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v7');
+  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v8');
   assert.deepEqual(readiness.EXPECTED_PERSON_FKS.map((row) => [row.key, row.delete_action]), [
     ['atlas_v2.authoring_manifest_runs.person_id', 'SET NULL'],
     ['atlas_v2.person_descriptions.person_id', 'CASCADE'],
@@ -31,6 +31,7 @@ test('P10 Person merge reference policy is explicit and includes every reviewed 
     ['atlas_v2.person_politics_sources.person_politics_id', 'CASCADE'],
     ['atlas_v2.relationship_descriptions.person_politics_id', 'CASCADE']
   ]);
+  assert.deepEqual(readiness.EXPECTED_USER_TRIGGERS, [], 'Unit 16 retires all reviewed user triggers from the Person merge surface');
 });
 
 test('P10-B base snapshots and optional P10-C requirement snapshots are both explicit', () => {

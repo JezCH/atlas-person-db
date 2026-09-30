@@ -9,7 +9,6 @@ import {
 
 test('durable dependency surfaces classify by role, not historical phase', () => {
   assert.equal(classifyPath('authoring/requests/example.json'), 'registration');
-  assert.equal(classifyPath('non-timeline-persons.json'), 'registration');
 
   assert.equal(classifyPath('README.md'), 'governance');
   assert.equal(classifyPath('docs/operations/example.txt'), 'governance');
