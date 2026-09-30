@@ -28,8 +28,13 @@ test('schema bootstrap dispatcher has only the permissions needed to read code a
 
 
 test('schema bootstrap dispatcher requires the dispatched child apply run to succeed', () => {
-  assert.match(workflow, /gh run list/);
+  assert.match(workflow, /git fetch --no-tags --quiet origin main/);
+  assert.match(workflow, /dispatch_sha="\$\(git rev-parse origin\/main\)"/);
+  assert.match(workflow, /git merge-base --is-ancestor "\$GITHUB_SHA" "\$dispatch_sha"/);
+  assert.match(workflow, /before_ids/);
   assert.match(workflow, /child_run_id/);
+  assert.match(workflow, /candidate_sha/);
+  assert.match(workflow, /git merge-base --is-ancestor "\$GITHUB_SHA" "\$candidate_sha"/);
   assert.match(workflow, /AUTHORING_BOOTSTRAP_CHILD_RUN_NOT_FOUND/);
   assert.match(workflow, /gh run watch "\$child_run_id"/);
   assert.match(workflow, /--exit-status/);
