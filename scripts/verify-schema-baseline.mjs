@@ -7,6 +7,8 @@ import pg from 'pg';
 const require = createRequire(import.meta.url);
 const { AUTHORING_MIGRATION_PATHS, AUTHORING_APPLY_MIGRATION_PATHS, applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
 const { CORRECTION_MIGRATION_PATHS, applyCorrectionMigrations } = require('../server/atlas-correction-migrations.js');
+const { readStage2SchemaRelease } = require('../server/atlas-stage2-schema-release.js');
+const { applyP9Cutover, inspectP9Cutover } = require('../server/atlas-stage2-p9-db-cutover.js');
 const { Client } = pg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const baselinePath = path.join(root, 'db/schema/atlas_v2.current.sql');
@@ -72,6 +74,28 @@ const expectedCorrectionMigrations = [
   '20260827_correction_manifest_v1_4.sql',
   '20260928_polity_identity_retirements.sql'
 ];
+
+const expectedStage2SchemaComponents = [
+  'semantic_extensions',
+  'relation_type_catalog',
+  'source_model',
+  'normalized_provenance',
+  'entity_boundaries',
+  'native_activity_provenance'
+];
+
+const expectedStage2Tables = [
+  'governance_context_names','governance_contexts',
+  'historical_event_names','historical_event_sources','historical_events',
+  'people_group_names','people_group_sources','people_groups',
+  'person_event_participation_sources','person_event_participations',
+  'person_people_affiliation_sources','person_people_affiliations',
+  'person_polity_relation_types',
+  'polity_designation_names','polity_designation_sources','polity_designations',
+  'polity_governance_period_sources','polity_governance_periods',
+  'polity_identity_relation_sources','polity_identity_relation_types','polity_identity_relations',
+  'polity_relation_sources','polity_relation_types','polity_relations'
+].sort();
 
 const expectedTables = [
   'authoring_manifest_runs','chronology_claims','correction_manifest_runs','migration_metadata','period_bases','period_basis_names','person_descriptions',
@@ -230,10 +254,144 @@ try {
     }
   }
 
+  // Materialize the immutable reviewed Stage 2 schema bodies on this clean
+  // target. Do not replay the historical release ledger/lock/retry ceremony.
+  const stage2Schema = readStage2SchemaRelease();
+  same(stage2Schema.components.map((component) => component.id), expectedStage2SchemaComponents, 'Stage 2 schema component order');
+  for (const component of stage2Schema.components) {
+    const normalized = component.body.replace(/^\s*--.*$/gm, '');
+    if (/\b(?:delete|update)\s+atlas_v2\.person_politics_v2\b/i.test(normalized) || /\btruncate\b/i.test(normalized) || /\bdrop\s+(?:table|schema)\b/i.test(normalized)) {
+      throw new Error(`Stage 2 current-schema component is destructive: ${component.id}`);
+    }
+    if (/territor|geometry/i.test(normalized)) throw new Error(`P14 content leaked into current-schema component: ${component.id}`);
+    await client.query(component.body);
+  }
+
+  const stage2Tables = await client.query(`
+    select table_name
+      from information_schema.tables
+     where table_schema='atlas_v2'
+       and table_name = any($1::text[])
+     order by table_name`, [expectedStage2Tables]);
+  same(stage2Tables.rows.map((row) => row.table_name), expectedStage2Tables, 'Stage 2 current table set');
+
+  const obsoleteReleaseLedger = await client.query(`
+    select to_regclass('atlas_v2.stage2_schema_release_components') as release_ledger`);
+  if (obsoleteReleaseLedger.rows[0]?.release_ledger) {
+    throw new Error('historical Stage 2 release ledger leaked into current clean-schema reconstruction');
+  }
+
+  const stage2ActivityColumns = await client.query(`
+    select column_name,is_nullable
+      from information_schema.columns
+     where table_schema='atlas_v2'
+       and table_name='person_politics_v2'
+       and column_name = any($1::text[])
+     order by column_name`, [[
+       'relation_type_id',
+       'activity_start_month','activity_start_day','activity_start_granularity','activity_start_certainty','activity_start_calendar',
+       'activity_end_month','activity_end_day','activity_end_granularity','activity_end_certainty','activity_end_calendar',
+       'legacy_source_key'
+     ]]);
+  same(
+    stage2ActivityColumns.rows.map((row) => row.column_name),
+    [
+      'activity_end_calendar','activity_end_certainty','activity_end_day','activity_end_granularity','activity_end_month',
+      'activity_start_calendar','activity_start_certainty','activity_start_day','activity_start_granularity','activity_start_month',
+      'legacy_source_key','relation_type_id'
+    ],
+    'Stage 2 Activity columns'
+  );
+  if (stage2ActivityColumns.rows.find((row) => row.column_name === 'legacy_source_key')?.is_nullable !== 'YES') {
+    throw new Error('Stage 2 native Activity legacy_source_key must be nullable');
+  }
+
+  const stage2SourceColumns = await client.query(`
+    select column_name,is_nullable
+      from information_schema.columns
+     where table_schema='atlas_v2'
+       and table_name='sources'
+       and column_name = any($1::text[])
+     order by column_name`, [['bytes','canonical_url','citation_text','sha256']]);
+  same(stage2SourceColumns.rows.map((row) => row.column_name), ['bytes','canonical_url','citation_text','sha256'], 'Stage 2 Source columns');
+  for (const key of ['bytes','sha256']) {
+    if (stage2SourceColumns.rows.find((row) => row.column_name === key)?.is_nullable !== 'YES') {
+      throw new Error(`Stage 2 Source ${key} must support unmaterialized bibliographic evidence`);
+    }
+  }
+
+  const personRelationCatalog = await client.query(`select code from atlas_v2.person_polity_relation_types order by code`);
+  same(personRelationCatalog.rows.map((row) => row.code), ['active_in','claims_rule','governs','opposes','rules','serves'], 'Person-Polity relation catalog');
+  const polityRelationCatalog = await client.query(`select code from atlas_v2.polity_relation_types order by code`);
+  same(polityRelationCatalog.rows.map((row) => row.code), ['colonial_dependency_of','constituent_of','dominion_of','nominally_subordinate_to','vassal_of'], 'Polity relation catalog');
+
+  const firstP9Cutover = await applyP9Cutover(client);
+  if (firstP9Cutover.replay !== false || firstP9Cutover.after?.old_index_present || !firstP9Cutover.after?.new_index_present) {
+    throw new Error(`fresh P9 semantic-key cutover drift: ${JSON.stringify(firstP9Cutover)}`);
+  }
+  const secondP9Cutover = await applyP9Cutover(client);
+  if (secondP9Cutover.replay !== true || secondP9Cutover.after?.old_index_present || !secondP9Cutover.after?.new_index_present) {
+    throw new Error(`P9 semantic-key replay drift: ${JSON.stringify(secondP9Cutover)}`);
+  }
+
   const firstAuthoringReplay = await applyAuthoringMigrations(client);
   const secondAuthoringReplay = await applyAuthoringMigrations(client);
   assertAuthoringMigrationRegistry(firstAuthoringReplay, 'first authoring replay');
   assertAuthoringMigrationRegistry(secondAuthoringReplay, 'second authoring replay');
+
+  const p9Readback = await inspectP9Cutover(client);
+  if (p9Readback.old_index_present || !p9Readback.new_index_present || p9Readback.duplicate_groups !== 0 || p9Readback.ready !== true) {
+    throw new Error(`current P9 schema read-back failed: ${JSON.stringify(p9Readback)}`);
+  }
+
+  const temporalBoundaryColumns = await client.query(`
+    select column_name,is_nullable
+      from information_schema.columns
+     where table_schema='atlas_v2'
+       and table_name='person_politics_v2'
+       and column_name in ('activity_start','activity_end')
+     order by column_name`);
+  same(
+    temporalBoundaryColumns.rows.map((row) => `${row.column_name}:${row.is_nullable}`),
+    ['activity_end:YES','activity_start:YES'],
+    'P13 unknown Activity boundary nullability'
+  );
+
+  const temporalBoundaryConstraints = await client.query(`
+    select conname
+      from pg_constraint
+     where conrelid='atlas_v2.person_politics_v2'::regclass
+       and conname in (
+         'person_politics_v2_start_boundary_shape_check',
+         'person_politics_v2_end_boundary_shape_check',
+         'person_politics_v2_ongoing_end_check'
+       )
+     order by conname`);
+  same(
+    temporalBoundaryConstraints.rows.map((row) => row.conname),
+    [
+      'person_politics_v2_end_boundary_shape_check',
+      'person_politics_v2_ongoing_end_check',
+      'person_politics_v2_start_boundary_shape_check'
+    ],
+    'P13 unknown Activity boundary constraints'
+  );
+
+  const semanticIndexes = await client.query(`
+    select indexname
+      from pg_indexes
+     where schemaname='atlas_v2'
+       and indexname in (
+         'person_politics_v2_null_role_semantic_uidx',
+         'person_politics_v2_stage2_semantic_identity_uq',
+         'person_politics_v2_unknown_semantic_identity_uq'
+       )
+     order by indexname`);
+  same(
+    semanticIndexes.rows.map((row) => row.indexname),
+    ['person_politics_v2_stage2_semantic_identity_uq','person_politics_v2_unknown_semantic_identity_uq'],
+    'current Activity semantic identity indexes'
+  );
 
   const timelineTables = await client.query(`
     select table_name
@@ -386,9 +544,15 @@ try {
   if (!secondApplyRejected) throw new Error('baseline must reject a non-clean atlas_v2 target');
 
   console.log(JSON.stringify({
-    marker: 'ATLAS_SCHEMA_BASELINE_V1',
+    marker: 'ATLAS_CURRENT_SCHEMA_RECONSTRUCTION_V2',
     status: 'PASS',
-    tables: expectedTables.length,
+    baseline_tables: expectedTables.length,
+    stage2_schema_components: expectedStage2SchemaComponents.length,
+    stage2_schema_tables: stage2Tables.rows.length,
+    historical_stage2_release_ledger: false,
+    p9_semantic_key_cutover: true,
+    p9_semantic_key_replay: secondP9Cutover.replay === true,
+    p13_unknown_activity_boundaries: true,
     constraints: expectedConstraints.length,
     maintenance_indexes: expectedIndexes.length,
     authoring_migrations: firstAuthoringReplay.applied.length,
