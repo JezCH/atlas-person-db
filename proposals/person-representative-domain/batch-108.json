@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-01",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "01331178bf15d48d1ad921d3a38cbbc0560b2870",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Assign only the six explicit MICROBATCH-06 representative domains after successful canonical Person/Activity registration. Preserve any non-null Production value and fail closed on conflict."
+  },
+  "review_scope": {
+    "task_key": "AOE2-SS-MICROBATCH-06-DOMAIN-20261001",
+    "reviewed_assignments": 6,
+    "reviewed_holds": 0,
+    "rationale": "Musa ibn Nusayr is represented in this batch by military command/conquest activity; the other five are represented by sovereign or dynastic rule and are classified governance."
+  },
+  "entries": [
+    {
+      "person_id": "581d5a01-d18c-4519-94dd-7c5b2b7a1deb",
+      "canonical_name_en": "Musa ibn Nusayr",
+      "preferred_name_ko": "무사 이븐 누사이르",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "1925f6f3-4c81-4293-954a-bddf447d841a",
+      "canonical_name_en": "Nur ad-Din Zengi",
+      "preferred_name_ko": "누르 앗 딘",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "a7566fc2-ae57-480e-b2d2-43557a49b7b9",
+      "canonical_name_en": "Odoacer",
+      "preferred_name_ko": "오도아케르",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "a1b314bf-7b18-4489-aae3-e1fa7b94bab6",
+      "canonical_name_en": "Přemysl Ottokar II",
+      "preferred_name_ko": "오타카르 2세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "363adcde-3b46-40f5-ad83-65733c7d745d",
+      "canonical_name_en": "Qutb-ud-Din Aibak",
+      "preferred_name_ko": "쿠트브 웃 딘 아이바크",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "0d6177bb-e99e-43a0-9587-67eee5257706",
+      "canonical_name_en": "Raden Wijaya",
+      "preferred_name_ko": "라덴 위자야",
+      "representative_domain": "governance"
+    }
+  ]
+}
