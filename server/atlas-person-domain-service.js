@@ -86,49 +86,54 @@ async function writeAudit(client, { requestId, personId, before, after }) {
   ]);
 }
 
-async function setRepresentativeDomain(client, { person_id, representative_domain, request_id } = {}) {
+async function setRepresentativeDomainTx(client, { person_id, representative_domain, request_id } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
   const personId = normalizePersonId(person_id);
   const domain = normalizeDomain(representative_domain);
   const requestId = String(request_id || crypto.randomUUID()).trim();
   if (!requestId) throw new Error("PERSON_DOMAIN_REQUEST_ID_REQUIRED");
 
-  await client.query("BEGIN ISOLATION LEVEL SERIALIZABLE");
-  try {
-    const locked = await lockPerson(client, personId);
-    const before = locked.representative_domain || null;
-    if (before === domain) {
-      await client.query("COMMIT");
-      return Object.freeze({
-        committed:true,
-        replay:true,
-        request_id:requestId,
-        person_id:personId,
-        representative_domain:domain,
-        before_domain:before
-      });
-    }
-
-    await client.query(`
-      update atlas_v2.persons
-         set representative_domain=$2
-       where id=$1::uuid
-    `, [personId, domain]);
-
-    await writeAudit(client, { requestId, personId, before, after:domain });
-
-    const verified = await currentDomain(client, personId);
-    if (verified !== domain) throw new Error("PERSON_DOMAIN_VERIFICATION_FAILED");
-    await client.query("COMMIT");
-
+  const locked = await lockPerson(client, personId);
+  const before = locked.representative_domain || null;
+  if (before === domain) {
     return Object.freeze({
       committed:true,
-      replay:false,
+      replay:true,
       request_id:requestId,
       person_id:personId,
       representative_domain:domain,
       before_domain:before
     });
+  }
+
+  await client.query(`
+    update atlas_v2.persons
+       set representative_domain=$2
+     where id=$1::uuid
+  `, [personId, domain]);
+
+  await writeAudit(client, { requestId, personId, before, after:domain });
+
+  const verified = await currentDomain(client, personId);
+  if (verified !== domain) throw new Error("PERSON_DOMAIN_VERIFICATION_FAILED");
+
+  return Object.freeze({
+    committed:true,
+    replay:false,
+    request_id:requestId,
+    person_id:personId,
+    representative_domain:domain,
+    before_domain:before
+  });
+}
+
+async function setRepresentativeDomain(client, input = {}) {
+  if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
+  await client.query("BEGIN ISOLATION LEVEL SERIALIZABLE");
+  try {
+    const result = await setRepresentativeDomainTx(client, input);
+    await client.query("COMMIT");
+    return result;
   } catch (error) {
     try { await client.query("ROLLBACK"); } catch {}
     throw error;
@@ -141,6 +146,8 @@ module.exports = Object.freeze({
   DOMAIN_CODES,
   normalizePersonId,
   normalizeDomain,
+  currentDomain,
   listRepresentativeDomains,
+  setRepresentativeDomainTx,
   setRepresentativeDomain
 });

@@ -57,6 +57,13 @@ async function inspectCoreAuthoringSchema(client) {
            and strpos(pg_get_constraintdef(c.oid), 'atlas-human-authoring/v1') > 0
       ) as ledger_human_authoring_schema_allowed,
       exists(
+        select 1
+          from pg_constraint c
+         where c.conrelid=to_regclass('atlas_v2.authoring_manifest_runs')
+           and c.conname='authoring_manifest_runs_manifest_schema_check'
+           and strpos(pg_get_constraintdef(c.oid), 'atlas-human-person-authoring/v1') > 0
+      ) as ledger_human_person_authoring_schema_allowed,
+      exists(
         select 1 from information_schema.columns
          where table_schema='atlas_v2' and table_name='person_politics_v2' and column_name='relation_type_id'
       ) as relation_type_id,
@@ -177,7 +184,8 @@ async function inspectCoreAuthoringSchema(client) {
     && columns.ledger_manifest_schema === true
     && columns.ledger_result_snapshot === true;
   const ledgerHumanAuthoringSchemaAllowed = row.ledger_human_authoring_schema_allowed === true;
-  const ledgerContractReady = ledgerColumnsReady && ledgerHumanAuthoringSchemaAllowed;
+  const ledgerHumanPersonAuthoringSchemaAllowed = row.ledger_human_person_authoring_schema_allowed === true;
+  const ledgerContractReady = ledgerColumnsReady && ledgerHumanAuthoringSchemaAllowed && ledgerHumanPersonAuthoringSchemaAllowed;
   const personReferenceColumnsReady = personReferenceTablesReady
     && columns.person_external_reference_columns === true
     && columns.person_profile_mutation_audit_columns === true;
@@ -201,6 +209,7 @@ async function inspectCoreAuthoringSchema(client) {
     activity_columns_ready: activityColumnsReady,
     ledger_columns_ready: ledgerColumnsReady,
     ledger_human_authoring_schema_allowed: ledgerHumanAuthoringSchemaAllowed,
+    ledger_human_person_authoring_schema_allowed: ledgerHumanPersonAuthoringSchemaAllowed,
     ledger_contract_ready: ledgerContractReady,
     columns_ready: activityColumnsReady && ledgerColumnsReady,
     person_reference_tables_ready: personReferenceTablesReady,

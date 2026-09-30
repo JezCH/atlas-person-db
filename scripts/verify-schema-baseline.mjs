@@ -32,7 +32,8 @@ const expectedAuthoringMigrations = [
   '20260928_person_timeline_dispositions.sql',
   '20260930_external_reference_decision_state.sql',
   '20260930_source_bibliographic_completion.sql',
-  '20260930_place_historical_relations.sql'
+  '20260930_place_historical_relations.sql',
+  '20260930_human_person_authoring_manifest_schema.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -54,7 +55,8 @@ const expectedAuthoringReplayMigrations = [
   '20260928_person_timeline_dispositions.sql',
   '20260930_external_reference_decision_state.sql',
   '20260930_source_bibliographic_completion.sql',
-  '20260930_place_historical_relations.sql'
+  '20260930_place_historical_relations.sql',
+  '20260930_human_person_authoring_manifest_schema.sql'
 ];
 
 const expectedCorrectionMigrations = [

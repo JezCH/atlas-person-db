@@ -8,6 +8,17 @@ const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service
 const { createSource } = require("./atlas-source-service.js");
 const { normalizePersonPlaceFacts, resolvePersonPlaceFacts } = require("./atlas-place-relation-service.js");
 const { normalizeSpatialRegistrationHandshake } = require("./atlas-spatial-fact-contract.js");
+const {
+  normalizeTimelineDisposition,
+  currentTimelineDisposition,
+  sameTimelineDisposition,
+  setTimelineDisposition
+} = require("./atlas-person-timeline-service.js");
+const {
+  normalizeDomain,
+  currentDomain,
+  setRepresentativeDomainTx
+} = require("./atlas-person-domain-service.js");
 
 const { EMPTY_END, validateOngoingActivity } = require("./atlas-ongoing-activity.js");
 const {
@@ -18,8 +29,10 @@ const {
 } = require("./atlas-external-reference-service.js");
 
 const HUMAN_AUTHORING_SCHEMA = "atlas-human-authoring/v1";
+const HUMAN_PERSON_AUTHORING_SCHEMA = "atlas-human-person-authoring/v1";
 const HUMAN_AUTHORING_MARKER = "ATLAS_HUMAN_AUTHORING_V1";
 const SEMANTIC_VERSION = "v2-relation-full-temporal";
+const PERSON_ONLY_SEMANTIC_VERSION = "person-only-canonical-v1";
 const RELATION_CODES = new Set(["rules", "governs", "serves", "active_in", "claims_rule"]);
 const CERTAINTIES = new Set(["exact", "approximate", "uncertain"]);
 const CONFIDENCE_VALUES = new Set(["well_established", "likely", "speculative", "disputed", "unknown"]);
@@ -211,11 +224,57 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
 function prepareHumanAuthoringRequest(rawRequest, { allowLegacyNamuWikiOmission = true } = {}) {
   const resolved = withResolvedHumanRequestId(rawRequest);
   return Object.freeze({
+    schema:HUMAN_AUTHORING_SCHEMA,
     rawRequest:resolved.request,
     request:normalizeHumanAuthoringRequest(resolved.request, { allowLegacyNamuWikiOmission }),
     hash:manifestHash(resolved.request),
     requestIdGenerated:resolved.generated
   });
+}
+
+function normalizeHumanPersonAuthoringRequest(raw, { allowLegacyNamuWikiOmission = true } = {}) {
+  const request = requiredObject(raw, "HUMAN_PERSON_AUTHORING_REQUEST_OBJECT_REQUIRED");
+  if (request.schema !== HUMAN_PERSON_AUTHORING_SCHEMA) throw new Error("HUMAN_PERSON_AUTHORING_SCHEMA_REQUIRED");
+  const requestId = requiredText(request.request_id, "HUMAN_PERSON_AUTHORING_REQUEST_ID_REQUIRED");
+  const person = requiredObject(request.person, "HUMAN_PERSON_AUTHORING_PERSON_REQUIRED");
+  const lifeStatusReview = normalizePersonLifeStatusReview(person);
+  const namuwiki = normalizeNamuWikiReference(request?.external_references?.namuwiki, { allowLegacyOmission:allowLegacyNamuWikiOmission });
+  const timelineDisposition = normalizeTimelineDisposition(requiredObject(request.timeline_disposition, "HUMAN_PERSON_AUTHORING_TIMELINE_DISPOSITION_REQUIRED"));
+  if (timelineDisposition.disposition === "timeline") throw new Error("HUMAN_PERSON_AUTHORING_NON_TIMELINE_DISPOSITION_REQUIRED");
+  const representativeDomain = normalizeDomain(requiredText(request.representative_domain, "HUMAN_PERSON_AUTHORING_DOMAIN_REQUIRED"));
+  if (!representativeDomain) throw new Error("HUMAN_PERSON_AUTHORING_DOMAIN_REQUIRED");
+  return Object.freeze({
+    requestId,
+    person:Object.freeze({
+      canonical_name_en:requiredText(person.canonical_name_en, "HUMAN_PERSON_AUTHORING_PERSON_EN_REQUIRED"),
+      display_name_ko:requiredText(person.display_name_ko, "HUMAN_PERSON_AUTHORING_PERSON_KO_REQUIRED"),
+      canonical_key:optionalText(person.canonical_key),
+      person_type:optionalText(person.person_type) || "historical",
+      historicity:optionalText(person.historicity) || "historical",
+      ...(lifeStatusReview || {})
+    }),
+    timeline_disposition:timelineDisposition,
+    representative_domain:representativeDomain,
+    sources:Object.freeze(normalizeSources(request.sources)),
+    external_references:Object.freeze({ namuwiki })
+  });
+}
+
+function prepareHumanPersonAuthoringRequest(rawRequest, { allowLegacyNamuWikiOmission = true } = {}) {
+  const resolved = withResolvedHumanRequestId(rawRequest);
+  return Object.freeze({
+    schema:HUMAN_PERSON_AUTHORING_SCHEMA,
+    rawRequest:resolved.request,
+    request:normalizeHumanPersonAuthoringRequest(resolved.request, { allowLegacyNamuWikiOmission }),
+    hash:manifestHash(resolved.request),
+    requestIdGenerated:resolved.generated
+  });
+}
+
+function prepareAnyHumanAuthoringRequest(rawRequest, options = {}) {
+  const schema = String(rawRequest?.schema || "").trim();
+  if (schema === HUMAN_PERSON_AUTHORING_SCHEMA) return prepareHumanPersonAuthoringRequest(rawRequest, options);
+  return prepareHumanAuthoringRequest(rawRequest, options);
 }
 
 async function exactEntityByPreferredEnglishName(client, { table, namesTable, ownerColumn, name, activeSql = "" }) {
@@ -336,6 +395,43 @@ async function resolveOrCreateSources(client, requestId, sources) {
   return Object.freeze(results);
 }
 
+async function linkPersonSources(client, personId, sources) {
+  for (const source of sources) {
+    await client.query(
+      `insert into atlas_v2.person_sources(person_id,source_id)
+       values($1::uuid,$2::uuid)
+       on conflict do nothing`,
+      [personId, source.id]
+    );
+  }
+  const live = await client.query(
+    `select source_id::text
+       from atlas_v2.person_sources
+      where person_id=$1::uuid
+      order by source_id::text`,
+    [personId]
+  );
+  const liveIds = new Set((live.rows || []).map((row) => String(row.source_id).toLowerCase()));
+  for (const source of sources) {
+    if (!liveIds.has(String(source.id).toLowerCase())) throw new Error("HUMAN_PERSON_AUTHORING_SOURCE_LINK_VERIFICATION_FAILED");
+  }
+  return Object.freeze([...liveIds]);
+}
+
+async function writeTimelineAudit(client, requestId, personId, result) {
+  if (result.replay) return;
+  await client.query(
+    `insert into atlas_v2.person_profile_mutation_audits(request_id,person_id,operation,before_snapshot,after_snapshot)
+     values($1,$2::uuid,'set_person_timeline_disposition',$3::jsonb,$4::jsonb)`,
+    [
+      `${requestId}:timeline`,
+      personId,
+      JSON.stringify({ timeline_disposition:result.before }),
+      JSON.stringify({ timeline_disposition:result.after })
+    ]
+  );
+}
+
 async function currentNamuWikiReference(client, personId, { forUpdate = false } = {}) {
   const row = await currentExternalReference(client, personId, "namuwiki", { forUpdate });
   if (!row) return null;
@@ -376,14 +472,18 @@ async function resolveNamuWikiReference(client, { requestId, person, requested, 
     status:String(result.after.status),
     checked_at:result.after.checked_at == null ? null : String(result.after.checked_at),
     document_title:result.after.document_title == null ? null : String(result.after.document_title),
-    url:result.after.url == null ? null : String(result.after.url)
+    url:result.after.url == null ? null : String(result.after.url),
+    ...(result.after.review_state == null ? {} : { review_state:String(result.after.review_state) }),
+    ...(result.after.review_reason == null ? {} : { review_reason:String(result.after.review_reason) })
   });
   if (!result.replay) {
     const before = result.before == null ? null : Object.freeze({
       status:String(result.before.status),
       checked_at:result.before.checked_at == null ? null : String(result.before.checked_at),
       document_title:result.before.document_title == null ? null : String(result.before.document_title),
-      url:result.before.url == null ? null : String(result.before.url)
+      url:result.before.url == null ? null : String(result.before.url),
+      ...(result.before.review_state == null ? {} : { review_state:String(result.before.review_state) }),
+      ...(result.before.review_reason == null ? {} : { review_reason:String(result.before.review_reason) })
     });
     await client.query(`
       insert into atlas_v2.person_profile_mutation_audits(request_id,person_id,operation,before_snapshot,after_snapshot)
@@ -469,7 +569,119 @@ function outcome(requestId, replay, snapshot) {
   });
 }
 
+function buildPersonOnlySnapshot({ person, sources, timelineDisposition, representativeDomain, transport, externalReferences }) {
+  return Object.freeze({
+    version:1,
+    schema:HUMAN_PERSON_AUTHORING_SCHEMA,
+    semantic_version:PERSON_ONLY_SEMANTIC_VERSION,
+    transport:transport || null,
+    external_references:externalReferences || Object.freeze({ namuwiki:null }),
+    person:Object.freeze({ ...person }),
+    timeline_disposition:Object.freeze({ ...timelineDisposition }),
+    representative_domain:representativeDomain,
+    sources:Object.freeze(sources.map((source) => Object.freeze({ id:source.id, disposition:source.disposition, locator:source.locator })))
+  });
+}
+
+async function verifyPersonOnlyReplay(client, ledger) {
+  const snapshot = ledger?.result_snapshot;
+  if (snapshot?.schema !== HUMAN_PERSON_AUTHORING_SCHEMA || Number(snapshot?.version) !== 1 || snapshot?.semantic_version !== PERSON_ONLY_SEMANTIC_VERSION) {
+    throw new Error("HUMAN_PERSON_AUTHORING_LEDGER_SNAPSHOT_INVALID");
+  }
+  const personId = requiredUuid(snapshot?.person?.id, "ledger.person.id");
+  if (String(ledger.person_id) !== personId || ledger.relationship_id != null) throw new Error("HUMAN_PERSON_AUTHORING_REPLAY_LEDGER_DRIFT");
+  const person = await client.query(`select id::text from atlas_v2.persons where id=$1::uuid`, [personId]);
+  if (person.rowCount !== 1) throw new Error("HUMAN_PERSON_AUTHORING_REPLAY_PERSON_NOT_FOUND");
+  const timeline = await currentTimelineDisposition(client, personId, { forUpdate:true });
+  if (!sameTimelineDisposition(timeline, { person_id:personId, ...snapshot.timeline_disposition })) throw new Error("HUMAN_PERSON_AUTHORING_REPLAY_TIMELINE_DRIFT");
+  const domain = await currentDomain(client, personId);
+  if (domain !== snapshot.representative_domain) throw new Error("HUMAN_PERSON_AUTHORING_REPLAY_DOMAIN_DRIFT");
+  const namuwiki = await currentNamuWikiReference(client, personId, { forUpdate:true });
+  if (!sameNamuWikiCore(namuwiki, snapshot.external_references?.namuwiki)) throw new Error("HUMAN_PERSON_AUTHORING_REPLAY_NAMUWIKI_DRIFT");
+  const links = await client.query(`select source_id::text from atlas_v2.person_sources where person_id=$1::uuid order by source_id::text`, [personId]);
+  const liveIds = new Set((links.rows || []).map((row) => String(row.source_id).toLowerCase()));
+  for (const source of snapshot.sources || []) {
+    if (!liveIds.has(String(source.id).toLowerCase())) throw new Error("HUMAN_PERSON_AUTHORING_REPLAY_SOURCE_DRIFT");
+  }
+  return snapshot;
+}
+
+function personOnlyOutcome(requestId, replay, snapshot) {
+  return Object.freeze({
+    marker:HUMAN_AUTHORING_MARKER,
+    schema:HUMAN_PERSON_AUTHORING_SCHEMA,
+    request_id:requestId,
+    committed:true,
+    replay,
+    person_id:snapshot.person.id,
+    polity_id:null,
+    role_id:null,
+    relationship_id:null,
+    source_ids:snapshot.sources.map((source) => source.id),
+    external_references:snapshot.external_references || Object.freeze({ namuwiki:null }),
+    result:snapshot
+  });
+}
+
+async function assertPersonOnlyTargetHasNoActivities(client, personId) {
+  const result = await client.query(
+    `select count(*)::int as activity_count
+       from atlas_v2.person_politics_v2
+      where person_id=$1::uuid`,
+    [personId]
+  );
+  const count = Number(result.rows?.[0]?.activity_count || 0);
+  if (count !== 0) throw new Error("HUMAN_PERSON_AUTHORING_EXISTING_ACTIVITY_CONFLICT");
+  return count;
+}
+
+async function applyPersonOnlyPreparedWithinTransaction(client, prepared, { transport = null, allowLegacyNamuWikiOmission = false } = {}) {
+  const { request, hash } = prepared;
+  const ledger = await readLedger(client, request.requestId);
+  if (ledger) {
+    if (ledger.manifest_hash !== hash) throw new Error("AUTHORING_REQUEST_ID_COLLISION");
+    if (ledger.manifest_schema !== HUMAN_PERSON_AUTHORING_SCHEMA) throw new Error("AUTHORING_LEDGER_SCHEMA_MISMATCH");
+    return personOnlyOutcome(request.requestId, true, await verifyPersonOnlyReplay(client, ledger));
+  }
+
+  const person = await resolveOrCreatePerson(client, request.person);
+  await assertPersonOnlyTargetHasNoActivities(client, person.id);
+  const namuwiki = await resolveNamuWikiReference(client, {
+    requestId:request.requestId,
+    person,
+    requested:request.external_references.namuwiki,
+    allowLegacyNamuWikiOmission
+  });
+  const sources = await resolveOrCreateSources(client, request.requestId, request.sources);
+  await linkPersonSources(client, person.id, sources);
+  const timelineResult = await setTimelineDisposition(client, person.id, request.timeline_disposition);
+  await writeTimelineAudit(client, request.requestId, person.id, timelineResult);
+  const domainResult = await setRepresentativeDomainTx(client, {
+    person_id:person.id,
+    representative_domain:request.representative_domain,
+    request_id:`${request.requestId}:domain`
+  });
+
+  const snapshot = buildPersonOnlySnapshot({
+    person,
+    sources,
+    timelineDisposition:timelineResult.after,
+    representativeDomain:domainResult.representative_domain,
+    transport,
+    externalReferences:Object.freeze({ namuwiki })
+  });
+  await client.query(
+    `insert into atlas_v2.authoring_manifest_runs(request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot)
+     values($1,$2,$3,$4::uuid,null,$5::jsonb)`,
+    [request.requestId, hash, HUMAN_PERSON_AUTHORING_SCHEMA, person.id, JSON.stringify(snapshot)]
+  );
+  return personOnlyOutcome(request.requestId, false, snapshot);
+}
+
 async function applyPreparedWithinTransaction(client, prepared, { transport = null, catalogCache = null, allowLegacyNamuWikiOmission = false } = {}) {
+  if (prepared?.schema === HUMAN_PERSON_AUTHORING_SCHEMA) {
+    return applyPersonOnlyPreparedWithinTransaction(client, prepared, { transport, allowLegacyNamuWikiOmission });
+  }
   const { request, hash } = prepared;
   const ledger = await readLedger(client, request.requestId);
   if (ledger) {
@@ -493,9 +705,9 @@ async function applyPreparedWithinTransaction(client, prepared, { transport = nu
     requested:request.external_references.namuwiki,
     allowLegacyNamuWikiOmission
   });
-  const spatialDisposition = normalizeSpatialRegistrationHandshake(request.raw_spatial_disposition, { polityDisposition:polity.disposition });
   const sources = await resolveOrCreateSources(client, request.requestId, request.sources);
   const placeFacts = await resolvePersonPlaceFacts(client, { personId:person.id, facts:request.person.place_facts });
+  const spatialDisposition = normalizeSpatialRegistrationHandshake(request.raw_spatial_disposition, { polityDisposition:polity.disposition });
   const payload = activityPayload({ personId:person.id, polityId:polity.id, roleId:role.id, relation, periodBasis, activity:request.activity, sources });
   const created = await createStage2NativeActivityTx(client).create(payload, { requestId:request.requestId });
   const snapshot = Object.freeze({ ...buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:Object.freeze({ namuwiki }) }), person_place_facts:placeFacts, spatial_disposition:spatialDisposition });
@@ -525,7 +737,7 @@ async function lockRequestIds(client, requestIds) {
   }
 }
 
-function createHumanAuthoringService({ client, prepare = prepareHumanAuthoringRequest, applyPrepared = applyPreparedWithinTransaction } = {}) {
+function createHumanAuthoringService({ client, prepare = prepareAnyHumanAuthoringRequest, applyPrepared = applyPreparedWithinTransaction } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   if (typeof prepare !== "function") throw new Error("prepare is required");
   if (typeof applyPrepared !== "function") throw new Error("applyPrepared is required");
@@ -695,6 +907,7 @@ async function loadHumanAuthoringCatalogs(client) {
 
 module.exports = Object.freeze({
   HUMAN_AUTHORING_SCHEMA,
+  HUMAN_PERSON_AUTHORING_SCHEMA,
   HUMAN_AUTHORING_MARKER,
   SEMANTIC_VERSION,
   RELATION_CODES,
@@ -708,16 +921,23 @@ module.exports = Object.freeze({
   automaticHumanRequestId,
   withResolvedHumanRequestId,
   normalizeHumanAuthoringRequest,
+  normalizeHumanPersonAuthoringRequest,
   prepareHumanAuthoringRequest,
+  prepareHumanPersonAuthoringRequest,
+  prepareAnyHumanAuthoringRequest,
   activityPayload,
   resolveCatalogCode,
   resolveOrCreatePerson,
   resolveOrCreatePolity,
   resolveOrCreateRole,
   resolveOrCreateSources,
+  linkPersonSources,
   currentNamuWikiReference,
   resolveNamuWikiReference,
   applyPreparedWithinTransaction,
+  applyPersonOnlyPreparedWithinTransaction,
+  assertPersonOnlyTargetHasNoActivities,
+  verifyPersonOnlyReplay,
   lockRequestIds,
   createHumanAuthoringService,
   loadHumanAuthoringCatalogs
