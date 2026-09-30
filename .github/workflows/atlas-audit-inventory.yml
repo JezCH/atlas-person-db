@@ -11,6 +11,7 @@ on:
       - 'server/atlas-audit-inventory-handler.js'
       - 'server/atlas-polity-reference-audit-handler.js'
       - 'server/atlas-audit-github-oidc.js'
+      - 'server/atlas-correction-polity-designation-retire-v2-service.js'
       - 'scripts/build-p9-completeness-repair-plan.mjs'
       - 'scripts/build-person-necessity-audit-export.mjs'
       - 'stage2/integration/p9-legacy-temporal-metadata-migration.v1.json'
@@ -186,7 +187,7 @@ jobs:
 
           endpoint="${ATLAS_AUDIT_ENDPOINT}?__atlas_audit_surface=polity-reference-audit"
           payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" \
-            '{deployment_sha:$deployment_sha,evidence_terms:["fifth","kamakura","tokugawa","toyotomi","liao dynasty","ming dynasty","tsardom of russia","empire of japan","shakya","haudenosaunee","swedish empire","qara khitai"]}')"
+            '{deployment_sha:$deployment_sha,evidence_terms:["pre-meiji japan","imperial japan","tokugawa","toyotomi","empire of japan","liao dynasty","ming dynasty","tsardom of russia","shakya","haudenosaunee","swedish empire","qara khitai"]}')"
           fetched=false
           for attempt in $(seq 1 12); do
             oidc_token="$(request_oidc)"

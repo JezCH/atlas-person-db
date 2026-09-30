@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-name:empire-of-japan-ko-formal:2026-09-30:v1",
+  "release_order": 1175,
+  "evidence": {
+    "decision": "After restoring the durable Empire of Japan UUID, use the formal Korean rendering 대일본제국 for the preferred display name. The 1889 Constitution of the Empire of Japan provides direct official-title evidence for 大日本帝国; this preferred label is used for the reviewed 1868–1945 imperial-state identity rather than the superseded editorial Imperial Japan label."
+  },
+  "operations": [
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "empire-of-japan-ko-formal-name",
+      "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+      "locale": "ko",
+      "expected_name": "일본 제국",
+      "replacement_name": "대일본제국"
+    }
+  ]
+}
