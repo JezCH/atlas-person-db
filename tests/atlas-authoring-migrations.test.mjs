@@ -15,8 +15,8 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 16);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 16);
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 17);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 17);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
@@ -33,7 +33,8 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.equal(AUTHORING_MIGRATION_PATHS[13].endsWith("20260924_person_portraits_simple_v3.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[14].endsWith("20260928_polity_identity_retirements.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[15].endsWith("20260928_person_timeline_dispositions.sql"), true);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20260928_person_timeline_dispositions.sql"), true);
+  assert.equal(AUTHORING_MIGRATION_PATHS[16].endsWith("20260930_external_reference_decision_state.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20260930_external_reference_decision_state.sql"), true);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
