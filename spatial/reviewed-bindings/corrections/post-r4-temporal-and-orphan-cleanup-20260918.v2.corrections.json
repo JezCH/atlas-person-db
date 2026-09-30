@@ -1,8 +1,8 @@
 {
   "schema": "atlas-reviewed-spatial-corrections/v1",
-  "correction_id": "post-r4-temporal-and-orphan-cleanup-20260918",
-  "baseline": "04fa6687f38d0022e2c2a0939a0f5c3f2f6944a5",
-  "reviewed_at": "2026-09-18T05:35:00Z",
+  "correction_id": "post-r4-temporal-and-orphan-cleanup-20260918-v2",
+  "baseline": "463435fb3de8bc462bd1725e6d80f2e51e7f2331",
+  "reviewed_at": "2026-09-30T15:12:00Z",
   "changes": [
     {
       "polity_id": "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90",
@@ -120,15 +120,6 @@
       },
       "disposition": "review_queue",
       "reason": "The Roxolani were a nomadic Sarmatian polity whose historical geography shifted across the Pontic-Danubian steppe; the Amage episode does not establish a sufficiently precise fixed capital."
-    },
-    {
-      "polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
-      "expected": {
-        "region_code": "east-asia",
-        "subregion_code": null
-      },
-      "disposition": "remove_orphan",
-      "reason": "Exact-sha Production polity-reference audit at 04fa6687f38d0022e2c2a0939a0f5c3f2f6944a5 contains no live polity with this UUID; retain no stale spatial binding."
     },
     {
       "polity_id": "524642ff-33fb-52f3-8623-e4a877b1997a",

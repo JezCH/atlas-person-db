@@ -1,8 +1,8 @@
 {
   "schema": "atlas-reviewed-spatial-corrections/v1",
-  "correction_id": "confirmed-polity-orphan-retirement-20260919",
-  "baseline": "74d50b05f7bdeb711d49befcb548e5c339b2c7ca",
-  "reviewed_at": "2026-09-19T12:44:00Z",
+  "correction_id": "confirmed-polity-orphan-retirement-20260919-v2",
+  "baseline": "463435fb3de8bc462bd1725e6d80f2e51e7f2331",
+  "reviewed_at": "2026-09-30T15:12:00Z",
   "changes": [
     {
       "polity_id": "a1e5baa6-51e0-433e-8087-d800dd1cb3a2",
@@ -30,15 +30,6 @@
       },
       "disposition": "remove_orphan",
       "reason": "Tsardom of Russia duplicate/state-form UUID retired after relink and exact Production orphan audit; remove stale static spatial binding."
-    },
-    {
-      "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
-      "expected": {
-        "region_code": "east-asia",
-        "subregion_code": "japan"
-      },
-      "disposition": "remove_orphan",
-      "reason": "Empire of Japan state-form UUID retired after relink and exact Production orphan audit; remove stale static spatial binding."
     },
     {
       "polity_id": "80810807-0abb-5255-b40c-1945f4073eb1",

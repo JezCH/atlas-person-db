@@ -1,0 +1,23 @@
+{
+  "schema": "atlas-spatial-taxonomy-migration/v1",
+  "migration_id": "japan-lineage-restoration-tokugawa-japan-leaf-20260930",
+  "reviewed_at": "2026-09-30T15:12:00Z",
+  "source_refs": [
+    "ATLAS Japan lineage restoration Production state at 463435fb3de8bc462bd1725e6d80f2e51e7f2331",
+    "Restored Tokugawa Shogunate UUID 46534f7e-9247-5644-b5ad-9525c3d4f5d6; reviewed geographic placement is the Japan archipelago leaf"
+  ],
+  "migrations": [
+    {
+      "polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
+      "from": {
+        "region_code": "east-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "east-asia",
+        "subregion_code": "japan"
+      },
+      "reason": "Tokugawa Shogunate has been restored as a live historical polity; its durable political core is the Japanese archipelago, so the prior East Asia macro-only baseline is upgraded to the reviewed Japan leaf."
+    }
+  ]
+}
