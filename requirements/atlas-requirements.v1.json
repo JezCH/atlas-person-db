@@ -156,7 +156,7 @@
     },
     {
       "id": "ATLAS-RQ-0103",
-      "status": "COMPLETED",
+      "status": "ACTIVE",
       "title": "Current schema is reconstructible",
       "evidence_paths": [
         "db/schema/atlas_v2.current.sql",
@@ -448,7 +448,7 @@
     },
     {
       "id": "ATLAS-RQ-0223",
-      "status": "COMPLETED",
+      "status": "PENDING",
       "title": "Pass full Production product lifecycle acceptance",
       "phase": "P13",
       "evidence_paths": [
@@ -521,7 +521,7 @@
     },
     {
       "id": "ATLAS-RQ-0230",
-      "status": "COMPLETED",
+      "status": "PENDING",
       "title": "Complete source-backed AI candidate to human review to authoring workflow",
       "phase": "P13",
       "evidence_paths": [
