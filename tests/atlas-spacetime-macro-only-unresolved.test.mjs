@@ -13,6 +13,8 @@ const presentation = require("../atlas-person-spacetime-presentation-layout.js")
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const spatialIndex = JSON.parse(readFileSync(path.join(here, "..", "atlas-polity-spatial-index.json"), "utf8"));
+const TEST_PLACE_ID = "00000000-0000-4000-8000-000000000011";
+const TEST_SOURCE_ID = "00000000-0000-4000-8000-000000000012";
 
 function activity(polityId) {
   return {
@@ -31,9 +33,10 @@ function reviewedPlaceFunctionRecord(polityId) {
       end_year: 110,
       function_type: "capital",
       place_name: "Reviewed Capital",
+      place_id: TEST_PLACE_ID,
       region_code: "east-asia",
       confidence: "well_established",
-      source_refs: ["reviewed-source"]
+      source_refs: [{ source_id: TEST_SOURCE_ID, locator: "reviewed-source" }]
     }]
   };
 }
