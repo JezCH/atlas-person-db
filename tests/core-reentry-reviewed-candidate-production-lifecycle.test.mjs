@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
@@ -179,4 +180,12 @@ test("apply_reviewed_candidate allows GitHub OIDC automation but forwards only e
   assert.equal(applied.reviewed_payload,undefined);
   assert.equal(applied.transport.kind,"github_oidc");
   assert.equal(res.body.exact_readback,true);
+});
+
+
+test("consolidated Authoring API exposes reviewed-candidate as a named surface without adding a second API route", () => {
+  const source = fs.readFileSync(new URL("../api/atlas-authoring.js", import.meta.url), "utf8");
+  assert.match(source, /surface === "reviewed-candidate"/);
+  assert.match(source, /createReviewedCandidateHandler/);
+  assert.match(source, /ATLAS_REVIEWED_CANDIDATE_FAILURE/);
 });
