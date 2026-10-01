@@ -8,6 +8,7 @@ const { inspectAuthoringReadiness }=require('../server/atlas-authoring-readiness
 const { createPolity, createRole }=require('../server/atlas-identity-service.js');
 const { createHumanAuthoringService, loadHumanAuthoringCatalogs }=require('../server/atlas-human-authoring-service.js');
 const { loadStage2NativeActivity }=require('../server/atlas-stage2-native-activity-service.js');
+const { createReviewedCandidateRegistrationService }=require('../server/atlas-reviewed-candidate-registration-service.js');
 
 const { Client }=pg;
 const databaseUrl=String(process.env.DATABASE_URL||'').trim();
@@ -80,6 +81,49 @@ function urlLessRequest() {
     sources:[{
       title:'Fixture printed monograph',
       citation_text:'Fixture printed reference, p. 42.'
+    }]
+  };
+}
+
+function reviewedCandidatePersonRequest(candidateId) {
+  return {
+    schema:'atlas-human-person-authoring/v1',
+    request_id:`fixture:reviewed-candidate:${candidateId}:review-1`,
+    person:{
+      canonical_name_en:`Reviewed Candidate ${candidateId}`,
+      display_name_ko:`검토 후보 ${candidateId}`,
+      person_type:'historical',
+      historicity:'historical',
+      life_status:'deceased',
+      life_status_checked_at:'2026-10-01',
+      life_status_basis:'historical_certainty'
+    },
+    external_references:{
+      namuwiki:{
+        status:'not_found',
+        checked_at:'2026-10-01',
+        review_reason:'no_exact_document'
+      }
+    },
+    timeline_disposition:{
+      disposition:'chronology_unresolved',
+      reason:'Human-reviewed candidate fixture without a defensible person-specific Activity interval.',
+      basis_code:'reviewed_candidate_fixture_unresolved',
+      traditional_year:null,
+      traditional_year_alternative:null,
+      review_evidence:{
+        authority_scope:'reviewed_candidate_fixture',
+        sources:[`https://example.test/reviewed-candidate/${candidateId}`],
+        reviewed_at:'2026-10-01'
+      }
+    },
+    representative_domain:'knowledge',
+    sources:[{
+      source_type:'academic_reference',
+      title:`Reviewed candidate source ${candidateId}`,
+      canonical_url:`https://example.test/reviewed-candidate/${candidateId}`,
+      citation_text:`Human-reviewed candidate source ${candidateId}.`,
+      locator:'fixture'
     }]
   };
 }
@@ -260,6 +304,78 @@ try {
   )).rows[0].count);
   assert.equal(personOnlyActivityCount,0);
 
+  const reviewedCandidate=createReviewedCandidateRegistrationService({client});
+  const approvedCandidateId='fixture-reviewed-candidate-approved';
+  const approvedReview=await reviewedCandidate.recordHumanReview({
+    candidate_id:approvedCandidateId,
+    revision:1,
+    review_state:'APPROVED',
+    review_checkpoint:'#1374 fixture human checkpoint',
+    reviewed_payload:{authoring_request:reviewedCandidatePersonRequest(approvedCandidateId)}
+  });
+  assert.equal(approvedReview.human_authorized,true);
+  assert.equal(approvedReview.registration_state,'QUEUED');
+
+  const registeredCandidate=await reviewedCandidate.applyQueued({
+    candidate_id:approvedCandidateId,
+    review_revision:1,
+    transport:{kind:'fresh_postgres_reviewed_candidate_rehearsal'}
+  });
+  assert.equal(registeredCandidate.registration_state,'REGISTERED');
+  assert.equal(registeredCandidate.exact_readback,true);
+  assert.equal(registeredCandidate.replay,false);
+  assert.ok(registeredCandidate.person_id);
+  assert.equal(registeredCandidate.relationship_id,null);
+
+  const candidateDbState=(await client.query(`
+    select r.review_state,r.human_authorized,r.review_checkpoint,
+           s.review_revision,s.registration_state,s.person_id::text,s.authoring_request_id,s.result_snapshot
+      from atlas_v2.person_candidate_review_revisions r
+      join atlas_v2.person_candidate_registration_states s on s.candidate_id=r.candidate_id and s.review_revision=r.revision
+     where r.candidate_id=$1 and r.revision=1
+  `,[approvedCandidateId])).rows[0];
+  assert.equal(candidateDbState.review_state,'APPROVED');
+  assert.equal(candidateDbState.human_authorized,true);
+  assert.equal(candidateDbState.registration_state,'REGISTERED');
+  assert.equal(candidateDbState.person_id,registeredCandidate.person_id);
+  assert.equal(candidateDbState.authoring_request_id,registeredCandidate.authoring_request_id);
+  assert.equal(candidateDbState.result_snapshot?.authoring?.exact_readback_replay,true);
+
+  const candidateReplay=await reviewedCandidate.applyQueued({
+    candidate_id:approvedCandidateId,
+    review_revision:1,
+    transport:{kind:'fresh_postgres_reviewed_candidate_rehearsal'}
+  });
+  assert.equal(candidateReplay.registration_state,'REGISTERED');
+  assert.equal(candidateReplay.replay,true);
+  assert.equal(candidateReplay.person_id,registeredCandidate.person_id);
+  assert.equal(candidateReplay.exact_readback,true);
+
+  const staleCandidateId='fixture-reviewed-candidate-stale';
+  await reviewedCandidate.recordHumanReview({
+    candidate_id:staleCandidateId,
+    revision:1,
+    review_state:'APPROVED',
+    review_checkpoint:'#1374 fixture approval revision 1',
+    reviewed_payload:{authoring_request:reviewedCandidatePersonRequest(staleCandidateId)}
+  });
+  const holdRevision=await reviewedCandidate.recordHumanReview({
+    candidate_id:staleCandidateId,
+    revision:2,
+    review_state:'HOLD',
+    review_checkpoint:'#1374 fixture hold revision 2',
+    reviewed_payload:{authoring_request:reviewedCandidatePersonRequest(staleCandidateId),hold_reason:'new conflicting evidence'}
+  });
+  assert.equal(holdRevision.registration_state,'BLOCKED');
+  await assert.rejects(
+    ()=>reviewedCandidate.applyQueued({candidate_id:staleCandidateId,review_revision:1}),
+    /CANDIDATE_REVIEW_REVISION_STALE/
+  );
+  await assert.rejects(
+    ()=>reviewedCandidate.applyQueued({candidate_id:staleCandidateId,review_revision:2}),
+    /REVIEW_REVISION_NOT_HUMAN_APPROVED/
+  );
+
   const counts=(await client.query(`select
     (select count(*)::int from atlas_v2.persons p join atlas_v2.person_names n on n.person_id=p.id where n.locale='en' and n.is_preferred=true and n.name='Human Authoring Fixture Person') as fixture_persons,
     (select count(*)::int from atlas_v2.polities p join atlas_v2.polity_names n on n.polity_id=p.id where n.locale='en' and n.is_preferred=true and n.name='Human Authoring Fixture Polity') as fixture_polities,
@@ -289,6 +405,11 @@ try {
     unknown_relation_rejected_by_live_catalog:true,
     person_only_authoring:true,
     person_only_zero_activity:true,
+    reviewed_candidate_human_approval:true,
+    reviewed_candidate_registered:true,
+    reviewed_candidate_exact_authoring_readback:true,
+    reviewed_candidate_replay_safe:true,
+    stale_candidate_revision_blocked:true,
     production_mutation_authorized:false
   },null,2));
 } catch (error) {
