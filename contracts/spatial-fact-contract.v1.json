@@ -59,7 +59,10 @@
       "reviewed_hold"
     ],
     "silent_omission_forbidden": true,
-    "done_requires_materialized_reviewed_disposition": true
+    "done_requires_materialized_reviewed_disposition": true,
+    "request_materialized_flag_is_authority": false,
+    "materialization_authority": "atlas_v2.spatial_registration_dispositions",
+    "materialization_rule": "A reviewed request supplies state/evidence only; the canonical registration writer persists and exact-read-backs the disposition before DONE."
   },
   "p14_boundary": {
     "contract": "contracts/p14-territory-geometry-contract.v1.json",
