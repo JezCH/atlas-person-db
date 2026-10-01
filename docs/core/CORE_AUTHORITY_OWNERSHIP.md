@@ -1,7 +1,7 @@
 # ATLAS CORE Authority Ownership Map
 
-**Status:** Canonical after CORE v2 Unit 16  
-**As of:** 2026-09-30  
+**Status:** Canonical through CORE-REENTRY-08  
+**As of:** 2026-10-01  
 **Machine authority:** `docs/core/CORE_AUTHORITY_OWNERSHIP.v1.json`  
 **Architecture authority:** `docs/core/CORE_V2_MASTER_PLAN.md`
 
@@ -45,5 +45,5 @@ Unit 16 closes residue cleanup: this registry has no active multi-writer debt, o
 - Historical Role case/scope correction executors are retired; reviewed request JSON remains audit evidence only.
 - Normal Activity authoring, exact-before reviewed Activity correction, and destructive Person lifecycle are distinct lifecycle authorities.
 - `polity_place_function` is now DB-backed canonical historical fact authority. It requires a first-class Place UUID and Source UUID+locator provenance and rejects display-only fields such as region/subregion/place label.
-- `spatial/projections/polity-place-functions.v1.json` and `atlas-polity-spatial-index.json` are **derived/projection outputs** for spacetime display; they do not own Place or Source identity.
+- `spatial/projections/polity-place-functions.v1.json` is a UUID projection of canonical DB facts. `atlas-polity-spatial-index.json` is a **derived output** for spacetime display; neither owns Place or Source identity.
 - `spatial_registration_disposition_lifecycle` is deliberately narrower: it proves that a reviewed new-Polity spatial decision was durably written/read back before registration completion and does not become a second display or historical spatial-fact authority.
