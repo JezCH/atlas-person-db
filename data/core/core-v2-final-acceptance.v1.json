@@ -199,6 +199,14 @@
   "notes": [
     "P14 Territory/Geometry content implementation remains a separate pending product phase; Unit 15 sealed only its boundary contract.",
     "Historical audit artifacts may remain when non-authoritative; executable obsolete CORE paths may not.",
-    "The full repository integrity suite remains the executable regression surface behind this acceptance record."
-  ]
+    "The PASS fields in this file are a checkpoint record, not proof. Current acceptance is derived by scripts/verify-core-final-acceptance.mjs from executable probes.",
+    "The ATLAS Integrity workflow runs the executable final-acceptance gate after fresh-schema reconstruction."
+  ],
+  "verification": {
+    "mode": "executable_probes",
+    "command": "npm run test:core-final",
+    "verifier": "scripts/verify-core-final-acceptance.mjs",
+    "integrity_workflow": ".github/workflows/atlas-integrity.yml",
+    "static_status_is_checkpoint_only": true
+  }
 }
