@@ -11,7 +11,8 @@ const {
 } = require("./atlas-reviewed-candidate-service.js");
 const {
   prepareAnyHumanAuthoringRequest,
-  applyPreparedWithinTransaction
+  applyPreparedWithinTransaction,
+  lockRequestIds
 } = require("./atlas-human-authoring-service.js");
 const { readLedger, manifestHash } = require("./atlas-authoring-manifest-service.js");
 
@@ -186,6 +187,7 @@ function createReviewedCandidateRegistrationService({
 
         const rawRequest = reviewedAuthoringRequest(latest);
         const prepared = prepare(rawRequest, { allowLegacyNamuWikiOmission:false });
+        await lockRequestIds(client, [prepared.request.requestId]);
 
         if (TERMINAL_REGISTRATION.has(String(registration.registration_state))) {
           if (String(registration.authoring_request_id || "") !== String(prepared.request.requestId)) {
