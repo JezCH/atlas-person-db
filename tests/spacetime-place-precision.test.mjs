@@ -12,6 +12,7 @@ const ROMAN_POLITY_ID = "5d9a6186-bbe6-5d1a-ba93-02190ae4c417";
 const romanPlaceFunctions = spatialIndex.place_function_records.find((record) => record.polity_id === ROMAN_POLITY_ID)?.functions || [];
 const ROME_FUNCTION = romanPlaceFunctions.find((fn) => fn.place_name === "Rome");
 const UNKNOWN_PLACE_ID = "00000000-0000-4000-8000-000000000061";
+const UNKNOWN_SOURCE_ID = "00000000-0000-4000-8000-000000000062";
 
 test("reviewed Place evidence compiles to point precision without inventing geographic coordinates", () => {
   const continuum = spaceAxis.createSpatialContinuum();
@@ -81,10 +82,10 @@ test("unreviewed Place names never upgrade spatial precision", () => {
         place_id: UNKNOWN_PLACE_ID,
         region_code: "europe",
         confidence: "reviewed",
-        source_refs: ["unreviewed-display-source"]
+        source_refs: [{ source_id: UNKNOWN_SOURCE_ID, locator: "unreviewed-display-source" }]
       }],
       confidence: "reviewed",
-      source_refs: ["unreviewed-display-source"],
+      source_refs: [{ source_id: UNKNOWN_SOURCE_ID, locator: "unreviewed-display-source" }],
       start_year: 1800,
       end_year: 1810
     }]
