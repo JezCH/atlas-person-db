@@ -62,32 +62,26 @@
     }
   }
 
-  document.getElementById("createPersonForm")?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    submit("create_person", {
-      canonical_name_en: value("personCanonicalNameEn"),
-      display_name_ko: value("personDisplayNameKo"),
-      canonical_key: value("personCanonicalKey") || null,
-      person_type: value("personType") || "historical",
-      historicity: value("personHistoricity") || "historical",
-      life_status: value("personLifeStatus") || null,
-      life_status_checked_at: value("personLifeStatusCheckedAt") || null,
-      life_status_basis: value("personLifeStatusBasis") || null,
-      allow_display_name_collision: checked("personAllowKoCollision")
-    }, event.submitter);
-  });
+  function sealRegistrationGatedIdentityForm(formId, message) {
+    const form = document.getElementById(formId);
+    if (!form) return;
+    for (const control of form.querySelectorAll("input,select,textarea,button")) control.disabled = true;
+    const notice = document.createElement("p");
+    notice.className = "identity-help";
+    notice.dataset.registrationGate = "true";
+    notice.textContent = message;
+    form.prepend(notice);
+    form.addEventListener("submit", (event) => event.preventDefault());
+  }
 
-  document.getElementById("createPolityForm")?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    submit("create_polity", {
-      canonical_name_en: value("polityCanonicalNameEn"),
-      display_name_ko: value("polityDisplayNameKo"),
-      canonical_key: value("polityCanonicalKey") || null,
-      polity_type: value("polityType") || "historical_polity",
-      historicity: value("polityHistoricity") || "historical",
-      allow_display_name_collision: checked("polityAllowKoCollision")
-    }, event.submitter);
-  });
+  sealRegistrationGatedIdentityForm(
+    "createPersonForm",
+    "Person 직접 생성은 폐지되었습니다. 위의 ‘일반 신규 인물 등록’에서 Source · NamuWiki · timeline · 대표 분야를 포함한 canonical registration으로 등록하세요."
+  );
+  sealRegistrationGatedIdentityForm(
+    "createPolityForm",
+    "Polity 직접 생성은 폐지되었습니다. Polity는 canonical registration context 안에서만 생성할 수 있습니다."
+  );
 
   document.getElementById("createRoleForm")?.addEventListener("submit", (event) => {
     event.preventDefault();
