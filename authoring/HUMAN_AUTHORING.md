@@ -82,7 +82,9 @@ See `LIVING_PERSON_POLICY.md` for the canonical policy.
 
 ## Temporal boundary policy
 
-Each start/end boundary supports:
+Each start/end boundary supports either a known boundary or a reviewed unresolved boundary.
+
+A known boundary carries:
 
 - signed non-zero historical year
 - optional month `1..12`
@@ -90,7 +92,7 @@ Each start/end boundary supports:
 - independent certainty
 - independent calendar
 
-Missing month/day remain `NULL`; the system never invents placeholder dates. The server remains authoritative for validation even when the browser performs the same checks for operator feedback.
+A genuinely unresolved boundary is the all-null tuple: year, month, day, granularity, certainty, and calendar are all `NULL`. Partial unresolved tuples are invalid. Missing month/day on a known boundary remain `NULL`; the system never invents placeholder dates or a default calendar for an unresolved boundary. The server remains authoritative for validation even when the browser or GitHub transport performs the same checks for operator feedback.
 
 ## Source policy
 
@@ -121,8 +123,10 @@ A current Activity can use `chronology_status: "ongoing"`, `end_year: null`,
 null/omitted end month, day, granularity, certainty and calendar, and a required
 `ongoing_as_of: "YYYY-MM-DD"`. The verification date must be real, no later than
 review time, and no earlier than the known start. Sources must establish both
-the start and continued activity at that date. Unknown historical endpoints do
-not qualify. An ordinary closed Activity still requires its actual end.
+the start and continued activity at that date. An unknown historical endpoint
+is not an ongoing endpoint: encode it as the all-null unresolved boundary under
+a non-ongoing chronology state. Never use `ongoing_as_of` as a substitute
+factual end date.
 
 The existing chronology-status field explicitly distinguishes ongoing intervals;
 no year is stored as an artificial endpoint. Native provenance retains

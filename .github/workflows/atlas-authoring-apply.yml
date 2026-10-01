@@ -117,12 +117,36 @@ jobs:
                 and (.activity.period_basis_id | type == "string")
                 and (.activity.polity_binding.mode | IN("declared","existing"))
                 and (.activity.role_binding.mode | IN("declared","existing","none"))
-                and (.activity.activity_start_granularity | type == "string")
-                and (.activity.activity_start_certainty | type == "string")
-                and (.activity.activity_start_calendar | type == "string")
-                and (.activity.activity_end_granularity | type == "string")
-                and (.activity.activity_end_certainty | type == "string")
-                and (.activity.activity_end_calendar | type == "string")
+                and (
+                  ((.activity.activity_start | type == "number")
+                    and (.activity.activity_start_granularity | type == "string")
+                    and (.activity.activity_start_certainty | type == "string")
+                    and (.activity.activity_start_calendar | type == "string"))
+                  or
+                  (.activity.activity_start == null
+                    and .activity.activity_start_month == null
+                    and .activity.activity_start_day == null
+                    and .activity.activity_start_granularity == null
+                    and .activity.activity_start_certainty == null
+                    and .activity.activity_start_calendar == null)
+                )
+                and (
+                  ((.activity.activity_end | type == "number")
+                    and (.activity.activity_end_granularity | type == "string")
+                    and (.activity.activity_end_certainty | type == "string")
+                    and (.activity.activity_end_calendar | type == "string"))
+                  or
+                  (.activity.activity_end == null
+                    and .activity.activity_end_month == null
+                    and .activity.activity_end_day == null
+                    and .activity.activity_end_granularity == null
+                    and .activity.activity_end_certainty == null
+                    and .activity.activity_end_calendar == null
+                    and (
+                      .activity.chronology_status != "ongoing"
+                      or (.activity.ongoing_as_of | type == "string")
+                    ))
+                )
                 and (.activity.person_name == null)
                 and (.activity.politic_name == null)
                 and (.activity.polity_name == null)
@@ -141,10 +165,30 @@ jobs:
                 and (.polity.canonical_name_en | type == "string" and length > 0)
                 and (.activity.relation_type | IN("rules","governs","serves","active_in","opposes","claims_rule"))
                 and (.activity.period_basis | type == "string" and length > 0)
-                and (.activity.start_year | type == "number")
-                and ((.activity.end_year | type == "number") or (.activity.chronology_status == "ongoing" and .activity.end_year == null and (.activity.ongoing_as_of | type == "string")))
-                and (.activity.start_certainty | IN("exact","approximate","uncertain"))
-                and ((.activity.end_certainty | IN("exact","approximate","uncertain")) or (.activity.chronology_status == "ongoing" and .activity.end_certainty == null))
+                and (
+                  ((.activity.start_year | type == "number")
+                    and (.activity.start_certainty | IN("exact","approximate","uncertain")))
+                  or
+                  (.activity.start_year == null
+                    and .activity.start_month == null
+                    and .activity.start_day == null
+                    and .activity.start_certainty == null
+                    and .activity.start_calendar == null)
+                )
+                and (
+                  ((.activity.end_year | type == "number")
+                    and (.activity.end_certainty | IN("exact","approximate","uncertain")))
+                  or
+                  (.activity.end_year == null
+                    and .activity.end_month == null
+                    and .activity.end_day == null
+                    and .activity.end_certainty == null
+                    and .activity.end_calendar == null
+                    and (
+                      .activity.chronology_status != "ongoing"
+                      or (.activity.ongoing_as_of | type == "string")
+                    ))
+                )
                 and (.activity.confidence | IN("well_established","likely","speculative","disputed","unknown"))
                 and (.sources | type == "array" and length > 0)
               ' "$manifest" >/dev/null || { echo "Rejected human authoring request: $manifest" >&2; exit 1; }
@@ -1040,17 +1084,45 @@ jobs:
                       and (.polity.canonical_name_en // null)==($m.polity.canonical_name_en // null)
                       and (.relation.code // null)==($m.activity.relation_type // null)
                       and (.period_basis.code // null)==($m.activity.period_basis // null)
-                      and .start.year==$m.activity.start_year
-                      and (.start.month // null)==($m.activity.start_month // null)
-                      and (.start.day // null)==($m.activity.start_day // null)
-                      and (.start.certainty // null)==($m.activity.start_certainty // null)
-                      and (.start.calendar // null)==($m.activity.start_calendar // "unspecified_historical")
-                      and .end.year==$m.activity.end_year
-                      and (if $m.activity.chronology_status=="ongoing" then .end.status=="ongoing" and .end.as_of==$m.activity.ongoing_as_of else true end)
-                      and (.end.month // null)==($m.activity.end_month // null)
-                      and (.end.day // null)==($m.activity.end_day // null)
-                      and (.end.certainty // null)==($m.activity.end_certainty // null)
-                      and (.end.calendar // null)==(if $m.activity.chronology_status=="ongoing" then null else ($m.activity.end_calendar // "unspecified_historical") end)
+                      and (
+                        if $m.activity.start_year == null then
+                          .start.year==null
+                          and (.start.month // null)==null
+                          and (.start.day // null)==null
+                          and (.start.certainty // null)==null
+                          and (.start.calendar // null)==null
+                        else
+                          .start.year==$m.activity.start_year
+                          and (.start.month // null)==($m.activity.start_month // null)
+                          and (.start.day // null)==($m.activity.start_day // null)
+                          and (.start.certainty // null)==($m.activity.start_certainty // null)
+                          and (.start.calendar // null)==($m.activity.start_calendar // "unspecified_historical")
+                        end
+                      )
+                      and (
+                        if $m.activity.chronology_status=="ongoing" then
+                          .end.year==null
+                          and (.end.month // null)==null
+                          and (.end.day // null)==null
+                          and (.end.certainty // null)==null
+                          and (.end.calendar // null)==null
+                          and .end.status=="ongoing"
+                          and .end.as_of==$m.activity.ongoing_as_of
+                        elif $m.activity.end_year == null then
+                          .end.year==null
+                          and (.end.month // null)==null
+                          and (.end.day // null)==null
+                          and (.end.certainty // null)==null
+                          and (.end.calendar // null)==null
+                          and (.end.status // null)!="ongoing"
+                        else
+                          .end.year==$m.activity.end_year
+                          and (.end.month // null)==($m.activity.end_month // null)
+                          and (.end.day // null)==($m.activity.end_day // null)
+                          and (.end.certainty // null)==($m.activity.end_certainty // null)
+                          and (.end.calendar // null)==($m.activity.end_calendar // "unspecified_historical")
+                        end
+                      )
                       and (
                         if ($m.activity.role // null)==null then .role==null
                         else

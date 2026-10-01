@@ -115,7 +115,7 @@ The Activity identity uses full temporal semantics. Both boundaries carry:
 - certainty
 - calendar
 
-Historical year `0` is forbidden. Unknown history must never be encoded as `0`, `1`, a birth year, or another placeholder merely to make a manifest pass. Unresolved-boundary authoring remains a separate later contract.
+Historical year `0` is forbidden. Unknown history must never be encoded as `0`, `1`, a birth year, or another placeholder merely to make a manifest pass. A genuinely unresolved boundary is represented by the canonical all-null boundary tuple. It is semantically distinct from a source-verified ongoing end, which also has null factual end fields but is identified by `chronology_status: "ongoing"` plus `ongoing_as_of`.
 
 Certainty is recorded but is **not** part of the P9 semantic identity key. Granularity and calendar are part of identity.
 

@@ -124,6 +124,10 @@ function validateNamuWiki(file, manifest) {
   return Object.freeze({ status:'not_found', checked_at:reference.checked_at });
 }
 
+function emptyBoundaryValue(value) {
+  return value == null || value === '';
+}
+
 function validateBoundary(file, activity, prefix) {
   if (prefix === "end" && activity.chronology_status === "ongoing") {
     try { validateOngoingActivity(activity, { human:true }); } catch (error) { fail(file, error.message); }
@@ -132,13 +136,48 @@ function validateBoundary(file, activity, prefix) {
   const year = activity[`${prefix}_year`];
   const month = activity[`${prefix}_month`];
   const day = activity[`${prefix}_day`];
+  const certainty = activity[`${prefix}_certainty`];
+  const calendarValue = activity[`${prefix}_calendar`];
+
+  if (emptyBoundaryValue(year)) {
+    if ([month, day, certainty, calendarValue].some((value) => !emptyBoundaryValue(value))) {
+      fail(file, `${prefix} unresolved boundary must leave all boundary fields null`);
+    }
+    return;
+  }
+
   if (!historicalYear(year)) fail(file, `${prefix}_year must be a non-zero integer historical year`);
   if (!optionalMonth(month)) fail(file, `${prefix}_month must be null or 1..12`);
   if (!optionalDay(day)) fail(file, `${prefix}_day must be null or 1..31`);
   if (day != null && month == null) fail(file, `${prefix}_day requires ${prefix}_month`);
-  if (!CERTAINTIES.has(activity[`${prefix}_certainty`])) fail(file, `${prefix}_certainty is invalid`);
-  const calendar = activity[`${prefix}_calendar`] ?? 'unspecified_historical';
+  if (!CERTAINTIES.has(certainty)) fail(file, `${prefix}_certainty is invalid`);
+  const calendar = calendarValue ?? 'unspecified_historical';
   if (!CALENDARS.has(calendar)) fail(file, `${prefix}_calendar is invalid`);
+}
+
+function validateNativeBoundary(file, activity, prefix) {
+  if (prefix === "activity_end" && activity.chronology_status === "ongoing") {
+    try { validateOngoingActivity(activity, { requireProvenance:true }); } catch (error) { fail(file, error.message); }
+    return;
+  }
+  const year = activity[prefix];
+  const month = activity[`${prefix}_month`];
+  const day = activity[`${prefix}_day`];
+  const granularity = activity[`${prefix}_granularity`];
+  const certainty = activity[`${prefix}_certainty`];
+  const calendar = activity[`${prefix}_calendar`];
+
+  if (emptyBoundaryValue(year)) {
+    if ([month, day, granularity, certainty, calendar].some((value) => !emptyBoundaryValue(value))) {
+      fail(file, `${prefix} unresolved boundary must leave all boundary fields null`);
+    }
+    return;
+  }
+
+  if (!historicalYear(year)) fail(file, `${prefix} must be a non-zero integer historical year`);
+  if (!nonEmptyString(granularity)) fail(file, `${prefix}_granularity is required`);
+  if (!nonEmptyString(certainty)) fail(file, `${prefix}_certainty is required`);
+  if (!nonEmptyString(calendar)) fail(file, `${prefix}_calendar is required`);
 }
 
 function validateHuman(file, manifest) {
@@ -209,15 +248,22 @@ function validateNative(file, manifest) {
   if (!nonEmptyString(activity.period_basis_id)) fail(file, 'activity.period_basis_id is required');
   if (!BINDING_MODES.has(activity?.polity_binding?.mode)) fail(file, 'activity.polity_binding.mode is invalid');
   if (!ROLE_BINDING_MODES.has(activity?.role_binding?.mode)) fail(file, 'activity.role_binding.mode is invalid');
-  for (const prefix of ["activity_start","activity_end"]) {
-    if (!historicalYear(activity[prefix])) fail(file, `${prefix} must be a non-zero integer historical year`);
-    if (!nonEmptyString(activity[`${prefix}_granularity`])) fail(file, `${prefix}_granularity is required`);
-    if (!nonEmptyString(activity[`${prefix}_certainty`])) fail(file, `${prefix}_certainty is required`);
-    if (!nonEmptyString(activity[`${prefix}_calendar`])) fail(file, `${prefix}_calendar is required`);
-  }
+  for (const prefix of ["activity_start","activity_end"]) validateNativeBoundary(file, activity, prefix);
   for (const forbidden of ['person_name','politic_name','polity_name','role','period_basis','relation_type']) {
     if (activity[forbidden] != null) fail(file, `activity.${forbidden} is forbidden in Stage 2-native v2`);
   }
+}
+
+function humanBoundarySemanticToken(activity, prefix) {
+  if (prefix === 'end' && activity.chronology_status === 'ongoing') return ['<ONGOING>'];
+  const year = activity[`${prefix}_year`];
+  if (emptyBoundaryValue(year)) return ['<UNKNOWN>'];
+  return [
+    year,
+    activity[`${prefix}_month`] ?? null,
+    activity[`${prefix}_day`] ?? null,
+    activity[`${prefix}_calendar`] ?? 'unspecified_historical'
+  ];
 }
 
 function semanticKey(manifest) {
@@ -229,8 +275,8 @@ function semanticKey(manifest) {
     a.relation_type,
     a.role ?? null,
     a.period_basis,
-    a.start_year,a.start_month ?? null,a.start_day ?? null,a.start_calendar ?? 'unspecified_historical',
-    a.end_year,a.end_month ?? null,a.end_day ?? null,a.end_calendar ?? 'unspecified_historical'
+    ...humanBoundarySemanticToken(a, 'start'),
+    ...humanBoundarySemanticToken(a, 'end')
   ]);
 }
 
