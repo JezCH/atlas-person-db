@@ -77,6 +77,21 @@ async function loadReviewRevision(client, { candidate_id, review_revision, forUp
   return result.rows[0] || null;
 }
 
+async function loadLatestReviewRevision(client, { candidate_id, forUpdate = false } = {}) {
+  const id = text(candidate_id);
+  if (!id) throw new Error("CANDIDATE_ID_REQUIRED");
+  const result = await client.query(
+    `select candidate_id,revision,review_state,review_checkpoint,reviewed_payload,payload_hash,human_authorized,reviewed_at
+       from atlas_v2.person_candidate_review_revisions
+      where candidate_id=$1
+      order by revision desc
+      limit 1
+      ${forUpdate ? "for update" : ""}`,
+    [id]
+  );
+  return result.rows[0] || null;
+}
+
 async function loadRegistrationState(client, { candidate_id, forUpdate = false } = {}) {
   const id = text(candidate_id);
   if (!id) throw new Error("CANDIDATE_ID_REQUIRED");
@@ -237,6 +252,7 @@ module.exports = Object.freeze({
   REGISTRATION_TRANSITIONS,
   normalizeReviewRevision,
   loadReviewRevision,
+  loadLatestReviewRevision,
   loadRegistrationState,
   recordReviewRevision,
   queueApprovedRevision,
