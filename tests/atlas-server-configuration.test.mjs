@@ -78,7 +78,7 @@ test('authenticated DB handlers convert connection failure to deterministic JSON
     {
       method: 'POST',
       headers: { authorization: 'Bearer secret' },
-      body: { operation: 'create_person', payload: { canonical_name_en: 'A', display_name_ko: '가' } }
+      body: { operation: 'create_role', payload: { code: 'fixture', source_label: 'Fixture', display_name_ko: '픽스처', category: 'fixture' } }
     }
   );
 });
