@@ -33,11 +33,11 @@ test('admin temporal input exposes separate full boundaries without asking for g
     'humanEndYear','humanEndMonth','humanEndDay','humanEndCertainty','humanEndCalendar'
   ]) assert.match(ui,new RegExp(`id="${id}"`));
   for (const calendar of ['gregorian','julian','unspecified_historical','source_calendar']) assert.match(ui,new RegExp(`value="${calendar}"`));
-  assert.match(ui,/prefix\.toLowerCase\(\)\}_year/);
-  assert.match(ui,/prefix\.toLowerCase\(\)\}_month/);
-  assert.match(ui,/prefix\.toLowerCase\(\)\}_day/);
-  assert.match(ui,/prefix\.toLowerCase\(\)\}_certainty/);
-  assert.match(ui,/prefix\.toLowerCase\(\)\}_calendar/);
+  assert.match(ui,/\$\{key\}_year/);
+  assert.match(ui,/\$\{key\}_month/);
+  assert.match(ui,/\$\{key\}_day/);
+  assert.match(ui,/\$\{key\}_certainty/);
+  assert.match(ui,/\$\{key\}_calendar/);
   assert.match(ui,/\.\.\.boundary\("Start", "시작"\)/);
   assert.match(ui,/\.\.\.boundary\("End", "종료"\)/);
   assert.doesNotMatch(ui,/humanStartGranularity|humanEndGranularity/);
