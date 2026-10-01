@@ -4,7 +4,7 @@
   "core_version": "v2",
   "accepted_as_of": "2026-10-01",
   "status": "PASS",
-  "scope": "CORE v2 Units 0-17 architecture and publication invariants",
+  "scope": "CORE v2 Units 0-17 plus 2026-10-01 targeted re-entry repairs",
   "p14_content_implementation_in_scope": false,
   "criteria": [
     {
@@ -187,6 +187,29 @@
         "WORK_EXECUTION.md",
         "docs/core/CORE_V2_FINAL_ACCEPTANCE.md"
       ]
+    },
+    {
+      "id": "current_schema_reconstruction_authority_pass",
+      "requirement": "current schema reconstruction has one executable authority = PASS",
+      "status": "PASS",
+      "evidence_paths": [
+        "server/atlas-current-schema-reconstruction.js",
+        "scripts/verify-schema-baseline.mjs",
+        "tests/stage2-historical-release-artifacts.test.mjs"
+      ]
+    },
+    {
+      "id": "reviewed_candidate_production_lifecycle_pass",
+      "requirement": "source-backed reviewed candidate to canonical Authoring Production lifecycle = PASS",
+      "status": "PASS",
+      "evidence_paths": [
+        "server/atlas-reviewed-candidate-service.js",
+        "server/atlas-reviewed-candidate-registration-service.js",
+        "server/atlas-reviewed-candidate-handler.js",
+        "api/atlas-authoring.js",
+        "scripts/rehearse-human-authoring-operational-parity.mjs",
+        "tests/core-reentry-reviewed-candidate-production-lifecycle.test.mjs"
+      ]
     }
   ],
   "external_evidence": [
@@ -197,8 +220,10 @@
     }
   ],
   "notes": [
+    "This acceptance was rerun after the 2026-10-01 targeted CORE re-entry and includes the repaired current-schema reconstruction and reviewed-candidate Production lifecycle.",
     "P14 Territory/Geometry content implementation remains a separate pending product phase; Unit 15 sealed only its boundary contract.",
     "Historical audit artifacts may remain when non-authoritative; executable obsolete CORE paths may not.",
     "The full repository integrity suite remains the executable regression surface behind this acceptance record."
-  ]
+  ],
+  "reentry_acceptance_unit": "CORE-REENTRY-04"
 }
