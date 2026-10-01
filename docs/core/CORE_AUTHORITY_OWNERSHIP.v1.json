@@ -422,12 +422,47 @@
       "note": "Unit 12 closes the context-object ownership gap: PeopleGroup, HistoricalEvent and GovernanceContext are independently source-backed identities, with supported Person affiliation/event participation and Polity governance-period links. They are not Polities and the writer never creates a Polity as a substitute."
     },
     {
+      "id": "polity_place_function",
+      "semantic_fact": "Historical Polity→Place function with full temporal interval, confidence, first-class Place UUID and Source UUID+locator provenance",
+      "canonical_state": [
+        "atlas_v2.polity_place_functions",
+        "atlas_v2.polity_place_function_sources"
+      ],
+      "authoritative_writer": {
+        "path": "server/atlas-polity-place-function-service.js",
+        "symbol": "createPolityPlaceFunction"
+      },
+      "orchestrators": [
+        "server/atlas-authoring-object-transaction.js",
+        "server/atlas-identity-handler.js"
+      ],
+      "shadow_writers": [],
+      "status": "single_writer",
+      "remediation_unit": null,
+      "evidence_anchors": [
+        {
+          "path": "server/atlas-polity-place-function-service.js",
+          "contains": "async function createPolityPlaceFunction"
+        },
+        {
+          "path": "db/migrations/20261001_polity_place_function_authority.sql",
+          "contains": "CREATE TABLE IF NOT EXISTS atlas_v2.polity_place_functions"
+        },
+        {
+          "path": "scripts/compile-spatial-bindings.mjs",
+          "contains": "POLITY_PLACE_FUNCTION_PROJECTION_SCHEMA"
+        }
+      ],
+      "note": "CORE-REENTRY-08 establishes DB-backed historical spatial fact authority. Place and Source identity are canonical UUID references; region_code/place_name remain projection-only display fields. Legacy baseline/correction place-function authoring is no longer current execution authority."
+    },
+    {
       "id": "spatial_reviewed_facts",
-      "semantic_fact": "Reviewed spatial display dispositions, with historical PolityPlaceFunction semantics governed separately by contracts/spatial-fact-contract.v1.json",
+      "semantic_fact": "Reviewed spatial display dispositions and derived Place-function display projection; historical PolityPlaceFunction facts are owned separately in canonical DB state",
       "canonical_state": [
         "spatial/reviewed-bindings/0000-migrated-baseline.index.json",
         "spatial/reviewed-bindings/shards/*.json",
         "spatial/reviewed-bindings/corrections/*.json",
+        "spatial/projections/polity-place-functions.v1.json",
         "contracts/spatial-fact-contract.v1.json"
       ],
       "authoritative_writer": {
@@ -450,7 +485,7 @@
           "contains": "atlas-polity-spatial-index.json"
         }
       ],
-      "note": "Unit 11 closed the semantic boundary: repository spatial shards/corrections own reviewed display disposition publication; PolityPlaceFunction is explicitly a historical Place+provenance fact and cannot contain display geography. New Polity Human Authoring requires a materialized reviewed spatial-disposition handshake before DONE. atlas-polity-spatial-index.json remains derived compatibility output only."
+      "note": "CORE-REENTRY-08 removes historical Place identity/provenance authority from the spatial registry. Repository bindings own display disposition only; spatial/projections/polity-place-functions.v1.json is a deterministic UUID projection of canonical DB PolityPlaceFunction facts. atlas-polity-spatial-index.json remains derived compatibility output."
     },
     {
       "id": "spatial_registration_disposition_lifecycle",
