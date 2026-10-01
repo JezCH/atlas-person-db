@@ -142,7 +142,7 @@ async function recordReviewRevision(client, raw) {
 function assertHumanApproved(review) {
   if (!review) throw new Error("REVIEW_REVISION_NOT_FOUND");
   if (review.review_state !== "APPROVED" || review.human_authorized !== true) {
-    throw new Error("REVIEW_REVISION_NOT_HUMAN_APPROVED");
+    throw new Error("REGISTRATION_REQUIRES_HUMAN_APPROVED_REVISION");
   }
 }
 
