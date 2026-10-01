@@ -4,11 +4,13 @@ import { createRequire } from "node:module";
 import { readFileSync } from "node:fs";
 const require=createRequire(import.meta.url);
 const model=require("../atlas-person-spacetime-model.js");
+const PLACE_A="00000000-0000-4000-8000-000000000031",PLACE_B="00000000-0000-4000-8000-000000000032",SOURCE_ID="00000000-0000-4000-8000-000000000033";
+const sourceRefs=(locator)=>[{source_id:SOURCE_ID,locator}];
 
 function geographyIndex(region="east-asia"){return {schema:model.SPATIAL_INDEX_SCHEMA,polity_geography:{"polity-a":region},polity_subregions:{"polity-a":"korean-peninsula"},place_function_records:[],review_queue:[]};}
 function placeFunctionIndex(){return {schema:model.SPATIAL_INDEX_SCHEMA,polity_geography:{},place_function_records:[{polity_id:"polity-a",functions:[
-  {start_year:100,end_year:109,function_type:"capital",place_name:"Old Capital",region_code:"west-asia",confidence:"well_established",source_refs:["source:old"]},
-  {start_year:110,end_year:130,function_type:"capital",place_name:"New Capital",region_code:"east-asia",confidence:"well_established",source_refs:["source:new"]}
+  {start_year:100,end_year:109,function_type:"capital",place_name:"Old Capital",place_id:PLACE_A,region_code:"west-asia",confidence:"well_established",source_refs:sourceRefs("source:old")},
+  {start_year:110,end_year:130,function_type:"capital",place_name:"New Capital",place_id:PLACE_B,region_code:"east-asia",confidence:"well_established",source_refs:sourceRefs("source:new")}
 ]}],review_queue:[]};}
 
 test("historical timeline has no year zero",()=>{
