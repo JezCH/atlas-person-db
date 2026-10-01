@@ -4,10 +4,12 @@ const { createPostgresClient } = require("../server/atlas-postgres-client.js");
 const { createHumanAuthoringHandler } = require("../server/atlas-human-authoring-handler.js");
 const { createNamuWikiLinkHandler } = require("../server/atlas-namuwiki-link-handler.js");
 const { createReviewedPersonMergeHandler } = require("../server/atlas-reviewed-person-merge-handler.js");
+const { createReviewedCandidateHandler } = require("../server/atlas-reviewed-candidate-handler.js");
 
 const humanAuthoringHandler = createHumanAuthoringHandler({ clientFactory:createPostgresClient });
 const namuWikiLinkHandler = createNamuWikiLinkHandler({ createClient:createPostgresClient });
 const reviewedPersonMergeHandler = createReviewedPersonMergeHandler({ createClient:createPostgresClient });
+const reviewedCandidateHandler = createReviewedCandidateHandler({ clientFactory:createPostgresClient });
 
 function selectAuthoringSurface(req) {
   const direct = req?.query?.__atlas_authoring_surface;
@@ -33,6 +35,9 @@ module.exports = async function consolidatedAuthoringHandler(req, res) {
   } else if (surface === "reviewed-person-merge") {
     handler = reviewedPersonMergeHandler;
     failureLabel = "ATLAS_REVIEWED_PERSON_MERGE_FAILURE";
+  } else if (surface === "reviewed-candidate") {
+    handler = reviewedCandidateHandler;
+    failureLabel = "ATLAS_REVIEWED_CANDIDATE_FAILURE";
   } else if (surface) {
     res.statusCode = 404;
     res.setHeader("content-type", "application/json; charset=utf-8");
