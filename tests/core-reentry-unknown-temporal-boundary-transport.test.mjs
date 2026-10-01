@@ -166,7 +166,7 @@ test('CORE-REENTRY-09 unknown closed end and ongoing end remain distinct in repo
   const unknown=unknownHumanBoundary(humanRequest('reentry09:semantic:unknown'),'end');
   const ongoing=unknownHumanBoundary(humanRequest('reentry09:semantic:ongoing'),'end');
   ongoing.activity.chronology_status='ongoing';
-  ongoing.activity.ongoing_as_of='2026-10-02';
+  ongoing.activity.ongoing_as_of='2026-09-30';
   const result=runValidator([unknown,ongoing]);
   assert.equal(result.status,0,result.stderr||result.stdout);
 });
