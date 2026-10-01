@@ -205,7 +205,7 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
         if (isPreflightBatchOperation(body)) {
           const results = await service.preflightBatch(auth.batch.requests, {
             transports,
-            allowLegacyNamuWikiOmission:auth.method === "github_oidc"
+            allowLegacyNamuWikiOmission:false
           });
           const counts = results.reduce((acc, item) => {
             acc[item.status] = (acc[item.status] || 0) + 1;
@@ -227,7 +227,7 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
         }
         const results = await service.applyBatch(auth.batch.requests, {
           transports,
-          allowLegacyNamuWikiOmission:auth.method === "github_oidc"
+          allowLegacyNamuWikiOmission:false
         });
         return json(res, 200, {
           ok:true,
@@ -248,7 +248,7 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
       const request = body?.request && typeof body.request === "object" && !Array.isArray(body.request) ? body.request : body;
       const outcome = await service.apply(request, {
         transport:auth.transport,
-        allowLegacyNamuWikiOmission:auth.method === "github_oidc"
+        allowLegacyNamuWikiOmission:false
       });
       return json(res, 200, { ok:true, auth_method:auth.method, ...outcome });
     } catch (error) {
