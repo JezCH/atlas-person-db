@@ -511,12 +511,13 @@ function generatedAtFor(baseline, shards, corrections = []) {
   return instants.reduce((latest, value) => Date.parse(value) > Date.parse(latest) ? value : latest);
 }
 
-export function compileSpatialBindings({ baseline, shards = [], corrections = [], placeFunctions }) {
+export function compileSpatialBindings({ baseline, shards = [], corrections = [], placeFunctions = null }) {
   validateCanonicalBaseline(baseline);
-  if ((baseline.place_function_records || []).length) {
+  const canonicalProjectionMode = placeFunctions != null;
+  if (canonicalProjectionMode && (baseline.place_function_records || []).length) {
     fail('SPATIAL_BASELINE_HISTORICAL_FACT_AUTHORITY_FORBIDDEN', 'baseline place_function_records must be empty; use the canonical UUID projection');
   }
-  const projection = normalizePolityPlaceFunctionProjection(placeFunctions);
+  const projection = canonicalProjectionMode ? normalizePolityPlaceFunctionProjection(placeFunctions) : null;
   const normalizedCorrections = corrections.map(normalizeSpatialCorrectionFile).sort((left, right) => {
     const idOrder = left.correction_id.localeCompare(right.correction_id, 'en');
     return idOrder || left.source.localeCompare(right.source, 'en');
@@ -525,10 +526,12 @@ export function compileSpatialBindings({ baseline, shards = [], corrections = []
     const idOrder = left.shard_id.localeCompare(right.shard_id, 'en');
     return idOrder || left.source.localeCompare(right.source, 'en');
   });
-  const activeCorrections = normalizedCorrections.map((correction) => Object.freeze({
-    ...correction,
-    changes:Object.freeze(correction.changes.filter((change) => change.disposition !== 'place_function'))
-  }));
+  const activeCorrections = canonicalProjectionMode
+    ? normalizedCorrections.map((correction) => Object.freeze({
+        ...correction,
+        changes:Object.freeze(correction.changes.filter((change) => change.disposition !== 'place_function'))
+      }))
+    : normalizedCorrections;
 
   const shardIds = new Set();
   for (const shard of normalizedShards) {
@@ -536,8 +539,8 @@ export function compileSpatialBindings({ baseline, shards = [], corrections = []
     shardIds.add(shard.shard_id);
   }
 
-  const placeFunctionRecords = structuredClone(projection.records);
-  const projectedPolityIds = new Set(placeFunctionRecords.map((record) => text(record.polity_id)));
+  const placeFunctionRecords = structuredClone(canonicalProjectionMode ? projection.records : (baseline.place_function_records || []));
+  const projectedPolityIds = new Set(canonicalProjectionMode ? placeFunctionRecords.map((record) => text(record.polity_id)) : []);
   const polityGeography = Object.fromEntries(Object.entries(baseline.polity_geography || {}).filter(([polityId]) => !projectedPolityIds.has(polityId)));
   const politySubregions = Object.fromEntries(Object.entries(baseline.polity_subregions || {}).filter(([polityId]) => !projectedPolityIds.has(polityId)));
   const reviewQueue = structuredClone((baseline.review_queue || []).filter((record) => !projectedPolityIds.has(text(record?.polity_id))));
