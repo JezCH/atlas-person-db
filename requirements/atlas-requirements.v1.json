@@ -453,10 +453,12 @@
     },
     {
       "id": "ATLAS-RQ-0223",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "title": "Pass full Production product lifecycle acceptance",
       "phase": "P13",
       "evidence_paths": [
+        "scripts/verify-core-final-acceptance.mjs",
+        ".github/workflows/atlas-integrity.yml",
         "docs/core/CORE_V2_FINAL_ACCEPTANCE.md",
         "data/core/core-v2-final-acceptance.v1.json",
         "tests/core-final-acceptance.test.mjs",
