@@ -73,10 +73,11 @@ test('NamuWiki normalizer accepts only explicit linked/not_found decisions', () 
   assert.throws(() => normalizeNamuWikiReference({ status:'not_found', checked_at:'2026-08-21', url:'https://namu.wiki/w/x' }, { allowLegacyOmission:false }), /HUMAN_AUTHORING_NAMUWIKI_NOT_FOUND_FIELDS_INVALID/);
 });
 
-test('legacy omission remains possible only through the explicit compatibility option', () => {
+test('legacy omission is parse/replay compatibility only; live authoring writes stay strict', () => {
   assert.equal(normalizeNamuWikiReference(null, { allowLegacyOmission:true }), null);
-  assert.match(handler, /allowLegacyNamuWikiOmission:auth\.method === "github_oidc"/);
-  assert.match(service, /allowLegacyNamuWikiOmission = true/);
+  assert.match(handler, /allowLegacyNamuWikiOmission:false/);
+  assert.match(service, /prepare\(rawRequest, \{ allowLegacyNamuWikiOmission:true \}\)/);
+  assert.match(service, /applyPrepared\(client, prepared, \{ transport, catalogCache:new Map\(\), allowLegacyNamuWikiOmission:false \}\)/);
 });
 
 test('changed GitHub human-authoring manifests fail closed without a NamuWiki decision', () => {
