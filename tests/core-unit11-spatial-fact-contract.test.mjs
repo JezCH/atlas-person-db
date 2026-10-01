@@ -19,11 +19,19 @@ test('Unit 11 historical PolityPlaceFunction requires first-class Place identity
   assert.throws(()=>spatial.assertPolityPlaceFunction({...fact,region_code:'europe'}),/DISPLAY_FIELD_FORBIDDEN/);
 });
 
-test('Unit 11 new Polity registration cannot finish with silent spatial debt',()=>{
+test('Unit 11 new Polity registration cannot finish with silent spatial debt or request self-attestation',()=>{
   assert.throws(()=>spatial.normalizeSpatialRegistrationHandshake(null,{polityDisposition:'created'}),/SPATIAL_DISPOSITION_REQUIRED/);
-  assert.throws(()=>spatial.normalizeSpatialRegistrationHandshake({state:'reviewed_hold',materialized:false,evidence:'x'},{polityDisposition:'created'}),/NOT_MATERIALIZED/);
-  assert.deepEqual(spatial.normalizeSpatialRegistrationHandshake({state:'reviewed_hold',materialized:true,evidence:'reviewed shard hold'},{polityDisposition:'created'}),{required:true,state:'reviewed_hold',materialized:true,evidence:'reviewed shard hold'});
-  assert.deepEqual(spatial.normalizeSpatialRegistrationHandshake(null,{polityDisposition:'reused'}),{required:false,state:'existing_polity',materialized:true});
+  assert.deepEqual(
+    spatial.normalizeSpatialRegistrationHandshake({state:'reviewed_hold',materialized:false,evidence:'reviewed hold'},{polityDisposition:'created'}),
+    {required:true,state:'reviewed_hold',evidence:'reviewed hold'}
+  );
+  assert.deepEqual(
+    spatial.normalizeSpatialRegistrationHandshake({state:'reviewed_hold',materialized:true,evidence:'reviewed hold'},{polityDisposition:'created'}),
+    {required:true,state:'reviewed_hold',evidence:'reviewed hold'}
+  );
+  assert.deepEqual(spatial.normalizeSpatialRegistrationHandshake(null,{polityDisposition:'reused'}),{required:false,state:'existing_polity'});
+  assert.equal(spatial.CONTRACT.registration_handshake.request_materialized_flag_is_authority,false);
+  assert.equal(spatial.CONTRACT.registration_handshake.materialization_authority,'atlas_v2.spatial_registration_dispositions');
 });
 
 test('Unit 11 registration obligation is a materialized handshake, not post-registration debt',()=>{
