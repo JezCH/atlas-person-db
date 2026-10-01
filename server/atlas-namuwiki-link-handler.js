@@ -10,7 +10,8 @@ const { bearerToken, requireRuntime } = require("./atlas-authoring-apply-handler
 const MARKER = "ATLAS_NAMUWIKI_LINK_V1";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const SHA_RE = /^[0-9a-f]{40}$/;
-const ALLOWED_BODY_KEYS = new Set(["runtime_sha", "workflow_sha", "person_id", "status", "url", "expected_current_url"]);
+const ALLOWED_BODY_KEYS = new Set(["runtime_sha", "workflow_sha", "person_id", "status", "url", "expected_current_url", "review_reason"]);
+const REVIEW_REASONS = new Set(["no_exact_document", "related_or_derivative_only", "exact_target_url_pending"]);
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -56,6 +57,7 @@ function requireNamuWikiLinkPayload(body) {
   let externalReference;
   let expectedCurrentReference = null;
   if (status === "linked") {
+    if (String(body?.review_reason || "").trim()) throw new Error("NAMUWIKI_LINK_REVIEW_REASON_FORBIDDEN");
     externalReference = requireCanonicalNamuWikiUrl(body?.url);
     if (String(body?.expected_current_url || "").trim()) {
       expectedCurrentReference = requireCanonicalNamuWikiUrl(body.expected_current_url);
@@ -64,7 +66,13 @@ function requireNamuWikiLinkPayload(body) {
   } else if (status === "not_found") {
     if (String(body?.url || "").trim()) throw new Error("NAMUWIKI_NOT_FOUND_URL_FORBIDDEN");
     if (String(body?.expected_current_url || "").trim()) throw new Error("NAMUWIKI_NOT_FOUND_EXPECTED_CURRENT_URL_FORBIDDEN");
-    externalReference = normalizeNamuWikiInput({ status:"not_found", document_title:null, url:null });
+    const reviewReason = String(body?.review_reason || "").trim() || null;
+    if (reviewReason && !REVIEW_REASONS.has(reviewReason)) throw new Error("NAMUWIKI_NOT_FOUND_REVIEW_REASON_INVALID");
+    const normalized = normalizeNamuWikiInput({ status:"not_found", document_title:null, url:null });
+    externalReference = Object.freeze({
+      ...normalized,
+      ...(reviewReason ? { review_reason:reviewReason } : {})
+    });
   } else {
     throw new Error("NAMUWIKI_LINK_STATUS_UNSUPPORTED");
   }
@@ -174,7 +182,8 @@ function createNamuWikiLinkHandler({
       if (!reference
         || reference.status !== payload.externalReference.status
         || reference.url !== payload.externalReference.url
-        || reference.document_title !== payload.externalReference.document_title) {
+        || reference.document_title !== payload.externalReference.document_title
+        || (payload.externalReference.review_reason != null && reference.review_reason !== payload.externalReference.review_reason)) {
         throw new Error("NAMUWIKI_LINK_SERVER_VERIFICATION_MISMATCH");
       }
 
