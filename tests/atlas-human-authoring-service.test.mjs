@@ -29,7 +29,7 @@ function request(overrides = {}) {
   return {
     schema:HUMAN_AUTHORING_SCHEMA,
     request_id:'admin:test-razia',
-    person:{ canonical_name_en:'Razia Sultan', display_name_ko:'라지아 술탄' },
+    person:{ canonical_name_en:'Razia Sultan', display_name_ko:'라지아 술탄', representative_domain:'governance' },
     polity:{ canonical_name_en:'Delhi Sultanate', display_name_ko:'델리 술탄국' },
     activity:{
       relation_type:'rules',
@@ -57,6 +57,8 @@ function request(overrides = {}) {
 test('year-only human input compiles to year granularity without operator UUIDs', () => {
   const normalized = normalizeHumanAuthoringRequest(request());
   assert.equal(normalized.person.canonical_name_en, 'Razia Sultan');
+  assert.equal(normalized.person.representative_domain_reviewed, true);
+  assert.equal(normalized.person.representative_domain, 'governance');
   assert.equal(normalized.activity.relation_type, 'rules');
   assert.deepEqual(normalized.activity.start, { year:1236, month:null, day:null, granularity:'year', certainty:'exact', calendar:'unspecified_historical' });
 });
@@ -187,3 +189,18 @@ test('compiled Activity payload is UUID-only and full-temporal before native wri
   for (const forbidden of ['person_name','polity_name','politic_name','relation_type','period_basis','role']) assert.equal(Object.hasOwn(payload, forbidden), false);
   assert.equal(HUMAN_AUTHORING_MARKER, 'ATLAS_HUMAN_AUTHORING_V1');
 });
+
+test('normal Activity authoring distinguishes an omitted domain review from reviewed-null', () => {
+  const omitted=request();
+  delete omitted.person.representative_domain;
+  const omittedNormalized=normalizeHumanAuthoringRequest(omitted);
+  assert.equal(omittedNormalized.person.representative_domain_reviewed,false);
+  assert.equal(omittedNormalized.person.representative_domain,null);
+
+  const reviewedNull=request();
+  reviewedNull.person.representative_domain=null;
+  const reviewedNullNormalized=normalizeHumanAuthoringRequest(reviewedNull);
+  assert.equal(reviewedNullNormalized.person.representative_domain_reviewed,true);
+  assert.equal(reviewedNullNormalized.person.representative_domain,null);
+});
+
