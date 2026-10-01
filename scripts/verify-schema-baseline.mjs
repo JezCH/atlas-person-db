@@ -40,6 +40,7 @@ const expectedAuthoringMigrations = [
   '20260930_place_historical_relations.sql',
   '20260930_human_person_authoring_manifest_schema.sql',
   '20260930_reviewed_candidate_boundary.sql',
+  '20261001_spatial_registration_dispositions.sql',
   '20260930_unit16_retire_external_reference_sync_trigger.sql'
 ];
 
@@ -65,6 +66,7 @@ const expectedAuthoringReplayMigrations = [
   '20260930_place_historical_relations.sql',
   '20260930_human_person_authoring_manifest_schema.sql',
   '20260930_reviewed_candidate_boundary.sql',
+  '20261001_spatial_registration_dispositions.sql',
   '20260930_unit16_retire_external_reference_sync_trigger.sql'
 ];
 
