@@ -1394,6 +1394,49 @@
       ]
     },
     {
+      "polity_id": "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90",
+      "functions": [
+        {
+          "start_year": 1943,
+          "end_year": 1943,
+          "function_type": "political_center",
+          "place_name": "Singapore",
+          "place_id": "4792157c-99ac-5d72-84bc-99baeb217911",
+          "region_code": "southeast-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            {
+              "source_id": "677c16aa-8a6b-52a7-ab98-27ef7a3190d4",
+              "locator": "Press Information Bureau, Government of India: Anniversary of the formation of Azad Hind Government (21 Oct 1943)"
+            },
+            {
+              "source_id": "25cfc76c-7993-5d82-987c-7d46352fb048",
+              "locator": "Publications Division, Government of India: Builders of Modern India — Subhas Chandra Bose"
+            }
+          ]
+        },
+        {
+          "start_year": 1944,
+          "end_year": 1945,
+          "function_type": "political_center",
+          "place_name": "Rangoon",
+          "place_id": "41539b95-1782-5c82-9578-afe8cecd1a83",
+          "region_code": "southeast-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            {
+              "source_id": "c88cdd70-16eb-5c3c-881b-425a880029f9",
+              "locator": "Government of India / IGNCA chronology: Bose civil and military headquarters moved to Burma in January 1944"
+            },
+            {
+              "source_id": "d0516347-22db-5919-80aa-ca80fe33574f",
+              "locator": "Odisha Review: headquarters of the Provisional Government, Indian Independence League and Supreme Command shifted from Singapore to Rangoon"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "polity_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
       "functions": [
         {
@@ -1518,6 +1561,41 @@
       ]
     },
     {
+      "polity_id": "a1697cdb-1085-545c-850e-1bbc25cdb61b",
+      "functions": [
+        {
+          "start_year": 632,
+          "end_year": 656,
+          "function_type": "capital",
+          "place_name": "Medina",
+          "place_id": "e9c69c90-7572-5a69-ae63-19f5ac1946b1",
+          "region_code": "west-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            {
+              "source_id": "82565127-eb9c-5da2-a1c4-8fcd738ecf87",
+              "locator": "Cambridge University Press: Rituals of Islamic Monarchy — the conquest society c. 628–c. 660"
+            }
+          ]
+        },
+        {
+          "start_year": 656,
+          "end_year": 661,
+          "function_type": "capital",
+          "place_name": "Kufa",
+          "place_id": "889c7eb5-f72e-5297-9759-c8c2d193efeb",
+          "region_code": "west-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            {
+              "source_id": "9ed98162-dc7d-5a2f-89da-db4aac4694ae",
+              "locator": "Encyclopaedia Iranica: Kufa — Ali (r. 656–61) chose Kufa as his capital"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "polity_id": "d54c540c-f3fb-5d05-9dc0-26af4ee9815a",
       "functions": [
         {
@@ -1583,84 +1661,6 @@
             {
               "source_id": "e91f57ec-9c46-594b-859b-4a14c2af99ba",
               "locator": "Getty Thesaurus of Geographic Names: Mamluk Sultanate (TGN 6003667)"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "polity_id": "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90",
-      "functions": [
-        {
-          "start_year": 1943,
-          "end_year": 1943,
-          "function_type": "political_center",
-          "place_name": "Singapore",
-          "place_id": "4792157c-99ac-5d72-84bc-99baeb217911",
-          "region_code": "southeast-asia",
-          "confidence": "well_established",
-          "source_refs": [
-            {
-              "source_id": "677c16aa-8a6b-52a7-ab98-27ef7a3190d4",
-              "locator": "Press Information Bureau, Government of India: Anniversary of the formation of Azad Hind Government (21 Oct 1943)"
-            },
-            {
-              "source_id": "25cfc76c-7993-5d82-987c-7d46352fb048",
-              "locator": "Publications Division, Government of India: Builders of Modern India — Subhas Chandra Bose"
-            }
-          ]
-        },
-        {
-          "start_year": 1944,
-          "end_year": 1945,
-          "function_type": "political_center",
-          "place_name": "Rangoon",
-          "place_id": "41539b95-1782-5c82-9578-afe8cecd1a83",
-          "region_code": "southeast-asia",
-          "confidence": "well_established",
-          "source_refs": [
-            {
-              "source_id": "c88cdd70-16eb-5c3c-881b-425a880029f9",
-              "locator": "Government of India / IGNCA chronology: Bose civil and military headquarters moved to Burma in January 1944"
-            },
-            {
-              "source_id": "d0516347-22db-5919-80aa-ca80fe33574f",
-              "locator": "Odisha Review: headquarters of the Provisional Government, Indian Independence League and Supreme Command shifted from Singapore to Rangoon"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "polity_id": "a1697cdb-1085-545c-850e-1bbc25cdb61b",
-      "functions": [
-        {
-          "start_year": 632,
-          "end_year": 656,
-          "function_type": "capital",
-          "place_name": "Medina",
-          "place_id": "e9c69c90-7572-5a69-ae63-19f5ac1946b1",
-          "region_code": "west-asia",
-          "confidence": "well_established",
-          "source_refs": [
-            {
-              "source_id": "82565127-eb9c-5da2-a1c4-8fcd738ecf87",
-              "locator": "Cambridge University Press: Rituals of Islamic Monarchy — the conquest society c. 628–c. 660"
-            }
-          ]
-        },
-        {
-          "start_year": 656,
-          "end_year": 661,
-          "function_type": "capital",
-          "place_name": "Kufa",
-          "place_id": "889c7eb5-f72e-5297-9759-c8c2d193efeb",
-          "region_code": "west-asia",
-          "confidence": "well_established",
-          "source_refs": [
-            {
-              "source_id": "9ed98162-dc7d-5a2f-89da-db4aac4694ae",
-              "locator": "Encyclopaedia Iranica: Kufa — Ali (r. 656–61) chose Kufa as his capital"
             }
           ]
         }
