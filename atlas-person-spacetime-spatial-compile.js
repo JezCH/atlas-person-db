@@ -36,6 +36,10 @@
     return text(ref?.source_id) + "\u0000" + text(ref?.locator ?? ref?.source_locator_key);
   }
 
+  function canonicalHistoricalRefsValid(refs) {
+    return Array.isArray(refs) && refs.length > 0 && normalizedHistoricalRefs(refs).length === refs.length;
+  }
+
   function bindingSignature(value) {
     return JSON.stringify([
       text(value?.place_id),
@@ -487,6 +491,15 @@
     const macroCode = text(segment?.region_code);
     const macro = continuum?.bandForCode?.(macroCode);
     if (!macro || macro.kind !== "macroregion") return unresolvedSegment(segment, null, "invalid_macroregion");
+
+    if (text(segment?.placement_basis) === "polity_place_function") {
+      if (!UUID_PATTERN.test(text(segment?.place_id))) return unresolvedSegment(segment, macro, "canonical_place_identity_invalid");
+      if (!canonicalHistoricalRefsValid(segment?.source_refs)) return unresolvedSegment(segment, macro, "canonical_place_provenance_invalid");
+      for (const fn of Array.isArray(segment?.active_place_functions) ? segment.active_place_functions : []) {
+        if (!UUID_PATTERN.test(text(fn?.place_id))) return unresolvedSegment(segment, macro, "canonical_place_identity_invalid");
+        if (!canonicalHistoricalRefsValid(fn?.source_refs)) return unresolvedSegment(segment, macro, "canonical_place_provenance_invalid");
+      }
+    }
 
     const binding = reviewedPlaceBindingForSegment(segment);
     if (binding) {
