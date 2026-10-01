@@ -26,6 +26,7 @@ const AUTHORING_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260930_place_historical_relations.sql"),
   path.resolve(__dirname, "../db/migrations/20260930_human_person_authoring_manifest_schema.sql"),
   path.resolve(__dirname, "../db/migrations/20260930_reviewed_candidate_boundary.sql"),
+  path.resolve(__dirname, "../db/migrations/20261001_spatial_registration_dispositions.sql"),
   path.resolve(__dirname, "../db/migrations/20260930_unit16_retire_external_reference_sync_trigger.sql")
 ]);
 
@@ -51,6 +52,7 @@ const AUTHORING_APPLY_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260930_place_historical_relations.sql"),
   path.resolve(__dirname, "../db/migrations/20260930_human_person_authoring_manifest_schema.sql"),
   path.resolve(__dirname, "../db/migrations/20260930_reviewed_candidate_boundary.sql"),
+  path.resolve(__dirname, "../db/migrations/20261001_spatial_registration_dispositions.sql"),
   path.resolve(__dirname, "../db/migrations/20260930_unit16_retire_external_reference_sync_trigger.sql")
 ]);
 
