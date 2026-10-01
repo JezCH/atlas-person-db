@@ -7,6 +7,11 @@ import { computeSpatialStats } from "../scripts/compile-spatial-bindings.mjs";
 const require = createRequire(import.meta.url);
 const model = require("../atlas-person-spacetime-model.js");
 const index = JSON.parse(readFileSync(new URL("../atlas-polity-spatial-index.json", import.meta.url), "utf8"));
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+const SYNTH_PLACE_A = "00000000-0000-4000-8000-000000000041";
+const SYNTH_PLACE_B = "00000000-0000-4000-8000-000000000042";
+const SYNTH_SOURCE = "00000000-0000-4000-8000-000000000043";
+const synthRefs = (locator) => [{ source_id: SYNTH_SOURCE, locator }];
 
 const IDS = Object.freeze({
   byzantine: "074510f4-f2e7-5795-8cfb-2a4206fa7254",
@@ -53,7 +58,8 @@ test("all canonical place functions retain reviewed source evidence", () => {
   const functions = index.place_function_records.flatMap((record) => record.functions);
   assert.ok(functions.length > 0);
   assert.equal(functions.every((fn) => Array.isArray(fn.source_refs) && fn.source_refs.length > 0), true);
-  assert.equal(functions.some((fn) => fn.source_refs.some((ref) => String(ref).startsWith("ATLAS reviewed"))), false);
+  assert.equal(functions.every((fn) => UUID.test(fn.place_id)), true);
+  assert.equal(functions.every((fn) => fn.source_refs.every((ref) => UUID.test(ref.source_id) && typeof ref.locator === "string" && ref.locator.length > 0)), true);
 });
 
 test("reviewed polity geography now retains stable subregion precision", () => {
@@ -103,8 +109,8 @@ test("Mongol court centers use the same polity-place-function contract as capita
 test("same-region simultaneous place functions compile; conflicting regions do not", () => {
   const base = { schema:index.schema, regions:index.regions, polity_geography:{}, review_queue:[] };
   const same = { ...base, place_function_records:[{ polity_id:"p", functions:[
-    { start_year:100,end_year:110,function_type:"capital",place_name:"A",region_code:"west-asia",confidence:"well_established",source_refs:["s"] },
-    { start_year:100,end_year:110,function_type:"royal_court",place_name:"B",region_code:"west-asia",confidence:"well_established",source_refs:["s"] }
+    { start_year:100,end_year:110,function_type:"capital",place_name:"A",place_id:SYNTH_PLACE_A,region_code:"west-asia",confidence:"well_established",source_refs:synthRefs("synthetic-source") },
+    { start_year:100,end_year:110,function_type:"royal_court",place_name:"B",place_id:SYNTH_PLACE_B,region_code:"west-asia",confidence:"well_established",source_refs:synthRefs("synthetic-source") }
   ]}]};
   const placed = model.resolveActivityPlacement(activity("p",100,110), model.createSpatialLookup(same));
   assert.equal(placed.status,"placed"); assert.equal(placed.segments[0].region_code,"west-asia"); assert.equal(placed.segments[0].active_place_functions.length,2);
@@ -115,8 +121,8 @@ test("same-region simultaneous place functions compile; conflicting regions do n
 
 test("a place-function gap prevents silent partial placement", () => {
   const synthetic = { schema:index.schema, regions:index.regions, polity_geography:{}, review_queue:[], place_function_records:[{ polity_id:"p", functions:[
-    { start_year:100,end_year:104,function_type:"capital",place_name:"A",region_code:"west-asia",confidence:"well_established",source_refs:["s"] },
-    { start_year:106,end_year:110,function_type:"capital",place_name:"B",region_code:"west-asia",confidence:"well_established",source_refs:["s"] }
+    { start_year:100,end_year:104,function_type:"capital",place_name:"A",place_id:SYNTH_PLACE_A,region_code:"west-asia",confidence:"well_established",source_refs:synthRefs("synthetic-source") },
+    { start_year:106,end_year:110,function_type:"capital",place_name:"B",place_id:SYNTH_PLACE_B,region_code:"west-asia",confidence:"well_established",source_refs:synthRefs("synthetic-source") }
   ]}]};
   const result = model.resolveActivityPlacement(activity("p",100,110), model.createSpatialLookup(synthetic));
   assert.equal(result.status,"place_function_period_gap"); assert.equal(result.segments.length,0);

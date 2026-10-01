@@ -138,9 +138,9 @@ export function prepareCurrentTaxonomyBaseline(retainedBaseline, manifests) {
   });
 }
 
-export function compileSpatialBindingsR4({ baseline, shards = [], manifests = [], corrections = [] }) {
+export function compileSpatialBindingsR4({ baseline, shards = [], manifests = [], corrections = [], placeFunctions = null }) {
   const prepared = prepareCurrentTaxonomyBaseline(baseline, manifests);
-  const reviewed = compileSpatialBindings({ baseline: prepared.baseline, shards, corrections });
+  const reviewed = compileSpatialBindings({ baseline: prepared.baseline, shards, corrections, placeFunctions });
   const migrated = applyTaxonomyMigrationManifests(reviewed.index, prepared.postcompile);
   const migratedPolityIds = [...prepared.migrated_polity_ids, ...migrated.migrated_polity_ids].sort();
   if (JSON.stringify(migratedPolityIds) !== JSON.stringify(prepared.migration_polity_ids)) {
@@ -159,6 +159,7 @@ function parseArgs(argv) {
     shardsDir: 'spatial/reviewed-bindings/shards',
     correctionsDir: 'spatial/reviewed-bindings/corrections',
     migrationDir: 'spatial/taxonomy-migrations',
+    placeFunctionsPath: 'spatial/projections/polity-place-functions.v1.json',
     outPath: 'atlas-polity-spatial-index.json',
     check: false,
     validateOnly: false
@@ -171,6 +172,7 @@ function parseArgs(argv) {
       case '--shards-dir': options.shardsDir = value; index += 1; break;
       case '--corrections-dir': options.correctionsDir = value; index += 1; break;
       case '--migration-dir': options.migrationDir = value; index += 1; break;
+      case '--place-functions': options.placeFunctionsPath = value; index += 1; break;
       case '--out': options.outPath = value; index += 1; break;
       case '--check': options.check = true; break;
       case '--validate-only': options.validateOnly = true; break;
@@ -187,7 +189,8 @@ export function main(argv = process.argv.slice(2)) {
   const shards = loadReviewedBindingShards(options.shardsDir);
   const corrections = loadReviewedSpatialCorrections(options.correctionsDir);
   const migrations = loadTaxonomyMigrationManifests(options.migrationDir);
-  const result = compileSpatialBindingsR4({ baseline: retainedBaseline, shards, manifests: migrations, corrections });
+  const placeFunctions = readJson(options.placeFunctionsPath);
+  const result = compileSpatialBindingsR4({ baseline: retainedBaseline, shards, manifests: migrations, corrections, placeFunctions });
   const serialized = serializeSpatialIndex(result.index);
 
   if (options.validateOnly) {

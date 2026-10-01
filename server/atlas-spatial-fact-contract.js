@@ -22,8 +22,16 @@ function assertPolityPlaceFunction(raw){
   if(!raw || typeof raw!=="object" || Array.isArray(raw)) throw new Error("SPATIAL_POLITY_PLACE_FUNCTION_INVALID");
   for(const key of CONTRACT.historical_fact.required) if(raw[key]==null || (typeof raw[key]==="string"&&!text(raw[key]))) throw new Error(`SPATIAL_POLITY_PLACE_FUNCTION_REQUIRED:${key}`);
   if(!CONTRACT.historical_fact.function_types.includes(text(raw.function_type))) throw new Error("SPATIAL_POLITY_PLACE_FUNCTION_TYPE_INVALID");
-  if(raw.region_code!=null || raw.subregion_code!=null || raw.location_label!=null) throw new Error("SPATIAL_POLITY_PLACE_FUNCTION_DISPLAY_FIELD_FORBIDDEN");
+  if(raw.region_code!=null || raw.subregion_code!=null || raw.location_label!=null || raw.place_name!=null) throw new Error("SPATIAL_POLITY_PLACE_FUNCTION_DISPLAY_FIELD_FORBIDDEN");
+  const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  if(!uuid.test(text(raw.polity_id))) throw new Error("SPATIAL_POLITY_PLACE_FUNCTION_POLITY_ID_INVALID");
+  if(!uuid.test(text(raw.place_id))) throw new Error("SPATIAL_POLITY_PLACE_FUNCTION_PLACE_ID_INVALID");
   if(!Array.isArray(raw.source_refs)||raw.source_refs.length===0) throw new Error("SPATIAL_POLITY_PLACE_FUNCTION_SOURCE_REQUIRED");
+  for(const [index,ref] of raw.source_refs.entries()){
+    if(!ref || typeof ref!=="object" || Array.isArray(ref) || !uuid.test(text(ref.source_id)) || !text(ref.locator??ref.source_locator_key)) {
+      throw new Error(`SPATIAL_POLITY_PLACE_FUNCTION_SOURCE_INVALID:${index+1}`);
+    }
+  }
   return true;
 }
 

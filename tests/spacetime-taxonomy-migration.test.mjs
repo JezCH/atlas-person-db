@@ -61,6 +61,7 @@ test("retired r3 leaves and the former east-africa-horn alias are unreachable in
 
 test("new reviewed shards cannot author the retired east-africa-horn code", () => {
   const baseline = structuredClone(index);
+  baseline.place_function_records = [];
   const candidate = {
     schema: "atlas-reviewed-spatial-bindings/v1",
     shard_id: "r4-legacy-reject-probe",

@@ -83,6 +83,28 @@
     return value == null ? "" : String(value).trim();
   }
 
+  function normalizePlaceFunctionSourceRef(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+    const sourceId = text(value.source_id);
+    const locator = text(value.locator ?? value.source_locator_key);
+    if (!UUID_PATTERN.test(sourceId) || !locator) return null;
+    return Object.freeze({ source_id:sourceId, locator });
+  }
+
+  function uniquePlaceFunctionSourceRefs(values) {
+    const out = [];
+    const seen = new Set();
+    for (const value of Array.isArray(values) ? values : []) {
+      const normalized = normalizePlaceFunctionSourceRef(value);
+      if (!normalized) continue;
+      const key = normalized.source_id + "\u0000" + normalized.locator;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push(normalized);
+    }
+    return Object.freeze(out);
+  }
+
   function historicalYearToOrdinal(year) {
     if (!Number.isInteger(year) || year === 0) return null;
     return year < 0 ? year : year - 1;
@@ -132,13 +154,18 @@
     const errors = [];
     if (!REGION_CODES.has(regionCode)) errors.push(`invalid region_code: ${regionCode || "(empty)"}`);
     if (!text(fn?.place_name)) errors.push("place_name is required");
+    const placeId = text(fn?.place_id);
+    if (!UUID_PATTERN.test(placeId)) errors.push("place_id must be a canonical UUID");
     const functionType = text(fn?.function_type);
     if (!PLACE_FUNCTION_TYPES.has(functionType)) errors.push(`invalid function_type: ${functionType || "(empty)"}`);
     if (startYear != null && (!Number.isInteger(startYear) || startYear === 0)) errors.push("start_year must be a historical integer year or null");
     if (endYear != null && (!Number.isInteger(endYear) || endYear === 0)) errors.push("end_year must be a historical integer year or null");
     if (startYear != null && endYear != null && normalizeInterval(startYear, endYear)?.reversed_input) errors.push("start_year must not be after end_year");
-    const sourceRefs = Array.isArray(fn?.source_refs) ? fn.source_refs.map(text).filter(Boolean) : [];
-    if (!sourceRefs.length) errors.push("source_refs must contain at least one reviewed source reference");
+    const rawSourceRefs = Array.isArray(fn?.source_refs) ? fn.source_refs : [];
+    if (!rawSourceRefs.length) errors.push("source_refs must contain at least one reviewed source reference");
+    rawSourceRefs.forEach((ref,index) => {
+      if (!normalizePlaceFunctionSourceRef(ref)) errors.push(`source_refs[${index}] must contain canonical source_id UUID + locator`);
+    });
     const confidence = text(fn?.confidence);
     if (!ALLOWED_CONFIDENCE.has(confidence)) errors.push(`invalid confidence: ${confidence || "(empty)"}`);
     return errors.map((message) => `place_function_records[${recordIndex}] polity ${polityId || "(empty)"} function ${functionIndex}: ${message}`);
@@ -397,10 +424,10 @@
           place_id: text(fn.place_id) || null,
           region_code: text(fn.region_code),
           confidence: text(fn.confidence) || null,
-          source_refs: Object.freeze([...new Set(Array.isArray(fn.source_refs) ? fn.source_refs.map(text).filter(Boolean) : [])])
+          source_refs: uniquePlaceFunctionSourceRefs(fn.source_refs)
         }))),
         confidence: text(representative?.confidence),
-        source_refs: Object.freeze([...new Set(active.flatMap((fn) => Array.isArray(fn.source_refs) ? fn.source_refs.map(text).filter(Boolean) : []))]),
+        source_refs: uniquePlaceFunctionSourceRefs(active.flatMap((fn) => Array.isArray(fn.source_refs) ? fn.source_refs : [])),
         start_year: ordinalToHistoricalYear(segmentStart),
         end_year: ordinalToHistoricalYear(segmentEnd),
         partial_activity_interval: false

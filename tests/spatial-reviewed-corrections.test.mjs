@@ -17,6 +17,7 @@ const baseline = JSON.parse(fs.readFileSync('spatial/reviewed-bindings/0000-migr
 const shards = loadReviewedBindingShards('spatial/reviewed-bindings/shards');
 const corrections = loadReviewedSpatialCorrections('spatial/reviewed-bindings/corrections');
 const migrations = loadTaxonomyMigrationManifests('spatial/taxonomy-migrations');
+const placeFunctions = JSON.parse(fs.readFileSync('spatial/projections/polity-place-functions.v1.json', 'utf8'));
 
 const AZAD_HIND = '5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90';
 const RASHIDUN = 'a1697cdb-1085-545c-850e-1bbc25cdb61b';
@@ -42,7 +43,7 @@ function recordFor(index, polityId) {
 }
 
 test('post-r4 reviewed correction closes every remaining macro-only mapping without false static precision', () => {
-  const compiled = compileSpatialBindingsR4({ baseline, shards, manifests: migrations, corrections });
+  const compiled = compileSpatialBindingsR4({ baseline, shards, manifests: migrations, corrections, placeFunctions });
   const index = compiled.index;
 
   const macroOnly = Object.keys(index.polity_geography || {})

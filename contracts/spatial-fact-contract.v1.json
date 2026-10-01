@@ -28,8 +28,16 @@
       "place_id_must_reference_first_class_place": true,
       "source_refs_are_provenance_not_display_placement": true,
       "macroregion_subregion_are_not_historical_fact_fields": true,
-      "unknown_boundary_may_be_null": true
-    }
+      "unknown_boundary_may_be_null": true,
+      "source_refs_must_use_source_uuid_and_locator": true,
+      "repository_place_function_records_are_derived_projection": true,
+      "place_name_and_region_code_are_projection_only": true
+    },
+    "canonical_authority": [
+      "atlas_v2.polity_place_functions",
+      "atlas_v2.polity_place_function_sources"
+    ],
+    "authoritative_writer": "server/atlas-polity-place-function-service.js#createPolityPlaceFunction"
   },
   "display_disposition": {
     "entity": "SpatialDisplayDisposition",
@@ -47,7 +55,8 @@
     "rules": {
       "must_not_masquerade_as_polity_place_function": true,
       "review_queue_is_explicit_hold": true,
-      "activity_override_is_display_only": true
+      "activity_override_is_display_only": true,
+      "place_function_projection_path": "spatial/projections/polity-place-functions.v1.json"
     }
   },
   "registration_handshake": {

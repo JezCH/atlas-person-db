@@ -16,6 +16,7 @@ const baselinePath = 'spatial/reviewed-bindings/0000-migrated-baseline.index.jso
 const shardDir = 'spatial/reviewed-bindings/shards';
 const correctionDir = 'spatial/reviewed-bindings/corrections';
 const migrationDir = 'spatial/taxonomy-migrations';
+const placeFunctions = JSON.parse(fs.readFileSync('spatial/projections/polity-place-functions.v1.json', 'utf8'));
 
 const expected = new Map([
   ['00ec4b0c-6002-5791-825c-43465632102d', 'north-india-ganges'],
@@ -98,7 +99,7 @@ test('r4 stages retired-source migrations before strict compile and active-sourc
   assert.throws(() => compileSpatialBindings({ baseline: retainedBaseline, shards: [] }), { code: 'INVALID_SPATIAL_BASELINE' });
   const migrations = loadTaxonomyMigrationManifests(migrationDir);
   const corrections = loadReviewedSpatialCorrections(correctionDir);
-  const compiled = compileSpatialBindingsR4({ baseline: retainedBaseline, shards: loadReviewedBindingShards(shardDir), manifests: migrations, corrections });
+  const compiled = compileSpatialBindingsR4({ baseline: retainedBaseline, shards: loadReviewedBindingShards(shardDir), manifests: migrations, corrections, placeFunctions });
   assert.equal(compiled.migrated_polity_ids.length, expected.size);
   assert.deepEqual(new Set(compiled.migrated_polity_ids), new Set(expected.keys()));
   for (const [polityId, subregion] of expected) assert.equal(compiled.index.polity_subregions[polityId], subregion, polityId);

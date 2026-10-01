@@ -1,7 +1,7 @@
 # ATLAS CORE Authority Ownership Map
 
-**Status:** Canonical after CORE v2 Unit 16  
-**As of:** 2026-09-30  
+**Status:** Canonical through CORE-REENTRY-08  
+**As of:** 2026-10-01  
 **Machine authority:** `docs/core/CORE_AUTHORITY_OWNERSHIP.v1.json`  
 **Architecture authority:** `docs/core/CORE_V2_MASTER_PLAN.md`
 
@@ -27,7 +27,8 @@ Unit 16 closes residue cleanup: this registry has no active multi-writer debt, o
 | `polity_relation_assertion` | Structural/temporal Polity relation assertion and provenance | `server/atlas-correction-manifest-v2-service.js#insertPolityRelationBundle` | **single_writer** |
 | `polity_temporal_semantics` | Polity governance periods, temporal designations, and diachronic identity relations | `server/atlas-correction-v2-stage2-assertions.js#insertStage2AssertionBundle` | **single_writer** |
 | `context_objects` | Government/Regime, PeopleGroup, HistoricalEvent identities and Person links | `server/atlas-context-object-service.js#createContextObject / linkPersonContext / linkPolityGovernanceContext` | **single_writer** |
-| `spatial_reviewed_facts` | Reviewed spatial display dispositions, with historical PolityPlaceFunction semantics governed separately by contracts/spatial-fact-contract.v1.json | `scripts/compile-spatial-bindings.mjs#compileSpatialBindings` | **repository_source_authority** |
+| `polity_place_function` | Historical Polity→Place function with full temporal interval, confidence, first-class Place UUID and Source UUID+locator provenance | `server/atlas-polity-place-function-service.js#createPolityPlaceFunction` | **single_writer** |
+| `spatial_reviewed_facts` | Reviewed display dispositions plus the derived UUID Place-function projection; not historical Place/Source identity authority | `scripts/compile-spatial-bindings.mjs#compileSpatialBindings` | **repository_source_authority** |
 | `spatial_registration_disposition_lifecycle` | Durable new-Polity registration-completion disposition; lifecycle proof only, not display placement or PolityPlaceFunction authority | `server/atlas-spatial-registration-disposition-service.js#materializeSpatialRegistrationDisposition` | **single_writer** |
 | `runtime_projection` | Derived Runtime Activity projection and explicit compile exclusions/activation | `server/atlas-runtime-compile-service.js#compileRuntimeProjection` | **derived_single_writer** |
 | `non_timeline_person_registry` | Canonical reviewed Person timeline disposition, including chronology-unresolved/legendary/mythical/other reviewed exclusions | `server/atlas-person-timeline-service.js#setTimelineDisposition` | **single_writer** |
@@ -43,5 +44,6 @@ Unit 16 closes residue cleanup: this registry has no active multi-writer debt, o
 - `person_external_reference` is written by `atlas-external-reference-service.js#setNamuWikiDecision`; the old authoring-ledger projection trigger is dropped.
 - Historical Role case/scope correction executors are retired; reviewed request JSON remains audit evidence only.
 - Normal Activity authoring, exact-before reviewed Activity correction, and destructive Person lifecycle are distinct lifecycle authorities.
-- `atlas-polity-spatial-index.json` is a **derived output** retained only as a compatibility artifact; reviewed repository spatial facts remain the source authority.
+- `polity_place_function` is now DB-backed canonical historical fact authority. It requires a first-class Place UUID and Source UUID+locator provenance and rejects display-only fields such as region/subregion/place label.
+- `spatial/projections/polity-place-functions.v1.json` is a UUID projection of canonical DB facts. `atlas-polity-spatial-index.json` is a **derived output** for spacetime display; neither owns Place or Source identity.
 - `spatial_registration_disposition_lifecycle` is deliberately narrower: it proves that a reviewed new-Polity spatial decision was durably written/read back before registration completion and does not become a second display or historical spatial-fact authority.

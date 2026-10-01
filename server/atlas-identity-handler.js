@@ -4,7 +4,7 @@ const { createIdentityService } = require("./atlas-identity-service.js");
 const { createAuthoringObjectService } = require("./atlas-authoring-object-transaction.js");
 const { createMutationAuthorizer } = require("./atlas-session-auth.js");
 
-const AUTHORING_OBJECT_OPERATIONS = new Set(["create_source", "create_place", "create_context_object", "link_person_context", "link_polity_governance_context"]);
+const AUTHORING_OBJECT_OPERATIONS = new Set(["create_source", "create_place", "create_polity_place_function", "create_context_object", "link_person_context", "link_polity_governance_context"]);
 const REGISTRATION_GATED_IDENTITY_OPERATIONS = new Set(["create_person", "create_polity"]);
 
 function sendJson(res, status, body) {

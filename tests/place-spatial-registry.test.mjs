@@ -7,10 +7,14 @@ const require = createRequire(import.meta.url);
 const registryApi = require("../atlas-place-spatial-registry.js");
 const registry = JSON.parse(readFileSync(new URL("../atlas-place-spatial-registry.json", import.meta.url), "utf8"));
 const spatialIndex = JSON.parse(readFileSync(new URL("../atlas-polity-spatial-index.json", import.meta.url), "utf8"));
+const TEST_PLACE_ID = "00000000-0000-4000-8000-000000000051";
+const UNKNOWN_PLACE_ID = "00000000-0000-4000-8000-000000000052";
+const TEST_SOURCE_ID = "00000000-0000-4000-8000-000000000053";
+const OTHER_SOURCE_ID = "00000000-0000-4000-8000-000000000054";
 
 function reviewedPlace(overrides = {}) {
   return {
-    place_id: "place-rome",
+    place_id: TEST_PLACE_ID,
     canonical_name: "Rome",
     historical_names: ["Roma"],
     macroregion_code: "europe",
@@ -37,7 +41,7 @@ test("reviewed Place identity can carry reviewed coordinates and a real subregio
   const value = { schema: registryApi.PLACE_REGISTRY_SCHEMA, places: [reviewedPlace()] };
   const validation = registryApi.validatePlaceRegistry(value);
   assert.equal(validation.valid, true, validation.errors.join("\n"));
-  const place = registryApi.createPlaceLookup(value).get("place-rome");
+  const place = registryApi.createPlaceLookup(value).get(TEST_PLACE_ID);
   assert.equal(place.canonical_name, "Rome");
   assert.equal(place.macroregion_code, "europe");
   assert.equal(place.subregion_code, "italy");
@@ -83,29 +87,30 @@ test("historical Place registry rejects runtime display-coordinate fields", () =
 test("reviewed binding requires an existing reviewed Place and independent exact historical evidence", () => {
   const place = reviewedPlace({ coordinate_precision: "unknown", latitude: null, longitude: null });
   const binding = {
-    place_id: "place-rome",
+    place_id: TEST_PLACE_ID,
     polity_id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
     function_type: "capital",
     place_name: "Rome",
-    source_refs: ["reviewed historical polity-place function source"],
+    source_refs: [{ source_id: TEST_SOURCE_ID, locator: "reviewed historical polity-place function source" }],
     review_status: "reviewed"
   };
   const valid = { schema: registryApi.PLACE_REGISTRY_SCHEMA, places: [place], bindings: [binding] };
   assert.equal(registryApi.validatePlaceRegistry(valid).valid, true);
 
-  const unknownPlace = { schema: registryApi.PLACE_REGISTRY_SCHEMA, places: [place], bindings: [{ ...binding, place_id: "place-missing" }] };
+  const unknownPlace = { schema: registryApi.PLACE_REGISTRY_SCHEMA, places: [place], bindings: [{ ...binding, place_id: UNKNOWN_PLACE_ID }] };
   const validation = registryApi.validatePlaceRegistry(unknownPlace);
   assert.equal(validation.valid, false);
-  assert.match(validation.errors.join("\n"), /unknown place_id place-missing/);
+  assert.match(validation.errors.join("\n"), /unknown place_id/);
 });
 
 test("binding lookup is exact and does not bind a matching place_name without reviewed source refs", () => {
   const lookup = registryApi.createReviewedBindingLookup(registry);
-  const rome = registry.bindings.find((binding) => binding.place_id === "place-rome");
+  const romePlace = registry.places.find((place) => place.canonical_name === "Rome");
+  const rome = registry.bindings.find((binding) => binding.place_id === romePlace?.place_id);
   assert.ok(rome);
   assert.ok(lookup.has(registryApi.bindingSignature(rome)));
-  assert.equal(lookup.has(registryApi.bindingSignature({ ...rome, source_refs: ["different source"] })), false);
-  assert.equal(lookup.has(registryApi.bindingSignature({ ...rome, polity_id: "polity-example" })), false);
+  assert.equal(lookup.has(registryApi.bindingSignature({ ...rome, source_refs: [{ source_id: OTHER_SOURCE_ID, locator: "different source" }] })), false);
+  assert.equal(lookup.has(registryApi.bindingSignature({ ...rome, polity_id: "00000000-0000-4000-8000-000000000055" })), false);
 });
 
 
@@ -122,6 +127,7 @@ test("every canonical temporal place-function has an exact reviewed Place-to-lea
       const signature = registryApi.bindingSignature({
         polity_id: record.polity_id,
         function_type: fn.function_type,
+        place_id: fn.place_id,
         place_name: fn.place_name,
         source_refs: fn.source_refs
       });

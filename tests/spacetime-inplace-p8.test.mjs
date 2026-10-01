@@ -49,7 +49,7 @@ test("spatial continuum stays leaf-uniform and independent of data density", () 
 
 test("spatial compile never invents precision", () => {
   const c=spaceAxis.createSpatialContinuum();
-  const raw={status:"placed",activity_id:"a",polity_id:"p",segments:[{activity_id:"a",polity_id:"p",region_code:"europe",place_id:"place-paris",place_name:"Paris",place_function_type:"capital",start_year:1800,end_year:1810,placement_basis:"polity_place_function",confidence:"reviewed",source_refs:["s"]}]};
+  const raw={status:"placed",activity_id:"a",polity_id:"p",segments:[{activity_id:"a",polity_id:"p",region_code:"europe",place_id:"00000000-0000-4000-8000-000000000091",place_name:"Paris",place_function_type:"capital",start_year:1800,end_year:1810,placement_basis:"polity_place_function",confidence:"reviewed",source_refs:[{source_id:"00000000-0000-4000-8000-000000000092",locator:"synthetic unreviewed display evidence"}]}]};
   const compiled=spatialCompile.compileActivityPlacement(raw,c);
   assert.equal(compiled.status,"spatial_compile_unresolved");
   assert.equal(compiled.reason,"macroregion_only_unresolved");

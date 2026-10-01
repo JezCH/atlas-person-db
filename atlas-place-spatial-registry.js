@@ -15,6 +15,7 @@
   const COORDINATE_PRECISIONS = new Set(["unknown", "reviewed_point"]);
   const REVIEW_STATUSES = new Set(["provisional", "reviewed"]);
   const PRESENTATION_ONLY_FIELDS = Object.freeze(["world_x", "x_anchor", "x_min", "x_max", "display_anchor", "display_anchor_basis"]);
+  const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
   function text(value) {
     return value == null ? "" : String(value).trim();
@@ -34,12 +35,29 @@
     return Object.freeze(Array.from(new Set((Array.isArray(refs) ? refs : []).map(text).filter(Boolean))).sort());
   }
 
+  function normalizedHistoricalRefs(refs) {
+    const unique = new Map();
+    for (const raw of Array.isArray(refs) ? refs : []) {
+      if (!raw || typeof raw !== "object" || Array.isArray(raw)) continue;
+      const sourceId = text(raw.source_id);
+      const locator = text(raw.locator ?? raw.source_locator_key);
+      if (!UUID_PATTERN.test(sourceId) || !locator) continue;
+      const key = sourceId + "\u0000" + locator;
+      if (!unique.has(key)) unique.set(key, Object.freeze({ source_id: sourceId, locator }));
+    }
+    return Object.freeze([...unique.values()].sort((a, b) => a.source_id.localeCompare(b.source_id) || a.locator.localeCompare(b.locator)));
+  }
+
+  function historicalRefKey(ref) {
+    return text(ref?.source_id) + "\u0000" + text(ref?.locator ?? ref?.source_locator_key);
+  }
+
   function bindingSignature(value) {
     return JSON.stringify([
+      text(value?.place_id),
       text(value?.polity_id),
       text(value?.function_type || value?.place_function_type),
-      text(value?.place_name),
-      ...normalizedRefs(value?.source_refs || value?.historical_source_refs)
+      ...normalizedHistoricalRefs(value?.source_refs || value?.historical_source_refs).map(historicalRefKey)
     ]);
   }
 
@@ -65,6 +83,7 @@
       const sourceRefs = normalizedRefs(place?.spatial_source_refs);
 
       if (!placeId) errors.push(`${prefix}: place_id is required`);
+      else if (!UUID_PATTERN.test(placeId)) errors.push(`${prefix}: place_id must be a canonical UUID`);
       if (placeId && ids.has(placeId)) errors.push(`${prefix}: duplicate place_id ${placeId}`);
       if (placeId) {
         ids.add(placeId);
@@ -124,15 +143,17 @@
       const polityId = text(binding?.polity_id);
       const functionType = text(binding?.function_type);
       const placeName = text(binding?.place_name);
-      const sourceRefs = normalizedRefs(binding?.source_refs);
+      const sourceRefs = normalizedHistoricalRefs(binding?.source_refs);
       const reviewStatus = text(binding?.review_status) || "provisional";
       const place = placeById.get(placeId);
 
       if (!placeId) errors.push(`${prefix}: place_id is required`);
       if (!polityId) errors.push(`${prefix}: polity_id is required`);
+      else if (!UUID_PATTERN.test(polityId)) errors.push(`${prefix}: polity_id must be a canonical UUID`);
       if (!functionType) errors.push(`${prefix}: function_type is required`);
       if (!placeName) errors.push(`${prefix}: place_name is required`);
-      if (!Array.isArray(binding?.source_refs) || !sourceRefs.length) errors.push(`${prefix}: non-empty source_refs are required for exact binding`);
+      if (!Array.isArray(binding?.source_refs) || !sourceRefs.length) errors.push(`${prefix}: non-empty Source UUID + locator source_refs are required for exact binding`);
+      else if (sourceRefs.length !== binding.source_refs.length) errors.push(`${prefix}: every source_ref must contain canonical source_id UUID + locator`);
       if (!REVIEW_STATUSES.has(reviewStatus)) errors.push(`${prefix}: invalid review_status ${reviewStatus || "(empty)"}`);
       if (!place) {
         errors.push(`${prefix}: unknown place_id ${placeId || "(empty)"}`);
@@ -189,6 +210,7 @@
         canonical_name: place.canonical_name,
         macroregion_code: place.macroregion_code,
         subregion_code: place.subregion_code,
+        source_refs: normalizedHistoricalRefs(rawBinding.source_refs),
         spatial_source_refs: place.spatial_source_refs
       }));
     }
@@ -200,6 +222,7 @@
     COORDINATE_PRECISIONS,
     REVIEW_STATUSES,
     PRESENTATION_ONLY_FIELDS,
+    UUID_PATTERN,
     bindingSignature,
     validatePlaceRegistry,
     createPlaceLookup,

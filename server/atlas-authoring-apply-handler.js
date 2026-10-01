@@ -5,11 +5,13 @@ const { createAuthoringManifestDispatchService } = require("./atlas-authoring-ma
 const { applyAuthoringMigrations } = require("./atlas-authoring-migrations.js");
 const { inspectAuthoringReadiness } = require("./atlas-authoring-readiness.js");
 const { verifyGitHubActionsOidc } = require("./atlas-github-oidc.js");
+const { applyPolityPlaceFunctionAuthorityBackfill } = require("./atlas-polity-place-function-authority-backfill.js");
 
 const TRANSPORT_MARKER = "ATLAS_AUTHORING_TRANSPORT_V2";
 const TRANSPORT_VERSION = 2;
 const OPERATION_APPLY = "apply_manifest";
 const OPERATION_BOOTSTRAP = "bootstrap";
+const OPERATION_PLACE_AUTHORITY_BACKFILL = "backfill_polity_place_function_authority";
 const MANIFEST_PATH_RE = /^authoring\/requests\/[A-Za-z0-9._-]+\.json$/;
 const SHA_RE = /^[0-9a-f]{40}$/;
 
@@ -79,6 +81,14 @@ function requireBootstrapPayload(body) {
   return { ...envelope, operation };
 }
 
+function requirePlaceAuthorityBackfillPayload(body) {
+  const operation = String(body?.operation || "").trim();
+  if (operation !== OPERATION_PLACE_AUTHORITY_BACKFILL) throw new Error("AUTHORING_OPERATION_UNSUPPORTED");
+  const envelope = requireTransportEnvelope(body);
+  if (body?.manifest != null || body?.manifest_path != null) throw new Error("AUTHORING_PLACE_AUTHORITY_BACKFILL_MANIFEST_FORBIDDEN");
+  return { ...envelope, operation };
+}
+
 function statusForError(code) {
   if (code === "AUTHORING_RUNTIME_SHA_MISMATCH") return 409;
   if (/OIDC|APPROVED|COLLISION|AMBIGUOUS|DUPLICATE|UNRESOLVED|UNSUPPORTED|REQUIRED|NOT_FOUND|FAILED|MISMATCH|DRIFT|INVALID|FORBIDDEN|RETIRED|NOT_READY/.test(code)) return 409;
@@ -138,6 +148,7 @@ function createAuthoringApplyHandler({
       const body = parseBody(req);
       const operation = String(body?.operation || OPERATION_APPLY).trim();
       if (operation === OPERATION_BOOTSTRAP) payload = requireBootstrapPayload(body);
+      else if (operation === OPERATION_PLACE_AUTHORITY_BACKFILL) payload = requirePlaceAuthorityBackfillPayload(body);
       else if (operation === OPERATION_APPLY) payload = requireApplyPayload(body);
       else throw new Error("AUTHORING_OPERATION_UNSUPPORTED");
       requireRuntime(env, payload.runtimeSha);
@@ -182,6 +193,31 @@ function createAuthoringApplyHandler({
         });
       }
 
+      if (payload.operation === OPERATION_PLACE_AUTHORITY_BACKFILL) {
+        const outcome = await applyPolityPlaceFunctionAuthorityBackfill(client);
+        return json(res, 200, {
+          ok:true,
+          marker:outcome.marker,
+          transport_marker:TRANSPORT_MARKER,
+          transport_version:TRANSPORT_VERSION,
+          operation:OPERATION_PLACE_AUTHORITY_BACKFILL,
+          runtime_sha:payload.runtimeSha,
+          authoring_sha:payload.authoringSha,
+          committed:outcome.committed,
+          replay:outcome.replay,
+          backfill_id:outcome.backfill_id,
+          counts:{
+            polities:outcome.polities,
+            places:outcome.places,
+            sources:outcome.sources,
+            facts:outcome.facts,
+            source_links:outcome.source_links
+          },
+          created_sources:outcome.created_sources,
+          created_places:outcome.created_places
+        });
+      }
+
       const transport = Object.freeze({
         version: TRANSPORT_VERSION,
         runtime_sha: payload.runtimeSha,
@@ -222,6 +258,7 @@ module.exports = Object.freeze({
   requireTransportEnvelope,
   requireApplyPayload,
   requireBootstrapPayload,
+  requirePlaceAuthorityBackfillPayload,
   runtimeIdentity,
   requireRuntime,
   bearerToken,
@@ -229,5 +266,6 @@ module.exports = Object.freeze({
   TRANSPORT_MARKER,
   TRANSPORT_VERSION,
   OPERATION_APPLY,
-  OPERATION_BOOTSTRAP
+  OPERATION_BOOTSTRAP,
+  OPERATION_PLACE_AUTHORITY_BACKFILL
 });

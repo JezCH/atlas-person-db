@@ -9,6 +9,9 @@ const { createPolity, createRole }=require('../server/atlas-identity-service.js'
 const { createHumanAuthoringService, loadHumanAuthoringCatalogs }=require('../server/atlas-human-authoring-service.js');
 const { loadStage2NativeActivity }=require('../server/atlas-stage2-native-activity-service.js');
 const { createReviewedCandidateRegistrationService }=require('../server/atlas-reviewed-candidate-registration-service.js');
+const { createPlace }=require('../server/atlas-authoring-object-service.js');
+const { createPolityPlaceFunction }=require('../server/atlas-polity-place-function-service.js');
+const { applyPolityPlaceFunctionAuthorityBackfill }=require('../server/atlas-polity-place-function-authority-backfill.js');
 
 const { Client }=pg;
 const databaseUrl=String(process.env.DATABASE_URL||'').trim();
@@ -247,6 +250,54 @@ try {
   await client.query(`insert into atlas_v2.period_basis_names(id,period_basis_id,locale,name,is_preferred) values(gen_random_uuid(),$1::uuid,'en','Fixture human period',true)`,[PERIOD_ID]);
   await client.query('commit');
 
+  const syntheticBackfill={
+    schema:'atlas-polity-place-function-authority-backfill/v1',
+    backfill_id:'fixture:place-authority-backfill',
+    expected_polity_ids:[String(existingPolity.id).toLowerCase()],
+    expected_counts:{polities:1,places:1,sources:1,facts:1},
+    sources:[{
+      id:'44444444-4444-4444-8444-444444444444',
+      source_key:'fixture:place-authority-source',
+      source_type:'bibliographic_reference',
+      title:'Fixture Place Authority Source',
+      citation_text:'Fixture Place Authority Source'
+    }],
+    places:[{
+      id:'55555555-5555-4555-8555-555555555555',
+      canonical_key:'fixture-place-authority',
+      canonical_name_en:'Fixture Place Authority',
+      place_type:'historical_place',
+      historicity:'historical',
+      source_links:[{
+        source_id:'44444444-4444-4444-8444-444444444444',
+        source_locator_key:'fixture locator'
+      }]
+    }],
+    facts:[{
+      polity_id:String(existingPolity.id).toLowerCase(),
+      function_type:'political_center',
+      place_id:'55555555-5555-4555-8555-555555555555',
+      start_year:90,
+      end_year:95,
+      confidence:'well_established',
+      source_refs:[{
+        source_id:'44444444-4444-4444-8444-444444444444',
+        locator:'fixture locator'
+      }]
+    }]
+  };
+  const syntheticBackfillText=JSON.stringify(syntheticBackfill);
+  const backfillFirst=await applyPolityPlaceFunctionAuthorityBackfill(client,{readFile:()=>syntheticBackfillText});
+  assert.equal(backfillFirst.committed,true);
+  assert.equal(backfillFirst.replay,false);
+  assert.equal(backfillFirst.places,1);
+  assert.equal(backfillFirst.sources,1);
+  assert.equal(backfillFirst.facts,1);
+  const backfillReplay=await applyPolityPlaceFunctionAuthorityBackfill(client,{readFile:()=>syntheticBackfillText});
+  assert.equal(backfillReplay.committed,true);
+  assert.equal(backfillReplay.replay,true);
+  assert.equal(backfillReplay.facts,1);
+
   const warnings=[];
   const onWarning=(warning)=>{
     const message=String(warning?.message||warning||'');
@@ -310,6 +361,52 @@ try {
   const firstSource=(await client.query(`select source_type,canonical_url,citation_text from atlas_v2.sources where id=$1::uuid`,[first.source_ids[0]])).rows[0];
   assert.equal(firstSource.source_type,'web_bibliographic_reference');
   assert.equal(firstSource.canonical_url,'https://example.test/human-authoring-fixture');
+
+  await client.query('begin isolation level serializable');
+  const fixturePlace=await createPlace(client,{
+    canonical_key:'human-authoring-fixture-place',
+    canonical_name_en:'Human Authoring Fixture Place',
+    display_name_ko:'휴먼 저작 픽스처 장소',
+    place_type:'historical_place',
+    historicity:'historical',
+    source_links:[{source_id:first.source_ids[0],source_locator_key:'https://example.test/human-authoring-fixture'}]
+  });
+  const fixturePlaceFunction=await createPolityPlaceFunction(client,{
+    polity_id:first.polity_id,
+    function_type:'political_center',
+    place_id:fixturePlace.id,
+    start_year:101,
+    end_year:103,
+    confidence:'well_established',
+    source_refs:[{source_id:first.source_ids[0],locator:'https://example.test/human-authoring-fixture'}]
+  });
+  await client.query('commit');
+  assert.equal(fixturePlaceFunction.polity_id,first.polity_id);
+  assert.equal(fixturePlaceFunction.place_id,fixturePlace.id);
+  assert.equal(fixturePlaceFunction.source_refs[0].source_id,first.source_ids[0]);
+  const fixturePlaceFunctionReadback=(await client.query(`
+    select f.polity_id::text,f.place_id::text,f.function_type,f.start_year,f.end_year,f.confidence,
+           s.source_id::text,s.source_locator_key
+      from atlas_v2.polity_place_functions f
+      join atlas_v2.polity_place_function_sources s on s.fact_key=f.fact_key
+     where f.fact_key=$1
+  `,[fixturePlaceFunction.fact_key])).rows;
+  assert.equal(fixturePlaceFunctionReadback.length,1);
+  assert.equal(fixturePlaceFunctionReadback[0].polity_id,first.polity_id);
+  assert.equal(fixturePlaceFunctionReadback[0].place_id,fixturePlace.id);
+  assert.equal(fixturePlaceFunctionReadback[0].source_id,first.source_ids[0]);
+  await assert.rejects(
+    ()=>createPolityPlaceFunction(client,{
+      polity_id:first.polity_id,
+      function_type:'political_center',
+      place_id:'place-legacy-pseudo-id',
+      start_year:101,
+      end_year:103,
+      confidence:'well_established',
+      source_refs:[{source_id:first.source_ids[0],locator:'x'}]
+    }),
+    /POLITY_PLACE_FUNCTION_PLACE_ID_INVALID/
+  );
 
   const replay=await service.apply(firstRaw,{transport:{kind:'fresh_postgres_rehearsal'}});
   assert.equal(replay.replay,true);
@@ -496,6 +593,13 @@ try {
     new_person_namuwiki_required_at_service_boundary:true,
     new_person_source_basis_linked:true,
     new_person_registration_exact_readback:true,
+    canonical_place_uuid_authoring:true,
+    canonical_polity_place_function:true,
+    canonical_polity_place_function_source_uuid_locator:true,
+    legacy_place_pseudo_identity_rejected:true,
+    place_authority_backfill_transaction:true,
+    place_authority_backfill_exact_readback:true,
+    place_authority_backfill_replay_safe:true,
     existing_polity_reused:true,
     new_polity_spatial_registration_materialized:true,
     spatial_registration_exact_readback:true,

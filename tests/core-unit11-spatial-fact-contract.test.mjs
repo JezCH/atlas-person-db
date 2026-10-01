@@ -12,11 +12,20 @@ test('Unit 11 separates historical PolityPlaceFunction from display disposition'
   assert.equal(spatial.CONTRACT.display_disposition.rules.activity_override_is_display_only,true);
 });
 
-test('Unit 11 historical PolityPlaceFunction requires first-class Place identity and forbids display fields',()=>{
-  const fact={polity_id:'p',function_type:'capital',place_id:'place',confidence:'well_established',source_refs:['source']};
+test('Unit 11 historical PolityPlaceFunction requires first-class Place and Source UUID identity and forbids display fields',()=>{
+  const fact={
+    polity_id:'11111111-1111-4111-8111-111111111111',
+    function_type:'capital',
+    place_id:'22222222-2222-4222-8222-222222222222',
+    confidence:'well_established',
+    source_refs:[{source_id:'33333333-3333-4333-8333-333333333333',locator:'reviewed source locator'}]
+  };
   assert.equal(spatial.assertPolityPlaceFunction(fact),true);
   assert.throws(()=>spatial.assertPolityPlaceFunction({...fact,place_id:null}),/REQUIRED:place_id/);
+  assert.throws(()=>spatial.assertPolityPlaceFunction({...fact,place_id:'place-rome'}),/PLACE_ID_INVALID/);
+  assert.throws(()=>spatial.assertPolityPlaceFunction({...fact,source_refs:['free text source']}),/SOURCE_INVALID/);
   assert.throws(()=>spatial.assertPolityPlaceFunction({...fact,region_code:'europe'}),/DISPLAY_FIELD_FORBIDDEN/);
+  assert.throws(()=>spatial.assertPolityPlaceFunction({...fact,place_name:'Rome'}),/DISPLAY_FIELD_FORBIDDEN/);
 });
 
 test('Unit 11 new Polity registration cannot finish with silent spatial debt or request self-attestation',()=>{
