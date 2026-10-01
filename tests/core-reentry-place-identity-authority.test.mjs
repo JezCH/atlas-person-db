@@ -51,9 +51,15 @@ test('CORE-REENTRY-08 canonical DB writer and migration own PolityPlaceFunction 
   const migration=fs.readFileSync(path.join(root,'db/migrations/20261001_polity_place_function_authority.sql'),'utf8');
   const writer=fs.readFileSync(path.join(root,'server/atlas-polity-place-function-service.js'),'utf8');
   const compiler=fs.readFileSync(path.join(root,'scripts/compile-spatial-bindings.mjs'),'utf8');
+  const backfill=fs.readFileSync(path.join(root,'server/atlas-polity-place-function-authority-backfill.js'),'utf8');
   assert.match(migration,/CREATE TABLE IF NOT EXISTS atlas_v2\.polity_place_functions/);
   assert.match(migration,/CREATE TABLE IF NOT EXISTS atlas_v2\.polity_place_function_sources/);
-  assert.match(migration,/SPATIAL_POLITY_PLACE_FUNCTION_BACKFILL_PARTIAL_POLITY_SET/);
+  assert.doesNotMatch(migration,/INSERT\s+INTO\s+atlas_v2\.(?:places|place_names|sources|place_sources)/i);
+  assert.match(backfill,/applyPolityPlaceFunctionAuthorityBackfill/);
+  assert.match(backfill,/insertExactSource/);
+  assert.match(backfill,/insertExactPlace/);
+  assert.match(backfill,/createPolityPlaceFunction/);
+  assert.match(backfill,/POLITY_PLACE_AUTHORITY_TARGET_POLITY_SET_DRIFT/);
   assert.match(writer,/async function createPolityPlaceFunction/);
   assert.match(writer,/POLITY_PLACE_FUNCTION_DISPLAY_FIELD_FORBIDDEN/);
   assert.match(writer,/POLITY_PLACE_FUNCTION_SOURCE_READBACK_DRIFT/);
