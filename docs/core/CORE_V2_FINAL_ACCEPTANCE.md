@@ -7,7 +7,7 @@
 
 ## Acceptance result
 
-CORE v2 is accepted only when every Unit 17 invariant below is simultaneously satisfied. The machine-readable companion is `data/core/core-v2-final-acceptance.v1.json`, and `tests/core-final-acceptance.test.mjs` prevents the current requirements/contract state from drifting back to a pre-closure state.
+CORE v2 is accepted only when every invariant below is simultaneously satisfied by the **current executable gate**. `data/core/core-v2-final-acceptance.v1.json` is a checkpoint descriptor, not self-validating proof. `scripts/verify-core-final-acceptance.mjs` maps every criterion to live probes and is executed as `npm run test:core-final` by ATLAS Integrity after fresh-schema reconstruction.
 
 | Invariant | Result |
 |---|---:|
@@ -42,13 +42,13 @@ This document is a closure checkpoint, not a replacement source of truth. Each P
 - optimistic resource-scoped mutation and the one-work-unit response barrier are governed by `WORK_EXECUTION.md`;
 - Unit 16 residue removal remains guarded by `tests/core-residue-cleanup.test.mjs`.
 
-The full ATLAS Integrity workflow remains the executable aggregate gate: full current tests, requirements verification, release governance, Runtime verification, and fresh-schema reconstruction.
+The final verifier independently executes current requirements and release governance, authority/residue checks, identity/registration and reviewed-candidate checks, temporal-authoring checks, Runtime integrity/determinism/publication checks, destructive/provenance checks, fresh PostgreSQL schema reconstruction, and the Human Authoring operational lifecycle rehearsal. ATLAS Integrity then runs this verifier as the terminal executable aggregate gate.
 
 ## Product-phase reconciliation
 
 The following P13 requirements are closed by the completed CORE v2 architecture and this final acceptance:
 
-- `ATLAS-RQ-0223` — full Production product lifecycle acceptance
+- `ATLAS-RQ-0223` — full Production product lifecycle acceptance through the executable final-acceptance verifier
 - `ATLAS-RQ-0226` — first-class Person authoring without fabricated optional facts
 - `ATLAS-RQ-0227` — first-class Place and bibliographic Source authoring
 - `ATLAS-RQ-0228` — explicit Compile → Runtime projection/readiness
