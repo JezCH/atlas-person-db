@@ -5,6 +5,7 @@ const { createAuthoringObjectService } = require("./atlas-authoring-object-trans
 const { createMutationAuthorizer } = require("./atlas-session-auth.js");
 
 const AUTHORING_OBJECT_OPERATIONS = new Set(["create_source", "create_place", "create_context_object", "link_person_context", "link_polity_governance_context"]);
+const REGISTRATION_GATED_IDENTITY_OPERATIONS = new Set(["create_person", "create_polity"]);
 
 function sendJson(res, status, body) {
   res.statusCode = status;
@@ -53,6 +54,15 @@ function createIdentityHandler({ clientFactory, env = process.env, now } = {}) {
       return;
     }
 
+    if (REGISTRATION_GATED_IDENTITY_OPERATIONS.has(operation)) {
+      sendJson(res, 409, {
+        ok:false,
+        code:"IDENTITY_REGISTRATION_REQUIRED",
+        error:"Person and Polity creation must use the canonical registration contract via /api/atlas-authoring"
+      });
+      return;
+    }
+
     let client = null;
     try {
       client = await clientFactory(connectionString);
@@ -81,4 +91,4 @@ function createIdentityHandler({ clientFactory, env = process.env, now } = {}) {
   };
 }
 
-module.exports = Object.freeze({ AUTHORING_OBJECT_OPERATIONS, createIdentityHandler, databaseUrl, sendJson });
+module.exports = Object.freeze({ AUTHORING_OBJECT_OPERATIONS, REGISTRATION_GATED_IDENTITY_OPERATIONS, createIdentityHandler, databaseUrl, sendJson });

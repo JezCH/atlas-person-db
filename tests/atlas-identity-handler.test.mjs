@@ -53,27 +53,25 @@ test('identity handler requires administrator authorization before DB connection
   assert.equal(connected, false);
 });
 
-test('identity handler accepts server bearer and returns committed replay', async () => {
-  let receivedUrl = null;
-  const handler = createIdentityHandler({
-    clientFactory: async (url) => { receivedUrl = url; return clientForReplay(); },
-    env
-  });
-  const res = responseCapture();
-  await handler({
-    method: 'POST',
-    headers: { authorization: 'Bearer secret' },
-    body: {
-      operation: 'create_person',
-      payload: { canonical_name_en: 'Belisarius', display_name_ko: '벨리사리우스' }
-    }
-  }, res);
-  assert.equal(res.statusCode, 200);
-  assert.equal(receivedUrl, env.SUPABASE_DB_URL);
-  const body = JSON.parse(res.body);
-  assert.equal(body.ok, true);
-  assert.equal(body.outcome.committed, true);
-  assert.equal(body.outcome.replay, true);
+test('identity handler gates direct Person and Polity creation before DB connection', async () => {
+  for (const operation of ['create_person','create_polity']) {
+    let connected = false;
+    const handler = createIdentityHandler({
+      clientFactory: async () => { connected = true; return clientForReplay(); },
+      env
+    });
+    const res = responseCapture();
+    await handler({
+      method: 'POST',
+      headers: { authorization: 'Bearer secret' },
+      body: { operation, payload: { canonical_name_en: 'Fixture', display_name_ko: '픽스처' } }
+    }, res);
+    assert.equal(res.statusCode, 409);
+    assert.equal(connected, false);
+    const body = JSON.parse(res.body);
+    assert.equal(body.ok, false);
+    assert.equal(body.code, 'IDENTITY_REGISTRATION_REQUIRED');
+  }
 });
 
 test('identity handler rejects non-POST methods without touching auth or DB', async () => {
