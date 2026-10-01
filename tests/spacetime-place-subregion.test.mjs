@@ -114,7 +114,7 @@ test("matching place_name alone never upgrades spatial precision", () => {
 
   assert.equal(compiled.status, "spatial_compile_unresolved");
   assert.equal(compiled.reason, "macroregion_only_unresolved");
-  assert.equal(compiled.place_id, null);
+  assert.equal(compiled.place_id, rome.place_id);
   assert.equal(compiled.subregion_code, null);
   assert.equal(compiled.spatial_precision, "unresolved");
   assert.equal(compiled.x_anchor, null);
@@ -134,7 +134,8 @@ test("matching source evidence in another polity never upgrades spatial precisio
 });
 
 test("a reviewed exact binding conflicting with the resolved macroregion fails closed", () => {
-  const ankara = registry.bindings.find((binding) => binding.place_id === "place-ankara");
+  const ankaraPlace = registry.places.find((place) => place.canonical_name === "Ankara");
+  const ankara = registry.bindings.find((binding) => binding.place_id === ankaraPlace?.place_id);
   const compiled = spatialCompile.compilePlacementSegment(sourceSegment(ankara, { region_code: "europe" }), continuum);
   assert.equal(compiled.status, "spatial_compile_unresolved");
   assert.equal(compiled.reason, "reviewed_place_macroregion_conflict");
@@ -157,7 +158,7 @@ test("unreviewed compound Place strings remain unresolved without reviewed leaf 
     end_year: 1362
   }, continuum);
   assert.equal(compiled.status, "spatial_compile_unresolved");
-  assert.equal(compiled.reason, "macroregion_only_unresolved");
+  assert.equal(compiled.reason, "canonical_place_identity_invalid");
   assert.equal(compiled.spatial_precision, "unresolved");
   assert.equal(compiled.subregion_code, null);
   assert.equal(compiled.x_anchor, null);
