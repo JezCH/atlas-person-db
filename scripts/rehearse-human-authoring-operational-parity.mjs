@@ -93,6 +93,44 @@ function urlLessRequest() {
   };
 }
 
+function newPolityRequest() {
+  return {
+    schema:'atlas-human-authoring/v1',
+    request_id:'fixture:human-operational:new-polity-spatial',
+    person:{canonical_name_en:'Human Authoring Fixture Person',display_name_ko:null},
+    polity:{
+      canonical_name_en:'Human Authoring Spatial Fixture Polity',
+      display_name_ko:'휴먼 저작 공간 픽스처 정치체'
+    },
+    spatial_disposition:{
+      state:'reviewed_hold',
+      evidence:'Fresh PostgreSQL reviewed hold fixture; no display placement is inferred.'
+    },
+    activity:{
+      relation_type:'active_in',
+      period_basis:'fixture_human_period',
+      role:'Fixture Scholar',
+      role_display_name_ko:null,
+      start_year:114,
+      start_month:null,
+      start_day:null,
+      start_certainty:'exact',
+      start_calendar:'unspecified_historical',
+      end_year:115,
+      end_month:null,
+      end_day:null,
+      end_certainty:'exact',
+      end_calendar:'unspecified_historical',
+      confidence:'well_established',
+      chronology_status:'reviewed'
+    },
+    sources:[{
+      title:'Spatial registration fixture source',
+      citation_text:'Reviewed lifecycle evidence for the spatial registration fixture.'
+    }]
+  };
+}
+
 function reviewedCandidatePersonRequest(candidateId) {
   return {
     schema:'atlas-human-person-authoring/v1',
@@ -292,6 +330,30 @@ try {
   assert.equal(urlLessSource.canonical_url,null);
   assert.equal(urlLessSource.citation_text,'Fixture printed reference, p. 42.');
 
+  const newPolityRaw=newPolityRequest();
+  const newPolity=await service.apply(newPolityRaw,{transport:{kind:'fresh_postgres_rehearsal'}});
+  assert.equal(newPolity.replay,false);
+  assert.equal(newPolity.result.entities.person.disposition,'reused');
+  assert.equal(newPolity.result.entities.polity.disposition,'created');
+  assert.equal(newPolity.result.spatial_disposition.required,true);
+  assert.equal(newPolity.result.spatial_disposition.state,'reviewed_hold');
+  assert.equal(newPolity.result.spatial_disposition.materialized,true);
+  assert.equal(newPolity.result.spatial_disposition.authority,'atlas_v2.spatial_registration_dispositions');
+  assert.equal(newPolity.result.spatial_disposition.authoring_request_id,newPolityRaw.request_id);
+  const spatialRow=(await client.query(`
+    select polity_id::text,state,evidence,authoring_request_id
+      from atlas_v2.spatial_registration_dispositions
+     where polity_id=$1::uuid
+  `,[newPolity.polity_id])).rows[0];
+  assert.equal(spatialRow.polity_id,newPolity.polity_id);
+  assert.equal(spatialRow.state,'reviewed_hold');
+  assert.equal(spatialRow.evidence,newPolityRaw.spatial_disposition.evidence);
+  assert.equal(spatialRow.authoring_request_id,newPolityRaw.request_id);
+  const newPolityReplay=await service.apply(newPolityRaw,{transport:{kind:'fresh_postgres_rehearsal'}});
+  assert.equal(newPolityReplay.replay,true);
+  assert.equal(newPolityReplay.polity_id,newPolity.polity_id);
+  assert.equal(newPolityReplay.result.spatial_disposition.authority,'atlas_v2.spatial_registration_dispositions');
+
   const missingPersonKo=urlLessRequest();
   missingPersonKo.request_id='fixture:human-operational:new-person-no-ko';
   missingPersonKo.person={canonical_name_en:'Brand New Missing KO Person',display_name_ko:null};
@@ -435,6 +497,10 @@ try {
     new_person_source_basis_linked:true,
     new_person_registration_exact_readback:true,
     existing_polity_reused:true,
+    new_polity_spatial_registration_materialized:true,
+    spatial_registration_exact_readback:true,
+    spatial_registration_replay_verified:true,
+    request_materialized_self_attestation_not_used:true,
     existing_role_reused:true,
     new_role_created:true,
     full_temporal:true,

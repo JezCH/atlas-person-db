@@ -9,15 +9,13 @@ const TERMINAL_STATES=new Set(CONTRACT.registration_handshake.required_terminal_
 
 function text(v){return v==null?"":String(v).trim();}
 function normalizeSpatialRegistrationHandshake(raw,{polityDisposition="reused"}={}){
-  if(polityDisposition!=="created") return Object.freeze({required:false,state:"existing_polity",materialized:true});
+  if(polityDisposition!=="created") return Object.freeze({required:false,state:"existing_polity"});
   if(!raw || typeof raw!=="object" || Array.isArray(raw)) throw new Error("HUMAN_AUTHORING_SPATIAL_DISPOSITION_REQUIRED");
   const state=text(raw.state);
   if(!TERMINAL_STATES.has(state)) throw new Error("HUMAN_AUTHORING_SPATIAL_DISPOSITION_INVALID");
-  const materialized=raw.materialized===true;
-  if(!materialized) throw new Error("HUMAN_AUTHORING_SPATIAL_DISPOSITION_NOT_MATERIALIZED");
   const evidence=text(raw.evidence);
   if(!evidence) throw new Error("HUMAN_AUTHORING_SPATIAL_DISPOSITION_EVIDENCE_REQUIRED");
-  return Object.freeze({required:true,state,materialized:true,evidence});
+  return Object.freeze({required:true,state,evidence});
 }
 
 function assertPolityPlaceFunction(raw){

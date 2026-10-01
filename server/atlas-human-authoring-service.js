@@ -9,6 +9,10 @@ const { createSource } = require("./atlas-source-service.js");
 const { normalizePersonPlaceFacts, resolvePersonPlaceFacts } = require("./atlas-place-relation-service.js");
 const { normalizeSpatialRegistrationHandshake } = require("./atlas-spatial-fact-contract.js");
 const {
+  materializeSpatialRegistrationDisposition,
+  verifySpatialRegistrationDisposition
+} = require("./atlas-spatial-registration-disposition-service.js");
+const {
   normalizeTimelineDisposition,
   currentTimelineDisposition,
   sameTimelineDisposition,
@@ -609,6 +613,9 @@ async function verifyReplay(client, ledger) {
       namuwiki:snapshot.person_registration.namuwiki
     });
   }
+  if (snapshot.spatial_disposition?.authority === "atlas_v2.spatial_registration_dispositions") {
+    await verifySpatialRegistrationDisposition(client, snapshot.spatial_disposition);
+  }
   return snapshot;
 }
 
@@ -788,7 +795,14 @@ async function applyPreparedWithinTransaction(client, prepared, { transport = nu
     });
   }
   const placeFacts = await resolvePersonPlaceFacts(client, { personId:person.id, facts:request.person.place_facts });
-  const spatialDisposition = normalizeSpatialRegistrationHandshake(request.raw_spatial_disposition, { polityDisposition:polity.disposition });
+  const spatialReview = normalizeSpatialRegistrationHandshake(request.raw_spatial_disposition, { polityDisposition:polity.disposition });
+  const spatialDisposition = spatialReview.required
+    ? await materializeSpatialRegistrationDisposition(client, {
+        polityId:polity.id,
+        requestId:request.requestId,
+        review:spatialReview
+      })
+    : Object.freeze({ ...spatialReview, materialized:true });
   const payload = activityPayload({ personId:person.id, polityId:polity.id, roleId:role.id, relation, periodBasis, activity:request.activity, sources });
   const created = await createStage2NativeActivityTx(client).create(payload, { requestId:request.requestId });
   const snapshot = Object.freeze({ ...buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:Object.freeze({ namuwiki }), personRegistration }), person_place_facts:placeFacts, spatial_disposition:spatialDisposition });

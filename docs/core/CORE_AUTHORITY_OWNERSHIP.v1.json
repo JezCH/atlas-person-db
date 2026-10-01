@@ -453,6 +453,38 @@
       "note": "Unit 11 closed the semantic boundary: repository spatial shards/corrections own reviewed display disposition publication; PolityPlaceFunction is explicitly a historical Place+provenance fact and cannot contain display geography. New Polity Human Authoring requires a materialized reviewed spatial-disposition handshake before DONE. atlas-polity-spatial-index.json remains derived compatibility output only."
     },
     {
+      "id": "spatial_registration_disposition_lifecycle",
+      "semantic_fact": "Durable registration-completion disposition for a newly created Polity; lifecycle proof only, not display placement or PolityPlaceFunction authority",
+      "canonical_state": [
+        "atlas_v2.spatial_registration_dispositions"
+      ],
+      "authoritative_writer": {
+        "path": "server/atlas-spatial-registration-disposition-service.js",
+        "symbol": "materializeSpatialRegistrationDisposition"
+      },
+      "orchestrators": [
+        "server/atlas-human-authoring-service.js"
+      ],
+      "shadow_writers": [],
+      "status": "single_writer",
+      "remediation_unit": null,
+      "evidence_anchors": [
+        {
+          "path": "server/atlas-spatial-registration-disposition-service.js",
+          "contains": "async function materializeSpatialRegistrationDisposition"
+        },
+        {
+          "path": "server/atlas-spatial-registration-disposition-service.js",
+          "contains": "verifySpatialRegistrationDisposition"
+        },
+        {
+          "path": "db/migrations/20261001_spatial_registration_dispositions.sql",
+          "contains": "CREATE TABLE IF NOT EXISTS atlas_v2.spatial_registration_dispositions"
+        }
+      ],
+      "note": "CORE-REENTRY-07 separates registration lifecycle materialization from repository-backed spatial fact/display authority. Reviewed request state/evidence is persisted and exact-read-back inside canonical Human Authoring; request-side materialized flags have no authority."
+    },
+    {
       "id": "runtime_projection",
       "semantic_fact": "Derived Runtime Activity projection and explicit compile exclusions/activation",
       "canonical_state": [
