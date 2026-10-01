@@ -34,7 +34,9 @@ const expectedCriteria=[
   "obsolete_core_execution_code_zero",
   "task_level_single_writer_dependency_zero",
   "stale_authoritative_overwrite_paths_zero",
-  "active_task_keys_multiple_artifacts_zero"
+  "active_task_keys_multiple_artifacts_zero",
+  "current_schema_reconstruction_authority_pass",
+  "reviewed_candidate_production_lifecycle_pass"
 ];
 
 test("Unit 17 final acceptance artifact covers every canonical end-state with durable evidence",()=>{
@@ -60,6 +62,12 @@ test("Unit 17 historical acceptance keeps P14 out of scope without pinning curre
     assert.ok(item,id);
     assert.ok(item.evidence_paths?.length,id);
   }
+  const lifecycle=byId.get("ATLAS-RQ-0223");
+  for(const evidence of [
+    "server/atlas-current-schema-reconstruction.js",
+    "server/atlas-reviewed-candidate-registration-service.js",
+    "tests/core-reentry-reviewed-candidate-production-lifecycle.test.mjs"
+  ]) assert.ok(lifecycle.evidence_paths.includes(evidence), evidence);
   for(const id of ["ATLAS-RQ-0224","ATLAS-RQ-0225"]) assert.equal(byId.get(id)?.status,"PENDING",id);
 });
 
@@ -124,3 +132,28 @@ test("Unit 17 execution governance has no task-level single-writer dependency",(
   assert.match(execution,/one completed work unit is the maximum unit of execution for one user turn/i);
   assert.match(execution,/RESOURCE PREFLIGHT/);
 });
+
+test("Re-entry final acceptance uses one current-schema reconstruction authority",()=>{
+  const reconstruction=read("server/atlas-current-schema-reconstruction.js");
+  const stage2=read("server/atlas-stage2-schema-release.js");
+  assert.match(reconstruction,/CURRENT_SCHEMA_PHASES/);
+  assert.match(reconstruction,/\"baseline\",[\s\S]*\"correction\",[\s\S]*\"stage2\",[\s\S]*\"p9\",[\s\S]*\"authoring\"/);
+  assert.match(reconstruction,/async function reconstructCurrentSchema/);
+  assert.doesNotMatch(stage2,/function applyStage2SchemaRelease\s*\(/);
+  assert.equal(fs.existsSync(path.join(root,"scripts/rehearse-stage2-p5-additive-schema-release.mjs")),false);
+});
+
+test("Re-entry final acceptance exercises reviewed candidate through canonical Human Authoring",()=>{
+  const registration=read("server/atlas-reviewed-candidate-registration-service.js");
+  const handler=read("server/atlas-reviewed-candidate-handler.js");
+  const api=read("api/atlas-authoring.js");
+  assert.match(registration,/begin isolation level serializable/);
+  assert.match(registration,/applyPreparedWithinTransaction/);
+  assert.match(registration,/CANDIDATE_REVIEW_REVISION_STALE/);
+  assert.match(registration,/allowLegacyNamuWikiOmission:false/);
+  assert.match(registration,/exactLedgerSnapshot/);
+  assert.match(handler,/CANDIDATE_REVIEW_HUMAN_AUTH_REQUIRED/);
+  assert.match(api,/surface === "reviewed-candidate"/);
+  assert.equal(fs.existsSync(path.join(root,"tests/core-reentry-reviewed-candidate-production-lifecycle.test.mjs")),true);
+});
+
