@@ -11,6 +11,7 @@ const { loadStage2NativeActivity }=require('../server/atlas-stage2-native-activi
 const { createReviewedCandidateRegistrationService }=require('../server/atlas-reviewed-candidate-registration-service.js');
 const { createPlace }=require('../server/atlas-authoring-object-service.js');
 const { createPolityPlaceFunction }=require('../server/atlas-polity-place-function-service.js');
+const { applyPolityPlaceFunctionAuthorityBackfill }=require('../server/atlas-polity-place-function-authority-backfill.js');
 
 const { Client }=pg;
 const databaseUrl=String(process.env.DATABASE_URL||'').trim();
@@ -248,6 +249,54 @@ try {
   await client.query(`insert into atlas_v2.period_bases(id,code,is_active) values($1::uuid,'fixture_human_period',true)`,[PERIOD_ID]);
   await client.query(`insert into atlas_v2.period_basis_names(id,period_basis_id,locale,name,is_preferred) values(gen_random_uuid(),$1::uuid,'en','Fixture human period',true)`,[PERIOD_ID]);
   await client.query('commit');
+
+  const syntheticBackfill={
+    schema:'atlas-polity-place-function-authority-backfill/v1',
+    backfill_id:'fixture:place-authority-backfill',
+    expected_polity_ids:[String(existingPolity.id).toLowerCase()],
+    expected_counts:{polities:1,places:1,sources:1,facts:1},
+    sources:[{
+      id:'44444444-4444-4444-8444-444444444444',
+      source_key:'fixture:place-authority-source',
+      source_type:'bibliographic_reference',
+      title:'Fixture Place Authority Source',
+      citation_text:'Fixture Place Authority Source'
+    }],
+    places:[{
+      id:'55555555-5555-4555-8555-555555555555',
+      canonical_key:'fixture-place-authority',
+      canonical_name_en:'Fixture Place Authority',
+      place_type:'historical_place',
+      historicity:'historical',
+      source_links:[{
+        source_id:'44444444-4444-4444-8444-444444444444',
+        source_locator_key:'fixture locator'
+      }]
+    }],
+    facts:[{
+      polity_id:String(existingPolity.id).toLowerCase(),
+      function_type:'political_center',
+      place_id:'55555555-5555-4555-8555-555555555555',
+      start_year:90,
+      end_year:95,
+      confidence:'well_established',
+      source_refs:[{
+        source_id:'44444444-4444-4444-8444-444444444444',
+        locator:'fixture locator'
+      }]
+    }]
+  };
+  const syntheticBackfillText=JSON.stringify(syntheticBackfill);
+  const backfillFirst=await applyPolityPlaceFunctionAuthorityBackfill(client,{readFile:()=>syntheticBackfillText});
+  assert.equal(backfillFirst.committed,true);
+  assert.equal(backfillFirst.replay,false);
+  assert.equal(backfillFirst.places,1);
+  assert.equal(backfillFirst.sources,1);
+  assert.equal(backfillFirst.facts,1);
+  const backfillReplay=await applyPolityPlaceFunctionAuthorityBackfill(client,{readFile:()=>syntheticBackfillText});
+  assert.equal(backfillReplay.committed,true);
+  assert.equal(backfillReplay.replay,true);
+  assert.equal(backfillReplay.facts,1);
 
   const warnings=[];
   const onWarning=(warning)=>{
@@ -548,6 +597,9 @@ try {
     canonical_polity_place_function:true,
     canonical_polity_place_function_source_uuid_locator:true,
     legacy_place_pseudo_identity_rejected:true,
+    place_authority_backfill_transaction:true,
+    place_authority_backfill_exact_readback:true,
+    place_authority_backfill_replay_safe:true,
     existing_polity_reused:true,
     new_polity_spatial_registration_materialized:true,
     spatial_registration_exact_readback:true,
