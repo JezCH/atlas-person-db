@@ -8,32 +8,36 @@ const model = require("../atlas-person-spacetime-model.js");
 const spaceAxis = require("../atlas-person-spacetime-space-axis.js");
 const spatialCompile = require("../atlas-person-spacetime-spatial-compile.js");
 const spatialIndex = JSON.parse(readFileSync(new URL("../atlas-polity-spatial-index.json", import.meta.url), "utf8"));
+const ROMAN_POLITY_ID = "5d9a6186-bbe6-5d1a-ba93-02190ae4c417";
+const romanPlaceFunctions = spatialIndex.place_function_records.find((record) => record.polity_id === ROMAN_POLITY_ID)?.functions || [];
+const ROME_FUNCTION = romanPlaceFunctions.find((fn) => fn.place_name === "Rome");
+const UNKNOWN_PLACE_ID = "00000000-0000-4000-8000-000000000061";
 
 test("reviewed Place evidence compiles to point precision without inventing geographic coordinates", () => {
   const continuum = spaceAxis.createSpatialContinuum();
   const raw = {
     status: "placed",
     activity_id: "rome-test",
-    polity_id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+    polity_id: ROMAN_POLITY_ID,
     segments: [{
       activity_id: "rome-test",
-      polity_id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+      polity_id: ROMAN_POLITY_ID,
       region_code: "europe",
       placement_basis: "polity_place_function",
       location_label: "Rome",
       place_function_type: "capital",
       place_name: "Rome",
-      place_id: null,
+      place_id: ROME_FUNCTION.place_id,
       active_place_functions: [{
         function_type: "capital",
         place_name: "Rome",
-        place_id: null,
+        place_id: ROME_FUNCTION.place_id,
         region_code: "europe",
         confidence: "well_established",
-        source_refs: ["1911 Encyclopaedia Britannica: Constantine (emperors)"]
+        source_refs: ROME_FUNCTION.source_refs
       }],
       confidence: "well_established",
-      source_refs: ["1911 Encyclopaedia Britannica: Constantine (emperors)"],
+      source_refs: ROME_FUNCTION.source_refs,
       start_year: -27,
       end_year: 329
     }]
@@ -44,13 +48,13 @@ test("reviewed Place evidence compiles to point precision without inventing geog
 
   assert.equal(compiled.status, "placed");
   assert.equal(segment.spatial_precision, "place");
-  assert.equal(segment.place_id, "place-rome");
+  assert.equal(segment.place_id, ROME_FUNCTION.place_id);
   assert.equal(segment.subregion_code, "italy");
   assert.equal(segment.display_anchor_basis, "reviewed_place_point");
   assert.equal(segment.x_min, segment.x_anchor);
   assert.equal(segment.x_max, segment.x_anchor);
   assert.equal(segment.active_place_functions.length, 1);
-  assert.deepEqual(segment.active_place_functions[0].source_refs, ["1911 Encyclopaedia Britannica: Constantine (emperors)"]);
+  assert.deepEqual(segment.active_place_functions[0].source_refs, ROME_FUNCTION.source_refs);
   assert.equal(segment.display_place_points.length, 1);
   assert.equal(segment.display_place_points[0].place_name, "Rome");
   assert.equal(segment.display_place_points[0].x_anchor, segment.x_anchor);
@@ -70,11 +74,11 @@ test("unreviewed Place names never upgrade spatial precision", () => {
       location_label: "Paris",
       place_function_type: "capital",
       place_name: "Paris",
-      place_id: "place-paris",
+      place_id: UNKNOWN_PLACE_ID,
       active_place_functions: [{
         function_type: "capital",
         place_name: "Paris",
-        place_id: "place-paris",
+        place_id: UNKNOWN_PLACE_ID,
         region_code: "europe",
         confidence: "reviewed",
         source_refs: ["unreviewed-display-source"]
@@ -102,7 +106,7 @@ test("real Roman Empire capital changes compile both reviewed Place segments", (
   const continuum = spaceAxis.createSpatialContinuum();
   const activity = {
     id: "roman-empire-capital-span",
-    polity: { id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417" },
+    polity: { id: ROMAN_POLITY_ID },
     start: { year: -27 },
     end: { year: 395 },
     relation: { code: "rules" }
