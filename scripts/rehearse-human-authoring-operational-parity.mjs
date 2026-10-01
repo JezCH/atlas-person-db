@@ -373,7 +373,7 @@ try {
   );
   await assert.rejects(
     ()=>reviewedCandidate.applyQueued({candidate_id:staleCandidateId,review_revision:2}),
-    /REVIEW_REVISION_NOT_HUMAN_APPROVED/
+    /REGISTRATION_REQUIRES_HUMAN_APPROVED_REVISION/
   );
 
   const counts=(await client.query(`select
