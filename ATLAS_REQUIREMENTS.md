@@ -1,6 +1,6 @@
 # ATLAS Requirements Source of Truth v1
 
-> Status: **CORE RE-ENTRY ACTIVE / VERIFIED CLOSED WORK PRESERVED / P13 LIFECYCLE ACCEPTANCE REOPENED**
+> Status: **CORE v2 FINAL ACCEPTANCE / P13 COMPLETED / P14 PENDING**
 >
 > As of: **2026-10-01**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
@@ -160,9 +160,9 @@ Historical Baseline B evidence remains audit history. Current correctness must b
 - Live `corrections/intents/` dispatch and correction manifest v1/v1.1/v1.2/v1.3/v1.4 service dispatch are unreachable; current regression tests explicitly reject those schemas and assert zero legacy executable correction-service dependencies.
 - Historical migration/request artifacts may remain as replay/audit evidence. Their presence is not live compatibility.
 
-### P13 — Full product lifecycle — REOPENED FOR TARGETED REMEDIATION
+### P13 — Full product lifecycle — COMPLETED
 
-- `ATLAS-RQ-0223` — **PENDING:** full Production product lifecycle acceptance is reopened because the post-closure audit found integration gaps that Unit 17 did not exercise end-to-end.
+- `ATLAS-RQ-0223` — **COMPLETED:** full Production product lifecycle acceptance is derived by `scripts/verify-core-final-acceptance.mjs`, which executes the current requirements/release/authority/residue/identity/registration/temporal/Runtime/destructive/provenance/schema and human-authoring lifecycle probes; the static acceptance JSON is checkpoint evidence only.
 - `ATLAS-RQ-0226` — **COMPLETED:** complete first-class Person object authoring without forcing unknown optional profile facts.
 - `ATLAS-RQ-0227` — **COMPLETED:** complete Place and bibliographic Source authoring as independent objects.
 - `ATLAS-RQ-0228` — **COMPLETED:** implement explicit Compile → Runtime projection and readiness filtering.
@@ -171,7 +171,7 @@ Historical Baseline B evidence remains audit history. Current correctness must b
 
 P13 acceptance requires Person, Place and Source exist as first-class Authoring objects, the normalized writer remains authoritative, and Runtime cannot publish unresolved Authoring data as if it were settled fact.
 
-CORE v2 Unit 17 remains historical acceptance evidence, but its terminal closure was superseded by the 2026-10-01 re-entry audit for the specifically reopened invariants above. Verified completed requirements remain closed; P14 historical-map content and research integration remain separately pending.
+CORE v2 Unit 17 remains historical acceptance evidence. The 2026-10-01 re-entry repairs are now included in the executable final-acceptance gate; P14 historical-map content and research integration remain separately pending.
 
 ### P14 — Historical map contract — PENDING
 
