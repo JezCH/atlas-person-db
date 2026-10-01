@@ -96,6 +96,38 @@ function urlLessRequest() {
   };
 }
 
+function unknownBoundaryRequest() {
+  return {
+    schema:'atlas-human-authoring/v1',
+    request_id:'fixture:human-operational:unknown-boundaries',
+    person:{canonical_name_en:'Human Authoring Fixture Person',display_name_ko:null},
+    polity:{canonical_name_en:'Human Authoring Fixture Polity',display_name_ko:null},
+    activity:{
+      relation_type:'serves',
+      period_basis:'fixture_human_period',
+      role:'Fixture Archivist',
+      role_display_name_ko:null,
+      start_year:null,
+      start_month:null,
+      start_day:null,
+      start_certainty:null,
+      start_calendar:null,
+      end_year:null,
+      end_month:null,
+      end_day:null,
+      end_certainty:null,
+      end_calendar:null,
+      confidence:'likely',
+      chronology_status:'reviewed',
+      notes:'Fresh PostgreSQL all-null unresolved-boundary transport fixture.'
+    },
+    sources:[{
+      title:'Unknown boundary fixture source',
+      citation_text:'Reviewed evidence establishes the Activity but not defensible boundary years.'
+    }]
+  };
+}
+
 function newPolityRequest() {
   return {
     schema:'atlas-human-authoring/v1',
@@ -427,6 +459,29 @@ try {
   assert.equal(urlLessSource.canonical_url,null);
   assert.equal(urlLessSource.citation_text,'Fixture printed reference, p. 42.');
 
+  const unknownBoundaryRaw=unknownBoundaryRequest();
+  const unknownBoundary=await service.apply(unknownBoundaryRaw,{transport:{kind:'fresh_postgres_rehearsal'}});
+  assert.equal(unknownBoundary.replay,false);
+  const unknownBoundaryActivity=await loadStage2NativeActivity(client,unknownBoundary.relationship_id);
+  assert.equal(unknownBoundaryActivity.activity_start,null);
+  assert.equal(unknownBoundaryActivity.activity_start_month,null);
+  assert.equal(unknownBoundaryActivity.activity_start_day,null);
+  assert.equal(unknownBoundaryActivity.activity_start_granularity,null);
+  assert.equal(unknownBoundaryActivity.activity_start_certainty,null);
+  assert.equal(unknownBoundaryActivity.activity_start_calendar,null);
+  assert.equal(unknownBoundaryActivity.activity_end,null);
+  assert.equal(unknownBoundaryActivity.activity_end_month,null);
+  assert.equal(unknownBoundaryActivity.activity_end_day,null);
+  assert.equal(unknownBoundaryActivity.activity_end_granularity,null);
+  assert.equal(unknownBoundaryActivity.activity_end_certainty,null);
+  assert.equal(unknownBoundaryActivity.activity_end_calendar,null);
+  assert.equal(unknownBoundaryActivity.chronology_status,'reviewed');
+  assert.equal(unknownBoundary.result.entities.activity.start.year,null);
+  assert.equal(unknownBoundary.result.entities.activity.end.year,null);
+  const unknownBoundaryReplay=await service.apply(unknownBoundaryRaw,{transport:{kind:'fresh_postgres_rehearsal'}});
+  assert.equal(unknownBoundaryReplay.replay,true);
+  assert.equal(unknownBoundaryReplay.relationship_id,unknownBoundary.relationship_id);
+
   const newPolityRaw=newPolityRequest();
   const newPolity=await service.apply(newPolityRaw,{transport:{kind:'fresh_postgres_rehearsal'}});
   assert.equal(newPolity.replay,false);
@@ -608,6 +663,9 @@ try {
     existing_role_reused:true,
     new_role_created:true,
     full_temporal:true,
+    unknown_temporal_boundary_transport:true,
+    unknown_temporal_boundary_exact_readback:true,
+    unknown_temporal_boundary_replay_safe:true,
     web_source:true,
     url_less_bibliographic_source:true,
     exact_request_replay:true,
