@@ -453,7 +453,7 @@
     },
     {
       "id": "ATLAS-RQ-0223",
-      "status": "COMPLETED",
+      "status": "PENDING",
       "title": "Pass full Production product lifecycle acceptance",
       "phase": "P13",
       "evidence_paths": [

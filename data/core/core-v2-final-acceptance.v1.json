@@ -216,14 +216,17 @@
     {
       "kind": "active_core_status",
       "url": "https://github.com/JezCH/atlas-person-db/issues/917",
-      "assertion": "At acceptance, #917 is the sole active CORE status surface and is transitioned to terminal CORE v2 closure."
+      "assertion": "Historical acceptance evidence only. Current CORE status is governed by the active #917 re-entry body."
     }
   ],
   "notes": [
-    "This acceptance was rerun after the 2026-10-01 targeted CORE re-entry and includes the repaired current-schema reconstruction and reviewed-candidate Production lifecycle.",
-    "P14 Territory/Geometry content implementation remains a separate pending product phase; Unit 15 sealed only its boundary contract.",
-    "Historical audit artifacts may remain when non-authoritative; executable obsolete CORE paths may not.",
-    "The full repository integrity suite remains the executable regression surface behind this acceptance record."
+    "Historical PASS evidence is preserved, but this record is not current terminal closure authority after the post-closure audit.",
+    "The repaired current-schema reconstruction and reviewed-candidate Production lifecycle remain valid completed remediation evidence.",
+    "ATLAS-RQ-0223 is reopened until the remaining active CORE remediation blockers are closed and acceptance is regenerated from executable checks.",
+    "P14 Territory/Geometry content implementation remains a separate pending product phase."
   ],
-  "reentry_acceptance_unit": "CORE-REENTRY-04"
+  "reentry_acceptance_unit": "CORE-REENTRY-04",
+  "current_closure_authority": false,
+  "current_closure_status": "SUPERSEDED_BY_POST_CLOSURE_AUDIT",
+  "superseded_reason": "Post-closure audit found unresolved CORE integration gaps beyond the repaired current-schema and reviewed-candidate boundaries."
 }

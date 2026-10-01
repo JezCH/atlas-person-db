@@ -160,9 +160,9 @@ Historical Baseline B evidence remains audit history. Current correctness must b
 - Live `corrections/intents/` dispatch and correction manifest v1/v1.1/v1.2/v1.3/v1.4 service dispatch are unreachable; current regression tests explicitly reject those schemas and assert zero legacy executable correction-service dependencies.
 - Historical migration/request artifacts may remain as replay/audit evidence. Their presence is not live compatibility.
 
-### P13 — Full product lifecycle — COMPLETED AFTER TARGETED RE-ENTRY
+### P13 — Full product lifecycle — REOPENED BY POST-CLOSURE AUDIT
 
-- `ATLAS-RQ-0223` — **COMPLETED:** final Production lifecycle acceptance was rerun against the repaired current architecture, including canonical current-schema reconstruction and the human-reviewed candidate → canonical Human Authoring lifecycle.
+- `ATLAS-RQ-0223` — **PENDING:** the prior final acceptance is retained as historical evidence, but the post-closure audit found remaining Production-lifecycle integration gaps. Re-acceptance requires closing the active CORE remediation blockers and rerunning generated executable acceptance against the resulting current architecture.
 - `ATLAS-RQ-0226` — **COMPLETED:** complete first-class Person object authoring without forcing unknown optional profile facts.
 - `ATLAS-RQ-0227` — **COMPLETED:** complete Place and bibliographic Source authoring as independent objects.
 - `ATLAS-RQ-0228` — **COMPLETED:** implement explicit Compile → Runtime projection and readiness filtering.

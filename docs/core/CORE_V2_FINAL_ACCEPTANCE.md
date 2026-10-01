@@ -1,14 +1,15 @@
 # ATLAS CORE v2 Final Acceptance
 
-**Status:** PASS  
+**Status:** HISTORICAL PASS — SUPERSEDED AS CURRENT CLOSURE AUTHORITY  
 **Accepted as of:** 2026-10-01  
 **Scope:** CORE v2 Units 0–17 architecture plus 2026-10-01 targeted re-entry repairs  
 **Re-entry acceptance:** `CORE-REENTRY-04 — FINAL-PRODUCTION-LIFECYCLE-ACCEPTANCE`  
+**Current closure authority:** **NO** — superseded by the post-closure audit and active #917 remediation state.  
 **P14 content implementation:** out of scope; the Territory/Geometry boundary is sealed, while historical-map content remains a later product phase.
 
 ## Acceptance result
 
-CORE v2 is accepted only when every Unit 17 invariant below is simultaneously satisfied. The 2026-10-01 post-closure audit reopened this acceptance after finding gaps in current-schema reconstruction and the reviewed-candidate Production lifecycle; this revision re-accepts CORE only after those executable boundaries were repaired and added to the acceptance surface. The machine-readable companion is `data/core/core-v2-final-acceptance.v1.json`, and `tests/core-final-acceptance.test.mjs` prevents the current requirements/contract state from drifting back to a pre-closure state.
+This document preserves the acceptance result that was reached at PR #1771. It is now historical evidence rather than current terminal authority. A subsequent post-closure audit found additional unresolved integration gaps outside the two repaired boundaries, so #917 has re-entered CORE remediation and `ATLAS-RQ-0223` is PENDING until those blockers are closed and acceptance is regenerated from executable checks. The machine-readable companion is `data/core/core-v2-final-acceptance.v1.json`, and `tests/core-final-acceptance.test.mjs` prevents the current requirements/contract state from drifting back to a pre-closure state.
 
 | Invariant | Result |
 |---|---:|
@@ -64,4 +65,4 @@ The following P13 requirements are closed by the completed CORE v2 architecture 
 
 ## Operational closure
 
-After this re-entry acceptance merges and the exact merged revision passes the required current-architecture verification, #917 must contain no active CORE unit and no “next unit” pointer. Re-entry is allowed only for a concrete regression against a closed invariant or for a deliberately versioned future CORE program. Historical comments, superseded PRs, parked issues, and old queue keys do not reactivate CORE v2.
+This historical acceptance must not be used to close #917 while the post-closure audit remediation set remains active. Terminal closure requires a later executable re-acceptance after the active blockers are closed. Re-entry is allowed only for a concrete regression against a closed invariant or for a deliberately versioned future CORE program. Historical comments, superseded PRs, parked issues, and old queue keys do not reactivate CORE v2.
