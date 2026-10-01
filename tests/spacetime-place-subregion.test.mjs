@@ -123,7 +123,8 @@ test("matching place_name alone never upgrades spatial precision", () => {
 });
 
 test("matching source evidence in another polity never upgrades spatial precision", () => {
-  const rome = registry.bindings.find((binding) => binding.place_id === "place-rome");
+  const romePlace = registry.places.find((place) => place.canonical_name === "Rome");
+  const rome = registry.bindings.find((binding) => binding.place_id === romePlace?.place_id);
   const compiled = spatialCompile.compilePlacementSegment(sourceSegment(rome, { polity_id: OTHER_POLITY_ID }), continuum);
   assert.equal(compiled.status, "spatial_compile_unresolved");
   assert.equal(compiled.reason, "macroregion_only_unresolved");
