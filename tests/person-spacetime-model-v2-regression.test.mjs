@@ -4,6 +4,10 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const model = require("../atlas-person-spacetime-model.js");
+const PLACE_A = "00000000-0000-4000-8000-000000000021";
+const PLACE_B = "00000000-0000-4000-8000-000000000022";
+const SOURCE_ID = "00000000-0000-4000-8000-000000000023";
+const sourceRefs = (locator) => [{ source_id: SOURCE_ID, locator }];
 
 function geographyIndex(region = "east-asia") {
   return {
@@ -22,8 +26,8 @@ function placeFunctionIndex() {
     place_function_records: [{
       polity_id: "polity-a",
       functions: [
-        { start_year: 100, end_year: 109, function_type: "capital", place_name: "Old Capital", region_code: "west-asia", confidence: "well_established", source_refs: ["source:old"] },
-        { start_year: 110, end_year: 130, function_type: "capital", place_name: "New Capital", region_code: "east-asia", confidence: "well_established", source_refs: ["source:new"] }
+        { start_year: 100, end_year: 109, function_type: "capital", place_name: "Old Capital", place_id: PLACE_A, region_code: "west-asia", confidence: "well_established", source_refs: sourceRefs("source:old") },
+        { start_year: 110, end_year: 130, function_type: "capital", place_name: "New Capital", place_id: PLACE_B, region_code: "east-asia", confidence: "well_established", source_refs: sourceRefs("source:new") }
       ]
     }],
     review_queue: []
@@ -86,8 +90,8 @@ test("v2 same-region simultaneous place functions compile deterministically", ()
     place_function_records: [{
       polity_id: "polity-a",
       functions: [
-        { start_year: 100, end_year: 110, function_type: "royal_court", place_name: "Court", region_code: "west-asia", confidence: "well_established", source_refs: ["source:court"] },
-        { start_year: 100, end_year: 110, function_type: "capital", place_name: "Capital", region_code: "west-asia", confidence: "well_established", source_refs: ["source:capital"] }
+        { start_year: 100, end_year: 110, function_type: "royal_court", place_name: "Court", place_id: PLACE_A, region_code: "west-asia", confidence: "well_established", source_refs: sourceRefs("source:court") },
+        { start_year: 100, end_year: 110, function_type: "capital", place_name: "Capital", place_id: PLACE_B, region_code: "west-asia", confidence: "well_established", source_refs: sourceRefs("source:capital") }
       ]
     }],
     review_queue: []
@@ -102,8 +106,8 @@ test("v2 same-region simultaneous place functions compile deterministically", ()
 test("v2 conflicting simultaneous place-function regions remain unresolved", () => {
   const index = placeFunctionIndex();
   index.place_function_records[0].functions = [
-    { start_year: 100, end_year: 110, function_type: "capital", place_name: "A", region_code: "west-asia", confidence: "well_established", source_refs: ["source:a"] },
-    { start_year: 100, end_year: 110, function_type: "royal_court", place_name: "B", region_code: "central-asia", confidence: "well_established", source_refs: ["source:b"] }
+    { start_year: 100, end_year: 110, function_type: "capital", place_name: "A", place_id: PLACE_A, region_code: "west-asia", confidence: "well_established", source_refs: sourceRefs("source:a") },
+    { start_year: 100, end_year: 110, function_type: "royal_court", place_name: "B", place_id: PLACE_B, region_code: "central-asia", confidence: "well_established", source_refs: sourceRefs("source:b") }
   ];
   const placement = model.resolveActivityPlacement({ id: "activity-a", polity: { id: "polity-a" }, start: { year: 100 }, end: { year: 110 } }, model.createSpatialLookup(index));
   assert.equal(placement.status, "place_function_region_conflict");
@@ -113,8 +117,8 @@ test("v2 conflicting simultaneous place-function regions remain unresolved", () 
 test("v2 place-function coverage gaps prevent silent partial placement", () => {
   const index = placeFunctionIndex();
   index.place_function_records[0].functions = [
-    { start_year: 100, end_year: 104, function_type: "capital", place_name: "A", region_code: "west-asia", confidence: "well_established", source_refs: ["source:a"] },
-    { start_year: 106, end_year: 110, function_type: "capital", place_name: "B", region_code: "west-asia", confidence: "well_established", source_refs: ["source:b"] }
+    { start_year: 100, end_year: 104, function_type: "capital", place_name: "A", place_id: PLACE_A, region_code: "west-asia", confidence: "well_established", source_refs: sourceRefs("source:a") },
+    { start_year: 106, end_year: 110, function_type: "capital", place_name: "B", place_id: PLACE_B, region_code: "west-asia", confidence: "well_established", source_refs: sourceRefs("source:b") }
   ];
   const placement = model.resolveActivityPlacement({ id: "activity-a", polity: { id: "polity-a" }, start: { year: 100 }, end: { year: 110 } }, model.createSpatialLookup(index));
   assert.equal(placement.status, "place_function_period_gap");
