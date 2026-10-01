@@ -6,10 +6,7 @@ import assert from 'node:assert/strict';
 import pg from 'pg';
 
 const require = createRequire(import.meta.url);
-const { applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
-const { applyCorrectionMigrations } = require('../server/atlas-correction-migrations.js');
-const { applyStage2SchemaRelease } = require('../server/atlas-stage2-schema-release.js');
-const { applyP9Cutover } = require('../server/atlas-stage2-p9-db-cutover.js');
+const { reconstructCurrentSchema } = require('../server/atlas-current-schema-reconstruction.js');
 const duplicateReview = require('../server/atlas-duplicate-review-service.js');
 const p10Completion = require('../server/atlas-person-duplicate-revalidation-readiness.js');
 const mergeService = require('../server/atlas-person-merge-service.js');
@@ -26,19 +23,17 @@ const GORGO_REQUIREMENT = 'p10:gorgo-of-sparta:gorgo:p4-reviewed-same-person';
 const MERGE_REQUEST = 'fixture:canonical-readiness:gorgo-physical-merge';
 const CANDIDATE_REGISTRATION_ID = 'fixture:canonical-readiness:gorgo-registration';
 
-const baselineSchema = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 const requirementMigration = fs.readFileSync(path.join(root, 'migration/phase-10/p10-person-duplicate-revalidation-requirements.sql'), 'utf8');
 
 const client = new Client({ connectionString: databaseUrl });
 await client.connect();
 try {
   await client.query('drop schema if exists atlas_v2 cascade');
-  await client.query(baselineSchema);
-  await applyAuthoringMigrations(client);
-  await applyCorrectionMigrations(client);
-  const release = await applyStage2SchemaRelease(client);
-  assert.equal(release.applied.length, 6);
-  await applyP9Cutover(client);
+  const reconstruction = await reconstructCurrentSchema(client);
+  assert.deepEqual(reconstruction.phases, ['baseline','correction','stage2','p9','authoring']);
+  assert.equal(reconstruction.stage2.components.length, 6);
+  assert.equal(reconstruction.p9.after.old_index_present, false);
+  assert.equal(reconstruction.p9.after.new_index_present, true);
   await client.query(requirementMigration);
 
   await client.query(`insert into atlas_v2.persons(id,canonical_key,person_type,historicity) values

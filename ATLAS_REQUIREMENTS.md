@@ -62,7 +62,7 @@ Unknown optional profile facts remain absent/unresolved. The system must not req
 |---|---|---|
 | `ATLAS-RQ-0101` | COMPLETED | normalized `atlas_v2` authority |
 | `ATLAS-RQ-0102` | COMPLETED | normalized identity authoring |
-| `ATLAS-RQ-0103` | ACTIVE | reconstructible current schema — reopened after current-schema reconstruction audit |
+| `ATLAS-RQ-0103` | COMPLETED | reconstructible current schema — clean baseline + current registries + reviewed Stage 2 schema bodies + P9 cutover are proven on fresh PostgreSQL |
 | `ATLAS-RQ-0104` | COMPLETED | centralized ATLAS Integrity |
 | `ATLAS-RQ-0105` | COMPLETED | shared deterministic PostgreSQL client |
 | `ATLAS-RQ-0106` | COMPLETED | dedicated admin session secret role |

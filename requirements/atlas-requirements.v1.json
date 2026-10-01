@@ -156,10 +156,15 @@
     },
     {
       "id": "ATLAS-RQ-0103",
-      "status": "ACTIVE",
+      "status": "COMPLETED",
       "title": "Current schema is reconstructible",
       "evidence_paths": [
         "db/schema/atlas_v2.current.sql",
+        "server/atlas-current-schema-reconstruction.js",
+        "server/atlas-stage2-schema-release.js",
+        "server/atlas-stage2-p9-db-cutover.js",
+        "server/atlas-correction-migrations.js",
+        "server/atlas-authoring-migrations.js",
         "scripts/verify-schema-baseline.mjs",
         "ARCHITECTURE_INVARIANTS.md"
       ]

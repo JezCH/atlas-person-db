@@ -6,9 +6,7 @@ import assert from 'node:assert/strict';
 import pg from 'pg';
 
 const require = createRequire(import.meta.url);
-const { applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
-const { applyCorrectionMigrations } = require('../server/atlas-correction-migrations.js');
-const { applyStage2SchemaRelease } = require('../server/atlas-stage2-schema-release.js');
+const { reconstructCurrentSchema } = require('../server/atlas-current-schema-reconstruction.js');
 const duplicateReview = require('../server/atlas-duplicate-review-service.js');
 const duplicateDetector = require('../server/atlas-duplicate-detector.js');
 const completion = require('../server/atlas-person-duplicate-revalidation-readiness.js');
@@ -24,17 +22,17 @@ const GORGO_SURVIVOR = '5136407a-9792-5103-be6f-54c947b255a5';
 const GORGO_DUPLICATE = 'a3367f19-e901-5213-aba6-76c4aef1b730';
 const REQUIREMENT_KEY = 'p10:gorgo-of-sparta:gorgo:p4-reviewed-same-person';
 
-const baselineSchema = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 const requirementMigration = fs.readFileSync(path.join(root, 'migration/phase-10/p10-person-duplicate-revalidation-requirements.sql'), 'utf8');
 const client = new Client({ connectionString: databaseUrl });
 await client.connect();
 try {
   await client.query('drop schema if exists atlas_v2 cascade');
-  await client.query(baselineSchema);
-  await applyAuthoringMigrations(client);
-  await applyCorrectionMigrations(client);
-  const release = await applyStage2SchemaRelease(client);
-  assert.equal(release.applied.length, 6);
+  const reconstruction = await reconstructCurrentSchema(client);
+  assert.deepEqual(reconstruction.phases, ['baseline','correction','stage2','p9','authoring']);
+  assert.equal(reconstruction.stage2.components.length, 6);
+  assert.equal(reconstruction.p9.after.old_index_present, false);
+  assert.equal(reconstruction.p9.after.new_index_present, true);
+  assert.equal(reconstruction.p9.after.duplicate_groups, 0);
 
   let readiness = await completion.inspectPersonDuplicateRevalidationReadiness(client);
   assert.equal(readiness.ready, false);

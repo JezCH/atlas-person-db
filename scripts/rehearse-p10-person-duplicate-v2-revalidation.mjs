@@ -1,14 +1,9 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import assert from 'node:assert/strict';
 import pg from 'pg';
 
 const require = createRequire(import.meta.url);
-const { applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
-const { applyCorrectionMigrations } = require('../server/atlas-correction-migrations.js');
-const { applyStage2SchemaRelease } = require('../server/atlas-stage2-schema-release.js');
+const { reconstructCurrentSchema } = require('../server/atlas-current-schema-reconstruction.js');
 const { createAuthoringManifestDispatchService } = require('../server/atlas-authoring-manifest-dispatch-service.js');
 const { createStage2NativeActivityTx, loadStage2NativeActivity } = require('../server/atlas-stage2-native-activity-service.js');
 const duplicateReview = require('../server/atlas-duplicate-review-service.js');
@@ -18,7 +13,6 @@ const mergeReadiness = require('../server/atlas-person-merge-reference-readiness
 const mergeService = require('../server/atlas-person-merge-service.js');
 
 const { Client } = pg;
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const databaseUrl = String(process.env.DATABASE_URL || '').trim();
 if (!/^postgres(?:ql)?:\/\//.test(databaseUrl)) throw new Error('DATABASE_URL is required');
 
@@ -109,16 +103,16 @@ function activityPayload(row, overrides = {}) {
   };
 }
 
-const baselineSchema = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 const client = new Client({ connectionString: databaseUrl });
 await client.connect();
 try {
   await client.query('DROP SCHEMA IF EXISTS atlas_v2 CASCADE');
-  await client.query(baselineSchema);
-  await applyAuthoringMigrations(client);
-  await applyCorrectionMigrations(client);
-  const schemaRelease = await applyStage2SchemaRelease(client);
-  assert.equal(schemaRelease.applied.length, 6);
+  const reconstruction = await reconstructCurrentSchema(client);
+  assert.deepEqual(reconstruction.phases, ['baseline','correction','stage2','p9','authoring']);
+  assert.equal(reconstruction.stage2.components.length, 6);
+  assert.equal(reconstruction.p9.after.old_index_present, false);
+  assert.equal(reconstruction.p9.after.new_index_present, true);
+  assert.equal(reconstruction.p9.after.duplicate_groups, 0);
 
   const initialReferenceReadiness = await mergeReadiness.inspectPersonMergeReferenceReadiness(client);
   assert.equal(initialReferenceReadiness.ready, true, initialReferenceReadiness.blockers.join(';'));
