@@ -98,6 +98,6 @@ test('GitHub human-authoring batch failure reports atomic rollback without parti
       'authoring/requests/b.json',
       'authoring/requests/c.json'
     ],
-    allowLegacyNamuWikiOmission:true
+    allowLegacyNamuWikiOmission:false
   });
 });

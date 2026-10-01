@@ -131,7 +131,7 @@ test('GitHub batch authoring authenticates once and delegates the ordered batch 
   assert.ok(seen.context.transports.every((transport)=>transport.kind==='github_oidc'));
   assert.ok(seen.context.transports.every((transport)=>transport.runtime_sha===RUNTIME_SHA));
   assert.ok(seen.context.transports.every((transport)=>transport.authoring_sha===AUTHORING_SHA));
-  assert.equal(seen.context.allowLegacyNamuWikiOmission,true);
+  assert.equal(seen.context.allowLegacyNamuWikiOmission,false);
 });
 
 test('batch envelope rejects unsafe shape before any write', () => {

@@ -24,7 +24,15 @@ function firstRequest() {
       display_name_ko:'휴먼 저작 픽스처 인물',
       life_status:'deceased',
       life_status_checked_at:'2026-09-27',
-      life_status_basis:'historical_certainty'
+      life_status_basis:'historical_certainty',
+      representative_domain:'knowledge'
+    },
+    external_references:{
+      namuwiki:{
+        status:'not_found',
+        checked_at:'2026-10-01',
+        review_reason:'no_exact_document'
+      }
     },
     polity:{canonical_name_en:'Human Authoring Fixture Polity',display_name_ko:null},
     activity:{
@@ -229,6 +237,22 @@ try {
   assert.equal(first.result.entities.role.id,String(existingRole.id).toLowerCase());
   assert.equal(first.result.entities.relation_type.code,'active_in');
   assert.equal(first.result.entities.period_basis.code,'fixture_human_period');
+  assert.equal(first.result.person_registration.timeline_disposition.disposition,'timeline');
+  assert.equal(first.result.person_registration.representative_domain_reviewed,true);
+  assert.equal(first.result.person_registration.representative_domain,'knowledge');
+  assert.equal(first.result.person_registration.namuwiki.status,'not_found');
+  assert.deepEqual(first.result.person_registration.source_ids,[first.source_ids[0]]);
+
+  const firstProfile=(await client.query(`
+    select p.representative_domain,t.disposition,
+           (select count(*)::int from atlas_v2.person_sources ps where ps.person_id=p.id) as person_source_count
+      from atlas_v2.persons p
+      join atlas_v2.person_timeline_dispositions t on t.person_id=p.id
+     where p.id=$1::uuid
+  `,[first.person_id])).rows[0];
+  assert.equal(firstProfile.representative_domain,'knowledge');
+  assert.equal(firstProfile.disposition,'timeline');
+  assert.equal(firstProfile.person_source_count,1);
 
   const firstActivity=await loadStage2NativeActivity(client,first.relationship_id);
   assert.equal(firstActivity.activity_start,101);
@@ -279,6 +303,20 @@ try {
   missingPolityKo.polity={canonical_name_en:'Brand New Missing KO Polity',display_name_ko:null};
   missingPolityKo.activity={...missingPolityKo.activity,start_year:122,end_year:123,role:'Fixture Scholar',role_display_name_ko:null};
   await assert.rejects(()=>service.apply(missingPolityKo),/HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED/);
+
+  const missingDomain=firstRequest();
+  missingDomain.request_id='fixture:human-operational:new-person-no-domain-review';
+  missingDomain.person={...missingDomain.person,canonical_name_en:'Brand New Missing Domain Review',display_name_ko:'도메인 검토 누락 픽스처'};
+  delete missingDomain.person.representative_domain;
+  missingDomain.activity={...missingDomain.activity,start_year:130,end_year:131};
+  await assert.rejects(()=>service.apply(missingDomain),/HUMAN_AUTHORING_NEW_PERSON_DOMAIN_REVIEW_REQUIRED/);
+
+  const missingNamuWiki=firstRequest();
+  missingNamuWiki.request_id='fixture:human-operational:new-person-no-namuwiki';
+  missingNamuWiki.person={...missingNamuWiki.person,canonical_name_en:'Brand New Missing NamuWiki Review',display_name_ko:'나무위키 검토 누락 픽스처'};
+  delete missingNamuWiki.external_references;
+  missingNamuWiki.activity={...missingNamuWiki.activity,start_year:132,end_year:133};
+  await assert.rejects(()=>service.apply(missingNamuWiki),/HUMAN_AUTHORING_NAMUWIKI_REQUIRED/);
 
   const missingSource=urlLessRequest();
   missingSource.request_id='fixture:human-operational:no-source';
@@ -391,6 +429,11 @@ try {
     live_period_basis_catalog:true,
     new_person:true,
     deceased_status_gate:true,
+    new_person_timeline_disposition_persisted:true,
+    new_person_domain_review_persisted:true,
+    new_person_namuwiki_required_at_service_boundary:true,
+    new_person_source_basis_linked:true,
+    new_person_registration_exact_readback:true,
     existing_polity_reused:true,
     existing_role_reused:true,
     new_role_created:true,
