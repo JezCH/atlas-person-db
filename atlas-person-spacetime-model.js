@@ -96,17 +96,11 @@
     const seen = new Set();
     for (const value of Array.isArray(values) ? values : []) {
       const normalized = normalizePlaceFunctionSourceRef(value);
-      if (normalized) {
-        const key = normalized.source_id + "\u0000" + normalized.locator;
-        if (seen.has(key)) continue;
-        seen.add(key);
-        out.push(normalized);
-        continue;
-      }
-      const legacy = typeof value === "string" ? text(value) : "";
-      if (!legacy || seen.has("legacy\u0000" + legacy)) continue;
-      seen.add("legacy\u0000" + legacy);
-      out.push(legacy);
+      if (!normalized) continue;
+      const key = normalized.source_id + "\u0000" + normalized.locator;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push(normalized);
     }
     return Object.freeze(out);
   }
@@ -161,7 +155,7 @@
     if (!REGION_CODES.has(regionCode)) errors.push(`invalid region_code: ${regionCode || "(empty)"}`);
     if (!text(fn?.place_name)) errors.push("place_name is required");
     const placeId = text(fn?.place_id);
-    if (placeId && !UUID_PATTERN.test(placeId)) errors.push("place_id must be a canonical UUID when present");
+    if (!UUID_PATTERN.test(placeId)) errors.push("place_id must be a canonical UUID");
     const functionType = text(fn?.function_type);
     if (!PLACE_FUNCTION_TYPES.has(functionType)) errors.push(`invalid function_type: ${functionType || "(empty)"}`);
     if (startYear != null && (!Number.isInteger(startYear) || startYear === 0)) errors.push("start_year must be a historical integer year or null");
@@ -170,8 +164,7 @@
     const rawSourceRefs = Array.isArray(fn?.source_refs) ? fn.source_refs : [];
     if (!rawSourceRefs.length) errors.push("source_refs must contain at least one reviewed source reference");
     rawSourceRefs.forEach((ref,index) => {
-      const legacy = typeof ref === "string" ? text(ref) : "";
-      if (!legacy && !normalizePlaceFunctionSourceRef(ref)) errors.push(`source_refs[${index}] must be a reviewed string fixture or canonical source_id UUID + locator`);
+      if (!normalizePlaceFunctionSourceRef(ref)) errors.push(`source_refs[${index}] must contain canonical source_id UUID + locator`);
     });
     const confidence = text(fn?.confidence);
     if (!ALLOWED_CONFIDENCE.has(confidence)) errors.push(`invalid confidence: ${confidence || "(empty)"}`);
