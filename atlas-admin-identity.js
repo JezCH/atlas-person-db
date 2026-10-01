@@ -124,11 +124,11 @@
         <div class="identity-two"><label>정확한 문서명 <small>문서 있음일 때 필수</small><input id="humanNamuWikiTitle" /></label><label>정확한 문서 URL <small>https://namu.wiki/w/...</small><input id="humanNamuWikiUrl" type="url" placeholder="https://namu.wiki/w/..." /></label></div>
         <p class="identity-help">새 Person이거나 기존 Person에 나무위키 검토값이 없으면 반드시 실제 검색 후 linked/not_found를 선택합니다. 이미 검토된 기존 Person은 첫 옵션 그대로 두면 재검사하지 않습니다.</p>
         <h3>활동 시작</h3>
-        <div class="identity-two"><label>시작 연도<input id="humanStartYear" type="number" step="1" required /></label><label>시작 월 <small>선택</small><input id="humanStartMonth" type="number" min="1" max="12" step="1" /></label></div>
+        <div class="identity-two"><label>시작 연도 <small>비우면 경계 미상</small><input id="humanStartYear" type="number" step="1" /></label><label>시작 월 <small>연도 입력 시 선택</small><input id="humanStartMonth" type="number" min="1" max="12" step="1" /></label></div>
         <div class="identity-two"><label>시작 일 <small>선택 · 월 입력 필요</small><input id="humanStartDay" type="number" min="1" max="31" step="1" /></label><label>시작 확실성<select id="humanStartCertainty" required>${certaintyOptions()}</select></label></div>
         <label>시작 Calendar<select id="humanStartCalendar" required>${calendarOptions()}</select></label>
         <h3>활동 종료</h3>
-        <div class="identity-two"><label>종료 연도<input id="humanEndYear" type="number" step="1" required /></label><label>종료 월 <small>선택</small><input id="humanEndMonth" type="number" min="1" max="12" step="1" /></label></div>
+        <div class="identity-two"><label>종료 연도 <small>비우면 경계 미상</small><input id="humanEndYear" type="number" step="1" /></label><label>종료 월 <small>연도 입력 시 선택</small><input id="humanEndMonth" type="number" min="1" max="12" step="1" /></label></div>
         <div class="identity-two"><label>종료 일 <small>선택 · 월 입력 필요</small><input id="humanEndDay" type="number" min="1" max="31" step="1" /></label><label>종료 확실성<select id="humanEndCertainty" required>${certaintyOptions()}</select></label></div>
         <label>종료 Calendar<select id="humanEndCalendar" required>${calendarOptions()}</select></label>
         <label>근거 신뢰도<select id="humanConfidence" required><option value="well_established">Well established</option><option value="likely">Likely</option><option value="speculative">Speculative</option><option value="disputed">Disputed</option><option value="unknown">Unknown</option></select></label>
@@ -190,19 +190,31 @@
   }
 
   function boundary(prefix, label) {
-    const year = Number(value(`human${prefix}Year`));
+    const yearText = value(`human${prefix}Year`);
     const month = optionalInteger(`human${prefix}Month`);
     const day = optionalInteger(`human${prefix}Day`);
+    const key = prefix.toLowerCase();
+    if (!yearText) {
+      if (month !== null || day !== null) throw new Error(`${label} 연도가 미상이면 월·일도 비워야 합니다.`);
+      return {
+        [`${key}_year`]: null,
+        [`${key}_month`]: null,
+        [`${key}_day`]: null,
+        [`${key}_certainty`]: null,
+        [`${key}_calendar`]: null
+      };
+    }
+    const year = Number(yearText);
     if (!Number.isInteger(year) || year === 0) throw new Error(`${label} 연도는 0이 아닌 정수 역사연도여야 합니다.`);
     if (month !== null && (!Number.isInteger(month) || month < 1 || month > 12)) throw new Error(`${label} 월은 1~12여야 합니다.`);
     if (day !== null && (!Number.isInteger(day) || day < 1 || day > 31)) throw new Error(`${label} 일은 1~31이어야 합니다.`);
     if (day !== null && month === null) throw new Error(`${label} 일을 입력하려면 월을 먼저 입력해야 합니다.`);
     return {
-      [`${prefix.toLowerCase()}_year`]: year,
-      [`${prefix.toLowerCase()}_month`]: month,
-      [`${prefix.toLowerCase()}_day`]: day,
-      [`${prefix.toLowerCase()}_certainty`]: value(`human${prefix}Certainty`),
-      [`${prefix.toLowerCase()}_calendar`]: value(`human${prefix}Calendar`)
+      [`${key}_year`]: year,
+      [`${key}_month`]: month,
+      [`${key}_day`]: day,
+      [`${key}_certainty`]: value(`human${prefix}Certainty`),
+      [`${key}_calendar`]: value(`human${prefix}Calendar`)
     };
   }
 
