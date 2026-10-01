@@ -37,11 +37,13 @@ test('CORE-REENTRY-08 current Place-function projection uses canonical Place and
 
 test('CORE-REENTRY-08 compiler rebuilds current Place-function display from UUID projection instead of baseline/correction authority',async()=>{
   const mod=await import(pathToFileURL(path.join(root,'scripts/compile-spatial-bindings.mjs')).href);
+  const r4=await import(pathToFileURL(path.join(root,'scripts/compile-spatial-bindings-r4.mjs')).href);
   const baseline=JSON.parse(fs.readFileSync(path.join(root,'spatial/reviewed-bindings/0000-migrated-baseline.index.json'),'utf8'));
   const placeFunctions=JSON.parse(fs.readFileSync(path.join(root,'spatial/projections/polity-place-functions.v1.json'),'utf8'));
   const shards=mod.loadReviewedBindingShards(path.join(root,'spatial/reviewed-bindings/shards'));
   const corrections=mod.loadReviewedSpatialCorrections(path.join(root,'spatial/reviewed-bindings/corrections'));
-  const result=mod.compileSpatialBindings({baseline,shards,corrections,placeFunctions});
+  const migrations=r4.loadTaxonomyMigrationManifests(path.join(root,'spatial/taxonomy-migrations'));
+  const result=r4.compileSpatialBindingsR4({baseline,shards,manifests:migrations,corrections,placeFunctions});
   const expected=JSON.parse(fs.readFileSync(path.join(root,'atlas-polity-spatial-index.json'),'utf8'));
   assert.deepEqual(result.index,expected);
   assert.deepEqual(result.index.place_function_records,placeFunctions.records);
