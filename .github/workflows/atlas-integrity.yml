@@ -245,6 +245,9 @@ jobs:
       - name: Rebuild current v2 schema on fresh PostgreSQL
         run: npm run test:schema
 
+      - name: Verify executable CORE final acceptance
+        run: npm run test:core-final
+
   test:
     name: test
     needs: [classify, registration_validation, governance_validation, ui_validation, full_test]
