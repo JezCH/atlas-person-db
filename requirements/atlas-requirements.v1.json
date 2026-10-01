@@ -453,14 +453,18 @@
     },
     {
       "id": "ATLAS-RQ-0223",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "title": "Pass full Production product lifecycle acceptance",
       "phase": "P13",
       "evidence_paths": [
         "docs/core/CORE_V2_FINAL_ACCEPTANCE.md",
         "data/core/core-v2-final-acceptance.v1.json",
         "tests/core-final-acceptance.test.mjs",
-        "contracts/runtime-projection-contract.v1.json"
+        "contracts/runtime-projection-contract.v1.json",
+        "server/atlas-current-schema-reconstruction.js",
+        "server/atlas-reviewed-candidate-registration-service.js",
+        "scripts/rehearse-human-authoring-operational-parity.mjs",
+        "tests/core-reentry-reviewed-candidate-production-lifecycle.test.mjs"
       ]
     },
     {
