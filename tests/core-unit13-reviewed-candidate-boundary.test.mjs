@@ -12,16 +12,16 @@ test('Unit 13 refuses AI/unattested APPROVED state',()=>{
  assert.equal(normalizeReviewRevision(approved).review_state,'APPROVED');
 });
 test('Unit 13 makes review revisions immutable and replay-safe',async()=>{
- const stored=normalizeReviewRevision(approved);const client={query:async(sql)=>/select review_state/.test(sql)?{rowCount:1,rows:[stored]}:{rowCount:0,rows:[]}};
+ const stored=normalizeReviewRevision(approved);const client={query:async(sql)=>/from atlas_v2\.person_candidate_review_revisions/i.test(sql)?{rowCount:1,rows:[stored]}:{rowCount:0,rows:[]}};
  assert.equal((await recordReviewRevision(client,approved)).replay,true);
  await assert.rejects(()=>recordReviewRevision(client,{...approved,review_checkpoint:'#1374 comment changed'}),/REVIEW_REVISION_IMMUTABLE/);
 });
 test('Unit 13 Lane B queues only an exact human-approved revision',async()=>{
- const calls=[];const client={query:async(sql,args)=>{calls.push({sql,args});if(/select review_state,human_authorized/.test(sql))return{rowCount:1,rows:[{review_state:'APPROVED',human_authorized:true}]};return{rowCount:1,rows:[]}}};
+ const calls=[];const client={query:async(sql,args)=>{calls.push({sql,args});if(/from atlas_v2\.person_candidate_review_revisions/i.test(sql))return{rowCount:1,rows:[{review_state:'APPROVED',human_authorized:true}]};if(/from atlas_v2\.person_candidate_registration_states/i.test(sql))return{rowCount:0,rows:[]};return{rowCount:1,rows:[]}}};
  const out=await queueApprovedRevision(client,{candidate_id:'candidate-1',review_revision:1});assert.equal(out.registration_state,'QUEUED');assert.ok(calls.some(x=>/person_candidate_registration_states/.test(x.sql)));
 });
 test('Unit 13 blocks authoritative registration states for non-approved revisions',async()=>{
- const client={query:async(sql)=>/select review_state,human_authorized/.test(sql)?{rowCount:1,rows:[{review_state:'HOLD',human_authorized:false}]}:{rowCount:1,rows:[]}};
+ const client={query:async(sql)=>/from atlas_v2\.person_candidate_review_revisions/i.test(sql)?{rowCount:1,rows:[{review_state:'HOLD',human_authorized:false}]}:{rowCount:1,rows:[]}};
  await assert.rejects(()=>setRegistrationState(client,{candidate_id:'candidate-1',review_revision:1,registration_state:'REGISTERED'}),/REQUIRES_HUMAN_APPROVED_REVISION/);
 });
 test('Unit 13 schema keeps review and registration as independent state axes',()=>{
