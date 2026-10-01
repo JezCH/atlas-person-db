@@ -140,6 +140,8 @@ source, transaction, idempotency, NamuWiki and readback requirements still apply
 
 ## Spatial registration handshake
 
-A newly created Polity cannot reach registration **DONE** with silent spatial debt. The reviewed request must carry a materialized spatial disposition handshake whose terminal state is one of `existing_disposition`, `reviewed_static`, `reviewed_place_function`, or `reviewed_hold`. `reviewed_hold` is an explicit reviewed disposition, not an omitted review.
+A newly created Polity cannot reach registration **DONE** with silent spatial debt. The reviewed request supplies a spatial review decision (`state` + non-empty `evidence`) whose terminal state is one of `existing_disposition`, `reviewed_static`, `reviewed_place_function`, or `reviewed_hold`. Request-side `materialized:true` is not authority and is ignored for compatibility with historical manifests.
+
+For a newly created Polity, the canonical Human Authoring writer persists that reviewed decision to `atlas_v2.spatial_registration_dispositions` in the same SERIALIZABLE transaction, then exact-read-backs the row before the Activity ledger can be completed. Only that server-produced read-back carries `materialized:true`. `reviewed_hold` is an explicit reviewed lifecycle disposition, not an omitted review. This lifecycle row proves registration closure; it does **not** replace repository-backed reviewed display bindings or historical `PolityPlaceFunction` facts.
 
 Historical `PolityPlaceFunction` and display placement are separate contracts. A historical function identifies an existing first-class Place and provenance. Macroregion/subregion, location labels, review-queue reasons, and Activity display overrides are display/disposition state and must not masquerade as historical polity-place facts. See `contracts/spatial-fact-contract.v1.json`.
