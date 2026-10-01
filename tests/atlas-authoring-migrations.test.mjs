@@ -165,7 +165,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(polityPlaceFunctionAuthority, /REFERENCES atlas_v2\.places\(id\) ON DELETE RESTRICT/i);
   assert.match(polityPlaceFunctionAuthority, /source_id uuid NOT NULL REFERENCES atlas_v2\.sources\(id\) ON DELETE RESTRICT/i);
   assert.match(polityPlaceFunctionAuthority, /UNIQUE NULLS NOT DISTINCT/i);
-  assert.match(polityPlaceFunctionAuthority, /SPATIAL_POLITY_PLACE_FUNCTION_BACKFILL_PARTIAL_POLITY_SET/i);
+  assert.doesNotMatch(polityPlaceFunctionAuthority, /INSERT\s+INTO\s+atlas_v2\.(?:places|place_names|sources|place_sources)/i);
 
   const unit16Retirement = migrations[23].sql;
   assert.match(unit16Retirement, /DROP TRIGGER IF EXISTS authoring_manifest_runs_external_reference_sync/i);
