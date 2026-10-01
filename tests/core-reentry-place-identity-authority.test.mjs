@@ -2,10 +2,13 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
+import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
 import {pathToFileURL} from 'node:url';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const require=createRequire(import.meta.url);
+const model=require('../atlas-person-spacetime-model.js');
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
 test('CORE-REENTRY-08 current Place-function projection uses canonical Place and Source UUIDs only',()=>{
@@ -67,4 +70,29 @@ test('CORE-REENTRY-08 canonical DB writer and migration own PolityPlaceFunction 
   assert.match(writer,/POLITY_PLACE_FUNCTION_SOURCE_READBACK_DRIFT/);
   assert.match(compiler,/SPATIAL_BASELINE_HISTORICAL_FACT_AUTHORITY_FORBIDDEN/);
   assert.match(compiler,/change\.disposition !== 'place_function'/);
+});
+
+
+test('CORE-REENTRY-08 current runtime validation rejects null/pseudo Place identity and string provenance',()=>{
+  const validFunction={
+    start_year:100,
+    end_year:101,
+    function_type:'capital',
+    place_name:'Fixture Capital',
+    place_id:'00000000-0000-4000-8000-000000000081',
+    region_code:'east-asia',
+    confidence:'well_established',
+    source_refs:[{source_id:'00000000-0000-4000-8000-000000000082',locator:'fixture locator'}]
+  };
+  const makeIndex=(fn)=>({
+    schema:model.SPATIAL_INDEX_SCHEMA,
+    polity_geography:{},
+    polity_subregions:{},
+    place_function_records:[{polity_id:'fixture-polity',functions:[fn]}],
+    review_queue:[]
+  });
+  assert.equal(model.validateSpatialIndex(makeIndex(validFunction)).valid,true);
+  assert.equal(model.validateSpatialIndex(makeIndex({...validFunction,place_id:null})).valid,false);
+  assert.equal(model.validateSpatialIndex(makeIndex({...validFunction,place_id:'place-legacy-pseudo-id'})).valid,false);
+  assert.equal(model.validateSpatialIndex(makeIndex({...validFunction,source_refs:['legacy string provenance']})).valid,false);
 });
