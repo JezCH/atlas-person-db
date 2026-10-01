@@ -476,8 +476,7 @@ try {
   assert.equal(unknownBoundaryActivity.activity_end_certainty,null);
   assert.equal(unknownBoundaryActivity.activity_end_calendar,null);
   assert.equal(unknownBoundaryActivity.chronology_status,'reviewed');
-  assert.equal(unknownBoundary.result.entities.activity.start.year,null);
-  assert.equal(unknownBoundary.result.entities.activity.end.year,null);
+  assert.equal((unknownBoundary.result.entities.activity.semantic_key.match(/<UNKNOWN>/g)||[]).length,2);
   const unknownBoundaryReplay=await service.apply(unknownBoundaryRaw,{transport:{kind:'fresh_postgres_rehearsal'}});
   assert.equal(unknownBoundaryReplay.replay,true);
   assert.equal(unknownBoundaryReplay.relationship_id,unknownBoundary.relationship_id);
