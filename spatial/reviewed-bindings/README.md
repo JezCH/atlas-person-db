@@ -171,3 +171,12 @@ The structural migration is not complete merely because the compiler exists. Bef
 After this gate is satisfied, new broad coverage work is shard-native by default:
 
 `reviewed shard(s) -> compiler -> canonical runtime artifact`
+
+## PolityPlaceFunction authority
+
+Historical `PolityPlaceFunction` facts are no longer authored in the reviewed display baseline or correction stream. Their canonical state is `atlas_v2.polity_place_functions` plus `atlas_v2.polity_place_function_sources`, written through `server/atlas-polity-place-function-service.js#createPolityPlaceFunction`.
+
+The compiler reads `spatial/projections/polity-place-functions.v1.json` only as a deterministic display projection of that DB authority. Every projected function must carry a canonical first-class `place_id` UUID and each provenance reference must be `{ source_id, locator }`. `place_name` and `region_code` in that projection are presentation fields, not historical identity.
+
+Legacy `place_function` correction records remain immutable audit evidence but no longer mutate the current compiled Place-function set. New historical Place-function authoring through the repository correction lane is forbidden.
+
