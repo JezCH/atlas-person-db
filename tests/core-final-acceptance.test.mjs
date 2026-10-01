@@ -14,6 +14,7 @@ const ownership=json("docs/core/CORE_AUTHORITY_OWNERSHIP.v1.json");
 const runtime=json("contracts/runtime-projection-contract.v1.json");
 const obligations=json("data/core/registration-obligations.v1.json");
 const execution=read("WORK_EXECUTION.md");
+const verifier=read("scripts/verify-core-final-acceptance.mjs");
 
 const expectedCriteria=[
   "requirements_contradictions_zero",
@@ -37,21 +38,29 @@ const expectedCriteria=[
   "active_task_keys_multiple_artifacts_zero"
 ];
 
-test("Unit 17 final acceptance artifact covers every canonical end-state with durable evidence",()=>{
+test("final acceptance checkpoint is backed by one executable criterion-to-probe verifier",()=>{
   assert.equal(acceptance.schema,"atlas-core-final-acceptance/v1");
   assert.equal(acceptance.status,"PASS");
   assert.equal(acceptance.p14_content_implementation_in_scope,false);
+  assert.equal(acceptance.verification?.mode,"executable_probes");
+  assert.equal(acceptance.verification?.command,"npm run test:core-final");
+  assert.equal(acceptance.verification?.verifier,"scripts/verify-core-final-acceptance.mjs");
+  assert.equal(acceptance.verification?.static_status_is_checkpoint_only,true);
   assert.deepEqual(acceptance.criteria.map((x)=>x.id),expectedCriteria);
+  assert.match(verifier,/ATLAS_CORE_FINAL_ACCEPTANCE_EXECUTABLE_V2/);
+  assert.match(verifier,/criterionProbes/);
+  assert.match(verifier,/rehearse-human-authoring-operational-parity\.mjs/);
+  assert.match(verifier,/verify-schema-baseline\.mjs/);
   for(const criterion of acceptance.criteria){
-    assert.equal(criterion.status,"PASS",criterion.id);
     assert.ok(Array.isArray(criterion.evidence_paths)&&criterion.evidence_paths.length>0,criterion.id);
     for(const evidencePath of criterion.evidence_paths){
       assert.equal(fs.existsSync(path.join(root,evidencePath)),true,`${criterion.id}: ${evidencePath}`);
     }
+    assert.ok(verifier.includes(JSON.stringify(criterion.id)),`verifier mapping missing: ${criterion.id}`);
   }
 });
 
-test("Unit 17 historical acceptance keeps P14 out of scope without pinning current P13 lifecycle status",()=>{
+test("final acceptance evidence covers repaired P13 while P14 remains out of scope",()=>{
   const byId=new Map(requirements.requirements.map((x)=>[x.id,x]));
   assert.equal(acceptance.status,"PASS");
   assert.equal(acceptance.p14_content_implementation_in_scope,false);
@@ -60,6 +69,7 @@ test("Unit 17 historical acceptance keeps P14 out of scope without pinning curre
     assert.ok(item,id);
     assert.ok(item.evidence_paths?.length,id);
   }
+  assert.ok(byId.get("ATLAS-RQ-0223")?.evidence_paths?.includes("scripts/verify-core-final-acceptance.mjs"));
   for(const id of ["ATLAS-RQ-0224","ATLAS-RQ-0225"]) assert.equal(byId.get(id)?.status,"PENDING",id);
 });
 
