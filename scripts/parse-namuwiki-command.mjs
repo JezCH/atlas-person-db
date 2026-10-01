@@ -3,6 +3,7 @@ import { pathToFileURL } from "node:url";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const NAMUWIKI_URL_RE = /^https:\/\/namu\.wiki\/w\/\S+$/;
+const REVIEW_REASONS = new Set(["no_exact_document", "related_or_derivative_only", "exact_target_url_pending"]);
 const DEFAULT_MAX_BATCH_SIZE = 25;
 
 function invalid(message) {
@@ -33,11 +34,18 @@ function parseItem(line) {
     return Object.freeze({ person_id:personId, status:"linked", url, expected_current_url:expectedCurrentUrl });
   }
 
-  const missing = line.match(/^not_found\s+(\S+)$/);
+  const missing = line.match(/^not_found\s+(\S+)(?:\s+(\S+))?$/);
   if (missing) {
     const personId = missing[1].toLowerCase();
+    const reviewReason = missing[2] || null;
     if (!UUID_RE.test(personId)) throw invalid(`Invalid person UUID: ${missing[1]}`);
-    return Object.freeze({ person_id:personId, status:"not_found", url:null });
+    if (reviewReason && !REVIEW_REASONS.has(reviewReason)) throw invalid(`Invalid NamuWiki review reason for ${personId}: ${reviewReason}`);
+    return Object.freeze({
+      person_id:personId,
+      status:"not_found",
+      url:null,
+      ...(reviewReason ? { review_reason:reviewReason } : {})
+    });
   }
 
   throw invalid(`Invalid batch item: ${line}`);
@@ -52,8 +60,8 @@ export function parseNamuWikiCommand(body, { maxBatchSize=DEFAULT_MAX_BATCH_SIZE
   const singleCorrection = text.match(/^\/namuwiki-correct\s+(\S+)\s+(\S+)\s+(\S+)$/);
   if (singleCorrection) return [parseItem(`correct ${singleCorrection[1]} ${singleCorrection[2]} ${singleCorrection[3]}`)];
 
-  const singleMissing = text.match(/^\/namuwiki-not-found\s+(\S+)$/);
-  if (singleMissing) return [parseItem(`not_found ${singleMissing[1]}`)];
+  const singleMissing = text.match(/^\/namuwiki-not-found\s+(\S+)(?:\s+(\S+))?$/);
+  if (singleMissing) return [parseItem(`not_found ${singleMissing[1]}${singleMissing[2] ? ` ${singleMissing[2]}` : ""}`)];
 
   const lines = text.split("\n");
   if (lines[0]?.trim() !== "/namuwiki-batch") {

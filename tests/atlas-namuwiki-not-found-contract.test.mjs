@@ -61,6 +61,27 @@ test("NamuWiki handler payload accepts exact not_found contract", () => {
   });
 });
 
+test("NamuWiki handler accepts bounded not_found review reasons", () => {
+  const payload = requireNamuWikiLinkPayload({
+    runtime_sha:RUNTIME_SHA,
+    workflow_sha:WORKFLOW_SHA,
+    person_id:PERSON_ID,
+    status:"not_found",
+    review_reason:"related_or_derivative_only"
+  });
+  assert.equal(payload.externalReference.review_reason, "related_or_derivative_only");
+  assert.throws(
+    () => requireNamuWikiLinkPayload({
+      runtime_sha:RUNTIME_SHA,
+      workflow_sha:WORKFLOW_SHA,
+      person_id:PERSON_ID,
+      status:"not_found",
+      review_reason:"made_up_reason"
+    }),
+    /NAMUWIKI_NOT_FOUND_REVIEW_REASON_INVALID/
+  );
+});
+
 test("NamuWiki handler keeps linked default and rejects URL on not_found", () => {
   const linked = requireNamuWikiLinkPayload({
     runtime_sha:RUNTIME_SHA,
