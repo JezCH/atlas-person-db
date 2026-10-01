@@ -28,6 +28,7 @@ Unit 16 closes residue cleanup: this registry has no active multi-writer debt, o
 | `polity_temporal_semantics` | Polity governance periods, temporal designations, and diachronic identity relations | `server/atlas-correction-v2-stage2-assertions.js#insertStage2AssertionBundle` | **single_writer** |
 | `context_objects` | Government/Regime, PeopleGroup, HistoricalEvent identities and Person links | `server/atlas-context-object-service.js#createContextObject / linkPersonContext / linkPolityGovernanceContext` | **single_writer** |
 | `spatial_reviewed_facts` | Reviewed spatial display dispositions, with historical PolityPlaceFunction semantics governed separately by contracts/spatial-fact-contract.v1.json | `scripts/compile-spatial-bindings.mjs#compileSpatialBindings` | **repository_source_authority** |
+| `spatial_registration_disposition_lifecycle` | Durable new-Polity registration-completion disposition; lifecycle proof only, not display placement or PolityPlaceFunction authority | `server/atlas-spatial-registration-disposition-service.js#materializeSpatialRegistrationDisposition` | **single_writer** |
 | `runtime_projection` | Derived Runtime Activity projection and explicit compile exclusions/activation | `server/atlas-runtime-compile-service.js#compileRuntimeProjection` | **derived_single_writer** |
 | `non_timeline_person_registry` | Canonical reviewed Person timeline disposition, including chronology-unresolved/legendary/mythical/other reviewed exclusions | `server/atlas-person-timeline-service.js#setTimelineDisposition` | **single_writer** |
 | `reviewed_candidate_state` | Candidate review revision and APPROVED/HOLD/REJECTED decision | `server/atlas-reviewed-candidate-service.js#recordReviewRevision` | **single_writer** |
@@ -43,3 +44,4 @@ Unit 16 closes residue cleanup: this registry has no active multi-writer debt, o
 - Historical Role case/scope correction executors are retired; reviewed request JSON remains audit evidence only.
 - Normal Activity authoring, exact-before reviewed Activity correction, and destructive Person lifecycle are distinct lifecycle authorities.
 - `atlas-polity-spatial-index.json` is a **derived output** retained only as a compatibility artifact; reviewed repository spatial facts remain the source authority.
+- `spatial_registration_disposition_lifecycle` is deliberately narrower: it proves that a reviewed new-Polity spatial decision was durably written/read back before registration completion and does not become a second display or historical spatial-fact authority.
