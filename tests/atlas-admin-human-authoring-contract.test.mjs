@@ -43,6 +43,14 @@ test('admin temporal input exposes separate full boundaries without asking for g
   assert.doesNotMatch(ui,/humanStartGranularity|humanEndGranularity/);
   assert.match(ui,/year === 0/);
   assert.match(ui,/day !== null && month === null/);
+  assert.match(ui,/시작 연도 <small>비우면 경계 미상<\/small><input id="humanStartYear" type="number" step="1" \/>/);
+  assert.match(ui,/종료 연도 <small>비우면 경계 미상<\/small><input id="humanEndYear" type="number" step="1" \/>/);
+  assert.match(ui,/const yearText = value\(`human\$\{prefix\}Year`\)/);
+  assert.match(ui,/if \(!yearText\) \{/);
+  assert.match(ui,/\[\`\$\{key\}_year\`\]: null/);
+  assert.match(ui,/\[\`\$\{key\}_certainty\`\]: null/);
+  assert.match(ui,/\[\`\$\{key\}_calendar\`\]: null/);
+  assert.match(ui,/연도가 미상이면 월·일도 비워야 합니다/);
 });
 
 test('existing entity reuse does not force Korean labels in the browser',()=>{
