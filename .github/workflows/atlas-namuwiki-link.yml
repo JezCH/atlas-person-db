@@ -116,6 +116,7 @@ jobs:
             REFERENCE_STATUS="$(jq -r '.status' <<<"$ITEM")"
             NAMUWIKI_URL="$(jq -r '.url // ""' <<<"$ITEM")"
             EXPECTED_CURRENT_URL="$(jq -r '.expected_current_url // ""' <<<"$ITEM")"
+            REVIEW_REASON="$(jq -r '.review_reason // ""' <<<"$ITEM")"
             echo "ATLAS_NAMUWIKI_CURRENT_PERSON_ID=$PERSON_ID" >> "$GITHUB_ENV"
 
             RESPONSE_FILE="$RUNNER_TEMP/atlas-namuwiki-response-${PERSON_ID}.json"
@@ -126,6 +127,7 @@ jobs:
               --arg status "$REFERENCE_STATUS" \
               --arg url "$NAMUWIKI_URL" \
               --arg expected_current_url "$EXPECTED_CURRENT_URL" \
+              --arg review_reason "$REVIEW_REASON" \
               'if $status == "linked" then
                  if ($expected_current_url | length) > 0 then
                    {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,url:$url,expected_current_url:$expected_current_url}
@@ -134,6 +136,7 @@ jobs:
                  end
                else
                  {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,status:$status}
+                 + (if ($review_reason | length) > 0 then {review_reason:$review_reason} else {} end)
                end')"
             HTTP_STATUS="$(curl --silent --show-error \
               --output "$RESPONSE_FILE" \
@@ -150,6 +153,9 @@ jobs:
               jq -e '.ok == true and .committed == true and .external_reference.status == "linked" and (.external_reference.url | type == "string") and (.external_reference.document_title | type == "string")' "$RESPONSE_FILE" >/dev/null
             else
               jq -e '.ok == true and .committed == true and .external_reference.status == "not_found" and .external_reference.url == null and .external_reference.document_title == null' "$RESPONSE_FILE" >/dev/null
+              if [[ -n "$REVIEW_REASON" ]]; then
+                jq -e --arg review_reason "$REVIEW_REASON" '.external_reference.review_reason == $review_reason' "$RESPONSE_FILE" >/dev/null
+              fi
             fi
 
             EXPECTED_STATUS="$(jq -r '.external_reference.status' "$RESPONSE_FILE")"
@@ -172,6 +178,9 @@ jobs:
               test "$ACTUAL_TITLE" = "$EXPECTED_TITLE"
             else
               jq -e '.person.external_references.namuwiki.url == null and .person.external_references.namuwiki.document_title == null' "$READ_FILE" >/dev/null
+              if [[ -n "$REVIEW_REASON" ]]; then
+                jq -e --arg review_reason "$REVIEW_REASON" '.person.external_references.namuwiki.absence_reason == $review_reason' "$READ_FILE" >/dev/null
+              fi
             fi
 
             RESULT="$(jq -cn \
