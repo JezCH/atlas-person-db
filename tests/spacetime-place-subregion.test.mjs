@@ -12,6 +12,8 @@ const registry = JSON.parse(readFileSync(new URL("../atlas-place-spatial-registr
 const spatialIndex = JSON.parse(readFileSync(new URL("../atlas-polity-spatial-index.json", import.meta.url), "utf8"));
 const continuum = spaceAxis.createSpatialContinuum();
 const placeById = registryApi.createPlaceLookup(registry);
+const OTHER_SOURCE_ID = "00000000-0000-4000-8000-000000000071";
+const OTHER_POLITY_ID = "00000000-0000-4000-8000-000000000072";
 
 function sourceSegment(binding, overrides = {}) {
   const place = placeById.get(binding.place_id);
@@ -22,7 +24,7 @@ function sourceSegment(binding, overrides = {}) {
     placement_basis: "polity_place_function",
     place_function_type: binding.function_type,
     place_name: binding.place_name,
-    place_id: null,
+    place_id: binding.place_id,
     confidence: "well_established",
     source_refs: [...binding.source_refs],
     start_year: 1,
@@ -37,6 +39,7 @@ function spatialIndexFunctionForBinding(binding) {
   const signature = registryApi.bindingSignature(binding);
   const matches = record.functions.filter((fn) => registryApi.bindingSignature({
     polity_id: record.polity_id,
+    place_id: fn.place_id,
     function_type: fn.function_type,
     place_name: fn.place_name,
     source_refs: fn.source_refs
@@ -105,8 +108,9 @@ test("reviewed bindings activate through the real spatial-index resolver, not on
 });
 
 test("matching place_name alone never upgrades spatial precision", () => {
-  const rome = registry.bindings.find((binding) => binding.place_id === "place-rome");
-  const compiled = spatialCompile.compilePlacementSegment(sourceSegment(rome, { source_refs: ["unreviewed different source"] }), continuum);
+  const romePlace = registry.places.find((place) => place.canonical_name === "Rome");
+  const rome = registry.bindings.find((binding) => binding.place_id === romePlace?.place_id);
+  const compiled = spatialCompile.compilePlacementSegment(sourceSegment(rome, { source_refs: [{ source_id: OTHER_SOURCE_ID, locator: "unreviewed different source" }] }), continuum);
 
   assert.equal(compiled.status, "spatial_compile_unresolved");
   assert.equal(compiled.reason, "macroregion_only_unresolved");
@@ -120,7 +124,7 @@ test("matching place_name alone never upgrades spatial precision", () => {
 
 test("matching source evidence in another polity never upgrades spatial precision", () => {
   const rome = registry.bindings.find((binding) => binding.place_id === "place-rome");
-  const compiled = spatialCompile.compilePlacementSegment(sourceSegment(rome, { polity_id: "polity-example" }), continuum);
+  const compiled = spatialCompile.compilePlacementSegment(sourceSegment(rome, { polity_id: OTHER_POLITY_ID }), continuum);
   assert.equal(compiled.status, "spatial_compile_unresolved");
   assert.equal(compiled.reason, "macroregion_only_unresolved");
   assert.equal(compiled.spatial_precision, "unresolved");
