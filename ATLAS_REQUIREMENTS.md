@@ -167,7 +167,7 @@ Historical Baseline B evidence remains audit history. Current correctness must b
 - `ATLAS-RQ-0227` — **COMPLETED:** complete Place and bibliographic Source authoring as independent objects.
 - `ATLAS-RQ-0228` — **COMPLETED:** implement explicit Compile → Runtime projection and readiness filtering.
 - `ATLAS-RQ-0229` — **COMPLETED:** represent unresolved Person Activity boundaries without fabricated endpoints.
-- `ATLAS-RQ-0230` — **PENDING:** source-backed AI candidate → human review → authoritative authoring is not complete until the reviewed-candidate schema and live registration path are wired into the active current-schema/Production lifecycle.
+- `ATLAS-RQ-0230` — **COMPLETED:** source-backed candidate review is immutable and human-authorized, approved revisions are queued by exact revision, and the consolidated Production Authoring API applies only the stored reviewed payload through canonical Human Authoring with exact ledger/replay read-back; stale/non-approved revisions fail closed.
 
 P13 acceptance requires Person, Place and Source exist as first-class Authoring objects, the normalized writer remains authoritative, and Runtime cannot publish unresolved Authoring data as if it were settled fact.
 

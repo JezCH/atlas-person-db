@@ -526,14 +526,18 @@
     },
     {
       "id": "ATLAS-RQ-0230",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "title": "Complete source-backed AI candidate to human review to authoring workflow",
       "phase": "P13",
       "evidence_paths": [
         "server/atlas-reviewed-candidate-service.js",
-        "server/atlas-registration-coordinator.js",
+        "server/atlas-reviewed-candidate-registration-service.js",
+        "server/atlas-reviewed-candidate-handler.js",
+        "api/atlas-authoring.js",
+        "scripts/rehearse-human-authoring-operational-parity.mjs",
         "tests/core-unit13-reviewed-candidate-boundary.test.mjs",
-        "tests/atlas-core-unit7-registration-writer-integration.test.mjs"
+        "tests/core-reentry-reviewed-candidate-production-lifecycle.test.mjs",
+        ".github/workflows/atlas-human-authoring-operational-parity.yml"
       ]
     },
     {
