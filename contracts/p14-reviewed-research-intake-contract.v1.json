@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-p14-reviewed-research-intake-contract/v1",
+  "artifact_schema": "atlas-p14-reviewed-territory-research/v1",
+  "status": "CURRENT",
+  "purpose": "Reviewed non-mutating research intake for P14 TerritoryRecord/Geometry authoring candidates.",
+  "review_states": ["APPROVED", "HOLD", "REJECTED"],
+  "rules": {
+    "production_mutation_authorized": false,
+    "historical_accuracy_over_completion": true,
+    "unknown_stays_unknown": true,
+    "person_activity_cannot_define_geometry": true,
+    "campaign_claim_hegemony_or_office_cannot_imply_direct_control": true,
+    "invented_geometry_forbidden": true,
+    "display_requirements_cannot_create_historical_authority": true,
+    "approved_requires_exact_polity_uuid": true,
+    "approved_requires_source_uuid_and_locator": true,
+    "approved_requires_zero_remaining_blockers": true,
+    "hold_requires_explicit_remaining_blockers": true,
+    "rejected_requires_review_reason": true,
+    "reviewed_research_is_not_authoring_write_authority": true
+  },
+  "approved_case": {
+    "required": [
+      "case_id",
+      "review_state",
+      "research_question",
+      "polity_id",
+      "geometry",
+      "territory",
+      "remaining_blockers"
+    ],
+    "geometry_modes": ["candidate", "existing"],
+    "candidate_geometry_required": ["geometry_kind", "geometry_ref", "source_refs"],
+    "existing_geometry_required": ["geometry_id"],
+    "territory_required": [
+      "control_type",
+      "boundary_certainty",
+      "evidence_confidence",
+      "chronology_status",
+      "source_refs"
+    ],
+    "forbidden_inline_geometry_fields": [
+      "coordinates",
+      "geojson",
+      "wkt",
+      "bbox"
+    ]
+  },
+  "handoff": {
+    "output": "reviewed P14 authoring candidate only",
+    "canonical_writer": "server/atlas-p14-territory-geometry-service.js",
+    "application_requires_current_state_validation": true,
+    "review_artifact_itself_never_mutates_production": true
+  }
+}
