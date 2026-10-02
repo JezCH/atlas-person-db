@@ -4,6 +4,7 @@ const crypto = require("node:crypto");
 
 const CONTRACT_SCHEMA = "atlas-core-final-acceptance-contract/v2";
 const EVIDENCE_SCHEMA = "atlas-core-final-acceptance-evidence/v2";
+const P13_REQUIREMENT_ID = "ATLAS-RQ-0223";
 const SHA_RE = /^[0-9a-f]{40}$/;
 
 function stable(value) {
@@ -149,6 +150,7 @@ function evaluateAcceptance({
     schema:EVIDENCE_SCHEMA,
     version:2,
     core_version:"v2",
+    requirement_id:P13_REQUIREMENT_ID,
     generated:true,
     status,
     commit_sha:sha,
@@ -183,6 +185,7 @@ function assertGeneratedPass(report) {
 module.exports = Object.freeze({
   CONTRACT_SCHEMA,
   EVIDENCE_SCHEMA,
+  P13_REQUIREMENT_ID,
   validateContract,
   productionGateResult,
   evaluateAcceptance,
