@@ -5,10 +5,13 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { createMutationTransport, validateRequest } = require('../server/atlas-mutation-transport.js');
 
-test('validates mutation envelope', () => {
-  assert.equal(validateRequest({ operation: 'create', payload: { a: 1 } }).valid, true);
+test('validates only current mutation envelope operations', () => {
+  assert.equal(validateRequest({ operation: 'delete', payload: { id:'11111111-1111-4111-8111-111111111111' } }).valid, true);
+  for (const operation of ['create','update','import','reconcile']) {
+    assert.equal(validateRequest({ operation, payload:{} }).valid, false);
+  }
   assert.equal(validateRequest({ operation: 'unknown', payload: {} }).valid, false);
-  assert.equal(validateRequest({ operation: 'create' }).valid, false);
+  assert.equal(validateRequest({ operation: 'delete' }).valid, false);
 });
 
 test('rejects non-POST without calling service', async () => {
@@ -38,10 +41,10 @@ test('forwards validated request and preserves service outcome', async () => {
   });
   const response = await transport.handle({
     method: 'POST',
-    body: JSON.stringify({ operation: 'update', payload: { id: 7, value: { person_name: 'Ada' } }, request_id: 'req-1' })
+    body: JSON.stringify({ operation: 'delete', payload: { id: 7 }, request_id: 'req-1' })
   });
   assert.equal(response.status, 200);
-  assert.equal(seen.operation, 'update');
+  assert.equal(seen.operation, 'delete');
   assert.equal(seen.request_id, 'req-1');
   const body = JSON.parse(response.body);
   assert.equal(body.ok, true);
@@ -50,8 +53,8 @@ test('forwards validated request and preserves service outcome', async () => {
 
 test('maps validation blocker to conflict and transaction failure to server error', async () => {
   const blocked = createMutationTransport({ mutationService: { async mutate() { return { committed: false, validation_failures: [{ code: 'BLOCKED' }] }; } } });
-  assert.equal((await blocked.handle({ method: 'POST', body: { operation: 'create', payload: {} } })).status, 409);
+  assert.equal((await blocked.handle({ method: 'POST', body: { operation: 'delete', payload: { id:'x' } } })).status, 409);
 
   const failed = createMutationTransport({ mutationService: { async mutate() { return { committed: false, validation_failures: [], transaction_failure: 'boom' }; } } });
-  assert.equal((await failed.handle({ method: 'POST', body: { operation: 'create', payload: {} } })).status, 500);
+  assert.equal((await failed.handle({ method: 'POST', body: { operation: 'delete', payload: { id:'x' } } })).status, 500);
 });
