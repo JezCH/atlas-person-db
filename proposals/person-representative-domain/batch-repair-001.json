@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "cfe8e7aa4a67460c614c091f1ba542b0e9641e46",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Materialize only the seven PR #1795 R1 non-timeline legacy reviewed representative-domain decisions preserved in canonical timeline review evidence from PR #1551. Expected current state is NULL; preserve any non-null Production value and fail closed on conflict."
+  },
+  "review_scope": {
+    "task_key": "R1-NON-TIMELINE-LEGACY-DOMAIN-MATERIALIZATION-20261003",
+    "source_audit": "PR #1795",
+    "original_review_source": "PR #1551 / canonical person_timeline_dispositions.review_evidence.legacy_record.request_context.representative_domain",
+    "reviewed_assignments": 7,
+    "reviewed_holds": 0,
+    "rationale": "This is materialization-only repair. No historical/domain re-evaluation is performed. The seven exact UUIDs are the safe-to-batch non-timeline subset of the 13 reviewed-but-unmaterialized domain debts in PR #1795."
+  },
+  "entries": [
+    {
+      "person_id": "490b5966-63ec-4bdb-83e4-5d4fb1f25769",
+      "canonical_name_en": "Luo Guanzhong",
+      "preferred_name_ko": "나관중",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "9ce6a904-0164-4651-aa5b-50ab9a569909",
+      "canonical_name_en": "Samson",
+      "preferred_name_ko": "삼손",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "6ad5c0e4-2547-4e3a-86b0-c3b9eaa16b63",
+      "canonical_name_en": "Madhava of Sangamagrama",
+      "preferred_name_ko": "상가마그라마의 마다바",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "249a4aea-a45d-4249-b0c7-74574ba72b0f",
+      "canonical_name_en": "Yājñavalkya",
+      "preferred_name_ko": "야즈냐발키야",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "b9dd3e9b-3db4-4df1-9b08-3c6da9787c6e",
+      "canonical_name_en": "Wu Cheng'en",
+      "preferred_name_ko": "오승은",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "c00c48a7-ecec-458c-93ad-765a8abaea07",
+      "canonical_name_en": "Kabir",
+      "preferred_name_ko": "카비르",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "7407feff-345f-4573-8320-62de8d58d428",
+      "canonical_name_en": "Thiruvalluvar",
+      "preferred_name_ko": "티루발루바르",
+      "representative_domain": "culture"
+    }
+  ]
+}
