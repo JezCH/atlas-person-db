@@ -9,6 +9,7 @@ test('consolidated read surface selector accepts the routed read targets', () =>
   assert.equal(consolidatedRead.selectReadSurface({ query: { __atlas_read_surface: 'person' } }), 'person');
   assert.equal(consolidatedRead.selectReadSurface({ query: { __atlas_read_surface: 'polity' } }), 'polity');
   assert.equal(consolidatedRead.selectReadSurface({ query: { __atlas_read_surface: 'runtime-exclusions' } }), 'runtime-exclusions');
+  assert.equal(consolidatedRead.selectReadSurface({ query: { __atlas_read_surface: 'registration-queue' } }), 'registration-queue');
   assert.equal(consolidatedRead.selectReadSurface({ query: { __atlas_read_surface: 'admin-inspector' } }), 'admin-inspector');
   assert.equal(consolidatedRead.selectReadSurface({ query: { __atlas_read_surface: 'admin-system-status' } }), 'admin-system-status');
 });
