@@ -108,7 +108,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: atlas-core-final-acceptance-\${{ github.sha }}
+          name: atlas-core-final-acceptance-${{ github.sha }}
           path: artifacts/core-final-acceptance/
           if-no-files-found: warn
           retention-days: 90
@@ -117,9 +117,9 @@ jobs:
         if: always()
         shell: bash
         env:
-          GH_TOKEN: \${{ github.token }}
-          PRODUCTION_OUTCOME: \${{ steps.production.outcome }}
-          GENERATED_OUTCOME: \${{ steps.generated.outcome }}
+          GH_TOKEN: ${{ github.token }}
+          PRODUCTION_OUTCOME: ${{ steps.production.outcome }}
+          GENERATED_OUTCOME: ${{ steps.generated.outcome }}
         run: |
           set -euo pipefail
           state=failure
@@ -130,24 +130,24 @@ jobs:
           fi
           payload="$(jq -cn \
             --arg state "$state" \
-            --arg target_url "\${GITHUB_SERVER_URL}/\${GITHUB_REPOSITORY}/actions/runs/\${GITHUB_RUN_ID}" \
+            --arg target_url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --arg description "$description" \
             --arg context "ATLAS CORE Final Acceptance" \
             '{state:$state,target_url:$target_url,description:$description,context:$context}')"
           curl --fail-with-body --silent --show-error \
             --request POST \
-            -H "authorization: Bearer \${GH_TOKEN}" \
+            -H "authorization: Bearer ${GH_TOKEN}" \
             -H "accept: application/vnd.github+json" \
             -H "x-github-api-version: 2022-11-28" \
             --data "$payload" \
-            "\${GITHUB_API_URL}/repos/\${GITHUB_REPOSITORY}/statuses/\${GITHUB_SHA}"
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}"
 
       - name: Enforce generated final acceptance
         if: always()
         shell: bash
         env:
-          PRODUCTION_OUTCOME: \${{ steps.production.outcome }}
-          GENERATED_OUTCOME: \${{ steps.generated.outcome }}
+          PRODUCTION_OUTCOME: ${{ steps.production.outcome }}
+          GENERATED_OUTCOME: ${{ steps.generated.outcome }}
         run: |
           set -euo pipefail
           [[ "$PRODUCTION_OUTCOME" == "success" ]] || { echo 'Exact Production SHA readiness failed.' >&2; exit 1; }
