@@ -475,7 +475,14 @@
       "id": "ATLAS-RQ-0224",
       "status": "PENDING",
       "title": "Integrate the historical map contract",
-      "phase": "P14"
+      "phase": "P14",
+      "evidence_paths": [
+        "contracts/p14-territory-geometry-contract.v2.json",
+        "db/migrations/20261002_p14_territory_geometry_authority.sql",
+        "server/atlas-p14-territory-geometry-service.js",
+        "scripts/rehearse-p14-territory-geometry-authoring.mjs",
+        "tests/core-unit15-p14-boundary-seal.test.mjs"
+      ]
     },
     {
       "id": "ATLAS-RQ-0225",
