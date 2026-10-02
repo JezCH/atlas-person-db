@@ -253,10 +253,68 @@ function buildApprovedHandoffs(raw){
   })));
 }
 
+async function requireCanonicalRow(client,sql,params,code){
+  const result=await client.query(sql,params);
+  if(result.rowCount!==1) throw new Error(code);
+}
+async function verifyApprovedHandoffsAgainstCanonicalState(client,raw){
+  if(!client||typeof client.query!=="function") throw new Error("PostgreSQL client is required");
+  const handoffs=buildApprovedHandoffs(raw);
+  const checkedSources=new Set();
+  const checkedPolities=new Set();
+  const checkedGeometries=new Set();
+
+  for(const handoff of handoffs){
+    if(!checkedPolities.has(handoff.polity_id)){
+      await requireCanonicalRow(
+        client,
+        "select id::text from atlas_v2.polities where id=$1::uuid",
+        [handoff.polity_id],
+        "P14_RESEARCH_POLITY_UNRESOLVED"
+      );
+      checkedPolities.add(handoff.polity_id);
+    }
+
+    if(handoff.geometry.mode==="existing"&&!checkedGeometries.has(handoff.geometry.geometry_id)){
+      await requireCanonicalRow(
+        client,
+        "select id::text from atlas_v2.geometries where id=$1::uuid",
+        [handoff.geometry.geometry_id],
+        "P14_RESEARCH_GEOMETRY_UNRESOLVED"
+      );
+      checkedGeometries.add(handoff.geometry.geometry_id);
+    }
+
+    const sourceRefs=[
+      ...(handoff.geometry.mode==="candidate"?handoff.geometry.source_refs:[]),
+      ...handoff.territory.source_refs
+    ];
+    for(const ref of sourceRefs){
+      if(checkedSources.has(ref.source_id)) continue;
+      await requireCanonicalRow(
+        client,
+        "select id::text from atlas_v2.sources where id=$1::uuid",
+        [ref.source_id],
+        "P14_RESEARCH_SOURCE_UNRESOLVED"
+      );
+      checkedSources.add(ref.source_id);
+    }
+  }
+
+  return Object.freeze({
+    approved_handoffs:handoffs.length,
+    canonical_polities_verified:checkedPolities.size,
+    canonical_sources_verified:checkedSources.size,
+    canonical_existing_geometries_verified:checkedGeometries.size,
+    production_mutation_authorized:false
+  });
+}
+
 module.exports=Object.freeze({
   CONTRACT,
   normalizeGeometryBinding,
   normalizeTerritoryCandidate,
   normalizeReviewedResearchArtifact,
-  buildApprovedHandoffs
+  buildApprovedHandoffs,
+  verifyApprovedHandoffsAgainstCanonicalState
 });
