@@ -13,12 +13,12 @@
   "bootstrap": {
     "historical_queued_candidates": 646,
     "added_commerce_candidates": 55,
-    "total_admissions": 701,
     "historical_sources": [
       "GitHub issue #1374 comments",
       "GitHub issue #1375 comments"
     ],
-    "commerce_addition_basis": "user-approved world-commerce audit, 2026-10-03"
+    "commerce_addition_basis": "user-approved world-commerce audit, 2026-10-03",
+    "bootstrap_admissions": 701
   },
   "candidates": [
     {
