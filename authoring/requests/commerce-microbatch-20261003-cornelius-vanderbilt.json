@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "commerce-microbatch-20261003-cornelius-vanderbilt",
+  "person": {
+    "canonical_name_en": "Cornelius Vanderbilt",
+    "display_name_ko": "코닐리어스 밴더빌트",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-03",
+    "life_status_basis": "documented_death",
+    "representative_domain": "commerce"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-03",
+      "document_title": "코닐리어스 밴더빌트",
+      "url": "https://namu.wiki/w/%EC%BD%94%EB%8B%90%EB%A6%AC%EC%96%B4%EC%8A%A4%20%EB%B0%B4%EB%8D%94%EB%B9%8C%ED%8A%B8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Entrepreneur",
+    "role_display_name_ko": "기업가",
+    "start_year": 1810,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1877,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative transportation-business career begins with Vanderbilt's 1810 Staten Island–Manhattan ferry enterprise and runs through his documented shipping-and-railroad magnate career to 1877; the start is a business event, not his birth year."
+  },
+  "sources": [
+    {
+      "source_type": "government_reference",
+      "title": "Vanderbilt Mansion National Historic Site: Monument to the Gilded Age — National Park Service Teaching with Historic Places",
+      "canonical_url": "https://files.eric.ed.gov/fulltext/ED463989.pdf",
+      "citation_text": "The National Park Service lesson states that in 1810 sixteen-year-old Cornelius Vanderbilt began accumulating the family fortune by starting a ferry service between Staten Island and Manhattan.",
+      "locator": "Reading 1: The Vanderbilt Family Beginnings"
+    },
+    {
+      "source_type": "university_archive",
+      "title": "Cornelius Vanderbilt (1794-1877) biographical file — Vanderbilt University",
+      "canonical_url": "https://collections.library.vanderbilt.edu/repositories/4/resources/621",
+      "citation_text": "Vanderbilt University identifies Cornelius Vanderbilt as a successful nineteenth-century shipping and railroad magnate and records his 1794–1877 life dates.",
+      "locator": "Historical or Biographical Note"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-147",
+    "lane": "Lane A canonical registration",
+    "previous_review": "APPROVED / TIMELINE_ELIGIBLE / commerce / QUEUED / SS",
+    "review_inherited": true
+  }
+}
