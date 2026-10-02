@@ -199,9 +199,17 @@ async function createTerritoryRecord(client,raw){
     id=String(existing.rows[0].id).toLowerCase();
   }
 
+  const preSourceLive=await loadTerritoryRecord(client,id);
+  if(!preSourceLive||!sameTerritory(preSourceLive,record)) {
+    throw new Error("P14_TERRITORY_SEMANTIC_CONFLICT");
+  }
+
+  // Fail closed before mutating provenance. A request that collides on the
+  // semantic identity but disagrees on reviewed certainty/confidence must not
+  // be able to leave Source links behind.
   const addedSourceLinks=await appendTerritorySources(client,id,record.source_refs);
   const live=await loadTerritoryRecord(client,id);
-  if(!live||!sameTerritory(live,record)) throw new Error("P14_TERRITORY_SEMANTIC_CONFLICT");
+  if(!live||!sameTerritory(live,record)) throw new Error("P14_TERRITORY_READBACK_DRIFT");
   if(!requestedRefsPresent(live.source_refs,record.source_refs)) throw new Error("P14_TERRITORY_SOURCE_READBACK_DRIFT");
 
   return Object.freeze({
