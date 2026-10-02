@@ -1,0 +1,4830 @@
+{
+  "schema": "atlas-post-core-registration-obligation-debt-audit/v1",
+  "audit_id": "POST-CORE-LEGACY-REGISTRATION-OBLIGATION-DEBT-AUDIT-2026-10-02",
+  "captured_at": "2026-10-02T15:02:33.830Z",
+  "mutation_count": 0,
+  "baselines": {
+    "latest_main_sha": "50fda2d0ab9640fb2f91199f337f6469f2470a8e",
+    "production_deployed_sha": "908b10261b6288d3c38716cebc2cdd35f9f95b53",
+    "production_ref": "main",
+    "production_environment": "production",
+    "main_ahead_of_production": true,
+    "files_changed_between_production_and_main": [
+      "ATLAS_REQUIREMENTS.md",
+      "docs/ATLAS_CURRENT_WORKSTREAMS.md",
+      "docs/core/CORE_V2_FINAL_ACCEPTANCE.md",
+      "requirements/atlas-requirements.v1.json",
+      "scripts/verify-atlas-requirements.mjs"
+    ],
+    "registration_contract_paths_changed_between_production_and_main": []
+  },
+  "pipeline_verdict": {
+    "status": "NEW_REGISTRATION_PIPELINE_CURRENTLY_CLEAN",
+    "current_pipeline_defect_count": 0,
+    "basis": [
+      "Current executable registration contract integrates domain review, timeline disposition, NamuWiki decision, Person Sources, new-Polity spatial disposition handshake, Compile/Runtime closure.",
+      "CORE re-entry #1774-#1779 closes the concrete legacy registration-path gaps and rehearses them on fresh PostgreSQL.",
+      "No post-#1774 live Person registration cohort exists yet; verdict is executable-contract/rehearsal based rather than post-cutover live-cohort empirical proof."
+    ]
+  },
+  "counts": {
+    "persons": {
+      "total": 2089,
+      "missing_canonical_name_en": 0,
+      "missing_preferred_name_ko": 0,
+      "exact_normalized_en_duplicate_groups": 0,
+      "exact_normalized_ko_duplicate_groups": 0,
+      "retired_reference_residual": "NOT_MEASURED",
+      "static_registry_duplicate": "NOT_MEASURED"
+    },
+    "representative_domain": {
+      "valid_non_null": 1963,
+      "null_total": 126,
+      "exact_reviewed_assignment_unmaterialized": 13,
+      "reviewed_null": "NOT_MEASURED",
+      "unreviewed_null": "NOT_MEASURED",
+      "remaining_null_review_state_not_exposed": 113,
+      "invalid_value": 0,
+      "by_domain": {
+        "governance": 1345,
+        "technology": 37,
+        "religion": 79,
+        "military": 204,
+        "culture": 87,
+        "knowledge": 168,
+        "commerce": 15,
+        "exploration": 28
+      },
+      "note": "Canonical public domain source exposes value/null, not a durable reviewed-null discriminator. Do not infer the remaining NULL split."
+    },
+    "namuwiki": {
+      "linked": 1306,
+      "reviewed_not_found_with_reason": 635,
+      "reviewed_not_found_reason_missing": 86,
+      "no_decision": 62,
+      "invalid": 0,
+      "malformed_linked": 0
+    },
+    "timeline": {
+      "timeline": 1936,
+      "non_timeline_valid": 84,
+      "chronology_unresolved_valid": 57,
+      "legendary": 70,
+      "mythical": 14,
+      "other_reviewed_exclusion": 0,
+      "missing_disposition": 12,
+      "contradictory_state": 0,
+      "invalid": 0
+    },
+    "activities": {
+      "total": 2453,
+      "machine_structural_complete": 2453,
+      "zero_source": 0,
+      "semantic_duplicate_groups": 0,
+      "temporal_boundary_structural_debt": 0,
+      "relation_debt": 0,
+      "role_missing": 0,
+      "period_basis_missing": 0,
+      "confidence_missing": 0,
+      "ongoing": 0,
+      "chronology_status_distribution": {
+        "reviewed": 2139,
+        "exact_as_recorded": 294,
+        "reviewed_traditional_chronology_uncertain": 3,
+        "reviewed_stage2_approximate": 1,
+        "TRADITIONAL_RETROSPECTIVE_UNCERTAIN": 1,
+        "reviewed_stage2_phase": 8,
+        "reviewed_stage2_traditional_disputed": 1,
+        "reviewed_stage2_1590_boundary_uncertain_within_year": 2,
+        "reviewed_stage2_bolivia_1825_delegation_end": 1,
+        "reviewed_stage2_discontinuous_jhansi_rule": 2,
+        "reviewed_stage2_exact_term": 1
+      },
+      "historical_correctness_review_required": "NOT_MEASURED"
+    },
+    "source_provenance": {
+      "zero_source_activity": 0,
+      "canonical_source_uuid_per_link": "NOT_MEASURED",
+      "source_locator_completeness": "NOT_MEASURED",
+      "dangling_source_reference": "NOT_MEASURED",
+      "legacy_free_text_only": "NOT_MEASURED",
+      "source_identity_duplicate": "NOT_MEASURED",
+      "note": "Public Person read exposes source_count but not the full Source/link/locator inventory."
+    },
+    "polities": {
+      "total": 1180,
+      "linked_polities": 1158,
+      "orphan_polities": 22,
+      "activity_count": 2453,
+      "missing_en": 0,
+      "missing_ko": 0,
+      "missing_canonical_key": 0
+    },
+    "new_polity_spatial_obligation": {
+      "complete": "NOT_MEASURED",
+      "reviewed_hold": "NOT_MEASURED",
+      "missing": "NOT_MEASURED",
+      "reason": "Canonical atlas_v2.spatial_registration_dispositions is not exposed by the public read surface; do not infer lifecycle disposition from display spatial projection."
+    },
+    "runtime_parity": {
+      "normal_included": 2453,
+      "authoring_activity_count": 2453,
+      "intentional_excluded": 0,
+      "suspicious_mismatch": 0,
+      "authoring_only_unresolved": 0,
+      "runtime_orphan": 0,
+      "publication_current": true,
+      "authoring_matches_active_compile": true,
+      "projection_matches_active_compile": true,
+      "authoring_delta_since_compile": 0,
+      "active_compile": {
+        "compile_key": "runtime-person-politics-v1:49bf8d070db141f4bacc2dd4a9c48a84c04bb19ee3a5f19668cd4b2730c2f906",
+        "compiler_version": "runtime-person-politics-v1",
+        "input_fingerprint": "49bf8d070db141f4bacc2dd4a9c48a84c04bb19ee3a5f19668cd4b2730c2f906",
+        "output_fingerprint": "c19a757cba01793580e3b35b799250a23b52d8e38ed5798e3c2a9e4b831b2b9e",
+        "input_row_count": 2453,
+        "output_row_count": 2453,
+        "excluded_row_count": 0,
+        "exclusion_summary": {},
+        "compiled_at": "2026-09-30T22:37:04.377Z"
+      }
+    },
+    "exact_backlog": {
+      "item_count": 173,
+      "unique_person_count": 164,
+      "by_class": {
+        "LEGACY_DATA_DEBT": 111,
+        "REVIEW_BACKLOG": 62
+      },
+      "by_obligation": {
+        "representative_domain": 13,
+        "timeline_disposition": 12,
+        "namuwiki_absence_reason": 86,
+        "namuwiki_no_decision": 62
+      }
+    },
+    "valid_unknown_or_hold": {
+      "timeline_non_timeline_or_unresolved": 141
+    }
+  },
+  "exact_sets": {
+    "representative_domain_unmaterialized": [
+      {
+        "person_id": "c3128a85-ddde-4d28-9219-5715f8611b20",
+        "canonical_name_en": "Sima Yi",
+        "preferred_name_ko": "사마의",
+        "expected_domain": "governance",
+        "evidence": "PR #1767 reviewed companion assignment",
+        "dependency": "existing open PR #1767 / concurrent ownership; do not duplicate write"
+      },
+      {
+        "person_id": "dbac46ae-d3dc-4068-840f-46fedbdbd901",
+        "canonical_name_en": "Stilicho",
+        "preferred_name_ko": "스틸리코",
+        "expected_domain": "military",
+        "evidence": "PR #1767 reviewed companion assignment",
+        "dependency": "existing open PR #1767 / concurrent ownership; do not duplicate write"
+      },
+      {
+        "person_id": "45bdc34d-3a99-4034-b03d-c546c96608f9",
+        "canonical_name_en": "Vardan Mamikonian",
+        "preferred_name_ko": "바르단 마미코니안",
+        "expected_domain": "military",
+        "evidence": "PR #1767 reviewed companion assignment",
+        "dependency": "existing open PR #1767 / concurrent ownership; do not duplicate write"
+      },
+      {
+        "person_id": "f371e82b-33eb-4927-8b45-1c553ea81d4c",
+        "canonical_name_en": "Shashanka",
+        "preferred_name_ko": "샤샹카",
+        "expected_domain": "governance",
+        "evidence": "PR #1767 reviewed companion assignment",
+        "dependency": "existing open PR #1767 / concurrent ownership; do not duplicate write"
+      },
+      {
+        "person_id": "b774cec1-f3b0-46a9-8cd1-3414e74780a4",
+        "canonical_name_en": "Taira no Kiyomori",
+        "preferred_name_ko": "타이라노 키요모리",
+        "expected_domain": "governance",
+        "evidence": "PR #1767 reviewed companion assignment",
+        "dependency": "existing open PR #1767 / concurrent ownership; do not duplicate write"
+      },
+      {
+        "person_id": "f0c7abaa-7670-49d0-a82e-7b63fd1a62c3",
+        "canonical_name_en": "Tabinshwehti",
+        "preferred_name_ko": "타빈슈웨티",
+        "expected_domain": "governance",
+        "evidence": "PR #1767 reviewed companion assignment",
+        "dependency": "existing open PR #1767 / concurrent ownership; do not duplicate write"
+      },
+      {
+        "person_id": "490b5966-63ec-4bdb-83e4-5d4fb1f25769",
+        "canonical_name_en": "Luo Guanzhong",
+        "preferred_name_ko": "나관중",
+        "expected_domain": "culture",
+        "evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain",
+        "dependency": null
+      },
+      {
+        "person_id": "9ce6a904-0164-4651-aa5b-50ab9a569909",
+        "canonical_name_en": "Samson",
+        "preferred_name_ko": "삼손",
+        "expected_domain": "military",
+        "evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain",
+        "dependency": null
+      },
+      {
+        "person_id": "6ad5c0e4-2547-4e3a-86b0-c3b9eaa16b63",
+        "canonical_name_en": "Madhava of Sangamagrama",
+        "preferred_name_ko": "상가마그라마의 마다바",
+        "expected_domain": "knowledge",
+        "evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain",
+        "dependency": null
+      },
+      {
+        "person_id": "249a4aea-a45d-4249-b0c7-74574ba72b0f",
+        "canonical_name_en": "Yājñavalkya",
+        "preferred_name_ko": "야즈냐발키야",
+        "expected_domain": "knowledge",
+        "evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain",
+        "dependency": null
+      },
+      {
+        "person_id": "b9dd3e9b-3db4-4df1-9b08-3c6da9787c6e",
+        "canonical_name_en": "Wu Cheng'en",
+        "preferred_name_ko": "오승은",
+        "expected_domain": "culture",
+        "evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain",
+        "dependency": null
+      },
+      {
+        "person_id": "c00c48a7-ecec-458c-93ad-765a8abaea07",
+        "canonical_name_en": "Kabir",
+        "preferred_name_ko": "카비르",
+        "expected_domain": "culture",
+        "evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain",
+        "dependency": null
+      },
+      {
+        "person_id": "7407feff-345f-4573-8320-62de8d58d428",
+        "canonical_name_en": "Thiruvalluvar",
+        "preferred_name_ko": "티루발루바르",
+        "expected_domain": "culture",
+        "evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain",
+        "dependency": null
+      }
+    ],
+    "timeline_missing": [
+      {
+        "person_id": "c3128a85-ddde-4d28-9219-5715f8611b20",
+        "canonical_name_en": "Sima Yi",
+        "preferred_name_ko": "사마의",
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      {
+        "person_id": "dbac46ae-d3dc-4068-840f-46fedbdbd901",
+        "canonical_name_en": "Stilicho",
+        "preferred_name_ko": "스틸리코",
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      {
+        "person_id": "45bdc34d-3a99-4034-b03d-c546c96608f9",
+        "canonical_name_en": "Vardan Mamikonian",
+        "preferred_name_ko": "바르단 마미코니안",
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      {
+        "person_id": "a7566fc2-ae57-480e-b2d2-43557a49b7b9",
+        "canonical_name_en": "Odoacer",
+        "preferred_name_ko": "오도아케르",
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      {
+        "person_id": "f371e82b-33eb-4927-8b45-1c553ea81d4c",
+        "canonical_name_en": "Shashanka",
+        "preferred_name_ko": "샤샹카",
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      {
+        "person_id": "581d5a01-d18c-4519-94dd-7c5b2b7a1deb",
+        "canonical_name_en": "Musa ibn Nusayr",
+        "preferred_name_ko": "무사 이븐 누사이르",
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      {
+        "person_id": "1925f6f3-4c81-4293-954a-bddf447d841a",
+        "canonical_name_en": "Nur ad-Din Zengi",
+        "preferred_name_ko": "누르 앗 딘",
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      {
+        "person_id": "b774cec1-f3b0-46a9-8cd1-3414e74780a4",
+        "canonical_name_en": "Taira no Kiyomori",
+        "preferred_name_ko": "타이라노 키요모리",
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      {
+        "person_id": "363adcde-3b46-40f5-ad83-65733c7d745d",
+        "canonical_name_en": "Qutb-ud-Din Aibak",
+        "preferred_name_ko": "쿠트브 웃 딘 아이바크",
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      {
+        "person_id": "a1b314bf-7b18-4489-aae3-e1fa7b94bab6",
+        "canonical_name_en": "Přemysl Ottokar II",
+        "preferred_name_ko": "오타카르 2세",
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      {
+        "person_id": "0d6177bb-e99e-43a0-9587-67eee5257706",
+        "canonical_name_en": "Raden Wijaya",
+        "preferred_name_ko": "라덴 위자야",
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      {
+        "person_id": "f0c7abaa-7670-49d0-a82e-7b63fd1a62c3",
+        "canonical_name_en": "Tabinshwehti",
+        "preferred_name_ko": "타빈슈웨티",
+        "activity_count": 1,
+        "historicity": "historical"
+      }
+    ],
+    "namuwiki_absence_reason_debt": [
+      {
+        "person_id": "df30b154-09b3-4a4e-9f35-1591ac30391f",
+        "canonical_name_en": "Saichō",
+        "preferred_name_ko": "사이초",
+        "checked_at": "2026-09-28",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "dd6529c5-de4d-4f20-9ba7-187f552e2d90",
+        "canonical_name_en": "Kūkai",
+        "preferred_name_ko": "구카이",
+        "checked_at": "2026-09-28",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "d9b85876-9186-4fec-bf01-50e3fd877f61",
+        "canonical_name_en": "Uicheon",
+        "preferred_name_ko": "의천",
+        "checked_at": "2026-09-28",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f9b2f826-c180-4bbf-accc-ade5e98afe61",
+        "canonical_name_en": "Mäxmüd of Kazan",
+        "preferred_name_ko": "마흐무드 칸",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "eb8ddc8c-51d3-4366-9f77-e6f39bfa2b89",
+        "canonical_name_en": "Shin Sawbu",
+        "preferred_name_ko": "신 사우부",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "d9a11477-71c7-49b1-86b1-bacc541579a7",
+        "canonical_name_en": "Bolkiah",
+        "preferred_name_ko": "볼키아",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f0798d19-da83-4899-8de8-a163668542c9",
+        "canonical_name_en": "Caterina Sforza",
+        "preferred_name_ko": "카테리나 스포르차",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "d9d5ab1d-8027-4f93-8255-8006c620f861",
+        "canonical_name_en": "Frederick I of Denmark",
+        "preferred_name_ko": "프레데리크 1세",
+        "checked_at": "2026-08-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ec081f93-d616-4791-90dd-7012783b81e0",
+        "canonical_name_en": "Coya Cusirimay",
+        "preferred_name_ko": "코야 쿠시리마이",
+        "checked_at": "2026-09-02",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f9f68f32-38d9-4e60-8755-bd2ca88145b4",
+        "canonical_name_en": "Anacaona",
+        "preferred_name_ko": "아나카오나",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "d7f5ceb3-99b6-448b-81d7-3d27fb4b7941",
+        "canonical_name_en": "Amara Dunqas",
+        "preferred_name_ko": "아마라 둔카스",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "d9beb4e4-5652-4f67-b373-cadb0e32e4b0",
+        "canonical_name_en": "Wang Yangming",
+        "preferred_name_ko": "왕양명",
+        "checked_at": "2026-09-28",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "fc299f9e-a64c-410a-b329-3bfa2cb43ffe",
+        "canonical_name_en": "Pier Gerlofs Donia",
+        "preferred_name_ko": "피어 헤를로프스 도니아",
+        "checked_at": "2026-09-20",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e63755de-3533-4126-8bd3-f815cf9df804",
+        "canonical_name_en": "Jürgen Wullenwever",
+        "preferred_name_ko": "위르겐 불렌베버",
+        "checked_at": "2026-09-02",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "dd459595-dcd4-421c-bded-9e0d2bcc502d",
+        "canonical_name_en": "Antonio de Mendoza",
+        "preferred_name_ko": "안토니오 데 멘도사",
+        "checked_at": "2026-08-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "d9211d47-fe6b-587d-a309-93f509403ff5",
+        "canonical_name_en": "Bayinnaung",
+        "preferred_name_ko": "버인나웅",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ecffd8bf-7aa4-4a59-a405-6f151d61ace2",
+        "canonical_name_en": "Frederick II of Denmark",
+        "preferred_name_ko": "프레데리크 2세",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f7866f08-988d-419d-affb-4faff37cc093",
+        "canonical_name_en": "Maharana Pratap",
+        "preferred_name_ko": "마하라나 프라탑",
+        "checked_at": "2026-09-26",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ff32bba5-85ff-4cef-9dfd-e2e9516e67da",
+        "canonical_name_en": "Francis Drake",
+        "preferred_name_ko": "프랜시스 드레이크",
+        "checked_at": "2026-09-20",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "da2fb26b-b2b5-46fe-aa15-4ff269c80b49",
+        "canonical_name_en": "Dular Bombogor",
+        "preferred_name_ko": "둘라르 봄보고르",
+        "checked_at": "2026-08-28",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e4deb023-5426-4268-9f82-286349dae9a1",
+        "canonical_name_en": "Aurangzeb",
+        "preferred_name_ko": "아우랑제브",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e0383913-ad19-46ec-9740-d3a23874be90",
+        "canonical_name_en": "Henry Morgan",
+        "preferred_name_ko": "헨리 모건",
+        "checked_at": "2026-09-20",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "eb95c602-1991-4886-bcae-f973035744cc",
+        "canonical_name_en": "Tamanend",
+        "preferred_name_ko": "타마넨드",
+        "checked_at": "2026-09-01",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "db3e1ca1-3607-4710-8383-39c692d5e2f9",
+        "canonical_name_en": "Payoreva",
+        "preferred_name_ko": "파요레바",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e5229004-059b-40a9-bd7a-b8c019a095fb",
+        "canonical_name_en": "Azim ud-Din I",
+        "preferred_name_ko": "아짐 우드딘 1세",
+        "checked_at": "2026-09-01",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ed1fe97a-4b23-4d17-b31c-886124a08862",
+        "canonical_name_en": "Chisli",
+        "preferred_name_ko": "치슬리",
+        "checked_at": "2026-09-01",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e555d224-ab19-419a-9524-a0b14703e09e",
+        "canonical_name_en": "Alexander I of Russia",
+        "preferred_name_ko": "알렉산드르 1세",
+        "checked_at": "2026-08-28",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e495cc46-9a28-4b5f-829b-53438f1788ed",
+        "canonical_name_en": "Gregor MacGregor",
+        "preferred_name_ko": "그레거 맥그리거",
+        "checked_at": "2026-09-02",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e27c4641-70c6-4e6f-b65b-bcc24efd26a3",
+        "canonical_name_en": "Ghezo",
+        "preferred_name_ko": "게조",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "edff14cc-fa99-4d42-800c-037e10d8018e",
+        "canonical_name_en": "Akaitcho",
+        "preferred_name_ko": "아카이초",
+        "checked_at": "2026-09-02",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "dc657ae4-d13f-4477-ada4-7786db7682d2",
+        "canonical_name_en": "Ismail Berzeg",
+        "preferred_name_ko": "이스마일 베르제그",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ddf3c13c-4c1a-4ce5-ab0f-f07ed1067e45",
+        "canonical_name_en": "Francisco Morazán",
+        "preferred_name_ko": "프란시스코 모라산",
+        "checked_at": "2026-09-01",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "de41d98d-2ca9-5858-ac9f-1de3cc7c8136",
+        "canonical_name_en": "Harriet Tubman",
+        "preferred_name_ko": "해리엇 터브먼",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e10fcad7-6e2f-5567-bfc7-fca4855101c7",
+        "canonical_name_en": "Lakshmibai",
+        "preferred_name_ko": "락슈미 바이",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e5876043-0b93-4b7d-90d5-3fa9ce48c547",
+        "canonical_name_en": "Muteesa I of Buganda",
+        "preferred_name_ko": "무테사 1세",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "d8b1f134-5ffd-428e-8139-8305a9e9440f",
+        "canonical_name_en": "Orélie-Antoine de Tounens",
+        "preferred_name_ko": "오렐리 앙투안 드 투낭",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "db627afc-d6e5-4bb8-8033-0a687c2360a0",
+        "canonical_name_en": "Roman Nose (Woqini)",
+        "preferred_name_ko": "로만 노즈(워키니)",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e0130004-997a-4d17-9e6c-a4d60465ad8c",
+        "canonical_name_en": "Mbatian",
+        "preferred_name_ko": "음바티안",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e0427b1c-86c5-4be2-9cc6-02725e09acfb",
+        "canonical_name_en": "John A. Macdonald",
+        "preferred_name_ko": "존 A. 맥도널드",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ea9b780f-d5fa-46af-98fc-c0d7803af1cf",
+        "canonical_name_en": "Ferdinand de Lesseps",
+        "preferred_name_ko": "페르디낭 드 레셉스",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f65616ef-e2cc-4979-afad-b644e7cf91f0",
+        "canonical_name_en": "Barghash bin Said",
+        "preferred_name_ko": "바르가시 빈 사이드",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e13d9966-0dc2-4b88-a225-cb9df8f1d690",
+        "canonical_name_en": "Chief Joseph",
+        "preferred_name_ko": "조지프 추장",
+        "checked_at": "2026-09-01",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "dbae940b-2d8f-422a-be03-7cb101f20820",
+        "canonical_name_en": "Osh-Tisch",
+        "preferred_name_ko": "오시티시",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "dae6c092-4e79-4b83-ae1f-6d3363ebe43b",
+        "canonical_name_en": "Geronimo",
+        "preferred_name_ko": "제로니모",
+        "checked_at": "2026-08-28",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f04525f7-52fa-43d4-815a-c134ae9c0670",
+        "canonical_name_en": "Liu Yongfu",
+        "preferred_name_ko": "류융푸",
+        "checked_at": "2026-09-02",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f4c043fe-e672-4090-8345-70df0df0b9b3",
+        "canonical_name_en": "Joe Capilano",
+        "preferred_name_ko": "조 캐필라노",
+        "checked_at": "2026-08-28",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e4407670-323a-4597-9db3-288ea50d7f61",
+        "canonical_name_en": "Manuel Amador Guerrero",
+        "preferred_name_ko": "마누엘 아마도르 게레로",
+        "checked_at": "2026-08-28",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ee2d9190-dccf-406f-94cb-876b748c8a1b",
+        "canonical_name_en": "Billy Hughes",
+        "preferred_name_ko": "빌리 휴스",
+        "checked_at": "2026-08-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e65abc3c-7705-4373-96dc-36007d988ad0",
+        "canonical_name_en": "Hamad Pasha al-Sufi",
+        "preferred_name_ko": "하마드 파샤 알수피",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "dc1fe0cd-75b6-415d-9dcf-7d5575332371",
+        "canonical_name_en": "Grigory Choros-Gurkin",
+        "preferred_name_ko": "그리고리 초로스구르킨",
+        "checked_at": "2026-09-01",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "d89243ad-27e8-4bfc-a984-3aad0e909e2c",
+        "canonical_name_en": "Donduk Kuular",
+        "preferred_name_ko": "돈두크 쿠울라르",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ec04bfdb-fa98-43f1-b5eb-7cb8461bcfda",
+        "canonical_name_en": "Sabit Damolla",
+        "preferred_name_ko": "사비트 다몰라",
+        "checked_at": "2026-09-02",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "efbba157-ccf2-43f9-8544-e29f54240d34",
+        "canonical_name_en": "Michael Joseph Savage",
+        "preferred_name_ko": "마이클 조지프 새비지",
+        "checked_at": "2026-08-28",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e313c5ef-779c-40b2-ab4c-0555160d5f85",
+        "canonical_name_en": "Howard Walter Florey",
+        "preferred_name_ko": "하워드 플로리",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ecef9995-b6e5-4792-bd31-c690f1bec2b9",
+        "canonical_name_en": "Pedro Aguirre Cerda",
+        "preferred_name_ko": "페드로 아기레 세르다",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e1494e6e-b6cd-49f1-a79f-9ce18120d6cb",
+        "canonical_name_en": "Olive Yang",
+        "preferred_name_ko": "올리브 양",
+        "checked_at": "2026-09-01",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e68a74a8-0ed2-43c9-88cc-7e96a015c5aa",
+        "canonical_name_en": "Nikolaos Plastiras",
+        "preferred_name_ko": "니콜라오스 플라스티라스",
+        "checked_at": "2026-09-08",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e4d1ce89-3991-417d-b513-75f6714484d7",
+        "canonical_name_en": "Albert Kalonji",
+        "preferred_name_ko": "알베르 칼론지",
+        "checked_at": "2026-09-01",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f43870d3-72de-49c5-920d-0b2d328e673e",
+        "canonical_name_en": "Hamid Idris Awate",
+        "preferred_name_ko": "하미드 이드리스 아와테",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e751fef4-e421-43d5-ae87-407682fd9196",
+        "canonical_name_en": "Mohamed Siad Barre",
+        "preferred_name_ko": "모하메드 시아드 바레",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "deeb70c3-c0f6-432c-bc57-8c5055f9e24d",
+        "canonical_name_en": "Olof Palme",
+        "preferred_name_ko": "올로프 팔메",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ed7c719d-cd21-4dad-955c-1f37fb1ad1fc",
+        "canonical_name_en": "Sheikh Mujibur Rahman",
+        "preferred_name_ko": "셰이크 무지부르 라흐만",
+        "checked_at": "2026-09-02",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e85d2eaf-3cff-4dd0-b756-b1a3d6c181fa",
+        "canonical_name_en": "Gough Whitlam",
+        "preferred_name_ko": "고프 휘틀럼",
+        "checked_at": "2026-08-31",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f53e308b-9762-4a0a-8f8b-a683d32ef98d",
+        "canonical_name_en": "Ogdo Aksyonova",
+        "preferred_name_ko": "오그도 악쇼노바",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f2e78550-ad43-4a54-bce2-7fdf3afafdc4",
+        "canonical_name_en": "Jaber Al-Ahmad Al-Jaber Al-Sabah",
+        "preferred_name_ko": "자베르 알-아흐마드 알-자베르 알-사바",
+        "checked_at": "2026-08-26",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ffc80ccf-da01-44dc-b2f7-129c00bb876a",
+        "canonical_name_en": "Galarrwuy Yunupingu",
+        "preferred_name_ko": "갈라루이 유누핑구",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "eaefe5ae-a363-43e6-80d2-c176e1001e06",
+        "canonical_name_en": "Kurt Waldheim",
+        "preferred_name_ko": "쿠르트 발트하임",
+        "checked_at": "2026-09-01",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "db8ab8ed-cc41-4ce5-a4a4-baa206758566",
+        "canonical_name_en": "Idriss Déby",
+        "preferred_name_ko": "이드리스 데비",
+        "checked_at": "2026-09-01",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e0fe056b-3d54-4ccd-9ca1-c077c283a069",
+        "canonical_name_en": "Gush X'een",
+        "preferred_name_ko": "거쉬 신",
+        "checked_at": "2026-08-27",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e63e6d59-1589-46c7-a105-ae20f3920d11",
+        "canonical_name_en": "Guacanaoma",
+        "preferred_name_ko": "과카나오마",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "efb47d00-8eab-4309-8207-f34d207e1ad8",
+        "canonical_name_en": "Lawtylywalyn",
+        "preferred_name_ko": "라우틸리왈린",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f1f33e88-5bba-472c-9eff-9c5bf97ded2f",
+        "canonical_name_en": "Romulus",
+        "preferred_name_ko": "로물루스",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ebd1a7e3-6a1a-4e02-87f6-7ec5aacf0641",
+        "canonical_name_en": "Bjorn Ironside",
+        "preferred_name_ko": "비요른 아이언사이드",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "dc3208bb-a94f-4e75-8ddb-8810d61ddc16",
+        "canonical_name_en": "Sardus",
+        "preferred_name_ko": "사르두스",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "eaa8060a-6a93-4734-a38d-5222ebd0cb67",
+        "canonical_name_en": "Siward Barn",
+        "preferred_name_ko": "시워드 반",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ecc64877-3cc8-48c3-a231-c327af657a45",
+        "canonical_name_en": "Achish (Abimelech)",
+        "preferred_name_ko": "아기스(아비멜렉)",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f974e5e7-8c90-4693-8bb5-32bb709ae84d",
+        "canonical_name_en": "Ansenuza",
+        "preferred_name_ko": "안세누사",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "ff4da770-cbf1-452c-991f-6d7c2aa88a58",
+        "canonical_name_en": "Edward Blondin",
+        "preferred_name_ko": "에드워드 블론딘",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "dace6b3a-6ac8-45de-b63d-fbe0bd6bd696",
+        "canonical_name_en": "U Kix Chan",
+        "preferred_name_ko": "우 키시 찬",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f231e67f-d1e8-4e9a-8e6e-c3bef1827566",
+        "canonical_name_en": "Wëikayoma",
+        "preferred_name_ko": "웨이카요마",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "fa864dce-028f-45e9-b86b-2395e489cecf",
+        "canonical_name_en": "Ngurunderi",
+        "preferred_name_ko": "응구룬데리",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f2eb1ca0-b37d-5497-a40d-a5df55ee8a2c",
+        "canonical_name_en": "Kupe",
+        "preferred_name_ko": "쿠페",
+        "checked_at": "2026-08-26",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "e4e96660-351c-4d5c-afbb-baffcc1c1ae5",
+        "canonical_name_en": "Tyushtya",
+        "preferred_name_ko": "튜시탸",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "eba0e96c-dc82-47e1-96de-54201f3b4757",
+        "canonical_name_en": "Pálnatóki",
+        "preferred_name_ko": "팔나토키",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "f3cde17e-0d51-486d-8d45-3c66169e8daf",
+        "canonical_name_en": "Protis",
+        "preferred_name_ko": "프로티스",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      },
+      {
+        "person_id": "da7f43c1-aea9-4be3-a887-096f9a897ec9",
+        "canonical_name_en": "Qutb al-Din Tahamtan of Hormuz",
+        "preferred_name_ko": "호르무즈의 쿠트브 앗딘 타함탄",
+        "checked_at": "2026-09-30",
+        "review_state": "reviewed_absent"
+      }
+    ],
+    "namuwiki_no_decision": [
+      {
+        "person_id": "9ab1eaed-9c12-43d4-ad55-ad62bdd3dc94",
+        "canonical_name_en": "Richard Arkwright",
+        "preferred_name_ko": "리처드 아크라이트"
+      },
+      {
+        "person_id": "9a8272f7-5bd4-4cf8-80b1-8fc79d3afdd9",
+        "canonical_name_en": "Joseph Marie Jacquard",
+        "preferred_name_ko": "조제프 마리 자카르"
+      },
+      {
+        "person_id": "97f308a5-a15f-4c39-a68f-40b201745266",
+        "canonical_name_en": "Sir George Cayley",
+        "preferred_name_ko": "조지 케일리"
+      },
+      {
+        "person_id": "d51d91b2-cf30-4743-84d2-c9725795418c",
+        "canonical_name_en": "John Dalton",
+        "preferred_name_ko": "존 돌턴"
+      },
+      {
+        "person_id": "9ee7c911-c60d-4a88-b299-7a25e6438d63",
+        "canonical_name_en": "Mayer Amschel Rothschild",
+        "preferred_name_ko": "마이어 암셸 로스차일드"
+      },
+      {
+        "person_id": "cf84dcb3-19a0-4299-90ba-aebe7569ed7e",
+        "canonical_name_en": "Jonathan Lambert",
+        "preferred_name_ko": "조너선 램버트"
+      },
+      {
+        "person_id": "ae5b60cd-0113-4aea-8bc7-facb989fc2bf",
+        "canonical_name_en": "George Stephenson",
+        "preferred_name_ko": "조지 스티븐슨"
+      },
+      {
+        "person_id": "a3f4021f-e959-4de9-991e-40d04367693c",
+        "canonical_name_en": "Dohasan",
+        "preferred_name_ko": "도하산"
+      },
+      {
+        "person_id": "b811a120-602e-4b39-9466-817217072f83",
+        "canonical_name_en": "Edgar Degas",
+        "preferred_name_ko": "에드가 드가"
+      },
+      {
+        "person_id": "abf94244-9812-4e4c-b63f-bec4a25b486a",
+        "canonical_name_en": "Karl Benz",
+        "preferred_name_ko": "카를 벤츠"
+      },
+      {
+        "person_id": "ad51aa2c-a9f6-4332-ac92-ba1ee7b8d85c",
+        "canonical_name_en": "William James",
+        "preferred_name_ko": "윌리엄 제임스"
+      },
+      {
+        "person_id": "b5cce601-aeca-4e4f-af80-5eda81b073fe",
+        "canonical_name_en": "Edvard Munch",
+        "preferred_name_ko": "에드바르 뭉크"
+      },
+      {
+        "person_id": "b7f3c0c0-c021-4e71-b7c2-0f0006ce2482",
+        "canonical_name_en": "Henrik Ibsen",
+        "preferred_name_ko": "헨리크 입센"
+      },
+      {
+        "person_id": "d54ba641-531c-4f1d-9b69-bf0660440754",
+        "canonical_name_en": "Rabih az-Zubayr",
+        "preferred_name_ko": "라비흐 아즈주바이르"
+      },
+      {
+        "person_id": "a55eb02b-e452-4ac3-8329-446965ac2b37",
+        "canonical_name_en": "Wilhelm Röntgen",
+        "preferred_name_ko": "빌헬름 뢴트겐"
+      },
+      {
+        "person_id": "bd2f973b-b22b-47d2-be8f-1d0a4741229d",
+        "canonical_name_en": "Chief Isaac",
+        "preferred_name_ko": "아이작 추장"
+      },
+      {
+        "person_id": "ad947f4b-dc3a-4557-b871-54bbbe484d24",
+        "canonical_name_en": "Guglielmo Marconi",
+        "preferred_name_ko": "굴리엘모 마르코니"
+      },
+      {
+        "person_id": "c6d5ccc1-6a85-46df-a0b1-e788c4070098",
+        "canonical_name_en": "Jacob Morenga",
+        "preferred_name_ko": "야코프 모렝가"
+      },
+      {
+        "person_id": "c3b35168-17a0-4b4b-9468-b46c368ab257",
+        "canonical_name_en": "Henry Ford",
+        "preferred_name_ko": "헨리 포드"
+      },
+      {
+        "person_id": "a643a787-7278-4b0c-a787-10b3f580c2f0",
+        "canonical_name_en": "Rabindranath Tagore",
+        "preferred_name_ko": "라빈드라나트 타고르"
+      },
+      {
+        "person_id": "9f68b83e-c9e5-43e6-9bf6-0cf38d839bd3",
+        "canonical_name_en": "Marcel Proust",
+        "preferred_name_ko": "마르셀 프루스트"
+      },
+      {
+        "person_id": "d78866ad-a877-4a2a-9226-5cf2f73f5cba",
+        "canonical_name_en": "Srinivasa Ramanujan",
+        "preferred_name_ko": "스리니바사 라마누잔"
+      },
+      {
+        "person_id": "d3a55a20-50cb-4444-b03a-5c1e3b253df9",
+        "canonical_name_en": "Frederick Banting",
+        "preferred_name_ko": "프레더릭 밴팅"
+      },
+      {
+        "person_id": "c0d04b34-c399-44fe-bbd9-897dbd826146",
+        "canonical_name_en": "Satyendra Nath Bose",
+        "preferred_name_ko": "사티엔드라 나트 보스"
+      },
+      {
+        "person_id": "c3586f40-8c6d-4d97-a818-da00dc57b22a",
+        "canonical_name_en": "Paul Dirac",
+        "preferred_name_ko": "폴 디랙"
+      },
+      {
+        "person_id": "8fa5444d-6e2a-4734-a7d3-739496955a58",
+        "canonical_name_en": "Stefan Banach",
+        "preferred_name_ko": "스테판 바나흐"
+      },
+      {
+        "person_id": "b8fae22e-19f3-4565-9feb-cbd27579c8cd",
+        "canonical_name_en": "Walt Disney",
+        "preferred_name_ko": "월트 디즈니"
+      },
+      {
+        "person_id": "b9bf1082-34e6-4337-bd35-0ec5778123a0",
+        "canonical_name_en": "J. R. R. Tolkien",
+        "preferred_name_ko": "J. R. R. 톨킨"
+      },
+      {
+        "person_id": "ace071bf-feab-44aa-92a6-3fca50a93303",
+        "canonical_name_en": "Julius Rosenberg",
+        "preferred_name_ko": "줄리어스 로젠버그"
+      },
+      {
+        "person_id": "a9a2cef9-fbf8-4a46-8d3c-f41b6d78e6c2",
+        "canonical_name_en": "Malcom McLean",
+        "preferred_name_ko": "맬컴 매클레인"
+      },
+      {
+        "person_id": "b60799c7-4707-42fe-9613-2a2dfb1c960c",
+        "canonical_name_en": "Chien-Shiung Wu",
+        "preferred_name_ko": "우젠슝"
+      },
+      {
+        "person_id": "c075303a-4f0f-4652-bd0e-64e4917676b0",
+        "canonical_name_en": "Toni Morrison",
+        "preferred_name_ko": "토니 모리슨"
+      },
+      {
+        "person_id": "c1e9432c-5986-4f2b-accb-392069b87e6f",
+        "canonical_name_en": "Nyatri Tsenpo",
+        "preferred_name_ko": "냐트리 첸포"
+      },
+      {
+        "person_id": "9c60171d-7f6a-4099-9b99-7e085e702a5f",
+        "canonical_name_en": "Nunuku-whenua",
+        "preferred_name_ko": "누누쿠훼누아"
+      },
+      {
+        "person_id": "a0f6650d-00aa-47ef-ac11-2c1b5d170166",
+        "canonical_name_en": "Niall Noígíallach",
+        "preferred_name_ko": "니얼 노이기알라흐"
+      },
+      {
+        "person_id": "cbe5911a-6462-4ff5-9e33-83ca0277b3e5",
+        "canonical_name_en": "Daji",
+        "preferred_name_ko": "달기"
+      },
+      {
+        "person_id": "9d317619-d549-4051-b8a1-46cd44604d94",
+        "canonical_name_en": "Ragnar Lodbrok",
+        "preferred_name_ko": "라그나르 로드브로크"
+      },
+      {
+        "person_id": "a38c2f11-394c-490f-83f4-b290fa85b54d",
+        "canonical_name_en": "Moses",
+        "preferred_name_ko": "모세"
+      },
+      {
+        "person_id": "98d52f4f-ad3d-4cab-aae9-0c4eb900ac2a",
+        "canonical_name_en": "Dragoș of Moldavia",
+        "preferred_name_ko": "몰다비아의 드라고슈"
+      },
+      {
+        "person_id": "9ce6a904-0164-4651-aa5b-50ab9a569909",
+        "canonical_name_en": "Samson",
+        "preferred_name_ko": "삼손"
+      },
+      {
+        "person_id": "d322b829-aef3-4e37-aa76-6aac0e1be7c1",
+        "canonical_name_en": "Xochitl",
+        "preferred_name_ko": "소치틀"
+      },
+      {
+        "person_id": "b9f30122-e970-4119-a2ad-3327413b7dd6",
+        "canonical_name_en": "Aeetes",
+        "preferred_name_ko": "아이에테스"
+      },
+      {
+        "person_id": "9a8d68f4-8cd6-45cc-952c-7488a6bc3c6a",
+        "canonical_name_en": "ʻAhoʻeitu",
+        "preferred_name_ko": "아호에이투"
+      },
+      {
+        "person_id": "af74e8a0-4abc-4486-bdf7-d64303f74b42",
+        "canonical_name_en": "Aliguyon",
+        "preferred_name_ko": "알리구욘"
+      },
+      {
+        "person_id": "b9dd3e9b-3db4-4df1-9b08-3c6da9787c6e",
+        "canonical_name_en": "Wu Cheng'en",
+        "preferred_name_ko": "오승은"
+      },
+      {
+        "person_id": "b165d74c-0e94-4584-b71e-81a763722a04",
+        "canonical_name_en": "Lady of Huarmey",
+        "preferred_name_ko": "우아르메이의 귀부인"
+      },
+      {
+        "person_id": "d62c171a-43c1-4548-a533-e6ebba22f75e",
+        "canonical_name_en": "Yu the Great",
+        "preferred_name_ko": "우왕"
+      },
+      {
+        "person_id": "b341256a-cfe9-497a-9594-f7031296c923",
+        "canonical_name_en": "Great Peacemaker (Deganawida)",
+        "preferred_name_ko": "위대한 평화중재자(데가나위다)"
+      },
+      {
+        "person_id": "9cefc952-fef5-4151-b2c7-6d97b4c23b36",
+        "canonical_name_en": "Ntare I Rushatsi Cambarantama",
+        "preferred_name_ko": "은타레 1세 루샤치 캄바란타마"
+      },
+      {
+        "person_id": "c1871bf4-30ad-4bb3-8534-2d26e20fe583",
+        "canonical_name_en": "Nkongolo Mwamba",
+        "preferred_name_ko": "응콩골로 음왐바"
+      },
+      {
+        "person_id": "8f32ca07-5a74-4aa9-95e8-7010c8b2c8f0",
+        "canonical_name_en": "Javraganak",
+        "preferred_name_ko": "자브라가낙"
+      },
+      {
+        "person_id": "bd506489-de93-4029-9c29-245f6dd653b2",
+        "canonical_name_en": "Chiksa'",
+        "preferred_name_ko": "칙사"
+      },
+      {
+        "person_id": "ac555496-899b-49de-aa72-4e269ca0758e",
+        "canonical_name_en": "Domitian of Carantania",
+        "preferred_name_ko": "카란타니아의 도미티안"
+      },
+      {
+        "person_id": "c00c48a7-ecec-458c-93ad-765a8abaea07",
+        "canonical_name_en": "Kabir",
+        "preferred_name_ko": "카비르"
+      },
+      {
+        "person_id": "d62b4afe-fb24-4fb6-aa35-322ddf6bf8ce",
+        "canonical_name_en": "Qillerkavialuk",
+        "preferred_name_ko": "킬레르카비알루크"
+      },
+      {
+        "person_id": "90f0124a-b238-4ddb-969c-bad4364b043d",
+        "canonical_name_en": "Tariácuri",
+        "preferred_name_ko": "타리아쿠리"
+      },
+      {
+        "person_id": "b55357c6-6beb-4d9b-9099-0551371afc8a",
+        "canonical_name_en": "Tróndur í Gøtu",
+        "preferred_name_ko": "트론두르 이 괴투"
+      },
+      {
+        "person_id": "cd1007a3-8e13-4335-82a4-0426dcf54f2c",
+        "canonical_name_en": "Tyrrhenus",
+        "preferred_name_ko": "티레노스"
+      },
+      {
+        "person_id": "af2d0a76-c6fc-47b9-b845-e78f71480db3",
+        "canonical_name_en": "Tin Hinan",
+        "preferred_name_ko": "틴 히난"
+      },
+      {
+        "person_id": "94211b42-5ade-459c-b384-d289f4b58515",
+        "canonical_name_en": "Penthesilea",
+        "preferred_name_ko": "펜테실레이아"
+      },
+      {
+        "person_id": "b9415486-8764-471a-b306-b7458fdb029f",
+        "canonical_name_en": "Po Nagar",
+        "preferred_name_ko": "포 나가르"
+      },
+      {
+        "person_id": "8ff3519e-bf47-4e17-beca-e7814b0e18a6",
+        "canonical_name_en": "Hanno the Navigator",
+        "preferred_name_ko": "항해자 한노"
+      }
+    ]
+  },
+  "not_measured": [
+    "representative_domain reviewed-null vs unreviewed-null split for remaining NULL Persons",
+    "retired Person reference residuals and legacy static registry duplication",
+    "full Source UUID/locator/dangling/duplicate identity inventory",
+    "atlas_v2.spatial_registration_dispositions lifecycle counts"
+  ],
+  "repair_backlog": [
+    {
+      "debt_id": "DOMAIN-001",
+      "entity_type": "Person",
+      "entity_uuid": "c3128a85-ddde-4d28-9219-5715f8611b20",
+      "person_name": "Sima Yi",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "governance",
+        "review_evidence": "PR #1767 reviewed companion assignment"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": "existing open PR #1767 / concurrent ownership; do not duplicate write",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "DOMAIN-002",
+      "entity_type": "Person",
+      "entity_uuid": "dbac46ae-d3dc-4068-840f-46fedbdbd901",
+      "person_name": "Stilicho",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "military",
+        "review_evidence": "PR #1767 reviewed companion assignment"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": "existing open PR #1767 / concurrent ownership; do not duplicate write",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "DOMAIN-003",
+      "entity_type": "Person",
+      "entity_uuid": "45bdc34d-3a99-4034-b03d-c546c96608f9",
+      "person_name": "Vardan Mamikonian",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "military",
+        "review_evidence": "PR #1767 reviewed companion assignment"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": "existing open PR #1767 / concurrent ownership; do not duplicate write",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "DOMAIN-004",
+      "entity_type": "Person",
+      "entity_uuid": "f371e82b-33eb-4927-8b45-1c553ea81d4c",
+      "person_name": "Shashanka",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "governance",
+        "review_evidence": "PR #1767 reviewed companion assignment"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": "existing open PR #1767 / concurrent ownership; do not duplicate write",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "DOMAIN-005",
+      "entity_type": "Person",
+      "entity_uuid": "b774cec1-f3b0-46a9-8cd1-3414e74780a4",
+      "person_name": "Taira no Kiyomori",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "governance",
+        "review_evidence": "PR #1767 reviewed companion assignment"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": "existing open PR #1767 / concurrent ownership; do not duplicate write",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "DOMAIN-006",
+      "entity_type": "Person",
+      "entity_uuid": "f0c7abaa-7670-49d0-a82e-7b63fd1a62c3",
+      "person_name": "Tabinshwehti",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "governance",
+        "review_evidence": "PR #1767 reviewed companion assignment"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": "existing open PR #1767 / concurrent ownership; do not duplicate write",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "DOMAIN-007",
+      "entity_type": "Person",
+      "entity_uuid": "490b5966-63ec-4bdb-83e4-5d4fb1f25769",
+      "person_name": "Luo Guanzhong",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "culture",
+        "review_evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": null,
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "DOMAIN-008",
+      "entity_type": "Person",
+      "entity_uuid": "9ce6a904-0164-4651-aa5b-50ab9a569909",
+      "person_name": "Samson",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "military",
+        "review_evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": null,
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "DOMAIN-009",
+      "entity_type": "Person",
+      "entity_uuid": "6ad5c0e4-2547-4e3a-86b0-c3b9eaa16b63",
+      "person_name": "Madhava of Sangamagrama",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "knowledge",
+        "review_evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": null,
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "DOMAIN-010",
+      "entity_type": "Person",
+      "entity_uuid": "249a4aea-a45d-4249-b0c7-74574ba72b0f",
+      "person_name": "Yājñavalkya",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "knowledge",
+        "review_evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": null,
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "DOMAIN-011",
+      "entity_type": "Person",
+      "entity_uuid": "b9dd3e9b-3db4-4df1-9b08-3c6da9787c6e",
+      "person_name": "Wu Cheng'en",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "culture",
+        "review_evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": null,
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "DOMAIN-012",
+      "entity_type": "Person",
+      "entity_uuid": "c00c48a7-ecec-458c-93ad-765a8abaea07",
+      "person_name": "Kabir",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "culture",
+        "review_evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": null,
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "DOMAIN-013",
+      "entity_type": "Person",
+      "entity_uuid": "7407feff-345f-4573-8320-62de8d58d428",
+      "person_name": "Thiruvalluvar",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Reviewed representative_domain decision exists but current canonical Person representative_domain is NULL.",
+      "current_state": {
+        "representative_domain": null
+      },
+      "expected_contract": {
+        "representative_domain": "culture",
+        "review_evidence": "canonical timeline review_evidence.legacy_record.request_context.representative_domain"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": null,
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-001",
+      "entity_type": "Person",
+      "entity_uuid": "c3128a85-ddde-4d28-9219-5715f8611b20",
+      "person_name": "Sima Yi",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-002",
+      "entity_type": "Person",
+      "entity_uuid": "dbac46ae-d3dc-4068-840f-46fedbdbd901",
+      "person_name": "Stilicho",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-003",
+      "entity_type": "Person",
+      "entity_uuid": "45bdc34d-3a99-4034-b03d-c546c96608f9",
+      "person_name": "Vardan Mamikonian",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-004",
+      "entity_type": "Person",
+      "entity_uuid": "a7566fc2-ae57-480e-b2d2-43557a49b7b9",
+      "person_name": "Odoacer",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-005",
+      "entity_type": "Person",
+      "entity_uuid": "f371e82b-33eb-4927-8b45-1c553ea81d4c",
+      "person_name": "Shashanka",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-006",
+      "entity_type": "Person",
+      "entity_uuid": "581d5a01-d18c-4519-94dd-7c5b2b7a1deb",
+      "person_name": "Musa ibn Nusayr",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-007",
+      "entity_type": "Person",
+      "entity_uuid": "1925f6f3-4c81-4293-954a-bddf447d841a",
+      "person_name": "Nur ad-Din Zengi",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-008",
+      "entity_type": "Person",
+      "entity_uuid": "b774cec1-f3b0-46a9-8cd1-3414e74780a4",
+      "person_name": "Taira no Kiyomori",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-009",
+      "entity_type": "Person",
+      "entity_uuid": "363adcde-3b46-40f5-ad83-65733c7d745d",
+      "person_name": "Qutb-ud-Din Aibak",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-010",
+      "entity_type": "Person",
+      "entity_uuid": "a1b314bf-7b18-4489-aae3-e1fa7b94bab6",
+      "person_name": "Přemysl Ottokar II",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-011",
+      "entity_type": "Person",
+      "entity_uuid": "0d6177bb-e99e-43a0-9587-67eee5257706",
+      "person_name": "Raden Wijaya",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "TIMELINE-012",
+      "entity_type": "Person",
+      "entity_uuid": "f0c7abaa-7670-49d0-a82e-7b63fd1a62c3",
+      "person_name": "Tabinshwehti",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "Activity-bearing historical Person has no canonical timeline disposition row.",
+      "current_state": {
+        "timeline_disposition": null,
+        "activity_count": 1,
+        "historicity": "historical"
+      },
+      "expected_contract": {
+        "timeline_disposition": "timeline"
+      },
+      "risk": "LOW",
+      "recommended_writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "Confirm no concurrent disposition write before apply; no chronology change required.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-001",
+      "entity_type": "Person",
+      "entity_uuid": "df30b154-09b3-4a4e-9f35-1591ac30391f",
+      "person_name": "Saichō",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-28"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-002",
+      "entity_type": "Person",
+      "entity_uuid": "dd6529c5-de4d-4f20-9ba7-187f552e2d90",
+      "person_name": "Kūkai",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-28"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-003",
+      "entity_type": "Person",
+      "entity_uuid": "d9b85876-9186-4fec-bf01-50e3fd877f61",
+      "person_name": "Uicheon",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-28"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-004",
+      "entity_type": "Person",
+      "entity_uuid": "f9b2f826-c180-4bbf-accc-ade5e98afe61",
+      "person_name": "Mäxmüd of Kazan",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-005",
+      "entity_type": "Person",
+      "entity_uuid": "eb8ddc8c-51d3-4366-9f77-e6f39bfa2b89",
+      "person_name": "Shin Sawbu",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-006",
+      "entity_type": "Person",
+      "entity_uuid": "d9a11477-71c7-49b1-86b1-bacc541579a7",
+      "person_name": "Bolkiah",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-007",
+      "entity_type": "Person",
+      "entity_uuid": "f0798d19-da83-4899-8de8-a163668542c9",
+      "person_name": "Caterina Sforza",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-008",
+      "entity_type": "Person",
+      "entity_uuid": "d9d5ab1d-8027-4f93-8255-8006c620f861",
+      "person_name": "Frederick I of Denmark",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-009",
+      "entity_type": "Person",
+      "entity_uuid": "ec081f93-d616-4791-90dd-7012783b81e0",
+      "person_name": "Coya Cusirimay",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-02"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-010",
+      "entity_type": "Person",
+      "entity_uuid": "f9f68f32-38d9-4e60-8755-bd2ca88145b4",
+      "person_name": "Anacaona",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-011",
+      "entity_type": "Person",
+      "entity_uuid": "d7f5ceb3-99b6-448b-81d7-3d27fb4b7941",
+      "person_name": "Amara Dunqas",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-012",
+      "entity_type": "Person",
+      "entity_uuid": "d9beb4e4-5652-4f67-b373-cadb0e32e4b0",
+      "person_name": "Wang Yangming",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-28"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-013",
+      "entity_type": "Person",
+      "entity_uuid": "fc299f9e-a64c-410a-b329-3bfa2cb43ffe",
+      "person_name": "Pier Gerlofs Donia",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-20"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-014",
+      "entity_type": "Person",
+      "entity_uuid": "e63755de-3533-4126-8bd3-f815cf9df804",
+      "person_name": "Jürgen Wullenwever",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-02"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-015",
+      "entity_type": "Person",
+      "entity_uuid": "dd459595-dcd4-421c-bded-9e0d2bcc502d",
+      "person_name": "Antonio de Mendoza",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-016",
+      "entity_type": "Person",
+      "entity_uuid": "d9211d47-fe6b-587d-a309-93f509403ff5",
+      "person_name": "Bayinnaung",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-017",
+      "entity_type": "Person",
+      "entity_uuid": "ecffd8bf-7aa4-4a59-a405-6f151d61ace2",
+      "person_name": "Frederick II of Denmark",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-018",
+      "entity_type": "Person",
+      "entity_uuid": "f7866f08-988d-419d-affb-4faff37cc093",
+      "person_name": "Maharana Pratap",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-26"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-019",
+      "entity_type": "Person",
+      "entity_uuid": "ff32bba5-85ff-4cef-9dfd-e2e9516e67da",
+      "person_name": "Francis Drake",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-20"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-020",
+      "entity_type": "Person",
+      "entity_uuid": "da2fb26b-b2b5-46fe-aa15-4ff269c80b49",
+      "person_name": "Dular Bombogor",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-28"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-021",
+      "entity_type": "Person",
+      "entity_uuid": "e4deb023-5426-4268-9f82-286349dae9a1",
+      "person_name": "Aurangzeb",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-022",
+      "entity_type": "Person",
+      "entity_uuid": "e0383913-ad19-46ec-9740-d3a23874be90",
+      "person_name": "Henry Morgan",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-20"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-023",
+      "entity_type": "Person",
+      "entity_uuid": "eb95c602-1991-4886-bcae-f973035744cc",
+      "person_name": "Tamanend",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-01"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-024",
+      "entity_type": "Person",
+      "entity_uuid": "db3e1ca1-3607-4710-8383-39c692d5e2f9",
+      "person_name": "Payoreva",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-025",
+      "entity_type": "Person",
+      "entity_uuid": "e5229004-059b-40a9-bd7a-b8c019a095fb",
+      "person_name": "Azim ud-Din I",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-01"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-026",
+      "entity_type": "Person",
+      "entity_uuid": "ed1fe97a-4b23-4d17-b31c-886124a08862",
+      "person_name": "Chisli",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-01"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-027",
+      "entity_type": "Person",
+      "entity_uuid": "e555d224-ab19-419a-9524-a0b14703e09e",
+      "person_name": "Alexander I of Russia",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-28"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-028",
+      "entity_type": "Person",
+      "entity_uuid": "e495cc46-9a28-4b5f-829b-53438f1788ed",
+      "person_name": "Gregor MacGregor",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-02"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-029",
+      "entity_type": "Person",
+      "entity_uuid": "e27c4641-70c6-4e6f-b65b-bcc24efd26a3",
+      "person_name": "Ghezo",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-030",
+      "entity_type": "Person",
+      "entity_uuid": "edff14cc-fa99-4d42-800c-037e10d8018e",
+      "person_name": "Akaitcho",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-02"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-031",
+      "entity_type": "Person",
+      "entity_uuid": "dc657ae4-d13f-4477-ada4-7786db7682d2",
+      "person_name": "Ismail Berzeg",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-032",
+      "entity_type": "Person",
+      "entity_uuid": "ddf3c13c-4c1a-4ce5-ab0f-f07ed1067e45",
+      "person_name": "Francisco Morazán",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-01"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-033",
+      "entity_type": "Person",
+      "entity_uuid": "de41d98d-2ca9-5858-ac9f-1de3cc7c8136",
+      "person_name": "Harriet Tubman",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-034",
+      "entity_type": "Person",
+      "entity_uuid": "e10fcad7-6e2f-5567-bfc7-fca4855101c7",
+      "person_name": "Lakshmibai",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-035",
+      "entity_type": "Person",
+      "entity_uuid": "e5876043-0b93-4b7d-90d5-3fa9ce48c547",
+      "person_name": "Muteesa I of Buganda",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-036",
+      "entity_type": "Person",
+      "entity_uuid": "d8b1f134-5ffd-428e-8139-8305a9e9440f",
+      "person_name": "Orélie-Antoine de Tounens",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-037",
+      "entity_type": "Person",
+      "entity_uuid": "db627afc-d6e5-4bb8-8033-0a687c2360a0",
+      "person_name": "Roman Nose (Woqini)",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-038",
+      "entity_type": "Person",
+      "entity_uuid": "e0130004-997a-4d17-9e6c-a4d60465ad8c",
+      "person_name": "Mbatian",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-039",
+      "entity_type": "Person",
+      "entity_uuid": "e0427b1c-86c5-4be2-9cc6-02725e09acfb",
+      "person_name": "John A. Macdonald",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-040",
+      "entity_type": "Person",
+      "entity_uuid": "ea9b780f-d5fa-46af-98fc-c0d7803af1cf",
+      "person_name": "Ferdinand de Lesseps",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-041",
+      "entity_type": "Person",
+      "entity_uuid": "f65616ef-e2cc-4979-afad-b644e7cf91f0",
+      "person_name": "Barghash bin Said",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-042",
+      "entity_type": "Person",
+      "entity_uuid": "e13d9966-0dc2-4b88-a225-cb9df8f1d690",
+      "person_name": "Chief Joseph",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-01"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-043",
+      "entity_type": "Person",
+      "entity_uuid": "dbae940b-2d8f-422a-be03-7cb101f20820",
+      "person_name": "Osh-Tisch",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-044",
+      "entity_type": "Person",
+      "entity_uuid": "dae6c092-4e79-4b83-ae1f-6d3363ebe43b",
+      "person_name": "Geronimo",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-28"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-045",
+      "entity_type": "Person",
+      "entity_uuid": "f04525f7-52fa-43d4-815a-c134ae9c0670",
+      "person_name": "Liu Yongfu",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-02"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-046",
+      "entity_type": "Person",
+      "entity_uuid": "f4c043fe-e672-4090-8345-70df0df0b9b3",
+      "person_name": "Joe Capilano",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-28"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-047",
+      "entity_type": "Person",
+      "entity_uuid": "e4407670-323a-4597-9db3-288ea50d7f61",
+      "person_name": "Manuel Amador Guerrero",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-28"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-048",
+      "entity_type": "Person",
+      "entity_uuid": "ee2d9190-dccf-406f-94cb-876b748c8a1b",
+      "person_name": "Billy Hughes",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-049",
+      "entity_type": "Person",
+      "entity_uuid": "e65abc3c-7705-4373-96dc-36007d988ad0",
+      "person_name": "Hamad Pasha al-Sufi",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-050",
+      "entity_type": "Person",
+      "entity_uuid": "dc1fe0cd-75b6-415d-9dcf-7d5575332371",
+      "person_name": "Grigory Choros-Gurkin",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-01"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-051",
+      "entity_type": "Person",
+      "entity_uuid": "d89243ad-27e8-4bfc-a984-3aad0e909e2c",
+      "person_name": "Donduk Kuular",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-052",
+      "entity_type": "Person",
+      "entity_uuid": "ec04bfdb-fa98-43f1-b5eb-7cb8461bcfda",
+      "person_name": "Sabit Damolla",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-02"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-053",
+      "entity_type": "Person",
+      "entity_uuid": "efbba157-ccf2-43f9-8544-e29f54240d34",
+      "person_name": "Michael Joseph Savage",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-28"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-054",
+      "entity_type": "Person",
+      "entity_uuid": "e313c5ef-779c-40b2-ab4c-0555160d5f85",
+      "person_name": "Howard Walter Florey",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-055",
+      "entity_type": "Person",
+      "entity_uuid": "ecef9995-b6e5-4792-bd31-c690f1bec2b9",
+      "person_name": "Pedro Aguirre Cerda",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-056",
+      "entity_type": "Person",
+      "entity_uuid": "e1494e6e-b6cd-49f1-a79f-9ce18120d6cb",
+      "person_name": "Olive Yang",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-01"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-057",
+      "entity_type": "Person",
+      "entity_uuid": "e68a74a8-0ed2-43c9-88cc-7e96a015c5aa",
+      "person_name": "Nikolaos Plastiras",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-08"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-058",
+      "entity_type": "Person",
+      "entity_uuid": "e4d1ce89-3991-417d-b513-75f6714484d7",
+      "person_name": "Albert Kalonji",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-01"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-059",
+      "entity_type": "Person",
+      "entity_uuid": "f43870d3-72de-49c5-920d-0b2d328e673e",
+      "person_name": "Hamid Idris Awate",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-060",
+      "entity_type": "Person",
+      "entity_uuid": "e751fef4-e421-43d5-ae87-407682fd9196",
+      "person_name": "Mohamed Siad Barre",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-061",
+      "entity_type": "Person",
+      "entity_uuid": "deeb70c3-c0f6-432c-bc57-8c5055f9e24d",
+      "person_name": "Olof Palme",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-062",
+      "entity_type": "Person",
+      "entity_uuid": "ed7c719d-cd21-4dad-955c-1f37fb1ad1fc",
+      "person_name": "Sheikh Mujibur Rahman",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-02"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-063",
+      "entity_type": "Person",
+      "entity_uuid": "e85d2eaf-3cff-4dd0-b756-b1a3d6c181fa",
+      "person_name": "Gough Whitlam",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-31"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-064",
+      "entity_type": "Person",
+      "entity_uuid": "f53e308b-9762-4a0a-8f8b-a683d32ef98d",
+      "person_name": "Ogdo Aksyonova",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-065",
+      "entity_type": "Person",
+      "entity_uuid": "f2e78550-ad43-4a54-bce2-7fdf3afafdc4",
+      "person_name": "Jaber Al-Ahmad Al-Jaber Al-Sabah",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-26"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-066",
+      "entity_type": "Person",
+      "entity_uuid": "ffc80ccf-da01-44dc-b2f7-129c00bb876a",
+      "person_name": "Galarrwuy Yunupingu",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-067",
+      "entity_type": "Person",
+      "entity_uuid": "eaefe5ae-a363-43e6-80d2-c176e1001e06",
+      "person_name": "Kurt Waldheim",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-01"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-068",
+      "entity_type": "Person",
+      "entity_uuid": "db8ab8ed-cc41-4ce5-a4a4-baa206758566",
+      "person_name": "Idriss Déby",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-01"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-069",
+      "entity_type": "Person",
+      "entity_uuid": "e0fe056b-3d54-4ccd-9ca1-c077c283a069",
+      "person_name": "Gush X'een",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-27"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-070",
+      "entity_type": "Person",
+      "entity_uuid": "e63e6d59-1589-46c7-a105-ae20f3920d11",
+      "person_name": "Guacanaoma",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-071",
+      "entity_type": "Person",
+      "entity_uuid": "efb47d00-8eab-4309-8207-f34d207e1ad8",
+      "person_name": "Lawtylywalyn",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-072",
+      "entity_type": "Person",
+      "entity_uuid": "f1f33e88-5bba-472c-9eff-9c5bf97ded2f",
+      "person_name": "Romulus",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-073",
+      "entity_type": "Person",
+      "entity_uuid": "ebd1a7e3-6a1a-4e02-87f6-7ec5aacf0641",
+      "person_name": "Bjorn Ironside",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-074",
+      "entity_type": "Person",
+      "entity_uuid": "dc3208bb-a94f-4e75-8ddb-8810d61ddc16",
+      "person_name": "Sardus",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-075",
+      "entity_type": "Person",
+      "entity_uuid": "eaa8060a-6a93-4734-a38d-5222ebd0cb67",
+      "person_name": "Siward Barn",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-076",
+      "entity_type": "Person",
+      "entity_uuid": "ecc64877-3cc8-48c3-a231-c327af657a45",
+      "person_name": "Achish (Abimelech)",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-077",
+      "entity_type": "Person",
+      "entity_uuid": "f974e5e7-8c90-4693-8bb5-32bb709ae84d",
+      "person_name": "Ansenuza",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-078",
+      "entity_type": "Person",
+      "entity_uuid": "ff4da770-cbf1-452c-991f-6d7c2aa88a58",
+      "person_name": "Edward Blondin",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-079",
+      "entity_type": "Person",
+      "entity_uuid": "dace6b3a-6ac8-45de-b63d-fbe0bd6bd696",
+      "person_name": "U Kix Chan",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-080",
+      "entity_type": "Person",
+      "entity_uuid": "f231e67f-d1e8-4e9a-8e6e-c3bef1827566",
+      "person_name": "Wëikayoma",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-081",
+      "entity_type": "Person",
+      "entity_uuid": "fa864dce-028f-45e9-b86b-2395e489cecf",
+      "person_name": "Ngurunderi",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-082",
+      "entity_type": "Person",
+      "entity_uuid": "f2eb1ca0-b37d-5497-a40d-a5df55ee8a2c",
+      "person_name": "Kupe",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-08-26"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-083",
+      "entity_type": "Person",
+      "entity_uuid": "e4e96660-351c-4d5c-afbb-baffcc1c1ae5",
+      "person_name": "Tyushtya",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-084",
+      "entity_type": "Person",
+      "entity_uuid": "eba0e96c-dc82-47e1-96de-54201f3b4757",
+      "person_name": "Pálnatóki",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-085",
+      "entity_type": "Person",
+      "entity_uuid": "f3cde17e-0d51-486d-8d45-3c66169e8daf",
+      "person_name": "Protis",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REASON-086",
+      "entity_type": "Person",
+      "entity_uuid": "da7f43c1-aea9-4be3-a887-096f9a897ec9",
+      "person_name": "Qutb al-Din Tahamtan of Hormuz",
+      "debt_class": "LEGACY_DATA_DEBT",
+      "exact_problem": "NamuWiki status is reviewed_absent/not_found but current contract reason is missing.",
+      "current_state": {
+        "status": "not_found",
+        "review_state": "reviewed_absent",
+        "absence_reason": null,
+        "checked_at": "2026-09-30"
+      },
+      "expected_contract": {
+        "status": "not_found",
+        "absence_reason": "non-empty reviewed reason"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Re-review exact absence reason; do not invent reason from status alone.",
+      "safe_to_batch": true
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-001",
+      "entity_type": "Person",
+      "entity_uuid": "9ab1eaed-9c12-43d4-ad55-ad62bdd3dc94",
+      "person_name": "Richard Arkwright",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-002",
+      "entity_type": "Person",
+      "entity_uuid": "9a8272f7-5bd4-4cf8-80b1-8fc79d3afdd9",
+      "person_name": "Joseph Marie Jacquard",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-003",
+      "entity_type": "Person",
+      "entity_uuid": "97f308a5-a15f-4c39-a68f-40b201745266",
+      "person_name": "Sir George Cayley",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-004",
+      "entity_type": "Person",
+      "entity_uuid": "d51d91b2-cf30-4743-84d2-c9725795418c",
+      "person_name": "John Dalton",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-005",
+      "entity_type": "Person",
+      "entity_uuid": "9ee7c911-c60d-4a88-b299-7a25e6438d63",
+      "person_name": "Mayer Amschel Rothschild",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-006",
+      "entity_type": "Person",
+      "entity_uuid": "cf84dcb3-19a0-4299-90ba-aebe7569ed7e",
+      "person_name": "Jonathan Lambert",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-007",
+      "entity_type": "Person",
+      "entity_uuid": "ae5b60cd-0113-4aea-8bc7-facb989fc2bf",
+      "person_name": "George Stephenson",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-008",
+      "entity_type": "Person",
+      "entity_uuid": "a3f4021f-e959-4de9-991e-40d04367693c",
+      "person_name": "Dohasan",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-009",
+      "entity_type": "Person",
+      "entity_uuid": "b811a120-602e-4b39-9466-817217072f83",
+      "person_name": "Edgar Degas",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-010",
+      "entity_type": "Person",
+      "entity_uuid": "abf94244-9812-4e4c-b63f-bec4a25b486a",
+      "person_name": "Karl Benz",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-011",
+      "entity_type": "Person",
+      "entity_uuid": "ad51aa2c-a9f6-4332-ac92-ba1ee7b8d85c",
+      "person_name": "William James",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-012",
+      "entity_type": "Person",
+      "entity_uuid": "b5cce601-aeca-4e4f-af80-5eda81b073fe",
+      "person_name": "Edvard Munch",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-013",
+      "entity_type": "Person",
+      "entity_uuid": "b7f3c0c0-c021-4e71-b7c2-0f0006ce2482",
+      "person_name": "Henrik Ibsen",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-014",
+      "entity_type": "Person",
+      "entity_uuid": "d54ba641-531c-4f1d-9b69-bf0660440754",
+      "person_name": "Rabih az-Zubayr",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-015",
+      "entity_type": "Person",
+      "entity_uuid": "a55eb02b-e452-4ac3-8329-446965ac2b37",
+      "person_name": "Wilhelm Röntgen",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-016",
+      "entity_type": "Person",
+      "entity_uuid": "bd2f973b-b22b-47d2-be8f-1d0a4741229d",
+      "person_name": "Chief Isaac",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-017",
+      "entity_type": "Person",
+      "entity_uuid": "ad947f4b-dc3a-4557-b871-54bbbe484d24",
+      "person_name": "Guglielmo Marconi",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-018",
+      "entity_type": "Person",
+      "entity_uuid": "c6d5ccc1-6a85-46df-a0b1-e788c4070098",
+      "person_name": "Jacob Morenga",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-019",
+      "entity_type": "Person",
+      "entity_uuid": "c3b35168-17a0-4b4b-9468-b46c368ab257",
+      "person_name": "Henry Ford",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-020",
+      "entity_type": "Person",
+      "entity_uuid": "a643a787-7278-4b0c-a787-10b3f580c2f0",
+      "person_name": "Rabindranath Tagore",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-021",
+      "entity_type": "Person",
+      "entity_uuid": "9f68b83e-c9e5-43e6-9bf6-0cf38d839bd3",
+      "person_name": "Marcel Proust",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-022",
+      "entity_type": "Person",
+      "entity_uuid": "d78866ad-a877-4a2a-9226-5cf2f73f5cba",
+      "person_name": "Srinivasa Ramanujan",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-023",
+      "entity_type": "Person",
+      "entity_uuid": "d3a55a20-50cb-4444-b03a-5c1e3b253df9",
+      "person_name": "Frederick Banting",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-024",
+      "entity_type": "Person",
+      "entity_uuid": "c0d04b34-c399-44fe-bbd9-897dbd826146",
+      "person_name": "Satyendra Nath Bose",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-025",
+      "entity_type": "Person",
+      "entity_uuid": "c3586f40-8c6d-4d97-a818-da00dc57b22a",
+      "person_name": "Paul Dirac",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-026",
+      "entity_type": "Person",
+      "entity_uuid": "8fa5444d-6e2a-4734-a7d3-739496955a58",
+      "person_name": "Stefan Banach",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-027",
+      "entity_type": "Person",
+      "entity_uuid": "b8fae22e-19f3-4565-9feb-cbd27579c8cd",
+      "person_name": "Walt Disney",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-028",
+      "entity_type": "Person",
+      "entity_uuid": "b9bf1082-34e6-4337-bd35-0ec5778123a0",
+      "person_name": "J. R. R. Tolkien",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-029",
+      "entity_type": "Person",
+      "entity_uuid": "ace071bf-feab-44aa-92a6-3fca50a93303",
+      "person_name": "Julius Rosenberg",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-030",
+      "entity_type": "Person",
+      "entity_uuid": "a9a2cef9-fbf8-4a46-8d3c-f41b6d78e6c2",
+      "person_name": "Malcom McLean",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-031",
+      "entity_type": "Person",
+      "entity_uuid": "b60799c7-4707-42fe-9613-2a2dfb1c960c",
+      "person_name": "Chien-Shiung Wu",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-032",
+      "entity_type": "Person",
+      "entity_uuid": "c075303a-4f0f-4652-bd0e-64e4917676b0",
+      "person_name": "Toni Morrison",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-033",
+      "entity_type": "Person",
+      "entity_uuid": "c1e9432c-5986-4f2b-accb-392069b87e6f",
+      "person_name": "Nyatri Tsenpo",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-034",
+      "entity_type": "Person",
+      "entity_uuid": "9c60171d-7f6a-4099-9b99-7e085e702a5f",
+      "person_name": "Nunuku-whenua",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-035",
+      "entity_type": "Person",
+      "entity_uuid": "a0f6650d-00aa-47ef-ac11-2c1b5d170166",
+      "person_name": "Niall Noígíallach",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-036",
+      "entity_type": "Person",
+      "entity_uuid": "cbe5911a-6462-4ff5-9e33-83ca0277b3e5",
+      "person_name": "Daji",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-037",
+      "entity_type": "Person",
+      "entity_uuid": "9d317619-d549-4051-b8a1-46cd44604d94",
+      "person_name": "Ragnar Lodbrok",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-038",
+      "entity_type": "Person",
+      "entity_uuid": "a38c2f11-394c-490f-83f4-b290fa85b54d",
+      "person_name": "Moses",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-039",
+      "entity_type": "Person",
+      "entity_uuid": "98d52f4f-ad3d-4cab-aae9-0c4eb900ac2a",
+      "person_name": "Dragoș of Moldavia",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-040",
+      "entity_type": "Person",
+      "entity_uuid": "9ce6a904-0164-4651-aa5b-50ab9a569909",
+      "person_name": "Samson",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-041",
+      "entity_type": "Person",
+      "entity_uuid": "d322b829-aef3-4e37-aa76-6aac0e1be7c1",
+      "person_name": "Xochitl",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-042",
+      "entity_type": "Person",
+      "entity_uuid": "b9f30122-e970-4119-a2ad-3327413b7dd6",
+      "person_name": "Aeetes",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-043",
+      "entity_type": "Person",
+      "entity_uuid": "9a8d68f4-8cd6-45cc-952c-7488a6bc3c6a",
+      "person_name": "ʻAhoʻeitu",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-044",
+      "entity_type": "Person",
+      "entity_uuid": "af74e8a0-4abc-4486-bdf7-d64303f74b42",
+      "person_name": "Aliguyon",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-045",
+      "entity_type": "Person",
+      "entity_uuid": "b9dd3e9b-3db4-4df1-9b08-3c6da9787c6e",
+      "person_name": "Wu Cheng'en",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-046",
+      "entity_type": "Person",
+      "entity_uuid": "b165d74c-0e94-4584-b71e-81a763722a04",
+      "person_name": "Lady of Huarmey",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-047",
+      "entity_type": "Person",
+      "entity_uuid": "d62c171a-43c1-4548-a533-e6ebba22f75e",
+      "person_name": "Yu the Great",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-048",
+      "entity_type": "Person",
+      "entity_uuid": "b341256a-cfe9-497a-9594-f7031296c923",
+      "person_name": "Great Peacemaker (Deganawida)",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-049",
+      "entity_type": "Person",
+      "entity_uuid": "9cefc952-fef5-4151-b2c7-6d97b4c23b36",
+      "person_name": "Ntare I Rushatsi Cambarantama",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-050",
+      "entity_type": "Person",
+      "entity_uuid": "c1871bf4-30ad-4bb3-8534-2d26e20fe583",
+      "person_name": "Nkongolo Mwamba",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-051",
+      "entity_type": "Person",
+      "entity_uuid": "8f32ca07-5a74-4aa9-95e8-7010c8b2c8f0",
+      "person_name": "Javraganak",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-052",
+      "entity_type": "Person",
+      "entity_uuid": "bd506489-de93-4029-9c29-245f6dd653b2",
+      "person_name": "Chiksa'",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-053",
+      "entity_type": "Person",
+      "entity_uuid": "ac555496-899b-49de-aa72-4e269ca0758e",
+      "person_name": "Domitian of Carantania",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-054",
+      "entity_type": "Person",
+      "entity_uuid": "c00c48a7-ecec-458c-93ad-765a8abaea07",
+      "person_name": "Kabir",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-055",
+      "entity_type": "Person",
+      "entity_uuid": "d62b4afe-fb24-4fb6-aa35-322ddf6bf8ce",
+      "person_name": "Qillerkavialuk",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-056",
+      "entity_type": "Person",
+      "entity_uuid": "90f0124a-b238-4ddb-969c-bad4364b043d",
+      "person_name": "Tariácuri",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-057",
+      "entity_type": "Person",
+      "entity_uuid": "b55357c6-6beb-4d9b-9099-0551371afc8a",
+      "person_name": "Tróndur í Gøtu",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-058",
+      "entity_type": "Person",
+      "entity_uuid": "cd1007a3-8e13-4335-82a4-0426dcf54f2c",
+      "person_name": "Tyrrhenus",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-059",
+      "entity_type": "Person",
+      "entity_uuid": "af2d0a76-c6fc-47b9-b845-e78f71480db3",
+      "person_name": "Tin Hinan",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-060",
+      "entity_type": "Person",
+      "entity_uuid": "94211b42-5ade-459c-b384-d289f4b58515",
+      "person_name": "Penthesilea",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-061",
+      "entity_type": "Person",
+      "entity_uuid": "b9415486-8764-471a-b306-b7458fdb029f",
+      "person_name": "Po Nagar",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    },
+    {
+      "debt_id": "NAMUWIKI-REVIEW-062",
+      "entity_type": "Person",
+      "entity_uuid": "8ff3519e-bf47-4e17-beca-e7814b0e18a6",
+      "person_name": "Hanno the Navigator",
+      "debt_class": "REVIEW_BACKLOG",
+      "exact_problem": "No current NamuWiki linked/not_found decision exists.",
+      "current_state": {
+        "namuwiki_decision": null
+      },
+      "expected_contract": {
+        "decision": "LINKED or REVIEWED_NOT_FOUND_WITH_REASON"
+      },
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "recommended_writer": "server/atlas-external-reference-service.js via governed existing-Person NamuWiki write path",
+      "dependencies": "Run compact exhaustive NamuWiki review before any write.",
+      "safe_to_batch": false
+    }
+  ],
+  "repair_plan": [
+    {
+      "batch": "R1",
+      "scope": "7 non-timeline Persons from PR #1551 whose reviewed non-null representative_domain survives in canonical timeline review_evidence but Person.representative_domain is NULL.",
+      "exact_count": 7,
+      "risk": "LOW",
+      "writer": "server/atlas-person-domain-service.js / canonical Person Domain Apply",
+      "dependencies": "Exclude the six #1767-owned rows from duplicate work."
+    },
+    {
+      "batch": "R2",
+      "scope": "12 Activity-bearing historical Persons with missing canonical timeline disposition (MICROBATCH-06 + MICROBATCH-07).",
+      "exact_count": 12,
+      "risk": "LOW",
+      "writer": "server/atlas-person-timeline-service.js",
+      "dependencies": "No identity/date edits; exact timeline disposition only."
+    },
+    {
+      "batch": "R3",
+      "scope": "Reviewed NamuWiki not_found rows missing absence_reason.",
+      "exact_count": 86,
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "writer": "governed external-reference/NamuWiki writer",
+      "dependencies": "Reason must be re-reviewed, not inferred."
+    },
+    {
+      "batch": "R4",
+      "scope": "Persons with no NamuWiki decision.",
+      "exact_count": 62,
+      "risk": "HISTORICAL_REVIEW_REQUIRED",
+      "writer": "governed external-reference/NamuWiki writer after review",
+      "dependencies": "Compact exhaustive review; separate from absence-reason lane."
+    },
+    {
+      "batch": "R5",
+      "scope": "Read-only measurement of currently NOT_MEASURED spatial-registration lifecycle and full Source-link locator/dangling state before any Polity/source repair.",
+      "exact_count": "NOT_MEASURED",
+      "risk": "MEDIUM",
+      "writer": "NONE_READ_ONLY_AUDIT_FIRST",
+      "dependencies": "Must not infer from display projection; avoid Polity identity/correction lane."
+    }
+  ],
+  "next_task": {
+    "batch": "R1",
+    "task": "Materialize the 7 preserved reviewed representative_domain decisions from PR #1551 only; do not touch the six #1767 rows while that concurrent work remains owned elsewhere.",
+    "execute_now": false
+  }
+}
