@@ -164,6 +164,9 @@ test('catalog loading never overlaps queries on a single pg client', async () =>
   assert.equal(maxInFlight,1);
   assert.deepEqual(catalogs.relation_types,['rules','serves']);
   assert.deepEqual(catalogs.period_bases,['reign']);
+  assert.deepEqual(catalogs.representative_domains.map((item)=>item.code),['governance','military','knowledge','technology','commerce','culture','religion','exploration']);
+  assert.equal(catalogs.representative_domain_reviewed_null_allowed,true);
+  assert.deepEqual(catalogs.spatial_registration_states,['existing_disposition','reviewed_static','reviewed_place_function','reviewed_hold']);
 });
 
 test('role code/category derivation remains deterministic', () => {

@@ -79,3 +79,36 @@ test('normal registration submits one semantic request and session expiry protec
   assert.match(ui,/sources:\s*\[\{/);
   assert.match(gate,/"\/api\/atlas-authoring"/);
 });
+
+
+test('new Person representative-domain review is explicit and canonical-catalog driven',()=>{
+  assert.match(ui,/id="humanRepresentativeDomain"/);
+  assert.match(ui,/body\.catalogs\?\.representative_domains/);
+  assert.match(ui,/body\.catalogs\?\.representative_domain_reviewed_null_allowed === true/);
+  assert.match(ui,/populateRepresentativeDomains\(domainSelect, representativeDomains/);
+  assert.match(ui,/__reviewed_null__/);
+  assert.match(ui,/return \{ representative_domain:null \}/);
+  assert.match(ui,/\.\.\.representativeDomainReview\(\)/);
+  for (const invented of ['ruler','science','diplomacy']) assert.doesNotMatch(ui,new RegExp(`value="${invented}"`));
+  assert.match(ui,/기존 Person 재사용 시 생략/);
+});
+
+test('new Polity spatial registration handshake is optional for reuse and canonical-catalog driven',()=>{
+  assert.match(ui,/id="humanSpatialDispositionState"/);
+  assert.match(ui,/id="humanSpatialDispositionEvidence" disabled/);
+  assert.match(ui,/body\.catalogs\?\.spatial_registration_states/);
+  assert.match(ui,/populateSpatialStates\(spatialSelect, spatialStates\)/);
+  assert.match(ui,/if \(!state\) return null/);
+  assert.match(ui,/\.\.\.\(spatialDisposition \? \{ spatial_disposition:spatialDisposition \} : \{\}\)/);
+  assert.match(ui,/reviewed_hold/);
+  assert.match(ui,/Territory·Geometry·경계·좌표/);
+  assert.doesNotMatch(ui,/latitude|longitude|polygon|geometry_payload|territory_record/i);
+});
+
+test('Admin explains canonical fail-closed domain and spatial errors',()=>{
+  assert.match(ui,/HUMAN_AUTHORING_NEW_PERSON_DOMAIN_REVIEW_REQUIRED/);
+  assert.match(ui,/PERSON_DOMAIN_VALUE_UNSUPPORTED/);
+  assert.match(ui,/HUMAN_AUTHORING_SPATIAL_DISPOSITION_REQUIRED/);
+  assert.match(ui,/HUMAN_AUTHORING_SPATIAL_DISPOSITION_INVALID/);
+  assert.match(ui,/HUMAN_AUTHORING_SPATIAL_DISPOSITION_EVIDENCE_REQUIRED/);
+});

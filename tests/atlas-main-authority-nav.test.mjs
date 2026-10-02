@@ -44,13 +44,17 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.doesNotMatch(nav, /authority-domain-card/);
 });
 
-test('future authority shells state readiness from the Korean catalog instead of fabricating first-class data', () => {
+test('authority shells reflect current canonical readiness without activating parked P14', () => {
   assert.match(catalog, /백엔드 조회 필요/);
-  assert.match(catalog, /향후 단계 · P14/);
+  assert.match(catalog, /중단됨 · 사용자 재개 필요/);
   assert.match(catalog, /부분 조회/);
   assert.match(catalog, /현재 canonical Polity 목록을 먼저 조회/);
   assert.match(catalog, /검토 candidate registry는 판단 대기열/);
-  assert.match(catalog, /독립 출처 목록·상세 조회와 first-class Source authoring은 P13에서 완성해야 합니다/);
+  assert.match(catalog, /first-class canonical Source authoring은 이미 구현되어 있습니다/);
+  assert.match(catalog, /Source identity는 canonical Source object가 담당하고 locator\/citation은 assertion provenance를 설명합니다/);
+  assert.match(catalog, /canonical Place\/PolityPlaceFunction authoring authority는 구현되어 있습니다/);
+  assert.match(catalog, /사용자가 명시적으로 재개하기 전에는 다음 단계나 자동 로드맵으로 취급하지 않습니다/);
+  assert.doesNotMatch(catalog, /향후 단계 · P14|first-class Source authoring은 P13에서 완성해야 합니다|P13 기준 계약이 필요합니다/);
   assert.match(catalog, /인물 → 활동 → 정치체 → 영토 → 지리 형상/);
   assert.match(nav, /ATLAS_UI_AUTHORITY_CATALOG_KO/);
   assert.doesNotMatch(nav, /fetch\s*\(/);

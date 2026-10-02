@@ -116,7 +116,12 @@
         <div class="identity-two"><label>생존 상태<select id="humanLifeStatus"><option value="">기존 Person 재사용 시 생략 가능</option><option value="deceased">사망 확인됨 · deceased</option></select></label><label>검토일<input id="humanLifeStatusCheckedAt" type="date" /></label></div>
         <label>판정 근거<select id="humanLifeStatusBasis"><option value="">선택</option><option value="documented_death">문헌·공식 기록으로 사망 확인</option><option value="historical_certainty">역사적 연대상 사망이 확실</option></select></label>
         <p class="identity-help">새 Person은 반드시 deceased 판정이 있어야 합니다. 현재 생존자는 직책·분야와 무관하게 제외하며, 활동 종료연도·ongoing 여부·대표 활동연도는 생존 판정에 사용하지 않습니다.</p>
+        <label>대표 분야 검토<select id="humanRepresentativeDomain"><option value="">기존 Person 재사용 시 생략 · 신규 Person은 반드시 검토</option></select></label>
+        <p class="identity-help">대표 분야는 Activity Role에서 자동 추론하지 않습니다. 신규 Person은 8개 canonical 분야 중 하나 또는 “검토했으나 미확정”을 명시해야 하며, 기존 Person 재사용 시 비워두면 기존 값을 변경하지 않습니다.</p>
         <div class="identity-two"><label>정치체 영문명<input id="humanPolityEn" required /></label><label>정치체 한국어명 <small>신규 Polity 생성 시 필수</small><input id="humanPolityKo" /></label></div>
+        <h3>신규 Polity 공간 검토</h3>
+        <div class="identity-two"><label>Spatial disposition<select id="humanSpatialDispositionState"><option value="">기존 Polity 재사용 · 공간 검토 생략</option></select></label><label>검토 근거<input id="humanSpatialDispositionEvidence" disabled /></label></div>
+        <p class="identity-help">새 Polity 생성이 필요한 경우에만 canonical spatial registration 상태와 근거를 선택합니다. reviewed_hold는 정상적인 검토 완료 상태이며, 여기서 Territory·Geometry·경계·좌표를 만들지 않습니다.</p>
         <div class="identity-two"><label>관계<select id="humanRelation" required><option value="">불러오는 중...</option></select></label><label>Period basis<select id="humanPeriodBasis" required><option value="">불러오는 중...</option></select></label></div>
         <div class="identity-two"><label>Role 영문명 <small>역할이 없으면 비움</small><input id="humanRoleEn" placeholder="예: Sultan" /></label><label>Role 한국어명 <small>신규 Role 생성 시 필수</small><input id="humanRoleKo" placeholder="예: 술탄" /></label></div>
         <h3>나무위키 확인</h3>
@@ -148,11 +153,77 @@
     }
   }
 
+  function populateRepresentativeDomains(select, definitions, reviewedNullAllowed) {
+    select.innerHTML = '<option value="">기존 Person 재사용 시 생략 · 신규 Person은 반드시 검토</option>';
+    for (const item of definitions) {
+      if (!item?.code) continue;
+      const option = document.createElement("option");
+      option.value = String(item.code);
+      option.textContent = item.label_ko ? `${item.label_ko} · ${item.code}` : String(item.code);
+      select.appendChild(option);
+    }
+    if (reviewedNullAllowed) {
+      const option = document.createElement("option");
+      option.value = "__reviewed_null__";
+      option.textContent = "검토했으나 미확정 · reviewed NULL";
+      select.appendChild(option);
+    }
+  }
+
+  const spatialStateLabels = Object.freeze({
+    existing_disposition:"기존 검토 disposition 확인",
+    reviewed_static:"정적 지리 기준 검토 완료",
+    reviewed_place_function:"PolityPlaceFunction 기준 검토 완료",
+    reviewed_hold:"검토 완료 · 위치 판단 보류"
+  });
+
+  function populateSpatialStates(select, states) {
+    select.innerHTML = '<option value="">기존 Polity 재사용 · 공간 검토 생략</option>';
+    for (const state of states) {
+      const option = document.createElement("option");
+      option.value = String(state);
+      option.textContent = spatialStateLabels[state] ? `${spatialStateLabels[state]} · ${state}` : String(state);
+      select.appendChild(option);
+    }
+  }
+
+  function syncSpatialDispositionFields() {
+    const state = value("humanSpatialDispositionState");
+    const evidence = document.getElementById("humanSpatialDispositionEvidence");
+    if (!evidence) return;
+    evidence.disabled = !state;
+    evidence.required = Boolean(state);
+    if (!state) evidence.value = "";
+  }
+
+  function representativeDomainReview() {
+    const select = document.getElementById("humanRepresentativeDomain");
+    const raw = value("humanRepresentativeDomain");
+    if (!raw) return {};
+    if (raw === "__reviewed_null__") return { representative_domain:null };
+    const allowed = new Set([...select.options].map((option) => option.value).filter((code) => code && code !== "__reviewed_null__"));
+    if (!allowed.has(raw)) throw new Error("대표 분야 값이 현재 canonical catalog에 없습니다.");
+    return { representative_domain:raw };
+  }
+
+  function spatialDispositionReview() {
+    const select = document.getElementById("humanSpatialDispositionState");
+    const state = value("humanSpatialDispositionState");
+    if (!state) return null;
+    const allowed = new Set([...select.options].map((option) => option.value).filter(Boolean));
+    if (!allowed.has(state)) throw new Error("Spatial disposition 값이 현재 canonical catalog에 없습니다.");
+    const evidence = value("humanSpatialDispositionEvidence");
+    if (!evidence) throw new Error("신규 Polity 공간 검토 근거를 입력해야 합니다.");
+    return { state, evidence };
+  }
+
   async function loadHumanCatalogs() {
     const output = document.getElementById("humanAuthoringResult");
     const relationSelect = document.getElementById("humanRelation");
     const periodSelect = document.getElementById("humanPeriodBasis");
-    if (!output || !relationSelect || !periodSelect) return;
+    const domainSelect = document.getElementById("humanRepresentativeDomain");
+    const spatialSelect = document.getElementById("humanSpatialDispositionState");
+    if (!output || !relationSelect || !periodSelect || !domainSelect || !spatialSelect) return;
     try {
       const response = await fetch(authoringEndpoint, {
         method: "GET",
@@ -166,9 +237,16 @@
       }
       const relationTypes = Array.isArray(body.catalogs?.relation_types) ? body.catalogs.relation_types : [];
       const periodBases = Array.isArray(body.catalogs?.period_bases) ? body.catalogs.period_bases : [];
-      if (relationTypes.length === 0 || periodBases.length === 0) throw new Error("활성 Relation/Period Basis 카탈로그가 비어 있습니다.");
+      const representativeDomains = Array.isArray(body.catalogs?.representative_domains) ? body.catalogs.representative_domains : [];
+      const spatialStates = Array.isArray(body.catalogs?.spatial_registration_states) ? body.catalogs.spatial_registration_states : [];
+      if (relationTypes.length === 0 || periodBases.length === 0 || representativeDomains.length === 0 || spatialStates.length === 0) {
+        throw new Error("활성 Relation/Period Basis/Domain/Spatial 카탈로그가 비어 있습니다.");
+      }
       appendCatalogOptions(relationSelect, relationTypes, (code) => relationLabels[code] ? `${code} · ${relationLabels[code]}` : code);
       appendCatalogOptions(periodSelect, periodBases);
+      populateRepresentativeDomains(domainSelect, representativeDomains, body.catalogs?.representative_domain_reviewed_null_allowed === true);
+      populateSpatialStates(spatialSelect, spatialStates);
+      syncSpatialDispositionFields();
       output.textContent = "일반 신규등록 준비됨";
       output.dataset.type = "success";
     } catch (error) {
@@ -273,7 +351,12 @@
       HUMAN_AUTHORING_NAMUWIKI_CHECKED_AT_INVALID: "나무위키 확인일이 올바르지 않습니다.",
       HUMAN_AUTHORING_NAMUWIKI_DOCUMENT_TITLE_REQUIRED: "나무위키 문서가 있으면 정확한 문서명이 필요합니다.",
       HUMAN_AUTHORING_NAMUWIKI_URL_INVALID: "나무위키 문서 URL이 올바르지 않습니다.",
-      HUMAN_AUTHORING_SOURCE_CANONICAL_URL_AMBIGUOUS: "같은 Source URL이 여러 identity에 존재합니다. Source 중복 검토가 필요합니다."
+      HUMAN_AUTHORING_SOURCE_CANONICAL_URL_AMBIGUOUS: "같은 Source URL이 여러 identity에 존재합니다. Source 중복 검토가 필요합니다.",
+      HUMAN_AUTHORING_NEW_PERSON_DOMAIN_REVIEW_REQUIRED: "신규 Person은 대표 분야를 검토해야 합니다. 8개 분야 또는 ‘검토했으나 미확정’을 선택하세요.",
+      PERSON_DOMAIN_VALUE_UNSUPPORTED: "대표 분야가 현재 canonical 8개 분야에 포함되지 않습니다.",
+      HUMAN_AUTHORING_SPATIAL_DISPOSITION_REQUIRED: "신규 Polity 생성에는 공간 검토 상태가 필요합니다. 기존 Polity 재사용이면 비워두세요.",
+      HUMAN_AUTHORING_SPATIAL_DISPOSITION_INVALID: "공간 검토 상태가 현재 canonical registration contract에 포함되지 않습니다.",
+      HUMAN_AUTHORING_SPATIAL_DISPOSITION_EVIDENCE_REQUIRED: "신규 Polity 공간 검토에는 근거가 필요합니다."
     })[code] || fallback || code;
   }
 
@@ -289,6 +372,7 @@
     try {
       const sourceUrl = value("humanSourceUrl");
       const namuwiki = namuwikiReference();
+      const spatialDisposition = spatialDispositionReview();
       const payload = {
         schema: "atlas-human-authoring/v1",
         request_id: requestId(),
@@ -297,7 +381,8 @@
           display_name_ko: value("humanPersonKo") || null,
           life_status: value("humanLifeStatus") || null,
           life_status_checked_at: value("humanLifeStatusCheckedAt") || null,
-          life_status_basis: value("humanLifeStatusBasis") || null
+          life_status_basis: value("humanLifeStatusBasis") || null,
+          ...representativeDomainReview()
         },
         polity: { canonical_name_en: value("humanPolityEn"), display_name_ko: value("humanPolityKo") || null },
         activity: {
@@ -317,7 +402,8 @@
           canonical_url: sourceUrl || null,
           citation_text: value("humanSourceCitation") || null
         }],
-        external_references: namuwiki ? { namuwiki } : {}
+        external_references: namuwiki ? { namuwiki } : {},
+        ...(spatialDisposition ? { spatial_disposition:spatialDisposition } : {})
       };
       const response = await fetch(authoringEndpoint, {
         method: "POST",
@@ -362,7 +448,9 @@
 
   insertHumanAuthoringPanel();
   document.getElementById("humanNamuWikiStatus")?.addEventListener("change", syncNamuWikiFields);
+  document.getElementById("humanSpatialDispositionState")?.addEventListener("change", syncSpatialDispositionFields);
   syncNamuWikiFields();
+  syncSpatialDispositionFields();
   document.getElementById("humanAuthoringForm")?.addEventListener("submit", submitHumanAuthoring);
   loadHumanCatalogs();
 })();
