@@ -1,0 +1,310 @@
+{
+  "schema": "atlas-current-ui-information-coverage-audit/v1",
+  "audited_at": "2026-10-02",
+  "audit_mode": "READ_INSPECT_COMPARE_CLASSIFY_REPORT",
+  "base_main_sha": "afb37aad0155a69191f1fbb6ae2cebd57ed62441",
+  "deployed_sha_observed": "50fda2d0ab9640fb2f91199f337f6469f2470a8e",
+  "deployed_delta_note": "The only main delta observed after deployment was PR #1795 audit-artifact-only documentation; no UI/read/API implementation paths changed.",
+  "production_mutation_authorized": false,
+  "ui_code_mutation_authorized": false,
+  "p14_state": "PARKED_BY_USER_NOT_ACTIVE_DO_NOT_AUTO_RESUME",
+  "check_count": 99,
+  "classification_counts": {
+    "DONE": 65,
+    "PARTIAL": 12,
+    "MISSING": 15,
+    "STALE_REQUIREMENT": 5,
+    "INTENTIONALLY_NOT_EXPOSED": 2
+  },
+  "priority_findings": [
+    {
+      "priority": "P0",
+      "surface": "Admin Authoring",
+      "state": "MISSING",
+      "requirement": "New Person canonical registration succeeds",
+      "evidence": [
+        "atlas-admin-identity.js Human Authoring payload does not send person.representative_domain",
+        "server/atlas-human-authoring-service.js rejects a created Person unless representative_domain_reviewed is true, raising HUMAN_AUTHORING_NEW_PERSON_DOMAIN_REVIEW_REQUIRED"
+      ],
+      "action": "Add a reviewed representative-domain control to canonical Human Authoring and regression-test a successful new-Person payload."
+    },
+    {
+      "priority": "P0",
+      "surface": "Admin Authoring",
+      "state": "MISSING",
+      "requirement": "New Polity canonical registration succeeds",
+      "evidence": [
+        "atlas-admin-identity.js Human Authoring payload does not send spatial_disposition",
+        "server/atlas-spatial-fact-contract.js requires terminal spatial disposition state plus evidence when polityDisposition=created"
+      ],
+      "action": "Collect canonical spatial terminal state and evidence when Human Authoring creates a new Polity."
+    },
+    {
+      "priority": "P0",
+      "surface": "Navigation / Authority catalog",
+      "state": "MISSING",
+      "requirement": "P14 current project state is represented accurately",
+      "evidence": [
+        "docs/ATLAS_CURRENT_WORKSTREAMS.md marks P14 PARKED_BY_USER / NOT_ACTIVE",
+        "atlas-ui-authority-catalog.ko.js still labels Geometry as '향후 단계 · P14' and describes P14 completion as the active future path"
+      ],
+      "action": "Change public authority copy to parked/not-active and remove automatic-roadmap implication."
+    },
+    {
+      "priority": "P0",
+      "surface": "Navigation / Authority catalog",
+      "state": "MISSING",
+      "requirement": "Source backend state copy is current",
+      "evidence": [
+        "atlas-source-service.js already provides first-class Source authoring metadata",
+        "atlas-ui-authority-catalog.ko.js still says first-class Source authoring must be completed in P13"
+      ],
+      "action": "Rewrite Source copy to distinguish completed backend authoring from the still-missing independent public Source browser."
+    }
+  ],
+  "other_missing": [
+    {
+      "surface": "Source",
+      "requirement": "Author/creator, institution, publisher, publication date/year, external identifier",
+      "evidence": "atlas-source-service.js owns these fields, while Person read and Admin Source Inspector currently omit them."
+    },
+    {
+      "surface": "Source",
+      "requirement": "citation_metadata / artifact_metadata",
+      "evidence": "Canonical Source service supports structured metadata; current read projections omit it."
+    },
+    {
+      "surface": "Polity",
+      "requirement": "Retired identity / redirect history",
+      "evidence": "Retirement/restore backend exists; atlas-polity-read-service.js does not project lifecycle history."
+    },
+    {
+      "surface": "Polity",
+      "requirement": "Continuity / lineage visibility",
+      "evidence": "Identity/correction authority exists, but public Polity read has no continuity/lineage section."
+    },
+    {
+      "surface": "Admin System",
+      "requirement": "Last successful authoring/correction references",
+      "evidence": "Canonical mutation ledgers exist; System Status does not expose bounded last-mutation references."
+    },
+    {
+      "surface": "Admin",
+      "requirement": "Authoring request/ledger/history inspection",
+      "evidence": "Authoring manifest/audit data exists; UUID Object Inspector does not expose operational ledger history."
+    },
+    {
+      "surface": "Admin Authoring",
+      "requirement": "Ongoing Activity authoring",
+      "evidence": "Backend supports ongoing/as_of; current Human Authoring form has no ongoing control."
+    },
+    {
+      "surface": "Admin Authoring",
+      "requirement": "Non-timeline Person-only authoring",
+      "evidence": "Backend atlas-human-person-authoring/v1 exists; current normal Admin UI has no form for it."
+    },
+    {
+      "surface": "Admin Authoring",
+      "requirement": "Person place facts",
+      "evidence": "Human Authoring accepts person.place_facts; Admin form does not expose it."
+    }
+  ],
+  "partial_findings": [
+    "Person detail supports UUID routing but does not visibly print/copy the Person UUID.",
+    "Timeline disposition is in Person read and card empty-state labels but lacks a dedicated Person-detail field.",
+    "Representative domain is used for filters/colors/portrait presentation but lacks a persistent visible semantic badge in Person detail.",
+    "Global Runtime publication/exclusion is visible, but Person detail does not show per-entity inclusion/exclusion lifecycle.",
+    "Portrait lifecycle backend exists, but Person UI lacks a clear read-only provenance/revision-history browser.",
+    "Public Dashboard emphasizes used-Polity concentration and provenance coverage rather than exact canonical Polity/Source inventory totals.",
+    "Admin blocker/readiness information is distributed rather than a unified obligation-debt metric.",
+    "Human Authoring has only basic Source title/url/citation controls despite richer canonical Source metadata.",
+    "Runtime HOLD/blocked/error user-facing distinctions are not fully normalized.",
+    "Places authority copy is stale: canonical Place/PolityPlaceFunction backend exists but independent public Place browsing is still missing."
+  ],
+  "stale_or_superseded": [
+    {
+      "requirement": "Old spacetime maximum zoom 800%",
+      "current_state": "SUPERSEDED",
+      "evidence": "Current mobile/desktop regression contract uses 500% default within a 50–1500% camera range."
+    },
+    {
+      "requirement": "Density-based regional width/compression",
+      "current_state": "SUPERSEDED",
+      "evidence": "Current stable world geometry/global scale contract forbids density distortion; density is handled via zoom/LOD/labels."
+    },
+    {
+      "requirement": "Mandatory era-icon/material portrait-frame system",
+      "current_state": "NO_LONGER_BINDING",
+      "evidence": "Current portrait contract separates canonical portrait subject from presentation layers and does not require baked-in era/material icons."
+    },
+    {
+      "requirement": "Generic competing-evidence UI taxonomy",
+      "current_state": "STALE_REQUIREMENT",
+      "evidence": "Current canonical model exposes source-backed evidence but no universal competing-evidence field; UI must not invent one."
+    },
+    {
+      "requirement": "Historical map polygon work as active UI backlog",
+      "current_state": "PARKED",
+      "evidence": "P14 is explicitly parked and separate from current Spacetime Person UI."
+    }
+  ],
+  "intentionally_not_exposed": [
+    {
+      "item": "GitHub Actions integrity health as runtime truth",
+      "reason": "Admin explicitly refuses to manufacture CI health from runtime state."
+    },
+    {
+      "item": "Secret values",
+      "reason": "Admin exposes configuration status booleans only; raw secret values remain hidden."
+    }
+  ],
+  "verified_done_surfaces": {
+    "person_main": [
+      "KO/EN names, aliases, person type, historicity, descriptions, person sources",
+      "Polity/Relation/domain filtering",
+      "BCE/CE and unresolved chronology presentation"
+    ],
+    "activity": [
+      "explicit Polity, Relation, Role, Period Basis",
+      "full start/end temporal boundaries",
+      "granularity, certainty, calendar, confidence, chronology status, notes",
+      "opposes/claims_rule preserved as explicit Relation semantics"
+    ],
+    "evidence": [
+      "title, type, canonical URL, citation text, locator",
+      "chronology/certainty evidence grouping"
+    ],
+    "spacetime": [
+      "unified camera zoom/pan",
+      "mobile pinch/pan",
+      "full-name labels and stable region/era axes",
+      "domain colors, opposed-polity handling, unresolved chronology, non-timeline exclusion",
+      "inspector, minimap, bounded performance/lazy loading"
+    ],
+    "portrait": [
+      "present/absent/fallback state",
+      "upload/replace/delete",
+      "4:5 subject composition with presentation background separated from canonical image",
+      "responsive rendering"
+    ],
+    "dashboard": [
+      "Person/Activity scale",
+      "incomplete-reason breakdown",
+      "domain and NamuWiki progress",
+      "Runtime exclusion count/reasons/targets",
+      "provenance debt",
+      "unknown remains unknown; no fabricated zero"
+    ],
+    "admin": [
+      "deployed SHA/ref/environment",
+      "schema state and dynamic DB table counts",
+      "Runtime compile/publication state",
+      "readiness and UUID Object Inspector",
+      "primitive Person/Polity forms safely registration-gated"
+    ]
+  },
+  "implementation_batches": [
+    {
+      "id": "UI-R1",
+      "priority": "P0",
+      "title": "Admin canonical registration contract parity",
+      "likely_files": [
+        "atlas-admin-identity.js",
+        "tests/atlas-admin-human-authoring-contract.test.mjs",
+        "atlas-admin-identity.css"
+      ],
+      "dependency": "Existing /api/atlas-authoring contract, domain registry, spatial registration terminal-state contract",
+      "risk": "HIGH",
+      "browser_verification": "REQUIRED_AUTHENTICATED_NO_PRODUCTION_MUTATION",
+      "production_deployment": "YES",
+      "scope": "Fix new-Person representative-domain and new-Polity spatial-disposition form contract drift; prove canonical payload parity."
+    },
+    {
+      "id": "UI-R2",
+      "priority": "P0",
+      "title": "Public authority-state copy correction",
+      "likely_files": [
+        "atlas-ui-authority-catalog.ko.js",
+        "relevant authority/navigation tests"
+      ],
+      "dependency": "docs/ATLAS_CURRENT_WORKSTREAMS.md project state",
+      "risk": "LOW",
+      "browser_verification": "REQUIRED",
+      "production_deployment": "YES",
+      "scope": "Represent P14 as parked and correct obsolete Source/Place/P13 copy."
+    },
+    {
+      "id": "UI-R3",
+      "priority": "P1",
+      "title": "Canonical Source bibliographic coverage",
+      "likely_files": [
+        "server/atlas-runtime-person-read-service.js",
+        "server/atlas-admin-inspector-service.js",
+        "atlas-person-main.js",
+        "atlas-person-evidence-view.js",
+        "tests"
+      ],
+      "dependency": "atlas-source-service.js fields",
+      "risk": "MEDIUM",
+      "browser_verification": "REQUIRED",
+      "production_deployment": "YES"
+    },
+    {
+      "id": "UI-R4",
+      "priority": "P1",
+      "title": "Polity identity lifecycle visibility",
+      "likely_files": [
+        "server/atlas-polity-read-service.js",
+        "atlas-polity-dossier-view.js",
+        "tests"
+      ],
+      "dependency": "Canonical retirement/restore/designation/continuity authority",
+      "risk": "MEDIUM_HIGH",
+      "browser_verification": "REQUIRED",
+      "production_deployment": "YES"
+    },
+    {
+      "id": "UI-R5",
+      "priority": "P1",
+      "title": "Person detail lifecycle completeness",
+      "likely_files": [
+        "atlas-person-main.js",
+        "atlas-person-main.css",
+        "tests"
+      ],
+      "dependency": "Person read, domain read, timeline disposition",
+      "risk": "LOW_MEDIUM",
+      "browser_verification": "REQUIRED_DESKTOP_MOBILE",
+      "production_deployment": "YES"
+    },
+    {
+      "id": "UI-R6",
+      "priority": "P2",
+      "title": "Admin mutation/ledger observability",
+      "dependency": "Canonical ledgers only; no secrets",
+      "risk": "MEDIUM",
+      "browser_verification": "REQUIRED_AUTHENTICATED_READ_ONLY",
+      "production_deployment": "YES"
+    },
+    {
+      "id": "UI-R7",
+      "priority": "P2_P3",
+      "title": "Portrait provenance/history visibility",
+      "dependency": "Canonical portrait revisions/sources",
+      "risk": "MEDIUM",
+      "browser_verification": "REQUIRED_DESKTOP_MOBILE",
+      "production_deployment": "YES"
+    },
+    {
+      "id": "UI-R8",
+      "priority": "P3",
+      "title": "Spacetime/mobile polish only after measured regression",
+      "dependency": "Current spacetime regression contract",
+      "risk": "LOW_MEDIUM",
+      "browser_verification": "REQUIRED_IF_CHANGED",
+      "production_deployment": "YES_IF_CHANGED",
+      "scope": "No speculative redesign; current core Spacetime functionality is already DONE."
+    }
+  ],
+  "exact_next_unit": "UI-R1 — Admin canonical registration contract parity — NOT_STARTED"
+}
