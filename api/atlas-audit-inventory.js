@@ -4,6 +4,7 @@
 // Audit retrigger 2026-09-05: capture exact temporal metadata for the next Yelü Dashi merge blocker.
 // Audit retrigger 2026-09-20: capture exact live Polity references blocking the reviewed Kingdom of Greece retirement.
 // Audit retrigger 2026-09-24: capture the complete current 28-Polity unlinked/orphan reference surface before cleanup.
+// Audit retrigger 2026-10-02: force a deployable exact-SHA baseline for the Ireland 6-A frontier.
 const { createAuditInventoryHandler } = require("../server/atlas-audit-inventory-handler.js");
 const { createPolityReferenceAuditHandler } = require("../server/atlas-polity-reference-audit-handler.js");
 
