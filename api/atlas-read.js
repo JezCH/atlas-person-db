@@ -26,6 +26,7 @@ let runtimeExclusionsServiceModule = null;
 let runtimeExclusionsHandlerModule = null;
 let recentDeltaServiceModule = null;
 let recentDeltaHandlerModule = null;
+let registrationQueueHandlerModule = null;
 
 function getRuntimePublicationServiceModule() {
   if (!runtimePublicationServiceModule) {
@@ -67,6 +68,13 @@ function getRecentDeltaHandlerModule() {
     recentDeltaHandlerModule = require("../server/atlas-recent-delta-read-handler.js");
   }
   return recentDeltaHandlerModule;
+}
+
+function getRegistrationQueueHandlerModule() {
+  if (!registrationQueueHandlerModule) {
+    registrationQueueHandlerModule = require("../server/atlas-registration-queue-read-handler.js");
+  }
+  return registrationQueueHandlerModule;
 }
 
 function defineLazyExport(name, load, exportName = name) {
@@ -154,6 +162,11 @@ const runtimePublicationReadHandler = createLazyHandler(() => {
   return createRuntimePublicationReadHandler({ clientFactory:getPostgresClientFactory() });
 });
 
+const registrationQueueReadHandler = createLazyHandler(() => {
+  const { createRegistrationQueueReadHandler } = getRegistrationQueueHandlerModule();
+  return createRegistrationQueueReadHandler({ clientFactory:getPostgresClientFactory() });
+});
+
 function selectReadSurface(req) {
   const direct = req?.query?.__atlas_read_surface;
   if (Array.isArray(direct)) return direct.length === 1 ? String(direct[0] || "").trim() : "";
@@ -179,6 +192,7 @@ async function consolidatedReadHandler(req, res) {
   if (surface === "runtime-identity") return publicRuntimeIdentityHandler(req, res);
   if (surface === "runtime-publication") return runtimePublicationReadHandler(req, res);
   if (surface === "runtime-exclusions") return runtimeExclusionsReadHandler(req, res);
+  if (surface === "registration-queue") return registrationQueueReadHandler(req, res);
   if (surface === "admin-inspector") return adminInspectorHandler(req, res);
   if (surface === "admin-system-status") return adminSystemStatusHandler(req, res);
   return normalizedReadHandler(req, res);
