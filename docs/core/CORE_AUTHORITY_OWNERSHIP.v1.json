@@ -709,35 +709,43 @@
     },
     {
       "id": "p14_territory_geometry_boundary",
-      "semantic_fact": "Canonical interface separating Polity-owned historical territorial authority from reusable evidence-backed Geometry",
+      "semantic_fact": "Canonical DB-backed P14 Authoring authority separating Polity-owned historical TerritoryRecord semantics from reusable evidence-backed Geometry",
       "canonical_state": [
-        "contracts/p14-territory-geometry-contract.v1.json"
+        "atlas_v2.geometries",
+        "atlas_v2.geometry_sources",
+        "atlas_v2.territory_records",
+        "atlas_v2.territory_record_sources",
+        "contracts/p14-territory-geometry-contract.v2.json"
       ],
       "authoritative_writer": {
-        "path": "server/atlas-p14-territory-geometry-contract.js",
-        "symbol": "assertTerritoryRecord / assertGeometry / assertTerritoryGeometryLink"
+        "path": "server/atlas-p14-territory-geometry-service.js",
+        "symbol": "createGeometry / createTerritoryRecord"
       },
       "orchestrators": [
-        "future reviewed Territory/Geometry authoring only"
+        "future reviewed P14 research/application surfaces only"
       ],
       "shadow_writers": [],
-      "status": "repository_source_authority",
+      "status": "single_writer",
       "remediation_unit": null,
       "evidence_anchors": [
         {
-          "path": "contracts/p14-territory-geometry-contract.v1.json",
+          "path": "contracts/p14-territory-geometry-contract.v2.json",
           "contains": "Person -> Activity -> Polity -> TerritoryRecord -> Geometry"
         },
         {
-          "path": "server/atlas-p14-territory-geometry-contract.js",
-          "contains": "function assertTerritoryRecord"
+          "path": "server/atlas-p14-territory-geometry-service.js",
+          "contains": "async function createGeometry"
         },
         {
-          "path": "server/atlas-p14-territory-geometry-contract.js",
-          "contains": "function assertGeometry"
+          "path": "server/atlas-p14-territory-geometry-service.js",
+          "contains": "async function createTerritoryRecord"
+        },
+        {
+          "path": "db/migrations/20261002_p14_territory_geometry_authority.sql",
+          "contains": "CREATE TABLE IF NOT EXISTS atlas_v2.territory_records"
         }
       ],
-      "note": "Unit 15 seals interfaces only. TerritoryRecord owns control type, boundary certainty, evidence confidence, valid interval and provenance under Polity authority. Geometry owns reusable evidence-backed shape only. Person/Activity-owned geometry, invented geometry and display-derived political authority are forbidden. Actual Territory polygon production remains NONCORE."
+      "note": "P14-A upgrades the Unit 15 boundary seal into DB-backed canonical Authoring. Geometry owns only reusable reviewed shape references plus Source UUID provenance; TerritoryRecord alone owns Polity control semantics, spatial boundary certainty, evidence confidence and reviewed temporal validity. Unknown/ongoing temporal boundaries remain explicit. Actual historical polygon research/content remains outside this foundation."
     }
   ]
 }
