@@ -4,7 +4,7 @@
 **Current P13 requirement:** `ATLAS-RQ-0223 — COMPLETED`  
 **Historical acceptance:** PR #1771 / 2026-10-01 — audit evidence only  
 **Current closure authority:** generated evidence from `.github/workflows/atlas-core-final-acceptance.yml`  
-**P14 content implementation:** out of scope; P14 remains separate product work.
+**P14 content implementation:** out of scope; **PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME**.
 
 ## Generated acceptance result
 
@@ -96,7 +96,7 @@ The following P13 requirements are completed:
 - `ATLAS-RQ-0229` — unresolved Activity boundaries without fake endpoints;
 - `ATLAS-RQ-0230` — source-backed candidate → human review → authoritative authoring.
 
-`ATLAS-RQ-0224` and `ATLAS-RQ-0225` remain **PENDING** because historical-map content/research integration is P14 product work, not a CORE v2 architecture closure blocker.
+`ATLAS-RQ-0224` and `ATLAS-RQ-0225` remain unimplemented requirement rows for traceability, but their execution state is **PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME**. They are not a CORE blocker and must not become a project frontier without an explicit user restart.
 
 ## Re-entry rule
 
