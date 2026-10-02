@@ -12,6 +12,7 @@ const require=createRequire(import.meta.url);
 const {
   CONTRACT_SCHEMA,
   EVIDENCE_SCHEMA,
+  P13_REQUIREMENT_ID,
   validateContract,
   productionGateResult,
   evaluateAcceptance,
@@ -152,6 +153,8 @@ test("generated acceptance PASS is derived only from all executable gates plus e
     workflow:{repository:"JezCH/atlas-person-db",run_id:"123",run_attempt:"2"}
   });
   assert.equal(report.schema,EVIDENCE_SCHEMA);
+  assert.equal(report.requirement_id,P13_REQUIREMENT_ID);
+  assert.equal(report.requirement_id,"ATLAS-RQ-0223");
   assert.equal(report.generated,true);
   assert.equal(report.status,"PASS");
   assert.equal(report.commit_sha,SHA);
@@ -188,9 +191,23 @@ test("main workflow waits for exact Production SHA, generates evidence, uploads 
   assert.doesNotMatch(workflow,/\\\$\{GITHUB_/);
 });
 
-test("P13 lifecycle requirement remains pending until exact-main generated acceptance has actually run",()=>{
-  const item=requirements.requirements.find((entry)=>entry.id==="ATLAS-RQ-0223");
+test("P13 lifecycle requirement is completed only with generated acceptance authority and recorded Production proof",()=>{
+  const item=requirements.requirements.find((entry)=>entry.id===P13_REQUIREMENT_ID);
   assert.ok(item);
-  assert.equal(item.status,"PENDING");
-  assert.ok(item.evidence_paths.includes("data/core/core-v2-final-acceptance.v1.json"));
+  assert.equal(item.status,"COMPLETED");
+  for(const evidence of [
+    "contracts/core-final-acceptance-contract.v2.json",
+    "server/atlas-core-final-acceptance.js",
+    "scripts/run-core-final-acceptance.mjs",
+    ".github/workflows/atlas-core-final-acceptance.yml",
+    "tests/core-final-acceptance.test.mjs"
+  ]) assert.ok(item.evidence_paths.includes(evidence),evidence);
+
+  const closure=read("docs/core/CORE_V2_FINAL_ACCEPTANCE.md");
+  assert.match(closure,/0ed0f0de849972ebda1eab618ce6112f5d5cb135/);
+  assert.match(closure,/36960727475/);
+  assert.match(closure,/11207792140/);
+  assert.match(closure,/dpl_GbgrFxDR32VLH7z6sjga6MxrbEb9/);
+  assert.match(closure,/9 \/ 9 PASS/);
+  assert.match(closure,/26 \/ 26 PASS/);
 });

@@ -1,6 +1,6 @@
 # ATLAS Requirements Source of Truth v1
 
-> Status: **CORE RE-ENTRY ACTIVE / VERIFIED CLOSED WORK PRESERVED / P13 LIFECYCLE ACCEPTANCE REOPENED**
+> Status: **CORE v2 CLOSED / GENERATED P13 LIFECYCLE ACCEPTANCE PASSED / P14 PRODUCT WORK REMAINS PENDING**
 >
 > As of: **2026-10-01**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
@@ -162,7 +162,7 @@ Historical Baseline B evidence remains audit history. Current correctness must b
 
 ### P13 — Full product lifecycle — REOPENED BY POST-CLOSURE AUDIT
 
-- `ATLAS-RQ-0223` — **PENDING:** the prior static PASS is historical evidence only. The remaining closure step is the generated final-acceptance workflow: it must execute the required invariant gates on fresh PostgreSQL and prove exact-SHA Production readiness before a PASS is generated. The requirement stays PENDING until that main/Production run succeeds.
+- `ATLAS-RQ-0223` — **COMPLETED:** generated final acceptance now derives PASS from executable invariant gates on fresh PostgreSQL plus exact-SHA Production readiness. Initial generated proof: main `0ed0f0de849972ebda1eab618ce6112f5d5cb135`, workflow run `36960727475`, artifact `11207792140`, Production deployment `dpl_GbgrFxDR32VLH7z6sjga6MxrbEb9`; all required gates and mapped invariants passed with zero failures.
 - `ATLAS-RQ-0226` — **COMPLETED:** complete first-class Person object authoring without forcing unknown optional profile facts.
 - `ATLAS-RQ-0227` — **COMPLETED:** complete Place and bibliographic Source authoring as independent objects.
 - `ATLAS-RQ-0228` — **COMPLETED:** implement explicit Compile → Runtime projection and readiness filtering.

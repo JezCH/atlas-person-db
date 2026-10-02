@@ -97,6 +97,7 @@ fs.mkdirSync(path.dirname(outputPath),{recursive:true});
 fs.writeFileSync(outputPath,JSON.stringify(report,null,2)+"\n");
 process.stdout.write(JSON.stringify({
   schema:report.schema,
+  requirement_id:report.requirement_id,
   status:report.status,
   commit_sha:report.commit_sha,
   production:report.production,

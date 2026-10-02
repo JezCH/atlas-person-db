@@ -2,7 +2,7 @@
   "schema": "atlas-requirements/v1",
   "version": 1,
   "finalized": true,
-  "as_of": "2026-10-01",
+  "as_of": "2026-10-02",
   "roadmap": [
     "P0",
     "P1",
@@ -453,7 +453,7 @@
     },
     {
       "id": "ATLAS-RQ-0223",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "title": "Pass full Production product lifecycle acceptance",
       "phase": "P13",
       "evidence_paths": [
