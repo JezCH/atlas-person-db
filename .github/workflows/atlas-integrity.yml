@@ -245,6 +245,9 @@ jobs:
       - name: Rebuild current v2 schema on fresh PostgreSQL
         run: npm run test:schema
 
+      - name: Rehearse P14 Territory Geometry canonical authoring
+        run: node scripts/rehearse-p14-territory-geometry-authoring.mjs
+
   test:
     name: test
     needs: [classify, registration_validation, governance_validation, ui_validation, full_test]
