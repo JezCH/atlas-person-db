@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "commerce-microbatch-20261003-thomas-gresham",
+  "person": {
+    "canonical_name_en": "Thomas Gresham",
+    "display_name_ko": "토머스 그레셤",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-03",
+    "life_status_basis": "documented_death",
+    "representative_domain": "commerce"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-03",
+      "document_title": "토머스 그레셤",
+      "url": "https://namu.wiki/w/%ED%86%A0%EB%A8%B8%EC%8A%A4%20%EA%B7%B8%EB%A0%88%EC%85%A4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Financier",
+    "role_display_name_ko": "금융가",
+    "start_year": 1552,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1574,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative royal-finance career spans Gresham's appointment as royal agent in Antwerp around the turn of 1551/1552 through his documented decision to retire as Elizabeth I's banker in 1574. Start certainty is approximate because sources place the appointment in December 1551 or January 1552."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Our History — Gresham College",
+      "canonical_url": "https://www.gresham.ac.uk/about-us/our-history",
+      "citation_text": "Gresham College records Gresham's appointment as Royal Agent in Antwerp in 1552, his management of royal debt and credit, and the founding of the Royal Exchange in 1571.",
+      "locator": "Sir Thomas Gresham"
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Thomas Gresham and the Tudor Monarchy — Gresham College",
+      "canonical_url": "https://www.gresham.ac.uk/sites/default/files/2019-06-16_JohnGuy_ThomasGresham.pdf",
+      "citation_text": "John Guy's Gresham College lecture records Gresham's firm decision in 1574 to retire as Elizabeth's banker.",
+      "locator": "1574 retirement discussion"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gplist3-20260921-075",
+    "lane": "Lane A canonical registration",
+    "previous_review": "APPROVED / TIMELINE_ELIGIBLE / commerce / QUEUED / SS",
+    "review_inherited": true
+  }
+}
