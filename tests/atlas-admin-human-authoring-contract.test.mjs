@@ -112,3 +112,10 @@ test('Admin explains canonical fail-closed domain and spatial errors',()=>{
   assert.match(ui,/HUMAN_AUTHORING_SPATIAL_DISPOSITION_INVALID/);
   assert.match(ui,/HUMAN_AUTHORING_SPATIAL_DISPOSITION_EVIDENCE_REQUIRED/);
 });
+
+
+test('canonical registration selects remain width-bounded on mobile layouts',()=>{
+  const css=fs.readFileSync(new URL('../atlas-admin-identity.css',import.meta.url),'utf8');
+  assert.match(css,/\.identity-form select \{[^}]*width:\s*100%[^}]*min-width:\s*0[^}]*min-height:\s*42px/s);
+  assert.match(css,/@media \(max-width: 520px\) \{ \.identity-two \{ grid-template-columns: 1fr; \} \}/);
+});
