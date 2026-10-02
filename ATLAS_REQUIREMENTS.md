@@ -162,7 +162,7 @@ Historical Baseline B evidence remains audit history. Current correctness must b
 
 ### P13 — Full product lifecycle — REOPENED BY POST-CLOSURE AUDIT
 
-- `ATLAS-RQ-0223` — **PENDING:** the prior final acceptance is retained as historical evidence, but the post-closure audit found remaining Production-lifecycle integration gaps. Re-acceptance requires closing the active CORE remediation blockers and rerunning generated executable acceptance against the resulting current architecture.
+- `ATLAS-RQ-0223` — **PENDING:** the prior static PASS is historical evidence only. The remaining closure step is the generated final-acceptance workflow: it must execute the required invariant gates on fresh PostgreSQL and prove exact-SHA Production readiness before a PASS is generated. The requirement stays PENDING until that main/Production run succeeds.
 - `ATLAS-RQ-0226` — **COMPLETED:** complete first-class Person object authoring without forcing unknown optional profile facts.
 - `ATLAS-RQ-0227` — **COMPLETED:** complete Place and bibliographic Source authoring as independent objects.
 - `ATLAS-RQ-0228` — **COMPLETED:** implement explicit Compile → Runtime projection and readiness filtering.
