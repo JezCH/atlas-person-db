@@ -464,7 +464,11 @@
         "server/atlas-current-schema-reconstruction.js",
         "server/atlas-reviewed-candidate-registration-service.js",
         "scripts/rehearse-human-authoring-operational-parity.mjs",
-        "tests/core-reentry-reviewed-candidate-production-lifecycle.test.mjs"
+        "tests/core-reentry-reviewed-candidate-production-lifecycle.test.mjs",
+        "contracts/core-final-acceptance-contract.v2.json",
+        "server/atlas-core-final-acceptance.js",
+        "scripts/run-core-final-acceptance.mjs",
+        ".github/workflows/atlas-core-final-acceptance.yml"
       ]
     },
     {

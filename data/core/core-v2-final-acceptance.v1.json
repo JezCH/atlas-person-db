@@ -223,10 +223,12 @@
     "Historical PASS evidence is preserved, but this record is not current terminal closure authority after the post-closure audit.",
     "The repaired current-schema reconstruction and reviewed-candidate Production lifecycle remain valid completed remediation evidence.",
     "ATLAS-RQ-0223 is reopened until the remaining active CORE remediation blockers are closed and acceptance is regenerated from executable checks.",
-    "P14 Territory/Geometry content implementation remains a separate pending product phase."
+    "P14 Territory/Geometry content implementation remains a separate pending product phase.",
+    "This v1 record is historical evidence only. Current terminal acceptance is generated from executable gates and exact Production SHA readiness; stored PASS values in this file are never current closure authority."
   ],
   "reentry_acceptance_unit": "CORE-REENTRY-04",
   "current_closure_authority": false,
   "current_closure_status": "SUPERSEDED_BY_POST_CLOSURE_AUDIT",
-  "superseded_reason": "Post-closure audit found unresolved CORE integration gaps beyond the repaired current-schema and reviewed-candidate boundaries."
+  "superseded_reason": "Post-closure audit found unresolved CORE integration gaps beyond the repaired current-schema and reviewed-candidate boundaries.",
+  "superseded_by": "contracts/core-final-acceptance-contract.v2.json + .github/workflows/atlas-core-final-acceptance.yml generated evidence"
 }
