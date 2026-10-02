@@ -154,6 +154,7 @@ jobs:
           [[ "$GENERATED_OUTCOME" == "success" ]] || { echo 'Generated executable acceptance failed.' >&2; exit 1; }
           jq -e --arg sha "$GITHUB_SHA" '
             .schema == "atlas-core-final-acceptance-evidence/v2" and
+            .requirement_id == "ATLAS-RQ-0223" and
             .generated == true and
             .status == "PASS" and
             .commit_sha == $sha and
