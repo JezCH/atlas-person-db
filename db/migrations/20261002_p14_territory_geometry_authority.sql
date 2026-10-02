@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS atlas_v2.territory_records (
       AND valid_start_granularity IN ('year','month','day')
       AND valid_start_certainty IN ('exact','approximate','uncertain')
       AND valid_start_calendar IN ('gregorian','julian','unspecified_historical','source_calendar')
-      AND valid_start_month IS NULL OR valid_start_month BETWEEN 1 AND 12
+      AND (valid_start_month IS NULL OR valid_start_month BETWEEN 1 AND 12)
     )
   ),
   CONSTRAINT territory_records_start_shape_ck CHECK(
