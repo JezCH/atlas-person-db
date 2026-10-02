@@ -89,7 +89,7 @@ async function createGeometry(client,raw){
     id=String(existing.rows[0].id).toLowerCase();
   }
 
-  await appendGeometrySources(client,id,geometry.source_refs);
+  const addedSourceLinks=await appendGeometrySources(client,id,geometry.source_refs);
   const live=await loadGeometry(client,id);
   if(!live||live.geometry_kind!==geometry.geometry_kind||live.geometry_ref!==geometry.geometry_ref) {
     throw new Error("P14_GEOMETRY_READBACK_DRIFT");
@@ -102,7 +102,8 @@ async function createGeometry(client,raw){
     geometry_kind:live.geometry_kind,
     geometry_ref:live.geometry_ref,
     source_refs:live.source_refs,
-    replay:inserted.rowCount!==1
+    replay:inserted.rowCount!==1 && addedSourceLinks===0,
+    added_source_links:addedSourceLinks
   });
 }
 
@@ -198,7 +199,7 @@ async function createTerritoryRecord(client,raw){
     id=String(existing.rows[0].id).toLowerCase();
   }
 
-  await appendTerritorySources(client,id,record.source_refs);
+  const addedSourceLinks=await appendTerritorySources(client,id,record.source_refs);
   const live=await loadTerritoryRecord(client,id);
   if(!live||!sameTerritory(live,record)) throw new Error("P14_TERRITORY_SEMANTIC_CONFLICT");
   if(!requestedRefsPresent(live.source_refs,record.source_refs)) throw new Error("P14_TERRITORY_SOURCE_READBACK_DRIFT");
@@ -227,7 +228,8 @@ async function createTerritoryRecord(client,raw){
     chronology_status:live.chronology_status,
     ongoing_as_of:live.ongoing_as_of,
     source_refs:live.source_refs,
-    replay:inserted.rowCount!==1
+    replay:inserted.rowCount!==1 && addedSourceLinks===0,
+    added_source_links:addedSourceLinks
   });
 }
 
