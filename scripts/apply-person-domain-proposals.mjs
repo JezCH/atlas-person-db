@@ -53,6 +53,24 @@ function discoverContiguous(prefix) {
   return Object.freeze(files.map((item) => item.name));
 }
 
+function discoverRepairBatches() {
+  const pattern = /^batch-repair-(\d{3})\.json$/;
+  const files = fs.readdirSync(PROPOSAL_DIR)
+    .map((name) => ({ name, match:name.match(pattern) }))
+    .filter((item) => item.match)
+    .map((item) => ({ name:item.name, ordinal:Number(item.match[1]) }))
+    .sort((a,b) => a.ordinal - b.ordinal);
+  if (files.length === 0) return Object.freeze([]);
+  const maxOrdinal = files.at(-1).ordinal;
+  for (let expected = 1; expected <= maxOrdinal; expected++) {
+    const actual = files[expected - 1];
+    if (!actual || actual.ordinal !== expected) {
+      fail(`Non-contiguous batch-repair sequence: expected ${String(expected).padStart(3,"0")}`);
+    }
+  }
+  return Object.freeze(files.map((item) => item.name));
+}
+
 function validateEntry(entry, { allowNull = false, source }) {
   const personId = String(entry?.person_id || "").trim().toLowerCase();
   if (!UUID_RE.test(personId)) fail(`Invalid Person UUID in ${source}: ${personId}`);
@@ -95,11 +113,12 @@ function loadPlan() {
   if (JSON.stringify(smokeCodes) !== JSON.stringify(expectedCodes)) fail("Smoke set must cover each canonical domain exactly once", smokeCodes);
 
   const batchFiles = discoverContiguous("batch");
+  const repairFiles = discoverRepairBatches();
   const holdFiles = discoverContiguous("hold");
 
   const batch = [];
   const batchIds = new Map();
-  for (const name of batchFiles) {
+  for (const name of [...batchFiles, ...repairFiles]) {
     const raw = readJson(name);
     for (const item of raw.entries) {
       const entry = validateEntry(item, { source:name });
@@ -149,15 +168,18 @@ function loadPlan() {
     }
   }
 
-  return Object.freeze({ smoke, batch, hold, assignments, batchFiles, holdFiles });
+  return Object.freeze({ smoke, batch, hold, assignments, batchFiles, repairFiles, holdFiles });
 }
 
 function selectBatchFile(plan, target) {
   const name = String(target || "").trim();
-  if (!/^batch-\d{3}\.json$/.test(name) || path.basename(name) !== name) {
-    fail(`Bounded batch mode requires an exact batch-NNN.json basename: ${name || "<empty>"}`);
+  const standard = /^batch-\d{3}\.json$/.test(name);
+  const repair = /^batch-repair-\d{3}\.json$/.test(name);
+  if ((!standard && !repair) || path.basename(name) !== name) {
+    fail(`Bounded batch mode requires an exact batch-NNN.json or batch-repair-NNN.json basename: ${name || "<empty>"}`);
   }
-  if (!plan.batchFiles.includes(name)) fail(`Reviewed batch manifest is not in the contiguous plan: ${name}`);
+  const allowed = standard ? plan.batchFiles.includes(name) : plan.repairFiles.includes(name);
+  if (!allowed) fail(`Reviewed batch manifest is not in the canonical plan: ${name}`);
   const entries = plan.batch.filter((entry) => entry.source === name);
   if (entries.length === 0) fail(`Reviewed batch manifest has no writable entries: ${name}`);
   return Object.freeze({ name, entries:Object.freeze(entries) });
