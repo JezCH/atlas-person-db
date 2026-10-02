@@ -42,6 +42,10 @@ async function inspectCoreAuthoringSchema(client) {
       to_regclass('atlas_v2.person_external_references') as person_external_references,
       to_regclass('atlas_v2.person_profile_mutation_audits') as person_profile_mutation_audits,
       to_regclass('atlas_v2.person_timeline_dispositions') as person_timeline_dispositions,
+      to_regclass('atlas_v2.geometries') as p14_geometries,
+      to_regclass('atlas_v2.geometry_sources') as p14_geometry_sources,
+      to_regclass('atlas_v2.territory_records') as p14_territory_records,
+      to_regclass('atlas_v2.territory_record_sources') as p14_territory_record_sources,
       (
         select format_type(a.atttypid,a.atttypmod)
           from pg_attribute a
@@ -193,6 +197,9 @@ async function inspectCoreAuthoringSchema(client) {
     "persons","polities","roles","period_bases","relation_types","activities","activity_sources"
   ].every((field) => Boolean(row[field]));
   const ledgerTableReady = Boolean(row.authoring_ledger);
+  const p14TablesReady = [
+    "p14_geometries","p14_geometry_sources","p14_territory_records","p14_territory_record_sources"
+  ].every((field) => Boolean(row[field]));
   const personReferenceTablesReady = Boolean(row.person_external_references)
     && Boolean(row.person_profile_mutation_audits);
   const columns = Object.freeze({
@@ -235,7 +242,8 @@ async function inspectCoreAuthoringSchema(client) {
     ongoing_terms_ready: row.ongoing_terms_ready === true,
     base_tables_ready: baseTablesReady,
     ledger_table_ready: ledgerTableReady,
-    tables_ready: baseTablesReady && ledgerTableReady,
+    tables_ready: baseTablesReady && ledgerTableReady && p14TablesReady,
+    p14_tables_ready: p14TablesReady,
     activity_columns_ready: activityColumnsReady,
     ledger_columns_ready: ledgerColumnsReady,
     ledger_human_authoring_schema_allowed: ledgerHumanAuthoringSchemaAllowed,
