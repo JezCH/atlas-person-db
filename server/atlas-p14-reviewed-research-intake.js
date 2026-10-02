@@ -104,7 +104,7 @@ function normalizeTerritoryCandidate(raw){
   if(!BOUNDARY_CERTAINTIES.has(boundary_certainty)) throw new Error("P14_RESEARCH_BOUNDARY_CERTAINTY_INVALID");
   const evidence_confidence=text(raw.evidence_confidence);
   if(!EVIDENCE_CONFIDENCES.has(evidence_confidence)) throw new Error("P14_RESEARCH_EVIDENCE_CONFIDENCE_INVALID");
-  const chronology_status=text(raw.chronology_status)||"reviewed";
+  const chronology_status=text(raw.chronology_status);
   if(!CHRONOLOGY_STATUSES.has(chronology_status)) throw new Error("P14_RESEARCH_CHRONOLOGY_STATUS_INVALID");
 
   const start=normalizeBoundary(raw,"valid_start");
@@ -152,7 +152,8 @@ function normalizeTerritoryCandidate(raw){
 }
 function normalizeApprovedCase(raw){
   assertOnlyKeys(raw,APPROVED_CASE_KEYS,"P14_RESEARCH_APPROVED_FIELD_FORBIDDEN");
-  const blockers=Array.isArray(raw.remaining_blockers)?raw.remaining_blockers.map(text).filter(Boolean):[];
+  if(!Array.isArray(raw.remaining_blockers)) throw new Error("P14_RESEARCH_APPROVED_BLOCKERS_REQUIRED");
+  const blockers=raw.remaining_blockers.map(text).filter(Boolean);
   if(blockers.length!==0) throw new Error("P14_RESEARCH_APPROVED_BLOCKERS_MUST_BE_EMPTY");
   const polity_id=uuid(raw.polity_id,"P14_RESEARCH_POLITY_ID_INVALID");
   const geometry=normalizeGeometryBinding(raw.geometry);
