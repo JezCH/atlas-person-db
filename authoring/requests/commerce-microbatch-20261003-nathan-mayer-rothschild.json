@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "commerce-microbatch-20261003-nathan-mayer-rothschild",
+  "person": {
+    "canonical_name_en": "Nathan Mayer Rothschild",
+    "display_name_ko": "네이선 메이어 로스차일드",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-03",
+    "life_status_basis": "documented_death",
+    "representative_domain": "commerce"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-03",
+      "review_state": "reviewed_absent",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Banker",
+    "role_display_name_ko": "은행가",
+    "start_year": 1809,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1836,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative London banking leadership span follows the Rothschild Archive's chronology for Nathan Mayer Rothschild as head of N M Rothschild, 1809–1836."
+  },
+  "sources": [
+    {
+      "source_type": "archive_reference",
+      "title": "Rothschilds directing the London House — The Rothschild Archive",
+      "canonical_url": "https://www.rothschildarchive.org/business/rothschilds_who_directed_the_business_houses/rothschilds_directing_the_london_house",
+      "citation_text": "The Rothschild Archive lists Nathan Mayer Rothschild (1777–1836) as directing N M Rothschild from 1809 to 1836 and notes that he established N M Rothschild in London in 1809.",
+      "locator": "N M Rothschild — Nathan Mayer Rothschild, 1809–1836"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gplist3-20260921-077",
+    "lane": "Lane A canonical registration",
+    "previous_review": "APPROVED / TIMELINE_ELIGIBLE / commerce / QUEUED / SS",
+    "review_inherited": true,
+    "namuwiki_review_note": "Indexed search found only the related Rothschild family article, not an exact independent Person document."
+  }
+}
