@@ -2,7 +2,7 @@
 
 > Status: **CORE v2 CLOSED / GENERATED P13 LIFECYCLE ACCEPTANCE PASSED / P14 PRODUCT WORK REMAINS PENDING**
 >
-> As of: **2026-10-01**  
+> As of: **2026-10-02**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
 > CORE architecture / invariants / unit topology: `docs/core/CORE_V2_MASTER_PLAN.md`  
 > Active CORE status: GitHub Issue **#917** body only  
@@ -173,12 +173,12 @@ P13 acceptance requires Person, Place and Source exist as first-class Authoring 
 
 CORE v2 Unit 17 remains historical acceptance evidence, but its terminal closure was superseded by the 2026-10-01 re-entry audit for the specifically reopened invariants above. Verified completed requirements remain closed; P14 historical-map content and research integration remain separately pending.
 
-### P14 — Historical map contract — PENDING
+### P14 — Historical map contract — ACTIVE PRODUCT WORK
 
-- `ATLAS-RQ-0224` — **PENDING:** integrate the historical map contract using Person → Activity → Polity → Territory → Geometry.
-- `ATLAS-RQ-0225` — **PENDING:** preserve the ATLAS map research standard and evidence discipline.
+- `ATLAS-RQ-0224` — **PENDING:** integrate the historical map contract using Person → Activity → Polity → TerritoryRecord → Geometry. **P14-A canonical Authoring foundation is implemented**: DB-backed Geometry/TerritoryRecord authority, canonical Source UUID+locator provenance, reviewed unknown/ongoing temporal boundaries, deterministic idempotent writers and exact read-back. Remaining work is product integration beyond this foundation; this requirement is not yet complete.
+- `ATLAS-RQ-0225` — **PENDING:** preserve the ATLAS map research standard and evidence discipline across actual historical territory research/content.
 
-Territory/Geometry work must never back-propagate invented identity, chronology or political authority into the Person DB.
+Territory/Geometry work must never back-propagate invented identity, chronology or political authority into the Person DB. P14-A adds no historical polygon content, inferred coordinates, GeoJSON/PostGIS rendering, or display-derived authority.
 
 ## 4. Project-integrity maintenance surface
 

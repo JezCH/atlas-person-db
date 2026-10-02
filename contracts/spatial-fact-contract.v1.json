@@ -74,7 +74,7 @@
     "materialization_rule": "A reviewed request supplies state/evidence only; the canonical registration writer persists and exact-read-backs the disposition before DONE."
   },
   "p14_boundary": {
-    "contract": "contracts/p14-territory-geometry-contract.v1.json",
-    "rule": "PolityPlaceFunction and SpatialDisplayDisposition do not imply TerritoryRecord or Geometry; territorial authority requires the explicit P14 chain."
+    "contract": "contracts/p14-territory-geometry-contract.v2.json",
+    "rule": "PolityPlaceFunction and SpatialDisplayDisposition do not imply TerritoryRecord or Geometry; territorial authority exists only through DB-backed canonical P14 Authoring under Person -> Activity -> Polity -> TerritoryRecord -> Geometry."
   }
 }
