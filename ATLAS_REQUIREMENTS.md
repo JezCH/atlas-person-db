@@ -175,10 +175,10 @@ CORE v2 Unit 17 remains historical acceptance evidence, but its terminal closure
 
 ### P14 — Historical map contract — ACTIVE PRODUCT WORK
 
-- `ATLAS-RQ-0224` — **PENDING:** integrate the historical map contract using Person → Activity → Polity → TerritoryRecord → Geometry. **P14-A canonical Authoring foundation is implemented**: DB-backed Geometry/TerritoryRecord authority, canonical Source UUID+locator provenance, reviewed unknown/ongoing temporal boundaries, deterministic idempotent writers and exact read-back. Remaining work is product integration beyond this foundation; this requirement is not yet complete.
-- `ATLAS-RQ-0225` — **PENDING:** preserve the ATLAS map research standard and evidence discipline across actual historical territory research/content.
+- `ATLAS-RQ-0224` — **PENDING:** integrate the historical map contract using Person → Activity → Polity → TerritoryRecord → Geometry. **P14-A canonical Authoring foundation is implemented**: DB-backed Geometry/TerritoryRecord authority, canonical Source UUID+locator provenance, reviewed unknown/ongoing temporal boundaries, deterministic idempotent writers and exact read-back. **P14-B reviewed research intake is also implemented**: reviewed research is non-mutating, `APPROVED` requires exact canonical Polity UUID plus Source UUID+locator evidence and zero blockers, while unresolved work remains explicit `HOLD`. Remaining work is product/content integration beyond these foundations; this requirement is not yet complete.
+- `ATLAS-RQ-0225` — **PENDING:** preserve the ATLAS map research standard and evidence discipline across actual historical territory research/content. P14-B now enforces the research-intake contract and CI validation, but no actual historical territory content has yet been reviewed through that intake, so this requirement remains pending.
 
-Territory/Geometry work must never back-propagate invented identity, chronology or political authority into the Person DB. P14-A adds no historical polygon content, inferred coordinates, GeoJSON/PostGIS rendering, or display-derived authority.
+Territory/Geometry work must never back-propagate invented identity, chronology or political authority into the Person DB. P14-A/P14-B add no historical polygon content, inferred coordinates, GeoJSON/PostGIS rendering, or display-derived authority.
 
 ## 4. Project-integrity maintenance surface
 
