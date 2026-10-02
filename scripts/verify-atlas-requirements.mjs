@@ -69,6 +69,24 @@ const mandatoryIds = [
 ];
 for (const id of mandatoryIds) if (!byId.has(id)) fail(`mandatory requirement missing: ${id}`);
 
+for (const id of ["ATLAS-RQ-0224", "ATLAS-RQ-0225"]) {
+  const item = byId.get(id);
+  if (item?.status !== "PENDING") fail(`${id} must remain unimplemented requirement state while P14 is parked`);
+  if (item?.execution_state !== "PARKED_BY_USER" || item?.active !== false || item?.auto_resume !== false) {
+    fail(`${id} must be PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`);
+  }
+  if (item?.resume_condition !== "explicit_user_restart_only") fail(`${id} must require explicit user restart`);
+}
+if (registry.execution_state?.p14?.state !== "PARKED_BY_USER"
+  || registry.execution_state?.p14?.active !== false
+  || registry.execution_state?.p14?.auto_resume !== false
+  || registry.execution_state?.p14?.resume_condition !== "explicit_user_restart_only") {
+  fail("P14 project execution state must be PARKED_BY_USER and explicit-user-restart-only");
+}
+for (const phrase of ["P14 PARKED_BY_USER", "DO_NOT_AUTO_RESUME", "explicitly restarts it"]) {
+  if (!document.includes(phrase)) fail(`P14 parked execution policy missing from human requirements: ${phrase}`);
+}
+
 const requiredProductPhrases = [
   "Person is a first-class Authoring object",
   "Place and Source are first-class Authoring entities",
