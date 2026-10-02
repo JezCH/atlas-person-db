@@ -1,0 +1,16 @@
+{
+  "mode": "full_stage2_baseline",
+  "purpose": "POLITY-IRELAND-EXACT-LIVE-INVENTORY-20261002",
+  "scope": {
+    "polities": ["Ireland", "Irish Free State"],
+    "persons": ["Daniel O'Connell", "Michael Collins"],
+    "include_activities": true,
+    "include_spatial_bindings": true
+  },
+  "requirements": {
+    "read_only": true,
+    "exact_production_sha": true,
+    "fail_closed_on_deployment_sha_mismatch": true
+  },
+  "notes": "Ireland frontier 6-A only. No correction or Production mutation. Exact UUID proof is required before 6-C."
+}
