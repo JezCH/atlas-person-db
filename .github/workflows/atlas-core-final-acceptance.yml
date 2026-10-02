@@ -48,7 +48,6 @@ jobs:
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/atlas_core_final_acceptance
       ATLAS_PRODUCTION_READINESS_JSON: artifacts/core-final-acceptance/production-readiness.json
       ATLAS_CORE_FINAL_ACCEPTANCE_OUTPUT: artifacts/core-final-acceptance/core-v2-final-acceptance.generated.json
-      ATLAS_PRODUCTION_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
 
     steps:
       - uses: actions/checkout@v4
@@ -68,12 +67,13 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p artifacts/core-final-acceptance
+          endpoint="$(jq -er '.production_endpoint' contracts/core-final-acceptance-contract.v2.json)"
           matched=false
           for attempt in $(seq 1 90); do
             status="$(curl --silent --show-error \
               --output artifacts/core-final-acceptance/production-readiness.json \
               --write-out '%{http_code}' \
-              "$ATLAS_PRODUCTION_ENDPOINT" || true)"
+              "$endpoint" || true)"
             if [[ "$status" == "200" ]] && jq -e --arg sha "$GITHUB_SHA" '
               .ok == true and
               .marker == "ATLAS_AUTHORING_TRANSPORT_V2" and
