@@ -11,11 +11,14 @@ const {
 
 test("registration queue source bootstraps 646 historical admissions plus 55 approved commerce additions", () => {
   const source = loadQueueSource();
-  assert.equal(source.candidates.length, 701);
+  assert.ok(source.candidates.length >= 701);
   assert.equal(source.bootstrap.historical_queued_candidates, 646);
   assert.equal(source.bootstrap.added_commerce_candidates, 55);
+  assert.equal(source.bootstrap.bootstrap_admissions, 701);
   const ids = new Set(source.candidates.map((row) => row.candidate_id));
-  assert.equal(ids.size, 701);
+  assert.equal(ids.size, source.candidates.length);
+  const historical = source.candidates.filter((row) => row.origin === "historical_queue");
+  assert.equal(historical.length, 646);
   const commerceAdds = source.candidates.filter((row) => row.origin === "commerce_world_history_20261003");
   assert.equal(commerceAdds.length, 55);
   assert.ok(commerceAdds.every((row) => row.representative_domain === "commerce"));
