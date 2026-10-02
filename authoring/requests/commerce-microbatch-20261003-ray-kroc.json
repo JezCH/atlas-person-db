@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "commerce-microbatch-20261003-ray-kroc",
+  "person": {
+    "canonical_name_en": "Ray Kroc",
+    "display_name_ko": "레이 크록",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-03",
+    "life_status_basis": "documented_death",
+    "representative_domain": "commerce"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-03",
+      "document_title": "레이 크록",
+      "url": "https://namu.wiki/w/%EB%A0%88%EC%9D%B4%20%ED%81%AC%EB%A1%9D"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Entrepreneur",
+    "role_display_name_ko": "기업가",
+    "start_year": 1954,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1961,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative McDonald's entrepreneurial transformation span begins when Kroc became the McDonald brothers' franchise agent in 1954 and ends with McDonald's acquisition of the brothers' company rights in 1961."
+  },
+  "sources": [
+    {
+      "source_type": "corporate_history",
+      "title": "McDonald’s History — McDonald’s Corporation",
+      "canonical_url": "https://corporate.mcdonalds.com/corpmcd/our-company/who-we-are/our-history.html",
+      "citation_text": "McDonald's corporate history states that Kroc visited the brothers in 1954 and became their franchise agent, opened the Des Plaines restaurant in 1955, and McDonald's acquired the brothers' company rights in 1961.",
+      "locator": "Ray Kroc"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-151",
+    "lane": "Lane A canonical registration",
+    "previous_review": "APPROVED / TIMELINE_ELIGIBLE / commerce / QUEUED / SS",
+    "review_inherited": true
+  }
+}
