@@ -6,7 +6,8 @@ const require=createRequire(import.meta.url);
 const {
   CONTRACT,
   normalizeReviewedResearchArtifact,
-  buildApprovedHandoffs
+  buildApprovedHandoffs,
+  verifyApprovedHandoffsAgainstCanonicalState
 }=require("../server/atlas-p14-reviewed-research-intake.js");
 
 const POLITY="11111111-1111-4111-8111-111111111111";
@@ -153,6 +154,40 @@ test("unknown and ongoing temporal boundaries preserve current P14 semantics",()
   ongoing.territory.ongoing_as_of="2026-10-02";
   const ongoingNormalized=normalizeReviewedResearchArtifact(artifact(ongoing));
   assert.equal(ongoingNormalized.cases[0].territory.ongoing_as_of,"2026-10-02");
+});
+
+test("approved handoff verifies canonical Polity Source and existing Geometry read-only",async()=>{
+  const row=approved();
+  row.geometry={mode:"existing",geometry_id:GEOMETRY};
+  const queries=[];
+  const client={
+    async query(sql,params){
+      queries.push({sql:String(sql),params});
+      return {rowCount:1,rows:[{id:String(params[0])}]};
+    }
+  };
+  const verified=await verifyApprovedHandoffsAgainstCanonicalState(client,artifact(row));
+  assert.deepEqual(verified,{
+    approved_handoffs:1,
+    canonical_polities_verified:1,
+    canonical_sources_verified:1,
+    canonical_existing_geometries_verified:1,
+    production_mutation_authorized:false
+  });
+  assert.equal(queries.every((item)=>/^select /i.test(item.sql.trim())),true);
+});
+
+test("approved handoff fails closed when a canonical Source UUID is unresolved",async()=>{
+  const client={
+    async query(sql){
+      if(String(sql).includes("atlas_v2.sources")) return {rowCount:0,rows:[]};
+      return {rowCount:1,rows:[{id:"ok"}]};
+    }
+  };
+  await assert.rejects(
+    ()=>verifyApprovedHandoffsAgainstCanonicalState(client,artifact(approved())),
+    /P14_RESEARCH_SOURCE_UNRESOLVED/
+  );
 });
 
 test("unknown intake fields fail closed instead of being silently discarded",()=>{
