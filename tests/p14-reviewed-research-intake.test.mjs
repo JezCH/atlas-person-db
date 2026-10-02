@@ -155,6 +155,16 @@ test("unknown and ongoing temporal boundaries preserve current P14 semantics",()
   assert.equal(ongoingNormalized.cases[0].territory.ongoing_as_of,"2026-10-02");
 });
 
+test("unknown intake fields fail closed instead of being silently discarded",()=>{
+  const extraCase=approved();
+  extraCase.territory.direct_control_note="ignored fields are forbidden";
+  assert.throws(()=>normalizeReviewedResearchArtifact(artifact(extraCase)),/TERRITORY_FIELD_FORBIDDEN/);
+
+  const extraArtifact=artifact(approved());
+  extraArtifact.source_urls=["https://example.invalid"];
+  assert.throws(()=>normalizeReviewedResearchArtifact(extraArtifact),/ARTIFACT_FIELD_FORBIDDEN/);
+});
+
 test("research artifacts can never self-authorize Production mutation",()=>{
   const raw=artifact(approved());
   raw.production_mutation_authorized=true;
