@@ -2,7 +2,7 @@
 
 > Status: **CORE v2 CLOSED / GENERATED P13 LIFECYCLE ACCEPTANCE PASSED / P14 PRODUCT WORK REMAINS PENDING**
 >
-> As of: **2026-10-02**  
+> As of: **2026-10-01**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
 > CORE architecture / invariants / unit topology: `docs/core/CORE_V2_MASTER_PLAN.md`  
 > Active CORE status: GitHub Issue **#917** body only  
@@ -173,12 +173,12 @@ P13 acceptance requires Person, Place and Source exist as first-class Authoring 
 
 CORE v2 Unit 17 remains historical acceptance evidence, but its terminal closure was superseded by the 2026-10-01 re-entry audit for the specifically reopened invariants above. Verified completed requirements remain closed; P14 historical-map content and research integration remain separately pending.
 
-### P14 — Historical map contract — ACTIVE PRODUCT WORK
+### P14 — Historical map contract — PENDING
 
-- `ATLAS-RQ-0224` — **PENDING:** integrate the historical map contract using Person → Activity → Polity → TerritoryRecord → Geometry. **P14-A canonical Authoring foundation is implemented**: DB-backed Geometry/TerritoryRecord authority, canonical Source UUID+locator provenance, reviewed unknown/ongoing temporal boundaries, deterministic idempotent writers and exact read-back. **P14-B reviewed research intake is also implemented**: reviewed research is non-mutating, `APPROVED` requires exact canonical Polity UUID plus Source UUID+locator evidence and zero blockers, while unresolved work remains explicit `HOLD`. Remaining work is product/content integration beyond these foundations; this requirement is not yet complete.
-- `ATLAS-RQ-0225` — **PENDING:** preserve the ATLAS map research standard and evidence discipline across actual historical territory research/content. P14-B now enforces the research-intake contract and CI validation, but no actual historical territory content has yet been reviewed through that intake, so this requirement remains pending.
+- `ATLAS-RQ-0224` — **PENDING:** integrate the historical map contract using Person → Activity → Polity → Territory → Geometry.
+- `ATLAS-RQ-0225` — **PENDING:** preserve the ATLAS map research standard and evidence discipline.
 
-Territory/Geometry work must never back-propagate invented identity, chronology or political authority into the Person DB. P14-A/P14-B add no historical polygon content, inferred coordinates, GeoJSON/PostGIS rendering, or display-derived authority.
+Territory/Geometry work must never back-propagate invented identity, chronology or political authority into the Person DB.
 
 ## 4. Project-integrity maintenance surface
 
