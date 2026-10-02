@@ -2,6 +2,9 @@
 
 const { deterministicRequestId, normalizeOperation } = require("./atlas-mutation-request-utils.js");
 
+const RETIRED_ACTIVITY_WRITE_OPERATIONS = new Set(["create","update","import","reconcile"]);
+const RETIRED_ACTIVITY_WRITE_CODE = "P9_LEGACY_ACTIVITY_MUTATION_RETIRED_USE_AUTHORING_MANIFEST_V2";
+
 function blockedOutcome({ requestId, operation, blockers }) {
   return Object.freeze({
     marker: "ATLAS_SERVER_MUTATION_SERVICE",
@@ -43,19 +46,20 @@ function createV2AuthoritativeMutationService({ planner, transactionFactory, ver
   async function mutate(request = {}) {
     const operation = normalizeOperation(request.operation);
     const rawPayload = request.payload ?? null;
+    const requestId = request.request_id || deterministicRequestId(operation, rawPayload);
+
+    if (RETIRED_ACTIVITY_WRITE_OPERATIONS.has(operation)) {
+      return blockedOutcome({
+        requestId,
+        operation,
+        blockers: [{ code: RETIRED_ACTIVITY_WRITE_CODE }]
+      });
+    }
+
     const plan = planner.plan(operation, rawPayload);
     const payload = Object.prototype.hasOwnProperty.call(plan, "normalized_payload")
       ? plan.normalized_payload
       : rawPayload;
-    const requestId = request.request_id || deterministicRequestId(operation, payload);
-
-    if (operation === "reconcile") {
-      return blockedOutcome({
-        requestId,
-        operation,
-        blockers: [{ code: "RECONCILIATION_NORMALIZED_INPUT_REQUIRED" }]
-      });
-    }
 
     if (Array.isArray(plan.blockers) && plan.blockers.length) {
       return blockedOutcome({ requestId, operation, blockers: plan.blockers });
@@ -101,4 +105,4 @@ function createV2AuthoritativeMutationService({ planner, transactionFactory, ver
   return Object.freeze({ mutate });
 }
 
-module.exports = Object.freeze({ createV2AuthoritativeMutationService });
+module.exports = Object.freeze({ createV2AuthoritativeMutationService, RETIRED_ACTIVITY_WRITE_OPERATIONS, RETIRED_ACTIVITY_WRITE_CODE });

@@ -1,7 +1,7 @@
 "use strict";
 
 const ALLOWED_OPERATIONS = new Set([
-  "create", "update", "delete", "delete_person", "import", "reconcile",
+  "delete", "delete_person",
   "set_person_korean_name", "set_person_external_reference"
 ]);
 

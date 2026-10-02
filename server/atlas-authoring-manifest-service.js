@@ -1,16 +1,7 @@
 "use strict";
 
 const crypto = require("node:crypto");
-const {
-  createPerson,
-  createPolity,
-  createRole,
-  normalizeExact
-} = require("./atlas-identity-service.js");
-const {
-  createV2AuthoritativeTx,
-  comparablePayload
-} = require("./atlas-postgres-v2-authoritative-transaction.js");
+const { normalizeExact } = require("./atlas-identity-service.js");
 
 const MANIFEST_V1 = "atlas-authoring-manifest/v1";
 const MANIFEST_V2 = "atlas-authoring-manifest/v2";
@@ -114,18 +105,6 @@ async function readLedger(client, requestId) {
   return result.rows[0] || null;
 }
 
-function activityFromManifest(personName, raw) {
-  return comparablePayload({
-    person_name: personName,
-    politic_name: raw?.politic_name,
-    activity_start: raw?.activity_start,
-    activity_end: raw?.activity_end,
-    role: raw?.role,
-    period_basis: raw?.period_basis,
-    notes: raw?.notes
-  });
-}
-
 async function loadRelationshipIdentity(client, relationshipId) {
   const result = await client.query(
     `select id,person_id,polity_id,role_id,period_basis_id
@@ -140,61 +119,6 @@ async function loadRelationshipIdentity(client, relationshipId) {
 
 function assertExactId(actual, expected, code) {
   if (String(actual ?? "") !== String(expected ?? "")) throw new Error(code);
-}
-
-function verifyPostwriteBinding({ relationship, personResult, polityResult, roleResult }) {
-  assertExactId(relationship?.person_id, personResult?.id, "AUTHORING_POSTWRITE_PERSON_MISMATCH");
-  if (polityResult) {
-    assertExactId(relationship?.polity_id, polityResult.id, "AUTHORING_POSTWRITE_POLITY_MISMATCH");
-  }
-  if (roleResult) {
-    assertExactId(relationship?.role_id, roleResult.id, "AUTHORING_POSTWRITE_ROLE_MISMATCH");
-  }
-}
-
-function identityDisposition(result) {
-  return result?.replay === true ? "reused" : "created";
-}
-
-function buildExecutionSnapshot({
-  schema,
-  marker,
-  personResult,
-  polityResult,
-  roleResult,
-  relationship,
-  activityReplay
-}) {
-  return Object.freeze({
-    version: RESULT_SNAPSHOT_VERSION,
-    schema,
-    marker,
-    provenance_complete: true,
-    entities: Object.freeze({
-      person: Object.freeze({
-        id: String(personResult.id),
-        disposition: identityDisposition(personResult)
-      }),
-      polity: Object.freeze({
-        id: String(relationship.polity_id),
-        disposition: polityResult ? identityDisposition(polityResult) : "resolved_existing"
-      }),
-      role: Object.freeze({
-        id: relationship.role_id == null ? null : String(relationship.role_id),
-        disposition: relationship.role_id == null
-          ? "not_applicable"
-          : roleResult ? identityDisposition(roleResult) : "resolved_existing"
-      }),
-      period_basis: Object.freeze({
-        id: String(relationship.period_basis_id),
-        disposition: "resolved_existing"
-      }),
-      activity: Object.freeze({
-        id: String(relationship.id),
-        disposition: activityReplay === true ? "reused" : "created"
-      })
-    })
-  });
 }
 
 function buildHistoricalReplaySnapshot({ schema, marker, ledger, relationship }) {
@@ -295,41 +219,7 @@ function createAuthoringManifestService({ client } = {}) {
           return outcomeFromSnapshot({ marker, requestId, replay: true, snapshot });
         }
 
-        const personResult = await createPerson(client, person);
-        const polityResult = polityIdentity ? await createPolity(client, polityIdentity) : null;
-        const roleResult = roleIdentity ? await createRole(client, roleIdentity) : null;
-
-        const activityPayload = activityFromManifest(person.canonical_name_en, activity);
-        const activityTx = createV2AuthoritativeTx(client);
-        const created = await activityTx.executeV2Authoritative({
-          operation: "create",
-          payload: activityPayload,
-          request_id: `authoring:${requestId}`
-        });
-        const relationshipId = created.normalized_relationship_ids?.[0] || null;
-        if (!relationshipId) throw new Error("AUTHORING_ACTIVITY_CREATE_FAILED");
-
-        const relationship = await loadRelationshipIdentity(client, relationshipId);
-        verifyPostwriteBinding({ relationship, personResult, polityResult, roleResult });
-        const snapshot = buildExecutionSnapshot({
-          schema,
-          marker,
-          personResult,
-          polityResult,
-          roleResult,
-          relationship,
-          activityReplay: created.replay
-        });
-
-        await client.query(
-          `insert into atlas_v2.authoring_manifest_runs(
-             request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot
-           ) values($1,$2,$3,$4,$5,$6::jsonb)`,
-          [requestId, hash, schema, personResult.id, relationshipId, JSON.stringify(snapshot)]
-        );
-        await client.query("commit");
-
-        return outcomeFromSnapshot({ marker, requestId, replay: false, snapshot });
+        throw new Error("AUTHORING_LEGACY_MANIFEST_NEW_WRITE_RETIRED_USE_NATIVE_V2");
       } catch (error) {
         try { await client.query("rollback"); } catch {}
         throw error;
@@ -348,11 +238,8 @@ module.exports = Object.freeze({
   requireManifest,
   markerForSchema,
   validateDeclaredIdentityReferences,
-  activityFromManifest,
   readLedger,
   loadRelationshipIdentity,
-  verifyPostwriteBinding,
-  buildExecutionSnapshot,
   buildHistoricalReplaySnapshot,
   assertSnapshotMatchesLive,
   outcomeFromSnapshot

@@ -7,17 +7,15 @@ const {
   MANIFEST_V1,
   MANIFEST_V2,
   RESULT_SNAPSHOT_VERSION,
+  createAuthoringManifestService,
   requireManifest,
   manifestHash,
   markerForSchema,
-  activityFromManifest,
-  verifyPostwriteBinding,
-  buildExecutionSnapshot,
   buildHistoricalReplaySnapshot,
   assertSnapshotMatchesLive
 } = require('../server/atlas-authoring-manifest-service.js');
 
-test('authoring manifest v1 remains compatible and requires approval, stable request id, person and activity', () => {
+test('legacy authoring manifest schemas remain parseable for historical replay', () => {
   const parsed = requireManifest({
     schema: MANIFEST_V1,
     review_status: 'approved',
@@ -34,7 +32,7 @@ test('authoring manifest v1 remains compatible and requires approval, stable req
   assert.throws(() => requireManifest({ schema: MANIFEST_V1, request_id: 'x', person: {}, activity: {} }), /AUTHORING_MANIFEST_NOT_APPROVED/);
 });
 
-test('authoring manifest v2 can atomically declare new polity and role identities', () => {
+test('legacy v2 declarations remain parseable only for matching historical ledgers', () => {
   const parsed = requireManifest({
     schema: MANIFEST_V2,
     review_status: 'approved',
@@ -60,14 +58,13 @@ test('authoring manifest v2 can atomically declare new polity and role identitie
       period_basis: 'reign'
     }
   });
-
   assert.equal(parsed.schema, MANIFEST_V2);
   assert.equal(parsed.polityIdentity.canonical_name_en, 'New Polity');
   assert.equal(parsed.roleIdentity.code, 'new_role');
   assert.equal(markerForSchema(parsed.schema), 'ATLAS_AUTHORING_MANIFEST_V2');
 });
 
-test('declared polity and role must be the exact identities referenced by the activity', () => {
+test('declared polity and role must still match historical activity references', () => {
   const base = {
     schema: MANIFEST_V2,
     review_status: 'approved',
@@ -97,82 +94,41 @@ test('declared polity and role must be the exact identities referenced by the ac
     activity: { ...base.activity, role: null },
     role_identity: { code: 'new_role', category: 'political', source_label: 'New Role', display_name_ko: '새 역할' }
   }), /AUTHORING_ROLE_ACTIVITY_REFERENCE_REQUIRED/);
-
-  assert.throws(() => requireManifest({
-    schema: MANIFEST_V1,
-    review_status: 'approved',
-    request_id: 'person:test:v1-extra',
-    person: base.person,
-    polity_identity: { canonical_name_en: 'New Polity', display_name_ko: '새 정치체' },
-    activity: base.activity
-  }), /AUTHORING_MANIFEST_V2_REQUIRED_FOR_IDENTITY_DECLARATIONS/);
 });
 
 test('manifest hash is stable across object key order', () => {
   assert.equal(manifestHash({ b: 2, a: 1 }), manifestHash({ a: 1, b: 2 }));
 });
 
-test('activity manifest is normalized through authoritative comparable payload', () => {
-  assert.deepEqual(activityFromManifest('Liliʻuokalani', {
-    politic_name: 'Kingdom of Hawaii',
-    activity_start: 1891,
-    activity_end: 1893,
-    role: 'Queen',
-    period_basis: 'reign',
-    notes: null
-  }), {
-    person_name: 'Liliʻuokalani',
-    politic_name: 'Kingdom of Hawaii',
-    activity_start: 1891,
-    activity_end: 1893,
-    role: 'Queen',
-    period_basis: 'reign',
-    notes: null
-  });
+test('legacy service rejects a new manifest before any identity or Activity writer can run', async () => {
+  const calls=[];
+  const client={
+    async query(sql,params=[]){
+      const text=String(sql).replace(/\s+/g,' ').trim();
+      calls.push({text,params});
+      if(text==='begin isolation level serializable') return {rows:[],rowCount:0};
+      if(text.includes('pg_advisory_xact_lock')) return {rows:[],rowCount:1};
+      if(text.includes('from atlas_v2.authoring_manifest_runs')) return {rows:[],rowCount:0};
+      if(text==='rollback') return {rows:[],rowCount:0};
+      throw new Error('unexpected SQL: '+text);
+    }
+  };
+  const service=createAuthoringManifestService({client});
+  await assert.rejects(
+    ()=>service.apply({
+      schema:MANIFEST_V2,
+      review_status:'approved',
+      request_id:'legacy:new-write:blocked',
+      person:{canonical_name_en:'Blocked',display_name_ko:'차단'},
+      activity:{politic_name:'Blocked Polity',activity_start:1,activity_end:2,period_basis:'reign'}
+    }),
+    /AUTHORING_LEGACY_MANIFEST_NEW_WRITE_RETIRED_USE_NATIVE_V2/
+  );
+  assert.ok(calls.some(x=>x.text==='rollback'));
+  assert.equal(calls.some(x=>/insert into atlas_v2\.person_politics_v2/i.test(x.text)),false);
 });
 
-test('execution snapshot records entity dispositions and normalized UUID bindings', () => {
-  const snapshot = buildExecutionSnapshot({
-    schema: MANIFEST_V2,
-    marker: 'ATLAS_AUTHORING_MANIFEST_V2',
-    personResult: { id: 'person-1', replay: false },
-    polityResult: { id: 'polity-1', replay: true },
-    roleResult: null,
-    relationship: {
-      id: 'activity-1',
-      person_id: 'person-1',
-      polity_id: 'polity-1',
-      role_id: 'role-1',
-      period_basis_id: 'period-1'
-    },
-    activityReplay: false
-  });
-
-  assert.equal(snapshot.version, RESULT_SNAPSHOT_VERSION);
-  assert.equal(snapshot.provenance_complete, true);
-  assert.deepEqual(snapshot.entities.person, { id: 'person-1', disposition: 'created' });
-  assert.deepEqual(snapshot.entities.polity, { id: 'polity-1', disposition: 'reused' });
-  assert.deepEqual(snapshot.entities.role, { id: 'role-1', disposition: 'resolved_existing' });
-  assert.deepEqual(snapshot.entities.activity, { id: 'activity-1', disposition: 'created' });
-});
-
-test('postwrite binding verification fails closed on identity drift before commit', () => {
-  const relationship = { person_id: 'person-1', polity_id: 'polity-1', role_id: 'role-1' };
-  assert.doesNotThrow(() => verifyPostwriteBinding({
-    relationship,
-    personResult: { id: 'person-1' },
-    polityResult: { id: 'polity-1' },
-    roleResult: { id: 'role-1' }
-  }));
-  assert.throws(() => verifyPostwriteBinding({
-    relationship,
-    personResult: { id: 'other-person' },
-    polityResult: { id: 'polity-1' },
-    roleResult: { id: 'role-1' }
-  }), /AUTHORING_POSTWRITE_PERSON_MISMATCH/);
-});
-
-test('historical ledger rows are backfilled without inventing original create/reuse provenance', () => {
+test('historical ledger rows can still be represented without inventing create/reuse provenance', () => {
   const snapshot = buildHistoricalReplaySnapshot({
     schema: MANIFEST_V1,
     marker: 'ATLAS_AUTHORING_MANIFEST_V1',
@@ -184,27 +140,26 @@ test('historical ledger rows are backfilled without inventing original create/re
       period_basis_id: 'period-1'
     }
   });
+  assert.equal(snapshot.version,RESULT_SNAPSHOT_VERSION);
   assert.equal(snapshot.provenance_complete, false);
   assert.equal(snapshot.entities.person.disposition, 'historical_unknown');
   assert.equal(snapshot.entities.role.disposition, 'not_applicable');
 });
 
-test('stored result snapshots are checked against live normalized bindings on replay', () => {
-  const snapshot = buildExecutionSnapshot({
-    schema: MANIFEST_V2,
-    marker: 'ATLAS_AUTHORING_MANIFEST_V2',
-    personResult: { id: 'person-1', replay: false },
-    polityResult: null,
-    roleResult: null,
-    relationship: {
-      id: 'activity-1',
-      person_id: 'person-1',
-      polity_id: 'polity-1',
-      role_id: null,
-      period_basis_id: 'period-1'
-    },
-    activityReplay: false
-  });
+test('stored historical snapshots are checked against live normalized bindings on replay', () => {
+  const snapshot={
+    version:RESULT_SNAPSHOT_VERSION,
+    schema:MANIFEST_V2,
+    marker:'ATLAS_AUTHORING_MANIFEST_V2',
+    provenance_complete:true,
+    entities:{
+      person:{id:'person-1',disposition:'historical_unknown'},
+      polity:{id:'polity-1',disposition:'historical_unknown'},
+      role:{id:null,disposition:'not_applicable'},
+      period_basis:{id:'period-1',disposition:'historical_unknown'},
+      activity:{id:'activity-1',disposition:'historical_unknown'}
+    }
+  };
 
   assert.doesNotThrow(() => assertSnapshotMatchesLive({
     snapshot,

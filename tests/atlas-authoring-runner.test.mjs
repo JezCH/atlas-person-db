@@ -15,11 +15,17 @@ const workflowSource = fs.readFileSync(new URL('../.github/workflows/atlas-autho
 
 test('legacy manifest orchestration remains available only for historical ledger replay', () => {
   assert.match(serviceSource, /begin isolation level serializable/i);
-  assert.match(serviceSource, /createPerson\(client, person\)/);
-  assert.match(serviceSource, /createV2AuthoritativeTx\(client\)/);
+  assert.match(serviceSource, /readLedger/);
+  assert.match(serviceSource, /buildHistoricalReplaySnapshot/);
+  assert.match(serviceSource, /AUTHORING_LEGACY_MANIFEST_NEW_WRITE_RETIRED_USE_NATIVE_V2/);
+  assert.doesNotMatch(serviceSource, /createPerson\(client, person\)/);
+  assert.doesNotMatch(serviceSource, /createPolity\(client/);
+  assert.doesNotMatch(serviceSource, /createRole\(client/);
+  assert.doesNotMatch(serviceSource, /createV2AuthoritativeTx|executeV2Authoritative/);
   assert.match(dispatchSource, /AUTHORING_MANIFEST_V1_NEW_WRITE_RETIRED/);
   assert.match(dispatchSource, /existingLedgerKind/);
   assert.match(dispatchSource, /return legacy\.apply\(rawManifest\)/);
+  assert.match(dispatchSource, /return nativeV2\.apply\(rawManifest/);
 });
 
 test('new manifest v2 owns one transaction and binds created identities directly into Stage 2 native Activity UUID fields', () => {
@@ -62,11 +68,13 @@ test('authoring migrations have one ordered registry shared by production and lo
   assert.equal((lifecycleMigrationSource.match(/ON DELETE SET NULL/gi) || []).length, 2);
 });
 
-test('local/manual legacy runner remains normalized and path-confined', () => {
+test('local/manual legacy runner is path-confined and replay-only through the retired legacy service', () => {
   assert.match(runnerSource, /authoring\/requests/);
   assert.match(runnerSource, /AUTHORING_MANIFEST_PATH_NOT_ALLOWED/);
   assert.match(runnerSource, /createAuthoringManifestService/);
+  assert.match(serviceSource, /AUTHORING_LEGACY_MANIFEST_NEW_WRITE_RETIRED_USE_NATIVE_V2/);
   assert.doesNotMatch(runnerSource, /insert into atlas_v2\.persons/i);
+  assert.doesNotMatch(runnerSource, /createV2AuthoritativeTx|executeV2Authoritative/);
 });
 
 test('production apply keeps database credentials inside Vercel and routes through the new-write dispatcher at exact deployed main SHA', () => {
