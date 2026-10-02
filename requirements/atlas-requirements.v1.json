@@ -475,13 +475,21 @@
       "id": "ATLAS-RQ-0224",
       "status": "PENDING",
       "title": "Integrate the historical map contract",
-      "phase": "P14"
+      "phase": "P14",
+      "execution_state": "PARKED_BY_USER",
+      "active": false,
+      "auto_resume": false,
+      "resume_condition": "explicit_user_restart_only"
     },
     {
       "id": "ATLAS-RQ-0225",
       "status": "PENDING",
       "title": "Preserve the ATLAS map research standard",
-      "phase": "P14"
+      "phase": "P14",
+      "execution_state": "PARKED_BY_USER",
+      "active": false,
+      "auto_resume": false,
+      "resume_condition": "explicit_user_restart_only"
     },
     {
       "id": "ATLAS-RQ-0226",
@@ -650,5 +658,13 @@
       "status": "ACTIVE",
       "title": "No merge-to-main or deploy for branch-only work"
     }
-  ]
+  ],
+  "execution_state": {
+    "p14": {
+      "state": "PARKED_BY_USER",
+      "active": false,
+      "auto_resume": false,
+      "resume_condition": "explicit_user_restart_only"
+    }
+  }
 }
