@@ -39,6 +39,21 @@ function nonEmptyStringArray(value,code){
   });
   return Object.freeze([...new Set(items)]);
 }
+function assertOnlyKeys(raw,allowed,code){
+  const extras=Object.keys(raw||{}).filter((key)=>!allowed.has(key)).sort();
+  if(extras.length) throw new Error(`${code}:${extras.join(",")}`);
+}
+const ARTIFACT_KEYS=new Set(["schema","status","reviewed_at","production_mutation_authorized","cases"]);
+const APPROVED_CASE_KEYS=new Set(["case_id","review_state","research_question","polity_id","geometry","territory","remaining_blockers"]);
+const HOLD_CASE_KEYS=new Set(["case_id","review_state","research_question","polity_id","remaining_blockers","review_reason"]);
+const REJECTED_CASE_KEYS=new Set(["case_id","review_state","research_question","review_reason"]);
+const CANDIDATE_GEOMETRY_KEYS=new Set(["mode","geometry_kind","geometry_ref","source_refs"]);
+const TERRITORY_KEYS=new Set([
+  "control_type","boundary_certainty","evidence_confidence",
+  "valid_start","valid_start_month","valid_start_day","valid_start_granularity","valid_start_certainty","valid_start_calendar",
+  "valid_end","valid_end_month","valid_end_day","valid_end_granularity","valid_end_certainty","valid_end_calendar",
+  "chronology_status","ongoing_as_of","source_refs"
+]);
 function assertNoForbiddenKeys(value,pathName="case"){
   if(value==null||typeof value!=="object") return;
   if(Array.isArray(value)){
@@ -60,6 +75,7 @@ function normalizeExistingGeometry(raw){
 }
 function normalizeCandidateGeometry(raw){
   if(!raw||typeof raw!=="object"||Array.isArray(raw)) throw new Error("P14_RESEARCH_GEOMETRY_INVALID");
+  assertOnlyKeys(raw,CANDIDATE_GEOMETRY_KEYS,"P14_RESEARCH_GEOMETRY_FIELD_FORBIDDEN");
   const geometry=normalizeGeometry({
     geometry_kind:raw.geometry_kind,
     geometry_ref:raw.geometry_ref,
@@ -81,6 +97,7 @@ function normalizeGeometryBinding(raw){
 }
 function normalizeTerritoryCandidate(raw){
   if(!raw||typeof raw!=="object"||Array.isArray(raw)) throw new Error("P14_RESEARCH_TERRITORY_INVALID");
+  assertOnlyKeys(raw,TERRITORY_KEYS,"P14_RESEARCH_TERRITORY_FIELD_FORBIDDEN");
   const control_type=text(raw.control_type);
   if(!CONTROL_TYPES.has(control_type)) throw new Error("P14_RESEARCH_CONTROL_TYPE_INVALID");
   const boundary_certainty=text(raw.boundary_certainty);
@@ -134,6 +151,7 @@ function normalizeTerritoryCandidate(raw){
   });
 }
 function normalizeApprovedCase(raw){
+  assertOnlyKeys(raw,APPROVED_CASE_KEYS,"P14_RESEARCH_APPROVED_FIELD_FORBIDDEN");
   const blockers=Array.isArray(raw.remaining_blockers)?raw.remaining_blockers.map(text).filter(Boolean):[];
   if(blockers.length!==0) throw new Error("P14_RESEARCH_APPROVED_BLOCKERS_MUST_BE_EMPTY");
   const polity_id=uuid(raw.polity_id,"P14_RESEARCH_POLITY_ID_INVALID");
@@ -152,6 +170,7 @@ function normalizeApprovedCase(raw){
   });
 }
 function normalizeHoldCase(raw){
+  assertOnlyKeys(raw,HOLD_CASE_KEYS,"P14_RESEARCH_HOLD_FIELD_FORBIDDEN");
   const blockers=nonEmptyStringArray(raw.remaining_blockers,"P14_RESEARCH_HOLD_BLOCKERS_REQUIRED");
   return Object.freeze({
     case_id:text(raw.case_id),
@@ -166,6 +185,7 @@ function normalizeHoldCase(raw){
   });
 }
 function normalizeRejectedCase(raw){
+  assertOnlyKeys(raw,REJECTED_CASE_KEYS,"P14_RESEARCH_REJECTED_FIELD_FORBIDDEN");
   const review_reason=text(raw.review_reason);
   if(!review_reason) throw new Error("P14_RESEARCH_REJECTED_REASON_REQUIRED");
   return Object.freeze({
@@ -195,6 +215,7 @@ function normalizeCase(raw){
 }
 function normalizeReviewedResearchArtifact(raw){
   if(!raw||typeof raw!=="object"||Array.isArray(raw)) throw new Error("P14_RESEARCH_ARTIFACT_INVALID");
+  assertOnlyKeys(raw,ARTIFACT_KEYS,"P14_RESEARCH_ARTIFACT_FIELD_FORBIDDEN");
   if(raw.schema!==CONTRACT.artifact_schema) throw new Error("P14_RESEARCH_SCHEMA_INVALID");
   if(raw.status!=="REVIEWED_NO_PRODUCTION_MUTATION") throw new Error("P14_RESEARCH_STATUS_INVALID");
   if(raw.production_mutation_authorized!==false) throw new Error("P14_RESEARCH_PRODUCTION_MUTATION_FORBIDDEN");
