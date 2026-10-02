@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "commerce-microbatch-20261003-madam-c-j-walker",
+  "person": {
+    "canonical_name_en": "Madam C. J. Walker",
+    "display_name_ko": "매덤 C. J. 워커",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-03",
+    "life_status_basis": "documented_death",
+    "representative_domain": "commerce"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-03",
+      "review_state": "reviewed_absent",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Entrepreneur",
+    "role_display_name_ko": "기업가",
+    "start_year": 1905,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1919,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative beauty-business career begins with Walker's move to Denver and commercial product-selling activity in 1905 and continues through her active entrepreneurial career to her death in 1919; the start is a documented business event, not a lifespan proxy."
+  },
+  "sources": [
+    {
+      "source_type": "museum_archive",
+      "title": "Madam C. J. Walker Collection — Smithsonian Transcription Center",
+      "canonical_url": "https://transcription.si.edu/initiatives/madam-c-j-walker-collection",
+      "citation_text": "The Smithsonian identifies Walker as an entrepreneur (1867–1919), records her 1905 move to Denver as a sales agent and her subsequent development and expansion of her own hair-care business.",
+      "locator": "About the Initiative"
+    },
+    {
+      "source_type": "government_reference",
+      "title": "Two American Entrepreneurs: Madam C.J. Walker and J.C. Penney — U.S. National Park Service",
+      "canonical_url": "https://home.nps.gov/articles/two-american-entrepreneurs-madam-c-j-walker-and-j-c-penney-teaching-with-historic-places.htm",
+      "citation_text": "The National Park Service records Walker arriving in Denver in 1905 and soon mixing and selling her products door to door before expanding the business.",
+      "locator": "Madam C.J. Walker"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-065",
+    "lane": "Lane A canonical registration",
+    "previous_review": "APPROVED / TIMELINE_ELIGIBLE / commerce / QUEUED / SS",
+    "review_inherited": true,
+    "namuwiki_review_note": "Indexed search found derivative mentions but no exact independent Person document."
+  }
+}
