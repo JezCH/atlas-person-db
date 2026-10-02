@@ -481,14 +481,26 @@
         "db/migrations/20261002_p14_territory_geometry_authority.sql",
         "server/atlas-p14-territory-geometry-service.js",
         "scripts/rehearse-p14-territory-geometry-authoring.mjs",
-        "tests/core-unit15-p14-boundary-seal.test.mjs"
+        "tests/core-unit15-p14-boundary-seal.test.mjs",
+        "contracts/p14-reviewed-research-intake-contract.v1.json",
+        "server/atlas-p14-reviewed-research-intake.js",
+        "scripts/verify-p14-reviewed-research-intake.mjs",
+        "tests/p14-reviewed-research-intake.test.mjs"
       ]
     },
     {
       "id": "ATLAS-RQ-0225",
       "status": "PENDING",
       "title": "Preserve the ATLAS map research standard",
-      "phase": "P14"
+      "phase": "P14",
+      "evidence_paths": [
+        "docs/research/P14_REVIEWED_TERRITORY_GEOMETRY_INTAKE.md",
+        "contracts/p14-reviewed-research-intake-contract.v1.json",
+        "server/atlas-p14-reviewed-research-intake.js",
+        "scripts/verify-p14-reviewed-research-intake.mjs",
+        "research/p14/intake/README.md",
+        "tests/p14-reviewed-research-intake.test.mjs"
+      ]
     },
     {
       "id": "ATLAS-RQ-0226",
