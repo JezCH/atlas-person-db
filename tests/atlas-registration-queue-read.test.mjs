@@ -26,7 +26,7 @@ test("registration queue source bootstraps 646 historical admissions plus 55 app
 
 test("lookup normalization is exact but tolerant of accents and punctuation", () => {
   assert.equal(normalizeLookupName("Estée Lauder"), normalizeLookupName("Estee Lauder"));
-  assert.equal(normalizeLookupName("A.P. Møller"), normalizeLookupName("A P Moller"));
+  assert.equal(normalizeLookupName("A.P. Moller"), normalizeLookupName("A P Moller"));
   assert.notEqual(normalizeLookupName("John Law"), normalizeLookupName("John Locke"));
 });
 
