@@ -182,6 +182,10 @@ test("main workflow waits for exact Production SHA, generates evidence, uploads 
   assert.match(workflow,/ATLAS CORE Final Acceptance/);
   assert.match(workflow,/statuses: write/);
   assert.match(workflow,/core-final-acceptance-contract\.v2\.json/);
+  assert.match(workflow,/\$\{\{ github\.token \}\}/);
+  assert.match(workflow,/\$\{\{ steps\.generated\.outcome \}\}/);
+  assert.doesNotMatch(workflow,/\\\$\{\{/);
+  assert.doesNotMatch(workflow,/\\\$\{GITHUB_/);
 });
 
 test("P13 lifecycle requirement remains pending until exact-main generated acceptance has actually run",()=>{
