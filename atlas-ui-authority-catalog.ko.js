@@ -48,7 +48,7 @@
       status_label: "백엔드 조회 필요",
       summary: "장소는 장기적으로 독립 기준 객체이지만 현재 메인 화면용 기준 조회 기능이 준비되지 않았습니다.",
       available: "시공간 인물도는 검토된 정치체 장소 기능을 별도 읽기 계약으로 소비하고 있습니다.",
-      missing: "출생지·사망지·수도·활동 장소 등을 UUID 기반 장소 객체로 읽고 편집하는 P13 기준 계약이 필요합니다.",
+      missing: "canonical Place/PolityPlaceFunction authoring authority는 구현되어 있습니다. 독립 Place 목록·상세 조회와 일반 사용자용 탐색 화면은 아직 없습니다.",
       principle: "장소 이름을 임의 문자열로 추정하지 않고 독립 식별자와 출처 추적 정보를 사용합니다."
     }),
     events: entry({
@@ -68,17 +68,17 @@
       status_label: "부분 조회",
       summary: "인물과 활동의 읽을 수 있는 출처 정보는 이미 메인 화면에 공개되지만 독립 출처 탐색 화면은 아직 없습니다.",
       available: "제목·출처 유형·기준 URL·인용문과 활동 위치자를 인물 상세에서 확인할 수 있습니다.",
-      missing: "독립 출처 목록·상세 조회와 first-class Source authoring은 P13에서 완성해야 합니다.",
-      principle: "메인 화면은 사람이 읽을 수 있는 출처를 제공하고 관리 기능은 안전한 출처 식별자와 진단 메타데이터를 다룹니다."
+      missing: "first-class canonical Source authoring은 이미 구현되어 있습니다. 아직 없는 것은 독립 Source 목록·상세 브라우저와 전체 bibliographic metadata의 공개 조회입니다.",
+      principle: "Source identity는 canonical Source object가 담당하고 locator/citation은 assertion provenance를 설명합니다. 메인 화면은 사람이 읽을 수 있는 출처를 제공하고 관리 기능은 안전한 Source 식별자와 진단 메타데이터를 다룹니다."
     }),
     geometry: entry({
       label: "지리 형상",
       eyebrow: "지도·지리 형상 기준 정보",
-      status_code: "future",
-      status_label: "향후 단계 · P14",
-      summary: "지리 형상은 역사 지도 통합 단계에서 정치체 영토를 통해 연결될 미래 기준 도메인입니다.",
-      available: "현재 인물 DB는 지도 연동에 필요한 인물 → 활동 → 정치체 의미 구조를 보존합니다.",
-      missing: "영토·지리 형상 공개 조회와 시계열 지도 통합은 별도 역사 지도 저장소와 P14에서 완성해야 합니다.",
+      status_code: "parked",
+      status_label: "중단됨 · 사용자 재개 필요",
+      summary: "역사 지도 P14의 Territory/Geometry 작업은 현재 진행 중이 아니며 자동 재개하지 않습니다.",
+      available: "현재 인물 DB와 시공간 인물도는 Person → Activity → Polity 의미 구조와 검토된 공간 배치를 계속 사용합니다.",
+      missing: "역사 경계·Territory·Geometry 통합은 PARKED 상태입니다. 사용자가 명시적으로 재개하기 전에는 다음 단계나 자동 로드맵으로 취급하지 않습니다.",
       principle: "인물 → 활동 → 정치체 → 영토 → 지리 형상 체인을 유지하며 인물에 영토를 직접 귀속하지 않습니다."
     })
   });
