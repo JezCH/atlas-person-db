@@ -36,7 +36,7 @@ Unit 16 closes residue cleanup: this registry has no active multi-writer debt, o
 | `registration_execution_state` | Registration state bound to one immutable human-approved candidate review revision and resulting canonical Person/apply result | `server/atlas-reviewed-candidate-service.js + server/atlas-human-authoring-service.js#queueApprovedRevision / setRegistrationState + authoring manifest ledger` | **single_writer** |
 | `person_destructive_lifecycle` | Person merge and hard-delete dependency-safe lifecycle | `server/atlas-destructive-lifecycle-service.js + existing Person lifecycle executors#discoverIdentityReferences / snapshotIdentityDependencies / verifyIdentityAbsent` | **single_writer** |
 | `polity_retirement` | Durable Polity retirement tombstone/redirect after zero-external-reference proof | `server/atlas-correction-polity-retire-v2-service.js#createCorrectionPolityRetireV2Service` | **single_writer** |
-| `p14_territory_geometry_boundary` | Canonical DB-backed P14 Authoring authority separating Polity-owned historical TerritoryRecord semantics from reusable evidence-backed Geometry | `server/atlas-p14-territory-geometry-service.js#createGeometry / createTerritoryRecord` | **single_writer** |
+| `p14_territory_geometry_boundary` | Canonical interface separating Polity-owned historical territorial authority from reusable evidence-backed Geometry | `server/atlas-p14-territory-geometry-contract.js#assertTerritoryRecord / assertGeometry / assertTerritoryGeometryLink` | **repository_source_authority** |
 
 ## Unit 16 closure notes
 

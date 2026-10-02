@@ -42,7 +42,6 @@ const expectedAuthoringMigrations = [
   '20260930_reviewed_candidate_boundary.sql',
   '20261001_spatial_registration_dispositions.sql',
   '20261001_polity_place_function_authority.sql',
-  '20261002_p14_territory_geometry_authority.sql',
   '20260930_unit16_retire_external_reference_sync_trigger.sql'
 ];
 
@@ -70,7 +69,6 @@ const expectedAuthoringReplayMigrations = [
   '20260930_reviewed_candidate_boundary.sql',
   '20261001_spatial_registration_dispositions.sql',
   '20261001_polity_place_function_authority.sql',
-  '20261002_p14_territory_geometry_authority.sql',
   '20260930_unit16_retire_external_reference_sync_trigger.sql'
 ];
 
@@ -494,49 +492,6 @@ try {
        and rc.constraint_name='place_sources_source_id_fkey'`);
   same(placeSourceDeleteRule.rows.map((row) => row.delete_rule), ['RESTRICT'], 'P13 Source provenance delete rule');
 
-  const p14Tables = await client.query(`
-    select table_name
-      from information_schema.tables
-     where table_schema='atlas_v2'
-       and table_name in ('geometries','geometry_sources','territory_records','territory_record_sources')
-     order by table_name`);
-  same(
-    p14Tables.rows.map((row) => row.table_name),
-    ['geometries','geometry_sources','territory_record_sources','territory_records'],
-    'P14 Territory/Geometry canonical tables'
-  );
-
-  const p14SourceDeleteRules = await client.query(`
-    select rc.constraint_name,rc.delete_rule
-      from information_schema.referential_constraints rc
-     where rc.constraint_schema='atlas_v2'
-       and rc.constraint_name in ('geometry_sources_source_id_fkey','territory_record_sources_source_id_fkey')
-     order by rc.constraint_name`);
-  same(
-    p14SourceDeleteRules.rows.map((row) => `${row.constraint_name}:${row.delete_rule}`),
-    ['geometry_sources_source_id_fkey:RESTRICT','territory_record_sources_source_id_fkey:RESTRICT'],
-    'P14 Source provenance delete rules'
-  );
-
-  const p14TemporalColumns = await client.query(`
-    select column_name,is_nullable
-      from information_schema.columns
-     where table_schema='atlas_v2'
-       and table_name='territory_records'
-       and column_name in (
-         'valid_start','valid_start_month','valid_start_day','valid_start_granularity','valid_start_certainty','valid_start_calendar',
-         'valid_end','valid_end_month','valid_end_day','valid_end_granularity','valid_end_certainty','valid_end_calendar',
-         'chronology_status','ongoing_as_of'
-       )
-     order by column_name`);
-  if (p14TemporalColumns.rows.find((row) => row.column_name === 'valid_start')?.is_nullable !== 'YES'
-    || p14TemporalColumns.rows.find((row) => row.column_name === 'valid_end')?.is_nullable !== 'YES') {
-    throw new Error('P14 unresolved Territory boundaries must remain nullable');
-  }
-  if (p14TemporalColumns.rows.find((row) => row.column_name === 'chronology_status')?.is_nullable !== 'NO') {
-    throw new Error('P14 Territory chronology_status must be required');
-  }
-
   const portraitTables = await client.query(`
     select table_name
       from information_schema.tables
@@ -603,9 +558,6 @@ try {
     reviewed_candidate_boundary_tables: candidateTables.rows.length,
     person_timeline_disposition_table: timelineTables.rows.length,
     p13_place_authoring_tables: placeTables.rows.length,
-    p14_territory_geometry_tables: p14Tables.rows.length,
-    p14_source_provenance_restrict: true,
-    p14_unresolved_temporal_boundaries: true,
     p13_source_provenance_restrict: true,
     correction_migrations: firstCorrectionReplay.applied.length,
     correction_migration_replay: true,

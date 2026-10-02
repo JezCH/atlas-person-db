@@ -23,7 +23,6 @@ function clientFor({
   humanSchemaAllowed = true,
   humanPersonSchemaAllowed = true,
   personReferenceSchemaReady = true,
-  p14SchemaReady = true,
   legacyPersonReferenceProjectionPresent = false,
   p5Ready = true
 } = {}) {
@@ -50,10 +49,6 @@ function clientFor({
           authoring_ledger: ledgerTableReady ? 'atlas_v2.authoring_manifest_runs' : null,
           person_external_references: personReferenceSchemaReady ? 'atlas_v2.person_external_references' : null,
           person_profile_mutation_audits: personReferenceSchemaReady ? 'atlas_v2.person_profile_mutation_audits' : null,
-          p14_geometries: p14SchemaReady ? 'atlas_v2.geometries' : null,
-          p14_geometry_sources: p14SchemaReady ? 'atlas_v2.geometry_sources' : null,
-          p14_territory_records: p14SchemaReady ? 'atlas_v2.territory_records' : null,
-          p14_territory_record_sources: p14SchemaReady ? 'atlas_v2.territory_record_sources' : null,
           ledger_manifest_schema: ledgerTableReady && ledgerColumnsReady,
           ledger_result_snapshot: ledgerTableReady && ledgerColumnsReady,
           ledger_human_authoring_schema_allowed: ledgerTableReady && ledgerColumnsReady && humanSchemaAllowed,
@@ -94,7 +89,6 @@ test('authoring readiness requires P5, core Stage 2 schema, human-compatible led
   assert.equal(result.core.base_tables_ready, true);
   assert.equal(result.core.ledger_table_ready, true);
   assert.equal(result.core.tables_ready, true);
-  assert.equal(result.core.p14_tables_ready, true);
   assert.equal(result.core.activity_columns_ready, true);
   assert.equal(result.core.ledger_columns_ready, true);
   assert.equal(result.core.ledger_human_authoring_schema_allowed, true);
@@ -132,15 +126,6 @@ test('missing authoring ledger schema is explicitly bootstrappable without weake
   assert.equal(missingLedger.bootstrap_ready, true);
   assert.equal(missingLedger.bootstrap_required, true);
   assert.equal(missingLedger.core.ledger_table_ready, false);
-});
-
-test('missing P14 Territory Geometry schema is explicitly bootstrappable', async () => {
-  const result = await inspectAuthoringReadiness(clientFor({ p14SchemaReady: false }));
-  assert.equal(result.ready, false);
-  assert.equal(result.bootstrap_ready, true);
-  assert.equal(result.bootstrap_required, true);
-  assert.equal(result.core.p14_tables_ready, false);
-  assert.equal(result.core.base_tables_ready, true);
 });
 
 test('missing Person external-reference/profile-audit schema is explicitly bootstrappable', async () => {
