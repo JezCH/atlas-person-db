@@ -9,13 +9,14 @@ const sequencedFiles = (prefix) => fs.readdirSync(proposalDir)
   .filter((name) => new RegExp(`^${prefix}-\\d{3}\\.json$`).test(name))
   .sort();
 const batchFiles = sequencedFiles('batch');
+const repairBatchFiles = sequencedFiles('batch-repair');
 const holdFiles = sequencedFiles('hold');
 const css = fs.readFileSync(path.join(root, 'atlas-person-domain-palette.css'), 'utf8').toLowerCase();
 const ui = fs.readFileSync(path.join(root, 'atlas-person-domain-ui.js'), 'utf8');
 const registry = fs.readFileSync(path.join(root, 'atlas-person-domain-registry.js'), 'utf8');
 const applyClient = fs.readFileSync(path.join(root, 'scripts/apply-person-domain-proposals.mjs'), 'utf8');
 const workflow = fs.readFileSync(path.join(root, '.github/workflows/atlas-person-domain-apply.yml'), 'utf8');
-const proposals = [...batchFiles,'palette-smoke-001.json']
+const proposals = [...batchFiles,...repairBatchFiles,'palette-smoke-001.json']
   .map((name) => fs.readFileSync(path.join(proposalDir, name), 'utf8'))
   .join('\n');
 
@@ -83,8 +84,10 @@ test('browser registry and reviewed proposals use canonical codes only', () => {
 
 test('reviewed batch and HOLD sequences are contiguous except explicitly cancelled ordinals and dynamically discoverable', () => {
   assertContiguousSequence(batchFiles, 'batch');
+  assertContiguousSequence(repairBatchFiles, 'batch-repair');
   assertContiguousSequence(holdFiles, 'hold');
   assert.match(applyClient, /discoverContiguous\("batch"\)/);
+  assert.match(applyClient, /discoverRepairBatches\(\)/);
   assert.match(applyClient, /discoverContiguous\("hold"\)/);
   assert.match(applyClient, /batch:new Set\(\[22,27,28,29,30\]\)/);
   assert.match(applyClient, /Cancelled \$\{prefix\} ordinal must not have a manifest/);
@@ -92,7 +95,7 @@ test('reviewed batch and HOLD sequences are contiguous except explicitly cancell
 });
 
 test('reviewed batch Person ids are unique unless an explicit supersede chain records a later correction', () => {
-  const batch = batchFiles.flatMap((name) => {
+  const batch = [...batchFiles, ...repairBatchFiles].flatMap((name) => {
     const parsed = JSON.parse(fs.readFileSync(path.join(proposalDir, name), 'utf8'));
     return parsed.entries.map((entry) => ({ ...entry, source:name }));
   });
