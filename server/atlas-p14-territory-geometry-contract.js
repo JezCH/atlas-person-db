@@ -88,7 +88,12 @@ function normalizeSourceRefs(raw,codePrefix){
 
 function normalizeGeometry(raw){
   if(!raw||typeof raw!=="object"||Array.isArray(raw)) throw new Error("P14_GEOMETRY_INVALID");
-  for(const field of ["person_id","polity_id","activity_id","control_type","valid_start","valid_end","region_code","subregion_code","location_label"]) {
+  for(const field of [
+    "person_id","polity_id","activity_id","control_type","boundary_certainty","evidence_confidence",
+    "valid_start","valid_start_month","valid_start_day","valid_start_granularity","valid_start_certainty","valid_start_calendar",
+    "valid_end","valid_end_month","valid_end_day","valid_end_granularity","valid_end_certainty","valid_end_calendar",
+    "chronology_status","ongoing_as_of","region_code","subregion_code","location_label"
+  ]) {
     if(raw[field]!=null) throw new Error(`P14_GEOMETRY_HISTORICAL_AUTHORITY_FORBIDDEN:${field}`);
   }
   if(raw.invented===true||raw.provenance?.invented===true) throw new Error("P14_INVENTED_GEOMETRY_FORBIDDEN");
@@ -114,6 +119,7 @@ function boundaryToken(boundary){
 
 function normalizeTerritoryRecord(raw){
   if(!raw||typeof raw!=="object"||Array.isArray(raw)) throw new Error("P14_TERRITORY_RECORD_INVALID");
+  if(raw.id!=null) throw new Error("P14_TERRITORY_ID_CALLER_FORBIDDEN");
   if(raw.person_id!=null||raw.activity_id!=null) throw new Error("P14_PERSON_ACTIVITY_OWNED_TERRITORY_FORBIDDEN");
   for(const field of CONTRACT.territory_record.rules.display_fields_forbidden) {
     if(raw[field]!=null) throw new Error(`P14_DISPLAY_FIELD_IN_TERRITORY_FORBIDDEN:${field}`);
