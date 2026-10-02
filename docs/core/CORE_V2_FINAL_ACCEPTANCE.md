@@ -1,44 +1,61 @@
 # ATLAS CORE v2 Final Acceptance
 
-**Current status:** PENDING GENERATED ACCEPTANCE  
-**Historical acceptance:** PR #1771 / 2026-10-01 — preserved as audit evidence only  
+**Current status:** GENERATED PASS / CORE v2 CLOSED  
+**Current P13 requirement:** `ATLAS-RQ-0223 — COMPLETED`  
+**Historical acceptance:** PR #1771 / 2026-10-01 — audit evidence only  
 **Current closure authority:** generated evidence from `.github/workflows/atlas-core-final-acceptance.yml`  
 **P14 content implementation:** out of scope; P14 remains separate product work.
 
-## Why the old PASS is no longer authoritative
+## Generated acceptance result
 
-`data/core/core-v2-final-acceptance.v1.json` preserves the Unit 17 / targeted re-entry PASS reached before the post-closure audit. Its stored PASS values are historical only and are explicitly marked `current_closure_authority:false`.
+The first current-authority generated acceptance completed on main commit:
 
-The old methodology could accept a repository because a PASS artifact, ownership registry, or source file contained expected declarations. That is insufficient for terminal closure. A terminal acceptance result must now be generated from the execution result of the current architecture and from an exact Production deployment read-back.
+- accepted main SHA: `0ed0f0de849972ebda1eab618ce6112f5d5cb135`;
+- workflow run: `36960727475`;
+- workflow job: `110693599986`;
+- artifact: `11207792140`;
+- artifact digest: `sha256:7bcc07a2ad125bb946d501db1af3416de8d1e8215b5365dec4470f1584c03731`;
+- Production deployment: `dpl_GbgrFxDR32VLH7z6sjga6MxrbEb9`;
+- Production runtime SHA: `0ed0f0de849972ebda1eab618ce6112f5d5cb135`;
+- generated report schema: `atlas-core-final-acceptance-evidence/v2`;
+- generated status: **PASS**;
+- executable gates: **9 / 9 PASS**;
+- mapped invariants: **26 / 26 PASS**;
+- failed gates: **0**;
+- failed invariants: **0**.
 
-## Current generated acceptance authority
+The closure-state commit that marks `ATLAS-RQ-0223` completed must itself rerun the same exact-SHA generated workflow. Therefore this document records the initial proof above, while the authoritative operational rule remains “latest successful generated acceptance for the current main closure SHA,” not a hand-edited PASS field.
 
-The authority chain is:
+## Why the old PASS is not authority
+
+`data/core/core-v2-final-acceptance.v1.json` preserves the Unit 17 / targeted re-entry PASS reached before the post-closure audit. Its stored PASS values are historical only and remain explicitly marked `current_closure_authority:false`.
+
+A source-controlled acceptance artifact cannot close CORE by declaration.
+
+## Current authority chain
 
 1. `contracts/core-final-acceptance-contract.v2.json`
-   - declares the required gates and invariant-to-gate mapping;
-   - contains no PASS/FAIL status field for any gate or invariant.
+   - declares required gates and invariant-to-gate mapping;
+   - stores no PASS/FAIL result for any gate or invariant.
 2. `server/atlas-core-final-acceptance.js`
-   - validates the contract;
+   - validates that contract;
+   - binds generated evidence to `ATLAS-RQ-0223`;
    - derives Production readiness from the exact expected commit SHA;
-   - derives every invariant result from executable gate results;
-   - can return terminal PASS only when every required gate and Production check pass.
+   - derives every invariant result from executable gate outcomes.
 3. `scripts/run-core-final-acceptance.mjs`
-   - executes the required gates;
-   - captures stdout/stderr in durable logs;
-   - hashes each log;
-   - writes `artifacts/core-final-acceptance/core-v2-final-acceptance.generated.json`.
+   - executes every command gate;
+   - persists stdout/stderr logs and SHA-256 hashes;
+   - produces `core-v2-final-acceptance.generated.json`.
 4. `.github/workflows/atlas-core-final-acceptance.yml`
-   - runs only for `main`/manual acceptance;
-   - waits until the Production authoring-readiness endpoint exposes the exact `GITHUB_SHA`;
+   - waits until Production exposes the exact `GITHUB_SHA`;
    - requires `ready:true`, `bootstrap_ready:true`, and `readiness.ready:true`;
-   - runs the generated acceptance runner on fresh PostgreSQL;
-   - uploads the generated JSON and gate logs;
-   - publishes commit status `ATLAS CORE Final Acceptance` for the exact SHA.
+   - runs acceptance on fresh PostgreSQL;
+   - uploads generated JSON plus gate logs;
+   - publishes commit status `ATLAS CORE Final Acceptance`.
 
-## Executable gate set
+## Required executable gates
 
-The generated run must pass all of the following:
+Every generated acceptance run must pass:
 
 - complete current test suite — `npm test`;
 - requirements source-of-truth verification;
@@ -50,39 +67,37 @@ The generated run must pass all of the following:
 - canonical-data readiness rehearsal on fresh PostgreSQL;
 - exact Production SHA authoring-readiness read-back.
 
-The contract maps those gates to the CORE invariants, including registration completeness, reviewed-candidate lifecycle, destructive lifecycle, Runtime reproducibility, obsolete executable residue, primitive identity bypass sealing, DB-backed spatial materialization, first-class Place UUID authority, unknown temporal transport, and exact Production readiness.
+These gates cover the original Unit 17 invariants plus the post-closure remediation set: new-Person registration completeness, reviewed-candidate lifecycle, primitive identity bypass sealing, DB-backed spatial materialization, first-class Place UUID authority, unknown temporal-boundary transport, obsolete executable residue, destructive lifecycle, Runtime reproducibility, and exact Production readiness.
 
 ## Terminal PASS rule
 
-A current terminal PASS is valid only when the generated evidence satisfies all of the following:
+Current terminal PASS exists only when generated evidence satisfies all of the following:
 
 - schema `atlas-core-final-acceptance-evidence/v2`;
+- `requirement_id:"ATLAS-RQ-0223"`;
 - `generated:true`;
-- every required gate is `PASS`;
-- every mapped invariant is `PASS`;
-- no failed gate or invariant exists;
-- evidence `commit_sha` equals the workflow `GITHUB_SHA`;
-- Production `runtime_sha` equals that same SHA;
+- all required gates PASS;
+- all mapped invariants PASS;
+- no failed gate or invariant;
+- evidence `commit_sha` equals workflow `GITHUB_SHA`;
+- Production `runtime_sha` equals the same SHA;
 - Production authoring/readiness and bootstrap read-backs are all true.
 
-No source-controlled JSON can declare the current terminal PASS by itself.
+Any current main commit that changes the acceptance/runtime surface must satisfy the same mechanism; a historical static PASS never substitutes for it.
 
-## Requirement state
+## Product-phase reconciliation
 
-Until the first exact-main generated acceptance run succeeds, `ATLAS-RQ-0223` remains **PENDING**.
+The following P13 requirements are completed:
 
-`ATLAS-RQ-0226` through `ATLAS-RQ-0230` retain their independently completed states. `ATLAS-RQ-0224` and `ATLAS-RQ-0225` remain separate P14 work and are not prerequisites for CORE v2 architecture closure.
+- `ATLAS-RQ-0223` — full Production product lifecycle acceptance;
+- `ATLAS-RQ-0226` — first-class Person authoring without fabricated optional facts;
+- `ATLAS-RQ-0227` — first-class Place and bibliographic Source authoring;
+- `ATLAS-RQ-0228` — explicit Compile → Runtime projection/readiness;
+- `ATLAS-RQ-0229` — unresolved Activity boundaries without fake endpoints;
+- `ATLAS-RQ-0230` — source-backed candidate → human review → authoritative authoring.
 
-## Closure evidence
+`ATLAS-RQ-0224` and `ATLAS-RQ-0225` remain **PENDING** because historical-map content/research integration is P14 product work, not a CORE v2 architecture closure blocker.
 
-After the generated workflow succeeds on the merged implementation SHA, closure evidence consists of:
+## Re-entry rule
 
-- the exact main commit SHA;
-- successful `ATLAS CORE Final Acceptance` commit status;
-- workflow run ID;
-- uploaded generated acceptance JSON and gate logs;
-- exact Production readiness SHA;
-- the final `ATLAS-RQ-0223` status transition to COMPLETED;
-- #917 checkpoint recording those exact identifiers.
-
-Until that evidence exists, this document deliberately does not claim terminal closure.
+CORE v2 is closed after generated acceptance. Re-entry is justified only by concrete contradictory evidence against a closed invariant, or by a deliberately versioned future CORE program. Historical comments, old queue states, superseded PRs, and static PASS artifacts do not reactivate CORE by themselves.
