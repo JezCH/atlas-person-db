@@ -7,7 +7,7 @@ const { requiredUuid, historicalYear } = require("./atlas-activity-semantic-key-
 const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service.js");
 const { createSource } = require("./atlas-source-service.js");
 const { normalizePersonPlaceFacts, resolvePersonPlaceFacts } = require("./atlas-place-relation-service.js");
-const { normalizeSpatialRegistrationHandshake } = require("./atlas-spatial-fact-contract.js");
+const { CONTRACT:SPATIAL_FACT_CONTRACT, normalizeSpatialRegistrationHandshake } = require("./atlas-spatial-fact-contract.js");
 const {
   materializeSpatialRegistrationDisposition,
   verifySpatialRegistrationDisposition
@@ -19,6 +19,7 @@ const {
   setTimelineDisposition
 } = require("./atlas-person-timeline-service.js");
 const {
+  DOMAIN_DEFINITIONS,
   normalizeDomain,
   currentDomain,
   setRepresentativeDomainTx
@@ -997,7 +998,13 @@ function createHumanAuthoringService({ client, prepare = prepareAnyHumanAuthorin
 async function loadHumanAuthoringCatalogs(client) {
   const relations = await client.query(`select code from atlas_v2.person_polity_relation_types where is_active=true and code<>'opposes' order by code`);
   const periods = await client.query(`select code from atlas_v2.period_bases where is_active=true order by code`);
-  return Object.freeze({ relation_types:Object.freeze(relations.rows.map((row) => String(row.code))), period_bases:Object.freeze(periods.rows.map((row) => String(row.code))) });
+  return Object.freeze({
+    relation_types:Object.freeze(relations.rows.map((row) => String(row.code))),
+    period_bases:Object.freeze(periods.rows.map((row) => String(row.code))),
+    representative_domains:Object.freeze(DOMAIN_DEFINITIONS.map((item) => Object.freeze({ code:item.code, label_ko:item.label_ko }))),
+    representative_domain_reviewed_null_allowed:true,
+    spatial_registration_states:Object.freeze([...SPATIAL_FACT_CONTRACT.registration_handshake.required_terminal_states])
+  });
 }
 
 module.exports = Object.freeze({
