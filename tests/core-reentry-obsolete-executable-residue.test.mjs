@@ -57,6 +57,16 @@ test("public mutation transport no longer accepts retired Activity write operati
   assert.equal(ALLOWED_OPERATIONS.has("delete"),true);
 });
 
+test("legacy authoring manifests are replay-only and cannot re-enter the retired Activity writer",()=>{
+  const legacy=read("server/atlas-authoring-manifest-service.js");
+  assert.doesNotMatch(legacy,/createV2AuthoritativeTx|executeV2Authoritative|createPerson\(|createPolity\(|createRole\(/);
+  assert.match(legacy,/AUTHORING_LEGACY_MANIFEST_NEW_WRITE_RETIRED_USE_NATIVE_V2/);
+
+  const dispatch=read("server/atlas-authoring-manifest-dispatch-service.js");
+  assert.match(dispatch,/AUTHORING_MANIFEST_V1_NEW_WRITE_RETIRED/);
+  assert.match(dispatch,/createNativeAuthoringManifestV2Service/);
+});
+
 test("operational launchers do not reference removed scripts",()=>{
   const pkg=JSON.parse(read("package.json"));
   assert.equal(Object.prototype.hasOwnProperty.call(pkg.scripts,"portrait:backfill-history"),false);
