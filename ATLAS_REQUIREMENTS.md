@@ -1,11 +1,12 @@
 # ATLAS Requirements Source of Truth v1
 
-> Status: **CORE v2 CLOSED / GENERATED P13 LIFECYCLE ACCEPTANCE PASSED / P14 PRODUCT WORK REMAINS PENDING**
+> Status: **CORE v2 CLOSED / GENERATED P13 LIFECYCLE ACCEPTANCE PASSED / P14 PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME**
 >
 > As of: **2026-10-01**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
 > CORE architecture / invariants / unit topology: `docs/core/CORE_V2_MASTER_PLAN.md`  
-> Active CORE status: GitHub Issue **#917** body only  
+> CORE closure status: GitHub Issue **#917** — **CLOSED; no active CORE unit**  
+> Current project workstreams: `docs/ATLAS_CURRENT_WORKSTREAMS.md`  
 > Validator: `scripts/verify-atlas-requirements.mjs`  
 > Execution policy: `WORK_EXECUTION.md`  
 > Release policy: `RELEASE_GOVERNANCE.md`  
@@ -171,12 +172,14 @@ Historical Baseline B evidence remains audit history. Current correctness must b
 
 P13 acceptance requires Person, Place and Source exist as first-class Authoring objects, the normalized writer remains authoritative, and Runtime cannot publish unresolved Authoring data as if it were settled fact.
 
-CORE v2 Unit 17 remains historical acceptance evidence, but its terminal closure was superseded by the 2026-10-01 re-entry audit for the specifically reopened invariants above. Verified completed requirements remain closed; P14 historical-map content and research integration remain separately pending.
+CORE v2 Unit 17 remains historical acceptance evidence, but its terminal closure was superseded by the 2026-10-01 re-entry audit for the specifically reopened invariants above. Verified completed requirements remain closed. P14 historical-map content and research integration are **PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME**; their requirement rows remain unimplemented for traceability but are not an execution frontier.
 
-### P14 — Historical map contract — PENDING
+### P14 — Historical map contract — PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME
 
-- `ATLAS-RQ-0224` — **PENDING:** integrate the historical map contract using Person → Activity → Polity → Territory → Geometry.
-- `ATLAS-RQ-0225` — **PENDING:** preserve the ATLAS map research standard and evidence discipline.
+- `ATLAS-RQ-0224` — requirement remains unimplemented for traceability; **execution is parked by user**.
+- `ATLAS-RQ-0225` — requirement remains unimplemented for traceability; **execution is parked by user**.
+- P14 Territory / Geometry / historical boundary-map / polygon work must **not** be selected as a next unit unless the user explicitly restarts it.
+- Historical P14 PRs, commits, research documents and rollback history are audit evidence only; they are not the current project frontier.
 
 Territory/Geometry work must never back-propagate invented identity, chronology or political authority into the Person DB.
 
@@ -225,15 +228,16 @@ Superseded requirements are retained for traceability and never treated as curre
 
 ## 7. CORE v2 execution authority
 
-The old P10→P14 numbered queue is retained above only for requirement traceability. It is **not** the active execution queue.
+The old P10→P14 numbered queue is retained above only for requirement traceability. It is **not** the active execution queue. In particular, P14 is **PARKED_BY_USER** and must not auto-resume.
 
 Current execution truth is intentionally split so it cannot drift:
 
 - **architecture / invariants / exact unit definitions:** `docs/core/CORE_V2_MASTER_PLAN.md`
-- **current active unit and exact resume point:** GitHub Issue **#917 body only**
+- **CORE closure state:** GitHub Issue **#917** is closed; no active CORE unit exists
+- **current cross-workstream frontier:** `docs/ATLAS_CURRENT_WORKSTREAMS.md`
 - **execution mechanics / Response Barrier / verification rules:** `WORK_EXECUTION.md`
 
-Historical #917 comments, old P11/P12 release tasks, stale PRs and old P-phase queue prose are audit evidence only. A new CORE turn resumes from #917, completes one unit, advances #917 to the next exact unit, then stops unless the user explicitly requests multiple units.
+Historical #917 comments, old P11/P12 release tasks, stale PRs and old P-phase queue prose are audit evidence only. A CORE re-entry is allowed only for concrete contradictory evidence against a closed invariant or a deliberately versioned future CORE program. It does not resume from historical #917 comments.
 
 ## 8. Completion definition
 
