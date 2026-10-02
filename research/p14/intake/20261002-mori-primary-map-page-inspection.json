@@ -1,78 +1,22 @@
 {
-  "schema": "atlas-p14-primary-map-inspection/v1",
-  "status": "REVIEWED_PRIMARY_PAGE_ACQUISITION_BLOCKED_BOUNDARY_SEMANTICS_HOLD",
+  "schema": "atlas-p14-reviewed-territory-research/v1",
+  "status": "REVIEWED_NO_PRODUCTION_MUTATION",
   "reviewed_at": "2026-10-02",
   "production_mutation_authorized": false,
-  "case_id": "p14-e-mori-motonari-primary-map-page-inspection",
-  "polity_id": "488eb50f-a337-424c-84df-267cd6466274",
-  "activity_interval": {"start_year": 1523, "end_year": 1571},
-  "primary_targets": [
+  "cases": [
     {
-      "source_key": "mori-museum-2000-mori-sekigahara",
-      "title": "毛利氏の関ケ原",
-      "publisher": "毛利博物館",
-      "publication_date": "2000-09",
-      "locator": "pp. 6-7, 「毛利氏領国の拡大」",
-      "reported_slices": [1523, 1555, 1557, 1569],
-      "acquisition_state": "NOT_DIRECTLY_ACQUIRED",
-      "inspection_state": "NOT_DIRECTLY_INSPECTED",
-      "authority_record": "Yamaguchi Prefectural Yamaguchi Library / NDL Collaborative Reference DB case 1000212761",
-      "authority_url": "https://crd.ndl.go.jp/reference/detail?page=ref_view&id=1000212761"
-    },
-    {
-      "source_key": "mori-motonari-exhibition-1997",
-      "title": "毛利元就展 その時代と至宝",
-      "publisher": "NHK / NHKプロモーション",
-      "publication_year": 1997,
-      "locator": "p. 257, 「毛利氏の勢力の推移」",
-      "reported_slices": [1523, 1530, 1541, 1554, 1557, 1569],
-      "acquisition_state": "BIBLIOGRAPHIC_RECORD_ACQUIRED_PAGE_IMAGE_NOT_ACQUIRED",
-      "inspection_state": "NOT_DIRECTLY_INSPECTED",
-      "ndl_search_url": "https://ndlsearch.ndl.go.jp/books/R100000136-I1970867909786773378",
-      "hiroshima_prefectural_art_museum_url": "https://www.hpam.jp/museum/backnumber/1997MoriMotonari.html"
+      "case_id": "p14-e-mori-motonari-primary-map-page-inspection",
+      "review_state": "HOLD",
+      "research_question": "Can Mōri Motonari's reported 1523, 1555, 1557, and c.1569 territorial map states be directly inspected and assigned defensible boundary semantics for canonical Geometry authoring?",
+      "polity_id": "488eb50f-a337-424c-84df-267cd6466274",
+      "remaining_blockers": [
+        "PRIMARY_MAP_PAGE_IMAGE_OR_LAWFUL_DIGITAL_COPY_REQUIRED",
+        "MAP_LEGEND_AND_BOUNDARY_SEMANTICS_INSPECTION_REQUIRED",
+        "CANONICAL_SOURCE_UUID_CREATION_OR_READBACK_REQUIRED",
+        "BOUNDARY_DIGITIZATION_REVIEW_REQUIRED",
+        "GEOMETRY_MATERIALIZATION_REQUIRED"
+      ],
+      "review_reason": "P14-E confirmed the exact published map locators and time slices from Yamaguchi Prefectural Yamaguchi Library / NDL case 1000212761, and independently confirmed the 1997 exhibition-catalogue identity and Mōri chronology through public institutional sources. However, the exact target map pages and their legends were not directly available for inspection in this work unit. The library record describes them generically as 勢力範囲 shown by color coding or lines; that wording does not establish whether each area is direct administrative territory, effective political control, vassal/allied scope, or a mixed reconstruction. An inspectable 1585 Hiroshima institutional map, outside Motonari's interval, also distinguishes domain fill from a separately fixed border, reinforcing that semantics must be read from the original legend rather than inferred. Geometry therefore remains HOLD and no boundary is digitized."
     }
-  ],
-  "directly_inspectable_authoritative_context": [
-    {
-      "source": "ひろしま文化大百科 / 広島県",
-      "url": "https://www.hiroshima-bunka.jp/modules/motonari11/",
-      "use": "chronology_and_control-semantics_context",
-      "findings": [
-        "1523 succession to the Mōri house",
-        "1529 Takahashi defeat and succession to Takahashi holdings / leadership position",
-        "1554 break with the Ōuchi and start of autonomous Sengoku-daimyo expansion",
-        "1557 destruction of the Ōuchi after conquest of Suō and Nagato",
-        "by first half of 1562 near-control of Iwami",
-        "1566 Amago surrender after Izumo invasion"
-      ]
-    },
-    {
-      "source": "ひろしまWEB博物館",
-      "title": "確定した毛利氏の領国",
-      "url": "https://www.mogurin.or.jp/museum/hwm/details/tenzi05/1/t05_1_g2_map.html",
-      "map_year": 1585,
-      "use": "semantic_control_only_outside_motonari_interval",
-      "finding": "The institutional map explicitly distinguishes Mōri domain fill from a formally settled border line. It demonstrates that later Mōri mapping can encode both territorial possession and a separately fixed boundary, but it is outside Motonari's 1523-1571 interval and cannot be back-projected."
-    }
-  ],
-  "boundary_semantics_review": {
-    "decision": "HOLD",
-    "provisional_policy": "MIXED_OR_UNRESOLVED",
-    "reason": "The Yamaguchi library record describes the cited maps generically as 勢力範囲, shown by color coding or lines. Without the actual legends and map pages, ATLAS cannot determine whether each colored/outlined area means direct administrative territory, effective military-political control, vassal/allied scope, or a mixed sphere. The directly inspectable 1585 institutional map proves that Mōri visualizations may distinguish domain area and formally settled border, reinforcing the need to read each legend rather than infer semantics from the shape."
-  },
-  "geometry_decision": "HOLD_GEOMETRY_MATERIALIZATION",
-  "safe_time_slice_candidates": [
-    {"year": 1523, "status": "SOURCE_REPORTED_NOT_GEOMETRY_APPROVED"},
-    {"year": 1555, "status": "SOURCE_REPORTED_NOT_GEOMETRY_APPROVED"},
-    {"year": 1557, "status": "SOURCE_REPORTED_NOT_GEOMETRY_APPROVED"},
-    {"year_approx": 1569, "status": "SOURCE_REPORTED_NOT_GEOMETRY_APPROVED"}
-  ],
-  "remaining_blockers": [
-    "PRIMARY_MAP_PAGE_IMAGE_OR_LAWFUL_DIGITAL_COPY_REQUIRED",
-    "MAP_LEGEND_AND_BOUNDARY_SEMANTICS_INSPECTION_REQUIRED",
-    "CANONICAL_SOURCE_UUID_CREATION_OR_READBACK_REQUIRED",
-    "BOUNDARY_DIGITIZATION_REVIEW_REQUIRED",
-    "GEOMETRY_MATERIALIZATION_REQUIRED"
-  ],
-  "next_resume_point": "P14-F — Mōri lawful primary-page acquisition path or equivalent authoritative inspectable 1523/1555/1557/1569 map asset — NOT STARTED"
+  ]
 }
