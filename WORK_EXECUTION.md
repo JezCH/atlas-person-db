@@ -378,6 +378,34 @@ Branch inventory is historical storage, not a work queue. Inspect only branches 
 
 A new worker answers “what is active?” from current authoritative state first. Historical folding is exceptional recovery work.
 
+### Person registration queue: one live current view
+
+The Person registration backlog has one query surface:
+
+```text
+GET /api/atlas-read?__atlas_read_surface=registration-queue
+```
+
+This response is the current registration-queue list to consult for ordinary work. Do not reconstruct the queue by folding #1374/#1375 comments again.
+
+Its durable admission source is:
+
+```text
+data/core/person-registration-queue-source.v1.json
+```
+
+Queue rules:
+
+- every newly human-approved candidate promoted to the registration queue must be appended to that source with a unique `candidate_id`;
+- the source is an admission ledger, not the user-facing pending list;
+- the live read surface subtracts terminal candidate-registration states and exact unique canonical Person identity matches, so completed registrations disappear from the current queue without deleting Git history;
+- `REGISTERED`, `VERIFIED_AUTHORING_ONLY`, and `NOT_APPLICABLE` are not current queue rows;
+- `QUEUED`, `APPLYING`, and `BLOCKED` may remain visible with their live state;
+- an ambiguous exact identity match stays visible and is marked for identity resolution rather than being silently removed;
+- GitHub issue comments remain historical evidence only and are not the current queue authority.
+
+When asked for “the registration queue”, read this live surface first.
+
 ## 11. Registration completeness without repeated cleanup
 
 When a new canonical obligation exists, new applicable records must handle it in the same registration lifecycle so legacy backfill debt does not keep growing.
