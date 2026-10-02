@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-02  
 **Status:** REVIEWED SOURCE NORMALIZATION / NO GEOMETRY MATERIALIZATION / NO PRODUCTION MUTATION  
-**Normalized artifact:** `research/p14/intake/20261002-mori-time-sliced-geometry-source-normalization.json`
+**Normalized artifact:** `research/p14/source-normalization/20261002-mori-time-sliced-geometry-source-normalization.json`
 
 ## Scope
 
