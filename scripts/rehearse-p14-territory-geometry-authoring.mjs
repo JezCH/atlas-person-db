@@ -37,6 +37,12 @@ try{
     title:"P14 Territory Geometry fixture source",
     citation_text:"Reviewed fixture evidence for P14 canonical authoring."
   });
+  const conflictingSource=await createSource(client,{
+    source_key:"fixture:p14-territory-geometry-conflict-source",
+    source_type:"academic_reference",
+    title:"P14 Territory Geometry conflicting fixture source",
+    citation_text:"Must never be attached by a rejected semantic-conflict request."
+  });
 
   const polity=await createPolity(client,{
     canonical_key:"p14-territory-fixture-polity",
@@ -101,6 +107,31 @@ try{
   const territoryReplay=await createTerritoryRecord(client,territoryRaw);
   assert.equal(territoryReplay.replay,true);
   assert.equal(territoryReplay.id,territory.id);
+
+  await assert.rejects(
+    ()=>createTerritoryRecord(client,{
+      ...territoryRaw,
+      boundary_certainty:"exact",
+      source_refs:[{source_id:conflictingSource.id,locator:"must-not-persist"}]
+    }),
+    /P14_TERRITORY_SEMANTIC_CONFLICT/
+  );
+  const afterRejectedConflict=await loadTerritoryRecord(client,territory.id);
+  assert.equal(afterRejectedConflict.source_refs.length,1);
+  assert.equal(afterRejectedConflict.source_refs[0].source_id,source.id);
+  assert.equal(afterRejectedConflict.source_refs.some((ref)=>ref.source_id===conflictingSource.id),false);
+
+  await assert.rejects(
+    ()=>createGeometry(client,{
+      ...geometryRaw,
+      geometry_kind:"multipolygon",
+      source_refs:[{source_id:conflictingSource.id,locator:"must-not-persist"}]
+    }),
+    /P14_GEOMETRY_REF_CONFLICT/
+  );
+  const geometryAfterRejectedConflict=await loadGeometry(client,geometry.id);
+  assert.equal(geometryAfterRejectedConflict.source_refs.length,1);
+  assert.equal(geometryAfterRejectedConflict.source_refs[0].source_id,source.id);
 
   const ongoingRaw={
     ...territoryRaw,
@@ -172,6 +203,7 @@ try{
     unresolved_source_rejected:true,
     geometry_replay_safe:true,
     territory_replay_safe:true,
+    rejected_conflict_provenance_side_effects:0,
     exact_readback:true,
     bulk_gis_content_authored:false
   },null,2));
