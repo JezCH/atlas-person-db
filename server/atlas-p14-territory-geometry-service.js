@@ -67,6 +67,7 @@ function requestedRefsPresent(actual,requested){
 async function createGeometry(client,raw){
   if(!client||typeof client.query!=="function") throw new Error("PostgreSQL client is required");
   const geometry=normalizeGeometry(raw);
+  if(geometry.geometry_id!=null) throw new Error("P14_GEOMETRY_ID_CALLER_FORBIDDEN");
   await verifySources(client,geometry.source_refs,"P14_GEOMETRY_SOURCE_UNRESOLVED");
 
   const inserted=await client.query(`
