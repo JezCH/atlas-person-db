@@ -1,0 +1,166 @@
+name: ATLAS CORE Final Acceptance
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/atlas-core-final-acceptance.yml'
+      - 'api/**'
+      - 'server/**'
+      - 'scripts/**'
+      - 'db/**'
+      - 'contracts/**'
+      - 'data/core/**'
+      - 'requirements/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  statuses: write
+
+concurrency:
+  group: atlas-core-final-acceptance-main
+  cancel-in-progress: true
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: atlas_core_final_acceptance
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d atlas_core_final_acceptance"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/atlas_core_final_acceptance
+      ATLAS_PRODUCTION_READINESS_JSON: artifacts/core-final-acceptance/production-readiness.json
+      ATLAS_CORE_FINAL_ACCEPTANCE_OUTPUT: artifacts/core-final-acceptance/core-v2-final-acceptance.generated.json
+      ATLAS_PRODUCTION_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install exact locked dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - id: production
+        name: Read exact Production SHA readiness
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/core-final-acceptance
+          matched=false
+          for attempt in $(seq 1 90); do
+            status="$(curl --silent --show-error \
+              --output artifacts/core-final-acceptance/production-readiness.json \
+              --write-out '%{http_code}' \
+              "$ATLAS_PRODUCTION_ENDPOINT" || true)"
+            if [[ "$status" == "200" ]] && jq -e --arg sha "$GITHUB_SHA" '
+              .ok == true and
+              .marker == "ATLAS_AUTHORING_TRANSPORT_V2" and
+              .transport_version == 2 and
+              .runtime_sha == $sha and
+              .ready == true and
+              .bootstrap_ready == true and
+              .readiness.ready == true
+            ' artifacts/core-final-acceptance/production-readiness.json >/dev/null 2>&1; then
+              matched=true
+              break
+            fi
+            runtime_sha="$(jq -r '.runtime_sha // "unavailable"' artifacts/core-final-acceptance/production-readiness.json 2>/dev/null || printf 'unavailable')"
+            echo "Production exact-SHA readiness pending: status=$status runtime_sha=$runtime_sha expected=$GITHUB_SHA attempt=$attempt/90"
+            sleep 10
+          done
+          [[ "$matched" == "true" ]] || {
+            echo "Production did not expose exact ready SHA $GITHUB_SHA." >&2
+            cat artifacts/core-final-acceptance/production-readiness.json >&2 || true
+            exit 1
+          }
+
+      - id: generated
+        name: Generate executable CORE final acceptance evidence
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/run-core-final-acceptance.mjs
+
+      - name: Upload generated acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-core-final-acceptance-\${{ github.sha }}
+          path: artifacts/core-final-acceptance/
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Publish exact-SHA final acceptance commit status
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: \${{ github.token }}
+          PRODUCTION_OUTCOME: \${{ steps.production.outcome }}
+          GENERATED_OUTCOME: \${{ steps.generated.outcome }}
+        run: |
+          set -euo pipefail
+          state=failure
+          description='CORE final acceptance failed'
+          if [[ "$PRODUCTION_OUTCOME" == "success" && "$GENERATED_OUTCOME" == "success" ]]; then
+            state=success
+            description='Generated CORE final acceptance PASS'
+          fi
+          payload="$(jq -cn \
+            --arg state "$state" \
+            --arg target_url "\${GITHUB_SERVER_URL}/\${GITHUB_REPOSITORY}/actions/runs/\${GITHUB_RUN_ID}" \
+            --arg description "$description" \
+            --arg context "ATLAS CORE Final Acceptance" \
+            '{state:$state,target_url:$target_url,description:$description,context:$context}')"
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            -H "authorization: Bearer \${GH_TOKEN}" \
+            -H "accept: application/vnd.github+json" \
+            -H "x-github-api-version: 2022-11-28" \
+            --data "$payload" \
+            "\${GITHUB_API_URL}/repos/\${GITHUB_REPOSITORY}/statuses/\${GITHUB_SHA}"
+
+      - name: Enforce generated final acceptance
+        if: always()
+        shell: bash
+        env:
+          PRODUCTION_OUTCOME: \${{ steps.production.outcome }}
+          GENERATED_OUTCOME: \${{ steps.generated.outcome }}
+        run: |
+          set -euo pipefail
+          [[ "$PRODUCTION_OUTCOME" == "success" ]] || { echo 'Exact Production SHA readiness failed.' >&2; exit 1; }
+          [[ "$GENERATED_OUTCOME" == "success" ]] || { echo 'Generated executable acceptance failed.' >&2; exit 1; }
+          jq -e --arg sha "$GITHUB_SHA" '
+            .schema == "atlas-core-final-acceptance-evidence/v2" and
+            .generated == true and
+            .status == "PASS" and
+            .commit_sha == $sha and
+            .production.runtime_sha == $sha and
+            .production.ready == true and
+            .production.bootstrap_ready == true and
+            .production.readiness_ready == true and
+            (.failures.gate_ids | length) == 0 and
+            (.failures.invariant_ids | length) == 0
+          ' "$ATLAS_CORE_FINAL_ACCEPTANCE_OUTPUT" >/dev/null
