@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "commerce-microbatch-20261003-jamsetji-tata",
+  "person": {
+    "canonical_name_en": "Jamsetji Tata",
+    "display_name_ko": "잠셋지 타타",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-03",
+    "life_status_basis": "documented_death",
+    "representative_domain": "commerce"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-03",
+      "document_title": "잠셋지 타타",
+      "url": "https://namu.wiki/w/%EC%9E%A0%EC%85%8B%EC%A7%80%20%ED%83%80%ED%83%80"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "British Raj",
+    "display_name_ko": "영국령 인도"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Industrialist",
+    "role_display_name_ko": "산업가",
+    "start_year": 1868,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1904,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative independent business and industrial career begins with Jamsetji Tata's own trading company in 1868 and ends with the 1904 succession on his passing; Tata's official timeline explicitly ties both events to group leadership, rather than using lifespan dates as a proxy."
+  },
+  "sources": [
+    {
+      "source_type": "corporate_history",
+      "title": "1868-1917: The Early Years — Tata group",
+      "canonical_url": "https://www.tata.com/about-us/tata-group-our-heritage/Our-Timeline-The-Early-Years-1868-1917",
+      "citation_text": "Tata's official history records Jamsetji starting a trading company in 1868 and Dorabji Tata becoming chairman on Jamsetji's passing in 1904.",
+      "locator": "1868 and 1904 timeline entries"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "workshop-20260924-064",
+    "lane": "Lane A canonical registration",
+    "previous_review": "APPROVED / TIMELINE_ELIGIBLE / commerce / QUEUED / SS",
+    "refined_priority": "SS+",
+    "review_inherited": true
+  }
+}
