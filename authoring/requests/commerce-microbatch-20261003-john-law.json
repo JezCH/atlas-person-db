@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "commerce-microbatch-20261003-john-law",
+  "person": {
+    "canonical_name_en": "John Law",
+    "display_name_ko": "존 로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-03",
+    "life_status_basis": "documented_death",
+    "representative_domain": "commerce"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-03",
+      "document_title": "존 로",
+      "url": "https://namu.wiki/w/%EC%A1%B4%20%EB%A1%9C"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Financier",
+    "role_display_name_ko": "금융가",
+    "start_year": 1716,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1720,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative financial-commercial span begins with Law's Banque Générale in 1716 and ends with the collapse of the Law system and his departure from France in 1720; it is not a lifespan proxy."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "John Law and the Compagnie d’Occident — Bibliothèque nationale de France, France-Amériques",
+      "canonical_url": "https://heritage.bnf.fr/france-ameriques/en/john-law-and-compagnie-doccident",
+      "citation_text": "BnF records Law establishing a bank in 1716, creating the Compagnie d’Occident in 1717, the 1720 collapse, and his departure from France in December 1720.",
+      "locator": "https://heritage.bnf.fr/france-ameriques/en/john-law-and-compagnie-doccident"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gp-20260921-146",
+    "lane": "Lane A canonical registration",
+    "previous_review": "APPROVED / TIMELINE_ELIGIBLE / commerce / QUEUED / SS",
+    "review_inherited": true
+  }
+}

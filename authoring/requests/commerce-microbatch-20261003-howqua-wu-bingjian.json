@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "commerce-microbatch-20261003-howqua-wu-bingjian",
+  "person": {
+    "canonical_name_en": "Howqua (Wu Bingjian)",
+    "display_name_ko": "호콰(우빙젠)",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-03",
+    "life_status_basis": "documented_death",
+    "representative_domain": "commerce"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-03",
+      "review_state": "reviewed_absent",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Qing Dynasty",
+    "display_name_ko": "청나라"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Merchant",
+    "role_display_name_ko": "상인",
+    "start_year": 1801,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1834,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Representative Canton merchant span begins with Howqua/Wu Bingjian inheriting the Yihe Company in 1801. The end uses his reported 1834 retirement as a conservative representative boundary; later influence continued, so end certainty is approximate rather than falsely exact."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Uncovering the garden of the richest man on earth in nineteenth-century Canton: Howqua's garden in Honam, China",
+      "canonical_url": "https://eprints.whiterose.ac.uk/114939/3/Garden%20History.pdf",
+      "citation_text": "The University of Sheffield/White Rose paper identifies Howqua as Wu Bingjian (1769–1843) and states that he inherited the Yihe Company in 1801, after which it became highly profitable.",
+      "locator": "Howqua, richest man on earth in the first half of the nineteenth century"
+    },
+    {
+      "source_type": "specialist_reference",
+      "title": "Portrait of the Chinese Merchant Howqua (Wu Bingjian) — Christie’s",
+      "canonical_url": "https://www.christies.com/en/lot/lot-2112066",
+      "citation_text": "Christie's identifies Howqua as the wealthiest and most successful Co-Hong merchant and records his retirement in 1834 and death in 1843.",
+      "locator": "Lot Essay"
+    }
+  ],
+  "review_context": {
+    "candidate_id": "gplist3-20260921-078",
+    "lane": "Lane A canonical registration",
+    "previous_review": "APPROVED / TIMELINE_ELIGIBLE / commerce / QUEUED / SS",
+    "review_inherited": true,
+    "identity_note": "Current canonical writer has no separate alias field; the historically essential alternate identity Wu Bingjian is retained in the canonical English display."
+  }
+}
