@@ -423,5 +423,5 @@ if (MODE === "smoke") {
   console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, source:selected.name, ...verifyExpected(body, selected.entries, [], selected.scienceTargets) }, null, 2));
 } else {
   const body = await readCurrent();
-  console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, ...verifyExpected(body, [...plan.assignments.values()], plan.hold) }, null, 2));
+  console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, ...verifyExpected(body, [...plan.assignments.values()], plan.hold, plan.scienceTargets) }, null, 2));
 }
