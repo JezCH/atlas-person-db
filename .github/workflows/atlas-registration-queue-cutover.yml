@@ -1,0 +1,86 @@
+name: ATLAS Registration Queue Canonical Cutover
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'db/migrations/20261003_person_registration_queue_canonical.sql'
+      - 'server/atlas-registration-queue-bootstrap-service.js'
+      - 'server/atlas-registration-queue-read-service.js'
+      - 'server/atlas-registration-queue-service.js'
+      - 'server/atlas-authoring-apply-handler.js'
+      - 'data/core/person-registration-queue-source.v1.json'
+      - '.github/workflows/atlas-registration-queue-cutover.yml'
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-registration-queue-cutover
+  cancel-in-progress: false
+
+jobs:
+  cutover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ATLAS_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
+      ATLAS_QUEUE_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=registration-queue
+      ATLAS_AUTHORING_AUDIENCE: atlas-person-db-authoring
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for exact Production runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 90); do
+            status="$(curl --silent --show-error --output /tmp/readiness.json --write-out '%{http_code}' "$ATLAS_AUTHORING_ENDPOINT")"
+            if [[ "$status" == "200" ]] && [[ "$(jq -r '.runtime_sha // ""' /tmp/readiness.json)" == "$GITHUB_SHA" ]]; then
+              exit 0
+            fi
+            sleep 10
+          done
+          cat /tmp/readiness.json >&2 || true
+          exit 1
+
+      - name: Bootstrap canonical queue once
+        shell: bash
+        run: |
+          set -euo pipefail
+          oidc="$(curl --fail-with-body --silent --show-error -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUTHORING_AUDIENCE}" | jq -er '.value')"
+          payload="$(jq -cn --arg sha "$GITHUB_SHA" '{operation:"bootstrap_registration_queue",transport_version:2,runtime_sha:$sha,authoring_sha:$sha}')"
+          status="$(curl --silent --show-error --output /tmp/cutover.json --write-out '%{http_code}' --request POST -H 'content-type: application/json' -H "authorization: Bearer ${oidc}" --data "$payload" "$ATLAS_AUTHORING_ENDPOINT")"
+          [[ "$status" == "200" ]] || { cat /tmp/cutover.json >&2; exit 1; }
+          jq -e '
+            .ok==true and .committed==true
+            and .canonical_db_table=="atlas_v2.person_candidate_registration_states"
+            and .membership_rule=="person_id IS NULL"
+            and .migration_candidate_total==701
+            and .registered_bound_count==308
+            and .pending_count==393
+            and (.missing_candidate_ids|length)==0
+            and (.extra_candidate_ids|length)==0
+            and .duplicate_candidate_ids==0
+            and .dangling_person_ids==0
+            and .commerce_20261003_preserved==true
+          ' /tmp/cutover.json >/dev/null
+
+      - name: Production queue read-back
+        shell: bash
+        run: |
+          set -euo pipefail
+          status="$(curl --silent --show-error --output /tmp/queue.json --write-out '%{http_code}' "$ATLAS_QUEUE_ENDPOINT")"
+          [[ "$status" == "200" ]] || { cat /tmp/queue.json >&2; exit 1; }
+          jq -e '
+            .ok==true
+            and .authority=="database"
+            and .canonical_table=="atlas_v2.person_candidate_registration_states"
+            and .membership_rule=="person_id IS NULL"
+            and .summary.candidate_total==701
+            and .summary.current_total==393
+            and .summary.registered_bound_total==308
+            and (.candidates|length)==393
+          ' /tmp/queue.json >/dev/null
+          [[ "$(jq '[.candidates[] | select(.candidate_id|startswith("commerce-20261003-"))] | length' /tmp/queue.json)" == "55" ]]
