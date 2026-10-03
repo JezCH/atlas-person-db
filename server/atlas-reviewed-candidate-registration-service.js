@@ -1,6 +1,9 @@
 "use strict";
 
-const { bindRegistrationQueueCandidate } = require("./atlas-registration-queue-read-service.js");
+const {
+  admitRegistrationQueueCandidate,
+  bindRegistrationQueueCandidate
+} = require("./atlas-registration-queue-read-service.js");
 const {
   recordReviewRevision,
   queueApprovedRevision,
@@ -35,6 +38,37 @@ function requiredCandidateRef(raw) {
   if (!candidate_id) throw new Error("CANDIDATE_ID_REQUIRED");
   if (!Number.isInteger(review_revision) || review_revision < 1) throw new Error("REVIEW_REVISION_REQUIRED");
   return Object.freeze({ candidate_id, review_revision });
+}
+
+function registrationQueueCandidateFromReview(review) {
+  const payload = review?.reviewed_payload;
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    throw new Error("CANDIDATE_REVIEWED_PAYLOAD_INVALID");
+  }
+  const request = payload.authoring_request && typeof payload.authoring_request === "object" && !Array.isArray(payload.authoring_request)
+    ? payload.authoring_request
+    : {};
+  const person = request.person && typeof request.person === "object" && !Array.isArray(request.person)
+    ? request.person
+    : {};
+  const name = text(payload.name || person.canonical_name_en || person.display_name_ko);
+  if (!name) throw new Error("REGISTRATION_QUEUE_CANDIDATE_NAME_REQUIRED");
+  const representativeDomain = text(
+    payload.representative_domain ?? request.representative_domain ?? person.representative_domain
+  ) || null;
+  const priority = text(payload.priority ?? payload.legacy_priority) || null;
+  return Object.freeze({
+    candidate_id:text(review.candidate_id),
+    name,
+    representative_domain:representativeDomain,
+    priority,
+    review_metadata:Object.freeze({
+      review_state:text(review.review_state) || null,
+      review_checkpoint:text(review.review_checkpoint) || null,
+      payload_hash:text(review.payload_hash) || null,
+      origin:payload.origin == null ? null : text(payload.origin) || null
+    })
+  });
 }
 
 function reviewedAuthoringRequest(review) {
@@ -119,10 +153,12 @@ function createReviewedCandidateRegistrationService({
   client,
   prepare = prepareAnyHumanAuthoringRequest,
   applyPrepared = applyPreparedWithinTransaction,
+  admitQueueCandidate = admitRegistrationQueueCandidate,
   bindQueueCandidate = bindRegistrationQueueCandidate
 } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   if (typeof prepare !== "function" || typeof applyPrepared !== "function") throw new Error("Candidate authoring primitives are required");
+  if (typeof admitQueueCandidate !== "function") throw new Error("Candidate queue admission writer is required");
   if (typeof bindQueueCandidate !== "function") throw new Error("Candidate queue binder is required");
 
   return Object.freeze({
@@ -142,12 +178,15 @@ function createReviewedCandidateRegistrationService({
 
         let registration = null;
         if (Number(latest.revision) === recorded.revision) {
-          registration = state === "APPROVED"
-            ? await queueApprovedRevision(client, {
-                candidate_id:recorded.candidate_id,
-                review_revision:recorded.revision
-              })
-            : await markNonApprovedDecision(client, recorded);
+          if (state === "APPROVED") {
+            registration = await queueApprovedRevision(client, {
+              candidate_id:recorded.candidate_id,
+              review_revision:recorded.revision
+            });
+            await admitQueueCandidate(client, registrationQueueCandidateFromReview(latest));
+          } else {
+            registration = await markNonApprovedDecision(client, recorded);
+          }
         }
 
         await client.query("commit");
@@ -304,6 +343,7 @@ function createReviewedCandidateRegistrationService({
 module.exports = Object.freeze({
   NON_APPROVED_REGISTRATION_STATE,
   requiredCandidateRef,
+  registrationQueueCandidateFromReview,
   reviewedAuthoringRequest,
   exactLedgerSnapshot,
   createReviewedCandidateRegistrationService
