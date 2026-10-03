@@ -147,15 +147,16 @@
     row = normalizeInteractiveRow(row);
     if (!row || row.dataset.personTableDecorated === "true") return;
     row.dataset.personTableDecorated = "true";
-    row.classList.add("person-table-row");
+    row.classList.add("person-table-row", "person-register-entry");
     const identity = wrapIdentity(row);
     const range = row.querySelector(":scope > .person-card-range");
     const activities = row.querySelector(":scope > .person-card-activities");
     const count = row.querySelector(":scope > .person-card-count");
     const status = row.querySelector(":scope > .person-card-top");
-    range?.classList.add("person-table-range");
-    activities?.classList.add("person-table-activities");
-    count?.classList.add("person-table-count");
+    identity?.classList.add("person-register-identity");
+    range?.classList.add("person-table-range", "person-register-range");
+    activities?.classList.add("person-table-activities", "person-register-activities");
+    count?.classList.add("person-table-count", "person-register-count");
     if (count) count.textContent = String(count.textContent || "").replace(/^Activity\s*/i, "");
     foldExceptionalStatus(identity, status);
     const activityRows = activities?.querySelectorAll?.(".person-card-activity") || [];
@@ -180,13 +181,16 @@
 
   function makeEraBand(era) {
     const band = document.createElement("div");
-    band.className = `person-era-band person-era-${era.code}`;
+    band.className = `person-era-band person-register-era-band person-era-${era.code}`;
     band.setAttribute("role", "rowheader");
     band.setAttribute("aria-label", `${era.label} · ${era.range}`);
     band.title = `${era.label} · ${era.range}`;
     const label = document.createElement("span");
     label.textContent = era.label;
-    band.append(label);
+    const range = document.createElement("small");
+    range.className = "person-era-band-range";
+    range.textContent = era.range;
+    band.append(label, range);
     return band;
   }
 
@@ -202,11 +206,11 @@
       row.dataset.atlasEra = era.code;
       if (era.code !== activeCode) {
         activeGroup = document.createElement("div");
-        activeGroup.className = "person-era-group";
+        activeGroup.className = "person-era-group person-register-era";
         activeGroup.dataset.atlasEra = era.code;
         activeGroup.append(makeEraBand(era));
         activeRows = document.createElement("div");
-        activeRows.className = "person-era-rows";
+        activeRows.className = "person-era-rows person-register-entries";
         activeGroup.append(activeRows);
         grid.append(activeGroup);
         activeCode = era.code;
@@ -225,8 +229,8 @@
 
   function decorateGrid(grid) {
     if (!grid) return;
-    grid.classList.add("person-table-grid");
-    if (!grid.querySelector(":scope > .person-table-head")) grid.prepend(makeHeader());
+    grid.classList.add("person-table-grid", "person-monumental-register");
+    grid.querySelector(":scope > .person-table-head")?.remove();
     const directRows = [...grid.querySelectorAll(":scope > .person-card")];
     directRows.forEach(decorateRow);
     groupRowsByEra(grid);
