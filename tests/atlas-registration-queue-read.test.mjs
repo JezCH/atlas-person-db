@@ -157,3 +157,10 @@ test("canonical queue migration encodes the nullable Person FK invariant without
   assert.match(sql, /WHERE person_id IS NULL/i);
   assert.doesNotMatch(sql, /candidate_person_bind|binding_table|fuzzy|similarity/i);
 });
+
+
+test("Person merge preserves queue bindings by rebinding source UUIDs to the survivor", () => {
+  const source = fs.readFileSync(new URL("../server/atlas-person-merge-service.js", import.meta.url), "utf8");
+  assert.match(source, /update atlas_v2\.person_registration_candidates[\s\S]*set person_id=\$2::uuid/);
+  assert.match(source, /registration_candidates_moved/);
+});
