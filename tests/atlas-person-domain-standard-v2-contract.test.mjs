@@ -68,3 +68,18 @@ test("Unit 01 is contract-only and does not claim a live runtime cutover", () =>
   assert.match(doc, /no runtime registry switch/);
   assert.match(doc, /no UI label switch/);
 });
+
+
+test("v2 science-retained checkpoints are verify-only review evidence", () => {
+  assert.deepEqual(contract.migration.science_retained_checkpoint, {
+    container_key:"science_retained",
+    v2_target_domain:"science",
+    stored_domain:"knowledge",
+    behavior:"verify_only_no_write",
+    provenance_required:true,
+    purpose:"durably distinguish reviewed science-target Persons from unresolved legacy knowledge before final cutover"
+  });
+  assert.match(doc, /science_retained/);
+  assert.match(doc, /review evidence, not a mutation command/i);
+  assert.match(doc, /still reads `knowledge` in Production without issuing a write/i);
+});
