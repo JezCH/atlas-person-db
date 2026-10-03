@@ -148,7 +148,17 @@ async function main() {
       const styleSamples=styledLabels.slice(0,20).map((el)=>{
         const style=getComputedStyle(el);
         const domain=el.dataset.representativeDomain;
-        const expectedVar=domain==='religion'?'--atlas-person-domain-religion-edge':('--atlas-person-domain-'+domain);
+        const edgeVarByDomain={
+          governance:'--atlas-person-domain-governance-surface',
+          military:'--atlas-person-domain-military',
+          knowledge:'--atlas-person-domain-knowledge',
+          technology:'--atlas-person-domain-technology-surface',
+          commerce:'--atlas-person-domain-commerce',
+          culture:'--atlas-person-domain-culture',
+          religion:'--atlas-person-domain-religion-edge',
+          exploration:'--atlas-person-domain-exploration'
+        };
+        const expectedVar=edgeVarByDomain[domain]||'';
         return {
           person_id:el.dataset.spacetimePerson,
           domain,
