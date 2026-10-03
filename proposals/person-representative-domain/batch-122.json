@@ -1,0 +1,88 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "685dab687c815f52bb5a9f388f4f98e701cdc928",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 15. Record five confirmed mathematics, medicine, information theory, mathematical physics, and surgery science targets as verify-only science_retained checkpoints. No Person domain write is requested; all five must remain live Production knowledge until final cutover.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-15",
+    "reviewed_count": 5,
+    "science_target_count": 5,
+    "non_science_target_count": 0
+  },
+  "review_scope": {
+    "selection_rule": "Choose a low-ambiguity science cohort whose live Production value is knowledge and whose latest numbered-batch assignment provenance is established. Exclude unresolved Human Authoring origins and genuine philosophy-science, religion-science, or applied technology boundary cases.",
+    "result_summary": {
+      "science_retained": 5
+    }
+  },
+  "entries": [],
+  "science_retained": [
+    {
+      "person_id": "1b0a070a-ab8d-45da-8d3b-36089d249c8a",
+      "canonical_name_en": "Euclid",
+      "preferred_name_ko": "유클리드",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-050.json",
+      "basis": "Euclid's representative identity is mathematics, especially the systematic geometry and mathematical proof tradition of the Elements. Under v2, mathematics and formal inquiry belong to science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Euclid/"
+      ]
+    },
+    {
+      "person_id": "108f55ab-3e8b-40e3-aded-8ed291174e49",
+      "canonical_name_en": "Heo Jun",
+      "preferred_name_ko": "허준",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-018.json",
+      "basis": "Heo Jun's representative identity is medicine: he served as a royal physician and authored major medical works including Donguibogam. Under v2, medicine belongs to science.",
+      "review_sources": [
+        "https://encykorea.aks.ac.kr/Article/E0063152"
+      ]
+    },
+    {
+      "person_id": "67e31735-c96f-4c90-a467-77c5653d2e04",
+      "canonical_name_en": "Claude Shannon",
+      "preferred_name_ko": "클로드 섀넌",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-082.json",
+      "basis": "Shannon's representative identity is the mathematical theory of information and communication. His foundational work established information theory as a scientific and mathematical field; the representative domain is science rather than applied hardware engineering.",
+      "review_sources": [
+        "https://news.mit.edu/2001/shannon",
+        "https://betterworld.mit.edu/information-theory/"
+      ]
+    },
+    {
+      "person_id": "a1e86566-f6a3-4720-b3dd-d9be47744480",
+      "canonical_name_en": "Ruđer Bošković",
+      "preferred_name_ko": "루제르 보슈코비치",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-067.json",
+      "basis": "Bošković's representative identity is mathematical physics, astronomy, and mathematical scientific inquiry. His main work lies in mathematical physics, placing him in v2 science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Boscovich/"
+      ]
+    },
+    {
+      "person_id": "fd973933-e383-4fe1-ad36-ca4e2aedcd92",
+      "canonical_name_en": "Abu al-Qasim al-Zahrawi",
+      "preferred_name_ko": "아부 알카심 알자흐라위",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-092.json",
+      "basis": "Al-Zahrawi's representative identity is medicine and surgery, especially the medical encyclopedia Kitab al-Tasrif and systematic surgical practice and instrumentation. Under v2, medicine belongs to science.",
+      "review_sources": [
+        "https://pubmed.ncbi.nlm.nih.gov/32736026/",
+        "https://pubmed.ncbi.nlm.nih.gov/38331026/"
+      ]
+    }
+  ]
+}
