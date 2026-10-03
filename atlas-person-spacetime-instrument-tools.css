@@ -763,6 +763,52 @@
   border-top-color: #30383d;
 }
 
+
+/* UNRESOLVED REVIEW — diagnostic history stays inside the dark instrument system. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-unresolved-grid > article {
+  border: 1px solid var(--spacetime-tools-line);
+  border-radius: 2px;
+  background: var(--spacetime-tools-raised);
+  color: var(--spacetime-tools-text);
+  box-shadow: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-unresolved-head h3 {
+  color: #c8c4ba;
+  font-family: var(--atlas-font-display, Georgia, serif);
+  font-weight: 600;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-unresolved-head > strong {
+  color: var(--spacetime-tools-metal-strong);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-unresolved-grid > article > p {
+  color: var(--spacetime-tools-muted);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-unresolved-list {
+  border-top-color: var(--spacetime-tools-line);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-unresolved-row {
+  border-bottom-color: var(--spacetime-tools-line-soft);
+  color: #8e969b;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-unresolved-row strong {
+  color: #c7c4bc;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-unresolved-row small {
+  color: var(--spacetime-tools-warning);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-more,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-empty-inline {
+  color: var(--spacetime-tools-muted);
+}
+
 /* V8 owns responsive hierarchy. V7 changes only the skin at current breakpoints. */
 @media (max-width: 760px) {
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-toolbar {
