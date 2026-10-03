@@ -7,6 +7,16 @@ const EXPECTED_RUNTIME_SHA = String(process.env.ATLAS_EXPECTED_RUNTIME_SHA || ""
 const OUT_DIR = process.env.ATLAS_VISUAL_OUT_DIR || "artifacts/spacetime-visual-acceptance";
 const REPO = "JezCH/atlas-person-db";
 const ASSETS = Object.freeze([
+  "index.html",
+  "atlas-main-authority-nav.js",
+  "atlas-ui-visual-foundation.css",
+  "atlas-person-monumental-register.css",
+  "atlas-person-chronicle-detail.css",
+  "atlas-ui-mobile-v8.css",
+  "atlas-ui-motion-material-v9.css",
+  "atlas-person-spacetime-monumental-canvas.css",
+  "atlas-person-spacetime-instrument-tools.css",
+  "atlas-person-spacetime-mobile-v8.css",
   "atlas-domain-surface-owner.js",
   "atlas-person-domain-palette.css",
   "atlas-person-domain-ui.js",
