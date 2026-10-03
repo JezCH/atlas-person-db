@@ -27,9 +27,9 @@ COMMENT ON COLUMN atlas_v2.person_registration_candidates.person_id IS
 
 -- One-time bootstrap snapshot from the pre-cutover PR #1802 live view.
 -- Runtime queue membership never consults names, aliases, Git JSON, or issue history.
-INSERT INTO atlas_v2.person_registration_candidates(
-  candidate_id,name,representative_domain,priority,review_metadata,person_id
-) VALUES
+-- Fresh schema rehearsals may not contain Production Persons yet; bootstrap UUIDs bind only when that canonical UUID exists.
+WITH seed(candidate_id,name,representative_domain,priority,review_metadata,bootstrap_person_id) AS (
+VALUES
 (
   'aoe2-ss-20260925-abdallah-ibn-yasin',
   'Abdallah ibn Yasin',
@@ -5638,6 +5638,23 @@ INSERT INTO atlas_v2.person_registration_candidates(
   '{"lookup_names":["Aristotle Onassis","Aristotle Socrates Onassis","아리스토텔레스 오나시스"],"review_state":"APPROVED","origin":"commerce_world_history_20261003","source_issue":null,"source_comment_id":null,"human_authorized_by_user":true,"bootstrap_artifact":"data/core/person-registration-queue-source.v1.json"}'::jsonb,
   NULL
 )
+),
+resolved AS (
+  SELECT
+    s.candidate_id,
+    s.name,
+    s.representative_domain,
+    s.priority,
+    s.review_metadata,
+    p.id AS person_id
+  FROM seed s
+  LEFT JOIN atlas_v2.persons p ON p.id=s.bootstrap_person_id
+)
+INSERT INTO atlas_v2.person_registration_candidates(
+  candidate_id,name,representative_domain,priority,review_metadata,person_id
+)
+SELECT candidate_id,name,representative_domain,priority,review_metadata,person_id
+FROM resolved
 ON CONFLICT (candidate_id) DO NOTHING;
 
 COMMIT;
