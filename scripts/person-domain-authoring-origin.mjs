@@ -45,7 +45,12 @@ export function validateHumanAuthoringOrigin({ root, entry } = {}) {
   if (text(request?.request_id) !== requestId) fail("HUMAN_AUTHORING_ORIGIN_REQUEST_ID_MISMATCH");
 
   const person = request?.person || {};
-  if (text(person?.representative_domain).toLowerCase() !== previousDomain) {
+  const sourceDomain = text(
+    request?.schema === "atlas-human-person-authoring/v1"
+      ? request?.representative_domain
+      : person?.representative_domain
+  ).toLowerCase();
+  if (sourceDomain !== previousDomain) {
     fail("HUMAN_AUTHORING_ORIGIN_DOMAIN_MISMATCH");
   }
   if (text(person?.canonical_name_en) !== canonicalName) {
