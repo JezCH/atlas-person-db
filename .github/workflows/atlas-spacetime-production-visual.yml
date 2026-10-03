@@ -18,6 +18,7 @@ on:
       - "atlas-person-spacetime-*.js"
       - "atlas-person-spacetime-*.css"
       - "scripts/verify-spacetime-production-*.mjs"
+      - "scripts/verify-ui-v10-production-visual.mjs"
       - ".github/workflows/atlas-spacetime-production-visual.yml"
   workflow_dispatch:
     inputs:
