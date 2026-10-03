@@ -65,7 +65,8 @@ function requireNamuWikiLinkPayload(body) {
     }
   } else if (status === "not_found") {
     if (String(body?.url || "").trim()) throw new Error("NAMUWIKI_NOT_FOUND_URL_FORBIDDEN");
-    if (String(body?.expected_current_url || "").trim()) throw new Error("NAMUWIKI_NOT_FOUND_EXPECTED_CURRENT_URL_FORBIDDEN");
+    const expectedCurrentUrl = String(body?.expected_current_url || "").trim();
+    if (expectedCurrentUrl) expectedCurrentReference = requireCanonicalNamuWikiUrl(expectedCurrentUrl);
     const reviewReason = String(body?.review_reason || "").trim() || null;
     if (reviewReason && !REVIEW_REASONS.has(reviewReason)) throw new Error("NAMUWIKI_NOT_FOUND_REVIEW_REASON_INVALID");
     const normalized = normalizeNamuWikiInput({ status:"not_found", document_title:null, url:null });
@@ -120,7 +121,8 @@ function createNamuWikiLinkHandler({
         commands:[
           "/namuwiki-link <person_uuid> <canonical_namuwiki_url>",
           "/namuwiki-correct <person_uuid> <expected_current_namuwiki_url> <canonical_namuwiki_url>",
-          "/namuwiki-not-found <person_uuid>"
+          "/namuwiki-not-found <person_uuid>",
+          "/namuwiki-not-found-correct <person_uuid> <expected_current_namuwiki_url> <review_reason>"
         ]
       });
     }

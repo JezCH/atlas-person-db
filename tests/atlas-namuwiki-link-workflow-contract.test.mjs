@@ -18,4 +18,5 @@ test('NamuWiki link mutation keeps deployed runtime SHA distinct from signed wor
   assert.match(workflow, /--arg runtime_sha "\$ATLAS_RUNTIME_SHA"/);
   assert.match(workflow, /--arg workflow_sha "\$GITHUB_SHA"/);
   assert.match(workflow, /\{runtime_sha:\$runtime_sha,workflow_sha:\$workflow_sha,person_id:\$person_id,url:\$url\}/);
+  assert.match(workflow, /expected_current_url:\$expected_current_url/);
 });

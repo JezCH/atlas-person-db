@@ -61,6 +61,17 @@ test("dedicated payload keeps deployed runtime SHA separate from the OIDC workfl
   assert.equal(correction.expectedCurrentReference.url, OLD_NAMUWIKI_URL);
   assert.equal(correction.externalReference.url, NAMUWIKI_URL);
   assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, expected_current_url:NAMUWIKI_URL, url:NAMUWIKI_URL }), /MUST_CHANGE/);
+  const missingCorrection = handler.requireNamuWikiLinkPayload({
+    runtime_sha:SHA,
+    workflow_sha:WORKFLOW_SHA,
+    person_id:PERSON_ID,
+    status:"not_found",
+    expected_current_url:OLD_NAMUWIKI_URL,
+    review_reason:"related_or_derivative_only"
+  });
+  assert.equal(missingCorrection.externalReference.status, "not_found");
+  assert.equal(missingCorrection.externalReference.review_reason, "related_or_derivative_only");
+  assert.equal(missingCorrection.expectedCurrentReference.url, OLD_NAMUWIKI_URL);
   assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:NAMUWIKI_URL }), /WORKFLOW_SHA_REQUIRED/);
   assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:"https://namu.moe/w/x" }), /CANONICAL_URL_REQUIRED/);
   assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:`${NAMUWIKI_URL}?from=x` }), /CANONICAL_URL_REQUIRED/);
@@ -102,6 +113,7 @@ test("Issue #431 workflow is one-at-a-time, actor-gated and performs Production 
   assert.match(workflow, /atlas-person-db-namuwiki-link/);
   assert.match(workflow, /\/namuwiki-link/);
   assert.match(workflow, /\/namuwiki-correct/);
+  assert.match(workflow, /\/namuwiki-not-found-correct/);
   assert.match(workflow, /expected_current_url/);
   assert.match(workflow, /atlas-namuwiki-link/);
   assert.match(workflow, /atlas-person-read/);

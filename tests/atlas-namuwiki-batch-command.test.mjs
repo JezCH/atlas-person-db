@@ -20,12 +20,18 @@ test("single NamuWiki commands remain backward compatible", () => {
   assert.deepEqual(parseNamuWikiCommand(`/namuwiki-not-found ${A} no_exact_document`), [
     { person_id:A, status:"not_found", url:null, review_reason:"no_exact_document" }
   ]);
+  assert.deepEqual(parseNamuWikiCommand(`/namuwiki-not-found-correct ${A} ${OLD_URL} related_or_derivative_only`), [
+    { person_id:A, status:"not_found", url:null, expected_current_url:OLD_URL, review_reason:"related_or_derivative_only" }
+  ]);
 });
 
 test("batch command parses mixed operations in order", () => {
   assert.deepEqual(parseNamuWikiCommand(`/namuwiki-batch\nlink ${A.toUpperCase()} ${URL}\nnot_found ${B}`), [
     { person_id:A, status:"linked", url:URL },
     { person_id:B, status:"not_found", url:null }
+  ]);
+  assert.deepEqual(parseNamuWikiCommand(`/namuwiki-batch\nnot_found_correct ${A} ${OLD_URL} no_exact_document`), [
+    { person_id:A, status:"not_found", url:null, expected_current_url:OLD_URL, review_reason:"no_exact_document" }
   ]);
 });
 
@@ -34,6 +40,8 @@ test("batch command rejects malformed, duplicate, and oversized input before wri
   assert.throws(() => parseNamuWikiCommand(`/namuwiki-correct ${A} ${URL} ${URL}`), /must change/);
   assert.throws(() => parseNamuWikiCommand(`/namuwiki-batch\nnot_found ${A}\nnot_found ${A}`), /Duplicate person UUID/);
   assert.throws(() => parseNamuWikiCommand(`/namuwiki-not-found ${A} invented_reason`), /Invalid NamuWiki review reason/);
+  assert.throws(() => parseNamuWikiCommand(`/namuwiki-not-found-correct ${A} https://example.com/x no_exact_document`), /Invalid expected current NamuWiki URL/);
+  assert.throws(() => parseNamuWikiCommand(`/namuwiki-not-found-correct ${A} ${OLD_URL} invented_reason`), /Invalid NamuWiki review reason/);
   const rows = Array.from({ length:26 }, (_, index) => {
     const suffix = index.toString(16).padStart(12, "0");
     return `not_found 00000000-0000-4000-8000-${suffix}`;

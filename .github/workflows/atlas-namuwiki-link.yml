@@ -19,7 +19,7 @@ jobs:
       github.event.issue.number == 431 &&
       !github.event.issue.pull_request &&
       github.actor == 'JezCH' &&
-      (startsWith(github.event.comment.body, '/namuwiki-link') || startsWith(github.event.comment.body, '/namuwiki-correct') || startsWith(github.event.comment.body, '/namuwiki-not-found') || startsWith(github.event.comment.body, '/namuwiki-batch'))
+      (startsWith(github.event.comment.body, '/namuwiki-link') || startsWith(github.event.comment.body, '/namuwiki-correct') || startsWith(github.event.comment.body, '/namuwiki-not-found') || startsWith(github.event.comment.body, '/namuwiki-not-found-correct') || startsWith(github.event.comment.body, '/namuwiki-batch'))
     runs-on: ubuntu-latest
     environment: production
     env:
@@ -136,6 +136,7 @@ jobs:
                  end
                else
                  {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,status:$status}
+                 + (if ($expected_current_url | length) > 0 then {expected_current_url:$expected_current_url} else {} end)
                  + (if ($review_reason | length) > 0 then {review_reason:$review_reason} else {} end)
                end')"
             HTTP_STATUS="$(curl --silent --show-error \
