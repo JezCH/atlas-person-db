@@ -38,7 +38,8 @@ test("UI V9 uses short entrance motion only for Detail and mobile drawer", () =>
   assert.match(css, /#personMainDetail\.person-main-detail:not\(\[hidden\]\)/);
   assert.match(css, /@keyframes atlas-v9-detail-in/);
   assert.match(css, /transform: translateX\(10px\)/);
-  assert.match(css, /\.mobile-drawer:not\(\[hidden\]\)/);
+  assert.match(css, /\.mobile-drawer\.open/);
+  assert.doesNotMatch(css, /\.mobile-drawer:not\(\[hidden\]\)/);
   assert.match(css, /@keyframes atlas-v9-drawer-in/);
   assert.match(css, /transform: translateX\(-12px\)/);
 });
