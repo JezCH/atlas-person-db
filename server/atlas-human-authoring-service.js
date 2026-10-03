@@ -1,5 +1,6 @@
 "use strict";
 
+const { bindRegistrationQueueCandidate } = require("./atlas-registration-queue-read-service.js");
 const { createPerson, createPolity, createRole, normalizeExact, normalizePersonLifeStatusReview } = require("./atlas-identity-service.js");
 const { temporalContextFromHumanActivity } = require("./atlas-polity-identity-resolver.js");
 const { createStage2NativeActivityTx, loadStage2NativeActivity } = require("./atlas-stage2-native-activity-service.js");
@@ -833,17 +834,29 @@ async function lockRequestIds(client, requestIds) {
   }
 }
 
-function createHumanAuthoringService({ client, prepare = prepareAnyHumanAuthoringRequest, applyPrepared = applyPreparedWithinTransaction } = {}) {
+function normalizeQueueCandidateId(value) {
+  if (value == null) return null;
+  const candidateId = String(value).normalize("NFC").trim();
+  if (!candidateId) throw new Error("HUMAN_AUTHORING_QUEUE_CANDIDATE_ID_INVALID");
+  return candidateId;
+}
+
+function createHumanAuthoringService({ client, prepare = prepareAnyHumanAuthoringRequest, applyPrepared = applyPreparedWithinTransaction, bindQueueCandidate = bindRegistrationQueueCandidate } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   if (typeof prepare !== "function") throw new Error("prepare is required");
   if (typeof applyPrepared !== "function") throw new Error("applyPrepared is required");
+  if (typeof bindQueueCandidate !== "function") throw new Error("bindQueueCandidate is required");
   return Object.freeze({
-    async apply(rawRequest, { transport = null, allowLegacyNamuWikiOmission = true } = {}) {
+    async apply(rawRequest, { transport = null, allowLegacyNamuWikiOmission = true, candidate_id = null } = {}) {
       const prepared = prepare(rawRequest, { allowLegacyNamuWikiOmission:true });
+      const queueCandidateId = normalizeQueueCandidateId(candidate_id);
       await client.query("begin isolation level serializable");
       try {
         await lockRequestIds(client, [prepared.request.requestId]);
         const result = await applyPrepared(client, prepared, { transport, catalogCache:new Map(), allowLegacyNamuWikiOmission:false });
+        if (queueCandidateId) {
+          await bindQueueCandidate(client, { candidate_id:queueCandidateId, person_id:result.person_id, required:true });
+        }
         await client.query("commit");
         return result;
       } catch (error) {
@@ -933,10 +946,12 @@ function createHumanAuthoringService({ client, prepare = prepareAnyHumanAuthorin
       return Object.freeze(results);
     },
 
-    async applyBatch(rawRequests, { transports = null, allowLegacyNamuWikiOmission = true } = {}) {
+    async applyBatch(rawRequests, { transports = null, allowLegacyNamuWikiOmission = true, candidate_ids = null } = {}) {
       if (!Array.isArray(rawRequests) || rawRequests.length === 0) throw new Error("HUMAN_AUTHORING_BATCH_REQUESTS_REQUIRED");
       const normalizedTransports = transports == null ? rawRequests.map(() => null) : transports;
       if (!Array.isArray(normalizedTransports) || normalizedTransports.length !== rawRequests.length) throw new Error("HUMAN_AUTHORING_BATCH_TRANSPORT_LENGTH_MISMATCH");
+      const normalizedCandidateIds = candidate_ids == null ? rawRequests.map(() => null) : candidate_ids.map(normalizeQueueCandidateId);
+      if (!Array.isArray(normalizedCandidateIds) || normalizedCandidateIds.length !== rawRequests.length) throw new Error("HUMAN_AUTHORING_BATCH_CANDIDATE_IDS_LENGTH_MISMATCH");
 
       const prepared = new Array(rawRequests.length).fill(null);
       const preparationFailures = [];
@@ -975,6 +990,13 @@ function createHumanAuthoringService({ client, prepare = prepareAnyHumanAuthorin
             catalogCache,
             allowLegacyNamuWikiOmission:false
           });
+          if (normalizedCandidateIds[index]) {
+            await bindQueueCandidate(client, {
+              candidate_id:normalizedCandidateIds[index],
+              person_id:result.person_id,
+              required:true
+            });
+          }
           await client.query("commit");
           results.push(result);
         } catch (error) {
@@ -1042,6 +1064,7 @@ module.exports = Object.freeze({
   verifyPersonOnlyReplay,
   verifyNewPersonRegistrationReadback,
   lockRequestIds,
+  normalizeQueueCandidateId,
   createHumanAuthoringService,
   loadHumanAuthoringCatalogs
 });
