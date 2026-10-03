@@ -182,6 +182,7 @@
     appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260923-runtime-ownership-v1");
     appendStylesheetOnce("./atlas-person-spacetime-monumental-canvas.css?v=20261003-ui-v6-canvas-v1");
     appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261003-ui-v7-tools-v1");
+    appendStylesheetOnce("./atlas-person-spacetime-mobile-v8.css?v=20261003-ui-v8-mobile-v1");
     spacetimeAssetsPromise = ensureSpacetimeModel()
       .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20261003-ui-v7-tools-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
@@ -261,6 +262,10 @@
     const eyebrow = topbar.querySelector(".eyebrow");
     const title = topbar.querySelector("h1");
     const subtitle = topbar.querySelector(".subtitle");
+    const mobileTitle = document.querySelector(".mobile-appbar-title strong");
+    const mobileSubtitle = document.querySelector(".mobile-appbar-title small");
+    if (mobileTitle) mobileTitle.textContent = meta?.label || personHeading.title;
+    if (mobileSubtitle) mobileSubtitle.textContent = "ATLAS 편집";
     if (domain === "persons") {
       if (eyebrow) eyebrow.textContent = personHeading.eyebrow;
       if (title) title.textContent = personHeading.title;
