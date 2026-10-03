@@ -15,7 +15,7 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 26);
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 27);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 26);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
@@ -43,6 +43,9 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.equal(AUTHORING_MIGRATION_PATHS[23].endsWith("20260930_unit16_retire_external_reference_sync_trigger.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[24].endsWith("20261003_person_registration_queue_authority.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[25].endsWith("20261003_shah_abbas_registration_queue_binding.sql"), true);
+  assert.equal(AUTHORING_MIGRATION_PATHS[26].endsWith("20261004_person_representative_domain_standard_v2_replay_safe.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS[8].endsWith("20261004_person_representative_domain_standard_v2_replay_safe.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.some((value)=>value.endsWith("20260919_person_representative_domain_standard_replay_safe.sql")), false);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-6).endsWith("20260930_reviewed_candidate_boundary.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-5).endsWith("20261001_spatial_registration_dispositions.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-4).endsWith("20261001_polity_place_function_authority.sql"), true);
@@ -185,6 +188,11 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(shahAbbasBinding, /ba5b60c5-ac74-41ad-9158-aacfb77b7ac6/i);
   assert.match(shahAbbasBinding, /UPDATE atlas_v2\.person_registration_candidates/i);
   assert.match(shahAbbasBinding, /pn\.name = 'Abbas I'/i);
+
+  const domainV2Replay = migrations[26].sql;
+  assert.match(domainV2Replay, /PERSON_DOMAIN_V2_REPLAY_MIXED_LEGACY_AND_V2_STATE/);
+  assert.match(domainV2Replay, /'science'/);
+  assert.doesNotMatch(domainV2Replay, /UPDATE\s+atlas_v2\.persons/i);
 });
 
 test('current clean schema baseline remains the measured pre-lifecycle Production shape', () => {
