@@ -1,0 +1,94 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-04",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "a8582a29eb6daad025f0f89640652e0d464470dd",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 21. Resolve a provenance-clean mixed boundary cohort from legacy knowledge using representative historical identity rather than generic role labels. State-building and diplomatic constitutional leadership map to governance; psychoanalysis as intellectual/social thought maps to culture; Pythagoras's historically grounded religious teaching, ritual authority, and founded way of life map to religion; direct foundational mathematics and natural-science work map to science and remain verify-only knowledge before the final atomic cutover.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-21",
+    "reviewed_count": 5,
+    "science_target_count": 2,
+    "non_science_target_count": 3
+  },
+  "review_scope": {
+    "selection_rule": "Choose five genuinely unreviewed live knowledge Persons with established numbered-batch provenance whose representative identities can be resolved from direct authoritative evidence across governance, social/intellectual thought, religious authority, mathematics, and natural science. Do not consume legacy Human Authoring rows whose original knowledge assignment cannot satisfy the current provenance validator.",
+    "result_summary": {
+      "governance": 1,
+      "culture": 1,
+      "religion": 1,
+      "science_retained": 2
+    }
+  },
+  "entries": [
+    {
+      "person_id": "4ac78579-a8ce-56b9-a901-89f0b34317b9",
+      "canonical_name_en": "Benjamin Franklin",
+      "preferred_name_ko": "벤저민 프랭클린",
+      "representative_domain": "governance",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-017.json",
+      "basis": "Franklin was also a major scientist, inventor, printer, and writer, but his representative historical identity includes decisive state-building and diplomatic leadership: delegate to the Continental Congress, participant in drafting the Declaration of Independence, first American minister received by a foreign government, negotiator of the French alliance and Treaty of Paris, and participant in the Constitutional Convention. Under v2, this defining political and state-formation role places him in governance.",
+      "review_sources": [
+        "https://diplomacy.state.gov/encyclopedia/benjamin-franklin-first-american-minister/",
+        "https://www.loc.gov/exhibits/franklin/franklin-intro.html"
+      ]
+    },
+    {
+      "person_id": "be0af966-3bbe-4ef4-b237-06225bb1f6bb",
+      "canonical_name_en": "Sigmund Freud",
+      "preferred_name_ko": "지그문트 프로이트",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-046.json",
+      "basis": "Freud trained as a physician and neurologist, but his defining historical identity is as founder of psychoanalysis and a theorist of the human mind whose ideas profoundly affected psychology, literature, art, and Western intellectual culture. Under v2, psychoanalysis in this representative intellectual and social-thought identity belongs to culture rather than natural science.",
+      "review_sources": [
+        "https://psychoanalysis.org.uk/freud",
+        "https://www.britannica.com/biography/Sigmund-Freud"
+      ]
+    },
+    {
+      "person_id": "87b9541e-cc28-46ca-a849-43a5a14ae162",
+      "canonical_name_en": "Pythagoras",
+      "preferred_name_ko": "피타고라스",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-067.json",
+      "basis": "Modern popular tradition strongly associates Pythagoras with mathematics, but the earliest evidence reviewed by the Stanford Encyclopedia of Philosophy states that his contemporary fame did not rest on mathematics or science. It instead emphasizes teachings on the soul and reincarnation, expertise in religious ritual, and his founding of a rigorous way of life centered on religious practice. Under v2, that representative religious authority places him in religion.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/pythagoras/"
+      ]
+    }
+  ],
+  "science_retained": [
+    {
+      "person_id": "7ac5c165-dabf-4b0c-95f5-8d6ee2665646",
+      "canonical_name_en": "René Descartes",
+      "preferred_name_ko": "르네 데카르트",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-057.json",
+      "basis": "Descartes is foundational to modern philosophy, but the reviewed Stanford evidence explicitly describes him as a first-rank mathematician and important scientific thinker, with analytic geometry, optics/refraction, empirical work on the rainbow, and a systematic natural philosophy. Under v2, mathematics and formal/empirical natural inquiry support science as the representative target; the stored value remains knowledge until final cutover.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/descartes/",
+        "https://plato.stanford.edu/entries/descartes-mathematics/"
+      ]
+    },
+    {
+      "person_id": "00ee8555-9615-4d8a-a434-70b5de15a357",
+      "canonical_name_en": "Blaise Pascal",
+      "preferred_name_ko": "블레즈 파스칼",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-085.json",
+      "basis": "Pascal was also a major religious philosopher and prose writer, but his direct historical contributions include foundational work in probability and projective geometry, experimental and theoretical physics of pressure and the vacuum, hydrostatics, and calculating devices. The reviewed mathematical and philosophical reference sources treat these scientific achievements as central to his legacy. Under v2, mathematics and empirical physical inquiry place the representative target in science; the stored value remains knowledge until final cutover.",
+      "review_sources": [
+        "https://iep.utm.edu/pascal-b/",
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Pascal/"
+      ]
+    }
+  ]
+}
