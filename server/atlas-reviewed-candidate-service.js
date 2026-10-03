@@ -1,6 +1,7 @@
 "use strict";
 
 const crypto = require("node:crypto");
+const { enqueueRegistrationQueueCandidate } = require("./atlas-registration-queue-service.js");
 
 const REVIEW = new Set(["PENDING","IN_REVIEW","APPROVED","HOLD","REJECTED","DUPLICATE_EXISTING"]);
 const REG = new Set(["NOT_READY","QUEUED","APPLYING","REGISTERED","VERIFIED_AUTHORING_ONLY","BLOCKED","NOT_APPLICABLE"]);
@@ -154,11 +155,19 @@ async function queueApprovedRevision(client, { candidate_id, review_revision } =
 
   const current = await loadRegistrationState(client, { candidate_id:ref.candidate_id, forUpdate:true });
   if (!current) {
-    await client.query(
-      `insert into atlas_v2.person_candidate_registration_states(candidate_id,review_revision,registration_state)
-       values($1,$2,'QUEUED')`,
-      [ref.candidate_id, ref.review_revision]
-    );
+    const payload = review.reviewed_payload && typeof review.reviewed_payload === "object" ? review.reviewed_payload : {};
+    const authoring = payload.authoring_request && typeof payload.authoring_request === "object" ? payload.authoring_request : {};
+    const person = authoring.person && typeof authoring.person === "object" ? authoring.person : {};
+    const name = text(payload.name || person.canonical_name_en || person.display_name_ko);
+    const representativeDomain = payload.representative_domain ?? authoring.representative_domain ?? person.representative_domain ?? null;
+    await enqueueRegistrationQueueCandidate(client, {
+      candidate_id:ref.candidate_id,
+      review_revision:ref.review_revision,
+      name,
+      representative_domain:representativeDomain,
+      priority:payload.priority ?? null,
+      metadata:{ review_checkpoint:review.review_checkpoint, review_state:review.review_state }
+    });
     return Object.freeze({ ...ref, registration_state:"QUEUED", replay:false });
   }
 
@@ -183,11 +192,10 @@ async function queueApprovedRevision(client, { candidate_id, review_revision } =
     `update atlas_v2.person_candidate_registration_states
         set review_revision=$2,
             registration_state='QUEUED',
-            person_id=null,
             authoring_request_id=null,
             result_snapshot=null,
             updated_at=now()
-      where candidate_id=$1`,
+      where candidate_id=$1 and person_id is null`,
     [ref.candidate_id, ref.review_revision]
   );
   return Object.freeze({ ...ref, registration_state:"QUEUED", replay:false });
