@@ -49,6 +49,7 @@ test('logical Person, Runtime compile, audit and correction surfaces consolidate
     { source: '/api/atlas-admin-inspector', destination: '/api/atlas-read?__atlas_read_surface=admin-inspector' },
     { source: '/api/atlas-admin-system-status', destination: '/api/atlas-read?__atlas_read_surface=admin-system-status' },
     { source: '/api/atlas-person-domain', destination: '/api/atlas-mutate?__atlas_mutation_surface=person-domain' },
+    { source: '/api/atlas-person-domain-v2-cutover', destination: '/api/atlas-mutate?__atlas_mutation_surface=person-domain-v2-cutover' },
     { source: '/api/atlas-runtime-compile', destination: '/api/atlas-mutate?__atlas_mutation_surface=runtime-compile' },
     { source: '/api/atlas-correction-migrations', destination: '/api/atlas-correction-apply?__atlas_correction_surface=migrations' }
   ]);
@@ -71,9 +72,12 @@ test('consolidated mutation entrypoint preserves generic mutation, Person domain
   assert.match(mutateApi, /createVercelMutationHandler/);
   assert.match(mutateApi, /atlas-person-domain-handler\.js/);
   assert.match(mutateApi, /createPersonDomainHandler/);
+  assert.match(mutateApi, /atlas-person-domain-v2-cutover-handler\.js/);
+  assert.match(mutateApi, /createPersonDomainV2CutoverHandler/);
   assert.match(mutateApi, /atlas-runtime-compile-handler\.js/);
   assert.match(mutateApi, /createRuntimeCompileHandler/);
   assert.match(mutateApi, /surface === "person-domain"/);
+  assert.match(mutateApi, /surface === "person-domain-v2-cutover"/);
   assert.match(mutateApi, /surface === "runtime-compile"/);
 });
 

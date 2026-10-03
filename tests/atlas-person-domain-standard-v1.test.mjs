@@ -17,7 +17,7 @@ const seq=(prefix)=>fs.readdirSync(dir).filter((name)=>new RegExp(`^${prefix}-\\
 const batchFiles=seq("batch");
 const repairFiles=seq("batch-repair");
 const holdFiles=seq("hold");
-const cancelled={batch:new Set([22,27,28,29,30]),hold:new Set()};
+const cancelled={batch:new Set([22,27,28,29,30]),"batch-repair":new Set(),hold:new Set()};
 
 function assertContiguous(files,prefix){
   const max=Number(files.at(-1).match(/-(\d{3})\.json$/)[1]);

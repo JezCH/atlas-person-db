@@ -151,7 +151,7 @@ async function main() {
         const edgeVarByDomain={
           governance:'--atlas-person-domain-governance-surface',
           military:'--atlas-person-domain-military',
-          knowledge:'--atlas-person-domain-knowledge',
+          science:'--atlas-person-domain-science',
           technology:'--atlas-person-domain-technology-surface',
           commerce:'--atlas-person-domain-commerce',
           culture:'--atlas-person-domain-culture',

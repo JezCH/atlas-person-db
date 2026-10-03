@@ -5,6 +5,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { inspectAuthoringReadiness } = require('../server/atlas-authoring-readiness.js');
 const { OLD_INDEX, NEW_INDEX } = require('../server/atlas-stage2-p9-db-cutover.js');
+const CUTOVER = require('../contracts/person-domain-v2-final-cutover.json');
 
 const NEW_INDEX_DEF = `CREATE UNIQUE INDEX ${NEW_INDEX} ON atlas_v2.person_politics_v2
   (person_id, polity_id, relation_type_id, role_id, period_basis_id,
@@ -24,8 +25,21 @@ function clientFor({
   humanPersonSchemaAllowed = true,
   personReferenceSchemaReady = true,
   legacyPersonReferenceProjectionPresent = false,
-  p5Ready = true
+  p5Ready = true,
+  personDomainV2Ready = true
 } = {}) {
+  const domainRows = personDomainV2Ready
+    ? [
+        ...CUTOVER.science_target_ids.map((person_id) => ({ person_id, representative_domain:'science' })),
+        ...Array.from({ length:1346 }, (_,index) => ({ person_id:`governance-${index}`, representative_domain:'governance' })),
+        ...Array.from({ length:205 }, (_,index) => ({ person_id:`military-${index}`, representative_domain:'military' })),
+        ...Array.from({ length:38 }, (_,index) => ({ person_id:`technology-${index}`, representative_domain:'technology' })),
+        ...Array.from({ length:28 }, (_,index) => ({ person_id:`commerce-${index}`, representative_domain:'commerce' })),
+        ...Array.from({ length:161 }, (_,index) => ({ person_id:`culture-${index}`, representative_domain:'culture' })),
+        ...Array.from({ length:100 }, (_,index) => ({ person_id:`religion-${index}`, representative_domain:'religion' })),
+        ...Array.from({ length:28 }, (_,index) => ({ person_id:`exploration-${index}`, representative_domain:'exploration' }))
+      ]
+    : CUTOVER.science_target_ids.map((person_id) => ({ person_id, representative_domain:'knowledge' }));
   return {
     async query(sql, params = []) {
       const text = String(sql);
@@ -69,6 +83,20 @@ function clientFor({
           legacy_person_external_reference_sync_trigger: legacyPersonReferenceProjectionPresent
         }] };
       }
+      if (text.includes('select id::text person_id,representative_domain from atlas_v2.persons')) {
+        return { rows:domainRows };
+      }
+      if (text.includes("pg_get_constraintdef(c.oid)") && text.includes("persons_representative_domain_check")) {
+        return {
+          rowCount:1,
+          rows:[{
+            definition:personDomainV2Ready
+              ? "CHECK ((representative_domain IS NULL) OR (representative_domain = ANY (ARRAY['governance'::text,'military'::text,'science'::text,'technology'::text,'commerce'::text,'culture'::text,'religion'::text,'exploration'::text])))"
+              : "CHECK ((representative_domain IS NULL) OR (representative_domain = ANY (ARRAY['governance'::text,'military'::text,'knowledge'::text,'technology'::text,'commerce'::text,'culture'::text,'religion'::text,'exploration'::text])))",
+            convalidated:true
+          }]
+        };
+      }
       if (text.includes('from pg_indexes')) {
         const name = params[0];
         if (name === OLD_INDEX) return { rows: oldIndex ? [{ indexname: OLD_INDEX, indexdef: 'CREATE UNIQUE INDEX legacy' }] : [] };
@@ -102,6 +130,8 @@ test('authoring readiness requires P5, core Stage 2 schema, human-compatible led
   assert.equal(result.core.legacy_person_external_reference_sync_trigger_present, false);
   assert.equal(result.core.person_external_reference_projection_retired, true);
   assert.equal(result.core.person_reference_contract_ready, true);
+  assert.equal(result.person_domain_v2.cutover_complete, true);
+  assert.equal(result.person_domain_v2.counts.science, 72);
   assert.equal(result.p9.old_index_present, false);
   assert.equal(result.p9.new_index_present, true);
   assert.equal(result.p9.duplicate_groups, 0);
@@ -193,4 +223,11 @@ test('bootstrap never masks duplicate groups, base-table gaps, or Stage 2 Activi
   const missingActivityColumns = await inspectAuthoringReadiness(clientFor({ activityColumnsReady: false, ledgerColumnsReady: false }));
   assert.equal(missingActivityColumns.ready, false);
   assert.equal(missingActivityColumns.bootstrap_ready, false);
+});
+test('authoring readiness fails closed while Person Domain v2 cutover is incomplete', async () => {
+  const result = await inspectAuthoringReadiness(clientFor({ personDomainV2Ready:false }));
+  assert.equal(result.ready,false);
+  assert.equal(result.bootstrap_ready,false);
+  assert.equal(result.person_domain_v2.cutover_complete,false);
+  assert.equal(result.person_domain_v2.ready_for_cutover,false);
 });

@@ -91,15 +91,18 @@ test('historical C8 workflow manifest remains audit evidence while current workf
 
   const personDomainWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-person-domain-apply.yml', import.meta.url), 'utf8');
   assert.match(personDomainWorkflow, /^\s*push\s*:/m);
-  assert.match(personDomainWorkflow, /branches:\s*\n\s*- main/);
+  assert.match(personDomainWorkflow, /branches:\s*\[main\]|branches:\s*\n\s*- main/);
   assert.match(personDomainWorkflow, /workflow_dispatch\s*:/m);
-  assert.match(personDomainWorkflow, /environment:\s*production/);
-  assert.match(personDomainWorkflow, /id-token:\s*write/);
-  assert.match(personDomainWorkflow, /atlas-person-domain-api/);
-  assert.match(personDomainWorkflow, /apply-person-domain-proposals\.mjs smoke/);
-  assert.match(personDomainWorkflow, /apply-person-domain-proposals\.mjs batch/);
-  assert.match(personDomainWorkflow, /apply-person-domain-proposals\.mjs verify/);
+  assert.match(personDomainWorkflow, /ATLAS Person Domain Verify/);
+  assert.match(personDomainWorkflow, /verify-person-domain-v2\.mjs/);
+  assert.doesNotMatch(personDomainWorkflow, /environment:\s*production|id-token:\s*write|apply-person-domain-proposals\.mjs/);
   assert.doesNotMatch(personDomainWorkflow, /SUPABASE_DB_URL|DATABASE_URL|ATLAS_MUTATION_TOKEN/);
+
+  const personDomainCutoverWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-person-domain-v2-cutover.yml', import.meta.url), 'utf8');
+  assert.match(personDomainCutoverWorkflow, /environment:\s*production/);
+  assert.match(personDomainCutoverWorkflow, /id-token:\s*write/);
+  assert.match(personDomainCutoverWorkflow, /atlas-person-domain-v2-cutover/);
+  assert.match(personDomainCutoverWorkflow, /Execute exact atomic v2 cutover/);
 
 });
 
