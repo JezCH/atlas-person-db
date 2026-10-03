@@ -84,6 +84,67 @@
   display: none !important;
 }
 
+/* Sorting remains functional, but no longer masquerades as a data-table header. */
+.person-monumental-register > .person-register-sortbar {
+  display: flex;
+  min-height: 28px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 2px 2px 8px;
+  border-bottom: 1px solid var(--atlas-divider-soft);
+  color: var(--atlas-text-muted);
+}
+
+.person-register-sort-caption {
+  margin-right: 2px;
+  color: #596168;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: .08em;
+}
+
+.person-monumental-register > .person-register-sortbar .person-table-sort-button {
+  position: relative;
+  width: auto;
+  min-width: 0;
+  gap: 4px;
+  padding: 3px 0;
+  color: #747d83;
+  font-size: 8.5px;
+  font-weight: 720;
+  letter-spacing: .015em;
+}
+
+.person-monumental-register > .person-register-sortbar .person-table-sort-button:hover {
+  color: #b8b5ae;
+}
+
+.person-monumental-register > .person-register-sortbar .person-table-sort-button.is-active {
+  color: #d6d0c4;
+}
+
+.person-monumental-register > .person-register-sortbar .person-table-sort-button.is-active::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--atlas-honor-metal);
+}
+
+.person-monumental-register > .person-register-sortbar .person-table-sort-icon {
+  font-size: 7px;
+  opacity: .48;
+}
+
+.person-monumental-register > .person-register-sortbar .person-table-sort-button:focus-visible {
+  border-radius: 2px;
+  outline: 1px solid rgba(192, 174, 136, .55);
+  outline-offset: 2px;
+}
+
 /* Each era is a chronological chapter, not a boxed table section. */
 .person-monumental-register .person-era-group,
 .person-monumental-register .person-register-era {
