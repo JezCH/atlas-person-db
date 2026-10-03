@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import { validateHumanAuthoringOrigin } from "./person-domain-authoring-origin.mjs";
 
 const ROOT = path.resolve(new URL("..", import.meta.url).pathname);
 const PROPOSAL_DIR = path.join(ROOT, "proposals/person-representative-domain");
@@ -87,8 +88,23 @@ function validateEntry(entry, { allowNull = false, source }) {
     fail(`Unsupported previous_representative_domain in ${source}: ${previousDomain}`);
   }
   const supersedesSource = String(entry?.supersedes_source || "").trim();
+  const supersedesOrigin = entry?.supersedes_origin == null
+    ? null
+    : String(entry.supersedes_origin).trim().toLowerCase();
+  const supersedesRequestId = entry?.supersedes_request_id == null
+    ? null
+    : String(entry.supersedes_request_id).trim();
   if ((previousDomain == null) !== (supersedesSource === "")) {
     fail(`Reviewed domain correction must provide both previous_representative_domain and supersedes_source in ${source}: ${personId}`);
+  }
+  if (supersedesOrigin != null && supersedesOrigin !== "human_authoring") {
+    fail(`Unsupported supersedes_origin in ${source}: ${supersedesOrigin}`);
+  }
+  if ((supersedesOrigin === "human_authoring") !== Boolean(supersedesRequestId)) {
+    fail(`Human-authoring correction must provide both supersedes_origin=human_authoring and supersedes_request_id in ${source}: ${personId}`);
+  }
+  if (previousDomain == null && (supersedesOrigin != null || supersedesRequestId != null)) {
+    fail(`New reviewed assignment cannot declare a supersedes origin in ${source}: ${personId}`);
   }
   if (previousDomain != null && previousDomain === domain) {
     fail(`Reviewed domain correction must change the domain in ${source}: ${personId}`);
@@ -98,6 +114,8 @@ function validateEntry(entry, { allowNull = false, source }) {
     representative_domain:domain,
     previous_representative_domain:previousDomain,
     supersedes_source:supersedesSource || null,
+    supersedes_origin:supersedesOrigin,
+    supersedes_request_id:supersedesRequestId,
     canonical_name_en:String(entry?.canonical_name_en || "").trim(),
     preferred_name_ko:String(entry?.preferred_name_ko || "").trim(),
     source
@@ -125,10 +143,19 @@ function loadPlan() {
       const prior = batchIds.get(entry.person_id);
       if (prior) {
         const validCorrection = entry.previous_representative_domain === prior.representative_domain
-          && entry.supersedes_source === prior.source;
+          && entry.supersedes_source === prior.source
+          && entry.supersedes_origin == null
+          && entry.supersedes_request_id == null;
         if (!validCorrection) fail(`Duplicate reviewed batch Person without explicit supersede chain: ${entry.person_id}`, { prior, current:entry });
       } else if (entry.previous_representative_domain != null || entry.supersedes_source != null) {
-        fail(`Reviewed domain correction has no prior batch assignment: ${entry.person_id}`, entry);
+        if (entry.supersedes_origin !== "human_authoring") {
+          fail(`Reviewed domain correction has no prior batch assignment or approved Human Authoring origin: ${entry.person_id}`, entry);
+        }
+        try {
+          validateHumanAuthoringOrigin({ root:ROOT, entry });
+        } catch (error) {
+          fail(`Invalid Human Authoring correction provenance for ${entry.person_id}: ${String(error?.message || error)}`, entry);
+        }
       }
       batchIds.set(entry.person_id, entry);
       batch.push(entry);
