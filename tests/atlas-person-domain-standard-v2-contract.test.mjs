@@ -68,3 +68,14 @@ test("Unit 01 is contract-only and does not claim a live runtime cutover", () =>
   assert.match(doc, /no runtime registry switch/);
   assert.match(doc, /no UI label switch/);
 });
+
+
+test("science-target reviews are durable no-write dispositions with an exact cutover gate", () => {
+  assert.equal(contract.migration.science_review_record.container, "science_targets array on the bounded batch-NNN.json review manifest");
+  assert.equal(contract.migration.science_review_record.stored_domain, "knowledge");
+  assert.equal(contract.migration.science_review_record.target_domain, "science");
+  assert.match(contract.migration.science_review_record.verification, /latest assignment provenance/i);
+  assert.match(contract.migration.science_review_record.cutover_gate, /exactly equal/i);
+  assert.match(doc, /science_targets/);
+  assert.match(doc, /live `knowledge` Person-id set must exactly equal/i);
+});
