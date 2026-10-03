@@ -42,7 +42,32 @@
     owner.setAttribute("role", "columnheader");
   }
 
+  function installRegisterControls(grid) {
+    let bar = grid?.querySelector?.(":scope > .person-register-sortbar");
+    if (bar) return bar;
+
+    bar = document.createElement("div");
+    bar.className = "person-register-sortbar";
+    bar.setAttribute("role", "toolbar");
+    bar.setAttribute("aria-label", "인물 정렬");
+
+    const caption = document.createElement("span");
+    caption.className = "person-register-sort-caption";
+    caption.textContent = "정렬";
+
+    bar.append(
+      caption,
+      makeSortButton("연대", "start"),
+      makeSortButton("인물", "person"),
+      makeSortButton("정치체", "polity")
+    );
+    grid.prepend(bar);
+    return bar;
+  }
+
   function installHeaderControls(grid) {
+    if (grid?.classList?.contains("person-monumental-register")) return installRegisterControls(grid);
+
     const header = grid?.querySelector?.(":scope > .person-table-head");
     if (!header) return null;
 
@@ -69,6 +94,7 @@
       const stateLabel = active ? (current.direction === "desc" ? "내림차순" : "오름차순") : "정렬 안 됨";
 
       button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
       owner?.classList.toggle("is-sort-active", active);
       owner?.setAttribute("aria-sort", active ? (current.direction === "desc" ? "descending" : "ascending") : "none");
       if (icon) icon.textContent = active ? (current.direction === "desc" ? "▼" : "▲") : "↕";
@@ -152,19 +178,19 @@
 
   function makeEraGroup(code, template, flat = false) {
     const group = document.createElement("div");
-    group.className = `person-era-group${flat ? " person-era-group-flat" : ""}`;
+    group.className = `person-era-group person-register-era${flat ? " person-era-group-flat" : ""}`;
     group.dataset.atlasEra = code;
 
     const band = template?.cloneNode?.(true) || document.createElement("div");
     if (!band.classList.contains("person-era-band")) {
-      band.className = `person-era-band person-era-${code}`;
+      band.className = `person-era-band person-register-era-band person-era-${code}`;
       const label = document.createElement("span");
       label.textContent = code || "연대 미상";
       band.append(label);
     }
 
     const rows = document.createElement("div");
-    rows.className = "person-era-rows";
+    rows.className = "person-era-rows person-register-entries";
     group.append(band, rows);
     return { group, rows };
   }
