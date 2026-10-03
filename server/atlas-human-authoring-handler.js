@@ -80,6 +80,7 @@ function batchEnvelope(body) {
     if (!MANIFEST_PATH_RE.test(path)) throw new Error("HUMAN_AUTHORING_MANIFEST_PATH_NOT_ALLOWED");
     return path;
   });
+  if (body.candidate_ids != null && !Array.isArray(body.candidate_ids)) throw new Error("HUMAN_AUTHORING_BATCH_CANDIDATE_IDS_INVALID");
   const candidateIds = body.candidate_ids == null
     ? requests.map(() => null)
     : body.candidate_ids.map((value) => {
