@@ -7,14 +7,19 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (relative) => fs.readFileSync(path.join(root, relative), "utf8");
 
-test("Production visual workflow exposes a required exact-SHA manual closure gate", () => {
+test("Production visual workflow auto-runs on main while retaining the exact-SHA manual closure gate", () => {
   const workflow = read(".github/workflows/atlas-spacetime-production-visual.yml");
+  assert.match(workflow, /push:\s*\n\s*branches:\s*\n\s*- main/);
   assert.match(workflow, /workflow_dispatch:/);
   assert.match(workflow, /expected_runtime_sha:/);
   assert.match(workflow, /required:\s*true/);
+  assert.match(workflow, /ATLAS_EXPECTED_RUNTIME_SHA=\$EXPECTED_SHA/);
+  assert.match(workflow, /Wait for exact-SHA Production parity/);
+  assert.match(workflow, /for attempt in \$\(seq 1 90\)/);
   assert.match(workflow, /verify-spacetime-production-exact-sha\.mjs/);
   assert.match(workflow, /verify-spacetime-production-visual\.mjs/);
   assert.match(workflow, /verify-spacetime-production-domain-colors\.mjs/);
+  assert.match(workflow, /verify-ui-v10-production-visual\.mjs/);
 });
 
 test("exact-SHA verifier fails closed and byte-compares the current spacetime/domain assets", () => {
@@ -23,6 +28,16 @@ test("exact-SHA verifier fails closed and byte-compares the current spacetime/do
   assert.match(verifier, /raw\.githubusercontent\.com/);
   assert.match(verifier, /productionBytes\.equals\(githubBytes\)/);
   for (const asset of [
+    "index.html",
+    "atlas-main-authority-nav.js",
+    "atlas-ui-visual-foundation.css",
+    "atlas-person-monumental-register.css",
+    "atlas-person-chronicle-detail.css",
+    "atlas-ui-mobile-v8.css",
+    "atlas-ui-motion-material-v9.css",
+    "atlas-person-spacetime-monumental-canvas.css",
+    "atlas-person-spacetime-instrument-tools.css",
+    "atlas-person-spacetime-mobile-v8.css",
     "atlas-domain-surface-owner.js",
     "atlas-person-domain-palette.css",
     "atlas-person-domain-ui.js",
@@ -63,8 +78,10 @@ test("Production visual acceptance covers the compact 390px mobile presentation 
   assert.match(verifier, /mobile\.cameraRect\.height <= 40 && mobile\.searchRect\.height <= 40/);
   assert.match(verifier, /mobile\.cameraRect\.top >= mobile\.searchRect\.bottom \+ 2/);
   assert.match(verifier, /Math\.abs\(mobile\.macroOpacity - at500\.macroOpacity\) < 0\.001/);
-  assert.match(verifier, /Math\.abs\(mobile\.subregionOpacity - at500\.subregionOpacity\) < 0\.001/);
-  assert.doesNotMatch(verifier, /mobile\.macroOpacity > 0\.99 && mobile\.subregionOpacity < 0\.01/);
+  assert.match(verifier, /mobile\.subregionOpacity === 0/);
+  assert.match(verifier, /V8 hierarchy contract/);
+  assert.match(verifier, /Emulation\.setEmulatedMedia/);
+  assert.match(verifier, /prefers-reduced-motion/);
   assert.match(verifier, /mobile\.statusSummaryVisible && !mobile\.statusMoreOpen/);
   assert.match(verifier, /spacetime-mobile-390\.png/);
 });
@@ -96,6 +113,25 @@ test("Production visual acceptance requires every viewport Person name at 500 an
   assert.doesNotMatch(verifier, /EXPECTED_REVIEWED_PLACE_COUNT/);
   assert.doesNotMatch(verifier, /bandContainment\.label_violation_count === 0/);
   assert.match(verifier, /bandContainment\.rail_violation_count === 0/);
+});
+
+test("V10 real-Chrome acceptance captures Person Main and Detail on desktop and 390px mobile", () => {
+  const verifier = read("scripts/verify-ui-v10-production-visual.mjs");
+  assert.match(verifier, /DESKTOP = Object\.freeze\(\{ width:1600, height:1000/);
+  assert.match(verifier, /MOBILE = Object\.freeze\(\{ width:390, height:844/);
+  assert.match(verifier, /prefers-reduced-motion/);
+  assert.match(verifier, /mainPortraitCount===0/);
+  assert.match(verifier, /portraitCount===1/);
+  assert.match(verifier, /sectionCount>=4/);
+  assert.match(verifier, /authoringPresent/);
+  assert.match(verifier, /bodyScrollWidth<=391/);
+  assert.match(verifier, /portraitRect\?\.width>=220&&mobileDetail\.portraitRect\?\.width<=260/);
+  for (const screenshot of [
+    "person-main-1600x1000.png",
+    "person-detail-1600x1000.png",
+    "person-main-390x844.png",
+    "person-detail-390x844.png"
+  ]) assert.match(verifier, new RegExp(screenshot.replaceAll(".", "\\.")));
 });
 
 test("real-Chrome domain acceptance preserves Person/Activity semantic separation", () => {
