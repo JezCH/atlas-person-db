@@ -1,0 +1,145 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "4741ad52dd7d69cde9a3d12860fee0cdef81a1eb",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 04. Reclassify one bounded 12-Person ancient humanities/philosophy slice from legacy knowledge to culture. Every write requires live Production previous_domain=knowledge; any drift fails closed.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-04",
+    "reviewed_count": 12,
+    "science_target_count": 0,
+    "non_science_target_count": 12
+  },
+  "review_scope": {
+    "selection_rule": "Select twelve current Production knowledge Persons whose representative identity is clearly philosophy, historiography, grammar/philology, or an ancient philosophical school, avoiding the harder science/philosophy boundary cases Pythagoras, Aristotle, and Hippocrates for a later focused review.",
+    "result_summary": {
+      "culture": 12
+    }
+  },
+  "entries": [
+    {
+      "person_id": "f5f06440-64dc-5b83-bf9f-8ceea93cc204",
+      "canonical_name_en": "Confucius",
+      "preferred_name_ko": "공자",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-007.json",
+      "basis": "V2 culture includes philosophy and humanities. Confucius is globally represented as a foundational East Asian thinker, teacher, and philosopher; political office is secondary to his intellectual and cultural legacy.",
+      "review_sources": ["https://plato.stanford.edu/entries/confucius/"]
+    },
+    {
+      "person_id": "6b384004-05a4-4bfd-b959-db12283fd122",
+      "canonical_name_en": "Mozi",
+      "preferred_name_ko": "묵자",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-007.json",
+      "basis": "V2 culture includes philosophy and social thought. Mozi is the foundational figure of Mohism, an early Chinese philosophical movement centered on ethics, political thought, argumentation, and standards of judgment.",
+      "review_sources": ["https://plato.stanford.edu/entries/mohism/"]
+    },
+    {
+      "person_id": "1003bb71-cd8f-4b3f-a006-5c22a7e87f7c",
+      "canonical_name_en": "Herodotus",
+      "preferred_name_ko": "헤로도토스",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-086.json",
+      "basis": "V2 culture includes history and historiography. Herodotus is represented above all as a historian and author of the Histories, not as a natural/formal scientist.",
+      "review_sources": ["https://sourcebooks.fordham.edu/ancient/eb11-herodotus.asp"]
+    },
+    {
+      "person_id": "b380122b-4ce0-4e81-ba79-18d454a1ba5c",
+      "canonical_name_en": "Thucydides",
+      "preferred_name_ko": "투키디데스",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-085.json",
+      "basis": "V2 culture includes history and historiography. Thucydides is represented by the History of the Peloponnesian War and his historiographical method; his generalship does not outweigh that legacy.",
+      "review_sources": ["https://sourcebooks.fordham.edu/ancient/eb11-thucydides.asp"]
+    },
+    {
+      "person_id": "7c1ee280-92f3-4fe7-8e1f-cf9a4f18eca8",
+      "canonical_name_en": "Socrates",
+      "preferred_name_ko": "소크라테스",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-007.json",
+      "basis": "V2 culture includes philosophy. Socrates is one of the canonical founders of the Western philosophical tradition and is represented by philosophical inquiry rather than science or political office.",
+      "review_sources": ["https://plato.stanford.edu/entries/socrates/"]
+    },
+    {
+      "person_id": "8461b81c-8b06-440a-a07c-81ba9c4f1615",
+      "canonical_name_en": "Pāṇini",
+      "preferred_name_ko": "파니니",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-086.json",
+      "basis": "V2 culture includes language, philology, and humanities. Pāṇini is represented by the Aṣṭādhyāyī and the systematic analysis and codification of Sanskrit grammar.",
+      "review_sources": ["https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Sanskrit"]
+    },
+    {
+      "person_id": "798a4946-16ef-5a4b-a7bb-80934250bb90",
+      "canonical_name_en": "Plato",
+      "preferred_name_ko": "플라톤",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-007.json",
+      "basis": "V2 culture includes philosophy and humanities. Plato is one of the central figures in the history of philosophy and is represented by his philosophical writings and Academy.",
+      "review_sources": ["https://plato.stanford.edu/entries/plato/"]
+    },
+    {
+      "person_id": "283c3c8f-0071-4729-bb87-227c89b97bb5",
+      "canonical_name_en": "Diogenes of Sinope",
+      "preferred_name_ko": "디오게네스",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-045.json",
+      "basis": "V2 culture includes philosophy. Diogenes is the central emblematic figure of Cynic philosophy, remembered for philosophical ethics and critique of convention.",
+      "review_sources": ["https://plato.stanford.edu/entries/ethics-ancient/"]
+    },
+    {
+      "person_id": "b5289bf5-0fd2-4a57-b0a0-114acbd18cb4",
+      "canonical_name_en": "Arete of Cyrene",
+      "preferred_name_ko": "키레네의 아레테",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-044.json",
+      "basis": "V2 culture includes philosophy. Arete succeeded Aristippus as head of the Cyrenaic school and belongs to the philosophical succession of the Cyrenaics.",
+      "review_sources": ["https://plato.stanford.edu/entries/cyrenaics/"]
+    },
+    {
+      "person_id": "b135825f-e1bc-4a86-b813-0a3de5d63045",
+      "canonical_name_en": "Zhuangzi",
+      "preferred_name_ko": "장자",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-046.json",
+      "basis": "V2 culture includes philosophy and literature. Zhuangzi is a pivotal figure of Classical philosophical Daoism whose eponymous text is both philosophically and literarily foundational.",
+      "review_sources": ["https://plato.stanford.edu/entries/zhuangzi/"]
+    },
+    {
+      "person_id": "0d448c70-ec7a-4e21-8724-e6c8d36022de",
+      "canonical_name_en": "Mencius",
+      "preferred_name_ko": "맹자",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-056.json",
+      "basis": "V2 culture includes philosophy and social thought. Mencius is a canonical Confucian philosopher known for ethical and political philosophy and theories of human nature.",
+      "review_sources": ["https://plato.stanford.edu/entries/mencius/"]
+    },
+    {
+      "person_id": "3e44d918-378d-4f6e-b098-6f1724028337",
+      "canonical_name_en": "Sima Qian",
+      "preferred_name_ko": "사마천",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-067.json",
+      "basis": "V2 culture includes history and historiography. Sima Qian is represented by the Shiji and his foundational role in Chinese historiography; court astronomical duties are secondary to that enduring historical identity.",
+      "review_sources": ["https://www.chiculture.org.hk/en/china-five-thousand-years/1933"]
+    }
+  ]
+}
