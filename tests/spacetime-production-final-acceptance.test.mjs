@@ -159,6 +159,28 @@ test("real-Chrome domain acceptance preserves Person/Activity semantic separatio
   assert.match(verifier, /style_mismatches\.length === 0/);
 });
 
+test("V10 closure lets canonical domain color outrank the V6 neutral fallback without important", () => {
+  const css = read("atlas-person-spacetime-domain-colors.css");
+  const frameScope = '.spacetime-frame[data-spacetime-visual="chronology-v6"]';
+  for (const domain of ["governance","military","knowledge","technology","commerce","culture","religion","exploration"]) {
+    assert.ok(css.includes(`${frameScope} .spacetime-track-label[data-representative-domain="${domain}"]`));
+    assert.ok(css.includes(`${frameScope} .spacetime-track-rail[data-representative-domain="${domain}"]`));
+  }
+  assert.doesNotMatch(css, /!important/);
+});
+
+test("V10 closure keeps unresolved review panels in the dark instrument material system", () => {
+  const css = read("atlas-person-spacetime-instrument-tools.css");
+  assert.match(css, /UNRESOLVED REVIEW/);
+  assert.match(css, /\.spacetime-unresolved-grid > article \{/);
+  assert.match(css, /background: var\(--spacetime-tools-raised\)/);
+  assert.match(css, /border: 1px solid var\(--spacetime-tools-line\)/);
+  assert.match(css, /\.spacetime-unresolved-head > strong \{/);
+  assert.match(css, /color: var\(--spacetime-tools-metal-strong\)/);
+  assert.match(css, /\.spacetime-unresolved-row small \{/);
+  assert.match(css, /color: var\(--spacetime-tools-warning\)/);
+});
+
 test("final acceptance documentation keeps established stable-world invariants", () => {
   const doc = read("docs/spacetime-current-renderer-final-acceptance.md");
   assert.match(doc, /viewport-fit/);
