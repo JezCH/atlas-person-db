@@ -1,0 +1,125 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "ec7f3a45f4ea0b888f06000173a8873ab049ae00",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 06. Reclassify one bounded 10-Person historiography/philosophy slice from legacy knowledge to culture. Every write requires live Production previous_domain=knowledge; any drift fails closed.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-06",
+    "reviewed_count": 10,
+    "science_target_count": 0,
+    "non_science_target_count": 10
+  },
+  "review_scope": {
+    "selection_rule": "Select ten current Production knowledge Persons whose representative historical identity is historiography, philosophy, political thought, or humanities scholarship. Use a smaller 10-Person unit because Bertrand Russell and William James require explicit boundary reasoning against formal inquiry/psychology.",
+    "result_summary": {
+      "culture": 10
+    }
+  },
+  "entries": [
+    {
+      "person_id": "6de1758f-807a-4e66-8099-85dd41ca86e6",
+      "canonical_name_en": "Livy",
+      "preferred_name_ko": "리비우스",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-087.json",
+      "basis": "V2 culture includes history and historiography. Livy's enduring representative identity is as the Roman historian of Ab Urbe Condita, not as a natural or formal scientist.",
+      "review_sources": ["https://onlinelibrary.wiley.com/doi/10.1002/9781444338386.wbeah08102.pub2"]
+    },
+    {
+      "person_id": "8bcb4f4d-0363-4a32-a17c-ad0e40454e0c",
+      "canonical_name_en": "Ban Zhao",
+      "preferred_name_ko": "반소",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-044.json",
+      "basis": "V2 culture includes history, literature, and humanities. Ban Zhao is represented as a historian, scholar, and woman of letters who completed the Book of Han and authored influential literary and didactic works.",
+      "review_sources": ["https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/ban-zhao"]
+    },
+    {
+      "person_id": "e7d1e88e-b062-465b-b5bd-bec3f2220d42",
+      "canonical_name_en": "Tacitus",
+      "preferred_name_ko": "타키투스",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-087.json",
+      "basis": "V2 culture includes history and historiography. Tacitus is represented by the Annals, Histories, Germania, and Agricola; his senatorial career is secondary to his canonical historical authorship.",
+      "review_sources": ["https://academic.oup.com/edited-volume/61673/chapter-abstract/548207843"]
+    },
+    {
+      "person_id": "75621c54-8bcd-4853-9c8a-ee2ff8be8655",
+      "canonical_name_en": "Edward Gibbon",
+      "preferred_name_ko": "에드워드 기번",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-087.json",
+      "basis": "V2 culture includes history and historiography. Gibbon's representative historical identity is as the author of The History of the Decline and Fall of the Roman Empire.",
+      "review_sources": ["https://www.iranicaonline.org/articles/gibbon/"]
+    },
+    {
+      "person_id": "725dd4b5-7c80-4d54-ae01-18034fe6c2c3",
+      "canonical_name_en": "Leopold von Ranke",
+      "preferred_name_ko": "레오폴트 폰 랑케",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-087.json",
+      "basis": "V2 culture includes history and historiography. Ranke is a foundational figure of modern source-based historical scholarship and historical method.",
+      "review_sources": ["https://www.encyclopedia.com/people/history/historians-european-biographies/leopold-von-ranke"]
+    },
+    {
+      "person_id": "74d914dc-3c46-444b-ab23-f1b9c124a569",
+      "canonical_name_en": "Cesare Beccaria",
+      "preferred_name_ko": "체사레 베카리아",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-017.json",
+      "basis": "V2 culture includes philosophy, jurisprudential thought, and social thought. Beccaria is most durably represented by On Crimes and Punishments and Enlightenment penal reform, rather than by commerce or empirical science.",
+      "review_sources": ["https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Beccaria-Bonesana%2C_Cesare"]
+    },
+    {
+      "person_id": "0ca9cc8f-4e75-41ef-99d4-56c39a48d958",
+      "canonical_name_en": "John Stuart Mill",
+      "preferred_name_ko": "존 스튜어트 밀",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-009.json",
+      "basis": "V2 culture includes philosophy, political thought, and social theory. Although Mill also worked in political economy, his representative legacy is as a philosopher of utilitarianism, liberty, empiricism, ethics, and political philosophy.",
+      "review_sources": ["https://plato.stanford.edu/entries/mill/"]
+    },
+    {
+      "person_id": "086a0c88-d4d4-413c-95d7-1821fdf2de51",
+      "canonical_name_en": "Bertrand Russell",
+      "preferred_name_ko": "버트런드 러셀",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-081.json",
+      "basis": "V2 culture includes philosophy and humanities. Russell's mathematical logic creates a formal-inquiry boundary, but his representative historical identity is broader analytic philosophy, logic, essay writing, and social criticism; SEP identifies him foremost as philosopher, logician, essayist, and social critic and a founder of analytic philosophy.",
+      "review_sources": ["https://plato.stanford.edu/entries/russell/"]
+    },
+    {
+      "person_id": "ad51aa2c-a9f6-4332-ac92-ba1ee7b8d85c",
+      "canonical_name_en": "William James",
+      "preferred_name_ko": "윌리엄 제임스",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-089.json",
+      "basis": "V2 culture includes philosophy and humanities. James spans psychology and physiology, but his representative historical identity includes foundational pragmatism, radical empiricism, philosophy of religion, and major philosophical influence; this unit resolves the interdisciplinary boundary in favor of culture.",
+      "review_sources": ["https://plato.stanford.edu/entries/james/"]
+    },
+    {
+      "person_id": "5b567eb8-c0ca-40cf-ad28-1f8882e65fe1",
+      "canonical_name_en": "Nicolò Vito di Gozze",
+      "preferred_name_ko": "니콜로 비토 디 고체",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-067.json",
+      "basis": "V2 culture includes philosophy, political thought, and humanities. Gozze wrote philosophical dialogues and a major Aristotelian work on the state and republic; repeated civic office does not outweigh his representative intellectual authorship in this Person record.",
+      "review_sources": ["https://www.treccani.it/enciclopedia/niccolo-vito-de-gozze_%28Enciclopedia-Italiana%29/"]
+    }
+  ]
+}
