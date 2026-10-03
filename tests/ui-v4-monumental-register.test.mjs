@@ -11,7 +11,7 @@ test("UI V4 loads Monumental Register after the global visual foundation", () =>
   assert.ok(foundation >= 0, "global visual foundation must remain loaded");
   assert.ok(register > foundation, "V4 Register layer must load after V3 foundation");
   assert.match(html, /atlas-person-table-view\.js\?v=20261003-ui-v4-register-v1/);
-  assert.match(html, /atlas-person-main\.js\?v=20261003-ui-v4-register-v1/);
+  assert.match(html, /atlas-person-main\.js\?v=20261003-ui-v5-detail-v1/);
 });
 
 test("UI V4 projects canonical Person domain into the register row", () => {
