@@ -2,6 +2,7 @@
 
 const { inspectP9Cutover } = require("./atlas-stage2-p9-db-cutover.js");
 const { personMergeExecutionState } = require("./atlas-person-merge-interlock.js");
+const { inspectPersonDomainV2Cutover } = require("./atlas-person-domain-v2-cutover-service.js");
 
 async function requireAdditiveAuthoringSchema(client) {
   const result = await client.query(`
@@ -277,6 +278,7 @@ async function inspectAuthoringReadiness(client) {
   // calls are deprecated and will become unsafe in pg@9. This readiness path
   // does not need parallelism, so keep one client strictly sequential.
   const core = await inspectCoreAuthoringSchema(client);
+  const personDomainV2 = await inspectPersonDomainV2Cutover(client);
   const p9 = await inspectP9Cutover(client);
   const merge = personMergeExecutionState();
   const p9Ready = p9.old_index_present === false
@@ -289,11 +291,13 @@ async function inspectAuthoringReadiness(client) {
     && core.columns_ready
     && core.ledger_contract_ready
     && core.person_reference_contract_ready
+    && personDomainV2.cutover_complete
     && p9Ready
     && mergeContractReady;
   const bootstrapReady = p5Ready
     && core.base_tables_ready
     && core.activity_columns_ready
+    && personDomainV2.cutover_complete
     && p9Ready
     && mergeContractReady;
 
@@ -303,6 +307,7 @@ async function inspectAuthoringReadiness(client) {
     bootstrap_required: bootstrapReady && !ready,
     p5_ready: p5Ready,
     core,
+    person_domain_v2: personDomainV2,
     p9,
     person_merge: merge,
     person_merge_contract_ready: mergeContractReady
