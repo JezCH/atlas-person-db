@@ -87,6 +87,12 @@ async function snapshotPerson(client, personId) {
      where person_id=$1
      order by candidate_id
   `, [personId]);
+  const registrationCandidates = await client.query(`
+    select candidate_id,name,representative_domain,priority,person_id::text
+      from atlas_v2.person_registration_candidates
+     where person_id=$1
+     order by candidate_id
+  `, [personId]);
   if (person.rowCount !== 1) throw new Error("merge person not found");
   return {
     person: person.rows[0],
@@ -104,7 +110,8 @@ async function snapshotPerson(client, personId) {
     people_affiliation_sources: peopleAffiliationSources.rows,
     event_participations: eventParticipations.rows,
     event_participation_sources: eventParticipationSources.rows,
-    candidate_registration_states: candidateRegistrationStates.rows
+    candidate_registration_states: candidateRegistrationStates.rows,
+    registration_candidates: registrationCandidates.rows
   };
 }
 
@@ -122,7 +129,8 @@ async function globalCounts(client) {
     (select count(*)::int from atlas_v2.person_external_references) as external_references,
     (select count(*)::int from atlas_v2.person_portraits) as portraits,
     (select count(*)::int from atlas_v2.person_timeline_dispositions) as timeline_dispositions,
-    (select count(*)::int from atlas_v2.person_candidate_registration_states) as candidate_registration_states`);
+    (select count(*)::int from atlas_v2.person_candidate_registration_states) as candidate_registration_states,
+    (select count(*)::int from atlas_v2.person_registration_candidates) as registration_candidates`);
   return result.rows[0];
 }
 
@@ -396,6 +404,12 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
        where person_id=$1::uuid
        returning candidate_id
     `, [sides.source_person_id, sides.survivor_person_id]);
+    const registrationCandidates = await client.query(`
+      update atlas_v2.person_registration_candidates
+         set person_id=$2::uuid,updated_at=now()
+       where person_id=$1::uuid
+       returning candidate_id
+    `, [sides.source_person_id, sides.survivor_person_id]);
     const retiredRequirements = await client.query(`
       update atlas_v2.person_duplicate_revalidation_requirements
          set requirement_state='RETIRED',updated_at=now()
@@ -416,6 +430,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       (select count(*)::int from atlas_v2.person_portraits where person_id=$1) as portraits,
       (select count(*)::int from atlas_v2.person_timeline_dispositions where person_id=$1) as timeline_dispositions,
       (select count(*)::int from atlas_v2.person_candidate_registration_states where person_id=$1) as candidate_registration_states,
+      (select count(*)::int from atlas_v2.person_registration_candidates where person_id=$1) as registration_candidates,
       (select count(*)::int from atlas_v2.authoring_manifest_runs where person_id=$1) as authoring_person_pointers,
       (select count(*)::int from atlas_v2.persons where id=$1) as person`, [sides.source_person_id]);
     if (Object.values(remainingSourceRefs.rows[0]).some((value) => Number(value) !== 0)) throw new Error("source person references remain after merge");
@@ -432,6 +447,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     if (afterCounts.people_affiliation_sources !== beforeCounts.people_affiliation_sources) throw new Error("people affiliation provenance count changed during person merge");
     if (afterCounts.event_participations !== beforeCounts.event_participations) throw new Error("event participation count changed during person merge");
     if (afterCounts.event_participation_sources !== beforeCounts.event_participation_sources) throw new Error("event participation provenance count changed during person merge");
+    if (afterCounts.registration_candidates !== beforeCounts.registration_candidates) throw new Error("registration candidate count changed during person merge");
     if (afterCounts.external_references !== beforeCounts.external_references - externalReferences.collapsed) throw new Error("external reference count changed outside deterministic reference collapse");
     if (afterCounts.portraits !== beforeCounts.portraits) throw new Error("portrait count changed during person merge");
     if (afterCounts.timeline_dispositions !== beforeCounts.timeline_dispositions - timelineDisposition.collapsed) {
@@ -455,6 +471,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       people_affiliations_moved: peopleAffiliations.rowCount,
       event_participations_moved: eventParticipations.rowCount,
       candidate_registration_states_moved: candidateRegistrationStates.rowCount,
+      registration_candidates_moved: registrationCandidates.rowCount,
       authoring_person_pointers_cleared_by_lifecycle_fk: Number(authoringPersonPointersBefore.rows[0]?.count || 0),
       revalidation_requirements_retired: retiredRequirements.rows.map((row) => String(row.requirement_key)),
       candidate_frontier_refresh: {
