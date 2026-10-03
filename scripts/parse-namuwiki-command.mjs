@@ -65,7 +65,7 @@ export function parseNamuWikiCommand(body, { maxBatchSize=DEFAULT_MAX_BATCH_SIZE
 
   const lines = text.split("\n");
   if (lines[0]?.trim() !== "/namuwiki-batch") {
-    throw invalid("Expected /namuwiki-link, /namuwiki-correct, /namuwiki-not-found, or /namuwiki-batch");
+    throw invalid("Expected /namuwiki-link, /namuwiki-correct, /namuwiki-not-found, /namuwiki-not-found-correct, or /namuwiki-batch");
   }
 
   const itemLines = lines.slice(1).map((line) => line.trim()).filter(Boolean);
