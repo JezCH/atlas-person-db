@@ -170,3 +170,12 @@ test("final acceptance documentation keeps established stable-world invariants",
   assert.match(doc, /Missing, unknown, future, or unclassified values remain neutral/);
   assert.match(doc, /leftover_artifacts: \[\]/);
 });
+
+
+test("Production domain acceptance follows the V6 semantic surface palette", () => {
+  const verifier = read("scripts/verify-spacetime-production-domain-colors.mjs");
+  assert.match(verifier, /atlas-person-domain-governance-surface/);
+  assert.match(verifier, /atlas-person-domain-technology-surface/);
+  assert.match(verifier, /atlas-person-domain-religion-edge/);
+  assert.match(verifier, /style_mismatches\.length === 0/);
+});
