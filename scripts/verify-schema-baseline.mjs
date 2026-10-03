@@ -42,7 +42,8 @@ const expectedAuthoringMigrations = [
   '20260930_reviewed_candidate_boundary.sql',
   '20261001_spatial_registration_dispositions.sql',
   '20261001_polity_place_function_authority.sql',
-  '20260930_unit16_retire_external_reference_sync_trigger.sql'
+  '20260930_unit16_retire_external_reference_sync_trigger.sql',
+  '20261003_person_registration_queue_authority.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -69,7 +70,8 @@ const expectedAuthoringReplayMigrations = [
   '20260930_reviewed_candidate_boundary.sql',
   '20261001_spatial_registration_dispositions.sql',
   '20261001_polity_place_function_authority.sql',
-  '20260930_unit16_retire_external_reference_sync_trigger.sql'
+  '20260930_unit16_retire_external_reference_sync_trigger.sql',
+  '20261003_person_registration_queue_authority.sql'
 ];
 
 const expectedCorrectionMigrations = [
