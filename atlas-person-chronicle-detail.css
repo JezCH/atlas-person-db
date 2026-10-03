@@ -1,0 +1,886 @@
+/* ATLAS UI V5 — Person Chronicle Detail
+ * Presentation-only layer for the selected Person surface.
+ * The Detail is an editorial chronicle, not a nested admin dashboard.
+ */
+
+#personMainDetail.person-main-detail {
+  --person-detail-domain-wash: rgba(156, 146, 125, .025);
+  width: min(720px, calc(100vw - 36px));
+  padding: 58px 30px 32px;
+  border: 1px solid #343a3f;
+  border-radius: 5px;
+  background:
+    radial-gradient(circle at 18% 4%, var(--person-detail-domain-wash), transparent 25rem),
+    linear-gradient(180deg, rgba(255,255,255,.016), transparent 16rem),
+    var(--atlas-surface-1);
+  color: var(--atlas-text);
+  box-shadow: -18px 0 56px rgba(0,0,0,.28), 0 24px 80px rgba(0,0,0,.34);
+  scrollbar-color: #4a5054 transparent;
+}
+
+#personMainDetail[data-representative-domain="governance"] { --person-detail-domain-wash: rgba(212,175,55,.045); }
+#personMainDetail[data-representative-domain="military"] { --person-detail-domain-wash: rgba(184,58,58,.045); }
+#personMainDetail[data-representative-domain="knowledge"] { --person-detail-domain-wash: rgba(63,120,197,.045); }
+#personMainDetail[data-representative-domain="technology"] { --person-detail-domain-wash: rgba(89,99,109,.05); }
+#personMainDetail[data-representative-domain="commerce"] { --person-detail-domain-wash: rgba(46,139,87,.04); }
+#personMainDetail[data-representative-domain="culture"] { --person-detail-domain-wash: rgba(154,91,165,.045); }
+#personMainDetail[data-representative-domain="religion"] { --person-detail-domain-wash: rgba(226,215,185,.035); }
+#personMainDetail[data-representative-domain="exploration"] { --person-detail-domain-wash: rgba(217,107,30,.04); }
+
+#personMainDetailBackdrop {
+  background: rgba(8, 10, 12, .58);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.person-detail-overlay-close {
+  top: 14px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #7d858b;
+  font-size: 24px;
+  font-weight: 300;
+  box-shadow: none;
+}
+
+.person-detail-overlay-close:hover {
+  background: transparent;
+  color: var(--atlas-text-strong);
+}
+
+.person-detail-overlay-close:focus-visible {
+  outline: 1px solid var(--atlas-honor-metal);
+  outline-offset: 2px;
+}
+
+/* ---------- Hero: portrait + identity ---------- */
+
+.person-chronicle-hero {
+  display: grid;
+  grid-template-columns: 184px minmax(0, 1fr);
+  gap: 28px;
+  align-items: end;
+  padding: 0 0 28px;
+  border-bottom: 1px solid var(--atlas-divider);
+}
+
+.person-chronicle-hero .person-detail-portrait {
+  width: 184px;
+  margin: 0;
+  border: 0;
+  border-radius: 2px;
+  background: #111417;
+  box-shadow:
+    0 0 0 1px rgba(240,236,228,.055),
+    0 18px 36px rgba(0,0,0,.24);
+}
+
+.person-chronicle-hero .person-detail-portrait-neutral {
+  background:
+    radial-gradient(circle at 50% 24%, rgba(192,174,136,.065), transparent 48%),
+    linear-gradient(145deg, #1c2024, #111417);
+}
+
+.person-chronicle-hero .person-detail-portrait::before {
+  background:
+    radial-gradient(ellipse at 50% 28%, rgba(255,255,255,.025), transparent 44%),
+    linear-gradient(to bottom, transparent 48%, rgba(7,9,11,.22));
+}
+
+.person-chronicle-identity {
+  min-width: 0;
+  padding-bottom: 3px;
+}
+
+.person-chronicle-identity .eyebrow {
+  margin: 0 0 13px;
+  color: var(--atlas-honor-metal);
+  font-size: 8px;
+  letter-spacing: .22em;
+}
+
+.person-chronicle-identity h2 {
+  margin: 0;
+  color: #f2eee6;
+  font-family: var(--atlas-font-display, "Noto Serif KR", "Nanum Myeongjo", AppleMyungjo, Batang, Georgia, serif);
+  font-size: clamp(31px, 3.1vw, 46px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  overflow-wrap: anywhere;
+}
+
+.person-detail-canonical {
+  margin: 8px 0 0;
+  color: #8f969a;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: .015em;
+}
+
+.person-detail-era {
+  margin: 21px 0 0;
+  color: #d3cdc1;
+  font-size: 15px;
+  font-weight: 720;
+  line-height: 1.35;
+  letter-spacing: .025em;
+  font-variant-numeric: tabular-nums;
+}
+
+.person-detail-domain {
+  position: relative;
+  margin: 7px 0 0;
+  padding-left: 13px;
+  color: #9da3a5;
+  font-size: 10px;
+  font-weight: 720;
+  letter-spacing: .055em;
+}
+
+.person-detail-domain::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 6px;
+  height: 1px;
+  background: var(--atlas-honor-metal);
+  opacity: .7;
+}
+
+.person-detail-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 16px 0 0;
+  color: #686f74;
+  font-size: 8.5px;
+  font-weight: 700;
+}
+
+.person-detail-status > span {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.person-detail-status > span + span::before {
+  content: "·";
+  margin: 0 6px;
+  color: #4d5459;
+}
+
+/* ---------- Editorial sections ---------- */
+
+.person-chronicle-body {
+  display: block;
+}
+
+.person-chronicle-section.person-detail-section {
+  padding: 25px 0 27px;
+  border-bottom: 1px solid var(--atlas-divider-soft);
+}
+
+.person-chronicle-section > h3,
+.person-chronicle-section .person-detail-section-head > h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 15px;
+  color: #dcd8d0;
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: .025em;
+}
+
+.person-detail-section-index {
+  min-width: 18px;
+  color: var(--atlas-honor-metal);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.person-chronicle-section h3 small {
+  color: #555d62;
+  font-size: 7.5px;
+  font-weight: 750;
+  letter-spacing: .14em;
+}
+
+.person-chronicle-section .person-detail-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 3px;
+}
+
+.person-chronicle-section .person-detail-section-head > span {
+  color: #6d757a;
+  font-size: 8.5px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Names are registry rows, not chips. */
+.person-name-register {
+  display: grid;
+  gap: 0;
+}
+
+.person-name-register > .person-name-entry {
+  display: grid;
+  grid-template-columns: minmax(150px, .9fr) minmax(0, 1.4fr);
+  gap: 18px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(48,54,59,.5);
+  border-radius: 0;
+  background: transparent;
+}
+
+.person-name-register > .person-name-entry:last-child {
+  border-bottom: 0;
+}
+
+.person-name-register b {
+  color: #d7d3cb;
+  font-family: var(--atlas-font-display, Georgia, serif);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.person-name-register small {
+  color: #6e767b;
+  font-size: 8.5px;
+  line-height: 1.45;
+  text-align: right;
+}
+
+/* Description becomes body copy with an editorial locale marker. */
+.person-chronicle-section .person-description {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 28px;
+  border: 0;
+}
+
+.person-chronicle-section .person-description + .person-description {
+  margin-top: 18px;
+}
+
+.person-chronicle-section .person-description small {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  color: #5f676c;
+  font-size: 7.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.person-chronicle-section .person-description p {
+  margin: 0;
+  color: #b7b8b4;
+  font-size: 11.5px;
+  line-height: 1.72;
+  white-space: pre-wrap;
+}
+
+/* ---------- Activities: chronology as the visual structure ---------- */
+
+.person-chronicle-activities {
+  padding-top: 27px !important;
+}
+
+.person-chronicle-activities .person-activity-list {
+  position: relative;
+  display: grid;
+  gap: 0;
+  margin-top: 3px;
+  padding-left: 34px;
+}
+
+.person-chronicle-activities .person-activity-list::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 14px;
+  left: 8px;
+  width: 1px;
+  background: linear-gradient(var(--atlas-honor-metal), var(--atlas-divider));
+  opacity: .48;
+}
+
+.person-chronicle-activity.person-activity-card {
+  position: relative;
+  padding: 18px 0 21px;
+  border: 0;
+  border-bottom: 1px solid var(--atlas-divider-soft);
+  border-radius: 0;
+  background: transparent;
+}
+
+.person-chronicle-activity.person-activity-card:last-child {
+  border-bottom: 0;
+}
+
+.person-chronicle-activity::before {
+  content: "";
+  position: absolute;
+  top: 27px;
+  left: -30px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--atlas-honor-metal);
+  border-radius: 50%;
+  background: var(--atlas-surface-1);
+  box-shadow: 0 0 0 4px var(--atlas-surface-1);
+}
+
+.person-chronicle-activity > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.person-chronicle-activity-main {
+  min-width: 0;
+}
+
+.person-activity-sequence {
+  display: block;
+  margin: 0 0 5px;
+  color: #555d62;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  font-variant-numeric: tabular-nums;
+}
+
+.person-activity-period-display {
+  margin: 0 0 7px !important;
+  color: #cbc5b9 !important;
+  font-size: 10px !important;
+  font-weight: 720 !important;
+  line-height: 1.4;
+  letter-spacing: .025em;
+  font-variant-numeric: tabular-nums;
+}
+
+.person-chronicle-activity header h4 {
+  margin: 0;
+  color: #e0dcd4;
+  font-family: var(--atlas-font-display, Georgia, serif);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -.018em;
+}
+
+.person-activity-role-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 7px 0 0 !important;
+  color: #8d9498 !important;
+  font-size: 9px !important;
+  line-height: 1.45;
+}
+
+.person-activity-role-line > span {
+  display: inline;
+}
+
+.person-activity-role-line > span + span::before {
+  content: "·";
+  margin: 0 6px;
+  color: #51585d;
+}
+
+.person-chronicle-activity .person-relation-badge {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #a7a49d;
+  font: inherit;
+  font-weight: 720;
+}
+
+.person-chronicle-activity .person-activity-actions {
+  opacity: .42;
+  transition: opacity .12s ease;
+}
+
+.person-chronicle-activity:hover .person-activity-actions,
+.person-chronicle-activity:focus-within .person-activity-actions {
+  opacity: .88;
+}
+
+.person-chronicle-activity .person-activity-actions .mini-btn {
+  min-height: 0;
+  padding: 3px 0;
+  border: 0;
+  background: transparent;
+  color: #8a6666;
+  font-size: 8px;
+  box-shadow: none;
+}
+
+.person-chronicle-activity .person-activity-actions .mini-btn:hover {
+  color: #d78f8f;
+  background: transparent;
+}
+
+.person-chronicle-activity .person-activity-dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin: 15px 0 0;
+  border-top: 1px solid rgba(48,54,59,.58);
+  border-bottom: 1px solid rgba(48,54,59,.58);
+}
+
+.person-chronicle-activity .person-activity-dates > div {
+  padding: 9px 11px 9px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.person-chronicle-activity .person-activity-dates > div + div {
+  padding-left: 12px;
+  border-left: 1px solid rgba(48,54,59,.58);
+}
+
+.person-chronicle-activity .person-activity-dates dt {
+  color: #5e666b;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+.person-chronicle-activity .person-activity-dates dd {
+  display: grid;
+  gap: 2px;
+  margin: 4px 0 0;
+  color: #bdb9b0;
+  font-size: 9.5px;
+  font-weight: 700;
+}
+
+.person-chronicle-activity .person-activity-dates small {
+  color: #626a70;
+  font-size: 7.5px;
+  font-weight: 550;
+}
+
+.person-chronicle-activity .person-activity-meta {
+  margin: 9px 0 0;
+  color: #5f676c;
+  font-size: 7.5px;
+}
+
+.person-chronicle-activity .person-activity-notes {
+  margin: 12px 0 0;
+  padding: 0 0 0 10px;
+  border: 0;
+  border-left: 1px solid #444b50;
+  border-radius: 0;
+  background: transparent;
+  color: #989d9e;
+  font-size: 9.5px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* Evidence stays available, but reads as a disclosure in the chronology. */
+.person-chronicle-activity .person-evidence-inspector {
+  margin-top: 13px;
+  border: 0;
+  border-top: 1px solid rgba(48,54,59,.62);
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.person-chronicle-activity .person-evidence-inspector > summary {
+  min-height: 0;
+  padding: 10px 0 0;
+  color: #777f83;
+}
+
+.person-chronicle-activity .person-evidence-inspector > summary b {
+  color: #8f9699;
+  font-size: 8.5px;
+}
+
+.person-chronicle-activity .person-evidence-inspector > summary small {
+  color: #575f64;
+  font-size: 7.5px;
+}
+
+.person-chronicle-activity .person-evidence-summary-badges {
+  gap: 5px;
+}
+
+.person-chronicle-activity .person-evidence-summary-badges i {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #666e73;
+  font-size: 7.5px;
+}
+
+.person-chronicle-activity .person-evidence-summary-badges i + i::before {
+  content: "·";
+  margin-right: 5px;
+  color: #454c51;
+}
+
+.person-chronicle-activity .person-evidence-inspector[open] > summary {
+  border-bottom: 0;
+  background: transparent;
+}
+
+.person-chronicle-activity .person-evidence-body {
+  display: grid;
+  gap: 12px;
+  padding: 13px 0 0;
+}
+
+.person-chronicle-activity .person-evidence-facts,
+.person-chronicle-activity .person-evidence-boundaries {
+  gap: 0;
+}
+
+.person-chronicle-activity .person-evidence-facts > div,
+.person-chronicle-activity .person-evidence-boundary {
+  padding: 8px 10px 8px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(48,54,59,.48);
+  border-radius: 0;
+  background: transparent;
+}
+
+.person-chronicle-activity .person-evidence-facts > div + div,
+.person-chronicle-activity .person-evidence-boundary + .person-evidence-boundary {
+  padding-left: 10px;
+  border-left: 1px solid rgba(48,54,59,.48);
+}
+
+.person-chronicle-activity .person-evidence-facts small,
+.person-chronicle-activity .person-evidence-boundary > small,
+.person-chronicle-activity .person-evidence-sources-head span {
+  color: #596166;
+  font-size: 7px;
+}
+
+.person-chronicle-activity .person-evidence-facts strong,
+.person-chronicle-activity .person-evidence-boundary > strong,
+.person-chronicle-activity .person-evidence-sources-head strong {
+  color: #92989a;
+  font-size: 8.5px;
+}
+
+.person-chronicle-activity .person-evidence-boundary-meta > span {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.person-chronicle-activity .person-evidence-boundary-meta small,
+.person-chronicle-activity .person-evidence-boundary-meta b {
+  color: #60686d;
+  font-size: 6.5px;
+}
+
+/* ---------- Sources: citation register rather than cards ---------- */
+
+.person-chronicle-section .person-source-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.person-chronicle-section .person-source-item {
+  display: grid;
+  gap: 4px;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(48,54,59,.5);
+  border-radius: 0;
+  background: transparent;
+}
+
+.person-chronicle-section .person-source-item:last-child {
+  border-bottom: 0;
+}
+
+.person-chronicle-section .person-source-item > div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.person-chronicle-section .person-source-item a,
+.person-chronicle-section .person-source-item span {
+  color: #aeb1ae;
+  font-size: 9.5px;
+  line-height: 1.5;
+  text-decoration-color: rgba(192,174,136,.4);
+  text-underline-offset: 2px;
+}
+
+.person-chronicle-section .person-source-item a:hover {
+  color: #ddd8cf;
+}
+
+.person-chronicle-section .person-source-item small {
+  color: #60686d;
+  font-size: 7.5px;
+}
+
+.person-chronicle-section .person-source-type {
+  flex: 0 0 auto !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--atlas-honor-metal) !important;
+  font-size: 7px !important;
+  font-weight: 800 !important;
+  letter-spacing: .055em;
+}
+
+.person-chronicle-body .person-empty-inline,
+#personMainDetail .person-detail-placeholder {
+  color: #6e767b;
+  font-size: 9.5px;
+}
+
+/* ---------- Authoring: retained, but deliberately subordinate ---------- */
+
+.person-detail-authoring {
+  margin-top: 22px;
+  border-top: 1px solid var(--atlas-divider);
+}
+
+.person-detail-authoring > summary {
+  display: flex;
+  min-height: 44px;
+  align-items: baseline;
+  gap: 9px;
+  padding: 14px 0 0;
+  cursor: pointer;
+  list-style: none;
+  color: #6d757a;
+}
+
+.person-detail-authoring > summary::-webkit-details-marker {
+  display: none;
+}
+
+.person-detail-authoring > summary > span {
+  color: #555d62;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.person-detail-authoring > summary > strong {
+  color: #777f83;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.person-detail-authoring > summary::after {
+  content: "+";
+  margin-left: auto;
+  color: #596166;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.person-detail-authoring[open] > summary::after {
+  content: "−";
+}
+
+.person-detail-authoring-body {
+  padding: 4px 0 0;
+}
+
+.person-detail-authoring .person-profile-editor {
+  gap: 9px;
+  padding: 14px 0 0;
+  border: 0;
+}
+
+.person-detail-authoring .person-profile-editor > .person-detail-section-head h3 {
+  color: #8f9699;
+  font-size: 9px;
+}
+
+.person-detail-authoring .person-profile-editor > .person-detail-section-head > span,
+.person-detail-authoring .person-profile-help {
+  color: #5f676c;
+  font-size: 8px;
+}
+
+.person-detail-authoring .person-profile-form,
+.person-detail-authoring .person-portrait-provenance,
+.person-detail-authoring .person-portrait-upload-preview {
+  border-color: #343b40;
+  border-radius: 3px;
+  background: #15191c;
+}
+
+.person-detail-authoring .person-profile-form label > span,
+.person-detail-authoring .person-portrait-upload-preview span {
+  color: #737b80;
+}
+
+.person-detail-authoring .person-profile-form input,
+.person-detail-authoring .person-profile-form select,
+.person-detail-authoring .person-portrait-source-row select,
+.person-detail-authoring .person-portrait-source-add select,
+.person-detail-authoring .person-portrait-metadata-form select {
+  border-color: #3a4147;
+  border-radius: 3px;
+  background: #111518;
+  color: #c9c7c1;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 760px) {
+  #personMainDetail.person-main-detail {
+    top: 62px;
+    right: 6px;
+    bottom: 6px;
+    width: calc(100vw - 12px);
+    padding: 48px 18px 24px;
+    border-radius: 4px;
+  }
+
+  .person-detail-overlay-close {
+    top: 10px;
+    right: 10px;
+  }
+
+  .person-chronicle-hero {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-bottom: 24px;
+  }
+
+  .person-chronicle-hero .person-detail-portrait {
+    width: min(250px, 74vw);
+    justify-self: center;
+  }
+
+  .person-chronicle-identity {
+    text-align: left;
+  }
+
+  .person-chronicle-identity h2 {
+    font-size: clamp(30px, 10vw, 40px);
+  }
+
+  .person-detail-era {
+    margin-top: 17px;
+    font-size: 13px;
+  }
+
+  .person-name-register > .person-name-entry {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .person-name-register small {
+    text-align: left;
+  }
+
+  .person-chronicle-section .person-detail-section-head {
+    display: block;
+  }
+
+  .person-chronicle-section .person-detail-section-head > span {
+    display: block;
+    margin: -8px 0 12px 26px;
+  }
+
+  .person-chronicle-activities .person-activity-list {
+    padding-left: 26px;
+  }
+
+  .person-chronicle-activities .person-activity-list::before {
+    left: 6px;
+  }
+
+  .person-chronicle-activity::before {
+    left: -24px;
+  }
+
+  .person-chronicle-activity .person-activity-dates {
+    grid-template-columns: 1fr;
+  }
+
+  .person-chronicle-activity .person-activity-dates > div + div {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid rgba(48,54,59,.5);
+  }
+
+  .person-chronicle-activity .person-evidence-facts,
+  .person-chronicle-activity .person-evidence-boundaries {
+    grid-template-columns: 1fr;
+  }
+
+  .person-chronicle-activity .person-evidence-facts > div + div,
+  .person-chronicle-activity .person-evidence-boundary + .person-evidence-boundary {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .person-detail-authoring .person-profile-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 390px) {
+  #personMainDetail.person-main-detail {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .person-chronicle-hero .person-detail-portrait {
+    width: min(230px, 72vw);
+  }
+
+  .person-chronicle-identity h2 {
+    font-size: 29px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .person-chronicle-activity .person-activity-actions {
+    transition: none;
+  }
+}
