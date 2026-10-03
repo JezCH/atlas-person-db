@@ -311,7 +311,7 @@ textarea,
   animation: atlas-v9-backdrop-in var(--atlas-motion-standard) var(--atlas-motion-ease-out) both;
 }
 
-.mobile-drawer:not([hidden]) {
+.mobile-drawer.open {
   animation: atlas-v9-drawer-in var(--atlas-motion-emphasis) var(--atlas-motion-ease-out) both;
 }
 
@@ -444,7 +444,7 @@ textarea,
   #personMainDetailBackdrop:not([hidden]),
   #personMainDetail.person-main-detail:not([hidden]),
   .mobile-drawer-backdrop:not([hidden]),
-  .mobile-drawer:not([hidden]) {
+  .mobile-drawer.open {
     animation: none !important;
   }
 
