@@ -97,6 +97,11 @@ test("Production visual acceptance requires every viewport Person name at 500 an
   assert.match(verifier, /at500\.domLabelCount === at500\.domPersonCount/);
   assert.match(verifier, /at500\.missingVisibleLabelPersonIds\.length === 0/);
   assert.match(verifier, /at500\.extraVisibleLabelPersonIds\.length === 0/);
+  assert.match(verifier, /const clientLeft=Number\(scroll\.clientLeft\)\|\|0/);
+  assert.match(verifier, /const clientTop=Number\(scroll\.clientTop\)\|\|0/);
+  assert.match(verifier, /right:sr\.left\+clientLeft\+Number\(scroll\.clientWidth\|\|0\)/);
+  assert.match(verifier, /bottom:sr\.top\+clientTop\+Number\(scroll\.clientHeight\|\|0\)/);
+  assert.doesNotMatch(verifier, /right:sr\.right,bottom:sr\.bottom/);
   assert.match(verifier, /minimumAcceptance\.zoomOutDisabled/);
   assert.match(verifier, /minimumAcceptance\.minimumPercent >= 50/);
   assert.match(verifier, /Math\.abs\(minimumAcceptance\.worldWidth - minimumAcceptance\.usableWidth\) <= 2/);

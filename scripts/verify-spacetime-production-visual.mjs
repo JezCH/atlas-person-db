@@ -198,9 +198,16 @@ async function collect500(client) {
     const bandContainment=(${bandContainmentCode})(qa(".spacetime-track-label"),qa(".spacetime-region-head-band[data-spacetime-band]"),qa(".spacetime-track-rail"));
     const dataViewport=(() => {
       const sr=scroll.getBoundingClientRect();
+      const clientLeft=Number(scroll.clientLeft)||0;
+      const clientTop=Number(scroll.clientTop)||0;
       const axis=Number(q(".spacetime-canvas")?.offsetLeft)||0;
       const header=Number(q(".spacetime-canvas")?.offsetTop)||0;
-      return {left:sr.left+axis,top:sr.top+header,right:sr.right,bottom:sr.bottom};
+      return {
+        left:sr.left+clientLeft+axis,
+        top:sr.top+clientTop+header,
+        right:sr.left+clientLeft+Number(scroll.clientWidth||0),
+        bottom:sr.top+clientTop+Number(scroll.clientHeight||0)
+      };
     })();
     const intersects=(r,v)=>Math.min(r.right,v.right)-Math.max(r.left,v.left)>0.5&&Math.min(r.bottom,v.bottom)-Math.max(r.top,v.top)>0.5;
     const visiblePersonIds=(selector)=>[...new Set(qa(selector).filter(el=>intersects(el.getBoundingClientRect(),dataViewport)&&Number(style(el).opacity)>0.02).map(el=>el.dataset.spacetimePerson).filter(Boolean))].sort();
@@ -273,9 +280,16 @@ async function collect1500(client, geometry500) {
     const scroll=q(".spacetime-scroll");
     const dataViewport=(() => {
       const sr=scroll.getBoundingClientRect();
+      const clientLeft=Number(scroll.clientLeft)||0;
+      const clientTop=Number(scroll.clientTop)||0;
       const axis=Number(q(".spacetime-canvas")?.offsetLeft)||0;
       const header=Number(q(".spacetime-canvas")?.offsetTop)||0;
-      return {left:sr.left+axis,top:sr.top+header,right:sr.right,bottom:sr.bottom};
+      return {
+        left:sr.left+clientLeft+axis,
+        top:sr.top+clientTop+header,
+        right:sr.left+clientLeft+Number(scroll.clientWidth||0),
+        bottom:sr.top+clientTop+Number(scroll.clientHeight||0)
+      };
     })();
     const intersects=(r,v)=>Math.min(r.right,v.right)-Math.max(r.left,v.left)>0.5&&Math.min(r.bottom,v.bottom)-Math.max(r.top,v.top)>0.5;
     const visiblePersonIds=(selector)=>[...new Set(qa(selector).filter(el=>intersects(el.getBoundingClientRect(),dataViewport)&&Number(style(el).opacity)>0.02).map(el=>el.dataset.spacetimePerson).filter(Boolean))].sort();
