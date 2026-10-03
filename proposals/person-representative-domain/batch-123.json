@@ -1,0 +1,97 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "67219005344509fda3b7b58a4fc11c8b8dd3a128",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 16. Resolve a focused Tibetan Buddhist philosophy/religion boundary cohort from legacy knowledge into culture or religion according to representative historical identity. No science_retained checkpoint is used in this unit.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-16",
+    "reviewed_count": 5,
+    "science_target_count": 0,
+    "non_science_target_count": 5
+  },
+  "review_scope": {
+    "selection_rule": "Choose five currently-live knowledge Persons with exact approved Human Authoring provenance and a coherent Tibetan Buddhist philosophy/religion boundary. Classify philosophy/logic/scholarly authorship as culture; institutional religious leadership, lineage authority, or sect/tradition founding as religion.",
+    "result_summary": {
+      "culture": 2,
+      "religion": 3
+    }
+  },
+  "entries": [
+    {
+      "person_id": "02960d07-40d7-49c2-8356-7883008b84cf",
+      "canonical_name_en": "Sakya Paṇḍita",
+      "preferred_name_ko": "사캬 판디타",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-sakya-pandita-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:sakya-pandita:person-only:v1",
+      "basis": "Sakya Paṇḍita was an ordained Buddhist master, but his representative intellectual identity is unusually centered on philosophy, logic, epistemology, grammar, poetics, translation, debate, and a large scholarly corpus. Under v2, philosophy and humanities belong to culture rather than religion when institutional religious leadership is not the defining representative identity.",
+      "review_sources": [
+        "https://treasuryoflives.org/biographies/view/Sakya-Pandita-Kunga-Gyeltsen/2137"
+      ]
+    },
+    {
+      "person_id": "386dc31d-4543-429a-a2ca-171c9228b4bd",
+      "canonical_name_en": "Phagpa",
+      "preferred_name_ko": "파스파",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-phagpa-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:phagpa:person-only:v1",
+      "basis": "Phagpa's representative identity is as a Tibetan Buddhist lama and Sakya hierarch whose defining historical office was National and later Imperial Preceptor under Khubilai, with authority over Buddhist affairs and ritual-teaching relations at the Yuan court. Under v2, institutional religious leadership is religion.",
+      "review_sources": [
+        "https://treasuryoflives.org/biographies/view/Pakpa/TBRC_P1048"
+      ]
+    },
+    {
+      "person_id": "3f786834-e3fc-4a5f-af4e-a3b97053f939",
+      "canonical_name_en": "Tsongkhapa",
+      "preferred_name_ko": "쫑카파",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-tsongkhapa-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:tsongkhapa:person-only:v1",
+      "basis": "Tsongkhapa was a major religious philosopher, but his representative historical role combines Buddhist doctrine, monastic discipline, meditation, institution building, and the formation of the Gelug tradition. Under v2, sect/tradition founding and religious institutional leadership place the representative domain in religion.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/tsongkhapa/"
+      ]
+    },
+    {
+      "person_id": "4c8c8901-cd7b-4ff5-ab4a-c22b3e4e6531",
+      "canonical_name_en": "Longchenpa",
+      "preferred_name_ko": "롱첸파",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-longchenpa-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:longchenpa:person-only:v1",
+      "basis": "Longchenpa was a scholar-yogi, ordained monk, lineage heir, Dzogchen teacher, and founder of religious hermitages whose scholarship systematized the Nyingma Great Perfection tradition. The representative identity is religious master and lineage authority rather than secular philosophical authorship, so v2 religion is primary.",
+      "review_sources": [
+        "https://treasuryoflives.org/biographies/view/Longchenpa/2882"
+      ]
+    },
+    {
+      "person_id": "6a860b3e-f925-4a6a-ab79-f018a1f8d822",
+      "canonical_name_en": "Mipham",
+      "preferred_name_ko": "미팜 린포체",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-mipham-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:mipham:person-only:v1",
+      "basis": "Mipham was a Nyingma monk and practitioner, but his representative legacy is primarily an exceptionally broad scholarly and philosophical corpus in logic, Madhyamaka, poetics, medicine, astrology, tantra, and systematic interpretation, without a defining institutional leadership office. Under v2, philosophy and scholarly humanities place the representative domain in culture.",
+      "review_sources": [
+        "https://treasuryoflives.org/biographies/view/mipam-Gyatso/4228"
+      ]
+    }
+  ],
+  "science_retained": []
+}
