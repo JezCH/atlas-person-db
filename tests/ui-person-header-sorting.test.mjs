@@ -4,15 +4,19 @@ import fs from 'node:fs';
 
 const source = fs.readFileSync(new URL('../atlas-person-header-sorting.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-header-sorting.css', import.meta.url), 'utf8');
+const registerCss = fs.readFileSync(new URL('../atlas-person-monumental-register.css', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
-test('Person table headers own sorting for Person, activity period, and Polity', () => {
-  assert.match(source, /installSortButton\(header\.querySelector\("\.person-table-col-identity"\), "인물", "person"\)/);
-  assert.match(source, /installSortButton\(header\.querySelector\("\.person-table-col-range"\), "주요 활동기간", "start"\)/);
-  assert.match(source, /installSortButton\(polity, "정치체 · 관계", "polity"\)/);
+test('Person Register exposes quiet sorting for chronology, Person, and Polity', () => {
+  assert.match(source, /person-register-sortbar/);
+  assert.match(source, /makeSortButton\("연대", "start"\)/);
+  assert.match(source, /makeSortButton\("인물", "person"\)/);
+  assert.match(source, /makeSortButton\("정치체", "polity"\)/);
   assert.match(source, /"start-asc", "start-desc", "person-asc", "person-desc", "polity-asc", "polity-desc"/);
   assert.match(source, /icon\.textContent = active \? \(current\.direction === "desc" \? "▼" : "▲"\) : "↕"/);
-  assert.match(source, /aria-sort/);
+  assert.match(source, /aria-pressed/);
+  assert.match(registerCss, /person-register-sortbar/);
+  assert.match(registerCss, /atlas-honor-metal/);
 });
 
 test('sorting uses visible Korean labels and real chronology while unknown values remain last', () => {
@@ -36,7 +40,7 @@ test('sorting rebuilds physical DOM order and preserves era metadata', () => {
   assert.match(css, /person-table-sort-flat \.person-era-group-flat \.person-era-band>span/);
 });
 
-test('obsolete Person sort dropdown is removed and header controls are responsive', () => {
+test('obsolete Person sort dropdown is removed and Register controls remain responsive', () => {
   assert.match(source, /function removeLegacySortControl/);
   assert.match(source, /document\.getElementById\("personMainSort"\)/);
   assert.match(source, /controls\.remove\(\)/);
@@ -45,12 +49,12 @@ test('obsolete Person sort dropdown is removed and header controls are responsiv
 });
 
 test('sorting enhancement loads after table decoration and before era navigation and Person Main', () => {
-  const tableJs = 'atlas-person-table-view.js?v=20260819-era-model-r2';
-  const sortingJs = 'atlas-person-header-sorting.js?v=20260817-header-sort-v2';
+  const tableJs = 'atlas-person-table-view.js?v=20261003-ui-v4-register-v1';
+  const sortingJs = 'atlas-person-header-sorting.js?v=20261003-ui-v4-register-v1';
   const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
   const mainJs = html.match(/atlas-person-main\.js\?v=[^"'\s>]+/)?.[0] || '';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1';
-  const sortingCss = 'atlas-person-header-sorting.css?v=20260817-header-sort-v2';
+  const sortingCss = 'atlas-person-header-sorting.css?v=20261003-ui-v4-register-v1';
 
   for (const asset of [tableJs, sortingJs, navJs, mainJs, geometryCss, sortingCss]) assert.ok(html.includes(asset));
   assert.ok(html.indexOf(tableJs) < html.indexOf(sortingJs));
