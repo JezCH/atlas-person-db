@@ -306,3 +306,59 @@ test('governance explicitly covers major political powerholders beyond sovereign
   assert.equal(reviewed.get('Nefertiti'), 'governance');
   assert.equal(reviewed.get('Jezebel'), 'governance');
 });
+
+
+test('v2 science-retained checkpoints are provenance-bound verify-only review records', () => {
+  const latest = new Map(
+    JSON.parse(fs.readFileSync(path.join(proposalDir, 'palette-smoke-001.json'), 'utf8')).entries
+      .map((entry) => [entry.person_id, { ...entry, source:'palette-smoke-001.json' }])
+  );
+  const retainedIds = new Set();
+  let retainedCount = 0;
+  for (const name of batchFiles) {
+    const parsed = JSON.parse(fs.readFileSync(path.join(proposalDir, name), 'utf8'));
+    for (const entry of parsed.entries || []) {
+      assert.equal(retainedIds.has(entry.person_id), false, `write after science-retained disposition: ${entry.person_id}`);
+      latest.set(entry.person_id, { ...entry, source:name });
+    }
+    for (const retained of parsed.science_retained || []) {
+      retainedCount += 1;
+      assert.equal(retainedIds.has(retained.person_id), false);
+      retainedIds.add(retained.person_id);
+      assert.equal(retained.v2_target_domain, 'science');
+      assert.equal(retained.stored_domain, 'knowledge');
+      assert.equal(typeof retained.current_assignment_source, 'string');
+      assert.ok(retained.current_assignment_source.length > 0);
+      if (retained.current_assignment_origin === 'human_authoring') {
+        assert.match(retained.current_assignment_source, /^authoring\/requests\/[A-Za-z0-9._-]+\.json$/);
+        assert.equal(typeof retained.current_assignment_request_id, 'string');
+        assert.ok(retained.current_assignment_request_id.length > 0);
+      } else {
+        const prior = latest.get(retained.person_id);
+        assert.ok(prior, `science-retained Person lacks prior reviewed assignment: ${retained.person_id}`);
+        assert.equal(prior.representative_domain, 'knowledge');
+        assert.equal(retained.current_assignment_source, prior.source);
+        assert.equal(retained.current_assignment_origin, undefined);
+        assert.equal(retained.current_assignment_request_id, undefined);
+      }
+    }
+  }
+  assert.ok(retainedCount >= 8);
+  assert.match(applyClient, /science_retained/);
+  assert.match(applyClient, /science_retained_verified/);
+  assert.match(applyClient, /Science-retained Person must remain stored as knowledge before cutover/);
+});
+
+test('Batch 116 records Unit 09 science retains separately from the one culture write', () => {
+  const batch116 = JSON.parse(fs.readFileSync(path.join(proposalDir, 'batch-116.json'), 'utf8'));
+  assert.equal(batch116.entries.length, 1);
+  assert.equal(batch116.entries[0].canonical_name_en, 'Jeong Yak-yong');
+  assert.equal(batch116.entries[0].representative_domain, 'culture');
+  assert.equal(batch116.entries[0].previous_representative_domain, 'knowledge');
+  assert.equal(batch116.entries[0].supersedes_source, 'batch-062.json');
+  assert.equal(batch116.science_retained.length, 8);
+  assert.equal(new Set(batch116.science_retained.map((entry) => entry.person_id)).size, 8);
+  assert.equal(batch116.science_retained.every((entry) => entry.v2_target_domain === 'science'), true);
+  assert.equal(batch116.science_retained.every((entry) => entry.stored_domain === 'knowledge'), true);
+  assert.equal(batch116.science_retained.every((entry) => entry.current_assignment_source === 'batch-008.json'), true);
+});

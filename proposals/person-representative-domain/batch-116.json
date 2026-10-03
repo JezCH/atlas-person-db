@@ -1,0 +1,136 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "4e0b3ca0636e251303f5317b3db9433c8bab249f",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 09. Record eight confirmed science-target Persons as verify-only science_retained checkpoints while moving one clear humanities Person from legacy knowledge to culture. Every retained Person must remain live Production knowledge until final cutover; the culture correction requires live previous_domain=knowledge.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-09",
+    "reviewed_count": 9,
+    "science_target_count": 8,
+    "non_science_target_count": 1
+  },
+  "review_scope": {
+    "selection_rule": "Use a compact 9-Person unit to introduce durable science-retain checkpoints on eight unambiguous science/formal-inquiry figures sharing simple batch-008 provenance, plus one source-clear humanities correction for Jeong Yak-yong.",
+    "result_summary": {
+      "science_retained": 8,
+      "culture": 1
+    }
+  },
+  "entries": [
+    {
+      "person_id": "b5c9ad45-ead8-44f2-ba57-c1a480419b38",
+      "canonical_name_en": "Jeong Yak-yong",
+      "preferred_name_ko": "정약용",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-062.json",
+      "basis": "V2 culture includes philosophy, social thought, scholarship, and intellectual history. Jeong Yak-yong displayed scientific and technical interests, but his representative historical identity is the late-Joseon Silhak scholar, reform thinker, and prolific author who synthesized practical-learning thought across government, economy, society, culture, and philosophy.",
+      "review_sources": [
+        "https://encykorea.aks.ac.kr/Article/E0050549"
+      ]
+    }
+  ],
+  "science_retained": [
+    {
+      "person_id": "1aa5257a-3548-41de-b3d0-c461317f51aa",
+      "canonical_name_en": "Alan Turing",
+      "preferred_name_ko": "앨런 튜링",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "V2 science explicitly includes mathematics and formal inquiry. Turing is represented by foundational work in mathematics, logic, computability, cryptanalysis, and theoretical computer science.",
+      "review_sources": [
+        "https://www.britannica.com/biography/Alan-Turing"
+      ]
+    },
+    {
+      "person_id": "f841000f-2bc6-41a0-9995-2dc19a30da94",
+      "canonical_name_en": "Antoine Lavoisier",
+      "preferred_name_ko": "앙투안 라부아지에",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Lavoisier's representative identity is experimental chemistry and the quantitative transformation of chemical science; this is an unambiguous v2 science retain.",
+      "review_sources": [
+        "https://www.britannica.com/biography/Antoine-Lavoisier"
+      ]
+    },
+    {
+      "person_id": "4e9a52e5-4c23-476f-9a1e-0383e25f7702",
+      "canonical_name_en": "Ernest Rutherford",
+      "preferred_name_ko": "어니스트 러더퍼드",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Rutherford is represented by experimental research on radioactivity and atomic structure and by foundational work in nuclear physics; the v2 target is science.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/chemistry/1908/rutherford/facts/"
+      ]
+    },
+    {
+      "person_id": "ecede7e0-be63-4a7d-a160-bc42430eb5c1",
+      "canonical_name_en": "Gregor Mendel",
+      "preferred_name_ko": "그레고어 멘델",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Mendel's representative identity is empirical heredity research and the foundational experimental work later recognized as genetics; the v2 target is science.",
+      "review_sources": [
+        "https://www.britannica.com/biography/Gregor-Mendel"
+      ]
+    },
+    {
+      "person_id": "01f38546-b212-4642-9b70-a1d903dc6937",
+      "canonical_name_en": "James Clerk Maxwell",
+      "preferred_name_ko": "제임스 클러크 맥스웰",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Maxwell is represented as a physicist and mathematician whose electromagnetic theory unified electricity, magnetism, and light; the v2 target is science.",
+      "review_sources": [
+        "https://www.britannica.com/biography/James-Clerk-Maxwell"
+      ]
+    },
+    {
+      "person_id": "5d2117da-787e-4852-8498-9bd129375464",
+      "canonical_name_en": "Max Planck",
+      "preferred_name_ko": "막스 플랑크",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Planck is represented by theoretical physics and the introduction of energy quanta, a foundational contribution to quantum theory; the v2 target is science.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/physics/1918/planck/facts/"
+      ]
+    },
+    {
+      "person_id": "c9260843-643d-4ad2-ba5b-dfed67655cfe",
+      "canonical_name_en": "Michael Faraday",
+      "preferred_name_ko": "마이클 패러데이",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Faraday's representative identity is experimental physics and chemistry, especially electromagnetism and electrochemistry; the v2 target is science.",
+      "review_sources": [
+        "https://www.britannica.com/biography/Michael-Faraday"
+      ]
+    },
+    {
+      "person_id": "63d3df96-611d-4703-a8b6-fe0d21065387",
+      "canonical_name_en": "Johannes Kepler",
+      "preferred_name_ko": "요하네스 케플러",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Kepler is represented by mathematical astronomy and the laws of planetary motion; the v2 target is science.",
+      "review_sources": [
+        "https://www.britannica.com/biography/Johannes-Kepler"
+      ]
+    }
+  ]
+}

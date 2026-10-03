@@ -78,6 +78,14 @@
       "science_is_the_only_blue_science_code",
       "exactly_eight_canonical_codes",
       "registry_ui_schema_and_tests_use_v2_labels"
-    ]
+    ],
+    "science_retained_checkpoint": {
+      "container_key": "science_retained",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "behavior": "verify_only_no_write",
+      "provenance_required": true,
+      "purpose": "durably distinguish reviewed science-target Persons from unresolved legacy knowledge before final cutover"
+    }
   }
 }

@@ -63,9 +63,12 @@ For each bounded unit:
 1. read current canonical Person/domain state;
 2. determine the v2 representative target from historical representative identity;
 3. if the target is not science, move the Person to the existing target code such as `culture`, `religion`, `commerce`, or `technology`;
-4. if the target is science, leave the stored value as `knowledge` for now;
+4. if the target is science, leave the stored value as `knowledge` for now and record it in that unit's `science_retained` checkpoint;
 5. verify the changed rows once through the canonical writer/read-back boundary;
-6. write a durable checkpoint with the exact next unreviewed starting point.
+6. verify every `science_retained` Person still reads `knowledge` in Production without issuing a write;
+7. write a durable checkpoint with the exact next unreviewed starting point.
+
+A `science_retained` entry is review evidence, not a mutation command. It records the v2 target (`science`), the temporary stored v1 value (`knowledge`), the latest assignment provenance, and the source-backed representative-identity basis. The apply client must fail closed if the retained Person no longer reads `knowledge` or if the claimed assignment provenance is stale.
 
 No review unit may bulk-convert unresolved Persons.
 
