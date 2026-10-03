@@ -122,6 +122,67 @@ function validateEntry(entry, { allowNull = false, source }) {
   });
 }
 
+function validateScienceTarget(item, { source, batchIds }) {
+  const personId = String(item?.person_id || "").trim().toLowerCase();
+  if (!UUID_RE.test(personId)) fail(`Invalid science-target Person UUID in ${source}: ${personId}`);
+  const targetDomain = String(item?.target_domain || "").trim().toLowerCase();
+  const storedDomain = String(item?.stored_domain || "").trim().toLowerCase();
+  if (targetDomain !== "science") fail(`Science review target_domain must be science in ${source}: ${personId}`);
+  if (storedDomain !== "knowledge") fail(`Science review stored_domain must remain knowledge before cutover in ${source}: ${personId}`);
+  const assignmentSource = String(item?.current_assignment_source || "").trim();
+  if (!assignmentSource) fail(`Science review requires current_assignment_source in ${source}: ${personId}`);
+  const assignmentOrigin = item?.current_assignment_origin == null
+    ? null
+    : String(item.current_assignment_origin).trim().toLowerCase();
+  const assignmentRequestId = item?.current_assignment_request_id == null
+    ? null
+    : String(item.current_assignment_request_id).trim();
+  const prior = batchIds.get(personId);
+  if (prior) {
+    if (prior.representative_domain !== "knowledge") {
+      fail(`Science review latest numbered assignment is not knowledge in ${source}: ${personId}`, prior);
+    }
+    if (assignmentSource !== prior.source) {
+      fail(`Science review must cite latest numbered assignment in ${source}: ${personId}`, { expected:prior.source, actual:assignmentSource });
+    }
+    if (assignmentOrigin != null || assignmentRequestId != null) {
+      fail(`Science review with numbered assignment must not cite Human Authoring origin in ${source}: ${personId}`);
+    }
+  } else {
+    if (assignmentOrigin !== "human_authoring" || !assignmentRequestId) {
+      fail(`Science review without numbered assignment requires verified Human Authoring origin in ${source}: ${personId}`);
+    }
+    try {
+      validateHumanAuthoringOrigin({
+        root:ROOT,
+        entry:{
+          person_id:personId,
+          canonical_name_en:String(item?.canonical_name_en || "").trim(),
+          preferred_name_ko:String(item?.preferred_name_ko || "").trim(),
+          representative_domain:"science",
+          previous_representative_domain:"knowledge",
+          supersedes_origin:"human_authoring",
+          supersedes_source:assignmentSource,
+          supersedes_request_id:assignmentRequestId
+        }
+      });
+    } catch (error) {
+      fail(`Invalid science-review Human Authoring provenance for ${personId}: ${String(error?.message || error)}`);
+    }
+  }
+  return Object.freeze({
+    person_id:personId,
+    target_domain:"science",
+    stored_domain:"knowledge",
+    current_assignment_source:assignmentSource,
+    current_assignment_origin:assignmentOrigin,
+    current_assignment_request_id:assignmentRequestId,
+    canonical_name_en:String(item?.canonical_name_en || "").trim(),
+    preferred_name_ko:String(item?.preferred_name_ko || "").trim(),
+    source
+  });
+}
+
 function loadPlan() {
   const smokeRaw = readJson("palette-smoke-001.json");
   const smoke = smokeRaw.entries.map((entry) => validateEntry(entry, { source:"palette-smoke-001.json" }));
@@ -136,8 +197,10 @@ function loadPlan() {
 
   const batch = [];
   const batchIds = new Map();
+  const rawByBatch = new Map();
   for (const name of [...batchFiles, ...repairFiles]) {
     const raw = readJson(name);
+    rawByBatch.set(name, raw);
     for (const item of raw.entries) {
       const entry = validateEntry(item, { source:name });
       const prior = batchIds.get(entry.person_id);
@@ -162,6 +225,21 @@ function loadPlan() {
     }
   }
 
+  const scienceTargets = [];
+  const scienceTargetIds = new Set();
+  for (const name of [...batchFiles, ...repairFiles]) {
+    const raw = rawByBatch.get(name);
+    const items = Array.isArray(raw?.science_targets) ? raw.science_targets : [];
+    for (const item of items) {
+      const target = validateScienceTarget(item, { source:name, batchIds });
+      if (scienceTargetIds.has(target.person_id)) {
+        fail(`Duplicate reviewed science target: ${target.person_id}`);
+      }
+      scienceTargetIds.add(target.person_id);
+      scienceTargets.push(target);
+    }
+  }
+
   const hold = [];
   const holdIds = new Set();
   for (const name of holdFiles) {
@@ -177,6 +255,7 @@ function loadPlan() {
 
   for (const personId of holdIds) {
     if (batchIds.has(personId)) fail(`HOLD Person appears in reviewed batch write set: ${personId}`);
+    if (scienceTargetIds.has(personId)) fail(`HOLD Person appears in reviewed science-target set: ${personId}`);
   }
 
   const assignments = new Map();
@@ -195,7 +274,7 @@ function loadPlan() {
     }
   }
 
-  return Object.freeze({ smoke, batch, hold, assignments, batchFiles, repairFiles, holdFiles });
+  return Object.freeze({ smoke, batch, scienceTargets, hold, assignments, batchFiles, repairFiles, holdFiles });
 }
 
 function selectBatchFile(plan, target) {
@@ -208,8 +287,11 @@ function selectBatchFile(plan, target) {
   const allowed = standard ? plan.batchFiles.includes(name) : plan.repairFiles.includes(name);
   if (!allowed) fail(`Reviewed batch manifest is not in the canonical plan: ${name}`);
   const entries = plan.batch.filter((entry) => entry.source === name);
-  if (entries.length === 0) fail(`Reviewed batch manifest has no writable entries: ${name}`);
-  return Object.freeze({ name, entries:Object.freeze(entries) });
+  const scienceTargets = plan.scienceTargets.filter((entry) => entry.source === name);
+  if (entries.length === 0 && scienceTargets.length === 0) {
+    fail(`Reviewed batch manifest has no writable entries or science-review dispositions: ${name}`);
+  }
+  return Object.freeze({ name, entries:Object.freeze(entries), scienceTargets:Object.freeze(scienceTargets) });
 }
 
 async function readCurrent() {
@@ -292,7 +374,18 @@ async function applyOnlyChanged(entries, label) {
   return pending.length;
 }
 
-function verifyExpected(body, expectedEntries, holdEntries) {
+function verifyScienceTargets(body, scienceTargets) {
+  const current = currentDomainMap(body);
+  for (const target of scienceTargets) {
+    const actual = current.get(target.person_id) || null;
+    if (actual !== "knowledge") {
+      fail(`Reviewed science target must remain stored as knowledge before cutover: ${target.person_id}`, { actual });
+    }
+  }
+  return scienceTargets.length;
+}
+
+function verifyExpected(body, expectedEntries, holdEntries, scienceTargets = []) {
   const current = currentDomainMap(body);
   for (const entry of expectedEntries) {
     if (current.get(entry.person_id) !== entry.representative_domain) {
@@ -302,9 +395,11 @@ function verifyExpected(body, expectedEntries, holdEntries) {
   for (const entry of holdEntries) {
     if (current.has(entry.person_id)) fail(`HOLD Person must remain unclassified: ${entry.person_id}`, { actual:current.get(entry.person_id) });
   }
+  const verifiedScienceTargets = verifyScienceTargets(body, scienceTargets);
   return Object.freeze({
     production_assigned:Number(body.assigned),
     verified_assignments:expectedEntries.length,
+    verified_science_targets:verifiedScienceTargets,
     hold_unclassified:holdEntries.length,
     counts:body.counts
   });
@@ -320,12 +415,12 @@ if (MODE === "smoke") {
 } else if (MODE === "batch") {
   await applyOnlyChanged([...plan.assignments.values()], MODE);
   const body = await readCurrent();
-  console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, ...verifyExpected(body, [...plan.assignments.values()], plan.hold) }, null, 2));
+  console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, ...verifyExpected(body, [...plan.assignments.values()], plan.hold, plan.scienceTargets) }, null, 2));
 } else if (MODE === "file") {
   const selected = selectBatchFile(plan, TARGET);
   await applyOnlyChanged(selected.entries, `${MODE}:${selected.name}`);
   const body = await readCurrent();
-  console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, source:selected.name, ...verifyExpected(body, selected.entries, []) }, null, 2));
+  console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, source:selected.name, ...verifyExpected(body, selected.entries, [], selected.scienceTargets) }, null, 2));
 } else {
   const body = await readCurrent();
   console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, ...verifyExpected(body, [...plan.assignments.values()], plan.hold) }, null, 2));
