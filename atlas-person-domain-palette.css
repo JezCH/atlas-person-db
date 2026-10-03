@@ -12,10 +12,10 @@
   --atlas-person-domain-military-hover: rgba(184, 58, 58, 0.18);
   --atlas-person-domain-military-selected: rgba(184, 58, 58, 0.22);
 
-  --atlas-person-domain-knowledge: #3f78c5;
-  --atlas-person-domain-knowledge-tint: rgba(63, 120, 197, 0.12);
-  --atlas-person-domain-knowledge-hover: rgba(63, 120, 197, 0.18);
-  --atlas-person-domain-knowledge-selected: rgba(63, 120, 197, 0.22);
+  --atlas-person-domain-science: #3f78c5;
+  --atlas-person-domain-science-tint: rgba(63, 120, 197, 0.12);
+  --atlas-person-domain-science-hover: rgba(63, 120, 197, 0.18);
+  --atlas-person-domain-science-selected: rgba(63, 120, 197, 0.22);
 
   /* Technology uses a near-black cool Steel accent while retaining the older
    * Graphite family as its quieter surface language. */
@@ -73,12 +73,12 @@
   --person-domain-hover: var(--atlas-person-domain-military-hover);
   --person-domain-selected: var(--atlas-person-domain-military-selected);
 }
-.person-card[data-representative-domain="knowledge"] {
-  --person-domain-color: var(--atlas-person-domain-knowledge);
-  --person-domain-edge: var(--atlas-person-domain-knowledge);
-  --person-domain-tint: var(--atlas-person-domain-knowledge-tint);
-  --person-domain-hover: var(--atlas-person-domain-knowledge-hover);
-  --person-domain-selected: var(--atlas-person-domain-knowledge-selected);
+.person-card[data-representative-domain="science"] {
+  --person-domain-color: var(--atlas-person-domain-science);
+  --person-domain-edge: var(--atlas-person-domain-science);
+  --person-domain-tint: var(--atlas-person-domain-science-tint);
+  --person-domain-hover: var(--atlas-person-domain-science-hover);
+  --person-domain-selected: var(--atlas-person-domain-science-selected);
 }
 .person-card[data-representative-domain="technology"] {
   --person-domain-color: var(--atlas-person-domain-technology);

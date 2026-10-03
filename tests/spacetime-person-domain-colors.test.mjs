@@ -12,7 +12,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CODES = Object.freeze([
   "governance",
   "military",
-  "knowledge",
+  "science",
   "technology",
   "commerce",
   "culture",

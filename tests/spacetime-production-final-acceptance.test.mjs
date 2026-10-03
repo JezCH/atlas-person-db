@@ -161,7 +161,7 @@ test("real-Chrome domain acceptance preserves Person/Activity semantic separatio
   assert.match(verifier, /technology:'--atlas-person-domain-technology-surface'/);
   assert.match(verifier, /religion:'--atlas-person-domain-religion-edge'/);
   assert.match(verifier, /military:'--atlas-person-domain-military'/);
-  assert.match(verifier, /knowledge:'--atlas-person-domain-knowledge'/);
+  assert.match(verifier, /science:'--atlas-person-domain-science'/);
   assert.match(verifier, /commerce:'--atlas-person-domain-commerce'/);
   assert.match(verifier, /culture:'--atlas-person-domain-culture'/);
   assert.match(verifier, /exploration:'--atlas-person-domain-exploration'/);
@@ -170,7 +170,7 @@ test("real-Chrome domain acceptance preserves Person/Activity semantic separatio
 test("V10 closure lets canonical domain color outrank the V6 neutral fallback without important", () => {
   const css = read("atlas-person-spacetime-domain-colors.css");
   const frameScope = '.spacetime-frame[data-spacetime-visual="chronology-v6"]';
-  for (const domain of ["governance","military","knowledge","technology","commerce","culture","religion","exploration"]) {
+  for (const domain of ["governance","military","science","technology","commerce","culture","religion","exploration"]) {
     assert.ok(css.includes(`${frameScope} .spacetime-track-label[data-representative-domain="${domain}"]`));
     assert.ok(css.includes(`${frameScope} .spacetime-track-rail[data-representative-domain="${domain}"]`));
   }

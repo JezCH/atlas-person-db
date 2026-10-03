@@ -28,7 +28,7 @@ function firstRequest() {
       life_status:'deceased',
       life_status_checked_at:'2026-09-27',
       life_status_basis:'historical_certainty',
-      representative_domain:'knowledge'
+      representative_domain:'science'
     },
     external_references:{
       namuwiki:{
@@ -198,7 +198,7 @@ function reviewedCandidatePersonRequest(candidateId) {
         reviewed_at:'2026-10-01'
       }
     },
-    representative_domain:'knowledge',
+    representative_domain:'science',
     sources:[{
       source_type:'academic_reference',
       title:`Reviewed candidate source ${candidateId}`,
@@ -242,7 +242,7 @@ function personOnlyRequest() {
         reviewed_at:'2026-09-30'
       }
     },
-    representative_domain:'knowledge',
+    representative_domain:'science',
     sources:[{
       source_type:'academic_reference',
       title:'Person-only fixture source',
@@ -360,7 +360,7 @@ try {
   assert.equal(first.result.entities.period_basis.code,'fixture_human_period');
   assert.equal(first.result.person_registration.timeline_disposition.disposition,'timeline');
   assert.equal(first.result.person_registration.representative_domain_reviewed,true);
-  assert.equal(first.result.person_registration.representative_domain,'knowledge');
+  assert.equal(first.result.person_registration.representative_domain,'science');
   assert.equal(first.result.person_registration.namuwiki.status,'not_found');
   assert.deepEqual(first.result.person_registration.source_ids,[first.source_ids[0]]);
 
@@ -371,7 +371,7 @@ try {
       join atlas_v2.person_timeline_dispositions t on t.person_id=p.id
      where p.id=$1::uuid
   `,[first.person_id])).rows[0];
-  assert.equal(firstProfile.representative_domain,'knowledge');
+  assert.equal(firstProfile.representative_domain,'science');
   assert.equal(firstProfile.disposition,'timeline');
   assert.equal(firstProfile.person_source_count,1);
 
@@ -548,7 +548,7 @@ try {
   assert.equal(personOnly.result.person.disposition,'created');
   assert.equal(personOnly.relationship_id,null);
   assert.equal(personOnly.result.timeline_disposition.disposition,'chronology_unresolved');
-  assert.equal(personOnly.result.representative_domain,'knowledge');
+  assert.equal(personOnly.result.representative_domain,'science');
   const personOnlyActivityCount=Number((await client.query(
     `select count(*)::int as count from atlas_v2.person_politics_v2 where person_id=$1::uuid`,
     [personOnly.person_id]

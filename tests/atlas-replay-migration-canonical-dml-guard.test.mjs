@@ -72,7 +72,9 @@ test("historical one-time data migrations stay outside live replay registries", 
   const authoringLive = basenameList(authoring.AUTHORING_APPLY_MIGRATION_PATHS);
   assert.ok(authoringFull.includes("20260905_person_representative_domain_standard_v1.sql"));
   assert.ok(!authoringLive.includes("20260905_person_representative_domain_standard_v1.sql"));
-  assert.ok(authoringLive.includes("20260919_person_representative_domain_standard_replay_safe.sql"));
+  assert.ok(authoringFull.includes("20260919_person_representative_domain_standard_replay_safe.sql"));
+  assert.ok(!authoringLive.includes("20260919_person_representative_domain_standard_replay_safe.sql"));
+  assert.ok(authoringLive.includes("20261004_person_representative_domain_standard_v2_replay_safe.sql"));
 
   const correctionFull = basenameList(correction.POST_STAGE2_MIGRATION_PATHS);
   const correctionLive = basenameList(correction.CORRECTION_APPLY_POST_STAGE2_MIGRATION_PATHS);

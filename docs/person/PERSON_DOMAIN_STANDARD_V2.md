@@ -1,13 +1,12 @@
 # ATLAS Person Domain Standard v2
 
-**Status:** Approved migration target  
+**Status:** Active canonical standard  
 **Tracking:** #1806  
-**Scope:** `representative_domain` only  
-**Runtime state:** v1 remains live until the final cutover unit
+**Scope:** `representative_domain` only
 
-## 1. Decision
+## 1. Canonical taxonomy
 
-ATLAS keeps exactly **eight** representative Person domains. The v2 taxonomy restores a clear distinction between science and humanities without adding a ninth sector.
+ATLAS has exactly eight Person representative domains.
 
 | Code | Korean label | Representative scope |
 |---|---|---|
@@ -20,95 +19,57 @@ ATLAS keeps exactly **eight** representative Person domains. The v2 taxonomy res
 | `religion` | **종교** | religious leadership, theology, faith traditions, reform |
 | `exploration` | **탐험** | exploration, navigation, expeditions, geographic discovery |
 
-The current eight color families are retained. `science` inherits the current Academic Blue family used by `knowledge`; no ninth color is introduced.
+`science` owns the existing Academic Blue family formerly used by legacy `knowledge`; no ninth color or runtime sector exists.
 
 ## 2. Classification authority
 
-A Person receives one representative domain or NULL.
+A Person receives exactly one representative domain or NULL. Representative historical identity is the authority. Activity Role, titles, occupations, and offices are evidence only and never an automatic mapping rule.
 
-The decision is based on **representative historical identity**, not automatic Activity Role mapping. Titles, occupations, offices, or role strings may provide evidence but are not themselves classification authority.
+## 3. Legacy `knowledge` retirement
 
-Examples of boundary behavior:
+`knowledge` is retired from the active DB constraint, server registry, browser registry, Admin/Human Authoring catalog, UI selectors, and new writes.
 
-- a philosopher or historian normally moves toward `culture`, not `science`;
-- a physicist, mathematician, astronomer, or physician normally remains on the blue knowledge/science path;
-- an engineer, inventor, or architect normally belongs to `technology`;
-- a theologian or religious founder whose representative identity is religious belongs to `religion`;
-- an economist or economic thinker may belong to `commerce` when economic systems or economic thought are the representative identity;
-- multi-domain figures still receive one representative domain under the same editorial rule used by v1.
+Historical pre-v2 review batches, authoring requests, and audit evidence may still contain the literal value `knowledge` because those artifacts describe the state that existed when they were reviewed. Those artifacts are evidence, not current assignments.
 
-## 3. Why `knowledge` cannot be bulk-renamed now
+For an already-recorded Human Authoring request only, legacy `knowledge` is replay-normalized to canonical `science` while the original manifest hash and stored evidence remain unchanged. A new request carrying `knowledge` is rejected.
 
-The live v1 `knowledge` bucket contains both science-side and humanities-side Persons. A direct `knowledge → science` rename would therefore misclassify philosophers, historians, social thinkers, and similar figures as scientists.
+## 4. Final cutover authority
 
-For that reason, the v2 migration MUST NOT perform a blind code rename.
+The immutable reviewed science set is `contracts/person-domain-v2-final-cutover.json`. It contains exactly 72 Person UUIDs and is derived from all durable `science_retained` review checkpoints.
 
-## 4. Migration sequence
+The dedicated final-cutover transaction must:
 
-The migration stays at eight semantic sectors throughout and does not create a temporary ninth sector.
+1. run only on exact Production `main` SHA with the dedicated GitHub Actions OIDC policy;
+2. acquire the global Person Domain v2 advisory lock and table/row locks;
+3. prove the complete live `knowledge` UUID set exactly equals the reviewed 72 science UUIDs;
+4. prove all pre-cutover domain counts match the approved checkpoint;
+5. drop the v1 domain constraint inside the same serializable transaction;
+6. update exactly those 72 rows from `knowledge` to `science`;
+7. write immutable per-Person `set_person_representative_domain` audits;
+8. install and validate the v2 eight-code DB constraint;
+9. prove the complete post-cutover distribution before commit;
+10. roll back everything on any mismatch.
 
-### Unit 01 — contract
+Normal Authoring migrations never perform the canonical row rewrite.
 
-Record this target taxonomy and migration invariants only.
+## 5. Migration/replay contract
 
-- no Production Person mutation;
-- no schema constraint change;
-- no runtime registry switch;
-- no UI label switch.
+The replay-safe schema migration recognizes only coherent states:
 
-### Review units — 5–12 current `knowledge` Persons per unit
+- **pre-cutover:** `knowledge` exists and `science` does not; replay leaves the v1 constraint untouched so only the dedicated cutover transaction can move data;
+- **post-cutover / clean reconstruction:** `knowledge` is absent and the validated v2 constraint is installed.
 
-For each bounded unit:
+A mixed live `knowledge` + `science` storage state fails closed.
 
-1. read current canonical Person/domain state;
-2. determine the v2 representative target from historical representative identity;
-3. if the target is not science, move the Person to the existing target code such as `culture`, `religion`, `commerce`, or `technology`;
-4. if the target is science, leave the stored value as `knowledge` for now and record it in that unit's `science_retained` checkpoint;
-5. verify the changed rows once through the canonical writer/read-back boundary;
-6. verify every `science_retained` Person still reads `knowledge` in Production without issuing a write;
-7. write a durable checkpoint with the exact next unreviewed starting point.
-
-A `science_retained` entry is review evidence, not a mutation command. It records the v2 target (`science`), the temporary stored v1 value (`knowledge`), the latest assignment provenance, and the source-backed representative-identity basis. The apply client must fail closed if the retained Person no longer reads `knowledge` or if the claimed assignment provenance is stale.
-
-No review unit may bulk-convert unresolved Persons.
-
-### Final cutover unit
-
-The cutover begins only after **every remaining live `knowledge` Person has been reviewed and confirmed science-target**.
-
-Then, as one bounded migration:
-
-1. rename remaining stored `knowledge` values to `science`;
-2. replace the controlled DB code;
-3. update server and browser registries;
-4. update labels:
-   - 통치·정치 → 정치·통치
-   - 기술·공학·발명 → 공학·기술
-   - 상업·경제 → 경제·상업
-   - 문화·예술 → 인문·예술
-   - 종교·신앙 → 종교
-   - 탐험·항해 → 탐험
-5. reuse the current blue palette for `science`;
-6. update focused tests and migration/replay guards;
-7. verify `knowledge = 0` and exactly eight canonical codes.
-
-## 5. Non-goals
-
-This migration does not:
-
-- add a ninth domain;
-- add secondary or multi-color domains;
-- infer domains automatically from Role;
-- change Person/Activity identity semantics;
-- change the eight established color families;
-- activate P14 Territory/Geometry work.
+The old proposal apply path is retired after v2. Pre-v2 batches remain immutable review evidence; current automation performs read-only v2 verification.
 
 ## 6. Completion condition
 
 Person Domain v2 is complete only when:
 
-- all legacy `knowledge` Persons have a reviewed v2 disposition;
+- all reviewed science targets store `science`;
 - no Person stores `knowledge`;
-- `science` is the canonical blue science code;
-- exactly eight canonical codes remain;
-- runtime, Admin, Person UI, schema constraints, writer validation, and focused regression tests all agree on the v2 taxonomy.
+- `science=72` and the other seven counts match the Unit 23 checkpoint;
+- exactly eight canonical codes are exposed;
+- runtime, Admin/Human Authoring, browser registry, Person UI, Spacetime UI, DB constraint, clean-schema replay, and regression tests all agree on v2;
+- exact Production SHA and immutable cutover evidence are recorded on #1806.
