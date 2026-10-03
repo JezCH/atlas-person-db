@@ -121,6 +121,7 @@ jobs:
           curl -fsS http://127.0.0.1:9222/json/version >/dev/null
           node scripts/verify-spacetime-production-visual.mjs
           node scripts/verify-spacetime-production-domain-colors.mjs
+          node scripts/verify-ui-v10-production-visual.mjs
           for report in "$ATLAS_VISUAL_OUT_DIR"/*.json; do
             echo "===== $report ====="
             cat "$report"
