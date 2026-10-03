@@ -1,0 +1,106 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-04",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "5131dd52ccc8ced1f5026bcb27c09ef3320fc126",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 23. Resolve the final six genuinely unreviewed legacy knowledge Persons after the bounded provenance repair. Historiography, language documentation, and Indigenous cultural record belong to culture; defining Vedic religious-sage and tradition authority belongs to religion; theoretical physics, mathematics/astronomy, pathology, and antibiotic research belong to science. Science targets remain verify-only knowledge until the final atomic cutover.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-23",
+    "reviewed_count": 6,
+    "science_target_count": 3,
+    "non_science_target_count": 3
+  },
+  "review_scope": {
+    "selection_rule": "Review the complete six-Person unreviewed legacy knowledge remainder recorded at the Unit 22 checkpoint, using repaired canonical provenance where required. Do not leave a residual unreviewed Person; do not perform the final knowledge-to-science cutover in this unit.",
+    "prerequisite_provenance_repair": "batch-repair-002.json",
+    "result_summary": {
+      "culture": 2,
+      "religion": 1,
+      "science_retained": 3
+    }
+  },
+  "entries": [
+    {
+      "person_id": "17fe5b34-2f92-4c67-bcdb-f373ce3b3684",
+      "canonical_name_en": "Mykhailo Hrushevsky",
+      "preferred_name_ko": "미하일로 흐루셰우스키",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-repair-002.json",
+      "basis": "Hrushevsky was also a major political leader during the Ukrainian Revolution, but the reviewed reference identifies him first as Ukraine's pre-eminent historian and principal organizer of Ukrainian scholarship, with a monumental historical corpus and long-term leadership in historical research. Under v2, history, historiography, and scholarship in the humanities belong to culture.",
+      "review_sources": [
+        "https://www.encyclopediaofukraine.com/display.asp?linkpath=pagesH%5CR%5CHrushevskyMykhailo"
+      ]
+    },
+    {
+      "person_id": "249a4aea-a45d-4249-b0c7-74574ba72b0f",
+      "canonical_name_en": "Yājñavalkya",
+      "preferred_name_ko": "야즈냐발키야",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-repair-001.json",
+      "basis": "Yājñavalkya is a major philosophical figure, but the reviewed religious reference presents him as a Hindu Vedic sage associated with the White Yajur Veda, the Brihadaranyaka Upanishad, a named religious school, and enduring spiritual teaching on Brahman and the Self. Under v2, this defining sage, scripture, and faith-tradition authority places the representative domain in religion.",
+      "review_sources": [
+        "https://www.encyclopedia.com/religion/dictionaries-thesauruses-pictures-and-press-releases/yajnavalkya",
+        "https://www.jstor.org/stable/jj.18254874"
+      ]
+    },
+    {
+      "person_id": "299c8de4-e1cc-4a3f-a82f-4abe29b1d6b8",
+      "canonical_name_en": "Pablo Tac",
+      "preferred_name_ko": "파블로 탁",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-repair-002.json",
+      "basis": "Tac studied for the priesthood, but his enduring representative legacy is as an Indigenous Luiseño scholar, writer, linguist, and recorder of Luiseño language, history, customs, and cultural memory. His grammar, dictionary, writing system, and historical-cultural account are foundational documentary work. Under v2, language, history, writing, and cultural memory belong to culture.",
+      "review_sources": [
+        "https://www.ucpress.edu/flyer/books/pablo-tac-indigenous-scholar/hardcover",
+        "https://pages.ucsd.edu/~mgarellek/History/",
+        "https://americanindian.si.edu/nk360/california-missions/source-i/"
+      ]
+    }
+  ],
+  "science_retained": [
+    {
+      "person_id": "605d4e27-e933-4429-bb51-c023d4a20905",
+      "canonical_name_en": "J. Robert Oppenheimer",
+      "preferred_name_ko": "줄리어스 로버트 오펜하이머",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-repair-002.json",
+      "basis": "Oppenheimer's representative historical identity is theoretical physics. He made major contributions to quantum and molecular physics, trained a generation of physicists, and led the Los Alamos scientific laboratory during the Manhattan Project. Under v2, theoretical physics and formal natural-scientific inquiry belong to science; the stored value remains knowledge until final cutover.",
+      "review_sources": [
+        "https://www.ias.edu/scholars/oppenheimer",
+        "https://www.ias.edu/oppenheimer-legacy"
+      ]
+    },
+    {
+      "person_id": "6ad5c0e4-2547-4e3a-86b0-c3b9eaa16b63",
+      "canonical_name_en": "Madhava of Sangamagrama",
+      "preferred_name_ko": "상가마그라마의 마다바",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-repair-001.json",
+      "basis": "Madhava is represented as a mathematician-astronomer of the Kerala school whose advances in infinite series and trigonometric expansions mark a decisive development toward mathematical analysis. Under v2, mathematics and astronomy belong to science; the stored value remains knowledge until final cutover.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Madhava/"
+      ]
+    },
+    {
+      "person_id": "e313c5ef-779c-40b2-ab4c-0555160d5f85",
+      "canonical_name_en": "Howard Walter Florey",
+      "preferred_name_ko": "하워드 플로리",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-repair-002.json",
+      "basis": "Florey's representative identity is pathology and experimental medicine. His team systematically investigated antibacterial substances and developed penicillin into an effective chemotherapeutic treatment, work recognized by the 1945 Nobel Prize in Physiology or Medicine. Under v2, medicine, pathology, and empirical biomedical inquiry belong to science; the stored value remains knowledge until final cutover.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/medicine/1945/florey/biographical/"
+      ]
+    }
+  ]
+}
