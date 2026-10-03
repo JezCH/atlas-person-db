@@ -28,6 +28,7 @@ const expectedAuthoringMigrations = [
   '20260902_ongoing_activity_terms.sql',
   '20260904_person_representative_domains.sql',
   '20260905_person_representative_domain_standard_v1.sql',
+  '20260919_person_representative_domain_standard_replay_safe.sql',
   '20260906_p13a_temporal_unknown_boundaries.sql',
   '20260906_p13_source_place_objects.sql',
   '20260920_person_portraits.sql',
@@ -44,7 +45,8 @@ const expectedAuthoringMigrations = [
   '20261001_polity_place_function_authority.sql',
   '20260930_unit16_retire_external_reference_sync_trigger.sql',
   '20261003_person_registration_queue_authority.sql',
-  '20261003_shah_abbas_registration_queue_binding.sql'
+  '20261003_shah_abbas_registration_queue_binding.sql',
+  '20261004_person_representative_domain_standard_v2_replay_safe.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -56,7 +58,7 @@ const expectedAuthoringReplayMigrations = [
   '20260821_human_authoring_external_reference_sync.sql',
   '20260902_ongoing_activity_terms.sql',
   '20260904_person_representative_domains.sql',
-  '20260919_person_representative_domain_standard_replay_safe.sql',
+  '20261004_person_representative_domain_standard_v2_replay_safe.sql',
   '20260906_p13a_temporal_unknown_boundaries.sql',
   '20260906_p13_source_place_objects.sql',
   '20260920_person_portraits.sql',
