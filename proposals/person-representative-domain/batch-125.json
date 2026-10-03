@@ -1,0 +1,86 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "1bb016b6d39359f74bec467a0734fbff8d538b6f",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 18. Record five confirmed medicine, mathematics, astronomy, health-statistics, and natural-science targets as verify-only science_retained checkpoints. No Person domain write is requested; all five remain live Production knowledge until final atomic knowledge-to-science cutover.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-18",
+    "reviewed_count": 5,
+    "science_target_count": 5,
+    "non_science_target_count": 0
+  },
+  "review_scope": {
+    "selection_rule": "Choose five genuinely unreviewed live knowledge Persons with established latest numbered-batch provenance whose representative historical identity is sufficiently grounded in v2 science: medicine, mathematics, astronomy, applied health statistics, or empirical natural inquiry. Treat philosophical, literary, or administrative secondary identities as non-dominant only where the reviewed evidence supports a science-primary disposition.",
+    "result_summary": {
+      "science_retained": 5
+    }
+  },
+  "entries": [],
+  "science_retained": [
+    {
+      "person_id": "2fdc0e4a-e311-42d0-9bc2-8597380dda44",
+      "canonical_name_en": "Hippocrates",
+      "preferred_name_ko": "히포크라테스",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-086.json",
+      "basis": "Hippocrates is represented above all by medicine and clinical inquiry. The reviewed medical-history evidence emphasizes observation-based medical knowledge, diagnosis, treatment, and the Hippocratic medical tradition. Under v2, medicine belongs to science.",
+      "review_sources": [
+        "https://www.nlm.nih.gov/hmd/greek/greek_aristotle.html"
+      ]
+    },
+    {
+      "person_id": "75521f03-45cc-4879-969d-84a4de4203bc",
+      "canonical_name_en": "Omar Khayyam",
+      "preferred_name_ko": "오마르 하이얌",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-044.json",
+      "basis": "Omar Khayyam spans poetry and philosophy, but the reviewed historical-mathematics evidence identifies major original work in algebra and astronomy, including cubic equations, astronomical tables, and calendar reform. Under v2, mathematics and astronomy belong to science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Khayyam/"
+      ]
+    },
+    {
+      "person_id": "1f5d04f0-4d34-479e-b0b0-c0d4f65e3799",
+      "canonical_name_en": "Shen Kuo",
+      "preferred_name_ko": "심괄",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-094.json",
+      "basis": "Shen Kuo was a polymath and official, but his representative intellectual legacy includes astronomy, mathematics, magnetism, earth science, and systematic observation of natural phenomena. Under v2, this natural and empirical inquiry belongs to science rather than technology or culture.",
+      "review_sources": [
+        "https://www.encyclopedia.com/science/dictionaries-thesauruses-pictures-and-press-releases/shen-kua"
+      ]
+    },
+    {
+      "person_id": "75114421-92e5-478b-b642-4ed0c509132e",
+      "canonical_name_en": "Florence Nightingale",
+      "preferred_name_ko": "플로렌스 나이팅게일",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-050.json",
+      "basis": "Nightingale's representative historical identity joins nursing reform with applied statistics and evidence-based health analysis. The Royal Statistical Society highlights her statistical investigations and data visualization as integral to revolutionizing nursing. Under v2, medicine, health inquiry, and empirical analysis belong to science.",
+      "review_sources": [
+        "https://rss.org.uk/training-events/events/excellence-awards/the-florence-nightingale-award-for-excellence-in-h/"
+      ]
+    },
+    {
+      "person_id": "7f63697a-9164-5c4a-933f-d46ee52ed3ae",
+      "canonical_name_en": "Hypatia",
+      "preferred_name_ko": "히파티아",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-067.json",
+      "basis": "Hypatia combined Neoplatonic philosophy with mathematics and astronomy, but the reviewed history-of-mathematics evidence identifies her as the first woman known to have made a substantial contribution to mathematics and records her teaching of mathematics alongside philosophy. Under v2, mathematics and astronomy place the representative target in science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Hypatia/"
+      ]
+    }
+  ]
+}
