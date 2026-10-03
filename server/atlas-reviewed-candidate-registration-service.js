@@ -48,6 +48,32 @@ function reviewedAuthoringRequest(review) {
   return request;
 }
 
+function reviewedCandidateMetadata(review) {
+  const payload = review?.reviewed_payload || {};
+  const candidate = payload?.candidate && typeof payload.candidate === "object" && !Array.isArray(payload.candidate)
+    ? payload.candidate
+    : {};
+  const request = reviewedAuthoringRequest(review);
+  const canonicalName = text(request?.person?.canonical_name_en);
+  const displayNameKo = text(request?.person?.display_name_ko);
+  const name = text(candidate?.name || payload?.name || canonicalName || displayNameKo);
+  if (!name) throw new Error("CANDIDATE_NAME_REQUIRED");
+  const explicitLookup = Array.isArray(candidate?.lookup_names)
+    ? candidate.lookup_names
+    : (Array.isArray(payload?.lookup_names) ? payload.lookup_names : []);
+  const lookup_names = [...new Set([...explicitLookup, canonicalName, displayNameKo, name].map(text).filter(Boolean))];
+  return Object.freeze({
+    name,
+    lookup_names:Object.freeze(lookup_names),
+    representative_domain:candidate?.representative_domain ?? payload?.representative_domain ?? request?.representative_domain ?? null,
+    legacy_priority:candidate?.legacy_priority ?? payload?.legacy_priority ?? null,
+    origin:candidate?.origin ?? payload?.origin ?? "reviewed_candidate",
+    source_issue:candidate?.source_issue ?? payload?.source_issue ?? null,
+    source_comment_id:candidate?.source_comment_id ?? payload?.source_comment_id ?? null,
+    human_authorized_by_user:true
+  });
+}
+
 async function rollbackQuietly(client) {
   try { await client.query("rollback"); } catch {}
 }
@@ -83,30 +109,18 @@ async function markNonApprovedDecision(client, review) {
     candidate_id:review.candidate_id,
     forUpdate:true
   });
-  if (current && TERMINAL_REGISTRATION.has(String(current.registration_state))) {
+  if (current && current.person_id) {
     throw new Error("CANDIDATE_REVIEW_AFTER_TERMINAL_REGISTRATION");
   }
 
-  if (!current) {
+  if (current) {
     await client.query(
-      `insert into atlas_v2.person_candidate_registration_states(
-         candidate_id,review_revision,registration_state,person_id,authoring_request_id,result_snapshot
-       ) values($1,$2,$3,null,null,null)`,
-      [review.candidate_id, review.revision, nextState]
-    );
-  } else {
-    await client.query(
-      `update atlas_v2.person_candidate_registration_states
-          set review_revision=$2,
-              registration_state=$3,
-              person_id=null,
-              authoring_request_id=null,
-              result_snapshot=null,
-              updated_at=now()
-        where candidate_id=$1`,
-      [review.candidate_id, review.revision, nextState]
+      `delete from atlas_v2.person_candidate_registration_states
+        where candidate_id=$1 and person_id is null`,
+      [review.candidate_id]
     );
   }
+
   return Object.freeze({
     candidate_id:review.candidate_id,
     review_revision:review.revision,
@@ -142,7 +156,8 @@ function createReviewedCandidateRegistrationService({
           registration = state === "APPROVED"
             ? await queueApprovedRevision(client, {
                 candidate_id:recorded.candidate_id,
-                review_revision:recorded.revision
+                review_revision:recorded.revision,
+                candidate_metadata:reviewedCandidateMetadata(recorded)
               })
             : await markNonApprovedDecision(client, recorded);
         }
@@ -292,6 +307,7 @@ module.exports = Object.freeze({
   NON_APPROVED_REGISTRATION_STATE,
   requiredCandidateRef,
   reviewedAuthoringRequest,
+  reviewedCandidateMetadata,
   exactLedgerSnapshot,
   createReviewedCandidateRegistrationService
 });
