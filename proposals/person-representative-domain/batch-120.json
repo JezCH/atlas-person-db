@@ -1,0 +1,147 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "dafa76de80c4faa6fd075704140626c9e1ca8f20",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 13. Record ten confirmed mathematics, astronomy, optics, and chemistry science targets as verify-only science_retained checkpoints. No Person domain write is requested; all ten must remain live Production knowledge until final cutover.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-13",
+    "reviewed_count": 10,
+    "science_target_count": 10,
+    "non_science_target_count": 0
+  },
+  "review_scope": {
+    "selection_rule": "Choose a low-ambiguity mathematics/astronomy/optics/chemistry cohort with verified live knowledge status and verified latest numbered-batch assignment provenance. Exclude genuine philosophy-science or technology-science boundary cases and any Person whose latest provenance is not established.",
+    "result_summary": {
+      "science_retained": 10
+    }
+  },
+  "entries": [],
+  "science_retained": [
+    {
+      "person_id": "0094adb0-1d76-4803-a295-623af66e372a",
+      "canonical_name_en": "Aryabhata",
+      "preferred_name_ko": "아리아바타",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-087.json",
+      "basis": "Aryabhata's representative identity is mathematics and mathematical astronomy, especially the Aryabhatiya and its treatment of arithmetic, algebra, trigonometry, and astronomical calculation. Under v2, mathematics and astronomy belong to science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Aryabhata_I/"
+      ]
+    },
+    {
+      "person_id": "1e73d444-828b-423b-8ffd-f30651277f47",
+      "canonical_name_en": "Al-Biruni",
+      "preferred_name_ko": "알비루니",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-084.json",
+      "basis": "Al-Biruni's representative identity spans mathematics, astronomy, physics, geodesy, and empirical measurement. His historical identity is predominantly scientific despite substantial historical and cultural writings.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Al-Biruni/"
+      ]
+    },
+    {
+      "person_id": "4c773e19-c309-4af5-aec9-e5d9db999416",
+      "canonical_name_en": "Brahmagupta",
+      "preferred_name_ko": "브라마굽타",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-086.json",
+      "basis": "Brahmagupta's representative identity is mathematics and astronomy, with major contributions to number systems, algebraic methods, and mathematical astronomy. The v2 target is science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Brahmagupta/"
+      ]
+    },
+    {
+      "person_id": "5eec83bb-14b4-4e4a-9ef6-aece12f6cda1",
+      "canonical_name_en": "Liu Hui",
+      "preferred_name_ko": "유휘",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-094.json",
+      "basis": "Liu Hui is represented by mathematics, especially his commentary on the Nine Chapters and work in geometry and numerical methods. Mathematics and formal inquiry belong to v2 science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Liu_Hui/"
+      ]
+    },
+    {
+      "person_id": "6c659196-ec7f-4ec8-9efe-a5e2e3ae8e8e",
+      "canonical_name_en": "Ibn al-Haytham",
+      "preferred_name_ko": "이븐 알하이삼",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-085.json",
+      "basis": "Ibn al-Haytham's representative identity is experimental and mathematical optics, vision science, astronomy, and physics. His Book of Optics and reform of physical inquiry make science the clear representative domain.",
+      "review_sources": [
+        "https://link.springer.com/chapter/10.1007/978-3-319-31903-2_2",
+        "https://pubmed.ncbi.nlm.nih.gov/24737194/"
+      ]
+    },
+    {
+      "person_id": "c94d5933-be6b-43e3-a7ca-5f7c9a6b9301",
+      "canonical_name_en": "Al-Battani",
+      "preferred_name_ko": "알바타니",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-088.json",
+      "basis": "Al-Battani's representative identity is observational astronomy and mathematics, including precise stellar, lunar, and planetary measurements and mathematical astronomical methods. The v2 target is science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Al-Battani/"
+      ]
+    },
+    {
+      "person_id": "d78866ad-a877-4a2a-9226-5cf2f73f5cba",
+      "canonical_name_en": "Srinivasa Ramanujan",
+      "preferred_name_ko": "스리니바사 라마누잔",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-082.json",
+      "basis": "Ramanujan's representative identity is pure mathematics, especially number theory, infinite series, continued fractions, and related analysis. Mathematics and formal inquiry are explicitly within v2 science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Ramanujan/"
+      ]
+    },
+    {
+      "person_id": "8fa5444d-6e2a-4734-a7d3-739496955a58",
+      "canonical_name_en": "Stefan Banach",
+      "preferred_name_ko": "스테판 바나흐",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-088.json",
+      "basis": "Banach's representative identity is pure mathematics and the foundation of modern functional analysis, with major work in topological vector spaces, measure, and integration. The v2 target is science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Banach/"
+      ]
+    },
+    {
+      "person_id": "a9375644-e94f-49fe-b679-53786e6eff06",
+      "canonical_name_en": "Leonardo Fibonacci",
+      "preferred_name_ko": "레오나르도 피보나치",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-087.json",
+      "basis": "Fibonacci's representative identity is mathematics, particularly arithmetic and number methods transmitted and developed through Liber Abaci. Under v2, mathematics is science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Fibonacci/"
+      ]
+    },
+    {
+      "person_id": "872a10bf-1779-4cb0-ae8c-ff79471d40c8",
+      "canonical_name_en": "Dmitri Mendeleev",
+      "preferred_name_ko": "드미트리 멘델레예프",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-082.json",
+      "basis": "Mendeleev's representative identity is chemistry, especially formulation of the periodic law and organization of the elements into the periodic system. The v2 target is science.",
+      "review_sources": [
+        "https://www.sciencehistory.org/education/scientific-biographies/julius-lothar-meyer-and-dmitri-ivanovich-mendeleev/"
+      ]
+    }
+  ]
+}
