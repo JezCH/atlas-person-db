@@ -1,0 +1,842 @@
+/* ATLAS UI V7 — Spacetime Instrument Tools
+ * Presentation-only layer for toolbar, telemetry, search results, Meanwhile,
+ * minimap and inspector. V6 owns the chronology canvas itself.
+ */
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] {
+  --spacetime-tools-ink: #121518;
+  --spacetime-tools-raised: #171b1e;
+  --spacetime-tools-raised-2: #1b2024;
+  --spacetime-tools-line: #30373c;
+  --spacetime-tools-line-soft: #252b30;
+  --spacetime-tools-text: #d6d3cc;
+  --spacetime-tools-muted: #7f888d;
+  --spacetime-tools-faint: #596166;
+  --spacetime-tools-metal: var(--atlas-honor-metal, #c0ae88);
+  --spacetime-tools-metal-strong: var(--atlas-honor-metal-strong, #d0bc91);
+  --spacetime-tools-warning: #c59c56;
+}
+
+/* TOOLBAR — an instrument rail, not a row of white controls. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 6px 2px 7px;
+  margin: 0 0 5px;
+  border: 0;
+  border-top: 1px solid var(--spacetime-tools-line-soft);
+  border-bottom: 1px solid var(--spacetime-tools-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--spacetime-tools-text);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls {
+  gap: 14px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls label,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera > span {
+  color: var(--spacetime-tools-muted);
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .08em;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input {
+  width: 205px;
+  min-width: 180px;
+  height: 28px;
+  padding: 0 6px;
+  border: 0;
+  border-bottom: 1px solid #4a5257;
+  border-radius: 0;
+  background: transparent;
+  color: #e7e3da;
+  box-shadow: none;
+  font-size: 11px;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input::placeholder {
+  color: #626a6f;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input:hover {
+  border-bottom-color: #70787d;
+  background: rgba(255,255,255,.012);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input:focus {
+  outline: none;
+  border-bottom-color: var(--spacetime-tools-metal);
+  background: rgba(192,174,136,.025);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera {
+  gap: 0;
+  border-left: 1px solid var(--spacetime-tools-line-soft);
+  padding-left: 10px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera > span {
+  margin-right: 5px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera output {
+  height: 28px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #a7adb0;
+  box-shadow: none;
+  font-size: 10px;
+  font-weight: 760;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button {
+  min-width: 27px;
+  padding: 0 7px;
+  border-left: 1px solid var(--spacetime-tools-line-soft);
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button:first-of-type {
+  border-left: 0;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera output {
+  min-width: 52px;
+  color: #ddd7ca;
+  font-variant-numeric: tabular-nums;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button:focus-visible {
+  background: rgba(255,255,255,.025);
+  color: #f0ece3;
+  outline: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button#spacetimeCameraZoomReset {
+  min-width: 42px;
+  margin-left: 4px;
+  color: #9f967f;
+  border-left: 1px solid #4b463d;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button:disabled {
+  background: transparent;
+  color: #4f575c;
+  border-color: var(--spacetime-tools-line-soft);
+}
+
+/* Precision legend becomes one quiet disclosure on the rail. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend {
+  margin-left: auto;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend > summary {
+  height: 28px;
+  padding: 0 4px 0 8px;
+  border: 0;
+  border-left: 1px solid var(--spacetime-tools-line-soft);
+  border-radius: 0;
+  background: transparent;
+  color: #8f979b;
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .035em;
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend > summary:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend > summary:focus-visible {
+  color: #ddd8cf;
+  background: rgba(255,255,255,.02);
+  outline: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend > summary::after {
+  color: #6e767b;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-content {
+  top: calc(100% + 5px);
+  right: 0;
+  gap: 10px;
+  padding: 9px 11px;
+  border: 1px solid #3a4247;
+  border-radius: 2px;
+  background: rgba(18,21,24,.985);
+  box-shadow: 0 14px 30px rgba(0,0,0,.30);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-content > strong {
+  color: #d5d1c8;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-content > span {
+  color: #959da1;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-content > small {
+  color: #697176;
+}
+
+/* SEARCH RESULTS — register strips rather than mini cards. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-results {
+  padding: 6px 2px 7px;
+  margin-bottom: 5px;
+  border: 0;
+  border-bottom: 1px solid var(--spacetime-tools-line-soft);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-results-head strong {
+  color: #c8c5be;
+  font-size: 10px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-results-head span {
+  color: var(--spacetime-tools-faint);
+  font-size: 9px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list {
+  gap: 4px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list button {
+  min-width: 170px;
+  max-width: 250px;
+  padding: 5px 7px 5px 8px;
+  border: 0;
+  border-left: 1px solid #42494e;
+  border-radius: 0;
+  background: rgba(255,255,255,.012);
+  box-shadow: none;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list button:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list button:focus-visible {
+  border-left-color: var(--spacetime-tools-metal);
+  background: rgba(192,174,136,.035);
+  outline: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list strong {
+  color: #dedad1;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list span {
+  color: #858e93;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list small {
+  color: #626b70;
+}
+
+/* STATUS — micro telemetry, pills only for warnings. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  min-height: 24px;
+  margin: 0 0 3px;
+  padding: 0 2px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-bottom: 1px solid var(--spacetime-tools-line-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row > span,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more-content > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex: 0 0 auto;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #6e777c;
+  font-size: 9px;
+  line-height: 22px;
+  white-space: nowrap;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row > span:first-child {
+  padding-left: 0;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row > span + span::before,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more-content > span + span::before {
+  content: "·";
+  margin-right: 5px;
+  color: #434a4e;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row b,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more-content b {
+  color: #aaaeb0;
+  font-weight: 760;
+  font-variant-numeric: tabular-nums;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more > summary {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 7px;
+  border: 0;
+  border-left: 1px solid var(--spacetime-tools-line-soft);
+  border-radius: 0;
+  background: transparent;
+  color: #676f74;
+  font-size: 8px;
+  font-weight: 740;
+  cursor: pointer;
+  list-style: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more > summary::-webkit-details-marker {
+  display: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more > summary::after {
+  content: "▾";
+  margin-left: 4px;
+  color: #50585d;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more[open] > summary::after {
+  content: "▴";
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more-content {
+  position: absolute;
+  z-index: 85;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: max-content;
+  padding: 5px 8px;
+  border: 1px solid #394146;
+  border-radius: 2px;
+  background: rgba(18,21,24,.985);
+  box-shadow: 0 12px 28px rgba(0,0,0,.28);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more[open] > .spacetime-status-more-content {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 0;
+  max-width: min(760px,80vw);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row .spacetime-integrity-status,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more-content .spacetime-integrity-status {
+  margin-left: 5px;
+  padding: 0 6px;
+  border: 1px solid rgba(197,156,86,.42);
+  border-radius: 2px;
+  background: rgba(197,156,86,.055);
+  color: #b79a65;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-integrity-status b {
+  color: #d1ae6d;
+}
+
+/* MEANWHILE is another instrument strip, not a parchment card. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile {
+  gap: 6px;
+  padding: 7px 2px;
+  margin: 0 0 6px;
+  border: 0;
+  border-bottom: 1px solid #3b352b;
+  border-radius: 0;
+  background: linear-gradient(90deg, rgba(192,174,136,.045), transparent 62%);
+  box-shadow: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile.is-empty {
+  min-height: 20px;
+  padding: 2px 2px 3px;
+  margin: 0 0 4px;
+  border: 0;
+  background: transparent;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile small {
+  color: #8f8063;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile.is-empty small {
+  color: #626a6f;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile strong {
+  color: #d0c4aa;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile.is-empty strong {
+  color: #858d91;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile span,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile.is-empty span {
+  color: #70787d;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-head button {
+  height: 24px;
+  padding: 0 6px;
+  border: 0;
+  border-left: 1px solid #4b4437;
+  border-radius: 0;
+  background: transparent;
+  color: #a89672;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions span {
+  padding: 2px 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #817762;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions b {
+  color: #aaa083;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities button {
+  min-width: 160px;
+  max-width: 240px;
+  padding: 4px 6px;
+  border: 0;
+  border-left: 1px solid #463f33;
+  border-radius: 0;
+  background: rgba(192,174,136,.018);
+  box-shadow: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities button:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities button:focus-visible {
+  border-left-color: var(--spacetime-tools-metal);
+  background: rgba(192,174,136,.055);
+  outline: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities strong {
+  color: #d3c9b6;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities span {
+  color: #807661;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities small {
+  color: #6a6254;
+}
+
+/* SIDECAR — minimap + inspector read as one instrument stack. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sidecar {
+  gap: 7px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap {
+  padding: 8px 0 0;
+  border: 0;
+  border-top: 1px solid #3a4247;
+  border-bottom: 1px solid #2e353a;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-head {
+  margin: 0 8px 6px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-head strong {
+  color: #aaaeb0;
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .08em;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-head span {
+  color: #5f676c;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-surface {
+  height: 112px;
+  border: 1px solid #353d42;
+  border-radius: 1px;
+  background: #101315;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.008);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-surface:focus-visible {
+  outline: 1px solid rgba(208,188,145,.62);
+  outline-offset: 1px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-viewport {
+  border: 1px solid var(--spacetime-tools-metal);
+  background: rgba(192,174,136,.045);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-selected {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border: 1px solid var(--spacetime-tools-metal);
+  background: #f1ece1;
+  box-shadow: 0 0 0 2px rgba(192,174,136,.14);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-status {
+  margin: 4px 7px 5px;
+  color: #5f676c;
+  font-size: 7.5px;
+}
+
+/* INSPECTOR — quiet before selection, stronger only after selection. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector {
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #343c41;
+  border-radius: 2px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.012), transparent 80px),
+    #15191c;
+  box-shadow: none;
+  color: var(--spacetime-tools-text);
+  scrollbar-color: #454d52 #171b1e;
+  transition: border-color 220ms ease, background 220ms ease;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty {
+  max-height: 58px;
+  min-height: 0;
+  padding: 8px 9px;
+  border-color: #2e353a;
+  background: #14181b;
+  color: #697176;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty > div {
+  gap: 2px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty small,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > small {
+  color: #636b70;
+  font-size: 8px;
+  font-weight: 760;
+  letter-spacing: .14em;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty strong {
+  color: #9ca2a4;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty p {
+  display: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person {
+  gap: 3px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #343c41;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > strong {
+  color: #e2ddd4;
+  font-family: var(--atlas-font-display, "Noto Serif KR", "Nanum Myeongjo", AppleMyungjo, Batang, Georgia, serif);
+  font-size: 20px;
+  font-weight: 620;
+  line-height: 1.2;
+  letter-spacing: -.015em;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > span {
+  color: #7b8489;
+  font-size: 10px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > p {
+  margin: 2px 0 0;
+  color: #9a927f;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > output {
+  margin-top: 3px;
+  padding: 3px 0 0;
+  border: 0;
+  border-top: 1px solid #4b4437;
+  border-radius: 0;
+  background: transparent;
+  color: #bba77e;
+  font-size: 8px;
+  font-weight: 730;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions {
+  grid-template-columns: repeat(5,minmax(0,1fr));
+  gap: 0;
+  border-bottom: 1px solid #2f363b;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button {
+  height: 27px;
+  padding: 0 3px;
+  border: 0;
+  border-left: 1px solid #2f363b;
+  border-radius: 0;
+  background: transparent;
+  color: #7c858a;
+  font-size: 8px;
+  font-weight: 740;
+  box-shadow: none;
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button:first-child {
+  border-left: 0;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button:focus-visible {
+  border-color: #2f363b;
+  background: rgba(255,255,255,.018);
+  color: #d0ccc4;
+  outline: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] #spacetimeDetailPerson {
+  border-color: #2f363b;
+  background: rgba(192,174,136,.03);
+  color: #b8a47d;
+  box-shadow: inset 0 -1px 0 rgba(192,174,136,.48);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button:disabled {
+  background: transparent;
+  color: #464d51;
+  opacity: 1;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-section-title {
+  min-height: 20px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-section-title strong {
+  color: #898f92;
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-section-title span {
+  min-width: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #5f676c;
+  font-size: 8px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activities {
+  gap: 0;
+  border-top: 1px solid #2e3539;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity {
+  gap: 5px;
+  padding: 6px 1px 7px;
+  border: 0;
+  border-bottom: 1px solid #2e3539;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity.is-selected {
+  border-color: #403a31;
+  background: linear-gradient(90deg, rgba(192,174,136,.045), transparent 72%);
+  box-shadow: inset 2px 0 0 rgba(192,174,136,.62);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select {
+  padding: 2px 4px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select strong {
+  color: #c8c6c0;
+  font-size: 9px;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select small {
+  color: #6f787d;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select > span:nth-child(2) {
+  color: #788186;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select em {
+  color: #a28f67;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select:focus-visible {
+  border-radius: 0;
+  background: rgba(255,255,255,.018);
+}
+
+/* Evidence becomes stacked instrument readout rather than nested white cards. */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence {
+  border-top-color: #333b40;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-title strong {
+  color: #9ea5a8;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-title span {
+  color: #646d72;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-row,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-evidence .spacetime-selection-evidence-row {
+  padding: 6px 7px;
+  border: 1px solid #31383d;
+  border-radius: 1px;
+  background: #131719;
+  box-shadow: none;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-head strong {
+  color: #aeb2b2;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-head span,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-meta span,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-place,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-sources {
+  color: #717a7f;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-place b,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-sources b {
+  color: #92999c;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-note,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-disclaimer {
+  color: #586166;
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-disclaimer {
+  border-top-color: #30383d;
+}
+
+/* V8 owns responsive hierarchy. V7 changes only the skin at current breakpoints. */
+@media (max-width: 760px) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-toolbar {
+    padding: 5px 2px 6px;
+    gap: 4px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input {
+    width: 100%;
+    min-width: 0;
+    height: 36px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera output {
+    height: 36px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row {
+    gap: 0;
+    padding-bottom: 2px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more {
+    flex: 0 0 100%;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more > summary {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more-content {
+    position: static;
+    min-width: 0;
+    width: 100%;
+    margin-top: 3px;
+    border: 0;
+    border-top: 1px solid #30373c;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap {
+    padding: 6px 0 0;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-surface {
+    height: 92px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty {
+    max-height: 52px;
+  }
+}
+
+@media (max-width: 560px) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-surface {
+    height: 84px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend > summary,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list button,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button {
+    transition: none;
+  }
+}
