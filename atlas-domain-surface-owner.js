@@ -97,7 +97,7 @@
   function ensureSpacetimeDomainAssets() {
     ensureStylesheet(
       'link[data-atlas-person-spacetime-domain-colors="true"]',
-      "./atlas-person-spacetime-domain-colors.css?v=20260912-religion-silver-v5",
+      "./atlas-person-spacetime-domain-colors.css?v=20261003-ui-v6-canvas-v1",
       "atlasPersonSpacetimeDomainColors"
     );
 
