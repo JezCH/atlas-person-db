@@ -6,12 +6,14 @@ const { applyAuthoringMigrations } = require("./atlas-authoring-migrations.js");
 const { inspectAuthoringReadiness } = require("./atlas-authoring-readiness.js");
 const { verifyGitHubActionsOidc } = require("./atlas-github-oidc.js");
 const { applyPolityPlaceFunctionAuthorityBackfill } = require("./atlas-polity-place-function-authority-backfill.js");
+const { bootstrapRegistrationQueue } = require("./atlas-registration-queue-bootstrap-service.js");
 
 const TRANSPORT_MARKER = "ATLAS_AUTHORING_TRANSPORT_V2";
 const TRANSPORT_VERSION = 2;
 const OPERATION_APPLY = "apply_manifest";
 const OPERATION_BOOTSTRAP = "bootstrap";
 const OPERATION_PLACE_AUTHORITY_BACKFILL = "backfill_polity_place_function_authority";
+const OPERATION_REGISTRATION_QUEUE_BOOTSTRAP = "bootstrap_registration_queue";
 const MANIFEST_PATH_RE = /^authoring\/requests\/[A-Za-z0-9._-]+\.json$/;
 const SHA_RE = /^[0-9a-f]{40}$/;
 
@@ -78,6 +80,14 @@ function requireBootstrapPayload(body) {
   if (operation !== OPERATION_BOOTSTRAP) throw new Error("AUTHORING_OPERATION_UNSUPPORTED");
   const envelope = requireTransportEnvelope(body);
   if (body?.manifest != null || body?.manifest_path != null) throw new Error("AUTHORING_BOOTSTRAP_MANIFEST_FORBIDDEN");
+  return { ...envelope, operation };
+}
+
+function requireRegistrationQueueBootstrapPayload(body) {
+  const operation = String(body?.operation || "").trim();
+  if (operation !== OPERATION_REGISTRATION_QUEUE_BOOTSTRAP) throw new Error("AUTHORING_OPERATION_UNSUPPORTED");
+  const envelope = requireTransportEnvelope(body);
+  if (body?.manifest != null || body?.manifest_path != null) throw new Error("AUTHORING_REGISTRATION_QUEUE_BOOTSTRAP_MANIFEST_FORBIDDEN");
   return { ...envelope, operation };
 }
 
@@ -148,6 +158,7 @@ function createAuthoringApplyHandler({
       const body = parseBody(req);
       const operation = String(body?.operation || OPERATION_APPLY).trim();
       if (operation === OPERATION_BOOTSTRAP) payload = requireBootstrapPayload(body);
+      else if (operation === OPERATION_REGISTRATION_QUEUE_BOOTSTRAP) payload = requireRegistrationQueueBootstrapPayload(body);
       else if (operation === OPERATION_PLACE_AUTHORITY_BACKFILL) payload = requirePlaceAuthorityBackfillPayload(body);
       else if (operation === OPERATION_APPLY) payload = requireApplyPayload(body);
       else throw new Error("AUTHORING_OPERATION_UNSUPPORTED");
@@ -190,6 +201,21 @@ function createAuthoringApplyHandler({
           bootstrap_complete: true,
           ready: true,
           readiness
+        });
+      }
+
+      if (payload.operation === OPERATION_REGISTRATION_QUEUE_BOOTSTRAP) {
+        const outcome = await bootstrapRegistrationQueue(client);
+        return json(res, 200, {
+          ok:true,
+          marker:TRANSPORT_MARKER,
+          transport_marker:TRANSPORT_MARKER,
+          transport_version:TRANSPORT_VERSION,
+          operation:OPERATION_REGISTRATION_QUEUE_BOOTSTRAP,
+          runtime_sha:payload.runtimeSha,
+          authoring_sha:payload.authoringSha,
+          committed:true,
+          ...outcome
         });
       }
 
@@ -267,5 +293,7 @@ module.exports = Object.freeze({
   TRANSPORT_VERSION,
   OPERATION_APPLY,
   OPERATION_BOOTSTRAP,
-  OPERATION_PLACE_AUTHORITY_BACKFILL
+  OPERATION_PLACE_AUTHORITY_BACKFILL,
+  OPERATION_REGISTRATION_QUEUE_BOOTSTRAP,
+  requireRegistrationQueueBootstrapPayload
 });
