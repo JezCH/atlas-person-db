@@ -33,6 +33,27 @@ function hash(value) {
   return crypto.createHash("sha256").update(JSON.stringify(stable(value))).digest("hex");
 }
 
+function normalizeCandidateMetadata(raw = {}) {
+  const name = text(raw?.name);
+  if (!name) throw new Error("CANDIDATE_NAME_REQUIRED");
+  const lookup_names = [...new Set(
+    (Array.isArray(raw?.lookup_names) ? raw.lookup_names : [name])
+      .map(text)
+      .filter(Boolean)
+  )];
+  if (!lookup_names.length) lookup_names.push(name);
+  return Object.freeze({
+    name,
+    lookup_names:Object.freeze(lookup_names),
+    representative_domain:raw?.representative_domain == null ? null : text(raw.representative_domain) || null,
+    legacy_priority:raw?.legacy_priority == null ? null : text(raw.legacy_priority) || null,
+    origin:raw?.origin == null ? "reviewed_candidate" : text(raw.origin) || "reviewed_candidate",
+    source_issue:raw?.source_issue == null ? null : Number(raw.source_issue),
+    source_comment_id:raw?.source_comment_id == null ? null : Number(raw.source_comment_id),
+    human_authorized_by_user:raw?.human_authorized_by_user === true
+  });
+}
+
 function normalizedCandidateRef(candidateId, reviewRevision) {
   const candidate_id = text(candidateId);
   const review_revision = Number(reviewRevision);
@@ -146,8 +167,9 @@ function assertHumanApproved(review) {
   }
 }
 
-async function queueApprovedRevision(client, { candidate_id, review_revision } = {}) {
+async function queueApprovedRevision(client, { candidate_id, review_revision, candidate_metadata } = {}) {
   const ref = normalizedCandidateRef(candidate_id, review_revision);
+  const metadata = normalizeCandidateMetadata(candidate_metadata);
   await lockCandidate(client, ref.candidate_id);
   const review = await loadReviewRevision(client, { ...ref, forUpdate:true });
   assertHumanApproved(review);
@@ -155,9 +177,17 @@ async function queueApprovedRevision(client, { candidate_id, review_revision } =
   const current = await loadRegistrationState(client, { candidate_id:ref.candidate_id, forUpdate:true });
   if (!current) {
     await client.query(
-      `insert into atlas_v2.person_candidate_registration_states(candidate_id,review_revision,registration_state)
-       values($1,$2,'QUEUED')`,
-      [ref.candidate_id, ref.review_revision]
+      `insert into atlas_v2.person_candidate_registration_states(
+         candidate_id,review_revision,registration_state,person_id,
+         name,lookup_names,representative_domain,legacy_priority,origin,
+         source_issue,source_comment_id,human_authorized_by_user
+       ) values($1,$2,'QUEUED',null,$3,$4::text[],$5,$6,$7,$8,$9,$10)`,
+      [
+        ref.candidate_id, ref.review_revision,
+        metadata.name, metadata.lookup_names, metadata.representative_domain,
+        metadata.legacy_priority, metadata.origin, metadata.source_issue,
+        metadata.source_comment_id, metadata.human_authorized_by_user
+      ]
     );
     return Object.freeze({ ...ref, registration_state:"QUEUED", replay:false });
   }
@@ -186,9 +216,22 @@ async function queueApprovedRevision(client, { candidate_id, review_revision } =
             person_id=null,
             authoring_request_id=null,
             result_snapshot=null,
+            name=$3,
+            lookup_names=$4::text[],
+            representative_domain=$5,
+            legacy_priority=$6,
+            origin=$7,
+            source_issue=$8,
+            source_comment_id=$9,
+            human_authorized_by_user=$10,
             updated_at=now()
       where candidate_id=$1`,
-    [ref.candidate_id, ref.review_revision]
+    [
+      ref.candidate_id, ref.review_revision,
+      metadata.name, metadata.lookup_names, metadata.representative_domain,
+      metadata.legacy_priority, metadata.origin, metadata.source_issue,
+      metadata.source_comment_id, metadata.human_authorized_by_user
+    ]
   );
   return Object.freeze({ ...ref, registration_state:"QUEUED", replay:false });
 }
@@ -251,6 +294,7 @@ module.exports = Object.freeze({
   TERMINAL_REGISTRATION,
   REGISTRATION_TRANSITIONS,
   normalizeReviewRevision,
+  normalizeCandidateMetadata,
   loadReviewRevision,
   loadLatestReviewRevision,
   loadRegistrationState,
