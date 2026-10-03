@@ -1,0 +1,99 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "dfa7d9b47e93bc615e776ad5c0b3b9099204f596",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 17. Resolve a focused philosophy/religion boundary cohort from legacy knowledge using current approved Human Person Authoring provenance. Philosophy and scholarly intellectual authorship map to culture when religious office is not the defining representative identity; institutional religious leadership and tradition-forming authority map to religion. No science_retained checkpoint is used in this unit.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-17",
+    "reviewed_count": 5,
+    "science_target_count": 0,
+    "non_science_target_count": 5
+  },
+  "review_scope": {
+    "selection_rule": "Choose five currently-live knowledge Persons from the genuinely unreviewed pool with exact approved atlas-human-person-authoring/v1 provenance and low-enough ambiguity to apply the Unit 16 philosophy/religion representative-identity rule. Defer stronger mixed-identity cases such as Maimonides and Ibn ʿArabī.",
+    "result_summary": {
+      "culture": 3,
+      "religion": 2
+    }
+  },
+  "entries": [
+    {
+      "person_id": "0541b7bb-0262-44ca-9358-e76423551fba",
+      "canonical_name_en": "Adi Shankara",
+      "preferred_name_ko": "아디 샹카라",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-adi-shankara-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:adi-shankara:person-only:v1",
+      "basis": "Shankara's representative historical identity in the reviewed scholarship is the preeminent Advaita Vedanta philosopher who systematized metaphysics, language, epistemology, and philosophical pedagogy. Claims that he established the monastic system are presented as traditional or purported rather than the strongest historical basis. Under v2, philosophy and intellectual history therefore place the representative domain in culture.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/shankara/"
+      ]
+    },
+    {
+      "person_id": "c06c962b-c180-46df-98e8-77a4882e25de",
+      "canonical_name_en": "Kundakunda",
+      "preferred_name_ko": "쿤다쿤다",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-kundakunda-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:kundakunda:person-only:v1",
+      "basis": "Oxford scholarship treats Kundakunda as one of the earliest Jain philosophers and as foundational for Jaina philosophy of mind, epistemology, and theories of the self. The reviewed provenance does not establish a defining institutional religious office that outweighs this philosophical authorship. Under v2, his representative domain is culture.",
+      "review_sources": [
+        "https://academic.oup.com/edited-volume/27982/chapter-abstract/211664346"
+      ]
+    },
+    {
+      "person_id": "a0fa03e8-3233-4280-818b-b6f7e623224a",
+      "canonical_name_en": "Gorampa Sonam Senge",
+      "preferred_name_ko": "고람파",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-gorampa-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:gorampa:person-only:v1",
+      "basis": "Gorampa held monastic offices and founded a monastery, but the reviewed scholarly record identifies him primarily as one of the most widely studied Sakya philosophers, with his distinctive Madhyamaka arguments and philosophical texts defining his lasting historical identity. Unlike a tradition founder or supreme lineage authority, his representative significance is philosophical scholarship, so v2 culture is primary.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/gorampa/",
+        "https://treasuryoflives.org/biographies/view/Gorampa/TBRC_P1042"
+      ]
+    },
+    {
+      "person_id": "c45ebc93-61cc-4d98-8bd7-52fa77470685",
+      "canonical_name_en": "Dolpopa Sherab Gyeltsen",
+      "preferred_name_ko": "돌포파",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-dolpopa-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:dolpopa:person-only:v1",
+      "basis": "Dolpopa was the fourth throne holder of Jonang Monastery and the figure credited with establishing the Jonang tradition as an independent religious tradition through his teachings and institutional leadership. Although philosophically important, tradition-forming religious authority is the defining representative identity, so v2 religion is primary.",
+      "review_sources": [
+        "https://treasuryoflives.org/biographies/view/Dolpopa-Sherab-Gyeltsen/2670",
+        "https://treasuryoflives.org/tradition/Jonang"
+      ]
+    },
+    {
+      "person_id": "b5a01c64-4995-471d-8062-b40948669fa1",
+      "canonical_name_en": "Saadia Gaon",
+      "preferred_name_ko": "사디아 가온",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-saadia-gaon-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:saadia-gaon:person-only:v1",
+      "basis": "Saadia was a philosopher and theologian, but his representative historical identity also includes decisive rabbinic authority and leadership as head Rabbi of the Sura Academy, with major work defending and systematizing Jewish religious tradition and law. Under v2, this defining institutional religious authority places him in religion.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/saadya/"
+      ]
+    }
+  ],
+  "science_retained": []
+}
