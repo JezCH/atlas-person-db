@@ -13,6 +13,7 @@ const {
   bindRegistrationQueueCandidate
 } = require("../server/atlas-registration-queue-read-service.js");
 const { createHumanAuthoringService } = require("../server/atlas-human-authoring-service.js");
+const { registrationQueueCandidateFromReview } = require("../server/atlas-reviewed-candidate-registration-service.js");
 
 const PERSON_ID = "11111111-1111-4111-8111-111111111111";
 const OTHER_PERSON_ID = "22222222-2222-4222-8222-222222222222";
@@ -55,6 +56,35 @@ test("queue read returns every DB row whose person_id is NULL with usable candid
   assert.equal(queue.summary.registered_bound, 1);
   assert.equal(queue.summary.dangling_person_ids, 0);
   assert.equal(calls.length, 2);
+});
+
+test("approved review materializes canonical queue candidate metadata without name matching", () => {
+  const candidate = registrationQueueCandidateFromReview({
+    candidate_id:"commerce-new-001",
+    review_state:"APPROVED",
+    review_checkpoint:"review-1",
+    payload_hash:"hash-1",
+    reviewed_payload:{
+      authoring_request:{
+        person:{ canonical_name_en:"Example Merchant" },
+        representative_domain:"commerce"
+      },
+      priority:"SS",
+      origin:"reviewed_intake"
+    }
+  });
+  assert.deepEqual(candidate, {
+    candidate_id:"commerce-new-001",
+    name:"Example Merchant",
+    representative_domain:"commerce",
+    priority:"SS",
+    review_metadata:{
+      review_state:"APPROVED",
+      review_checkpoint:"review-1",
+      payload_hash:"hash-1",
+      origin:"reviewed_intake"
+    }
+  });
 });
 
 test("canonical queue admission inserts or refreshes the same DB row with person_id NULL", async () => {
