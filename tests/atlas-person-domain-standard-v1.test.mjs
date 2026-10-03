@@ -266,7 +266,8 @@ test('Batch 073 records the user-reviewed Nodira correction and two new governan
   assert.equal(byName.get('Nodira').previous_representative_domain, 'governance');
   assert.equal(byName.get('Nodira').supersedes_source, 'batch-072.json');
   assert.match(applyClient, /expected_previous/);
-  assert.match(applyClient, /applyOnlyChanged\(\[\.\.\.plan\.assignments\.values\(\)\], MODE\)/);\n  assert.match(applyClient, /validateHumanAuthoringOrigin/);
+  assert.match(applyClient, /applyOnlyChanged\(\[\.\.\.plan\.assignments\.values\(\)\], MODE\)/);
+  assert.match(applyClient, /validateHumanAuthoringOrigin/);
 });
 
 test('Pythagoras HOLD history is preserved and retired by the later reviewed knowledge decision', () => {
