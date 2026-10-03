@@ -9676,5 +9676,9 @@
       "source_comment_id": null,
       "human_authorized_by_user": true
     }
-  ]
+  ],
+  "runtime_authority": false,
+  "status": "historical_bootstrap_artifact",
+  "retired_from_live_membership": "2026-10-03",
+  "note": "Historical admission/bootstrap artifact only. Current registration-queue authority is atlas_v2.person_candidate_registration_states and membership is person_id IS NULL."
 }
