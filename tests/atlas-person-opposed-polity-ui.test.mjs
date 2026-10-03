@@ -17,12 +17,13 @@ test('main Person rows render opposed counterparty polity together with its rela
 });
 
 test('Person detail keeps the opposed polity and relation for historical context', () => {
-  const detailStart = source.indexOf('function activityHtml(activity)');
+  const detailStart = source.indexOf('function activityHtml(activity, index = 0)');
   const detailEnd = source.indexOf('function renderDetail(person)');
   assert.ok(detailStart >= 0 && detailEnd > detailStart);
   const detail = source.slice(detailStart, detailEnd);
 
-  assert.match(detail, /const relation = activity\.relation\?\.code/);
+  assert.match(detail, /const relationCode = activity\.relation\?\.code/);
+  assert.match(detail, /const relation = RELATION_FILTER_LABELS\[relationCode\] \|\| relationCode/);
   assert.match(detail, /const polity = activity\.polity\?\.display_name/);
   assert.match(detail, /person-relation-badge/);
   assert.match(detail, /<h4>\$\{escapeHtml\(polity\)\}<\/h4>/);
