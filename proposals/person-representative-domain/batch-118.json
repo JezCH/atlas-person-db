@@ -1,0 +1,146 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "85868264cd917b9d20630f9ad17f12250851201c",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 11. Record ten confirmed modern-physics science targets as verify-only science_retained checkpoints. No Person domain write is requested; all ten must remain live Production knowledge until final cutover.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-11",
+    "reviewed_count": 10,
+    "science_target_count": 10,
+    "non_science_target_count": 0
+  },
+  "review_scope": {
+    "selection_rule": "Choose a coherent modern-physics and astrophysics cohort with clear representative scientific identity and verified latest numbered-batch provenance. Exclude genuine philosophy/science boundary cases and Persons whose latest provenance is not yet established.",
+    "result_summary": {
+      "science_retained": 10
+    }
+  },
+  "entries": [],
+  "science_retained": [
+    {
+      "person_id": "015197eb-6ddc-454a-8a70-96425fbc4799",
+      "canonical_name_en": "Subrahmanyan Chandrasekhar",
+      "preferred_name_ko": "수브라마니안 찬드라세카르",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-089.json",
+      "basis": "Chandrasekhar's representative identity is theoretical astrophysics, especially stellar structure and evolution. This is directly within the v2 science scope.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/physics/1983/chandrasekhar/facts/"
+      ]
+    },
+    {
+      "person_id": "0e20b282-1708-4f15-b979-12deff85d569",
+      "canonical_name_en": "Niels Bohr",
+      "preferred_name_ko": "닐스 보어",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-082.json",
+      "basis": "Bohr is represented by foundational theoretical physics on atomic structure and quantum theory. His representative identity is unambiguously scientific.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/physics/1922/bohr/facts/"
+      ]
+    },
+    {
+      "person_id": "31c7191c-9da5-47d1-9460-8ba9528bf1b7",
+      "canonical_name_en": "Erwin Schrödinger",
+      "preferred_name_ko": "에르빈 슈뢰딩거",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-082.json",
+      "basis": "Schrödinger's representative identity is theoretical physics and the wave-mechanical formulation of quantum mechanics. His philosophical interests are secondary to that scientific identity.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/physics/1933/schrodinger/facts/"
+      ]
+    },
+    {
+      "person_id": "5b3fc484-77e5-47d6-a57f-9d7477fe76a0",
+      "canonical_name_en": "Marie Curie",
+      "preferred_name_ko": "마리 퀴리",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-012.json",
+      "basis": "Curie's representative identity is experimental physics and chemistry, especially research on radioactivity and the discovery and study of radium and polonium. The v2 target is science.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/physics/1903/marie-curie/facts/"
+      ]
+    },
+    {
+      "person_id": "70294b4e-18ae-44df-9b07-60252cfda913",
+      "canonical_name_en": "Enrico Fermi",
+      "preferred_name_ko": "엔리코 페르미",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-087.json",
+      "basis": "Fermi is represented by theoretical and experimental nuclear physics, including neutron-induced reactions and foundational work in modern physics. The v2 target is science.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/physics/1938/fermi/facts/"
+      ]
+    },
+    {
+      "person_id": "c3586f40-8c6d-4d97-a818-da00dc57b22a",
+      "canonical_name_en": "Paul Dirac",
+      "preferred_name_ko": "폴 디랙",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-088.json",
+      "basis": "Dirac's representative identity is theoretical physics, particularly relativistic quantum theory and atomic theory. This falls directly within v2 science.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/physics/1933/dirac/facts/"
+      ]
+    },
+    {
+      "person_id": "dccd4b69-294c-4839-90de-8d48180377fa",
+      "canonical_name_en": "Werner Heisenberg",
+      "preferred_name_ko": "베르너 하이젠베르크",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-082.json",
+      "basis": "Heisenberg's representative identity is theoretical physics and the creation of quantum mechanics, including the uncertainty relation. The v2 target is science.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/physics/1932/heisenberg/facts/"
+      ]
+    },
+    {
+      "person_id": "899c7d6f-5012-4371-be36-14ccb7459b66",
+      "canonical_name_en": "Abdus Salam",
+      "preferred_name_ko": "압두스 살람",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-089.json",
+      "basis": "Salam's representative identity is theoretical particle physics, especially electroweak unification. The v2 target is science.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/physics/1979/salam/facts/"
+      ]
+    },
+    {
+      "person_id": "a55eb02b-e452-4ac3-8329-446965ac2b37",
+      "canonical_name_en": "Wilhelm Röntgen",
+      "preferred_name_ko": "빌헬름 뢴트겐",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-092.json",
+      "basis": "Röntgen's representative identity is experimental physics, defined by the discovery and investigation of X-rays. The v2 target is science.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/physics/1901/rontgen/facts/"
+      ]
+    },
+    {
+      "person_id": "c0d04b34-c399-44fe-bbd9-897dbd826146",
+      "canonical_name_en": "Satyendra Nath Bose",
+      "preferred_name_ko": "사티엔드라 나트 보스",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-094.json",
+      "basis": "Bose's representative identity is theoretical physics and quantum statistics, especially the work that led to Bose-Einstein statistics. The v2 target is science.",
+      "review_sources": [
+        "https://www.aps.org/apsnews/2005/10/this-month-in-physics-history"
+      ]
+    }
+  ]
+}
