@@ -1,0 +1,110 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "6f9711be5eedf1286ca29494c73b71e6a2daaf93",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 07. Reclassify one bounded 8-Person economic/social-systems boundary slice from legacy knowledge into commerce, culture, and technology. Every write requires live Production previous_domain=knowledge; any drift fails closed.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-07",
+    "reviewed_count": 8,
+    "science_target_count": 0,
+    "non_science_target_count": 8
+  },
+  "review_scope": {
+    "selection_rule": "Use a deliberately smaller boundary unit to test the v2 separation between economic thought (commerce), social/historical thought (culture), and applied industrial systems (technology) without forcing ambiguous cases into a larger batch.",
+    "result_summary": {
+      "commerce": 5,
+      "culture": 2,
+      "technology": 1
+    }
+  },
+  "entries": [
+    {
+      "person_id": "2cd3c689-feeb-4364-9e2d-0e51a82a8963",
+      "canonical_name_en": "Adam Smith",
+      "preferred_name_ko": "애덤 스미스",
+      "representative_domain": "commerce",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-009.json",
+      "basis": "V2 commerce explicitly includes economic systems and economic thought when those are the representative historical identity. Smith's durable global identity is as a foundational political economist and author of The Wealth of Nations, despite his moral-philosophy career.",
+      "review_sources": ["https://www.econlib.org/library/Enc/bios/Smith.html"]
+    },
+    {
+      "person_id": "8f4d7038-013d-47f6-b6ff-41ed3bb79243",
+      "canonical_name_en": "David Ricardo",
+      "preferred_name_ko": "데이비드 리카도",
+      "representative_domain": "commerce",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-009.json",
+      "basis": "V2 commerce includes economic thought. Ricardo is represented primarily as a classical economist whose major contributions concern political economy, trade, rent, value, and distribution.",
+      "review_sources": ["https://www.econlib.org/library/Enc/bios/Ricardo.html"]
+    },
+    {
+      "person_id": "5fd732cd-5b2a-4833-892f-6da88fa0d7c7",
+      "canonical_name_en": "John Maynard Keynes",
+      "preferred_name_ko": "존 메이너드 케인스",
+      "representative_domain": "commerce",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-009.json",
+      "basis": "V2 commerce includes economic systems and economic thought. Keynes is the namesake and foundational theorist of Keynesian macroeconomics and is represented historically above all as an economist.",
+      "review_sources": [
+        "https://www.imf.org/external/pubs/ft/fandd/basics/4_keynes.htm",
+        "https://www.econlib.org/library/Enc/bios/Keynes.html"
+      ]
+    },
+    {
+      "person_id": "0177f298-1658-4f1b-815e-ced1296ebdb6",
+      "canonical_name_en": "Milton Friedman",
+      "preferred_name_ko": "밀턴 프리드먼",
+      "representative_domain": "commerce",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-009.json",
+      "basis": "V2 commerce includes economic thought. Friedman is represented by monetary economics, consumption analysis, stabilization policy, and the Chicago school of economics.",
+      "review_sources": ["https://www.nobelprize.org/prizes/economic-sciences/1976/friedman/facts/"]
+    },
+    {
+      "person_id": "ddd3df15-6ae3-406e-9b47-6bc1efdf74c0",
+      "canonical_name_en": "Elinor Ostrom",
+      "preferred_name_ko": "엘리너 오스트롬",
+      "representative_domain": "commerce",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-094.json",
+      "basis": "V2 commerce includes economic governance and economic systems when representative. Ostrom's prize-recognized contribution is the analysis of economic governance, especially the commons.",
+      "review_sources": ["https://www.nobelprize.org/prizes/economic-sciences/2009/ostrom/facts/"]
+    },
+    {
+      "person_id": "ee2b07d6-f28a-4252-b437-e3e35f43755d",
+      "canonical_name_en": "Karl Marx",
+      "preferred_name_ko": "카를 마르크스",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-007.json",
+      "basis": "V2 culture includes philosophy, history, and social thought. Marx's economic analysis is central, but his representative identity spans philosophy of history, social and political philosophy, ideology critique, and a general theory of society; the broader humanities/social-thought identity is more faithful than treating him as an economist alone.",
+      "review_sources": ["https://plato.stanford.edu/entries/marx/"]
+    },
+    {
+      "person_id": "abc01682-4ad1-43bf-a5d9-d665140daf3b",
+      "canonical_name_en": "Ibn Khaldun",
+      "preferred_name_ko": "이븐 할둔",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-046.json",
+      "basis": "V2 culture includes history and social thought. Ibn Khaldun is represented principally as a historian and theorist of society, state formation, group solidarity, and historical change rather than as a specialist economist.",
+      "review_sources": ["https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Ibn_Khald%C5%ABn"]
+    },
+    {
+      "person_id": "25a1dc73-1685-4970-83b8-60d3e5766aca",
+      "canonical_name_en": "Frederick Winslow Taylor",
+      "preferred_name_ko": "프레더릭 윈즐로 테일러",
+      "representative_domain": "technology",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-009.json",
+      "basis": "V2 technology includes engineering and applied systems. Taylor was a mechanical engineer whose scientific-management methods applied engineering-style measurement, process design, and efficiency systems to industrial work; his representative identity is applied industrial technology/engineering rather than abstract scholarship.",
+      "review_sources": ["https://blogs.loc.gov/inside_adams/2024/07/frederick-winslow-taylor-scientific-management/"]
+    }
+  ]
+}
