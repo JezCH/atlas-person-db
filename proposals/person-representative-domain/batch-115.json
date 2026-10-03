@@ -1,0 +1,142 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "f811d68084752901321407bf56022651c8d09b8b",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 08. Reclassify one bounded 8-Person Human Authoring-origin philosophy slice from legacy knowledge to culture. Every correction must prove its approved authoring origin and still observe live Production previous_domain=knowledge; any provenance or state drift fails closed.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-08",
+    "reviewed_count": 8,
+    "science_target_count": 0,
+    "non_science_target_count": 8
+  },
+  "review_scope": {
+    "selection_rule": "Exercise the newly added Human Authoring-origin correction path on eight current Production knowledge Persons whose representative identity is clearly philosophy, logic, epistemology, or metaphysics rather than natural/formal science or institutional religious leadership.",
+    "result_summary": {
+      "culture": 8
+    }
+  },
+  "entries": [
+    {
+      "person_id": "e762da53-76d6-425f-9baa-ca23735f6bb7",
+      "canonical_name_en": "Asaṅga",
+      "preferred_name_ko": "아상가",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260928-asanga.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260928:asanga:gupta:v1",
+      "basis": "V2 culture includes philosophy and humanities. Asaṅga is represented by his foundational systematization of Yogācāra Buddhist philosophy; monastic context does not outweigh the philosophical identity of this Person record.",
+      "review_sources": [
+        "https://academic.oup.com/reference/62340/reference-article-abstract/554139437",
+        "https://www.jstage.jst.go.jp/article/gbs/1/1/1_4/_html/-char/en"
+      ]
+    },
+    {
+      "person_id": "c98582af-bf05-430c-b675-630d20445c25",
+      "canonical_name_en": "Dharmakīrti",
+      "preferred_name_ko": "다르마키르티",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260928-dharmakirti.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260928:dharmakirti:vardhana:v1",
+      "basis": "V2 culture includes philosophy, logic, and humanities. Dharmakīrti is represented by Buddhist epistemology, philosophy of language, inference, and logic rather than natural science or institutional religious leadership.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/dharmakiirti/",
+        "https://academic.oup.com/reference/62340/reference-article-abstract/571451285"
+      ]
+    },
+    {
+      "person_id": "32a21163-7211-4abf-9468-9c0881ab4e82",
+      "canonical_name_en": "Gaṅgeśa",
+      "preferred_name_ko": "강게샤",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-gangesa-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:gangesa:person-only:v1",
+      "basis": "V2 culture includes philosophy, logic, and humanities. Gaṅgeśa is the pivotal Navya-Nyāya philosopher whose representative work concerns epistemology, inference, language, and critical reasoning.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/gangesa/",
+        "https://academic.oup.com/edited-volume/27982/chapter/211656615"
+      ]
+    },
+    {
+      "person_id": "92398f0a-60d9-4781-b04b-2d73c0077cc0",
+      "canonical_name_en": "al-Fārābī",
+      "preferred_name_ko": "알파라비",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-al-farabi-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:al-farabi:person-only:v1",
+      "basis": "V2 culture includes philosophy and humanities. Al-Fārābī is represented above all as a philosopher and logician, with major work in metaphysics, political philosophy, logic, and music theory.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/al-farabi/",
+        "https://www.iranicaonline.org/articles/farabi-i/"
+      ]
+    },
+    {
+      "person_id": "68a8c8b9-eabc-45de-b23f-eac21f56b594",
+      "canonical_name_en": "Suhrawardī",
+      "preferred_name_ko": "수흐라와르디",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-suhrawardi-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:suhrawardi:person-only:v1",
+      "basis": "V2 culture includes philosophy and humanities. Suhrawardī founded the Illuminationist philosophical tradition and is represented by original work in logic, epistemology, metaphysics, psychology, and ontology rather than institutional religious leadership.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/suhrawardi/",
+        "https://www.iranicaonline.org/articles/illuminationism/"
+      ]
+    },
+    {
+      "person_id": "9578433e-b34e-4eb4-861d-096eab9084bf",
+      "canonical_name_en": "Mullā Ṣadrā",
+      "preferred_name_ko": "물라 사드라",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-mulla-sadra-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:mulla-sadra:person-only:v1",
+      "basis": "V2 culture includes philosophy and humanities. Mullā Ṣadrā is represented by his major metaphysical and philosophical synthesis, despite the theological and exegetical dimensions of his work.",
+      "review_sources": [
+        "https://plato.stanford.edu/archives/spr2021/entries/mulla-sadra/"
+      ]
+    },
+    {
+      "person_id": "a653f474-0c62-444d-bad2-bd0125ac6dc0",
+      "canonical_name_en": "Kumārila Bhaṭṭa",
+      "preferred_name_ko": "쿠마릴라 밧타",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-kumarila-bhatta-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:kumarila-bhatta:person-only:v1",
+      "basis": "V2 culture includes philosophy and humanities. Kumārila is represented as a major Mīmāṃsā philosopher whose work centers on epistemology, language, interpretation, and philosophical defense of Vedic authority.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/kumaarila/"
+      ]
+    },
+    {
+      "person_id": "6d3bfd10-5e4d-414d-85ac-d90c42a80ef6",
+      "canonical_name_en": "Gersonides",
+      "preferred_name_ko": "게르소니데스",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-gersonides-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:gersonides:person-only:v1",
+      "basis": "V2 culture includes philosophy and humanities. Gersonides also contributed to mathematics and astronomy, but his representative identity in this philosophy-canon record is the major medieval Jewish philosopher and religious rationalist whose comprehensive philosophical system had a lasting intellectual influence.",
+      "review_sources": [
+        "https://plato.stanford.edu/archives/sum2017/entries/gersonides/"
+      ]
+    }
+  ]
+}
