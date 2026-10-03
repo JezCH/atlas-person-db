@@ -130,7 +130,7 @@ test('authoring readiness requires P5, core Stage 2 schema, human-compatible led
   assert.equal(result.core.legacy_person_external_reference_sync_trigger_present, false);
   assert.equal(result.core.person_external_reference_projection_retired, true);
   assert.equal(result.core.person_reference_contract_ready, true);
-  assert.equal(result.person_domain_v2.cutover_complete, true);
+  assert.equal(result.person_domain_v2.schema_v2_ready, true);
   assert.equal(result.person_domain_v2.counts.science, 72);
   assert.equal(result.p9.old_index_present, false);
   assert.equal(result.p9.new_index_present, true);
@@ -224,10 +224,10 @@ test('bootstrap never masks duplicate groups, base-table gaps, or Stage 2 Activi
   assert.equal(missingActivityColumns.ready, false);
   assert.equal(missingActivityColumns.bootstrap_ready, false);
 });
-test('authoring readiness fails closed while Person Domain v2 cutover is incomplete', async () => {
+test('authoring readiness fails closed while the Person Domain schema is still v1', async () => {
   const result = await inspectAuthoringReadiness(clientFor({ personDomainV2Ready:false }));
   assert.equal(result.ready,false);
   assert.equal(result.bootstrap_ready,false);
+  assert.equal(result.person_domain_v2.schema_v2_ready,false);
   assert.equal(result.person_domain_v2.cutover_complete,false);
-  assert.equal(result.person_domain_v2.ready_for_cutover,false);
 });
