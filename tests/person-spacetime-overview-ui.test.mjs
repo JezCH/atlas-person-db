@@ -104,6 +104,7 @@ test("the timeline remains a map-like camera viewport", () => {
 
 test("sticky era axis stays opaque while only era content fades", () => {
   assert.match(view, /class="spacetime-era-axis" style="--spacetime-era-content-opacity:\$\{timeAxis\.era_opacity\}"/);
+  assert.match(view, /data-spacetime-era="\$\{escapeHtml\(era\.code\)\}"/);
   assert.doesNotMatch(view, /class="spacetime-era-axis" style="opacity:/);
   assert.match(css, /\.spacetime-era-axis\{[^}]*background:#fff/);
   assert.match(css, /\.spacetime-era-axis>div\{[^}]*opacity:var\(--spacetime-era-content-opacity,1\)/);
