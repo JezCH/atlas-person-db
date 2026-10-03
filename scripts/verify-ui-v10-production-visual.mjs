@@ -202,6 +202,48 @@ async function main(){
     assert(mobileMain.mainPortraitCount===0,"Person Main must not render portraits on mobile",mobileMain);
     await screenshot(client,"person-main-390x844.png");
 
+    const drawerOpened=await evaluate(client,`(() => {
+      document.querySelector('#mobileMenuButton')?.click();
+      const drawer=document.querySelector('#mobileDrawer');
+      const backdrop=document.querySelector('#mobileDrawerBackdrop');
+      const r=drawer?.getBoundingClientRect?.();
+      return {
+        open:Boolean(drawer?.classList.contains('open')),
+        ariaHidden:drawer?.getAttribute('aria-hidden'),
+        backdropHidden:Boolean(backdrop?.hidden),
+        bodyOpen:document.body.classList.contains('mobile-menu-open'),
+        rect:r?{left:r.left,right:r.right,width:r.width}:null
+      };
+    })()`);
+    assert(drawerOpened.open&&drawerOpened.ariaHidden==="false"&&!drawerOpened.backdropHidden&&drawerOpened.bodyOpen,
+      "Mobile drawer did not open through the real menu control",drawerOpened);
+    assert(drawerOpened.rect?.left>=-1&&drawerOpened.rect?.right>100,
+      "Mobile drawer did not enter the viewport",drawerOpened);
+    await screenshot(client,"mobile-drawer-open-390x844.png");
+
+    const drawerClosed=await evaluate(client,`(() => {
+      document.querySelector('#mobileMenuClose')?.click();
+      const drawer=document.querySelector('#mobileDrawer');
+      const backdrop=document.querySelector('#mobileDrawerBackdrop');
+      const r=drawer?.getBoundingClientRect?.();
+      return new Promise((resolve)=>setTimeout(()=>{
+        const rr=drawer?.getBoundingClientRect?.();
+        resolve({
+          open:Boolean(drawer?.classList.contains('open')),
+          ariaHidden:drawer?.getAttribute('aria-hidden'),
+          backdropHidden:Boolean(backdrop?.hidden),
+          bodyOpen:document.body.classList.contains('mobile-menu-open'),
+          rect:rr?{left:rr.left,right:rr.right,width:rr.width}:null,
+          transform:drawer?getComputedStyle(drawer).transform:null
+        });
+      },320));
+    })()`);
+    assert(!drawerClosed.open&&drawerClosed.ariaHidden==="true"&&drawerClosed.backdropHidden&&!drawerClosed.bodyOpen,
+      "Mobile drawer close control did not clear open state",drawerClosed);
+    assert(drawerClosed.rect?.right<=1,
+      "Mobile drawer remained visibly onscreen after pressing close",drawerClosed);
+    await screenshot(client,"mobile-drawer-closed-390x844.png");
+
     const mobileDetail=await openFirstDetail(client);
     assert(!mobileDetail.panelHidden&&mobileDetail.portraitCount===1,"Person Detail portrait contract failed on mobile",mobileDetail);
     assert(mobileDetail.panelRect?.left>=-1&&mobileDetail.panelRect?.right<=391,"Person Detail escapes mobile viewport",mobileDetail);
@@ -219,6 +261,8 @@ async function main(){
         "person-main-1600x1000.png",
         "person-detail-1600x1000.png",
         "person-main-390x844.png",
+        "mobile-drawer-open-390x844.png",
+        "mobile-drawer-closed-390x844.png",
         "person-detail-390x844.png"
       ],
       status:"PASS"
