@@ -63,15 +63,16 @@ For each bounded unit:
 1. read current canonical Person/domain state;
 2. determine the v2 representative target from historical representative identity;
 3. if the target is not science, move the Person to the existing target code such as `culture`, `religion`, `commerce`, or `technology`;
-4. if the target is science, leave the stored value as `knowledge` for now;
-5. verify the changed rows once through the canonical writer/read-back boundary;
-6. write a durable checkpoint with the exact next unreviewed starting point.
+4. if the target is science, leave the stored value as `knowledge` for now and record that Person in the same bounded review manifest's `science_targets` array;
+5. each science-target record must identify the latest assignment provenance and is verified against live Production as still stored `knowledge`;
+6. verify changed rows once through the canonical writer/read-back boundary;
+7. write a durable checkpoint with the exact next unreviewed starting point.
 
 No review unit may bulk-convert unresolved Persons.
 
 ### Final cutover unit
 
-The cutover begins only after **every remaining live `knowledge` Person has been reviewed and confirmed science-target**.
+The cutover begins only after **every remaining live `knowledge` Person has been reviewed and confirmed science-target**. Immediately before cutover, the live `knowledge` Person-id set must exactly equal the durable union of reviewed `science_targets`; neither missing nor extra ids are allowed.
 
 Then, as one bounded migration:
 
