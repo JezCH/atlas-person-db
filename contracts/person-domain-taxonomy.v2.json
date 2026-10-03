@@ -1,0 +1,83 @@
+{
+  "schema": "atlas-person-domain-taxonomy/v2",
+  "status": "approved_migration_target",
+  "issue": 1806,
+  "cardinality": "exactly_one_or_null",
+  "automatic_role_backfill": false,
+  "secondary_domains": false,
+  "sector_count": 8,
+  "target_definitions": [
+    {
+      "code": "governance",
+      "label_ko": "정치·통치",
+      "scope": "political power, rule, state leadership and de facto governance",
+      "palette_source": "governance"
+    },
+    {
+      "code": "military",
+      "label_ko": "군사",
+      "scope": "warfare, military command and armed leadership",
+      "palette_source": "military"
+    },
+    {
+      "code": "science",
+      "label_ko": "과학",
+      "scope": "natural science, mathematics, medicine, astronomy and formal or empirical inquiry",
+      "palette_source": "knowledge"
+    },
+    {
+      "code": "technology",
+      "label_ko": "공학·기술",
+      "scope": "engineering, invention, architecture, applied technology and construction",
+      "palette_source": "technology"
+    },
+    {
+      "code": "commerce",
+      "label_ko": "경제·상업",
+      "scope": "commerce, finance, enterprise and economic systems or thought when that is the representative historical identity",
+      "palette_source": "commerce"
+    },
+    {
+      "code": "culture",
+      "label_ko": "인문·예술",
+      "scope": "philosophy, history, language, literature, social thought, visual arts, music and performing arts",
+      "palette_source": "culture"
+    },
+    {
+      "code": "religion",
+      "label_ko": "종교",
+      "scope": "religious leadership, theology, faith traditions and religious reform",
+      "palette_source": "religion"
+    },
+    {
+      "code": "exploration",
+      "label_ko": "탐험",
+      "scope": "exploration, navigation, geographic discovery, expeditions and frontier travel",
+      "palette_source": "exploration"
+    }
+  ],
+  "legacy": {
+    "runtime_code": "knowledge",
+    "runtime_label_ko": "학문·과학·사상",
+    "retirement_rule": "Do not rename knowledge to science until every remaining knowledge Person has been reviewed and is confirmed science-target."
+  },
+  "migration": {
+    "strategy": "eight_sectors_without_temporary_ninth_code",
+    "review_unit_size": {
+      "minimum": 5,
+      "maximum": 12
+    },
+    "phases": [
+      "contract",
+      "knowledge_person_review_and_reclassification",
+      "final_atomic_knowledge_to_science_cutover"
+    ],
+    "pre_cutover_rule": "Persons whose v2 target is science remain temporarily stored as knowledge; only non-science targets move during review units.",
+    "final_cutover_postconditions": [
+      "knowledge_count_is_zero",
+      "science_is_the_only_blue_science_code",
+      "exactly_eight_canonical_codes",
+      "registry_ui_schema_and_tests_use_v2_labels"
+    ]
+  }
+}
