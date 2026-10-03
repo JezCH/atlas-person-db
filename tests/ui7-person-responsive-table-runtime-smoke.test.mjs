@@ -54,9 +54,9 @@ function node(className, textContent = '') {
     }
   };
   element.classList = {
-    add(value) {
+    add(...values) {
       const classes = new Set(String(element.className || '').split(/\s+/).filter(Boolean));
-      classes.add(value);
+      for (const value of values) classes.add(value);
       element.className = [...classes].join(' ');
     }
   };
@@ -92,24 +92,26 @@ test('UI7 table keeps status folding and groups visible rows under the derived e
   vm.runInNewContext(eraSource, context);
   vm.runInNewContext(source, context);
 
-  const header = grid.children[0];
-  assert.ok(header.className.includes('person-table-head'));
-  assert.equal(header.children.length, 5);
-  assert.equal(header.children[0].textContent, '시대');
+  assert.ok(grid.className.includes('person-monumental-register'));
+  assert.equal(grid.children.some((child) => child.className.includes('person-table-head')), false);
 
-  const eraGroup = grid.children[1];
+  const eraGroup = grid.children[0];
   assert.ok(eraGroup.className.includes('person-era-group'));
   assert.equal(eraGroup.dataset.atlasEra, 'early-civilization');
   assert.equal(eraGroup.children[0].children[0].textContent, '초기문명');
+  assert.equal(eraGroup.children[0].children[1].className, 'person-era-band-range');
   assert.equal(eraGroup.children[1].children.length, 2);
+  assert.ok(eraGroup.className.includes('person-register-era'));
+  assert.ok(eraGroup.children[1].className.includes('person-register-entries'));
+  assert.ok(historical.row.className.includes('person-register-entry'));
 
   assert.deepEqual(
     historical.row.children.map((child) => child.className),
     [
-      'person-table-identity',
-      'person-card-range person-table-range',
-      'person-card-activities person-table-activities',
-      'person-card-count person-table-count'
+      'person-table-identity person-register-identity',
+      'person-card-range person-table-range person-register-range',
+      'person-card-activities person-table-activities person-register-activities',
+      'person-card-count person-table-count person-register-count'
     ]
   );
   assert.equal(historical.status.parent, null);
@@ -117,10 +119,10 @@ test('UI7 table keeps status folding and groups visible rows under the derived e
   assert.deepEqual(
     legendary.row.children.map((child) => child.className),
     [
-      'person-table-identity',
-      'person-card-range person-table-range',
-      'person-card-activities person-table-activities',
-      'person-card-count person-table-count'
+      'person-table-identity person-register-identity',
+      'person-card-range person-table-range person-register-range',
+      'person-card-activities person-table-activities person-register-activities',
+      'person-card-count person-table-count person-register-count'
     ]
   );
   assert.equal(legendary.status.parent, legendary.row.children[0]);
