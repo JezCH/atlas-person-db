@@ -54,6 +54,38 @@ function optionalText(value) {
   return normalizeExact(value) || null;
 }
 
+function canonicalReplayDomain(value) {
+  if (value == null || String(value).trim() === "") return null;
+  const raw = String(value).trim().toLowerCase();
+  return raw === "knowledge" ? "science" : normalizeDomain(raw);
+}
+
+function normalizeAuthoringDomain(value) {
+  return canonicalReplayDomain(value);
+}
+
+function usesLegacyKnowledgeDomain(raw) {
+  const schema = String(raw?.schema || "").trim();
+  const value = schema === HUMAN_PERSON_AUTHORING_SCHEMA
+    ? raw?.representative_domain
+    : raw?.person?.representative_domain;
+  return value != null && String(value).trim().toLowerCase() === "knowledge";
+}
+
+function canonicalizeReplaySnapshot(snapshot) {
+  if (!snapshot || typeof snapshot !== "object" || Array.isArray(snapshot)) return snapshot;
+  if (snapshot.schema === HUMAN_PERSON_AUTHORING_SCHEMA && snapshot.representative_domain === "knowledge") {
+    return Object.freeze({ ...snapshot, representative_domain:"science" });
+  }
+  if (snapshot.person_registration?.representative_domain === "knowledge") {
+    return Object.freeze({
+      ...snapshot,
+      person_registration:Object.freeze({ ...snapshot.person_registration, representative_domain:"science" })
+    });
+  }
+  return snapshot;
+}
+
 function requiredObject(value, code) {
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error(code);
   return value;
@@ -199,7 +231,7 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
       historicity:optionalText(person.historicity) || "historical",
       ...(lifeStatusReview || {}),
       representative_domain_reviewed:Object.prototype.hasOwnProperty.call(person, "representative_domain"),
-      representative_domain:normalizeDomain(person.representative_domain),
+      representative_domain:normalizeAuthoringDomain(person.representative_domain),
       place_facts:normalizePersonPlaceFacts(person.place_facts)
     }),
     polity:polity == null ? null : Object.freeze({
@@ -236,7 +268,8 @@ function prepareHumanAuthoringRequest(rawRequest, { allowLegacyNamuWikiOmission 
     rawRequest:resolved.request,
     request:normalizeHumanAuthoringRequest(resolved.request, { allowLegacyNamuWikiOmission }),
     hash:manifestHash(resolved.request),
-    requestIdGenerated:resolved.generated
+    requestIdGenerated:resolved.generated,
+    legacyDomainAliasUsed:usesLegacyKnowledgeDomain(resolved.request)
   });
 }
 
@@ -249,7 +282,7 @@ function normalizeHumanPersonAuthoringRequest(raw, { allowLegacyNamuWikiOmission
   const namuwiki = normalizeNamuWikiReference(request?.external_references?.namuwiki, { allowLegacyOmission:allowLegacyNamuWikiOmission });
   const timelineDisposition = normalizeTimelineDisposition(requiredObject(request.timeline_disposition, "HUMAN_PERSON_AUTHORING_TIMELINE_DISPOSITION_REQUIRED"));
   if (timelineDisposition.disposition === "timeline") throw new Error("HUMAN_PERSON_AUTHORING_NON_TIMELINE_DISPOSITION_REQUIRED");
-  const representativeDomain = normalizeDomain(requiredText(request.representative_domain, "HUMAN_PERSON_AUTHORING_DOMAIN_REQUIRED"));
+  const representativeDomain = normalizeAuthoringDomain(requiredText(request.representative_domain, "HUMAN_PERSON_AUTHORING_DOMAIN_REQUIRED"));
   if (!representativeDomain) throw new Error("HUMAN_PERSON_AUTHORING_DOMAIN_REQUIRED");
   return Object.freeze({
     requestId,
@@ -275,7 +308,8 @@ function prepareHumanPersonAuthoringRequest(rawRequest, { allowLegacyNamuWikiOmi
     rawRequest:resolved.request,
     request:normalizeHumanPersonAuthoringRequest(resolved.request, { allowLegacyNamuWikiOmission }),
     hash:manifestHash(resolved.request),
-    requestIdGenerated:resolved.generated
+    requestIdGenerated:resolved.generated,
+    legacyDomainAliasUsed:usesLegacyKnowledgeDomain(resolved.request)
   });
 }
 
@@ -569,7 +603,7 @@ async function verifyNewPersonRegistrationReadback(client, {
   }
 
   const domain = await currentDomain(client, normalizedPersonId);
-  if (domain !== representativeDomain) throw new Error("HUMAN_AUTHORING_NEW_PERSON_DOMAIN_READBACK_DRIFT");
+  if (domain !== canonicalReplayDomain(representativeDomain)) throw new Error("HUMAN_AUTHORING_NEW_PERSON_DOMAIN_READBACK_DRIFT");
 
   const liveNamuWiki = await currentNamuWikiReference(client, normalizedPersonId, { forUpdate:true });
   if (!sameNamuWikiCore(liveNamuWiki, namuwiki)) throw new Error("HUMAN_AUTHORING_NEW_PERSON_NAMUWIKI_READBACK_DRIFT");
@@ -618,7 +652,7 @@ async function verifyReplay(client, ledger) {
   if (snapshot.spatial_disposition?.authority === "atlas_v2.spatial_registration_dispositions") {
     await verifySpatialRegistrationDisposition(client, snapshot.spatial_disposition);
   }
-  return snapshot;
+  return canonicalizeReplaySnapshot(snapshot);
 }
 
 function outcome(requestId, replay, snapshot) {
@@ -664,7 +698,7 @@ async function verifyPersonOnlyReplay(client, ledger) {
   const timeline = await currentTimelineDisposition(client, personId, { forUpdate:true });
   if (!sameTimelineDisposition(timeline, { person_id:personId, ...snapshot.timeline_disposition })) throw new Error("HUMAN_PERSON_AUTHORING_REPLAY_TIMELINE_DRIFT");
   const domain = await currentDomain(client, personId);
-  if (domain !== snapshot.representative_domain) throw new Error("HUMAN_PERSON_AUTHORING_REPLAY_DOMAIN_DRIFT");
+  if (domain !== canonicalReplayDomain(snapshot.representative_domain)) throw new Error("HUMAN_PERSON_AUTHORING_REPLAY_DOMAIN_DRIFT");
   const namuwiki = await currentNamuWikiReference(client, personId, { forUpdate:true });
   if (!sameNamuWikiCore(namuwiki, snapshot.external_references?.namuwiki)) throw new Error("HUMAN_PERSON_AUTHORING_REPLAY_NAMUWIKI_DRIFT");
   const links = await client.query(`select source_id::text from atlas_v2.person_sources where person_id=$1::uuid order by source_id::text`, [personId]);
@@ -672,7 +706,7 @@ async function verifyPersonOnlyReplay(client, ledger) {
   for (const source of snapshot.sources || []) {
     if (!liveIds.has(String(source.id).toLowerCase())) throw new Error("HUMAN_PERSON_AUTHORING_REPLAY_SOURCE_DRIFT");
   }
-  return snapshot;
+  return canonicalizeReplaySnapshot(snapshot);
 }
 
 function personOnlyOutcome(requestId, replay, snapshot) {
@@ -712,6 +746,7 @@ async function applyPersonOnlyPreparedWithinTransaction(client, prepared, { tran
     if (ledger.manifest_schema !== HUMAN_PERSON_AUTHORING_SCHEMA) throw new Error("AUTHORING_LEDGER_SCHEMA_MISMATCH");
     return personOnlyOutcome(request.requestId, true, await verifyPersonOnlyReplay(client, ledger));
   }
+  if (prepared.legacyDomainAliasUsed) throw new Error("HUMAN_AUTHORING_LEGACY_KNOWLEDGE_NEW_WRITE_RETIRED");
 
   const person = await resolveOrCreatePerson(client, request.person);
   await assertPersonOnlyTargetHasNoActivities(client, person.id);
@@ -759,6 +794,7 @@ async function applyPreparedWithinTransaction(client, prepared, { transport = nu
     const snapshot = await verifyReplay(client, ledger);
     return outcome(request.requestId, true, snapshot);
   }
+  if (prepared.legacyDomainAliasUsed) throw new Error("HUMAN_AUTHORING_LEGACY_KNOWLEDGE_NEW_WRITE_RETIRED");
   const relation = request.activity.relation_type == null
     ? Object.freeze({ id:null, code:null })
     : await resolveCatalogCodeCached(client, catalogCache, { table:"person_polity_relation_types", code:request.activity.relation_type, unresolvedCode:"HUMAN_AUTHORING_RELATION_TYPE_UNRESOLVED" });
@@ -1043,6 +1079,10 @@ module.exports = Object.freeze({
   roleCategoryForRelation,
   normalizeNamuWikiReference,
   normalizeBoundary,
+  canonicalReplayDomain,
+  normalizeAuthoringDomain,
+  usesLegacyKnowledgeDomain,
+  canonicalizeReplaySnapshot,
   automaticHumanRequestId,
   withResolvedHumanRequestId,
   normalizeHumanAuthoringRequest,
