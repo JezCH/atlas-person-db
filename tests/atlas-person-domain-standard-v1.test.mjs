@@ -106,10 +106,20 @@ test('reviewed batch Person ids are unique unless an explicit supersede chain re
     if (prior) {
       assert.equal(entry.previous_representative_domain, prior.representative_domain);
       assert.equal(entry.supersedes_source, prior.source);
+      assert.equal(entry.supersedes_origin, undefined);
+      assert.equal(entry.supersedes_request_id, undefined);
       assert.notEqual(entry.representative_domain, prior.representative_domain);
+    } else if (entry.previous_representative_domain != null || entry.supersedes_source != null) {
+      assert.equal(entry.supersedes_origin, 'human_authoring');
+      assert.match(entry.supersedes_source, /^authoring\/requests\/[A-Za-z0-9._-]+\.json$/);
+      assert.equal(typeof entry.supersedes_request_id, 'string');
+      assert.ok(entry.supersedes_request_id.length > 0);
+      assert.notEqual(entry.representative_domain, entry.previous_representative_domain);
     } else {
       assert.equal(entry.previous_representative_domain, undefined);
       assert.equal(entry.supersedes_source, undefined);
+      assert.equal(entry.supersedes_origin, undefined);
+      assert.equal(entry.supersedes_request_id, undefined);
     }
     latest.set(entry.person_id, entry);
   }
@@ -257,6 +267,7 @@ test('Batch 073 records the user-reviewed Nodira correction and two new governan
   assert.equal(byName.get('Nodira').supersedes_source, 'batch-072.json');
   assert.match(applyClient, /expected_previous/);
   assert.match(applyClient, /applyOnlyChanged\(\[\.\.\.plan\.assignments\.values\(\)\], MODE\)/);
+  assert.match(applyClient, /validateHumanAuthoringOrigin/);
 });
 
 test('Pythagoras HOLD history is preserved and retired by the later reviewed knowledge decision', () => {
