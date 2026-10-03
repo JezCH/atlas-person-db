@@ -198,9 +198,16 @@ async function collect500(client) {
     const bandContainment=(${bandContainmentCode})(qa(".spacetime-track-label"),qa(".spacetime-region-head-band[data-spacetime-band]"),qa(".spacetime-track-rail"));
     const dataViewport=(() => {
       const sr=scroll.getBoundingClientRect();
+      const clientLeft=Number(scroll.clientLeft)||0;
+      const clientTop=Number(scroll.clientTop)||0;
       const axis=Number(q(".spacetime-canvas")?.offsetLeft)||0;
       const header=Number(q(".spacetime-canvas")?.offsetTop)||0;
-      return {left:sr.left+axis,top:sr.top+header,right:sr.right,bottom:sr.bottom};
+      return {
+        left:sr.left+clientLeft+axis,
+        top:sr.top+clientTop+header,
+        right:sr.left+clientLeft+Number(scroll.clientWidth||0),
+        bottom:sr.top+clientTop+Number(scroll.clientHeight||0)
+      };
     })();
     const intersects=(r,v)=>Math.min(r.right,v.right)-Math.max(r.left,v.left)>0.5&&Math.min(r.bottom,v.bottom)-Math.max(r.top,v.top)>0.5;
     const visiblePersonIds=(selector)=>[...new Set(qa(selector).filter(el=>intersects(el.getBoundingClientRect(),dataViewport)&&Number(style(el).opacity)>0.02).map(el=>el.dataset.spacetimePerson).filter(Boolean))].sort();
@@ -208,32 +215,6 @@ async function collect500(client) {
     const visibleLabelPersonIds=visiblePersonIds(".spacetime-track-label");
     const missingVisibleLabelPersonIds=visibleRailPersonIds.filter(id=>!visibleLabelPersonIds.includes(id));
     const extraVisibleLabelPersonIds=visibleLabelPersonIds.filter(id=>!visibleRailPersonIds.includes(id));
-    const visibleWorldBounds={
-      left:Number(scroll.scrollLeft)||0,
-      top:Number(scroll.scrollTop)||0,
-      right:(Number(scroll.scrollLeft)||0)+Math.max(1,(Number(scroll.clientWidth)||0)-Number(q(".spacetime-canvas")?.offsetLeft||0)),
-      bottom:(Number(scroll.scrollTop)||0)+Math.max(1,(Number(scroll.clientHeight)||0)-Number(q(".spacetime-canvas")?.offsetTop||0))
-    };
-    const visibleRailDetails=qa(".spacetime-track-rail").filter(el=>{
-      const r=el.getBoundingClientRect();
-      return intersects(r,dataViewport)&&Number(style(el).opacity)>0.02;
-    }).map(el=>{
-      const r=el.getBoundingClientRect();
-      const left=parseFloat(el.style.left), top=parseFloat(el.style.top), height=parseFloat(el.style.height);
-      const bottom=top+height;
-      return {
-        person_id:el.dataset.spacetimePerson||null,
-        activity_id:el.dataset.spacetimeActivity||null,
-        band:el.dataset.spacetimeBand||null,
-        basis:el.dataset.spacetimeRailBasis||null,
-        style_left:left,
-        style_top:top,
-        style_height:height,
-        rect:{left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height},
-        runtime_x_eligible:Number.isFinite(left)&&left>=visibleWorldBounds.left-2&&left<=visibleWorldBounds.right+2,
-        runtime_y_eligible:Number.isFinite(top)&&Number.isFinite(bottom)&&Math.min(bottom,visibleWorldBounds.bottom)>=Math.max(top,visibleWorldBounds.top)
-      };
-    });
     return {
       viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},
       zoom:(q("#spacetimeCameraZoomValue")?.textContent||"").trim(),
@@ -277,8 +258,6 @@ async function collect500(client) {
       visibleLabelPersonIds,
       missingVisibleLabelPersonIds,
       extraVisibleLabelPersonIds,
-      visibleWorldBounds,
-      visibleRailDetails,
       labelOverlap,
       bandContainment
     };
@@ -301,9 +280,16 @@ async function collect1500(client, geometry500) {
     const scroll=q(".spacetime-scroll");
     const dataViewport=(() => {
       const sr=scroll.getBoundingClientRect();
+      const clientLeft=Number(scroll.clientLeft)||0;
+      const clientTop=Number(scroll.clientTop)||0;
       const axis=Number(q(".spacetime-canvas")?.offsetLeft)||0;
       const header=Number(q(".spacetime-canvas")?.offsetTop)||0;
-      return {left:sr.left+axis,top:sr.top+header,right:sr.right,bottom:sr.bottom};
+      return {
+        left:sr.left+clientLeft+axis,
+        top:sr.top+clientTop+header,
+        right:sr.left+clientLeft+Number(scroll.clientWidth||0),
+        bottom:sr.top+clientTop+Number(scroll.clientHeight||0)
+      };
     })();
     const intersects=(r,v)=>Math.min(r.right,v.right)-Math.max(r.left,v.left)>0.5&&Math.min(r.bottom,v.bottom)-Math.max(r.top,v.top)>0.5;
     const visiblePersonIds=(selector)=>[...new Set(qa(selector).filter(el=>intersects(el.getBoundingClientRect(),dataViewport)&&Number(style(el).opacity)>0.02).map(el=>el.dataset.spacetimePerson).filter(Boolean))].sort();
