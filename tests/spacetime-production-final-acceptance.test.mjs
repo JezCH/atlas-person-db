@@ -157,6 +157,14 @@ test("real-Chrome domain acceptance preserves Person/Activity semantic separatio
   assert.match(verifier, /label_rail_mismatches\.length === 0/);
   assert.match(verifier, /activity_glyph_domain_attr_count === 0/);
   assert.match(verifier, /style_mismatches\.length === 0/);
+  assert.match(verifier, /governance:'--atlas-person-domain-governance-surface'/);
+  assert.match(verifier, /technology:'--atlas-person-domain-technology-surface'/);
+  assert.match(verifier, /religion:'--atlas-person-domain-religion-edge'/);
+  assert.match(verifier, /military:'--atlas-person-domain-military'/);
+  assert.match(verifier, /knowledge:'--atlas-person-domain-knowledge'/);
+  assert.match(verifier, /commerce:'--atlas-person-domain-commerce'/);
+  assert.match(verifier, /culture:'--atlas-person-domain-culture'/);
+  assert.match(verifier, /exploration:'--atlas-person-domain-exploration'/);
 });
 
 test("V10 closure lets canonical domain color outrank the V6 neutral fallback without important", () => {
