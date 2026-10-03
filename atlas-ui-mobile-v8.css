@@ -1,0 +1,540 @@
+/* ATLAS UI V8 — Mobile Responsive Visual Pass
+ * Mobile is not a reduced desktop screenshot.
+ * Preserve hierarchy, reduce simultaneous information, keep data intact.
+ */
+
+@media (max-width: 760px) {
+  html,
+  body,
+  .workspace-shell,
+  .main-area,
+  .person-main-view,
+  .person-main-layout,
+  .person-main-groups,
+  .person-group,
+  .person-card-grid.person-table-grid {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  .main-area {
+    padding: 4px 6px 24px;
+  }
+
+  /* Mobile shell: quiet appbar, same hierarchy as desktop shell. */
+  .mobile-appbar {
+    height: 58px;
+    padding: 8px 8px 8px 7px;
+    gap: 8px;
+    border-bottom-color: #2e353a;
+    background: rgba(13,16,19,.965);
+  }
+
+  .mobile-menu-button {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+    border: 0;
+    border-left: 1px solid #434b50;
+    border-radius: 0;
+    background: transparent;
+    color: #aaaeb0;
+    font-size: 20px;
+  }
+
+  .mobile-menu-button:hover,
+  .mobile-menu-button:focus-visible {
+    background: rgba(255,255,255,.018);
+    color: #e4e0d8;
+  }
+
+  .mobile-appbar-title {
+    gap: 1px;
+  }
+
+  .mobile-appbar-title strong {
+    color: #e6e1d8;
+    font-family: var(--atlas-font-display, "Noto Serif KR", "Nanum Myeongjo", AppleMyungjo, Batang, Georgia, serif);
+    font-size: 15px;
+    font-weight: 620;
+    letter-spacing: -.012em;
+  }
+
+  .mobile-appbar-title small {
+    margin-top: 2px;
+    color: #666e73;
+    font-size: 7.5px;
+    font-weight: 740;
+    letter-spacing: .09em;
+  }
+
+  .mobile-drawer {
+    width: min(86vw, 318px);
+    padding: 16px 14px;
+  }
+
+  .mobile-nav button {
+    min-height: 44px;
+  }
+
+  /* Person controls: one hierarchy at a time instead of three cramped columns. */
+  .person-era-navigator {
+    top: 58px;
+    z-index: 28;
+    gap: 4px;
+    margin: 0 -1px 3px;
+    padding: 5px 5px 6px;
+    border: 1px solid #30373c;
+    border-radius: 2px;
+    background: rgba(17,20,23,.975);
+    box-shadow: 0 8px 18px rgba(0,0,0,.18);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .person-era-nav-controls {
+    gap: 4px;
+  }
+
+  .person-era-search,
+  .person-era-polity-filter,
+  .person-era-relation-filter {
+    height: 32px;
+    border: 0;
+    border-bottom: 1px solid #40484d;
+    border-radius: 0;
+    background: #15191c;
+    color: #c9c7c1;
+    box-shadow: none;
+    font-size: 16px;
+  }
+
+  .person-era-search::placeholder {
+    color: #656d72;
+  }
+
+  .person-era-search:focus,
+  .person-era-polity-filter:focus,
+  .person-era-relation-filter:focus {
+    border-color: var(--atlas-honor-metal);
+    box-shadow: inset 0 -1px 0 rgba(192,174,136,.35);
+    outline: none;
+  }
+
+  .person-era-nav-track {
+    grid-template-columns: 28px minmax(0,1fr) 28px;
+    gap: 4px;
+  }
+
+  .person-era-nav-step {
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #747c80;
+  }
+
+  .person-era-nav-step:hover:not(:disabled),
+  .person-era-nav-step:focus-visible {
+    background: rgba(255,255,255,.02);
+    color: #d8d4cc;
+    outline: 1px solid rgba(192,174,136,.36);
+    outline-offset: -1px;
+  }
+
+  .person-era-jump-list {
+    gap: 3px;
+    padding: 0;
+  }
+
+  .person-era-jump {
+    min-width: 66px;
+    min-height: 28px;
+    padding: 3px 5px;
+    border: 0;
+    border-left: 1px solid #343b40;
+    border-radius: 0;
+    background: transparent !important;
+    color: #777f83 !important;
+  }
+
+  .person-era-jump:hover {
+    filter: none;
+    background: rgba(255,255,255,.018) !important;
+  }
+
+  .person-era-jump.is-current {
+    outline: 0;
+    border-left-color: var(--atlas-honor-metal);
+    color: #d3cec4 !important;
+    background: linear-gradient(90deg, rgba(192,174,136,.055), transparent) !important;
+  }
+
+  .person-era-jump.is-current::after {
+    right: 5px;
+    bottom: 0;
+    left: 5px;
+    height: 1px;
+    border-radius: 0;
+    background: var(--atlas-honor-metal);
+  }
+
+  .person-era-jump.person-era-unknown {
+    margin-left: 8px;
+  }
+
+  .person-era-jump.person-era-unknown::before {
+    left: -5px;
+    background: #3a4247;
+  }
+
+  .person-era-jump-label {
+    font-size: 9px;
+    font-weight: 740;
+  }
+
+  .person-era-jump-count {
+    min-width: 17px;
+    height: 17px;
+    padding: 0 3px;
+    border-radius: 0;
+    background: transparent;
+    color: #5f676c;
+    font-size: 7px;
+  }
+
+  .person-domain-filter-row {
+    grid-template-columns: auto minmax(0,1fr);
+    gap: 5px;
+    padding-top: 4px;
+    border-top-color: #2d3439;
+  }
+
+  .person-domain-filter-row > strong {
+    color: #676f74;
+    font-size: 7.5px;
+    letter-spacing: .04em;
+  }
+
+  .person-domain-filter-list {
+    gap: 2px;
+    padding: 0;
+  }
+
+  .person-domain-filter {
+    min-height: 22px;
+    gap: 4px;
+    padding: 2px 5px;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    background: transparent;
+    color: #747c80;
+    font-size: 8px;
+  }
+
+  .person-domain-filter[data-domain]::before {
+    width: 5px;
+    height: 5px;
+    box-shadow: none;
+  }
+
+  .person-domain-filter:hover {
+    background: rgba(255,255,255,.018);
+  }
+
+  .person-domain-filter.is-active {
+    border-color: var(--person-filter-domain-color);
+    background: rgba(255,255,255,.02);
+    box-shadow: none;
+    color: #c5c3bd;
+  }
+
+  .person-domain-filter em {
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #555d62;
+    font-size: 6.5px;
+  }
+
+  /* Register: name + period + one primary activity are the immediate layer. */
+  .person-monumental-register > .person-register-sortbar {
+    min-height: 25px;
+    gap: 9px;
+    padding: 2px 1px 6px;
+    overflow-x: auto;
+    justify-content: flex-end;
+    scrollbar-width: none;
+  }
+
+  .person-monumental-register > .person-register-sortbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .person-register-sort-caption {
+    display: none;
+  }
+
+  .person-monumental-register .person-era-band,
+  .person-monumental-register .person-register-era-band {
+    gap: 6px;
+    padding: 14px 1px 6px;
+  }
+
+  .person-monumental-register .person-era-band > span {
+    font-size: 13px;
+  }
+
+  .person-monumental-register .person-era-band-range {
+    font-size: 7.5px;
+  }
+
+  .person-monumental-register .person-era-rows > .person-card,
+  .person-monumental-register .person-register-entry {
+    row-gap: 5px;
+    padding: 12px 0 11px;
+  }
+
+  .person-monumental-register .person-register-entry::before {
+    top: 14px;
+    height: 23px;
+  }
+
+  .person-monumental-register .person-table-identity,
+  .person-monumental-register .person-register-identity {
+    padding: 0 8px 0 13px;
+  }
+
+  .person-monumental-register .person-table-identity > strong {
+    font-size: 17px;
+    line-height: 1.2;
+  }
+
+  .person-monumental-register .person-register-range {
+    padding: 0 8px 0 13px;
+    color: #bab6ad;
+    font-size: 10px;
+  }
+
+  .person-monumental-register .person-register-count {
+    padding-top: 1px;
+    font-size: 7px;
+  }
+
+  .person-monumental-register .person-register-activities {
+    padding: 1px 1px 0 13px;
+  }
+
+  .person-monumental-register .person-table-activities .person-card-activity {
+    padding: 5px 0 4px;
+  }
+
+  .person-monumental-register .person-table-activities .person-card-activity:nth-child(n + 2) {
+    display: none;
+  }
+
+  .person-monumental-register .person-table-activities .person-card-activity-head b {
+    color: #c7c4bd;
+    font-size: 10.5px;
+  }
+
+  .person-monumental-register .person-table-activities .person-card-activity-role,
+  .person-monumental-register .person-table-activities .person-card-activity-period {
+    font-size: 8.5px;
+  }
+
+  /* Detail: portrait first, identity second, then editorial chronology. */
+  #personMainDetail.person-main-detail {
+    top: 58px;
+    right: 4px;
+    bottom: 4px;
+    width: calc(100vw - 8px);
+    max-width: calc(100vw - 8px);
+    padding: 42px 16px 22px;
+    border-left: 1px solid #343b40;
+    border-right: 1px solid #343b40;
+    border-radius: 2px;
+  }
+
+  .person-detail-overlay-close {
+    top: 8px;
+    right: 8px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .person-chronicle-hero {
+    gap: 17px;
+    padding-bottom: 21px;
+  }
+
+  .person-chronicle-hero .person-detail-portrait {
+    width: min(248px, 70vw);
+  }
+
+  .person-chronicle-identity {
+    text-align: center;
+  }
+
+  .person-chronicle-identity .eyebrow {
+    margin-bottom: 9px;
+  }
+
+  .person-chronicle-identity h2 {
+    font-size: clamp(29px, 9.2vw, 38px);
+    line-height: 1.1;
+  }
+
+  .person-detail-canonical {
+    margin-top: 6px;
+    font-size: 10px;
+  }
+
+  .person-detail-era {
+    margin-top: 14px;
+    font-size: 12px;
+  }
+
+  .person-detail-domain {
+    display: inline-block;
+    margin-top: 6px;
+  }
+
+  .person-detail-status {
+    justify-content: center;
+    margin-top: 11px;
+    font-size: 7.5px;
+  }
+
+  .person-chronicle-section.person-detail-section {
+    padding: 21px 0 23px;
+  }
+
+  .person-chronicle-section > h3,
+  .person-chronicle-section .person-detail-section-head > h3 {
+    margin-bottom: 12px;
+  }
+
+  .person-chronicle-section .person-description p {
+    font-size: 11px;
+    line-height: 1.68;
+  }
+
+  .person-chronicle-activities .person-activity-list {
+    padding-left: 23px;
+  }
+
+  .person-chronicle-activities .person-activity-list::before {
+    left: 5px;
+  }
+
+  .person-chronicle-activity::before {
+    left: -21px;
+  }
+
+  .person-chronicle-activity.person-activity-card {
+    padding: 15px 0 18px;
+  }
+
+  .person-chronicle-activity header h4 {
+    font-size: 16px;
+  }
+
+  .person-detail-authoring > summary {
+    min-height: 42px;
+  }
+}
+
+@media (max-width: 520px) {
+  .person-era-nav-controls {
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  }
+
+  .person-era-search {
+    grid-column: 1 / -1;
+  }
+
+  .person-era-polity-filter,
+  .person-era-relation-filter {
+    width: 100%;
+  }
+
+  .person-monumental-register .person-register-entry {
+    grid-template-columns: minmax(0,1fr) auto;
+  }
+
+  .person-monumental-register .person-table-identity > .person-card-canonical {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 390px) {
+  .main-area {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  .person-era-navigator {
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 4px;
+    padding-left: 4px;
+  }
+
+  .person-era-jump {
+    min-width: 58px;
+  }
+
+  .person-era-jump-count,
+  .person-domain-filter em {
+    display: none;
+  }
+
+  .person-monumental-register .person-table-identity > .person-card-canonical,
+  .person-monumental-register .person-table-status-inline {
+    display: none;
+  }
+
+  .person-monumental-register .person-table-identity > strong {
+    font-size: 16px;
+  }
+
+  .person-monumental-register .person-register-entry::before {
+    left: 1px;
+  }
+
+  #personMainDetail.person-main-detail {
+    right: 3px;
+    bottom: 3px;
+    width: calc(100vw - 6px);
+    max-width: calc(100vw - 6px);
+    padding-right: 13px;
+    padding-left: 13px;
+  }
+
+  .person-chronicle-hero .person-detail-portrait {
+    width: min(230px, 68vw);
+  }
+
+  .person-chronicle-identity h2 {
+    font-size: 29px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-button,
+  .person-era-search,
+  .person-era-polity-filter,
+  .person-era-relation-filter,
+  .person-era-jump,
+  .person-domain-filter {
+    transition: none;
+  }
+}

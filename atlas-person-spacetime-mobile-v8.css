@@ -1,0 +1,388 @@
+/* ATLAS UI V8 — Spacetime Mobile Hierarchy
+ * Loaded after V7 instrument tools.
+ * Keeps camera, geometry, semantic LOD and interaction handlers unchanged.
+ */
+
+@media (max-width: 760px) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+  }
+
+  /* Two-tier toolbar: search first, camera second. */
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-toolbar {
+    display: block;
+    padding: 4px 0 5px;
+    margin-bottom: 3px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+    gap: 3px;
+    width: 100%;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls label {
+    display: grid;
+    grid-template-columns: 34px minmax(0,1fr);
+    gap: 5px;
+    width: 100%;
+    align-items: center;
+    color: #6e767b;
+    font-size: 8px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input {
+    width: 100%;
+    min-width: 0;
+    height: 34px;
+    font-size: 16px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera {
+    display: grid;
+    grid-template-columns: 34px 38px minmax(58px,auto) 38px minmax(48px,auto);
+    width: 100%;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera > span {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    color: #6e767b;
+    font-size: 8px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera output {
+    height: 34px;
+    min-width: 0;
+    border-left: 1px solid #2c3338;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button:first-of-type {
+    border-left: 1px solid #2c3338;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button#spacetimeCameraZoomReset {
+    min-width: 0;
+    margin-left: 0;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend {
+    display: none;
+  }
+
+  /* Search results stay horizontally browsable, but never force page overflow. */
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-results {
+    max-width: 100%;
+    padding: 5px 0 6px;
+    overflow: hidden;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list {
+    max-width: 100%;
+    gap: 3px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list button {
+    min-width: min(76vw, 245px);
+  }
+
+  /* Mobile telemetry: Person + zoom first; integrity/detail moves under disclosure. */
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    max-width: 100%;
+    min-height: 23px;
+    padding: 0 0 2px;
+    overflow: visible;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row > .spacetime-status-primary {
+    padding: 0 7px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row > .spacetime-status-primary:first-child {
+    padding-left: 0;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row > .spacetime-status-primary:nth-of-type(2) {
+    display: none;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more {
+    flex: 0 0 auto;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more > summary {
+    height: 22px;
+    padding: 0 0 0 7px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more-content {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    margin-top: 2px;
+    padding: 4px 0;
+    border: 0;
+    border-top: 1px solid #2d3439;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more[open] > .spacetime-status-more-content {
+    display: flex !important;
+    flex: 0 0 100%;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  /* Meanwhile keeps one compact row until a moment is actually selected. */
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile.is-empty {
+    min-height: 18px;
+    padding: 1px 0 2px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile.is-empty span {
+    display: none;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-head {
+    align-items: flex-start;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-head > div {
+    display: grid;
+    gap: 1px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-regions,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  /* Canvas gets the screen. Side tools flow after it. */
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-workspace {
+    grid-template-columns: minmax(0,1fr);
+    gap: 6px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-frame,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-scroll {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-scroll {
+    height: 55vh;
+    min-height: 410px;
+    max-height: 560px;
+  }
+
+  /* Macroregion first. Subregion returns above overview zoom through existing LOD. */
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-frame[data-spacetime-overview="true"] .spacetime-region-head-layer.is-subregion {
+    opacity: 0 !important;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-region-head-layer.is-place,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-place-guide {
+    opacity: 0 !important;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-region-head-layer.is-macro .spacetime-region-head-band strong {
+    font-size: 8.5px;
+    letter-spacing: .045em;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-region-head-layer.is-macro .spacetime-region-head-band small {
+    display: none;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-corner {
+    font-size: 8px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-corner small {
+    display: none;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-era-axis > div span {
+    font-size: 8px;
+    letter-spacing: .03em;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-axis span {
+    font-size: 8px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-year-axis span.is-major {
+    font-size: 9px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-era-boundary b {
+    display: none;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-era-boundary-emblem {
+    left: 4px;
+    width: 5px;
+    height: 5px;
+  }
+
+  /* Labels remain readable, but occupy less simultaneous horizontal space. */
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-track-label {
+    height: 17px;
+    padding: 0 3px 0 4px;
+    font-size: 9px;
+    line-height: 17px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-activity-glyph {
+    height: 19px;
+    padding: 2px 4px;
+    font-size: 8px;
+  }
+
+  /* Sidecar hierarchy: minimap before inspector, selection expands inspector. */
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sidecar {
+    position: relative;
+    top: auto;
+    max-height: none;
+    overflow: visible;
+    gap: 5px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap {
+    order: 1;
+    width: 100%;
+    padding-top: 5px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-head {
+    margin: 0 5px 4px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-head span {
+    display: none;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-surface {
+    height: 88px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector {
+    order: 2;
+    max-height: none;
+    padding: 9px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty {
+    min-height: 0;
+    max-height: 49px;
+    padding: 7px 8px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty small {
+    font-size: 7px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty strong {
+    font-size: 11px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > strong {
+    font-size: 18px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions {
+    grid-template-columns: repeat(5,minmax(0,1fr));
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button {
+    min-width: 0;
+    height: 30px;
+    font-size: 7.5px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-list {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-row {
+    min-width: min(78vw, 300px);
+    max-width: min(84vw, 340px);
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-unresolved-grid {
+    grid-template-columns: minmax(0,1fr);
+    gap: 8px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-unresolved-grid > article {
+    min-width: 0;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-scroll {
+    height: 53vh;
+    min-height: 390px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-surface {
+    height: 80px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row > .spacetime-status-primary {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 390px) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls label {
+    grid-template-columns: 30px minmax(0,1fr);
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera {
+    grid-template-columns: 30px 36px minmax(52px,auto) 36px minmax(43px,auto);
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-scroll {
+    height: 52vh;
+    min-height: 380px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-surface {
+    height: 76px;
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button {
+    font-size: 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-toolbar,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sidecar {
+    scroll-behavior: auto;
+  }
+}
