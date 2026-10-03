@@ -1137,9 +1137,9 @@
     if (!context) return;
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
     context.clearRect(0, 0, width, height);
-    context.fillStyle = "#f8fafc";
+    context.fillStyle = "#101315";
     context.fillRect(0, 0, width, height);
-    context.strokeStyle = "#d8e1ec";
+    context.strokeStyle = "#343b40";
     context.lineWidth = 1;
     for (const region of regions.slice(1)) {
       const x = minimap.projectVerticalLine(region.left, { width: contentWidth, height: timelineHeight }, { width, height });
@@ -1148,7 +1148,7 @@
       context.lineTo(Math.round(x) + 0.5, height);
       context.stroke();
     }
-    context.strokeStyle = "#e4e9f0";
+    context.strokeStyle = "#2a3034";
     for (const era of eras.slice(1)) {
       const y = minimap.projectHorizontalLine(era.top, { width: contentWidth, height: timelineHeight }, { width, height });
       context.beginPath();
@@ -1158,14 +1158,14 @@
     }
     const points = minimap.projectItems(allProjectedTracks, { width: contentWidth, height: timelineHeight }, { width, height });
     const filtered = activePersonIds.size < allProjectedTracks.length;
-    context.fillStyle = filtered ? "rgba(96,124,169,.18)" : "rgba(96,124,169,.52)";
+    context.fillStyle = filtered ? "rgba(205,201,191,.10)" : "rgba(205,201,191,.28)";
     for (const point of points) {
       context.beginPath();
       context.arc(point.minimap_x, point.minimap_y, 1.25, 0, Math.PI * 2);
       context.fill();
     }
     if (filtered) {
-      context.fillStyle = "rgba(67,91,132,.86)";
+      context.fillStyle = "rgba(213,208,197,.62)";
       for (const point of points) {
         if (!activePersonIds.has(point.person_id)) continue;
         context.beginPath();
@@ -1620,6 +1620,7 @@
   }
 
   function renderInto(mount) {
+    mount.dataset.spacetimeTools = "instrument-v7";
     const renderFocus = captureRenderFocus(mount);
     const { timeProjection, spaceAxis, semanticAxis, spatialCompile, exploration, lod, presentationLayout } = runtime();
     const timeline = timelineRange();
