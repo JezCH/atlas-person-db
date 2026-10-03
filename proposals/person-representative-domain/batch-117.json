@@ -1,0 +1,98 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "0a88ffc4d1110ca6d1a9f903a28943f88fab0cf7",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 10. Record six confirmed science-target Persons as verify-only science_retained checkpoints. No Person domain write is requested in this unit; every retained Person must remain live Production knowledge until final cutover.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-10",
+    "reviewed_count": 6,
+    "science_target_count": 6,
+    "non_science_target_count": 0
+  },
+  "review_scope": {
+    "selection_rule": "Continue the simple batch-008 provenance cohort from Unit 09, taking six clear mathematics, astronomy, chemistry, medicine, and experimental-science identities. Deliberately defer Gottfried Wilhelm Leibniz as a real philosophy-mathematics boundary case.",
+    "result_summary": {
+      "science_retained": 6
+    }
+  },
+  "entries": [],
+  "science_retained": [
+    {
+      "person_id": "27e8ca3b-c6a6-4df8-a7ec-cf2bf8c66b38",
+      "canonical_name_en": "Al-Khwarizmi",
+      "preferred_name_ko": "알콰리즈미",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Al-Khwarizmi's representative identity is mathematical and astronomical scholarship, especially algebra, arithmetic, astronomical tables, and mathematical geography. Under v2, mathematics and formal inquiry belong to science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Al-Khwarizmi/"
+      ]
+    },
+    {
+      "person_id": "bff150dc-7d25-4248-a17b-14b42e11edfd",
+      "canonical_name_en": "Archimedes",
+      "preferred_name_ko": "아르키메데스",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Archimedes is represented above all as a mathematician and investigator of mechanics and physical principles. His inventions are important, but his canonical historical identity is broader mathematical and scientific inquiry rather than engineering alone.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Archimedes/"
+      ]
+    },
+    {
+      "person_id": "77799894-fcd0-4423-af3d-57291a806a15",
+      "canonical_name_en": "Claudius Ptolemy",
+      "preferred_name_ko": "클라우디오스 프톨레마이오스",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Ptolemy's representative identity is mathematical astronomy, with major work in astronomy, mathematics, and mathematical geography. This falls directly within the v2 science scope.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Ptolemy/"
+      ]
+    },
+    {
+      "person_id": "f9905d7b-48c0-4cd4-8378-c7a955859caa",
+      "canonical_name_en": "Edward Jenner",
+      "preferred_name_ko": "에드워드 제너",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Jenner is represented as a physician and investigator whose experimental vaccination work against smallpox became foundational to immunization. Medicine and empirical medical inquiry are explicitly within v2 science.",
+      "review_sources": [
+        "https://catalogues.royalsociety.org/CalmView/Record.aspx?id=NA6250&src=CalmView.Persons"
+      ]
+    },
+    {
+      "person_id": "2614127e-3fa8-421c-a1cc-59386c37fb41",
+      "canonical_name_en": "Fritz Haber",
+      "preferred_name_ko": "프리츠 하버",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Haber's representative identity is chemistry, especially physical chemistry and ammonia synthesis. Although the work had major industrial applications, his defining historical identity is scientific chemical research.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/chemistry/1918/haber/facts/"
+      ]
+    },
+    {
+      "person_id": "b4acabec-5f13-4826-a291-e5b147c8e888",
+      "canonical_name_en": "Galen",
+      "preferred_name_ko": "갈레노스",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Galen's representative identity is medicine, anatomy, and experimental physiology. His philosophical writings do not outweigh his long-standing historical identity as physician and medical investigator; medicine is explicitly within v2 science.",
+      "review_sources": [
+        "https://pubmed.ncbi.nlm.nih.gov/12937057/"
+      ]
+    }
+  ]
+}
