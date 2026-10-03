@@ -86,7 +86,7 @@ function clientFor({
       if (text.includes('select id::text person_id,representative_domain from atlas_v2.persons')) {
         return { rows:domainRows };
       }
-      if (text.includes("pg_get_constraintdef(c.oid)") && text.includes("persons_representative_domain_check")) {
+      if (text.includes("pg_get_constraintdef(c.oid)") && params[0] === "persons_representative_domain_check") {
         return {
           rowCount:1,
           rows:[{
