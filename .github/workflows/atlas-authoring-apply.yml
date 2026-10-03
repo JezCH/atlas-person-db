@@ -44,6 +44,7 @@ jobs:
       ATLAS_PERSON_READ_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read
       ATLAS_AUTHORING_AUDIENCE: atlas-person-db-authoring
       ATLAS_AUTHORING_TRANSPORT_VERSION: '2'
+      ATLAS_PERSON_DOMAIN_V2_CUTOVER_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-domain-v2-cutover
     steps:
       - uses: actions/checkout@v4
         with:
@@ -233,6 +234,22 @@ jobs:
             echo 'ATLAS_AUTHORING_SELECTED=false' >> "$GITHUB_ENV"
             echo 'No approved authoring requests selected.'
           fi
+
+      - name: Wait for exact Production Person Domain v2 cutover
+        if: env.ATLAS_AUTHORING_SELECTED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 60); do
+            status="$(curl --silent --show-error --output /tmp/atlas-person-domain-v2-cutover.json --write-out '%{http_code}' "$ATLAS_PERSON_DOMAIN_V2_CUTOVER_ENDPOINT")"
+            if [[ "$status" == "200" ]] && jq -e --arg sha "$GITHUB_SHA" '.ok==true and .runtime_sha==$sha and .state.cutover_complete==true' /tmp/atlas-person-domain-v2-cutover.json >/dev/null; then
+              exit 0
+            fi
+            sleep 5
+          done
+          cat /tmp/atlas-person-domain-v2-cutover.json >&2 || true
+          echo "PERSON_DOMAIN_V2_CUTOVER_NOT_READY" >&2
+          exit 1
 
       - name: Verify deployed authoring runtime readiness
         if: env.ATLAS_AUTHORING_SELECTED == 'true'
