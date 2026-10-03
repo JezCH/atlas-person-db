@@ -39,6 +39,10 @@
       "destination": "/api/atlas-mutate?__atlas_mutation_surface=person-domain"
     },
     {
+      "source": "/api/atlas-person-domain-v2-cutover",
+      "destination": "/api/atlas-mutate?__atlas_mutation_surface=person-domain-v2-cutover"
+    },
+    {
       "source": "/api/atlas-runtime-compile",
       "destination": "/api/atlas-mutate?__atlas_mutation_surface=runtime-compile"
     },

@@ -1,19 +1,11 @@
 "use strict";
 
 const crypto = require("node:crypto");
+const DOMAIN_REGISTRY = require("../atlas-person-domain-registry.js");
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const DOMAIN_DEFINITIONS = Object.freeze([
-  Object.freeze({ code:"governance", label_ko:"통치·정치" }),
-  Object.freeze({ code:"military", label_ko:"군사" }),
-  Object.freeze({ code:"knowledge", label_ko:"학문·과학·사상" }),
-  Object.freeze({ code:"technology", label_ko:"기술·공학·발명" }),
-  Object.freeze({ code:"commerce", label_ko:"상업·경제" }),
-  Object.freeze({ code:"culture", label_ko:"문화·예술" }),
-  Object.freeze({ code:"religion", label_ko:"종교·신앙" }),
-  Object.freeze({ code:"exploration", label_ko:"탐험·항해" })
-]);
-const DOMAIN_CODES = new Set(DOMAIN_DEFINITIONS.map((item) => item.code));
+const DOMAIN_DEFINITIONS = Object.freeze(DOMAIN_REGISTRY.DEFINITIONS.map((item) => Object.freeze({ code:item.code, label_ko:item.label_ko })));
+const DOMAIN_CODES = new Set(DOMAIN_REGISTRY.CODES);
 
 function normalizePersonId(value) {
   const id = String(value || "").trim().toLowerCase();
@@ -36,118 +28,57 @@ async function listRepresentativeDomains(client) {
      where representative_domain is not null
      order by id
   `);
-  const rows = result.rows.map((row) => Object.freeze({
-    person_id:String(row.person_id),
-    representative_domain:String(row.representative_domain),
-    updated_at:null
-  }));
-  const counts = Object.fromEntries(DOMAIN_DEFINITIONS.map((item) => [item.code, 0]));
-  for (const row of rows) counts[row.representative_domain] = (counts[row.representative_domain] || 0) + 1;
-  return Object.freeze({
-    definitions:DOMAIN_DEFINITIONS,
-    rows:Object.freeze(rows),
-    counts:Object.freeze(counts),
-    assigned:rows.length
+  const rows = result.rows.map((row) => {
+    const representativeDomain=String(row.representative_domain);
+    if(!DOMAIN_CODES.has(representativeDomain)) throw new Error(`PERSON_DOMAIN_NONCANONICAL_STORED_VALUE:${representativeDomain}`);
+    return Object.freeze({person_id:String(row.person_id),representative_domain:representativeDomain,updated_at:null});
   });
+  const counts=Object.fromEntries(DOMAIN_DEFINITIONS.map((item)=>[item.code,0]));
+  for(const row of rows) counts[row.representative_domain]+=1;
+  return Object.freeze({definitions:DOMAIN_DEFINITIONS,rows:Object.freeze(rows),counts:Object.freeze(counts),assigned:rows.length});
 }
 
 async function currentDomain(client, personId) {
-  const result = await client.query(`
-    select representative_domain
-      from atlas_v2.persons
-     where id=$1::uuid
-  `, [personId]);
-  if (result.rowCount !== 1) throw new Error("PERSON_DOMAIN_TARGET_NOT_FOUND");
-  return result.rows[0]?.representative_domain || null;
+  const result=await client.query(`select representative_domain from atlas_v2.persons where id=$1::uuid`,[personId]);
+  if(result.rowCount!==1) throw new Error("PERSON_DOMAIN_TARGET_NOT_FOUND");
+  return result.rows[0]?.representative_domain||null;
 }
 
 async function lockPerson(client, personId) {
-  await client.query("select pg_advisory_xact_lock(hashtext($1))", [`atlas-person-domain:${personId}`]);
-  const result = await client.query(`
-    select id::text, representative_domain
-      from atlas_v2.persons
-     where id=$1::uuid
-     for update
-  `, [personId]);
-  if (result.rowCount !== 1) throw new Error("PERSON_DOMAIN_TARGET_NOT_FOUND");
+  await client.query("select pg_advisory_xact_lock(hashtext($1))",[`atlas-person-domain:${personId}`]);
+  const result=await client.query(`select id::text,representative_domain from atlas_v2.persons where id=$1::uuid for update`,[personId]);
+  if(result.rowCount!==1) throw new Error("PERSON_DOMAIN_TARGET_NOT_FOUND");
   return result.rows[0];
 }
 
-async function writeAudit(client, { requestId, personId, before, after }) {
+async function writeAudit(client,{requestId,personId,before,after}) {
   await client.query(`
-    insert into atlas_v2.person_profile_mutation_audits(
-      request_id, person_id, operation, before_snapshot, after_snapshot
-    ) values($1,$2::uuid,'set_person_representative_domain',$3::jsonb,$4::jsonb)
-  `, [
-    requestId,
-    personId,
-    JSON.stringify({ representative_domain:before }),
-    JSON.stringify({ representative_domain:after })
-  ]);
+    insert into atlas_v2.person_profile_mutation_audits(request_id,person_id,operation,before_snapshot,after_snapshot)
+    values($1,$2::uuid,'set_person_representative_domain',$3::jsonb,$4::jsonb)
+  `,[requestId,personId,JSON.stringify({representative_domain:before}),JSON.stringify({representative_domain:after})]);
 }
 
-async function setRepresentativeDomainTx(client, { person_id, representative_domain, request_id } = {}) {
-  if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
-  const personId = normalizePersonId(person_id);
-  const domain = normalizeDomain(representative_domain);
-  const requestId = String(request_id || crypto.randomUUID()).trim();
-  if (!requestId) throw new Error("PERSON_DOMAIN_REQUEST_ID_REQUIRED");
-
-  const locked = await lockPerson(client, personId);
-  const before = locked.representative_domain || null;
-  if (before === domain) {
-    return Object.freeze({
-      committed:true,
-      replay:true,
-      request_id:requestId,
-      person_id:personId,
-      representative_domain:domain,
-      before_domain:before
-    });
-  }
-
-  await client.query(`
-    update atlas_v2.persons
-       set representative_domain=$2
-     where id=$1::uuid
-  `, [personId, domain]);
-
-  await writeAudit(client, { requestId, personId, before, after:domain });
-
-  const verified = await currentDomain(client, personId);
-  if (verified !== domain) throw new Error("PERSON_DOMAIN_VERIFICATION_FAILED");
-
-  return Object.freeze({
-    committed:true,
-    replay:false,
-    request_id:requestId,
-    person_id:personId,
-    representative_domain:domain,
-    before_domain:before
-  });
+async function setRepresentativeDomainTx(client,{person_id,representative_domain,request_id}={}) {
+  if(!client||typeof client.query!=="function") throw new Error("PostgreSQL client with query() is required");
+  const personId=normalizePersonId(person_id);
+  const domain=normalizeDomain(representative_domain);
+  const requestId=String(request_id||crypto.randomUUID()).trim();
+  if(!requestId) throw new Error("PERSON_DOMAIN_REQUEST_ID_REQUIRED");
+  const locked=await lockPerson(client,personId);
+  const before=locked.representative_domain||null;
+  if(before===domain) return Object.freeze({committed:true,replay:true,request_id:requestId,person_id:personId,representative_domain:domain,before_domain:before});
+  await client.query(`update atlas_v2.persons set representative_domain=$2 where id=$1::uuid`,[personId,domain]);
+  await writeAudit(client,{requestId,personId,before,after:domain});
+  const verified=await currentDomain(client,personId);
+  if(verified!==domain) throw new Error("PERSON_DOMAIN_VERIFICATION_FAILED");
+  return Object.freeze({committed:true,replay:false,request_id:requestId,person_id:personId,representative_domain:domain,before_domain:before});
 }
 
-async function setRepresentativeDomain(client, input = {}) {
-  if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
+async function setRepresentativeDomain(client,input={}) {
+  if(!client||typeof client.query!=="function") throw new Error("PostgreSQL client with query() is required");
   await client.query("BEGIN ISOLATION LEVEL SERIALIZABLE");
-  try {
-    const result = await setRepresentativeDomainTx(client, input);
-    await client.query("COMMIT");
-    return result;
-  } catch (error) {
-    try { await client.query("ROLLBACK"); } catch {}
-    throw error;
-  }
+  try{const result=await setRepresentativeDomainTx(client,input);await client.query("COMMIT");return result;}
+  catch(error){try{await client.query("ROLLBACK");}catch{} throw error;}
 }
 
-module.exports = Object.freeze({
-  UUID_RE,
-  DOMAIN_DEFINITIONS,
-  DOMAIN_CODES,
-  normalizePersonId,
-  normalizeDomain,
-  currentDomain,
-  listRepresentativeDomains,
-  setRepresentativeDomainTx,
-  setRepresentativeDomain
-});
+module.exports=Object.freeze({UUID_RE,DOMAIN_DEFINITIONS,DOMAIN_CODES,normalizePersonId,normalizeDomain,currentDomain,listRepresentativeDomains,setRepresentativeDomainTx,setRepresentativeDomain});
