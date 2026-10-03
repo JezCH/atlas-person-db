@@ -1,0 +1,123 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "0c86bb368db7d1ba9058bc226cfdd0dc6ed2b4f7",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 02. Reclassify only the first bounded philosophy slice whose v2 representative identity is non-science. Each write requires live Production previous_domain=knowledge; any drift fails closed.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-02",
+    "reviewed_count": 9,
+    "science_target_count": 0,
+    "non_science_target_count": 9
+  },
+  "review_scope": {
+    "source_batches": ["batch-102.json", "batch-103.json"],
+    "selection_rule": "Complete the two China philosophy records in batch-102 and the seven Korea philosophy records in batch-103 as one 9-Person bounded v2 review unit.",
+    "result_summary": {
+      "culture": 6,
+      "religion": 3
+    }
+  },
+  "entries": [
+    {
+      "person_id": "6b8282e2-b025-4c2e-9b7f-e78a7546ec2e",
+      "canonical_name_en": "Xunzi",
+      "preferred_name_ko": "순자",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-102.json",
+      "basis": "V2 culture covers philosophy. Xunzi is canonically represented as a Warring States Confucian philosopher; his philosophical identity, not natural or formal science, is representative.",
+      "review_sources": ["https://plato.stanford.edu/archives/sum2012/entries/xunzi/"]
+    },
+    {
+      "person_id": "d9beb4e4-5652-4f67-b373-cadb0e32e4b0",
+      "canonical_name_en": "Wang Yangming",
+      "preferred_name_ko": "왕양명",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-102.json",
+      "basis": "V2 culture covers philosophy. Wang Yangming is a major Neo-Confucian philosopher; although also a statesman and general, this philosophy-canon Person is represented by his intellectual doctrine.",
+      "review_sources": ["https://plato.stanford.edu/entries/wang-yangming/"]
+    },
+    {
+      "person_id": "e22d9449-ae8d-41f7-8fd8-3b8643255f73",
+      "canonical_name_en": "Choe Chiwon",
+      "preferred_name_ko": "최치원",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-103.json",
+      "basis": "V2 culture covers humanities, literature, and thought. Choe Chiwon is represented as a scholar, man of letters, writer, and intellectual whose writings and thought are his durable historical identity.",
+      "review_sources": ["https://encykorea.aks.ac.kr/Article/E0057711"]
+    },
+    {
+      "person_id": "92908ca5-c424-4061-bfd1-3ee33299613a",
+      "canonical_name_en": "Wonhyo",
+      "preferred_name_ko": "원효",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-103.json",
+      "basis": "V2 culture covers philosophy, including historically religious philosophy when intellectual work is the representative identity. Stanford Encyclopedia of Philosophy describes Wonhyo as the most prominent philosopher in Korean Buddhism and emphasizes his logic, commentaries, and One Mind philosophy; he is not classified here by monastic status alone.",
+      "review_sources": ["https://plato.stanford.edu/entries/korean-buddhism/"]
+    },
+    {
+      "person_id": "17ed7c94-16e4-42b0-9ca6-070a8f07ef7d",
+      "canonical_name_en": "Uisang",
+      "preferred_name_ko": "의상",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-103.json",
+      "basis": "V2 religion covers religious leadership and faith traditions. Uisang founded the Korean Hwaeom school, established its institutional tradition, and is remembered as a Buddhist religious leader as well as a philosopher.",
+      "review_sources": [
+        "https://www.rep.routledge.com/articles/biographical/uisang-605-702/v-1",
+        "https://journal.kabs.re.kr/articles/article/kVen/"
+      ]
+    },
+    {
+      "person_id": "d9b85876-9186-4fec-bf01-50e3fd877f61",
+      "canonical_name_en": "Uicheon",
+      "preferred_name_ko": "의천",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-103.json",
+      "basis": "V2 religion covers religious leadership, theology, and reform. Uicheon was an eminent Goryeo monk who established the Korean Cheontae school and led institutional reconciliation of Buddhist traditions.",
+      "review_sources": [
+        "https://dh.aks.ac.kr/~heritage/wiki/index.php/%EC%B9%A0%EA%B3%A1_%EC%84%A0%EB%B4%89%EC%82%AC_%EB%8C%80%EA%B0%81%EA%B5%AD%EC%82%AC%EB%B9%84",
+        "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/uichon"
+      ]
+    },
+    {
+      "person_id": "b55051fe-11da-47ae-84ba-13dfce9815e8",
+      "canonical_name_en": "Jinul",
+      "preferred_name_ko": "지눌",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-103.json",
+      "basis": "V2 religion covers religious leadership and reform. Jinul was a Korean Buddhist monk whose reform movement and synthesis became foundational to Korean Seon practice and institutions.",
+      "review_sources": ["https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/jinul-1158-1210"]
+    },
+    {
+      "person_id": "2e9243b7-14d4-4e57-8e31-8770866ac849",
+      "canonical_name_en": "Yi Hwang",
+      "preferred_name_ko": "이황",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-103.json",
+      "basis": "V2 culture covers philosophy and humanities. Yi Hwang is represented by his Neo-Confucian scholarship and philosophical school, despite holding government offices.",
+      "review_sources": ["https://encykorea.aks.ac.kr/Article/E0046626"]
+    },
+    {
+      "person_id": "6b6ec4e5-dcf0-4e66-8e0c-2d4fd2fb96de",
+      "canonical_name_en": "Yi I",
+      "preferred_name_ko": "이이",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-103.json",
+      "basis": "V2 culture covers philosophy and humanities. Yi I is represented by his Confucian scholarship, philosophical writings, and the intellectual tradition associated with him; political office does not override that representative identity here.",
+      "review_sources": ["https://encykorea.aks.ac.kr/Article/E0045546"]
+    }
+  ]
+}
