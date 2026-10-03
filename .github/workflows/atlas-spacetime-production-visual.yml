@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - "index.html"
+      - "status-summary.js"
+      - "atlas-person-era-navigation.css"
       - "atlas-main-authority-nav.js"
       - "atlas-ui-visual-foundation.css"
       - "atlas-person-monumental-register.css"
