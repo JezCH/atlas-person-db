@@ -22,6 +22,16 @@ BEGIN
     RAISE EXCEPTION 'SHAH_ABBAS_QUEUE_BINDING_CONFLICT:%:%', target_candidate_id, current_person_id;
   END IF;
 
+  -- Clean-schema rehearsals do not necessarily materialize this Production Person.
+  -- In a database where the target UUID exists, verify its canonical identity before binding.
+  IF NOT EXISTS (
+    SELECT 1
+      FROM atlas_v2.persons
+     WHERE id = target_person_id
+  ) THEN
+    RETURN;
+  END IF;
+
   IF NOT EXISTS (
     SELECT 1
       FROM atlas_v2.persons p
