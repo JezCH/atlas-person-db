@@ -950,8 +950,9 @@ function createHumanAuthoringService({ client, prepare = prepareAnyHumanAuthorin
       if (!Array.isArray(rawRequests) || rawRequests.length === 0) throw new Error("HUMAN_AUTHORING_BATCH_REQUESTS_REQUIRED");
       const normalizedTransports = transports == null ? rawRequests.map(() => null) : transports;
       if (!Array.isArray(normalizedTransports) || normalizedTransports.length !== rawRequests.length) throw new Error("HUMAN_AUTHORING_BATCH_TRANSPORT_LENGTH_MISMATCH");
+      if (candidate_ids != null && !Array.isArray(candidate_ids)) throw new Error("HUMAN_AUTHORING_BATCH_CANDIDATE_IDS_INVALID");
       const normalizedCandidateIds = candidate_ids == null ? rawRequests.map(() => null) : candidate_ids.map(normalizeQueueCandidateId);
-      if (!Array.isArray(normalizedCandidateIds) || normalizedCandidateIds.length !== rawRequests.length) throw new Error("HUMAN_AUTHORING_BATCH_CANDIDATE_IDS_LENGTH_MISMATCH");
+      if (normalizedCandidateIds.length !== rawRequests.length) throw new Error("HUMAN_AUTHORING_BATCH_CANDIDATE_IDS_LENGTH_MISMATCH");
 
       const prepared = new Array(rawRequests.length).fill(null);
       const preparationFailures = [];
