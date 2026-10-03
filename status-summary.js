@@ -9,15 +9,17 @@
     .admin-nav-link:hover{color:#fff;background:#6572e83d}
     .mobile-admin-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:#e9eef7;padding:12px;border-radius:10px;font-weight:800}
     .mobile-admin-link:hover{background:#6572e83d}
-    .registration-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 15px;margin-bottom:14px}
+    .registration-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 12px;margin-bottom:12px;border-color:#30373c;background:#15191c;color:#d8d2c5;box-shadow:inset 0 1px 0 rgba(255,255,255,.018)}
     .registration-summary-main{display:flex;align-items:center;gap:12px;min-width:0}
-    .registration-summary-dot{width:11px;height:11px;border-radius:999px;flex:0 0 auto;background:#d39a22;box-shadow:0 0 0 5px #fff3d6}
-    .registration-summary[data-state="ok"] .registration-summary-dot{background:#24955b;box-shadow:0 0 0 5px #e7f6ed}
-    .registration-summary[data-state="error"] .registration-summary-dot{background:#c44750;box-shadow:0 0 0 5px #fde9eb}
-    .registration-summary-title{font-weight:900;font-size:14px}
-    .registration-summary-detail{margin-top:3px;color:#6f7888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .registration-summary-dot{width:9px;height:9px;border-radius:999px;flex:0 0 auto;background:#d3a84a;box-shadow:0 0 0 4px rgba(211,168,74,.13)}
+    .registration-summary[data-state="ok"] .registration-summary-dot{background:#4ea36d;box-shadow:0 0 0 4px rgba(78,163,109,.13)}
+    .registration-summary[data-state="error"] .registration-summary-dot{background:#c95a5a;box-shadow:0 0 0 4px rgba(201,90,90,.13)}
+    .registration-summary-title{color:#d8d2c5;font-weight:850;font-size:13px;letter-spacing:.01em}
+    .registration-summary-detail{margin-top:3px;color:#7f888d;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .registration-summary-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
-    .registration-summary-link{border:1px solid #cfd6e1;border-radius:8px;padding:8px 11px;background:#fff;color:#172033;text-decoration:none;font-size:12px;font-weight:800}
+    .registration-summary-link{border:1px solid #394147;border-radius:6px;padding:7px 10px;background:#171c20;color:#cfc8b8;text-decoration:none;font-size:11px;font-weight:800}
+    .registration-summary-link:hover{border-color:#6f6652;background:#1b2024;color:#f0ece4}
+    .registration-summary-link:focus-visible{outline:1px solid rgba(208,188,145,.62);outline-offset:2px}
     .registration-summary-link:disabled{opacity:.55;cursor:wait}
     @media(max-width:760px){
       .admin-nav-link{display:none}

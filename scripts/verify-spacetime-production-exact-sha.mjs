@@ -8,6 +8,8 @@ const OUT_DIR = process.env.ATLAS_VISUAL_OUT_DIR || "artifacts/spacetime-visual-
 const REPO = "JezCH/atlas-person-db";
 const ASSETS = Object.freeze([
   "index.html",
+  "status-summary.js",
+  "atlas-person-era-navigation.css",
   "atlas-main-authority-nav.js",
   "atlas-ui-visual-foundation.css",
   "atlas-person-monumental-register.css",

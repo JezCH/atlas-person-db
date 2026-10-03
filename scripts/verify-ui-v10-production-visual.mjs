@@ -95,7 +95,13 @@ async function collectMain(client){
     const bodyWidth=Math.max(document.documentElement.scrollWidth,document.body.scrollWidth);
     const entry=q('.person-register-entry');
     const main=q('#personMainView');
+    const registration=q('#registrationSummary');
+    const eraNavigator=q('#personEraNavigator');
+    const eraSearch=q('.person-era-search');
     const bg=style(document.body)?.backgroundColor||'';
+    const registrationStyle=style(registration);
+    const eraNavigatorStyle=style(eraNavigator);
+    const eraSearchStyle=style(eraSearch);
     return {
       viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},
       bodyScrollWidth:bodyWidth,
@@ -105,6 +111,21 @@ async function collectMain(client){
       firstEntryName:(entry?.querySelector('.person-main-name-link')?.textContent||entry?.querySelector('strong')?.textContent||'').trim(),
       firstEntryDomain:entry?.dataset?.representativeDomain||null,
       bodyBackground:bg,
+      registrationSurface:registrationStyle?{
+        background:registrationStyle.backgroundColor,
+        borderTopColor:registrationStyle.borderTopColor,
+        color:registrationStyle.color
+      }:null,
+      eraNavigatorSurface:eraNavigatorStyle?{
+        background:eraNavigatorStyle.backgroundColor,
+        borderTopColor:eraNavigatorStyle.borderTopColor,
+        color:eraNavigatorStyle.color
+      }:null,
+      eraSearchSurface:eraSearchStyle?{
+        background:eraSearchStyle.backgroundColor,
+        borderTopColor:eraSearchStyle.borderTopColor,
+        color:eraSearchStyle.color
+      }:null,
       v9Loaded:[...document.styleSheets].some(s=>String(s.href||'').includes('atlas-ui-motion-material-v9.css')),
       v8Loaded:[...document.styleSheets].some(s=>String(s.href||'').includes('atlas-ui-mobile-v8.css'))
     };
@@ -161,6 +182,9 @@ async function main(){
     assert(desktopMain.mainVisible&&desktopMain.registerCount>0,"Person Register did not render on desktop",desktopMain);
     assert(desktopMain.mainPortraitCount===0,"Person Main must not render portraits",desktopMain);
     assert(desktopMain.v8Loaded&&desktopMain.v9Loaded,"Current V8/V9 presentation layers are not active",desktopMain);
+    assert(desktopMain.registrationSurface?.background==="rgb(21, 25, 28)","Person Runtime telemetry regressed to a bright surface",desktopMain);
+    assert(desktopMain.eraNavigatorSurface?.background==="rgba(18, 21, 24, 0.96)","Person era navigator regressed to a bright surface",desktopMain);
+    assert(desktopMain.eraSearchSurface?.background==="rgb(17, 21, 24)","Person era search regressed to a bright surface",desktopMain);
     await screenshot(client,"person-main-1600x1000.png");
 
     const desktopDetail=await openFirstDetail(client);
