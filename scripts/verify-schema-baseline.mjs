@@ -43,7 +43,8 @@ const expectedAuthoringMigrations = [
   '20261001_spatial_registration_dispositions.sql',
   '20261001_polity_place_function_authority.sql',
   '20260930_unit16_retire_external_reference_sync_trigger.sql',
-  '20261003_person_registration_queue_authority.sql'
+  '20261003_person_registration_queue_authority.sql',
+  '20261003_shah_abbas_registration_queue_binding.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -71,7 +72,8 @@ const expectedAuthoringReplayMigrations = [
   '20261001_spatial_registration_dispositions.sql',
   '20261001_polity_place_function_authority.sql',
   '20260930_unit16_retire_external_reference_sync_trigger.sql',
-  '20261003_person_registration_queue_authority.sql'
+  '20261003_person_registration_queue_authority.sql',
+  '20261003_shah_abbas_registration_queue_binding.sql'
 ];
 
 const expectedCorrectionMigrations = [
