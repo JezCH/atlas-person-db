@@ -1,0 +1,146 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "24039c46570546398290229c603a27a5d2164223",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 12. Record ten confirmed science targets across biology, medicine, chemistry, physics, and mathematics as verify-only science_retained checkpoints. No Person domain write is requested; all ten must remain live Production knowledge until final cutover.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-12",
+    "reviewed_count": 10,
+    "science_target_count": 10,
+    "non_science_target_count": 0
+  },
+  "review_scope": {
+    "selection_rule": "Choose a coherent low-ambiguity science cohort with verified current live knowledge status and verified latest numbered-batch assignment provenance. Defer genuine cross-domain boundary cases and any Person whose latest provenance cannot be established.",
+    "result_summary": {
+      "science_retained": 10
+    }
+  },
+  "entries": [],
+  "science_retained": [
+    {
+      "person_id": "0910a2e9-794b-42f1-b45b-0fa268a1f91e",
+      "canonical_name_en": "Norman Borlaug",
+      "preferred_name_ko": "노먼 볼로그",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-082.json",
+      "basis": "Borlaug's representative identity is plant pathology, crop breeding, and agricultural science underlying the Green Revolution. Although his Nobel award was for peace, the historical identity being classified is scientific agricultural research.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/peace/1970/borlaug/facts/"
+      ]
+    },
+    {
+      "person_id": "201df059-fd64-4006-a479-281fdb141244",
+      "canonical_name_en": "Alexander Fleming",
+      "preferred_name_ko": "알렉산더 플레밍",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-081.json",
+      "basis": "Fleming's representative identity is bacteriology and medical research, especially the discovery of penicillin. Medicine and empirical biomedical inquiry are explicitly within v2 science.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/medicine/1945/fleming/biographical/"
+      ]
+    },
+    {
+      "person_id": "4321da0e-2675-4f79-ab13-823c033d2a70",
+      "canonical_name_en": "Francis Crick",
+      "preferred_name_ko": "프랜시스 크릭",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-087.json",
+      "basis": "Crick's representative identity is molecular biology and biophysics, especially the molecular structure of DNA and its significance for genetic information. The v2 target is science.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/medicine/1962/crick/facts/"
+      ]
+    },
+    {
+      "person_id": "6be066f4-cb44-4302-8157-8804b39ede1f",
+      "canonical_name_en": "Carl Linnaeus",
+      "preferred_name_ko": "칼 린네",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-081.json",
+      "basis": "Linnaeus is historically represented by taxonomy, botany, natural history, and the binomial system for classifying organisms. This is a direct natural-science identity.",
+      "review_sources": [
+        "https://www.linnean.org/learning/who-was-linnaeus"
+      ]
+    },
+    {
+      "person_id": "b60799c7-4707-42fe-9613-2a2dfb1c960c",
+      "canonical_name_en": "Chien-Shiung Wu",
+      "preferred_name_ko": "우젠슝",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-088.json",
+      "basis": "Wu's representative identity is experimental nuclear physics, especially her decisive cobalt-60 experiment demonstrating parity violation in weak interactions. The v2 target is science.",
+      "review_sources": [
+        "https://www.aps.org/apsnews/2022/11/global-event-chien-shiung-wu"
+      ]
+    },
+    {
+      "person_id": "d3a55a20-50cb-4444-b03a-5c1e3b253df9",
+      "canonical_name_en": "Frederick Banting",
+      "preferred_name_ko": "프레더릭 밴팅",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-088.json",
+      "basis": "Banting's representative identity is medical research centered on the discovery and therapeutic isolation of insulin. Medicine and empirical biomedical inquiry belong to v2 science.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/medicine/1923/banting/facts/"
+      ]
+    },
+    {
+      "person_id": "d51d91b2-cf30-4743-84d2-c9725795418c",
+      "canonical_name_en": "John Dalton",
+      "preferred_name_ko": "존 돌턴",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-092.json",
+      "basis": "Dalton's representative identity is chemistry and physical science, especially atomic theory, atomic weights, meteorology, and the law of partial pressures. The v2 target is science.",
+      "review_sources": [
+        "https://www.sciencehistory.org/education/scientific-biographies/john-dalton/"
+      ]
+    },
+    {
+      "person_id": "e0b2112b-78ae-44b1-80dc-62374673ae59",
+      "canonical_name_en": "Louis Pasteur",
+      "preferred_name_ko": "루이 파스퇴르",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-012.json",
+      "basis": "Pasteur's representative identity is chemistry, microbiology, and experimental medical science, including fermentation, pasteurization, germ research, and vaccination. The v2 target is science.",
+      "review_sources": [
+        "https://www.pasteur.fr/en/about-us/our-dna/history"
+      ]
+    },
+    {
+      "person_id": "06104c76-4dbe-472e-8f64-97f74a4e18c7",
+      "canonical_name_en": "Niels Henrik Abel",
+      "preferred_name_ko": "닐스 헨리크 아벨",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-094.json",
+      "basis": "Abel's representative identity is pure mathematics, particularly algebra and analysis. Mathematics and formal inquiry are explicitly within the v2 science scope.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Abel/"
+      ]
+    },
+    {
+      "person_id": "f28e3e06-1bc3-44c2-8180-813b7ff5ba50",
+      "canonical_name_en": "Shiing-Shen Chern",
+      "preferred_name_ko": "천싱선",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-088.json",
+      "basis": "Chern's representative identity is mathematics, especially differential geometry and algebraic topology. Mathematics and formal inquiry are explicitly within the v2 science scope.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Chern/"
+      ]
+    }
+  ]
+}
