@@ -1,0 +1,91 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-04",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "6c6954c869413d77d0ec988624820dd5e8ac69b6",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 22. Record five provenance-clean legacy knowledge Persons as verify-only science_retained dispositions where the representative historical identity is grounded in mathematics, physics, medicine, scientific cartography/geography, or formal/empirical inquiry. No Production representative_domain write is requested; all five remain knowledge until the final atomic knowledge-to-science cutover.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-22",
+    "reviewed_count": 5,
+    "science_target_count": 5,
+    "non_science_target_count": 0
+  },
+  "review_scope": {
+    "selection_rule": "Choose five genuinely unreviewed live knowledge Persons with validator-compatible reviewed assignment provenance and strong science-side representative identity. Prefer direct mathematical, physical, medical, or scientific-cartographic contributions; defer unresolved religion/governance cases and legacy Human Authoring or repair-order provenance cases that cannot satisfy the current pre-cutover validator.",
+    "result_summary": {
+      "science_retained": 5
+    }
+  },
+  "entries": [],
+  "science_retained": [
+    {
+      "person_id": "d2b6be8c-df56-44fe-848d-660fb8f9b89a",
+      "canonical_name_en": "Albert Einstein",
+      "preferred_name_ko": "알베르트 아인슈타인",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "palette-smoke-001.json",
+      "basis": "Einstein's representative historical identity is theoretical physics. His work on the photoelectric effect, Brownian motion, special relativity, general relativity, statistical mechanics, and quantum theory is central to modern physics. Under v2, physics and empirical/formal natural inquiry belong to science; the stored value remains knowledge until final cutover.",
+      "review_sources": [
+        "https://www.nobelprize.org/prizes/physics/1921/einstein/biographical/",
+        "https://www.nobelprize.org/prizes/physics/1921/einstein/facts/"
+      ]
+    },
+    {
+      "person_id": "b47fb78d-4cb4-4dfb-a576-fe304c60ac30",
+      "canonical_name_en": "Ibn Sina",
+      "preferred_name_ko": "이븐 시나",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-044.json",
+      "basis": "Ibn Sina was a major philosopher as well as a physician, but his representative historical identity also includes a comprehensive scientific system spanning natural philosophy and medicine, while his Canon of Medicine became a foundational medical teaching text for centuries. Under v2, medicine and natural-scientific inquiry support science as the representative target; the stored value remains knowledge until final cutover.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/ibn-sina/",
+        "https://plato.stanford.edu/entries/ibn-sina-natural/"
+      ]
+    },
+    {
+      "person_id": "40c95688-4280-4e7c-a096-a5e356a7181a",
+      "canonical_name_en": "Gerardus Mercator",
+      "preferred_name_ko": "게라르두스 메르카토르",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-085.json",
+      "basis": "Mercator's representative identity is scientific cartography and geography rather than expeditionary exploration. Library of Congress material describes him as a geographer and cartographer who advanced cartography as a science through globes, maps, projections, atlases, mathematical instruments, and a projection that solved a geometric representation problem. Under v2, this formal and empirical geographic inquiry belongs to science.",
+      "review_sources": [
+        "https://guides.loc.gov/maps-illustrated-guide/european-atlases",
+        "https://www.loc.gov/item/prn-09-146/understanding-the-mercator-projection/2009-07-24/"
+      ]
+    },
+    {
+      "person_id": "d36801fe-ba76-445a-afa3-c0882c24ae9d",
+      "canonical_name_en": "Kim Jeong-ho",
+      "preferred_name_ko": "김정호",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-061.json",
+      "basis": "Kim Jeong-ho is represented as a geographer devoted to producing and systematizing geographic knowledge through major maps and gazetteers. The Academy of Korean Studies describes his effort to produce a scientifically constructed nationwide map using consistent scale and to organize national geographic information systematically; the National Museum of Korea classifies Daedongyeojido within traditional science/geography. Under v2, this empirical and systematic geographic inquiry belongs to science rather than exploration.",
+      "review_sources": [
+        "https://encykorea.aks.ac.kr/Article/E0010423",
+        "https://www.museum.go.kr/MUSEUM/contents/M0502000000.do?relicId=8518&schM=view&searchId=search"
+      ]
+    },
+    {
+      "person_id": "1535cf26-58cd-41d1-9166-ffffa8e0e3ff",
+      "canonical_name_en": "Gottfried Wilhelm Leibniz",
+      "preferred_name_ko": "고트프리트 빌헬름 라이프니츠",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-008.json",
+      "basis": "Leibniz was also a major philosopher, jurist, historian, and diplomat, but his representative intellectual identity includes independent development and publication of differential and integral calculus, foundational mathematical notation, formal logic, and major work in physics. Under v2, these foundational mathematical and formal-scientific contributions support science as the representative target; the stored value remains knowledge until final cutover.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Leibniz/",
+        "https://plato.stanford.edu/entries/leibniz/"
+      ]
+    }
+  ]
+}
