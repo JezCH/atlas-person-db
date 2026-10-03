@@ -1,0 +1,125 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "11ef66281c22e2972c8c8bef029bfbbf4cf59991",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 14. Record eight confirmed mathematics, astronomy, physics, evolutionary biology, and anatomy science targets as verify-only science_retained checkpoints. No Person domain write is requested; all eight must remain live Production knowledge until final cutover.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-14",
+    "reviewed_count": 8,
+    "science_target_count": 8,
+    "non_science_target_count": 0
+  },
+  "review_scope": {
+    "selection_rule": "Choose a low-ambiguity science cohort whose live Production value is knowledge and whose latest numbered-batch assignment provenance is established. Exclude philosophy-science, science-technology, religion-science, and any unresolved Human Authoring provenance cases.",
+    "result_summary": {
+      "science_retained": 8
+    }
+  },
+  "entries": [],
+  "science_retained": [
+    {
+      "person_id": "0208bbf2-0be2-481d-aece-b279fcd32a73",
+      "canonical_name_en": "Isaac Newton",
+      "preferred_name_ko": "아이작 뉴턴",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-011.json",
+      "basis": "Newton's representative identity is mathematics and natural philosophy/physics, especially calculus, optics, mechanics, and universal gravitation. Under v2 these are science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Newton/"
+      ]
+    },
+    {
+      "person_id": "0a975a8e-e9be-4144-b1a0-3301e8693d85",
+      "canonical_name_en": "Galileo Galilei",
+      "preferred_name_ko": "갈릴레오 갈릴레이",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-012.json",
+      "basis": "Galileo's representative identity is observational astronomy, mechanics, mathematical physics, and experimental investigation. Under v2 his representative domain is science.",
+      "review_sources": [
+        "https://www.museogalileo.it/en/galileo/life.html"
+      ]
+    },
+    {
+      "person_id": "d2fa20c9-e747-4d25-b3d4-a62d713a9c5f",
+      "canonical_name_en": "Nicolaus Copernicus",
+      "preferred_name_ko": "니콜라우스 코페르니쿠스",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-012.json",
+      "basis": "Copernicus's representative identity is mathematical astronomy and the heliocentric model that transformed subsequent astronomy. Under v2 astronomy is science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Copernicus/"
+      ]
+    },
+    {
+      "person_id": "e13c2ab2-f8fb-408a-9a65-34bb38223e85",
+      "canonical_name_en": "Carl Friedrich Gauss",
+      "preferred_name_ko": "카를 프리드리히 가우스",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-085.json",
+      "basis": "Gauss's representative identity is mathematics with major work across number theory, analysis, geometry, geodesy, astronomy, magnetism, and optics. Under v2 the representative domain is science.",
+      "review_sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Gauss/"
+      ]
+    },
+    {
+      "person_id": "e18b67dc-c89a-4f28-8784-0c0e9c49d63b",
+      "canonical_name_en": "John von Neumann",
+      "preferred_name_ko": "존 폰 노이만",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-082.json",
+      "basis": "von Neumann's representative identity is mathematics and mathematical science, spanning pure and applied mathematics, quantum mechanics, game theory, computing, and mathematical physics. Under v2 the representative domain is science.",
+      "review_sources": [
+        "https://www.ias.edu/von-neumann",
+        "https://www.ias.edu/scholars/von-neumann"
+      ]
+    },
+    {
+      "person_id": "749a300a-4e0a-44d7-bfc6-75dbbb54b677",
+      "canonical_name_en": "Charles Darwin",
+      "preferred_name_ko": "찰스 다윈",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-059.json",
+      "basis": "Darwin's representative identity is natural history and evolutionary biology, especially the theory of evolution by natural selection supported through extensive scientific observation. Under v2 this is science.",
+      "review_sources": [
+        "https://www.nhm.ac.uk/discover/charles-darwin-most-famous-biologist.html"
+      ]
+    },
+    {
+      "person_id": "5c9d4d8e-1d2d-44d1-b73c-d1343606b32b",
+      "canonical_name_en": "Alfred Russel Wallace",
+      "preferred_name_ko": "앨프리드 러셀 월리스",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-088.json",
+      "basis": "Wallace's representative identity is natural history, evolutionary biology, and biogeography, including independent formulation of evolution by natural selection and foundational biogeographic work. Under v2 this is science.",
+      "review_sources": [
+        "https://www.nhm.ac.uk/discover/who-was-alfred-russel-wallace.html",
+        "https://www.nhm.ac.uk/our-science/services/library/collections/wallace.html"
+      ]
+    },
+    {
+      "person_id": "bebe0e02-d97a-44ef-9c1a-fd5e2d2e9080",
+      "canonical_name_en": "Andreas Vesalius",
+      "preferred_name_ko": "안드레아스 베살리우스",
+      "v2_target_domain": "science",
+      "stored_domain": "knowledge",
+      "current_assignment_source": "batch-087.json",
+      "basis": "Vesalius's representative identity is empirical human anatomy and medicine, especially De humani corporis fabrica and anatomy based on direct observation and dissection. Under v2 medicine and anatomy belong to science.",
+      "review_sources": [
+        "https://www.nlm.nih.gov/exhibition/historicalanatomies/vesalius_bio.html",
+        "https://pubmed.ncbi.nlm.nih.gov/11723674/"
+      ]
+    }
+  ]
+}
