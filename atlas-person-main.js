@@ -161,7 +161,9 @@
     const canonical = person?.canonical_name_en && person.canonical_name_en !== person.display_name
       ? `<small class="person-card-canonical">${escapeHtml(person.canonical_name_en)}</small>` : "";
     const selectedClass = selectedPersonId === person.id ? " is-selected" : "";
-    const open = `<button class="person-card${selectedClass}" type="button" data-person-id="${escapeHtml(person.id)}">`;
+    const representativeDomain = String(personDomainsById?.[person?.id] || "").trim();
+    const domainAttribute = representativeDomain ? ` data-representative-domain="${escapeHtml(representativeDomain)}"` : "";
+    const open = `<button class="person-card${selectedClass}" type="button" data-person-id="${escapeHtml(person.id)}"${domainAttribute}>`;
     const close = "</button>";
     return `${open}
       <span class="person-card-top"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span>${escapeHtml(person.person_type || "type 미상")}</span></span>
