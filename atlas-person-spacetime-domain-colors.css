@@ -7,57 +7,58 @@
 
 .spacetime-track-label[data-representative-domain="governance"],
 .spacetime-track-rail[data-representative-domain="governance"] {
-  --spacetime-person-domain-color: var(--atlas-person-domain-governance);
-  --spacetime-person-domain-edge: var(--atlas-person-domain-governance);
-  --spacetime-person-domain-tint: var(--atlas-person-domain-governance-tint);
+  --spacetime-person-domain-color: var(--atlas-person-domain-governance-surface, #d4af37);
+  --spacetime-person-domain-edge: var(--atlas-person-domain-governance-surface, #d4af37);
+  --spacetime-person-domain-tint: rgba(212,175,55,.11);
 }
 .spacetime-track-label[data-representative-domain="military"],
 .spacetime-track-rail[data-representative-domain="military"] {
   --spacetime-person-domain-color: var(--atlas-person-domain-military);
   --spacetime-person-domain-edge: var(--atlas-person-domain-military);
-  --spacetime-person-domain-tint: var(--atlas-person-domain-military-tint);
+  --spacetime-person-domain-tint: rgba(184,58,58,.10);
 }
 .spacetime-track-label[data-representative-domain="knowledge"],
 .spacetime-track-rail[data-representative-domain="knowledge"] {
   --spacetime-person-domain-color: var(--atlas-person-domain-knowledge);
   --spacetime-person-domain-edge: var(--atlas-person-domain-knowledge);
-  --spacetime-person-domain-tint: var(--atlas-person-domain-knowledge-tint);
+  --spacetime-person-domain-tint: rgba(63,120,197,.10);
 }
 .spacetime-track-label[data-representative-domain="technology"],
 .spacetime-track-rail[data-representative-domain="technology"] {
-  --spacetime-person-domain-color: var(--atlas-person-domain-technology);
-  --spacetime-person-domain-edge: var(--atlas-person-domain-technology);
-  --spacetime-person-domain-tint: var(--atlas-person-domain-technology-tint);
+  --spacetime-person-domain-color: var(--atlas-person-domain-technology-surface, #59636d);
+  --spacetime-person-domain-edge: var(--atlas-person-domain-technology-surface, #59636d);
+  --spacetime-person-domain-tint: rgba(89,99,109,.12);
 }
 .spacetime-track-label[data-representative-domain="commerce"],
 .spacetime-track-rail[data-representative-domain="commerce"] {
   --spacetime-person-domain-color: var(--atlas-person-domain-commerce);
   --spacetime-person-domain-edge: var(--atlas-person-domain-commerce);
-  --spacetime-person-domain-tint: var(--atlas-person-domain-commerce-tint);
+  --spacetime-person-domain-tint: rgba(46,139,87,.10);
 }
 .spacetime-track-label[data-representative-domain="culture"],
 .spacetime-track-rail[data-representative-domain="culture"] {
   --spacetime-person-domain-color: var(--atlas-person-domain-culture);
   --spacetime-person-domain-edge: var(--atlas-person-domain-culture);
-  --spacetime-person-domain-tint: var(--atlas-person-domain-culture-tint);
+  --spacetime-person-domain-tint: rgba(154,91,165,.10);
 }
 .spacetime-track-label[data-representative-domain="religion"],
 .spacetime-track-rail[data-representative-domain="religion"] {
   --spacetime-person-domain-color: var(--atlas-person-domain-religion-edge);
   --spacetime-person-domain-edge: var(--atlas-person-domain-religion-edge);
-  --spacetime-person-domain-tint: var(--atlas-person-domain-religion-tint);
+  --spacetime-person-domain-tint: rgba(135,158,172,.11);
 }
 .spacetime-track-label[data-representative-domain="exploration"],
 .spacetime-track-rail[data-representative-domain="exploration"] {
   --spacetime-person-domain-color: var(--atlas-person-domain-exploration);
   --spacetime-person-domain-edge: var(--atlas-person-domain-exploration);
-  --spacetime-person-domain-tint: var(--atlas-person-domain-exploration-tint);
+  --spacetime-person-domain-tint: rgba(217,107,30,.10);
 }
 
 .spacetime-track-label[data-representative-domain]:not(.is-selected):not(.is-meanwhile-active):not(:hover) {
-  border-color: var(--spacetime-person-domain-edge);
-  background: linear-gradient(90deg, var(--spacetime-person-domain-tint), rgba(255,255,255,.94) 82%);
-  box-shadow: inset 3px 0 0 var(--spacetime-person-domain-edge), 0 1px 5px rgba(35,50,74,.08);
+  border-color: transparent;
+  border-left-color: var(--spacetime-person-domain-edge);
+  background: linear-gradient(90deg, var(--spacetime-person-domain-tint), rgba(18,21,24,.84) 36%, rgba(18,21,24,.54) 78%, rgba(18,21,24,0));
+  box-shadow: none;
 }
 
 .spacetime-track-rail[data-representative-domain]:not(.is-selected):not(.is-meanwhile-active):not(.is-activity-selected):not(:hover) {
