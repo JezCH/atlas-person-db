@@ -246,9 +246,11 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
       }
 
       const request = body?.request && typeof body.request === "object" && !Array.isArray(body.request) ? body.request : body;
+      const candidateId = body?.candidate_id == null ? null : String(body.candidate_id).trim() || null;
       const outcome = await service.apply(request, {
         transport:auth.transport,
-        allowLegacyNamuWikiOmission:false
+        allowLegacyNamuWikiOmission:false,
+        candidate_id:candidateId
       });
       return json(res, 200, { ok:true, auth_method:auth.method, ...outcome });
     } catch (error) {
