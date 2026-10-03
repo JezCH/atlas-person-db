@@ -21,10 +21,10 @@
   --spacetime-person-domain-edge: var(--atlas-person-domain-military);
   --spacetime-person-domain-tint: rgba(184,58,58,.10);
 }
-.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-label[data-representative-domain="knowledge"],
-.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-rail[data-representative-domain="knowledge"] {
-  --spacetime-person-domain-color: var(--atlas-person-domain-knowledge);
-  --spacetime-person-domain-edge: var(--atlas-person-domain-knowledge);
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-label[data-representative-domain="science"],
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-rail[data-representative-domain="science"] {
+  --spacetime-person-domain-color: var(--atlas-person-domain-science);
+  --spacetime-person-domain-edge: var(--atlas-person-domain-science);
   --spacetime-person-domain-tint: rgba(63,120,197,.10);
 }
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-label[data-representative-domain="technology"],

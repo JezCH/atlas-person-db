@@ -73,7 +73,7 @@
   function ensurePersonDomainAssets() {
     ensureStylesheet(
       'link[data-atlas-person-domain-palette="true"]',
-      "./atlas-person-domain-palette.css?v=20260912-religion-silver-blue-v6",
+      "./atlas-person-domain-palette.css?v=20261004-person-domain-v2",
       "atlasPersonDomainPalette"
     );
 
@@ -97,7 +97,7 @@
   function ensureSpacetimeDomainAssets() {
     ensureStylesheet(
       'link[data-atlas-person-spacetime-domain-colors="true"]',
-      "./atlas-person-spacetime-domain-colors.css?v=20261003-ui-v6-canvas-v1",
+      "./atlas-person-spacetime-domain-colors.css?v=20261004-person-domain-v2",
       "atlasPersonSpacetimeDomainColors"
     );
 

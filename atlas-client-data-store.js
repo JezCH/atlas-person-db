@@ -99,7 +99,12 @@
   }
 
   function normalizeDomainPayload(payload) {
-    if (payload?.ok !== true || !Array.isArray(payload.rows)) throw new Error("INVALID_PERSON_DOMAIN_RESPONSE");
+    if (
+      payload?.ok !== true
+      || payload?.marker !== "ATLAS_PERSON_REPRESENTATIVE_DOMAIN_V2"
+      || payload?.schema !== "atlas-person-domain/v2"
+      || !Array.isArray(payload.rows)
+    ) throw new Error("INVALID_PERSON_DOMAIN_RESPONSE");
     const rows = payload.rows.map((row) => Object.freeze({
       person_id:String(row?.person_id || "").trim(),
       representative_domain:String(row?.representative_domain || "").trim() || null
