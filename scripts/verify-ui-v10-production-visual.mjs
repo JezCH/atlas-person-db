@@ -202,8 +202,9 @@ async function main(){
     assert(mobileMain.mainPortraitCount===0,"Person Main must not render portraits on mobile",mobileMain);
     await screenshot(client,"person-main-390x844.png");
 
+    await evaluate(client,`document.querySelector('#mobileMenuButton')?.click(); true`);
+    await sleep(320);
     const drawerOpened=await evaluate(client,`(() => {
-      document.querySelector('#mobileMenuButton')?.click();
       const drawer=document.querySelector('#mobileDrawer');
       const backdrop=document.querySelector('#mobileDrawerBackdrop');
       const r=drawer?.getBoundingClientRect?.();
@@ -212,7 +213,8 @@ async function main(){
         ariaHidden:drawer?.getAttribute('aria-hidden'),
         backdropHidden:Boolean(backdrop?.hidden),
         bodyOpen:document.body.classList.contains('mobile-menu-open'),
-        rect:r?{left:r.left,right:r.right,width:r.width}:null
+        rect:r?{left:r.left,right:r.right,width:r.width}:null,
+        transform:drawer?getComputedStyle(drawer).transform:null
       };
     })()`);
     assert(drawerOpened.open&&drawerOpened.ariaHidden==="false"&&!drawerOpened.backdropHidden&&drawerOpened.bodyOpen,
