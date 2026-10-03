@@ -378,7 +378,7 @@ Branch inventory is historical storage, not a work queue. Inspect only branches 
 
 A new worker answers “what is active?” from current authoritative state first. Historical folding is exceptional recovery work.
 
-### Person registration queue: one live current view
+### Person registration queue: one canonical DB authority
 
 The Person registration backlog has one query surface:
 
@@ -386,25 +386,23 @@ The Person registration backlog has one query surface:
 GET /api/atlas-read?__atlas_read_surface=registration-queue
 ```
 
-This response is the current registration-queue list to consult for ordinary work. Do not reconstruct the queue by folding #1374/#1375 comments again.
-
-Its durable admission source is:
+Its canonical authority is the single DB dataset:
 
 ```text
-data/core/person-registration-queue-source.v1.json
+atlas_v2.person_candidate_registration_states
 ```
 
-Queue rules:
+Current membership is defined by exactly one invariant:
 
-- every newly human-approved candidate promoted to the registration queue must be appended to that source with a unique `candidate_id`;
-- the source is an admission ledger, not the user-facing pending list;
-- the live read surface subtracts terminal candidate-registration states and exact unique canonical Person identity matches, so completed registrations disappear from the current queue without deleting Git history;
-- `REGISTERED`, `VERIFIED_AUTHORING_ONLY`, and `NOT_APPLICABLE` are not current queue rows;
-- `QUEUED`, `APPLYING`, and `BLOCKED` may remain visible with their live state;
-- an ambiguous exact identity match stays visible and is marked for identity resolution rather than being silently removed;
-- GitHub issue comments remain historical evidence only and are not the current queue authority.
+```sql
+person_id IS NULL
+```
 
-When asked for “the registration queue”, read this live surface first.
+A successful registration records the canonical Person UUID on that same candidate row. The read surface does not scan Person names, aliases, GitHub issue comments, historical queue comments, or the bootstrap JSON to decide current membership.
+
+`data/core/person-registration-queue-source.v1.json` is retained only as the historical migration/bootstrap artifact for the 2026-10-03 cutover. It is not a live authority and is never dual-written with the DB.
+
+Review revisions and registration lifecycle metadata may remain for their own audit/transaction purposes, but they do not participate in the current-queue predicate.
 
 ## 11. Registration completeness without repeated cleanup
 
