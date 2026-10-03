@@ -82,6 +82,20 @@ test("NamuWiki handler accepts bounded not_found review reasons", () => {
   );
 });
 
+test("NamuWiki handler accepts guarded linked-to-not_found transition", () => {
+  const corrected = requireNamuWikiLinkPayload({
+    runtime_sha:RUNTIME_SHA,
+    workflow_sha:WORKFLOW_SHA,
+    person_id:PERSON_ID,
+    status:"not_found",
+    expected_current_url:LINKED_URL,
+    review_reason:"related_or_derivative_only"
+  });
+  assert.equal(corrected.externalReference.status, "not_found");
+  assert.equal(corrected.externalReference.review_reason, "related_or_derivative_only");
+  assert.equal(corrected.expectedCurrentReference.url, LINKED_URL);
+});
+
 test("NamuWiki handler keeps linked default and rejects URL on not_found", () => {
   const linked = requireNamuWikiLinkPayload({
     runtime_sha:RUNTIME_SHA,
