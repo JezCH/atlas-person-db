@@ -291,13 +291,13 @@ async function inspectAuthoringReadiness(client) {
     && core.columns_ready
     && core.ledger_contract_ready
     && core.person_reference_contract_ready
-    && personDomainV2.cutover_complete
+    && personDomainV2.schema_v2_ready
     && p9Ready
     && mergeContractReady;
   const bootstrapReady = p5Ready
     && core.base_tables_ready
     && core.activity_columns_ready
-    && personDomainV2.cutover_complete
+    && personDomainV2.schema_v2_ready
     && p9Ready
     && mergeContractReady;
 
