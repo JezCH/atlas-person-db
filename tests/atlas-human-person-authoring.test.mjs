@@ -36,7 +36,7 @@ function personOnlyFixture() {
       traditional_year_alternative:null,
       review_evidence:{authority_scope:'timeline_disposition_review_evidence_only'}
     },
-    representative_domain:'knowledge',
+    representative_domain:'science',
     sources:[{
       source_type:'academic_reference',
       title:'Example academic reference',
@@ -51,7 +51,7 @@ test('person-only request normalizes through the canonical non-timeline contract
   const prepared=human.prepareAnyHumanAuthoringRequest(personOnlyFixture(),{allowLegacyNamuWikiOmission:false});
   assert.equal(prepared.schema,'atlas-human-person-authoring/v1');
   assert.equal(prepared.request.timeline_disposition.disposition,'chronology_unresolved');
-  assert.equal(prepared.request.representative_domain,'knowledge');
+  assert.equal(prepared.request.representative_domain,'science');
   assert.equal(prepared.request.external_references.namuwiki.status,'not_found');
   assert.equal(prepared.request.external_references.namuwiki.review_state,'reviewed_absent');
   assert.equal(prepared.request.external_references.namuwiki.review_reason,'no_exact_document');
@@ -98,7 +98,7 @@ test('Person read projection exposes representative domain and timeline disposit
     id:'00000000-0000-4000-8000-000000000001',
     person_type:'historical',
     historicity:'historical',
-    representative_domain:'knowledge',
+    representative_domain:'science',
     timeline_disposition:{
       disposition:'chronology_unresolved',
       reason:'reviewed chronology gap',
@@ -115,7 +115,7 @@ test('Person read projection exposes representative domain and timeline disposit
     first_activity_year:null,
     last_activity_year:null
   });
-  assert.equal(projected.representative_domain,'knowledge');
+  assert.equal(projected.representative_domain,'science');
   assert.equal(projected.timeline_disposition.disposition,'chronology_unresolved');
   assert.equal(projected.timeline_disposition.reason,'reviewed chronology gap');
 });
@@ -123,4 +123,12 @@ test('Person read projection exposes representative domain and timeline disposit
 test('authoring apply migrations include person-only ledger schema migration', () => {
   const paths=migrations.AUTHORING_APPLY_MIGRATION_PATHS.map((value)=>String(value));
   assert.ok(paths.some((value)=>value.endsWith('20260930_human_person_authoring_manifest_schema.sql')));
+});
+
+test('legacy person-only knowledge input is marked retired while canonicalizing to science', () => {
+  const legacy=personOnlyFixture();
+  legacy.representative_domain='knowledge';
+  const prepared=human.prepareAnyHumanAuthoringRequest(legacy,{allowLegacyNamuWikiOmission:false});
+  assert.equal(prepared.request.representative_domain,'science');
+  assert.equal(prepared.legacyDomainAliasUsed,true);
 });
