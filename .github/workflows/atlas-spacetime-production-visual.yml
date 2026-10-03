@@ -1,6 +1,24 @@
 name: ATLAS Spacetime Production Visual Acceptance
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"
+      - "atlas-main-authority-nav.js"
+      - "atlas-ui-visual-foundation.css"
+      - "atlas-person-monumental-register.css"
+      - "atlas-person-chronicle-detail.css"
+      - "atlas-ui-mobile-v8.css"
+      - "atlas-ui-motion-material-v9.css"
+      - "atlas-domain-surface-owner.js"
+      - "atlas-person-domain-palette.css"
+      - "atlas-person-domain-ui.js"
+      - "atlas-person-spacetime-*.js"
+      - "atlas-person-spacetime-*.css"
+      - "scripts/verify-spacetime-production-*.mjs"
+      - ".github/workflows/atlas-spacetime-production-visual.yml"
   workflow_dispatch:
     inputs:
       expected_runtime_sha:
@@ -11,25 +29,47 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: atlas-spacetime-production-visual-main
+  cancel-in-progress: true
+
 jobs:
   visual_acceptance:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     env:
       ATLAS_PRODUCTION_URL: https://atlas-person-db.vercel.app/#atlas-spacetime
-      ATLAS_EXPECTED_RUNTIME_SHA: ${{ inputs.expected_runtime_sha }}
       ATLAS_VISUAL_OUT_DIR: artifacts/spacetime-visual-acceptance
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+
+      - name: Resolve Production acceptance SHA
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_SHA: ${{ inputs.expected_runtime_sha }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            EXPECTED_SHA="$DISPATCH_SHA"
+          else
+            EXPECTED_SHA="$GITHUB_SHA"
+          fi
+          [[ "$EXPECTED_SHA" =~ ^[0-9a-fA-F]{40}$ ]]
+          echo "ATLAS_EXPECTED_RUNTIME_SHA=$EXPECTED_SHA" >> "$GITHUB_ENV"
+          echo "Production visual acceptance target: $EXPECTED_SHA"
+
       - name: Install Korean browser fonts
         shell: bash
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends fonts-noto-cjk
           fc-cache -f
+
       - name: Locate Chrome
         shell: bash
         run: |
@@ -38,12 +78,31 @@ jobs:
           test -n "$CHROME_BIN"
           echo "CHROME_BIN=$CHROME_BIN" >> "$GITHUB_ENV"
           "$CHROME_BIN" --version
-      - name: Run exact-SHA Production visual acceptance
+
+      - name: Wait for exact-SHA Production parity
         shell: bash
         run: |
           set -euo pipefail
           rm -rf "$ATLAS_VISUAL_OUT_DIR"
           mkdir -p "$ATLAS_VISUAL_OUT_DIR"
+          matched=false
+          for attempt in $(seq 1 90); do
+            if node scripts/verify-spacetime-production-exact-sha.mjs; then
+              matched=true
+              break
+            fi
+            echo "Production exact-SHA parity pending: expected=$ATLAS_EXPECTED_RUNTIME_SHA attempt=$attempt/90"
+            sleep 10
+          done
+          [[ "$matched" == "true" ]] || {
+            echo "Production did not converge to exact SHA $ATLAS_EXPECTED_RUNTIME_SHA." >&2
+            exit 1
+          }
+
+      - name: Run exact-SHA Production visual acceptance
+        shell: bash
+        run: |
+          set -euo pipefail
           "$CHROME_BIN" \
             --headless=new \
             --no-sandbox \
@@ -60,18 +119,18 @@ jobs:
             sleep 0.25
           done
           curl -fsS http://127.0.0.1:9222/json/version >/dev/null
-          node scripts/verify-spacetime-production-exact-sha.mjs
           node scripts/verify-spacetime-production-visual.mjs
           node scripts/verify-spacetime-production-domain-colors.mjs
           for report in "$ATLAS_VISUAL_OUT_DIR"/*.json; do
             echo "===== $report ====="
             cat "$report"
           done
+
       - name: Upload visual evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: atlas-spacetime-production-visual-acceptance
+          name: atlas-spacetime-production-visual-acceptance-${{ github.sha }}
           path: artifacts/spacetime-visual-acceptance
           if-no-files-found: error
           retention-days: 30
