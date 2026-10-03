@@ -1,6 +1,6 @@
 /* Domain presentation must outrank the V6 neutral fallback variables.
  * Scope to the active chronology frame so canonical Person-domain color owns
- * label/rail semantics without !important or geometry changes.
+ * label/rail semantics without priority flags or geometry changes.
  */
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-label[data-representative-domain],
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-rail[data-representative-domain] {
