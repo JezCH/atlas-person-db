@@ -44,7 +44,7 @@ test('unknown-chronology presentation uses canonical timeline-disposition Korean
 
 test('Main and Admin load the same localization authority before dependent presentation code', () => {
   const i18nIndex = html.indexOf('atlas-ui-localization.js?v=20260819-ko-r2');
-  const tableIndex = html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2');
+  const tableIndex = html.indexOf('atlas-person-table-view.js?v=20261003-ui-v4-register-v1');
   const catalogIndex = html.indexOf('atlas-ui-authority-catalog.ko.js?v=20260920-polity-composite-v4');
   const navIndex = html.indexOf('atlas-main-authority-nav.js?v=');
   assert.ok(i18nIndex >= 0 && i18nIndex < tableIndex);
