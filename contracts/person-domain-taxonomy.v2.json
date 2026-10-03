@@ -78,6 +78,13 @@
       "science_is_the_only_blue_science_code",
       "exactly_eight_canonical_codes",
       "registry_ui_schema_and_tests_use_v2_labels"
-    ]
+    ],
+    "science_review_record": {
+      "container": "science_targets array on the bounded batch-NNN.json review manifest",
+      "stored_domain": "knowledge",
+      "target_domain": "science",
+      "verification": "Each confirmed science target must still read as knowledge in Production before final cutover; latest assignment provenance must be explicit.",
+      "cutover_gate": "The live knowledge Person-id set must exactly equal the durable reviewed science-target Person-id set before knowledge can be retired."
+    }
   }
 }
