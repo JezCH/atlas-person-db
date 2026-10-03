@@ -1,0 +1,87 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "586c63abe108dce670c89037325840a937ce9a61",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 19. Resolve five legacy knowledge Persons whose representative historical identity is philosophy, intellectual history, historiography, or cultural memory into culture. Scientific, administrative, legal, or military secondary roles do not override the dominant humanities identity in this bounded unit.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-19",
+    "reviewed_count": 5,
+    "science_target_count": 0,
+    "non_science_target_count": 5
+  },
+  "review_scope": {
+    "selection_rule": "Choose five genuinely unreviewed live knowledge Persons with established numbered-batch assignment provenance and sufficiently clear humanities/philosophy representative identity. Defer stronger philosophy-science cases such as René Descartes and Pythagoras rather than forcing them into this cohort.",
+    "result_summary": {
+      "culture": 5
+    }
+  },
+  "entries": [
+    {
+      "person_id": "0912bdab-405a-42f9-b63b-791b7a729922",
+      "canonical_name_en": "Aspasia",
+      "preferred_name_ko": "아스파시아",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-044.json",
+      "basis": "Aspasia's securely grounded ATLAS identity is as a fifth-century BCE Athenian intellectual associated with rhetoric, education, and the intellectual circle around Pericles. Detailed claims about her teaching and political influence are contested, but her representative identity is humanistic and intellectual rather than scientific or governmental. Under v2, intellectual history and humanities belong to culture.",
+      "review_sources": [
+        "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Aspasia"
+      ]
+    },
+    {
+      "person_id": "1ee551fc-6ad7-4c2f-80d4-5bbeb526132f",
+      "canonical_name_en": "Aristotle",
+      "preferred_name_ko": "아리스토텔레스",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-007.json",
+      "basis": "Aristotle made foundational contributions across natural inquiry, but his representative historical identity is the philosopher and founder of the Lyceum whose corpus shaped logic, metaphysics, ethics, politics, rhetoric, poetics, and philosophy for millennia. Under v2, philosophy belongs to culture; his scientific work is substantial but does not displace that representative identity.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/aristotle/"
+      ]
+    },
+    {
+      "person_id": "4593467a-6dea-4d07-a40f-597185fe0f25",
+      "canonical_name_en": "Ibn Rushd",
+      "preferred_name_ko": "이븐 루시드",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-044.json",
+      "basis": "Ibn Rushd was also a physician and judge, but modern scholarship identifies him as one of the major philosophers of the medieval Islamic world and a foundational source for later European philosophy through his Aristotelian commentaries and original philosophical work. Under v2, philosophy and intellectual history place his representative domain in culture.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/ibn-rushd/"
+      ]
+    },
+    {
+      "person_id": "b7cb64e7-6bbf-4a3f-8791-c8db642b5d17",
+      "canonical_name_en": "Francis Bacon",
+      "preferred_name_ko": "프랜시스 베이컨",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-081.json",
+      "basis": "Bacon's work on induction and natural philosophy strongly influenced the development of science, but his representative historical identity is as an early-modern philosopher, essayist, historian, and theorist of knowledge rather than as a practicing natural scientist. Under v2, philosophy and intellectual history belong to culture.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/francis-bacon/"
+      ]
+    },
+    {
+      "person_id": "b62406e7-c201-4d3c-b79f-2752c4111571",
+      "canonical_name_en": "Joe Medicine Crow",
+      "preferred_name_ko": "조 메디슨 크로",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-050.json",
+      "basis": "Joe Medicine Crow was also a decorated veteran and the last traditional Crow war chief, but his long-term representative public role from 1948 was Crow tribal historian and custodian of Apsáalooke history and culture. Under v2, history and cultural memory belong to culture, while his wartime military deeds remain a secondary biographical dimension.",
+      "review_sources": [
+        "https://www.pbs.org/kenburns/the-war/joseph-medicine-crow/",
+        "https://www.washingtonpost.com/news/morning-mix/wp/2016/04/04/joe-medicine-crow-a-war-chief-historian-and-the-last-link-to-the-battle-of-little-big-horn-dies-at-102/"
+      ]
+    }
+  ],
+  "science_retained": []
+}
