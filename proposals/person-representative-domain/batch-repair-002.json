@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-04",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "5f5c8e44e50cd6c47806b01ad91b5ccb8dd9ff08",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Unit 23 prerequisite provenance repair. Materialize four already-live legacy knowledge assignments that lack validator-compatible reviewed assignment provenance. This file does not reclassify any Person: each entry exactly matches current Production knowledge and exists only to establish a durable canonical assignment source for the immediately following v2 review repair manifest."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-V2-UNIT23-LEGACY-KNOWLEDGE-PROVENANCE-REPAIR-20261004",
+    "reviewed_assignments": 4,
+    "reviewed_holds": 0,
+    "execution_scope": "idempotent_provenance_materialization_only",
+    "rationale": "The four Persons are live as knowledge in Production, but their older Human Authoring records do not contain representative_domain fields acceptable to the current correction-provenance validator. Preserve the live value unchanged, create no historical reclassification here, and make the durable reviewed source explicit before Unit 23 classification.",
+    "identity_sources": [
+      "authoring/requests/mykhailo-hrushevsky-unr-1917-1918.json",
+      "authoring/requests/pablo-tac-payomkawichum-c1840-1841.json",
+      "authoring/requests/j-robert-oppenheimer-los-alamos-1943-1945.json",
+      "authoring/requests/howard-walter-florey-united-kingdom-1935-1962.json"
+    ]
+  },
+  "entries": [
+    {
+      "person_id": "17fe5b34-2f92-4c67-bcdb-f373ce3b3684",
+      "canonical_name_en": "Mykhailo Hrushevsky",
+      "preferred_name_ko": "미하일로 흐루셰우스키",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "299c8de4-e1cc-4a3f-a82f-4abe29b1d6b8",
+      "canonical_name_en": "Pablo Tac",
+      "preferred_name_ko": "파블로 탁",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "605d4e27-e933-4429-bb51-c023d4a20905",
+      "canonical_name_en": "J. Robert Oppenheimer",
+      "preferred_name_ko": "줄리어스 로버트 오펜하이머",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "e313c5ef-779c-40b2-ab4c-0555160d5f85",
+      "canonical_name_en": "Howard Walter Florey",
+      "preferred_name_ko": "하워드 플로리",
+      "representative_domain": "knowledge"
+    }
+  ],
+  "science_retained": []
+}
