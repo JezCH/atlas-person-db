@@ -1,0 +1,93 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "909bc2b6fa293f4dedd2fd7fc2eb0919a6ec31b7",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 20. Resolve a focused religion/philosophy boundary cohort from legacy knowledge. Classify theology, rabbinic or juridical religious authority, Sufi mystical tradition, Qur'an exegesis, and tradition-forming Vedanta authority as religion when those religious functions are integral to the Person's representative historical identity, even when philosophy or historiography is also major.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-20",
+    "reviewed_count": 5,
+    "science_target_count": 0,
+    "non_science_target_count": 5
+  },
+  "review_scope": {
+    "selection_rule": "Choose five genuinely unreviewed live knowledge Persons whose religious-theological, legal-religious, exegetical, mystical, or tradition-forming authority is strong enough to resolve the culture/religion boundary without relying on generic role labels alone.",
+    "result_summary": {
+      "religion": 5
+    }
+  },
+  "entries": [
+    {
+      "person_id": "7aeb78bc-2be1-466b-bb0d-13b5e55a9f9c",
+      "canonical_name_en": "Rāmānuja",
+      "preferred_name_ko": "라마누자",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-107.json",
+      "basis": "Rāmānuja is a major Vedanta philosopher, but his representative historical identity is inseparable from Viśiṣṭādvaita theology, devotional religious teaching, maṭha-associated activity, and the formation of the Śrīvaiṣṇava religious tradition. Under v2, theology and faith-tradition authority place the representative domain in religion.",
+      "review_sources": [
+        "https://iep.utm.edu/ramanuja/"
+      ]
+    },
+    {
+      "person_id": "a5edffb0-770e-4008-a085-b59747d850b7",
+      "canonical_name_en": "Madhva",
+      "preferred_name_ko": "마드바",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-107.json",
+      "basis": "Madhva is a philosopher and theologian, but the reviewed record identifies him as founder of Dvaita Vedānta, a religious teacher with pupils and institutional activity at Udupi, including establishment of the principal Krishna temple. Under v2, tradition founding and theology make religion the representative domain.",
+      "review_sources": [
+        "https://www.rep.routledge.com/articles/biographical/madhva-1238-1317/v-1",
+        "https://www.encyclopedia.com/people/philosophy-and-religion/hinduism-biographies/madhva"
+      ]
+    },
+    {
+      "person_id": "a62dc631-f685-4235-9161-0f4c1812e949",
+      "canonical_name_en": "Ibn ʿArabī",
+      "preferred_name_ko": "이븐 아라비",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-ibn-arabi-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:ibn-arabi:person-only:v1",
+      "basis": "Ibn ʿArabī is a major philosopher, but his enduring representative identity is also the preeminent master of philosophical Sufism, integrating Qur'an commentary, Hadith, jurisprudence, theology, mysticism, and the Sufi path. Under v2, this defining mystical and faith-tradition authority places him in religion.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/ibn-arabi/",
+        "https://plato.stanford.edu/entries/arabic-islamic-mysticism/"
+      ]
+    },
+    {
+      "person_id": "3f3cb937-b022-4b5c-9380-2a8625b33a2e",
+      "canonical_name_en": "Maimonides",
+      "preferred_name_ko": "마이모니데스",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_origin": "human_authoring",
+      "supersedes_source": "authoring/requests/philosophy-canon-20260930-maimonides-person-only.json",
+      "supersedes_request_id": "authoring:philosophy-canon-20260930:maimonides:person-only:v1",
+      "basis": "Maimonides is the leading medieval Jewish philosopher, but the same reviewed authority emphasizes that the Mishneh Torah established him as the leading rabbinic authority of his time, systematizing Jewish law and articulating binding principles of Jewish faith. Under v2, this defining rabbinic, legal, and theological authority makes religion the representative domain.",
+      "review_sources": [
+        "https://plato.stanford.edu/entries/maimonides/"
+      ]
+    },
+    {
+      "person_id": "632d77e3-8f1a-41fe-9aeb-646d2d7edd62",
+      "canonical_name_en": "Al-Tabari",
+      "preferred_name_ko": "알타바리",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-087.json",
+      "basis": "Al-Tabari is a foundational historian, but he was also an eminent Qur'an commentator, jurist, imam-level legal authority, and founder of a juridical school. His surviving historical and exegetical scholarship was deeply embedded in Islamic religious learning. Under v2, Qur'an exegesis, jurisprudence, and religious scholarly authority make religion the representative domain.",
+      "review_sources": [
+        "https://www.iranicaonline.org/articles/tabari-abu-jafar/",
+        "https://www.iranicaonline.org/articles/historiography-iii/"
+      ]
+    }
+  ],
+  "science_retained": []
+}
