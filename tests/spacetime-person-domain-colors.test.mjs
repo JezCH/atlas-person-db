@@ -105,3 +105,15 @@ test("domain integration does not alter spacetime geometry or camera invariants"
   assert.doesNotMatch(view, /representative_domain/);
   assert.doesNotMatch(view, /ATLAS_PERSON_SPACETIME_DOMAIN_COLORS/);
 });
+
+
+test("V10 chronology domain overrides outrank the neutral V6 defaults", () => {
+  const css = fs.readFileSync(path.join(root, "atlas-person-spacetime-domain-colors.css"), "utf8");
+  assert.match(css, /\.spacetime-frame\[data-spacetime-visual="chronology-v6"\] \.spacetime-track-label\[data-representative-domain="governance"\]/);
+  assert.match(css, /\.spacetime-frame\[data-spacetime-visual="chronology-v6"\] \.spacetime-track-rail\[data-representative-domain="governance"\]/);
+  assert.match(css, /--spacetime-person-domain-edge: var\(--atlas-person-domain-governance-surface\)/);
+  assert.match(css, /--spacetime-person-domain-edge: var\(--atlas-person-domain-technology-surface\)/);
+  assert.match(css, /--spacetime-person-domain-edge: var\(--atlas-person-domain-religion-edge\)/);
+  const owner = fs.readFileSync(path.join(root, "atlas-domain-surface-owner.js"), "utf8");
+  assert.match(owner, /atlas-person-spacetime-domain-colors\.css\?v=20261003-ui-v10-domain-closure-v1/);
+});
