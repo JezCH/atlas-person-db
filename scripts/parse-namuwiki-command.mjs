@@ -34,6 +34,23 @@ function parseItem(line) {
     return Object.freeze({ person_id:personId, status:"linked", url, expected_current_url:expectedCurrentUrl });
   }
 
+  const missingCorrection = line.match(/^not_found_correct\s+(\S+)\s+(\S+)\s+(\S+)$/);
+  if (missingCorrection) {
+    const personId = missingCorrection[1].toLowerCase();
+    const expectedCurrentUrl = missingCorrection[2];
+    const reviewReason = missingCorrection[3];
+    if (!UUID_RE.test(personId)) throw invalid(`Invalid person UUID: ${missingCorrection[1]}`);
+    if (!NAMUWIKI_URL_RE.test(expectedCurrentUrl)) throw invalid(`Invalid expected current NamuWiki URL for ${personId}`);
+    if (!REVIEW_REASONS.has(reviewReason)) throw invalid(`Invalid NamuWiki review reason for ${personId}: ${reviewReason}`);
+    return Object.freeze({
+      person_id:personId,
+      status:"not_found",
+      url:null,
+      expected_current_url:expectedCurrentUrl,
+      review_reason:reviewReason
+    });
+  }
+
   const missing = line.match(/^not_found\s+(\S+)(?:\s+(\S+))?$/);
   if (missing) {
     const personId = missing[1].toLowerCase();
@@ -59,6 +76,9 @@ export function parseNamuWikiCommand(body, { maxBatchSize=DEFAULT_MAX_BATCH_SIZE
 
   const singleCorrection = text.match(/^\/namuwiki-correct\s+(\S+)\s+(\S+)\s+(\S+)$/);
   if (singleCorrection) return [parseItem(`correct ${singleCorrection[1]} ${singleCorrection[2]} ${singleCorrection[3]}`)];
+
+  const singleMissingCorrection = text.match(/^\/namuwiki-not-found-correct\s+(\S+)\s+(\S+)\s+(\S+)$/);
+  if (singleMissingCorrection) return [parseItem(`not_found_correct ${singleMissingCorrection[1]} ${singleMissingCorrection[2]} ${singleMissingCorrection[3]}`)];
 
   const singleMissing = text.match(/^\/namuwiki-not-found\s+(\S+)(?:\s+(\S+))?$/);
   if (singleMissing) return [parseItem(`not_found ${singleMissing[1]}${singleMissing[2] ? ` ${singleMissing[2]}` : ""}`)];
