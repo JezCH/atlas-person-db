@@ -99,6 +99,48 @@ async function readCurrentRegistrationQueue({ client } = {}) {
   });
 }
 
+async function admitRegistrationQueueCandidate(client, {
+  candidate_id,
+  name,
+  representative_domain = null,
+  priority = null,
+  review_metadata = {}
+} = {}) {
+  if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
+  const candidateId = requiredCandidateId(candidate_id);
+  const candidateName = text(name);
+  if (!candidateName) throw new Error("REGISTRATION_QUEUE_CANDIDATE_NAME_REQUIRED");
+  const domain = representative_domain == null ? null : text(representative_domain) || null;
+  const normalizedPriority = priority == null ? null : text(priority) || null;
+  const metadata = normalizeMetadata(review_metadata);
+
+  const result = await client.query(
+    `insert into atlas_v2.person_registration_candidates(
+       candidate_id,name,representative_domain,priority,review_metadata,person_id
+     ) values($1,$2,$3,$4,$5::jsonb,null)
+     on conflict(candidate_id) do update
+       set name=excluded.name,
+           representative_domain=excluded.representative_domain,
+           priority=excluded.priority,
+           review_metadata=excluded.review_metadata,
+           updated_at=now()
+     where atlas_v2.person_registration_candidates.person_id is null
+     returning candidate_id,person_id::text`,
+    [candidateId,candidateName,domain,normalizedPriority,JSON.stringify(metadata)]
+  );
+
+  if (result.rowCount === 1) {
+    return Object.freeze({ candidate_id:candidateId, person_id:null });
+  }
+
+  const current = await loadRegistrationQueueCandidate(client, candidateId, { forUpdate:true });
+  if (!current) throw new Error("REGISTRATION_QUEUE_ADMISSION_FAILED");
+  return Object.freeze({
+    candidate_id:candidateId,
+    person_id:current.person_id == null ? null : requiredPersonId(current.person_id)
+  });
+}
+
 async function loadRegistrationQueueCandidate(client, candidateId, { forUpdate = false } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   const id = requiredCandidateId(candidateId);
@@ -154,6 +196,7 @@ module.exports = Object.freeze({
   requiredCandidateId,
   requiredPersonId,
   readCurrentRegistrationQueue,
+  admitRegistrationQueueCandidate,
   loadRegistrationQueueCandidate,
   bindRegistrationQueueCandidate
 });
