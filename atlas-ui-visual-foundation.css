@@ -465,6 +465,33 @@ textarea:focus {
 
 /* ---------- Authority/public domain shells ---------- */
 
+.authority-shell-head.card,
+.authority-state-grid > .card {
+  border-color: var(--atlas-divider);
+  border-radius: var(--atlas-radius-panel);
+  background: var(--atlas-surface-1);
+  box-shadow: none;
+}
+
+.authority-shell-head.card {
+  padding: 18px 20px;
+}
+
+.authority-state-grid > .card {
+  padding: 16px 18px;
+}
+
+.atlas-dashboard-mount > .card,
+.person-spacetime-mount > .card,
+.atlas-polity-review-mount > .card {
+  border-color: var(--atlas-divider);
+  border-radius: var(--atlas-radius-panel);
+  background: var(--atlas-surface-1);
+  color: var(--atlas-text);
+  box-shadow: none;
+}
+
+
 .authority-shell-head h2,
 .authority-state-grid h3 {
   color: var(--atlas-text-strong);
