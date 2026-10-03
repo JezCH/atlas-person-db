@@ -370,6 +370,9 @@ async function main() {
   await client.call("Log.enable");
   await client.call("Network.enable");
   await client.call("Emulation.setDeviceMetricsOverride", VIEWPORT);
+  await client.call("Emulation.setEmulatedMedia", {
+    features:[{ name:"prefers-reduced-motion", value:"reduce" }]
+  });
   client.on("Runtime.consoleAPICalled", (params) => {
     if (params.type === "error") consoleErrors.push(params.args?.map((a) => a.value ?? a.description ?? "").join(" ") || "console.error");
   });
@@ -608,10 +611,14 @@ async function main() {
     assert(mobile.cameraRect.height <= 40 && mobile.searchRect.height <= 40, "Mobile controls are taller than the compact contract", mobile);
     assert(mobile.cameraRect.top >= mobile.searchRect.bottom + 2, "Mobile search and zoom controls did not split into separate rows", mobile);
     assert(
-      Math.abs(mobile.macroOpacity - at500.macroOpacity) < 0.001 &&
-      Math.abs(mobile.subregionOpacity - at500.subregionOpacity) < 0.001,
-      "Mobile 500% header opacity diverged from the desktop semantic header layers",
-      { desktop500:{ macroOpacity:at500.macroOpacity, subregionOpacity:at500.subregionOpacity }, mobile }
+      Math.abs(mobile.macroOpacity - at500.macroOpacity) < 0.001,
+      "Mobile 500% Macroregion layer diverged from the desktop semantic layer",
+      { desktop500:{ macroOpacity:at500.macroOpacity }, mobile }
+    );
+    assert(
+      mobile.subregionOpacity === 0,
+      "Mobile 500% overview must suppress the Subregion header layer under the V8 hierarchy contract",
+      { desktop500:{ subregionOpacity:at500.subregionOpacity }, mobile }
     );
     assert(mobile.statusSummaryVisible && !mobile.statusMoreOpen, "Mobile secondary status details are not collapsed by default", mobile);
     await screenshot(client, "spacetime-mobile-390.png");
