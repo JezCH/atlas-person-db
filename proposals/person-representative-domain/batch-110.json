@@ -1,0 +1,147 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-10-03",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "db7931138e3adfa5774e53aa0ad18ba3f0e7e8d4",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Person Domain v2 Review Unit 03. Reclassify one bounded 12-Person philosophy/religion slice from legacy knowledge. Every write requires live Production previous_domain=knowledge; any drift fails closed.",
+    "v2_contract": "contracts/person-domain-taxonomy.v2.json",
+    "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-03",
+    "reviewed_count": 12,
+    "science_target_count": 0,
+    "non_science_target_count": 12
+  },
+  "review_scope": {
+    "source_batches": ["batch-104.json", "batch-105.json"],
+    "selection_rule": "Complete all nine Japan philosophy-canon records from batch-104 and all three India Buddhist philosophy records from batch-105 as one 12-Person bounded v2 review unit.",
+    "result_summary": {
+      "culture": 6,
+      "religion": 6
+    }
+  },
+  "entries": [
+    {
+      "person_id": "a71a1241-0352-475a-916b-c5d817604021",
+      "canonical_name_en": "Dōgen",
+      "preferred_name_ko": "도겐",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-104.json",
+      "basis": "V2 religion covers religious leadership and faith traditions. Dōgen founded the Japanese Sōtō Zen tradition and organized a distinctive religious practice centered on zazen; institutional religious leadership is stronger than generic philosophical classification.",
+      "review_sources": ["https://plato.stanford.edu/entries/japanese-philosophy/"]
+    },
+    {
+      "person_id": "9f26c0d4-db4d-4b0e-9594-ecbaa7503d0b",
+      "canonical_name_en": "Hōnen",
+      "preferred_name_ko": "호넨",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-104.json",
+      "basis": "V2 religion covers founders and religious reformers. Hōnen established the Pure Land movement that became a distinct Japanese religious tradition; his representative identity is sect-forming religious leadership.",
+      "review_sources": ["https://plato.stanford.edu/entries/japanese-philosophy/"]
+    },
+    {
+      "person_id": "dd6529c5-de4d-4f20-9ba7-187f552e2d90",
+      "canonical_name_en": "Kūkai",
+      "preferred_name_ko": "구카이",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-104.json",
+      "basis": "V2 religion covers religious founders and institutional traditions. Kūkai is most famous as founder of Japanese Shingon esoteric Buddhism and established its doctrine, ritual system, and monastic center; this outweighs his many literary and technical accomplishments.",
+      "review_sources": ["https://plato.stanford.edu/entries/kukai/"]
+    },
+    {
+      "person_id": "d334100f-6b44-46e7-a04a-6f3fbb1b08ac",
+      "canonical_name_en": "Motoori Norinaga",
+      "preferred_name_ko": "모토오리 노리나가",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-104.json",
+      "basis": "V2 culture covers humanities, philology, literature, and philosophy. Norinaga is represented by Kokugaku philology, interpretation of ancient Japanese texts, literary thought, and Shintō philosophy rather than institutional religious leadership.",
+      "review_sources": ["https://plato.stanford.edu/entries/japanese-philosophy/"]
+    },
+    {
+      "person_id": "7c82b545-ee1a-4810-8ec9-aa4a6710ff85",
+      "canonical_name_en": "Nichiren",
+      "preferred_name_ko": "니치렌",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-104.json",
+      "basis": "V2 religion covers founders and religious reformers. Nichiren created the Nichiren school and a distinctive Lotus Sutra-centered religious movement; sect founding is the representative historical identity.",
+      "review_sources": ["https://plato.stanford.edu/entries/japanese-philosophy/"]
+    },
+    {
+      "person_id": "57ed9f28-b206-4151-8317-f77659347ee7",
+      "canonical_name_en": "Nishida Kitarō",
+      "preferred_name_ko": "니시다 기타로",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-104.json",
+      "basis": "V2 culture covers philosophy and humanities. Nishida is explicitly treated as a major twentieth-century Japanese philosopher and founder of an original philosophical system; Buddhist influence does not make him primarily a religious leader.",
+      "review_sources": ["https://plato.stanford.edu/entries/nishida-kitaro/"]
+    },
+    {
+      "person_id": "23dd2f89-ab58-4b6d-9fed-f3db48da28e1",
+      "canonical_name_en": "Ogyū Sorai",
+      "preferred_name_ko": "오규 소라이",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-104.json",
+      "basis": "V2 culture covers philosophy, humanities, and social thought. Sorai is represented by Confucian philosophical, philological, ethical, and political thought rather than by exercising political office.",
+      "review_sources": ["https://plato.stanford.edu/entries/japanese-confucian/"]
+    },
+    {
+      "person_id": "df30b154-09b3-4a4e-9f35-1591ac30391f",
+      "canonical_name_en": "Saichō",
+      "preferred_name_ko": "사이초",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-104.json",
+      "basis": "V2 religion covers founders and institutional religious traditions. Saichō founded Japanese Tendai and established the school that became a major monastic and religious institution.",
+      "review_sources": ["https://plato.stanford.edu/entries/japanese-philosophy/"]
+    },
+    {
+      "person_id": "1ad440e3-5e17-49a3-bc5e-f163b2733e3e",
+      "canonical_name_en": "Shinran",
+      "preferred_name_ko": "신란",
+      "representative_domain": "religion",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-104.json",
+      "basis": "V2 religion covers religious leadership and enduring faith traditions. Shinran's Pure Land teaching became the basis of Jōdo Shinshū and his representative identity is religious teacher and tradition-forming reformer.",
+      "review_sources": ["https://plato.stanford.edu/entries/japanese-philosophy/"]
+    },
+    {
+      "person_id": "decf89f2-0156-481c-8dab-8044d7c7797d",
+      "canonical_name_en": "Dignāga",
+      "preferred_name_ko": "디그나가",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-105.json",
+      "basis": "V2 culture covers philosophy and humanities. Dignāga is a pivotal philosopher of logic and epistemology in classical India; his representative work concerns reasoning, inference, and argument rather than natural science or religious institution-building.",
+      "review_sources": ["https://plato.stanford.edu/entries/logic-india/"]
+    },
+    {
+      "person_id": "60e1d1ce-a826-49f1-80fc-ec8ea3de335f",
+      "canonical_name_en": "Nāgārjuna",
+      "preferred_name_ko": "나가르주나",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-105.json",
+      "basis": "V2 culture covers philosophy. Nāgārjuna is canonically described as one of the most important Buddhist philosophers and founder of a major philosophical system; monastic status does not outweigh his philosophical representative identity.",
+      "review_sources": ["https://plato.stanford.edu/entries/nagarjuna/"]
+    },
+    {
+      "person_id": "f23693ac-d1d9-4a34-848f-1e17d7282075",
+      "canonical_name_en": "Vasubandhu",
+      "preferred_name_ko": "바수반두",
+      "representative_domain": "culture",
+      "previous_representative_domain": "knowledge",
+      "supersedes_source": "batch-105.json",
+      "basis": "V2 culture covers philosophy and humanities. Vasubandhu is represented by Buddhist philosophical analysis, especially Yogācāra and Abhidharma thought; this is intellectual-philosophical rather than natural science or institutional religious leadership.",
+      "review_sources": ["https://plato.stanford.edu/entries/vasubandhu/"]
+    }
+  ]
+}
