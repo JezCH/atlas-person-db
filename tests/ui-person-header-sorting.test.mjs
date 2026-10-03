@@ -54,7 +54,7 @@ test('sorting enhancement loads after table decoration and before era navigation
   const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
   const mainJs = html.match(/atlas-person-main\.js\?v=[^"'\s>]+/)?.[0] || '';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1';
-  const sortingCss = 'atlas-person-header-sorting.css?v=20261003-ui-v4-register-v1';
+  const sortingCss = 'atlas-person-header-sorting.css?v=20260817-header-sort-v2';
 
   for (const asset of [tableJs, sortingJs, navJs, mainJs, geometryCss, sortingCss]) assert.ok(html.includes(asset));
   assert.ok(html.indexOf(tableJs) < html.indexOf(sortingJs));
