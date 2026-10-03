@@ -1,76 +1,166 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const {
-  loadQueueSource,
-  normalizeLookupName,
-  readCurrentRegistrationQueue
+  QUEUE_TABLE,
+  PENDING_SQL,
+  SUMMARY_SQL,
+  readCurrentRegistrationQueue,
+  bindRegistrationQueueCandidate
 } = require("../server/atlas-registration-queue-read-service.js");
+const { createHumanAuthoringService } = require("../server/atlas-human-authoring-service.js");
 
-test("registration queue source bootstraps 646 historical admissions plus 55 approved commerce additions", () => {
-  const source = loadQueueSource();
-  assert.ok(source.candidates.length >= 701);
-  assert.equal(source.bootstrap.historical_queued_candidates, 646);
-  assert.equal(source.bootstrap.added_commerce_candidates, 55);
-  assert.equal(source.bootstrap.bootstrap_admissions, 701);
-  const ids = new Set(source.candidates.map((row) => row.candidate_id));
-  assert.equal(ids.size, source.candidates.length);
-  const historical = source.candidates.filter((row) => row.origin === "historical_queue");
-  assert.equal(historical.length, 646);
-  const commerceAdds = source.candidates.filter((row) => row.origin === "commerce_world_history_20261003");
-  assert.equal(commerceAdds.length, 55);
-  assert.ok(commerceAdds.every((row) => row.representative_domain === "commerce"));
+const PERSON_ID = "11111111-1111-4111-8111-111111111111";
+const OTHER_PERSON_ID = "22222222-2222-4222-8222-222222222222";
+
+test("registration queue membership is a single canonical DB predicate", () => {
+  assert.equal(QUEUE_TABLE, "atlas_v2.person_registration_candidates");
+  assert.match(PENDING_SQL, /from atlas_v2\.person_registration_candidates/i);
+  assert.match(PENDING_SQL, /where person_id is null/i);
+  assert.doesNotMatch(PENDING_SQL, /person_names|lookup_names|registration_state|similarity|alias/i);
+
+  const serviceSource = fs.readFileSync(new URL("../server/atlas-registration-queue-read-service.js", import.meta.url), "utf8");
+  assert.doesNotMatch(serviceSource, /person-registration-queue-source|readFileSync|normalizeLookupName|exactPersonMatches/i);
 });
 
-test("lookup normalization is exact but tolerant of accents and punctuation", () => {
-  assert.equal(normalizeLookupName("Estée Lauder"), normalizeLookupName("Estee Lauder"));
-  assert.equal(normalizeLookupName("A.P. Moller"), normalizeLookupName("A P Moller"));
-  assert.notEqual(normalizeLookupName("John Law"), normalizeLookupName("John Locke"));
-});
-
-test("live queue removes terminal registration states and exact unique canonical persons while retaining ambiguous identities", async () => {
-  const source = {
-    schema:"atlas-core/person-registration-queue-source/v1",
-    version:1,
-    generated_at:"2026-10-03",
-    candidates:[
-      { candidate_id:"a", name:"Already Registered", lookup_names:["Already Registered"], representative_domain:"commerce", origin:"fixture" },
-      { candidate_id:"b", name:"Existing Person", lookup_names:["Existing Person"], representative_domain:"commerce", origin:"fixture" },
-      { candidate_id:"c", name:"Ambiguous Name", lookup_names:["Ambiguous Name"], representative_domain:"commerce", origin:"fixture" },
-      { candidate_id:"d", name:"Pending Person", lookup_names:["Pending Person"], representative_domain:"commerce", origin:"fixture" },
-      { candidate_id:"e", name:"Rejected Person", lookup_names:["Rejected Person"], representative_domain:"commerce", origin:"fixture" }
-    ]
-  };
+test("queue read returns every DB row whose person_id is NULL with usable candidate metadata", async () => {
+  const calls = [];
   const client = {
     async query(sql) {
-      if (/person_candidate_registration_states/.test(sql)) {
-        return { rows:[
-          { candidate_id:"a", review_revision:1, registration_state:"REGISTERED", person_id:"11111111-1111-4111-8111-111111111111" },
-          { candidate_id:"d", review_revision:2, registration_state:"QUEUED", person_id:null },
-          { candidate_id:"e", review_revision:3, registration_state:"NOT_APPLICABLE", person_id:null }
-        ] };
+      calls.push(String(sql));
+      if (String(sql) === SUMMARY_SQL) {
+        return { rows:[{ candidate_total:3, current_total:2, registered_bound:1, dangling_person_ids:0 }] };
       }
-      if (/person_names/.test(sql)) {
+      if (String(sql) === PENDING_SQL) {
         return { rows:[
-          { person_id:"22222222-2222-4222-8222-222222222222", name:"Existing Person" },
-          { person_id:"33333333-3333-4333-8333-333333333333", name:"Ambiguous Name" },
-          { person_id:"44444444-4444-4444-8444-444444444444", name:"Ambiguous Name" }
+          { candidate_id:"candidate-a", name:"Candidate A", representative_domain:"commerce", priority:"SS", review_metadata:{review_state:"APPROVED",origin:"fixture"} },
+          { candidate_id:"candidate-b", name:"Candidate B", representative_domain:null, priority:null, review_metadata:{} }
         ] };
       }
       throw new Error("unexpected query");
     }
   };
 
-  const queue = await readCurrentRegistrationQueue({ client, source });
-  assert.deepEqual(queue.candidates.map((row) => row.candidate_id), ["c","d"]);
-  assert.equal(queue.candidates[0].identity_resolution, "AMBIGUOUS_EXISTING");
-  assert.equal(queue.candidates[1].registration_state, "QUEUED");
-  assert.equal(queue.summary.source_admissions, 5);
+  const queue = await readCurrentRegistrationQueue({ client });
+  assert.equal(queue.authority, "atlas_v2.person_registration_candidates");
+  assert.equal(queue.membership_rule, "person_id IS NULL");
+  assert.deepEqual(queue.candidates.map((row) => row.candidate_id), ["candidate-a","candidate-b"]);
+  assert.equal(queue.candidates[0].priority, "SS");
+  assert.equal(queue.candidates[0].representative_domain, "commerce");
   assert.equal(queue.summary.current_total, 2);
-  assert.equal(queue.summary.removed_registered_state, 1);
-  assert.equal(queue.summary.removed_not_applicable, 1);
-  assert.equal(queue.summary.removed_existing_person, 1);
-  assert.equal(queue.summary.ambiguous_existing_identity, 1);
+  assert.equal(queue.summary.registered_bound, 1);
+  assert.equal(queue.summary.dangling_person_ids, 0);
+  assert.equal(calls.length, 2);
+});
+
+test("binding writes the canonical Person UUID onto the same candidate row and is idempotent", async () => {
+  let currentPersonId = null;
+  const client = {
+    async query(sql, params) {
+      const text = String(sql);
+      if (/select candidate_id,person_id::text/.test(text)) {
+        return { rows:[{ candidate_id:"candidate-a", person_id:currentPersonId }] };
+      }
+      if (/update atlas_v2\.person_registration_candidates/.test(text)) {
+        currentPersonId = String(params[1]);
+        return { rowCount:1, rows:[{ candidate_id:"candidate-a", person_id:currentPersonId }] };
+      }
+      throw new Error("unexpected query");
+    }
+  };
+
+  const first = await bindRegistrationQueueCandidate(client, { candidate_id:"candidate-a", person_id:PERSON_ID, required:true });
+  assert.equal(first.replay, false);
+  assert.equal(currentPersonId, PERSON_ID);
+
+  const replay = await bindRegistrationQueueCandidate(client, { candidate_id:"candidate-a", person_id:PERSON_ID, required:true });
+  assert.equal(replay.replay, true);
+
+  await assert.rejects(
+    bindRegistrationQueueCandidate(client, { candidate_id:"candidate-a", person_id:OTHER_PERSON_ID, required:true }),
+    /REGISTRATION_QUEUE_PERSON_BINDING_CONFLICT/
+  );
+});
+
+test("Human Authoring closes Person write and queue binding inside one serializable mutation boundary", async () => {
+  const events = [];
+  const client = {
+    async query(sql) {
+      const command = String(sql).trim().toLowerCase();
+      events.push(command);
+      return { rows:[] };
+    }
+  };
+  const service = createHumanAuthoringService({
+    client,
+    prepare:(raw) => ({ request:{ requestId:raw.request_id }, hash:"fixture" }),
+    applyPrepared:async() => {
+      events.push("apply-person");
+      return { request_id:"request-a", person_id:PERSON_ID };
+    },
+    bindQueueCandidate:async(_client,input) => {
+      events.push(`bind:${input.candidate_id}:${input.person_id}`);
+      return { ...input, replay:false };
+    }
+  });
+
+  await service.apply({ request_id:"request-a" }, { candidate_id:"candidate-a" });
+  assert.ok(events.indexOf("apply-person") < events.indexOf(`bind:candidate-a:${PERSON_ID}`));
+  assert.ok(events.indexOf(`bind:candidate-a:${PERSON_ID}`) < events.indexOf("commit"));
+  assert.equal(events.includes("rollback"), false);
+});
+
+test("queue-binding failure rolls the Person mutation back instead of accepting a partial success", async () => {
+  const events = [];
+  const client = {
+    async query(sql) {
+      const command = String(sql).trim().toLowerCase();
+      events.push(command);
+      return { rows:[] };
+    }
+  };
+  const service = createHumanAuthoringService({
+    client,
+    prepare:(raw) => ({ request:{ requestId:raw.request_id }, hash:"fixture" }),
+    applyPrepared:async() => ({ request_id:"request-a", person_id:PERSON_ID }),
+    bindQueueCandidate:async() => { throw new Error("REGISTRATION_QUEUE_PERSON_BINDING_FAILED"); }
+  });
+
+  await assert.rejects(
+    service.apply({ request_id:"request-a" }, { candidate_id:"candidate-a" }),
+    /REGISTRATION_QUEUE_PERSON_BINDING_FAILED/
+  );
+  assert.equal(events.includes("commit"), false);
+  assert.equal(events.includes("rollback"), true);
+});
+
+test("reviewed-candidate registration also binds the queue candidate before terminal success", () => {
+  const source = fs.readFileSync(new URL("../server/atlas-reviewed-candidate-registration-service.js", import.meta.url), "utf8");
+  assert.match(source, /bindRegistrationQueueCandidate/);
+  assert.ok((source.match(/await bindQueueCandidate\(/g) || []).length >= 2);
+  assert.match(source, /registration_state:"REGISTERED"/);
+});
+
+test("bootstrap JSON is retained only as historical audit input, not live authority", () => {
+  const source = JSON.parse(fs.readFileSync(new URL("../data/core/person-registration-queue-source.v1.json", import.meta.url), "utf8"));
+  assert.equal(source.live_authority, false);
+  assert.equal(source.authority, "historical_bootstrap_artifact");
+});
+
+test("canonical queue migration encodes the nullable Person FK invariant without a binding table", () => {
+  const sql = fs.readFileSync(new URL("../db/migrations/20261003_person_registration_queue_authority.sql", import.meta.url), "utf8");
+  assert.match(sql, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_registration_candidates/i);
+  assert.match(sql, /person_id uuid REFERENCES atlas_v2\.persons\(id\) ON DELETE RESTRICT/i);
+  assert.match(sql, /WHERE person_id IS NULL/i);
+  assert.doesNotMatch(sql, /candidate_person_bind|binding_table|fuzzy|similarity/i);
+});
+
+
+test("Person merge preserves queue bindings by rebinding source UUIDs to the survivor", () => {
+  const source = fs.readFileSync(new URL("../server/atlas-person-merge-service.js", import.meta.url), "utf8");
+  assert.match(source, /update atlas_v2\.person_registration_candidates[\s\S]*set person_id=\$2::uuid/);
+  assert.match(source, /registration_candidates_moved/);
 });

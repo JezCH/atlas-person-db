@@ -15,8 +15,8 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 24);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 24);
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 25);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 25);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
@@ -41,10 +41,12 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.equal(AUTHORING_MIGRATION_PATHS[21].endsWith("20261001_spatial_registration_dispositions.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[22].endsWith("20261001_polity_place_function_authority.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[23].endsWith("20260930_unit16_retire_external_reference_sync_trigger.sql"), true);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-4).endsWith("20260930_reviewed_candidate_boundary.sql"), true);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-3).endsWith("20261001_spatial_registration_dispositions.sql"), true);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-2).endsWith("20261001_polity_place_function_authority.sql"), true);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20260930_unit16_retire_external_reference_sync_trigger.sql"), true);
+  assert.equal(AUTHORING_MIGRATION_PATHS[24].endsWith("20261003_person_registration_queue_authority.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-5).endsWith("20260930_reviewed_candidate_boundary.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-4).endsWith("20261001_spatial_registration_dispositions.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-3).endsWith("20261001_polity_place_function_authority.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-2).endsWith("20260930_unit16_retire_external_reference_sync_trigger.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20261003_person_registration_queue_authority.sql"), true);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
@@ -170,6 +172,11 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   const unit16Retirement = migrations[23].sql;
   assert.match(unit16Retirement, /DROP TRIGGER IF EXISTS authoring_manifest_runs_external_reference_sync/i);
   assert.match(unit16Retirement, /DROP FUNCTION IF EXISTS atlas_v2\.sync_human_authoring_external_references\(\)/i);
+
+  const registrationQueueAuthority = migrations[24].sql;
+  assert.match(registrationQueueAuthority, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_registration_candidates/i);
+  assert.match(registrationQueueAuthority, /person_id uuid REFERENCES atlas_v2\.persons\(id\) ON DELETE RESTRICT/i);
+  assert.match(registrationQueueAuthority, /WHERE person_id IS NULL/i);
 });
 
 test('current clean schema baseline remains the measured pre-lifecycle Production shape', () => {

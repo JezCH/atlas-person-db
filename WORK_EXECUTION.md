@@ -378,7 +378,7 @@ Branch inventory is historical storage, not a work queue. Inspect only branches 
 
 A new worker answers “what is active?” from current authoritative state first. Historical folding is exceptional recovery work.
 
-### Person registration queue: one live current view
+### Person registration queue: one DB authority
 
 The Person registration backlog has one query surface:
 
@@ -386,25 +386,31 @@ The Person registration backlog has one query surface:
 GET /api/atlas-read?__atlas_read_surface=registration-queue
 ```
 
-This response is the current registration-queue list to consult for ordinary work. Do not reconstruct the queue by folding #1374/#1375 comments again.
-
-Its durable admission source is:
+Its canonical authority is one DB dataset:
 
 ```text
-data/core/person-registration-queue-source.v1.json
+atlas_v2.person_registration_candidates
 ```
 
-Queue rules:
+Queue membership has one rule only:
 
-- every newly human-approved candidate promoted to the registration queue must be appended to that source with a unique `candidate_id`;
-- the source is an admission ledger, not the user-facing pending list;
-- the live read surface subtracts terminal candidate-registration states and exact unique canonical Person identity matches, so completed registrations disappear from the current queue without deleting Git history;
-- `REGISTERED`, `VERIFIED_AUTHORING_ONLY`, and `NOT_APPLICABLE` are not current queue rows;
-- `QUEUED`, `APPLYING`, and `BLOCKED` may remain visible with their live state;
-- an ambiguous exact identity match stays visible and is marked for identity resolution rather than being silently removed;
-- GitHub issue comments remain historical evidence only and are not the current queue authority.
+```text
+person_id IS NULL     → current registration queue
+person_id IS NOT NULL → registration complete
+```
 
-When asked for “the registration queue”, read this live surface first.
+Rules:
+
+- candidate identity and working metadata live on the same canonical DB row;
+- a successful queue-backed Person registration writes the canonical Person UUID into that row's `person_id` inside the same registration transaction;
+- names and aliases may be used to help a human or worker find a candidate, but they never determine completion;
+- `registration_state`, review state, GitHub issue comments, historical ledgers, and JSON artifacts never determine current queue membership;
+- new queue admissions are inserted directly into this DB dataset with `person_id = NULL`;
+- the read surface returns all rows matching `person_id IS NULL` with the candidate metadata needed for subsequent registration work;
+- `data/core/person-registration-queue-source.v1.json` is retained only as the historical PR #1802/bootstrap audit artifact and is not a live authority or dual-write target;
+- do not reconstruct the queue from #1374/#1375 or any other historical issue/comment stream.
+
+Review/apply lifecycle state may continue to exist for review workflow purposes, but it is orthogonal to current queue membership.
 
 ## 11. Registration completeness without repeated cleanup
 

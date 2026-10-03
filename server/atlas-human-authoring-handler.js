@@ -80,6 +80,16 @@ function batchEnvelope(body) {
     if (!MANIFEST_PATH_RE.test(path)) throw new Error("HUMAN_AUTHORING_MANIFEST_PATH_NOT_ALLOWED");
     return path;
   });
+  if (body.candidate_ids != null && !Array.isArray(body.candidate_ids)) throw new Error("HUMAN_AUTHORING_BATCH_CANDIDATE_IDS_INVALID");
+  const candidateIds = body.candidate_ids == null
+    ? requests.map(() => null)
+    : body.candidate_ids.map((value) => {
+        if (value == null) return null;
+        const candidateId = String(value).normalize("NFC").trim();
+        if (!candidateId) throw new Error("HUMAN_AUTHORING_QUEUE_CANDIDATE_ID_INVALID");
+        return candidateId;
+      });
+  if (!Array.isArray(candidateIds) || candidateIds.length !== requests.length) throw new Error("HUMAN_AUTHORING_BATCH_CANDIDATE_IDS_LENGTH_MISMATCH");
   for (const request of requests) {
     if (!request || typeof request !== "object" || Array.isArray(request)) throw new Error("HUMAN_AUTHORING_BATCH_REQUEST_INVALID");
   }
@@ -87,7 +97,8 @@ function batchEnvelope(body) {
     runtimeSha,
     authoringSha,
     manifestPaths:Object.freeze(normalizedPaths),
-    requests:Object.freeze([...requests])
+    requests:Object.freeze([...requests]),
+    candidateIds:Object.freeze(candidateIds)
   });
 }
 
@@ -227,6 +238,7 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
         }
         const results = await service.applyBatch(auth.batch.requests, {
           transports,
+          candidate_ids:auth.batch.candidateIds,
           allowLegacyNamuWikiOmission:false
         });
         return json(res, 200, {
@@ -246,8 +258,11 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
       }
 
       const request = body?.request && typeof body.request === "object" && !Array.isArray(body.request) ? body.request : body;
+      const candidateId = body?.candidate_id == null ? null : String(body.candidate_id).normalize("NFC").trim();
+      if (body?.candidate_id != null && !candidateId) throw new Error("HUMAN_AUTHORING_QUEUE_CANDIDATE_ID_INVALID");
       const outcome = await service.apply(request, {
         transport:auth.transport,
+        candidate_id:candidateId,
         allowLegacyNamuWikiOmission:false
       });
       return json(res, 200, { ok:true, auth_method:auth.method, ...outcome });

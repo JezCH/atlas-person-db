@@ -14,6 +14,7 @@ test('P10 Person merge reference policy is explicit and includes every reviewed 
   assert.deepEqual(readiness.EXPECTED_PERSON_FKS.map((row) => [row.key, row.delete_action]), [
     ['atlas_v2.authoring_manifest_runs.person_id', 'SET NULL'],
     ['atlas_v2.person_candidate_registration_states.person_id', 'RESTRICT'],
+    ['atlas_v2.person_registration_candidates.person_id', 'RESTRICT'],
     ['atlas_v2.person_descriptions.person_id', 'CASCADE'],
     ['atlas_v2.person_event_participations.person_id', 'RESTRICT'],
     ['atlas_v2.person_external_references.person_id', 'RESTRICT'],
