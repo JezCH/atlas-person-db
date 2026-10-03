@@ -25,7 +25,15 @@ async function constraintState(client){
 async function domainRows(client,{forUpdate=false}={}){const r=await client.query(`select id::text person_id,representative_domain from atlas_v2.persons where representative_domain is not null order by id ${forUpdate?"for update":""}`);return r.rows;}
 async function inspectPersonDomainV2Cutover(client){
   const state=summarize(await domainRows(client));const constraint=await constraintState(client);
-  return Object.freeze({schema:"atlas-person-domain-v2-cutover-state/v1",expected_science_count:EXPECTED_IDS.length,...state,constraint,ready_for_cutover:state.pre_cutover_exact&&state.unsupported.length===0&&state.assigned===CUTOVER.expected_assigned&&countsMatch(state.counts,CUTOVER.expected_pre_cutover)&&constraint.v1&&constraint.validated,cutover_complete:state.data_cutover_complete&&state.assigned===CUTOVER.expected_assigned&&countsMatch(state.counts,CUTOVER.expected_post_cutover)&&constraint.v2&&constraint.validated});
+  return Object.freeze({
+    schema:"atlas-person-domain-v2-cutover-state/v1",
+    expected_science_count:EXPECTED_IDS.length,
+    ...state,
+    constraint,
+    schema_v2_ready:constraint.v2&&constraint.validated&&state.knowledge_ids.length===0&&state.unsupported.length===0,
+    ready_for_cutover:state.pre_cutover_exact&&state.unsupported.length===0&&state.assigned===CUTOVER.expected_assigned&&countsMatch(state.counts,CUTOVER.expected_pre_cutover)&&constraint.v1&&constraint.validated,
+    cutover_complete:state.data_cutover_complete&&state.assigned===CUTOVER.expected_assigned&&countsMatch(state.counts,CUTOVER.expected_post_cutover)&&constraint.v2&&constraint.validated
+  });
 }
 async function installV2Constraint(client){
   await client.query(`alter table atlas_v2.persons drop constraint if exists ${CONSTRAINT_NAME}`);
