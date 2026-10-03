@@ -5,10 +5,10 @@
   "generated_at": "2026-10-03",
   "semantics": {
     "user_facing_current_view": "/api/atlas-read?__atlas_read_surface=registration-queue",
-    "current_view_rule": "admitted candidates minus terminal candidate-registration states and exact single-person canonical identity matches",
-    "history_rule": "do not delete admission history from this source merely because a candidate registers; the live read surface removes completed candidates",
-    "future_add_rule": "every newly approved registration-queue candidate must be appended here with a unique candidate_id",
-    "completion_rule": "REGISTERED, VERIFIED_AUTHORING_ONLY, NOT_APPLICABLE, or an exact unique canonical Person identity removes the candidate from the live current view"
+    "current_view_rule": "read atlas_v2.person_registration_candidates where person_id IS NULL",
+    "history_rule": "this JSON is retained only as the PR #1802 / 2026-10-03 bootstrap audit artifact",
+    "future_add_rule": "do not append here; insert new candidates directly into atlas_v2.person_registration_candidates with person_id = NULL",
+    "completion_rule": "registration completes when the same canonical DB row receives the canonical Person UUID in person_id"
   },
   "bootstrap": {
     "historical_queued_candidates": 646,
