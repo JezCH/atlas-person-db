@@ -7,7 +7,7 @@
   "policy": {
     "automatic_role_backfill": false,
     "secondary_domains": false,
-    "decision": "Person Domain v2 Review Unit 08. Reclassify one bounded 8-Person Human Authoring-origin philosophy slice from legacy knowledge to culture. Every correction must prove its approved authoring origin and still observe live Production previous_domain=knowledge; any provenance or state drift fails closed.",
+    "decision": "Person Domain v2 Review Unit 08. Reclassify one bounded 8-Person philosophy slice from legacy knowledge to culture. Asaṅga and Dharmakīrti supersede their later batch-106 assignments; the other six use verified Human Authoring-origin provenance. Every correction still observes live Production previous_domain=knowledge; any provenance or state drift fails closed.",
     "v2_contract": "contracts/person-domain-taxonomy.v2.json",
     "review_unit": "PERSON-DOMAIN-V2-REVIEW-UNIT-08",
     "reviewed_count": 8,
@@ -15,7 +15,7 @@
     "non_science_target_count": 8
   },
   "review_scope": {
-    "selection_rule": "Exercise the newly added Human Authoring-origin correction path on eight current Production knowledge Persons whose representative identity is clearly philosophy, logic, epistemology, or metaphysics rather than natural/formal science or institutional religious leadership.",
+    "selection_rule": "Select eight current Production knowledge Persons whose representative identity is clearly philosophy, logic, epistemology, or metaphysics. Preserve the latest provenance authority per Person: batch-106 for Asaṅga/Dharmakīrti; exact approved Human Authoring requests for the six later person-only registrations.",
     "result_summary": {
       "culture": 8
     }
@@ -27,9 +27,7 @@
       "preferred_name_ko": "아상가",
       "representative_domain": "culture",
       "previous_representative_domain": "knowledge",
-      "supersedes_origin": "human_authoring",
-      "supersedes_source": "authoring/requests/philosophy-canon-20260928-asanga.json",
-      "supersedes_request_id": "authoring:philosophy-canon-20260928:asanga:gupta:v1",
+      "supersedes_source": "batch-106.json",
       "basis": "V2 culture includes philosophy and humanities. Asaṅga is represented by his foundational systematization of Yogācāra Buddhist philosophy; monastic context does not outweigh the philosophical identity of this Person record.",
       "review_sources": [
         "https://academic.oup.com/reference/62340/reference-article-abstract/554139437",
@@ -42,9 +40,7 @@
       "preferred_name_ko": "다르마키르티",
       "representative_domain": "culture",
       "previous_representative_domain": "knowledge",
-      "supersedes_origin": "human_authoring",
-      "supersedes_source": "authoring/requests/philosophy-canon-20260928-dharmakirti.json",
-      "supersedes_request_id": "authoring:philosophy-canon-20260928:dharmakirti:vardhana:v1",
+      "supersedes_source": "batch-106.json",
       "basis": "V2 culture includes philosophy, logic, and humanities. Dharmakīrti is represented by Buddhist epistemology, philosophy of language, inference, and logic rather than natural science or institutional religious leadership.",
       "review_sources": [
         "https://plato.stanford.edu/entries/dharmakiirti/",
