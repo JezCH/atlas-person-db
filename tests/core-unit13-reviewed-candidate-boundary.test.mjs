@@ -17,7 +17,7 @@ test('Unit 13 makes review revisions immutable and replay-safe',async()=>{
  await assert.rejects(()=>recordReviewRevision(client,{...approved,review_checkpoint:'#1374 comment changed'}),/REVIEW_REVISION_IMMUTABLE/);
 });
 test('Unit 13 Lane B queues only an exact human-approved revision',async()=>{
- const calls=[];const client={query:async(sql,args)=>{calls.push({sql,args});if(/from atlas_v2\.person_candidate_review_revisions/i.test(sql))return{rowCount:1,rows:[{review_state:'APPROVED',human_authorized:true}]};if(/from atlas_v2\.person_candidate_registration_states/i.test(sql))return{rowCount:0,rows:[]};return{rowCount:1,rows:[]}}};
+ const calls=[];const client={query:async(sql,args)=>{calls.push({sql,args});if(/from atlas_v2\.person_candidate_review_revisions/i.test(sql))return{rowCount:1,rows:[{review_state:'APPROVED',human_authorized:true,reviewed_payload:{name:'Example'},review_checkpoint:'#1374 comment 123'}]};if(/from atlas_v2\.person_candidate_registration_states/i.test(sql))return{rowCount:0,rows:[]};return{rowCount:1,rows:[]}}};
  const out=await queueApprovedRevision(client,{candidate_id:'candidate-1',review_revision:1});assert.equal(out.registration_state,'QUEUED');assert.ok(calls.some(x=>/person_candidate_registration_states/.test(x.sql)));
 });
 test('Unit 13 blocks authoritative registration states for non-approved revisions',async()=>{
