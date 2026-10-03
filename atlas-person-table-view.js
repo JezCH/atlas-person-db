@@ -157,7 +157,7 @@
     range?.classList.add("person-table-range", "person-register-range");
     activities?.classList.add("person-table-activities", "person-register-activities");
     count?.classList.add("person-table-count", "person-register-count");
-    if (count) count.textContent = String(count.textContent || "").replace(/^Activity\s*/i, "");
+    if (count) count.textContent = String(count.textContent || "").replace(/^Activity\s*/i, "활동 ");
     foldExceptionalStatus(identity, status);
     const activityRows = activities?.querySelectorAll?.(".person-card-activity") || [];
     const singleActivity = activityRows.length === 1 || /^1\s*건$/.test(String(count?.textContent || "").trim());
