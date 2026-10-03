@@ -8,9 +8,9 @@ const css = fs.readFileSync(path.join(root, 'atlas-person-domain-palette.css'), 
 const spacetimeCss = fs.readFileSync(path.join(root, 'atlas-person-spacetime-domain-colors.css'), 'utf8').toLowerCase();
 const owner = fs.readFileSync(path.join(root, 'atlas-domain-surface-owner.js'), 'utf8');
 
-test('religion silver-blue palette asset is cache-busted without changing the spacetime stylesheet contract', () => {
+test('religion silver-blue palette remains canonical while V6 refreshes the spacetime presentation asset', () => {
   assert.match(owner, /atlas-person-domain-palette\.css\?v=20260912-religion-silver-blue-v6/);
-  assert.match(owner, /atlas-person-spacetime-domain-colors\.css\?v=20260912-religion-silver-v5/);
+  assert.match(owner, /atlas-person-spacetime-domain-colors\.css\?v=20261003-ui-v6-canvas-v1/);
 });
 
 test('Person table domain skin keeps a strong existing-cell edge and adds no badge or dot', () => {
