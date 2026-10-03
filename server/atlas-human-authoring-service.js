@@ -8,6 +8,7 @@ const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service
 const { createSource } = require("./atlas-source-service.js");
 const { normalizePersonPlaceFacts, resolvePersonPlaceFacts } = require("./atlas-place-relation-service.js");
 const { CONTRACT:SPATIAL_FACT_CONTRACT, normalizeSpatialRegistrationHandshake } = require("./atlas-spatial-fact-contract.js");
+const { bindRegistrationQueueCandidate } = require("./atlas-registration-queue-service.js");
 const {
   materializeSpatialRegistrationDisposition,
   verifySpatialRegistrationDisposition
@@ -838,14 +839,22 @@ function createHumanAuthoringService({ client, prepare = prepareAnyHumanAuthorin
   if (typeof prepare !== "function") throw new Error("prepare is required");
   if (typeof applyPrepared !== "function") throw new Error("applyPrepared is required");
   return Object.freeze({
-    async apply(rawRequest, { transport = null, allowLegacyNamuWikiOmission = true } = {}) {
+    async apply(rawRequest, { transport = null, allowLegacyNamuWikiOmission = true, candidate_id = null } = {}) {
       const prepared = prepare(rawRequest, { allowLegacyNamuWikiOmission:true });
       await client.query("begin isolation level serializable");
       try {
         await lockRequestIds(client, [prepared.request.requestId]);
         const result = await applyPrepared(client, prepared, { transport, catalogCache:new Map(), allowLegacyNamuWikiOmission:false });
+        if (candidate_id != null) {
+          await bindRegistrationQueueCandidate(client, {
+            candidate_id,
+            person_id:result.person_id,
+            authoring_request_id:result.request_id,
+            result_snapshot:result.result
+          });
+        }
         await client.query("commit");
-        return result;
+        return candidate_id == null ? result : Object.freeze({ ...result, candidate_id:String(candidate_id) });
       } catch (error) {
         await rollbackQuietly(client);
         throw error;
