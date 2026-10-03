@@ -367,7 +367,7 @@
 
   function namesHtml(names) {
     if (!Array.isArray(names) || !names.length) return '<p class="person-empty-inline">등록된 이름 없음</p>';
-    return `<div class="person-name-chips">${names.map((row) => `<span><b>${escapeHtml(row.name)}</b><small>${escapeHtml(row.locale || "")}${row.name_type ? ` · ${escapeHtml(row.name_type)}` : ""}${row.is_preferred ? " · preferred" : ""}</small></span>`).join("")}</div>`;
+    return `<div class="person-name-chips person-name-register">${names.map((row) => `<span class="person-name-entry"><b>${escapeHtml(row.name)}</b><small>${escapeHtml(row.locale || "")}${row.name_type ? ` · ${escapeHtml(row.name_type)}` : ""}${row.is_preferred ? " · preferred" : ""}</small></span>`).join("")}</div>`;
   }
 
   function descriptionsHtml(descriptions) {
@@ -385,9 +385,10 @@
     });
   }
 
-  function activityHtml(activity) {
+  function activityHtml(activity, index = 0) {
     const role = activity.role?.display_name || activity.role?.source_label || "역할 미지정";
-    const relation = activity.relation?.code || "relation 미상";
+    const relationCode = activity.relation?.code || "relation 미상";
+    const relation = RELATION_FILTER_LABELS[relationCode] || relationCode;
     const polity = activity.polity?.display_name || activity.polity?.canonical_name_en || "정치체 미상";
     const basis = activity.period_basis?.display_name || activity.period_basis?.code || "기간 기준 미상";
     const startMeta = boundaryMeta(activity.start);
@@ -396,8 +397,18 @@
       activity.relation?.category ? `relation category: ${activity.relation.category}` : null
     ].filter(Boolean);
     const activityId = escapeHtml(activity.id || "");
-    return `<article class="person-activity-card" data-activity-id="${activityId}">
-      <header><div><span class="person-relation-badge">${escapeHtml(relation)}</span><h4>${escapeHtml(polity)}</h4><p>${escapeHtml(role)} · ${escapeHtml(basis)}</p></div><div class="person-activity-actions"><button class="mini-btn danger delete" type="button" data-authoring-action="delete" data-activity-id="${activityId}">삭제</button></div></header>
+    const sequence = String(index + 1).padStart(2, "0");
+    const period = `${boundaryLabel(activity.start)} — ${boundaryLabel(activity.end)}`;
+    return `<article class="person-activity-card person-chronicle-activity" data-activity-id="${activityId}">
+      <header>
+        <div class="person-chronicle-activity-main">
+          <span class="person-activity-sequence">${sequence}</span>
+          <p class="person-activity-period-display">${escapeHtml(period)}</p>
+          <h4>${escapeHtml(polity)}</h4>
+          <p class="person-activity-role-line"><span class="person-relation-badge">${escapeHtml(relation)}</span><span>${escapeHtml(role)}</span><span>${escapeHtml(basis)}</span></p>
+        </div>
+        <div class="person-activity-actions"><button class="mini-btn danger delete" type="button" data-authoring-action="delete" data-activity-id="${activityId}">삭제</button></div>
+      </header>
       <dl class="person-activity-dates">
         <div><dt>시작</dt><dd>${escapeHtml(boundaryLabel(activity.start))}${startMeta.length ? `<small>${startMeta.map(escapeHtml).join(" · ")}</small>` : ""}</dd></div>
         <div><dt>종료</dt><dd>${escapeHtml(boundaryLabel(activity.end))}${endMeta.length ? `<small>${endMeta.map(escapeHtml).join(" · ")}</small>` : ""}</dd></div>
@@ -433,13 +444,49 @@
     const portraitResult = arguments[1] || null;
     const panel = document.getElementById("personMainDetail");
     if (!panel) return;
+    const displayName = person.display_name || person.canonical_name_en || "이름 미상";
+    const canonicalName = String(person.canonical_name_en || "").trim();
     const rawHistoricity = person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity);
-    panel.innerHTML = `<div class="person-detail-head">${portraitFrameHtml(person, portraitResult)}<div><p class="eyebrow">PERSON DETAIL</p><div class="person-detail-name-row"><h2>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</h2></div><p><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "type 미상")}</span></p></div></div>
-      ${profileEditorHtml(person, portraitResult)}
-      <section class="person-detail-section"><h3>이름</h3>${namesHtml(person.names)}</section>
-      <section class="person-detail-section"><h3>설명</h3>${descriptionsHtml(person.descriptions)}</section>
-      <section class="person-detail-section"><h3>Person 출처</h3>${sourceListHtml(person.sources)}</section>
-      <section class="person-detail-section"><div class="person-detail-section-head"><h3>활동 관계</h3><span>${Number(person.activity_count || 0)}건 · ${escapeHtml(rangeLabel(person))}</span></div><div class="person-activity-list">${Array.isArray(person.activities) && person.activities.length ? person.activities.map(activityHtml).join("") : '<p class="person-empty-inline">등록된 Activity 없음</p>'}</div></section>`;
+    const domainCode = String(personDomainsById?.[person?.id] || person?.representative_domain || "").trim();
+    const domainLabel = domainCode ? String(domainRegistry?.LABELS?.[domainCode] || domainCode) : "분야 미지정";
+    const timelineLabel = timelineDispositionLabel(person);
+    panel.setAttribute("data-representative-domain", domainCode);
+    panel.innerHTML = `<div class="person-detail-head person-chronicle-hero">
+        ${portraitFrameHtml(person, portraitResult)}
+        <div class="person-chronicle-identity">
+          <p class="eyebrow">ATLAS · PERSON</p>
+          <div class="person-detail-name-row"><h2>${escapeHtml(displayName)}</h2></div>
+          ${canonicalName && canonicalName !== displayName ? `<p class="person-detail-canonical">${escapeHtml(canonicalName)}</p>` : ""}
+          <p class="person-detail-era">${escapeHtml(rangeLabel(person))}</p>
+          <p class="person-detail-domain">${escapeHtml(domainLabel)}</p>
+          <p class="person-detail-status"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "type 미상")}</span>${timelineLabel ? `<span class="person-timeline-disposition">${escapeHtml(timelineLabel)}</span>` : ""}</p>
+        </div>
+      </div>
+      <div class="person-chronicle-body">
+        <section class="person-detail-section person-chronicle-section" data-section="names">
+          <h3><span class="person-detail-section-index">01</span><span>이름</span><small>NAMES</small></h3>
+          ${namesHtml(person.names)}
+        </section>
+        <section class="person-detail-section person-chronicle-section" data-section="description">
+          <h3><span class="person-detail-section-index">02</span><span>설명</span><small>DESCRIPTION</small></h3>
+          ${descriptionsHtml(person.descriptions)}
+        </section>
+        <section class="person-detail-section person-chronicle-section person-chronicle-activities" data-section="activities">
+          <div class="person-detail-section-head">
+            <h3><span class="person-detail-section-index">03</span><span>활동 기록</span><small>ACTIVITIES</small></h3>
+            <span>${Number(person.activity_count || 0)}건 · ${escapeHtml(rangeLabel(person))}</span>
+          </div>
+          <div class="person-activity-list">${Array.isArray(person.activities) && person.activities.length ? person.activities.map((activity, index) => activityHtml(activity, index)).join("") : '<p class="person-empty-inline">등록된 Activity 없음</p>'}</div>
+        </section>
+        <section class="person-detail-section person-chronicle-section" data-section="sources">
+          <h3><span class="person-detail-section-index">04</span><span>출처</span><small>SOURCES</small></h3>
+          ${sourceListHtml(person.sources)}
+        </section>
+        <details class="person-detail-authoring">
+          <summary><span>AUTHORING</span><strong>표시 정보·초상 편집</strong></summary>
+          <div class="person-detail-authoring-body">${profileEditorHtml(person, portraitResult)}</div>
+        </details>
+      </div>`;
   }
 
   function renderDetailLoading() {
