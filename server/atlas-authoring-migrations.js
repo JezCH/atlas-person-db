@@ -30,7 +30,8 @@ const AUTHORING_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20261001_polity_place_function_authority.sql"),
   path.resolve(__dirname, "../db/migrations/20260930_unit16_retire_external_reference_sync_trigger.sql"),
   path.resolve(__dirname, "../db/migrations/20261003_person_registration_queue_authority.sql"),
-  path.resolve(__dirname, "../db/migrations/20261003_shah_abbas_registration_queue_binding.sql")
+  path.resolve(__dirname, "../db/migrations/20261003_shah_abbas_registration_queue_binding.sql"),
+  path.resolve(__dirname, "../db/migrations/20261004_person_representative_domain_standard_v2_replay_safe.sql")
 ]);
 
 const AUTHORING_APPLY_MIGRATION_PATHS = Object.freeze([
@@ -42,7 +43,7 @@ const AUTHORING_APPLY_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260821_human_authoring_external_reference_sync.sql"),
   path.resolve(__dirname, "../db/migrations/20260902_ongoing_activity_terms.sql"),
   path.resolve(__dirname, "../db/migrations/20260904_person_representative_domains.sql"),
-  path.resolve(__dirname, "../db/migrations/20260919_person_representative_domain_standard_replay_safe.sql"),
+  path.resolve(__dirname, "../db/migrations/20261004_person_representative_domain_standard_v2_replay_safe.sql"),
   path.resolve(__dirname, "../db/migrations/20260906_p13a_temporal_unknown_boundaries.sql"),
   path.resolve(__dirname, "../db/migrations/20260906_p13_source_place_objects.sql"),
   path.resolve(__dirname, "../db/migrations/20260920_person_portraits.sql"),
