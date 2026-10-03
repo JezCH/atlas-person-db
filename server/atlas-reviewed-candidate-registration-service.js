@@ -87,24 +87,11 @@ async function markNonApprovedDecision(client, review) {
     throw new Error("CANDIDATE_REVIEW_AFTER_TERMINAL_REGISTRATION");
   }
 
-  if (!current) {
+  if (current) {
     await client.query(
-      `insert into atlas_v2.person_candidate_registration_states(
-         candidate_id,review_revision,registration_state,person_id,authoring_request_id,result_snapshot
-       ) values($1,$2,$3,null,null,null)`,
-      [review.candidate_id, review.revision, nextState]
-    );
-  } else {
-    await client.query(
-      `update atlas_v2.person_candidate_registration_states
-          set review_revision=$2,
-              registration_state=$3,
-              person_id=null,
-              authoring_request_id=null,
-              result_snapshot=null,
-              updated_at=now()
-        where candidate_id=$1`,
-      [review.candidate_id, review.revision, nextState]
+      `delete from atlas_v2.person_candidate_registration_states
+        where candidate_id=$1 and person_id is null`,
+      [review.candidate_id]
     );
   }
   return Object.freeze({
