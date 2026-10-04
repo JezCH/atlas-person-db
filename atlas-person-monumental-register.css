@@ -940,12 +940,6 @@
     overflow-wrap: anywhere;
   }
 
-  .person-monumental-register .person-card-activity-range-note {
-    color: #9b8b68;
-    font-size: .92em;
-    font-weight: 700;
-    white-space: nowrap;
-  }
 
   .person-monumental-register .person-table-activities .person-card-activity-period {
     grid-area: activity-period;
