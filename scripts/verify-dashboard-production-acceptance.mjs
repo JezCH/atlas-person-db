@@ -15,6 +15,7 @@ const CRITICAL_ASSETS = Object.freeze([
   "atlas-dashboard-model.js",
   "atlas-dashboard.js",
   "atlas-dashboard.css",
+  "atlas-dashboard-monumental-v11.css",
   "atlas-main-authority-nav.js",
   "atlas-person-main.js"
 ]);
@@ -261,6 +262,12 @@ async function collectDesktopDom(client) {
       const text=(row.textContent||"").trim();
       return {label,value:text.slice(label.length).trim(),text};
     }) : [];
+    const hero=document.querySelector("#atlasDashboardMount .dashboard-hero");
+    const kpi=document.querySelector("#atlasDashboardMount .dashboard-kpi");
+    const panel=document.querySelector("#atlasDashboardMount .dashboard-panel");
+    const heroStyle=hero?getComputedStyle(hero):null;
+    const kpiStyle=kpi?getComputedStyle(kpi):null;
+    const panelStyle=panel?getComputedStyle(panel):null;
     const doc=document.documentElement;
     return {
       href:location.href,
@@ -271,6 +278,17 @@ async function collectDesktopDom(client) {
       kpi_count:qa("#atlasDashboardMount .dashboard-kpi").length,
       eyebrows:eyebrowPanels,
       panel_count:qa("#atlasDashboardMount .dashboard-panel").length,
+      presentation:{
+        v11_loaded:[...document.styleSheets].some((sheet)=>String(sheet.href||"").includes("atlas-dashboard-monumental-v11.css")),
+        hero_background:heroStyle?.backgroundColor||null,
+        hero_color:heroStyle?.color||null,
+        hero_radius:heroStyle?.borderRadius||null,
+        kpi_background:kpiStyle?.backgroundColor||null,
+        kpi_color:kpiStyle?.color||null,
+        kpi_radius:kpiStyle?.borderRadius||null,
+        panel_background:panelStyle?.backgroundColor||null,
+        panel_color:panelStyle?.color||null
+      },
       global_scroll:{client_width:doc.clientWidth,scroll_width:doc.scrollWidth,overflow_x:doc.scrollWidth-doc.clientWidth},
       freshness_rows:freshnessRows,
       activity_rows:activityRows,
@@ -721,6 +739,11 @@ async function main() {
     const desktopDom=await collectDesktopDom(client);
     assert(desktopDom.dashboard_visible, "Dashboard did not render on Desktop", desktopDom);
     assert(desktopDom.kpi_count >= 6, "Dashboard KPI grid incomplete", desktopDom);
+    assert(desktopDom.presentation?.v11_loaded, "Dashboard V11 presentation layer did not load", desktopDom.presentation);
+    assert(desktopDom.presentation?.hero_background === "rgb(25, 29, 33)", "Dashboard hero regressed to a bright surface", desktopDom.presentation);
+    assert(desktopDom.presentation?.kpi_background === "rgb(23, 27, 30)", "Dashboard KPI regressed to a bright surface", desktopDom.presentation);
+    assert(desktopDom.presentation?.panel_background === "rgb(25, 29, 33)", "Dashboard panel regressed to a bright surface", desktopDom.presentation);
+    assert(desktopDom.presentation?.kpi_radius === "3px", "Dashboard KPI material radius regressed", desktopDom.presentation);
     for (const label of requiredEyebrows) assert(desktopDom.eyebrows.includes(label), `Dashboard panel missing: ${label}`, desktopDom.eyebrows);
     assert(desktopDom.global_scroll.overflow_x <= 1, "Desktop Dashboard causes page-level horizontal overflow", desktopDom.global_scroll);
     assert(!desktopDom.error_overlay, "Framework error overlay detected", desktopDom);

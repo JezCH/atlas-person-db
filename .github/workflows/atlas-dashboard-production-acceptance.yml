@@ -8,6 +8,7 @@ on:
       - "atlas-dashboard.js"
       - "atlas-dashboard-model.js"
       - "atlas-dashboard.css"
+      - "atlas-dashboard-monumental-v11.css"
       - "atlas-client-data-store.js"
       - "atlas-main-authority-nav.js"
       - "atlas-person-main.js"
