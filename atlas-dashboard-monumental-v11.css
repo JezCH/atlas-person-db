@@ -470,6 +470,36 @@
   border-color: #3a4247;
 }
 
+/* Final bright-surface sweep: legacy Dashboard chips and segmented toggles. */
+.dashboard-namuwiki-legend-item {
+  border: 1px solid #30373c;
+  border-radius: 4px;
+  background: #15191c;
+  color: #90989d;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.012);
+}
+
+.dashboard-namuwiki-legend-item > b {
+  color: #e2ddd3;
+}
+
+.dashboard-polity-toolbar > div {
+  padding: 2px;
+  border: 1px solid #30373c;
+  border-radius: 4px;
+  background: #121619;
+}
+
+.dashboard-polity-toolbar button {
+  border-color: transparent;
+  background: transparent;
+}
+
+.dashboard-polity-toolbar button[aria-pressed="true"] {
+  border-color: rgba(192,174,136,.46);
+  background: #1d2225;
+}
+
 /* Buttons in the utility strip inherit the global dark control language. */
 .dashboard-tool-actions .btn {
   border-color: #394147;

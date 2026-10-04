@@ -12,7 +12,7 @@ test("UI V7 loads after the V6 chronology canvas and cache-busts the modified lo
   const v7 = 'atlas-person-spacetime-instrument-tools.css?v=20261003-ui-v7-tools-v1';
 
   const v8 = 'atlas-person-spacetime-mobile-v8.css?v=20261003-ui-v8-mobile-v1';
-  assert.match(html, /atlas-main-authority-nav\.js\?v=20261004-dashboard-v11/);
+  assert.match(html, /atlas-main-authority-nav\.js\?v=20261004-dashboard-v11-r2/);
   assert.ok(nav.includes(base));
   assert.ok(nav.includes(v6));
   assert.ok(nav.includes(v7));
