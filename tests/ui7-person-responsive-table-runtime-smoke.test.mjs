@@ -112,7 +112,7 @@ test('UI7 table keeps status folding and groups visible rows under the derived e
       'person-table-identity person-register-identity',
       'person-card-range person-table-range person-register-range',
       'person-card-activities person-table-activities person-register-activities',
-      'person-card-count person-table-count person-register-count'
+      'person-card-count person-table-count person-register-count is-activity-count-quiet'
     ]
   );
   assert.equal(historical.status.parent, null);
@@ -123,7 +123,7 @@ test('UI7 table keeps status folding and groups visible rows under the derived e
       'person-table-identity person-register-identity',
       'person-card-range person-table-range person-register-range',
       'person-card-activities person-table-activities person-register-activities',
-      'person-card-count person-table-count person-register-count'
+      'person-card-count person-table-count person-register-count is-activity-count-quiet'
     ]
   );
   assert.equal(legendary.status.parent, legendary.row.children[0]);
