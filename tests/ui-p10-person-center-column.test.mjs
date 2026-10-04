@@ -8,7 +8,9 @@ const verifier=read("scripts/verify-ui-v10-production-visual.mjs");
 const html=read("index.html");
 
 test("P10 puts Person identity, Activity facts, and chronology on the same mobile scan row",()=>{
-  const mobile=register.slice(register.indexOf("@media (max-width: 760px)"));
+  const mobileStart=register.indexOf("@media (max-width: 760px)");
+  const narrowStart=register.indexOf("@media (max-width: 340px)");
+  const mobile=register.slice(mobileStart,narrowStart);
   assert.match(mobile,/grid-template-columns: minmax\(82px, \.92fr\) minmax\(0, 1\.35fr\) auto/);
   assert.match(mobile,/grid-template-areas: "identity activities range"/);
   assert.match(mobile,/align-items: start/);
