@@ -52,8 +52,8 @@ test("P2 dark Register removes the old wide identity slab while preserving domai
   assert.doesNotMatch(css, /data-representative-domain="knowledge"/);
 });
 
-test("P2 browser assets use one coherent cache version", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p2-dense-register-v1/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p2-dense-register-v1/);
+test("P2 dense Register contract remains intact under the P3 Activity hierarchy assets", () => {
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p3-activity-hierarchy-v1/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p3-activity-hierarchy-v1/);
   assert.match(html, /atlas-person-header-sorting\.js\?v=20261004-ui-p2-dense-register-v1/);
 });

@@ -37,7 +37,19 @@ function node(className, textContent = '') {
       if (index >= 0) this.parent.children.splice(index, 1);
       this.parent = null;
     },
-    setAttribute(name, value) { this.attributes[name] = value; },
+    setAttribute(name, value) { this.attributes[name] = String(value); },
+    getAttribute(name) { return Object.prototype.hasOwnProperty.call(this.attributes, name) ? this.attributes[name] : null; },
+    removeAttribute(name) { delete this.attributes[name]; },
+    closest(selector) {
+      let current = this;
+      while (current) {
+        const classes = String(current.className || '').split(/\s+/).filter(Boolean);
+        if (selector === 'button[data-person-activity-toggle]' && current.tagName === 'BUTTON' && current.dataset.personActivityToggle != null) return current;
+        if (selector === '.person-register-entry[data-person-id]' && classes.includes('person-register-entry') && current.dataset.personId) return current;
+        current = current.parent;
+      }
+      return null;
+    },
     querySelector(selector) {
       if (selector === ':scope > .person-table-identity') return this.children.find((c) => String(c.className).split(' ').includes('person-table-identity')) || null;
       if (selector === ':scope > strong') return this.children.find((c) => c.tagName === 'STRONG') || null;
@@ -46,10 +58,12 @@ function node(className, textContent = '') {
       for (const cls of ['person-card-range','person-card-activities','person-card-count','person-card-top','person-table-head']) {
         if (selector === `:scope > .${cls}`) return this.children.find((c) => String(c.className).split(' ').includes(cls)) || null;
       }
+      if (selector === '.person-activity-toggle-icon') return this.children.find((c) => String(c.className).split(' ').includes('person-activity-toggle-icon')) || null;
       return null;
     },
     querySelectorAll(selector) {
       if (selector === ':scope > .person-card') return this.children.filter((c) => String(c.className).split(' ').includes('person-card'));
+      if (selector === '.person-card-activity') return this.children.filter((c) => String(c.className).split(' ').includes('person-card-activity'));
       return [];
     }
   };
@@ -58,12 +72,27 @@ function node(className, textContent = '') {
       const classes = new Set(String(element.className || '').split(/\s+/).filter(Boolean));
       for (const value of values) classes.add(value);
       element.className = [...classes].join(' ');
+    },
+    remove(...values) {
+      const classes = new Set(String(element.className || '').split(/\s+/).filter(Boolean));
+      for (const value of values) classes.delete(value);
+      element.className = [...classes].join(' ');
+    },
+    toggle(value, force) {
+      const classes = new Set(String(element.className || '').split(/\s+/).filter(Boolean));
+      const next = force === undefined ? !classes.has(value) : Boolean(force);
+      if (next) classes.add(value); else classes.delete(value);
+      element.className = [...classes].join(' ');
+      return next;
+    },
+    contains(value) {
+      return String(element.className || '').split(/\s+/).filter(Boolean).includes(value);
     }
   };
   return element;
 }
 
-function personRow(historicity, personType, rangeText = '') {
+function personRow(historicity, personType, rangeText = '', personId = '') {
   const strong = node(''); strong.tagName = 'STRONG';
   const canonical = node('person-card-canonical');
   const range = node('person-card-range', rangeText);
@@ -72,8 +101,9 @@ function personRow(historicity, personType, rangeText = '') {
   const status = node('person-card-top');
   status.append(node('person-historicity', historicity), node('', personType));
   const row = node('person-card');
+  if (personId) row.dataset.personId = personId;
   row.append(status, strong, canonical, range, count, activities);
-  return { row, strong, canonical, range, status };
+  return { row, strong, canonical, range, status, activities, count };
 }
 
 test('UI7 table keeps status folding and groups visible rows under the derived era band', () => {
@@ -112,7 +142,7 @@ test('UI7 table keeps status folding and groups visible rows under the derived e
       'person-table-identity person-register-identity',
       'person-card-range person-table-range person-register-range',
       'person-card-activities person-table-activities person-register-activities',
-      'person-card-count person-table-count person-register-count'
+      'person-card-count person-table-count person-register-count is-activity-count-quiet'
     ]
   );
   assert.equal(historical.status.parent, null);
@@ -123,11 +153,57 @@ test('UI7 table keeps status folding and groups visible rows under the derived e
       'person-table-identity person-register-identity',
       'person-card-range person-table-range person-register-range',
       'person-card-activities person-table-activities person-register-activities',
-      'person-card-count person-table-count person-register-count'
+      'person-card-count person-table-count person-register-count is-activity-count-quiet'
     ]
   );
   assert.equal(legendary.status.parent, legendary.row.children[0]);
   assert.ok(legendary.status.className.includes('person-table-status-inline'));
   assert.equal(legendary.status.children[0].hidden, false);
   assert.equal(legendary.status.children[1].hidden, true);
+});
+
+
+test('P3 multi-Activity rows expose a real disclosure control and expand in place', () => {
+  const multi = personRow('historical', 'historical', 'AD 100 – AD 140', 'person-multi');
+  multi.activities.append(node('person-card-activity'), node('person-card-activity'));
+  multi.count.textContent = 'Activity 2건';
+
+  const grid = node('person-card-grid');
+  grid.append(multi.row);
+  let activityToggleCapture = null;
+  const document = {
+    readyState: 'complete',
+    createElement(tag) { const created = node(''); created.tagName = tag.toUpperCase(); return created; },
+    querySelectorAll(selector) { return selector === '.person-card-grid' ? [grid] : []; },
+    addEventListener(type, handler, options) {
+      if (type === 'click' && options === true) activityToggleCapture = handler;
+    }
+  };
+  const window = { addEventListener() {} };
+  const context = { window, document, Object, Set, String, Number, queueMicrotask: (fn) => fn(), console };
+  vm.runInNewContext(eraSource, context);
+  vm.runInNewContext(source, context);
+
+  assert.ok(multi.row.classList.contains('has-multiple-activities'));
+  assert.equal(multi.row.dataset.activityCount, '2');
+  assert.equal(multi.count.classList.contains('is-activity-count-quiet'), false);
+  assert.equal(multi.count.children.length, 1);
+
+  const toggle = multi.count.children[0];
+  assert.equal(toggle.className, 'person-activity-toggle');
+  assert.equal(toggle.getAttribute('aria-expanded'), 'false');
+  assert.equal(toggle.children[0].textContent, '2건');
+  assert.equal(toggle.children[1].textContent, '+');
+  assert.equal(typeof activityToggleCapture, 'function');
+
+  let stopped = false;
+  activityToggleCapture({
+    target: toggle,
+    stopPropagation() { stopped = true; }
+  });
+
+  assert.equal(stopped, true);
+  assert.ok(multi.row.classList.contains('is-activities-expanded'));
+  assert.equal(toggle.getAttribute('aria-expanded'), 'true');
+  assert.equal(toggle.children[1].textContent, '−');
 });
