@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:queue-20261004:crazy-horse:person-only:v1",
+  "registration_candidate_id": "gplist3-20260921-024",
+  "person": {
+    "canonical_name_en": "Crazy Horse",
+    "display_name_ko": "크레이지 호스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-04",
+      "document_title": "타슝카 위트코",
+      "url": "https://namu.wiki/w/%ED%83%80%EC%8A%9D%EC%B9%B4%20%EC%9C%84%ED%8A%B8%EC%BD%94"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Crazy Horse is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://www.nps.gov/libi/learn/historyculture/crazy-horse.htm"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "military",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Crazy Horse — National Park Service",
+      "canonical_url": "https://www.nps.gov/libi/learn/historyculture/crazy-horse.htm",
+      "citation_text": "The U.S. National Park Service identifies Crazy Horse as an Oglala Lakota war leader associated with the Battle of the Rosebud and the Battle of the Little Bighorn.",
+      "locator": "Biography"
+    }
+  ],
+  "review_context": {
+    "request_batch": "QUEUE-EIGHT-20261004",
+    "queue_candidate_id": "gplist3-20260921-024",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
+  }
+}
