@@ -444,7 +444,7 @@ async function main(){
     assert(mobileMain.cardLikeCount===0,"Mobile Person rows regressed toward card geometry",mobileMain);
     assert(mobileMain.quietCountVisible===0,"Mobile ordinary rows expose Activity-count noise",mobileMain);
     assert(mobileMain.activityDomIntegrity,"Mobile multi-Activity DOM lost Activity information",mobileMain);
-    assert(mobileMain.ordinaryMedianHeight!=null&&mobileMain.ordinaryMedianHeight<=64,
+    assert(mobileMain.ordinaryMedianHeight!=null&&mobileMain.ordinaryMedianHeight<=56,
       "Mobile Person Register lost compact scan density",mobileMain);
 
     const mobileActivityDisclosure=await verifyActivityDisclosure(client);
