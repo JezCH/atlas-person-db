@@ -7,8 +7,8 @@ const table=read("atlas-person-table-view.js");
 const html=read("index.html");
 
 test("P9 removes the repeated role-side approximation label",()=>{
-  assert.doesNotMatch(table,/연대 근사/);
   assert.doesNotMatch(table,/appendApproximationNote/);
+  assert.doesNotMatch(table,/role\.textContent\s*=\s*[^\n]*연대 근사/);
 });
 
 test("P9 promotes approximation-only chronology differences into the primary Person range",()=>{
