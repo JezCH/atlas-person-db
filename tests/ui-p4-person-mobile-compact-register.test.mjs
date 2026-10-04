@@ -29,7 +29,7 @@ test("P4 compact ownership survives P10 identity-Activity-range scan grammar", (
   assert.match(mobile, /grid-template-areas: "identity activities range"/);
   assert.match(mobile, /has-multiple-activities[\s\S]*?grid-template-areas: "identity activities range count"/s);
   assert.match(mobile, /row-gap: 0/);
-  assert.match(mobile, /padding: 4px 0/);
+  assert.match(mobile, /padding: 6px 0/);
   assert.match(mobile, /\.person-table-identity > \.person-card-canonical,[\s\S]*?\.person-table-status-inline \{\s*display: none;/s);
   assert.match(mobile, /\.person-register-range \{[\s\S]*?white-space: nowrap;/s);
 });
