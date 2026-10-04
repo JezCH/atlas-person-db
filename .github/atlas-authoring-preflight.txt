@@ -1,8 +1,1 @@
-apply authoring/requests/queue-register-20261004-zhang-heng-person-only.json
-apply authoring/requests/queue-register-20261004-nasir-al-din-al-tusi-person-only.json
-apply authoring/requests/queue-register-20261004-ulugh-beg-person-only.json
-apply authoring/requests/queue-register-20261004-tycho-brahe-person-only.json
-apply authoring/requests/queue-register-20261004-richard-feynman-person-only.json
-apply authoring/requests/queue-register-20261004-rosalind-franklin-person-only.json
-apply authoring/requests/queue-register-20261004-frida-kahlo-person-only.json
-apply authoring/requests/queue-register-20261004-crazy-horse-person-only.json
+preflight authoring/requests/queue-register-20261004-zhang-heng-person-only.json
