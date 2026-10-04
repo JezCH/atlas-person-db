@@ -49,7 +49,7 @@ test("UI V10 does not alter the mobile hierarchy layer", () => {
   const html = read("index.html");
   const era = html.indexOf("atlas-person-era-navigation.css?v=20261004-ui-v10-dark-surfaces-v1");
   const mobile = html.indexOf("atlas-ui-mobile-v8.css?v=20261003-ui-v8-mobile-v1");
-  const motion = html.indexOf("atlas-ui-motion-material-v9.css?v=20261004-mobile-drawer-close-v1");
+  const motion = html.indexOf("atlas-ui-motion-material-v9.css?v=20261004-mobile-drawer-close-v2");
   assert.ok(era >= 0);
   assert.ok(mobile > era);
   assert.ok(motion > mobile);
