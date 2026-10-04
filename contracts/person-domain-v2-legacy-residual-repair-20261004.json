@@ -1,6 +1,6 @@
 {
   "schema": "atlas-person-domain-v2-legacy-residual-repair/v1",
-  "status": "ready_for_apply",
+  "status": "applied_closed",
   "issue": 1793,
   "superseded_pr": 1767,
   "reviewed_at": "2026-10-04",
@@ -38,5 +38,16 @@
     }
   ],
   "repair_transport_pr": 1861,
-  "trigger_note": "Follow-up main push after workflow exists on default branch; exact Production pre-read still controls mutation."
+  "trigger_note": "Follow-up main push after workflow exists on default branch; exact Production pre-read still controls mutation.",
+  "applied_at": "2026-10-04",
+  "apply_merge_sha": "a12a1bf2d3fbd491d03d8f7177976874a5feae3c",
+  "apply_workflow_run": 37171047026,
+  "apply_workflow_job": 111344049017,
+  "result": {
+    "repaired_count": 6,
+    "replay": false,
+    "conflict_count": 0,
+    "exact_public_readback": "6/6",
+    "final_state": "all_correct"
+  }
 }
