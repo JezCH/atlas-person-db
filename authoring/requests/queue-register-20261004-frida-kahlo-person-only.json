@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-person-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:queue-register-20261004:frida-kahlo:person-only:v1",
+  "request_id": "authoring:queue-20261004:frida-kahlo:person-only:v1",
   "registration_candidate_id": "workshop-20260924-026",
   "person": {
     "canonical_name_en": "Frida Kahlo",
@@ -21,15 +21,15 @@
     }
   },
   "timeline_disposition": {
-    "disposition": "other_reviewed_exclusion",
-    "reason": "Person identity is securely historical, but this bounded queue registration does not assert a canonical polity-bound Activity. Keep the Person out of the spacetime timeline until an Activity is separately reviewed.",
-    "basis_code": "queue_registration_person_only_activity_deferred",
+    "disposition": "chronology_unresolved",
+    "reason": "Frida Kahlo is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "review_evidence": {
       "authority_scope": "timeline_disposition_review_evidence_only",
       "sources": [
-        "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/08/Biografias-Frida-Kahlo-ingles.pdf"
+        "https://www.moma.org/artists/2963"
       ],
       "reviewed_at": "2026-10-04"
     }
@@ -37,11 +37,17 @@
   "representative_domain": "culture",
   "sources": [
     {
-      "source_type": "museum_reference",
-      "title": "Biography of Frida Kahlo — Museo Frida Kahlo",
-      "canonical_url": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/08/Biografias-Frida-Kahlo-ingles.pdf",
-      "citation_text": "Museo Frida Kahlo's biography records Frida Kahlo's 1907 birth in Mexico City and the accident after which she began painting while immobilized.",
-      "locator": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/08/Biografias-Frida-Kahlo-ingles.pdf"
+      "source_type": "academic_reference",
+      "title": "Frida Kahlo — The Museum of Modern Art",
+      "canonical_url": "https://www.moma.org/artists/2963",
+      "citation_text": "The Museum of Modern Art identifies Frida Kahlo (1907–1954) as a Mexican artist represented in its collection, grounding her representative identity in visual art.",
+      "locator": "Artist profile"
     }
-  ]
+  ],
+  "review_context": {
+    "request_batch": "QUEUE-EIGHT-20261004",
+    "queue_candidate_id": "workshop-20260924-026",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
+  }
 }
