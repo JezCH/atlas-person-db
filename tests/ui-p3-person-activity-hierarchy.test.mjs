@@ -58,5 +58,5 @@ test("P3 uses restrained honor-metal disclosure instead of a new badge grammar",
 test("P3 browser assets use the Activity hierarchy cache key", () => {
   assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p8-horizontal-flow-v1/);
   assert.match(html, /atlas-ui-mobile-v8\.css\?v=20261004-ui-p4-mobile-compact-v1/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p7-fill-whitespace-v1/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p9-promote-approximation-v1/);
 });
