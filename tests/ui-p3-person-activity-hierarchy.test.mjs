@@ -24,8 +24,8 @@ test("P3 keeps every Activity in the DOM and collapses only secondary rows by pr
   assert.match(main, /activities\.map\(compactActivityHtml\)\.join\(""\)/);
   assert.match(register, /has-multiple-activities:not\(\.is-activities-expanded\)[\s\S]*?person-card-activity:nth-child\(n \+ 2\)[\s\S]*?display: none/s);
   assert.match(register, /is-activities-expanded[\s\S]*?person-card-activity \+ \.person-card-activity/s);
-  assert.match(mobile, /has-multiple-activities:not\(\.is-activities-expanded\)[\s\S]*?person-card-activity:nth-child\(n \+ 2\)[\s\S]*?display: none/s);
-  assert.doesNotMatch(mobile, /^\s*\.person-monumental-register \.person-table-activities \.person-card-activity:nth-child\(n \+ 2\) \{\s*display: none;\s*\}/ms);
+  assert.doesNotMatch(mobile, /person-card-activity:nth-child\(n \+ 2\)[\s\S]*?display: none/s);
+  assert.match(mobile, /P4 ownership boundary: compact Person Register geometry is defined only in/);
 });
 
 test("P3 disclosure is accessible and cannot trigger Person selection", () => {
