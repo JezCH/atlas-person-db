@@ -19,7 +19,7 @@ test("P12 keeps ordinary 0/1-Activity counts quiet and multi-Activity count stat
 });
 
 test("P12 keeps every Activity visible instead of collapsing secondary rows", () => {
-  assert.match(main, /activities\.map\(compactActivityHtml\)\.join\("")/);
+  assert.match(main, /activities\.map\(compactActivityHtml\)\.join\(""\)/);
   assert.doesNotMatch(register, /person-card-activity:nth-child\(n \+ 2\)[\s\S]*?display: none/s);
   assert.doesNotMatch(register, /is-activities-expanded/);
   assert.doesNotMatch(mobile, /person-card-activity:nth-child\(n \+ 2\)[\s\S]*?display: none/s);
