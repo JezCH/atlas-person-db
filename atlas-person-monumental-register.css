@@ -501,6 +501,24 @@
   border-bottom: 0;
 }
 
+/* P3 Activity hierarchy: one primary Activity is the scanning layer.
+ * Multiple Activities remain in the DOM and are disclosed in-place on demand. */
+.person-monumental-register .person-register-entry.has-multiple-activities:not(.is-activities-expanded)
+  .person-card-activity:nth-child(n + 2) {
+  display: none;
+}
+
+.person-monumental-register .person-register-entry.has-multiple-activities:not(.is-activities-expanded)
+  .person-card-activity:first-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.person-monumental-register .person-register-entry.is-activities-expanded
+  .person-card-activity + .person-card-activity {
+  border-top-color: rgba(192, 174, 136, .12);
+}
+
 .person-monumental-register .person-card-activity-head {
   grid-column: 1;
   display: flex;
@@ -579,14 +597,15 @@
   font-weight: 700;
 }
 
-/* Activity count is a quiet index, not a table column heading. */
+/* Activity count is silent for ordinary 0/1-Activity rows.
+ * Only multi-Activity people receive a compact disclosure control. */
 .person-monumental-register .person-table-count,
 .person-monumental-register .person-register-count {
   display: flex;
   min-width: 0;
   align-items: flex-start;
   justify-content: flex-end;
-  padding: 4px 4px 0 0;
+  padding: 2px 3px 0 0;
   border: 0;
   color: #656e74;
   font-size: 7.5px;
@@ -594,6 +613,56 @@
   line-height: 1.35;
   text-align: right;
   white-space: nowrap;
+}
+
+.person-monumental-register .person-register-count.is-activity-count-quiet {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.person-monumental-register .person-activity-toggle {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  margin: 0;
+  padding: 1px 0 2px;
+  border: 0;
+  border-bottom: 1px solid rgba(192, 174, 136, .26);
+  border-radius: 0;
+  background: transparent;
+  color: #8c9295;
+  font: inherit;
+  font-size: 7.5px;
+  font-weight: 760;
+  line-height: 1.2;
+  letter-spacing: .02em;
+  cursor: pointer;
+}
+
+.person-monumental-register .person-activity-toggle:hover {
+  border-bottom-color: rgba(208, 188, 145, .62);
+  color: #d2cdc3;
+}
+
+.person-monumental-register .person-activity-toggle:focus-visible {
+  outline: 1px solid rgba(208, 188, 145, .56);
+  outline-offset: 2px;
+}
+
+.person-monumental-register .person-activity-toggle[aria-expanded="true"] {
+  border-bottom-color: var(--atlas-honor-metal-strong);
+  color: #d8d2c7;
+}
+
+.person-monumental-register .person-activity-toggle-icon {
+  width: 8px;
+  color: var(--atlas-honor-metal-strong);
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
 }
 
 /* Unknown/non-timeline is a separate chronological chapter without a fake card. */
@@ -763,8 +832,19 @@
 
   .person-monumental-register .person-register-count {
     grid-area: count;
-    padding: 2px 2px 0 0;
+    padding: 1px 2px 0 0;
     font-size: 7px;
+  }
+
+  .person-monumental-register .person-activity-toggle {
+    gap: 2px;
+    padding-bottom: 1px;
+    font-size: 7px;
+  }
+
+  .person-monumental-register .person-activity-toggle-icon {
+    width: 7px;
+    font-size: 8px;
   }
 
   .person-monumental-register .person-register-activities {
