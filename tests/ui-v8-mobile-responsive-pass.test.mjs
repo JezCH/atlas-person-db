@@ -7,7 +7,7 @@ const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "
 test("UI V8 loads the static mobile hierarchy layer after Person Chronicle Detail", () => {
   const html = read("index.html");
   const detail = html.indexOf("atlas-person-chronicle-detail.css?v=20261003-ui-v5-detail-v1");
-  const mobile = html.indexOf("atlas-ui-mobile-v8.css?v=20261003-ui-v8-mobile-v1");
+  const mobile = html.indexOf("atlas-ui-mobile-v8.css?v=20261004-ui-p2-dense-register-v1");
   assert.ok(detail >= 0);
   assert.ok(mobile > detail);
   assert.match(html, /atlas-main-authority-nav\.js\?v=20261004-dashboard-v11-r2/);
@@ -35,12 +35,13 @@ test("UI V8 gives Person mobile controls sequential hierarchy instead of three c
   assert.match(css, /\.person-domain-filter\.is-active \{[\s\S]*?border-color: var\(--person-filter-domain-color\)/);
 });
 
-test("UI V8 makes the mobile Person Register show name, period and one primary Activity first", () => {
+test("UI P2 keeps the V8 mobile hierarchy but makes the Person Register denser", () => {
   const css = read("atlas-ui-mobile-v8.css");
 
-  assert.match(css, /Register: name \+ period \+ one primary activity are the immediate layer/);
-  assert.match(css, /\.person-table-identity > strong \{[\s\S]*?font-size: 17px/);
-  assert.match(css, /\.person-register-range \{[\s\S]*?font-size: 10px/);
+  assert.match(css, /P2 dense Register: one factual row, one primary Activity line/);
+  assert.match(css, /grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
+  assert.match(css, /\.person-table-identity > strong \{[\s\S]*?font-size: 14\.5px/);
+  assert.match(css, /\.person-register-range \{[\s\S]*?font-size: 9px/);
   assert.match(css, /\.person-card-activity:nth-child\(n \+ 2\) \{\n    display: none;/);
   assert.match(css, /@media \(max-width: 390px\)[\s\S]*?\.person-table-identity > \.person-card-canonical,[\s\S]*?\.person-table-status-inline \{\n    display: none;/);
 
