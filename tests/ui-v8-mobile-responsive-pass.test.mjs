@@ -10,7 +10,7 @@ test("UI V8 loads the static mobile hierarchy layer after Person Chronicle Detai
   const mobile = html.indexOf("atlas-ui-mobile-v8.css?v=20261003-ui-v8-mobile-v1");
   assert.ok(detail >= 0);
   assert.ok(mobile > detail);
-  assert.match(html, /atlas-main-authority-nav\.js\?v=20261003-ui-v8-mobile-v1/);
+  assert.match(html, /atlas-main-authority-nav\.js\?v=20261004-dashboard-v11/);
 });
 
 test("UI V8 prevents document-width overflow at the 390px acceptance surface", () => {
