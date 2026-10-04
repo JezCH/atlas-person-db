@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-person-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:registration-queue-20261004:nasir-al-din-al-tusi:person-only:v1",
+  "request_id": "authoring:queue-20261004:nasir-al-din-al-tusi:person-only:v1",
   "registration_candidate_id": "gp-20260921-089",
   "person": {
     "canonical_name_en": "Nasir al-Din al-Tusi",
@@ -20,15 +20,15 @@
     }
   },
   "timeline_disposition": {
-    "disposition": "other_reviewed_exclusion",
-    "reason": "Canonical Person identity and representative domain are registered from the approved queue candidate in this batch without asserting a polity-bound Activity. Timeline inclusion remains separate and requires a reviewed Activity.",
-    "basis_code": "identity_registered_activity_review_deferred",
+    "disposition": "chronology_unresolved",
+    "reason": "Nasir al-Din al-Tusi is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "review_evidence": {
-      "authority_scope": "registration_scope_only",
+      "authority_scope": "timeline_disposition_review_evidence_only",
       "sources": [
-        "https://mathshistory.st-andrews.ac.uk/Biographies/Al-Tusi_Nasir/"
+        "https://www.iranicaonline.org/articles/tusi-nasir-al-din-mathematician-astronomer/"
       ],
       "reviewed_at": "2026-10-04"
     }
@@ -37,17 +37,16 @@
   "sources": [
     {
       "source_type": "academic_reference",
-      "title": "Nasir al-Din al-Tusi — MacTutor History of Mathematics",
-      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Al-Tusi_Nasir/",
-      "citation_text": "MacTutor identifies Nasir al-Din al-Tusi (1201–1274) as an astronomer and mathematician who made important contributions to astronomy and mathematical scholarship.",
-      "locator": "Quick Info; Biography"
+      "title": "ṬUSI, NAṢIR-AL-DIN — Mathematics and Astronomy — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/tusi-nasir-al-din-mathematician-astronomer/",
+      "citation_text": "Encyclopaedia Iranica documents Nasir al-Din al-Tusi's major contributions to mathematics and astronomy, including trigonometry and the Maragha astronomical program.",
+      "locator": "Mathematics and astronomy"
     }
   ],
   "review_context": {
-    "request_batch": "REGISTRATION-QUEUE-8-20261004",
+    "request_batch": "QUEUE-EIGHT-20261004",
     "queue_candidate_id": "gp-20260921-089",
-    "domain_standard": "Person Domain v2",
-    "namuwiki_review": "Exact indexed NamuWiki search did not establish an independent exact Person document; no guessed URL.",
-    "timeline_decision": "Identity-first queue registration only; no polity-bound Activity is asserted in this batch."
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
   }
 }

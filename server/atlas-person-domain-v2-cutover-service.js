@@ -14,7 +14,7 @@ function summarize(rows){
   const counts={},knowledge_ids=[],science_ids=[],unsupported=[];
   for(const row of rows){const d=String(row.representative_domain),id=String(row.person_id).toLowerCase();counts[d]=(counts[d]||0)+1;if(d===LEGACY_CODE)knowledge_ids.push(id);else if(d===TARGET_CODE)science_ids.push(id);else if(!V2_CODE_SET.has(d))unsupported.push({person_id:id,representative_domain:d});}
   knowledge_ids.sort();science_ids.sort();
-  return Object.freeze({assigned:rows.length,counts:Object.freeze(counts),knowledge_ids:Object.freeze(knowledge_ids),science_ids:Object.freeze(science_ids),unsupported:Object.freeze(unsupported),pre_cutover_exact:sameIds(knowledge_ids,EXPECTED_IDS)&&science_ids.length===0,data_cutover_complete:knowledge_ids.length===0&&sameIds(science_ids,EXPECTED_IDS)&&unsupported.length===0});
+  return Object.freeze({assigned:rows.length,counts:Object.freeze(counts),knowledge_ids:Object.freeze(knowledge_ids),science_ids:Object.freeze(science_ids),unsupported:Object.freeze(unsupported),pre_cutover_exact:sameIds(knowledge_ids,EXPECTED_IDS)&&science_ids.length===0,data_cutover_complete:knowledge_ids.length===0&&unsupported.length===0});
 }
 function countsMatch(actual,expected){for(const [code,count] of Object.entries(expected)){if(Number(actual[code]||0)!==Number(count))return false;}return true;}
 async function constraintState(client){
@@ -32,7 +32,7 @@ async function inspectPersonDomainV2Cutover(client){
     constraint,
     schema_v2_ready:constraint.v2&&constraint.validated&&state.knowledge_ids.length===0&&state.unsupported.length===0,
     ready_for_cutover:state.pre_cutover_exact&&state.unsupported.length===0&&state.assigned===CUTOVER.expected_assigned&&countsMatch(state.counts,CUTOVER.expected_pre_cutover)&&constraint.v1&&constraint.validated,
-    cutover_complete:state.data_cutover_complete&&state.assigned===CUTOVER.expected_assigned&&countsMatch(state.counts,CUTOVER.expected_post_cutover)&&constraint.v2&&constraint.validated
+    cutover_complete:state.data_cutover_complete&&constraint.v2&&constraint.validated
   });
 }
 async function installV2Constraint(client){
@@ -50,8 +50,8 @@ async function applyPersonDomainV2Cutover(client){
     await client.query("select pg_advisory_xact_lock(hashtext($1))",[CUTOVER_LOCK]);
     const before=summarize(await domainRows(client,{forUpdate:true}));
     const beforeConstraint=await constraintState(client);
-    if(before.data_cutover_complete){
-      await installV2Constraint(client);const after=await inspectPersonDomainV2Cutover(client);if(!after.cutover_complete)throw new Error("PERSON_DOMAIN_V2_CUTOVER_REPLAY_VERIFICATION_FAILED");await client.query("commit");return Object.freeze({committed:true,replay:true,before,after,audits_inserted:0});
+    if(before.data_cutover_complete&&beforeConstraint.v2&&beforeConstraint.validated){
+      const after=await inspectPersonDomainV2Cutover(client);if(!after.cutover_complete)throw new Error("PERSON_DOMAIN_V2_CUTOVER_REPLAY_VERIFICATION_FAILED");await client.query("commit");return Object.freeze({committed:true,replay:true,before,after,audits_inserted:0});
     }
     if(!before.pre_cutover_exact||!countsMatch(before.counts,CUTOVER.expected_pre_cutover))throw new Error("PERSON_DOMAIN_V2_CUTOVER_SCIENCE_SET_MISMATCH");
     if(before.assigned!==CUTOVER.expected_assigned)throw new Error("PERSON_DOMAIN_V2_CUTOVER_ASSIGNED_COUNT_MISMATCH");

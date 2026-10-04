@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-person-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:registration-queue-20261004:zhang-heng:person-only:v1",
+  "request_id": "authoring:queue-20261004:zhang-heng:person-only:v1",
   "registration_candidate_id": "gp-20260921-087",
   "person": {
     "canonical_name_en": "Zhang Heng",
@@ -14,21 +14,22 @@
   },
   "external_references": {
     "namuwiki": {
-      "status": "not_found",
+      "status": "linked",
       "checked_at": "2026-10-04",
-      "review_reason": "no_exact_document"
+      "document_title": "장형(후한)",
+      "url": "https://namu.wiki/w/%EC%9E%A5%ED%98%95(%ED%9B%84%ED%95%9C)"
     }
   },
   "timeline_disposition": {
-    "disposition": "other_reviewed_exclusion",
-    "reason": "Canonical Person identity and representative domain are registered from the approved queue candidate in this batch without asserting a polity-bound Activity. Timeline inclusion remains separate and requires a reviewed Activity.",
-    "basis_code": "identity_registered_activity_review_deferred",
+    "disposition": "chronology_unresolved",
+    "reason": "Zhang Heng is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "review_evidence": {
-      "authority_scope": "registration_scope_only",
+      "authority_scope": "timeline_disposition_review_evidence_only",
       "sources": [
-        "https://mathshistory.st-andrews.ac.uk/Biographies/Zhang_Heng/"
+        "https://mathshistory.st-andrews.ac.uk/BEA/zhang_heng_bea.pdf"
       ],
       "reviewed_at": "2026-10-04"
     }
@@ -37,17 +38,16 @@
   "sources": [
     {
       "source_type": "academic_reference",
-      "title": "Zhang Heng — MacTutor History of Mathematics",
-      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Zhang_Heng/",
-      "citation_text": "MacTutor identifies Zhang Heng (78–139) as a Chinese mathematician, astronomer and geographer, and records his scientific and court career under the Eastern Han.",
-      "locator": "Quick Info; Biography"
+      "title": "Zhang Heng — Biographical Encyclopedia of Astronomers",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/BEA/zhang_heng_bea.pdf",
+      "citation_text": "The Biographical Encyclopedia of Astronomers identifies Zhang Heng (78–139) as an Eastern Han Chinese astronomer and scholar who served in the Bureau of Astronomy and Calendrics and developed a spherical-heaven astronomical model.",
+      "locator": "Zhang Heng biography"
     }
   ],
   "review_context": {
-    "request_batch": "REGISTRATION-QUEUE-8-20261004",
+    "request_batch": "QUEUE-EIGHT-20261004",
     "queue_candidate_id": "gp-20260921-087",
-    "domain_standard": "Person Domain v2",
-    "namuwiki_review": "Exact indexed NamuWiki search did not establish an independent exact Person document; no guessed URL.",
-    "timeline_decision": "Identity-first queue registration only; no polity-bound Activity is asserted in this batch."
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
   }
 }

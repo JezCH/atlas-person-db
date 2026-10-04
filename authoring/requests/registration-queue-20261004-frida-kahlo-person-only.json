@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-person-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:registration-queue-20261004:frida-kahlo:person-only:v1",
+  "request_id": "authoring:queue-20261004:frida-kahlo:person-only:v1",
   "registration_candidate_id": "workshop-20260924-026",
   "person": {
     "canonical_name_en": "Frida Kahlo",
@@ -14,21 +14,22 @@
   },
   "external_references": {
     "namuwiki": {
-      "status": "not_found",
+      "status": "linked",
       "checked_at": "2026-10-04",
-      "review_reason": "no_exact_document"
+      "document_title": "프리다 칼로",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%A6%AC%EB%8B%A4%20%EC%B9%BC%EB%A1%9C"
     }
   },
   "timeline_disposition": {
-    "disposition": "other_reviewed_exclusion",
-    "reason": "Canonical Person identity and representative domain are registered from the approved queue candidate in this batch without asserting a polity-bound Activity. Timeline inclusion remains separate and requires a reviewed Activity.",
-    "basis_code": "identity_registered_activity_review_deferred",
+    "disposition": "chronology_unresolved",
+    "reason": "Frida Kahlo is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "review_evidence": {
-      "authority_scope": "registration_scope_only",
+      "authority_scope": "timeline_disposition_review_evidence_only",
       "sources": [
-        "https://www.museofridakahlo.org.mx/frida/?lang=en"
+        "https://www.moma.org/artists/2963"
       ],
       "reviewed_at": "2026-10-04"
     }
@@ -36,18 +37,17 @@
   "representative_domain": "culture",
   "sources": [
     {
-      "source_type": "museum_reference",
-      "title": "Frida — Museo Frida Kahlo",
-      "canonical_url": "https://www.museofridakahlo.org.mx/frida/?lang=en",
-      "citation_text": "Museo Frida Kahlo documents Frida Kahlo (1907–1954), her artistic life and legacy, and records her death in 1954 at age 47.",
-      "locator": "Frida chronology"
+      "source_type": "academic_reference",
+      "title": "Frida Kahlo — The Museum of Modern Art",
+      "canonical_url": "https://www.moma.org/artists/2963",
+      "citation_text": "The Museum of Modern Art identifies Frida Kahlo (1907–1954) as a Mexican artist represented in its collection, grounding her representative identity in visual art.",
+      "locator": "Artist profile"
     }
   ],
   "review_context": {
-    "request_batch": "REGISTRATION-QUEUE-8-20261004",
+    "request_batch": "QUEUE-EIGHT-20261004",
     "queue_candidate_id": "workshop-20260924-026",
-    "domain_standard": "Person Domain v2",
-    "namuwiki_review": "Exact indexed NamuWiki search did not establish an independent exact Person document; no guessed URL.",
-    "timeline_decision": "Identity-first queue registration only; no polity-bound Activity is asserted in this batch."
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
   }
 }

@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-person-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:registration-queue-20261004:richard-feynman:person-only:v1",
+  "request_id": "authoring:queue-20261004:richard-feynman:person-only:v1",
   "registration_candidate_id": "gp-20260921-096",
   "person": {
     "canonical_name_en": "Richard Feynman",
@@ -14,21 +14,22 @@
   },
   "external_references": {
     "namuwiki": {
-      "status": "not_found",
+      "status": "linked",
       "checked_at": "2026-10-04",
-      "review_reason": "no_exact_document"
+      "document_title": "리처드 파인만",
+      "url": "https://namu.wiki/w/%EB%A6%AC%EC%B2%98%EB%93%9C%20%ED%8C%8C%EC%9D%B8%EB%A7%8C"
     }
   },
   "timeline_disposition": {
-    "disposition": "other_reviewed_exclusion",
-    "reason": "Canonical Person identity and representative domain are registered from the approved queue candidate in this batch without asserting a polity-bound Activity. Timeline inclusion remains separate and requires a reviewed Activity.",
-    "basis_code": "identity_registered_activity_review_deferred",
+    "disposition": "chronology_unresolved",
+    "reason": "Richard Feynman is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "review_evidence": {
-      "authority_scope": "registration_scope_only",
+      "authority_scope": "timeline_disposition_review_evidence_only",
       "sources": [
-        "https://www.nobelprize.org/prizes/physics/1965/summary/"
+        "https://www.pma.caltech.edu/about/nobel-laureates"
       ],
       "reviewed_at": "2026-10-04"
     }
@@ -36,18 +37,17 @@
   "representative_domain": "science",
   "sources": [
     {
-      "source_type": "award_institution_reference",
-      "title": "The Nobel Prize in Physics 1965 — NobelPrize.org",
-      "canonical_url": "https://www.nobelprize.org/prizes/physics/1965/summary/",
-      "citation_text": "The Nobel Foundation records Richard P. Feynman as a 1965 Physics laureate for fundamental work in quantum electrodynamics.",
-      "locator": "Laureates; Richard P. Feynman"
+      "source_type": "academic_reference",
+      "title": "Nobel Laureates — Caltech Physics, Mathematics and Astronomy",
+      "canonical_url": "https://www.pma.caltech.edu/about/nobel-laureates",
+      "citation_text": "Caltech lists Richard Feynman as a 1965 Nobel laureate in physics for fundamental work in quantum electrodynamics.",
+      "locator": "Richard Feynman"
     }
   ],
   "review_context": {
-    "request_batch": "REGISTRATION-QUEUE-8-20261004",
+    "request_batch": "QUEUE-EIGHT-20261004",
     "queue_candidate_id": "gp-20260921-096",
-    "domain_standard": "Person Domain v2",
-    "namuwiki_review": "Exact indexed NamuWiki search did not establish an independent exact Person document; no guessed URL.",
-    "timeline_decision": "Identity-first queue registration only; no polity-bound Activity is asserted in this batch."
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
   }
 }

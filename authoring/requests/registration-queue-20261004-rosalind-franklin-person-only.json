@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-person-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:registration-queue-20261004:rosalind-franklin:person-only:v1",
+  "request_id": "authoring:queue-20261004:rosalind-franklin:person-only:v1",
   "registration_candidate_id": "workshop-20260924-054",
   "person": {
     "canonical_name_en": "Rosalind Franklin",
@@ -14,19 +14,20 @@
   },
   "external_references": {
     "namuwiki": {
-      "status": "not_found",
+      "status": "linked",
       "checked_at": "2026-10-04",
-      "review_reason": "no_exact_document"
+      "document_title": "로잘린드 프랭클린",
+      "url": "https://namu.wiki/w/%EB%A1%9C%EC%9E%98%EB%A6%B0%EB%93%9C%20%ED%94%84%EB%9E%AD%ED%81%B4%EB%A6%B0"
     }
   },
   "timeline_disposition": {
-    "disposition": "other_reviewed_exclusion",
-    "reason": "Canonical Person identity and representative domain are registered from the approved queue candidate in this batch without asserting a polity-bound Activity. Timeline inclusion remains separate and requires a reviewed Activity.",
-    "basis_code": "identity_registered_activity_review_deferred",
+    "disposition": "chronology_unresolved",
+    "reason": "Rosalind Franklin is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "review_evidence": {
-      "authority_scope": "registration_scope_only",
+      "authority_scope": "timeline_disposition_review_evidence_only",
       "sources": [
         "https://www.kcl.ac.uk/people/rosalind-franklin"
       ],
@@ -36,18 +37,17 @@
   "representative_domain": "science",
   "sources": [
     {
-      "source_type": "institutional_reference",
+      "source_type": "academic_reference",
       "title": "Rosalind Franklin — King's College London",
       "canonical_url": "https://www.kcl.ac.uk/people/rosalind-franklin",
-      "citation_text": "King's College London identifies Rosalind Franklin (1920–1958) as a biophysicist whose X-ray crystallography, including Photograph 51, was central to understanding DNA structure and whose later work helped found structural virology.",
+      "citation_text": "King's College London identifies Rosalind Franklin as a biophysicist whose X-ray crystallography research made a crucial contribution to understanding DNA structure and who also studied viruses.",
       "locator": "Biography"
     }
   ],
   "review_context": {
-    "request_batch": "REGISTRATION-QUEUE-8-20261004",
+    "request_batch": "QUEUE-EIGHT-20261004",
     "queue_candidate_id": "workshop-20260924-054",
-    "domain_standard": "Person Domain v2",
-    "namuwiki_review": "Exact indexed NamuWiki search did not establish an independent exact Person document; no guessed URL.",
-    "timeline_decision": "Identity-first queue registration only; no polity-bound Activity is asserted in this batch."
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
   }
 }
