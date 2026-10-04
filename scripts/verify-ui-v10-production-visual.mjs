@@ -210,7 +210,8 @@ async function verifyRegisterInteraction(client){
   await client.call("Input.dispatchMouseEvent",{type:"mouseMoved",x:target.linkRect.x,y:target.linkRect.y});
   await sleep(80);
   const hover=await evaluate(client,`(() => {
-    const row=document.querySelector('.person-register-entry[data-person-id="${target.personId}"]');
+    const personId=${JSON.stringify(target.personId)};
+    const row=[...document.querySelectorAll('.person-register-entry')].find((item)=>item.dataset.personId===personId);
     const link=row?.querySelector('.person-main-name-link');
     return row&&link?{
       rowHovered:row.matches(':hover'),
@@ -221,7 +222,8 @@ async function verifyRegisterInteraction(client){
   await client.call("Input.dispatchMouseEvent",{type:"mouseMoved",x:1,y:1});
 
   const focusAndSelected=await evaluate(client,`(() => {
-    const row=document.querySelector('.person-register-entry[data-person-id="${target.personId}"]');
+    const personId=${JSON.stringify(target.personId)};
+    const row=[...document.querySelectorAll('.person-register-entry')].find((item)=>item.dataset.personId===personId);
     const link=row?.querySelector('.person-main-name-link');
     if(!row||!link) return null;
     link.focus();
