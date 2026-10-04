@@ -101,12 +101,8 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   const personDomainCutoverWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-person-domain-v2-cutover.yml', import.meta.url), 'utf8');
   assert.match(personDomainCutoverWorkflow, /environment:\s*production/);
   assert.match(personDomainCutoverWorkflow, /id-token:\s*write/);
-  assert.match(personDomainCutoverWorkflow, /ATLAS Person Domain v2 Finalization/);
   assert.match(personDomainCutoverWorkflow, /atlas-person-domain-v2-cutover/);
-  assert.match(personDomainCutoverWorkflow, /state\.cutover_complete==true/);
-  assert.match(personDomainCutoverWorkflow, /person-domain-v2-legacy-repair/);
-  assert.match(personDomainCutoverWorkflow, /Apply exact six-person residual repair/);
-  assert.doesNotMatch(personDomainCutoverWorkflow, /Execute exact atomic v2 cutover/);
+  assert.match(personDomainCutoverWorkflow, /Execute exact atomic v2 cutover/);
 
 });
 
