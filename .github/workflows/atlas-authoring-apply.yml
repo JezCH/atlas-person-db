@@ -8,6 +8,10 @@ on:
       - 'authoring/requests/*.json'
       - '.github/workflows/atlas-authoring-apply.yml'
       - '.github/atlas-authoring-preflight.txt'
+      - 'contracts/person-domain-v2-legacy-residual-repair-20261004.json'
+      - 'server/atlas-person-domain-v2-legacy-repair-service.js'
+      - 'server/atlas-person-domain-v2-legacy-repair-handler.js'
+      - 'server/atlas-person-domain-v2-legacy-repair-github-oidc.js'
   workflow_dispatch:
     inputs:
       manifest:
@@ -27,6 +31,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
   id-token: write
 
 concurrency:
@@ -1312,5 +1317,124 @@ jobs:
         with:
           name: atlas-authoring-${{ github.sha }}
           path: /tmp/atlas-authoring-evidence/
+          if-no-files-found: error
+          retention-days: 90
+
+
+  legacy_domain_repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      REPAIR_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-mutate?__atlas_mutation_surface=person-domain-v2-legacy-repair
+      DOMAIN_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-domain
+      CUTOVER_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-domain-v2-cutover
+      RUNTIME_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
+      REPAIR_AUDIENCE: atlas-person-domain-v2-legacy-repair
+      EVIDENCE_DIR: artifacts/person-domain-v2-legacy-repair
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate bounded legacy domain repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check server/atlas-person-domain-v2-legacy-repair-service.js
+          node --check server/atlas-person-domain-v2-legacy-repair-handler.js
+          node --check server/atlas-person-domain-v2-legacy-repair-github-oidc.js
+          node --test tests/atlas-person-domain-v2-legacy-repair.test.mjs tests/atlas-person-domain-service.test.mjs
+
+      - name: Wait for exact Production v2 repair preconditions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+          for attempt in $(seq 1 60); do
+            runtime_status="$(curl --silent --show-error --output "$EVIDENCE_DIR/runtime.json" --write-out '%{http_code}' "$RUNTIME_ENDPOINT")"
+            cutover_status="$(curl --silent --show-error --output "$EVIDENCE_DIR/cutover.json" --write-out '%{http_code}' "$CUTOVER_ENDPOINT")"
+            repair_status="$(curl --silent --show-error --output "$EVIDENCE_DIR/preflight.json" --write-out '%{http_code}' "$REPAIR_ENDPOINT")"
+            if [[ "$runtime_status" == "200" && "$cutover_status" == "200" && "$repair_status" == "200" ]] \
+              && jq -e --arg sha "$GITHUB_SHA" '.identity.git_commit_sha==$sha and .identity.environment=="production"' "$EVIDENCE_DIR/runtime.json" >/dev/null \
+              && jq -e --arg sha "$GITHUB_SHA" '.ok==true and .runtime_sha==$sha and .state.cutover_complete==true and (.state.knowledge_ids|length)==0 and (.state.unsupported|length)==0 and .state.constraint.v2==true and .state.constraint.validated==true' "$EVIDENCE_DIR/cutover.json" >/dev/null \
+              && jq -e --arg sha "$GITHUB_SHA" '.ok==true and .runtime_sha==$sha and .state.target_count==6 and .state.conflict_count==0' "$EVIDENCE_DIR/preflight.json" >/dev/null; then
+              exit 0
+            fi
+            sleep 5
+          done
+          cat "$EVIDENCE_DIR/runtime.json" >&2 || true
+          cat "$EVIDENCE_DIR/cutover.json" >&2 || true
+          cat "$EVIDENCE_DIR/preflight.json" >&2 || true
+          exit 1
+
+      - name: Acquire bounded repair OIDC token
+        shell: bash
+        run: |
+          set -euo pipefail
+          token="$(curl --fail-with-body --silent --show-error -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=$REPAIR_AUDIENCE" | jq -er '.value')"
+          echo "::add-mask::$token"
+          echo "REPAIR_OIDC_TOKEN=$token" >> "$GITHUB_ENV"
+
+      - name: Apply exact six-person legacy domain repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail-with-body --silent --show-error -X POST \
+            -H "Authorization: Bearer $REPAIR_OIDC_TOKEN" \
+            -H 'content-type: application/json' \
+            --data "$(jq -cn --arg sha "$GITHUB_SHA" '{workflow_sha:$sha}')" \
+            "$REPAIR_ENDPOINT" | tee "$EVIDENCE_DIR/repair.json"
+          jq -e '.ok==true and .state.committed==true and .state.after.all_correct==true and .state.after.conflict_count==0 and .state.after.target_count==6' "$EVIDENCE_DIR/repair.json" >/dev/null
+
+      - name: Verify exact six-person public read-back
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail-with-body --silent --show-error "$DOMAIN_ENDPOINT" | tee "$EVIDENCE_DIR/domain.json"
+          jq -e '
+            def hasrow($id;$d): any(.rows[]; .person_id==$id and .representative_domain==$d);
+            .ok==true
+            and .schema=="atlas-person-domain/v2"
+            and ((.counts.knowledge // 0)==0)
+            and hasrow("f371e82b-33eb-4927-8b45-1c553ea81d4c";"governance")
+            and hasrow("c3128a85-ddde-4d28-9219-5715f8611b20";"governance")
+            and hasrow("dbac46ae-d3dc-4068-840f-46fedbdbd901";"military")
+            and hasrow("f0c7abaa-7670-49d0-a82e-7b63fd1a62c3";"governance")
+            and hasrow("b774cec1-f3b0-46a9-8cd1-3414e74780a4";"governance")
+            and hasrow("45bdc34d-3a99-4034-b03d-c546c96608f9";"military")
+          ' "$EVIDENCE_DIR/domain.json" >/dev/null
+
+      - name: Record durable repair checkpoint
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          repaired="$(jq -r '.state.repaired_count' "$EVIDENCE_DIR/repair.json")"
+          replay="$(jq -r '.state.replay' "$EVIDENCE_DIR/repair.json")"
+          assigned="$(jq -r '.assigned' "$EVIDENCE_DIR/domain.json")"
+          counts="$(jq -c '.counts' "$EVIDENCE_DIR/domain.json")"
+          gh issue comment 1793 --repo "$GITHUB_REPOSITORY" --body "PERSON DOMAIN V2 LEGACY SIX — CLOSED
+
+- workflow SHA: $GITHUB_SHA
+- transport: ATLAS Authoring Apply / bounded independent repair job
+- repaired_count: $repaired
+- replay: $replay
+- exact six-person public read-back: 6/6
+- conflicts: 0
+- assigned domain rows after repair: $assigned
+- current v2 counts: $counts
+- superseded PR #1767 remains closed and was not revived
+
+The six reviewed MICROBATCH-07 representative-domain residuals are materialized in current Production."
+
+      - name: Upload immutable legacy repair evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-person-domain-v2-legacy-repair-${{ github.sha }}
+          path: artifacts/person-domain-v2-legacy-repair
           if-no-files-found: error
           retention-days: 90
