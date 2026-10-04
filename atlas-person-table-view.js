@@ -118,6 +118,14 @@
   }
 
   function normalizeRange(value) { return String(value || "").toUpperCase().replace(/[‐‑‒–—―]/g, "-").replace(/\s+/g, "").trim(); }
+  function normalizeRangeWithoutApproximation(value) { return normalizeRange(value).replaceAll("약", ""); }
+  function appendApproximationNote(role) {
+    if (!role || role.querySelector?.(".person-card-activity-range-note")) return;
+    const note = document.createElement("span");
+    note.className = "person-card-activity-range-note";
+    note.textContent = "연대 근사";
+    role.append(document.createTextNode(" · "), note);
+  }
   function humanizeActivity(activity, personRange, singleActivity) {
     const relation = activity.querySelector?.(".person-relation-badge");
     if (relation) { const raw = String(relation.textContent || "").trim(); relation.textContent = RELATION_LABELS[raw] ?? cleanCode(raw); }
@@ -127,8 +135,19 @@
       if (parts.length > 1) { const basis = parts.pop(); role.textContent = `${parts.join(" · ")} · ${BASIS_LABELS[basis] ?? cleanCode(basis)}`; }
     }
     const period = activity.querySelector?.(".person-card-activity-period");
-    if (period && singleActivity && normalizeRange(period.textContent) === normalizeRange(personRange)) {
-      period.textContent = ""; period.classList.add("is-redundant"); period.setAttribute("aria-hidden", "true");
+    if (period && singleActivity) {
+      const periodText = String(period.textContent || "").trim();
+      const exactMatch = normalizeRange(periodText) === normalizeRange(personRange);
+      const approximationOnlyDifference = !exactMatch
+        && normalizeRangeWithoutApproximation(periodText) === normalizeRangeWithoutApproximation(personRange);
+      if (approximationOnlyDifference && /약/.test(periodText) && !/약/.test(String(personRange || ""))) {
+        appendApproximationNote(role);
+      }
+      if (exactMatch || approximationOnlyDifference) {
+        period.textContent = "";
+        period.classList.add("is-redundant");
+        period.setAttribute("aria-hidden", "true");
+      }
     }
     const meta = activity.querySelector?.("small");
     if (meta) {
