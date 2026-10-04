@@ -193,6 +193,7 @@ jobs:
                 )
                 and (.activity.confidence | IN("well_established","likely","speculative","disputed","unknown"))
                 and (.sources | type == "array" and length > 0)
+                and ((.registration_candidate_id == null) or (.registration_candidate_id | type == "string" and length > 0))
               ' "$manifest" >/dev/null || { echo "Rejected human authoring request: $manifest" >&2; exit 1; }
             elif [[ "$schema" == "atlas-human-person-authoring/v1" ]]; then
               jq -e '
@@ -209,6 +210,7 @@ jobs:
                 and (.representative_domain | IN("governance","military","science","technology","commerce","culture","religion","exploration"))
                 and (.sources | type == "array" and length > 0)
                 and (.external_references.namuwiki.status | IN("linked","not_found"))
+                and ((.registration_candidate_id == null) or (.registration_candidate_id | type == "string" and length > 0))
               ' "$manifest" >/dev/null || { echo "Rejected person-only human authoring request: $manifest" >&2; exit 1; }
             else
               echo "Rejected unsupported authoring schema in $manifest: $schema" >&2
@@ -976,6 +978,7 @@ jobs:
             ready_indexes="$(jq -c '[.results[] | select(.status=="READY") | .index]' "$preflight_response")"
             ready_paths="$(jq -cn --argjson all "$manifest_paths" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
             ready_requests="$(jq -cn --argjson all "$requests" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
+            ready_candidate_ids="$(jq -cn --argjson all "$candidate_ids" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
             ready_candidate_ids="$(jq -cn --argjson all "$candidate_ids" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
 
             verify_queue="/tmp/atlas-authoring-evidence/verify-queue.jsonl"
