@@ -96,7 +96,7 @@ test('UI7 assets load as a presentation layer after shared era ownership and bef
   assert.match(html, /atlas-person-table-view\.css\?v=[^"\'\s>]+/);
   assert.match(html, /atlas-person-table-alignment\.css\?v=20260921-mobile-card-fit-v1/);
   assert.match(html, /atlas-person-era-model\.js\?v=20260909-era-10-band-v1/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p2-dense-register-v1/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p3-activity-hierarchy-v1/);
   assert.ok(html.indexOf('atlas-person-era-model.js?v=20260909-era-10-band-v1') < html.indexOf('atlas-person-table-view.js?v=20261004-ui-p3-activity-hierarchy-v1'));
   const mainScript = html.search(/atlas-person-main\.js\?v=[^"'\s>]+/);
   assert.ok(mainScript >= 0 && html.indexOf('atlas-person-table-view.js?v=20261004-ui-p3-activity-hierarchy-v1') < mainScript);
