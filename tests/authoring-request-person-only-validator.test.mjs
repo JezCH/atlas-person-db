@@ -32,7 +32,7 @@ function fixture() {
       traditional_year_alternative:null,
       review_evidence:{source:'test'}
     },
-    representative_domain:'knowledge',
+    representative_domain:'science',
     sources:[{
       source_type:'academic_reference',
       title:'Validator test source',
@@ -64,6 +64,13 @@ test('registration validator accepts person-only non-timeline authoring and reje
     const blocked=runValidator(file);
     assert.notEqual(blocked.status,0);
     assert.match(blocked.stderr,/reviewed non-timeline disposition/);
+
+    const legacy=fixture();
+    legacy.representative_domain='knowledge';
+    fs.writeFileSync(file,JSON.stringify(legacy,null,2)+'\n');
+    const legacyBlocked=runValidator(file);
+    assert.notEqual(legacyBlocked.status,0);
+    assert.match(legacyBlocked.stderr,/representative_domain is invalid/);
   } finally {
     try { fs.unlinkSync(file); } catch {}
   }
