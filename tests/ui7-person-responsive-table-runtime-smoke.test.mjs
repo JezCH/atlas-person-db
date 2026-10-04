@@ -93,9 +93,10 @@ test('UI7 table keeps status folding and groups visible rows under the derived e
   vm.runInNewContext(source, context);
 
   assert.ok(grid.className.includes('person-monumental-register'));
-  assert.equal(grid.children.some((child) => child.className.includes('person-table-head')), false);
+  assert.equal(grid.children[0].className, 'person-table-head');
+  assert.equal(grid.children.some((child) => child.className.includes('person-table-head')), true);
 
-  const eraGroup = grid.children[0];
+  const eraGroup = grid.children[1];
   assert.ok(eraGroup.className.includes('person-era-group'));
   assert.equal(eraGroup.dataset.atlasEra, 'early-civilization');
   assert.equal(eraGroup.children[0].children[0].textContent, '초기문명');

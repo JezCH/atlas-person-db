@@ -117,7 +117,7 @@ test('mobile Person facet controls stay inside the viewport without browser focu
 
 test('era navigation assets load after the shared era model/table grouping and before Person Main initializes', () => {
   const eraModelJs = 'atlas-person-era-model.js?v=20260909-era-10-band-v1';
-  const tableJs = 'atlas-person-table-view.js?v=20261003-ui-v4-register-v1';
+  const tableJs = 'atlas-person-table-view.js?v=20261004-ui-p2-dense-register-v1';
   const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
   const mainJs = html.match(/atlas-person-main\.js\?v=[^"'\s>]+/)?.[0] || '';
   const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';

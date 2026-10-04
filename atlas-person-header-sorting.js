@@ -42,32 +42,7 @@
     owner.setAttribute("role", "columnheader");
   }
 
-  function installRegisterControls(grid) {
-    let bar = grid?.querySelector?.(":scope > .person-register-sortbar");
-    if (bar) return bar;
-
-    bar = document.createElement("div");
-    bar.className = "person-register-sortbar";
-    bar.setAttribute("role", "toolbar");
-    bar.setAttribute("aria-label", "인물 정렬");
-
-    const caption = document.createElement("span");
-    caption.className = "person-register-sort-caption";
-    caption.textContent = "정렬";
-
-    bar.append(
-      caption,
-      makeSortButton("연대", "start"),
-      makeSortButton("인물", "person"),
-      makeSortButton("정치체", "polity")
-    );
-    grid.prepend(bar);
-    return bar;
-  }
-
   function installHeaderControls(grid) {
-    if (grid?.classList?.contains("person-monumental-register")) return installRegisterControls(grid);
-
     const header = grid?.querySelector?.(":scope > .person-table-head");
     if (!header) return null;
 

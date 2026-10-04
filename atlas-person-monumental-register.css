@@ -19,12 +19,12 @@
     "Times New Roman",
     Georgia,
     serif;
-  --atlas-register-era-width: 116px;
+  --atlas-register-era-width: 78px;
   --atlas-register-person-columns:
-    minmax(235px, 1.05fr)
-    minmax(160px, .68fr)
-    minmax(390px, 1.9fr)
-    64px;
+    minmax(190px, 1fr)
+    minmax(122px, .62fr)
+    minmax(360px, 2.15fr)
+    52px;
 }
 
 /* Register shell — no catalogue card. */
@@ -80,69 +80,92 @@
   background: transparent;
 }
 
+/* Dense table header: the Register remains monumental in material, but factual
+ * columns are visible again so many people can be scanned and compared at once. */
 .person-monumental-register > .person-table-head {
-  display: none !important;
+  display: grid;
+  position: sticky;
+  top: var(--person-table-sticky-top, 0px);
+  z-index: 12;
+  min-height: 34px;
+  border: 0;
+  border-top: 1px solid var(--atlas-divider);
+  border-bottom: 1px solid var(--atlas-divider);
+  background: rgba(18, 21, 24, .97);
+  color: #7f878d;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, .12);
+  backdrop-filter: blur(8px);
 }
 
-/* Sorting remains functional, but no longer masquerades as a data-table header. */
-.person-monumental-register > .person-register-sortbar {
-  display: flex;
-  min-height: 28px;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-  padding: 2px 2px 8px;
-  border-bottom: 1px solid var(--atlas-divider-soft);
-  color: var(--atlas-text-muted);
-}
-
-.person-register-sort-caption {
-  margin-right: 2px;
-  color: #596168;
-  font-size: 8px;
-  font-weight: 750;
-  letter-spacing: .08em;
-}
-
-.person-monumental-register > .person-register-sortbar .person-table-sort-button {
-  position: relative;
-  width: auto;
+.person-monumental-register > .person-table-head .person-table-head-cell {
   min-width: 0;
-  gap: 4px;
-  padding: 3px 0;
-  color: #747d83;
+  padding: 7px 10px;
+  border: 0;
+  border-right: 1px solid rgba(48, 54, 59, .72);
+  background: transparent;
+  color: inherit;
   font-size: 8.5px;
-  font-weight: 720;
-  letter-spacing: .015em;
+  font-weight: 760;
+  line-height: 1.25;
+  letter-spacing: .04em;
 }
 
-.person-monumental-register > .person-register-sortbar .person-table-sort-button:hover {
-  color: #b8b5ae;
+.person-monumental-register > .person-table-head .person-table-head-cell:last-child {
+  border-right: 0;
 }
 
-.person-monumental-register > .person-register-sortbar .person-table-sort-button.is-active {
-  color: #d6d0c4;
+.person-monumental-register > .person-table-head .person-table-col-era {
+  position: static;
+  justify-content: flex-start;
+  padding-left: 6px;
+  background: transparent;
+  color: #666f76;
 }
 
-.person-monumental-register > .person-register-sortbar .person-table-sort-button.is-active::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 1px;
-  background: var(--atlas-honor-metal);
+.person-monumental-register > .person-table-head .person-table-col-identity {
+  position: static;
+  background: transparent;
 }
 
-.person-monumental-register > .person-register-sortbar .person-table-sort-icon {
-  font-size: 7px;
-  opacity: .48;
+.person-monumental-register > .person-table-head .person-table-col-activities {
+  padding: 0;
 }
 
-.person-monumental-register > .person-register-sortbar .person-table-sort-button:focus-visible {
-  border-radius: 2px;
-  outline: 1px solid rgba(192, 174, 136, .55);
-  outline-offset: 2px;
+.person-monumental-register > .person-table-head .person-table-head-title {
+  padding: 5px 9px 3px;
+  color: #687178;
+  font-size: 7.5px;
+  letter-spacing: .07em;
+}
+
+.person-monumental-register > .person-table-head .person-table-activity-subhead {
+  border-top: 1px solid rgba(48, 54, 59, .62);
+  color: #7f878d;
+  font-size: 7.5px;
+}
+
+.person-monumental-register > .person-table-head .person-table-activity-subhead > span {
+  padding: 4px 9px;
+  border-right: 1px solid rgba(48, 54, 59, .58);
+}
+
+.person-monumental-register > .person-table-head .person-table-sort-button {
+  color: #858d92;
+}
+
+.person-monumental-register > .person-table-head .person-table-sort-button:hover,
+.person-monumental-register > .person-table-head .person-table-sort-button.is-active {
+  color: #ddd8ce;
+}
+
+.person-monumental-register > .person-table-head .person-table-sort-button.is-active .person-table-sort-icon {
+  color: var(--atlas-honor-metal-strong);
+}
+
+.person-monumental-register > .person-table-head .person-table-head-cell.is-sort-active,
+.person-monumental-register > .person-table-head .person-table-activity-subhead > span.is-sort-active {
+  background: rgba(192, 174, 136, .035);
+  color: #d3cec4;
 }
 
 /* Each era is a chronological chapter, not a boxed table section. */
@@ -174,8 +197,8 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  gap: 5px;
-  padding: 22px 18px 18px 2px;
+  gap: 3px;
+  padding: 10px 8px 9px 3px;
   border: 0;
   background: transparent;
   color: var(--atlas-text-secondary);
@@ -187,17 +210,17 @@
   text-orientation: mixed;
   color: #d4cfc4;
   font-family: var(--atlas-font-display);
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 650;
   line-height: 1.22;
   letter-spacing: -.01em;
 }
 
 .person-monumental-register .person-era-band-range {
-  max-width: 104px;
+  max-width: 72px;
   color: #656e74;
   font-family: inherit;
-  font-size: 8.5px;
+  font-size: 7px;
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: .035em;
@@ -222,7 +245,7 @@
   min-width: 0;
   box-sizing: border-box;
   gap: 0;
-  padding: 18px 0 17px;
+  padding: 8px 0;
   border: 0;
   border-bottom: 1px solid var(--atlas-divider-soft);
   border-radius: 0;
@@ -244,10 +267,10 @@
 .person-monumental-register .person-register-entry::before {
   content: "";
   position: absolute;
-  top: 20px;
-  left: 5px;
+  top: 10px;
+  left: 4px;
   width: 2px;
-  height: 28px;
+  height: 19px;
   background: var(--person-register-domain-color);
   opacity: .88;
 }
@@ -258,8 +281,8 @@
 .person-monumental-register .person-register-entry[data-representative-domain="military"] {
   --person-register-domain-color: var(--atlas-person-domain-military, #B83A3A);
 }
-.person-monumental-register .person-register-entry[data-representative-domain="knowledge"] {
-  --person-register-domain-color: var(--atlas-person-domain-knowledge, #3F78C5);
+.person-monumental-register .person-register-entry[data-representative-domain="science"] {
+  --person-register-domain-color: var(--atlas-person-domain-science, #3F78C5);
 }
 .person-monumental-register .person-register-entry[data-representative-domain="technology"] {
   --person-register-domain-color: var(--atlas-person-domain-technology, #59636D);
@@ -290,9 +313,9 @@
 .person-monumental-register .person-register-entry.is-selected::after {
   content: "";
   position: absolute;
-  top: 9px;
-  bottom: 9px;
-  left: -7px;
+  top: 4px;
+  bottom: 4px;
+  left: -5px;
   width: 1px;
   background: var(--atlas-honor-metal-strong);
   box-shadow: 0 0 0 1px rgba(192, 174, 136, .045);
@@ -316,8 +339,8 @@
   min-width: 0;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 4px;
-  padding: 0 18px 0 22px;
+  gap: 2px;
+  padding: 0 12px 0 14px;
   border: 0;
   background: transparent;
 }
@@ -326,12 +349,27 @@
   margin: 0;
   color: #e9e5dd;
   font-family: var(--atlas-font-display);
-  font-size: clamp(18px, 1.45vw, 22px);
-  font-weight: 600;
-  line-height: 1.25;
+  font-size: 15px;
+  font-weight: 620;
+  line-height: 1.24;
   letter-spacing: -.025em;
   overflow-wrap: anywhere;
   transition: color .14s ease, transform .14s ease;
+}
+
+/* P2 bridge: the dynamically loaded legacy domain skin used a wide tinted
+ * identity slab for the former light table. On the dark dense Register, domain
+ * identity is carried by the rail and readable name foreground instead. */
+.person-monumental-register .person-card[data-representative-domain] .person-table-identity,
+.person-monumental-register .person-era-rows > .person-card[data-representative-domain]:hover .person-table-identity,
+.person-monumental-register .person-era-rows > .person-card[data-representative-domain].is-selected .person-table-identity {
+  box-shadow: none !important;
+  background: transparent !important;
+  padding-inline-start: 14px !important;
+}
+
+.person-monumental-register .person-card[data-representative-domain] .person-table-identity > strong {
+  color: var(--person-domain-on-dark, #e9e5dd);
 }
 
 .person-monumental-register .person-main-name-link {
@@ -355,7 +393,7 @@
 .person-monumental-register .person-table-identity > .person-card-canonical {
   color: #7d858b;
   font-family: inherit;
-  font-size: 9.5px;
+  font-size: 8.5px;
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: .015em;
@@ -369,9 +407,9 @@
   align-items: center;
   justify-content: flex-start;
   gap: 0;
-  margin-top: 2px;
+  margin-top: 1px;
   color: #697279;
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 700;
   line-height: 1.35;
 }
@@ -401,10 +439,10 @@
   display: flex;
   min-width: 0;
   align-items: flex-start;
-  padding: 3px 18px 0 0;
+  padding: 1px 12px 0 0;
   border: 0;
   color: #c7c2b8;
-  font-size: 12px;
+  font-size: 10.5px;
   font-weight: 750;
   line-height: 1.45;
   letter-spacing: .025em;
@@ -423,7 +461,7 @@
   display: block;
   min-width: 0;
   margin: 0;
-  padding: 0 20px 0 0;
+  padding: 0 12px 0 0;
   border: 0;
   background: transparent;
 }
@@ -436,18 +474,18 @@
 .person-monumental-register .person-table-activities.person-card-activities.is-empty {
   display: flex;
   align-items: flex-start;
-  padding-top: 3px;
+  padding-top: 1px;
   color: #747d83;
-  font-size: 10px;
+  font-size: 9px;
 }
 
 .person-monumental-register .person-table-activities .person-card-activity {
   display: grid;
   grid-template-columns: var(--person-activity-columns);
   min-width: 0;
-  gap: 5px 14px;
+  gap: 2px 10px;
   align-items: start;
-  padding: 0 0 8px;
+  padding: 0 0 4px;
   border: 0;
   border-bottom: 1px solid rgba(48, 54, 59, .58);
   border-radius: 0;
@@ -455,7 +493,7 @@
 }
 
 .person-monumental-register .person-table-activities .person-card-activity + .person-card-activity {
-  padding-top: 8px;
+  padding-top: 4px;
 }
 
 .person-monumental-register .person-table-activities .person-card-activity:last-child {
@@ -470,12 +508,12 @@
   align-items: baseline;
   justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 4px;
 }
 
 .person-monumental-register .person-table-activities .person-card-activity-head b {
   color: #ddd9d0;
-  font-size: 12.5px;
+  font-size: 11px;
   font-weight: 760;
   line-height: 1.35;
   overflow-wrap: anywhere;
@@ -488,7 +526,7 @@
   border-radius: 0;
   background: transparent;
   color: #7a8389;
-  font-size: 8.5px;
+  font-size: 7.8px;
   font-weight: 750;
   line-height: 1.35;
 }
@@ -501,7 +539,7 @@
 .person-monumental-register .person-table-activities .person-card-activity-role {
   grid-column: 2;
   color: #9ca2a5;
-  font-size: 9.5px;
+  font-size: 8.8px;
   font-weight: 650;
   line-height: 1.45;
 }
@@ -509,7 +547,7 @@
 .person-monumental-register .person-table-activities .person-card-activity-period {
   grid-column: 3;
   color: #bdb8ae;
-  font-size: 9.5px;
+  font-size: 8.8px;
   font-weight: 700;
   line-height: 1.45;
   letter-spacing: .018em;
@@ -517,7 +555,7 @@
 }
 
 .person-monumental-register .person-table-activities .person-card-activity-period.is-redundant {
-  visibility: hidden;
+  display: none;
 }
 
 .person-monumental-register .person-table-activities .person-card-activity > small {
@@ -551,7 +589,7 @@
   padding: 4px 4px 0 0;
   border: 0;
   color: #656e74;
-  font-size: 8.5px;
+  font-size: 7.5px;
   font-weight: 700;
   line-height: 1.35;
   text-align: right;
@@ -569,51 +607,77 @@
   display: none;
 }
 
-/* Mid-width: retain hierarchy, let Activities occupy a full second line. */
+/* Mid-width keeps the factual header aligned to the same two-row grammar
+ * used by each Person entry: identity/range/count above, Activities below. */
 @media (max-width: 1100px) {
   :root {
-    --atlas-register-era-width: 96px;
+    --atlas-register-era-width: 66px;
   }
 
   .person-card-grid.person-table-grid.person-monumental-register {
     overflow-x: visible;
   }
 
+  .person-monumental-register > .person-table-head {
+    position: static;
+    top: auto;
+    grid-template-columns: var(--atlas-register-era-width) minmax(180px, 1fr) minmax(118px, .62fr) 48px;
+    grid-template-areas:
+      "era identity range count"
+      "era activities activities activities";
+  }
+
+  .person-monumental-register > .person-table-head .person-table-col-era { grid-area: era; }
+  .person-monumental-register > .person-table-head .person-table-col-identity { grid-area: identity; }
+  .person-monumental-register > .person-table-head .person-table-col-range { grid-area: range; }
+  .person-monumental-register > .person-table-head .person-table-col-activities { grid-area: activities; }
+  .person-monumental-register > .person-table-head .person-table-col-count { grid-area: count; }
+
   .person-monumental-register .person-era-rows > .person-card,
   .person-monumental-register .person-register-entry {
-    grid-template-columns: minmax(210px, 1fr) minmax(150px, .65fr) 58px;
+    grid-template-columns: minmax(180px, 1fr) minmax(118px, .62fr) 48px;
     grid-template-areas:
       "identity range count"
       "activities activities activities";
-    row-gap: 12px;
+    row-gap: 5px;
+    padding: 8px 0;
   }
 
   .person-monumental-register .person-register-identity { grid-area: identity; }
   .person-monumental-register .person-register-range { grid-area: range; }
   .person-monumental-register .person-register-activities {
     grid-area: activities;
-    padding: 0 16px 0 22px;
+    padding: 0 10px 0 14px;
   }
   .person-monumental-register .person-register-count { grid-area: count; }
 }
 
-/* Mobile is not a shrunken desktop table: preserve hierarchy, reduce simultaneity. */
+/* Mobile becomes a compact two-line register, not a stack of mini cards.
+ * Typical one-Activity rows render as:
+ *   name | range | count
+ *   polity·relation | role·basis
+ * A non-redundant Activity period or exception adds a factual third line only
+ * when the data actually requires it. */
 @media (max-width: 760px) {
   :root {
     --atlas-register-era-width: 0px;
   }
 
   .person-group.person-group-historical > .person-group-head {
-    margin-bottom: 6px;
-    padding: 0 2px 12px;
+    margin-bottom: 4px;
+    padding: 0 2px 8px;
   }
 
   .person-group.person-group-historical > .person-group-head h2 {
-    font-size: 19px;
+    font-size: 17px;
   }
 
   .person-group.person-group-historical > .person-group-head p:not(.eyebrow) {
-    font-size: 9px;
+    font-size: 8.5px;
+  }
+
+  .person-monumental-register > .person-table-head {
+    display: none;
   }
 
   .person-monumental-register .person-era-group,
@@ -629,107 +693,153 @@
     min-height: 0;
     flex-direction: row;
     align-items: baseline;
-    gap: 8px;
-    padding: 18px 2px 8px;
+    gap: 7px;
+    padding: 11px 2px 5px;
     border: 0;
   }
 
   .person-monumental-register .person-era-band > span {
-    font-size: 14px;
+    font-size: 11px;
   }
 
   .person-monumental-register .person-era-band-range {
     max-width: none;
-    font-size: 8px;
+    font-size: 7px;
   }
 
   .person-monumental-register .person-era-rows > .person-card,
   .person-monumental-register .person-register-entry {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto 42px;
     grid-template-areas:
-      "identity count"
-      "range count"
-      "activities activities";
-    row-gap: 7px;
+      "identity range count"
+      "activities activities activities";
+    column-gap: 7px;
+    row-gap: 4px;
     min-width: 0;
     max-width: 100%;
-    padding: 14px 0 13px;
+    padding: 8px 0 7px;
   }
 
   .person-monumental-register .person-register-entry::before {
-    top: 16px;
-    left: 2px;
-    height: 24px;
+    top: 9px;
+    left: 1px;
+    height: 18px;
   }
 
   .person-monumental-register .person-register-entry.is-selected::after {
+    top: 3px;
+    bottom: 3px;
     left: -2px;
   }
 
   .person-monumental-register .person-table-identity,
   .person-monumental-register .person-register-identity {
     grid-area: identity;
-    padding: 0 10px 0 14px;
+    padding: 0 4px 0 11px;
+  }
+
+  .person-monumental-register .person-card[data-representative-domain] .person-table-identity,
+  .person-monumental-register .person-era-rows > .person-card[data-representative-domain]:hover .person-table-identity,
+  .person-monumental-register .person-era-rows > .person-card[data-representative-domain].is-selected .person-table-identity {
+    padding-inline-start: 11px !important;
   }
 
   .person-monumental-register .person-table-identity > strong {
-    font-size: 17px;
-    line-height: 1.25;
+    font-size: 14.5px;
+    line-height: 1.22;
   }
 
   .person-monumental-register .person-table-identity > .person-card-canonical {
-    font-size: 9px;
+    font-size: 8px;
   }
 
   .person-monumental-register .person-register-range {
     grid-area: range;
-    padding: 0 10px 0 14px;
-    font-size: 10.5px;
+    align-items: flex-start;
+    padding: 1px 0 0;
+    font-size: 9px;
+    white-space: nowrap;
   }
 
   .person-monumental-register .person-register-count {
     grid-area: count;
-    padding: 2px 2px 0 4px;
-    font-size: 8px;
+    padding: 2px 2px 0 0;
+    font-size: 7px;
   }
 
   .person-monumental-register .person-register-activities {
     grid-area: activities;
-    padding: 2px 2px 0 14px;
+    padding: 0 2px 0 11px;
   }
 
   .person-monumental-register .person-table-activities .person-card-activity {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2px;
-    padding-bottom: 7px;
+    grid-template-columns: minmax(0, 1.14fr) minmax(0, 1fr);
+    grid-template-areas:
+      "activity-head activity-role"
+      "activity-period activity-period"
+      "activity-meta activity-meta";
+    gap: 1px 8px;
+    padding: 0 0 3px;
   }
 
   .person-monumental-register .person-table-activities .person-card-activity + .person-card-activity {
-    padding-top: 7px;
+    padding-top: 4px;
   }
 
-  .person-monumental-register .person-card-activity-head,
-  .person-monumental-register .person-table-activities .person-card-activity-role,
+  .person-monumental-register .person-card-activity-head {
+    grid-area: activity-head;
+    grid-column: auto;
+    flex-wrap: wrap;
+  }
+
+  .person-monumental-register .person-table-activities .person-card-activity-role {
+    grid-area: activity-role;
+    grid-column: auto;
+    min-width: 0;
+  }
+
   .person-monumental-register .person-table-activities .person-card-activity-period {
-    grid-column: 1;
+    grid-area: activity-period;
+    grid-column: auto;
+    font-size: 8px;
+  }
+
+  .person-monumental-register .person-table-activities .person-card-activity > small {
+    grid-area: activity-meta;
+    grid-column: auto;
   }
 
   .person-monumental-register .person-table-activities .person-card-activity-head b {
-    font-size: 11.5px;
+    font-size: 10px;
+  }
+
+  .person-monumental-register .person-relation-badge,
+  .person-monumental-register .person-table-activities .person-card-activity-role {
+    font-size: 7.8px;
   }
 
   .person-monumental-register .person-table-status-inline {
-    font-size: 7.5px;
+    font-size: 7px;
   }
 }
 
 @media (max-width: 390px) {
+  .person-monumental-register .person-era-rows > .person-card,
+  .person-monumental-register .person-register-entry {
+    grid-template-columns: minmax(0, 1fr) auto 38px;
+    column-gap: 5px;
+  }
+
   .person-monumental-register .person-table-identity > strong {
-    font-size: 16px;
+    font-size: 14px;
+  }
+
+  .person-monumental-register .person-register-range {
+    font-size: 8.5px;
   }
 
   .person-monumental-register .person-register-count {
-    max-width: 52px;
+    max-width: 38px;
     white-space: normal;
   }
 }

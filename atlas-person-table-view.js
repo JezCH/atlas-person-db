@@ -230,7 +230,7 @@
   function decorateGrid(grid) {
     if (!grid) return;
     grid.classList.add("person-table-grid", "person-monumental-register");
-    grid.querySelector(":scope > .person-table-head")?.remove();
+    if (!grid.querySelector(":scope > .person-table-head")) grid.prepend(makeHeader());
     const directRows = [...grid.querySelectorAll(":scope > .person-card")];
     directRows.forEach(decorateRow);
     groupRowsByEra(grid);
