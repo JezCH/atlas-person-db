@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:registration-queue-20261004:frida-kahlo:person-only:v1",
+  "registration_candidate_id": "workshop-20260924-026",
+  "person": {
+    "canonical_name_en": "Frida Kahlo",
+    "display_name_ko": "프리다 칼로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-04",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "other_reviewed_exclusion",
+    "reason": "Canonical Person identity and representative domain are registered from the approved queue candidate in this batch without asserting a polity-bound Activity. Timeline inclusion remains separate and requires a reviewed Activity.",
+    "basis_code": "identity_registered_activity_review_deferred",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "registration_scope_only",
+      "sources": [
+        "https://www.museofridakahlo.org.mx/frida/?lang=en"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "culture",
+  "sources": [
+    {
+      "source_type": "museum_reference",
+      "title": "Frida — Museo Frida Kahlo",
+      "canonical_url": "https://www.museofridakahlo.org.mx/frida/?lang=en",
+      "citation_text": "Museo Frida Kahlo documents Frida Kahlo (1907–1954), her artistic life and legacy, and records her death in 1954 at age 47.",
+      "locator": "Frida chronology"
+    }
+  ],
+  "review_context": {
+    "request_batch": "REGISTRATION-QUEUE-8-20261004",
+    "queue_candidate_id": "workshop-20260924-026",
+    "domain_standard": "Person Domain v2",
+    "namuwiki_review": "Exact indexed NamuWiki search did not establish an independent exact Person document; no guessed URL.",
+    "timeline_decision": "Identity-first queue registration only; no polity-bound Activity is asserted in this batch."
+  }
+}
