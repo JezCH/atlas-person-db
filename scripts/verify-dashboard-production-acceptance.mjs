@@ -265,9 +265,13 @@ async function collectDesktopDom(client) {
     const hero=document.querySelector("#atlasDashboardMount .dashboard-hero");
     const kpi=document.querySelector("#atlasDashboardMount .dashboard-kpi");
     const panel=document.querySelector("#atlasDashboardMount .dashboard-panel");
+    const namuwikiLegend=document.querySelector("#atlasDashboardMount .dashboard-namuwiki-legend-item");
+    const polityToolbarGroup=document.querySelector("#atlasDashboardMount .dashboard-polity-toolbar > div");
     const heroStyle=hero?getComputedStyle(hero):null;
     const kpiStyle=kpi?getComputedStyle(kpi):null;
     const panelStyle=panel?getComputedStyle(panel):null;
+    const namuwikiLegendStyle=namuwikiLegend?getComputedStyle(namuwikiLegend):null;
+    const polityToolbarGroupStyle=polityToolbarGroup?getComputedStyle(polityToolbarGroup):null;
     const doc=document.documentElement;
     return {
       href:location.href,
@@ -287,7 +291,9 @@ async function collectDesktopDom(client) {
         kpi_color:kpiStyle?.color||null,
         kpi_radius:kpiStyle?.borderRadius||null,
         panel_background:panelStyle?.backgroundColor||null,
-        panel_color:panelStyle?.color||null
+        panel_color:panelStyle?.color||null,
+        namuwiki_legend_background:namuwikiLegendStyle?.backgroundColor||null,
+        polity_toolbar_group_background:polityToolbarGroupStyle?.backgroundColor||null
       },
       global_scroll:{client_width:doc.clientWidth,scroll_width:doc.scrollWidth,overflow_x:doc.scrollWidth-doc.clientWidth},
       freshness_rows:freshnessRows,
@@ -744,6 +750,8 @@ async function main() {
     assert(desktopDom.presentation?.kpi_background === "rgb(23, 27, 30)", "Dashboard KPI regressed to a bright surface", desktopDom.presentation);
     assert(desktopDom.presentation?.panel_background === "rgb(25, 29, 33)", "Dashboard panel regressed to a bright surface", desktopDom.presentation);
     assert(desktopDom.presentation?.kpi_radius === "3px", "Dashboard KPI material radius regressed", desktopDom.presentation);
+    assert(desktopDom.presentation?.namuwiki_legend_background === "rgb(21, 25, 28)", "Dashboard NamuWiki legend regressed to a bright surface", desktopDom.presentation);
+    assert(desktopDom.presentation?.polity_toolbar_group_background === "rgb(18, 22, 25)", "Dashboard polity toolbar regressed to a bright surface", desktopDom.presentation);
     for (const label of requiredEyebrows) assert(desktopDom.eyebrows.includes(label), `Dashboard panel missing: ${label}`, desktopDom.eyebrows);
     assert(desktopDom.global_scroll.overflow_x <= 1, "Desktop Dashboard causes page-level horizontal overflow", desktopDom.global_scroll);
     assert(!desktopDom.error_overlay, "Framework error overlay detected", desktopDom);
