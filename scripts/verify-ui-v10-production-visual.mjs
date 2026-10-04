@@ -374,6 +374,55 @@ async function main(){
     assert(desktopMain.registrationSurface?.background==="rgb(21, 25, 28)","Person Runtime telemetry regressed to a bright surface",desktopMain);
     assert(desktopMain.eraNavigatorSurface?.background==="rgba(18, 21, 24, 0.96)","Person era navigator regressed to a bright surface",desktopMain);
     assert(desktopMain.eraSearchSurface?.background==="rgb(17, 21, 24)","Person era search regressed to a bright surface",desktopMain);
+    assert(desktopMain.cardLikeCount===0,"Person Register regressed toward card-like row geometry",desktopMain);
+    assert(desktopMain.quietCountVisible===0,"Ordinary 0/1-Activity rows expose Activity-count noise",desktopMain);
+    assert(desktopMain.activityDomIntegrity,"Multi-Activity DOM count no longer matches declared Activity count",desktopMain);
+    assert(desktopMain.tableHeadVisible,"Desktop Person factual header is not visible",desktopMain);
+    assert(desktopMain.headerCells.length===5,"Desktop Person factual header column count changed",desktopMain);
+    assert(desktopMain.ordinaryMedianHeight!=null&&desktopMain.ordinaryMedianHeight<=56,
+      "Desktop Person Register lost compact scan density",desktopMain);
+
+    const desktopInteraction=await verifyRegisterInteraction(client);
+    const desktopNameContrast=contrastRatio(desktopInteraction.normalNameColor,desktopMain.bodyBackground);
+    assert(desktopNameContrast!=null&&desktopNameContrast>=4.5,
+      "Rendered Person domain-name contrast fell below WCAG AA",{...desktopInteraction,bodyBackground:desktopMain.bodyBackground,contrast:desktopNameContrast});
+    assert(desktopInteraction.hover?.rowHovered,"Real pointer hover did not reach the Person row",desktopInteraction);
+    assert(desktopInteraction.hover?.nameColor===desktopInteraction.normalNameColor,
+      "Hover replaced the Person semantic domain foreground",desktopInteraction);
+    assert(desktopInteraction.focusLinkColor===desktopInteraction.normalNameColor,
+      "Focus replaced the Person semantic domain foreground",desktopInteraction);
+    assert(desktopInteraction.selectedNameColor===desktopInteraction.normalNameColor,
+      "Selection replaced the Person semantic domain foreground",desktopInteraction);
+    assert(desktopInteraction.linkOutline!=="none"&&desktopInteraction.rowOutline!=="none",
+      "Person link or row focus-visible treatment is missing",desktopInteraction);
+    assert(desktopInteraction.selectedRule?.opacity==="1",
+      "Selected Person honor-metal rule is not visible",desktopInteraction);
+
+    const desktopFiltering=await verifyRegisterFiltering(client);
+    assert(desktopFiltering&&desktopFiltering.initialCount===desktopMain.registerCount,
+      "Person filter regression probe could not start from the rendered Register",desktopFiltering);
+    assert(desktopFiltering.searchCount>0&&desktopFiltering.searchCount<=desktopFiltering.initialCount&&desktopFiltering.searchContainsFirst,
+      "Person search no longer preserves a matching result",desktopFiltering);
+    assert(desktopFiltering.domainCount>0&&desktopFiltering.domainCount<=desktopFiltering.initialCount&&desktopFiltering.domainPure,
+      "Person domain filtering no longer produces a pure domain result set",desktopFiltering);
+    assert(desktopFiltering.restoredCount===desktopFiltering.initialCount,
+      "Clearing Person filters did not restore the original result set",desktopFiltering);
+
+    const desktopActivityDisclosure=await verifyActivityDisclosure(client);
+    assert(desktopActivityDisclosure&&!desktopActivityDisclosure.missingToggle,
+      "No multi-Activity disclosure control was available for Production acceptance",desktopActivityDisclosure);
+    assert(desktopActivityDisclosure.declared===desktopActivityDisclosure.total&&desktopActivityDisclosure.total>1,
+      "Multi-Activity row lost Activity information",desktopActivityDisclosure);
+    assert(desktopActivityDisclosure.collapsedVisible===1&&desktopActivityDisclosure.collapsedExpanded==="false",
+      "Multi-Activity row is not compact when collapsed",desktopActivityDisclosure);
+    assert(desktopActivityDisclosure.expandedVisible===desktopActivityDisclosure.total&&desktopActivityDisclosure.expandedState==="true",
+      "Multi-Activity disclosure did not reveal every Activity",desktopActivityDisclosure);
+    assert(desktopActivityDisclosure.recollapsedVisible===1&&desktopActivityDisclosure.recollapsedState==="false",
+      "Multi-Activity disclosure did not return to compact state",desktopActivityDisclosure);
+    assert(desktopActivityDisclosure.selectedBefore===desktopActivityDisclosure.selectedAfterExpand
+      &&desktopActivityDisclosure.selectedBefore===desktopActivityDisclosure.selectedAfterCollapse,
+      "Activity disclosure triggered Person selection",desktopActivityDisclosure);
+
     await screenshot(client,"person-main-1600x1000.png");
 
     const desktopDetail=await openFirstDetail(client);
@@ -389,6 +438,25 @@ async function main(){
     assert(mobileMain.bodyScrollWidth<=391,"Person mobile page has horizontal document overflow",mobileMain);
     assert(mobileMain.mainVisible&&mobileMain.registerCount>0,"Person Register did not render on mobile",mobileMain);
     assert(mobileMain.mainPortraitCount===0,"Person Main must not render portraits on mobile",mobileMain);
+    assert(!mobileMain.tableHeadVisible,"Desktop factual header leaked into the compact mobile Register",mobileMain);
+    assert(mobileMain.cardLikeCount===0,"Mobile Person rows regressed toward card geometry",mobileMain);
+    assert(mobileMain.quietCountVisible===0,"Mobile ordinary rows expose Activity-count noise",mobileMain);
+    assert(mobileMain.activityDomIntegrity,"Mobile multi-Activity DOM lost Activity information",mobileMain);
+    assert(mobileMain.ordinaryMedianHeight!=null&&mobileMain.ordinaryMedianHeight<=64,
+      "Mobile Person Register lost compact scan density",mobileMain);
+
+    const mobileActivityDisclosure=await verifyActivityDisclosure(client);
+    assert(mobileActivityDisclosure&&!mobileActivityDisclosure.missingToggle,
+      "Mobile multi-Activity disclosure control is missing",mobileActivityDisclosure);
+    assert(mobileActivityDisclosure.declared===mobileActivityDisclosure.total
+      &&mobileActivityDisclosure.expandedVisible===mobileActivityDisclosure.total,
+      "Mobile Activity disclosure does not preserve every Activity",mobileActivityDisclosure);
+    assert(mobileActivityDisclosure.collapsedVisible===1&&mobileActivityDisclosure.recollapsedVisible===1,
+      "Mobile multi-Activity row does not retain compact collapsed state",mobileActivityDisclosure);
+    assert(mobileActivityDisclosure.selectedBefore===mobileActivityDisclosure.selectedAfterExpand
+      &&mobileActivityDisclosure.selectedBefore===mobileActivityDisclosure.selectedAfterCollapse,
+      "Mobile Activity disclosure triggered Person selection",mobileActivityDisclosure);
+
     await screenshot(client,"person-main-390x844.png");
 
     await evaluate(client,`document.querySelector('#mobileMenuButton')?.click(); true`);
@@ -446,8 +514,15 @@ async function main(){
       production_origin:PRODUCTION_ORIGIN,
       expected_runtime_sha:EXPECTED_RUNTIME_SHA,
       checked_at:new Date().toISOString(),
-      desktop:{main:desktopMain,detail:desktopDetail},
-      mobile:{main:mobileMain,detail:mobileDetail},
+      p6_register_regression:"PASS",
+      desktop:{
+        main:desktopMain,
+        interaction:{...desktopInteraction,nameContrast:Number(desktopNameContrast.toFixed(2))},
+        filtering:desktopFiltering,
+        activityDisclosure:desktopActivityDisclosure,
+        detail:desktopDetail
+      },
+      mobile:{main:mobileMain,activityDisclosure:mobileActivityDisclosure,detail:mobileDetail},
       screenshots:[
         "person-main-1600x1000.png",
         "person-detail-1600x1000.png",
@@ -459,6 +534,8 @@ async function main(){
       status:"PASS"
     };
     fs.writeFileSync(path.join(OUT_DIR,"ui-v10-visual-acceptance.json"),JSON.stringify(report,null,2)+"\n");
+    fs.writeFileSync(path.join(OUT_DIR,"ui-p6-person-register-acceptance.json"),JSON.stringify(report,null,2)+"\n");
+    console.log("ATLAS_UI_P6_PERSON_REGISTER_ACCEPTANCE_PASS");
     console.log("ATLAS_UI_V10_PRODUCTION_VISUAL_ACCEPTANCE_PASS");
     console.log(JSON.stringify(report,null,2));
   } finally {
@@ -477,6 +554,8 @@ main().catch((error)=>{
     details:error?.details||null
   };
   fs.writeFileSync(path.join(OUT_DIR,"ui-v10-visual-acceptance.json"),JSON.stringify(failure,null,2)+"\n");
+  fs.writeFileSync(path.join(OUT_DIR,"ui-p6-person-register-acceptance.json"),JSON.stringify(failure,null,2)+"\n");
+  console.error("ATLAS_UI_P6_PERSON_REGISTER_ACCEPTANCE_FAIL");
   console.error("ATLAS_UI_V10_PRODUCTION_VISUAL_ACCEPTANCE_FAIL");
   console.error(JSON.stringify(failure,null,2));
   process.exitCode=1;
