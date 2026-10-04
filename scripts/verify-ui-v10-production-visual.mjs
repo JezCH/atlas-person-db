@@ -17,6 +17,27 @@ function assert(condition,message,details=null){
   error.details=details;
   throw error;
 }
+function parseRgb(value){
+  const match=String(value||"").match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)/i);
+  return match?[Number(match[1]),Number(match[2]),Number(match[3])]:null;
+}
+function relativeLuminance(rgb){
+  if(!rgb) return null;
+  const channel=(value)=>{
+    const s=value/255;
+    return s<=0.04045?s/12.92:((s+0.055)/1.055)**2.4;
+  };
+  const [r,g,b]=rgb.map(channel);
+  return 0.2126*r+0.7152*g+0.0722*b;
+}
+function contrastRatio(foreground,background){
+  const fg=relativeLuminance(parseRgb(foreground));
+  const bg=relativeLuminance(parseRgb(background));
+  if(fg==null||bg==null) return null;
+  const hi=Math.max(fg,bg);
+  const lo=Math.min(fg,bg);
+  return (hi+0.05)/(lo+0.05);
+}
 async function jsonFetch(url){
   const response=await fetch(url,{cache:"no-store"});
   if(!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
@@ -91,22 +112,56 @@ async function collectMain(client){
   return evaluate(client,`(() => {
     const q=(s)=>document.querySelector(s);
     const qa=(s)=>[...document.querySelectorAll(s)];
-    const style=(el)=>el?getComputedStyle(el):null;
+    const style=(el,pseudo=null)=>el?getComputedStyle(el,pseudo):null;
+    const median=(values)=>{
+      const sorted=values.filter(Number.isFinite).slice().sort((a,b)=>a-b);
+      if(!sorted.length) return null;
+      const mid=Math.floor(sorted.length/2);
+      return sorted.length%2?sorted[mid]:(sorted[mid-1]+sorted[mid])/2;
+    };
+    const visible=(el)=>{
+      const s=style(el);
+      return Boolean(el&&s&&s.display!=="none"&&s.visibility!=="hidden"&&Number(s.opacity||1)>0);
+    };
     const bodyWidth=Math.max(document.documentElement.scrollWidth,document.body.scrollWidth);
-    const entry=q('.person-register-entry');
+    const rows=qa('.person-register-entry');
+    const ordinaryRows=rows.filter((row)=>!row.classList.contains('has-multiple-activities'));
+    const entry=rows[0]||null;
     const main=q('#personMainView');
     const registration=q('#registrationSummary');
     const eraNavigator=q('#personEraNavigator');
     const eraSearch=q('.person-era-search');
+    const tableHead=q('.person-monumental-register > .person-table-head');
     const bg=style(document.body)?.backgroundColor||'';
     const registrationStyle=style(registration);
     const eraNavigatorStyle=style(eraNavigator);
     const eraSearchStyle=style(eraSearch);
+    const ordinaryHeights=ordinaryRows.slice(0,30).map((row)=>Number(row.getBoundingClientRect().height.toFixed(2)));
+    const cardLikeCount=rows.filter((row)=>{
+      const s=style(row);
+      const radius=Math.max(...String(s?.borderRadius||"0").split(/\s+/).map((value)=>Number.parseFloat(value)||0));
+      return radius>0.5 || (s?.boxShadow&&s.boxShadow!=="none");
+    }).length;
+    const quietCounts=qa('.person-register-count.is-activity-count-quiet');
+    const multiRows=rows.filter((row)=>row.classList.contains('has-multiple-activities'));
+    const activityDomIntegrity=multiRows.every((row)=>
+      row.querySelectorAll('.person-card-activity').length===Number(row.dataset.activityCount||0)
+    );
+    const headerCells=tableHead?[...tableHead.querySelectorAll('.person-table-head-cell')].map((cell)=>String(cell.textContent||"").replace(/\s+/g," ").trim()):[];
     return {
       viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},
       bodyScrollWidth:bodyWidth,
       mainVisible:Boolean(main && !main.hidden),
-      registerCount:qa('.person-register-entry').length,
+      registerCount:rows.length,
+      ordinaryRegisterCount:ordinaryRows.length,
+      multiActivityCount:multiRows.length,
+      ordinaryMedianHeight:median(ordinaryHeights),
+      ordinarySampleHeights:ordinaryHeights,
+      cardLikeCount,
+      quietCountVisible:quietCounts.filter(visible).length,
+      activityDomIntegrity,
+      tableHeadVisible:visible(tableHead),
+      headerCells,
       mainPortraitCount:qa('#personMainView .person-main-groups .person-detail-portrait').length,
       firstEntryName:(entry?.querySelector('.person-main-name-link')?.textContent||entry?.querySelector('strong')?.textContent||'').trim(),
       firstEntryDomain:entry?.dataset?.representativeDomain||null,
@@ -128,6 +183,142 @@ async function collectMain(client){
       }:null,
       v9Loaded:[...document.styleSheets].some(s=>String(s.href||'').includes('atlas-ui-motion-material-v9.css')),
       v8Loaded:[...document.styleSheets].some(s=>String(s.href||'').includes('atlas-ui-mobile-v8.css'))
+    };
+  })()`);
+}
+
+async function verifyRegisterInteraction(client){
+  const target=await evaluate(client,`(() => {
+    const row=[...document.querySelectorAll('.person-register-entry[data-representative-domain]')]
+      .find((item)=>item.querySelector('.person-main-name-link'));
+    if(!row) return null;
+    const link=row.querySelector('.person-main-name-link');
+    const rect=link.getBoundingClientRect();
+    const rowStyle=getComputedStyle(row);
+    const after=getComputedStyle(row,'::after');
+    return {
+      personId:row.dataset.personId||null,
+      domain:row.dataset.representativeDomain||null,
+      normalNameColor:getComputedStyle(link).color,
+      rowBackground:rowStyle.backgroundColor,
+      linkRect:{x:rect.left+rect.width/2,y:rect.top+rect.height/2},
+      selectedRuleBefore:{opacity:after.opacity,background:after.backgroundColor}
+    };
+  })()`);
+  assert(target&&target.linkRect,"No domain-colored NamuWiki Person link available for interaction acceptance");
+
+  await client.call("Input.dispatchMouseEvent",{type:"mouseMoved",x:target.linkRect.x,y:target.linkRect.y});
+  await sleep(80);
+  const hover=await evaluate(client,`(() => {
+    const personId=${JSON.stringify(target.personId)};
+    const row=[...document.querySelectorAll('.person-register-entry')].find((item)=>item.dataset.personId===personId);
+    const link=row?.querySelector('.person-main-name-link');
+    return row&&link?{
+      rowHovered:row.matches(':hover'),
+      nameColor:getComputedStyle(link).color,
+      decorationColor:getComputedStyle(link).textDecorationColor
+    }:null;
+  })()`);
+  await client.call("Input.dispatchMouseEvent",{type:"mouseMoved",x:1,y:1});
+
+  const focusAndSelected=await evaluate(client,`(() => {
+    const personId=${JSON.stringify(target.personId)};
+    const row=[...document.querySelectorAll('.person-register-entry')].find((item)=>item.dataset.personId===personId);
+    const link=row?.querySelector('.person-main-name-link');
+    if(!row||!link) return null;
+    link.focus();
+    const focusLinkColor=getComputedStyle(link).color;
+    const linkOutline=getComputedStyle(link).outlineStyle;
+    row.focus();
+    const rowOutline=getComputedStyle(row).outlineStyle;
+    row.classList.add('is-selected');
+    const selectedNameColor=getComputedStyle(link).color;
+    const selectedBackground=getComputedStyle(row).backgroundColor;
+    const selectedAfter=getComputedStyle(row,'::after');
+    const selectedRule={opacity:selectedAfter.opacity,background:selectedAfter.backgroundColor,transform:selectedAfter.transform};
+    row.classList.remove('is-selected');
+    row.blur();
+    return {focusLinkColor,linkOutline,rowOutline,selectedNameColor,selectedBackground,selectedRule};
+  })()`);
+
+  return {...target,hover,...focusAndSelected};
+}
+
+async function verifyRegisterFiltering(client){
+  return evaluate(client,`(() => {
+    const api=window.ATLAS_PERSON_MAIN;
+    if(!api) return null;
+    const rows=()=>[...document.querySelectorAll('.person-register-entry')];
+    const first=rows()[0];
+    const domainRow=rows().find((row)=>row.dataset.representativeDomain);
+    if(!first||!domainRow) return null;
+    const firstName=(first.querySelector('.person-main-name-link')?.textContent||first.querySelector('strong')?.textContent||'').trim();
+    const domain=domainRow.dataset.representativeDomain;
+    const initialCount=rows().length;
+
+    api.setSearchQuery(firstName);
+    const searchRows=rows();
+    const searchCount=searchRows.length;
+    const searchContainsFirst=searchRows.some((row)=>
+      (row.querySelector('.person-main-name-link')?.textContent||row.querySelector('strong')?.textContent||'').trim()===firstName
+    );
+    api.setSearchQuery('');
+
+    api.setDomainFilter(domain);
+    const domainRows=rows();
+    const domainCount=domainRows.length;
+    const domainPure=domainRows.length>0&&domainRows.every((row)=>row.dataset.representativeDomain===domain);
+    api.setDomainFilter('');
+
+    return {
+      initialCount,
+      firstName,
+      searchCount,
+      searchContainsFirst,
+      domain,
+      domainCount,
+      domainPure,
+      restoredCount:rows().length
+    };
+  })()`);
+}
+
+async function verifyActivityDisclosure(client){
+  return evaluate(client,`(() => {
+    const row=document.querySelector('.person-register-entry.has-multiple-activities');
+    if(!row) return null;
+    const visible=(el)=>{
+      const s=getComputedStyle(el);
+      return s.display!=="none"&&s.visibility!=="hidden";
+    };
+    const activities=()=>[...row.querySelectorAll('.person-card-activity')];
+    const toggle=row.querySelector('.person-activity-toggle');
+    if(!toggle) return {missingToggle:true};
+    const selectedBefore=window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null;
+    const total=activities().length;
+    const collapsedVisible=activities().filter(visible).length;
+    const collapsedExpanded=toggle.getAttribute('aria-expanded');
+    toggle.click();
+    const expandedVisible=activities().filter(visible).length;
+    const expandedState=toggle.getAttribute('aria-expanded');
+    const selectedAfterExpand=window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null;
+    toggle.click();
+    const recollapsedVisible=activities().filter(visible).length;
+    const recollapsedState=toggle.getAttribute('aria-expanded');
+    const selectedAfterCollapse=window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null;
+    return {
+      missingToggle:false,
+      declared:Number(row.dataset.activityCount||0),
+      total,
+      collapsedVisible,
+      collapsedExpanded,
+      expandedVisible,
+      expandedState,
+      recollapsedVisible,
+      recollapsedState,
+      selectedBefore,
+      selectedAfterExpand,
+      selectedAfterCollapse
     };
   })()`);
 }
@@ -185,6 +376,55 @@ async function main(){
     assert(desktopMain.registrationSurface?.background==="rgb(21, 25, 28)","Person Runtime telemetry regressed to a bright surface",desktopMain);
     assert(desktopMain.eraNavigatorSurface?.background==="rgba(18, 21, 24, 0.96)","Person era navigator regressed to a bright surface",desktopMain);
     assert(desktopMain.eraSearchSurface?.background==="rgb(17, 21, 24)","Person era search regressed to a bright surface",desktopMain);
+    assert(desktopMain.cardLikeCount===0,"Person Register regressed toward card-like row geometry",desktopMain);
+    assert(desktopMain.quietCountVisible===0,"Ordinary 0/1-Activity rows expose Activity-count noise",desktopMain);
+    assert(desktopMain.activityDomIntegrity,"Multi-Activity DOM count no longer matches declared Activity count",desktopMain);
+    assert(desktopMain.tableHeadVisible,"Desktop Person factual header is not visible",desktopMain);
+    assert(desktopMain.headerCells.length===5,"Desktop Person factual header column count changed",desktopMain);
+    assert(desktopMain.ordinaryMedianHeight!=null&&desktopMain.ordinaryMedianHeight<=56,
+      "Desktop Person Register lost compact scan density",desktopMain);
+
+    const desktopInteraction=await verifyRegisterInteraction(client);
+    const desktopNameContrast=contrastRatio(desktopInteraction.normalNameColor,desktopMain.bodyBackground);
+    assert(desktopNameContrast!=null&&desktopNameContrast>=4.5,
+      "Rendered Person domain-name contrast fell below WCAG AA",{...desktopInteraction,bodyBackground:desktopMain.bodyBackground,contrast:desktopNameContrast});
+    assert(desktopInteraction.hover?.rowHovered,"Real pointer hover did not reach the Person row",desktopInteraction);
+    assert(desktopInteraction.hover?.nameColor===desktopInteraction.normalNameColor,
+      "Hover replaced the Person semantic domain foreground",desktopInteraction);
+    assert(desktopInteraction.focusLinkColor===desktopInteraction.normalNameColor,
+      "Focus replaced the Person semantic domain foreground",desktopInteraction);
+    assert(desktopInteraction.selectedNameColor===desktopInteraction.normalNameColor,
+      "Selection replaced the Person semantic domain foreground",desktopInteraction);
+    assert(desktopInteraction.linkOutline!=="none"&&desktopInteraction.rowOutline!=="none",
+      "Person link or row focus-visible treatment is missing",desktopInteraction);
+    assert(desktopInteraction.selectedRule?.opacity==="1",
+      "Selected Person honor-metal rule is not visible",desktopInteraction);
+
+    const desktopFiltering=await verifyRegisterFiltering(client);
+    assert(desktopFiltering&&desktopFiltering.initialCount===desktopMain.registerCount,
+      "Person filter regression probe could not start from the rendered Register",desktopFiltering);
+    assert(desktopFiltering.searchCount>0&&desktopFiltering.searchCount<=desktopFiltering.initialCount&&desktopFiltering.searchContainsFirst,
+      "Person search no longer preserves a matching result",desktopFiltering);
+    assert(desktopFiltering.domainCount>0&&desktopFiltering.domainCount<=desktopFiltering.initialCount&&desktopFiltering.domainPure,
+      "Person domain filtering no longer produces a pure domain result set",desktopFiltering);
+    assert(desktopFiltering.restoredCount===desktopFiltering.initialCount,
+      "Clearing Person filters did not restore the original result set",desktopFiltering);
+
+    const desktopActivityDisclosure=await verifyActivityDisclosure(client);
+    assert(desktopActivityDisclosure&&!desktopActivityDisclosure.missingToggle,
+      "No multi-Activity disclosure control was available for Production acceptance",desktopActivityDisclosure);
+    assert(desktopActivityDisclosure.declared===desktopActivityDisclosure.total&&desktopActivityDisclosure.total>1,
+      "Multi-Activity row lost Activity information",desktopActivityDisclosure);
+    assert(desktopActivityDisclosure.collapsedVisible===1&&desktopActivityDisclosure.collapsedExpanded==="false",
+      "Multi-Activity row is not compact when collapsed",desktopActivityDisclosure);
+    assert(desktopActivityDisclosure.expandedVisible===desktopActivityDisclosure.total&&desktopActivityDisclosure.expandedState==="true",
+      "Multi-Activity disclosure did not reveal every Activity",desktopActivityDisclosure);
+    assert(desktopActivityDisclosure.recollapsedVisible===1&&desktopActivityDisclosure.recollapsedState==="false",
+      "Multi-Activity disclosure did not return to compact state",desktopActivityDisclosure);
+    assert(desktopActivityDisclosure.selectedBefore===desktopActivityDisclosure.selectedAfterExpand
+      &&desktopActivityDisclosure.selectedBefore===desktopActivityDisclosure.selectedAfterCollapse,
+      "Activity disclosure triggered Person selection",desktopActivityDisclosure);
+
     await screenshot(client,"person-main-1600x1000.png");
 
     const desktopDetail=await openFirstDetail(client);
@@ -200,6 +440,25 @@ async function main(){
     assert(mobileMain.bodyScrollWidth<=391,"Person mobile page has horizontal document overflow",mobileMain);
     assert(mobileMain.mainVisible&&mobileMain.registerCount>0,"Person Register did not render on mobile",mobileMain);
     assert(mobileMain.mainPortraitCount===0,"Person Main must not render portraits on mobile",mobileMain);
+    assert(!mobileMain.tableHeadVisible,"Desktop factual header leaked into the compact mobile Register",mobileMain);
+    assert(mobileMain.cardLikeCount===0,"Mobile Person rows regressed toward card geometry",mobileMain);
+    assert(mobileMain.quietCountVisible===0,"Mobile ordinary rows expose Activity-count noise",mobileMain);
+    assert(mobileMain.activityDomIntegrity,"Mobile multi-Activity DOM lost Activity information",mobileMain);
+    assert(mobileMain.ordinaryMedianHeight!=null&&mobileMain.ordinaryMedianHeight<=64,
+      "Mobile Person Register lost compact scan density",mobileMain);
+
+    const mobileActivityDisclosure=await verifyActivityDisclosure(client);
+    assert(mobileActivityDisclosure&&!mobileActivityDisclosure.missingToggle,
+      "Mobile multi-Activity disclosure control is missing",mobileActivityDisclosure);
+    assert(mobileActivityDisclosure.declared===mobileActivityDisclosure.total
+      &&mobileActivityDisclosure.expandedVisible===mobileActivityDisclosure.total,
+      "Mobile Activity disclosure does not preserve every Activity",mobileActivityDisclosure);
+    assert(mobileActivityDisclosure.collapsedVisible===1&&mobileActivityDisclosure.recollapsedVisible===1,
+      "Mobile multi-Activity row does not retain compact collapsed state",mobileActivityDisclosure);
+    assert(mobileActivityDisclosure.selectedBefore===mobileActivityDisclosure.selectedAfterExpand
+      &&mobileActivityDisclosure.selectedBefore===mobileActivityDisclosure.selectedAfterCollapse,
+      "Mobile Activity disclosure triggered Person selection",mobileActivityDisclosure);
+
     await screenshot(client,"person-main-390x844.png");
 
     await evaluate(client,`document.querySelector('#mobileMenuButton')?.click(); true`);
@@ -257,8 +516,15 @@ async function main(){
       production_origin:PRODUCTION_ORIGIN,
       expected_runtime_sha:EXPECTED_RUNTIME_SHA,
       checked_at:new Date().toISOString(),
-      desktop:{main:desktopMain,detail:desktopDetail},
-      mobile:{main:mobileMain,detail:mobileDetail},
+      p6_register_regression:"PASS",
+      desktop:{
+        main:desktopMain,
+        interaction:{...desktopInteraction,nameContrast:Number(desktopNameContrast.toFixed(2))},
+        filtering:desktopFiltering,
+        activityDisclosure:desktopActivityDisclosure,
+        detail:desktopDetail
+      },
+      mobile:{main:mobileMain,activityDisclosure:mobileActivityDisclosure,detail:mobileDetail},
       screenshots:[
         "person-main-1600x1000.png",
         "person-detail-1600x1000.png",
@@ -270,6 +536,8 @@ async function main(){
       status:"PASS"
     };
     fs.writeFileSync(path.join(OUT_DIR,"ui-v10-visual-acceptance.json"),JSON.stringify(report,null,2)+"\n");
+    fs.writeFileSync(path.join(OUT_DIR,"ui-p6-person-register-acceptance.json"),JSON.stringify(report,null,2)+"\n");
+    console.log("ATLAS_UI_P6_PERSON_REGISTER_ACCEPTANCE_PASS");
     console.log("ATLAS_UI_V10_PRODUCTION_VISUAL_ACCEPTANCE_PASS");
     console.log(JSON.stringify(report,null,2));
   } finally {
@@ -288,6 +556,8 @@ main().catch((error)=>{
     details:error?.details||null
   };
   fs.writeFileSync(path.join(OUT_DIR,"ui-v10-visual-acceptance.json"),JSON.stringify(failure,null,2)+"\n");
+  fs.writeFileSync(path.join(OUT_DIR,"ui-p6-person-register-acceptance.json"),JSON.stringify(failure,null,2)+"\n");
+  console.error("ATLAS_UI_P6_PERSON_REGISTER_ACCEPTANCE_FAIL");
   console.error("ATLAS_UI_V10_PRODUCTION_VISUAL_ACCEPTANCE_FAIL");
   console.error(JSON.stringify(failure,null,2));
   process.exitCode=1;
