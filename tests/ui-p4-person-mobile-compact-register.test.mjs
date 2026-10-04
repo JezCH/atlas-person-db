@@ -29,7 +29,7 @@ test("P4 compact ownership survives P10 identity-Activity-range scan grammar", (
   assert.match(mobile, /grid-template-areas: "identity activities range"/);
   assert.match(mobile, /has-multiple-activities[\s\S]*?grid-template-areas: "identity activities range count"/s);
   assert.match(mobile, /row-gap: 0/);
-  assert.match(mobile, /padding: 4px 0/);
+  assert.match(mobile, /padding: 6px 0/);
   assert.match(mobile, /\.person-table-identity > \.person-card-canonical,[\s\S]*?\.person-table-status-inline \{\s*display: none;/s);
   assert.match(mobile, /\.person-register-range \{[\s\S]*?white-space: nowrap;/s);
 });
@@ -49,7 +49,7 @@ test("P4 keeps the compact multi-Activity control touchable without restoring ca
 });
 
 test("P4 browser assets use the compact mobile cache key while P3 runtime remains unchanged", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p10-center-column-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v1/);
   assert.match(html, /atlas-ui-mobile-v8\.css\?v=20261004-ui-p4-mobile-compact-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p9-promote-approximation-v1/);
 });

@@ -237,6 +237,7 @@
 .person-monumental-register .person-era-rows > .person-card,
 .person-monumental-register .person-register-entry {
   --person-register-domain-color: #4c555c;
+  --person-register-domain-wash: rgba(76, 85, 92, .024);
 
   position: relative;
   display: grid;
@@ -277,27 +278,35 @@
 
 .person-monumental-register .person-register-entry[data-representative-domain="governance"] {
   --person-register-domain-color: var(--atlas-person-domain-governance, #D4AF37);
+  --person-register-domain-wash: rgba(212, 175, 55, .052);
 }
 .person-monumental-register .person-register-entry[data-representative-domain="military"] {
   --person-register-domain-color: var(--atlas-person-domain-military, #B83A3A);
+  --person-register-domain-wash: rgba(184, 58, 58, .042);
 }
 .person-monumental-register .person-register-entry[data-representative-domain="science"] {
   --person-register-domain-color: var(--atlas-person-domain-science, #3F78C5);
+  --person-register-domain-wash: rgba(63, 120, 197, .046);
 }
 .person-monumental-register .person-register-entry[data-representative-domain="technology"] {
   --person-register-domain-color: var(--atlas-person-domain-technology, #59636D);
+  --person-register-domain-wash: rgba(89, 99, 109, .042);
 }
 .person-monumental-register .person-register-entry[data-representative-domain="commerce"] {
   --person-register-domain-color: var(--atlas-person-domain-commerce, #2E8B57);
+  --person-register-domain-wash: rgba(46, 139, 87, .042);
 }
 .person-monumental-register .person-register-entry[data-representative-domain="culture"] {
   --person-register-domain-color: var(--atlas-person-domain-culture, #9A5BA5);
+  --person-register-domain-wash: rgba(154, 91, 165, .042);
 }
 .person-monumental-register .person-register-entry[data-representative-domain="religion"] {
   --person-register-domain-color: var(--atlas-person-domain-religion-edge, var(--atlas-person-domain-religion, #E2D7B9));
+  --person-register-domain-wash: rgba(175, 193, 204, .034);
 }
 .person-monumental-register .person-register-entry[data-representative-domain="exploration"] {
   --person-register-domain-color: var(--atlas-person-domain-exploration, #D96B1E);
+  --person-register-domain-wash: rgba(217, 107, 30, .044);
 }
 
 .person-monumental-register .person-register-entry:hover {
@@ -822,7 +831,13 @@
     row-gap: 0;
     min-width: 0;
     max-width: 100%;
-    padding: 4px 0;
+    padding: 6px 0;
+    background-image: linear-gradient(
+      90deg,
+      var(--person-register-domain-wash) 0%,
+      var(--person-register-domain-wash) 16%,
+      rgba(0, 0, 0, 0) 62%
+    );
   }
 
   .person-monumental-register .person-register-entry.has-multiple-activities {
@@ -831,14 +846,14 @@
   }
 
   .person-monumental-register .person-register-entry::before {
-    top: 6px;
+    top: 8px;
     left: 1px;
-    height: 18px;
+    height: 20px;
   }
 
   .person-monumental-register .person-register-entry.is-selected::after {
-    top: 2px;
-    bottom: 2px;
+    top: 3px;
+    bottom: 3px;
     left: -2px;
   }
 

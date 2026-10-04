@@ -18,9 +18,9 @@ test("P7 keeps mobile Activity facts on one compact scan line without restoring 
 test("P7 removes blank vertical air from ordinary mobile Person rows", () => {
   const mobile = register.slice(register.indexOf("@media (max-width: 760px)"));
   assert.match(mobile, /row-gap: 1px/);
-  assert.match(mobile, /padding: 4px 0/);
+  assert.match(mobile, /padding: 6px 0/);
   assert.match(mobile, /person-era-band[\s\S]*?padding: 8px 2px 4px/s);
-  assert.match(mobile, /person-register-entry::before[\s\S]*?top: 6px/s);
+  assert.match(mobile, /person-register-entry::before[\s\S]*?top: 8px/s);
 });
 
 test("P7 keeps factual text more visible while preserving compact geometry", () => {
@@ -51,7 +51,7 @@ test("P7 keeps genuinely different Activity periods visible and protects very na
 });
 
 test("P7 publishes the new assets and tightens Production density acceptance", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p10-center-column-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p9-promote-approximation-v1/);
   assert.equal((verifier.match(/ordinaryMedianHeight<=56/g) || []).length, 2);
 });
