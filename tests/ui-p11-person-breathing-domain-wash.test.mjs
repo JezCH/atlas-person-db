@@ -42,5 +42,5 @@ test("P11 Production acceptance enforces a breathing-density band and rendered w
 });
 
 test("P11 publishes the breathing-domain-wash Register asset",()=>{
-  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v1/);
+  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v2/);
 });
