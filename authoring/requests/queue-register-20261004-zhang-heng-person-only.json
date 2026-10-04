@@ -1,0 +1,47 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:queue-register-20261004:zhang-heng:person-only:v1",
+  "registration_candidate_id": "gp-20260921-087",
+  "person": {
+    "canonical_name_en": "Zhang Heng",
+    "display_name_ko": "장형",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-04",
+      "document_title": "장형(후한)",
+      "url": "https://namu.wiki/w/%EC%9E%A5%ED%98%95(%ED%9B%84%ED%95%9C)"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "other_reviewed_exclusion",
+    "reason": "Person identity is securely historical, but this bounded queue registration does not assert a canonical polity-bound Activity. Keep the Person out of the spacetime timeline until an Activity is separately reviewed.",
+    "basis_code": "queue_registration_person_only_activity_deferred",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Zhang_Heng/"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "science",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Zhang Heng — MacTutor History of Mathematics",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Zhang_Heng/",
+      "citation_text": "MacTutor identifies Zhang Heng (78–139) as a Chinese mathematician, astronomer and geographer of the Eastern Han period.",
+      "locator": "https://mathshistory.st-andrews.ac.uk/Biographies/Zhang_Heng/"
+    }
+  ]
+}
