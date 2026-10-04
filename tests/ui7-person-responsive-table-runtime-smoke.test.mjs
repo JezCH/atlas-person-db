@@ -59,6 +59,16 @@ function node(className, textContent = '') {
         if (selector === `:scope > .${cls}`) return this.children.find((c) => String(c.className).split(' ').includes(cls)) || null;
       }
       if (selector === '.person-activity-toggle-icon') return this.children.find((c) => String(c.className).split(' ').includes('person-activity-toggle-icon')) || null;
+      const simpleClass = selector.match(/^\.([A-Za-z0-9_-]+)$/);
+      if (simpleClass) {
+        const wanted = simpleClass[1];
+        const queue = [...this.children];
+        while (queue.length) {
+          const current = queue.shift();
+          if (String(current.className || '').split(/\s+/).filter(Boolean).includes(wanted)) return current;
+          queue.push(...(current.children || []));
+        }
+      }
       return null;
     },
     querySelectorAll(selector) {
@@ -206,4 +216,36 @@ test('P3 multi-Activity rows expose a real disclosure control and expand in plac
   assert.ok(multi.row.classList.contains('is-activities-expanded'));
   assert.equal(toggle.getAttribute('aria-expanded'), 'true');
   assert.equal(toggle.children[1].textContent, '−');
+});
+
+
+test('P9 promotes single-Activity approximation into the primary range without role noise', () => {
+  const rowData = personRow('historical', 'historical', 'BC 3150 – BC 3125', 'person-approx');
+  const activity = node('person-card-activity');
+  const head = node('person-card-activity-head');
+  head.append(node('', '고대 이집트'), node('person-relation-badge', 'rules'));
+  const role = node('person-card-activity-role', '파라오 · reign');
+  const period = node('person-card-activity-period', '약 BC 3150 – 약 BC 3125');
+  activity.append(head, role, period);
+  rowData.activities.append(activity);
+  rowData.count.textContent = 'Activity 1건';
+
+  const grid = node('person-card-grid');
+  grid.append(rowData.row);
+  const document = {
+    readyState: 'complete',
+    createElement(tag) { const created = node(''); created.tagName = tag.toUpperCase(); return created; },
+    querySelectorAll(selector) { return selector === '.person-card-grid' ? [grid] : []; },
+    addEventListener() {}
+  };
+  const window = { addEventListener() {} };
+  const context = { window, document, Object, Set, String, Number, queueMicrotask: (fn) => fn(), console };
+  vm.runInNewContext(eraSource, context);
+  vm.runInNewContext(source, context);
+
+  assert.equal(rowData.range.textContent, '약 BC 3150 – 약 BC 3125');
+  assert.equal(rowData.range.dataset.rangeApproximationFromActivity, 'true');
+  assert.ok(period.classList.contains('is-redundant'));
+  assert.equal(period.getAttribute('aria-hidden'), 'true');
+  assert.equal(role.textContent.includes('연대 근사'), false);
 });

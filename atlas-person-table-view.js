@@ -119,12 +119,13 @@
 
   function normalizeRange(value) { return String(value || "").toUpperCase().replace(/[‐‑‒–—―]/g, "-").replace(/\s+/g, "").trim(); }
   function normalizeRangeWithoutApproximation(value) { return normalizeRange(value).replaceAll("약", ""); }
-  function appendApproximationNote(role) {
-    if (!role || role.dataset?.rangeApproximationNote === "true") return;
-    role.textContent = `${String(role.textContent || "").trim()} · 연대 근사`;
-    role.dataset.rangeApproximationNote = "true";
+  function promoteApproximationToPersonRange(range, periodText) {
+    if (!range) return;
+    range.textContent = periodText;
+    range.dataset.rangeApproximationFromActivity = "true";
   }
-  function humanizeActivity(activity, personRange, singleActivity) {
+  function humanizeActivity(activity, personRangeElement, singleActivity) {
+    const personRange = String(personRangeElement?.textContent || "");
     const relation = activity.querySelector?.(".person-relation-badge");
     if (relation) { const raw = String(relation.textContent || "").trim(); relation.textContent = RELATION_LABELS[raw] ?? cleanCode(raw); }
     const role = activity.querySelector?.(".person-card-activity-role");
@@ -138,8 +139,8 @@
       const exactMatch = normalizeRange(periodText) === normalizeRange(personRange);
       const approximationOnlyDifference = !exactMatch
         && normalizeRangeWithoutApproximation(periodText) === normalizeRangeWithoutApproximation(personRange);
-      if (approximationOnlyDifference && /약/.test(periodText) && !/약/.test(String(personRange || ""))) {
-        appendApproximationNote(role);
+      if (approximationOnlyDifference && /약/.test(periodText) && !/약/.test(personRange)) {
+        promoteApproximationToPersonRange(personRangeElement, periodText);
       }
       if (exactMatch || approximationOnlyDifference) {
         period.textContent = "";
@@ -240,7 +241,7 @@
     foldExceptionalStatus(identity, status);
     const activityRows = [...(activities?.querySelectorAll?.(".person-card-activity") || [])];
     const singleActivity = activityRows.length === 1;
-    for (const activity of activityRows) humanizeActivity(activity, range?.textContent || "", singleActivity);
+    for (const activity of activityRows) humanizeActivity(activity, range, singleActivity);
     configureActivityHierarchy(row, activities, count, activityRows);
     for (const cell of [identity, range, activities, count]) if (cell) row.append(cell);
   }

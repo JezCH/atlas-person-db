@@ -35,8 +35,11 @@ test("P7 collapses Activity periods that differ from Person range only by Korean
   assert.match(table, /function normalizeRangeWithoutApproximation/);
   assert.match(table, /replaceAll\("약", ""\)/);
   assert.match(table, /const approximationOnlyDifference/);
-  assert.match(table, /appendApproximationNote\(role\)/);
-  assert.match(table, /role\.textContent = `\$\{String\(role\.textContent \|\| ""\)\.trim\(\)\} · 연대 근사`/);
+  assert.match(table, /function promoteApproximationToPersonRange/);
+  assert.match(table, /range\.textContent = periodText/);
+  assert.match(table, /range\.dataset\.rangeApproximationFromActivity = "true"/);
+  assert.doesNotMatch(table, /appendApproximationNote/);
+  assert.doesNotMatch(table, /role\.textContent\s*=\s*[^\n]*연대 근사/);
   assert.match(table, /if \(exactMatch \|\| approximationOnlyDifference\)/);
   assert.match(table, /period\.classList\.add\("is-redundant"\)/);
 });
@@ -49,6 +52,6 @@ test("P7 keeps genuinely different Activity periods visible and protects very na
 
 test("P7 publishes the new assets and tightens Production density acceptance", () => {
   assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p8-horizontal-flow-v1/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p7-fill-whitespace-v1/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p9-promote-approximation-v1/);
   assert.equal((verifier.match(/ordinaryMedianHeight<=56/g) || []).length, 2);
 });
