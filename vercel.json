@@ -43,6 +43,10 @@
       "destination": "/api/atlas-mutate?__atlas_mutation_surface=person-domain-v2-cutover"
     },
     {
+      "source": "/api/atlas-person-domain-v2-legacy-repair",
+      "destination": "/api/atlas-mutate?__atlas_mutation_surface=person-domain-v2-legacy-repair"
+    },
+    {
       "source": "/api/atlas-runtime-compile",
       "destination": "/api/atlas-mutate?__atlas_mutation_surface=runtime-compile"
     },
@@ -108,4 +112,4 @@
       ]
     }
   ]
-}
+}\n
