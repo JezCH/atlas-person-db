@@ -1,0 +1,56 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+
+const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+
+test("UI V11 loads Dashboard Monumental presentation after the canonical Dashboard CSS", () => {
+  const nav = read("atlas-main-authority-nav.js");
+  const base = nav.indexOf('appendStylesheetOnce("./atlas-dashboard.css?v=20261001-canonical-nontimeline-v1")');
+  const v11 = nav.indexOf('appendStylesheetOnce("./atlas-dashboard-monumental-v11.css?v=20261004-dashboard-v11")');
+  assert.ok(base >= 0);
+  assert.ok(v11 > base);
+});
+
+test("UI V11 removes bright SaaS card material from Dashboard hero, KPI, panels, and loading state", () => {
+  const css = read("atlas-dashboard-monumental-v11.css");
+  assert.match(css, /\.dashboard-control-center \.card \{/);
+  assert.match(css, /var\(--dashboard-surface\)/);
+  assert.match(css, /\.dashboard-hero \{/);
+  assert.match(css, /border-left: 2px solid rgba\(192,174,136,\.68\)/);
+  assert.match(css, /\.dashboard-kpi \{/);
+  assert.match(css, /#171b1e !important/);
+  assert.match(css, /\.dashboard-panel,/);
+  assert.match(css, /\.dashboard-loading-grid span \{/);
+  assert.match(css, /linear-gradient\(90deg,#15191c 0%,#1d2226 48%,#15191c 100%\)/);
+  assert.doesNotMatch(css, /background:\s*#fff\b/i);
+  assert.doesNotMatch(css, /background:\s*white\b/i);
+});
+
+test("UI V11 preserves semantic domain signals and uses the global honor metal for neutral selection", () => {
+  const css = read("atlas-dashboard-monumental-v11.css");
+  assert.match(css, /--dashboard-metal: var\(--atlas-honor-metal/);
+  assert.match(css, /--dashboard-metal-strong: var\(--atlas-honor-metal-strong/);
+  assert.match(css, /\.dashboard-domain-swatch/);
+  assert.doesNotMatch(css, /--atlas-person-domain-governance:\s*#/);
+  assert.doesNotMatch(css, /--atlas-person-domain-military:\s*#/);
+});
+
+test("UI V11 keeps mobile Dashboard compact and reduced-motion safe", () => {
+  const css = read("atlas-dashboard-monumental-v11.css");
+  assert.match(css, /@media \(max-width: 600px\)/);
+  assert.match(css, /\.dashboard-kpi \{[\s\S]*min-height: 94px/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(css, /\.dashboard-loading-grid span \{[\s\S]*animation: none/);
+});
+
+test("UI V11 Production acceptance locks the new presentation asset and dark computed styles", () => {
+  const verifier = read("scripts/verify-dashboard-production-acceptance.mjs");
+  const workflow = read(".github/workflows/atlas-dashboard-production-acceptance.yml");
+  assert.match(verifier, /"atlas-dashboard-monumental-v11\.css"/);
+  assert.match(verifier, /v11_loaded/);
+  assert.match(verifier, /Dashboard hero regressed to a bright surface/);
+  assert.match(verifier, /Dashboard KPI regressed to a bright surface/);
+  assert.match(verifier, /Dashboard panel regressed to a bright surface/);
+  assert.match(workflow, /atlas-dashboard-monumental-v11\.css/);
+});
