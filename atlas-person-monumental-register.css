@@ -798,8 +798,8 @@
     min-height: 0;
     flex-direction: row;
     align-items: baseline;
-    gap: 7px;
-    padding: 11px 2px 5px;
+    gap: 6px;
+    padding: 8px 2px 4px;
     border: 0;
   }
 
@@ -820,10 +820,10 @@
       "identity range"
       "activities activities";
     column-gap: 6px;
-    row-gap: 3px;
+    row-gap: 1px;
     min-width: 0;
     max-width: 100%;
-    padding: 6px 0;
+    padding: 4px 0;
   }
 
   .person-monumental-register .person-register-entry.has-multiple-activities {
@@ -834,14 +834,14 @@
   }
 
   .person-monumental-register .person-register-entry::before {
-    top: 9px;
+    top: 6px;
     left: 1px;
     height: 18px;
   }
 
   .person-monumental-register .person-register-entry.is-selected::after {
-    top: 3px;
-    bottom: 3px;
+    top: 2px;
+    bottom: 2px;
     left: -2px;
   }
 
@@ -858,8 +858,9 @@
   }
 
   .person-monumental-register .person-table-identity > strong {
-    font-size: 14.5px;
-    line-height: 1.22;
+    color: #ddd9d0;
+    font-size: 15px;
+    line-height: 1.18;
   }
 
   .person-monumental-register .person-table-identity > .person-card-canonical,
@@ -869,9 +870,11 @@
 
   .person-monumental-register .person-register-range {
     grid-area: range;
-    align-items: flex-start;
-    padding: 1px 0 0;
-    font-size: 9px;
+    align-items: baseline;
+    padding: 0;
+    color: #c8c3ba;
+    font-size: 9.2px;
+    line-height: 1.2;
     white-space: nowrap;
   }
 
@@ -902,55 +905,75 @@
 
   .person-monumental-register .person-register-activities {
     grid-area: activities;
-    padding: 0 2px 0 11px;
+    padding: 0 1px 0 11px;
   }
 
   .person-monumental-register .person-table-activities .person-card-activity {
-    grid-template-columns: minmax(0, 1.14fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, .82fr) auto;
     grid-template-areas:
-      "activity-head activity-role"
-      "activity-period activity-period"
-      "activity-meta activity-meta";
-    gap: 1px 8px;
-    padding: 0 0 3px;
+      "activity-head activity-role activity-period"
+      "activity-meta activity-meta activity-meta";
+    gap: 0 7px;
+    align-items: baseline;
+    padding: 0;
   }
 
   .person-monumental-register .person-table-activities .person-card-activity + .person-card-activity {
-    padding-top: 4px;
+    padding-top: 3px;
   }
 
   .person-monumental-register .person-card-activity-head {
     grid-area: activity-head;
     grid-column: auto;
     flex-wrap: wrap;
+    gap: 3px;
   }
 
   .person-monumental-register .person-table-activities .person-card-activity-role {
     grid-area: activity-role;
     grid-column: auto;
     min-width: 0;
+    color: #aaada9;
+    font-size: 8.4px;
+    line-height: 1.25;
+    text-align: right;
     overflow-wrap: anywhere;
+  }
+
+  .person-monumental-register .person-card-activity-range-note {
+    color: #9b8b68;
+    font-size: .92em;
+    font-weight: 700;
+    white-space: nowrap;
   }
 
   .person-monumental-register .person-table-activities .person-card-activity-period {
     grid-area: activity-period;
     grid-column: auto;
-    font-size: 8px;
+    justify-self: end;
+    color: #aaa59c;
+    font-size: 7.8px;
+    line-height: 1.2;
+    text-align: right;
+    white-space: nowrap;
   }
 
   .person-monumental-register .person-table-activities .person-card-activity > small {
     grid-area: activity-meta;
-    grid-column: auto;
+    grid-column: 1 / -1;
+    margin-top: 1px;
   }
 
   .person-monumental-register .person-table-activities .person-card-activity-head b {
     min-width: 0;
-    font-size: 10px;
+    color: #d4d1ca;
+    font-size: 10.2px;
+    line-height: 1.22;
     overflow-wrap: anywhere;
   }
 
-  .person-monumental-register .person-relation-badge,
-  .person-monumental-register .person-table-activities .person-card-activity-role {
+  .person-monumental-register .person-relation-badge {
+    color: #8d959b;
     font-size: 7.8px;
   }
 
@@ -962,6 +985,20 @@
 @media (max-width: 520px) {
   .person-monumental-register .person-register-entry.has-multiple-activities {
     --atlas-person-mobile-count-width: 40px;
+  }
+}
+
+@media (max-width: 340px) {
+  .person-monumental-register .person-table-activities .person-card-activity {
+    grid-template-columns: minmax(0, 1fr) minmax(0, .78fr);
+    grid-template-areas:
+      "activity-head activity-role"
+      "activity-period activity-period"
+      "activity-meta activity-meta";
+  }
+
+  .person-monumental-register .person-table-activities .person-card-activity-period {
+    justify-self: end;
   }
 }
 
