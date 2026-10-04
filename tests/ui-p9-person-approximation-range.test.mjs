@@ -33,5 +33,5 @@ test("P9 passes the actual range element into Activity humanization",()=>{
 });
 
 test("P9 publishes the promoted chronology decorator",()=>{
-  assert.match(html,/atlas-person-table-view\.js\?v=20261004-ui-p12-multi-activity-visible-v1/);
+  assert.match(html,/atlas-person-table-view\.js\?v=20261004-ui-p13-column-balance-polity-height-v1/);
 });
