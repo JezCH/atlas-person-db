@@ -61,14 +61,15 @@ The intervening P14 units performed no Production Person/Activity/Polity mutatio
 - **PR #1767 is CLOSED / SUPERSEDED TRANSPORT.** It must not be merged or reopened:
   - its `batch-109.json` path collides with the later v2 Review Unit 02 authority;
   - its old proposal/batch mutation path was retired by #1855.
-- The six reviewed MICROBATCH-07 assignments formerly carried by #1767 are preserved under #1793 as **legacy residual candidates**, not as an active PR:
+- The six reviewed MICROBATCH-07 assignments formerly carried by #1767 are **CLOSED IN PRODUCTION**:
   - Shashanka `f371e82b-33eb-4927-8b45-1c553ea81d4c` → governance
   - Sima Yi `c3128a85-ddde-4d28-9219-5715f8611b20` → governance
   - Stilicho `dbac46ae-d3dc-4068-840f-46fedbdbd901` → military
   - Tabinshwehti `f0c7abaa-7670-49d0-a82e-7b63fd1a62c3` → governance
   - Taira no Kiyomori `b774cec1-f3b0-46a9-8cd1-3414e74780a4` → governance
   - Vardan Mamikonian `45bdc34d-3a99-4034-b03d-c546c96608f9` → military
-- Closing #1767 does **not** assert these six live values are already repaired. Exact current Production read-back is required before any repair, and only the current canonical writer may be used.
+- Durable apply evidence: Authoring run `37171047026`, retry job `111344049017`, merge SHA `a12a1bf2d3fbd491d03d8f7177976874a5feae3c`; repaired 6, conflict 0, exact public read-back 6/6.
+- PR #1767 remains closed/superseded and no legacy proposal sequence should be revived.
 
 ### NamuWiki
 
