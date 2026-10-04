@@ -264,126 +264,9 @@
     font-size: 6.5px;
   }
 
-  /* P3 dense Register: one factual row, one primary Activity line.
-   * Multi-Activity people expose an explicit in-row disclosure; this final
-   * mobile layer preserves that hierarchy without hiding information forever. */
-  .person-monumental-register > .person-table-head {
-    display: none;
-  }
-
-  .person-monumental-register .person-era-band,
-  .person-monumental-register .person-register-era-band {
-    gap: 7px;
-    padding: 11px 2px 5px;
-  }
-
-  .person-monumental-register .person-era-band > span {
-    font-size: 11px;
-  }
-
-  .person-monumental-register .person-era-band-range {
-    font-size: 7px;
-  }
-
-  .person-monumental-register .person-era-rows > .person-card,
-  .person-monumental-register .person-register-entry {
-    grid-template-columns: minmax(0, 1fr) auto 42px;
-    grid-template-areas:
-      "identity range count"
-      "activities activities activities";
-    column-gap: 7px;
-    row-gap: 4px;
-    padding: 8px 0 7px;
-  }
-
-  .person-monumental-register .person-register-entry::before {
-    top: 9px;
-    height: 18px;
-  }
-
-  .person-monumental-register .person-table-identity,
-  .person-monumental-register .person-register-identity {
-    padding: 0 4px 0 11px;
-  }
-
-  .person-monumental-register .person-table-identity > strong {
-    font-size: 14.5px;
-    line-height: 1.22;
-  }
-
-  .person-monumental-register .person-register-range {
-    padding: 1px 0 0;
-    color: #bab6ad;
-    font-size: 9px;
-    white-space: nowrap;
-  }
-
-  .person-monumental-register .person-register-count {
-    padding: 1px 2px 0 0;
-    font-size: 7px;
-  }
-
-  .person-monumental-register .person-activity-toggle {
-    gap: 2px;
-    padding-bottom: 1px;
-    font-size: 7px;
-  }
-
-  .person-monumental-register .person-activity-toggle-icon {
-    width: 7px;
-    font-size: 8px;
-  }
-
-  .person-monumental-register .person-register-activities {
-    padding: 0 2px 0 11px;
-  }
-
-  .person-monumental-register .person-table-activities .person-card-activity {
-    grid-template-columns: minmax(0, 1.14fr) minmax(0, 1fr);
-    grid-template-areas:
-      "activity-head activity-role"
-      "activity-period activity-period"
-      "activity-meta activity-meta";
-    gap: 1px 8px;
-    padding: 0 0 3px;
-  }
-
-  .person-monumental-register .person-register-entry.has-multiple-activities:not(.is-activities-expanded)
-    .person-table-activities .person-card-activity:nth-child(n + 2) {
-    display: none;
-  }
-
-  .person-monumental-register .person-card-activity-head {
-    grid-area: activity-head;
-    grid-column: auto;
-  }
-
-  .person-monumental-register .person-table-activities .person-card-activity-role {
-    grid-area: activity-role;
-    grid-column: auto;
-    min-width: 0;
-  }
-
-  .person-monumental-register .person-table-activities .person-card-activity-period {
-    grid-area: activity-period;
-    grid-column: auto;
-    font-size: 8px;
-  }
-
-  .person-monumental-register .person-table-activities .person-card-activity > small {
-    grid-area: activity-meta;
-    grid-column: auto;
-  }
-
-  .person-monumental-register .person-table-activities .person-card-activity-head b {
-    color: #c7c4bd;
-    font-size: 10px;
-  }
-
-  .person-monumental-register .person-relation-badge,
-  .person-monumental-register .person-table-activities .person-card-activity-role {
-    font-size: 7.8px;
-  }
+  /* P4 ownership boundary: compact Person Register geometry is defined only in
+   * atlas-person-monumental-register.css. This later mobile shell layer does
+   * not redeclare Person row, Activity, count, or identity geometry. */
 
   /* Detail: portrait first, identity second, then editorial chronology. */
   #personMainDetail.person-main-detail {
@@ -501,14 +384,6 @@
     width: 100%;
   }
 
-  .person-monumental-register .person-register-entry {
-    grid-template-columns: minmax(0,1fr) auto 40px;
-    column-gap: 6px;
-  }
-
-  .person-monumental-register .person-table-identity > .person-card-canonical {
-    font-size: 8px;
-  }
 }
 
 @media (max-width: 390px) {
@@ -533,27 +408,6 @@
     display: none;
   }
 
-  .person-monumental-register .person-table-identity > .person-card-canonical,
-  .person-monumental-register .person-table-status-inline {
-    display: none;
-  }
-
-  .person-monumental-register .person-table-identity > strong {
-    font-size: 14px;
-  }
-
-  .person-monumental-register .person-register-entry {
-    grid-template-columns: minmax(0,1fr) auto 38px;
-    column-gap: 5px;
-  }
-
-  .person-monumental-register .person-register-range {
-    font-size: 8.5px;
-  }
-
-  .person-monumental-register .person-register-entry::before {
-    left: 1px;
-  }
 
   #personMainDetail.person-main-detail {
     right: 3px;
