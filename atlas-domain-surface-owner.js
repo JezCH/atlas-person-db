@@ -73,7 +73,7 @@
   function ensurePersonDomainAssets() {
     ensureStylesheet(
       'link[data-atlas-person-domain-palette="true"]',
-      "./atlas-person-domain-palette.css?v=20261004-person-domain-v2",
+      "./atlas-person-domain-palette.css?v=20261004-ui-p1-dark-name-v1",
       "atlasPersonDomainPalette"
     );
 
