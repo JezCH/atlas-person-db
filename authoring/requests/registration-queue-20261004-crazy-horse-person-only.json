@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:registration-queue-20261004:crazy-horse:person-only:v1",
+  "registration_candidate_id": "gplist3-20260921-024",
+  "person": {
+    "canonical_name_en": "Crazy Horse",
+    "display_name_ko": "크레이지 호스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-04",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "other_reviewed_exclusion",
+    "reason": "Canonical Person identity and representative domain are registered from the approved queue candidate in this batch without asserting a polity-bound Activity. Timeline inclusion remains separate and requires a reviewed Activity.",
+    "basis_code": "identity_registered_activity_review_deferred",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "registration_scope_only",
+      "sources": [
+        "https://www.nps.gov/libi/learn/historyculture/crazy-horse.htm"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "military",
+  "sources": [
+    {
+      "source_type": "government_reference",
+      "title": "Crazy Horse (tashunka witco) — U.S. National Park Service",
+      "canonical_url": "https://www.nps.gov/libi/learn/historyculture/crazy-horse.htm",
+      "citation_text": "The National Park Service identifies Crazy Horse as an Oglala Lakota war leader who played leading roles in Red Cloud's War, the Sioux War of 1876–1877, the Rosebud, and the Little Bighorn, and records his death in 1877.",
+      "locator": "History & Culture"
+    }
+  ],
+  "review_context": {
+    "request_batch": "REGISTRATION-QUEUE-8-20261004",
+    "queue_candidate_id": "gplist3-20260921-024",
+    "domain_standard": "Person Domain v2",
+    "namuwiki_review": "Exact indexed NamuWiki search did not establish an independent exact Person document; no guessed URL.",
+    "timeline_decision": "Identity-first queue registration only; no polity-bound Activity is asserted in this batch."
+  }
+}
