@@ -47,7 +47,7 @@ test('spacetime view consumes the shared era model while retaining its own place
 
 test('shared era model loads before Person table and before lazy spacetime activation', () => {
   const eraIndex = html.indexOf('atlas-person-era-model.js?v=20260909-era-10-band-v1');
-  const tableIndex = html.indexOf('atlas-person-table-view.js?v=20261004-ui-p3-activity-hierarchy-v1');
+  const tableIndex = html.indexOf('atlas-person-table-view.js?v=20261004-ui-p7-fill-whitespace-v1');
   const navIndex = html.indexOf('atlas-main-authority-nav.js');
   assert.ok(eraIndex >= 0, 'shared era model script must be present');
   assert.ok(tableIndex > eraIndex, 'table view must load after era model');
