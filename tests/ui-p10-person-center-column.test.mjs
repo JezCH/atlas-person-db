@@ -18,7 +18,9 @@ test("P10 puts Person identity, Activity facts, and chronology on the same mobil
 });
 
 test("P10 gives the Activity facts the flexible center column instead of a detached second line",()=>{
-  const mobile=register.slice(register.indexOf("@media (max-width: 760px)"));
+  const mobileStart=register.indexOf("@media (max-width: 760px)");
+  const narrowStart=register.indexOf("@media (max-width: 340px)");
+  const mobile=register.slice(mobileStart,narrowStart);
   assert.match(mobile,/\.person-register-activities \{[\s\S]*?grid-area: activities;[\s\S]*?min-width: 0;[\s\S]*?padding: 0;/s);
   assert.match(mobile,/\.person-table-activities \.person-card-activity \{[\s\S]*?display: flex;[\s\S]*?min-width: 0;/s);
   assert.doesNotMatch(mobile,/grid-template-areas:\s*"identity range"\s*"activities activities"/s);
