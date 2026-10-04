@@ -7,7 +7,7 @@ const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "
 test("UI V8 loads the static mobile hierarchy layer after Person Chronicle Detail", () => {
   const html = read("index.html");
   const detail = html.indexOf("atlas-person-chronicle-detail.css?v=20261003-ui-v5-detail-v1");
-  const mobile = html.indexOf("atlas-ui-mobile-v8.css?v=20261004-ui-p2-dense-register-v1");
+  const mobile = html.indexOf("atlas-ui-mobile-v8.css?v=20261004-ui-p3-activity-hierarchy-v1");
   assert.ok(detail >= 0);
   assert.ok(mobile > detail);
   assert.match(html, /atlas-main-authority-nav\.js\?v=20261004-dashboard-v11-r2/);
