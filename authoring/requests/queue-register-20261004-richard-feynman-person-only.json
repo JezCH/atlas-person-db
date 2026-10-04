@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-person-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:queue-register-20261004:richard-feynman:person-only:v1",
+  "request_id": "authoring:queue-20261004:richard-feynman:person-only:v1",
   "registration_candidate_id": "gp-20260921-096",
   "person": {
     "canonical_name_en": "Richard Feynman",
@@ -21,15 +21,15 @@
     }
   },
   "timeline_disposition": {
-    "disposition": "other_reviewed_exclusion",
-    "reason": "Person identity is securely historical, but this bounded queue registration does not assert a canonical polity-bound Activity. Keep the Person out of the spacetime timeline until an Activity is separately reviewed.",
-    "basis_code": "queue_registration_person_only_activity_deferred",
+    "disposition": "chronology_unresolved",
+    "reason": "Richard Feynman is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "review_evidence": {
       "authority_scope": "timeline_disposition_review_evidence_only",
       "sources": [
-        "https://www.nobelprize.org/prizes/physics/1965/summary/"
+        "https://www.pma.caltech.edu/about/nobel-laureates"
       ],
       "reviewed_at": "2026-10-04"
     }
@@ -37,11 +37,17 @@
   "representative_domain": "science",
   "sources": [
     {
-      "source_type": "official_reference",
-      "title": "The Nobel Prize in Physics 1965 — Richard P. Feynman",
-      "canonical_url": "https://www.nobelprize.org/prizes/physics/1965/summary/",
-      "citation_text": "The Nobel Foundation records Richard P. Feynman as a 1965 Physics laureate for fundamental work in quantum electrodynamics.",
-      "locator": "https://www.nobelprize.org/prizes/physics/1965/summary/"
+      "source_type": "academic_reference",
+      "title": "Nobel Laureates — Caltech Physics, Mathematics and Astronomy",
+      "canonical_url": "https://www.pma.caltech.edu/about/nobel-laureates",
+      "citation_text": "Caltech lists Richard Feynman as a 1965 Nobel laureate in physics for fundamental work in quantum electrodynamics.",
+      "locator": "Richard Feynman"
     }
-  ]
+  ],
+  "review_context": {
+    "request_batch": "QUEUE-EIGHT-20261004",
+    "queue_candidate_id": "gp-20260921-096",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
+  }
 }
