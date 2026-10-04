@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:queue-20261004:richard-feynman:person-only:v1",
+  "registration_candidate_id": "gp-20260921-096",
+  "person": {
+    "canonical_name_en": "Richard Feynman",
+    "display_name_ko": "리처드 파인먼",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-04",
+      "document_title": "리처드 파인만",
+      "url": "https://namu.wiki/w/%EB%A6%AC%EC%B2%98%EB%93%9C%20%ED%8C%8C%EC%9D%B8%EB%A7%8C"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Richard Feynman is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://www.pma.caltech.edu/about/nobel-laureates"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "science",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Nobel Laureates — Caltech Physics, Mathematics and Astronomy",
+      "canonical_url": "https://www.pma.caltech.edu/about/nobel-laureates",
+      "citation_text": "Caltech lists Richard Feynman as a 1965 Nobel laureate in physics for fundamental work in quantum electrodynamics.",
+      "locator": "Richard Feynman"
+    }
+  ],
+  "review_context": {
+    "request_batch": "QUEUE-EIGHT-20261004",
+    "queue_candidate_id": "gp-20260921-096",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
+  }
+}

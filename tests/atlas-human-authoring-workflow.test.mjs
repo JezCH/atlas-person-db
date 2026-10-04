@@ -68,3 +68,15 @@ test('trusted completeness audit is mutation-free and preserves normal apply sem
   assert.match(workflow, /\.committed==false/);
   assert.match(workflow, /result_count_mismatch/);
 });
+
+
+test('person-only queue registration uses canonical science and forwards candidate IDs atomically', () => {
+  assert.match(workflow, /\.representative_domain \| IN\("governance","military","science","technology","commerce","culture","religion","exploration"\)/);
+  assert.doesNotMatch(workflow, /\.representative_domain \| IN\([^\n]*"knowledge"/);
+  assert.match(workflow, /registration_candidate_id/);
+  assert.match(workflow, /candidate_ids="\$\(jq -s/);
+  assert.match(workflow, /--argjson candidate_ids "\$candidate_ids_json"/);
+  assert.match(workflow, /candidate_ids:\$candidate_ids/);
+  assert.match(workflow, /ready_candidate_ids/);
+  assert.match(workflow, /post_human_batch "apply_batch" "\$ready_paths" "\$ready_requests" "\$ready_candidate_ids" "\$response"/);
+});

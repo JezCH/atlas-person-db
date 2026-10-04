@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:queue-20261004:zhang-heng:person-only:v1",
+  "registration_candidate_id": "gp-20260921-087",
+  "person": {
+    "canonical_name_en": "Zhang Heng",
+    "display_name_ko": "장형",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-04",
+      "document_title": "장형(후한)",
+      "url": "https://namu.wiki/w/%EC%9E%A5%ED%98%95(%ED%9B%84%ED%95%9C)"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Zhang Heng is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://mathshistory.st-andrews.ac.uk/BEA/zhang_heng_bea.pdf"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "science",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Zhang Heng — Biographical Encyclopedia of Astronomers",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/BEA/zhang_heng_bea.pdf",
+      "citation_text": "The Biographical Encyclopedia of Astronomers identifies Zhang Heng (78–139) as an Eastern Han Chinese astronomer and scholar who served in the Bureau of Astronomy and Calendrics and developed a spherical-heaven astronomical model.",
+      "locator": "Zhang Heng biography"
+    }
+  ],
+  "review_context": {
+    "request_batch": "QUEUE-EIGHT-20261004",
+    "queue_candidate_id": "gp-20260921-087",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
+  }
+}

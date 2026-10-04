@@ -16,7 +16,7 @@ const BINDING_MODES = new Set(['declared','existing']);
 const ROLE_BINDING_MODES = new Set(['declared','existing','none']);
 const PERSON_LIFE_STATUS_BASES = new Set(['documented_death','historical_certainty']);
 const PERSON_ONLY_DISPOSITIONS = new Set(['chronology_unresolved','legendary','mythical','other_reviewed_exclusion']);
-const REPRESENTATIVE_DOMAINS = new Set(['governance','military','knowledge','technology','commerce','culture','religion','exploration']);
+const REPRESENTATIVE_DOMAINS = new Set(['governance','military','science','technology','commerce','culture','religion','exploration']);
 
 function fail(file, message) {
   throw new Error(`${file}: ${message}`);
