@@ -137,6 +137,22 @@ async function collectMain(client){
     const eraNavigatorStyle=style(eraNavigator);
     const eraSearchStyle=style(eraSearch);
     const ordinaryHeights=ordinaryRows.slice(0,30).map((row)=>Number(row.getBoundingClientRect().height.toFixed(2)));
+    const centerSamples=ordinaryRows.slice(0,30).map((row)=>{
+      const rowRect=row.getBoundingClientRect();
+      const activities=row.querySelector('.person-register-activities');
+      const activityRect=activities?.getBoundingClientRect?.();
+      const centerX=rowRect.left+(rowRect.width/2);
+      return activityRect?{
+        coversCenter:activityRect.left<=centerX&&activityRect.right>=centerX,
+        widthRatio:Number((activityRect.width/Math.max(rowRect.width,1)).toFixed(3)),
+        leftGap:Number(Math.max(0,activityRect.left-rowRect.left).toFixed(2)),
+        rightGap:Number(Math.max(0,rowRect.right-activityRect.right).toFixed(2))
+      }:null;
+    }).filter(Boolean);
+    const centerCoverageRate=centerSamples.length
+      ? centerSamples.filter((sample)=>sample.coversCenter).length/centerSamples.length
+      : null;
+    const medianActivityWidthRatio=median(centerSamples.map((sample)=>sample.widthRatio));
     const cardLikeCount=rows.filter((row)=>{
       const s=style(row);
       const radius=Math.max(...String(s?.borderRadius||"0").split(/\s+/).map((value)=>Number.parseFloat(value)||0));
@@ -157,6 +173,9 @@ async function collectMain(client){
       multiActivityCount:multiRows.length,
       ordinaryMedianHeight:median(ordinaryHeights),
       ordinarySampleHeights:ordinaryHeights,
+      centerCoverageRate,
+      medianActivityWidthRatio,
+      centerSamples,
       cardLikeCount,
       quietCountVisible:quietCounts.filter(visible).length,
       activityDomIntegrity,
@@ -446,6 +465,10 @@ async function main(){
     assert(mobileMain.activityDomIntegrity,"Mobile multi-Activity DOM lost Activity information",mobileMain);
     assert(mobileMain.ordinaryMedianHeight!=null&&mobileMain.ordinaryMedianHeight<=56,
       "Mobile Person Register lost compact scan density",mobileMain);
+    assert(mobileMain.centerCoverageRate!=null&&mobileMain.centerCoverageRate>=0.8,
+      "Mobile Person factual Activity column no longer occupies the visual center",mobileMain);
+    assert(mobileMain.medianActivityWidthRatio!=null&&mobileMain.medianActivityWidthRatio>=0.24,
+      "Mobile Person factual Activity column became too narrow and reopened center whitespace",mobileMain);
 
     const mobileActivityDisclosure=await verifyActivityDisclosure(client);
     assert(mobileActivityDisclosure&&!mobileActivityDisclosure.missingToggle,
