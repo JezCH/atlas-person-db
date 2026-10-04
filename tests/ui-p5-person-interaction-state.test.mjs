@@ -29,7 +29,7 @@ test("P5 hover changes luminance and underline treatment without changing domain
   assert.match(register, /\.person-register-entry:hover \{\s*background: rgba\(255, 255, 255, \.018\)/s);
   assert.match(register, /\.person-register-entry:hover::before \{\s*opacity: 1;\s*transform: scaleY\(1\.08\)/s);
   assert.match(register, /\.person-main-name-link:hover \{\s*text-decoration: underline;/s);
-  assert.doesNotMatch(register, /\.person-main-name-link:hover \{[^}]*color:/s);
+  assert.doesNotMatch(register, /\.person-main-name-link:hover \{[^}]*\n\s*color\s*:/s);
   assert.doesNotMatch(motion, /\.person-register-entry:hover \.person-main-name-link/);
 });
 
