@@ -1,0 +1,47 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:queue-register-20261004:richard-feynman:person-only:v1",
+  "registration_candidate_id": "gp-20260921-096",
+  "person": {
+    "canonical_name_en": "Richard Feynman",
+    "display_name_ko": "리처드 파인먼",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-04",
+      "document_title": "리처드 파인만",
+      "url": "https://namu.wiki/w/%EB%A6%AC%EC%B2%98%EB%93%9C%20%ED%8C%8C%EC%9D%B8%EB%A7%8C"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "other_reviewed_exclusion",
+    "reason": "Person identity is securely historical, but this bounded queue registration does not assert a canonical polity-bound Activity. Keep the Person out of the spacetime timeline until an Activity is separately reviewed.",
+    "basis_code": "queue_registration_person_only_activity_deferred",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://www.nobelprize.org/prizes/physics/1965/summary/"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "science",
+  "sources": [
+    {
+      "source_type": "official_reference",
+      "title": "The Nobel Prize in Physics 1965 — Richard P. Feynman",
+      "canonical_url": "https://www.nobelprize.org/prizes/physics/1965/summary/",
+      "citation_text": "The Nobel Foundation records Richard P. Feynman as a 1965 Physics laureate for fundamental work in quantum electrodynamics.",
+      "locator": "https://www.nobelprize.org/prizes/physics/1965/summary/"
+    }
+  ]
+}

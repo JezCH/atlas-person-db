@@ -1,0 +1,47 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:queue-register-20261004:frida-kahlo:person-only:v1",
+  "registration_candidate_id": "workshop-20260924-026",
+  "person": {
+    "canonical_name_en": "Frida Kahlo",
+    "display_name_ko": "프리다 칼로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-04",
+      "document_title": "프리다 칼로",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%A6%AC%EB%8B%A4%20%EC%B9%BC%EB%A1%9C"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "other_reviewed_exclusion",
+    "reason": "Person identity is securely historical, but this bounded queue registration does not assert a canonical polity-bound Activity. Keep the Person out of the spacetime timeline until an Activity is separately reviewed.",
+    "basis_code": "queue_registration_person_only_activity_deferred",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/08/Biografias-Frida-Kahlo-ingles.pdf"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "culture",
+  "sources": [
+    {
+      "source_type": "museum_reference",
+      "title": "Biography of Frida Kahlo — Museo Frida Kahlo",
+      "canonical_url": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/08/Biografias-Frida-Kahlo-ingles.pdf",
+      "citation_text": "Museo Frida Kahlo's biography records Frida Kahlo's 1907 birth in Mexico City and the accident after which she began painting while immobilized.",
+      "locator": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/08/Biografias-Frida-Kahlo-ingles.pdf"
+    }
+  ]
+}
