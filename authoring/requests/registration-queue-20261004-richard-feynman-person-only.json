@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:registration-queue-20261004:richard-feynman:person-only:v1",
+  "registration_candidate_id": "gp-20260921-096",
+  "person": {
+    "canonical_name_en": "Richard Feynman",
+    "display_name_ko": "리처드 파인먼",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-04",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "other_reviewed_exclusion",
+    "reason": "Canonical Person identity and representative domain are registered from the approved queue candidate in this batch without asserting a polity-bound Activity. Timeline inclusion remains separate and requires a reviewed Activity.",
+    "basis_code": "identity_registered_activity_review_deferred",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "registration_scope_only",
+      "sources": [
+        "https://www.nobelprize.org/prizes/physics/1965/summary/"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "science",
+  "sources": [
+    {
+      "source_type": "award_institution_reference",
+      "title": "The Nobel Prize in Physics 1965 — NobelPrize.org",
+      "canonical_url": "https://www.nobelprize.org/prizes/physics/1965/summary/",
+      "citation_text": "The Nobel Foundation records Richard P. Feynman as a 1965 Physics laureate for fundamental work in quantum electrodynamics.",
+      "locator": "Laureates; Richard P. Feynman"
+    }
+  ],
+  "review_context": {
+    "request_batch": "REGISTRATION-QUEUE-8-20261004",
+    "queue_candidate_id": "gp-20260921-096",
+    "domain_standard": "Person Domain v2",
+    "namuwiki_review": "Exact indexed NamuWiki search did not establish an independent exact Person document; no guessed URL.",
+    "timeline_decision": "Identity-first queue registration only; no polity-bound Activity is asserted in this batch."
+  }
+}
