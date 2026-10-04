@@ -18,9 +18,9 @@ test("P7 keeps mobile Activity facts on one compact scan line without restoring 
 test("P7 removes blank vertical air from ordinary mobile Person rows", () => {
   const mobile = register.slice(register.indexOf("@media (max-width: 760px)"));
   assert.match(mobile, /row-gap: 1px/);
-  assert.match(mobile, /padding: 6px 0/);
+  assert.match(mobile, /padding: 7px 0/);
   assert.match(mobile, /person-era-band[\s\S]*?padding: 8px 2px 4px/s);
-  assert.match(mobile, /person-register-entry::before[\s\S]*?top: 8px/s);
+  assert.match(mobile, /person-register-entry::before[\s\S]*?top: 9px/s);
 });
 
 test("P7 keeps factual text more visible while preserving compact geometry", () => {
