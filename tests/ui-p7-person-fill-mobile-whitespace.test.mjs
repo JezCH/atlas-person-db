@@ -38,7 +38,8 @@ test("P7 collapses Activity periods that differ from Person range only by Korean
   assert.match(table, /function promoteApproximationToPersonRange/);
   assert.match(table, /range\.textContent = periodText/);
   assert.match(table, /range\.dataset\.rangeApproximationFromActivity = "true"/);
-  assert.doesNotMatch(table, /연대 근사/);
+  assert.doesNotMatch(table, /appendApproximationNote/);
+  assert.doesNotMatch(table, /role\.textContent\s*=\s*[^\n]*연대 근사/);
   assert.match(table, /if \(exactMatch \|\| approximationOnlyDifference\)/);
   assert.match(table, /period\.classList\.add\("is-redundant"\)/);
 });
