@@ -173,20 +173,22 @@ test('UI7 table keeps status folding and groups visible rows under the derived e
 });
 
 
-test('P3 multi-Activity rows expose a real disclosure control and expand in place', () => {
+test('P12 multi-Activity rows keep every Activity visible without disclosure chrome', () => {
   const multi = personRow('historical', 'historical', 'AD 100 – AD 140', 'person-multi');
-  multi.activities.append(node('person-card-activity'), node('person-card-activity'));
+  const first = node('person-card-activity');
+  const second = node('person-card-activity');
+  multi.activities.append(first, second);
   multi.count.textContent = 'Activity 2건';
 
   const grid = node('person-card-grid');
   grid.append(multi.row);
-  let activityToggleCapture = null;
+  let capturedClickHandler = null;
   const document = {
     readyState: 'complete',
     createElement(tag) { const created = node(''); created.tagName = tag.toUpperCase(); return created; },
     querySelectorAll(selector) { return selector === '.person-card-grid' ? [grid] : []; },
     addEventListener(type, handler, options) {
-      if (type === 'click' && options === true) activityToggleCapture = handler;
+      if (type === 'click' && options === true) capturedClickHandler = handler;
     }
   };
   const window = { addEventListener() {} };
@@ -197,25 +199,13 @@ test('P3 multi-Activity rows expose a real disclosure control and expand in plac
   assert.ok(multi.row.classList.contains('has-multiple-activities'));
   assert.equal(multi.row.dataset.activityCount, '2');
   assert.equal(multi.count.classList.contains('is-activity-count-quiet'), false);
-  assert.equal(multi.count.children.length, 1);
-
-  const toggle = multi.count.children[0];
-  assert.equal(toggle.className, 'person-activity-toggle');
-  assert.equal(toggle.getAttribute('aria-expanded'), 'false');
-  assert.equal(toggle.children[0].textContent, '2건');
-  assert.equal(toggle.children[1].textContent, '+');
-  assert.equal(typeof activityToggleCapture, 'function');
-
-  let stopped = false;
-  activityToggleCapture({
-    target: toggle,
-    stopPropagation() { stopped = true; }
-  });
-
-  assert.equal(stopped, true);
-  assert.ok(multi.row.classList.contains('is-activities-expanded'));
-  assert.equal(toggle.getAttribute('aria-expanded'), 'true');
-  assert.equal(toggle.children[1].textContent, '−');
+  assert.equal(multi.count.textContent, '2건');
+  assert.equal(multi.count.children.length, 0);
+  assert.equal(multi.activities.children.length, 2);
+  assert.equal(multi.activities.children[0], first);
+  assert.equal(multi.activities.children[1], second);
+  assert.equal(capturedClickHandler, null);
+  assert.equal(multi.row.classList.contains('is-activities-expanded'), false);
 });
 
 

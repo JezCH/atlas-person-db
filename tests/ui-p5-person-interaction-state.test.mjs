@@ -33,10 +33,10 @@ test("P5 hover changes luminance and underline treatment without changing domain
   assert.doesNotMatch(motion, /\.person-register-entry:hover \.person-main-name-link/);
 });
 
-test("P5 focus states remain visible on row link activity disclosure and restored sort header", () => {
+test("P5 focus states remain visible on row link and restored sort header", () => {
   assert.match(register, /\.person-register-entry:focus-visible \{[\s\S]*?outline: 1px solid rgba\(192, 174, 136, \.52\)/s);
   assert.match(domain, /\.person-main-name-link:focus-visible[\s\S]*?outline: 1px solid var\(--atlas-honor-metal-strong/s);
-  assert.match(register, /\.person-activity-toggle:focus-visible[\s\S]*?outline: 1px solid rgba\(208, 188, 145, \.56\)/s);
+  assert.doesNotMatch(register, /\.person-activity-toggle/);
   assert.match(motion, /\.person-monumental-register \.person-table-sort-button:focus-visible,/);
   assert.doesNotMatch(motion, /person-register-sortbar \.person-table-sort-button:focus-visible/);
 });
@@ -54,7 +54,7 @@ test("P5 motion layer owns only transitions for Person Register interaction", ()
 });
 
 test("P5 cache keys publish the interaction-state owners in final cascade order", () => {
-  const registerIndex = html.indexOf("atlas-person-monumental-register.css?v=20261004-ui-p11-breathing-wash-v2");
+  const registerIndex = html.indexOf("atlas-person-monumental-register.css?v=20261004-ui-p12-multi-activity-visible-v1");
   const mobileIndex = html.indexOf("atlas-ui-mobile-v8.css?v=20261004-ui-p4-mobile-compact-v1");
   const motionIndex = html.indexOf("atlas-ui-motion-material-v9.css?v=20261004-ui-p5-interaction-state-v1");
   assert.ok(registerIndex >= 0);
