@@ -239,15 +239,38 @@ jobs:
             echo 'No approved authoring requests selected.'
           fi
 
-      - name: Wait for exact Production Person Domain v2 cutover
+      - name: Wait for compatible Production Person Domain v2 cutover
         if: env.ATLAS_AUTHORING_SELECTED == 'true'
         shell: bash
         run: |
           set -euo pipefail
           for attempt in $(seq 1 60); do
             status="$(curl --silent --show-error --output /tmp/atlas-person-domain-v2-cutover.json --write-out '%{http_code}' "$ATLAS_PERSON_DOMAIN_V2_CUTOVER_ENDPOINT")"
-            if [[ "$status" == "200" ]] && jq -e --arg sha "$GITHUB_SHA" '.ok==true and .runtime_sha==$sha and .state.cutover_complete==true' /tmp/atlas-person-domain-v2-cutover.json >/dev/null; then
-              exit 0
+            if [[ "$status" == "200" ]] && jq -e '.ok==true and .state.cutover_complete==true and (.runtime_sha | test("^[0-9a-f]{40}$"))' /tmp/atlas-person-domain-v2-cutover.json >/dev/null; then
+              runtime_sha="$(jq -er '.runtime_sha' /tmp/atlas-person-domain-v2-cutover.json)"
+              if [[ "$runtime_sha" == "$GITHUB_SHA" ]]; then
+                exit 0
+              fi
+              if ! git cat-file -e "${runtime_sha}^{commit}" 2>/dev/null; then
+                git fetch --no-tags --quiet origin main
+              fi
+              if git cat-file -e "${runtime_sha}^{commit}" 2>/dev/null && git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA"; then
+                git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-person-domain-v2-runtime-diff.txt
+                set +e
+                node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
+          const text = fs.readFileSync('/tmp/atlas-person-domain-v2-runtime-diff.txt', 'utf8').trim();
+          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
+          if (shouldBuildForChangedPaths(paths)) process.exit(1);
+          console.log(`Person Domain v2 cutover accepted deployment-safe runtime ancestor across ${paths.length} path${paths.length === 1 ? '' : 's'}.`);
+          NODE
+                safe_status=$?
+                set -e
+                if [[ "$safe_status" == "0" ]]; then
+                  exit 0
+                fi
+              fi
             fi
             sleep 5
           done
