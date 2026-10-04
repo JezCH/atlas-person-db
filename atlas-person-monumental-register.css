@@ -281,8 +281,8 @@
 .person-monumental-register .person-register-entry[data-representative-domain="military"] {
   --person-register-domain-color: var(--atlas-person-domain-military, #B83A3A);
 }
-.person-monumental-register .person-register-entry[data-representative-domain="knowledge"] {
-  --person-register-domain-color: var(--atlas-person-domain-knowledge, #3F78C5);
+.person-monumental-register .person-register-entry[data-representative-domain="science"] {
+  --person-register-domain-color: var(--atlas-person-domain-science, #3F78C5);
 }
 .person-monumental-register .person-register-entry[data-representative-domain="technology"] {
   --person-register-domain-color: var(--atlas-person-domain-technology, #59636D);
