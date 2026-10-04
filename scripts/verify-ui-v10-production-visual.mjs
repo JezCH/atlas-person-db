@@ -141,11 +141,17 @@ async function collectMain(client){
     const centerSamples=ordinaryRows.slice(0,30).map((row)=>{
       const rowRect=row.getBoundingClientRect();
       const activities=row.querySelector('.person-register-activities');
+      const identity=row.querySelector('.person-register-identity');
       const activityRect=activities?.getBoundingClientRect?.();
+      const identityRect=identity?.getBoundingClientRect?.();
       const centerX=rowRect.left+(rowRect.width/2);
       return activityRect?{
         coversCenter:activityRect.left<=centerX&&activityRect.right>=centerX,
         widthRatio:Number((activityRect.width/Math.max(rowRect.width,1)).toFixed(3)),
+        identityWidthRatio:identityRect?Number((identityRect.width/Math.max(rowRect.width,1)).toFixed(3)):null,
+        activityToIdentityRatio:identityRect&&identityRect.width>0
+          ? Number((activityRect.width/identityRect.width).toFixed(3))
+          : null,
         leftGap:Number(Math.max(0,activityRect.left-rowRect.left).toFixed(2)),
         rightGap:Number(Math.max(0,rowRect.right-activityRect.right).toFixed(2))
       }:null;
@@ -154,6 +160,8 @@ async function collectMain(client){
       ? centerSamples.filter((sample)=>sample.coversCenter).length/centerSamples.length
       : null;
     const medianActivityWidthRatio=median(centerSamples.map((sample)=>sample.widthRatio));
+    const medianIdentityWidthRatio=median(centerSamples.map((sample)=>sample.identityWidthRatio));
+    const medianActivityToIdentityRatio=median(centerSamples.map((sample)=>sample.activityToIdentityRatio));
     const cardLikeCount=rows.filter((row)=>{
       const s=style(row);
       const radius=Math.max(...String(s?.borderRadius||"0").split(/\s+/).map((value)=>Number.parseFloat(value)||0));
@@ -176,6 +184,8 @@ async function collectMain(client){
       ordinarySampleHeights:ordinaryHeights,
       centerCoverageRate,
       medianActivityWidthRatio,
+      medianIdentityWidthRatio,
+      medianActivityToIdentityRatio,
       centerSamples,
       cardLikeCount,
       quietCountVisible:quietCounts.filter(visible).length,
@@ -324,6 +334,7 @@ async function verifyMultiActivityVisibility(client){
       .map((activity)=>activity.querySelector('.person-card-activity-period'))
       .filter(visible)
       .map((period)=>Math.abs((rect(period)?.right||0)-(containerRect?.right||0)));
+    const activityHeights=activities.map((activity)=>Number((rect(activity)?.height||0).toFixed(2)));
     return {
       declared:Number(row.dataset.activityCount||0),
       total:activities.length,
@@ -332,6 +343,8 @@ async function verifyMultiActivityVisibility(client){
       countVisible:visible(count),
       rangeVisible:visible(range),
       activityAreaRightDelta:rowRect&&containerRect?Math.abs(rowRect.right-containerRect.right):null,
+      rowHeight:rowRect?Number(rowRect.height.toFixed(2)):null,
+      activityHeights,
       periodRightDeltas
     };
   })()`);
@@ -461,6 +474,12 @@ async function main(){
       "Mobile Person factual Activity column no longer occupies the visual center",mobileMain);
     assert(mobileMain.medianActivityWidthRatio!=null&&mobileMain.medianActivityWidthRatio>=0.24,
       "Mobile Person factual Activity column became too narrow and reopened center whitespace",mobileMain);
+    assert(mobileMain.medianIdentityWidthRatio!=null&&mobileMain.medianIdentityWidthRatio>=0.32,
+      "Mobile Person identity column is still too narrow",mobileMain);
+    assert(mobileMain.medianActivityToIdentityRatio!=null
+      &&mobileMain.medianActivityToIdentityRatio>=0.75
+      &&mobileMain.medianActivityToIdentityRatio<=1.15,
+      "Mobile Person identity and Activity columns are no longer balanced",mobileMain);
 
     const mobileMultiActivity=await verifyMultiActivityVisibility(client);
     assert(mobileMultiActivity&&mobileMultiActivity.declared===mobileMultiActivity.total&&mobileMultiActivity.total>1,
@@ -476,6 +495,11 @@ async function main(){
     assert(mobileMultiActivity.periodRightDeltas.length===mobileMultiActivity.total
       &&mobileMultiActivity.periodRightDeltas.every((delta)=>delta<=1.5),
       "Mobile multi-Activity periods are not aligned to the ordinary chronology edge",mobileMultiActivity);
+    assert(mobileMultiActivity.activityHeights.length===mobileMultiActivity.total
+      &&mobileMultiActivity.activityHeights.every((height)=>height>=34),
+      "Mobile multi-Activity rows compress individual polity Activities below the standard row rhythm",mobileMultiActivity);
+    assert(mobileMultiActivity.rowHeight!=null&&mobileMultiActivity.rowHeight>=mobileMultiActivity.total*34,
+      "Mobile multi-Activity Person height is no longer driven by visible polity Activity count",mobileMultiActivity);
 
     await screenshot(client,"person-main-390x844.png");
 
