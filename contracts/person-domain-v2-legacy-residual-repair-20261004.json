@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-person-domain-v2-legacy-residual-repair/v1",
+  "status": "reviewed_pending_apply",
+  "issue": 1793,
+  "superseded_pr": 1767,
+  "reviewed_at": "2026-10-04",
+  "precondition": "each live value must be null or already equal to the reviewed target; any other value fails closed",
+  "targets": [
+    {
+      "person_id": "f371e82b-33eb-4927-8b45-1c553ea81d4c",
+      "canonical_name_en": "Shashanka",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "c3128a85-ddde-4d28-9219-5715f8611b20",
+      "canonical_name_en": "Sima Yi",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "dbac46ae-d3dc-4068-840f-46fedbdbd901",
+      "canonical_name_en": "Stilicho",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "f0c7abaa-7670-49d0-a82e-7b63fd1a62c3",
+      "canonical_name_en": "Tabinshwehti",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "b774cec1-f3b0-46a9-8cd1-3414e74780a4",
+      "canonical_name_en": "Taira no Kiyomori",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "45bdc34d-3a99-4034-b03d-c546c96608f9",
+      "canonical_name_en": "Vardan Mamikonian",
+      "representative_domain": "military"
+    }
+  ]
+}
