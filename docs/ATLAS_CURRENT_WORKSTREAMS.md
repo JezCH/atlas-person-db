@@ -1,6 +1,6 @@
 # ATLAS CURRENT WORKSTREAMS
 
-**As of:** 2026-10-02  
+**As of:** 2026-10-04  
 **Authority:** current main + current Production + latest durable checkpoint  
 **Reconciliation state:** COMPLETE  
 **Current main:** `908b10261b6288d3c38716cebc2cdd35f9f95b53` at reconciliation start  
@@ -39,23 +39,36 @@ The intervening P14 units performed no Production Person/Activity/Polity mutatio
 
 ### Exact next unit
 
-- **#1793 — Post-CORE legacy registration obligation debt audit:** **NOT STARTED / NEXT**.
-  - Audit current Production against the integrated registration-obligations contract.
-  - Discover debt first; do not combine discovery with repair.
-  - Confirmed repairs become later work units.
+- **#1793 — Post-CORE legacy registration obligation debt audit:** **IN PROGRESS / CURRENT**.
+  - R1 reviewed non-timeline representative-domain materialization is complete.
+  - The broader obligation audit remains open and is the authority for residual legacy debt.
+  - Discover debt first; confirmed repairs remain bounded follow-up units.
 
-### Representative-domain residual
+### Representative-domain state
 
-- **PR #1767 — AoE II SS MICROBATCH-07 representative domains:** **STILL_REQUIRED / ACTIVE FOLLOW-UP**.
-- Six target Person UUIDs and reviewed assignments remain:
+- **Person Domain v2:** **CLOSED** by #1806 / #1855.
+- Active canonical codes are exactly:
+  - `governance`
+  - `military`
+  - `science`
+  - `technology`
+  - `commerce`
+  - `culture`
+  - `religion`
+  - `exploration`
+- Legacy `knowledge` is retired from active DB/API/UI/Admin/new-authoring contracts.
+- Final v2 cutover verified `knowledge=0` and `science=72` for the reviewed migration cohort.
+- **PR #1767 is CLOSED / SUPERSEDED TRANSPORT.** It must not be merged or reopened:
+  - its `batch-109.json` path collides with the later v2 Review Unit 02 authority;
+  - its old proposal/batch mutation path was retired by #1855.
+- The six reviewed MICROBATCH-07 assignments formerly carried by #1767 are preserved under #1793 as **legacy residual candidates**, not as an active PR:
   - Shashanka `f371e82b-33eb-4927-8b45-1c553ea81d4c` → governance
   - Sima Yi `c3128a85-ddde-4d28-9219-5715f8611b20` → governance
   - Stilicho `dbac46ae-d3dc-4068-840f-46fedbdbd901` → military
   - Tabinshwehti `f0c7abaa-7670-49d0-a82e-7b63fd1a62c3` → governance
   - Taira no Kiyomori `b774cec1-f3b0-46a9-8cd1-3414e74780a4` → governance
   - Vardan Mamikonian `45bdc34d-3a99-4034-b03d-c546c96608f9` → military
-- No merged replacement proposal or later durable domain-apply checkpoint for these six was found.
-- **Do not merge merely from this board.** Repeat exact current Production domain read-back immediately before the eventual mutation.
+- Closing #1767 does **not** assert these six live values are already repaired. Exact current Production read-back is required before any repair, and only the current canonical writer may be used.
 
 ### NamuWiki
 
@@ -191,13 +204,13 @@ Legacy grade is never current historical truth authority.
 - Issue #1037 — canonical Place / PolityPlaceFunction authority is implemented by #1777; current status **COMPLETE**.
 - Issue #977 — closed historical NONCORE board; **not** a current active frontier.
 
-Only special reviewed open PR from the requested audit set:
-
-- PR #1767 — **STILL_REQUIRED / ACTIVE FOLLOW-UP**.
+Additional Person Domain cleanup:
+- PR #1767 — **CLOSED / SUPERSEDED TRANSPORT**; reviewed data intent retained under #1793.
+- PR #1845 — **CLOSED / SUPERSEDED** by merged #1846, #1848 and the #1855 v2 cutover.
 
 ## 9. CURRENT PRIORITY ORDER
 
-1. **#1793 Post-CORE Registration Obligation Debt Audit** — exact next work unit.
+1. **#1793 Post-CORE Registration Obligation Debt Audit** — current legacy-debt authority; continue from its latest checkpoint.
 2. Confirmed omissions from #1793 — bounded repair units.
 3. Ireland Polity correction.
 4. Kingdom of Italy Polity correction.
@@ -214,6 +227,6 @@ Only special reviewed open PR from the requested audit set:
 
 This reconciliation is one completed work unit. After it closes, stop.
 
-**Exact next resume point:** **#1793 — Post-CORE legacy registration obligation debt audit — NOT STARTED.**
+**Exact next resume point:** **#1793 — Post-CORE legacy registration obligation debt audit — IN PROGRESS.**
 
-Do not start #1793, Ireland, Kingdom of Italy, NamuWiki Batch 057, Unit 050, #1767 mutation, registration queue work, UI work, portrait work or P14 in the same turn as this reconciliation.
+Do not revive #1767 or any pre-v2 Person Domain proposal sequence. Continue only from the latest durable #1793 checkpoint and current Production state.
