@@ -1,6 +1,6 @@
 {
   "schema": "atlas-person-domain-v2-legacy-residual-repair/v1",
-  "status": "reviewed_pending_apply",
+  "status": "ready_for_apply",
   "issue": 1793,
   "superseded_pr": 1767,
   "reviewed_at": "2026-10-04",
@@ -36,5 +36,7 @@
       "canonical_name_en": "Vardan Mamikonian",
       "representative_domain": "military"
     }
-  ]
+  ],
+  "repair_transport_pr": 1861,
+  "trigger_note": "Follow-up main push after workflow exists on default branch; exact Production pre-read still controls mutation."
 }
