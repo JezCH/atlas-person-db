@@ -5,9 +5,9 @@ import repair from "../server/atlas-person-domain-v2-legacy-repair-service.js";
 const { TARGETS, classifyRows } = repair;
 
 function rows(domainFor) {
-  return TARGETS.map((target) => ({
+  return TARGETS.map((target, index) => ({
     person_id:target.person_id,
-    representative_domain:domainFor(target)
+    representative_domain:domainFor(target, index)
   }));
 }
 
