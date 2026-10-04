@@ -26,10 +26,11 @@ test("P10 gives the Activity facts the flexible center column instead of a detac
   assert.doesNotMatch(mobile,/grid-template-areas:\s*"identity range"\s*"activities activities"/s);
 });
 
-test("P10 preserves a safe stacked fallback only below 340px",()=>{
+test("P12 preserves the shared stacked fallback below 340px without a count column",()=>{
   const narrow=register.slice(register.indexOf("@media (max-width: 340px)"));
   assert.match(narrow,/grid-template-areas:\s*"identity range"\s*"activities activities"/s);
-  assert.match(narrow,/has-multiple-activities[\s\S]*?grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
+  assert.match(narrow,/has-multiple-activities \.person-register-activities \{[\s\S]*?grid-column: 1 \/ -1;[\s\S]*?grid-row: 2;/s);
+  assert.doesNotMatch(narrow,/identity range count|activities activities activities/);
 });
 
 test("P10 Production acceptance measures whether Activity facts actually cover the visual center",()=>{
