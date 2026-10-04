@@ -28,5 +28,5 @@ test("P8 keeps genuinely different Activity periods at the right edge without re
 });
 
 test("P8 publishes the horizontal-flow Register asset", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v2/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p12-multi-activity-visible-v1/);
 });
