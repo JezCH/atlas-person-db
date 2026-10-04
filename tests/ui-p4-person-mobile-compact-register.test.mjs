@@ -14,18 +14,20 @@ test("P4 gives mobile Person Register one geometry owner", () => {
   assert.doesNotMatch(shell, /\.person-monumental-register \.person-table-activities \.person-card-activity \{[\s\S]*?grid-template-columns:/);
 });
 
-test("P4 ordinary mobile rows spend zero width on the quiet Activity-count column", () => {
+test("P4 ordinary mobile rows remove the Activity-count track completely", () => {
   const mobile = register.slice(register.indexOf("@media (max-width: 760px)"));
-  assert.match(mobile, /--atlas-person-mobile-count-width: 0px/);
-  assert.match(mobile, /grid-template-columns: minmax\(0, 1fr\) auto var\(--atlas-person-mobile-count-width\)/);
-  assert.match(mobile, /\.person-register-entry\.has-multiple-activities \{\s*--atlas-person-mobile-count-width: 42px;/s);
+  assert.match(mobile, /--atlas-person-mobile-count-width: 42px/);
+  assert.match(mobile, /grid-template-columns: minmax\(0, 1fr\) auto;\s*grid-template-areas:\s*"identity range"\s*"activities activities"/s);
+  assert.match(mobile, /\.person-register-entry\.has-multiple-activities \{\s*grid-template-columns: minmax\(0, 1fr\) auto var\(--atlas-person-mobile-count-width\)/s);
+  assert.match(mobile, /\.person-register-count\.is-activity-count-quiet \{\s*display: none;/s);
   assert.match(mobile, /@media \(max-width: 520px\)[\s\S]*?--atlas-person-mobile-count-width: 40px/s);
   assert.match(mobile, /@media \(max-width: 390px\)[\s\S]*?--atlas-person-mobile-count-width: 38px/s);
 });
 
 test("P4 keeps the mobile scan grammar to identity-range then Activity", () => {
   const mobile = register.slice(register.indexOf("@media (max-width: 760px)"));
-  assert.match(mobile, /grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
+  assert.match(mobile, /grid-template-areas:\s*"identity range"\s*"activities activities"/s);
+  assert.match(mobile, /has-multiple-activities[\s\S]*?grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
   assert.match(mobile, /row-gap: 3px/);
   assert.match(mobile, /padding: 6px 0/);
   assert.match(mobile, /\.person-table-identity > \.person-card-canonical,[\s\S]*?\.person-table-status-inline \{\s*display: none;/s);
