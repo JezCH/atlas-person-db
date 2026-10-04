@@ -62,19 +62,31 @@ jobs:
           preflight_only=false
 
           if [[ "${{ github.event_name }}" == "push" ]] && git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- | grep -qx '.github/atlas-authoring-preflight.txt'; then
-            command="$(tr -d '\r\n' < .github/atlas-authoring-preflight.txt)"
-            mode="preflight"
-            manifest="$command"
-            if [[ "$command" =~ ^(preflight|apply)[[:space:]]+(.+)$ ]]; then
-              mode="${BASH_REMATCH[1]}"
-              manifest="${BASH_REMATCH[2]}"
-            fi
-            [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected bounded authoring manifest path: $manifest" >&2; exit 1; }
-            if [[ "$mode" == "preflight" ]]; then
+            selected_mode=""
+            selected_count=0
+            while IFS= read -r command || [[ -n "$command" ]]; do
+              command="$(printf '%s' "$command" | tr -d '\r')"
+              [[ -n "$command" ]] || continue
+              mode="preflight"
+              manifest="$command"
+              if [[ "$command" =~ ^(preflight|apply)[[:space:]]+(.+)$ ]]; then
+                mode="${BASH_REMATCH[1]}"
+                manifest="${BASH_REMATCH[2]}"
+              fi
+              [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected bounded authoring manifest path: $manifest" >&2; exit 1; }
+              if [[ -n "$selected_mode" && "$selected_mode" != "$mode" ]]; then
+                echo "Rejected mixed preflight/apply command batch." >&2
+                exit 1
+              fi
+              selected_mode="$mode"
+              selected_count=$((selected_count + 1))
+              printf '%s\n' "$manifest" >> /tmp/atlas-candidates.txt
+            done < .github/atlas-authoring-preflight.txt
+            [[ "$selected_count" -gt 0 ]] || { echo 'Rejected empty bounded authoring command batch.' >&2; exit 1; }
+            if [[ "$selected_mode" == "preflight" ]]; then
               preflight_only=true
             fi
-            printf '%s\n' "$manifest" > /tmp/atlas-candidates.txt
-            echo "Trusted ${mode}-only request selected: $manifest"
+            echo "Trusted ${selected_mode}-only batch selected: ${selected_count} manifest(s)"
           elif [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.audit_all_approved }}" == "true" ]]; then
             [[ "${{ inputs.bootstrap_only }}" != "true" ]] || { echo 'audit_all_approved and bootstrap_only are mutually exclusive' >&2; exit 1; }
             [[ -z "${{ inputs.manifest }}" ]] || { echo 'audit_all_approved does not accept a single manifest' >&2; exit 1; }
