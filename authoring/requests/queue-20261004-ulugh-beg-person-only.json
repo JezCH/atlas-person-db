@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:queue-20261004:ulugh-beg:person-only:v1",
+  "registration_candidate_id": "gplist3-20260921-048",
+  "person": {
+    "canonical_name_en": "Ulugh Beg",
+    "display_name_ko": "울루그 베그",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-04",
+      "document_title": "울루그 베그",
+      "url": "https://namu.wiki/w/%EC%9A%B8%EB%A3%A8%EA%B7%B8%20%EB%B2%A0%EA%B7%B8"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Ulugh Beg is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Ulugh_Beg/"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "science",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Ulugh Beg — MacTutor History of Mathematics",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Ulugh_Beg/",
+      "citation_text": "MacTutor identifies Ulugh Beg (1394–1449) as a ruler, mathematician, and astronomer whose Samarkand observatory and star catalogue were major achievements in observational astronomy.",
+      "locator": "Biography"
+    }
+  ],
+  "review_context": {
+    "request_batch": "QUEUE-EIGHT-20261004",
+    "queue_candidate_id": "gplist3-20260921-048",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
+  }
+}
