@@ -9,7 +9,7 @@ const {
 } = require("./atlas-github-oidc.js");
 
 const EXPECTED_AUDIENCE = "atlas-person-domain-v2-legacy-repair";
-const EXPECTED_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-person-domain-v2-legacy-repair.yml@refs/heads/main";
+const EXPECTED_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-person-domain-v2-cutover.yml@refs/heads/main";
 const POLICY = Object.freeze({
   audience:EXPECTED_AUDIENCE,
   repository:EXPECTED_REPOSITORY,
