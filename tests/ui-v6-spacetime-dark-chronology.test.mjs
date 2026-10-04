@@ -7,7 +7,7 @@ const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "
 test("UI V6 loads a dedicated chronology canvas after the base Spacetime stylesheet", () => {
   const html = read("index.html");
   const nav = read("atlas-main-authority-nav.js");
-  assert.match(html, /atlas-main-authority-nav\.js\?v=20261003-ui-v8-mobile-v1/);
+  assert.match(html, /atlas-main-authority-nav\.js\?v=20261004-dashboard-v11/);
   assert.match(html, /atlas-domain-surface-owner\.js\?v=20261004-person-domain-v2/);
   const base = 'atlas-person-spacetime-view.css?v=20260923-runtime-ownership-v1';
   const v6 = 'atlas-person-spacetime-monumental-canvas.css?v=20261003-ui-v6-canvas-v1';
