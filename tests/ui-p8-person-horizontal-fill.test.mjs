@@ -18,7 +18,7 @@ test("P8 lets polity relation and role basis read as one left-to-right factual p
   assert.match(mobile, /\.person-card-activity-head \{[\s\S]*?flex: 0 1 auto;/s);
   assert.match(mobile, /\.person-card-activity-role \{[\s\S]*?flex: 0 1 auto;[\s\S]*?text-align: left;/s);
   assert.match(mobile, /\.person-card-activity-role::before \{[\s\S]*?content: "· ";/s);
-  assert.match(mobile, /column-gap: 6px/);
+  assert.match(mobile, /column-gap: 4px/);
 });
 
 test("P8 keeps genuinely different Activity periods at the right edge without reserving an empty column", () => {
