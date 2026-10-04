@@ -159,6 +159,7 @@ jobs:
               jq -e '
                 .review_status == "approved"
                 and ((.request_id == null) or (.request_id | type == "string" and length > 0))
+                and ((.registration_candidate_id == null) or (.registration_candidate_id | type == "string" and length > 0))
                 and (.person.canonical_name_en | type == "string" and length > 0)
                 and (.person.life_status == "deceased")
                 and (.person.life_status_checked_at | type == "string" and test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$"))
@@ -197,6 +198,7 @@ jobs:
               jq -e '
                 .review_status == "approved"
                 and ((.request_id == null) or (.request_id | type == "string" and length > 0))
+                and ((.registration_candidate_id == null) or (.registration_candidate_id | type == "string" and length > 0))
                 and (.person.canonical_name_en | type == "string" and length > 0)
                 and (.person.display_name_ko | type == "string" and length > 0)
                 and (.person.life_status == "deceased")
@@ -204,7 +206,7 @@ jobs:
                 and (.person.life_status_basis | IN("documented_death","historical_certainty"))
                 and (.timeline_disposition.disposition | IN("chronology_unresolved","legendary","mythical","other_reviewed_exclusion"))
                 and (.timeline_disposition.reason | type == "string" and length > 0)
-                and (.representative_domain | IN("governance","military","knowledge","technology","commerce","culture","religion","exploration"))
+                and (.representative_domain | IN("governance","military","science","technology","commerce","culture","religion","exploration"))
                 and (.sources | type == "array" and length > 0)
                 and (.external_references.namuwiki.status | IN("linked","not_found"))
               ' "$manifest" >/dev/null || { echo "Rejected person-only human authoring request: $manifest" >&2; exit 1; }
@@ -892,7 +894,8 @@ jobs:
             local operation="$1"
             local paths_json="$2"
             local requests_json="$3"
-            local response="$4"
+            local candidate_ids_json="$4"
+            local response="$5"
             local status code oidc_token payload
             for attempt in 1 2 3; do
               oidc_token="$(request_oidc)"
@@ -903,7 +906,8 @@ jobs:
                 --arg authoring_sha "$GITHUB_SHA" \
                 --argjson manifest_paths "$paths_json" \
                 --argjson requests "$requests_json" \
-                '{operation:$operation,transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_paths:$manifest_paths,requests:$requests}')"
+                --argjson candidate_ids "$candidate_ids_json" \
+                '{operation:$operation,transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_paths:$manifest_paths,requests:$requests,candidate_ids:$candidate_ids}')"
               status="$(curl --silent --show-error \
                 --output "$response" \
                 --write-out '%{http_code}' \
@@ -937,9 +941,10 @@ jobs:
           if [[ "$all_human" == "true" && "${#manifests[@]}" -gt 0 ]]; then
             manifest_paths="$(printf '%s\n' "${manifests[@]}" | jq -R . | jq -s .)"
             requests="$(jq -s '.' "${manifests[@]}")"
+            candidate_ids="$(jq -s '[.[] | (.registration_candidate_id // null)]' "${manifests[@]}")"
 
             preflight_response="/tmp/atlas-authoring-evidence/responses/human-authoring-preflight.json"
-            preflight_status="$(post_human_batch "preflight_batch" "$manifest_paths" "$requests" "$preflight_response")"
+            preflight_status="$(post_human_batch "preflight_batch" "$manifest_paths" "$requests" "$candidate_ids" "$preflight_response")"
             if [[ "$preflight_status" != "200" ]]; then
               cat "$preflight_response" >&2 || true
               echo "Human authoring preflight failed: HTTP ${preflight_status}" >&2
@@ -971,6 +976,7 @@ jobs:
             ready_indexes="$(jq -c '[.results[] | select(.status=="READY") | .index]' "$preflight_response")"
             ready_paths="$(jq -cn --argjson all "$manifest_paths" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
             ready_requests="$(jq -cn --argjson all "$requests" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
+            ready_candidate_ids="$(jq -cn --argjson all "$candidate_ids" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
 
             verify_queue="/tmp/atlas-authoring-evidence/verify-queue.jsonl"
             : > "$verify_queue"
@@ -987,7 +993,7 @@ jobs:
             apply_failed=false
             if [[ "$ready_count" -gt 0 ]]; then
               response="/tmp/atlas-authoring-evidence/responses/human-authoring-batch.json"
-              status="$(post_human_batch "apply_batch" "$ready_paths" "$ready_requests" "$response")"
+              status="$(post_human_batch "apply_batch" "$ready_paths" "$ready_requests" "$ready_candidate_ids" "$response")"
 
               if [[ "$status" == "200" ]]; then
                 jq -e --argjson count "$ready_count" '
