@@ -120,11 +120,9 @@
   function normalizeRange(value) { return String(value || "").toUpperCase().replace(/[‐‑‒–—―]/g, "-").replace(/\s+/g, "").trim(); }
   function normalizeRangeWithoutApproximation(value) { return normalizeRange(value).replaceAll("약", ""); }
   function appendApproximationNote(role) {
-    if (!role || role.querySelector?.(".person-card-activity-range-note")) return;
-    const note = document.createElement("span");
-    note.className = "person-card-activity-range-note";
-    note.textContent = "연대 근사";
-    role.append(document.createTextNode(" · "), note);
+    if (!role || role.dataset?.rangeApproximationNote === "true") return;
+    role.textContent = `${String(role.textContent || "").trim()} · 연대 근사`;
+    role.dataset.rangeApproximationNote = "true";
   }
   function humanizeActivity(activity, personRange, singleActivity) {
     const relation = activity.querySelector?.(".person-relation-badge");
