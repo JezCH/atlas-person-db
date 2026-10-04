@@ -28,7 +28,7 @@ jobs:
     timeout-minutes: 30
     environment: production
     env:
-      REPAIR_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-domain-v2-legacy-repair
+      REPAIR_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-mutate?__atlas_mutation_surface=person-domain-v2-legacy-repair
       DOMAIN_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-domain
       REPAIR_AUDIENCE: atlas-person-domain-v2-legacy-repair
       EVIDENCE_DIR: artifacts/person-domain-v2-legacy-repair
