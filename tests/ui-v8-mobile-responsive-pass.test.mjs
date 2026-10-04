@@ -38,7 +38,7 @@ test("UI V8 gives Person mobile controls sequential hierarchy instead of three c
 test("UI P3 keeps the dense mobile hierarchy and discloses extra Activities on demand", () => {
   const css = read("atlas-ui-mobile-v8.css");
 
-  assert.match(css, /P2 dense Register: one factual row, one primary Activity line/);
+  assert.match(css, /P3 dense Register: one factual row, one primary Activity line/);
   assert.match(css, /grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
   assert.match(css, /\.person-table-identity > strong \{[\s\S]*?font-size: 14\.5px/);
   assert.match(css, /\.person-register-range \{[\s\S]*?font-size: 9px/);
