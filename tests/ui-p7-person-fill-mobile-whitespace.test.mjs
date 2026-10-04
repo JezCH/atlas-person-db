@@ -51,7 +51,7 @@ test("P7 keeps genuinely different Activity periods visible and protects very na
 });
 
 test("P7 publishes the new assets and tightens Production density acceptance", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v2/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p9-promote-approximation-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p12-multi-activity-visible-v1/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p12-multi-activity-visible-v1/);
   assert.equal((verifier.match(/ordinaryMedianHeight<=56/g) || []).length, 2);
 });
