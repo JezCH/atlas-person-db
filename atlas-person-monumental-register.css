@@ -782,11 +782,11 @@
 
   .person-monumental-register .person-era-rows > .person-card,
   .person-monumental-register .person-register-entry {
-    --atlas-person-mobile-count-width: 0px;
-    grid-template-columns: minmax(0, 1fr) auto var(--atlas-person-mobile-count-width);
+    --atlas-person-mobile-count-width: 42px;
+    grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
-      "identity range count"
-      "activities activities activities";
+      "identity range"
+      "activities activities";
     column-gap: 6px;
     row-gap: 3px;
     min-width: 0;
@@ -795,7 +795,10 @@
   }
 
   .person-monumental-register .person-register-entry.has-multiple-activities {
-    --atlas-person-mobile-count-width: 42px;
+    grid-template-columns: minmax(0, 1fr) auto var(--atlas-person-mobile-count-width);
+    grid-template-areas:
+      "identity range count"
+      "activities activities activities";
   }
 
   .person-monumental-register .person-register-entry::before {
@@ -844,6 +847,10 @@
     grid-area: count;
     padding: 0;
     font-size: 7px;
+  }
+
+  .person-monumental-register .person-register-count.is-activity-count-quiet {
+    display: none;
   }
 
   .person-monumental-register .person-activity-toggle {
