@@ -32,7 +32,7 @@ test("P11 preserves the P10 center-column scan geometry",()=>{
   const narrowStart=register.indexOf("@media (max-width: 340px)");
   const mobile=register.slice(mobileStart,narrowStart);
   assert.match(mobile,/grid-template-areas: "identity activities range"/);
-  assert.match(mobile,/grid-template-columns: minmax\(82px, \.92fr\) minmax\(0, 1\.35fr\) auto/);
+  assert.match(mobile,/grid-template-columns: minmax\(118px, 1\.05fr\) minmax\(0, 1fr\) auto/);
 });
 
 test("P11 Production acceptance enforces a breathing-density band and rendered wash",()=>{
@@ -42,5 +42,5 @@ test("P11 Production acceptance enforces a breathing-density band and rendered w
 });
 
 test("P11 publishes the breathing-domain-wash Register asset",()=>{
-  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p12-multi-activity-visible-v1/);
+  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p13-column-balance-polity-height-v1/);
 });

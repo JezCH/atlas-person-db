@@ -11,7 +11,7 @@ test("P10 puts Person identity, Activity facts, and chronology on the same mobil
   const mobileStart=register.indexOf("@media (max-width: 760px)");
   const narrowStart=register.indexOf("@media (max-width: 340px)");
   const mobile=register.slice(mobileStart,narrowStart);
-  assert.match(mobile,/grid-template-columns: minmax\(82px, \.92fr\) minmax\(0, 1\.35fr\) auto/);
+  assert.match(mobile,/grid-template-columns: minmax\(118px, 1\.05fr\) minmax\(0, 1fr\) auto/);
   assert.match(mobile,/grid-template-areas: "identity activities range"/);
   assert.match(mobile,/align-items: start/);
   assert.match(mobile,/column-gap: 7px/);
@@ -41,5 +41,5 @@ test("P10 Production acceptance measures whether Activity facts actually cover t
 });
 
 test("P10 publishes the center-column Register asset",()=>{
-  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p12-multi-activity-visible-v1/);
+  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p13-column-balance-polity-height-v1/);
 });

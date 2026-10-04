@@ -49,7 +49,7 @@ test('obsolete Person sort dropdown is removed and header controls remain respon
 });
 
 test('sorting enhancement loads after table decoration and before era navigation and Person Main', () => {
-  const tableJs = 'atlas-person-table-view.js?v=20261004-ui-p12-multi-activity-visible-v1';
+  const tableJs = 'atlas-person-table-view.js?v=20261004-ui-p13-column-balance-polity-height-v1';
   const sortingJs = 'atlas-person-header-sorting.js?v=20261004-ui-p2-dense-register-v1';
   const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
   const mainJs = html.match(/atlas-person-main\.js\?v=[^"'\s>]+/)?.[0] || '';

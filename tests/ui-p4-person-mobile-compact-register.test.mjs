@@ -16,7 +16,7 @@ test("P4 gives mobile Person Register one geometry owner", () => {
 
 test("P12 gives ordinary and multi-Activity mobile rows the same three-column geometry", () => {
   const mobile = register.slice(register.indexOf("@media (max-width: 760px)"));
-  assert.match(mobile, /grid-template-columns: minmax\(82px, \.92fr\) minmax\(0, 1\.35fr\) auto/);
+  assert.match(mobile, /grid-template-columns: minmax\(118px, 1\.05fr\) minmax\(0, 1fr\) auto/);
   assert.match(mobile, /grid-template-areas: "identity activities range"/);
   assert.doesNotMatch(mobile, /--atlas-person-mobile-count-width/);
   assert.doesNotMatch(mobile, /grid-template-areas: "identity activities range count"/);
@@ -44,7 +44,7 @@ test("P12 narrow fallback keeps all multi-Activity rows full-width", () => {
 });
 
 test("P12 browser assets publish the always-visible alignment fix", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p12-multi-activity-visible-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p13-column-balance-polity-height-v1/);
   assert.match(html, /atlas-ui-mobile-v8\.css\?v=20261004-ui-p4-mobile-compact-v1/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p12-multi-activity-visible-v1/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p13-column-balance-polity-height-v1/);
 });

@@ -20,7 +20,7 @@ test("P12 makes multi-Activity mobile rows use the same Person columns as ordina
   const mobileStart=register.indexOf("@media (max-width: 760px)");
   const narrowStart=register.indexOf("@media (max-width: 340px)");
   const mobile=register.slice(mobileStart,narrowStart);
-  assert.match(mobile,/grid-template-columns: minmax\(82px, \.92fr\) minmax\(0, 1\.35fr\) auto/);
+  assert.match(mobile,/grid-template-columns: minmax\(118px, 1\.05fr\) minmax\(0, 1fr\) auto/);
   assert.match(mobile,/grid-template-areas: "identity activities range"/);
   assert.doesNotMatch(mobile,/identity activities range count|--atlas-person-mobile-count-width/);
   assert.match(mobile,/\.person-register-count \{\s*display: none;/s);
@@ -44,6 +44,6 @@ test("P12 keeps the below-340px fallback explicit and full-width",()=>{
 });
 
 test("P12 publishes fresh browser assets",()=>{
-  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p12-multi-activity-visible-v1/);
-  assert.match(html,/atlas-person-table-view\.js\?v=20261004-ui-p12-multi-activity-visible-v1/);
+  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p13-column-balance-polity-height-v1/);
+  assert.match(html,/atlas-person-table-view\.js\?v=20261004-ui-p13-column-balance-polity-height-v1/);
 });

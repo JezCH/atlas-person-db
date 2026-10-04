@@ -763,7 +763,7 @@
 
   .person-monumental-register .person-era-rows > .person-card,
   .person-monumental-register .person-register-entry {
-    grid-template-columns: minmax(82px, .92fr) minmax(0, 1.35fr) auto;
+    grid-template-columns: minmax(118px, 1.05fr) minmax(0, 1fr) auto;
     grid-template-areas: "identity activities range";
     align-items: start;
     column-gap: 7px;
@@ -845,6 +845,18 @@
     grid-row: 1;
   }
 
+  /* P13: one visible polity Activity owns one vertical slot.
+   * This keeps multi-Activity rows from compressing two or three polities into
+   * a single Person-height rhythm. */
+  .person-monumental-register .person-register-entry.has-multiple-activities {
+    padding-block: 0;
+  }
+
+  .person-monumental-register .person-register-entry.has-multiple-activities .person-register-identity {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
   .person-monumental-register .person-table-activities .person-card-activity {
     display: flex;
     min-width: 0;
@@ -857,6 +869,13 @@
 
   .person-monumental-register .person-table-activities .person-card-activity + .person-card-activity {
     padding-top: 3px;
+  }
+
+  .person-monumental-register .person-register-entry.has-multiple-activities .person-card-activity,
+  .person-monumental-register .person-register-entry.has-multiple-activities .person-card-activity + .person-card-activity {
+    box-sizing: border-box;
+    min-height: 36px;
+    padding: 7px 0;
   }
 
   .person-monumental-register .person-card-activity-head {
