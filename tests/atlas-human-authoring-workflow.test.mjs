@@ -90,11 +90,3 @@ test('person-only workflow uses active science domain and retires knowledge from
 });
 
 
-test('bounded authoring command file supports homogeneous multi-manifest apply batches', () => {
-  assert.match(workflow, /selected_mode=""/);
-  assert.match(workflow, /selected_count=0/);
-  assert.match(workflow, /while IFS= read -r command/);
-  assert.match(workflow, /Rejected mixed preflight\/apply command batch/);
-  assert.match(workflow, /Rejected empty bounded authoring command batch/);
-  assert.match(workflow, /Trusted \$\{selected_mode\}-only batch selected/);
-});

@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-person-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:queue-register-20261004:zhang-heng:person-only:v1",
+  "request_id": "authoring:queue-20261004:zhang-heng:person-only:v1",
   "registration_candidate_id": "gp-20260921-087",
   "person": {
     "canonical_name_en": "Zhang Heng",
@@ -21,15 +21,15 @@
     }
   },
   "timeline_disposition": {
-    "disposition": "other_reviewed_exclusion",
-    "reason": "Person identity is securely historical, but this bounded queue registration does not assert a canonical polity-bound Activity. Keep the Person out of the spacetime timeline until an Activity is separately reviewed.",
-    "basis_code": "queue_registration_person_only_activity_deferred",
+    "disposition": "chronology_unresolved",
+    "reason": "Zhang Heng is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "review_evidence": {
       "authority_scope": "timeline_disposition_review_evidence_only",
       "sources": [
-        "https://mathshistory.st-andrews.ac.uk/Biographies/Zhang_Heng/"
+        "https://mathshistory.st-andrews.ac.uk/BEA/zhang_heng_bea.pdf"
       ],
       "reviewed_at": "2026-10-04"
     }
@@ -38,10 +38,16 @@
   "sources": [
     {
       "source_type": "academic_reference",
-      "title": "Zhang Heng — MacTutor History of Mathematics",
-      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Zhang_Heng/",
-      "citation_text": "MacTutor identifies Zhang Heng (78–139) as a Chinese mathematician, astronomer and geographer of the Eastern Han period.",
-      "locator": "https://mathshistory.st-andrews.ac.uk/Biographies/Zhang_Heng/"
+      "title": "Zhang Heng — Biographical Encyclopedia of Astronomers",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/BEA/zhang_heng_bea.pdf",
+      "citation_text": "The Biographical Encyclopedia of Astronomers identifies Zhang Heng (78–139) as an Eastern Han Chinese astronomer and scholar who served in the Bureau of Astronomy and Calendrics and developed a spherical-heaven astronomical model.",
+      "locator": "Zhang Heng biography"
     }
-  ]
+  ],
+  "review_context": {
+    "request_batch": "QUEUE-EIGHT-20261004",
+    "queue_candidate_id": "gp-20260921-087",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
+  }
 }
