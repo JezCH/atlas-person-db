@@ -17,6 +17,27 @@ function assert(condition,message,details=null){
   error.details=details;
   throw error;
 }
+function parseRgb(value){
+  const match=String(value||"").match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)/i);
+  return match?[Number(match[1]),Number(match[2]),Number(match[3])]:null;
+}
+function relativeLuminance(rgb){
+  if(!rgb) return null;
+  const channel=(value)=>{
+    const s=value/255;
+    return s<=0.04045?s/12.92:((s+0.055)/1.055)**2.4;
+  };
+  const [r,g,b]=rgb.map(channel);
+  return 0.2126*r+0.7152*g+0.0722*b;
+}
+function contrastRatio(foreground,background){
+  const fg=relativeLuminance(parseRgb(foreground));
+  const bg=relativeLuminance(parseRgb(background));
+  if(fg==null||bg==null) return null;
+  const hi=Math.max(fg,bg);
+  const lo=Math.min(fg,bg);
+  return (hi+0.05)/(lo+0.05);
+}
 async function jsonFetch(url){
   const response=await fetch(url,{cache:"no-store"});
   if(!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
@@ -91,22 +112,56 @@ async function collectMain(client){
   return evaluate(client,`(() => {
     const q=(s)=>document.querySelector(s);
     const qa=(s)=>[...document.querySelectorAll(s)];
-    const style=(el)=>el?getComputedStyle(el):null;
+    const style=(el,pseudo=null)=>el?getComputedStyle(el,pseudo):null;
+    const median=(values)=>{
+      const sorted=values.filter(Number.isFinite).slice().sort((a,b)=>a-b);
+      if(!sorted.length) return null;
+      const mid=Math.floor(sorted.length/2);
+      return sorted.length%2?sorted[mid]:(sorted[mid-1]+sorted[mid])/2;
+    };
+    const visible=(el)=>{
+      const s=style(el);
+      return Boolean(el&&s&&s.display!=="none"&&s.visibility!=="hidden"&&Number(s.opacity||1)>0);
+    };
     const bodyWidth=Math.max(document.documentElement.scrollWidth,document.body.scrollWidth);
-    const entry=q('.person-register-entry');
+    const rows=qa('.person-register-entry');
+    const ordinaryRows=rows.filter((row)=>!row.classList.contains('has-multiple-activities'));
+    const entry=rows[0]||null;
     const main=q('#personMainView');
     const registration=q('#registrationSummary');
     const eraNavigator=q('#personEraNavigator');
     const eraSearch=q('.person-era-search');
+    const tableHead=q('.person-monumental-register > .person-table-head');
     const bg=style(document.body)?.backgroundColor||'';
     const registrationStyle=style(registration);
     const eraNavigatorStyle=style(eraNavigator);
     const eraSearchStyle=style(eraSearch);
+    const ordinaryHeights=ordinaryRows.slice(0,30).map((row)=>Number(row.getBoundingClientRect().height.toFixed(2)));
+    const cardLikeCount=rows.filter((row)=>{
+      const s=style(row);
+      const radius=Math.max(...String(s?.borderRadius||"0").split(/\s+/).map((value)=>Number.parseFloat(value)||0));
+      return radius>0.5 || (s?.boxShadow&&s.boxShadow!=="none");
+    }).length;
+    const quietCounts=qa('.person-register-count.is-activity-count-quiet');
+    const multiRows=rows.filter((row)=>row.classList.contains('has-multiple-activities'));
+    const activityDomIntegrity=multiRows.every((row)=>
+      row.querySelectorAll('.person-card-activity').length===Number(row.dataset.activityCount||0)
+    );
+    const headerCells=tableHead?[...tableHead.querySelectorAll('.person-table-head-cell')].map((cell)=>String(cell.textContent||"").replace(/\s+/g," ").trim()):[];
     return {
       viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},
       bodyScrollWidth:bodyWidth,
       mainVisible:Boolean(main && !main.hidden),
-      registerCount:qa('.person-register-entry').length,
+      registerCount:rows.length,
+      ordinaryRegisterCount:ordinaryRows.length,
+      multiActivityCount:multiRows.length,
+      ordinaryMedianHeight:median(ordinaryHeights),
+      ordinarySampleHeights:ordinaryHeights,
+      cardLikeCount,
+      quietCountVisible:quietCounts.filter(visible).length,
+      activityDomIntegrity,
+      tableHeadVisible:visible(tableHead),
+      headerCells,
       mainPortraitCount:qa('#personMainView .person-main-groups .person-detail-portrait').length,
       firstEntryName:(entry?.querySelector('.person-main-name-link')?.textContent||entry?.querySelector('strong')?.textContent||'').trim(),
       firstEntryDomain:entry?.dataset?.representativeDomain||null,
@@ -128,6 +183,140 @@ async function collectMain(client){
       }:null,
       v9Loaded:[...document.styleSheets].some(s=>String(s.href||'').includes('atlas-ui-motion-material-v9.css')),
       v8Loaded:[...document.styleSheets].some(s=>String(s.href||'').includes('atlas-ui-mobile-v8.css'))
+    };
+  })()`);
+}
+
+async function verifyRegisterInteraction(client){
+  const target=await evaluate(client,`(() => {
+    const row=[...document.querySelectorAll('.person-register-entry[data-representative-domain]')]
+      .find((item)=>item.querySelector('.person-main-name-link'));
+    if(!row) return null;
+    const link=row.querySelector('.person-main-name-link');
+    const rect=link.getBoundingClientRect();
+    const rowStyle=getComputedStyle(row);
+    const after=getComputedStyle(row,'::after');
+    return {
+      personId:row.dataset.personId||null,
+      domain:row.dataset.representativeDomain||null,
+      normalNameColor:getComputedStyle(link).color,
+      rowBackground:rowStyle.backgroundColor,
+      linkRect:{x:rect.left+rect.width/2,y:rect.top+rect.height/2},
+      selectedRuleBefore:{opacity:after.opacity,background:after.backgroundColor}
+    };
+  })()`);
+  assert(target&&target.linkRect,"No domain-colored NamuWiki Person link available for interaction acceptance");
+
+  await client.call("Input.dispatchMouseEvent",{type:"mouseMoved",x:target.linkRect.x,y:target.linkRect.y});
+  await sleep(80);
+  const hover=await evaluate(client,`(() => {
+    const row=document.querySelector('.person-register-entry[data-person-id="${target.personId}"]');
+    const link=row?.querySelector('.person-main-name-link');
+    return row&&link?{
+      rowHovered:row.matches(':hover'),
+      nameColor:getComputedStyle(link).color,
+      decorationColor:getComputedStyle(link).textDecorationColor
+    }:null;
+  })()`);
+  await client.call("Input.dispatchMouseEvent",{type:"mouseMoved",x:1,y:1});
+
+  const focusAndSelected=await evaluate(client,`(() => {
+    const row=document.querySelector('.person-register-entry[data-person-id="${target.personId}"]');
+    const link=row?.querySelector('.person-main-name-link');
+    if(!row||!link) return null;
+    link.focus();
+    const focusLinkColor=getComputedStyle(link).color;
+    const linkOutline=getComputedStyle(link).outlineStyle;
+    row.focus();
+    const rowOutline=getComputedStyle(row).outlineStyle;
+    row.classList.add('is-selected');
+    const selectedNameColor=getComputedStyle(link).color;
+    const selectedBackground=getComputedStyle(row).backgroundColor;
+    const selectedAfter=getComputedStyle(row,'::after');
+    const selectedRule={opacity:selectedAfter.opacity,background:selectedAfter.backgroundColor,transform:selectedAfter.transform};
+    row.classList.remove('is-selected');
+    row.blur();
+    return {focusLinkColor,linkOutline,rowOutline,selectedNameColor,selectedBackground,selectedRule};
+  })()`);
+
+  return {...target,hover,...focusAndSelected};
+}
+
+async function verifyRegisterFiltering(client){
+  return evaluate(client,`(() => {
+    const api=window.ATLAS_PERSON_MAIN;
+    if(!api) return null;
+    const rows=()=>[...document.querySelectorAll('.person-register-entry')];
+    const first=rows()[0];
+    const domainRow=rows().find((row)=>row.dataset.representativeDomain);
+    if(!first||!domainRow) return null;
+    const firstName=(first.querySelector('.person-main-name-link')?.textContent||first.querySelector('strong')?.textContent||'').trim();
+    const domain=domainRow.dataset.representativeDomain;
+    const initialCount=rows().length;
+
+    api.setSearchQuery(firstName);
+    const searchRows=rows();
+    const searchCount=searchRows.length;
+    const searchContainsFirst=searchRows.some((row)=>
+      (row.querySelector('.person-main-name-link')?.textContent||row.querySelector('strong')?.textContent||'').trim()===firstName
+    );
+    api.setSearchQuery('');
+
+    api.setDomainFilter(domain);
+    const domainRows=rows();
+    const domainCount=domainRows.length;
+    const domainPure=domainRows.length>0&&domainRows.every((row)=>row.dataset.representativeDomain===domain);
+    api.setDomainFilter('');
+
+    return {
+      initialCount,
+      firstName,
+      searchCount,
+      searchContainsFirst,
+      domain,
+      domainCount,
+      domainPure,
+      restoredCount:rows().length
+    };
+  })()`);
+}
+
+async function verifyActivityDisclosure(client){
+  return evaluate(client,`(() => {
+    const row=document.querySelector('.person-register-entry.has-multiple-activities');
+    if(!row) return null;
+    const visible=(el)=>{
+      const s=getComputedStyle(el);
+      return s.display!=="none"&&s.visibility!=="hidden";
+    };
+    const activities=()=>[...row.querySelectorAll('.person-card-activity')];
+    const toggle=row.querySelector('.person-activity-toggle');
+    if(!toggle) return {missingToggle:true};
+    const selectedBefore=window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null;
+    const total=activities().length;
+    const collapsedVisible=activities().filter(visible).length;
+    const collapsedExpanded=toggle.getAttribute('aria-expanded');
+    toggle.click();
+    const expandedVisible=activities().filter(visible).length;
+    const expandedState=toggle.getAttribute('aria-expanded');
+    const selectedAfterExpand=window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null;
+    toggle.click();
+    const recollapsedVisible=activities().filter(visible).length;
+    const recollapsedState=toggle.getAttribute('aria-expanded');
+    const selectedAfterCollapse=window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null;
+    return {
+      missingToggle:false,
+      declared:Number(row.dataset.activityCount||0),
+      total,
+      collapsedVisible,
+      collapsedExpanded,
+      expandedVisible,
+      expandedState,
+      recollapsedVisible,
+      recollapsedState,
+      selectedBefore,
+      selectedAfterExpand,
+      selectedAfterCollapse
     };
   })()`);
 }
