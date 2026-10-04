@@ -264,10 +264,9 @@
     font-size: 6.5px;
   }
 
-  /* P2 dense Register: one factual row, one primary Activity line.
-   * The dark Monumental Register owns the semantic rail/name color; this later
-   * mobile layer only fixes responsive geometry and keeps one primary Activity
-   * visible until the explicit multi-Activity expansion pass. */
+  /* P3 dense Register: one factual row, one primary Activity line.
+   * Multi-Activity people expose an explicit in-row disclosure; this final
+   * mobile layer preserves that hierarchy without hiding information forever. */
   .person-monumental-register > .person-table-head {
     display: none;
   }
@@ -320,8 +319,19 @@
   }
 
   .person-monumental-register .person-register-count {
-    padding: 2px 2px 0 0;
+    padding: 1px 2px 0 0;
     font-size: 7px;
+  }
+
+  .person-monumental-register .person-activity-toggle {
+    gap: 2px;
+    padding-bottom: 1px;
+    font-size: 7px;
+  }
+
+  .person-monumental-register .person-activity-toggle-icon {
+    width: 7px;
+    font-size: 8px;
   }
 
   .person-monumental-register .person-register-activities {
@@ -338,7 +348,8 @@
     padding: 0 0 3px;
   }
 
-  .person-monumental-register .person-table-activities .person-card-activity:nth-child(n + 2) {
+  .person-monumental-register .person-register-entry.has-multiple-activities:not(.is-activities-expanded)
+    .person-table-activities .person-card-activity:nth-child(n + 2) {
     display: none;
   }
 
