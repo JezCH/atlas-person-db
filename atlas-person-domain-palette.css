@@ -49,6 +49,18 @@
   --atlas-person-domain-exploration-tint: rgba(217, 107, 30, 0.12);
   --atlas-person-domain-exploration-hover: rgba(217, 107, 30, 0.18);
   --atlas-person-domain-exploration-selected: rgba(217, 107, 30, 0.22);
+
+  /* Dark-surface text variants.
+   * Canonical semantic colors above remain unchanged; these tokens exist only
+   * to preserve readable Person-name foregrounds on the Graphite canvas. */
+  --atlas-person-domain-governance-on-dark: #e6c65a;
+  --atlas-person-domain-military-on-dark: #e06a6a;
+  --atlas-person-domain-science-on-dark: #78a9e8;
+  --atlas-person-domain-technology-on-dark: #a2adb8;
+  --atlas-person-domain-commerce-on-dark: #5bc68a;
+  --atlas-person-domain-culture-on-dark: #c07ac7;
+  --atlas-person-domain-religion-on-dark: #f0e7d0;
+  --atlas-person-domain-exploration-on-dark: #f29a55;
 }
 
 .person-card[data-representative-domain] {
@@ -57,6 +69,7 @@
   --person-domain-tint: transparent;
   --person-domain-hover: transparent;
   --person-domain-selected: transparent;
+  --person-domain-on-dark: var(--atlas-text-strong, #f0ece4);
 }
 
 .person-card[data-representative-domain="governance"] {
@@ -65,6 +78,7 @@
   --person-domain-tint: var(--atlas-person-domain-governance-tint);
   --person-domain-hover: var(--atlas-person-domain-governance-hover);
   --person-domain-selected: var(--atlas-person-domain-governance-selected);
+  --person-domain-on-dark: var(--atlas-person-domain-governance-on-dark);
 }
 .person-card[data-representative-domain="military"] {
   --person-domain-color: var(--atlas-person-domain-military);
@@ -72,6 +86,7 @@
   --person-domain-tint: var(--atlas-person-domain-military-tint);
   --person-domain-hover: var(--atlas-person-domain-military-hover);
   --person-domain-selected: var(--atlas-person-domain-military-selected);
+  --person-domain-on-dark: var(--atlas-person-domain-military-on-dark);
 }
 .person-card[data-representative-domain="science"] {
   --person-domain-color: var(--atlas-person-domain-science);
@@ -79,6 +94,7 @@
   --person-domain-tint: var(--atlas-person-domain-science-tint);
   --person-domain-hover: var(--atlas-person-domain-science-hover);
   --person-domain-selected: var(--atlas-person-domain-science-selected);
+  --person-domain-on-dark: var(--atlas-person-domain-science-on-dark);
 }
 .person-card[data-representative-domain="technology"] {
   --person-domain-color: var(--atlas-person-domain-technology);
@@ -86,6 +102,7 @@
   --person-domain-tint: var(--atlas-person-domain-technology-tint);
   --person-domain-hover: var(--atlas-person-domain-technology-hover);
   --person-domain-selected: var(--atlas-person-domain-technology-selected);
+  --person-domain-on-dark: var(--atlas-person-domain-technology-on-dark);
 }
 .person-card[data-representative-domain="commerce"] {
   --person-domain-color: var(--atlas-person-domain-commerce);
@@ -93,6 +110,7 @@
   --person-domain-tint: var(--atlas-person-domain-commerce-tint);
   --person-domain-hover: var(--atlas-person-domain-commerce-hover);
   --person-domain-selected: var(--atlas-person-domain-commerce-selected);
+  --person-domain-on-dark: var(--atlas-person-domain-commerce-on-dark);
 }
 .person-card[data-representative-domain="culture"] {
   --person-domain-color: var(--atlas-person-domain-culture);
@@ -100,6 +118,7 @@
   --person-domain-tint: var(--atlas-person-domain-culture-tint);
   --person-domain-hover: var(--atlas-person-domain-culture-hover);
   --person-domain-selected: var(--atlas-person-domain-culture-selected);
+  --person-domain-on-dark: var(--atlas-person-domain-culture-on-dark);
 }
 .person-card[data-representative-domain="religion"] {
   --person-domain-color: var(--atlas-person-domain-religion);
@@ -107,6 +126,7 @@
   --person-domain-tint: var(--atlas-person-domain-religion-tint);
   --person-domain-hover: var(--atlas-person-domain-religion-hover);
   --person-domain-selected: var(--atlas-person-domain-religion-selected);
+  --person-domain-on-dark: var(--atlas-person-domain-religion-on-dark);
 }
 .person-card[data-representative-domain="exploration"] {
   --person-domain-color: var(--atlas-person-domain-exploration);
@@ -114,6 +134,7 @@
   --person-domain-tint: var(--atlas-person-domain-exploration-tint);
   --person-domain-hover: var(--atlas-person-domain-exploration-hover);
   --person-domain-selected: var(--atlas-person-domain-exploration-selected);
+  --person-domain-on-dark: var(--atlas-person-domain-exploration-on-dark);
 }
 
 /*
@@ -153,21 +174,28 @@
   );
 }
 
-/* NamuWiki remains recognizable as a link, but the Person-domain underline is
- * the stronger identity cue. Text stays neutral so eight colored link texts do
- * not turn the table into a rainbow.
- */
-.person-card[data-representative-domain] .person-main-name-link {
-  color: #34405f;
+/* NamuWiki link state must never destroy Person-name legibility.
+ * Only the dark Monumental Register consumes the on-dark semantic foreground.
+ * Link and visited share the same semantic color; interaction is expressed by
+ * underline/focus treatment rather than by replacing the domain meaning. */
+.person-monumental-register .person-card[data-representative-domain] .person-main-name-link,
+.person-monumental-register .person-card[data-representative-domain] .person-main-name-link:visited {
+  color: var(--person-domain-on-dark);
   text-decoration-color: var(--person-domain-edge);
-  text-decoration-thickness: .11em;
+  text-decoration-thickness: .08em;
   text-underline-offset: .18em;
 }
 
-.person-card[data-representative-domain] .person-main-name-link:hover {
-  color: #202b40;
-  text-decoration-color: var(--person-domain-edge);
-  text-decoration-thickness: .14em;
+.person-monumental-register .person-card[data-representative-domain] .person-main-name-link:hover {
+  color: var(--person-domain-on-dark);
+  text-decoration-color: var(--person-domain-on-dark);
+  text-decoration-thickness: .12em;
+}
+
+.person-monumental-register .person-card[data-representative-domain] .person-main-name-link:focus-visible {
+  color: var(--person-domain-on-dark);
+  outline: 1px solid var(--atlas-honor-metal-strong, #c0ae88);
+  outline-offset: 2px;
 }
 
 .person-domain-form select {
