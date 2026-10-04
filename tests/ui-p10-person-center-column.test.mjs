@@ -40,5 +40,5 @@ test("P10 Production acceptance measures whether Activity facts actually cover t
 });
 
 test("P10 publishes the center-column Register asset",()=>{
-  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v1/);
+  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v2/);
 });

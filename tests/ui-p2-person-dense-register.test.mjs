@@ -41,7 +41,7 @@ test("P2 mobile Register stays compact while P10 fills the factual center column
   assert.match(mobile, /grid-template-areas: "identity activities range"/);
   assert.match(mobile, /\.person-table-activities \.person-card-activity \{[\s\S]*?display: flex;[\s\S]*?flex-wrap: wrap;/s);
   assert.match(mobile, /\.person-card-activity-role \{[\s\S]*?text-align: left;/s);
-  assert.match(mobile, /padding: 6px 0/);
+  assert.match(mobile, /padding: 7px 0/);
   assert.match(mobile, /> \.person-table-head \{\s*display: none;/s);
 });
 
@@ -54,7 +54,7 @@ test("P2 dark Register removes the old wide identity slab while preserving domai
 });
 
 test("P2 dense Register contract remains intact under the P3 Activity hierarchy assets", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v2/);
   assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p9-promote-approximation-v1/);
   assert.match(html, /atlas-person-header-sorting\.js\?v=20261004-ui-p2-dense-register-v1/);
 });

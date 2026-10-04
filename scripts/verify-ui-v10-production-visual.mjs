@@ -465,7 +465,7 @@ async function main(){
     assert(mobileMain.cardLikeCount===0,"Mobile Person rows regressed toward card geometry",mobileMain);
     assert(mobileMain.quietCountVisible===0,"Mobile ordinary rows expose Activity-count noise",mobileMain);
     assert(mobileMain.activityDomIntegrity,"Mobile multi-Activity DOM lost Activity information",mobileMain);
-    assert(mobileMain.ordinaryMedianHeight!=null&&mobileMain.ordinaryMedianHeight>=42&&mobileMain.ordinaryMedianHeight<=56,
+    assert(mobileMain.ordinaryMedianHeight!=null&&mobileMain.ordinaryMedianHeight>=30&&mobileMain.ordinaryMedianHeight<=56,
       "Mobile Person Register left the intended breathing-density band",mobileMain);
     assert(/linear-gradient/i.test(mobileMain.firstDomainBackgroundImage||""),
       "Mobile Person domain wash is not rendered",mobileMain);

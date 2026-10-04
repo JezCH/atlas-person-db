@@ -831,7 +831,7 @@
     row-gap: 0;
     min-width: 0;
     max-width: 100%;
-    padding: 6px 0;
+    padding: 7px 0;
     background-image: linear-gradient(
       90deg,
       var(--person-register-domain-wash) 0%,
@@ -846,14 +846,14 @@
   }
 
   .person-monumental-register .person-register-entry::before {
-    top: 8px;
+    top: 9px;
     left: 1px;
     height: 20px;
   }
 
   .person-monumental-register .person-register-entry.is-selected::after {
-    top: 3px;
-    bottom: 3px;
+    top: 4px;
+    bottom: 4px;
     left: -2px;
   }
 

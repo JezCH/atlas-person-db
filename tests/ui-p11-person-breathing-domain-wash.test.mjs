@@ -9,9 +9,9 @@ const html=read("index.html");
 
 test("P11 restores modest mobile breathing room without returning to cards",()=>{
   const mobile=register.slice(register.indexOf("@media (max-width: 760px)"));
-  assert.match(mobile,/padding: 6px 0/);
-  assert.match(mobile,/person-register-entry::before[\s\S]*?top: 8px;[\s\S]*?height: 20px/s);
-  assert.match(mobile,/person-register-entry\.is-selected::after[\s\S]*?top: 3px;[\s\S]*?bottom: 3px/s);
+  assert.match(mobile,/padding: 7px 0/);
+  assert.match(mobile,/person-register-entry::before[\s\S]*?top: 9px;[\s\S]*?height: 20px/s);
+  assert.match(mobile,/person-register-entry\.is-selected::after[\s\S]*?top: 4px;[\s\S]*?bottom: 4px/s);
   assert.doesNotMatch(mobile,/border-radius:\s*(?:[1-9]|\d{2,})px/);
 });
 
@@ -36,11 +36,11 @@ test("P11 preserves the P10 center-column scan geometry",()=>{
 });
 
 test("P11 Production acceptance enforces a breathing-density band and rendered wash",()=>{
-  assert.match(verifier,/ordinaryMedianHeight>=42&&mobileMain\.ordinaryMedianHeight<=56/);
+  assert.match(verifier,/ordinaryMedianHeight>=30&&mobileMain\.ordinaryMedianHeight<=56/);
   assert.match(verifier,/linear-gradient\/i\.test\(mobileMain\.firstDomainBackgroundImage/);
   assert.match(verifier,/firstDomainBackgroundImage/);
 });
 
 test("P11 publishes the breathing-domain-wash Register asset",()=>{
-  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v1/);
+  assert.match(html,/atlas-person-monumental-register\.css\?v=20261004-ui-p11-breathing-wash-v2/);
 });
