@@ -38,9 +38,9 @@ test("P2 desktop rows are materially denser than the former card-like Register",
 test("P2 mobile two-line register grammar remains intact after P4 compaction", () => {
   const mobile = css.slice(css.indexOf("@media (max-width: 760px)"));
   assert.match(mobile, /grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
-  assert.match(mobile, /grid-template-columns: minmax\(0, 1\.14fr\) minmax\(0, 1fr\)/);
-  assert.match(mobile, /"activity-head activity-role"\s*"activity-period activity-period"/s);
-  assert.match(mobile, /padding: 6px 0/);
+  assert.match(mobile, /grid-template-columns: minmax\(0, 1\.08fr\) minmax\(0, \.82fr\) auto/);
+  assert.match(mobile, /"activity-head activity-role activity-period"\s*"activity-meta activity-meta activity-meta"/s);
+  assert.match(mobile, /padding: 4px 0/);
   assert.match(mobile, /> \.person-table-head \{\s*display: none;/s);
 });
 
@@ -53,7 +53,7 @@ test("P2 dark Register removes the old wide identity slab while preserving domai
 });
 
 test("P2 dense Register contract remains intact under the P3 Activity hierarchy assets", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p5-interaction-state-v1/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p3-activity-hierarchy-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p7-fill-whitespace-v1/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p7-fill-whitespace-v1/);
   assert.match(html, /atlas-person-header-sorting\.js\?v=20261004-ui-p2-dense-register-v1/);
 });

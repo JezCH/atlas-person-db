@@ -40,7 +40,9 @@ test("P3 disclosure is accessible and cannot trigger Person selection", () => {
 
 test("P3 keeps single-Activity duplicate periods suppressed while multi-Activity periods stay factual", () => {
   assert.match(table, /const singleActivity = activityRows\.length === 1/);
-  assert.match(table, /period && singleActivity && normalizeRange\(period\.textContent\) === normalizeRange\(personRange\)/);
+  assert.match(table, /normalizeRangeWithoutApproximation/);
+  assert.match(table, /approximationOnlyDifference/);
+  assert.match(table, /appendApproximationNote\(role\)/);
   assert.match(register, /person-card-activity-period\.is-redundant \{\s*display: none;/s);
 });
 
@@ -54,7 +56,7 @@ test("P3 uses restrained honor-metal disclosure instead of a new badge grammar",
 });
 
 test("P3 browser assets use the Activity hierarchy cache key", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p5-interaction-state-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p7-fill-whitespace-v1/);
   assert.match(html, /atlas-ui-mobile-v8\.css\?v=20261004-ui-p4-mobile-compact-v1/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p3-activity-hierarchy-v1/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p7-fill-whitespace-v1/);
 });

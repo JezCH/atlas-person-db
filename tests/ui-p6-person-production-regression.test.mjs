@@ -10,7 +10,7 @@ const exact = read("scripts/verify-spacetime-production-exact-sha.mjs");
 test("P6 Production acceptance measures dense Register geometry instead of trusting CSS only", () => {
   assert.match(verifier, /ordinaryMedianHeight/);
   assert.match(verifier, /ordinaryMedianHeight<=56/);
-  assert.match(verifier, /ordinaryMedianHeight<=64/);
+  assert.equal((verifier.match(/ordinaryMedianHeight<=56/g) || []).length, 2);
   assert.match(verifier, /cardLikeCount===0/);
   assert.match(verifier, /quietCountVisible===0/);
   assert.match(verifier, /bodyScrollWidth<=391/);

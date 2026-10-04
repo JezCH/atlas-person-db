@@ -28,8 +28,8 @@ test("P4 keeps the mobile scan grammar to identity-range then Activity", () => {
   const mobile = register.slice(register.indexOf("@media (max-width: 760px)"));
   assert.match(mobile, /grid-template-areas:\s*"identity range"\s*"activities activities"/s);
   assert.match(mobile, /has-multiple-activities[\s\S]*?grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
-  assert.match(mobile, /row-gap: 3px/);
-  assert.match(mobile, /padding: 6px 0/);
+  assert.match(mobile, /row-gap: 1px/);
+  assert.match(mobile, /padding: 4px 0/);
   assert.match(mobile, /\.person-table-identity > \.person-card-canonical,[\s\S]*?\.person-table-status-inline \{\s*display: none;/s);
   assert.match(mobile, /\.person-register-range \{[\s\S]*?white-space: nowrap;/s);
 });
@@ -49,7 +49,7 @@ test("P4 keeps the compact multi-Activity control touchable without restoring ca
 });
 
 test("P4 browser assets use the compact mobile cache key while P3 runtime remains unchanged", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p5-interaction-state-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p7-fill-whitespace-v1/);
   assert.match(html, /atlas-ui-mobile-v8\.css\?v=20261004-ui-p4-mobile-compact-v1/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p3-activity-hierarchy-v1/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p7-fill-whitespace-v1/);
 });
