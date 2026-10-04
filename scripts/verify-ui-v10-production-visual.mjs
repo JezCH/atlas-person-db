@@ -127,6 +127,7 @@ async function collectMain(client){
     const rows=qa('.person-register-entry');
     const ordinaryRows=rows.filter((row)=>!row.classList.contains('has-multiple-activities'));
     const entry=rows[0]||null;
+    const domainEntry=rows.find((row)=>row.dataset.representativeDomain)||null;
     const main=q('#personMainView');
     const registration=q('#registrationSummary');
     const eraNavigator=q('#personEraNavigator');
@@ -184,6 +185,7 @@ async function collectMain(client){
       mainPortraitCount:qa('#personMainView .person-main-groups .person-detail-portrait').length,
       firstEntryName:(entry?.querySelector('.person-main-name-link')?.textContent||entry?.querySelector('strong')?.textContent||'').trim(),
       firstEntryDomain:entry?.dataset?.representativeDomain||null,
+      firstDomainBackgroundImage:style(domainEntry)?.backgroundImage||"",
       bodyBackground:bg,
       registrationSurface:registrationStyle?{
         background:registrationStyle.backgroundColor,
@@ -463,8 +465,10 @@ async function main(){
     assert(mobileMain.cardLikeCount===0,"Mobile Person rows regressed toward card geometry",mobileMain);
     assert(mobileMain.quietCountVisible===0,"Mobile ordinary rows expose Activity-count noise",mobileMain);
     assert(mobileMain.activityDomIntegrity,"Mobile multi-Activity DOM lost Activity information",mobileMain);
-    assert(mobileMain.ordinaryMedianHeight!=null&&mobileMain.ordinaryMedianHeight<=56,
-      "Mobile Person Register lost compact scan density",mobileMain);
+    assert(mobileMain.ordinaryMedianHeight!=null&&mobileMain.ordinaryMedianHeight>=42&&mobileMain.ordinaryMedianHeight<=56,
+      "Mobile Person Register left the intended breathing-density band",mobileMain);
+    assert(/linear-gradient/i.test(mobileMain.firstDomainBackgroundImage||""),
+      "Mobile Person domain wash is not rendered",mobileMain);
     assert(mobileMain.centerCoverageRate!=null&&mobileMain.centerCoverageRate>=0.8,
       "Mobile Person factual Activity column no longer occupies the visual center",mobileMain);
     assert(mobileMain.medianActivityWidthRatio!=null&&mobileMain.medianActivityWidthRatio>=0.24,
