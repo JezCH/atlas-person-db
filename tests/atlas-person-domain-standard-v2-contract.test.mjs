@@ -6,6 +6,7 @@ const root=path.resolve(new URL("..",import.meta.url).pathname);
 const contract=JSON.parse(fs.readFileSync(path.join(root,"contracts/person-domain-taxonomy.v2.json"),"utf8"));
 const cutover=JSON.parse(fs.readFileSync(path.join(root,"contracts/person-domain-v2-final-cutover.json"),"utf8"));
 const doc=fs.readFileSync(path.join(root,"docs/person/PERSON_DOMAIN_STANDARD_V2.md"),"utf8");
+const authoringFileValidator=fs.readFileSync(path.join(root,"scripts/validate-authoring-request-files.mjs"),"utf8");
 const codes=["governance","military","science","technology","commerce","culture","religion","exploration"];
 const labels=["정치·통치","군사","과학","공학·기술","경제·상업","인문·예술","종교","탐험"];
 
@@ -49,4 +50,10 @@ test("classification remains representative-identity based without a ninth secto
   assert.match(culture.scope,/history/i);
   assert.equal(contract.automatic_role_backfill,false);
   assert.equal(contract.secondary_domains,false);
+});
+
+
+test("authoring request file validation exposes only the v2 representative-domain vocabulary",()=>{
+  assert.match(authoringFileValidator,/REPRESENTATIVE_DOMAINS = new Set\(\['governance','military','science','technology','commerce','culture','religion','exploration'\]\)/);
+  assert.doesNotMatch(authoringFileValidator,/REPRESENTATIVE_DOMAINS = new Set\([^\n]*'knowledge'/);
 });
