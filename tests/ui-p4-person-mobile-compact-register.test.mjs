@@ -49,7 +49,7 @@ test("P4 keeps the compact multi-Activity control touchable without restoring ca
 });
 
 test("P4 browser assets use the compact mobile cache key while P3 runtime remains unchanged", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p4-mobile-compact-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p5-interaction-state-v1/);
   assert.match(html, /atlas-ui-mobile-v8\.css\?v=20261004-ui-p4-mobile-compact-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p3-activity-hierarchy-v1/);
 });

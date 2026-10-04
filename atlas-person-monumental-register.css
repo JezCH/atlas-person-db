@@ -304,13 +304,11 @@
   background: rgba(255, 255, 255, .018);
 }
 
-/* Neutral ceremonial selection: luminance + a longer honor-metal rule. */
-.person-monumental-register .person-register-entry.is-selected {
-  background: rgba(255, 255, 255, .038);
-  box-shadow: none;
-}
-
-.person-monumental-register .person-register-entry.is-selected::after {
+/* P5 interaction precedence:
+ * domain = identity, hover = transient luminance, selected = neutral honor metal,
+ * focus = accessibility outline. None of the interaction states replaces the
+ * Person's semantic domain foreground. */
+.person-monumental-register .person-register-entry::after {
   content: "";
   position: absolute;
   top: 4px;
@@ -319,6 +317,25 @@
   width: 1px;
   background: var(--atlas-honor-metal-strong);
   box-shadow: 0 0 0 1px rgba(192, 174, 136, .045);
+  opacity: 0;
+  transform: scaleY(.46);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.person-monumental-register .person-register-entry:hover::before {
+  opacity: 1;
+  transform: scaleY(1.08);
+}
+
+.person-monumental-register .person-register-entry.is-selected {
+  background: rgba(255, 255, 255, .038);
+  box-shadow: none;
+}
+
+.person-monumental-register .person-register-entry.is-selected::after {
+  opacity: 1;
+  transform: scaleY(1);
 }
 
 .person-monumental-register .person-register-entry:focus-visible {
@@ -380,13 +397,28 @@
 }
 
 .person-monumental-register .person-main-name-link:hover {
-  color: var(--atlas-text-strong);
   text-decoration: underline;
   text-decoration-color: rgba(192, 174, 136, .52);
   text-decoration-thickness: 1px;
 }
 
-.person-monumental-register .person-register-entry.is-selected .person-table-identity > strong {
+/* Domain foreground is immutable across interaction states. */
+.person-monumental-register .person-register-entry[data-representative-domain]:hover .person-table-identity > strong,
+.person-monumental-register .person-register-entry[data-representative-domain].is-selected .person-table-identity > strong,
+.person-monumental-register .person-register-entry[data-representative-domain]:focus-visible .person-table-identity > strong {
+  color: var(--person-domain-on-dark, #e9e5dd);
+}
+
+.person-monumental-register .person-register-entry[data-representative-domain] .person-main-name-link,
+.person-monumental-register .person-register-entry[data-representative-domain] .person-main-name-link:visited,
+.person-monumental-register .person-register-entry[data-representative-domain]:hover .person-main-name-link,
+.person-monumental-register .person-register-entry[data-representative-domain].is-selected .person-main-name-link,
+.person-monumental-register .person-register-entry[data-representative-domain]:focus-visible .person-main-name-link {
+  color: var(--person-domain-on-dark, #e9e5dd);
+}
+
+/* Rows without a representative domain may still use neutral selected emphasis. */
+.person-monumental-register .person-register-entry:not([data-representative-domain]).is-selected .person-table-identity > strong {
   color: #fffaf0;
 }
 

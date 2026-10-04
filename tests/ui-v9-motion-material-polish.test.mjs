@@ -7,7 +7,7 @@ const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "
 test("UI V9 loads last after the V8 mobile layer", () => {
   const html = read("index.html");
   const v8 = html.indexOf("atlas-ui-mobile-v8.css?v=20261004-ui-p4-mobile-compact-v1");
-  const v9 = html.indexOf("atlas-ui-motion-material-v9.css?v=20261004-mobile-drawer-close-v2");
+  const v9 = html.indexOf("atlas-ui-motion-material-v9.css?v=20261004-ui-p5-interaction-state-v1");
   assert.ok(v8 >= 0);
   assert.ok(v9 > v8);
 });
@@ -22,14 +22,16 @@ test("UI V9 defines one restrained motion system", () => {
   assert.doesNotMatch(css, /animation-iteration-count:\s*infinite/);
 });
 
-test("UI V9 makes Register selection a neutral metallic spotlight", () => {
-  const css = read("atlas-ui-motion-material-v9.css");
-  assert.match(css, /Person Register: selection is spotlight, not color replacement/);
-  assert.match(css, /\.person-register-entry::after \{/);
-  assert.match(css, /background: var\(--atlas-honor-metal-strong\)/);
-  assert.match(css, /opacity: 0/);
-  assert.match(css, /transform: scaleY\(\.46\)/);
-  assert.match(css, /\.person-register-entry\.is-selected::after \{\n  opacity: 1;\n  transform: scaleY\(1\)/);
+test("UI P5 keeps Register semantic state out of the motion layer", () => {
+  const motion = read("atlas-ui-motion-material-v9.css");
+  const register = read("atlas-person-monumental-register.css");
+  assert.match(motion, /Person Register: motion only; semantic state lives in Register/);
+  assert.match(motion, /\.person-register-entry::after \{\n  transition:/);
+  assert.doesNotMatch(motion, /\.person-register-entry::after \{[\s\S]*?background: var\(--atlas-honor-metal-strong\)/);
+  assert.doesNotMatch(motion, /\.person-register-entry:hover \.person-main-name-link,[\s\S]*?color: #f0ece4/);
+  assert.match(register, /P5 interaction precedence/);
+  assert.match(register, /\.person-register-entry::after \{[\s\S]*?background: var\(--atlas-honor-metal-strong\)/);
+  assert.match(register, /\.person-register-entry\.is-selected::after \{\s*opacity: 1;\s*transform: scaleY\(1\)/s);
 });
 
 test("UI V9 uses short entrance motion only for Detail and mobile drawer", () => {
@@ -67,6 +69,7 @@ test("UI V9 unifies focus-visible treatment across historical and operational su
   assert.match(css, /--atlas-focus-ring: rgba\(208,188,145,\.62\)/);
   assert.match(css, /\.nav-item:focus-visible,/);
   assert.match(css, /\.person-domain-filter:focus-visible,/);
+  assert.match(css, /\.person-monumental-register \.person-table-sort-button:focus-visible,/);
   assert.match(css, /\.spacetime-minimap-surface:focus-visible/);
   assert.match(css, /outline: 1px solid var\(--atlas-focus-ring\)/);
   assert.match(css, /outline-offset: 2px/);
