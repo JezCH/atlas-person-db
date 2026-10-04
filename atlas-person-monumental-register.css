@@ -607,8 +607,8 @@
   display: none;
 }
 
-/* Mid-width keeps the factual header but lets Activities use one compact
- * second line instead of expanding into a card-like block. */
+/* Mid-width keeps the factual header aligned to the same two-row grammar
+ * used by each Person entry: identity/range/count above, Activities below. */
 @media (max-width: 1100px) {
   :root {
     --atlas-register-era-width: 66px;
@@ -621,7 +621,17 @@
   .person-monumental-register > .person-table-head {
     position: static;
     top: auto;
+    grid-template-columns: var(--atlas-register-era-width) minmax(180px, 1fr) minmax(118px, .62fr) 48px;
+    grid-template-areas:
+      "era identity range count"
+      "era activities activities activities";
   }
+
+  .person-monumental-register > .person-table-head .person-table-col-era { grid-area: era; }
+  .person-monumental-register > .person-table-head .person-table-col-identity { grid-area: identity; }
+  .person-monumental-register > .person-table-head .person-table-col-range { grid-area: range; }
+  .person-monumental-register > .person-table-head .person-table-col-activities { grid-area: activities; }
+  .person-monumental-register > .person-table-head .person-table-col-count { grid-area: count; }
 
   .person-monumental-register .person-era-rows > .person-card,
   .person-monumental-register .person-register-entry {
