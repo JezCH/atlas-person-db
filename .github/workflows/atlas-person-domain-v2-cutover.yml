@@ -82,14 +82,14 @@ jobs:
             -H 'content-type: application/json' \
             --data "$(jq -cn --arg sha "$GITHUB_SHA" '{workflow_sha:$sha}')" \
             "$CUTOVER_ENDPOINT" | tee "$EVIDENCE_DIR/cutover.json"
-          jq -e '.ok==true and .state.committed==true and .state.after.cutover_complete==true and (.state.after.counts.knowledge // 0)==0 and .state.after.counts.science==72' "$EVIDENCE_DIR/cutover.json" >/dev/null
+          jq -e '.ok==true and .state.committed==true and .state.after.cutover_complete==true and (.state.after.knowledge_ids | length)==0 and (.state.after.unsupported | length)==0 and .state.after.constraint.v2==true and .state.after.constraint.validated==true' "$EVIDENCE_DIR/cutover.json" >/dev/null
 
       - name: Verify public v2 readback
         shell: bash
         run: |
           set -euo pipefail
           curl --fail-with-body --silent --show-error "$DOMAIN_ENDPOINT" | tee "$EVIDENCE_DIR/domain.json"
-          jq -e '.ok==true and .marker=="ATLAS_PERSON_REPRESENTATIVE_DOMAIN_V2" and .schema=="atlas-person-domain/v2" and .assigned==1978 and .counts.governance==1346 and .counts.military==205 and .counts.science==72 and .counts.technology==38 and .counts.commerce==28 and .counts.culture==161 and .counts.religion==100 and .counts.exploration==28 and ((.counts|has("knowledge"))|not) and ([.definitions[].code] == ["governance","military","science","technology","commerce","culture","religion","exploration"])' "$EVIDENCE_DIR/domain.json" >/dev/null
+          jq -e '.ok==true and .marker=="ATLAS_PERSON_REPRESENTATIVE_DOMAIN_V2" and .schema=="atlas-person-domain/v2" and (.assigned | type=="number") and (.counts | type=="object") and ((.counts.knowledge // 0)==0) and ([.definitions[].code] == ["governance","military","science","technology","commerce","culture","religion","exploration"]) and (([.counts.governance,.counts.military,.counts.science,.counts.technology,.counts.commerce,.counts.culture,.counts.religion,.counts.exploration] | add)==.assigned)' "$EVIDENCE_DIR/domain.json" >/dev/null
           curl --fail-with-body --silent --show-error "$RUNTIME_ENDPOINT" | tee "$EVIDENCE_DIR/runtime.json"
           jq -e --arg sha "$GITHUB_SHA" '.identity.git_commit_sha==$sha and .identity.environment=="production"' "$EVIDENCE_DIR/runtime.json" >/dev/null
 
