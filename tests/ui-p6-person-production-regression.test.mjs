@@ -17,14 +17,16 @@ test("P6 Production acceptance measures dense Register geometry instead of trust
   assert.match(verifier, /tableHeadVisible/);
 });
 
-test("P6 Production acceptance proves Activity disclosure preserves every Activity", () => {
-  assert.match(verifier, /async function verifyActivityDisclosure/);
+test("P12 Production acceptance proves every multi-Activity row stays visible and aligned", () => {
+  assert.match(verifier, /async function verifyMultiActivityVisibility/);
   assert.match(verifier, /declared:Number\(row\.dataset\.activityCount\|\|0\)/);
-  assert.match(verifier, /collapsedVisible===1/);
-  assert.match(verifier, /expandedVisible===desktopActivityDisclosure\.total/);
-  assert.match(verifier, /expandedVisible===mobileActivityDisclosure\.total/);
-  assert.match(verifier, /selectedBefore===desktopActivityDisclosure\.selectedAfterExpand/);
-  assert.match(verifier, /selectedBefore===mobileActivityDisclosure\.selectedAfterExpand/);
+  assert.match(verifier, /visibleCount:activities\.filter\(visible\)\.length/);
+  assert.match(verifier, /!desktopMultiActivity\.hasToggle/);
+  assert.match(verifier, /mobileMultiActivity\.visibleCount===mobileMultiActivity\.total/);
+  assert.match(verifier, /!mobileMultiActivity\.hasToggle&&!mobileMultiActivity\.countVisible/);
+  assert.match(verifier, /!mobileMultiActivity\.rangeVisible/);
+  assert.match(verifier, /activityAreaRightDelta<=1\.5/);
+  assert.match(verifier, /periodRightDeltas\.every\(\(delta\)=>delta<=1\.5\)/);
 });
 
 test("P6 Production acceptance exercises search and canonical domain filters then restores the result set", () => {
