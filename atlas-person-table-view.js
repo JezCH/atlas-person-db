@@ -202,7 +202,6 @@
     if (!toggle) return;
     const row = toggle.closest?.(".person-register-entry[data-person-id]");
     if (!row) return;
-    event.preventDefault();
     event.stopPropagation();
     setActivityExpansion(row, toggle, toggle.getAttribute("aria-expanded") !== "true");
   }
