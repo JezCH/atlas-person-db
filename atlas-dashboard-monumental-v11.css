@@ -1,0 +1,580 @@
+/* ATLAS Dashboard V11 — Monumental Control Center
+ * Presentation-only override for the canonical Dashboard.
+ * Reuses the V3 Graphite / Champagne foundation and canonical domain colors.
+ */
+
+.dashboard-control-center {
+  --dashboard-bg: var(--atlas-canvas, #121518);
+  --dashboard-surface: var(--atlas-surface-1, #191d21);
+  --dashboard-surface-2: var(--atlas-surface-2, #20252a);
+  --dashboard-surface-3: var(--atlas-surface-3, #262c31);
+  --dashboard-edge: var(--atlas-divider, #30363b);
+  --dashboard-edge-soft: var(--atlas-divider-soft, #272d32);
+  --dashboard-metal: var(--atlas-honor-metal, #9c927d);
+  --dashboard-metal-strong: var(--atlas-honor-metal-strong, #c0ae88);
+  --dashboard-text-strong: var(--atlas-text-strong, #f0ece4);
+  --dashboard-text: var(--atlas-text, #d8d5ce);
+  --dashboard-text-secondary: var(--atlas-text-secondary, #a7adb1);
+  --dashboard-text-muted: var(--atlas-text-muted, #6e767c);
+  color: var(--dashboard-text);
+  gap: 12px;
+}
+
+.dashboard-control-center .card {
+  border: 1px solid var(--dashboard-edge);
+  border-radius: 4px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.011), transparent 72px),
+    var(--dashboard-surface);
+  color: var(--dashboard-text);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.018),
+    0 10px 30px rgba(0,0,0,.08);
+}
+
+.dashboard-control-center .eyebrow {
+  color: var(--dashboard-metal);
+  letter-spacing: .16em;
+}
+
+/* Hero: a control-room ledger header, not a SaaS promo card. */
+.dashboard-hero {
+  position: relative;
+  padding: 18px 20px 18px 22px;
+  overflow: hidden;
+  border-left: 2px solid rgba(192,174,136,.68) !important;
+  background:
+    linear-gradient(90deg, rgba(192,174,136,.035), transparent 36%),
+    linear-gradient(180deg, rgba(255,255,255,.012), transparent 84px),
+    var(--dashboard-surface) !important;
+}
+
+.dashboard-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 20px 0 22px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(192,174,136,.24), transparent 72%);
+  pointer-events: none;
+}
+
+.dashboard-hero h2 {
+  color: var(--dashboard-text-strong);
+  font-family: var(--atlas-font-display, "Noto Serif KR", "Nanum Myeongjo", AppleMyungjo, Batang, Georgia, serif);
+  font-size: clamp(24px,3vw,34px);
+  font-weight: 620;
+  letter-spacing: -.025em;
+}
+
+.dashboard-hero p {
+  color: var(--dashboard-text-secondary);
+}
+
+#atlasDashboardRefresh {
+  border-color: #3a4247;
+  border-radius: 5px;
+  background: #15191c;
+  color: #cfc9bd;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.018);
+}
+
+#atlasDashboardRefresh:hover {
+  border-color: #6f6652;
+  background: #1c2125;
+  color: var(--dashboard-text-strong);
+}
+
+/* KPI register: operational numbers remain strong, surfaces recede. */
+.dashboard-kpi-grid {
+  gap: 8px;
+}
+
+.dashboard-kpi {
+  min-height: 96px;
+  padding: 14px 14px 13px;
+  gap: 6px;
+  border-radius: 3px !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.009), transparent 60px),
+    #171b1e !important;
+}
+
+.dashboard-kpi::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  margin-bottom: 2px;
+  background: rgba(192,174,136,.34);
+}
+
+.dashboard-kpi small {
+  color: #858d92;
+  font-size: 9px;
+  letter-spacing: .105em;
+}
+
+.dashboard-kpi strong {
+  color: var(--dashboard-text-strong);
+  font-size: 27px;
+  font-weight: 760;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.025em;
+}
+
+.dashboard-kpi span {
+  color: #8f979c;
+}
+
+.dashboard-kpi-action {
+  color: inherit;
+}
+
+.dashboard-kpi-action:not(:disabled)::after {
+  color: var(--dashboard-metal-strong);
+  opacity: .84;
+}
+
+.dashboard-kpi-action:hover:not(:disabled) {
+  border-color: #575f64;
+  background:
+    linear-gradient(180deg, rgba(192,174,136,.024), transparent 70px),
+    #1b2024 !important;
+  box-shadow: inset 2px 0 0 rgba(192,174,136,.48);
+  transform: none;
+}
+
+.dashboard-kpi-action:focus-visible,
+.dashboard-issue-grid button:focus-visible,
+.dashboard-issue-grid .dashboard-attention-link:focus-visible,
+.dashboard-breakdown-action:focus-visible,
+.dashboard-completeness td button:focus-visible,
+.dashboard-polity-toolbar button:focus-visible,
+.dashboard-polity-row:focus-visible,
+.dashboard-tool-actions .btn:focus-visible {
+  outline: 1px solid rgba(208,188,145,.62);
+  outline-offset: 2px;
+}
+
+/* Shared dashboard panels. */
+.dashboard-panel,
+.dashboard-tools {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.008), transparent 56px),
+    var(--dashboard-surface) !important;
+}
+
+.dashboard-panel-head {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--dashboard-edge-soft);
+}
+
+.dashboard-panel-head h3,
+.dashboard-tools h3 {
+  color: var(--dashboard-text-strong);
+  font-family: var(--atlas-font-display, "Noto Serif KR", "Nanum Myeongjo", AppleMyungjo, Batang, Georgia, serif);
+  font-weight: 620;
+  letter-spacing: -.018em;
+}
+
+.dashboard-panel-head > span,
+.dashboard-tools p,
+.dashboard-progress-copy span,
+.dashboard-progress-meta,
+.dashboard-publication-meta,
+.dashboard-drift-card span,
+.dashboard-timeline-copy small,
+.dashboard-timeline-meta small {
+  color: var(--dashboard-text-muted);
+}
+
+.dashboard-progress-copy strong,
+.dashboard-progress-copy > b,
+.dashboard-progress-meta b {
+  color: var(--dashboard-text);
+}
+
+.dashboard-progress-track,
+.dashboard-namuwiki-track,
+.dashboard-work-segment-track {
+  background: #101417;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.022);
+}
+
+.dashboard-progress-track > span {
+  background: var(--dashboard-metal);
+}
+
+/* Quiet secondary cards / rows. */
+.dashboard-issue-grid button,
+.dashboard-issue-grid .dashboard-attention-link,
+.dashboard-breakdown-row,
+.dashboard-domain-row,
+.dashboard-source-card,
+.dashboard-publication-stage,
+.dashboard-drift-card,
+.dashboard-polity-summary article,
+.dashboard-polity-row,
+.dashboard-work-segment-item {
+  border-color: #30373c;
+  border-radius: 4px;
+  background: #15191c;
+  color: var(--dashboard-text);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.012);
+}
+
+.dashboard-issue-grid button:hover:not(:disabled),
+.dashboard-issue-grid .dashboard-attention-link:hover,
+.dashboard-breakdown-action:hover,
+.dashboard-polity-row:hover:not(:disabled) {
+  border-color: #51595e;
+  background: #1a1f22;
+  color: var(--dashboard-text-strong);
+  box-shadow: inset 2px 0 0 rgba(192,174,136,.38);
+  transform: none;
+}
+
+.dashboard-issue-grid button:disabled,
+.dashboard-issue-grid button:disabled:hover {
+  border-color: #2a3034;
+  background: #13171a;
+  color: #70787d;
+  opacity: .72;
+}
+
+.dashboard-issue-grid span,
+.dashboard-breakdown-row span,
+.dashboard-domain-row span:nth-child(2),
+.dashboard-publication-stage span,
+.dashboard-polity-summary span,
+.dashboard-polity-name small,
+.dashboard-polity-metrics small,
+.dashboard-work-segment-item > span {
+  color: #939ba0;
+}
+
+.dashboard-issue-grid strong,
+.dashboard-breakdown-row b,
+.dashboard-domain-row b,
+.dashboard-source-card strong,
+.dashboard-source-card > b,
+.dashboard-publication-stage strong,
+.dashboard-drift-card strong,
+.dashboard-polity-summary strong,
+.dashboard-polity-name strong,
+.dashboard-polity-metrics b,
+.dashboard-work-segment-item > b {
+  color: #e6e1d8;
+}
+
+.dashboard-issue-grid .dashboard-attention-link small,
+.dashboard-issue-grid button small,
+.dashboard-source-card small {
+  color: #747d82;
+}
+
+.dashboard-source-card[data-source-state="ready"] .dashboard-source-dot {
+  background: var(--atlas-success, #79b995);
+}
+
+.dashboard-source-card[data-source-state="error"] .dashboard-source-dot {
+  background: var(--atlas-danger, #d77272);
+}
+
+.dashboard-source-card > p,
+.dashboard-error p,
+.dashboard-drift-meta [data-runtime-drift="true"] {
+  color: #d77272;
+}
+
+/* Loading must already look like the finished dark product. */
+.dashboard-loading-grid {
+  gap: 8px;
+}
+
+.dashboard-loading-grid span {
+  height: 92px;
+  border: 1px solid #2e353a;
+  border-radius: 4px;
+  background:
+    linear-gradient(90deg,#15191c 0%,#1d2226 48%,#15191c 100%);
+  background-size: 220% 100%;
+  animation: dashboard-pulse 1.35s linear infinite;
+}
+
+.dashboard-error {
+  border: 1px solid #473238;
+  border-radius: 4px;
+  background: #1b1719;
+  color: var(--dashboard-text);
+}
+
+/* Tables / matrix: ledger surfaces. */
+.dashboard-heatmap-wrap,
+.dashboard-completeness-wrap,
+.dashboard-runtime-exclusion-wrap {
+  border-color: #30373c;
+  border-radius: 4px;
+  background: #121619;
+}
+
+.dashboard-heatmap th,
+.dashboard-heatmap td,
+.dashboard-completeness th,
+.dashboard-completeness td,
+.dashboard-runtime-exclusion-table th,
+.dashboard-runtime-exclusion-table td {
+  border-color: #2a3034;
+  color: var(--dashboard-text);
+  background: #14181b;
+}
+
+.dashboard-heatmap thead th,
+.dashboard-completeness thead th,
+.dashboard-runtime-exclusion-table th {
+  background: #181d20;
+  color: #92999e;
+}
+
+.dashboard-heatmap tbody th,
+.dashboard-heatmap tfoot th {
+  background: #171b1e;
+  color: var(--dashboard-text);
+}
+
+.dashboard-heatmap tbody th small,
+.dashboard-heatmap tfoot th small,
+.dashboard-completeness tbody th small,
+.dashboard-runtime-exclusion-table td small {
+  color: #747c81;
+}
+
+.dashboard-heatmap .dashboard-heatmap-total-head,
+.dashboard-heatmap .dashboard-heatmap-total-cell,
+.dashboard-heatmap tfoot th,
+.dashboard-heatmap tfoot td {
+  background: #1b2023;
+}
+
+.dashboard-heatmap td::before,
+.dashboard-heatmap tbody td::before {
+  border-radius: 2px;
+}
+
+.dashboard-heatmap-unavailable {
+  border-color: #384045;
+  border-radius: 4px;
+  color: #7f888d;
+  background: #14181b;
+}
+
+.dashboard-completeness td button {
+  border-color: #3d454a;
+  border-radius: 999px;
+  background: #171c20;
+  color: #c9c1b1;
+  text-decoration: none;
+}
+
+.dashboard-completeness td button:hover {
+  border-color: #6d6451;
+  background: #1e2326;
+  color: var(--dashboard-text-strong);
+  box-shadow: none;
+}
+
+.dashboard-unit-badge,
+.dashboard-timeline-summary > span {
+  background: #20262a;
+  color: #8f979c;
+}
+
+/* Timeline / publication / drift. */
+.dashboard-timeline::before {
+  background: #343b40;
+}
+
+.dashboard-timeline-node {
+  background: #171b1e;
+  border-color: var(--dashboard-metal);
+}
+
+.dashboard-timeline-copy strong,
+.dashboard-timeline-meta b {
+  color: #d9d5cc;
+}
+
+.dashboard-publication-stage:not(:last-child)::after {
+  color: #666f74;
+}
+
+.dashboard-publication-stage small,
+.dashboard-drift-card small {
+  color: #8a9297;
+}
+
+.dashboard-drift-card[data-drift-state="drift"] {
+  border-color: rgba(215,114,114,.48);
+  background: rgba(105,45,45,.13);
+}
+
+/* Polity concentration / toolbar. */
+.dashboard-polity-toolbar {
+  border-color: var(--dashboard-edge-soft);
+  color: #8b9398;
+}
+
+.dashboard-polity-toolbar button {
+  border-color: #343b40;
+  background: #15191c;
+  color: #8f979c;
+}
+
+.dashboard-polity-toolbar button[aria-pressed="true"] {
+  border-color: rgba(192,174,136,.52);
+  background: #1d2225;
+  color: #ddd6c8;
+  box-shadow: inset 0 -1px 0 rgba(192,174,136,.38);
+}
+
+.dashboard-polity-bar {
+  background: #101417;
+}
+
+.dashboard-polity-bar i {
+  background: var(--dashboard-metal);
+}
+
+/* Work-segment legend preserves semantic domain colors; everything else stays neutral. */
+.dashboard-work-segment-item[data-empty="true"],
+.dashboard-namuwiki-legend-item[data-empty="true"] {
+  opacity: .48;
+}
+
+.dashboard-work-segment-item > b small,
+.dashboard-namuwiki-legend-item > b small {
+  color: #70797e;
+}
+
+.dashboard-namuwiki-summary,
+.dashboard-namuwiki-legend-item,
+.dashboard-heatmap-key {
+  color: #8e969b;
+}
+
+.dashboard-heatmap-key b,
+.dashboard-namuwiki-summary b {
+  color: #d7d2c8;
+}
+
+.dashboard-heatmap-scale i {
+  border-color: #3a4247;
+}
+
+/* Buttons in the utility strip inherit the global dark control language. */
+.dashboard-tool-actions .btn {
+  border-color: #394147;
+  background: #171c20;
+  color: #cbc5b9;
+}
+
+.dashboard-tool-actions .btn:hover {
+  border-color: #6f6652;
+  background: #1d2225;
+  color: var(--dashboard-text-strong);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Domain signal remains semantic and small. */
+.dashboard-domain-swatch {
+  box-shadow: 0 0 0 1px #15191c;
+}
+
+/* Mobile: keep the same hierarchy, reduce simultaneous surface weight. */
+@media (max-width: 600px) {
+  .dashboard-control-center {
+    gap: 9px;
+  }
+
+  .dashboard-hero {
+    padding: 16px 14px 15px 16px;
+    border-left-width: 1px !important;
+  }
+
+  .dashboard-hero h2 {
+    margin-top: 5px;
+    font-size: 24px;
+    line-height: 1.22;
+  }
+
+  .dashboard-hero p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .dashboard-hero::after {
+    right: 14px;
+    left: 16px;
+  }
+
+  #atlasDashboardRefresh {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .dashboard-kpi-grid {
+    gap: 7px;
+  }
+
+  .dashboard-kpi {
+    min-height: 94px;
+    padding: 12px 11px;
+  }
+
+  .dashboard-kpi strong {
+    font-size: 24px;
+  }
+
+  .dashboard-kpi small {
+    font-size: 8px;
+  }
+
+  .dashboard-kpi span {
+    font-size: 9px;
+  }
+
+  .dashboard-panel,
+  .dashboard-tools {
+    padding: 13px;
+  }
+
+  .dashboard-panel-head {
+    padding-bottom: 8px;
+  }
+
+  .dashboard-panel-head h3,
+  .dashboard-tools h3 {
+    font-size: 17px;
+  }
+
+  .dashboard-loading-grid span {
+    height: 86px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-loading-grid span {
+    animation: none;
+  }
+
+  .dashboard-kpi-action,
+  .dashboard-issue-grid button,
+  .dashboard-issue-grid .dashboard-attention-link,
+  .dashboard-breakdown-action,
+  .dashboard-completeness td button,
+  .dashboard-polity-row,
+  .dashboard-polity-toolbar button,
+  .dashboard-tool-actions .btn {
+    transition: none !important;
+  }
+}
