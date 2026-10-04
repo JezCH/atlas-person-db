@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:registration-queue-20261004:rosalind-franklin:person-only:v1",
+  "registration_candidate_id": "workshop-20260924-054",
+  "person": {
+    "canonical_name_en": "Rosalind Franklin",
+    "display_name_ko": "로절린드 프랭클린",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-04",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "other_reviewed_exclusion",
+    "reason": "Canonical Person identity and representative domain are registered from the approved queue candidate in this batch without asserting a polity-bound Activity. Timeline inclusion remains separate and requires a reviewed Activity.",
+    "basis_code": "identity_registered_activity_review_deferred",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "registration_scope_only",
+      "sources": [
+        "https://www.kcl.ac.uk/people/rosalind-franklin"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "science",
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Rosalind Franklin — King's College London",
+      "canonical_url": "https://www.kcl.ac.uk/people/rosalind-franklin",
+      "citation_text": "King's College London identifies Rosalind Franklin (1920–1958) as a biophysicist whose X-ray crystallography, including Photograph 51, was central to understanding DNA structure and whose later work helped found structural virology.",
+      "locator": "Biography"
+    }
+  ],
+  "review_context": {
+    "request_batch": "REGISTRATION-QUEUE-8-20261004",
+    "queue_candidate_id": "workshop-20260924-054",
+    "domain_standard": "Person Domain v2",
+    "namuwiki_review": "Exact indexed NamuWiki search did not establish an independent exact Person document; no guessed URL.",
+    "timeline_decision": "Identity-first queue registration only; no polity-bound Activity is asserted in this batch."
+  }
+}

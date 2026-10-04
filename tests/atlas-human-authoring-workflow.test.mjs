@@ -20,6 +20,9 @@ test('all-human authoring batches preflight then apply through the runtime-race-
   assert.match(workflow, /post_human_batch "apply_batch"/);
   assert.match(workflow, /manifest_paths:\$manifest_paths/);
   assert.match(workflow, /requests:\$requests/);
+  assert.match(workflow, /candidate_ids:\$candidate_ids/);
+  assert.match(workflow, /registration_candidate_id \/\/ null/);
+  assert.match(workflow, /ready_candidate_ids/);
   assert.match(workflow, /oidc_token="\$\(request_oidc\)"/);
   assert.match(workflow, /AUTHORING_RUNTIME_SHA_MISMATCH/);
   assert.match(workflow, /refresh_runtime_sha/);
@@ -79,4 +82,9 @@ test('person-only queue registration uses canonical science and forwards candida
   assert.match(workflow, /candidate_ids:\$candidate_ids/);
   assert.match(workflow, /ready_candidate_ids/);
   assert.match(workflow, /post_human_batch "apply_batch" "\$ready_paths" "\$ready_requests" "\$ready_candidate_ids" "\$response"/);
+});
+
+test('person-only workflow uses active science domain and retires knowledge from new writes', () => {
+  assert.match(workflow, /\.representative_domain \| IN\("governance","military","science","technology","commerce","culture","religion","exploration"\)/);
+  assert.doesNotMatch(workflow, /\.representative_domain \| IN\([^\n]*"knowledge"/);
 });
