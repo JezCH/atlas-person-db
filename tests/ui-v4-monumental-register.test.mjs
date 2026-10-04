@@ -7,7 +7,7 @@ const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "
 test("UI P2 loads the dense Monumental Register after the global visual foundation", () => {
   const html = read("index.html");
   const foundation = html.indexOf("atlas-ui-visual-foundation.css");
-  const register = html.indexOf("atlas-person-monumental-register.css?v=20261004-ui-p11-breathing-wash-v1");
+  const register = html.indexOf("atlas-person-monumental-register.css?v=20261004-ui-p11-breathing-wash-v2");
   assert.ok(foundation >= 0, "global visual foundation must remain loaded");
   assert.ok(register > foundation, "dense Register layer must load after V3 foundation");
   assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p9-promote-approximation-v1/);
