@@ -11,7 +11,7 @@ test("UI V5 loads Chronicle Detail after the global shell and Person Register", 
   const detail = html.indexOf("atlas-person-chronicle-detail.css");
   assert.ok(foundation >= 0 && register > foundation);
   assert.ok(detail > register, "Chronicle Detail must override the older detail/table presentation layers");
-  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261003-ui-v5-detail-v1/);
+  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261004-detail-d1-domain-semantics-v1/);
   assert.match(html, /atlas-person-main\.js\?v=20261003-ui-v5-detail-v1/);
 });
 
@@ -62,6 +62,8 @@ test("UI V5 gives portrait presence without domain-colored surfaces", () => {
   assert.match(css, /\.person-chronicle-hero \.person-detail-portrait/);
   assert.match(css, /width: 184px/);
   assert.match(css, /data-representative-domain="military"/);
+  assert.match(css, /data-representative-domain="science"/);
+  assert.doesNotMatch(css, /data-representative-domain="knowledge"/);
   assert.match(css, /--person-detail-domain-wash: rgba\(184,58,58,\.045\)/);
   assert.match(css, /radial-gradient\(circle at 18% 4%, var\(--person-detail-domain-wash\), transparent 25rem\)/);
   assert.match(css, /width: min\(250px, 74vw\)/);
