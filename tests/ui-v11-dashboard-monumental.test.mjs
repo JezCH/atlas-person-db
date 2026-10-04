@@ -7,7 +7,7 @@ const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "
 test("UI V11 loads Dashboard Monumental presentation after the canonical Dashboard CSS", () => {
   const nav = read("atlas-main-authority-nav.js");
   const base = nav.indexOf('appendStylesheetOnce("./atlas-dashboard.css?v=20261001-canonical-nontimeline-v1")');
-  const v11 = nav.indexOf('appendStylesheetOnce("./atlas-dashboard-monumental-v11.css?v=20261004-dashboard-v11")');
+  const v11 = nav.indexOf('appendStylesheetOnce("./atlas-dashboard-monumental-v11.css?v=20261004-dashboard-v11-r2")');
   assert.ok(base >= 0);
   assert.ok(v11 > base);
 });
@@ -25,6 +25,8 @@ test("UI V11 removes bright SaaS card material from Dashboard hero, KPI, panels,
   assert.match(css, /linear-gradient\(90deg,#15191c 0%,#1d2226 48%,#15191c 100%\)/);
   assert.doesNotMatch(css, /background:\s*#fff\b/i);
   assert.doesNotMatch(css, /background:\s*white\b/i);
+  assert.match(css, /\.dashboard-namuwiki-legend-item \{[\s\S]*background: #15191c/);
+  assert.match(css, /\.dashboard-polity-toolbar > div \{[\s\S]*background: #121619/);
 });
 
 test("UI V11 preserves semantic domain signals and uses the global honor metal for neutral selection", () => {
