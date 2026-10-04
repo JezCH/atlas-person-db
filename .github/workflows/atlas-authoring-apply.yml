@@ -979,7 +979,6 @@ jobs:
             ready_paths="$(jq -cn --argjson all "$manifest_paths" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
             ready_requests="$(jq -cn --argjson all "$requests" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
             ready_candidate_ids="$(jq -cn --argjson all "$candidate_ids" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
-            ready_candidate_ids="$(jq -cn --argjson all "$candidate_ids" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
 
             verify_queue="/tmp/atlas-authoring-evidence/verify-queue.jsonl"
             : > "$verify_queue"
