@@ -35,12 +35,12 @@ test("P2 desktop rows are materially denser than the former card-like Register",
   assert.doesNotMatch(css, /font-size: clamp\(18px, 1\.45vw, 22px\)/);
 });
 
-test("P2 mobile uses a two-line register grammar rather than a stacked mini-card", () => {
+test("P2 mobile two-line register grammar remains intact after P4 compaction", () => {
   const mobile = css.slice(css.indexOf("@media (max-width: 760px)"));
   assert.match(mobile, /grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
   assert.match(mobile, /grid-template-columns: minmax\(0, 1\.14fr\) minmax\(0, 1fr\)/);
   assert.match(mobile, /"activity-head activity-role"\s*"activity-period activity-period"/s);
-  assert.match(mobile, /padding: 8px 0 7px/);
+  assert.match(mobile, /padding: 6px 0/);
   assert.match(mobile, /> \.person-table-head \{\s*display: none;/s);
 });
 
