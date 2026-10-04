@@ -14,21 +14,21 @@ test("P4 gives mobile Person Register one geometry owner", () => {
   assert.doesNotMatch(shell, /\.person-monumental-register \.person-table-activities \.person-card-activity \{[\s\S]*?grid-template-columns:/);
 });
 
-test("P4 ordinary mobile rows remove the Activity-count track completely", () => {
+test("P4 ordinary mobile rows keep Activity count quiet under P10 center-fill geometry", () => {
   const mobile = register.slice(register.indexOf("@media (max-width: 760px)"));
   assert.match(mobile, /--atlas-person-mobile-count-width: 42px/);
-  assert.match(mobile, /grid-template-columns: minmax\(0, 1fr\) auto;\s*grid-template-areas:\s*"identity range"\s*"activities activities"/s);
-  assert.match(mobile, /\.person-register-entry\.has-multiple-activities \{\s*grid-template-columns: minmax\(0, 1fr\) auto var\(--atlas-person-mobile-count-width\)/s);
+  assert.match(mobile, /grid-template-columns: minmax\(82px, \.92fr\) minmax\(0, 1\.35fr\) auto/);
+  assert.match(mobile, /\.person-register-entry\.has-multiple-activities \{\s*grid-template-columns: minmax\(76px, \.9fr\) minmax\(0, 1\.15fr\) auto var\(--atlas-person-mobile-count-width\)/s);
   assert.match(mobile, /\.person-register-count\.is-activity-count-quiet \{\s*display: none;/s);
   assert.match(mobile, /@media \(max-width: 520px\)[\s\S]*?--atlas-person-mobile-count-width: 40px/s);
   assert.match(mobile, /@media \(max-width: 390px\)[\s\S]*?--atlas-person-mobile-count-width: 38px/s);
 });
 
-test("P4 keeps the mobile scan grammar to identity-range then Activity", () => {
+test("P4 compact ownership survives P10 identity-Activity-range scan grammar", () => {
   const mobile = register.slice(register.indexOf("@media (max-width: 760px)"));
-  assert.match(mobile, /grid-template-areas:\s*"identity range"\s*"activities activities"/s);
-  assert.match(mobile, /has-multiple-activities[\s\S]*?grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
-  assert.match(mobile, /row-gap: 1px/);
+  assert.match(mobile, /grid-template-areas: "identity activities range"/);
+  assert.match(mobile, /has-multiple-activities[\s\S]*?grid-template-areas: "identity activities range count"/s);
+  assert.match(mobile, /row-gap: 0/);
   assert.match(mobile, /padding: 4px 0/);
   assert.match(mobile, /\.person-table-identity > \.person-card-canonical,[\s\S]*?\.person-table-status-inline \{\s*display: none;/s);
   assert.match(mobile, /\.person-register-range \{[\s\S]*?white-space: nowrap;/s);
@@ -49,7 +49,7 @@ test("P4 keeps the compact multi-Activity control touchable without restoring ca
 });
 
 test("P4 browser assets use the compact mobile cache key while P3 runtime remains unchanged", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p8-horizontal-flow-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p10-center-column-v1/);
   assert.match(html, /atlas-ui-mobile-v8\.css\?v=20261004-ui-p4-mobile-compact-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p9-promote-approximation-v1/);
 });

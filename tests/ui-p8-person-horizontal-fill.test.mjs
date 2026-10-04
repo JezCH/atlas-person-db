@@ -18,7 +18,7 @@ test("P8 lets polity relation and role basis read as one left-to-right factual p
   assert.match(mobile, /\.person-card-activity-head \{[\s\S]*?flex: 0 1 auto;/s);
   assert.match(mobile, /\.person-card-activity-role \{[\s\S]*?flex: 0 1 auto;[\s\S]*?text-align: left;/s);
   assert.match(mobile, /\.person-card-activity-role::before \{[\s\S]*?content: "· ";/s);
-  assert.match(mobile, /column-gap: 6px/);
+  assert.match(mobile, /column-gap: 4px/);
 });
 
 test("P8 keeps genuinely different Activity periods at the right edge without reserving an empty column", () => {
@@ -28,5 +28,5 @@ test("P8 keeps genuinely different Activity periods at the right edge without re
 });
 
 test("P8 publishes the horizontal-flow Register asset", () => {
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p8-horizontal-flow-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p10-center-column-v1/);
 });
