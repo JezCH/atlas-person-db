@@ -35,14 +35,14 @@ test("UI V8 gives Person mobile controls sequential hierarchy instead of three c
   assert.match(css, /\.person-domain-filter\.is-active \{[\s\S]*?border-color: var\(--person-filter-domain-color\)/);
 });
 
-test("UI P2 keeps the V8 mobile hierarchy but makes the Person Register denser", () => {
+test("UI P3 keeps the dense mobile hierarchy and discloses extra Activities on demand", () => {
   const css = read("atlas-ui-mobile-v8.css");
 
   assert.match(css, /P2 dense Register: one factual row, one primary Activity line/);
   assert.match(css, /grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
   assert.match(css, /\.person-table-identity > strong \{[\s\S]*?font-size: 14\.5px/);
   assert.match(css, /\.person-register-range \{[\s\S]*?font-size: 9px/);
-  assert.match(css, /\.person-card-activity:nth-child\(n \+ 2\) \{\n    display: none;/);
+  assert.match(css, /has-multiple-activities:not\(\.is-activities-expanded\)[\s\S]*?person-card-activity:nth-child\(n \+ 2\)[\s\S]*?display: none;/);
   assert.match(css, /@media \(max-width: 390px\)[\s\S]*?\.person-table-identity > \.person-card-canonical,[\s\S]*?\.person-table-status-inline \{\n    display: none;/);
 
   const view = read("atlas-person-table-view.js");
