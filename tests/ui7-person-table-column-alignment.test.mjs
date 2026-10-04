@@ -80,5 +80,5 @@ test('era band presentation and geometry use fresh browser cache keys', () => {
   assert.match(html, /atlas-person-table-view\.css\?v=[^"\'\s>]+/);
   assert.match(html, /atlas-person-table-alignment\.css\?v=20260921-mobile-card-fit-v1/);
   assert.match(html, /atlas-person-era-model\.js\?v=20260909-era-10-band-v1/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p12-multi-activity-visible-v1/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p13-column-balance-polity-height-v1/);
 });
