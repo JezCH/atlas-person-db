@@ -41,9 +41,9 @@ test("UI P4 leaves compact Person Register geometry to one canonical mobile owne
 
   assert.match(shell, /P4 ownership boundary: compact Person Register geometry is defined only in/);
   assert.doesNotMatch(shell, /\.person-monumental-register \.person-register-entry \{[\s\S]*?grid-template-columns:/);
-  assert.match(register, /grid-template-areas:\s*"identity range"\s*"activities activities"/s);
+  assert.match(register, /grid-template-areas: "identity activities range"/);
   assert.match(register, /--atlas-person-mobile-count-width: 42px/);
-  assert.match(register, /has-multiple-activities[\s\S]*?grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
+  assert.match(register, /has-multiple-activities[\s\S]*?grid-template-areas: "identity activities range count"/s);
   assert.match(register, /padding: 4px 0/);
   assert.match(register, /\.person-table-identity > \.person-card-canonical,[\s\S]*?\.person-table-status-inline \{\s*display: none;/s);
   assert.match(register, /overflow-x: clip/);
