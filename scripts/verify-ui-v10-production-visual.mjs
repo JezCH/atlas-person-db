@@ -304,42 +304,35 @@ async function verifyRegisterFiltering(client){
   })()`);
 }
 
-async function verifyActivityDisclosure(client){
+async function verifyMultiActivityVisibility(client){
   return evaluate(client,`(() => {
     const row=document.querySelector('.person-register-entry.has-multiple-activities');
     if(!row) return null;
     const visible=(el)=>{
+      if(!el) return false;
       const s=getComputedStyle(el);
-      return s.display!=="none"&&s.visibility!=="hidden";
+      return s.display!=="none"&&s.visibility!=="hidden"&&Number(s.opacity||1)>0;
     };
-    const activities=()=>[...row.querySelectorAll('.person-card-activity')];
-    const toggle=row.querySelector('.person-activity-toggle');
-    if(!toggle) return {missingToggle:true};
-    const selectedBefore=window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null;
-    const total=activities().length;
-    const collapsedVisible=activities().filter(visible).length;
-    const collapsedExpanded=toggle.getAttribute('aria-expanded');
-    toggle.click();
-    const expandedVisible=activities().filter(visible).length;
-    const expandedState=toggle.getAttribute('aria-expanded');
-    const selectedAfterExpand=window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null;
-    toggle.click();
-    const recollapsedVisible=activities().filter(visible).length;
-    const recollapsedState=toggle.getAttribute('aria-expanded');
-    const selectedAfterCollapse=window.ATLAS_PERSON_MAIN?.getSelectedPersonId?.()||null;
+    const rect=(el)=>el?.getBoundingClientRect?.()||null;
+    const activities=[...row.querySelectorAll('.person-card-activity')];
+    const activityContainer=row.querySelector('.person-register-activities');
+    const count=row.querySelector('.person-register-count');
+    const range=row.querySelector('.person-register-range');
+    const containerRect=rect(activityContainer);
+    const rowRect=rect(row);
+    const periodRightDeltas=activities
+      .map((activity)=>activity.querySelector('.person-card-activity-period'))
+      .filter(visible)
+      .map((period)=>Math.abs((rect(period)?.right||0)-(containerRect?.right||0)));
     return {
-      missingToggle:false,
       declared:Number(row.dataset.activityCount||0),
-      total,
-      collapsedVisible,
-      collapsedExpanded,
-      expandedVisible,
-      expandedState,
-      recollapsedVisible,
-      recollapsedState,
-      selectedBefore,
-      selectedAfterExpand,
-      selectedAfterCollapse
+      total:activities.length,
+      visibleCount:activities.filter(visible).length,
+      hasToggle:Boolean(row.querySelector('.person-activity-toggle,[data-person-activity-toggle]')),
+      countVisible:visible(count),
+      rangeVisible:visible(range),
+      activityAreaRightDelta:rowRect&&containerRect?Math.abs(rowRect.right-containerRect.right):null,
+      periodRightDeltas
     };
   })()`);
 }
@@ -431,20 +424,15 @@ async function main(){
     assert(desktopFiltering.restoredCount===desktopFiltering.initialCount,
       "Clearing Person filters did not restore the original result set",desktopFiltering);
 
-    const desktopActivityDisclosure=await verifyActivityDisclosure(client);
-    assert(desktopActivityDisclosure&&!desktopActivityDisclosure.missingToggle,
-      "No multi-Activity disclosure control was available for Production acceptance",desktopActivityDisclosure);
-    assert(desktopActivityDisclosure.declared===desktopActivityDisclosure.total&&desktopActivityDisclosure.total>1,
-      "Multi-Activity row lost Activity information",desktopActivityDisclosure);
-    assert(desktopActivityDisclosure.collapsedVisible===1&&desktopActivityDisclosure.collapsedExpanded==="false",
-      "Multi-Activity row is not compact when collapsed",desktopActivityDisclosure);
-    assert(desktopActivityDisclosure.expandedVisible===desktopActivityDisclosure.total&&desktopActivityDisclosure.expandedState==="true",
-      "Multi-Activity disclosure did not reveal every Activity",desktopActivityDisclosure);
-    assert(desktopActivityDisclosure.recollapsedVisible===1&&desktopActivityDisclosure.recollapsedState==="false",
-      "Multi-Activity disclosure did not return to compact state",desktopActivityDisclosure);
-    assert(desktopActivityDisclosure.selectedBefore===desktopActivityDisclosure.selectedAfterExpand
-      &&desktopActivityDisclosure.selectedBefore===desktopActivityDisclosure.selectedAfterCollapse,
-      "Activity disclosure triggered Person selection",desktopActivityDisclosure);
+    const desktopMultiActivity=await verifyMultiActivityVisibility(client);
+    assert(desktopMultiActivity&&desktopMultiActivity.declared===desktopMultiActivity.total&&desktopMultiActivity.total>1,
+      "No valid multi-Activity row was available for Production acceptance",desktopMultiActivity);
+    assert(desktopMultiActivity.visibleCount===desktopMultiActivity.total,
+      "Desktop multi-Activity row hides one or more Activities",desktopMultiActivity);
+    assert(!desktopMultiActivity.hasToggle,
+      "Desktop multi-Activity row still exposes the retired disclosure control",desktopMultiActivity);
+    assert(desktopMultiActivity.countVisible,
+      "Desktop multi-Activity static Activity count unexpectedly disappeared",desktopMultiActivity);
 
     await screenshot(client,"person-main-1600x1000.png");
 
@@ -474,17 +462,20 @@ async function main(){
     assert(mobileMain.medianActivityWidthRatio!=null&&mobileMain.medianActivityWidthRatio>=0.24,
       "Mobile Person factual Activity column became too narrow and reopened center whitespace",mobileMain);
 
-    const mobileActivityDisclosure=await verifyActivityDisclosure(client);
-    assert(mobileActivityDisclosure&&!mobileActivityDisclosure.missingToggle,
-      "Mobile multi-Activity disclosure control is missing",mobileActivityDisclosure);
-    assert(mobileActivityDisclosure.declared===mobileActivityDisclosure.total
-      &&mobileActivityDisclosure.expandedVisible===mobileActivityDisclosure.total,
-      "Mobile Activity disclosure does not preserve every Activity",mobileActivityDisclosure);
-    assert(mobileActivityDisclosure.collapsedVisible===1&&mobileActivityDisclosure.recollapsedVisible===1,
-      "Mobile multi-Activity row does not retain compact collapsed state",mobileActivityDisclosure);
-    assert(mobileActivityDisclosure.selectedBefore===mobileActivityDisclosure.selectedAfterExpand
-      &&mobileActivityDisclosure.selectedBefore===mobileActivityDisclosure.selectedAfterCollapse,
-      "Mobile Activity disclosure triggered Person selection",mobileActivityDisclosure);
+    const mobileMultiActivity=await verifyMultiActivityVisibility(client);
+    assert(mobileMultiActivity&&mobileMultiActivity.declared===mobileMultiActivity.total&&mobileMultiActivity.total>1,
+      "No valid mobile multi-Activity row was available for Production acceptance",mobileMultiActivity);
+    assert(mobileMultiActivity.visibleCount===mobileMultiActivity.total,
+      "Mobile multi-Activity row hides one or more Activities",mobileMultiActivity);
+    assert(!mobileMultiActivity.hasToggle&&!mobileMultiActivity.countVisible,
+      "Mobile multi-Activity row still reserves disclosure/count chrome",mobileMultiActivity);
+    assert(!mobileMultiActivity.rangeVisible,
+      "Mobile multi-Activity row still shows the aggregate Person range instead of per-Activity chronology",mobileMultiActivity);
+    assert(mobileMultiActivity.activityAreaRightDelta!=null&&mobileMultiActivity.activityAreaRightDelta<=1.5,
+      "Mobile multi-Activity facts do not reach the ordinary chronology edge",mobileMultiActivity);
+    assert(mobileMultiActivity.periodRightDeltas.length===mobileMultiActivity.total
+      &&mobileMultiActivity.periodRightDeltas.every((delta)=>delta<=1.5),
+      "Mobile multi-Activity periods are not aligned to the ordinary chronology edge",mobileMultiActivity);
 
     await screenshot(client,"person-main-390x844.png");
 
@@ -548,10 +539,10 @@ async function main(){
         main:desktopMain,
         interaction:{...desktopInteraction,nameContrast:Number(desktopNameContrast.toFixed(2))},
         filtering:desktopFiltering,
-        activityDisclosure:desktopActivityDisclosure,
+        multiActivity:desktopMultiActivity,
         detail:desktopDetail
       },
-      mobile:{main:mobileMain,activityDisclosure:mobileActivityDisclosure,detail:mobileDetail},
+      mobile:{main:mobileMain,multiActivity:mobileMultiActivity,detail:mobileDetail},
       screenshots:[
         "person-main-1600x1000.png",
         "person-detail-1600x1000.png",
