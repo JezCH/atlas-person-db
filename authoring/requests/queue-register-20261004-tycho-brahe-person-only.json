@@ -1,0 +1,47 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:queue-register-20261004:tycho-brahe:person-only:v1",
+  "registration_candidate_id": "gp-20260921-092",
+  "person": {
+    "canonical_name_en": "Tycho Brahe",
+    "display_name_ko": "튀코 브라헤",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-04",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-04",
+      "document_title": "튀코 브라헤",
+      "url": "https://namu.wiki/w/%ED%8A%80%EC%BD%94%20%EB%B8%8C%EB%9D%BC%ED%97%A4"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "other_reviewed_exclusion",
+    "reason": "Person identity is securely historical, but this bounded queue registration does not assert a canonical polity-bound Activity. Keep the Person out of the spacetime timeline until an Activity is separately reviewed.",
+    "basis_code": "queue_registration_person_only_activity_deferred",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://mathshistory.st-andrews.ac.uk/Biographies/Brahe/"
+      ],
+      "reviewed_at": "2026-10-04"
+    }
+  },
+  "representative_domain": "science",
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Tycho Brahe — MacTutor History of Mathematics",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Brahe/",
+      "citation_text": "MacTutor identifies Tycho Brahe (1546–1601) as the Danish astronomer whose precise observations were fundamental to later planetary astronomy.",
+      "locator": "https://mathshistory.st-andrews.ac.uk/Biographies/Brahe/"
+    }
+  ]
+}
