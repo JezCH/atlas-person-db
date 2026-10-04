@@ -5,6 +5,7 @@
 
 #personMainDetail.person-main-detail {
   --person-detail-domain-wash: rgba(156, 146, 125, .025);
+  --person-detail-domain-accent: var(--atlas-honor-metal, #aa9a79);
   width: min(720px, calc(100vw - 36px));
   padding: 58px 30px 32px;
   border: 1px solid #343a3f;
@@ -18,14 +19,42 @@
   scrollbar-color: #4a5054 transparent;
 }
 
-#personMainDetail[data-representative-domain="governance"] { --person-detail-domain-wash: rgba(212,175,55,.045); }
-#personMainDetail[data-representative-domain="military"] { --person-detail-domain-wash: rgba(184,58,58,.045); }
-#personMainDetail[data-representative-domain="knowledge"] { --person-detail-domain-wash: rgba(63,120,197,.045); }
-#personMainDetail[data-representative-domain="technology"] { --person-detail-domain-wash: rgba(89,99,109,.05); }
-#personMainDetail[data-representative-domain="commerce"] { --person-detail-domain-wash: rgba(46,139,87,.04); }
-#personMainDetail[data-representative-domain="culture"] { --person-detail-domain-wash: rgba(154,91,165,.045); }
-#personMainDetail[data-representative-domain="religion"] { --person-detail-domain-wash: rgba(226,215,185,.035); }
-#personMainDetail[data-representative-domain="exploration"] { --person-detail-domain-wash: rgba(217,107,30,.04); }
+/* Detail consumes the canonical Domain v2 codes. The background wash remains
+ * deliberately weak (roughly 3–5% semantic color), while a tiny hero marker
+ * carries the readable on-dark identity color. Governance gold remains
+ * separate from the neutral ATLAS honor metal. */
+#personMainDetail[data-representative-domain="governance"] {
+  --person-detail-domain-wash: rgba(212,175,55,.045);
+  --person-detail-domain-accent: var(--atlas-person-domain-governance-on-dark, #e6c65a);
+}
+#personMainDetail[data-representative-domain="military"] {
+  --person-detail-domain-wash: rgba(184,58,58,.045);
+  --person-detail-domain-accent: var(--atlas-person-domain-military-on-dark, #e06a6a);
+}
+#personMainDetail[data-representative-domain="science"] {
+  --person-detail-domain-wash: rgba(63,120,197,.045);
+  --person-detail-domain-accent: var(--atlas-person-domain-science-on-dark, #78a9e8);
+}
+#personMainDetail[data-representative-domain="technology"] {
+  --person-detail-domain-wash: rgba(89,99,109,.05);
+  --person-detail-domain-accent: var(--atlas-person-domain-technology-on-dark, #a2adb8);
+}
+#personMainDetail[data-representative-domain="commerce"] {
+  --person-detail-domain-wash: rgba(46,139,87,.04);
+  --person-detail-domain-accent: var(--atlas-person-domain-commerce-on-dark, #5bc68a);
+}
+#personMainDetail[data-representative-domain="culture"] {
+  --person-detail-domain-wash: rgba(154,91,165,.045);
+  --person-detail-domain-accent: var(--atlas-person-domain-culture-on-dark, #c07ac7);
+}
+#personMainDetail[data-representative-domain="religion"] {
+  --person-detail-domain-wash: rgba(226,215,185,.035);
+  --person-detail-domain-accent: var(--atlas-person-domain-religion-on-dark, #f0e7d0);
+}
+#personMainDetail[data-representative-domain="exploration"] {
+  --person-detail-domain-wash: rgba(217,107,30,.04);
+  --person-detail-domain-accent: var(--atlas-person-domain-exploration-on-dark, #f29a55);
+}
 
 #personMainDetailBackdrop {
   background: rgba(8, 10, 12, .58);
@@ -150,8 +179,8 @@
   left: 0;
   width: 6px;
   height: 1px;
-  background: var(--atlas-honor-metal);
-  opacity: .7;
+  background: var(--person-detail-domain-accent);
+  opacity: .82;
 }
 
 .person-detail-status {
