@@ -909,12 +909,11 @@
   }
 
   .person-monumental-register .person-table-activities .person-card-activity {
-    grid-template-columns: minmax(0, 1.08fr) minmax(0, .82fr) auto;
-    grid-template-areas:
-      "activity-head activity-role activity-period"
-      "activity-meta activity-meta activity-meta";
-    gap: 0 7px;
+    display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
+    column-gap: 6px;
+    row-gap: 0;
     padding: 0;
   }
 
@@ -923,28 +922,31 @@
   }
 
   .person-monumental-register .person-card-activity-head {
-    grid-area: activity-head;
-    grid-column: auto;
+    flex: 0 1 auto;
+    min-width: 0;
     flex-wrap: wrap;
     gap: 3px;
   }
 
   .person-monumental-register .person-table-activities .person-card-activity-role {
-    grid-area: activity-role;
-    grid-column: auto;
+    flex: 0 1 auto;
     min-width: 0;
     color: #aaada9;
     font-size: 8.4px;
     line-height: 1.25;
-    text-align: right;
+    text-align: left;
     overflow-wrap: anywhere;
+  }
+
+  .person-monumental-register .person-table-activities .person-card-activity-role::before {
+    content: "· ";
+    color: #626a70;
   }
 
 
   .person-monumental-register .person-table-activities .person-card-activity-period {
-    grid-area: activity-period;
-    grid-column: auto;
-    justify-self: end;
+    flex: 0 0 auto;
+    margin-left: auto;
     color: #aaa59c;
     font-size: 7.8px;
     line-height: 1.2;
@@ -953,8 +955,7 @@
   }
 
   .person-monumental-register .person-table-activities .person-card-activity > small {
-    grid-area: activity-meta;
-    grid-column: 1 / -1;
+    flex: 0 0 100%;
     margin-top: 1px;
   }
 
@@ -983,16 +984,10 @@
 }
 
 @media (max-width: 340px) {
-  .person-monumental-register .person-table-activities .person-card-activity {
-    grid-template-columns: minmax(0, 1fr) minmax(0, .78fr);
-    grid-template-areas:
-      "activity-head activity-role"
-      "activity-period activity-period"
-      "activity-meta activity-meta";
-  }
-
   .person-monumental-register .person-table-activities .person-card-activity-period {
-    justify-self: end;
+    flex-basis: 100%;
+    margin-left: 0;
+    text-align: right;
   }
 }
 
