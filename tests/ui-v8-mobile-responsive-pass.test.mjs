@@ -7,7 +7,7 @@ const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "
 test("UI V8 loads the static mobile hierarchy layer after Person Chronicle Detail", () => {
   const html = read("index.html");
   const detail = html.indexOf("atlas-person-chronicle-detail.css?v=20261003-ui-v5-detail-v1");
-  const mobile = html.indexOf("atlas-ui-mobile-v8.css?v=20261004-ui-p3-activity-hierarchy-v1");
+  const mobile = html.indexOf("atlas-ui-mobile-v8.css?v=20261004-ui-p4-mobile-compact-v1");
   assert.ok(detail >= 0);
   assert.ok(mobile > detail);
   assert.match(html, /atlas-main-authority-nav\.js\?v=20261004-dashboard-v11-r2/);
@@ -35,15 +35,18 @@ test("UI V8 gives Person mobile controls sequential hierarchy instead of three c
   assert.match(css, /\.person-domain-filter\.is-active \{[\s\S]*?border-color: var\(--person-filter-domain-color\)/);
 });
 
-test("UI P3 keeps the dense mobile hierarchy and discloses extra Activities on demand", () => {
-  const css = read("atlas-ui-mobile-v8.css");
+test("UI P4 leaves compact Person Register geometry to one canonical mobile owner", () => {
+  const shell = read("atlas-ui-mobile-v8.css");
+  const register = read("atlas-person-monumental-register.css");
 
-  assert.match(css, /P3 dense Register: one factual row, one primary Activity line/);
-  assert.match(css, /grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
-  assert.match(css, /\.person-table-identity > strong \{[\s\S]*?font-size: 14\.5px/);
-  assert.match(css, /\.person-register-range \{[\s\S]*?font-size: 9px/);
-  assert.match(css, /has-multiple-activities:not\(\.is-activities-expanded\)[\s\S]*?person-card-activity:nth-child\(n \+ 2\)[\s\S]*?display: none;/);
-  assert.match(css, /@media \(max-width: 390px\)[\s\S]*?\.person-table-identity > \.person-card-canonical,[\s\S]*?\.person-table-status-inline \{\n    display: none;/);
+  assert.match(shell, /P4 ownership boundary: compact Person Register geometry is defined only in/);
+  assert.doesNotMatch(shell, /\.person-monumental-register \.person-register-entry \{[\s\S]*?grid-template-columns:/);
+  assert.match(register, /grid-template-areas:\s*"identity range"\s*"activities activities"/s);
+  assert.match(register, /--atlas-person-mobile-count-width: 42px/);
+  assert.match(register, /has-multiple-activities[\s\S]*?grid-template-areas:\s*"identity range count"\s*"activities activities activities"/s);
+  assert.match(register, /padding: 6px 0/);
+  assert.match(register, /\.person-table-identity > \.person-card-canonical,[\s\S]*?\.person-table-status-inline \{\s*display: none;/s);
+  assert.match(register, /overflow-x: clip/);
 
   const view = read("atlas-person-table-view.js");
   assert.match(view, /person-register-activities/);
