@@ -134,3 +134,12 @@ test('bootstrap verifies canonical NamuWiki reason readback before reporting suc
   assert.match(workflow, /NAMUWIKI_REASON_REGISTRY_PARSE_INCOMPLETE/);
   assert.match(workflow, /NAMUWIKI_REVIEW_REASON_READBACK_MISMATCH/);
 });
+
+
+test('Person Domain v2 authoring gate accepts only deployment-safe runtime ancestors', () => {
+  assert.match(workflow, /Wait for compatible Production Person Domain v2 cutover/);
+  assert.match(workflow, /atlas-person-domain-v2-runtime-diff\.txt/);
+  assert.match(workflow, /git merge-base --is-ancestor "\$runtime_sha" "\$GITHUB_SHA"/);
+  assert.match(workflow, /shouldBuildForChangedPaths/);
+  assert.match(workflow, /Person Domain v2 cutover accepted deployment-safe runtime ancestor/);
+});
