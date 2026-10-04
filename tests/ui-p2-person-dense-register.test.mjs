@@ -41,7 +41,7 @@ test("P2 mobile Register stays compact while P10 fills the factual center column
   assert.match(mobile, /grid-template-areas: "identity activities range"/);
   assert.match(mobile, /\.person-table-activities \.person-card-activity \{[\s\S]*?display: flex;[\s\S]*?flex-wrap: wrap;/s);
   assert.match(mobile, /\.person-card-activity-role \{[\s\S]*?text-align: left;/s);
-  assert.match(mobile, /padding: 4px 0/);
+  assert.match(mobile, /padding: 6px 0/);
   assert.match(mobile, /> \.person-table-head \{\s*display: none;/s);
 });
 
