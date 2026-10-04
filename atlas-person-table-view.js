@@ -143,6 +143,70 @@
     }
   }
 
+  function configureActivityHierarchy(row, activities, count, activityRows) {
+    const activityCount = activityRows.length;
+    row.dataset.activityCount = String(activityCount);
+    if (!count) return;
+
+    count.textContent = "";
+    count.setAttribute("aria-label", activityCount > 1 ? `활동 ${activityCount}건` : "");
+    if (activityCount <= 1) {
+      count.classList.add("is-activity-count-quiet");
+      count.setAttribute("aria-hidden", "true");
+      return;
+    }
+
+    row.classList.add("has-multiple-activities");
+    count.classList.remove("is-activity-count-quiet");
+    count.removeAttribute("aria-hidden");
+
+    const targetId = `person-activities-${String(row.dataset.personId || "row").replace(/[^A-Za-z0-9_-]+/g, "-")}`;
+    if (activities) activities.id = targetId;
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "person-activity-toggle";
+    toggle.dataset.personActivityToggle = "true";
+    toggle.setAttribute("aria-expanded", "false");
+    if (activities) toggle.setAttribute("aria-controls", targetId);
+    toggle.setAttribute("aria-label", `활동 ${activityCount}건 · 모두 펼치기`);
+    toggle.title = `활동 ${activityCount}건 · 모두 펼치기`;
+
+    const value = document.createElement("span");
+    value.className = "person-activity-toggle-value";
+    value.textContent = `${activityCount}건`;
+
+    const icon = document.createElement("span");
+    icon.className = "person-activity-toggle-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "+";
+
+    toggle.append(value, icon);
+    count.append(toggle);
+  }
+
+  function setActivityExpansion(row, toggle, expanded) {
+    if (!row || !toggle) return;
+    row.classList.toggle("is-activities-expanded", expanded);
+    toggle.setAttribute("aria-expanded", String(expanded));
+    const count = Number(row.dataset.activityCount || 0);
+    const action = expanded ? "접기" : "모두 펼치기";
+    toggle.setAttribute("aria-label", `활동 ${count}건 · ${action}`);
+    toggle.title = `활동 ${count}건 · ${action}`;
+    const icon = toggle.querySelector(".person-activity-toggle-icon");
+    if (icon) icon.textContent = expanded ? "−" : "+";
+  }
+
+  function onActivityToggle(event) {
+    const toggle = event.target?.closest?.("button[data-person-activity-toggle]");
+    if (!toggle) return;
+    const row = toggle.closest?.(".person-register-entry[data-person-id]");
+    if (!row) return;
+    event.preventDefault();
+    event.stopPropagation();
+    setActivityExpansion(row, toggle, toggle.getAttribute("aria-expanded") !== "true");
+  }
+
   function decorateRow(row) {
     row = normalizeInteractiveRow(row);
     if (!row || row.dataset.personTableDecorated === "true") return;
@@ -157,11 +221,11 @@
     range?.classList.add("person-table-range", "person-register-range");
     activities?.classList.add("person-table-activities", "person-register-activities");
     count?.classList.add("person-table-count", "person-register-count");
-    if (count) count.textContent = String(count.textContent || "").replace(/^Activity\s*/i, "활동 ");
     foldExceptionalStatus(identity, status);
-    const activityRows = activities?.querySelectorAll?.(".person-card-activity") || [];
-    const singleActivity = activityRows.length === 1 || /^1\s*건$/.test(String(count?.textContent || "").trim());
+    const activityRows = [...(activities?.querySelectorAll?.(".person-card-activity") || [])];
+    const singleActivity = activityRows.length === 1;
     for (const activity of activityRows) humanizeActivity(activity, range?.textContent || "", singleActivity);
+    configureActivityHierarchy(row, activities, count, activityRows);
     for (const cell of [identity, range, activities, count]) if (cell) row.append(cell);
   }
 
@@ -236,6 +300,7 @@
     groupRowsByEra(grid);
   }
   function decorateAll() { document.querySelectorAll(".person-card-grid").forEach(decorateGrid); humanizePageCopy(); }
+  document.addEventListener("click", onActivityToggle, true);
   window.addEventListener("atlas-person-main-rendered", decorateAll);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", decorateAll, { once: true });
   else queueMicrotask(decorateAll);
