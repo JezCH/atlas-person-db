@@ -136,10 +136,11 @@ test('bootstrap verifies canonical NamuWiki reason readback before reporting suc
 });
 
 
-test('Person Domain v2 authoring gate accepts only deployment-safe runtime ancestors', () => {
-  assert.match(workflow, /Wait for compatible Production Person Domain v2 cutover/);
-  assert.match(workflow, /atlas-person-domain-v2-runtime-diff\.txt/);
-  assert.match(workflow, /git merge-base --is-ancestor "\$runtime_sha" "\$GITHUB_SHA"/);
-  assert.match(workflow, /shouldBuildForChangedPaths/);
-  assert.match(workflow, /Person Domain v2 cutover accepted deployment-safe runtime ancestor/);
+test('Person Domain v2 authoring gate uses current live authoring readiness and no retired cutover route', () => {
+  assert.doesNotMatch(workflow, /atlas-person-domain-v2-cutover/);
+  assert.doesNotMatch(workflow, /Wait for compatible Production Person Domain v2 cutover/);
+  assert.match(workflow, /Verify deployed authoring runtime readiness/);
+  assert.match(workflow, /\.readiness\.person_domain_v2\.schema_v2_ready==true/);
+  assert.match(workflow, /\.ready==true or \.bootstrap_ready==true/);
+  assert.match(workflow, /AUTHORING_RUNTIME_CODE_DRIFT/);
 });
