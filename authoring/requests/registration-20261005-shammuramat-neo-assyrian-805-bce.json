@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Shammuramat",
+    "display_name_ko": "샴무라마트",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-05",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "canonical_name_en": "Neo-Assyrian Empire",
+    "display_name_ko": "신아시리아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Queen mother and royal political actor",
+    "role_display_name_ko": "왕모·왕실 정치 행위자",
+    "period_basis": "general_activity",
+    "start_year": -805,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -805,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Pazarcik boundary-stone inscription names Sammu-ramat as the palace woman of Shamshi-Adad V and mother of Adad-nirari III, and records her crossing the Euphrates with Adad-nirari during the 805 BCE intervention in Kummuh. ATLAS records that securely attested political-military appearance only; it does not assert a formal regency or import the later Semiramis legends."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Two Neo-Assyrian Stelae — Annual Review of the RIM Project",
+      "canonical_url": "https://oracc.museum.upenn.edu/arrim/downloads/arrim8/arrim8-4.pdf",
+      "citation_text": "The Pazarcik stele translation identifies Sammu-ramat as palace woman of Shamshi-Adad V, mother of Adad-nirari III, and records Adad-nirari and Sammu-ramat crossing the Euphrates in the intervention commemorated by the boundary stone."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Shalmaneser III, king of Assyria — Nimrud: Materialities of Assyrian Knowledge Production",
+      "canonical_url": "https://oracc.museum.upenn.edu/nimrud/ancientkalhu/thepeople/shalmaneseriii/index.html",
+      "citation_text": "ORACC notes that Sammu-ramat wielded considerable political power, joined the Assyrian army on campaign, and had a stela inscribed in her name and displayed at Assur."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-05",
+      "review_reason": "no_exact_document"
+    }
+  }
+}

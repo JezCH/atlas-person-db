@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Diocletian",
+    "display_name_ko": "디오클레티아누스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-05",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "period_basis": "reign",
+    "start_year": 284,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 305,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Diocletian ruled the Roman Empire from 284 to 305 CE. His reign reorganized imperial administration and established the Tetrarchy; ATLAS records the standard year-level imperial reign boundaries without inventing month/day precision."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Roman Empire (27 B.C.–393 A.D.) — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/essays/the-roman-empire-27-b-c-393-a-d",
+      "citation_text": "The Metropolitan Museum of Art gives Diocletian's reign as 284–305 CE and describes his administrative reorganization and establishment of the Tetrarchy."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "List of Rulers of the Roman Empire — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/toah/hd/roru/hd_roru.htm",
+      "citation_text": "The Met's ruler chronology lists Diocletian (and the Tetrarchy) for 284–305 CE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-05",
+      "document_title": "디오클레티아누스",
+      "url": "https://namu.wiki/w/%EB%94%94%EC%98%A4%ED%81%B4%EB%A0%88%ED%8B%B0%EC%95%84%EB%88%84%EC%8A%A4"
+    }
+  }
+}
