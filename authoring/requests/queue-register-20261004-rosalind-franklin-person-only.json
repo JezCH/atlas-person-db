@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-person-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:queue-register-20261004:rosalind-franklin:person-only:v1",
+  "request_id": "authoring:queue-20261004:rosalind-franklin:person-only:v1",
   "registration_candidate_id": "workshop-20260924-054",
   "person": {
     "canonical_name_en": "Rosalind Franklin",
@@ -21,9 +21,9 @@
     }
   },
   "timeline_disposition": {
-    "disposition": "other_reviewed_exclusion",
-    "reason": "Person identity is securely historical, but this bounded queue registration does not assert a canonical polity-bound Activity. Keep the Person out of the spacetime timeline until an Activity is separately reviewed.",
-    "basis_code": "queue_registration_person_only_activity_deferred",
+    "disposition": "chronology_unresolved",
+    "reason": "Rosalind Franklin is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "review_evidence": {
@@ -37,11 +37,17 @@
   "representative_domain": "science",
   "sources": [
     {
-      "source_type": "institutional_reference",
+      "source_type": "academic_reference",
       "title": "Rosalind Franklin — King's College London",
       "canonical_url": "https://www.kcl.ac.uk/people/rosalind-franklin",
-      "citation_text": "King's College London identifies Rosalind Franklin (1920–1958) as a biophysicist whose X-ray crystallography work, including Photograph 51, was central to understanding DNA structure.",
-      "locator": "https://www.kcl.ac.uk/people/rosalind-franklin"
+      "citation_text": "King's College London identifies Rosalind Franklin as a biophysicist whose X-ray crystallography research made a crucial contribution to understanding DNA structure and who also studied viruses.",
+      "locator": "Biography"
     }
-  ]
+  ],
+  "review_context": {
+    "request_batch": "QUEUE-EIGHT-20261004",
+    "queue_candidate_id": "workshop-20260924-054",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
+  }
 }
