@@ -1,0 +1,1099 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-domain:culture-audit:2026-10-05:v1",
+  "release_order": 951,
+  "evidence": {
+    "decision": "Person Domain v2 Culture audit. Re-review all 162 live culture Persons against the active eight-sector taxonomy using representative historical identity rather than generic role labels. Preserve prior source-backed v2 boundary decisions unless new evidence contradicts them. Culture remains the home of philosophy, history, language, literature, social thought, visual arts, music and performing arts; move only identities whose representative historical record more directly fits another canonical sector.",
+    "taxonomy": "contracts/person-domain-taxonomy.v2.json",
+    "source_main_sha": "6df037c9d0584aca4948c1aba3f3cd30c0cc24e8",
+    "production_snapshot": {
+      "captured_at": "2026-10-05",
+      "total_persons": 2106,
+      "assigned": 1993,
+      "counts": {
+        "governance": 1350,
+        "military": 208,
+        "science": 79,
+        "technology": 32,
+        "commerce": 33,
+        "culture": 162,
+        "religion": 100,
+        "exploration": 29
+      }
+    },
+    "reviewed_count": 162,
+    "retained_culture_count": 160,
+    "moved_count": 2,
+    "expected_snapshot_counts_after": {
+      "culture": 160,
+      "technology": 33,
+      "religion": 101
+    },
+    "retained_culture": [
+      {
+        "person_id": "4c199de4-62c0-4515-afd6-b941e9bc5124",
+        "canonical_name_en": "Sappho",
+        "preferred_name_ko": "사포",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "c7a1aba0-17ac-4c1c-9cf6-abf98d29130f",
+        "canonical_name_en": "Ennigaldi-Nanna",
+        "preferred_name_ko": "엔니갈디-난나",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "f5f06440-64dc-5b83-bf9f-8ceea93cc204",
+        "canonical_name_en": "Confucius",
+        "preferred_name_ko": "공자",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "a3a24796-9211-4a37-a2e0-2beae99c627d",
+        "canonical_name_en": "Telesilla",
+        "preferred_name_ko": "텔레실라",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "0912bdab-405a-42f9-b63b-791b7a729922",
+        "canonical_name_en": "Aspasia",
+        "preferred_name_ko": "아스파시아",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "4089c029-e224-4b4e-ad68-ca4fdcee6ddb",
+        "canonical_name_en": "Phidias",
+        "preferred_name_ko": "피디아스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "6b384004-05a4-4bfd-b959-db12283fd122",
+        "canonical_name_en": "Mozi",
+        "preferred_name_ko": "묵자",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "1003bb71-cd8f-4b3f-a006-5c22a7e87f7c",
+        "canonical_name_en": "Herodotus",
+        "preferred_name_ko": "헤로도토스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "cb350a00-8b92-47e9-a847-6d92b3075811",
+        "canonical_name_en": "Aristophanes",
+        "preferred_name_ko": "아리스토파네스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b380122b-4ce0-4e81-ba79-18d454a1ba5c",
+        "canonical_name_en": "Thucydides",
+        "preferred_name_ko": "투키디데스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "7c1ee280-92f3-4fe7-8e1f-cf9a4f18eca8",
+        "canonical_name_en": "Socrates",
+        "preferred_name_ko": "소크라테스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "8461b81c-8b06-440a-a07c-81ba9c4f1615",
+        "canonical_name_en": "Pāṇini",
+        "preferred_name_ko": "파니니",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "798a4946-16ef-5a4b-a7bb-80934250bb90",
+        "canonical_name_en": "Plato",
+        "preferred_name_ko": "플라톤",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "283c3c8f-0071-4729-bb87-227c89b97bb5",
+        "canonical_name_en": "Diogenes of Sinope",
+        "preferred_name_ko": "디오게네스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b5289bf5-0fd2-4a57-b0a0-114acbd18cb4",
+        "canonical_name_en": "Arete of Cyrene",
+        "preferred_name_ko": "키레네의 아레테",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "1ee551fc-6ad7-4c2f-80d4-5bbeb526132f",
+        "canonical_name_en": "Aristotle",
+        "preferred_name_ko": "아리스토텔레스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b135825f-e1bc-4a86-b813-0a3de5d63045",
+        "canonical_name_en": "Zhuangzi",
+        "preferred_name_ko": "장자",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "0d448c70-ec7a-4e21-8724-e6c8d36022de",
+        "canonical_name_en": "Mencius",
+        "preferred_name_ko": "맹자",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "6b8282e2-b025-4c2e-9b7f-e78a7546ec2e",
+        "canonical_name_en": "Xunzi",
+        "preferred_name_ko": "순자",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "3e44d918-378d-4f6e-b098-6f1724028337",
+        "canonical_name_en": "Sima Qian",
+        "preferred_name_ko": "사마천",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "6de1758f-807a-4e66-8099-85dd41ca86e6",
+        "canonical_name_en": "Livy",
+        "preferred_name_ko": "리비우스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "8bcb4f4d-0363-4a32-a17c-ad0e40454e0c",
+        "canonical_name_en": "Ban Zhao",
+        "preferred_name_ko": "반소",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "e7d1e88e-b062-465b-b5bd-bec3f2220d42",
+        "canonical_name_en": "Tacitus",
+        "preferred_name_ko": "타키투스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "60e1d1ce-a826-49f1-80fc-ec8ea3de335f",
+        "canonical_name_en": "Nāgārjuna",
+        "preferred_name_ko": "나가르주나",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "e762da53-76d6-425f-9baa-ca23735f6bb7",
+        "canonical_name_en": "Asaṅga",
+        "preferred_name_ko": "아상가",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "f23693ac-d1d9-4a34-848f-1e17d7282075",
+        "canonical_name_en": "Vasubandhu",
+        "preferred_name_ko": "바수반두",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "decf89f2-0156-481c-8dab-8044d7c7797d",
+        "canonical_name_en": "Dignāga",
+        "preferred_name_ko": "디그나가",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "c98582af-bf05-430c-b675-630d20445c25",
+        "canonical_name_en": "Dharmakīrti",
+        "preferred_name_ko": "다르마키르티",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "92908ca5-c424-4061-bfd1-3ee33299613a",
+        "canonical_name_en": "Wonhyo",
+        "preferred_name_ko": "원효",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "9ef0bb1b-40b9-4fe4-a442-a527b52f2f88",
+        "canonical_name_en": "Li Bai",
+        "preferred_name_ko": "이백",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "26933848-04ba-46af-8475-c3de2556ef2c",
+        "canonical_name_en": "Ziryab",
+        "preferred_name_ko": "지르얍",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "e22d9449-ae8d-41f7-8fd8-3b8643255f73",
+        "canonical_name_en": "Choe Chiwon",
+        "preferred_name_ko": "최치원",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "efed2423-c2df-4b32-8079-a5316fec1409",
+        "canonical_name_en": "Murasaki Shikibu",
+        "preferred_name_ko": "무라사키 시키부",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "4593467a-6dea-4d07-a40f-597185fe0f25",
+        "canonical_name_en": "Ibn Rushd",
+        "preferred_name_ko": "이븐 루시드",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "5853a9a3-50a3-4faf-af2c-615b5c86dcd4",
+        "canonical_name_en": "Zhu Xi",
+        "preferred_name_ko": "주희",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "c5ed48d6-967c-416e-83cc-929f77dcae73",
+        "canonical_name_en": "Snorri Sturluson",
+        "preferred_name_ko": "스노리 스투를루손",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "db71eca3-9ce5-40a3-9d9d-fbc7ec8a8ddf",
+        "canonical_name_en": "Rumi",
+        "preferred_name_ko": "잘랄루딘 루미",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "25c3d716-a426-406d-90b1-85b67eb136dc",
+        "canonical_name_en": "Saadi",
+        "preferred_name_ko": "사디",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b66d01f1-cb09-4e7d-b9d2-7eb00055244e",
+        "canonical_name_en": "Dante Alighieri",
+        "preferred_name_ko": "단테 알리기에리",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "5b200bf9-e2af-49d3-9861-b8e2e6eeabdf",
+        "canonical_name_en": "William of Ockham",
+        "preferred_name_ko": "오컴의 윌리엄",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "8d8f78e6-4cc8-4433-b6b6-e2a9777a0bc8",
+        "canonical_name_en": "Giotto",
+        "preferred_name_ko": "조토",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "25117b36-b5ba-4d45-9f9d-a35443814af8",
+        "canonical_name_en": "Petrarch",
+        "preferred_name_ko": "페트라르카",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "abc01682-4ad1-43bf-a5d9-d665140daf3b",
+        "canonical_name_en": "Ibn Khaldun",
+        "preferred_name_ko": "이븐 할둔",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "a73103e4-a4fd-4103-9346-c0c697585966",
+        "canonical_name_en": "Jan van Eyck",
+        "preferred_name_ko": "얀 반 에이크",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "a565511a-c043-5c88-a2e5-dde042ed8959",
+        "canonical_name_en": "Leonardo da Vinci",
+        "preferred_name_ko": "레오나르도 다빈치",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "8ffaeb0c-5125-4a92-904d-6b673335667f",
+        "canonical_name_en": "Sandro Botticelli",
+        "preferred_name_ko": "산드로 보티첼리",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "9d52e56e-3870-5507-a8ab-8f80640311fd",
+        "canonical_name_en": "Niccolo Machiavelli",
+        "preferred_name_ko": "니콜로 마키아벨리",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "dd1d4143-86fe-4008-b43b-668aadb90823",
+        "canonical_name_en": "Michelangelo",
+        "preferred_name_ko": "미켈란젤로 부오나로티",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "d9beb4e4-5652-4f67-b373-cadb0e32e4b0",
+        "canonical_name_en": "Wang Yangming",
+        "preferred_name_ko": "왕양명",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "c3b1123d-691a-40e8-8811-46b3a033f546",
+        "canonical_name_en": "Isabella d'Este",
+        "preferred_name_ko": "이사벨라 데스테",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "0c17162d-c62f-4b3d-98fe-6b8d5c60b4fa",
+        "canonical_name_en": "Raphael",
+        "preferred_name_ko": "라파엘로",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b06c545c-da23-40e1-b346-b1e602b99309",
+        "canonical_name_en": "Tansen",
+        "preferred_name_ko": "탄센",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "2e9243b7-14d4-4e57-8e31-8770866ac849",
+        "canonical_name_en": "Yi Hwang",
+        "preferred_name_ko": "이황",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b4187984-3302-41ca-b1e6-c74d507ece96",
+        "canonical_name_en": "Luís de Camões",
+        "preferred_name_ko": "루이스 드 카몽이스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "6b6ec4e5-dcf0-4e66-8e0c-2d4fd2fb96de",
+        "canonical_name_en": "Yi I",
+        "preferred_name_ko": "이이",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "5b567eb8-c0ca-40cf-ad28-1f8882e65fe1",
+        "canonical_name_en": "Nicolò Vito di Gozze",
+        "preferred_name_ko": "니콜로 비토 디 고체",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "dfa49bd5-8672-4f78-8ab6-72932a6726d9",
+        "canonical_name_en": "William Shakespeare",
+        "preferred_name_ko": "윌리엄 셰익스피어",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "551c7abe-cf1c-4dc2-b5b2-06abe4343798",
+        "canonical_name_en": "Caravaggio",
+        "preferred_name_ko": "카라바조",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "8104802a-8f0a-4f50-90ed-9f13a312e927",
+        "canonical_name_en": "Lope de Vega",
+        "preferred_name_ko": "로페 데 베가",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b7cb64e7-6bbf-4a3f-8791-c8db642b5d17",
+        "canonical_name_en": "Francis Bacon",
+        "preferred_name_ko": "프랜시스 베이컨",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "2112d485-894f-4a74-812d-7229483fc9df",
+        "canonical_name_en": "Gian Lorenzo Bernini",
+        "preferred_name_ko": "잔 로렌초 베르니니",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "a8a7430f-24c4-4da5-93e7-40f480bbe854",
+        "canonical_name_en": "Thomas Hobbes",
+        "preferred_name_ko": "토머스 홉스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "78e9b573-421a-48a5-b421-7173c50f3026",
+        "canonical_name_en": "Johannes Vermeer",
+        "preferred_name_ko": "요하네스 베르메르",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "5d3ff846-d1c0-4aff-90ec-0d2a69312cb0",
+        "canonical_name_en": "Sor Juana Inés de la Cruz",
+        "preferred_name_ko": "후아나 이네스 데 라 크루스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "d30bbbd8-b1b0-466f-b65f-2c55da41062c",
+        "canonical_name_en": "John Locke",
+        "preferred_name_ko": "존 로크",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "98e2abee-1fd9-45b2-8db7-33bdf6d981ce",
+        "canonical_name_en": "Julie d'Aubigny",
+        "preferred_name_ko": "쥘리 도비니",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "23dd2f89-ab58-4b6d-9fed-f3db48da28e1",
+        "canonical_name_en": "Ogyū Sorai",
+        "preferred_name_ko": "오규 소라이",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "aafc1c6d-ff86-4435-9580-dce055f38249",
+        "canonical_name_en": "Antonio Vivaldi",
+        "preferred_name_ko": "안토니오 비발디",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "f2740ecc-a868-4156-bc68-bf8f0d9fc4fc",
+        "canonical_name_en": "Johann Sebastian Bach",
+        "preferred_name_ko": "요한 제바스티안 바흐",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "f3b06c0c-23eb-42e9-b45b-1703b671bd57",
+        "canonical_name_en": "Jonathan Swift",
+        "preferred_name_ko": "조너선 스위프트",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "f7eec894-87d3-4254-835e-245c9e092318",
+        "canonical_name_en": "David Hume",
+        "preferred_name_ko": "데이비드 흄",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "fd06dd4a-c598-4655-adf1-546dd2bee81b",
+        "canonical_name_en": "Cao Xueqin",
+        "preferred_name_ko": "조설근",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "add62f50-5dfe-4b74-b8cb-9af003f859b2",
+        "canonical_name_en": "Jean-Jacques Rousseau",
+        "preferred_name_ko": "장자크 루소",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "74d914dc-3c46-444b-ab23-f1b9c124a569",
+        "canonical_name_en": "Cesare Beccaria",
+        "preferred_name_ko": "체사레 베카리아",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "75621c54-8bcd-4853-9c8a-ee2ff8be8655",
+        "canonical_name_en": "Edward Gibbon",
+        "preferred_name_ko": "에드워드 기번",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "cc98bd67-4827-4dd9-89ec-40785f231da5",
+        "canonical_name_en": "Wolfgang Amadeus Mozart",
+        "preferred_name_ko": "볼프강 아마데우스 모차르트",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "767be668-2242-4de5-b435-f97f10860a03",
+        "canonical_name_en": "Immanuel Kant",
+        "preferred_name_ko": "임마누엘 칸트",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "27dfd87b-d459-43d2-a3e9-986159b500e4",
+        "canonical_name_en": "Jacques-Louis David",
+        "preferred_name_ko": "자크루이 다비드",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "d334100f-6b44-46e7-a04a-6f3fbb1b08ac",
+        "canonical_name_en": "Motoori Norinaga",
+        "preferred_name_ko": "모토오리 노리나가",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b5c9ad45-ead8-44f2-ba57-c1a480419b38",
+        "canonical_name_en": "Jeong Yak-yong",
+        "preferred_name_ko": "정약용",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "f363272d-fb69-47e6-8117-b3bf7d740f0b",
+        "canonical_name_en": "Ludwig van Beethoven",
+        "preferred_name_ko": "루트비히 판 베토벤",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "316d6860-02ed-491d-95ba-9019644a0c4a",
+        "canonical_name_en": "Antonio Canova",
+        "preferred_name_ko": "안토니오 카노바",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "a2c8b64d-8f37-432c-bfd3-c6a2bc542551",
+        "canonical_name_en": "Jane Austen",
+        "preferred_name_ko": "제인 오스틴",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "2a6a8a66-37d2-489e-a4d7-1e83c24c8ced",
+        "canonical_name_en": "Nodira",
+        "preferred_name_ko": "노디라",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "725dd4b5-7c80-4d54-ae01-18034fe6c2c3",
+        "canonical_name_en": "Leopold von Ranke",
+        "preferred_name_ko": "레오폴트 폰 랑케",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "7b56abcb-c2f7-4515-8940-11e0f812493a",
+        "canonical_name_en": "Victor Hugo",
+        "preferred_name_ko": "빅토르 위고",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "12d6c0c9-f727-4358-b6ef-2acb1ff7a27f",
+        "canonical_name_en": "Hans Christian Andersen",
+        "preferred_name_ko": "한스 크리스티안 안데르센",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "299c8de4-e1cc-4a3f-a82f-4abe29b1d6b8",
+        "canonical_name_en": "Pablo Tac",
+        "preferred_name_ko": "파블로 탁",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "ee2b07d6-f28a-4252-b437-e3e35f43755d",
+        "canonical_name_en": "Karl Marx",
+        "preferred_name_ko": "카를 마르크스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "0100deee-7ee0-442f-8e43-2556aadb0312",
+        "canonical_name_en": "Norton I",
+        "preferred_name_ko": "노턴 1세",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "0ca9cc8f-4e75-41ef-99d4-56c39a48d958",
+        "canonical_name_en": "John Stuart Mill",
+        "preferred_name_ko": "존 스튜어트 밀",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "92949632-b9e5-4b6b-985e-f5245be4aa1e",
+        "canonical_name_en": "Jules Verne",
+        "preferred_name_ko": "쥘 베른",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "c5676a6d-891b-4d08-8738-d26226e78ae0",
+        "canonical_name_en": "Friedrich Nietzsche",
+        "preferred_name_ko": "프리드리히 니체",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b811a120-602e-4b39-9466-817217072f83",
+        "canonical_name_en": "Edgar Degas",
+        "preferred_name_ko": "에드가 드가",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b3d3c023-eae6-4082-ab16-97d26ee58981",
+        "canonical_name_en": "William Barak",
+        "preferred_name_ko": "윌리엄 바라크",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "7dee3870-de39-445c-b52f-5294efd7e5cd",
+        "canonical_name_en": "Richard Wagner",
+        "preferred_name_ko": "리하르트 바그너",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "821eba4d-47af-5e0f-b183-be624f960b93",
+        "canonical_name_en": "Jose Rizal",
+        "preferred_name_ko": "호세 리살",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "7763a315-4385-404b-b0d6-92a074a2aa27",
+        "canonical_name_en": "Vincent van Gogh",
+        "preferred_name_ko": "빈센트 반 고흐",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "eee4ef8b-9184-41d2-af37-0135fe4e8a5b",
+        "canonical_name_en": "Arthur Conan Doyle",
+        "preferred_name_ko": "아서 코난 도일",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "ad51aa2c-a9f6-4332-ac92-ba1ee7b8d85c",
+        "canonical_name_en": "William James",
+        "preferred_name_ko": "윌리엄 제임스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b5cce601-aeca-4e4f-af80-5eda81b073fe",
+        "canonical_name_en": "Edvard Munch",
+        "preferred_name_ko": "에드바르 뭉크",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b7f3c0c0-c021-4e71-b7c2-0f0006ce2482",
+        "canonical_name_en": "Henrik Ibsen",
+        "preferred_name_ko": "헨리크 입센",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "09b544e3-7721-4c28-b045-d9bb943396e4",
+        "canonical_name_en": "José Martí",
+        "preferred_name_ko": "호세 마르티",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "7518064d-e841-400a-b3ae-1daaa97d8ee7",
+        "canonical_name_en": "Giacomo Puccini",
+        "preferred_name_ko": "자코모 푸치니",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "be0af966-3bbe-4ef4-b237-06225bb1f6bb",
+        "canonical_name_en": "Sigmund Freud",
+        "preferred_name_ko": "지그문트 프로이트",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "086a0c88-d4d4-413c-95d7-1821fdf2de51",
+        "canonical_name_en": "Bertrand Russell",
+        "preferred_name_ko": "버트런드 러셀",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "3d0dbe11-765f-47db-a14c-69f3fd35d107",
+        "canonical_name_en": "Coco Chanel",
+        "preferred_name_ko": "코코 샤넬",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "57ed9f28-b206-4151-8317-f77659347ee7",
+        "canonical_name_en": "Nishida Kitarō",
+        "preferred_name_ko": "니시다 기타로",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "a643a787-7278-4b0c-a787-10b3f580c2f0",
+        "canonical_name_en": "Rabindranath Tagore",
+        "preferred_name_ko": "라빈드라나트 타고르",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "9f68b83e-c9e5-43e6-9bf6-0cf38d839bd3",
+        "canonical_name_en": "Marcel Proust",
+        "preferred_name_ko": "마르셀 프루스트",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "41fcf3c7-389c-434f-b020-1c94109f889c",
+        "canonical_name_en": "Franz Kafka",
+        "preferred_name_ko": "프란츠 카프카",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "17fe5b34-2f92-4c67-bcdb-f373ce3b3684",
+        "canonical_name_en": "Mykhailo Hrushevsky",
+        "preferred_name_ko": "미하일로 흐루셰우스키",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "dc1fe0cd-75b6-415d-9dcf-7d5575332371",
+        "canonical_name_en": "Grigory Choros-Gurkin",
+        "preferred_name_ko": "그리고리 초로스구르킨",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "f8a84918-0637-4d55-96df-eb8d07cd1845",
+        "canonical_name_en": "Charlie Chaplin",
+        "preferred_name_ko": "찰리 채플린",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "e9d538a5-b6c4-4add-9c26-eb7bee0ca5e9",
+        "canonical_name_en": "Louis Armstrong",
+        "preferred_name_ko": "루이 암스트롱",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "520d1438-ca69-4c95-ac97-089eaffd4398",
+        "canonical_name_en": "Virginia Woolf",
+        "preferred_name_ko": "버지니아 울프",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "6f029958-4714-4295-94c0-6c599aed55bc",
+        "canonical_name_en": "Martin Heidegger",
+        "preferred_name_ko": "마르틴 하이데거",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "149f6b22-e3c2-4996-8230-a9b5562dceed",
+        "canonical_name_en": "René Magritte",
+        "preferred_name_ko": "르네 마그리트",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "fde4556c-c95b-475e-8ef9-ff7227807d23",
+        "canonical_name_en": "Willie Seaweed",
+        "preferred_name_ko": "윌리 시위드",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "0d9c44c2-55d0-4df1-9e42-2393e363a90e",
+        "canonical_name_en": "Salvador Dalí",
+        "preferred_name_ko": "살바도르 달리",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b8fae22e-19f3-4565-9feb-cbd27579c8cd",
+        "canonical_name_en": "Walt Disney",
+        "preferred_name_ko": "월트 디즈니",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b9bf1082-34e6-4337-bd35-0ec5778123a0",
+        "canonical_name_en": "J. R. R. Tolkien",
+        "preferred_name_ko": "J. R. R. 톨킨",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "d27b8690-89b9-440c-b04f-60539bd2a699",
+        "canonical_name_en": "Albert Namatjira",
+        "preferred_name_ko": "앨버트 나마치라",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "1d913e76-ac79-4e82-90a2-08bbed2e8ef8",
+        "canonical_name_en": "Jorge Luis Borges",
+        "preferred_name_ko": "호르헤 루이스 보르헤스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "f538fff4-9658-496b-b807-8bcad963bcbd",
+        "canonical_name_en": "George Orwell",
+        "preferred_name_ko": "조지 오웰",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "82427a0e-173b-48c4-9b19-e04da2aefb72",
+        "canonical_name_en": "Jackson Pollock",
+        "preferred_name_ko": "잭슨 폴록",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b62406e7-c201-4d3c-b79f-2752c4111571",
+        "canonical_name_en": "Joe Medicine Crow",
+        "preferred_name_ko": "조 메디슨 크로",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "e16a3b74-f6f7-4eea-9c59-d796b8859d8c",
+        "canonical_name_en": "Simone de Beauvoir",
+        "preferred_name_ko": "시몬 드 보부아르",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "3a5f0856-8d8b-446a-9e59-379344f8d5ee",
+        "canonical_name_en": "Isaac Asimov",
+        "preferred_name_ko": "아이작 아시모프",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "320d1393-721d-4725-8b37-cb17ec7e023b",
+        "canonical_name_en": "Hannah Arendt",
+        "preferred_name_ko": "한나 아렌트",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "d89db567-f059-4ef4-9529-34892e2fafce",
+        "canonical_name_en": "Arthur C. Clarke",
+        "preferred_name_ko": "아서 C. 클라크",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "41383dbf-96d1-436e-a699-a1345c4493fe",
+        "canonical_name_en": "Frank Sinatra",
+        "preferred_name_ko": "프랭크 시나트라",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "7526594e-5ae7-466d-811e-aee445616ecd",
+        "canonical_name_en": "Elvis Presley",
+        "preferred_name_ko": "엘비스 프레슬리",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "c3ff9587-63e8-486f-b489-54d17717338c",
+        "canonical_name_en": "Albert Camus",
+        "preferred_name_ko": "알베르 카뮈",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "57f63dfa-18ed-4693-a384-8395064dc10f",
+        "canonical_name_en": "Chinua Achebe",
+        "preferred_name_ko": "치누아 아체베",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "f519e2b9-19f1-4b44-a298-6b5053269ab3",
+        "canonical_name_en": "John Lennon",
+        "preferred_name_ko": "존 레논",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "f0b62721-9191-418b-b9a9-ec66b8824fd1",
+        "canonical_name_en": "Michel Foucault",
+        "preferred_name_ko": "미셸 푸코",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "2de0b144-3055-4b25-a125-4b1e8442a571",
+        "canonical_name_en": "Gabriel García Márquez",
+        "preferred_name_ko": "가브리엘 가르시아 마르케스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "11ee564e-3943-4933-bc8f-3bd21f8d8f32",
+        "canonical_name_en": "Jimi Hendrix",
+        "preferred_name_ko": "지미 헨드릭스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "4a82aa3d-2a49-45c0-977c-37351879319c",
+        "canonical_name_en": "David Bowie",
+        "preferred_name_ko": "데이비드 보위",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "f53e308b-9762-4a0a-8f8b-a683d32ef98d",
+        "canonical_name_en": "Ogdo Aksyonova",
+        "preferred_name_ko": "오그도 악쇼노바",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "89bf99d9-1a09-46ba-a302-8c80a5b118ae",
+        "canonical_name_en": "Michael Jackson",
+        "preferred_name_ko": "마이클 잭슨",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "edcbb089-e052-490b-981b-1f66cf28109c",
+        "canonical_name_en": "Prince",
+        "preferred_name_ko": "프린스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "c075303a-4f0f-4652-bd0e-64e4917676b0",
+        "canonical_name_en": "Toni Morrison",
+        "preferred_name_ko": "토니 모리슨",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b74f7383-b029-477c-a16f-20951de53f04",
+        "canonical_name_en": "Daniel Mauricio Choque",
+        "preferred_name_ko": "다니엘 마우리시오 초케",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "32a21163-7211-4abf-9468-9c0881ab4e82",
+        "canonical_name_en": "Gaṅgeśa",
+        "preferred_name_ko": "강게샤",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "6d3bfd10-5e4d-414d-85ac-d90c42a80ef6",
+        "canonical_name_en": "Gersonides",
+        "preferred_name_ko": "게르소니데스",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "a0fa03e8-3233-4280-818b-b6f7e623224a",
+        "canonical_name_en": "Gorampa Sonam Senge",
+        "preferred_name_ko": "고람파",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "490b5966-63ec-4bdb-83e4-5d4fb1f25769",
+        "canonical_name_en": "Luo Guanzhong",
+        "preferred_name_ko": "나관중",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "9578433e-b34e-4eb4-861d-096eab9084bf",
+        "canonical_name_en": "Mullā Ṣadrā",
+        "preferred_name_ko": "물라 사드라",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "6a860b3e-f925-4a6a-ab79-f018a1f8d822",
+        "canonical_name_en": "Mipham",
+        "preferred_name_ko": "미팜 린포체",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "02960d07-40d7-49c2-8356-7883008b84cf",
+        "canonical_name_en": "Sakya Paṇḍita",
+        "preferred_name_ko": "사캬 판디타",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "68a8c8b9-eabc-45de-b23f-eac21f56b594",
+        "canonical_name_en": "Suhrawardī",
+        "preferred_name_ko": "수흐라와르디",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "0541b7bb-0262-44ca-9358-e76423551fba",
+        "canonical_name_en": "Adi Shankara",
+        "preferred_name_ko": "아디 샹카라",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "92398f0a-60d9-4781-b04b-2d73c0077cc0",
+        "canonical_name_en": "al-Fārābī",
+        "preferred_name_ko": "알파라비",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "b9dd3e9b-3db4-4df1-9b08-3c6da9787c6e",
+        "canonical_name_en": "Wu Cheng'en",
+        "preferred_name_ko": "오승은",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "a653f474-0c62-444d-bad2-bd0125ac6dc0",
+        "canonical_name_en": "Kumārila Bhaṭṭa",
+        "preferred_name_ko": "쿠마릴라 밧타",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "c06c962b-c180-46df-98e8-77a4882e25de",
+        "canonical_name_en": "Kundakunda",
+        "preferred_name_ko": "쿤다쿤다",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "7407feff-345f-4573-8320-62de8d58d428",
+        "canonical_name_en": "Thiruvalluvar",
+        "preferred_name_ko": "티루발루바르",
+        "disposition": "retain_culture"
+      },
+      {
+        "person_id": "448f77dc-f960-4ac5-9038-49e96cf964da",
+        "canonical_name_en": "Frida Kahlo",
+        "preferred_name_ko": "프리다 칼로",
+        "disposition": "retain_culture"
+      }
+    ],
+    "prior_v2_boundary_decisions_reaffirmed": [
+      "Aristotle",
+      "Francis Bacon",
+      "Sigmund Freud",
+      "William James",
+      "Bertrand Russell",
+      "Nāgārjuna",
+      "Asaṅga",
+      "Vasubandhu",
+      "Dignāga",
+      "Dharmakīrti",
+      "Wonhyo",
+      "Adi Shankara",
+      "Kundakunda",
+      "Sakya Paṇḍita",
+      "Mipham",
+      "Gorampa Sonam Senge",
+      "Suhrawardī",
+      "Mullā Ṣadrā",
+      "Gersonides",
+      "Kumārila Bhaṭṭa",
+      "Ibn Rushd",
+      "Karl Marx",
+      "Ibn Khaldun",
+      "John Stuart Mill",
+      "Mykhailo Hrushevsky",
+      "Pablo Tac"
+    ],
+    "edge_case_notes": [
+      {
+        "canonical_name_en": "Nodira",
+        "disposition": "retain_culture",
+        "basis": "Although she exercised major court-political influence after Umar Khan's death, Encyclopaedia Iranica treats Nādera principally as a Kokand poetess and her durable historical identity is strongly literary. Under the existing Gold rule, political status alone does not override a clearer artistic representative identity.",
+        "sources": [
+          "https://www.iranicaonline.org/articles/nadera-poetess/"
+        ]
+      },
+      {
+        "canonical_name_en": "Isabella d'Este",
+        "disposition": "retain_culture",
+        "basis": "She governed and engaged in politics, but specialist Isabella d'Este scholarship explicitly notes that history remembers her chiefly for patronage and collecting; representative identity therefore remains culture.",
+        "sources": [
+          "https://www.isabelladestearchive.org/about-5"
+        ]
+      },
+      {
+        "canonical_name_en": "William Barak",
+        "disposition": "retain_culture",
+        "basis": "Barak was an Indigenous leader and spokesman as well as a painter and cultural informant. His ATLAS representative identity remains culture because his artistic and cultural-memory role is central and he did not exercise state-level political rule.",
+        "sources": [
+          "https://adb.anu.edu.au/biography/barak-william-2930/text4239"
+        ]
+      },
+      {
+        "canonical_name_en": "Willie Seaweed",
+        "disposition": "retain_culture",
+        "basis": "Although a Nakwaxda'xw chief, UBC Museum of Anthropology authority emphasizes his work as singer, storyteller, wood carver and traditional artist who preserved potlatch culture; culture remains the representative domain.",
+        "sources": [
+          "https://atom.moa.ubc.ca/index.php/willie-seaweed"
+        ]
+      },
+      {
+        "canonical_name_en": "Rumi",
+        "disposition": "retain_culture",
+        "basis": "Rumi's religious setting is inseparable from his work, but his historical representative identity is overwhelmingly literary as a Sufi poet; no institutional religious leadership outweighs that literary identity for this single-domain system.",
+        "sources": [
+          "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/R%C5%ABm%C4%AB"
+        ]
+      },
+      {
+        "canonical_name_en": "Antoni Gaudí",
+        "disposition": "move_to_technology",
+        "basis": "Person Domain v2 explicitly assigns architecture, construction and applied building technology to technology. UNESCO identifies Gaudí as an architect and describes his exceptional contribution to architecture and building/construction technology, making technology the direct canonical fit.",
+        "sources": [
+          "https://whc.unesco.org/en/list/320/"
+        ]
+      },
+      {
+        "canonical_name_en": "Kabir",
+        "disposition": "move_to_religion",
+        "basis": "Kabir is both a major poet and religious figure, but Oxford scholarship places him at the beginning of the Hindi bhakti and sant traditions and describes the associated corpus as foundational to religious institutions and theological argument. This crosses the v2 religion threshold of faith tradition and religious reform rather than literature alone.",
+        "sources": [
+          "https://academic.oup.com/reference/62357/reference-article-abstract/554518400",
+          "https://academic.oup.com/book/12866"
+        ]
+      }
+    ]
+  },
+  "operations": [
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "culture-audit-antoni-gaudi-to-technology",
+      "person_id": "e3a77c32-5829-4f34-b567-26959e85ed12",
+      "expected_domain": "culture",
+      "replacement_domain": "technology"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "culture-audit-kabir-to-religion",
+      "person_id": "c00c48a7-ecec-458c-93ad-765a8abaea07",
+      "expected_domain": "culture",
+      "replacement_domain": "religion"
+    }
+  ]
+}
