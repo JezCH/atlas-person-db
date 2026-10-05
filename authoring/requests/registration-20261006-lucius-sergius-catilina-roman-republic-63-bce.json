@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-strong8-20261006:lucius-sergius-catilina:roman-republic:conspiracy:63-bce:v1",
+  "person": {
+    "canonical_name_en": "Lucius Sergius Catilina",
+    "display_name_ko": "루키우스 세르기우스 카틸리나",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "ea997325-953a-5c95-b5ea-3c34b47ceb56",
+    "canonical_name_en": "Roman Republic",
+    "display_name_ko": "로마 공화정",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Political conspirator and insurgent leader",
+    "role_display_name_ko": "정치 모반·반란 지도자",
+    "period_basis": "general_activity",
+    "start_year": -63,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -63,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After another electoral defeat Catiline organized the conspiracy of 63 BCE; in November he left Rome to join armed supporters in Etruria and was killed early in 62 BCE. ATLAS uses 63 BCE as the representative conspiracy year rather than manufacturing a continuous office term."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Sergius Catilina, Lucius — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/550496424",
+      "citation_text": "The Oxford Classical Dictionary records Catiline's failed elections, organization of a widespread conspiracy in 63 BCE, departure from Rome in November to join armed supporters in Etruria, and death early in 62 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "루키우스 세르기우스 카틸리나",
+      "url": "https://namu.wiki/w/%EB%A3%A8%ED%82%A4%EC%9A%B0%EC%8A%A4%20%EC%84%B8%EB%A5%B4%EA%B8%B0%EC%9A%B0%EC%8A%A4%20%EC%B9%B4%ED%8B%B8%EB%A6%AC%EB%82%98"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-STRONG8-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}

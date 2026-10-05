@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-strong8-20261006:cato-the-younger:roman-republic:praetor:54-bce:v1",
+  "person": {
+    "canonical_name_en": "Cato the Younger",
+    "display_name_ko": "소 카토",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "ea997325-953a-5c95-b5ea-3c34b47ceb56",
+    "canonical_name_en": "Roman Republic",
+    "display_name_ko": "로마 공화정",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Praetor",
+    "role_display_name_ko": "법무관",
+    "period_basis": "term",
+    "start_year": -54,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -54,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cato the Younger was elected praetor for 54 BCE, when he presided over the extortion court. ATLAS records this securely dated constitutional office as a representative political Activity rather than projecting his entire anti-Caesarian career into one synthetic interval."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Porcius Cato (2), Marcus, of Utica, 95–46 BCE — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/549703663",
+      "citation_text": "The Oxford Classical Dictionary records that Cato the Younger eventually became praetor in 54 BCE and later remained a leading Pompeian opponent of Caesar."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "소 카토",
+      "url": "https://namu.wiki/w/%EC%86%8C%20%EC%B9%B4%ED%86%A0"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-STRONG8-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}

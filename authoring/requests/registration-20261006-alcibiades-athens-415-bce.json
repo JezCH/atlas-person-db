@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-strong8-20261006:alcibiades:athens:sicilian-expedition:415-bce:v1",
+  "person": {
+    "canonical_name_en": "Alcibiades",
+    "display_name_ko": "알키비아데스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military"
+  },
+  "polity": {
+    "existing_id": "12eecff6-48de-5bce-b9d0-443d9e019a58",
+    "canonical_name_en": "Athens",
+    "display_name_ko": "아테네",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Strategos and statesman",
+    "role_display_name_ko": "스트라테고스·정치가",
+    "period_basis": "military_activity",
+    "start_year": -415,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -415,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 415 BCE Alcibiades sponsored the Sicilian expedition and was appointed with Nicias and Lamachus to command it. ATLAS uses this securely dated Athenian military-political milestone rather than fabricating one continuous allegiance interval across his later Spartan and Persian episodes."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Alcibiades, 451/450–404/403 BCE — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548069405",
+      "citation_text": "The Oxford Classical Dictionary identifies Alcibiades as an Athenian general and politician and records his appointment with Nicias and Lamachus to command the Sicilian expedition in 415 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "알키비아데스",
+      "url": "https://namu.wiki/w/%EC%95%8C%ED%82%A4%EB%B9%84%EC%95%84%EB%8D%B0%EC%8A%A4"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-STRONG8-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}
