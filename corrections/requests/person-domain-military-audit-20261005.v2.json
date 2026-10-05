@@ -1,0 +1,1409 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-domain:military-audit:2026-10-05:v1",
+  "release_order": 955,
+  "evidence": {
+    "decision": "Person Domain v2 Military audit. Re-review all 209 live military Persons against the active eight-sector taxonomy using representative historical identity. Military remains the home of warfare, military command and armed leadership when those are the durable representative identity. A governing office or ruler title does not by itself force governance when the historical identity is overwhelmingly military, but clear long-duration sovereign rulership remains governance under the established ATLAS top-state rule. Preserve explicit prior user-adjudicated military boundary decisions unless stronger current evidence contradicts them.",
+    "taxonomy": "contracts/person-domain-taxonomy.v2.json",
+    "source_main_sha": "910e3615d07044ffab2062a478a0a43c3d434118",
+    "production_snapshot": {
+      "captured_at": "2026-10-05",
+      "total_persons": 2106,
+      "assigned": 1993,
+      "counts": {
+        "governance": 1351,
+        "military": 209,
+        "science": 80,
+        "technology": 33,
+        "commerce": 32,
+        "culture": 163,
+        "religion": 98,
+        "exploration": 27
+      }
+    },
+    "reviewed_count": 209,
+    "retained_military_count": 207,
+    "moved_count": 2,
+    "expected_snapshot_counts_after": {
+      "governance": 1353,
+      "military": 207,
+      "science": 80,
+      "technology": 33,
+      "commerce": 32,
+      "culture": 163,
+      "religion": 98,
+      "exploration": 27
+    },
+    "retained_military": [
+      {
+        "person_id": "cf1f64c5-fc73-4a9b-a733-eea811e42321",
+        "canonical_name_en": "Fu Hao",
+        "preferred_name_ko": "부호",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "efe4b68a-b679-4cf2-98a1-c247a6f8dea9",
+        "canonical_name_en": "Barak",
+        "preferred_name_ko": "바락",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "71149327-09a5-42f5-abf3-edaaad607e5d",
+        "canonical_name_en": "Sisera",
+        "preferred_name_ko": "시스라",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "93f70e9a-0c86-4834-b38d-c986f74e216d",
+        "canonical_name_en": "Jael",
+        "preferred_name_ko": "야엘",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "c3199a21-ad18-41f1-8e2c-6826f0b578da",
+        "canonical_name_en": "Gideon",
+        "preferred_name_ko": "기드온",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "d5c962df-ae2c-4e82-bafb-550989ed44b2",
+        "canonical_name_en": "Sun Wu",
+        "preferred_name_ko": "손무",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "4f5bd5ce-abe4-41a4-ad6f-93bad2a72a1a",
+        "canonical_name_en": "Miltiades",
+        "preferred_name_ko": "밀티아데스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "5b8efb7d-b84c-4305-a0c4-cfbefb6de87f",
+        "canonical_name_en": "Artemisia I of Caria",
+        "preferred_name_ko": "아르테미시아 1세",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "4d3c5ca4-1557-4438-89c5-609eda08c252",
+        "canonical_name_en": "Cimon",
+        "preferred_name_ko": "키몬",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "5e7cb3b5-5e6e-5a2e-9b9c-baa5541279b3",
+        "canonical_name_en": "Brennus (Senones)",
+        "preferred_name_ko": "브렌누스(세노네스)",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e2191e4c-d63a-4db4-bfd1-5ad93e6c8ef2",
+        "canonical_name_en": "Epaminondas",
+        "preferred_name_ko": "에파메이논다스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "771c3bc9-bc9d-44fd-a711-4824f545af45",
+        "canonical_name_en": "Cynane",
+        "preferred_name_ko": "키나네",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "c3fe207e-7a1a-525c-a836-96d448e5e048",
+        "canonical_name_en": "Brennus (Galatia)",
+        "preferred_name_ko": "브렌누스(갈리아 원정)",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "d7baf5f9-04b7-4192-95c6-1b5a36da33f0",
+        "canonical_name_en": "Hamilcar Barca",
+        "preferred_name_ko": "하밀카르 바르카",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "709be8f8-d49a-5845-8a03-1868aeb89491",
+        "canonical_name_en": "Hannibal Barca",
+        "preferred_name_ko": "한니발 바르카",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "48886038-9209-425b-b282-76806e74db09",
+        "canonical_name_en": "Scipio Africanus",
+        "preferred_name_ko": "스키피오 아프리카누스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "55c42084-7e2a-589a-9f6b-c5c0a413ee25",
+        "canonical_name_en": "Zhang Han",
+        "preferred_name_ko": "장한",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "f62acf67-662c-45b8-99ff-169bc234d9d3",
+        "canonical_name_en": "Viriathus",
+        "preferred_name_ko": "비리아투스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "b146643c-5e7b-483f-a992-4732e84de643",
+        "canonical_name_en": "Gaius Marius",
+        "preferred_name_ko": "가이우스 마리우스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e727f13f-f80b-42bd-a482-ef9efd87fdac",
+        "canonical_name_en": "Spartacus",
+        "preferred_name_ko": "스파르타쿠스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "22a7d731-9edd-48f0-a593-e4167875782b",
+        "canonical_name_en": "Pompey the Great",
+        "preferred_name_ko": "그나이우스 폼페이우스 마그누스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "9c3626a5-f1ac-42b8-a797-3000a9970285",
+        "canonical_name_en": "Viridovix",
+        "preferred_name_ko": "비리도빅스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "8d0f6817-f0fb-5041-8e89-fc46201c0b72",
+        "canonical_name_en": "Ambiorix",
+        "preferred_name_ko": "암비오릭스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "3dfc194c-5c61-5047-ab2b-47796815a5fa",
+        "canonical_name_en": "Vercingetorix",
+        "preferred_name_ko": "베르킨게토릭스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "c7f384c2-91b3-4582-9624-f26a46e48e98",
+        "canonical_name_en": "Arminius",
+        "preferred_name_ko": "아르미니우스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "ed268f51-71dd-46d2-ad26-49bd1eef80c9",
+        "canonical_name_en": "Tacfarinas",
+        "preferred_name_ko": "타크파리나스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "566ed424-5031-41ac-94d4-a4a87f0f9ff8",
+        "canonical_name_en": "Caratacus",
+        "preferred_name_ko": "카라타쿠스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "7ee6c4a4-0ed2-5d95-ae7c-6814552155b7",
+        "canonical_name_en": "Sun Jian",
+        "preferred_name_ko": "손견",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "74611130-a9b8-52b2-85b2-e62e9bf4a892",
+        "canonical_name_en": "Lu Bu",
+        "preferred_name_ko": "여포",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "81fe4b36-88f4-5c9c-b8f8-8860ab728701",
+        "canonical_name_en": "Guan Yu",
+        "preferred_name_ko": "관우",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "f91de795-3abe-403f-86b2-6c06ce4c0c19",
+        "canonical_name_en": "Zhang Fei",
+        "preferred_name_ko": "장비",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "ce0754be-960c-4d93-9475-3b1845d5dbf6",
+        "canonical_name_en": "Zhao Yun",
+        "preferred_name_ko": "조운",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "a35330e1-cea3-5b9a-925c-d111e5a260f1",
+        "canonical_name_en": "Meng Huo",
+        "preferred_name_ko": "맹획",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "ea7456fa-c29d-5fac-979e-fc8c43824de4",
+        "canonical_name_en": "Lady Trieu",
+        "preferred_name_ko": "조구(趙嫗)",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "775f00b8-8a53-44b3-8bb5-9649fe0e9756",
+        "canonical_name_en": "Fritigern",
+        "preferred_name_ko": "프리티게른",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "dbac46ae-d3dc-4068-840f-46fedbdbd901",
+        "canonical_name_en": "Stilicho",
+        "preferred_name_ko": "스틸리코",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "6e77d860-69a9-4444-9355-efb0f1299cc0",
+        "canonical_name_en": "Respendial",
+        "preferred_name_ko": "레스펜디알",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "3795be4c-15dc-4c1a-a06e-72d6a7bf6d58",
+        "canonical_name_en": "Flavius Aetius",
+        "preferred_name_ko": "플라비우스 아이티우스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "45bdc34d-3a99-4034-b03d-c546c96608f9",
+        "canonical_name_en": "Vardan Mamikonian",
+        "preferred_name_ko": "바르단 마미코니안",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "ef25df7d-4f2c-5ae0-b13b-598d5b2be627",
+        "canonical_name_en": "Belisarius",
+        "preferred_name_ko": "벨리사리우스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "a3b56200-31d0-4988-a1bb-c32ed553f23f",
+        "canonical_name_en": "Narses",
+        "preferred_name_ko": "나르세스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "bf41533a-6c7c-43a0-95ab-df18f958d092",
+        "canonical_name_en": "Eulji Mundeok",
+        "preferred_name_ko": "을지문덕",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "54583770-280a-4ec1-81db-24729ed842ab",
+        "canonical_name_en": "Khalid ibn al-Walid",
+        "preferred_name_ko": "할리드 이븐 알왈리드",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e2ade9e4-fe1d-431d-bd04-f5be0bbd8fbc",
+        "canonical_name_en": "Gyebaek",
+        "preferred_name_ko": "계백",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "46187c42-c80d-4dbc-aa31-3adfb2e3d39c",
+        "canonical_name_en": "Kim Yu-sin",
+        "preferred_name_ko": "김유신",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "581d5a01-d18c-4519-94dd-7c5b2b7a1deb",
+        "canonical_name_en": "Musa ibn Nusayr",
+        "preferred_name_ko": "무사 이븐 누사이르",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "dc05e58f-b9c0-46b2-9bb8-d324ac0b76f0",
+        "canonical_name_en": "Muhammad ibn al-Qasim",
+        "preferred_name_ko": "무함마드 빈 카심",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e87fa13d-8835-4ce3-a17e-8455575680c6",
+        "canonical_name_en": "Tariq ibn Ziyad",
+        "preferred_name_ko": "타리크 이븐 지야드",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "febfbf5c-ab58-45db-85f7-53f54f968d9e",
+        "canonical_name_en": "Widukind",
+        "preferred_name_ko": "비두킨트",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "54bf8c8a-7c98-4a83-8106-99bf17b4170d",
+        "canonical_name_en": "Roland",
+        "preferred_name_ko": "롤랑",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "4d7b9099-ef40-4871-8af2-46bd1f8246a7",
+        "canonical_name_en": "Aterui",
+        "preferred_name_ko": "아테루이",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "4ea57402-639e-4d79-b4b3-383667d90647",
+        "canonical_name_en": "Nasr ibn Ahmad of Fraxinetum",
+        "preferred_name_ko": "프락시네툼의 나스르 이븐 아흐마드",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "5a938ac4-1dfd-40ae-b926-bc80750beac1",
+        "canonical_name_en": "Gang Gam-chan",
+        "preferred_name_ko": "강감찬",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "50e0c4e6-598a-493d-bea9-6252bdc263cb",
+        "canonical_name_en": "El Cid",
+        "preferred_name_ko": "엘 시드",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "fa374536-7763-4259-b52b-c2a718387bab",
+        "canonical_name_en": "Cheok Jun-gyeong",
+        "preferred_name_ko": "척준경",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "cace0ed2-21c2-4442-893a-095af712d090",
+        "canonical_name_en": "Yue Fei",
+        "preferred_name_ko": "악비",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e1014975-8146-47c9-b8dc-6e7506d79a46",
+        "canonical_name_en": "Guido da Landriano",
+        "preferred_name_ko": "귀도 다 란드리아노",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "0e9a360e-175a-4b60-8194-5f15bd66faf4",
+        "canonical_name_en": "Minamoto no Yoshitsune",
+        "preferred_name_ko": "미나모토노 요시츠네",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "eb6b2a77-059f-4042-a283-31ec67c6f97f",
+        "canonical_name_en": "Subutai",
+        "preferred_name_ko": "수부타이",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "f4ea542e-8f9b-41f1-ba2f-f85e6ddeb5a8",
+        "canonical_name_en": "William Wallace",
+        "preferred_name_ko": "윌리엄 월리스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e170fae3-b8cc-4a69-9309-5c69269140fb",
+        "canonical_name_en": "Kusunoki Masashige",
+        "preferred_name_ko": "구스노키 마사시게",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "33459667-1632-5a3e-bcc3-63833af5128c",
+        "canonical_name_en": "Fang Guozhen",
+        "preferred_name_ko": "방국진",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "3d1caf4a-1251-5566-8830-c1daecfdecd4",
+        "canonical_name_en": "Liu Futong",
+        "preferred_name_ko": "유복통",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "eee1e3e6-f474-5438-8a07-44c88027d0c7",
+        "canonical_name_en": "Koke Temur",
+        "preferred_name_ko": "쾨케 테무르",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "91826126-280e-5960-a34f-588ec25e439f",
+        "canonical_name_en": "Bolad Temur",
+        "preferred_name_ko": "볼라드 테무르",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "6f217b91-f8e3-4ab4-932f-e72ad1eb536d",
+        "canonical_name_en": "Bertrand du Guesclin",
+        "preferred_name_ko": "베르트랑 뒤 게클랭",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "ade6fb59-27b4-49ee-92df-cdfaee646572",
+        "canonical_name_en": "Choe Yeong",
+        "preferred_name_ko": "최영",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "6ef0043a-62ab-48de-b718-4ee97fe3de57",
+        "canonical_name_en": "Jan Žižka",
+        "preferred_name_ko": "얀 지슈카",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "6a9b78de-8871-5ac6-be98-26f30a7c7fbf",
+        "canonical_name_en": "Joan of Arc",
+        "preferred_name_ko": "잔 다르크",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "8e32f62c-9b6a-4e52-9290-eef620e86ef2",
+        "canonical_name_en": "Skanderbeg",
+        "preferred_name_ko": "스컨데르베우",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "fce4abc5-6301-4956-aaca-93924175081d",
+        "canonical_name_en": "Wulf Isebrand",
+        "preferred_name_ko": "불프 이제브란트",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "1fc8b288-d205-4217-9e81-435c1bf449d2",
+        "canonical_name_en": "Afonso de Albuquerque",
+        "preferred_name_ko": "아폰수 드 알부케르크",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "4636089b-eb9a-4214-8bb1-cd6b2d64d7f1",
+        "canonical_name_en": "Agüeybaná II",
+        "preferred_name_ko": "아궤이바나 2세",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "6121c75b-7509-4bf4-ac01-e52a02c0f59d",
+        "canonical_name_en": "György Dózsa",
+        "preferred_name_ko": "죄르지 도자",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "fc299f9e-a64c-410a-b329-3bfa2cb43ffe",
+        "canonical_name_en": "Pier Gerlofs Donia",
+        "preferred_name_ko": "피어 헤를로프스 도니아",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "c586abbe-f30b-41b1-bbdf-895890d56e8e",
+        "canonical_name_en": "Hernán Cortés",
+        "preferred_name_ko": "에르난 코르테스",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "7b3ce499-0987-4072-a4f8-480dc35f6767",
+        "canonical_name_en": "Ahmad ibn Ibrahim al-Ghazi",
+        "preferred_name_ko": "아흐마드 이븐 이브라힘 알가지",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "32124c4d-3c10-4802-9f4b-c717a156c563",
+        "canonical_name_en": "Francisco Pizarro",
+        "preferred_name_ko": "프란시스코 피사로",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "5068032a-fc0b-4c7a-9606-48f54bbd2be3",
+        "canonical_name_en": "Lempira",
+        "preferred_name_ko": "렘피라",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "eef1ea13-c99e-48bb-b691-8380832b2595",
+        "canonical_name_en": "Pedro de Valdivia",
+        "preferred_name_ko": "페드로 데 발디비아",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "18aacebf-c586-40e1-a5b8-2d07800c7a96",
+        "canonical_name_en": "Nils Dacke",
+        "preferred_name_ko": "닐스 다케",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "8fb92689-0f37-5983-bafe-58f6ecebccf6",
+        "canonical_name_en": "Leftraru",
+        "preferred_name_ko": "레프트라루",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e4b4b4a7-830f-430c-89ae-5e76f5d948b6",
+        "canonical_name_en": "Caupolicán",
+        "preferred_name_ko": "카우폴리칸",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "6399ab54-1005-4287-9b41-9061e57534aa",
+        "canonical_name_en": "Juan Calchaquí",
+        "preferred_name_ko": "후안 칼차키",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e344c8af-480d-4c02-a75b-8528ca5681cf",
+        "canonical_name_en": "Abayubá",
+        "preferred_name_ko": "아바유바",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "ea13e48a-94ef-5648-98be-f74554778166",
+        "canonical_name_en": "Yi Sun-sin",
+        "preferred_name_ko": "이순신",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "0e77ec0e-5d06-4e4f-83fa-9745d7e48283",
+        "canonical_name_en": "Maurice of Nassau",
+        "preferred_name_ko": "마우리츠 판 나사우",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "2b4a1e1d-022a-4fd6-a24e-a942a25e5a4f",
+        "canonical_name_en": "Shimazu Yoshihiro",
+        "preferred_name_ko": "시마즈 요시히로",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e5707968-fc11-4dd7-9972-de4b1eb207c8",
+        "canonical_name_en": "Gwon Yul",
+        "preferred_name_ko": "권율",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "6bb2178f-0889-42b8-809a-84043ef8b2e1",
+        "canonical_name_en": "Davyd Zherebtsov",
+        "preferred_name_ko": "다비드 제레브초프",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "fdba0d90-30ea-4064-bd39-ef0e36b42a33",
+        "canonical_name_en": "Sanada Yukimura",
+        "preferred_name_ko": "사나다 유키무라",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "02e6975e-5432-4b71-8b9f-451e41bc6b26",
+        "canonical_name_en": "Yamada Nagamasa",
+        "preferred_name_ko": "야마다 나가마사",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "59a5bad2-3caa-407c-9914-b8541dd2ac58",
+        "canonical_name_en": "Albrecht von Wallenstein",
+        "preferred_name_ko": "알브레히트 폰 발렌슈타인",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "fd373bb6-2bc9-4026-8399-89610b8359e4",
+        "canonical_name_en": "Antônio Filipe Camarão",
+        "preferred_name_ko": "안토니우 필리피 카마랑",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "da2fb26b-b2b5-46fe-aa15-4ff269c80b49",
+        "canonical_name_en": "Dular Bombogor",
+        "preferred_name_ko": "둘라르 봄보고르",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "352b4b15-b074-43cd-a532-5a5f87c3741f",
+        "canonical_name_en": "Miyamoto Musashi",
+        "preferred_name_ko": "미야모토 무사시",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "543bb20d-5e4f-488a-8df1-b5feb78489f8",
+        "canonical_name_en": "Togay Bey",
+        "preferred_name_ko": "토가이 베이",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "7e457809-9f5d-4072-8e57-b39f0f0732cd",
+        "canonical_name_en": "Ivan Sirko",
+        "preferred_name_ko": "이반 시르코",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e0383913-ad19-46ec-9740-d3a23874be90",
+        "canonical_name_en": "Henry Morgan",
+        "preferred_name_ko": "헨리 모건",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "75526e81-e4e9-4123-afaf-a54da1ff4659",
+        "canonical_name_en": "Shakushain",
+        "preferred_name_ko": "샤쿠샤인",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "1fe1cb2b-f6a7-4f79-bdf5-39d904d6b112",
+        "canonical_name_en": "Matå'pang",
+        "preferred_name_ko": "마타팡",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "932971a6-68d9-44ec-9d05-2550c8f42562",
+        "canonical_name_en": "Po'pay",
+        "preferred_name_ko": "포파이",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "24be4ff2-9b28-4f58-8d12-083d3adc5368",
+        "canonical_name_en": "Prince Eugene of Savoy",
+        "preferred_name_ko": "사부아 공자 외젠",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e4bc96d0-f94a-4014-8e05-6f9b2e826fd1",
+        "canonical_name_en": "Henry Every",
+        "preferred_name_ko": "헨리 에브리",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "db3e1ca1-3607-4710-8383-39c692d5e2f9",
+        "canonical_name_en": "Payoreva",
+        "preferred_name_ko": "파요레바",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "5f931acd-c5c2-4eda-9498-0abf7df5fef0",
+        "canonical_name_en": "Amaro Pargo",
+        "preferred_name_ko": "아마로 파고",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "cad07f09-eac2-4d75-bf53-257ac0fb985c",
+        "canonical_name_en": "Benjamin Hornigold",
+        "preferred_name_ko": "벤저민 호니골드",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "b258dd75-aeb6-5603-bda8-ccb6fd078327",
+        "canonical_name_en": "Edward Teach",
+        "preferred_name_ko": "에드워드 티치",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "54be569c-170b-4f00-b244-4685c4f4e00b",
+        "canonical_name_en": "Bartholomew Roberts",
+        "preferred_name_ko": "바솔로뮤 로버츠",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "838a6ff9-3db8-4917-a365-11df3ab88af3",
+        "canonical_name_en": "Fyodor Kharchin",
+        "preferred_name_ko": "표도르 하르친",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "4a48fa46-bbfc-4231-9da0-1fe68e432ce6",
+        "canonical_name_en": "Nanny of the Maroons",
+        "preferred_name_ko": "마룬의 내니",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "b58ad445-e255-48e1-a403-efb5f89f2b34",
+        "canonical_name_en": "Sepé Tiaraju",
+        "preferred_name_ko": "세페 티아라주",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "70f56b77-4d10-4296-98e4-b4887321b2a9",
+        "canonical_name_en": "Joseph Broussard",
+        "preferred_name_ko": "조제프 브루사르",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "f66f7659-44a3-4d1f-ae9f-d393c49d4f00",
+        "canonical_name_en": "Robert Clive",
+        "preferred_name_ko": "로버트 클라이브",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "acf4fb7f-c335-4f57-be29-ba8a84c6f055",
+        "canonical_name_en": "Pontiac",
+        "preferred_name_ko": "폰티액",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "c423eb8a-a790-4d76-a944-20fb76b3b58f",
+        "canonical_name_en": "Koerikei",
+        "preferred_name_ko": "코에리케이",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "4acb9f64-4916-4095-b83f-82264ba083df",
+        "canonical_name_en": "Logan",
+        "preferred_name_ko": "로건",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "2dee72ef-3298-49cf-87f7-9f0e1d4e1271",
+        "canonical_name_en": "Joseph Brant",
+        "preferred_name_ko": "조지프 브랜트",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "ed1fe97a-4b23-4d17-b31c-886124a08862",
+        "canonical_name_en": "Chisli",
+        "preferred_name_ko": "치슬리",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+        "canonical_name_en": "Gilbert du Motier, Marquis de Lafayette",
+        "preferred_name_ko": "라파예트 후작",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "202c0307-87ae-450a-9c1a-aa647bfb068b",
+        "canonical_name_en": "Ethan Allen",
+        "preferred_name_ko": "이선 앨런",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "2c965cd4-eab2-4474-9f2f-e43cc7c23dad",
+        "canonical_name_en": "Joseph María",
+        "preferred_name_ko": "조지프 마리아",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "50f1b435-ae3a-4ed9-8105-197007560631",
+        "canonical_name_en": "Nuku Amiruddin",
+        "preferred_name_ko": "누쿠 아미루딘",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "4dd5bbc8-196a-4e6a-b7e3-47c8a18ca8e9",
+        "canonical_name_en": "Little Turtle",
+        "preferred_name_ko": "리틀 터틀",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "4578536e-f89f-4040-b502-0c7d28896224",
+        "canonical_name_en": "Túpac Amaru II",
+        "preferred_name_ko": "투팍 아마루 2세",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "29e2b6d9-dfa1-4bb4-91e4-b8983fe1aaea",
+        "canonical_name_en": "Tomás Paniri",
+        "preferred_name_ko": "토마스 파니리",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "99a52aa5-d92f-41d5-bf63-6fd1d606b310",
+        "canonical_name_en": "Túpac Katari",
+        "preferred_name_ko": "투팍 카타리",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "170cf96b-c106-49f5-86ad-d1c320d32779",
+        "canonical_name_en": "Toypurina",
+        "preferred_name_ko": "토이푸리나",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "7f1d9d17-f769-40bc-b393-fe703e614055",
+        "canonical_name_en": "Charquin",
+        "preferred_name_ko": "차르킨",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "a22709ab-1e33-487f-bd09-9eb4ec224100",
+        "canonical_name_en": "Tadeusz Kościuszko",
+        "preferred_name_ko": "타데우시 코시치우슈코",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "ced263ec-ec43-46ee-a1fa-1443ec39477a",
+        "canonical_name_en": "Horatio Nelson",
+        "preferred_name_ko": "호레이쇼 넬슨",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "60085146-18e1-4f76-9dc9-b6746ca57525",
+        "canonical_name_en": "Beibulat Taimiev",
+        "preferred_name_ko": "베이불라트 타이미예프",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "62d43a03-b980-55f8-a992-d57346b62e70",
+        "canonical_name_en": "Tecumseh",
+        "preferred_name_ko": "테쿰세",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "a8797617-0a4e-4092-a78a-0c8a67b8d67a",
+        "canonical_name_en": "Andreas Hofer",
+        "preferred_name_ko": "안드레아스 호퍼",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "31a8343d-a862-46ed-86f9-15ec90fb9c4c",
+        "canonical_name_en": "Te Rauparaha",
+        "preferred_name_ko": "테 라우파라하",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "015bf9be-c853-4c27-922a-c502d3839af2",
+        "canonical_name_en": "José de San Martín",
+        "preferred_name_ko": "호세 데 산마르틴",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "877d7da5-3a2b-440b-b727-3ae07f443993",
+        "canonical_name_en": "Narbona",
+        "preferred_name_ko": "나르보나",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "459866ef-b8c5-4bb2-b466-c9c534dcacc8",
+        "canonical_name_en": "Windradyne",
+        "preferred_name_ko": "윈드라다인",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "b372abba-5962-4c67-980c-087846a3cb00",
+        "canonical_name_en": "Arthur Wellesley, 1st Duke of Wellington",
+        "preferred_name_ko": "아서 웰즐리",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "c791ad30-a754-4146-b30e-b3fc179c6fc4",
+        "canonical_name_en": "Estanislao",
+        "preferred_name_ko": "에스타니슬라오",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "56e7743a-1a0f-4028-909d-6c087d339914",
+        "canonical_name_en": "Tarenorerer",
+        "preferred_name_ko": "타레노레러",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "f5323159-faa5-40aa-a8ee-c919fdd77a33",
+        "canonical_name_en": "Vavlyo Nenyang",
+        "preferred_name_ko": "바블료 네냥",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "dc657ae4-d13f-4477-ada4-7786db7682d2",
+        "canonical_name_en": "Ismail Berzeg",
+        "preferred_name_ko": "이스마일 베르제그",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "5ae12df2-fbf9-44bf-9cc4-b860663f1b8b",
+        "canonical_name_en": "Yagan",
+        "preferred_name_ko": "야간",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "8b931faf-4a1a-442d-8b60-c854719454b2",
+        "canonical_name_en": "Buffalo Hump",
+        "preferred_name_ko": "버펄로 험프",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "53e5e994-4f71-4193-9e40-244d8f2d34f7",
+        "canonical_name_en": "Antonio Canales Rosillo",
+        "preferred_name_ko": "안토니오 카날레스 로시요",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "3d472a18-8421-4c62-9cbf-4733fbb1cc7e",
+        "canonical_name_en": "Multuggerah",
+        "preferred_name_ko": "멀투게라",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "05ca003b-aea1-4b2c-ae44-6aaaf937a88e",
+        "canonical_name_en": "Vauli Piettomin",
+        "preferred_name_ko": "바울리 피에토민",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "2e195df0-cde7-454d-b40f-edf6dabe1ca3",
+        "canonical_name_en": "Tarrarer",
+        "preferred_name_ko": "타라러",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "6e3f9294-185d-4e91-a791-cd1fc58107cc",
+        "canonical_name_en": "Hōne Heke",
+        "preferred_name_ko": "호네 헤케",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "a3dad1b6-d7c3-4351-abc7-8d9bbc1ed0e5",
+        "canonical_name_en": "Guillaume Henri Dufour",
+        "preferred_name_ko": "기욤 앙리 뒤푸르",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "4755388b-6d6d-40d7-9ab6-9bf3bf28f1c9",
+        "canonical_name_en": "Giuseppe Garibaldi",
+        "preferred_name_ko": "주세페 가리발디",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e10fcad7-6e2f-5567-bfc7-fca4855101c7",
+        "canonical_name_en": "Lakshmibai",
+        "preferred_name_ko": "락슈미 바이",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "d52b6aaa-2b2d-4cb8-a355-3da7e255f3e1",
+        "canonical_name_en": "William Walker",
+        "preferred_name_ko": "윌리엄 워커",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "3fac47b3-ea9a-4fbc-8c93-31e859119f4a",
+        "canonical_name_en": "Lalla Fatma N'Soumer",
+        "preferred_name_ko": "랄라 파트마 은수메르",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "3701d332-d1f9-491e-b97f-90fccb86f37c",
+        "canonical_name_en": "Saigō Takamori",
+        "preferred_name_ko": "사이고 다카모리",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "4a3ac83c-d60c-40d7-af92-23cfa2f9c02c",
+        "canonical_name_en": "Manuelito",
+        "preferred_name_ko": "마누엘리토",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "14c2f55c-dc38-42c7-a231-abba41927224",
+        "canonical_name_en": "Iron Jacket",
+        "preferred_name_ko": "아이언 재킷",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "85dd63ac-d2a0-41a4-b939-472b27a60f64",
+        "canonical_name_en": "Tumenggung Surapati",
+        "preferred_name_ko": "투멩궁 수라파티",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "2920c10d-b93b-41cd-8dae-2e2d1f3948eb",
+        "canonical_name_en": "Kastuś Kalinoŭski",
+        "preferred_name_ko": "카스투시 칼리노우스키",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "db627afc-d6e5-4bb8-8033-0a687c2360a0",
+        "canonical_name_en": "Roman Nose (Woqini)",
+        "preferred_name_ko": "로만 노즈(워키니)",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "384cf9c8-c935-427c-8110-0a089e023ddc",
+        "canonical_name_en": "Red Cloud",
+        "preferred_name_ko": "레드 클라우드",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "635b5f95-a2f0-48dd-8746-b44e2d77fcf8",
+        "canonical_name_en": "Cajeme",
+        "preferred_name_ko": "카헤메",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "b38d5c86-ad90-44a5-be7e-8730f4737e95",
+        "canonical_name_en": "Buffalo Calf Road Woman",
+        "preferred_name_ko": "버펄로 카프 로드 우먼",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "dbae940b-2d8f-422a-be03-7cb101f20820",
+        "canonical_name_en": "Osh-Tisch",
+        "preferred_name_ko": "오시티시",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "d0a210cb-659d-480a-9dbb-8d4e05c92463",
+        "canonical_name_en": "Pretty Nose",
+        "preferred_name_ko": "프리티 노즈",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "8ebeb666-e8d2-475c-b44e-03555f40a464",
+        "canonical_name_en": "Ataï",
+        "preferred_name_ko": "아타이",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "dae6c092-4e79-4b83-ae1f-6d3363ebe43b",
+        "canonical_name_en": "Geronimo",
+        "preferred_name_ko": "제로니모",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "84c52b81-b8f2-4b3b-a10a-b19df34f4649",
+        "canonical_name_en": "Jandamarra",
+        "preferred_name_ko": "잔다마라",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "f95de505-7c9e-4382-ac8e-f7575bf2746b",
+        "canonical_name_en": "Jeon Bong-jun",
+        "preferred_name_ko": "전봉준",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "f04525f7-52fa-43d4-815a-c134ae9c0670",
+        "canonical_name_en": "Liu Yongfu",
+        "preferred_name_ko": "류융푸",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "088d326e-0540-493c-86d4-360356197050",
+        "canonical_name_en": "Yaa Asantewaa",
+        "preferred_name_ko": "야 아산테와",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "c6d5ccc1-6a85-46df-a0b1-e788c4070098",
+        "canonical_name_en": "Jacob Morenga",
+        "preferred_name_ko": "야코프 모렝가",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "42cce5c4-984d-4195-8002-31ce90c545d2",
+        "canonical_name_en": "An Jung-geun",
+        "preferred_name_ko": "안중근",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "f1a8f29d-573c-44e8-b88d-fbccad9154e6",
+        "canonical_name_en": "Paul von Lettow-Vorbeck",
+        "preferred_name_ko": "파울 폰 레토포어베크",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e65abc3c-7705-4373-96dc-36007d988ad0",
+        "canonical_name_en": "Hamad Pasha al-Sufi",
+        "preferred_name_ko": "하마드 파샤 알수피",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e64be21d-fc1d-405b-a75c-5692524bbefe",
+        "canonical_name_en": "Adrian Carton de Wiart",
+        "preferred_name_ko": "에이드리언 카턴 드 와이어트",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "a098e80f-f3b9-4aaa-a643-c5d4dc4da1b9",
+        "canonical_name_en": "Manfred von Richthofen",
+        "preferred_name_ko": "만프레트 폰 리히트호펜",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "626a40c3-a005-459b-b78c-e58ed7b0a790",
+        "canonical_name_en": "Nestor Makhno",
+        "preferred_name_ko": "네스토르 마흐노",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "765cc098-fa92-4401-8365-6390217ee43c",
+        "canonical_name_en": "Andranik Ozanian",
+        "preferred_name_ko": "안드라니크 오자니안",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "9385af1f-4c8f-441d-b747-f22635edc8d6",
+        "canonical_name_en": "Carl Gustaf Emil Mannerheim",
+        "preferred_name_ko": "칼 구스타프 에밀 만네르헤임",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "1b549e5f-09c3-4454-8e9d-f45130abdfe2",
+        "canonical_name_en": "Pyotr Krasnov",
+        "preferred_name_ko": "표트르 크라스노프",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "0f264e75-6d6d-424a-81ac-df14f1519281",
+        "canonical_name_en": "Vasyl Vyshyvanyi",
+        "preferred_name_ko": "바실 비시바니",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "cb477fed-e177-4d72-ad61-b1ec23a673a7",
+        "canonical_name_en": "Omar Mukhtar",
+        "preferred_name_ko": "오마르 무크타르",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "7623e57d-2fc2-444d-b102-56d24a4c2ee4",
+        "canonical_name_en": "Augusto César Sandino",
+        "preferred_name_ko": "아우구스토 세사르 산디노",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "30fc3fa9-cb21-4dc3-9307-65fe16f30f9d",
+        "canonical_name_en": "Enrique Gorostieta Velarde",
+        "preferred_name_ko": "엔리케 고로스티에타 벨라르데",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "8c3f7629-d06d-48c5-8aea-bfb7b9cc285c",
+        "canonical_name_en": "Douglas MacArthur",
+        "preferred_name_ko": "더글러스 맥아더",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "3ea668dd-8ea8-40df-a8ef-b6d30863e510",
+        "canonical_name_en": "Georgy Zhukov",
+        "preferred_name_ko": "게오르기 주코프",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "e94f9359-c526-463f-950d-7759ec0628b9",
+        "canonical_name_en": "Witold Pilecki",
+        "preferred_name_ko": "비톨트 필레츠키",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "d5196fd6-4d6e-46a4-b5db-3b6a4647ece5",
+        "canonical_name_en": "Simo Häyhä",
+        "preferred_name_ko": "시모 해위해",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "1539ff3b-f3fc-492d-9828-34874f338eed",
+        "canonical_name_en": "Erwin Rommel",
+        "preferred_name_ko": "에르빈 롬멜",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "c2d9696d-99e2-4edd-a42e-2ce21d0ff696",
+        "canonical_name_en": "Jack Churchill",
+        "preferred_name_ko": "잭 처칠",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "473db34c-badf-4fa5-8cec-526b0aafd19b",
+        "canonical_name_en": "Audie Murphy",
+        "preferred_name_ko": "오디 머피",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "9e1b13fa-b0a1-41e3-9403-af214aecd82c",
+        "canonical_name_en": "Aimo Koivunen",
+        "preferred_name_ko": "아이모 코이부넨",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "7f52b3c5-60c7-46df-84a1-98fc50c26e40",
+        "canonical_name_en": "Claus von Stauffenberg",
+        "preferred_name_ko": "클라우스 폰 슈타우펜베르크",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "9b0ed6bb-83b7-4b0e-8905-2c2670675ca5",
+        "canonical_name_en": "Léo Major",
+        "preferred_name_ko": "레오 메이저",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "58f08c67-13e0-4ba7-b833-17e882d8cc6e",
+        "canonical_name_en": "Louis Mountbatten",
+        "preferred_name_ko": "루이 마운트배튼",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "7c46440f-3ab9-4291-b03f-519d6251b3bc",
+        "canonical_name_en": "Che Guevara",
+        "preferred_name_ko": "체 게바라",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "ca63f28e-be14-45ab-ac42-f294f3b96983",
+        "canonical_name_en": "Fin",
+        "preferred_name_ko": "핀",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "f43870d3-72de-49c5-920d-0b2d328e673e",
+        "canonical_name_en": "Hamid Idris Awate",
+        "preferred_name_ko": "하미드 이드리스 아와테",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "88155117-6866-41a8-8a40-c80ad3e16589",
+        "canonical_name_en": "Vasily Arkhipov",
+        "preferred_name_ko": "바실리 아르히포프",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "91342487-9d42-41c5-abcb-ce0821310c1d",
+        "canonical_name_en": "Abimael Guzmán",
+        "preferred_name_ko": "아비마엘 구스만",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "593cec30-0fc9-418e-9dff-cefc73ab314e",
+        "canonical_name_en": "Ahmad Shah Massoud",
+        "preferred_name_ko": "아흐마드 샤 마수드",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "57c344e4-ad5f-4d23-a4f9-0fb0e38d755f",
+        "canonical_name_en": "Stanislav Petrov",
+        "preferred_name_ko": "스타니슬라프 페트로프",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "258717ed-936b-44cb-b194-01f001fa14e1",
+        "canonical_name_en": "Francis Ona",
+        "preferred_name_ko": "프랜시스 오나",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "9ce6a904-0164-4651-aa5b-50ab9a569909",
+        "canonical_name_en": "Samson",
+        "preferred_name_ko": "삼손",
+        "disposition": "retain_military"
+      },
+      {
+        "person_id": "ec454db9-e4ab-457a-8e01-0807e59a24aa",
+        "canonical_name_en": "Crazy Horse",
+        "preferred_name_ko": "크레이지 호스",
+        "disposition": "retain_military"
+      }
+    ],
+    "prior_reviewed_boundary_decisions_reaffirmed": [
+      "Po'pay",
+      "Tecumseh",
+      "Lalla Fatma N'Soumer",
+      "Koerikei",
+      "Gaius Marius",
+      "Ahmad Shah Massoud",
+      "Musa ibn Nusayr",
+      "Claus von Stauffenberg"
+    ],
+    "edge_case_notes": [
+      {
+        "canonical_name_en": "Pyrrhus of Epirus",
+        "disposition": "move_to_governance",
+        "basis": "Pyrrhus was not merely a field commander: he repeatedly exercised sovereign kingship in Epirus and Macedon across much of his adult career. Under the established ATLAS rule that a clear secular top ruler remains governance even when also a celebrated general, his durable representative identity crosses the military/governance boundary in favor of governance.",
+        "sources": [
+          "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Pyrrhus"
+        ]
+      },
+      {
+        "canonical_name_en": "Sviatoslav I",
+        "disposition": "move_to_governance",
+        "basis": "Sviatoslav was Grand Prince of Kyiv, de jure from 945 and de facto from the 960s until 972, and his conquests were conducted as the sovereign ruler expanding Kyivan Rus. His military reputation is exceptional, but the warfare is inseparable from his direct top-state rulership; under the ATLAS top-state rule governance is the stronger single representative domain.",
+        "sources": [
+          "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CS%5CV%5CSviatoslavIIhorovych.htm"
+        ]
+      },
+      {
+        "canonical_name_en": "Skanderbeg",
+        "disposition": "retain_military",
+        "basis": "Skanderbeg also ruled the Kastrioti principality, but standard historical framing centers his durable identity on armed resistance and military leadership against the Ottoman Empire. Unlike a monarch whose historical representation is primarily dynastic rule, his princely authority and war leadership are effectively the same resistance career, so military remains representative.",
+        "sources": [
+          "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Scanderbeg"
+        ]
+      },
+      {
+        "canonical_name_en": "Nuku Amiruddin",
+        "disposition": "retain_military",
+        "basis": "Nuku became Sultan of Tidore, but his representative historical identity is the long anti-Dutch Nuku resistance movement from 1780 until his death; the sultanate phase was the political culmination of that armed struggle. Military therefore remains stronger than title-only reassignment.",
+        "sources": [
+          "https://en.wikipedia.org/wiki/Nuku_of_Tidore"
+        ]
+      },
+      {
+        "canonical_name_en": "Arthur Wellesley, 1st Duke of Wellington",
+        "disposition": "retain_military",
+        "basis": "Wellington twice served as prime minister, but the UK government's own historical profile states that he is today more famous as a soldier than as a politician. His durable representative identity therefore remains military.",
+        "sources": [
+          "https://www.gov.uk/government/history/past-prime-ministers/arthur-wellesley-1st-duke-of-wellington"
+        ]
+      },
+      {
+        "canonical_name_en": "Carl Gustaf Emil Mannerheim",
+        "disposition": "retain_military",
+        "basis": "Mannerheim served as regent and president, but Finnish official/public-history sources foreground his career as military commander, commander-in-chief and national war hero. The later presidency does not outweigh the military identity for this single representative code.",
+        "sources": [
+          "https://suomenpresidentit.fi/en/mannerheim/",
+          "https://finland.fi/life-society/soldier-president-mannerheim-took-finland-war-peace/"
+        ]
+      },
+      {
+        "canonical_name_en": "Po'pay",
+        "disposition": "retain_military",
+        "basis": "Preserve the explicit user-adjudicated governance-to-military correction already recorded in PR #1162; the revolt leadership is the controlling representative-domain decision.",
+        "sources": [
+          "https://github.com/JezCH/atlas-person-db/pull/1162"
+        ]
+      },
+      {
+        "canonical_name_en": "Tecumseh",
+        "disposition": "retain_military",
+        "basis": "Preserve the reviewed Batch 040 decision in PR #1023, which explicitly found that Tecumseh does not trigger the sovereign/top-state governance override and that his durable identity is military/wartime leadership.",
+        "sources": [
+          "https://github.com/JezCH/atlas-person-db/pull/1023"
+        ]
+      },
+      {
+        "canonical_name_en": "Lalla Fatma N'Soumer",
+        "disposition": "retain_military",
+        "basis": "Preserve the completed Religion audit decision in PR #1911 that moved Lalla Fatma from religion to military because anti-colonial resistance leadership outweighs religion as the single representative domain.",
+        "sources": [
+          "https://github.com/JezCH/atlas-person-db/pull/1911"
+        ]
+      },
+      {
+        "canonical_name_en": "Koerikei",
+        "disposition": "retain_military",
+        "basis": "Preserve the explicit reviewed military assignment in PR #1629 for the ǀXam leadership/resistance interval.",
+        "sources": [
+          "https://github.com/JezCH/atlas-person-db/pull/1629"
+        ]
+      },
+      {
+        "canonical_name_en": "Guillaume Henri Dufour",
+        "disposition": "retain_military",
+        "basis": "Dufour was also a structural engineer and topographer, but he held the Swiss office of General and commanded the federal army in the Sonderbund War. His cross-domain engineering/cartographic significance is substantial but does not clearly outweigh the national military-command identity, so no move is justified.",
+        "sources": [
+          "https://www.vtg.admin.ch/en/guillaume-henri-dufour-1787--1875",
+          "https://www.swisstopo.admin.ch/fr/150-ans-plus-tard-dufour-et-les-debuts-de-swisstopo"
+        ]
+      },
+      {
+        "canonical_name_en": "Lakshmibai",
+        "disposition": "retain_military",
+        "basis": "Although Lakshmibai was the Rani of Jhansi and exercised leadership, her durable historical representation is as a leading armed figure of the 1857 rebellion who personally fought the British. The military identity is therefore stronger than title-only governance reassignment.",
+        "sources": [
+          "https://en.wikipedia.org/wiki/Rani_of_Jhansi"
+        ]
+      }
+    ]
+  },
+  "operations": [
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "military-audit-pyrrhus-to-governance",
+      "person_id": "8d4ac35e-51fe-4792-b022-f86253f86d7f",
+      "expected_domain": "military",
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "military-audit-sviatoslav-i-to-governance",
+      "person_id": "9b399baa-5762-4557-b4f9-c5ea1cb3d8d0",
+      "expected_domain": "military",
+      "replacement_domain": "governance"
+    }
+  ]
+}
