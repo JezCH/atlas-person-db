@@ -7,6 +7,8 @@ const contract=JSON.parse(fs.readFileSync(path.join(root,"contracts/person-domai
 const cutover=JSON.parse(fs.readFileSync(path.join(root,"contracts/person-domain-v2-final-cutover.json"),"utf8"));
 const doc=fs.readFileSync(path.join(root,"docs/person/PERSON_DOMAIN_STANDARD_V2.md"),"utf8");
 const authoringFileValidator=fs.readFileSync(path.join(root,"scripts/validate-authoring-request-files.mjs"),"utf8");
+const liveVerifier=fs.readFileSync(path.join(root,"scripts/verify-person-domain-v2.mjs"),"utf8");
+const domainWorkflow=fs.readFileSync(path.join(root,".github/workflows/atlas-person-domain-apply.yml"),"utf8");
 const codes=["governance","military","science","technology","commerce","culture","religion","exploration"];
 const labels=["정치·통치","군사","과학","공학·기술","경제·상업","인문·예술","종교","탐험"];
 
@@ -29,7 +31,7 @@ test("legacy knowledge is retired from active writes but preserved as historical
   assert.match(doc,/original manifest hash/i);
 });
 
-test("final cutover authority is explicit, exact and complete",()=>{
+test("historical final cutover evidence remains explicit, exact and complete",()=>{
   assert.equal(cutover.schema,"atlas-person-domain-v2-final-cutover/v1");
   assert.equal(cutover.status,"approved");
   assert.equal(cutover.expected_assigned,1978);
@@ -56,4 +58,13 @@ test("classification remains representative-identity based without a ninth secto
 test("authoring request file validation exposes only the v2 representative-domain vocabulary",()=>{
   assert.match(authoringFileValidator,/REPRESENTATIVE_DOMAINS = new Set\(\['governance','military','science','technology','commerce','culture','religion','exploration'\]\)/);
   assert.doesNotMatch(authoringFileValidator,/REPRESENTATIVE_DOMAINS = new Set\([^\n]*'knowledge'/);
+});
+
+
+test("active Person Domain verification is independent from the historical cutover snapshot",()=>{
+  assert.doesNotMatch(liveVerifier,/person-domain-v2-final-cutover|science_target_ids|historicalScienceIds|expected_assigned|expected_post_cutover/);
+  assert.doesNotMatch(domainWorkflow,/person-domain-v2-final-cutover|proposals\/person-representative-domain/);
+  assert.match(liveVerifier,/Unsupported live representative domain/);
+  assert.match(liveVerifier,/Legacy knowledge remains live/);
+  assert.match(liveVerifier,/Assigned count and row count drift/);
 });
