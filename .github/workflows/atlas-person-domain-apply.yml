@@ -29,7 +29,6 @@ jobs:
     timeout-minutes: 30
     env:
       ATLAS_PERSON_DOMAIN_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-domain
-      ATLAS_CUTOVER_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-domain-v2-cutover
       ATLAS_RUNTIME_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
       ATLAS_EVIDENCE_DIR: artifacts/person-domain-v2-verify
     steps:
@@ -37,19 +36,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Wait for exact Production runtime and completed v2 cutover
+      - name: Wait for exact Production runtime
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p "$ATLAS_EVIDENCE_DIR"
           for attempt in $(seq 1 60); do
-            status="$(curl --silent --show-error --output "$ATLAS_EVIDENCE_DIR/cutover-state.json" --write-out '%{http_code}' "$ATLAS_CUTOVER_ENDPOINT")"
-            if [[ "$status" == "200" ]] && jq -e --arg sha "$GITHUB_SHA" '.ok==true and .runtime_sha==$sha and .state.cutover_complete==true' "$ATLAS_EVIDENCE_DIR/cutover-state.json" >/dev/null; then
+            status="$(curl --silent --show-error --output "$ATLAS_EVIDENCE_DIR/runtime-readiness.json" --write-out '%{http_code}' "$ATLAS_RUNTIME_ENDPOINT")"
+            if [[ "$status" == "200" ]] && jq -e --arg sha "$GITHUB_SHA" '.identity.git_commit_sha==$sha and .identity.environment=="production"' "$ATLAS_EVIDENCE_DIR/runtime-readiness.json" >/dev/null; then
               exit 0
             fi
             sleep 5
           done
-          cat "$ATLAS_EVIDENCE_DIR/cutover-state.json" >&2 || true
+          cat "$ATLAS_EVIDENCE_DIR/runtime-readiness.json" >&2 || true
           exit 1
       - name: Verify active v2 contract and immutable review ledger
         shell: bash
