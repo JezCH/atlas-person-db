@@ -38,7 +38,8 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /ATLAS_POLITY_BROWSER_VIEW/);
   assert.match(nav, /atlas-polity-browser-reader\.js/);
   assert.match(nav, /ATLAS_POLITY_BROWSER_READER/);
-  assert.match(nav, /atlas-polity-review-candidates\.js/);
+  assert.match(nav, /atlas-polity-review-registry\.js/);
+  assert.doesNotMatch(nav, /atlas-polity-review-candidates\.js/);
   assert.match(nav, /atlas-polity-review-panel\.js/);
   assert.match(nav, /ATLAS_POLITY_REVIEW_PANEL/);
   assert.doesNotMatch(nav, /authority-domain-card/);

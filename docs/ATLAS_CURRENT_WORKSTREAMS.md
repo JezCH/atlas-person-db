@@ -15,22 +15,37 @@ There are currently **two active project workstreams**.
 
 ### A. Polity identity / continuity cleanup — #1895
 
-All remaining Polity identity work is managed as one coherent workstream.
+All remaining Polity identity work is managed through the **current Polity review registry**:
+
+- canonical review registry: `atlas-polity-review-registry.js`
+- historical 2026-09-27 snapshot only: `atlas-polity-review-candidates.js`
+- terminal dispositions: `FIXED / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD_UNRESOLVED`
+
+The registry distinguishes **execution order** from **audit obligation**. Historical candidate conclusions are not automatic writes, but the carried audit seeds must not disappear until each receives a terminal disposition against current Production.
 
 Current sequence:
 
-1. **Ireland family** — exact next resume point.
+1. **Ireland family** — exact next mutation/review resume point.
 2. **Kingdom of Italy** — reviewed 3-way historical split:
    - medieval Regnum Italiae;
    - Napoleonic Kingdom of Italy, 1805–1814;
    - Kingdom of Italy, 1861–1946.
-3. **Fresh whole-Production Polity audit** after Ireland and Italy close.
+3. **Carry-forward closure audit** — re-review every still-unclosed historical seed against current Production:
+   - 29 same-identity / continuity candidates;
+   - 16 separate historical-family judgments;
+   - 2 temporal-designation residuals (Russia, Sweden);
+   - 2 KO/EN naming-collision residuals;
+   - 16 catastrophic-territorial-rupture probes, with Yuan → Northern Yuan already locked `KEEP_SEPARATE`.
+4. **Fresh whole-Production discovery scan** after the seeded ledger is closed, to catch cases not represented in the historical seed set.
+5. Close the workstream only when every seed and every fresh discovery result has a terminal disposition or an explicit unresolved hold reason.
 
-The final audit must be rebuilt from current Production and may check false merges, true duplicates, orphans, stale retired references, temporal-designation debt, KO/EN naming collisions and continuity contradictions.
+Important distinction:
 
-Do **not** replay historical “29 same-identity”, “16 continuity family”, old designation or old naming-collision lists as execution queues.
+- **Do not replay old decisions as writes.**
+- **Do not discard old audit seeds merely because they are historical.**
+- Rebuild the decision from current Production + current identity rules, then assign a terminal status.
 
-Already completed Polity families remain closed unless contradictory current evidence appears, including Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, France and the Japan lineage/occupation/designation chain.
+Already completed Polity fixes remain closed unless contradictory current evidence appears, including Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, the Kingdom-of-France generic/formal duplicate correction and the Japan lineage/occupation/designation rebuild. France's wider regime-family audit is a separate open seed and must not be conflated with the completed duplicate correction.
 
 ### B. UI information coverage / completeness — #1896
 
@@ -147,5 +162,7 @@ Portrait content, P14 historical-map Geometry and the broad legacy census are pa
 If no different task is explicitly selected by the user:
 
 **Resume #1895 at the Ireland Polity family.**
+
+After Ireland and Kingdom of Italy close, continue through the current review registry's carry-forward audit groups until every seed has a terminal disposition, then run the fresh whole-Production discovery scan.
 
 If the user selects a Person candidate or registration target, that explicit choice may run independently through #1374/#1375 without changing the active-project backlog.

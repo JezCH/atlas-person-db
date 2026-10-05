@@ -1,6 +1,6 @@
-# Stage 2 Polity Identity & Continuity — Current Contract v1
+# Stage 2 Polity Identity & Continuity — Historical Contract v1 (Superseded)
 
-> Status: BASELINE-INDEPENDENT CURRENT CONTRACT / NO PRODUCTION MUTATION
+> Status: **HISTORICAL / SUPERSEDED — NOT CURRENT AUTHORITY**\n>\n> Current authority: `#1895` + `atlas-polity-review-registry.js` + current Production. The later rupture review supersedes the Yuan → Northern Yuan single-identity conclusion below.
 >
 > Source decision record: `docs/audits/STAGE2_POLITY_CONTINUITY_DECISIONS_2026-08-12.md`
 
@@ -42,7 +42,7 @@ Current contract:
 
 ### Yuan → Northern Yuan, 1368
 
-The immediate post-1368 Yuan court continuation is modeled as **one stable Yuan Polity identity** with major territorial contraction.
+Historical 2026-08-12 decision (superseded): the immediate post-1368 Yuan court continuation was modeled as **one stable Yuan Polity identity** with major territorial contraction. **Do not apply this conclusion.** Later review under the catastrophic territorial discontinuity rule keeps Yuan Dynasty and Northern Yuan as separate Polity identities (`KEEP_SEPARATE`).
 
 Current contract:
 

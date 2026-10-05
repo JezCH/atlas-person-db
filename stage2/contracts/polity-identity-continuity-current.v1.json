@@ -46,7 +46,13 @@
       "designation_type": "historiographic_period",
       "automatic_new_polity_uuid": false,
       "production_polity_uuid": null,
-      "production_assertions_approved": false
+      "production_assertions_approved": false,
+      "decision_status": "SUPERSEDED",
+      "superseded_decision": {
+        "stable_single_polity_across_transition": false,
+        "terminal_status": "KEEP_SEPARATE",
+        "rationale": "Later catastrophic territorial discontinuity review keeps Yuan Dynasty and Northern Yuan as distinct Polity identities."
+      }
     },
     {
       "id": "russia_1721_empire",
@@ -94,5 +100,13 @@
     "correction v2 relink/retire/designation/identity-relation manifests",
     "normalized source provenance",
     "semantic-key v2 cutover after canonical Polity identity is fixed"
-  ]
+  ],
+  "status": "HISTORICAL_SUPERSEDED",
+  "canonical_current": false,
+  "superseded_as_of": "2026-09-27",
+  "current_authority": {
+    "issue": 1895,
+    "registry": "atlas-polity-review-registry.js",
+    "note": "Current Production and later reviewed rupture/continuity decisions supersede this 2026-08-12 Stage 2 snapshot."
+  }
 }

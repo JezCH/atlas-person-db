@@ -1,29 +1,31 @@
 (() => {
   "use strict";
 
-  const DATA = window.ATLAS_POLITY_REVIEW_CANDIDATES;
+  const DATA = window.ATLAS_POLITY_REVIEW_REGISTRY;
   if (!DATA) {
-    console.warn("ATLAS polity review candidates are unavailable.");
+    console.warn("ATLAS current polity review registry is unavailable.");
     return;
   }
 
-  const STORAGE_KEY = "atlas.polity.review.decisions.v1";
+  const STORAGE_KEY = "atlas.polity.review.decisions.v2";
   const KIND_META = Object.freeze({
-    confirmed_merge: Object.freeze({ label: "병합 확정", tone: "confirmed" }),
     repair_review: Object.freeze({ label: "오결합 수정", tone: "repair" }),
-    merge_review: Object.freeze({ label: "통합 검토", tone: "review" }),
-    split_review: Object.freeze({ label: "분리 검토", tone: "split" })
+    split_review: Object.freeze({ label: "분리 적용", tone: "split" }),
+    continuity_review: Object.freeze({ label: "연속성 재판정", tone: "review" }),
+    family_review: Object.freeze({ label: "역사 family", tone: "review" }),
+    designation_review: Object.freeze({ label: "시대 명칭", tone: "review" }),
+    naming_review: Object.freeze({ label: "명칭 충돌", tone: "review" }),
+    rupture_review: Object.freeze({ label: "대단절 probe", tone: "split" }),
+    resolved_review: Object.freeze({ label: "종결 이력", tone: "confirmed" })
   });
   const STATUS_LABEL = Object.freeze({
-    PRODUCTION_APPLIED_RETIRED: "Production 반영 완료",
-    REVIEWED_MERGE_BLOCKED_SPATIAL: "병합 판정 · 공간 보존 선행",
-    REVIEWED_MERGE_READY: "병합 판정 완료",
-    REVIEWED_SPLIT_REQUIRED: "분리 판정 완료",
-    NEEDS_SPLIT_REVIEW: "분리 추가 검토",
-    PRODUCTION_APPLIED_SPLIT: "Production 분리 반영 완료",
-    PRODUCTION_APPLIED_REPAIR: "Production 수정 완료",
-    SUPERSEDED_NO_WRITE: "후속 검토로 폐기 · 별도 유지",
-    AUDIT_REPAIR_REQUIRED: "전수감사 확정 · 수정 필요",
+    EXECUTION_REPAIR_REQUIRED: "실행 우선 · 수정 필요",
+    REVIEW_REQUIRED: "최신 Production 재판정 필요",
+    FIXED: "종결 · FIXED",
+    KEEP_SEPARATE: "종결 · KEEP_SEPARATE",
+    SUPERSEDED: "종결 · SUPERSEDED",
+    NOT_PRESENT: "종결 · NOT_PRESENT",
+    HOLD_UNRESOLVED: "종결 · HOLD_UNRESOLVED",
     REVIEW_HISTORY: "이전 검토 이력"
   });
   let liveDataPromise = null;
@@ -37,32 +39,41 @@
       .replaceAll("'", "&#039;");
   }
 
-  function legacyCases() {
-    return [...DATA.confirmed_merges, ...DATA.review_candidates, ...DATA.split_candidates];
+  function executionCases() {
+    return Array.isArray(DATA.execution_frontier) ? DATA.execution_frontier.slice() : [];
   }
 
-  function activeCases() {
-    return Array.isArray(DATA.active_frontier) ? DATA.active_frontier.slice() : [];
+  function auditCases() {
+    return [
+      ...(DATA.carry_forward_same_identity || []),
+      ...(DATA.historical_family_reviews || []),
+      ...(DATA.designation_residuals || []),
+      ...(DATA.naming_residuals || []),
+      ...(DATA.rupture_probes || [])
+    ];
   }
 
-  function resolvedFrontierHistoryCases() {
-    return Array.isArray(DATA.resolved_frontier_history) ? DATA.resolved_frontier_history.slice() : [];
+  function currentAuditCases() {
+    return auditCases().filter((row) => !row?.terminal_status);
   }
 
-  function historyCases() {
-    const activeIds = new Set(activeCases().map((row) => row.id));
+  function currentCases() {
     const seen = new Set();
-    return [...resolvedFrontierHistoryCases(), ...legacyCases()].filter((row) => {
-      if (!row?.id || activeIds.has(row.id) || seen.has(row.id)) return false;
+    return [...executionCases(), ...currentAuditCases()].filter((row) => {
+      if (!row?.id || seen.has(row.id)) return false;
       seen.add(row.id);
       return true;
     });
   }
 
-  function allKnownCases() {
+  function historyCases() {
+    const currentIds = new Set(currentCases().map((row) => row.id));
     const seen = new Set();
-    return [...activeCases(), ...historyCases()].filter((row) => {
-      if (!row?.id || seen.has(row.id)) return false;
+    return [
+      ...auditCases().filter((row) => Boolean(row?.terminal_status)),
+      ...(DATA.resolved_history || [])
+    ].filter((row) => {
+      if (!row?.id || currentIds.has(row.id) || seen.has(row.id)) return false;
       seen.add(row.id);
       return true;
     });
@@ -297,10 +308,9 @@
     const reviewed = row.reviewed_decision || "";
     const selected = decision?.decision || defaultDecision(row);
     const note = decision?.note || "";
-    const locked = history || Boolean(row.locked);
-    const displayStatus = history && !["PRODUCTION_APPLIED_RETIRED","PRODUCTION_APPLIED_SPLIT","PRODUCTION_APPLIED_REPAIR","SUPERSEDED_NO_WRITE"].includes(row.status)
-      ? "REVIEW_HISTORY"
-      : row.status;
+    const terminal = row.terminal_status || "";
+    const locked = history || Boolean(row.locked) || Boolean(terminal);
+    const displayStatus = terminal || row.status || (history ? "REVIEW_HISTORY" : "");
     const evidence = (row.evidence || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
     const options = ['<option value="">미검토</option>', ...DATA.decision_options.map((item) =>
       `<option value="${escapeHtml(item.code)}"${selected === item.code ? " selected" : ""}>${escapeHtml(item.label)}</option>`
@@ -320,7 +330,7 @@
       </div>
       <p class="polity-review-rationale">${escapeHtml(row.rationale)}</p>
       ${row.presentation_note ? `<div class="polity-review-presentation-note"><strong>시대별 표현 보존</strong><p>${escapeHtml(row.presentation_note)}</p></div>` : ""}
-      <div class="polity-review-evidence"><strong>기존 감사 근거</strong><ul>${evidence}</ul></div>
+      <div class="polity-review-evidence"><strong>감사 seed / 근거</strong><ul>${evidence}</ul></div>
       <div class="polity-review-suggestion"><span>${reviewed ? "검토 판정" : "검토 제안"}</span><strong>${escapeHtml(decisionLabel(reviewed || row.suggested_action))}</strong></div>
       <div class="polity-review-controls">
         <label>${locked ? "반영 상태" : "내 결정"}
@@ -347,12 +357,13 @@
   }
 
   function snapshot(decisions) {
-    const cases = activeCases();
+    const cases = currentCases();
     return {
-      schema: "atlas-polity-review-decisions/v1",
+      schema: "atlas-polity-review-decisions/v2",
       reviewed_at: new Date().toISOString(),
-      candidate_source_generated_at: DATA.generated_at,
-      active_frontier_source: DATA.active_frontier_source || null,
+      registry_generated_at: DATA.generated_at,
+      registry_authority: DATA.authority || null,
+      terminal_statuses: DATA.terminal_statuses || [],
       decisions: cases
         .map((row) => {
           const saved = decisions[row.id] || null;
@@ -367,6 +378,8 @@
             user_decision: saved?.decision || null,
             note,
             status: row.status || null,
+            terminal_status: row.terminal_status || null,
+            review_group: row.review_group || null,
             left_polity_id: row.left?.polity_id || null,
             right_polity_id: row.right?.polity_id || null
           };
@@ -378,7 +391,7 @@
   function mount(root) {
     if (!root) return;
     let decisions = readDecisions();
-    let filter = "active";
+    let filter = "current";
     let live = emptyLiveState();
 
     root.innerHTML = `<section class="polity-review-shell">
@@ -386,7 +399,7 @@
         <div>
           <p class="eyebrow">POLITY IDENTITY REVIEW</p>
           <h2>충돌·Identity 검토</h2>
-          <p>현재 처리할 정치체 identity frontier와 과거 검토 이력을 분리해 보여줍니다. 현재 frontier는 최신 전수감사에서 확정된 미해결 건만 포함하며, 과거 완료·폐기 건은 현재 작업 수에 섞지 않습니다.</p>
+          <p>현재 실행 우선 항목과 과거 감사에서 carry-forward된 미종결 seed를 함께 관리합니다. 옛 목록의 결론을 그대로 실행하지 않고, 각 seed를 최신 Production에서 다시 판정해 FIXED / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD_UNRESOLVED 중 하나로 닫습니다.</p>
         </div>
         <div class="polity-review-summary-actions">
           <button type="button" class="btn" data-export-decisions>결정 JSON 내보내기</button>
@@ -405,11 +418,14 @@
         <p>같은 장기 정치체 identity로 정리하더라도 국호·국가형태·공간·상징이 시대에 따라 달랐다면 그 차이는 temporal metadata로 보존해야 합니다. 검토 카드는 현재 연결 인물과 관측 연대를 보여주어 이 경계를 판단할 수 있게 합니다.</p>
       </div>
       <div class="polity-review-kpis">
-        <button class="card polity-review-filter is-active" type="button" data-kind-filter="active"><small>현재 검토</small><strong>${activeCases().length}</strong></button>
-        <button class="card polity-review-filter" type="button" data-kind-filter="repair_review"><small>오결합 수정</small><strong>${activeCases().filter((row) => row.kind === "repair_review").length}</strong></button>
-        <button class="card polity-review-filter" type="button" data-kind-filter="merge_review"><small>통합 검토</small><strong>${activeCases().filter((row) => row.kind === "merge_review").length}</strong></button>
-        <button class="card polity-review-filter" type="button" data-kind-filter="split_review"><small>분리 검토</small><strong>${activeCases().filter((row) => row.kind === "split_review").length}</strong></button>
-        <button class="card polity-review-filter is-history" type="button" data-kind-filter="history"><small>검토 이력</small><strong>${historyCases().length}</strong></button>
+        <button class="card polity-review-filter is-active" type="button" data-kind-filter="current"><small>미종결 전체</small><strong>${currentCases().length}</strong></button>
+        <button class="card polity-review-filter" type="button" data-kind-filter="execution"><small>실행 우선</small><strong>${executionCases().length}</strong></button>
+        <button class="card polity-review-filter" type="button" data-kind-filter="carry_forward_same_identity"><small>29 carry-forward</small><strong>${currentAuditCases().filter((row) => row.review_group === "carry_forward_same_identity").length}</strong></button>
+        <button class="card polity-review-filter" type="button" data-kind-filter="historical_family_review"><small>역사 family</small><strong>${currentAuditCases().filter((row) => row.review_group === "historical_family_review").length}</strong></button>
+        <button class="card polity-review-filter" type="button" data-kind-filter="designation_residual"><small>Designation</small><strong>${currentAuditCases().filter((row) => row.review_group === "designation_residual").length}</strong></button>
+        <button class="card polity-review-filter" type="button" data-kind-filter="naming_residual"><small>명칭 충돌</small><strong>${currentAuditCases().filter((row) => row.review_group === "naming_residual").length}</strong></button>
+        <button class="card polity-review-filter" type="button" data-kind-filter="rupture_probe"><small>Rupture probe</small><strong>${currentAuditCases().filter((row) => row.review_group === "rupture_probe").length}</strong></button>
+        <button class="card polity-review-filter is-history" type="button" data-kind-filter="history"><small>종결·이력</small><strong>${historyCases().length}</strong></button>
       </div>
       <div class="polity-review-toolbar card">
         <input type="search" data-review-search placeholder="정치체명·인물명·연대·근거 검색" />
@@ -426,16 +442,22 @@
 
     function render() {
       const needle = String(search?.value || "").normalize("NFKC").trim().toLocaleLowerCase("und");
-      const active = activeCases();
+      const current = currentCases();
+      const execution = executionCases();
+      const audit = currentAuditCases();
       const history = historyCases();
       const scopeRows = filter === "history"
         ? history
-        : filter === "active" ? active : active.filter((row) => row.kind === filter);
+        : filter === "execution"
+          ? execution
+          : filter === "current"
+            ? current
+            : audit.filter((row) => row.review_group === filter);
       const rows = scopeRows.filter((row) => !needle || caseSearchText(live, row).includes(needle));
       const historyMode = filter === "history";
       list.innerHTML = rows.map((row) => caseHtml(live, row, decisions[row.id], { history:historyMode })).join("");
-      const explicit = active.filter((row) => Boolean(decisions[row.id]?.decision || decisions[row.id]?.note)).length;
-      progress.textContent = `현재 검토 ${active.length} · 검토 이력 ${history.length} · 현재 입력 ${explicit}`;
+      const explicit = current.filter((row) => Boolean(decisions[row.id]?.decision || decisions[row.id]?.note)).length;
+      progress.textContent = `미종결 ${current.length} · 실행 우선 ${execution.length} · 종결/이력 ${history.length} · 현재 입력 ${explicit}`;
       if (kpis) kpis.innerHTML = datasetKpis(live);
       if (liveStatus) {
         liveStatus.textContent = live.status === "ready"

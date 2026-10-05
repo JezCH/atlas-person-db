@@ -12,6 +12,10 @@
   window.ATLAS_POLITY_REVIEW_CANDIDATES = Object.freeze({
     schema: "atlas-polity-review-candidates/v2",
     generated_at: "2026-09-27",
+    snapshot_status: "HISTORICAL_SNAPSHOT_ONLY",
+    canonical_current: false,
+    superseded_by: "atlas-polity-review-registry.js",
+    warning: "Do not use this 2026-09-27 snapshot as current Polity review authority. It preserves audit history only.",
     source_scope: "Current canonical Polity read + #977 POLITY_IDENTITY_EXHAUSTIVE_SIMILARITY_AUDIT checkpoint 5748136361 + terminal reconciliation of the prior 16/16 reviewed state-form merge program",
     active_frontier_source: Object.freeze({
       issue: 977,
