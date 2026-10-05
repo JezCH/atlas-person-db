@@ -1,0 +1,169 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-domain:technology-audit:2026-10-05:v1",
+  "release_order": 950,
+  "evidence": {
+    "decision": "Person Domain v2 Technology audit. Review all 38 live technology Persons against the active eight-sector taxonomy using representative historical identity, not a generic role label. Retain direct engineering, invention, architecture, applied-technology and construction identities. Move mathematical/formal inquiry to science and enterprise/economic-system identities to commerce.",
+    "taxonomy": "contracts/person-domain-taxonomy.v2.json",
+    "production_snapshot": {
+      "captured_at": "2026-10-05",
+      "total_persons": 2105,
+      "counts": {
+        "governance": 1350,
+        "military": 208,
+        "science": 78,
+        "technology": 38,
+        "commerce": 28,
+        "culture": 162,
+        "religion": 100,
+        "exploration": 28,
+        "unclassified": 113
+      }
+    },
+    "reviewed_count": 38,
+    "retained_technology_count": 32,
+    "moved_count": 6,
+    "expected_snapshot_counts_after": {
+      "science": 79,
+      "technology": 32,
+      "commerce": 33
+    },
+    "retained_technology": [
+      "Imhotep",
+      "Vitruvius",
+      "Cai Lun",
+      "Bi Sheng",
+      "Su Song",
+      "Ismail al-Jazari",
+      "Choe Museon",
+      "Filippo Brunelleschi",
+      "Jang Yeong-sil",
+      "Johannes Gutenberg",
+      "Mimar Sinan",
+      "Andrea Palladio",
+      "John Harrison",
+      "James Watt",
+      "Joseph Marie Jacquard",
+      "Sir George Cayley",
+      "George Stephenson",
+      "Henry Bessemer",
+      "Alfred Nobel",
+      "Alexander Graham Bell",
+      "Thomas Edison",
+      "Karl Benz",
+      "Gustave Eiffel",
+      "Nikola Tesla",
+      "Orville Wright",
+      "Wilbur Wright",
+      "Guglielmo Marconi",
+      "Willis Carrier",
+      "Robert Goddard",
+      "Frank Lloyd Wright",
+      "Sergei Korolev",
+      "Wernher von Braun"
+    ],
+    "movement_basis": [
+      {
+        "person_id": "928045d7-e218-543d-9df8-9b96c8f65781",
+        "canonical_name_en": "Ada Lovelace",
+        "target_domain": "science",
+        "basis": "Her representative contribution is mathematical and formal work on the Analytical Engine, including the extensive 1843 notes and algorithmic treatment. Under v2, mathematics and formal inquiry belong to science rather than applied engineering.",
+        "sources": [
+          "https://www.computerhistory.org/babbage/adalovelace"
+        ]
+      },
+      {
+        "person_id": "9ab1eaed-9c12-43d4-ad55-ad62bdd3dc94",
+        "canonical_name_en": "Richard Arkwright",
+        "target_domain": "commerce",
+        "basis": "Although Arkwright patented important spinning machinery, his representative historical identity also centers on establishing and scaling the factory system and a network of mills. Under v2, enterprise and an economic production system are the stronger representative fit.",
+        "sources": [
+          "https://www.english-heritage.org.uk/visit/blue-plaques/richard-arkwright/"
+        ]
+      },
+      {
+        "person_id": "ea9b780f-d5fa-46af-98fc-c0d7803af1cf",
+        "canonical_name_en": "Ferdinand de Lesseps",
+        "target_domain": "commerce",
+        "basis": "The Suez Canal Authority records de Lesseps as the concession holder who was to establish and supervise the canal company, later serving as president. His representative role was organizing, financing and directing a major infrastructure enterprise rather than performing the engineering design itself.",
+        "sources": [
+          "https://www.suezcanal.gov.eg/English/About/SuezCanal/Pages/CanalHistory.aspx",
+          "https://www.suezcanal.gov.eg/English/About/SuezCanalAuthority/Pages/SCAOverview.aspx"
+        ]
+      },
+      {
+        "person_id": "c3b35168-17a0-4b4b-9468-b46c368ab257",
+        "canonical_name_en": "Henry Ford",
+        "target_domain": "commerce",
+        "basis": "Ford's defining identity is industrial enterprise: founder and controlling owner of Ford Motor Company who transformed automobile production and scale through the firm's mass-production system. Under v2, enterprise is the representative domain even though the production system had major technological consequences.",
+        "sources": [
+          "https://corporate.thehenryford.org/explore/stories-of-innovation/visionaries/henry-ford",
+          "https://www.thehenryford.org/collections/explore/popular-research-topics/ford-motor-co-chronology-1903-2003"
+        ]
+      },
+      {
+        "person_id": "25a1dc73-1685-4970-83b8-60d3e5766aca",
+        "canonical_name_en": "Frederick Winslow Taylor",
+        "target_domain": "commerce",
+        "basis": "Taylor is historically identified as the father of scientific management and a foundational management thinker. The representative contribution is a system of management, productivity and business organization; v2 explicitly places economic systems or thought in commerce when that is the representative identity.",
+        "sources": [
+          "https://blogs.loc.gov/inside_adams/2024/07/frederick-winslow-taylor-scientific-management/"
+        ]
+      },
+      {
+        "person_id": "a9a2cef9-fbf8-4a46-8d3c-f41b6d78e6c2",
+        "canonical_name_en": "Malcom McLean",
+        "target_domain": "commerce",
+        "basis": "Smithsonian material identifies McLean as a trucking entrepreneur whose integrated container system transformed global trade and whose enterprise became Sea-Land Services. The representative identity is logistics enterprise and commercial-system transformation rather than engineering practice.",
+        "sources": [
+          "https://www.americanhistory.si.edu/explore/exhibitions/america-on-the-move/online/transforming-waterfront"
+        ]
+      }
+    ]
+  },
+  "operations": [
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "technology-audit-ada-lovelace-to-science",
+      "person_id": "928045d7-e218-543d-9df8-9b96c8f65781",
+      "expected_domain": "technology",
+      "replacement_domain": "science"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "technology-audit-richard-arkwright-to-commerce",
+      "person_id": "9ab1eaed-9c12-43d4-ad55-ad62bdd3dc94",
+      "expected_domain": "technology",
+      "replacement_domain": "commerce"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "technology-audit-ferdinand-de-lesseps-to-commerce",
+      "person_id": "ea9b780f-d5fa-46af-98fc-c0d7803af1cf",
+      "expected_domain": "technology",
+      "replacement_domain": "commerce"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "technology-audit-henry-ford-to-commerce",
+      "person_id": "c3b35168-17a0-4b4b-9468-b46c368ab257",
+      "expected_domain": "technology",
+      "replacement_domain": "commerce"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "technology-audit-frederick-winslow-taylor-to-commerce",
+      "person_id": "25a1dc73-1685-4970-83b8-60d3e5766aca",
+      "expected_domain": "technology",
+      "replacement_domain": "commerce"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "technology-audit-malcom-mclean-to-commerce",
+      "person_id": "a9a2cef9-fbf8-4a46-8d3c-f41b6d78e6c2",
+      "expected_domain": "technology",
+      "replacement_domain": "commerce"
+    }
+  ]
+}
