@@ -1,0 +1,313 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-domain:exploration-audit:2026-10-05:v1",
+  "release_order": 953,
+  "evidence": {
+    "decision": "Person Domain v2 Exploration audit. Re-review all 29 live exploration Persons against the active eight-sector taxonomy using representative historical identity rather than generic Activity roles. Exploration remains the home of exploration, navigation, geographic discovery, expeditions and frontier travel. Retain mixed political, military, diplomatic, commercial or scientific figures when their durable historical identity is primarily tied to a voyage, expedition, frontier journey, circumnavigation, settlement journey or exploration program; move only identities whose durable representative record is more directly explained by another canonical sector.",
+    "taxonomy": "contracts/person-domain-taxonomy.v2.json",
+    "source_main_sha": "3b46fb258991246d653a08c951c58dfeecc4e8ac",
+    "production_snapshot": {
+      "captured_at": "2026-10-05",
+      "total_persons": 2106,
+      "assigned": 1993,
+      "counts": {
+        "governance": 1350,
+        "military": 209,
+        "science": 79,
+        "technology": 33,
+        "commerce": 33,
+        "culture": 162,
+        "religion": 98,
+        "exploration": 29
+      }
+    },
+    "reviewed_count": 29,
+    "retained_exploration_count": 27,
+    "moved_count": 2,
+    "expected_snapshot_counts_after": {
+      "governance": 1350,
+      "military": 209,
+      "science": 80,
+      "technology": 33,
+      "commerce": 33,
+      "culture": 163,
+      "religion": 98,
+      "exploration": 27
+    },
+    "retained_exploration": [
+      {
+        "person_id": "deb99909-5476-4de1-ad57-ff9b4bf63001",
+        "canonical_name_en": "Zhang Qian",
+        "preferred_name_ko": "장건",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "8e47af37-4308-5cd1-a7af-7354af1c50c6",
+        "canonical_name_en": "Ingólfr Arnarson",
+        "preferred_name_ko": "잉골프 아르나르손",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "4013e0db-b7b2-4a15-8348-390c5f762770",
+        "canonical_name_en": "Ibn Fadlan",
+        "preferred_name_ko": "이븐 파들란",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "b4b47f39-00ec-4738-9108-d0340bed5bc9",
+        "canonical_name_en": "Erik the Red",
+        "preferred_name_ko": "붉은 에이리크",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "5c7ffbfc-4088-40f3-ba53-08bd03cea71a",
+        "canonical_name_en": "Leif Erikson",
+        "preferred_name_ko": "레이프 에이릭손",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "9d020dd4-d6c7-4de0-a216-fd1378e65e05",
+        "canonical_name_en": "Marco Polo",
+        "preferred_name_ko": "마르코 폴로",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "5ea35065-a0b6-5273-bc7b-e3f198b4284b",
+        "canonical_name_en": "Ibn Battuta",
+        "preferred_name_ko": "이븐 바투타",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "9d96d247-feeb-5069-bd11-98ea9ce1fdb7",
+        "canonical_name_en": "Zheng He",
+        "preferred_name_ko": "정화",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "cf713baa-a70c-519c-aa69-3926f944063c",
+        "canonical_name_en": "Henry the Navigator",
+        "preferred_name_ko": "인판트 동 엔히크",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "9e2b36ad-953d-457b-8622-279e399414b9",
+        "canonical_name_en": "Ahmad ibn Majid",
+        "preferred_name_ko": "아흐마드 이븐 마지드",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "0bc91b70-2f5f-4be4-b411-6e8903009928",
+        "canonical_name_en": "Christopher Columbus",
+        "preferred_name_ko": "크리스토퍼 콜럼버스",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "93e1f25c-3cf9-4b72-bcd2-85b054241a1e",
+        "canonical_name_en": "Vasco da Gama",
+        "preferred_name_ko": "바스쿠 다 가마",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "b2ce06b7-21d4-441e-b943-a608cc0cd242",
+        "canonical_name_en": "Amerigo Vespucci",
+        "preferred_name_ko": "아메리고 베스푸치",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "3a9812b8-9085-4b81-8d6e-882f5b264898",
+        "canonical_name_en": "Ferdinand Magellan",
+        "preferred_name_ko": "페르디난드 마젤란",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "dd2719b0-95b3-414c-be27-c94e2f73a2d6",
+        "canonical_name_en": "Jacques Cartier",
+        "preferred_name_ko": "자크 카르티에",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "ff32bba5-85ff-4cef-9dfd-e2e9516e67da",
+        "canonical_name_en": "Francis Drake",
+        "preferred_name_ko": "프랜시스 드레이크",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "99c175cb-d8c2-4bdb-ac78-46562ce909a1",
+        "canonical_name_en": "Samuel de Champlain",
+        "preferred_name_ko": "사뮈엘 드 샹플랭",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "c0ded296-4c82-411a-af3e-90869ed79b19",
+        "canonical_name_en": "Hasekura Tsunenaga",
+        "preferred_name_ko": "하세쿠라 츠네나가",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "d89fa81b-b400-4986-ab4f-dc55f819a9b8",
+        "canonical_name_en": "James Cook",
+        "preferred_name_ko": "제임스 쿡",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "d20abd93-4c12-596b-a361-085c50d56a95",
+        "canonical_name_en": "Sacagawea",
+        "preferred_name_ko": "사카가위아",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "cf84dcb3-19a0-4299-90ba-aebe7569ed7e",
+        "canonical_name_en": "Jonathan Lambert",
+        "preferred_name_ko": "조너선 램버트",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "0483a99e-5050-4010-ac96-99b9a6c856e8",
+        "canonical_name_en": "Osborne Russell",
+        "preferred_name_ko": "오즈번 러셀",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "5cbd8092-162d-4dbe-ac75-da03418433d5",
+        "canonical_name_en": "Roald Amundsen",
+        "preferred_name_ko": "로알 아문센",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "ff03db30-ac0c-4e16-82e1-dda95245c4ee",
+        "canonical_name_en": "Amelia Earhart",
+        "preferred_name_ko": "어밀리아 에어하트",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "86f6fb40-cfaf-4602-a622-5907b322bdf8",
+        "canonical_name_en": "Yuri Gagarin",
+        "preferred_name_ko": "유리 가가린",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "a239445c-9503-4116-b26f-e560f2e595e4",
+        "canonical_name_en": "Neil Armstrong",
+        "preferred_name_ko": "닐 암스트롱",
+        "disposition": "retain_exploration"
+      },
+      {
+        "person_id": "f2eb1ca0-b37d-5497-a40d-a5df55ee8a2c",
+        "canonical_name_en": "Kupe",
+        "preferred_name_ko": "쿠페",
+        "disposition": "retain_exploration"
+      }
+    ],
+    "edge_case_notes": [
+      {
+        "canonical_name_en": "Al-Masudi",
+        "disposition": "move_to_culture",
+        "basis": "Al-Masudi traveled extensively, but Encyclopaedia Iranica identifies him primarily as a tenth-century historian and geographer, and his surviving works are major historical-cultural syntheses. Under v2, history is explicitly culture; travel is supporting method rather than the representative identity.",
+        "sources": [
+          "https://www.iranicaonline.org/articles/masudi/",
+          "https://www.iranicaonline.org/articles/historiography-iii/"
+        ]
+      },
+      {
+        "canonical_name_en": "Al-Idrisi",
+        "disposition": "move_to_science",
+        "basis": "Al-Idrisi traveled, but his durable identity is geographer and cartographer. The Library of Congress describes his major achievement as a systematic work of medieval geography combining inherited knowledge with observations and traveler reports. That formal geographic/cartographic inquiry fits science more directly than exploration.",
+        "sources": [
+          "https://www.loc.gov/resource/gdcwdl.wdl_18418/?sp=9&st=list"
+        ]
+      },
+      {
+        "canonical_name_en": "Francis Drake",
+        "disposition": "retain_exploration",
+        "basis": "Drake was also a privateer and naval commander, but Royal Museums Greenwich explicitly treats him as an Elizabethan explorer and centers his successful 1577–1580 circumnavigation. Exploration remains the strongest single representative domain.",
+        "sources": [
+          "https://www.rmg.co.uk/collections/objects/rmgc-object-14077",
+          "https://www.rmg.co.uk/collections/objects/rmgc-object-14136"
+        ]
+      },
+      {
+        "canonical_name_en": "Samuel de Champlain",
+        "disposition": "retain_exploration",
+        "basis": "Champlain also founded Quebec and performed colonial administrative functions, but Parks Canada identifies him nationally as explorer, founder of Quebec and father of New France, and emphasizes repeated Atlantic crossings, mapping and inland exploration. Exploration remains representative.",
+        "sources": [
+          "https://parks.canada.ca/lhn-nhs/qc/saintlouisforts/culture/histoire-history/personnage-person",
+          "https://parks.canada.ca/lhn-nhs/ns/portroyal/culture/personnes-people"
+        ]
+      },
+      {
+        "canonical_name_en": "Hasekura Tsunenaga",
+        "disposition": "retain_exploration",
+        "basis": "Hasekura was a diplomatic envoy rather than a ruler. UNESCO's Memory of the World record centers the seven-year trans-Pacific and trans-Atlantic Keicho mission. Because governance is reserved for political power or rule while exploration explicitly includes expeditions and frontier travel, exploration remains the closest canonical sector.",
+        "sources": [
+          "https://media.unesco.org/sites/default/files/webform/mow001/japan_spain_keicho.pdf",
+          "https://www.unesco.org/es/memory-world/materials-related-keicho-era-mission-europe-japan-and-spain"
+        ]
+      },
+      {
+        "canonical_name_en": "Jonathan Lambert",
+        "disposition": "retain_exploration",
+        "basis": "Lambert proclaimed sovereignty, but the official Tristan da Cunha historical account primarily records him as leader of the first attempted settlement and a remote trading-station venture. The unrecognized sovereignty claim does not outweigh his frontier-settlement identity.",
+        "sources": [
+          "https://www.tristandc.com/history1506-1817.php",
+          "https://tristandc.com/po/stamps202407.php"
+        ]
+      },
+      {
+        "canonical_name_en": "Osborne Russell",
+        "disposition": "retain_exploration",
+        "basis": "Russell later served in Oregon's provisional government, but his durable historical identity is the mountain-man/trapper frontier career preserved in Journal of a Trapper; National Park Service material repeatedly uses Russell as a primary witness to western travel and trapping. Brief political office therefore does not override exploration/frontier identity.",
+        "sources": [
+          "https://npgallery.nps.gov/GetAsset/4fee6836-0a61-47b2-a9f5-c6779a469177",
+          "https://www.nps.gov/yell/learn/upload/YS_16_3_sm.pdf"
+        ]
+      },
+      {
+        "canonical_name_en": "Amelia Earhart",
+        "disposition": "retain_exploration",
+        "basis": "Earhart was an aviator rather than an engineer or inventor; her representative record is record-setting long-distance flight and attempted global circumnavigation. Exploration's frontier-travel scope is the closest fit.",
+        "sources": [
+          "https://airandspace.si.edu/collection-objects/amelia-earhart/nasm_A19500108000"
+        ]
+      },
+      {
+        "canonical_name_en": "Yuri Gagarin",
+        "disposition": "retain_exploration",
+        "basis": "Gagarin's defining historical act is the first human orbital spaceflight. Spaceflight as a frontier expedition is directly within exploration rather than military service or science alone.",
+        "sources": [
+          "https://science.nasa.gov/resource/yuri-gagarin-first-human-in-space/"
+        ]
+      },
+      {
+        "canonical_name_en": "Neil Armstrong",
+        "disposition": "retain_exploration",
+        "basis": "Armstrong was an engineer and test pilot, but his durable global historical identity is Apollo 11 commander and first person to walk on the Moon. The bounded lunar expedition makes exploration the strongest single representative domain.",
+        "sources": [
+          "https://www.nasa.gov/mission/apollo-11/"
+        ]
+      },
+      {
+        "canonical_name_en": "Kupe",
+        "disposition": "retain_exploration",
+        "basis": "Kupe is kept out of the ordinary timeline because the Person record is legendary_possible_historical_core, but the traditional identity itself is explicitly voyaging, discovery and settlement tradition; the uncertainty affects timeline treatment, not the representative domain.",
+        "sources": []
+      }
+    ]
+  },
+  "operations": [
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "exploration-audit-al-masudi-to-culture",
+      "person_id": "64a73852-6d78-4682-a8cb-48680fc39cf2",
+      "expected_domain": "exploration",
+      "replacement_domain": "culture"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "exploration-audit-al-idrisi-to-science",
+      "person_id": "f7233956-8e2d-465e-94e6-c405c9ff7793",
+      "expected_domain": "exploration",
+      "replacement_domain": "science"
+    }
+  ]
+}
