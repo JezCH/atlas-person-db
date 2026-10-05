@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-20261006:homer:person-only:v1",
+  "person": {
+    "canonical_name_en": "Homer",
+    "display_name_ko": "호메로스",
+    "person_type": "historical",
+    "historicity": "historical_tradition_uncertain_identity_and_chronology",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "호메로스",
+      "url": "https://namu.wiki/w/%ED%98%B8%EB%A9%94%EB%A1%9C%EC%8A%A4"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Homer is a foundational name in the Greek epic tradition, but modern Homeric scholarship does not securely establish one historical individual named Homer as the sole author of the Iliad and Odyssey, nor a defensible person-specific Activity interval. ATLAS preserves Homer as a historical literary tradition Person without inventing a year-based Activity rail.",
+    "basis_code": "homeric_question_uncertain_historical_identity_and_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://www.cambridge.org/core/books/abs/cambridge-guide-to-homer/homeric-question/1193E2FE5741D670B7E1BB34050A069D",
+        "https://www.cambridge.org/core/books/abs/english-translators-of-homer/translating-homer-some-issues/3B8B2C7A37DE14618A5B8A38FCD4F01D"
+      ],
+      "reviewed_at": "2026-10-06"
+    }
+  },
+  "representative_domain": "culture",
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Homeric Question — The Cambridge Guide to Homer",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-guide-to-homer/homeric-question/1193E2FE5741D670B7E1BB34050A069D",
+      "citation_text": "Cambridge surveys the continuing authorship problem surrounding Homer, the Iliad and the Odyssey, including oral-poetic and multi-stage composition models."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Translating Homer: Some Issues — English Translators of Homer",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/english-translators-of-homer/translating-homer-some-issues/3B8B2C7A37DE14618A5B8A38FCD4F01D",
+      "citation_text": "This scholarly overview notes that a historical individual named Homer cannot be demonstrated incontrovertibly and emphasizes the oral-traditional basis of the poems."
+    }
+  ],
+  "review_context": {
+    "request_batch": "USER-REGISTER5-20261006",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_non_timeline_disposition"
+  }
+}
