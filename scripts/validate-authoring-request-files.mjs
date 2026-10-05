@@ -17,6 +17,7 @@ const ROLE_BINDING_MODES = new Set(['declared','existing','none']);
 const PERSON_LIFE_STATUS_BASES = new Set(['documented_death','historical_certainty']);
 const PERSON_ONLY_DISPOSITIONS = new Set(['chronology_unresolved','legendary','mythical','other_reviewed_exclusion']);
 const REPRESENTATIVE_DOMAINS = new Set(['governance','military','science','technology','commerce','culture','religion','exploration']);
+const FINAL_NAMUWIKI_NOT_FOUND_REASONS = new Set(['no_exact_document','related_or_derivative_only']);
 
 function fail(file, message) {
   throw new Error(`${file}: ${message}`);
@@ -121,7 +122,14 @@ function validateNamuWiki(file, manifest) {
   if (reference.document_title != null || reference.url != null) {
     fail(file, 'not_found NamuWiki reference must not contain document_title or url');
   }
-  return Object.freeze({ status:'not_found', checked_at:reference.checked_at });
+  if (!nonEmptyString(reference.review_reason)) {
+    fail(file, 'not_found NamuWiki reference requires review_reason');
+  }
+  const reviewReason = reference.review_reason.trim();
+  if (!FINAL_NAMUWIKI_NOT_FOUND_REASONS.has(reviewReason)) {
+    fail(file, 'not_found NamuWiki review_reason must be no_exact_document or related_or_derivative_only');
+  }
+  return Object.freeze({ status:'not_found', checked_at:reference.checked_at, review_reason:reviewReason });
 }
 
 function emptyBoundaryValue(value) {

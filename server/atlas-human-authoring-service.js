@@ -31,7 +31,8 @@ const {
   normalizeNamuWikiDecision,
   currentExternalReference,
   sameDecision,
-  setNamuWikiDecision
+  setNamuWikiDecision,
+  NAMUWIKI_FINAL_NOT_FOUND_REASONS
 } = require("./atlas-external-reference-service.js");
 
 const HUMAN_AUTHORING_SCHEMA = "atlas-human-authoring/v1";
@@ -526,6 +527,12 @@ async function resolveNamuWikiReference(client, { requestId, person, requested, 
     if (current) return current;
     if (allowLegacyNamuWikiOmission) return null;
     throw new Error("HUMAN_AUTHORING_NAMUWIKI_REQUIRED");
+  }
+  if (requested.status === "not_found") {
+    if (!requested.review_reason) throw new Error("HUMAN_AUTHORING_NAMUWIKI_REVIEW_REASON_REQUIRED");
+    if (!NAMUWIKI_FINAL_NOT_FOUND_REASONS.includes(requested.review_reason)) {
+      throw new Error("HUMAN_AUTHORING_NAMUWIKI_REVIEW_REASON_INVALID");
+    }
   }
   let result;
   try {

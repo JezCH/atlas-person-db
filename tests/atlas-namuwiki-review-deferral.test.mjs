@@ -45,7 +45,10 @@ test('new GitHub registrations reject NamuWiki review deferral',()=>{
 
 test('new registrations require an explicit linked or not_found decision',()=>{
   assert.notEqual(validate(candidate()).status,0);
-  assert.equal(validate({...candidate(),external_references:{namuwiki:{status:'not_found',checked_at:'2026-09-26'}}}).status,0);
+  assert.notEqual(validate({...candidate(),external_references:{namuwiki:{status:'not_found',checked_at:'2026-09-26'}}}).status,0);
+  assert.equal(validate({...candidate(),external_references:{namuwiki:{status:'not_found',checked_at:'2026-09-26',review_reason:'no_exact_document'}}}).status,0);
+  assert.equal(validate({...candidate(),external_references:{namuwiki:{status:'not_found',checked_at:'2026-09-26',review_reason:'related_or_derivative_only'}}}).status,0);
+  assert.notEqual(validate({...candidate(),external_references:{namuwiki:{status:'not_found',checked_at:'2026-09-26',review_reason:'exact_target_url_pending'}}}).status,0);
   assert.equal(validate({...candidate(),external_references:{namuwiki:{
     status:'linked',
     checked_at:'2026-09-26',
@@ -57,7 +60,7 @@ test('new registrations require an explicit linked or not_found decision',()=>{
 test('a deferral cannot coexist with or replace an explicit reference decision',()=>{
   for(const reference of [
     {status:'unknown'},
-    {status:'not_found',checked_at:'2026-09-26'},
+    {status:'not_found',checked_at:'2026-09-26',review_reason:'no_exact_document'},
     {status:'linked',checked_at:'2026-09-26',document_title:'Example Person',url:'https://namu.wiki/w/Example%20Person'}
   ]) {
     assert.notEqual(validate({...candidate(),external_references:{namuwiki:reference},review_deferrals:{namuwiki:deferral}}).status,0);

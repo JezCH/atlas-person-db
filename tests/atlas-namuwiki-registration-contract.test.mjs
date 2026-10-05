@@ -64,8 +64,8 @@ test('NamuWiki normalizer accepts only explicit linked/not_found decisions', () 
     }
   );
   assert.deepEqual(
-    normalizeNamuWikiReference({ status:'not_found', checked_at:'2026-08-21' }, { allowLegacyOmission:false }),
-    { status:'not_found', checked_at:'2026-08-21', document_title:null, url:null, review_state:'reviewed_absent', review_reason:null }
+    normalizeNamuWikiReference({ status:'not_found', checked_at:'2026-08-21', review_reason:'no_exact_document' }, { allowLegacyOmission:false }),
+    { status:'not_found', checked_at:'2026-08-21', document_title:null, url:null, review_state:'reviewed_absent', review_reason:'no_exact_document' }
   );
   assert.throws(() => normalizeNamuWikiReference(null, { allowLegacyOmission:false }), /HUMAN_AUTHORING_NAMUWIKI_REQUIRED/);
   assert.throws(() => normalizeNamuWikiReference({ status:'unknown', checked_at:'2026-08-21' }, { allowLegacyOmission:false }), /HUMAN_AUTHORING_NAMUWIKI_STATUS_INVALID/);
@@ -86,8 +86,32 @@ test('changed GitHub human-authoring manifests fail closed without a NamuWiki de
   assert.match(validator, /checked_at must be a valid YYYY-MM-DD date/);
   assert.match(validator, /canonical https:\/\/namu\.wiki\/w\/\.\.\. URL/);
   assert.match(validator, /not_found NamuWiki reference must not contain document_title or url/);
+  assert.match(validator, /not_found NamuWiki reference requires review_reason/);
+  assert.match(validator, /no_exact_document or related_or_derivative_only/);
   assert.match(validator, /review_deferrals\.namuwiki is retired/);
   assert.match(validator, /\[NamuWiki\].*document not found/);
+});
+
+test('new authoring rejects not_found without a terminal detailed reason', async () => {
+  const client = fakeNamuWikiClient();
+  await assert.rejects(
+    resolveNamuWikiReference(client, {
+      requestId:'test:namuwiki:missing-reason',
+      person:{ id:PERSON_ID },
+      requested:{ status:'not_found', checked_at:'2026-10-05', document_title:null, url:null, review_state:'reviewed_absent', review_reason:null },
+      allowLegacyNamuWikiOmission:false
+    }),
+    /HUMAN_AUTHORING_NAMUWIKI_REVIEW_REASON_REQUIRED/
+  );
+  await assert.rejects(
+    resolveNamuWikiReference(client, {
+      requestId:'test:namuwiki:pending-reason',
+      person:{ id:PERSON_ID },
+      requested:{ status:'not_found', checked_at:'2026-10-05', document_title:null, url:null, review_state:'reviewed_absent', review_reason:'exact_target_url_pending' },
+      allowLegacyNamuWikiOmission:false
+    }),
+    /HUMAN_AUTHORING_NAMUWIKI_REVIEW_REASON_INVALID/
+  );
 });
 
 test('authoring persists a submitted NamuWiki decision and audits the mutation', async () => {
@@ -158,6 +182,8 @@ test('Person read surfaces normalized stored external references without authori
 
 test('normal Admin registration supports reviewed-state reuse while still reporting the outcome', () => {
   assert.match(admin, /id="humanNamuWikiStatus"/);
+  assert.match(admin, /id="humanNamuWikiReviewReason"/);
+  assert.match(admin, /review_reason:reviewReason/);
   assert.doesNotMatch(admin, /id="humanNamuWikiStatus" required/);
   assert.match(admin, /if \(!status\) return null/);
   assert.match(admin, /checkedAt\.required = reviewed/);
@@ -183,6 +209,8 @@ test('registration documentation preserves explicit decisions and reviewed-state
   for (const source of [policy, sop, humanDoc]) {
     assert.match(source, /linked/);
     assert.match(source, /not_found/);
+    assert.match(source, /review_reason/);
+    assert.match(source, /related_or_derivative_only/);
   }
   for (const source of [policy, humanDoc]) {
     assert.match(source, /나무위키: 연결됨/);

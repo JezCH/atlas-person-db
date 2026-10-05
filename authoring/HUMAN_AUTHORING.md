@@ -82,6 +82,15 @@ The browser keeps Person/Polity/Role Korean names optional so exact existing ent
 
 The same form requires a NamuWiki result and checked date. When `linked` is selected, exact document title and a canonical `https://namu.wiki/w/...` URL are required. When `not_found` is selected, title and URL are omitted. The successful result panel explicitly reports either `나무위키: 연결됨 — <문서명>` or `나무위키: 문서 없음`.
 
+### Terminal not-found reason contract
+
+For every **new** explicit `not_found` NamuWiki decision, `review_reason` is mandatory and must be one of:
+
+- `no_exact_document`;
+- `related_or_derivative_only`.
+
+An unresolved exact-target candidate is not a completed absence decision. `exact_target_url_pending` cannot be used to complete a new registration, and a verified exact target must be stored as `linked`. Existing reviewed Person state may still be reused without re-searching; immutable historical request replay remains compatible.
+
 ## NamuWiki display behavior
 
 The Person list/detail API carries `external_references.namuwiki` when an explicit decision has been stored by authoring. The main Person table consumes that authoritative read data:

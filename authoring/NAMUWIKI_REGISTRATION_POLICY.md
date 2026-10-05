@@ -29,12 +29,20 @@ When no independent Person document can be found after a reasonable review:
 "external_references": {
   "namuwiki": {
     "status": "not_found",
-    "checked_at": "2026-08-21"
+    "checked_at": "2026-08-21",
+    "review_reason": "no_exact_document"
   }
 }
 ```
 
-Omission, `unknown`, guessed URLs, non-NamuWiki URLs, and a `not_found` record carrying a title or URL are not valid decisions for a new human-authoring registration.
+Omission, `unknown`, guessed URLs, non-NamuWiki URLs, a `not_found` record carrying a title or URL, and a `not_found` record without a terminal `review_reason` are not valid decisions for a new human-authoring registration.
+
+A completed new-registration `not_found` decision must use exactly one of these terminal reasons:
+
+- `no_exact_document` — bounded indexed review found no independent exact Person document and no material related/derivative candidate that better explains the search result;
+- `related_or_derivative_only` — indexed review found related, derivative, section, disambiguation, or adjacent-topic material mentioning the Person, but no independent exact Person document.
+
+Historical reason values such as `exact_target_url_pending` remain migration/audit evidence only. `exact_target_url_pending` is unresolved and cannot close a new registration; once an exact target URL is verified the decision must be `linked`, not `not_found`.
 
 ## Default discovery method: external search index first
 
@@ -48,8 +56,8 @@ Required decision order:
 2. inspect indexed title, snippet, redirect, and disambiguation evidence for the exact historical Person;
 3. accept `linked` only when the evidence identifies the intended independent Person document;
 4. preserve the verified document title/path and store the canonical `https://namu.wiki/w/...` URL;
-5. use `not_found` only after a reasonable indexed search review finds no independent Person document;
-6. if the evidence is still insufficient for either decision, **do not close registration**.
+5. use `not_found` only after a reasonable indexed search review finds no independent Person document, and record the terminal `review_reason` that describes what the index review actually found;
+6. if the evidence is still insufficient for either decision, including an unresolved exact-target candidate, **do not close registration**.
 
 ## Hard registration-completion gate
 
@@ -85,7 +93,7 @@ For reviewed GitHub batch registrations, changed `atlas-human-authoring/v1` mani
 Every completed registration must state the NamuWiki outcome explicitly:
 
 - `나무위키: 연결됨 — <document_title>` when `status` is `linked`;
-- `나무위키: 문서 없음` when `status` is `not_found`;
+- `나무위키: 문서 없음 — <review_reason>` when `status` is `not_found`;
 - `나무위키: 기존 검토값 재사용` when an already-reviewed existing Person reused its authoritative state.
 
 There is no completed-registration outcome called “deferred”. An unresolved NamuWiki review means the registration itself is not complete.

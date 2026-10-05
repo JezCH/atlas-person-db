@@ -114,6 +114,18 @@ test('Admin explains canonical fail-closed domain and spatial errors',()=>{
 });
 
 
+
+test('NamuWiki not_found registration requires a terminal detailed review reason',()=>{
+  assert.match(ui,/id="humanNamuWikiReviewReason" disabled/);
+  assert.match(ui,/value="no_exact_document"/);
+  assert.match(ui,/value="related_or_derivative_only"/);
+  assert.match(ui,/reviewReason\.required = notFound/);
+  assert.match(ui,/review_reason:reviewReason/);
+  assert.match(ui,/HUMAN_AUTHORING_NAMUWIKI_REVIEW_REASON_REQUIRED/);
+  assert.match(ui,/HUMAN_AUTHORING_NAMUWIKI_REVIEW_REASON_INVALID/);
+  assert.match(ui,/나무위키: 문서 없음 —/);
+});
+
 test('canonical registration selects remain width-bounded on mobile layouts',()=>{
   const css=fs.readFileSync(new URL('../atlas-admin-identity.css',import.meta.url),'utf8');
   assert.match(css,/\.identity-form select \{[^}]*width:\s*100%[^}]*min-width:\s*0[^}]*min-height:\s*42px/s);

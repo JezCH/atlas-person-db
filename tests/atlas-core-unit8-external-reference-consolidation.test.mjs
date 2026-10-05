@@ -42,6 +42,11 @@ test('Unit 8 keeps reviewed not_found explicit and rejects linked overwrite unde
   assert.deepEqual(external.normalizeNamuWikiDecision({status:'not_found',checked_at:'2026-09-30'},{checkedAtRequired:true}),{
     provider:'namuwiki',status:'not_found',checked_at:'2026-09-30',document_title:null,url:null,review_state:'reviewed_absent',review_reason:null
   });
+  assert.deepEqual(external.NAMUWIKI_FINAL_NOT_FOUND_REASONS,['no_exact_document','related_or_derivative_only']);
+  assert.throws(
+    ()=>external.normalizeNamuWikiDecision({status:'not_found',checked_at:'2026-09-30',review_reason:'invented_reason'},{checkedAtRequired:true}),
+    /EXTERNAL_REFERENCE_NAMUWIKI_REVIEW_REASON_INVALID/
+  );
 });
 
 

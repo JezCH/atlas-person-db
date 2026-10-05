@@ -18,6 +18,6 @@ test("completed Person Domain cutover OIDC and workflow stay retired",()=>{
   assert.equal(fs.existsSync(path.join(root,"server/atlas-person-domain-v2-cutover-github-oidc.js")),false);
   assert.equal(fs.existsSync(path.join(root,"server/atlas-person-domain-v2-cutover-handler.js")),false);
   assert.equal(fs.existsSync(path.join(root,".github/workflows/atlas-person-domain-v2-cutover.yml")),false);
-  const verify=fs.readFileSync(path.join(root,".github/workflows/atlas-person-domain-apply.yml"),"utf8");
+  const verify=fs.readFileSync(path.join(root,".github/workflows/atlas-person-domain-verify.yml"),"utf8");
   assert.doesNotMatch(verify,/id-token:\s*write|atlas-person-domain-v2-cutover/);
 });

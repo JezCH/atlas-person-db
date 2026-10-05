@@ -358,9 +358,12 @@ or:
 ```json
 {
   "status": "not_found",
-  "checked_at": "YYYY-MM-DD"
+  "checked_at": "YYYY-MM-DD",
+  "review_reason": "no_exact_document | related_or_derivative_only"
 }
 ```
+
+For a new or previously-unreviewed Person, `not_found` is complete only when its terminal detailed reason is recorded. Use `no_exact_document` when no independent exact document or material related candidate is found, and `related_or_derivative_only` when related, derivative, section, or adjacent material exists but no independent exact Person document does. `exact_target_url_pending` is unresolved and cannot close registration.
 
 For an existing Person whose Production NamuWiki state is already `linked` or `not_found`, the historical review reuses that live value and **does not perform a new NamuWiki search**. The Human Authoring server can reuse the existing reviewed value. However, while the repository fast validator still requires `external_references.namuwiki` on every changed Human Authoring manifest, the GitHub fallback must copy the exact live reviewed value into that manifest as validation metadata. A different value never silently overwrites an existing linked document; it requires separate review.
 
@@ -499,7 +502,7 @@ Person: <English> / <Korean>
 Polity: <...>
 Role: <...>
 Period: <...>
-나무위키: 연결됨 — <document_title> | 문서 없음 | 기존 검토값 재사용
+나무위키: 연결됨 — <document_title> | 문서 없음 — <review_reason> | 기존 검토값 재사용
 Production read-back: VERIFIED
 ```
 
