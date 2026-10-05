@@ -15,7 +15,9 @@
     "canonical_name_en": "Kingdom of France",
     "display_name_ko": "프랑스 왕국",
     "polity_type": "historical_polity",
-    "historicity": "historical"
+    "historicity": "historical",
+    "existing_id": "7e090994-f196-4957-8295-dcfa08c53fba",
+    "canonical_key": "Kingdom of France"
   },
   "activity": {
     "relation_type": "serves",
@@ -56,5 +58,5 @@
       "checked_at": "2026-10-05"
     }
   },
-  "request_id": "authoring:jacques-cartier:kingdom-france:second-voyage:1535-1536:v1"
+  "request_id": "authoring:jacques-cartier:kingdom-france:second-voyage:1535-1536:v2"
 }
