@@ -1,0 +1,316 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-domain:commerce-audit:2026-10-05:v1",
+  "release_order": 954,
+  "evidence": {
+    "decision": "Person Domain v2 Commerce audit. Re-review all 33 live commerce Persons against the active eight-sector taxonomy using representative historical identity rather than individual offices or Activity roles. Commerce remains the home of commerce, finance, enterprise and economic systems or thought when representative. Political office, military service or technical invention is supporting evidence unless it outweighs the durable economic/enterprise identity. Move only Persons whose representative historical identity is more directly state leadership or another canonical sector.",
+    "taxonomy": "contracts/person-domain-taxonomy.v2.json",
+    "source_main_sha": "504d6199d474ae90eecf3d1f8457ca33d4687d83",
+    "production_snapshot": {
+      "captured_at": "2026-10-05",
+      "total_persons": 2106,
+      "assigned": 1993,
+      "counts": {
+        "governance": 1350,
+        "military": 209,
+        "science": 80,
+        "technology": 33,
+        "commerce": 33,
+        "culture": 163,
+        "religion": 98,
+        "exploration": 27
+      }
+    },
+    "reviewed_count": 33,
+    "retained_commerce_count": 32,
+    "moved_count": 1,
+    "expected_snapshot_counts_after": {
+      "governance": 1351,
+      "military": 209,
+      "science": 80,
+      "technology": 33,
+      "commerce": 32,
+      "culture": 163,
+      "religion": 98,
+      "exploration": 27
+    },
+    "retained_commerce": [
+      {
+        "person_id": "d87c37e8-5095-4e77-87bf-781eb2294642",
+        "canonical_name_en": "Agathokles of Rhodes",
+        "preferred_name_ko": "로도스의 아가토클레스",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "38a006d4-eb26-4412-8a60-ccb209a10f37",
+        "canonical_name_en": "Jang Bogo",
+        "preferred_name_ko": "장보고",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "aa816f19-b73e-48a9-9870-ab19f03c066f",
+        "canonical_name_en": "Jakob Fugger",
+        "preferred_name_ko": "야코프 푸거",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "e8af92fc-cd04-44f4-a4c8-7ead4aab7c86",
+        "canonical_name_en": "Thomas Gresham",
+        "preferred_name_ko": "토머스 그레셤",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "e158c5dd-e131-4e64-9b3d-bc6e1c032b3c",
+        "canonical_name_en": "John Law",
+        "preferred_name_ko": "존 로",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "b6d97112-95c8-4442-a4ac-c4f8062c8ec4",
+        "canonical_name_en": "Robert Carter I",
+        "preferred_name_ko": "로버트 카터 1세",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "9ab1eaed-9c12-43d4-ad55-ad62bdd3dc94",
+        "canonical_name_en": "Richard Arkwright",
+        "preferred_name_ko": "리처드 아크라이트",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "2cd3c689-feeb-4364-9e2d-0e51a82a8963",
+        "canonical_name_en": "Adam Smith",
+        "preferred_name_ko": "애덤 스미스",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "34395d7c-d501-48d5-8d08-1429024a1692",
+        "canonical_name_en": "Howqua (Wu Bingjian)",
+        "preferred_name_ko": "호콰(우빙젠)",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "8df15ef6-19d6-40e8-b515-3a670b894744",
+        "canonical_name_en": "John Macarthur",
+        "preferred_name_ko": "존 매카서",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "090e745d-6bb1-493e-ab57-465d03aba67c",
+        "canonical_name_en": "Nathan Mayer Rothschild",
+        "preferred_name_ko": "네이선 메이어 로스차일드",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "9ee7c911-c60d-4a88-b299-7a25e6438d63",
+        "canonical_name_en": "Mayer Amschel Rothschild",
+        "preferred_name_ko": "마이어 암셸 로스차일드",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "e1c41210-a6c4-4979-88f0-b3a06d9e2b73",
+        "canonical_name_en": "Cornelius Vanderbilt",
+        "preferred_name_ko": "코닐리어스 밴더빌트",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "8f4d7038-013d-47f6-b6ff-41ed3bb79243",
+        "canonical_name_en": "David Ricardo",
+        "preferred_name_ko": "데이비드 리카도",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "4b0471c2-e601-4039-8ac4-ead55ea24f7d",
+        "canonical_name_en": "Alfred Escher",
+        "preferred_name_ko": "알프레트 에셔",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "1b161e34-ba2e-4943-9a70-07c0a32478e7",
+        "canonical_name_en": "Allan Pinkerton",
+        "preferred_name_ko": "앨런 핑커톤",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "0b7d8e26-dd1b-422a-b40e-569e4b8acdcd",
+        "canonical_name_en": "Jamsetji Tata",
+        "preferred_name_ko": "잠셋지 타타",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "ea9b780f-d5fa-46af-98fc-c0d7803af1cf",
+        "canonical_name_en": "Ferdinand de Lesseps",
+        "preferred_name_ko": "페르디낭 드 레셉스",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "708ccac7-6dca-409f-8b4e-c12f598a5050",
+        "canonical_name_en": "John D. Rockefeller",
+        "preferred_name_ko": "존 데이비슨 록펠러",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "cedd1d70-6aad-44a8-8f76-04c92759a5fc",
+        "canonical_name_en": "Tippu Tip",
+        "preferred_name_ko": "티푸 티프",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "1cae45a2-e8ea-4daa-a378-3e12084d82fd",
+        "canonical_name_en": "Andrew Carnegie",
+        "preferred_name_ko": "앤드루 카네기",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "e386d5db-ce6f-4084-bf55-0d4ba90c95e5",
+        "canonical_name_en": "Madam C. J. Walker",
+        "preferred_name_ko": "매덤 C. J. 워커",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "f893373c-2b5e-476b-9199-27e7ed92dad9",
+        "canonical_name_en": "J. P. Morgan",
+        "preferred_name_ko": "J. P. 모건",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "c3b35168-17a0-4b4b-9468-b46c368ab257",
+        "canonical_name_en": "Henry Ford",
+        "preferred_name_ko": "헨리 포드",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "25a1dc73-1685-4970-83b8-60d3e5766aca",
+        "canonical_name_en": "Frederick Winslow Taylor",
+        "preferred_name_ko": "프레더릭 윈즐로 테일러",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "27bd64a2-a17b-4769-8870-65d22e943c26",
+        "canonical_name_en": "Lucky Luciano",
+        "preferred_name_ko": "러키 루치아노",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "5fd732cd-5b2a-4833-892f-6da88fa0d7c7",
+        "canonical_name_en": "John Maynard Keynes",
+        "preferred_name_ko": "존 메이너드 케인스",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "27b6e7b3-d8cc-42f5-ac7f-3c0a6fa19d2e",
+        "canonical_name_en": "Ray Kroc",
+        "preferred_name_ko": "레이 크록",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "a9a2cef9-fbf8-4a46-8d3c-f41b6d78e6c2",
+        "canonical_name_en": "Malcom McLean",
+        "preferred_name_ko": "맬컴 매클레인",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "0177f298-1658-4f1b-815e-ced1296ebdb6",
+        "canonical_name_en": "Milton Friedman",
+        "preferred_name_ko": "밀턴 프리드먼",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "528147df-7d8d-46ac-b02c-43b798aff21d",
+        "canonical_name_en": "Steve Jobs",
+        "preferred_name_ko": "스티브 잡스",
+        "disposition": "retain_commerce"
+      },
+      {
+        "person_id": "ddd3df15-6ae3-406e-9b47-6bc1efdf74c0",
+        "canonical_name_en": "Elinor Ostrom",
+        "preferred_name_ko": "엘리너 오스트롬",
+        "disposition": "retain_commerce"
+      }
+    ],
+    "prior_v2_boundary_decisions_reaffirmed": [
+      "Richard Arkwright",
+      "Ferdinand de Lesseps",
+      "Henry Ford",
+      "Frederick Winslow Taylor",
+      "Malcom McLean"
+    ],
+    "edge_case_notes": [
+      {
+        "canonical_name_en": "Cecil Rhodes",
+        "disposition": "move_to_governance",
+        "basis": "Rhodes was a mining magnate, but his durable historical identity includes direct state leadership as Prime Minister of the Cape Colony from 1890 to 1896 and the use of political authority and a chartered company to drive territorial expansion. South African History Online describes him as businessman, Member of Parliament, Prime Minister and imperialist, and explicitly links his economic power to political control. Under v2, direct state leadership and imperial political power fit governance more strongly than enterprise alone.",
+        "sources": [
+          "https://sahistory.org.za/people/cecil-john-rhodes",
+          "https://sahistory.org.za/archive/book-3-migration-land-and-minerals-making-south-africa-chapter-2-imperialism-and-union"
+        ]
+      },
+      {
+        "canonical_name_en": "Robert Carter I",
+        "disposition": "retain_commerce",
+        "basis": "Carter briefly exercised Virginia's executive authority as Council president, but his durable identity and power base were extraordinary plantation, land, tobacco, merchant, credit and proprietary wealth. Encyclopedia Virginia identifies him as the richest and one of the most powerful Virginians of his day and situates that power in the planter-merchant economy. The temporary acting governorship does not outweigh the economic identity.",
+        "sources": [
+          "https://encyclopediavirginia.org/entries/colonial-virginia/",
+          "https://encyclopediavirginia.org/entries/governors-of-virginia/"
+        ]
+      },
+      {
+        "canonical_name_en": "John Macarthur",
+        "disposition": "retain_commerce",
+        "basis": "Macarthur briefly virtually administered New South Wales during the Rum Rebellion, but the Australian Dictionary of Biography identifies his long-term significance with the wool industry, grazing, trading and promotion of a colonial commercial staple. The exceptional 1808 administrative episode does not override commerce.",
+        "sources": [
+          "https://adb.anu.edu.au/biography/macarthur-john-2390",
+          "https://adb.anu.edu.au/lifesummary/macarthur-john-2390"
+        ]
+      },
+      {
+        "canonical_name_en": "Alfred Escher",
+        "disposition": "retain_commerce",
+        "basis": "Escher held major political offices and thirty-four years in the National Council, but his representative legacy joins politics to founding and directing transformative rail, banking, insurance and infrastructure institutions. The Swiss Parliament itself frames his influence as simultaneously political and economic. With no national executive rulership and a durable enterprise/economic-system legacy, commerce remains the stronger single domain.",
+        "sources": [
+          "https://www.parlament.ch/blog/Pages/alfred-escher%E2%80%93ein-koenig-im-schweizer-parlament.aspx"
+        ]
+      },
+      {
+        "canonical_name_en": "Jang Bogo",
+        "disposition": "retain_commerce",
+        "basis": "Jang Bogo commanded armed maritime power, but the Academy of Korean Studies defines him as a merchant who established Cheonghaejin and led international maritime trade among Silla, Tang and Japan. Military force protected and enabled the trade network; commerce remains representative.",
+        "sources": [
+          "https://encykorea.aks.ac.kr/Article/E0048474"
+        ]
+      },
+      {
+        "canonical_name_en": "Tippu Tip",
+        "disposition": "retain_commerce",
+        "basis": "Tippu Tip exercised regional political control, but his historical identity is inseparable from the ivory and slave-trading network and trading state that generated that authority. The political role does not erase the enterprise/trade identity, so commerce remains the best single sector.",
+        "sources": []
+      },
+      {
+        "canonical_name_en": "Lucky Luciano",
+        "disposition": "retain_commerce",
+        "basis": "Luciano led organized crime rather than a state or polity. The FBI describes him as structuring La Cosa Nostra like a corporation and dividing rackets among families. Governance is reserved for political or state rule; enterprise, even illicit enterprise, is therefore closer to commerce under the present eight-sector taxonomy.",
+        "sources": [
+          "https://www.fbi.gov/history/cases-and-criminals/la-cosa-nostra"
+        ]
+      },
+      {
+        "canonical_name_en": "Elinor Ostrom",
+        "disposition": "retain_commerce",
+        "basis": "Ostrom was a political scientist, but her Nobel-recognized representative contribution is analysis of economic governance, especially the commons. The taxonomy explicitly assigns economic systems or thought to commerce when representative.",
+        "sources": [
+          "https://www.nobelprize.org/prizes/economic-sciences/2009/press-release/"
+        ]
+      }
+    ]
+  },
+  "operations": [
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "commerce-audit-cecil-rhodes-to-governance",
+      "person_id": "49e6b8cf-2322-44d8-a79e-892026b14211",
+      "expected_domain": "commerce",
+      "replacement_domain": "governance"
+    }
+  ]
+}
