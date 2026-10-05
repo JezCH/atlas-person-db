@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-20261006:cynisca:person-only:v1",
+  "person": {
+    "canonical_name_en": "Cynisca",
+    "display_name_ko": "키니스카",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-06",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Cynisca is securely historical and her Olympic victories are attested by Pausanias, but this bounded registration does not convert event dates into a longer personal Activity rail without a dedicated Activity review.",
+    "basis_code": "user_selected_registration_activity_not_yet_reviewed",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://www.perseus.tufts.edu/hopper/text?doc=Paus.+3.8"
+      ],
+      "reviewed_at": "2026-10-06"
+    }
+  },
+  "representative_domain": "culture",
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Pausanias, Description of Greece 3.8 — Perseus Digital Library",
+      "canonical_url": "https://www.perseus.tufts.edu/hopper/text?doc=Paus.+3.8",
+      "citation_text": "Pausanias names Cynisca, daughter of Archidamus, and records her as the first woman to breed horses and the first woman to win an Olympic victory."
+    }
+  ],
+  "review_context": {
+    "request_batch": "USER-REGISTER9-20261006",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_timeline_disposition"
+  }
+}

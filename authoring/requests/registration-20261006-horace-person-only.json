@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-20261006:horace:person-only:v1",
+  "person": {
+    "canonical_name_en": "Horace",
+    "display_name_ko": "호라티우스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-06",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Horace is securely historical as Quintus Horatius Flaccus, but this bounded registration does not choose one polity-bound literary Activity interval across the late Republic and Augustan settlement; Person identity and domain are registered first.",
+    "basis_code": "user_selected_registration_activity_not_yet_reviewed",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Horace"
+      ],
+      "reviewed_at": "2026-10-06"
+    }
+  },
+  "representative_domain": "culture",
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "1911 Encyclopaedia Britannica — Horace",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Horace",
+      "citation_text": "The Encyclopaedia Britannica identifies Quintus Horatius Flaccus (65–8 BCE) as the famous Roman poet known as Horace."
+    }
+  ],
+  "review_context": {
+    "request_batch": "USER-REGISTER9-20261006",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_timeline_disposition"
+  }
+}

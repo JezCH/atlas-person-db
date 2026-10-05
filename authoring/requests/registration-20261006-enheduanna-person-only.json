@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-20261006:enheduanna:person-only:v1",
+  "person": {
+    "canonical_name_en": "Enheduanna",
+    "display_name_ko": "엔헤두안나",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "엔헤두안나",
+      "url": "https://namu.wiki/w/%EC%97%94%ED%97%A4%EB%91%90%EC%95%88%EB%82%98"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Enheduanna is securely historical and strongly attested as a high priestess and named author, but this bounded registration does not assert a canonical polity-bound Activity rail; Person identity and domain are registered now without inventing an Activity interval.",
+    "basis_code": "user_selected_registration_activity_not_yet_reviewed",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://www.penn.museum/sites/expedition/goddesses-mothers-rulers/"
+      ],
+      "reviewed_at": "2026-10-06"
+    }
+  },
+  "representative_domain": "culture",
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "She Who Wrote: Enheduanna and Women of Mesopotamia, ca. 3400–2000 BC — Penn Museum",
+      "canonical_url": "https://www.penn.museum/sites/expedition/goddesses-mothers-rulers/",
+      "citation_text": "Penn Museum identifies Enheduanna, daughter of Sargon, as high priestess and poet around 2300 BCE and the earliest named author in world literature."
+    }
+  ],
+  "review_context": {
+    "request_batch": "USER-REGISTER9-20261006",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_timeline_disposition"
+  }
+}

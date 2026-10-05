@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-20261006:agrippina-the-younger:person-only:v1",
+  "person": {
+    "canonical_name_en": "Agrippina the Younger",
+    "display_name_ko": "소 아그리피나",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "소 아그리피나",
+      "url": "https://namu.wiki/w/%EC%86%8C%20%EC%95%84%EA%B7%B8%EB%A6%AC%ED%94%BC%EB%82%98"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Agrippina the Younger is securely historical and her imperial political role is well attested, but this bounded registration does not reduce her political career to a single unreviewed Activity rail.",
+    "basis_code": "user_selected_registration_activity_not_yet_reviewed",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://academic.oup.com/book/63003"
+      ],
+      "reviewed_at": "2026-10-06"
+    }
+  },
+  "representative_domain": "governance",
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Agrippina the Younger: A Dangerous Woman in Rome's Early Empire — Oxford Academic",
+      "canonical_url": "https://academic.oup.com/book/63003",
+      "citation_text": "Oxford University Press treats Agrippina the Younger as a major political figure of Rome's early empire, daughter of Germanicus, sister of Caligula, wife of Claudius, and mother of Nero."
+    }
+  ],
+  "review_context": {
+    "request_batch": "USER-REGISTER9-20261006",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_timeline_disposition"
+  }
+}
