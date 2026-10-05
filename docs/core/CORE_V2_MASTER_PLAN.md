@@ -203,18 +203,19 @@ Registration eligibility after 2026-09-26:
 Remove obsolete “only currently serving public-office Persons are excluded” wording during Unit 0.
 
 ## 5.2 Representative domain
-`representative_domain` is a nullable canonical Person property with controlled values:
-`governance / military / knowledge / technology / commerce / culture / religion / exploration`.
+`representative_domain` is a nullable canonical Person property with the canonical Person Domain v2 controlled values:
+`governance / military / science / technology / commerce / culture / religion / exploration`.
 
 Rules:
-- review during new Person registration;
-- store when clear;
-- null/HOLD is valid;
+- representative-domain review is a **default completion obligation for every newly created Person**, regardless of registration lane, profession, role, period, or whether an Activity is created in the same request;
+- ordinary new-Person registration cannot reach COMPLETE when the review was omitted;
+- store exactly one canonical v2 domain when the evidence supports a clear representative identity;
+- explicit reviewed `null`/HOLD is allowed only when classification is genuinely unresolved; it is a terminal reviewed disposition, not deferred cleanup debt;
 - never auto-infer Role→domain;
 - existing non-null domain is not overwritten by unrelated Activity registration;
-- conflict → dedicated re-review.
+- later contradictory evidence → targeted re-review/correction, never a routine post-registration domain batch.
 
-Routine “register Persons now, add domains later” must disappear.
+Routine “register Persons now, add domains later” is prohibited. Representative-domain work is part of Person registration itself, not a separate workstream.
 
 ## 5.3 Timeline / non-timeline
 Historical identity and timeline eligibility are separate axes.

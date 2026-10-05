@@ -139,8 +139,9 @@ Historical P14 research/commits remain audit history only. No Territory/Geometry
 - CORE v2 / P13 lifecycle
 - #1037 Place / PolityPlaceFunction structural debt
 - #977 as an active execution board
-- Person Domain v2 migration and former #1767 residual
-- #1845 Person Domain cleanup path
+- Person Domain v2 migration and former #1767 residual — closed; the standalone mutation/cleanup path is retired
+- #1845 Person Domain cleanup path — historical evidence only
+- standalone representative-domain backlog/batch work — retired; every new Person receives domain review inside the normal registration lifecycle, with only evidence-driven targeted corrections allowed later
 - old NamuWiki Batch/Unit legacy-drain frontiers
 - eight-Person duplicate authoring-evidence cleanup (#1893)
 - completed Later Jin / Serbia / Egypt / Poland / Germany / Han / France / Japan Polity fixes

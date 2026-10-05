@@ -23,6 +23,7 @@ The operator supplies historical information, not database identifiers:
 
 - Person canonical English name; Korean display name is needed only when a new Person must be created
 - for every new Person: reviewed `life_status: deceased`, review date, and life-status basis; currently living Persons are never created
+- for every new Person: an explicit representative-domain review; use one canonical v2 code (`governance / military / science / technology / commerce / culture / religion / exploration`) when clear, or explicit reviewed-null/HOLD where the Activity-bearing contract permits it; omission is not a review
 - Polity canonical English name; Korean display name is needed only when a new Polity must be created
 - relation code selected from the active live Relation Type catalog
 - Role label, when applicable; Korean display name is needed only when a new Role must be created
@@ -48,15 +49,26 @@ The server performs the internal work in one PostgreSQL `SERIALIZABLE` transacti
 
 1. validate the explicit NamuWiki `linked`/`not_found` decision;
 2. exact preferred-English Person lookup; reuse one exact UUID or create the Person;
-3. exact preferred-English Polity lookup; reuse one exact UUID or create the Polity;
-4. exact active Role lookup; reuse one exact UUID or create a normalized Role when needed;
-5. exact active Relation Type and Period Basis code resolution to UUIDs;
-6. Source creation/reuse and provenance-link construction;
-7. compilation to the UUID-only, full-temporal Stage 2 Activity contract;
-8. semantic-key v2 duplicate enforcement through `atlas-stage2-native-activity-service`;
-9. immutable request ledger snapshot containing the normalized NamuWiki decision and commit.
+3. when a Person is newly created, require the representative-domain review to have been explicitly supplied, persist the reviewed domain state through the canonical Person profile writer, and exact-read-back that state before registration completion;
+4. exact preferred-English Polity lookup; reuse one exact UUID or create the Polity;
+5. exact active Role lookup; reuse one exact UUID or create a normalized Role when needed;
+6. exact active Relation Type and Period Basis code resolution to UUIDs;
+7. Source creation/reuse and provenance-link construction;
+8. compilation to the UUID-only, full-temporal Stage 2 Activity contract;
+9. semantic-key v2 duplicate enforcement through `atlas-stage2-native-activity-service`;
+10. immutable request ledger snapshot containing the normalized NamuWiki and new-Person registration decisions and commit.
 
 The NamuWiki result uses the existing `atlas_v2.authoring_manifest_runs.result_snapshot` JSONB ledger. No extra NamuWiki table or second transaction is required. The Person read service projects the latest explicit stored decision back onto the Person response.
+
+### Representative-domain default
+
+Representative-domain review is not an optional enrichment phase. It is part of **every new Person registration by default**.
+
+- Activity-bearing Human Authoring distinguishes explicit review from omission. If the Person is newly created and `person.representative_domain` was omitted, the transaction fails closed with `HUMAN_AUTHORING_NEW_PERSON_DOMAIN_REVIEW_REQUIRED`.
+- A clear classification is stored as one canonical Person Domain v2 code.
+- Where the Activity-bearing contract permits reviewed null, that null means an explicit terminal HOLD because the representative identity is genuinely unresolved; it must not be used as shorthand for “classify later.”
+- Person-only Human Authoring requires a concrete representative domain under its current contract.
+- No routine post-registration Person-domain PR, batch, or backlog is created. Future domain changes occur only when new contradictory evidence justifies a targeted correction.
 
 Names and controlled vocabulary codes are resolver inputs only. UUIDs remain database identity. Ambiguous exact-name matches, inactive or unknown controlled-vocabulary codes, source-less writes, historical year zero, semantic duplicates, invalid NamuWiki decisions, or P9 readiness failure all fail closed.
 
