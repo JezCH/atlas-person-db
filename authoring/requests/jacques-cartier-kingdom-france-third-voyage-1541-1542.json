@@ -1,0 +1,59 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Jacques Cartier",
+    "display_name_ko": "자크 카르티에",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-05",
+    "life_status_basis": "documented_death",
+    "representative_domain": "exploration"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Explorer",
+    "role_display_name_ko": "탐험가",
+    "period_basis": "general_activity",
+    "start_year": 1541,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1542,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Third and final North American voyage, 1541–1542. Cartier sailed under the French Crown within the Roberval colonial enterprise, established Charlesbourg-Royal near Cap-Rouge in 1541 and abandoned the settlement in 1542. The Activity is kept separate from the earlier voyages and does not model New France as a polity he ruled."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Jacques Cartier (1491–1557) — Dictionary of Canadian Biography",
+      "canonical_url": "https://www.biographi.ca/en/bio.php?id_nbr=107",
+      "citation_text": "The Dictionary of Canadian Biography records Cartier's third expedition, his subordinate position under Roberval, the 1541 establishment at Charlesbourg-Royal and the abandonment of the settlement in June 1542."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Fort Charlesbourg Royal National Historic Site of Canada — Parks Canada",
+      "canonical_url": "https://www.pc.gc.ca/apps/dfhd/page_nhs_eng.aspx?id=597",
+      "citation_text": "Parks Canada states that Charlesbourg-Royal was founded by Jacques Cartier in 1541 during his third and final voyage and was occupied through the winter of 1541–1542."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-05"
+    }
+  }
+}

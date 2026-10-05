@@ -1,0 +1,59 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Jacques Cartier",
+    "display_name_ko": "자크 카르티에",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-05",
+    "life_status_basis": "documented_death",
+    "representative_domain": "exploration"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Explorer",
+    "role_display_name_ko": "탐험가",
+    "period_basis": "general_activity",
+    "start_year": 1535,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1536,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Second royal voyage, 1535–1536. Cartier entered and explored the St. Lawrence River, reached Stadacona and Hochelaga, and wintered near present-day Quebec City. It is stored separately from the 1534 and 1541–1542 voyages because the expeditions were distinct episodes with intervening gaps."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Jacques Cartier (1491–1557) — Dictionary of Canadian Biography",
+      "canonical_url": "https://www.biographi.ca/en/bio.php?id_nbr=107",
+      "citation_text": "The Dictionary of Canadian Biography records Cartier's second expedition beginning in May 1535, his exploration of the St. Lawrence River and the expedition's return in 1536."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Cartier's voyages — Parks Canada",
+      "canonical_url": "https://parks.canada.ca/lhn-nhs/qc/cartierbrebeuf/culture/histoire-history/evenement-event/cartier",
+      "citation_text": "Parks Canada identifies the second voyage as 1535–1536 and describes it as the expedition that established the St. Lawrence River as a route into the continent."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-05"
+    }
+  }
+}
