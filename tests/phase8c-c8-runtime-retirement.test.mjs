@@ -89,7 +89,7 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.doesNotMatch(canonicalReadinessWorkflow, /environment:\s*production/);
   assert.doesNotMatch(canonicalReadinessWorkflow, /SUPABASE_DB_URL|id-token:\s*write/);
 
-  const personDomainWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-person-domain-apply.yml', import.meta.url), 'utf8');
+  const personDomainWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-person-domain-verify.yml', import.meta.url), 'utf8');
   assert.match(personDomainWorkflow, /^\s*push\s*:/m);
   assert.match(personDomainWorkflow, /branches:\s*\[main\]|branches:\s*\n\s*- main/);
   assert.match(personDomainWorkflow, /workflow_dispatch\s*:/m);
