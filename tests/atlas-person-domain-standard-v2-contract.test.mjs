@@ -8,7 +8,7 @@ const cutover=JSON.parse(fs.readFileSync(path.join(root,"contracts/person-domain
 const doc=fs.readFileSync(path.join(root,"docs/person/PERSON_DOMAIN_STANDARD_V2.md"),"utf8");
 const authoringFileValidator=fs.readFileSync(path.join(root,"scripts/validate-authoring-request-files.mjs"),"utf8");
 const liveVerifier=fs.readFileSync(path.join(root,"scripts/verify-person-domain-v2.mjs"),"utf8");
-const domainWorkflow=fs.readFileSync(path.join(root,".github/workflows/atlas-person-domain-apply.yml"),"utf8");
+const domainWorkflow=fs.readFileSync(path.join(root,".github/workflows/atlas-person-domain-verify.yml"),"utf8");
 const codes=["governance","military","science","technology","commerce","culture","religion","exploration"];
 const labels=["정치·통치","군사","과학","공학·기술","경제·상업","인문·예술","종교","탐험"];
 
@@ -63,7 +63,7 @@ test("authoring request file validation exposes only the v2 representative-domai
 
 test("active Person Domain verification is independent from the historical cutover snapshot",()=>{
   assert.doesNotMatch(liveVerifier,/person-domain-v2-final-cutover|science_target_ids|historicalScienceIds|expected_assigned|expected_post_cutover/);
-  assert.doesNotMatch(domainWorkflow,/person-domain-v2-final-cutover|proposals\/person-representative-domain/);
+  assert.doesNotMatch(domainWorkflow,/person-domain-v2-final-cutover|proposals\/person-representative-domain|apply-person-domain-proposals/);
   assert.match(liveVerifier,/Unsupported live representative domain/);
   assert.match(liveVerifier,/Legacy knowledge remains live/);
   assert.match(liveVerifier,/Assigned count and row count drift/);
