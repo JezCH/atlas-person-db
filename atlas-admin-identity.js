@@ -127,7 +127,8 @@
         <h3>나무위키 확인</h3>
         <div class="identity-two"><label>문서 확인 결과<select id="humanNamuWikiStatus"><option value="">기존 검토값 재사용 · 기존 Person만</option><option value="linked">문서 있음 · 링크 연결</option><option value="not_found">문서 없음</option></select></label><label>확인일<input id="humanNamuWikiCheckedAt" type="date" /></label></div>
         <div class="identity-two"><label>정확한 문서명 <small>문서 있음일 때 필수</small><input id="humanNamuWikiTitle" /></label><label>정확한 문서 URL <small>https://namu.wiki/w/...</small><input id="humanNamuWikiUrl" type="url" placeholder="https://namu.wiki/w/..." /></label></div>
-        <p class="identity-help">새 Person이거나 기존 Person에 나무위키 검토값이 없으면 반드시 실제 검색 후 linked/not_found를 선택합니다. 이미 검토된 기존 Person은 첫 옵션 그대로 두면 재검사하지 않습니다.</p>
+        <label>문서 없음 세부 사유 <small>not_found일 때 필수</small><select id="humanNamuWikiReviewReason" disabled><option value="">선택</option><option value="no_exact_document">독립 인물 문서·유의미한 관련 후보 모두 확인되지 않음 · no_exact_document</option><option value="related_or_derivative_only">관련·파생·문단/인접 문서만 확인됨 · related_or_derivative_only</option></select></label>
+        <p class="identity-help">새 Person이거나 기존 Person에 나무위키 검토값이 없으면 반드시 실제 검색 후 linked/not_found를 선택합니다. not_found는 검색 결과의 성격까지 세부 사유로 기록해야 완료됩니다. 이미 검토된 기존 Person은 첫 옵션 그대로 두면 재검사하지 않습니다.</p>
         <h3>활동 시작</h3>
         <div class="identity-two"><label>시작 연도 <small>비우면 경계 미상</small><input id="humanStartYear" type="number" step="1" /></label><label>시작 월 <small>연도 입력 시 선택</small><input id="humanStartMonth" type="number" min="1" max="12" step="1" /></label></div>
         <div class="identity-two"><label>시작 일 <small>선택 · 월 입력 필요</small><input id="humanStartDay" type="number" min="1" max="31" step="1" /></label><label>시작 확실성<select id="humanStartCertainty" required>${certaintyOptions()}</select></label></div>
@@ -301,8 +302,10 @@
     const checkedAt = document.getElementById("humanNamuWikiCheckedAt");
     const title = document.getElementById("humanNamuWikiTitle");
     const url = document.getElementById("humanNamuWikiUrl");
+    const reviewReason = document.getElementById("humanNamuWikiReviewReason");
     const linked = status === "linked";
-    const reviewed = linked || status === "not_found";
+    const notFound = status === "not_found";
+    const reviewed = linked || notFound;
     if (checkedAt) {
       checkedAt.disabled = !reviewed;
       checkedAt.required = reviewed;
@@ -314,6 +317,11 @@
       input.required = linked;
       if (!linked) input.value = "";
     }
+    if (reviewReason) {
+      reviewReason.disabled = !notFound;
+      reviewReason.required = notFound;
+      if (!notFound) reviewReason.value = "";
+    }
   }
 
   function namuwikiReference() {
@@ -322,7 +330,13 @@
     const checkedAt = value("humanNamuWikiCheckedAt");
     if (status !== "linked" && status !== "not_found") throw new Error("나무위키 문서 확인 결과가 올바르지 않습니다.");
     if (!/^\d{4}-\d{2}-\d{2}$/.test(checkedAt)) throw new Error("나무위키 확인일을 입력해야 합니다.");
-    if (status === "not_found") return { status, checked_at:checkedAt };
+    if (status === "not_found") {
+      const reviewReason = value("humanNamuWikiReviewReason");
+      if (!["no_exact_document","related_or_derivative_only"].includes(reviewReason)) {
+        throw new Error("나무위키 문서 없음의 세부 사유를 선택해야 합니다.");
+      }
+      return { status, checked_at:checkedAt, review_reason:reviewReason };
+    }
     const documentTitle = value("humanNamuWikiTitle");
     const rawUrl = value("humanNamuWikiUrl");
     if (!documentTitle) throw new Error("나무위키 문서가 있으면 정확한 문서명을 입력해야 합니다.");
@@ -351,6 +365,8 @@
       HUMAN_AUTHORING_NAMUWIKI_CHECKED_AT_INVALID: "나무위키 확인일이 올바르지 않습니다.",
       HUMAN_AUTHORING_NAMUWIKI_DOCUMENT_TITLE_REQUIRED: "나무위키 문서가 있으면 정확한 문서명이 필요합니다.",
       HUMAN_AUTHORING_NAMUWIKI_URL_INVALID: "나무위키 문서 URL이 올바르지 않습니다.",
+      HUMAN_AUTHORING_NAMUWIKI_REVIEW_REASON_REQUIRED: "나무위키 문서 없음 판정에는 세부 사유가 필요합니다.",
+      HUMAN_AUTHORING_NAMUWIKI_REVIEW_REASON_INVALID: "나무위키 문서 없음 세부 사유는 no_exact_document 또는 related_or_derivative_only만 사용할 수 있습니다.",
       HUMAN_AUTHORING_SOURCE_CANONICAL_URL_AMBIGUOUS: "같은 Source URL이 여러 identity에 존재합니다. Source 중복 검토가 필요합니다.",
       HUMAN_AUTHORING_NEW_PERSON_DOMAIN_REVIEW_REQUIRED: "신규 Person은 대표 분야를 검토해야 합니다. 8개 분야 또는 ‘검토했으나 미확정’을 선택하세요.",
       PERSON_DOMAIN_VALUE_UNSUPPORTED: "대표 분야가 현재 canonical 8개 분야에 포함되지 않습니다.",
@@ -430,7 +446,7 @@
           savedNamuWiki?.status === "linked"
             ? `나무위키: 연결됨 — ${savedNamuWiki.document_title}`
             : savedNamuWiki?.status === "not_found"
-              ? "나무위키: 문서 없음"
+              ? `나무위키: 문서 없음 — ${savedNamuWiki.review_reason || "세부 사유 미기록"}`
               : "나무위키: 기존 검토값 없음"
         ].join("\n");
         output.dataset.type = "success";
