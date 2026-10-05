@@ -20,10 +20,11 @@ This file is the compact current-state board. Historical issue comments, merged 
   - Historical P14 PRs/commits/research remain audit history only.
   - No P14 unit may be selected without explicit user restart.
 - **Spacetime Person UI:** independent from P14.
-- **Open PR inventory at this resync:** exactly one open PR:
-  - **#1874 — Canonicalize duplicate eight-Person queue authoring evidence**.
-  - The eight Persons were already committed by #1859; #1874 is cleanup/evidence canonicalization only.
-  - Its current GitHub mergeability is false. Do not guess the cause; first rebase/reconcile it against current main or close it as superseded if current main already contains the required canonical state.
+- **Eight-Person duplicate queue evidence cleanup:** CLOSED by #1893.
+  - The eight Persons were already committed before this cleanup.
+  - All eight `queue-register-20261004-*` evidence files are byte-for-byte canonicalized to their `queue-20261004-*` counterparts.
+  - The bounded operator command gate is restored to one manifest request and points at canonical Zhang Heng in read-only preflight mode.
+  - Stale transport PR #1874 is superseded by #1893 and must not be merged or revived.
 
 ## 2. PRODUCTION / DEPLOYMENT STATE
 
@@ -227,15 +228,14 @@ Do not revive old UI plans as tasks merely because they exist in historical docu
 
 These are current executable items, not a claim that every lane must run serially:
 
-1. **PR #1874 disposition/cleanup** — reconcile with current main and either produce a clean mergeable cleanup or close as superseded.
-2. **Ireland Polity correction**.
-3. **Kingdom of Italy 3-way split**.
-4. **Fresh whole-Production Polity re-audit** after Ireland/Italy closure.
-5. **NamuWiki Batch 068** and **reason-backfill Unit 068** — independent bounded legacy-drain lanes.
-6. **#1375 Registration Queue Reconciliation**, including fresh disposition of the 40-candidate handoff and older queued rows.
-7. **#1374 new candidate review** only when a concrete source/range exists.
-8. **Current-main UI Information Coverage re-audit**.
-9. **Portrait content/provenance expansion** if explicitly prioritized.
+1. **Ireland Polity correction**.
+2. **Kingdom of Italy 3-way split**.
+3. **Fresh whole-Production Polity re-audit** after Ireland/Italy closure.
+4. **NamuWiki Batch 068** and **reason-backfill Unit 068** — independent bounded legacy-drain lanes.
+5. **#1375 Registration Queue Reconciliation**, including fresh disposition of the 40-candidate handoff and older queued rows.
+6. **#1374 new candidate review** only when a concrete source/range exists.
+7. **Current-main UI Information Coverage re-audit**.
+8. **Portrait content/provenance expansion** if explicitly prioritized.
 
 **P14 and the broad #1793 census are excluded from this execution order.**
 
@@ -243,6 +243,6 @@ These are current executable items, not a claim that every lane must run seriall
 
 This current-state resync is one work unit. After it is merged and the issue bodies are synchronized, stop.
 
-**Exact next resume point:** **PR #1874 disposition/cleanup**.
+**Exact next resume point:** **Ireland Polity correction**.
 
-Do not begin #1874 work inside the resync unit itself.
+The eight-Person duplicate-authoring-evidence cleanup is closed by #1893; do not reopen #1874.
