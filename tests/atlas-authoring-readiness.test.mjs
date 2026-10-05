@@ -5,7 +5,6 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { inspectAuthoringReadiness } = require('../server/atlas-authoring-readiness.js');
 const { OLD_INDEX, NEW_INDEX } = require('../server/atlas-stage2-p9-db-cutover.js');
-const CUTOVER = require('../contracts/person-domain-v2-final-cutover.json');
 
 const NEW_INDEX_DEF = `CREATE UNIQUE INDEX ${NEW_INDEX} ON atlas_v2.person_politics_v2
   (person_id, polity_id, relation_type_id, role_id, period_basis_id,
@@ -30,16 +29,16 @@ function clientFor({
 } = {}) {
   const domainRows = personDomainV2Ready
     ? [
-        ...CUTOVER.science_target_ids.map((person_id) => ({ person_id, representative_domain:'science' })),
-        ...Array.from({ length:1346 }, (_,index) => ({ person_id:`governance-${index}`, representative_domain:'governance' })),
-        ...Array.from({ length:205 }, (_,index) => ({ person_id:`military-${index}`, representative_domain:'military' })),
-        ...Array.from({ length:38 }, (_,index) => ({ person_id:`technology-${index}`, representative_domain:'technology' })),
-        ...Array.from({ length:28 }, (_,index) => ({ person_id:`commerce-${index}`, representative_domain:'commerce' })),
-        ...Array.from({ length:161 }, (_,index) => ({ person_id:`culture-${index}`, representative_domain:'culture' })),
-        ...Array.from({ length:100 }, (_,index) => ({ person_id:`religion-${index}`, representative_domain:'religion' })),
-        ...Array.from({ length:28 }, (_,index) => ({ person_id:`exploration-${index}`, representative_domain:'exploration' }))
+        { person_id:'fixture-governance', representative_domain:'governance' },
+        { person_id:'fixture-military', representative_domain:'military' },
+        { person_id:'fixture-science', representative_domain:'science' },
+        { person_id:'fixture-technology', representative_domain:'technology' },
+        { person_id:'fixture-commerce', representative_domain:'commerce' },
+        { person_id:'fixture-culture', representative_domain:'culture' },
+        { person_id:'fixture-religion', representative_domain:'religion' },
+        { person_id:'fixture-exploration', representative_domain:'exploration' }
       ]
-    : CUTOVER.science_target_ids.map((person_id) => ({ person_id, representative_domain:'knowledge' }));
+    : [{ person_id:'fixture-legacy-knowledge', representative_domain:'knowledge' }];
   return {
     async query(sql, params = []) {
       const text = String(sql);
@@ -131,7 +130,7 @@ test('authoring readiness requires P5, core Stage 2 schema, human-compatible led
   assert.equal(result.core.person_external_reference_projection_retired, true);
   assert.equal(result.core.person_reference_contract_ready, true);
   assert.equal(result.person_domain_v2.schema_v2_ready, true);
-  assert.equal(result.person_domain_v2.counts.science, 72);
+  assert.equal(result.person_domain_v2.counts.science, 1);
   assert.equal(result.p9.old_index_present, false);
   assert.equal(result.p9.new_index_present, true);
   assert.equal(result.p9.duplicate_groups, 0);
@@ -229,5 +228,5 @@ test('authoring readiness fails closed while the Person Domain schema is still v
   assert.equal(result.ready,false);
   assert.equal(result.bootstrap_ready,false);
   assert.equal(result.person_domain_v2.schema_v2_ready,false);
-  assert.equal(result.person_domain_v2.legacy_knowledge_ids.length,CUTOVER.science_target_ids.length);
+  assert.equal(result.person_domain_v2.legacy_knowledge_ids.length,1);
 });
