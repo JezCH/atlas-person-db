@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-person-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-20261006:phryne:person-only:v1",
+  "person": {
+    "canonical_name_en": "Phryne",
+    "display_name_ko": "프리네",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-06",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "timeline_disposition": {
+    "disposition": "chronology_unresolved",
+    "reason": "Phryne is a historically attested fourth-century BCE Greek hetaira with a substantial reception history, but the surviving evidence does not justify converting broad biographical traditions into one precise polity-bound Activity interval in this registration.",
+    "basis_code": "user_selected_registration_activity_not_yet_reviewed",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "review_evidence": {
+      "authority_scope": "timeline_disposition_review_evidence_only",
+      "sources": [
+        "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Phryne"
+      ],
+      "reviewed_at": "2026-10-06"
+    }
+  },
+  "representative_domain": "culture",
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "1911 Encyclopaedia Britannica — Phryne",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Phryne",
+      "citation_text": "The Encyclopaedia Britannica identifies Phryne as a fourth-century BCE Greek courtesan from Thespiae who lived at Athens and was associated in ancient tradition with major artists and a famous trial."
+    }
+  ],
+  "review_context": {
+    "request_batch": "USER-REGISTER9-20261006",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_timeline_disposition"
+  }
+}
