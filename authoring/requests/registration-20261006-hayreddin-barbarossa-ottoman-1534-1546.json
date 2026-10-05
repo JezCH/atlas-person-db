@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hayreddin-barbarossa:ottoman-fleet-command:1534-1546:v1",
+  "person": {
+    "canonical_name_en": "Hayreddin Barbarossa",
+    "display_name_ko": "바르바로스 하이레딘 파샤",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military"
+  },
+  "polity": {
+    "existing_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+    "canonical_name_en": "Ottoman Empire",
+    "display_name_ko": "오스만 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Commander of the Ottoman Fleet",
+    "role_display_name_ko": "오스만 함대 총사령관",
+    "period_basis": "term",
+    "start_year": 1534,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1546,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hayreddin Barbarossa entered the highest Ottoman naval command in the 1533–1534 transition and remained the empire's pre-eminent fleet commander until his death in 1546. Sources differ by one year in describing the formal appointment, so ATLAS uses 1534 with an approximate start boundary rather than forcing false precision."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "BARBAROS HAYREDDİN PAŞA — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/barbaros-hayreddin-pasa",
+      "citation_text": "TDV identifies Barbaros Hayreddin Pasha as the renowned Ottoman seaman and naval commander and documents his appointment, campaigns, and death in 1546."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "KAPUDAN PAŞA — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/kapudan-pasa",
+      "citation_text": "TDV explains the Ottoman fleet-command office and Barbaros Hayreddin Pasha's elevated naval command in the 1534 reorganization."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "바르바로스 하이레딘 파샤",
+      "url": "https://namu.wiki/w/%EB%B0%94%EB%A5%B4%EB%B0%94%EB%A1%9C%EC%8A%A4%20%ED%95%98%EC%9D%B4%EB%A0%88%EB%94%98%20%ED%8C%8C%EC%83%A4"
+    }
+  }
+}

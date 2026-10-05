@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cypselus:corinth:tyrant:657-627-bce:v1",
+  "person": {
+    "canonical_name_en": "Cypselus",
+    "display_name_ko": "킵셀로스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "2120253f-855a-4a14-a074-02aae8d7eae7",
+    "canonical_name_en": "Corinth",
+    "display_name_ko": "코린토스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Tyrant of Corinth",
+    "role_display_name_ko": "코린토스 참주",
+    "period_basis": "reign",
+    "start_year": -657,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -627,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Herodotus and Aristotle independently preserve Cypselus as the founder of the Corinthian tyranny and give him a thirty-year reign. The conventional 657–627 BCE absolute interval is a later chronological reconstruction, so ATLAS records both boundaries as approximate rather than falsely exact."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Herodotus, Histories 5.92 — Perseus Digital Library",
+      "canonical_url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0126%3Abook%3D5",
+      "citation_text": "Herodotus recounts Cypselus taking power at Corinth, ruling for thirty years, and being succeeded by his son Periander."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Aristotle, Politics 5 — Perseus Digital Library",
+      "canonical_url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0058%3Abook%3D5",
+      "citation_text": "Aristotle describes the Cypselid tyranny at Corinth and assigns thirty years of rule to Cypselus."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-06",
+      "review_reason": "no_exact_document"
+    }
+  }
+}
