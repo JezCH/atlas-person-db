@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-strong8-20261006:faustina-kowalska:second-polish-republic:divine-mercy:1931-02-22:v1",
+  "person": {
+    "canonical_name_en": "Faustina Kowalska",
+    "display_name_ko": "마리아 파우스티나 코발스카",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "documented_death",
+    "representative_domain": "religion"
+  },
+  "polity": {
+    "existing_id": "d196f9f5-059c-411c-af45-af44a53838ff",
+    "canonical_name_en": "Second Polish Republic",
+    "display_name_ko": "폴란드 제2공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Catholic nun and Divine Mercy mystic",
+    "role_display_name_ko": "가톨릭 수녀·하느님의 자비 신비가",
+    "period_basis": "general_activity",
+    "start_year": 1931,
+    "start_month": 2,
+    "start_day": 22,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1931,
+    "end_month": 2,
+    "end_day": 22,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "On 22 February 1931 Faustina Kowalska reported the vision that became the defining initial milestone of her Divine Mercy mission. ATLAS records the exact documented milestone rather than using her entire convent life as an undifferentiated religious-activity interval."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "St. Faustina Kowalska — Holy See Press Office",
+      "canonical_url": "https://press.vatican.va/content/salastampa/en/bollettino/pubblico/2016/07/30/160730d.pdf",
+      "citation_text": "The Holy See Press Office biography records Faustina Kowalska's 22 February 1931 vision and its connection to the Divine Mercy image and devotional mission."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "마리아 파우스티나 코발스카",
+      "url": "https://namu.wiki/w/%EB%A7%88%EB%A6%AC%EC%95%84%20%ED%8C%8C%EC%9A%B0%EC%8A%A4%ED%8B%B0%EB%82%98%20%EC%BD%94%EB%B0%9C%EC%8A%A4%EC%B9%B4"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-STRONG8-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}

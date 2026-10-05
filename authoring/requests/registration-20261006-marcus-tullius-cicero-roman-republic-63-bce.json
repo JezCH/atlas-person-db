@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-strong8-20261006:marcus-tullius-cicero:roman-republic:consul:63-bce:v1",
+  "person": {
+    "canonical_name_en": "Marcus Tullius Cicero",
+    "display_name_ko": "마르쿠스 툴리우스 키케로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "ea997325-953a-5c95-b5ea-3c34b47ceb56",
+    "canonical_name_en": "Roman Republic",
+    "display_name_ko": "로마 공화정",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Consul",
+    "role_display_name_ko": "집정관",
+    "period_basis": "term",
+    "start_year": -63,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -63,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cicero reached the Roman Republic's consulship in 63 BCE and, while consul, confronted the Catilinarian conspiracy. ATLAS records the securely dated consular year as a bounded representative political Activity rather than extending it across his whole political and philosophical career."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Cicero — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/cicero/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy identifies Cicero's consulship in 63 BCE as the high point of his political career and records his suppression of the Catilinarian conspiracy during that consulship."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "마르쿠스 툴리우스 키케로",
+      "url": "https://namu.wiki/w/%EB%A7%88%EB%A5%B4%EC%BF%A0%EC%8A%A4%20%ED%88%B4%EB%A6%AC%EC%9A%B0%EC%8A%A4%20%ED%82%A4%EC%BC%80%EB%A1%9C"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-STRONG8-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}

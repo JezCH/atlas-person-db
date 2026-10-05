@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-strong8-20261006:solon:athens:lawgiver:c594-bce:v1",
+  "person": {
+    "canonical_name_en": "Solon",
+    "display_name_ko": "솔론",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "12eecff6-48de-5bce-b9d0-443d9e019a58",
+    "canonical_name_en": "Athens",
+    "display_name_ko": "아테네",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Archon and lawgiver",
+    "role_display_name_ko": "아르콘·입법가",
+    "period_basis": "general_activity",
+    "start_year": -594,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -594,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Oxford dates Solon's major Athenian lawgiving to 594/3 BCE. ATLAS therefore uses c.594 BCE as a representative point with approximate boundaries instead of turning the archon-year convention into a falsely exact modern-calendar interval."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Solon, Athenian politician and poet — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/550499053",
+      "citation_text": "The Oxford Classical Dictionary describes Solon as the Athenian lawgiver who enacted laws in 594/3 BCE and strengthened formal institutions while seeking to prevent tyranny."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "솔론",
+      "url": "https://namu.wiki/w/%EC%86%94%EB%A1%A0"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-STRONG8-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-strong8-20261006:lucius-annaeus-seneca:roman-empire:advisor:54:v1",
+  "person": {
+    "canonical_name_en": "Lucius Annaeus Seneca",
+    "display_name_ko": "루키우스 안나이우스 세네카",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture"
+  },
+  "polity": {
+    "existing_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Advisor to Nero and philosopher",
+    "role_display_name_ko": "네로의 조언자·철학자",
+    "period_basis": "general_activity",
+    "start_year": 54,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 54,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Seneca was already Nero's former tutor and became one of Nero's advisers after the emperor's accession in 54 CE. ATLAS uses that securely dated transition as a representative point and does not invent an exact terminal year for his advisory influence."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Seneca — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/seneca/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy records that Lucius Annaeus Seneca, a philosopher and former tutor of Nero, was among Nero's advisers after his accession in 54 CE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "루키우스 안나이우스 세네카",
+      "url": "https://namu.wiki/w/%EB%A3%A8%ED%82%A4%EC%9A%B0%EC%8A%A4%20%EC%95%88%EB%82%98%EC%9D%B4%EC%9A%B0%EC%8A%A4%20%EC%84%B8%EB%84%A4%EC%B9%B4"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-STRONG8-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}
