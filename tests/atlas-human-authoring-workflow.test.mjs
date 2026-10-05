@@ -90,11 +90,30 @@ test('person-only workflow uses active science domain and retires knowledge from
 });
 
 
-test('bounded authoring command file supports homogeneous multi-manifest apply batches', () => {
-  assert.match(workflow, /selected_mode=""/);
-  assert.match(workflow, /selected_count=0/);
-  assert.match(workflow, /while IFS= read -r command/);
-  assert.match(workflow, /Rejected mixed preflight\/apply command batch/);
-  assert.match(workflow, /Rejected empty bounded authoring command batch/);
-  assert.match(workflow, /Trusted \$\{selected_mode\}-only batch selected/);
+const queueEightSlugs = [
+  'zhang-heng',
+  'nasir-al-din-al-tusi',
+  'ulugh-beg',
+  'tycho-brahe',
+  'richard-feynman',
+  'rosalind-franklin',
+  'frida-kahlo',
+  'crazy-horse'
+];
+
+test('bounded authoring command file selects exactly one manifest request', () => {
+  assert.match(workflow, /command="\$\(tr -d '\\\\r\\\\n' < \.github\/atlas-authoring-preflight\.txt\)"/);
+  assert.match(workflow, /printf '%s\\n' "\$manifest" > \/tmp\/atlas-candidates\.txt/);
+  assert.match(workflow, /Trusted \$\{mode\}-only request selected: \$manifest/);
+  assert.doesNotMatch(workflow, /selected_mode=/);
+  assert.doesNotMatch(workflow, /selected_count=/);
+  assert.doesNotMatch(workflow, /Rejected mixed preflight\/apply command batch/);
+});
+
+test('duplicate queue-register evidence stays byte-for-byte canonical for the reviewed eight', () => {
+  for (const slug of queueEightSlugs) {
+    const canonical = fs.readFileSync(new URL(`../authoring/requests/queue-20261004-${slug}-person-only.json`, import.meta.url), 'utf8');
+    const duplicate = fs.readFileSync(new URL(`../authoring/requests/queue-register-20261004-${slug}-person-only.json`, import.meta.url), 'utf8');
+    assert.equal(duplicate, canonical, `duplicate evidence drifted for ${slug}`);
+  }
 });
