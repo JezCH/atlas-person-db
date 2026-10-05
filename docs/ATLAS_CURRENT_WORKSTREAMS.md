@@ -3,8 +3,8 @@
 **As of:** 2026-10-05  
 **Authority:** current `main` + current Production + latest durable checkpoint  
 **Workstream state baseline:** verified against current repository state on 2026-10-05  
-**Latest READY Production deployment:** Vercel `dpl_BhFCvnoibCaoHo9YwdXZTG8evS7r` at `68e54bc210cf1ab7a20abe1c8089a27918c9d3bd`  
-**Repository/Production delta:** subsequent workstream-status synchronizations are documentation/issue-state changes only; the latest READY app remains #1893.  
+**Latest READY Production deployment:** Vercel `dpl_6iToXf1qdbWkqL5tDmhCak9zp84p` at `dc43314597563796cb911ee0f670b4c14c82af97` (#1899)  
+**Repository/Production state:** current executable cleanup is deployed; closed one-shot NamuWiki, Person Domain v2 cutover and Place authority backfill mutation surfaces are retired.  
 **P14:** `PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`
 
 This file is the compact current-state board. Historical issue comments, merged PRs, old queue bodies and old audit documents are evidence, not execution frontiers. User-selected candidate/registration pools are not backlog debt.
