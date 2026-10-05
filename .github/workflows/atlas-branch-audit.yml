@@ -1,0 +1,166 @@
+name: ATLAS Legacy Branch Audit
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/atlas-branch-audit.yml
+
+permissions:
+  contents: read
+  pull-requests: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Fetch all repository branches
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
+
+      - name: Classify branches conservatively
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, subprocess, pathlib
+          from collections import Counter
+
+          repo = os.environ["REPO"]
+          default = os.environ["DEFAULT_BRANCH"]
+          main_ref = f"refs/remotes/origin/{default}"
+
+          def run(*args, check=True):
+              return subprocess.run(args, text=True, capture_output=True, check=check)
+
+          pulls = json.loads(run(
+              "gh", "api", "--paginate", "--slurp",
+              f"repos/{repo}/pulls?state=all&per_page=100"
+          ).stdout)
+          pulls = [pr for page in pulls for pr in page]
+
+          open_heads = set()
+          closed_heads = {}
+          for pr in pulls:
+              head = pr.get("head") or {}
+              head_repo = (head.get("repo") or {}).get("full_name")
+              ref = head.get("ref")
+              sha = head.get("sha")
+              if head_repo != repo or not ref or not sha:
+                  continue
+              if pr.get("state") == "open":
+                  open_heads.add(ref)
+              else:
+                  closed_heads.setdefault((ref, sha), []).append({
+                      "number": pr["number"],
+                      "merged": pr.get("merged_at") is not None,
+                  })
+
+          protected = set()
+          pages = json.loads(run(
+              "gh", "api", "--paginate", "--slurp",
+              f"repos/{repo}/branches?protected=true&per_page=100"
+          ).stdout)
+          for page in pages:
+              for b in page:
+                  protected.add(b["name"])
+
+          refs = run(
+              "git", "for-each-ref", "refs/remotes/origin",
+              "--format=%(refname:strip=3)\t%(objectname)"
+          ).stdout.splitlines()
+          main_tree = run("git", "rev-parse", f"{main_ref}^{{tree}}").stdout.strip()
+
+          rows = []
+          for line in refs:
+              if not line.strip():
+                  continue
+              name, sha = line.split("\t", 1)
+              if name == "HEAD":
+                  continue
+
+              pr_numbers = []
+              if name == default:
+                  reason = "KEEP_DEFAULT"
+              elif name in protected:
+                  reason = "KEEP_PROTECTED"
+              elif name in open_heads:
+                  reason = "KEEP_OPEN_PR"
+              else:
+                  anc = subprocess.run(
+                      ["git", "merge-base", "--is-ancestor", sha, main_ref],
+                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+                  ).returncode == 0
+                  exact_closed = closed_heads.get((name, sha), [])
+                  if anc:
+                      reason = "SAFE_DELETE_ANCESTOR_OF_MAIN"
+                  elif exact_closed:
+                      pr_numbers = [x["number"] for x in exact_closed]
+                      if any(x["merged"] for x in exact_closed):
+                          reason = "SAFE_DELETE_EXACT_MERGED_PR_HEAD"
+                      else:
+                          reason = "SAFE_DELETE_EXACT_CLOSED_PR_HEAD"
+                  else:
+                      tree = run("git", "rev-parse", f"{sha}^{{tree}}").stdout.strip()
+                      if tree == main_tree:
+                          reason = "SAFE_DELETE_IDENTICAL_TREE"
+                      else:
+                          reason = "KEEP_UNIQUE_UNMERGED_REVIEW"
+
+              rows.append({
+                  "branch": name,
+                  "sha": sha,
+                  "classification": reason,
+                  "pr_numbers": pr_numbers,
+              })
+
+          rows.sort(key=lambda x: x["branch"])
+          counts = Counter(r["classification"] for r in rows)
+          delete_reasons = {
+              "SAFE_DELETE_ANCESTOR_OF_MAIN",
+              "SAFE_DELETE_EXACT_MERGED_PR_HEAD",
+              "SAFE_DELETE_EXACT_CLOSED_PR_HEAD",
+              "SAFE_DELETE_IDENTICAL_TREE",
+          }
+          safe = [r for r in rows if r["classification"] in delete_reasons]
+          hold = [r for r in rows if r["classification"] == "KEEP_UNIQUE_UNMERGED_REVIEW"]
+
+          pathlib.Path("branch-audit.json").write_text(json.dumps(rows, indent=2, ensure_ascii=False) + "\n")
+          pathlib.Path("branch-safe-delete.json").write_text(json.dumps(safe, indent=2, ensure_ascii=False) + "\n")
+          pathlib.Path("branch-unique-hold.json").write_text(json.dumps(hold, indent=2, ensure_ascii=False) + "\n")
+          pathlib.Path("branch-audit-summary.json").write_text(json.dumps({
+              "total": len(rows),
+              "safe_delete": len(safe),
+              "unique_unmerged_hold": len(hold),
+              "counts": dict(sorted(counts.items())),
+          }, indent=2) + "\n")
+
+          print(pathlib.Path("branch-audit-summary.json").read_text())
+          PY
+
+      - name: Job summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "## ATLAS branch audit" >> "$GITHUB_STEP_SUMMARY"
+          cat branch-audit-summary.json >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlas-branch-audit
+          path: |
+            branch-audit.json
+            branch-audit-summary.json
+            branch-safe-delete.json
+            branch-unique-hold.json
