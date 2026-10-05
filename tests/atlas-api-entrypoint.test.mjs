@@ -43,13 +43,11 @@ test('Vercel physical ATLAS API stays within budget and completed Stage2 release
 test('logical Person, Runtime compile, audit and correction surfaces consolidate onto existing physical functions', () => {
   assert.deepEqual(vercel.rewrites, [
     { source: '/api/atlas-reviewed-person-merge', destination: '/api/atlas-authoring?__atlas_authoring_surface=reviewed-person-merge' },
-    { source: '/api/atlas-namuwiki-link', destination: '/api/atlas-authoring?__atlas_authoring_surface=namuwiki-link' },
     { source: '/api/atlas-person-read', destination: '/api/atlas-read?__atlas_read_surface=person' },
     { source: '/api/atlas-polity-read', destination: '/api/atlas-read?__atlas_read_surface=polity' },
     { source: '/api/atlas-admin-inspector', destination: '/api/atlas-read?__atlas_read_surface=admin-inspector' },
     { source: '/api/atlas-admin-system-status', destination: '/api/atlas-read?__atlas_read_surface=admin-system-status' },
     { source: '/api/atlas-person-domain', destination: '/api/atlas-mutate?__atlas_mutation_surface=person-domain' },
-    { source: '/api/atlas-person-domain-v2-cutover', destination: '/api/atlas-mutate?__atlas_mutation_surface=person-domain-v2-cutover' },
     { source: '/api/atlas-runtime-compile', destination: '/api/atlas-mutate?__atlas_mutation_surface=runtime-compile' },
     { source: '/api/atlas-correction-migrations', destination: '/api/atlas-correction-apply?__atlas_correction_surface=migrations' }
   ]);
@@ -73,11 +71,9 @@ test('consolidated mutation entrypoint preserves generic mutation, Person domain
   assert.match(mutateApi, /atlas-person-domain-handler\.js/);
   assert.match(mutateApi, /createPersonDomainHandler/);
   assert.match(mutateApi, /atlas-person-domain-v2-cutover-handler\.js/);
-  assert.match(mutateApi, /createPersonDomainV2CutoverHandler/);
   assert.match(mutateApi, /atlas-runtime-compile-handler\.js/);
   assert.match(mutateApi, /createRuntimeCompileHandler/);
   assert.match(mutateApi, /surface === "person-domain"/);
-  assert.match(mutateApi, /surface === "person-domain-v2-cutover"/);
   assert.match(mutateApi, /surface === "runtime-compile"/);
 });
 
@@ -100,11 +96,11 @@ test('normal human authoring endpoint delegates to the Stage 2-native direct aut
   assert.doesNotMatch(authoringApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
-test('NamuWiki logical endpoint delegates to its isolated exact-SHA OIDC handler without adding a physical function', () => {
-  assert.match(authoringApi, /atlas-namuwiki-link-handler\.js/);
-  assert.match(authoringApi, /createNamuWikiLinkHandler/);
-  assert.match(authoringApi, /surface === "namuwiki-link"/);
-  assert.doesNotMatch(authoringApi, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|postgres:\/\/|postgresql:\/\//);
+test('retired one-shot NamuWiki and Person Domain cutover surfaces stay absent', () => {
+  assert.doesNotMatch(authoringApi, /atlas-namuwiki-link-handler\.js|createNamuWikiLinkHandler|surface === "namuwiki-link"/);
+  assert.doesNotMatch(mutateApi, /atlas-person-domain-v2-cutover-handler\.js|createPersonDomainV2CutoverHandler|surface === "person-domain-v2-cutover"/);
+  assert.equal(vercel.rewrites.some((row) => row.source === '/api/atlas-namuwiki-link'), false);
+  assert.equal(vercel.rewrites.some((row) => row.source === '/api/atlas-person-domain-v2-cutover'), false);
 });
 
 test('server-only authoring apply endpoint delegates to its isolated handler', () => {
