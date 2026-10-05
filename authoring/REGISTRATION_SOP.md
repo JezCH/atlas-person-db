@@ -8,7 +8,7 @@ A second rule is equally important: **ordinary registration must use the already
 
 ## 1. Completion criterion
 
-A registration is complete only when authoritative Production read-back confirms the intended Person, Activity, and reviewed NamuWiki state (`linked` or `not_found`, including exact reuse of an already-reviewed live state). A new or previously-unreviewed Person with unresolved NamuWiki review is not a completed registration.
+A registration is complete only when authoritative Production read-back confirms the intended Person, Activity, and reviewed NamuWiki state (`linked` or `not_found`, including exact reuse of an already-reviewed live state). For **every newly created Person**, the same registration must also complete and persist representative-domain review before it can be COMPLETE. Representative-domain review is a default Person-registration obligation, not a companion batch or later cleanup step. A new or previously-unreviewed Person with unresolved NamuWiki review is not a completed registration.
 
 ### Canonical Person historical fact coverage count
 
@@ -54,6 +54,8 @@ Every ordinary registration keeps these invariants:
 - bounded Production Person duplicate screening before expensive historical research;
 - current life-status screening before Person creation: living people are excluded; unresolved life status is HOLD/BLOCKED; only reviewed deceased Persons may be newly created;
 - reviewed historical identity, chronology, relation, Role, Polity, and at least one real Source for every new Activity;
+- representative-domain review for every newly created Person, using exactly one canonical Person Domain v2 value (`governance / military / science / technology / commerce / culture / religion / exploration`) when clear, or an explicit reviewed-null/HOLD only when genuinely unresolved; omission is never equivalent to HOLD;
+- representative-domain is reviewed and persisted inside the registration lifecycle; routine `register now → domain later` follow-up work is prohibited, and Role→Domain inference remains prohibited;
 - NamuWiki review for a new Person or a Person whose NamuWiki status has never been reviewed;
 - an already reviewed existing Person reuses its live `linked` or `not_found` NamuWiki state without re-searching it;
 - normalized Person/Polity/Role identity reuse when an exact live identity exists;
@@ -203,7 +205,8 @@ The local batch compilation preflight must confirm:
 
 - every Timeline candidate has one complete reviewed Human Authoring manifest;
 - only already-supported Relation Type and Period Basis codes are used unless a bounded catalog lookup has explicitly resolved a new ambiguity;
-- every new Person has a reviewed `deceased` life-status attestation and its reviewed NamuWiki decision;
+- every new Person has a reviewed `deceased` life-status attestation, a representative-domain review field, and its reviewed NamuWiki decision;
+- a clear representative identity uses one canonical v2 domain; a genuinely unresolved case must carry explicit reviewed-null/HOLD rather than silently omitting the field or scheduling a later domain batch;
 - when an existing Person already has a reviewed live NamuWiki value, copy that exact live value into the GitHub manifest if the current repository validator requires the field; **do not re-search NamuWiki**;
 - all non-timeline additions are folded into one bounded replacement of `non-timeline-persons.json`;
 - no excluded candidate produces a placeholder manifest merely to keep batch cardinality aligned.
