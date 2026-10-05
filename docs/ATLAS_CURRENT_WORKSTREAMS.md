@@ -1,53 +1,61 @@
 # ATLAS CURRENT WORKSTREAMS
 
-**As of:** 2026-10-04  
-**Authority:** current main + current Production + latest durable checkpoint  
-**Reconciliation state:** COMPLETE  
-**Current main:** `908b10261b6288d3c38716cebc2cdd35f9f95b53` at reconciliation start  
-**Current Production deployment at reconciliation start:** Vercel `dpl_5YERvFd9we5GS1k6ZD7jMREc5BD7` — READY at the same SHA  
+**As of:** 2026-10-05  
+**Authority:** current `main` + current Production + latest durable checkpoint  
+**Current-state resync:** COMPLETE  
+**Current main at resync start:** `1b43d9175a31fabbda0fa69e00e90d90c937c9e1`  
+**Current Production deployment:** Vercel `dpl_HcfV4rAoNyZnZvwF1joDGp7LTKGz` — **READY** at the same SHA  
 **P14:** `PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`
 
-This file is the compact current-state board. Historical issue comments, merged PRs, old queue bodies and old audit documents are evidence, not execution frontiers.
+This file is the compact current-state board. Historical issue comments, merged PRs, old queue bodies and old audit documents are evidence, not execution frontiers. When this board conflicts with a newer durable issue checkpoint, the newer checkpoint wins and this file must be resynced.
 
 ## 1. PROJECT STATE
 
 - **CORE v2:** CLOSED.
-  - Issue #917 is closed after generated acceptance.
+  - Issue #917 remains closure authority.
   - Re-entry requires a concrete regression against a closed invariant or a deliberately versioned future CORE program.
 - **P13 lifecycle / authoring architecture:** CLOSED.
 - **P14 historical map / Territory / Geometry / historical polygon work:** **PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME**.
-  - PR #1792 rolled back all active P14 historical-map implementation to the pre-P14 code state.
+  - PR #1792 rolled back the active P14 implementation to the pre-P14 code state.
   - Historical P14 PRs/commits/research remain audit history only.
   - No P14 unit may be selected without explicit user restart.
-- **Spacetime Person UI:** separate from P14. Do not treat ordinary spacetime UI work as Territory/Geometry work.
+- **Spacetime Person UI:** independent from P14.
+- **Open PR inventory at this resync:** exactly one open PR:
+  - **#1874 — Canonicalize duplicate eight-Person queue authoring evidence**.
+  - The eight Persons were already committed by #1859; #1874 is cleanup/evidence canonicalization only.
+  - Its current GitHub mergeability is false. Do not guess the cause; first rebase/reconcile it against current main or close it as superseded if current main already contains the required canonical state.
 
-## 2. PRODUCTION SNAPSHOT
+## 2. PRODUCTION / DEPLOYMENT STATE
 
-The latest exact read-only Stage 2 baseline captured immediately before the P14-only sequence was:
+The active Production deployment is **READY** at the current main SHA:
 
-- Persons: **2,089**
-- Activities: **2,453**
-- Polities: **1,180**
-- Sources: **3,162**
-- baseline digest: `sha256:ec2576f8ee5b7f8c927f115d7ec176fb638a77b188520f8871ba515aae57b4b8`
+- main: `1b43d9175a31fabbda0fa69e00e90d90c937c9e1`
+- deployment: `dpl_HcfV4rAoNyZnZvwF1joDGp7LTKGz`
+- deployed change: UI P13 / PR #1891
 
-Evidence: Audit Inventory run `37009317620`, exact Production SHA `e9087f665ae62839982d048323a1e30d4150b1bd`, read-only full Stage 2 baseline.
+Older Person/Activity/Polity/Source counts recorded by earlier reconciliation remain historical snapshots, not current count authority. Rebuild fresh counts from current Production when a task depends on them.
 
-The intervening P14 units performed no Production Person/Activity/Polity mutation and were subsequently rolled back by #1792. The post-rollback Authoring Apply run `37017440147` was bootstrap-only and explicitly applied no Person or Activity manifest. NamuWiki runs after that mutate external-reference review state, not Person/Activity/Polity identity counts.
+## 3. LEGACY REGISTRATION OBLIGATION AUDIT
 
-## 3. DATA REPAIR
+### #1793 — PARKED / HOLD
 
-### Exact next unit
+The earlier board incorrectly continued to describe #1793 as the active next unit. That is no longer current.
 
-- **#1793 — Post-CORE legacy registration obligation debt audit:** **IN PROGRESS / CURRENT**.
-  - R1 reviewed non-timeline representative-domain materialization is complete.
-  - The broader obligation audit remains open and is the authority for residual legacy debt.
-  - Discover debt first; confirmed repairs remain bounded follow-up units.
+Current directive from #1793:
+
+- **do not** continue a repository-wide / all-approved legacy census;
+- the read-only Authoring completeness run `37171611625` is diagnostic evidence only;
+- its `2,280` manifest classification (`2116 ALREADY_PRESENT / 9 READY / 155 BLOCKED`) is **not** an instruction to enumerate and repair every row;
+- only already-confirmed bounded residuals may be handled when independently in scope;
+- Person Domain v2 and the former six-row #1767 residual are **CLOSED IN PRODUCTION**;
+- broad census work resumes only on explicit future direction.
+
+Therefore #1793 is **not an executable next frontier**.
 
 ### Representative-domain state
 
-- **Person Domain v2:** **CLOSED** by #1806 / #1855.
-- Active canonical codes are exactly:
+- **Person Domain v2:** CLOSED.
+- Active canonical codes:
   - `governance`
   - `military`
   - `science`
@@ -57,47 +65,49 @@ The intervening P14 units performed no Production Person/Activity/Polity mutatio
   - `religion`
   - `exploration`
 - Legacy `knowledge` is retired from active DB/API/UI/Admin/new-authoring contracts.
-- Final v2 cutover verified `knowledge=0` and `science=72` for the reviewed migration cohort.
-- **PR #1767 is CLOSED / SUPERSEDED TRANSPORT.** It must not be merged or reopened:
-  - its `batch-109.json` path collides with the later v2 Review Unit 02 authority;
-  - its old proposal/batch mutation path was retired by #1855.
-- The six reviewed MICROBATCH-07 assignments formerly carried by #1767 are **CLOSED IN PRODUCTION**:
-  - Shashanka `f371e82b-33eb-4927-8b45-1c553ea81d4c` → governance
-  - Sima Yi `c3128a85-ddde-4d28-9219-5715f8611b20` → governance
-  - Stilicho `dbac46ae-d3dc-4068-840f-46fedbdbd901` → military
-  - Tabinshwehti `f0c7abaa-7670-49d0-a82e-7b63fd1a62c3` → governance
-  - Taira no Kiyomori `b774cec1-f3b0-46a9-8cd1-3414e74780a4` → governance
-  - Vardan Mamikonian `45bdc34d-3a99-4034-b03d-c546c96608f9` → military
-- Durable apply evidence: Authoring run `37171047026`, retry job `111344049017`, merge SHA `a12a1bf2d3fbd491d03d8f7177976874a5feae3c`; repaired 6, conflict 0, exact public read-back 6/6.
-- PR #1767 remains closed/superseded and no legacy proposal sequence should be revived.
+- PR #1767 is CLOSED / SUPERSEDED TRANSPORT.
+- Its six reviewed MICROBATCH-07 assignments were repaired and read back 6/6 in Production.
+- Do not revive the old v1 proposal sequence.
 
-### NamuWiki
+## 4. NAMUWIKI
 
-- General review lane: **Batch 056 CLOSED**; exact next frontier is **Batch 057 — rebuild fresh current Production missing set; NOT STARTED**.
-  - Batch 056 checkpoint: #820 comment `5954686202`.
-  - Post-write checkpoint recorded `missing=87`, `not_found=704`.
-- Reason-backfill lane: **Unit 049 CLOSED**; exact next frontier is **Unit 050 — rebuild fresh current not_found + blank absence_reason set; NOT STARTED**.
-  - Unit 049 checkpoint: #820 comment `5954670498`.
-- Never resume from old positional cursors or old subtraction arithmetic.
+Issue #820 remains the authority for this independent legacy-drain workstream.
 
-## 4. POLITY
+### General review lane
+
+- **Batch 067 — CLOSED**
+- durable checkpoint: #820 comment `5955750388`
+- exact Production verification: 5/5
+- **next frontier: Batch 068 — NOT STARTED**
+- On continuation, rebuild a fresh current Production `namuwiki_status=missing` set. Do not resume from a stale positional cursor or subtraction arithmetic.
+
+### Reason-backfill lane
+
+- **Unit 067 — CLOSED**
+- latest durable checkpoint: #820 comment `5976757224`
+- Unit 067 started from a fresh Production set with `reason-missing not_found=16`
+- **next frontier: Unit 068 — NOT STARTED**
+- On continuation, rebuild a fresh current Production `not_found` + blank `absence_reason` set.
+
+General review and reason-backfill are separate lanes and do not create a global writer lock.
+
+## 5. POLITY
 
 ### CONFIRMED_FIX_REQUIRED — Ireland family
 
-Exact read-only Production state contains distinct canonical UUIDs:
+Exact-live read-only inventory was completed by #1786/#1788, but no merged historical-identity correction followed.
+
+Current reviewed problem includes:
 
 - `Ireland` — `c9490230-d6cb-4f6b-a3ed-8baa0248c37e`
 - `Irish Free State` — `a0a6810a-9ebf-4e63-acfe-572608fdf3e3`
 - `Provisional Government of Ireland` — `9f43ac5f-c96e-448c-81f8-112e2f6e8424`
-
-Relevant exact Activities include:
-
-- Daniel O'Connell → generic Ireland, 1823–1847, `active_in`
-- Michael Collins → generic Ireland, 1919–1921, `active_in`
-- Michael Collins → Provisional Government of Ireland, 1922, `governs`
+- Daniel O'Connell → generic Ireland, 1823–1847
+- Michael Collins → generic Ireland, 1919–1921
+- Michael Collins → Provisional Government of Ireland, 1922
 - Éamon de Valera → Irish Free State, 1932–1937
 
-PR #1786 captured the exact-live baseline and #1788 repaired the audit deployment gate, but no subsequent merged Ireland historical-identity correction exists. The Ireland family therefore remains the first Polity correction frontier after the registration-debt audit and its confirmed repairs.
+**Status:** correction not materialized. Ireland remains the first confirmed Polity repair frontier.
 
 ### CONFIRMED_FIX_REQUIRED — Kingdom of Italy family
 
@@ -105,129 +115,134 @@ Current canonical `Kingdom of Italy` UUID:
 
 - `88921412-76c8-431c-a6e6-8c43d5a8b94a`
 
-The same UUID currently carries historically discontinuous Activities including:
+The same identity still carries discontinuous medieval, Napoleonic and 1861–1946 Activities.
 
-- Otto I — 951–973
-- Frederick I Barbarossa — 1155–1190
-- Napoleon I — 1805–1814
-- Victor Emmanuel II — 1861–1878
-- Umberto I / Margherita of Savoy — 1878–1900
-- Victor Emmanuel III — 1900–1946
-- Benito Mussolini and other modern-kingdom context
+Reviewed intended split remains:
 
-The prior reviewed 3-way distinction — medieval Regnum Italiae / Napoleonic Kingdom of Italy / 1861–1946 Kingdom of Italy — has **not** been materialized into separate canonical Production identities. This is the next Polity family after Ireland.
+1. medieval Regnum Italiae;
+2. Napoleonic Kingdom of Italy;
+3. Kingdom of Italy, 1861–1946.
 
-### COMPLETE — do not re-open without contradictory current evidence
+**Status:** reviewed split not materialized. This follows Ireland.
 
-- Later Jin family — closed by #1591.
-- Kingdom of Serbia family — closed by #1596.
-- Egypt family — closed by #1607.
-- Poland medieval/modern false merge — repaired by #1609.
-- Germany pre-1945 / FRG family — repaired/closed by #1612 and #1613.
-- Japan lineage / occupation / designation / umbrella / spacetime chain — completed through #1741, #1750, #1755 and #1757.
-- Previously closed Han, France duplicate, 16-family identity-audit results remain historical COMPLETE state unless a new exact Production contradiction is found.
+### COMPLETE — do not replay without contradictory current evidence
 
-### REVIEW_REQUIRED — future
+- Later Jin — #1591
+- Kingdom of Serbia — #1596
+- Egypt — #1607
+- Poland medieval/modern false merge — #1609
+- Germany pre-1945 / FRG — #1612/#1613
+- Han 韓/漢 correction
+- France duplicate correction
+- Japan lineage/occupation/designation/spacetime chain through #1741/#1750/#1755/#1757
+- prior closed 16-family identity-audit results
 
-Do **not** copy old “29 same-identity”, “16 continuity family”, designation-debt or naming-collision lists into the active board. After Ireland and Kingdom of Italy corrections, rebuild the remaining Polity audit from current Production.
+### Remaining Polity audit
 
-## 5. PERSON PIPELINE
+Do **not** copy old “29 same-identity”, “16 continuity family”, designation-debt or naming-collision lists into the active board. After Ireland and Kingdom of Italy are closed, rebuild a new whole-Production Polity audit from current state.
+
+## 6. PERSON PIPELINE
 
 ### Candidate review — #1374
 
-- Current state: **NO_ACTIVE_REVIEW_FRONTIER**.
-- Historical reviewed handoffs stay in comments/audit history.
-- Do not infer a new review batch from old comments.
+- **NO_ACTIVE_REVIEW_FRONTIER**
+- historical reviewed handoffs remain audit evidence;
+- start a new review unit only from a concrete current candidate source/range and fresh Production state.
 
 ### Registration Apply — #1375
 
-- Current state: **REGISTRATION_QUEUE_RECONCILIATION_REQUIRED**.
-- The historical body count of “450 queued rows” is not accepted as current truth.
-- Old APPLIED rows remain audit history in comments and must not stay in the current body.
-- Before consuming old queued candidates, classify each against current Production:
-  - `REGISTERED_ALREADY`
-  - `QUEUED_VALID`
-  - `BLOCKED_LIVING`
-  - `BLOCKED_IDENTITY`
-  - `HOLD_CHRONOLOGY`
-  - `DUPLICATE_EXISTING`
-  - `SUPERSEDED_REVIEW`
-- No current applying batch is claimed by this reconciliation.
-- Queue reconciliation is later than the Polity/NamuWiki priorities shown below; do not blindly resume old queue order.
+- **REGISTRATION_QUEUE_RECONCILIATION_REQUIRED**
+- no applying batch is currently claimed by the issue body;
+- historical queue totals are not current truth;
+- latest large handoff evidence includes **USER-CORE40-20261004**, 40 top-priority candidates, #1375 comment `5978777100`;
+- that handoff does **not** prove those 40 are still all unregistered now.
+
+Before consuming old queued candidates, reconcile each against current Production and classify:
+
+- `REGISTERED_ALREADY`
+- `QUEUED_VALID`
+- `BLOCKED_LIVING`
+- `BLOCKED_IDENTITY`
+- `HOLD_CHRONOLOGY`
+- `DUPLICATE_EXISTING`
+- `SUPERSEDED_REVIEW`
+
+Do not blindly resume historical queue order.
 
 ### Registration architecture
 
-Do not redesign it. Current main already integrates:
+Do not redesign it by default. Current main already integrates canonical Human Authoring, life-status review, representative-domain review, timeline disposition, NamuWiki disposition, spatial disposition and Compile/Runtime verification.
 
-- `data/core/registration-obligations.v1.json`
-- `server/atlas-registration-coordinator.js`
-- canonical Human Authoring
-- life-status gate
-- representative-domain review/writer
-- timeline disposition
-- NamuWiki reviewed disposition
-- spatial registration disposition
-- Compile / Runtime verification
+## 7. UI / SPACETIME
 
-The remaining problem is **legacy Production debt against the current contract**, tracked by #1793.
+The older board understated current UI progress.
 
-### Person assessment terminology
+### Implemented current-main progression
 
-Keep these separate:
+Person Main / mobile presentation has advanced through a long merged series culminating in:
 
-- historical factual assessment authority: current `ATLAS-PHFC-4.3` evidence/counting contract;
-- registration-priority metadata: workflow prioritization only;
-- legacy grade/tier fields: historical review metadata only.
+- Person Register P1–P13;
+- Production regression/visual acceptance gates;
+- canonical Domain v2 presentation;
+- always-visible multi-Activity rows;
+- mobile three-column identity / Activity / chronology structure;
+- current latest merge **#1891 — UI P13**.
 
-Legacy grade is never current historical truth authority.
+Person Detail also received **D1** canonical-domain alignment in #1883.
 
-## 6. UI / SPACETIME
+Current Production is READY at the #1891 main SHA.
 
-- **Current UI Information Coverage Audit:** **NOT STARTED / FUTURE**.
-- Future audit authority: current main + `docs/ui/UI_INFORMATION_COVERAGE.md`.
-- Re-evaluate each current requirement as `DONE / PARTIAL / MISSING / STALE_REQUIREMENT`; do not copy old UI plans as current tasks.
-- Existing spacetime Person UI is independent from P14 Territory/Geometry. If current functionality is healthy, only concrete regressions/current gaps justify changes.
+### Still incomplete
 
-## 7. PORTRAIT
+The **formal current-main UI Information Coverage re-audit** is still not closed. This is separate from the presentation work above.
 
-- Infrastructure: substantially implemented — canonical charter, DB/schema, storage, Person UI, provenance editing, 4:5 pipeline.
-- Content/provenance/reconstruction-quality expansion: **PARKED / OPTIONAL**, below current data-repair priorities.
-- Do not redesign portrait infrastructure as the default next task.
+When resumed, compare current main with `docs/ui/UI_INFORMATION_COVERAGE.md` and classify each requirement as:
 
-## 8. STALE / SUPERSEDED ITEMS CLOSED BY THIS RECONCILIATION
+- `DONE`
+- `PARTIAL`
+- `MISSING`
+- `STALE_REQUIREMENT`
 
-- PR #1564 — **COMPLETE_ELSEWHERE**; current SOP + registration obligations already enforce living-person exclusion.
-- PR #1599 — **COMPLETE_ELSEWHERE** via Egypt closure #1607.
-- PR #1602 — **COMPLETE_ELSEWHERE** via Egypt closure #1607.
-- PR #1631 — **COMPLETE_ELSEWHERE** via later canonical Unit 5 timeline-disposition/reconciliation + CORE acceptance.
-- PR #1725 — **SUPERSEDED / COMPLETE_ELSEWHERE** via completed Japan chain.
-- PR #1742 — **SUPERSEDED / COMPLETE_ELSEWHERE** via completed Japan chain.
-- Issue #1037 — canonical Place / PolityPlaceFunction authority is implemented by #1777; current status **COMPLETE**.
-- Issue #977 — closed historical NONCORE board; **not** a current active frontier.
+Do not revive old UI plans as tasks merely because they exist in historical documents.
 
-Additional Person Domain cleanup:
-- PR #1767 — **CLOSED / SUPERSEDED TRANSPORT**; reviewed data intent retained under #1793.
-- PR #1845 — **CLOSED / SUPERSEDED** by merged #1846, #1848 and the #1855 v2 cutover.
+## 8. PORTRAIT
 
-## 9. CURRENT PRIORITY ORDER
+- infrastructure is substantially implemented: canonical charter, schema/storage, Person UI, provenance editing and 4:5 asset pipeline;
+- mass content creation, provenance review and reconstruction-quality expansion remain **PARKED / OPTIONAL**;
+- do not redesign portrait infrastructure as the default next task.
 
-1. **#1793 Post-CORE Registration Obligation Debt Audit** — current legacy-debt authority; continue from its latest checkpoint.
-2. Confirmed omissions from #1793 — bounded repair units.
-3. Ireland Polity correction.
-4. Kingdom of Italy Polity correction.
-5. Remaining Polity re-audit rebuilt from current Production.
-6. NamuWiki legacy backlog drain — current Batch 057 / reason Unit 050.
-7. Registration Queue Reconciliation (#1375).
-8. Candidate review / new registration normal operation.
-9. Current UI Information Coverage Audit.
-10. Portrait content/provenance expansion.
+## 9. CLOSED / SUPERSEDED ITEMS THAT MUST NOT RE-ENTER
 
-**P14 is excluded from this execution order.**
+- CORE v2 / P13 lifecycle
+- P14 unless explicitly restarted
+- #1037 Place / PolityPlaceFunction structural debt
+- #977 as an active execution board
+- #1767 legacy Person Domain proposal transport
+- #1845 Person Domain cleanup path
+- old Later Jin / Serbia / Egypt / Poland / Germany / Han / France fix lists
+- old NamuWiki Batch 057 / Unit 050 frontiers
+- old #1793 “current next unit” instruction
 
-## 10. RESPONSE BARRIER / NEXT RESUME POINT
+## 10. CURRENT EXECUTABLE FRONTIERS
 
-This reconciliation is one completed work unit. After it closes, stop.
+These are current executable items, not a claim that every lane must run serially:
 
-**Exact next resume point:** **#1793 — Post-CORE legacy registration obligation debt audit — IN PROGRESS.**
+1. **PR #1874 disposition/cleanup** — reconcile with current main and either produce a clean mergeable cleanup or close as superseded.
+2. **Ireland Polity correction**.
+3. **Kingdom of Italy 3-way split**.
+4. **Fresh whole-Production Polity re-audit** after Ireland/Italy closure.
+5. **NamuWiki Batch 068** and **reason-backfill Unit 068** — independent bounded legacy-drain lanes.
+6. **#1375 Registration Queue Reconciliation**, including fresh disposition of the 40-candidate handoff and older queued rows.
+7. **#1374 new candidate review** only when a concrete source/range exists.
+8. **Current-main UI Information Coverage re-audit**.
+9. **Portrait content/provenance expansion** if explicitly prioritized.
 
-Do not revive #1767 or any pre-v2 Person Domain proposal sequence. Continue only from the latest durable #1793 checkpoint and current Production state.
+**P14 and the broad #1793 census are excluded from this execution order.**
+
+## 11. RESPONSE BARRIER / EXACT NEXT RESUME POINT
+
+This current-state resync is one work unit. After it is merged and the issue bodies are synchronized, stop.
+
+**Exact next resume point:** **PR #1874 disposition/cleanup**.
+
+Do not begin #1874 work inside the resync unit itself.
