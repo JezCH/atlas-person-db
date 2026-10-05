@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-person-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:queue-register-20261004:tycho-brahe:person-only:v1",
+  "request_id": "authoring:queue-20261004:tycho-brahe:person-only:v1",
   "registration_candidate_id": "gp-20260921-092",
   "person": {
     "canonical_name_en": "Tycho Brahe",
@@ -21,9 +21,9 @@
     }
   },
   "timeline_disposition": {
-    "disposition": "other_reviewed_exclusion",
-    "reason": "Person identity is securely historical, but this bounded queue registration does not assert a canonical polity-bound Activity. Keep the Person out of the spacetime timeline until an Activity is separately reviewed.",
-    "basis_code": "queue_registration_person_only_activity_deferred",
+    "disposition": "chronology_unresolved",
+    "reason": "Tycho Brahe is securely historical, but this bounded queue-registration operation does not assert a reviewed canonical polity-bound Activity rail. Person identity, representative domain, and sources are registered now; timeline placement remains subject to separate Activity/Polity review.",
+    "basis_code": "queue_registration_activity_chronology_not_yet_reviewed",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "review_evidence": {
@@ -40,8 +40,14 @@
       "source_type": "academic_reference",
       "title": "Tycho Brahe — MacTutor History of Mathematics",
       "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Brahe/",
-      "citation_text": "MacTutor identifies Tycho Brahe (1546–1601) as the Danish astronomer whose precise observations were fundamental to later planetary astronomy.",
-      "locator": "https://mathshistory.st-andrews.ac.uk/Biographies/Brahe/"
+      "citation_text": "MacTutor describes Tycho Brahe (1546–1601) as the Danish astronomer whose exceptionally precise pre-telescopic observations transformed observational astronomy.",
+      "locator": "Biography"
     }
-  ]
+  ],
+  "review_context": {
+    "request_batch": "QUEUE-EIGHT-20261004",
+    "queue_candidate_id": "gp-20260921-092",
+    "domain_standard": "contracts/person-domain-taxonomy.v2.json",
+    "registration_scope": "canonical_person_identity_domain_sources_and_queue_binding_only"
+  }
 }
