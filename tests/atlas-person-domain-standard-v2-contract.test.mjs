@@ -40,7 +40,8 @@ test("historical final cutover evidence remains explicit, exact and complete",()
   assert.deepEqual(cutover.canonical_codes,codes);
   assert.deepEqual(cutover.expected_post_cutover,{governance:1346,military:205,science:72,technology:38,commerce:28,culture:161,religion:100,exploration:28});
   assert.match(doc,/serializable transaction/i);
-  assert.match(doc,/roll back everything/i);
+  assert.match(doc,/historical audit evidence/i);
+  assert.match(doc,/one-shot cutover workflow, handler, service, and OIDC mutation surface have been removed/i);
 });
 
 test("classification remains representative-identity based without a ninth sector",()=>{
