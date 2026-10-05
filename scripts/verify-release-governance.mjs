@@ -87,7 +87,7 @@ if (!shouldBuildForChangedPaths(["docs/research/evidence.md", "server/atlas-corr
   fail("mixed change set must build when any deployment-relevant path exists");
 }
 
-const retiredStage2LiveTransportPaths = [
+const retiredOneShotLiveTransportPaths = [
   "api/atlas-stage2-schema-release.js",
   "api/atlas-stage2-train2-release.js",
   "server/atlas-stage2-schema-release-handler.js",
@@ -95,11 +95,21 @@ const retiredStage2LiveTransportPaths = [
   "server/atlas-stage2-train2-release-handler.js",
   "server/atlas-stage2-train2-github-oidc.js",
   ".github/workflows/atlas-stage2-schema-release.yml",
-  ".github/workflows/atlas-stage2-train2-release.yml"
+  ".github/workflows/atlas-stage2-train2-release.yml",
+  ".github/workflows/atlas-namuwiki-link.yml",
+  ".github/workflows/atlas-person-domain-v2-cutover.yml",
+  ".github/workflows/atlas-place-authority-backfill.yml",
+  "scripts/parse-namuwiki-command.mjs",
+  "server/atlas-namuwiki-link-github-oidc.js",
+  "server/atlas-namuwiki-link-handler.js",
+  "server/atlas-person-domain-v2-cutover-github-oidc.js",
+  "server/atlas-person-domain-v2-cutover-handler.js",
+  "server/atlas-person-domain-v2-cutover-service.js",
+  "server/atlas-polity-place-function-authority-backfill.js"
 ];
-for (const relativePath of retiredStage2LiveTransportPaths) {
+for (const relativePath of retiredOneShotLiveTransportPaths) {
   if (fs.existsSync(path.join(root, relativePath))) {
-    fail(`completed Stage2 live transport must stay retired: ${relativePath}`);
+    fail(`completed one-shot live transport must stay retired: ${relativePath}`);
   }
 }
 for (const route of [
@@ -166,6 +176,6 @@ console.log(JSON.stringify({
   vercel_non_production_builds_skipped: true,
   vercel_production_builds_relevance_gated: true,
   production_workflows_main_scoped: true,
-  historical_stage2_live_transport_retired: true,
+  historical_one_shot_live_transport_retired: true,
   release_requirements: ["ATLAS-RQ-0013", "ATLAS-NO-0013"]
 }, null, 2));
