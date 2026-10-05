@@ -9,11 +9,9 @@ on:
       - 'server/atlas-person-domain-service.js'
       - 'scripts/verify-person-domain-v2.mjs'
       - 'contracts/person-domain-taxonomy.v2.json'
-      - 'contracts/person-domain-v2-final-cutover.json'
       - 'atlas-person-domain-registry.js'
       - 'atlas-person-domain-palette.css'
       - 'atlas-person-spacetime-domain-colors.css'
-      - 'proposals/person-representative-domain/*.json'
   workflow_dispatch:
 
 permissions:
