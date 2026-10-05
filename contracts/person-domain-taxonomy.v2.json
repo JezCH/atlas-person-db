@@ -65,7 +65,7 @@
   },
   "migration": {
     "strategy": "eight_sectors_without_temporary_ninth_code",
-    "status": "final_cutover_release",
+    "status": "completed_historical_cutover",
     "review_completion": {
       "science_retained": 72,
       "live_knowledge_at_gate": 72,
@@ -79,6 +79,14 @@
       "exactly_eight_canonical_codes",
       "registry_ui_schema_authoring_and_tests_use_v2"
     ],
-    "historical_evidence_rule": "Pre-v2 batch and Human Authoring artifacts are immutable historical evidence. Legacy knowledge may be interpreted as science only for replay of an already-recorded request; it cannot create a new write."
+    "historical_evidence_rule": "Pre-v2 batch and Human Authoring artifacts are immutable historical evidence. Legacy knowledge may be interpreted as science only for replay of an already-recorded request; it cannot create a new write.",
+    "scope": "historical_cutover_checkpoint_only",
+    "active_live_invariants": [
+      "knowledge_count_is_zero",
+      "all_non_null_domains_use_exactly_eight_canonical_codes",
+      "new_person_registration_requires_representative_domain_review",
+      "live_domain_counts_may_change_after_legitimate_registration_or_targeted_correction"
+    ],
+    "postconditions_note": "These values describe the completed cutover checkpoint and are not permanent live-count invariants."
   }
 }
