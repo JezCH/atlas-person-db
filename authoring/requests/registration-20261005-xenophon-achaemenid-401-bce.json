@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Xenophon",
+    "display_name_ko": "크세노폰",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-05",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture"
+  },
+  "polity": {
+    "canonical_name_en": "Achaemenid Empire",
+    "display_name_ko": "아케메네스 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Historian and mercenary commander",
+    "role_display_name_ko": "역사가·용병 지휘관",
+    "period_basis": "general_activity",
+    "start_year": -401,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -401,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 401 BCE as a securely attributable representative point: Xenophon joined Cyrus the Younger's Greek mercenaries, participated in the campaign culminating at Cunaxa, and was subsequently chosen among the replacement Greek generals. The Activity is linked neutrally to the Achaemenid imperial context rather than treating Xenophon as an Achaemenid office-holder."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "XENOPHON — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/xenophon/",
+      "citation_text": "Encyclopaedia Iranica identifies Xenophon (ca. 430–353 BCE) as an Athenian historian and essayist who joined Cyrus the Younger's mercenaries in 401 BCE and became one of the replacement leaders during the retreat."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "ANABASIS — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/anabasis/",
+      "citation_text": "The Iranica article on Anabasis describes the 401 BCE expedition of Cyrus the Younger and the Ten Thousand and Xenophon's role after the Greek generals were killed."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-05",
+      "document_title": "크세노폰",
+      "url": "https://namu.wiki/w/%ED%81%AC%EC%84%B8%EB%85%B8%ED%8F%B0"
+    }
+  }
+}

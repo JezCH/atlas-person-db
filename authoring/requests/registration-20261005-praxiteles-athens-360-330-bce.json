@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Praxiteles",
+    "display_name_ko": "프락시텔레스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-05",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture"
+  },
+  "polity": {
+    "canonical_name_en": "Athens",
+    "display_name_ko": "아테네",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Sculptor",
+    "role_display_name_ko": "조각가",
+    "period_basis": "intellectual_activity",
+    "start_year": -360,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -330,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Metropolitan Museum of Art gives Praxiteles's active period as approximately 360–330 BCE and identifies him as an Athenian sculptor. ATLAS preserves both boundaries as approximate and does not convert this floruit into exact life dates."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Greek Art From Prehistoric to Classical — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/-/media/files/learn/for-educators/publications-for-educators/greek.pdf",
+      "citation_text": "The Metropolitan Museum of Art identifies Praxiteles as an Athenian sculptor active ca. 360–330 BCE who worked in marble and bronze."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Art of Classical Greece (ca. 480–323 B.C.) — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/essays/the-art-of-classical-greece-ca-480-323-b-c",
+      "citation_text": "The Met identifies the Athenian sculptor Praxiteles and his Aphrodite of Knidos as a major fourth-century BCE innovation whose proportions and pose became hallmarks of Greek sculpture."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-05",
+      "review_reason": "no_exact_document"
+    }
+  }
+}

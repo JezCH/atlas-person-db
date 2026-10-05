@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "registration_candidate_id": "gp6-20260922-007",
+  "person": {
+    "canonical_name_en": "Gaius Cilnius Maecenas",
+    "display_name_ko": "가이우스 킬리니우스 마이케나스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-05",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Political adviser and literary patron",
+    "role_display_name_ko": "정치 고문·문학 후원자",
+    "period_basis": "general_activity",
+    "start_year": -27,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -27,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses c.27 BCE as a representative Augustan-era activity point. The biographical tradition places Maecenas in charge at Rome during Augustus's Spanish absence in 27 BCE and documents his enduring patronage of Virgil and Horace. The point is not a claim that his political or cultural activity lasted only one year."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Maecenas, C. Cilnius — Dictionary of Greek and Roman Biography and Mythology",
+      "canonical_url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.04.0104%3Aentry%3Dmaecenas-c-cilnius-bio-1",
+      "citation_text": "The Perseus-hosted biographical entry describes Maecenas's political responsibilities for Augustus, including Rome during the Spanish campaign of 27 BCE, and his close patronage of Virgil and Horace."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-05",
+      "document_title": "가이우스 킬리니우스 마이케나스",
+      "url": "https://namu.wiki/w/%EA%B0%80%EC%9D%B4%EC%9A%B0%EC%8A%A4%20%ED%82%AC%EB%A6%AC%EB%8B%88%EC%9A%B0%EC%8A%A4%20%EB%A7%88%EC%9D%B4%EC%BC%80%EB%82%98%EC%8A%A4"
+    }
+  }
+}
