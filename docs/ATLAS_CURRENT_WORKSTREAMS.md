@@ -2,9 +2,9 @@
 
 **As of:** 2026-10-05  
 **Authority:** current `main` + current Production + latest durable checkpoint  
-**Repository main:** `e90532702e968cb690e27caf126efe319082f745`  
+**Workstream state baseline:** verified against current repository state on 2026-10-05  
 **Latest READY Production deployment:** Vercel `dpl_BhFCvnoibCaoHo9YwdXZTG8evS7r` at `68e54bc210cf1ab7a20abe1c8089a27918c9d3bd`  
-**Main/Production delta:** #1894 is workstream-status documentation only; its Vercel deployment was canceled, so the latest READY app remains #1893.  
+**Repository/Production delta:** subsequent workstream-status synchronizations are documentation/issue-state changes only; the latest READY app remains #1893.  
 **P14:** `PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`
 
 This file is the compact current-state board. Historical issue comments, merged PRs, old queue bodies and old audit documents are evidence, not execution frontiers. User-selected candidate/registration pools are not backlog debt.
