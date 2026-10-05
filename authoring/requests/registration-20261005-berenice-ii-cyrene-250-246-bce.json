@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:berenice-ii:cyrene:queen-regnant:250-246-bce:v1",
+  "person": {
+    "canonical_name_en": "Berenice II",
+    "display_name_ko": "베레니케 2세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-05",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "canonical_name_en": "Cyrene",
+    "display_name_ko": "키레네",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Queen Regnant",
+    "role_display_name_ko": "여왕",
+    "period_basis": "reign",
+    "start_year": -250,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -246,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Berenice II inherited the Cyrenaican kingship from Magas and is securely treated as a ruling queen by the later 250s BCE. Sources differ on whether her royal titulature should be projected back as early as 258 BCE while Magas was still alive. ATLAS therefore records the defensible c.250–246 BCE Cyrenaican royal interval, with an approximate start, and does not imply uninterrupted sole administration through the Demetrius/Koinon crisis."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Berenice II Euergetis (Ptolemaic queen and co-regent, 267/266–221 BC) — KBR SILVER",
+      "canonical_url": "https://silver.kbr.be/Berenice_II_Euergetis_%28Ptolemaic_queen_and_co-regent%2C_267/266-221_BC%29",
+      "citation_text": "KBR SILVER describes Berenice II as ruling queen of Cyrenaica from around 250 BCE and later queen and co-regent of Ptolemaic Egypt."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Two Ptolemaic queens — UCL Digital Egypt",
+      "canonical_url": "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/arsinoeii.html",
+      "citation_text": "UCL Digital Egypt identifies Berenike II as the daughter of Magas of Cyrene, states that she inherited her father's kingdom, and records her subsequent marriage to Ptolemy III."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-05",
+      "document_title": "베레니케 2세",
+      "url": "https://namu.wiki/w/%EB%B2%A0%EB%A0%88%EB%8B%88%EC%BC%80%202%EC%84%B8"
+    }
+  }
+}
