@@ -1,0 +1,55 @@
+name: ATLAS Branch Ancestry Audit
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/atlas-branch-ancestry-audit.yml
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Fetch all branches
+        run: git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
+
+      - name: Inventory branch ancestry
+        shell: bash
+        run: |
+          set -euo pipefail
+          git for-each-ref refs/remotes/origin --format='%(refname:strip=3)'             | grep -v '^HEAD$'             | grep -v '^main$'             | sort > all-branches.txt
+
+          : > in-main-history.txt
+          : > outside-main-history.txt
+          while IFS= read -r branch; do
+            if git merge-base --is-ancestor "refs/remotes/origin/$branch" origin/main; then
+              echo "$branch" >> in-main-history.txt
+            else
+              echo "$branch" >> outside-main-history.txt
+            fi
+          done < all-branches.txt
+
+          {
+            echo "all=$(wc -l < all-branches.txt)"
+            echo "in_main=$(wc -l < in-main-history.txt)"
+            echo "outside_main=$(wc -l < outside-main-history.txt)"
+          } | tee branch-ancestry-summary.txt
+
+      - name: Publish summary
+        run: cat branch-ancestry-summary.txt >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlas-branch-ancestry-audit
+          path: |
+            branch-ancestry-summary.txt
+            in-main-history.txt
+            outside-main-history.txt
+            all-branches.txt
