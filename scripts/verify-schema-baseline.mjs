@@ -46,7 +46,8 @@ const expectedAuthoringMigrations = [
   '20260930_unit16_retire_external_reference_sync_trigger.sql',
   '20261003_person_registration_queue_authority.sql',
   '20261003_shah_abbas_registration_queue_binding.sql',
-  '20261004_person_representative_domain_standard_v2_replay_safe.sql'
+  '20261004_person_representative_domain_standard_v2_replay_safe.sql',
+  '20261006_user_selected_person_registration_queue_07.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -75,7 +76,8 @@ const expectedAuthoringReplayMigrations = [
   '20261001_polity_place_function_authority.sql',
   '20260930_unit16_retire_external_reference_sync_trigger.sql',
   '20261003_person_registration_queue_authority.sql',
-  '20261003_shah_abbas_registration_queue_binding.sql'
+  '20261003_shah_abbas_registration_queue_binding.sql',
+  '20261006_user_selected_person_registration_queue_07.sql'
 ];
 
 const expectedCorrectionMigrations = [
