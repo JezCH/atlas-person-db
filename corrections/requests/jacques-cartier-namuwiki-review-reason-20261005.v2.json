@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-namuwiki:jacques-cartier:review-reason:2026-10-05:v1",
+  "release_order": 960,
+  "evidence": {
+    "decision": "Bounded external-index review found no independent Jacques Cartier Person document. Indexed NamuWiki-derived material instead exposes Jacques Cartier inside related or derivative topic material, including the Montreal history page. The canonical not_found detail is therefore related_or_derivative_only.",
+    "reviewed_at": "2026-10-05",
+    "searches": [
+      "\"자크 카르티에\" 나무위키",
+      "\"자크 카르티에\" site:namu.wiki",
+      "\"Jacques Cartier\" site:namu.wiki",
+      "\"카르티에\" 탐험가 나무위키"
+    ],
+    "related_indexed_document": "몬트리올/역사",
+    "related_indexed_url": "https://d.namu.moe/w/%EB%AA%AC%ED%8A%B8%EB%A6%AC%EC%98%AC/%EC%97%AD%EC%82%AC",
+    "person_id": "dd2719b0-95b3-414c-be27-c94e2f73a2d6",
+    "exact_before": {
+      "provider": "namuwiki",
+      "status": "not_found",
+      "checked_at": "2026-10-05",
+      "review_state": "reviewed_absent",
+      "review_reason": null
+    }
+  },
+  "operations": [
+    {
+      "type": "set_person_namuwiki_review_reason",
+      "case_id": "jacques-cartier-related-only",
+      "person_id": "dd2719b0-95b3-414c-be27-c94e2f73a2d6",
+      "expected_checked_at": "2026-10-05",
+      "expected_review_reason": null,
+      "replacement_review_reason": "related_or_derivative_only"
+    }
+  ]
+}
