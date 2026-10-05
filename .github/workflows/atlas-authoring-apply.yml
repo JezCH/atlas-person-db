@@ -44,7 +44,6 @@ jobs:
       ATLAS_PERSON_READ_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read
       ATLAS_AUTHORING_AUDIENCE: atlas-person-db-authoring
       ATLAS_AUTHORING_TRANSPORT_VERSION: '2'
-      ATLAS_PERSON_DOMAIN_V2_CUTOVER_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-domain-v2-cutover
     steps:
       - uses: actions/checkout@v4
         with:
@@ -239,45 +238,6 @@ jobs:
             echo 'No approved authoring requests selected.'
           fi
 
-      - name: Wait for compatible Production Person Domain v2 cutover
-        if: env.ATLAS_AUTHORING_SELECTED == 'true'
-        shell: bash
-        run: |
-          set -euo pipefail
-          for attempt in $(seq 1 60); do
-            status="$(curl --silent --show-error --output /tmp/atlas-person-domain-v2-cutover.json --write-out '%{http_code}' "$ATLAS_PERSON_DOMAIN_V2_CUTOVER_ENDPOINT")"
-            if [[ "$status" == "200" ]] && jq -e '.ok==true and .state.cutover_complete==true and (.runtime_sha | test("^[0-9a-f]{40}$"))' /tmp/atlas-person-domain-v2-cutover.json >/dev/null; then
-              runtime_sha="$(jq -er '.runtime_sha' /tmp/atlas-person-domain-v2-cutover.json)"
-              if [[ "$runtime_sha" == "$GITHUB_SHA" ]]; then
-                exit 0
-              fi
-              if ! git cat-file -e "${runtime_sha}^{commit}" 2>/dev/null; then
-                git fetch --no-tags --quiet origin main
-              fi
-              if git cat-file -e "${runtime_sha}^{commit}" 2>/dev/null && git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA"; then
-                git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-person-domain-v2-runtime-diff.txt
-                set +e
-                node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
-          const text = fs.readFileSync('/tmp/atlas-person-domain-v2-runtime-diff.txt', 'utf8').trim();
-          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
-          if (shouldBuildForChangedPaths(paths)) process.exit(1);
-          console.log(`Person Domain v2 cutover accepted deployment-safe runtime ancestor across ${paths.length} path${paths.length === 1 ? '' : 's'}.`);
-          NODE
-                safe_status=$?
-                set -e
-                if [[ "$safe_status" == "0" ]]; then
-                  exit 0
-                fi
-              fi
-            fi
-            sleep 5
-          done
-          cat /tmp/atlas-person-domain-v2-cutover.json >&2 || true
-          echo "PERSON_DOMAIN_V2_CUTOVER_NOT_READY" >&2
-          exit 1
-
       - name: Verify deployed authoring runtime readiness
         if: env.ATLAS_AUTHORING_SELECTED == 'true'
         shell: bash
@@ -315,6 +275,7 @@ jobs:
               and .readiness.p5_ready==true
               and .readiness.core.base_tables_ready==true
               and .readiness.core.activity_columns_ready==true
+              and .readiness.person_domain_v2.schema_v2_ready==true
               and .readiness.p9.old_index_present==false
               and .readiness.p9.new_index_present==true
               and .readiness.p9.duplicate_groups==0
