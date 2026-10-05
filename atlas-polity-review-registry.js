@@ -378,9 +378,10 @@
         right: { name: "Ireland" },
         rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"],
+        status: "SUPERSEDED",
+        terminal_status: "SUPERSEDED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority", "2026-10-05: duplicate tracking seed absorbed by active ireland-family-correction execution case; historical decision remains open only in the parent case"],
+        locked: true,
         parent_case_id: "ireland-family-correction"
       },
       {
@@ -392,9 +393,11 @@
         right: { name: "Korean Empire" },
         rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        reviewed_decision: "keep_both",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority", "2026-10-05 fresh Production: Joseon and Korean Empire are distinct identities with the intended 1897 boundary; current project model intentionally preserves the split"],
+        locked: true
       },
       {
         id: "austria-republic-federal-state",
@@ -537,9 +540,11 @@
         right: { name: "Russian Federation" },
         rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        reviewed_decision: "keep_both",
+        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program", "2026-10-05 fresh Production: Russian SFSR and Russian Federation are distinct identities at the 1991 transition; current project model intentionally preserves the split"],
+        locked: true
       },
       {
         id: "liberia-commonwealth-republic",
@@ -654,9 +659,10 @@
         right: { name: "Byzantine Empire" },
         rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        status: "SUPERSEDED",
+        terminal_status: "SUPERSEDED",
+        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program", "2026-10-05: duplicate family seed consolidated into the later byzantine-nicaea-rupture probe; historical judgment remains open there"],
+        locked: true
       }
     ]),
     designation_residuals: freezeRows([
@@ -725,9 +731,10 @@
         right: { name: "Eastern Zhou" },
         rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        status: "NOT_PRESENT",
+        terminal_status: "NOT_PRESENT",
+        evidence: ["rupture-rule explicit probe", "2026-10-05 fresh Production: neither Western Zhou nor Eastern Zhou identity is present; no generic Zhou identity spanning this rupture was found"],
+        locked: true
       },
       {
         id: "roman-west-east",
@@ -751,9 +758,10 @@
         right: { name: "Eastern Jin" },
         rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        status: "NOT_PRESENT",
+        terminal_status: "NOT_PRESENT",
+        evidence: ["rupture-rule explicit probe", "2026-10-05 fresh Production: Eastern Jin is not present; Western Jin exists only as a bounded 266–290 identity, so this candidate pair is not present"],
+        locked: true
       },
       {
         id: "northern-southern-song",
@@ -831,9 +839,10 @@
         right: { name: "Southern Ming" },
         rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        status: "NOT_PRESENT",
+        terminal_status: "NOT_PRESENT",
+        evidence: ["rupture-rule explicit probe", "2026-10-05 fresh Production: Southern Ming is not present and Ming Dynasty observed Activity ends at 1620; no current post-1644 collapse exists"],
+        locked: true
       },
       {
         id: "champa-panduranga",
@@ -844,9 +853,10 @@
         right: { name: "Panduranga" },
         rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        status: "NOT_PRESENT",
+        terminal_status: "NOT_PRESENT",
+        evidence: ["rupture-rule explicit probe", "2026-10-05 fresh Production: Panduranga is not present and current Champa Activity is bounded to 1360–1390; the candidate pair is not present"],
+        locked: true
       },
       {
         id: "inca-neo-inca",
@@ -857,9 +867,10 @@
         right: { name: "Neo-Inca State" },
         rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        status: "NOT_PRESENT",
+        terminal_status: "NOT_PRESENT",
+        evidence: ["rupture-rule explicit probe", "2026-10-05 fresh Production: Neo-Inca State is not present and Inca Empire Activity ends at 1533; the candidate pair is not present"],
+        locked: true
       },
       {
         id: "carolingian-partitions",
@@ -896,9 +907,10 @@
         right: { name: "Pakistan after 1971" },
         rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        status: "NOT_PRESENT",
+        terminal_status: "NOT_PRESENT",
+        evidence: ["rupture-rule explicit probe", "2026-10-05 fresh Production: no generic Pakistan, East Pakistan, or West Pakistan identity is present; only Dominion of Pakistan 1947–1948 is represented"],
+        locked: true
       },
       {
         id: "roc-mainland-taiwan",
@@ -922,9 +934,10 @@
         right: { name: "FR Yugoslavia" },
         rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        status: "NOT_PRESENT",
+        terminal_status: "NOT_PRESENT",
+        evidence: ["rupture-rule explicit probe", "2026-10-05 fresh Production: Federal Republic of Yugoslavia is not present; SFR Yugoslavia is represented separately with Activity ending in 1980"],
+        locked: true
       }
     ]),
     resolved_history: freezeRows([

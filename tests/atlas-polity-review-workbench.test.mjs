@@ -71,6 +71,46 @@ test('rupture registry locks Yuan / Northern Yuan as KEEP_SEPARATE while leaving
   assert.ok(registry.rupture_probes.some(row => !row.terminal_status));
 });
 
+test('fresh Production closes the no-write seed subset without resolving still-open historical judgments', () => {
+  const byId = new Map([
+    ...registry.carry_forward_same_identity,
+    ...registry.historical_family_reviews,
+    ...registry.rupture_probes
+  ].map(row => [row.id, row]));
+
+  assert.equal(byId.get('irish-free-state-ireland').terminal_status, 'SUPERSEDED');
+  assert.equal(byId.get('joseon-korean-empire').terminal_status, 'KEEP_SEPARATE');
+  assert.equal(byId.get('russian-sfsr-federation').terminal_status, 'KEEP_SEPARATE');
+  assert.equal(byId.get('nicaea-byzantine').terminal_status, 'SUPERSEDED');
+
+  for (const id of [
+    'western-eastern-zhou',
+    'western-eastern-jin',
+    'ming-southern-ming',
+    'champa-panduranga',
+    'inca-neo-inca',
+    'pakistan-1971-rupture',
+    'yugoslavia-sfr-fr'
+  ]) {
+    assert.equal(byId.get(id).terminal_status, 'NOT_PRESENT', id);
+    assert.equal(byId.get(id).locked, true, id);
+  }
+
+  const unresolved = [
+    ...registry.execution_frontier,
+    ...registry.carry_forward_same_identity,
+    ...registry.historical_family_reviews,
+    ...registry.designation_residuals,
+    ...registry.naming_residuals,
+    ...registry.rupture_probes
+  ].filter(row => !row.terminal_status);
+  assert.equal(unresolved.length, 55);
+  assert.equal(byId.get('northern-southern-song').terminal_status, null);
+  assert.equal(byId.get('roman-west-east').terminal_status, null);
+  assert.equal(byId.get('byzantine-nicaea-rupture').terminal_status, null);
+  assert.equal(byId.get('roc-mainland-taiwan').terminal_status, null);
+});
+
 test('old 2026-09-27 candidates and Stage 2 current-named contract are explicitly demoted', () => {
   assert.match(snapshot, /HISTORICAL_SNAPSHOT_ONLY/);
   assert.match(snapshot, /canonical_current: false/);
