@@ -2,12 +2,10 @@
 
 const { createPostgresClient } = require("../server/atlas-postgres-client.js");
 const { createHumanAuthoringHandler } = require("../server/atlas-human-authoring-handler.js");
-const { createNamuWikiLinkHandler } = require("../server/atlas-namuwiki-link-handler.js");
 const { createReviewedPersonMergeHandler } = require("../server/atlas-reviewed-person-merge-handler.js");
 const { createReviewedCandidateHandler } = require("../server/atlas-reviewed-candidate-handler.js");
 
 const humanAuthoringHandler = createHumanAuthoringHandler({ clientFactory:createPostgresClient });
-const namuWikiLinkHandler = createNamuWikiLinkHandler({ createClient:createPostgresClient });
 const reviewedPersonMergeHandler = createReviewedPersonMergeHandler({ createClient:createPostgresClient });
 const reviewedCandidateHandler = createReviewedCandidateHandler({ clientFactory:createPostgresClient });
 
@@ -29,10 +27,7 @@ module.exports = async function consolidatedAuthoringHandler(req, res) {
   const surface = selectAuthoringSurface(req);
   let handler = humanAuthoringHandler;
   let failureLabel = "ATLAS_HUMAN_AUTHORING_FAILURE";
-  if (surface === "namuwiki-link") {
-    handler = namuWikiLinkHandler;
-    failureLabel = "ATLAS_NAMUWIKI_LINK_FAILURE";
-  } else if (surface === "reviewed-person-merge") {
+  if (surface === "reviewed-person-merge") {
     handler = reviewedPersonMergeHandler;
     failureLabel = "ATLAS_REVIEWED_PERSON_MERGE_FAILURE";
   } else if (surface === "reviewed-candidate") {

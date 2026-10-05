@@ -101,13 +101,13 @@ test('replaceable validation workflows cancel stale runs', () => {
   }
 });
 
-test('Production mutation workflows remain non-cancelling', () => {
+test('active serialized Production mutation workflow remains non-cancelling and retired launchers stay absent', () => {
+  const workflow = fs.readFileSync(new URL('../.github/workflows/atlas-authoring-apply.yml', import.meta.url), 'utf8');
+  assert.match(workflow, /environment: production/);
+  assert.match(workflow, /cancel-in-progress: false/);
   for (const relative of [
-    '../.github/workflows/atlas-authoring-apply.yml',
-    '../.github/workflows/atlas-namuwiki-link.yml'
-  ]) {
-    const workflow = fs.readFileSync(new URL(relative, import.meta.url), 'utf8');
-    assert.match(workflow, /environment: production/);
-    assert.match(workflow, /cancel-in-progress: false/);
-  }
+    '../.github/workflows/atlas-namuwiki-link.yml',
+    '../.github/workflows/atlas-person-domain-v2-cutover.yml',
+    '../.github/workflows/atlas-place-authority-backfill.yml'
+  ]) assert.equal(fs.existsSync(new URL(relative, import.meta.url)), false);
 });

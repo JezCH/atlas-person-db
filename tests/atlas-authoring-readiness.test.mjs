@@ -229,5 +229,5 @@ test('authoring readiness fails closed while the Person Domain schema is still v
   assert.equal(result.ready,false);
   assert.equal(result.bootstrap_ready,false);
   assert.equal(result.person_domain_v2.schema_v2_ready,false);
-  assert.equal(result.person_domain_v2.cutover_complete,false);
+  assert.equal(result.person_domain_v2.legacy_knowledge_ids.length,CUTOVER.science_target_ids.length);
 });

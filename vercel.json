@@ -15,10 +15,6 @@
       "destination": "/api/atlas-authoring?__atlas_authoring_surface=reviewed-person-merge"
     },
     {
-      "source": "/api/atlas-namuwiki-link",
-      "destination": "/api/atlas-authoring?__atlas_authoring_surface=namuwiki-link"
-    },
-    {
       "source": "/api/atlas-person-read",
       "destination": "/api/atlas-read?__atlas_read_surface=person"
     },
@@ -37,10 +33,6 @@
     {
       "source": "/api/atlas-person-domain",
       "destination": "/api/atlas-mutate?__atlas_mutation_surface=person-domain"
-    },
-    {
-      "source": "/api/atlas-person-domain-v2-cutover",
-      "destination": "/api/atlas-mutate?__atlas_mutation_surface=person-domain-v2-cutover"
     },
     {
       "source": "/api/atlas-runtime-compile",

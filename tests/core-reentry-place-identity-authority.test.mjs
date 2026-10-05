@@ -52,19 +52,18 @@ test('CORE-REENTRY-08 compiler rebuilds current Place-function display from UUID
   assert.deepEqual(result.index.place_function_records,placeFunctions.records);
 });
 
-test('CORE-REENTRY-08 canonical DB writer and migration own PolityPlaceFunction facts',()=>{
+test('CORE-REENTRY-08 canonical DB writer and migration own current PolityPlaceFunction facts',()=>{
   const migration=fs.readFileSync(path.join(root,'db/migrations/20261001_polity_place_function_authority.sql'),'utf8');
   const writer=fs.readFileSync(path.join(root,'server/atlas-polity-place-function-service.js'),'utf8');
   const compiler=fs.readFileSync(path.join(root,'scripts/compile-spatial-bindings.mjs'),'utf8');
-  const backfill=fs.readFileSync(path.join(root,'server/atlas-polity-place-function-authority-backfill.js'),'utf8');
+  const evidence=JSON.parse(fs.readFileSync(path.join(root,'data/core/polity-place-function-authority-backfill.v1.json'),'utf8'));
   assert.match(migration,/CREATE TABLE IF NOT EXISTS atlas_v2\.polity_place_functions/);
   assert.match(migration,/CREATE TABLE IF NOT EXISTS atlas_v2\.polity_place_function_sources/);
   assert.doesNotMatch(migration,/INSERT\s+INTO\s+atlas_v2\.(?:places|place_names|sources|place_sources)/i);
-  assert.match(backfill,/applyPolityPlaceFunctionAuthorityBackfill/);
-  assert.match(backfill,/insertExactSource/);
-  assert.match(backfill,/insertExactPlace/);
-  assert.match(backfill,/createPolityPlaceFunction/);
-  assert.match(backfill,/POLITY_PLACE_AUTHORITY_TARGET_POLITY_SET_DRIFT/);
+  assert.equal(evidence.schema,'atlas-polity-place-function-authority-backfill/v1');
+  assert.ok(Array.isArray(evidence.facts) && evidence.facts.length > 0);
+  assert.equal(fs.existsSync(path.join(root,'server/atlas-polity-place-function-authority-backfill.js')),false);
+  assert.equal(fs.existsSync(path.join(root,'.github/workflows/atlas-place-authority-backfill.yml')),false);
   assert.match(writer,/async function createPolityPlaceFunction/);
   assert.match(writer,/POLITY_PLACE_FUNCTION_DISPLAY_FIELD_FORBIDDEN/);
   assert.match(writer,/POLITY_PLACE_FUNCTION_SOURCE_READBACK_DRIFT/);
