@@ -2,6 +2,16 @@
 
 const NAMUWIKI_PROVIDER = "namuwiki";
 const NAMUWIKI_HOST = "namu.wiki";
+const NAMUWIKI_REVIEW_REASONS = Object.freeze([
+  "no_exact_document",
+  "related_or_derivative_only",
+  "exact_target_url_pending",
+  "exact_target_url_verified"
+]);
+const NAMUWIKI_FINAL_NOT_FOUND_REASONS = Object.freeze([
+  "no_exact_document",
+  "related_or_derivative_only"
+]);
 
 function text(value) {
   return value == null ? "" : String(value).trim();
@@ -50,6 +60,9 @@ function normalizeNamuWikiDecision(raw, { checkedAtRequired = false, allowTitleS
   if (status === "not_found") {
     if (text(input.document_title) || text(input.url || input.canonical_url)) throw new Error("EXTERNAL_REFERENCE_NAMUWIKI_NOT_FOUND_FIELDS_INVALID");
     const reviewReason = text(input.review_reason) || null;
+    if (reviewReason && !NAMUWIKI_REVIEW_REASONS.includes(reviewReason)) {
+      throw new Error("EXTERNAL_REFERENCE_NAMUWIKI_REVIEW_REASON_INVALID");
+    }
     return Object.freeze({ provider:NAMUWIKI_PROVIDER, status, checked_at:checkedAt, document_title:null, url:null, review_state:"reviewed_absent", review_reason:reviewReason });
   }
 
@@ -132,6 +145,8 @@ async function setNamuWikiDecision(client, personId, rawDecision, {
 module.exports = Object.freeze({
   NAMUWIKI_PROVIDER,
   NAMUWIKI_HOST,
+  NAMUWIKI_REVIEW_REASONS,
+  NAMUWIKI_FINAL_NOT_FOUND_REASONS,
   validIsoDate,
   canonicalNamuWikiUrl,
   normalizeNamuWikiDecision,
