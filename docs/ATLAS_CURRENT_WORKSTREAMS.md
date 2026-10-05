@@ -72,26 +72,26 @@ Therefore #1793 is **not an executable next frontier**.
 
 ## 4. NAMUWIKI
 
-Issue #820 remains the authority for this independent legacy-drain workstream.
+**Legacy-drain workstream: CLOSED.**
 
-### General review lane
+Issue #820 is closed archival authority for the completed legacy NamuWiki drain. Historical Batch/Unit comments remain audit evidence only.
 
-- **Batch 067 — CLOSED**
-- durable checkpoint: #820 comment `5955750388`
-- exact Production verification: 5/5
-- **next frontier: Batch 068 — NOT STARTED**
-- On continuation, rebuild a fresh current Production `namuwiki_status=missing` set. Do not resume from a stale positional cursor or subtraction arithmetic.
+Terminal current Production reconciliation:
+- `namuwiki_status=linked`: **1,375**
+- `namuwiki_status=not_found`: **730**
+- `namuwiki_status=missing`: **0**
+- `not_found` rows with blank/missing `absence_reason`: **0**
 
-### Reason-backfill lane
+Terminal evidence:
+- Batch 073 checkpoint: #820 comment `5986491315`
+- #431 command `5986471854`
+- governed verification `5986479573`
+- workflow run `37250838661` — SUCCESS
+- workstream closure checkpoint: #820 comment `5986606389`
 
-- **Unit 067 — CLOSED**
-- latest durable checkpoint: #820 comment `5976757224`
-- Unit 067 started from a fresh Production set with `reason-missing not_found=16`
-- **next frontier: Unit 068 — NOT STARTED**
-- On continuation, rebuild a fresh current Production `not_found` + blank `absence_reason` set.
+There is no Batch 074 frontier and no remaining reason-backfill frontier.
 
-General review and reason-backfill are separate lanes and do not create a global writer lock.
-
+Future NamuWiki work is event-driven only through the current registration lifecycle when a newly registered Person creates a new review obligation. Do not reopen or replay #820 merely because historical Batch/Unit comments remain.
 ## 5. POLITY
 
 ### CONFIRMED_FIX_REQUIRED — Ireland family
@@ -221,7 +221,7 @@ Do not revive old UI plans as tasks merely because they exist in historical docu
 - #1767 legacy Person Domain proposal transport
 - #1845 Person Domain cleanup path
 - old Later Jin / Serbia / Egypt / Poland / Germany / Han / France fix lists
-- old NamuWiki Batch 057 / Unit 050 frontiers
+- old NamuWiki Batch/Unit legacy-drain frontiers; #820 is CLOSED
 - old #1793 “current next unit” instruction
 
 ## 10. CURRENT EXECUTABLE FRONTIERS
@@ -231,11 +231,10 @@ These are current executable items, not a claim that every lane must run seriall
 1. **Ireland Polity correction**.
 2. **Kingdom of Italy 3-way split**.
 3. **Fresh whole-Production Polity re-audit** after Ireland/Italy closure.
-4. **NamuWiki Batch 068** and **reason-backfill Unit 068** — independent bounded legacy-drain lanes.
-5. **#1375 Registration Queue Reconciliation**, including fresh disposition of the 40-candidate handoff and older queued rows.
-6. **#1374 new candidate review** only when a concrete source/range exists.
-7. **Current-main UI Information Coverage re-audit**.
-8. **Portrait content/provenance expansion** if explicitly prioritized.
+4. **#1375 Registration Queue Reconciliation**, including fresh disposition of the 40-candidate handoff and older queued rows.
+5. **#1374 new candidate review** only when a concrete source/range exists.
+6. **Current-main UI Information Coverage re-audit**.
+7. **Portrait content/provenance expansion** if explicitly prioritized.
 
 **P14 and the broad #1793 census are excluded from this execution order.**
 
