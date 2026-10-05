@@ -9,8 +9,7 @@ const root=path.resolve(new URL("..",import.meta.url).pathname);
 const dir=path.join(root,"proposals/person-representative-domain");
 const registry=require("../atlas-person-domain-registry.js");
 const css=fs.readFileSync(path.join(root,"atlas-person-domain-palette.css"),"utf8").toLowerCase();
-const retiredApply=fs.readFileSync(path.join(root,"scripts/apply-person-domain-proposals.mjs"),"utf8");
-const workflow=fs.readFileSync(path.join(root,".github/workflows/atlas-person-domain-apply.yml"),"utf8");
+const workflow=fs.readFileSync(path.join(root,".github/workflows/atlas-person-domain-verify.yml"),"utf8");
 const cutover=JSON.parse(fs.readFileSync(path.join(root,"contracts/person-domain-v2-final-cutover.json"),"utf8"));
 
 const seq=(prefix)=>fs.readdirSync(dir).filter((name)=>new RegExp(`^${prefix}-\\d{3}\\.json$`).test(name)).sort();
@@ -63,10 +62,9 @@ test("active runtime palette and registry contain science, not knowledge",()=>{
   assert.doesNotMatch(css,/atlas-person-domain-knowledge|data-representative-domain="knowledge"/);
 });
 
-test("pre-v2 proposal writer is permanently retired and workflow is verification-only",()=>{
-  assert.match(retiredApply,/PERSON_DOMAIN_V1_PROPOSAL_APPLY_RETIRED/);
+test("pre-v2 proposal ledger is archival and active workflow is verification-only",()=>{
   assert.match(workflow,/name:\s*ATLAS Person Domain Verify/);
   assert.doesNotMatch(workflow,/id-token:\s*write/);
-  assert.doesNotMatch(workflow,/apply-person-domain-proposals\.mjs/);
+  assert.doesNotMatch(workflow,/apply-person-domain-proposals\.mjs|id-token:\s*write/);
   assert.match(workflow,/verify-person-domain-v2\.mjs/);
 });

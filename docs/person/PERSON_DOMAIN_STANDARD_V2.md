@@ -33,24 +33,26 @@ Historical pre-v2 review batches, authoring requests, and audit evidence may sti
 
 For an already-recorded Human Authoring request only, legacy `knowledge` is replay-normalized to canonical `science` while the original manifest hash and stored evidence remain unchanged. A new request carrying `knowledge` is rejected.
 
-## 4. Final cutover authority
+## 4. Historical final-cutover evidence
 
-The immutable reviewed science set is `contracts/person-domain-v2-final-cutover.json`. It contains exactly 72 Person UUIDs and is derived from all durable `science_retained` review checkpoints.
+The immutable reviewed science set is preserved in `contracts/person-domain-v2-final-cutover.json`. It contains the 72 Person UUIDs used for the completed v1 → v2 cutover and is derived from the durable `science_retained` review checkpoints.
 
-The dedicated final-cutover transaction must:
+That contract is **historical audit evidence, not a live execution dependency**. The one-shot cutover workflow, handler, service, and OIDC mutation surface have been removed after successful completion.
 
-1. run only on exact Production `main` SHA with the dedicated GitHub Actions OIDC policy;
-2. acquire the global Person Domain v2 advisory lock and table/row locks;
-3. prove the complete live `knowledge` UUID set exactly equals the reviewed 72 science UUIDs;
-4. prove all pre-cutover domain counts match the approved checkpoint;
-5. drop the v1 domain constraint inside the same serializable transaction;
-6. update exactly those 72 rows from `knowledge` to `science`;
-7. write immutable per-Person `set_person_representative_domain` audits;
-8. install and validate the v2 eight-code DB constraint;
-9. prove the complete post-cutover distribution before commit;
-10. roll back everything on any mismatch.
+The completed cutover transaction:
 
-Normal Authoring migrations never perform the canonical row rewrite.
+1. ran against exact Production `main`;
+2. acquired the dedicated advisory/table/row locks;
+3. proved the complete live `knowledge` UUID set exactly matched the reviewed 72 science UUIDs;
+4. proved the approved pre-cutover checkpoint;
+5. replaced the v1 DB constraint inside the serializable transaction;
+6. rewrote exactly those 72 rows from `knowledge` to `science`;
+7. wrote immutable per-Person mutation audits;
+8. installed and validated the exact v2 eight-code DB constraint;
+9. proved the post-cutover state before commit;
+10. failed closed on any mismatch.
+
+Normal Authoring never replays this historical cutover. Future registrations write the active v2 vocabulary directly.
 
 ## 5. Migration/replay contract
 
@@ -61,15 +63,18 @@ The replay-safe schema migration recognizes only coherent states:
 
 A mixed live `knowledge` + `science` storage state fails closed.
 
-The old proposal apply path is retired after v2. Pre-v2 batches remain immutable review evidence; current automation performs read-only v2 verification.
+The old proposal apply path is retired and its executable stub has been removed. Pre-v2 batches remain immutable review evidence only; current automation performs read-only v2 verification.
 
-## 6. Completion condition
+## 6. Current invariant
 
-Person Domain v2 is complete only when:
+Person Domain v2 migration is complete. The live invariant is now structural rather than tied to the historical cutover counts:
 
-- all reviewed science targets store `science`;
-- no Person stores `knowledge`;
-- `science=72` and the other seven counts match the Unit 23 checkpoint;
-- exactly eight canonical codes are exposed;
-- runtime, Admin/Human Authoring, browser registry, Person UI, Spacetime UI, DB constraint, clean-schema replay, and regression tests all agree on v2;
-- exact Production SHA and immutable cutover evidence are recorded on #1806.
+- no live Person stores `knowledge`;
+- every non-null live representative domain is one of the exact eight canonical v2 codes;
+- new Person registration performs representative-domain review by default and persists the result inside the registration lifecycle;
+- omitted domain review cannot complete a new Person registration;
+- Role→Domain automatic inference remains forbidden;
+- live counts are allowed to grow or change as legitimate Persons are registered or evidence-backed corrections are made;
+- runtime, Admin/Human Authoring, browser registry, Person UI, Spacetime UI, DB constraint, clean-schema replay, and regression tests must continue to agree on v2.
+
+The historical `science=72` cutover set and Unit 23 distribution remain audit evidence only; they are not permanent live-count invariants.

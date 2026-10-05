@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.github/workflows/atlas-person-domain-apply.yml'
+      - '.github/workflows/atlas-person-domain-verify.yml'
       - 'server/atlas-person-domain-handler.js'
       - 'server/atlas-person-domain-service.js'
       - 'scripts/verify-person-domain-v2.mjs'
@@ -53,7 +53,7 @@ jobs:
         run: |
           set -euo pipefail
           node --check scripts/verify-person-domain-v2.mjs
-          node --test tests/atlas-person-domain-service.test.mjs tests/atlas-person-domain-standard-v1.test.mjs tests/atlas-person-domain-standard-v2-contract.test.mjs tests/spacetime-person-domain-colors.test.mjs
+          node --test tests/atlas-person-domain-service.test.mjs tests/atlas-person-domain-historical-ledger.test.mjs tests/atlas-person-domain-standard-v2-contract.test.mjs tests/spacetime-person-domain-colors.test.mjs
           node scripts/verify-person-domain-v2.mjs | tee "$ATLAS_EVIDENCE_DIR/verify.jsonl"
           curl --fail-with-body --silent --show-error "$ATLAS_RUNTIME_ENDPOINT" | jq . > "$ATLAS_EVIDENCE_DIR/runtime.json"
           jq -e --arg sha "$GITHUB_SHA" '.identity.git_commit_sha==$sha and .identity.environment=="production"' "$ATLAS_EVIDENCE_DIR/runtime.json" >/dev/null

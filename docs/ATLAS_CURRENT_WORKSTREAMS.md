@@ -141,7 +141,7 @@ Historical P14 research/commits remain audit history only. No Territory/Geometry
 - #977 as an active execution board
 - Person Domain v2 migration and former #1767 residual — closed; the standalone mutation/cleanup path is retired
 - #1845 Person Domain cleanup path — historical evidence only
-- standalone representative-domain backlog/batch work — retired; every new Person receives domain review inside the normal registration lifecycle, with only evidence-driven targeted corrections allowed later
+- standalone representative-domain backlog/batch work — retired; every new Person receives domain review inside the normal registration lifecycle, with only evidence-driven targeted corrections allowed later; retired proposal apply stub and misleading apply-named workflow path removed, historical manifests retained as archive-only evidence
 - old NamuWiki Batch/Unit legacy-drain frontiers
 - eight-Person duplicate authoring-evidence cleanup (#1893)
 - completed Later Jin / Serbia / Egypt / Poland / Germany / Han / France / Japan Polity fixes
