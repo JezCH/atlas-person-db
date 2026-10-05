@@ -235,6 +235,7 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
       place_facts:normalizePersonPlaceFacts(person.place_facts)
     }),
     polity:polity == null ? null : Object.freeze({
+      existing_id:polity.existing_id == null ? null : requiredUuid(polity.existing_id, "polity.existing_id"),
       canonical_name_en:requiredText(polity.canonical_name_en, "HUMAN_AUTHORING_POLITY_EN_REQUIRED"),
       display_name_ko:optionalText(polity.display_name_ko),
       canonical_key:optionalText(polity.canonical_key),
@@ -350,6 +351,28 @@ async function resolveOrCreatePerson(client, person) {
 }
 
 async function resolveOrCreatePolity(client, polity, activity = null) {
+  if (polity.existing_id) {
+    const exact = await client.query(`
+      select p.id::text,p.canonical_key,p.polity_type,p.historicity,
+             en.name as canonical_name_en,ko.name as display_name_ko
+        from atlas_v2.polities p
+        left join atlas_v2.polity_names en
+          on en.polity_id=p.id and en.locale='en' and en.is_preferred=true
+        left join atlas_v2.polity_names ko
+          on ko.polity_id=p.id and ko.locale='ko' and ko.is_preferred=true
+       where p.id=$1::uuid
+       limit 1
+    `, [polity.existing_id]);
+    const row = exact.rows?.[0];
+    if (!row) throw new Error("HUMAN_AUTHORING_POLITY_ID_UNRESOLVED");
+    const metadataMatches = String(row.canonical_name_en || "") === polity.canonical_name_en
+      && String(row.polity_type || "") === polity.polity_type
+      && String(row.historicity || "") === polity.historicity
+      && (polity.canonical_key == null || String(row.canonical_key || "") === polity.canonical_key)
+      && (polity.display_name_ko == null || String(row.display_name_ko || "") === polity.display_name_ko);
+    if (!metadataMatches) throw new Error("HUMAN_AUTHORING_POLITY_IDENTITY_MISMATCH");
+    return Object.freeze({ id:String(row.id).toLowerCase(), disposition:"reused" });
+  }
   let created;
   try {
     created = await createPolity(client, {

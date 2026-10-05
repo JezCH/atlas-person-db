@@ -309,6 +309,8 @@ Therefore manual catalog lookup is **not a mandatory standalone step** for every
 
 If the reviewed entity is clearly legitimate and there is no exact live identity, let Human Authoring create it. Do not search for a comparable ruler merely to infer a Polity or Role.
 
+If bounded Production preflight instead returns a Polity identity ambiguity and review identifies one exact existing Polity, keep the request on the ordinary Human Authoring path and add the reviewed `polity.existing_id`. The server must verify that UUID against the submitted canonical name/type/historicity (and supplied display name/canonical key) before reuse. Do not weaken the resolver or choose among ambiguous names heuristically.
+
 For a **correction** whose reviewed target Polity does not yet exist, do not manufacture an unrelated Person Activity merely to obtain a Polity UUID. Prefer a supported reviewed identity-authoring path or an atomic correction path that can bind the new Polity safely. A prerequisite ordinary Activity may create the Polity only when that Activity is independently historically warranted and already belongs in the user's reviewed work; record the dependency explicitly. If no safe identity path exists, keep the correction blocked rather than inventing data.
 
 ### Source reuse policy

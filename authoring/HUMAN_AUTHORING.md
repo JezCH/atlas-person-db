@@ -1,3 +1,20 @@
+
+### Reviewed exact existing-Polity binding
+
+Ordinary Human Authoring remains name/code based by default. If Production preflight returns a concrete Polity identity ambiguity and bounded review identifies one existing canonical Polity, the same `atlas-human-authoring/v1` request may add:
+
+```json
+"polity": {
+  "existing_id": "<reviewed existing Polity UUID>",
+  "canonical_name_en": "Exact canonical English name",
+  "display_name_ko": "Exact current Korean preferred name",
+  "polity_type": "historical_polity",
+  "historicity": "historical"
+}
+```
+
+The UUID is not trusted by itself. Production must read the referenced Polity and fail closed unless the UUID, canonical English name, supplied Korean display name, polity type, historicity, and any supplied canonical key agree. This is an ambiguity-resolution path only; it never authorizes creating or relabeling a Polity by UUID.
+
 # ATLAS Normal Human Authoring
 
 `/api/atlas-authoring` is the normal operator path for creating a Person and its first Stage 2-native Activity.

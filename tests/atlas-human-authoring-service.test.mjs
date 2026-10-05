@@ -143,6 +143,50 @@ test('existing Person and Polity reuse succeeds without KO while new identities 
   );
 });
 
+
+test('reviewed exact Polity UUID binding resolves ambiguity fail-closed against identity metadata', async () => {
+  const raw=request();
+  raw.polity={...raw.polity,existing_id:UUIDS.polity};
+  const normalized=normalizeHumanAuthoringRequest(raw);
+  assert.equal(normalized.polity.existing_id,UUIDS.polity);
+
+  const exactClient={ async query(sql,params) {
+    assert.match(String(sql),/where p\.id=\$1::uuid/);
+    assert.deepEqual(params,[UUIDS.polity]);
+    return {rows:[{
+      id:UUIDS.polity,
+      canonical_key:'Delhi Sultanate',
+      polity_type:'historical_polity',
+      historicity:'historical',
+      canonical_name_en:'Delhi Sultanate',
+      display_name_ko:'델리 술탄국'
+    }]};
+  }};
+  assert.deepEqual(
+    await resolveOrCreatePolity(exactClient, normalized.polity, normalized.activity),
+    {id:UUIDS.polity,disposition:'reused'}
+  );
+
+  const missingClient={ async query(){ return {rows:[]}; } };
+  await assert.rejects(
+    () => resolveOrCreatePolity(missingClient, normalized.polity, normalized.activity),
+    /HUMAN_AUTHORING_POLITY_ID_UNRESOLVED/
+  );
+
+  const mismatchClient={ async query(){ return {rows:[{
+    id:UUIDS.polity,
+    canonical_key:'Delhi Sultanate',
+    polity_type:'historical_polity',
+    historicity:'historical',
+    canonical_name_en:'Different Polity',
+    display_name_ko:'델리 술탄국'
+  }]}; } };
+  await assert.rejects(
+    () => resolveOrCreatePolity(mismatchClient, normalized.polity, normalized.activity),
+    /HUMAN_AUTHORING_POLITY_IDENTITY_MISMATCH/
+  );
+});
+
 test('existing Role reuse succeeds without KO and a missing new Role KO fails closed', async () => {
   const existing = await resolveOrCreateRole({ query:async()=>({rows:[{id:UUIDS.role}]}) }, { role:'Sultan', role_display_name_ko:null });
   assert.deepEqual(existing, { id:UUIDS.role, disposition:'reused' });
