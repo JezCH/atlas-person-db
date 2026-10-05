@@ -1,0 +1,744 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-domain:religion-audit:2026-10-05:v1",
+  "release_order": 952,
+  "evidence": {
+    "decision": "Person Domain v2 Religion audit. Re-review all 101 live religion Persons against the active eight-sector taxonomy using representative historical identity rather than generic role labels. Religion remains the home of religious leadership, theology, faith traditions and religious reform; dual political, military, literary or cultural activity does not by itself override religion. Move only Persons whose durable representative historical identity is more directly explained by another canonical sector.",
+    "taxonomy": "contracts/person-domain-taxonomy.v2.json",
+    "source_main_sha": "384074f82d2cb43b6d7a183253f80d8d81c748f8",
+    "production_snapshot": {
+      "captured_at": "2026-10-05",
+      "total_persons": 2106,
+      "assigned": 1993,
+      "counts": {
+        "governance": 1350,
+        "military": 208,
+        "science": 79,
+        "technology": 33,
+        "commerce": 33,
+        "culture": 160,
+        "religion": 101,
+        "exploration": 29
+      }
+    },
+    "reviewed_count": 101,
+    "retained_religion_count": 98,
+    "moved_count": 3,
+    "expected_snapshot_counts_after": {
+      "governance": 1350,
+      "military": 209,
+      "science": 79,
+      "technology": 33,
+      "commerce": 33,
+      "culture": 162,
+      "religion": 98,
+      "exploration": 29
+    },
+    "retained_religion": [
+      {
+        "person_id": "59deea38-c3c1-45f4-9f6c-03900abafd09",
+        "canonical_name_en": "Samuel",
+        "preferred_name_ko": "사무엘",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "d70ad209-0fcc-4798-816d-b62370ecaab0",
+        "canonical_name_en": "Elijah",
+        "preferred_name_ko": "엘리야",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "a00c27d8-66d0-45f6-85f6-d5290af198c0",
+        "canonical_name_en": "Elisha",
+        "preferred_name_ko": "엘리사",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "55657a4d-277a-4884-9718-d68f2f894678",
+        "canonical_name_en": "Jonah son of Amittai",
+        "preferred_name_ko": "아미타이의 아들 요나",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "7aeb8094-8496-41fa-937e-fcd72bde462f",
+        "canonical_name_en": "Amos",
+        "preferred_name_ko": "아모스",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "506b493d-7bee-47cf-ae26-7f8fe6a4824a",
+        "canonical_name_en": "Isaiah",
+        "preferred_name_ko": "이사야",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "1d922a8f-5afe-49d2-9950-0861a0425dee",
+        "canonical_name_en": "Jeremiah",
+        "preferred_name_ko": "예레미야",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "e8eaba4f-50aa-4fe3-a00a-a7311680ddf9",
+        "canonical_name_en": "Daniel",
+        "preferred_name_ko": "다니엘",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "6883c6ff-c06f-4ccb-a212-306a9d6c7081",
+        "canonical_name_en": "Ezekiel",
+        "preferred_name_ko": "에스겔",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "87b9541e-cc28-46ca-a849-43a5a14ae162",
+        "canonical_name_en": "Pythagoras",
+        "preferred_name_ko": "피타고라스",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "54974991-4ded-4385-bfe5-60c1ba351d84",
+        "canonical_name_en": "Esther",
+        "preferred_name_ko": "에스더",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "80f9df6b-638d-4869-81cd-e91cde6a2b81",
+        "canonical_name_en": "Ezra",
+        "preferred_name_ko": "에스라",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "d8281874-59eb-4507-9cff-7d665b362352",
+        "canonical_name_en": "Mahavira",
+        "preferred_name_ko": "마하비라",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "8e006020-b055-5d7c-8d18-2bf962a15396",
+        "canonical_name_en": "Gautama Buddha",
+        "preferred_name_ko": "석가모니",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "8e24ea34-006e-4143-91b2-bbb4443c55f8",
+        "canonical_name_en": "Mary, mother of Jesus",
+        "preferred_name_ko": "성모 마리아",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "594d772b-bd67-5741-bbad-2df4e580eb0c",
+        "canonical_name_en": "Jesus",
+        "preferred_name_ko": "예수",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "26a3617c-0898-4698-ab6b-d43e04f75baf",
+        "canonical_name_en": "Judas Iscariot",
+        "preferred_name_ko": "가룟 유다",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "cbfb450d-0cd7-423f-ba6e-ce6eb2f9a47f",
+        "canonical_name_en": "Mary Magdalene",
+        "preferred_name_ko": "막달라 마리아",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "c812a020-5be1-4ab0-9bd7-ea96afdf7b36",
+        "canonical_name_en": "John son of Zebedee",
+        "preferred_name_ko": "사도 요한",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "9c776333-aa7a-4148-83eb-8d10a36b7175",
+        "canonical_name_en": "John the Baptist",
+        "preferred_name_ko": "세례자 요한",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "26a37b16-9017-458c-ab6f-71692bd46dd5",
+        "canonical_name_en": "Peter the Apostle",
+        "preferred_name_ko": "사도 베드로",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "3260c048-920a-4b5b-964c-ba635b6d4fdb",
+        "canonical_name_en": "Paul the Apostle",
+        "preferred_name_ko": "사도 바울로",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "8183eb0a-8e11-43d5-bad4-81ca6e6a2053",
+        "canonical_name_en": "James, brother of Jesus",
+        "preferred_name_ko": "예수의 형제 야고보",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "aeb0fad2-35ec-5906-b95d-c359167a592a",
+        "canonical_name_en": "Zhang Jue",
+        "preferred_name_ko": "장각",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "1b9cf127-1cd2-43c7-8260-99650754ea42",
+        "canonical_name_en": "Pachomius",
+        "preferred_name_ko": "파코미우스",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "b9747f0d-a4cc-4e8d-a0f2-14e08b7c8656",
+        "canonical_name_en": "Frumentius",
+        "preferred_name_ko": "프루멘티우스",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "4bf8192e-0e44-43f7-8971-05b0b1f74111",
+        "canonical_name_en": "Augustine of Hippo",
+        "preferred_name_ko": "히포의 아우구스티누스",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "0172d632-8eaf-4095-92d8-b6620a3980ba",
+        "canonical_name_en": "Pope Leo I",
+        "preferred_name_ko": "교황 레오 1세",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "eb1e02b0-af95-4f69-99bc-c29b7915f710",
+        "canonical_name_en": "Gregory I",
+        "preferred_name_ko": "그레고리오 1세",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "94e6f898-9c65-596e-9576-772e42335e1e",
+        "canonical_name_en": "Muhammad",
+        "preferred_name_ko": "무함마드",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "8e3697c3-694d-4feb-aeb8-6a43bef2249f",
+        "canonical_name_en": "Xuanzang",
+        "preferred_name_ko": "현장",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "be3e847c-3873-443f-8fcc-b65ad87d8585",
+        "canonical_name_en": "Ali ibn Abi Talib",
+        "preferred_name_ko": "알리 이븐 아비 탈리브",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "17ed7c94-16e4-42b0-9ca6-070a8f07ef7d",
+        "canonical_name_en": "Uisang",
+        "preferred_name_ko": "의상",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "df30b154-09b3-4a4e-9f35-1591ac30391f",
+        "canonical_name_en": "Saichō",
+        "preferred_name_ko": "사이초",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "dd6529c5-de4d-4f20-9ba7-187f552e2d90",
+        "canonical_name_en": "Kūkai",
+        "preferred_name_ko": "구카이",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "632d77e3-8f1a-41fe-9aeb-646d2d7edd62",
+        "canonical_name_en": "Al-Tabari",
+        "preferred_name_ko": "알타바리",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "c4b0f1e9-722f-4507-8a27-bc4ee86a19de",
+        "canonical_name_en": "Abdallah ibn Yasin",
+        "preferred_name_ko": "압둘라 이븐 야신",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "366e42d6-90e0-4c02-a02e-9fad4128a76c",
+        "canonical_name_en": "Pope Gregory VII",
+        "preferred_name_ko": "그레고리오 7세",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "424e09aa-f5b2-4225-b01d-3939b448c68a",
+        "canonical_name_en": "Pope Urban II",
+        "preferred_name_ko": "우르바노 2세",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "c9f3181d-d404-40a0-acb6-cf8421766511",
+        "canonical_name_en": "Hasan-i Sabbah",
+        "preferred_name_ko": "하산 이 사바흐",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "3ed8688c-709b-4d65-ac88-6fc4a5c2b6ab",
+        "canonical_name_en": "Al-Ghazali",
+        "preferred_name_ko": "알가잘리",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "d9b85876-9186-4fec-bf01-50e3fd877f61",
+        "canonical_name_en": "Uicheon",
+        "preferred_name_ko": "의천",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "b055503f-2511-4975-bf40-9d984dc72e40",
+        "canonical_name_en": "Ibn Tumart",
+        "preferred_name_ko": "이븐 투마르트",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "7aeb78bc-2be1-466b-bb0d-13b5e55a9f9c",
+        "canonical_name_en": "Rāmānuja",
+        "preferred_name_ko": "라마누자",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "877f7ced-02dc-4efc-884b-5f77f1cde161",
+        "canonical_name_en": "Hildegard of Bingen",
+        "preferred_name_ko": "힐데가르트 폰 빙엔",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "9f26c0d4-db4d-4b0e-9594-ecbaa7503d0b",
+        "canonical_name_en": "Hōnen",
+        "preferred_name_ko": "호넨",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "b55051fe-11da-47ae-84ba-13dfce9815e8",
+        "canonical_name_en": "Jinul",
+        "preferred_name_ko": "지눌",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "d77b581a-98a9-4094-a497-6a8f94598bc4",
+        "canonical_name_en": "Pope Innocent III",
+        "preferred_name_ko": "인노첸시오 3세",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "5ce11517-f344-459b-82ef-db99c4eb4ffe",
+        "canonical_name_en": "Albert of Riga",
+        "preferred_name_ko": "리가의 알베르트",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "1ad440e3-5e17-49a3-bc5e-f163b2733e3e",
+        "canonical_name_en": "Shinran",
+        "preferred_name_ko": "신란",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "a71a1241-0352-475a-916b-c5d817604021",
+        "canonical_name_en": "Dōgen",
+        "preferred_name_ko": "도겐",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "d53f1105-927f-4188-8b5d-eaa1d8773691",
+        "canonical_name_en": "Thomas Aquinas",
+        "preferred_name_ko": "토마스 아퀴나스",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "7c82b545-ee1a-4810-8ec9-aa4a6710ff85",
+        "canonical_name_en": "Nichiren",
+        "preferred_name_ko": "니치렌",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "a5edffb0-770e-4008-a085-b59747d850b7",
+        "canonical_name_en": "Madhva",
+        "preferred_name_ko": "마드바",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "c042e66f-1e76-4840-9555-4c467e0321c8",
+        "canonical_name_en": "Stephen of Perm",
+        "preferred_name_ko": "페름의 스테판",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "34770660-c98c-4a3c-b540-b4f392184a75",
+        "canonical_name_en": "Jan Hus",
+        "preferred_name_ko": "얀 후스",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "ff0b4949-d77a-4a61-9829-79cd814f9117",
+        "canonical_name_en": "Tomás de Torquemada",
+        "preferred_name_ko": "토마스 데 토르케마다",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "409fee4e-d49e-4d62-a424-0a38d661bf15",
+        "canonical_name_en": "Girolamo Savonarola",
+        "preferred_name_ko": "지롤라모 사보나롤라",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "0a0bb353-016d-459b-987d-f5d2ee6bf0ce",
+        "canonical_name_en": "Guru Nanak",
+        "preferred_name_ko": "구루 나나크",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "8c86bca3-7620-4963-816a-99948b1afdce",
+        "canonical_name_en": "Pope Julius II",
+        "preferred_name_ko": "교황 율리오 2세",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "3c778add-f1aa-4211-9c7b-98ab20d22388",
+        "canonical_name_en": "Martin Luther",
+        "preferred_name_ko": "마르틴 루터",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "e321ced7-1d39-485f-bce7-69db19816417",
+        "canonical_name_en": "John Calvin",
+        "preferred_name_ko": "장 칼뱅",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "3bdc8aab-cc63-4b97-8b2a-3bd8c72ae7a1",
+        "canonical_name_en": "Kennyo",
+        "preferred_name_ko": "혼간지 겐뇨",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "d15ffeb5-04bf-4523-befc-222f4455f733",
+        "canonical_name_en": "Gregory XIII",
+        "preferred_name_ko": "그레고리오 13세",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "3ca8a960-1156-4daf-83a7-d32877d72b55",
+        "canonical_name_en": "Takayama Ukon",
+        "preferred_name_ko": "다카야마 우콘",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "6a49799d-6aa2-49e1-a77a-ba2ff5a68b84",
+        "canonical_name_en": "Ngawang Lobsang Gyatso",
+        "preferred_name_ko": "달라이 라마 5세(롭상 갸초)",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "09eeea77-bec5-42ac-b2bb-443649067f1e",
+        "canonical_name_en": "Hans Egede",
+        "preferred_name_ko": "한스 에게데",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "2846a3ce-8c07-4fa2-8196-e83eadd9199e",
+        "canonical_name_en": "Rijkuo-Maja",
+        "preferred_name_ko": "리쿠오 마야",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "dca7ca44-0547-4d16-a0df-576e98075906",
+        "canonical_name_en": "John Wesley",
+        "preferred_name_ko": "존 웨슬리",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "56a31af0-1aa5-40e6-9860-36fb6b41d800",
+        "canonical_name_en": "Junípero Serra",
+        "preferred_name_ko": "후니페로 세라",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "5222077a-9581-4552-8d13-4d22586686ab",
+        "canonical_name_en": "Usman dan Fodio",
+        "preferred_name_ko": "우스만 단 포디오",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "340ba6b0-832b-4a05-9b83-13b8e24521a7",
+        "canonical_name_en": "Marie Laveau",
+        "preferred_name_ko": "마리 라보",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "733c6ff9-56d6-4036-876c-ae85b1b7ba6a",
+        "canonical_name_en": "Joseph Smith Jr.",
+        "preferred_name_ko": "조지프 스미스 주니어",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "ebd12cb5-8da8-4b1d-8f19-d0480d7e5ccf",
+        "canonical_name_en": "Pius IX",
+        "preferred_name_ko": "비오 9세",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "c924b9f6-896f-4472-92f0-4da5bdceddc0",
+        "canonical_name_en": "Brigham Young",
+        "preferred_name_ko": "브리검 영",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "fd343755-96d6-4b80-a9f8-6a00636dba45",
+        "canonical_name_en": "Bahá'u'lláh",
+        "preferred_name_ko": "바하올라",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "e0130004-997a-4d17-9e6c-a4d60465ad8c",
+        "canonical_name_en": "Mbatian",
+        "preferred_name_ko": "음바티안",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "345d792a-5e30-4bfe-9e5d-7fadf7486d7c",
+        "canonical_name_en": "Te Kooti Arikirangi Te Turuki",
+        "preferred_name_ko": "테 코티 아리키랑이 테 투루키",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "4bc8388c-3c98-4943-be31-a5c79084965a",
+        "canonical_name_en": "Thubten Gyatso",
+        "preferred_name_ko": "툽텐 갸초",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "2fb79394-6076-445e-8548-d34ab660813a",
+        "canonical_name_en": "Muhammad Ahmad",
+        "preferred_name_ko": "무함마드 아흐마드",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "a487deed-d427-4ea1-a517-599cc93b5114",
+        "canonical_name_en": "Wovoka",
+        "preferred_name_ko": "워보카",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "65da356e-c39c-4dd6-b07c-c4de604392e0",
+        "canonical_name_en": "Antônio Conselheiro",
+        "preferred_name_ko": "안토니우 콘셀례이루",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "3ece8404-6a75-45aa-961a-997737e6c409",
+        "canonical_name_en": "Tenenisk",
+        "preferred_name_ko": "테네니스크",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "1cdc23c0-22f5-42f6-99d4-2a0ece00ffa4",
+        "canonical_name_en": "Grigori Rasputin",
+        "preferred_name_ko": "그리고리 라스푸틴",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "2f813faa-edb9-47f9-a7c4-5d9676e34fff",
+        "canonical_name_en": "Dashi-Dorzho Itigilov",
+        "preferred_name_ko": "다시도르조 이티길로프",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "d32125da-b2b6-4668-8b01-0076d4fb9deb",
+        "canonical_name_en": "Masémikensh",
+        "preferred_name_ko": "마세미켄시",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "2342a1b8-0a80-463c-8acf-862122d7e401",
+        "canonical_name_en": "Essie Parrish",
+        "preferred_name_ko": "에시 패리시",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "2046a381-55ce-487e-980d-a2bba33a8365",
+        "canonical_name_en": "John Paul I",
+        "preferred_name_ko": "요한 바오로 1세",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "be78b31d-667a-4327-8c3d-084b72849567",
+        "canonical_name_en": "John Paul II",
+        "preferred_name_ko": "요한 바오로 2세",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "c45ebc93-61cc-4d98-8bd7-52fa77470685",
+        "canonical_name_en": "Dolpopa Sherab Gyeltsen",
+        "preferred_name_ko": "돌포파",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "4c8c8901-cd7b-4ff5-ab4a-c22b3e4e6531",
+        "canonical_name_en": "Longchenpa",
+        "preferred_name_ko": "롱첸파",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "3f3cb937-b022-4b5c-9380-2a8625b33a2e",
+        "canonical_name_en": "Maimonides",
+        "preferred_name_ko": "마이모니데스",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "b5a01c64-4995-471d-8062-b40948669fa1",
+        "canonical_name_en": "Saadia Gaon",
+        "preferred_name_ko": "사디아 가온",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "249a4aea-a45d-4249-b0c7-74574ba72b0f",
+        "canonical_name_en": "Yājñavalkya",
+        "preferred_name_ko": "야즈냐발키야",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "a62dc631-f685-4235-9161-0f4c1812e949",
+        "canonical_name_en": "Ibn ʿArabī",
+        "preferred_name_ko": "이븐 아라비",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "3f786834-e3fc-4a5f-af4e-a3b97053f939",
+        "canonical_name_en": "Tsongkhapa",
+        "preferred_name_ko": "쫑카파",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "c00c48a7-ecec-458c-93ad-765a8abaea07",
+        "canonical_name_en": "Kabir",
+        "preferred_name_ko": "카비르",
+        "disposition": "retain_religion"
+      },
+      {
+        "person_id": "386dc31d-4543-429a-a2ca-171c9228b4bd",
+        "canonical_name_en": "Phagpa",
+        "preferred_name_ko": "파스파",
+        "disposition": "retain_religion"
+      }
+    ],
+    "prior_v2_boundary_decisions_reaffirmed": [
+      "Pythagoras",
+      "Al-Tabari",
+      "Rāmānuja",
+      "Madhva",
+      "Maimonides",
+      "Saadia Gaon",
+      "Yājñavalkya",
+      "Ibn ʿArabī",
+      "Tsongkhapa",
+      "Dolpopa Sherab Gyeltsen",
+      "Longchenpa",
+      "Phagpa"
+    ],
+    "edge_case_notes": [
+      {
+        "canonical_name_en": "Enheduanna",
+        "disposition": "move_to_culture",
+        "basis": "Although Enheduanna held the high-priestly office of Nanna, modern Assyriological and literary-history authorities identify her above all as the first known named author in world literature. Under v2, that durable literary identity fits culture more directly than office-based religion.",
+        "sources": [
+          "https://yalebooks.yale.edu/book/9780300276763/enheduana/",
+          "https://newsarchive.berkeley.edu/news/media/releases/2001/03/06_poems.html"
+        ]
+      },
+      {
+        "canonical_name_en": "Lalla Fatma N'Soumer",
+        "disposition": "move_to_military",
+        "basis": "Her spiritual authority is historically relevant, but her ATLAS Activity and historical scholarship center on leading armed Kabyle resistance against the French conquest. Warfare and armed leadership therefore fit military more directly than religion.",
+        "sources": [
+          "https://asjp.cerist.dz/en/downArticle/364/2/1/130841",
+          "https://asjp.cerist.dz/en/article/247924"
+        ]
+      },
+      {
+        "canonical_name_en": "Martin Luther King Jr.",
+        "disposition": "move_to_culture",
+        "basis": "King was a Baptist pastor and drew deeply on Christian theology, but his durable representative historical identity is leadership of the U.S. civil-rights movement and nonviolent social thought. Because v2 assigns social thought to culture and he did not exercise religious institutional leadership as his primary historical role, culture is the direct fit.",
+        "sources": [
+          "https://www.nobelprize.org/prizes/peace/1964/king/biographical/",
+          "https://kinginstitute.stanford.edu/mia-forms-elects-king-president"
+        ]
+      },
+      {
+        "canonical_name_en": "Ali ibn Abi Talib",
+        "disposition": "retain_religion",
+        "basis": "Ali also ruled as fourth caliph, but his enduring identity as a foundational Islamic figure and, in Shi'i tradition, the first Imam makes religion at least as structurally central as the political office. The single-domain rule therefore retains religion rather than mechanically mapping a caliphal reign to governance.",
+        "sources": [
+          "https://www.iranicaonline.org/articles/ali-b-abi-taleb/"
+        ]
+      },
+      {
+        "canonical_name_en": "Ngawang Lobsang Gyatso",
+        "disposition": "retain_religion",
+        "basis": "The Fifth Dalai Lama was explicitly both spiritual and political leader of Tibet. His representative identity remains the Dalai Lama institution, so the political role does not override the religious identity under the no-Role-to-Domain rule.",
+        "sources": [
+          "https://tibet.net/about-tibet/his-holiness/"
+        ]
+      },
+      {
+        "canonical_name_en": "Te Kooti Arikirangi Te Turuki",
+        "disposition": "retain_religion",
+        "basis": "Te Kooti was simultaneously a guerrilla leader, prophet and founder of the Ringatu faith. Because he created a durable faith tradition that survived the war phase, religion remains the better single representative domain.",
+        "sources": [
+          "https://teara.govt.nz/en/biographies/1t45/te-kooti-arikirangi-te-turuki",
+          "https://nzhistory.govt.nz/people/te-kooti-arikirangi-te-turuki"
+        ]
+      },
+      {
+        "canonical_name_en": "Thubten Gyatso",
+        "disposition": "retain_religion",
+        "basis": "The Thirteenth Dalai Lama exercised temporal rule as well as religious authority. His identity as Dalai Lama is the persistent cross-period representative identity, so religion is retained rather than using individual rule intervals to force governance.",
+        "sources": [
+          "https://tibet.net/about-tibet/his-holiness/"
+        ]
+      },
+      {
+        "canonical_name_en": "Muhammad Ahmad",
+        "disposition": "retain_religion",
+        "basis": "Muhammad Ahmad led a revolutionary movement and briefly ruled the Mahdist State, but the Mahdi claim and religious movement are constitutive of his historical identity and state formation. Religion therefore remains the better representative sector.",
+        "sources": [
+          "https://repository.royalholloway.ac.uk/items/4155426b-3f80-47da-b08a-81b48721bc0d/1/"
+        ]
+      },
+      {
+        "canonical_name_en": "Mbatian",
+        "disposition": "retain_religion",
+        "basis": "Mbatian's Laibon authority was ritually and spiritually grounded; the National Museums of Kenya evidence explicitly distinguishes that authority from a conventional political office. Religion remains direct.",
+        "sources": [
+          "https://artsandculture.google.com/story/mbatian-the-story-of-the-great-maasai-laibon-national-museums-of-kenya/bAWh6e02ybc9KA"
+        ]
+      }
+    ]
+  },
+  "operations": [
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "religion-audit-enheduanna-to-culture",
+      "person_id": "d34dd4c6-74d7-46e5-8b83-e2b873504e41",
+      "expected_domain": "religion",
+      "replacement_domain": "culture"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "religion-audit-lalla-fatma-nsoumer-to-military",
+      "person_id": "3fac47b3-ea9a-4fbc-8c93-31e859119f4a",
+      "expected_domain": "religion",
+      "replacement_domain": "military"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "religion-audit-martin-luther-king-jr-to-culture",
+      "person_id": "50599a52-741a-4d48-aec9-0c0c735a49bf",
+      "expected_domain": "religion",
+      "replacement_domain": "culture"
+    }
+  ]
+}
