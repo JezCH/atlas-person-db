@@ -102,9 +102,9 @@ const queueEightSlugs = [
 ];
 
 test('bounded authoring command file selects exactly one manifest request', () => {
-  assert.match(workflow, /command="\$\(tr -d '\\\\r\\\\n' < \.github\/atlas-authoring-preflight\.txt\)"/);
-  assert.match(workflow, /printf '%s\\n' "\$manifest" > \/tmp\/atlas-candidates\.txt/);
-  assert.match(workflow, /Trusted \$\{mode\}-only request selected: \$manifest/);
+  assert.ok(workflow.includes(String.raw`command="$(tr -d '\r\n' < .github/atlas-authoring-preflight.txt)"`));
+  assert.ok(workflow.includes(String.raw`printf '%s\n' "$manifest" > /tmp/atlas-candidates.txt`));
+  assert.ok(workflow.includes('echo "Trusted ${mode}-only request selected: $manifest"'));
   assert.doesNotMatch(workflow, /selected_mode=/);
   assert.doesNotMatch(workflow, /selected_count=/);
   assert.doesNotMatch(workflow, /Rejected mixed preflight\/apply command batch/);
