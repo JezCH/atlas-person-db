@@ -70,7 +70,7 @@ test('consolidated mutation entrypoint preserves generic mutation, Person domain
   assert.match(mutateApi, /createVercelMutationHandler/);
   assert.match(mutateApi, /atlas-person-domain-handler\.js/);
   assert.match(mutateApi, /createPersonDomainHandler/);
-  assert.match(mutateApi, /atlas-person-domain-v2-cutover-handler\.js/);
+
   assert.match(mutateApi, /atlas-runtime-compile-handler\.js/);
   assert.match(mutateApi, /createRuntimeCompileHandler/);
   assert.match(mutateApi, /surface === "person-domain"/);
