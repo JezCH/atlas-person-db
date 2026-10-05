@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:berenice-ii:ptolemaic-kingdom:queen-ruler:246-222-bce:v1",
+  "person": {
+    "canonical_name_en": "Berenice II",
+    "display_name_ko": "베레니케 2세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-05",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "canonical_name_en": "Ptolemaic Kingdom",
+    "display_name_ko": "프톨레마이오스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Queen and ruler",
+    "role_display_name_ko": "여왕·통치자",
+    "period_basis": "reign",
+    "start_year": -246,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -222,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Berenice II married Ptolemy III at his accession and served as Ptolemaic queen and co-ruler during his reign. ATLAS records the secure 246–222 BCE co-ruling interval and ends this Activity with Ptolemy III's reign rather than extending the same office unchanged to Berenice's death in 221 BCE."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Berenice II Euergetis (Ptolemaic queen and co-regent, 267/266–221 BC) — KBR SILVER",
+      "canonical_url": "https://silver.kbr.be/Berenice_II_Euergetis_%28Ptolemaic_queen_and_co-regent%2C_267/266-221_BC%29",
+      "citation_text": "KBR SILVER identifies Berenice II as queen and co-regent of Ptolemaic Egypt from 246 to 222 BCE."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Coin of Berenice II — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/C_1900-1204-9",
+      "citation_text": "The British Museum catalogues this Ptolemaic silver coin with Berenice II as the ruler and Egypt as the minting place, providing direct material evidence of her royal status."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-05",
+      "document_title": "베레니케 2세",
+      "url": "https://namu.wiki/w/%EB%B2%A0%EB%A0%88%EB%8B%88%EC%BC%80%202%EC%84%B8"
+    }
+  }
+}
