@@ -113,6 +113,6 @@ test("closed one-shot production mutation surfaces stay retired",()=>{
   const bootstrap=read(".github/workflows/atlas-authoring-schema-bootstrap.yml");
   assert.doesNotMatch(bootstrap,/PERSON_DOMAIN_V2_CUTOVER_ENDPOINT|atlas-person-domain-v2-cutover/);
 
-  const domainVerify=read(".github/workflows/atlas-person-domain-apply.yml");
+  const domainVerify=read(".github/workflows/atlas-person-domain-verify.yml");
   assert.doesNotMatch(domainVerify,/ATLAS_CUTOVER_ENDPOINT|atlas-person-domain-v2-cutover/);
 });
