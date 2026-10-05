@@ -77,3 +77,42 @@ test("operational launchers do not reference removed scripts",()=>{
     "scripts/build-p9-completeness-repair-plan.mjs"
   ]) assert.equal(workflow.includes(retired),false);
 });
+
+
+test("closed one-shot production mutation surfaces stay retired",()=>{
+  for(const retired of [
+    ".github/workflows/atlas-namuwiki-link.yml",
+    ".github/workflows/atlas-person-domain-v2-cutover.yml",
+    ".github/workflows/atlas-place-authority-backfill.yml",
+    "scripts/parse-namuwiki-command.mjs",
+    "server/atlas-namuwiki-link-github-oidc.js",
+    "server/atlas-namuwiki-link-handler.js",
+    "server/atlas-person-domain-v2-cutover-github-oidc.js",
+    "server/atlas-person-domain-v2-cutover-handler.js",
+    "server/atlas-person-domain-v2-cutover-service.js",
+    "server/atlas-polity-place-function-authority-backfill.js",
+    "tests/atlas-namuwiki-batch-command.test.mjs",
+    "tests/atlas-namuwiki-link-automation.test.mjs",
+    "tests/atlas-namuwiki-link-workflow-contract.test.mjs",
+    "tests/atlas-person-domain-v2-cutover.test.mjs"
+  ]) assert.equal(fs.existsSync(path.join(root,retired)),false,retired);
+
+  const vercel=JSON.parse(read("vercel.json"));
+  assert.equal(vercel.rewrites.some((row)=>row.source==="/api/atlas-namuwiki-link"),false);
+  assert.equal(vercel.rewrites.some((row)=>row.source==="/api/atlas-person-domain-v2-cutover"),false);
+
+  const authoring=read("api/atlas-authoring.js");
+  assert.doesNotMatch(authoring,/namuwiki-link|createNamuWikiLinkHandler/);
+
+  const mutate=read("api/atlas-mutate.js");
+  assert.doesNotMatch(mutate,/person-domain-v2-cutover|createPersonDomainV2CutoverHandler/);
+
+  const apply=read("server/atlas-authoring-apply-handler.js");
+  assert.doesNotMatch(apply,/backfill_polity_place_function_authority|OPERATION_PLACE_AUTHORITY_BACKFILL|applyPolityPlaceFunctionAuthorityBackfill/);
+
+  const bootstrap=read(".github/workflows/atlas-authoring-schema-bootstrap.yml");
+  assert.doesNotMatch(bootstrap,/PERSON_DOMAIN_V2_CUTOVER_ENDPOINT|atlas-person-domain-v2-cutover/);
+
+  const domainVerify=read(".github/workflows/atlas-person-domain-apply.yml");
+  assert.doesNotMatch(domainVerify,/ATLAS_CUTOVER_ENDPOINT|atlas-person-domain-v2-cutover/);
+});
