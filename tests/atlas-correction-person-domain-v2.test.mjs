@@ -94,7 +94,7 @@ test("v2 dispatcher forbids mixing Person domain rewrites with another correctio
     () => service.execute({
       operations: [
         validOperation(),
-        { type: "rewrite_source_citation" }
+        { type: "rewrite_activity" }
       ]
     }, { dryRun: true }),
     /CORRECTION_V2_PERSON_DOMAIN_MIXED_OPERATION_FAMILY_FORBIDDEN/
