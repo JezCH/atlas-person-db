@@ -29,10 +29,7 @@ async function constraintState(client) {
 
 async function inspectPersonDomainV2Readiness(client) {
   const result = await client.query(
-    `select id::text person_id,representative_domain
-       from atlas_v2.persons
-      where representative_domain is not null
-      order by id`
+    "select id::text person_id,representative_domain from atlas_v2.persons where representative_domain is not null order by id"
   );
 
   const counts = {};
