@@ -88,6 +88,8 @@ async function unifiedCounts(client) {
     (select count(*)::int from atlas_v2.relationship_descriptions) as relationship_descriptions,
     (select count(*)::int from atlas_v2.polity_relations) as polity_relations,
     (select count(*)::int from atlas_v2.polity_relation_sources) as polity_relation_sources,
+    (select count(*)::int from atlas_v2.governance_contexts) as governance_contexts,
+    (select count(*)::int from atlas_v2.governance_context_names) as governance_context_names,
     (select count(*)::int from atlas_v2.polity_governance_periods) as governance_periods,
     (select count(*)::int from atlas_v2.polity_governance_period_sources) as governance_sources,
     (select count(*)::int from atlas_v2.polity_designations) as designations,
@@ -103,6 +105,8 @@ function unifiedCountDeltas(operations) {
   const delta = {
     ...core.expectedCountDeltas(coreOperations),
     sources: 0,
+    governance_contexts: 0,
+    governance_context_names: 0,
     governance_periods: 0,
     governance_sources: 0,
     designations: 0,
