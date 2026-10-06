@@ -4,7 +4,12 @@
   "review_status": "approved",
   "person": {
     "canonical_name_en": "Otto I",
-    "display_name_ko": "오토 1세"
+    "display_name_ko": "오토 1세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty"
   },
   "polity": {
     "canonical_name_en": "Kingdom of Italy (Holy Roman Empire)",
