@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:federated-kingdom-south-kasai-after-state-form-merge:2026-10-06:v1",
+  "release_order": 1951,
+  "evidence": {
+    "decision": "Federated Kingdom of South Kasai is the monarchical state-form phase of the continuous South Kasai polity and is preserved as a temporal state_form designation on the Autonomous State of South Kasai survivor.",
+    "continuity_apply_run": "37480902227",
+    "continuity_runtime_compile": "37481031039",
+    "survivor_polity_id": "0e0d2c95-6ffb-40f2-8e2f-e98ab15c6f5a",
+    "production_readback": "2026-10-06 exact readback: legacy Federated Kingdom row has zero external references and only two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:federated-kingdom-south-kasai-after-state-form-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "9d978d31-92d8-4330-999d-161a8cf01547",
+        "canonical_key": "Federated Kingdom of South Kasai",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "0e0d2c95-6ffb-40f2-8e2f-e98ab15c6f5a",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Federated Kingdom of South Kasai",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "남카사이 연방왕국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
