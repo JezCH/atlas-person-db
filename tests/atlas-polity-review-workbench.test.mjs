@@ -221,6 +221,27 @@ test('POL-C1 gives canonical Polity cards plaque material without changing card 
   assert.doesNotMatch(material, /\n\s*height\s*:/);
 });
 
+test('POL-C2 refines Polity review cards without changing review geometry', () => {
+  const start = css.indexOf('UI POL-C2 — Review card material');
+  assert.ok(start >= 0);
+  const material = css.slice(start);
+
+  assert.match(material, /\.polity-review-filter,/);
+  assert.match(material, /\.polity-review-card,/);
+  assert.match(material, /\.polity-review-filter\.is-active/);
+  assert.match(material, /inset 2px 0 0 rgba\(208,188,145,\.58\)/);
+  assert.match(material, /\.polity-review-evidence/);
+  assert.match(material, /\.polity-review-model-note/);
+
+  assert.doesNotMatch(material, /#[0-9a-fA-F]{3,8}\b/);
+  assert.doesNotMatch(material, /\n\s*grid-template-columns\s*:/);
+  assert.doesNotMatch(material, /\n\s*padding\s*:/);
+  assert.doesNotMatch(material, /\n\s*font-size\s*:/);
+  assert.doesNotMatch(material, /\n\s*line-height\s*:/);
+  assert.doesNotMatch(material, /\n\s*width\s*:/);
+  assert.doesNotMatch(material, /\n\s*height\s*:/);
+});
+
 test('combined polity browser and review layout remains responsive', () => {
   assert.match(css, /polity-browser-kpis/);
   assert.match(css, /polity-browser-card/);
