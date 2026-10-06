@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:county-of-portugal-after-kingdom-state-form-merge:2026-10-07:v1",
+  "release_order": 1992,
+  "evidence": {
+    "decision": "County of Portugal is the modeled 1128-c.1139 comital state-form phase of the continuous Portuguese polity and is preserved as a temporal state_form designation on canonical Kingdom of Portugal.",
+    "continuity_apply_run": "37543151073",
+    "survivor_polity_id": "356c77d1-f2e1-5ad8-8716-e06d9fb3cdcc",
+    "production_readback": "2026-10-07 exact readback after #1991: legacy County row has zero external references and only two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:county-of-portugal-after-kingdom-state-form-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "ac18509d-6239-42e6-971c-42f3fe86d464",
+        "canonical_key": "County of Portugal",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "356c77d1-f2e1-5ad8-8716-e06d9fb3cdcc",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "County of Portugal",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "포르투갈 백국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
