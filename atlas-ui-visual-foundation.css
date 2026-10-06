@@ -21,6 +21,22 @@
   --atlas-radius-panel: 4px;
   --atlas-radius-control: 5px;
 
+  /* GLOBAL-M1 — Shared monumental material scale.
+   * One cross-surface contract for graphite sheen, aged-metal hairlines,
+   * selected-state rails, and recessed dark edges.
+   */
+  --atlas-material-hairline-soft: rgba(192, 174, 136, .075);
+  --atlas-material-hairline: rgba(192, 174, 136, .10);
+  --atlas-material-hairline-strong: rgba(208, 188, 145, .20);
+  --atlas-material-rail: rgba(208, 188, 145, .50);
+  --atlas-material-rail-soft: rgba(208, 188, 145, .40);
+  --atlas-material-sheen-soft: rgba(239, 235, 226, .008);
+  --atlas-material-sheen: rgba(239, 235, 226, .012);
+  --atlas-material-sheen-strong: rgba(239, 235, 226, .018);
+  --atlas-material-edge-dark: rgba(0, 0, 0, .16);
+  --atlas-material-edge-dark-strong: rgba(0, 0, 0, .20);
+  --atlas-material-glint: rgba(226, 211, 178, .72);
+
   /* Legacy aliases: keep existing components functional while removing the
    * purple SaaS identity from the global shell.
    */
