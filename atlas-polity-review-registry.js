@@ -44,19 +44,6 @@
     execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
       {
-        id: "hanover-electorate-kingdom",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Electorate of Hanover → Kingdom of Hanover",
-        left: { name: "Electorate of Hanover" },
-        right: { name: "Kingdom of Hanover" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "saxony-electorate-kingdom",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -823,6 +810,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "hanover-electorate-kingdom",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Electorate of Hanover → Kingdom of Hanover state-form merge",
+        left: { name: "Electorate of Hanover", ko: "하노버 선제후국", polity_id: "c9c41233-523f-4357-b526-5c20dd58d36b" },
+        right: { name: "Kingdom of Hanover", ko: "하노버 왕국", polity_id: "15236151-3a4c-4e08-acab-bbf0f51f96eb" },
+        rationale: "동일 Hanoverian 정치체의 rank/state-form 전환으로 통합했습니다. #1975에서 George III의 두 effective electoral Activity를 Kingdom of Hanover survivor로 재연결하되 1803–1813 French occupation/displacement 공백은 유지했습니다. 복구된 Elector phase는 1813-11-04~1814-10-11, King phase는 1814-10-12부터로 정밀화했고, Electorate of Hanover는 1760-10-25~1803(year-granularity) 및 1813-11-04~1814-10-11의 두 temporal state_form designation으로 보존했습니다. #1976에서 zero-external-reference legacy Electorate Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["Deutsche Biographie: Münster note of 12 October 1814 and George III title chronology", "Hannover.de / Stadtarchiv: French occupation and 4 November 1813 restoration chronology", "#1975 Hanover continuity merge; Correction Apply 37491765668 SUCCESS; Runtime compile 37491954413 SUCCESS", "#1976 legacy Electorate Polity retirement; Correction Apply 37492261683 SUCCESS; Runtime compile 37492373150 SUCCESS", "2026-10-07 canonical + runtime exact readback"],
+        locked: true
+      },
       {
         id: "bavaria-duchy-electorate",
         review_group: "resolved_history",
