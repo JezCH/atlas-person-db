@@ -76,3 +76,95 @@
 @media(max-width:900px){.polity-dossier-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.polity-dossier-identity{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.polity-dossier-section-head{display:grid}.polity-dossier-section-head p{text-align:left}.polity-dossier-designations article{grid-template-columns:1fr}.polity-dossier-designations article>span{white-space:normal}.polity-dossier-person>header{align-items:flex-start;display:grid}.polity-dossier-person>header>span{text-align:left}.polity-dossier-person li{grid-template-columns:1fr}}
 @media(max-width:520px){.polity-dossier-overview,.polity-dossier-identity{grid-template-columns:1fr}.polity-dossier-person>header button{min-height:44px}}
+
+
+/* UI POL-C1 — Polity plaque material.
+ * Visual-only refinement for canonical Polity browser cards and dossier panels.
+ * Structure, grid geometry, spacing, typography scale, data semantics, routing,
+ * and review logic remain owned by the existing rules above.
+ */
+.polity-browser-card{
+  border-color:rgba(192,174,136,.11);
+  background-color:var(--atlas-surface-1);
+  background-image:
+    linear-gradient(180deg,rgba(239,235,226,.014),rgba(239,235,226,.003) 38%,rgba(0,0,0,.035) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(239,235,226,.018),
+    inset 0 -1px 0 rgba(0,0,0,.22);
+}
+
+.polity-browser-card>summary{
+  transition:
+    background-color var(--atlas-motion-fast,110ms) var(--atlas-motion-ease,ease),
+    box-shadow var(--atlas-motion-fast,110ms) var(--atlas-motion-ease,ease);
+}
+
+.polity-browser-card>summary:hover{
+  background-color:rgba(239,235,226,.012);
+}
+
+.polity-browser-card[open]{
+  border-color:rgba(208,188,145,.20);
+  box-shadow:
+    inset 2px 0 0 rgba(208,188,145,.52),
+    inset 0 1px 0 rgba(239,235,226,.024),
+    inset 0 -1px 0 rgba(0,0,0,.25);
+}
+
+.polity-browser-card[open]>summary{
+  background-image:
+    linear-gradient(90deg,rgba(192,174,136,.035),rgba(239,235,226,.008) 34%,transparent 78%);
+  border-bottom-color:rgba(192,174,136,.10);
+}
+
+.polity-browser-title strong{
+  color:#e9e4d9;
+  text-shadow:0 1px 0 rgba(0,0,0,.48);
+}
+
+.polity-browser-card-stats span{
+  border:1px solid rgba(192,174,136,.07);
+  border-radius:2px;
+  background-color:var(--atlas-surface-3);
+  box-shadow:inset 0 1px 0 rgba(239,235,226,.010);
+}
+
+.polity-browser-meta>span,
+.polity-browser-activities li,
+.polity-dossier-overview>div,
+.polity-dossier-identity>span,
+.polity-dossier-designations article,
+.polity-dossier-person{
+  border-color:rgba(192,174,136,.075);
+  border-radius:3px;
+  background-color:var(--atlas-surface-1);
+  background-image:
+    linear-gradient(180deg,rgba(239,235,226,.010),transparent 58%);
+  box-shadow:
+    inset 0 1px 0 rgba(239,235,226,.012),
+    inset 0 -1px 0 rgba(0,0,0,.16);
+}
+
+.polity-dossier-section+.polity-dossier-section{
+  border-top-color:rgba(192,174,136,.08);
+}
+
+.polity-dossier-person>header{
+  background-color:var(--atlas-surface-2);
+  background-image:
+    linear-gradient(180deg,rgba(239,235,226,.014),transparent 72%);
+  box-shadow:inset 0 -1px 0 rgba(192,174,136,.07);
+}
+
+.polity-dossier-name-list>span,
+.polity-dossier-empty{
+  border-radius:2px;
+  background-color:var(--atlas-surface-2);
+  background-image:
+    linear-gradient(180deg,rgba(239,235,226,.008),transparent 72%);
+}
+
+.polity-dossier-person li{
+  border-top-color:rgba(192,174,136,.06);
+}
+
