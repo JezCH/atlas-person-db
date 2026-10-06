@@ -521,6 +521,124 @@
 }
 
 /* Mobile: keep the same hierarchy, reduce simultaneous surface weight. */
+
+
+/* UI DASH-M1 — Museum ledger material.
+ * Desktop-only material refinement for Dashboard cards and ledger rows.
+ * Information architecture, KPI geometry, charts/tables, spacing, typography scale,
+ * data semantics, and mobile hierarchy remain owned by the existing rules.
+ */
+@media (min-width: 601px) {
+  .dashboard-control-center .card {
+    border-color: rgba(192,174,136,.10);
+    background-color: var(--dashboard-surface);
+    background-image:
+      linear-gradient(180deg,rgba(239,235,226,.014),rgba(239,235,226,.002) 46%,rgba(0,0,0,.032) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(239,235,226,.016),
+      inset 0 -1px 0 rgba(0,0,0,.20),
+      0 10px 30px rgba(0,0,0,.07);
+  }
+
+  .dashboard-kpi {
+    border-color: rgba(192,174,136,.085);
+    background-color: var(--dashboard-surface) !important;
+    background-image:
+      linear-gradient(180deg,rgba(239,235,226,.012),rgba(239,235,226,.002) 58%,rgba(0,0,0,.025) 100%) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(239,235,226,.014),
+      inset 0 -1px 0 rgba(0,0,0,.18);
+  }
+
+  .dashboard-kpi::before {
+    background:
+      linear-gradient(90deg,rgba(208,188,145,.58),rgba(192,174,136,.16),transparent);
+  }
+
+  .dashboard-kpi-action:hover:not(:disabled) {
+    border-color: rgba(208,188,145,.22);
+    background-color: var(--dashboard-surface-2) !important;
+    background-image:
+      linear-gradient(90deg,rgba(192,174,136,.030),rgba(239,235,226,.004) 42%,transparent 86%) !important;
+    box-shadow:
+      inset 2px 0 0 rgba(208,188,145,.50),
+      inset 0 1px 0 rgba(239,235,226,.015);
+  }
+
+  .dashboard-panel,
+  .dashboard-tools {
+    border-color: rgba(192,174,136,.085);
+    background-color: var(--dashboard-surface) !important;
+    background-image:
+      linear-gradient(180deg,rgba(239,235,226,.010),rgba(239,235,226,.002) 54%,rgba(0,0,0,.024) 100%) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(239,235,226,.013),
+      inset 0 -1px 0 rgba(0,0,0,.16);
+  }
+
+  .dashboard-panel-head {
+    border-bottom-color: rgba(192,174,136,.075);
+  }
+
+  .dashboard-issue-grid button,
+  .dashboard-issue-grid .dashboard-attention-link,
+  .dashboard-breakdown-row,
+  .dashboard-domain-row,
+  .dashboard-source-card,
+  .dashboard-publication-stage,
+  .dashboard-drift-card,
+  .dashboard-polity-summary article,
+  .dashboard-polity-row,
+  .dashboard-work-segment-item,
+  .dashboard-namuwiki-legend-item {
+    border-color: rgba(192,174,136,.075);
+    background-color: var(--dashboard-surface);
+    background-image:
+      linear-gradient(180deg,rgba(239,235,226,.008),transparent 66%);
+    box-shadow:
+      inset 0 1px 0 rgba(239,235,226,.010),
+      inset 0 -1px 0 rgba(0,0,0,.14);
+  }
+
+  .dashboard-issue-grid button:hover:not(:disabled),
+  .dashboard-issue-grid .dashboard-attention-link:hover,
+  .dashboard-breakdown-action:hover,
+  .dashboard-polity-row:hover:not(:disabled) {
+    border-color: rgba(208,188,145,.18);
+    background-color: var(--dashboard-surface-2);
+    background-image:
+      linear-gradient(90deg,rgba(192,174,136,.026),rgba(239,235,226,.004) 40%,transparent 84%);
+    box-shadow:
+      inset 2px 0 0 rgba(208,188,145,.42),
+      inset 0 1px 0 rgba(239,235,226,.012);
+  }
+
+  .dashboard-polity-toolbar > div {
+    border-color: rgba(192,174,136,.08);
+    background-color: var(--dashboard-bg);
+    background-image: linear-gradient(180deg,rgba(239,235,226,.008),transparent 70%);
+    box-shadow: inset 0 1px 0 rgba(239,235,226,.010);
+  }
+
+  .dashboard-polity-toolbar button[aria-pressed="true"] {
+    border-color: rgba(208,188,145,.30);
+    background-color: var(--dashboard-surface-2);
+    box-shadow:
+      inset 0 -1px 0 rgba(208,188,145,.42),
+      inset 0 1px 0 rgba(239,235,226,.012);
+  }
+
+  .dashboard-heatmap-wrap,
+  .dashboard-completeness-wrap,
+  .dashboard-runtime-exclusion-wrap {
+    border-color: rgba(192,174,136,.08);
+    background-color: var(--dashboard-bg);
+    background-image:
+      linear-gradient(180deg,rgba(239,235,226,.006),transparent 56%);
+    box-shadow: inset 0 1px 0 rgba(239,235,226,.010);
+  }
+}
+
 @media (max-width: 600px) {
   .dashboard-control-center {
     gap: 9px;
