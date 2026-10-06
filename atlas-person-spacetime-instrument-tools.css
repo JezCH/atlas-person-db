@@ -809,6 +809,171 @@
   color: var(--spacetime-tools-muted);
 }
 
+/* SPACETIME-M1 — Shared instrument material integration.
+ * Material-only bridge for toolbar, telemetry, minimap, inspector and evidence.
+ * Responsive hierarchy, control dimensions, panel geometry, interaction IDs,
+ * camera semantics, and evidence content remain unchanged.
+ */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-toolbar {
+  border-top-color: var(--atlas-material-hairline-soft);
+  border-bottom-color: var(--atlas-material-hairline);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input {
+  border-bottom-color: var(--atlas-material-hairline);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input:hover {
+  border-bottom-color: var(--atlas-material-hairline-strong);
+  background: var(--atlas-material-sheen);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input:focus {
+  border-bottom-color: var(--spacetime-tools-metal);
+  background: var(--atlas-material-wash-hover);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend > summary {
+  border-color: var(--atlas-material-hairline-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button:focus-visible,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend > summary:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend > summary:focus-visible {
+  background: var(--atlas-material-wash-hover);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button#spacetimeCameraZoomReset {
+  border-color: var(--atlas-material-hairline-strong);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-content,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more-content {
+  border-color: var(--atlas-material-hairline);
+  background-color: rgba(18,21,24,.985);
+  background-image: linear-gradient(180deg,var(--atlas-material-sheen),transparent 74%);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen),
+    0 14px 30px rgba(0,0,0,.24);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-results,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row {
+  border-color: var(--atlas-material-hairline-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list button {
+  border-left-color: var(--atlas-material-hairline);
+  background: var(--atlas-material-sheen-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list button:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list button:focus-visible {
+  border-left-color: var(--spacetime-tools-metal);
+  background: var(--atlas-material-wash-active);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile {
+  border-bottom-color: var(--atlas-material-hairline-strong);
+  background: linear-gradient(90deg,var(--atlas-material-wash-active),transparent 62%);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities button {
+  border-left-color: var(--atlas-material-hairline);
+  background: var(--atlas-material-sheen-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities button:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities button:focus-visible {
+  border-left-color: var(--spacetime-tools-metal);
+  background: var(--atlas-material-wash-selected);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap {
+  border-top-color: var(--atlas-material-hairline);
+  border-bottom-color: var(--atlas-material-hairline-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-surface {
+  border-color: var(--atlas-material-hairline);
+  background-color: #101315;
+  background-image: linear-gradient(180deg,var(--atlas-material-sheen-soft),transparent 72%);
+  box-shadow: inset 0 1px 0 var(--atlas-material-sheen-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-viewport {
+  background: var(--atlas-material-wash-active);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector {
+  border-color: var(--atlas-material-hairline);
+  background-color: var(--spacetime-tools-raised);
+  background-image: linear-gradient(180deg,var(--atlas-material-sheen),transparent 80px);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen),
+    inset 0 -1px 0 var(--atlas-material-edge-dark);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty {
+  border-color: var(--atlas-material-hairline-soft);
+  background-color: var(--spacetime-tools-ink);
+  background-image: linear-gradient(180deg,var(--atlas-material-sheen-soft),transparent 72%);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activities,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-disclaimer {
+  border-color: var(--atlas-material-hairline-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button {
+  border-color: var(--atlas-material-hairline-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button:focus-visible,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select:hover,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select:focus-visible {
+  background: var(--atlas-material-wash-hover);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] #spacetimeDetailPerson {
+  background: var(--atlas-material-wash-active);
+  box-shadow: inset 0 -1px 0 var(--atlas-material-rail);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity {
+  border-color: var(--atlas-material-hairline-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity.is-selected {
+  border-color: var(--atlas-material-hairline-strong);
+  background: linear-gradient(90deg,var(--atlas-material-wash-selected),transparent 72%);
+  box-shadow: inset 2px 0 0 var(--atlas-material-rail);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-row,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-evidence .spacetime-selection-evidence-row {
+  border-color: var(--atlas-material-hairline-soft);
+  background-color: var(--spacetime-tools-ink);
+  background-image: linear-gradient(180deg,var(--atlas-material-sheen-soft),transparent 72%);
+  box-shadow: inset 0 1px 0 var(--atlas-material-sheen-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-unresolved-grid > article {
+  border-color: var(--atlas-material-hairline);
+  background-color: var(--spacetime-tools-raised);
+  background-image: linear-gradient(180deg,var(--atlas-material-sheen-soft),transparent 72%);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-soft),
+    inset 0 -1px 0 var(--atlas-material-edge-dark);
+}
+
 /* V8 owns responsive hierarchy. V7 changes only the skin at current breakpoints. */
 @media (max-width: 760px) {
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-toolbar {
