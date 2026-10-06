@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:county-of-savoy-after-duchy-state-form-merge:2026-10-07:v1",
+  "release_order": 1964,
+  "evidence": {
+    "decision": "County of Savoy is the pre-ducal state-form phase of the continuous Savoy polity and is preserved as a temporal state_form designation on canonical Duchy of Savoy.",
+    "continuity_apply_run": "37486419744",
+    "continuity_runtime_compile": "37486530556",
+    "survivor_polity_id": "f48c1835-d324-4b02-9e41-efb4a70d9e26",
+    "production_readback": "2026-10-07 exact readback: legacy County row has zero external references and only two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:county-of-savoy-after-duchy-state-form-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "45a8c3f3-cf7e-415a-a51c-b651b2761828",
+        "canonical_key": "County of Savoy",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "f48c1835-d324-4b02-9e41-efb4a70d9e26",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "County of Savoy",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "사보이 백국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
