@@ -5,11 +5,16 @@ const { insertExactSource } = require("./atlas-source-service.js");
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const STAGE2_ASSERTION_TYPES = new Set([
   "assert_source",
+  "assert_governance_context",
   "assert_governance_period",
   "assert_polity_designation",
   "assert_polity_identity_relation"
 ]);
 
+const GOVERNANCE_CONTEXT_FIELDS = Object.freeze([
+  "id","canonical_key","governance_type","historicity"
+]);
+const GOVERNANCE_CONTEXT_UUID_FIELDS = new Set(["id"]);
 const GOVERNANCE_FIELDS = Object.freeze([
   "id","polity_id","governance_context_id",
   "valid_from_year","valid_from_month","valid_from_day","valid_from_granularity","valid_from_certainty","valid_from_calendar",
@@ -85,6 +90,42 @@ function normalizeTripleSourceLinks(rawLinks, parentField, parentId, label) {
   return links;
 }
 
+function normalizeGovernanceContextName(raw, contextId, label) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error(`CORRECTION_V2_${label}_NAME_REQUIRED`);
+  const id = requireUuid(raw.id, `CORRECTION_V2_${label}_NAME_ID_INVALID`);
+  const parent = requireUuid(raw.governance_context_id, `CORRECTION_V2_${label}_NAME_PARENT_INVALID`);
+  if (parent !== contextId) throw new Error(`CORRECTION_V2_${label}_NAME_PARENT_MISMATCH`);
+  const locale = String(raw.locale || "").trim();
+  const name = String(raw.name || "").trim();
+  const nameType = String(raw.name_type || "").trim();
+  if (!locale || !name || !nameType || typeof raw.is_preferred !== "boolean") throw new Error(`CORRECTION_V2_${label}_NAME_INVALID`);
+  return { id, governance_context_id:contextId, locale, name, name_type:nameType, is_preferred:raw.is_preferred };
+}
+
+function normalizeGovernanceContextBundle(raw, label) {
+  const row = normalizeRow(raw?.context, GOVERNANCE_CONTEXT_FIELDS, GOVERNANCE_CONTEXT_UUID_FIELDS, `${label}_CONTEXT`);
+  row.canonical_key = String(row.canonical_key || "").trim();
+  row.governance_type = String(row.governance_type || "").trim();
+  row.historicity = String(row.historicity || "").trim();
+  if (!row.canonical_key || !["government","constitutional_regime","governing_regime"].includes(row.governance_type) || !row.historicity) {
+    throw new Error(`CORRECTION_V2_${label}_CONTEXT_METADATA_INVALID`);
+  }
+  const names = (raw?.names || []).map((item, index) => normalizeGovernanceContextName(item, row.id, `${label}_${index + 1}`));
+  if (!names.length) throw new Error(`CORRECTION_V2_${label}_NAME_REQUIRED`);
+  const seenIds = new Set();
+  const preferredLocales = new Set();
+  for (const name of names) {
+    if (seenIds.has(name.id)) throw new Error(`CORRECTION_V2_${label}_NAME_ID_REUSED`);
+    seenIds.add(name.id);
+    if (name.is_preferred) {
+      if (preferredLocales.has(name.locale)) throw new Error(`CORRECTION_V2_${label}_PREFERRED_LOCALE_REUSED`);
+      preferredLocales.add(name.locale);
+    }
+  }
+  names.sort((a,b) => a.locale.localeCompare(b.locale) || a.id.localeCompare(b.id));
+  return { context:row, names };
+}
+
 function normalizeGovernanceBundle(raw, label) {
   const row = normalizeRow(raw?.period, GOVERNANCE_FIELDS, GOVERNANCE_UUID_FIELDS, `${label}_PERIOD`);
   validateInterval(row, "valid", `${label}_PERIOD`);
@@ -157,6 +198,12 @@ function normalizeStage2AssertionOperation(raw, index) {
     if (absent !== bundle.source.id) throw new Error(`CORRECTION_V2_${label}_SOURCE_ID_MISMATCH`);
     return { type, decision_id: String(raw.decision_id || ""), exact_before: { source_absent_id: absent }, exact_after: bundle };
   }
+  if (type === "assert_governance_context") {
+    const bundle = normalizeGovernanceContextBundle(raw.exact_after, `${label}_GOVERNANCE_CONTEXT`);
+    const absent = requireUuid(raw?.exact_before?.governance_context_absent_id, `CORRECTION_V2_${label}_GOVERNANCE_CONTEXT_ABSENT_ID_INVALID`);
+    if (absent !== bundle.context.id) throw new Error(`CORRECTION_V2_${label}_GOVERNANCE_CONTEXT_ID_MISMATCH`);
+    return { type, decision_id:String(raw.decision_id || ""), exact_before:{ governance_context_absent_id:absent }, exact_after:bundle };
+  }
   if (type === "assert_governance_period") {
     const bundle = normalizeGovernanceBundle(raw.exact_after, `${label}_GOVERNANCE`);
     const absent = requireUuid(raw?.exact_before?.period_absent_id, `CORRECTION_V2_${label}_PERIOD_ABSENT_ID_INVALID`);
@@ -182,6 +229,26 @@ async function loadSourceBundle(client, id, { forUpdate = false } = {}) {
   const source = Object.fromEntries(SOURCE_FIELDS.map((field) => [field, row.rows[0][field] ?? null]));
   source.id = String(source.id).toLowerCase();
   return { source };
+}
+
+async function loadGovernanceContextBundle(client, id, { forUpdate = false } = {}) {
+  const row = await client.query(`select id::text,canonical_key,governance_type,historicity
+    from atlas_v2.governance_contexts where id=$1::uuid${forUpdate ? " for update" : ""}`, [id]);
+  if (!row.rowCount) return null;
+  const context = normalizeRow(row.rows[0], GOVERNANCE_CONTEXT_FIELDS, GOVERNANCE_CONTEXT_UUID_FIELDS, "DB_GOVERNANCE_CONTEXT");
+  const names = await client.query(`select id::text,governance_context_id::text,locale,name,name_type,is_preferred
+    from atlas_v2.governance_context_names where governance_context_id=$1::uuid order by locale,id::text`, [id]);
+  return {
+    context,
+    names:names.rows.map((item) => ({
+      id:String(item.id).toLowerCase(),
+      governance_context_id:String(item.governance_context_id).toLowerCase(),
+      locale:item.locale,
+      name:item.name,
+      name_type:item.name_type,
+      is_preferred:item.is_preferred
+    }))
+  };
 }
 
 async function loadGovernanceBundle(client, id, { forUpdate = false } = {}) {
@@ -237,6 +304,13 @@ async function assertStage2AssertionAbsent(client, operation) {
       if (keyCollision.rowCount) throw new Error(`CORRECTION_V2_SOURCE_KEY_ALREADY_EXISTS:${operation.decision_id}`);
     }
   }
+  else if (operation.type === "assert_governance_context") {
+    existing = await loadGovernanceContextBundle(client, operation.exact_after.context.id, { forUpdate:true });
+    if (!existing) {
+      const keyCollision = await client.query(`select id::text from atlas_v2.governance_contexts where canonical_key=$1 limit 1`, [operation.exact_after.context.canonical_key]);
+      if (keyCollision.rowCount) throw new Error(`CORRECTION_V2_GOVERNANCE_CONTEXT_KEY_ALREADY_EXISTS:${operation.decision_id}`);
+    }
+  }
   else if (operation.type === "assert_governance_period") existing = await loadGovernanceBundle(client, operation.exact_after.period.id, { forUpdate:true });
   else if (operation.type === "assert_polity_designation") existing = await loadDesignationBundle(client, operation.exact_after.designation.id, { forUpdate:true });
   else existing = await loadIdentityRelationBundle(client, operation.exact_after.relation.id, { forUpdate:true });
@@ -246,6 +320,15 @@ async function assertStage2AssertionAbsent(client, operation) {
 async function insertStage2AssertionBundle(client, operation) {
   if (operation.type === "assert_source") {
     await insertExactSource(client, operation.exact_after.source);
+    return;
+  }
+  if (operation.type === "assert_governance_context") {
+    const row = operation.exact_after.context;
+    await client.query(`insert into atlas_v2.governance_contexts(${GOVERNANCE_CONTEXT_FIELDS.join(",")}) values(${GOVERNANCE_CONTEXT_FIELDS.map((_, i) => `${i + 1}`).join(",")})`, GOVERNANCE_CONTEXT_FIELDS.map((field) => row[field]));
+    for (const name of operation.exact_after.names) {
+      await client.query(`insert into atlas_v2.governance_context_names(id,governance_context_id,locale,name,name_type,is_preferred) values($1::uuid,$2::uuid,$3,$4,$5,$6)`,
+        [name.id,name.governance_context_id,name.locale,name.name,name.name_type,name.is_preferred]);
+    }
     return;
   }
   if (operation.type === "assert_governance_period") {
@@ -269,6 +352,7 @@ async function insertStage2AssertionBundle(client, operation) {
 async function verifyStage2AssertionApplied(client, operation) {
   let actual;
   if (operation.type === "assert_source") actual = await loadSourceBundle(client, operation.exact_after.source.id, { forUpdate:true });
+  else if (operation.type === "assert_governance_context") actual = await loadGovernanceContextBundle(client, operation.exact_after.context.id, { forUpdate:true });
   else if (operation.type === "assert_governance_period") actual = await loadGovernanceBundle(client, operation.exact_after.period.id, { forUpdate:true });
   else if (operation.type === "assert_polity_designation") actual = await loadDesignationBundle(client, operation.exact_after.designation.id, { forUpdate:true });
   else actual = await loadIdentityRelationBundle(client, operation.exact_after.relation.id, { forUpdate:true });
@@ -276,9 +360,12 @@ async function verifyStage2AssertionApplied(client, operation) {
 }
 
 function stage2AssertionCountDelta(operation) {
-  const delta = { sources:0, governance_periods:0, governance_sources:0, designations:0, designation_names:0, designation_sources:0, identity_relations:0, identity_relation_sources:0 };
+  const delta = { sources:0, governance_contexts:0, governance_context_names:0, governance_periods:0, governance_sources:0, designations:0, designation_names:0, designation_sources:0, identity_relations:0, identity_relation_sources:0 };
   if (operation.type === "assert_source") {
     delta.sources = 1;
+  } else if (operation.type === "assert_governance_context") {
+    delta.governance_contexts = 1;
+    delta.governance_context_names = operation.exact_after.names.length;
   } else if (operation.type === "assert_governance_period") {
     delta.governance_periods = 1;
     delta.governance_sources = operation.exact_after.source_links.length;
@@ -295,6 +382,7 @@ function stage2AssertionCountDelta(operation) {
 
 function stage2AssertionIdentity(operation) {
   if (operation.type === "assert_source") return { id:operation.exact_after.source.id, source_links:[], name_ids:[] };
+  if (operation.type === "assert_governance_context") return { id:operation.exact_after.context.id, source_links:[], name_ids:operation.exact_after.names.map((name) => name.id) };
   if (operation.type === "assert_governance_period") return { id:operation.exact_after.period.id, source_links:operation.exact_after.source_links, name_ids:[] };
   if (operation.type === "assert_polity_designation") return { id:operation.exact_after.designation.id, source_links:operation.exact_after.source_links, name_ids:operation.exact_after.names.map((name) => name.id) };
   return { id:operation.exact_after.relation.id, source_links:operation.exact_after.source_links, name_ids:[] };
@@ -303,11 +391,13 @@ function stage2AssertionIdentity(operation) {
 module.exports = Object.freeze({
   STAGE2_ASSERTION_TYPES,
   SOURCE_FIELDS,
+  GOVERNANCE_CONTEXT_FIELDS,
   GOVERNANCE_FIELDS,
   DESIGNATION_FIELDS,
   IDENTITY_RELATION_FIELDS,
   normalizeStage2AssertionOperation,
   loadSourceBundle,
+  loadGovernanceContextBundle,
   loadGovernanceBundle,
   loadDesignationBundle,
   loadIdentityRelationBundle,
