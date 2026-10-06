@@ -3,7 +3,7 @@
 **As of:** 2026-10-06  
 **Authority:** current `main` + current Production + latest durable checkpoint  
 **Workstream state baseline:** verified against current repository state on 2026-10-05  
-**Latest Ireland data-mutation checkpoint:** Correction Apply `37465423564` SUCCESS on Production after #1933; obsolete Irish Free State / Provisional Government Polity rows retired to canonical Ireland
+**Latest Polity data-mutation checkpoint:** Correction Apply `37473452899` SUCCESS after #1939; Kingdom of Italy false merge split into medieval, Napoleonic, and 1861–1946 modern Polity identities; Runtime compile `37473567698` SUCCESS
 **Repository/Production state:** current executable cleanup is deployed; closed one-shot NamuWiki, Person Domain v2 cutover and Place authority backfill mutation surfaces are retired, and live Person Domain verification is independent from the historical cutover snapshot.  
 **P14:** `PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`
 
@@ -25,18 +25,14 @@ The registry distinguishes **execution order** from **audit obligation**. Histor
 
 Current sequence:
 
-1. **Kingdom of Italy** — exact next mutation/review resume point; reviewed 3-way historical split:
-   - medieval Regnum Italiae;
-   - Napoleonic Kingdom of Italy, 1805–1814;
-   - Kingdom of Italy, 1861–1946.
-2. **Carry-forward closure audit** — re-review every still-unclosed historical seed against current Production:
+1. **Carry-forward closure audit** — re-review every still-unclosed historical seed against current Production:
    - 29 same-identity / continuity candidates;
    - 16 separate historical-family judgments;
    - 2 temporal-designation residuals (Russia, Sweden);
    - 2 KO/EN naming-collision residuals;
    - 16 catastrophic-territorial-rupture probes, with Yuan → Northern Yuan already locked `KEEP_SEPARATE`.
-3. **Fresh whole-Production discovery scan** after the seeded ledger is closed, to catch cases not represented in the historical seed set.
-4. Close the workstream only when every seed and every fresh discovery result has a terminal disposition or an explicit unresolved hold reason.
+2. **Fresh whole-Production discovery scan** after the seeded ledger is closed, to catch cases not represented in the historical seed set.
+3. Close the workstream only when every seed and every fresh discovery result has a terminal disposition or an explicit unresolved hold reason.
 
 Important distinction:
 
@@ -44,7 +40,7 @@ Important distinction:
 - **Do not discard old audit seeds merely because they are historical.**
 - Rebuild the decision from current Production + current identity rules, then assign a terminal status.
 
-Already completed Polity fixes remain closed unless contradictory current evidence appears, including the Ireland family correction, Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, the Kingdom-of-France generic/formal duplicate correction and the Japan lineage/occupation/designation rebuild. France's wider regime-family audit is a separate open seed and must not be conflated with the completed duplicate correction.
+Already completed Polity fixes remain closed unless contradictory current evidence appears, including the Ireland family correction, the Kingdom of Italy 3-way split, Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, the Kingdom-of-France generic/formal duplicate correction and the Japan lineage/occupation/designation rebuild. France's wider regime-family audit is a separate open seed and must not be conflated with the completed duplicate correction.
 
 ### B. UI information coverage / completeness — #1896
 
@@ -161,10 +157,10 @@ Portrait content, P14 historical-map Geometry and the broad legacy census are pa
 
 If no different task is explicitly selected by the user:
 
-**Resume #1895 at the Kingdom of Italy 3-way split.**
+**Resume #1895 at `Union of South Africa → South Africa`, the first still-unclosed carry-forward continuity seed.**
 
-The Ireland family is terminal `FIXED` as of 2026-10-06: Irish Republic remains a distinct revolutionary Polity; Irish Free State is preserved as the 1922–1937 temporal state-form designation on canonical Ireland; Provisional Government of Ireland is preserved as a governance context/period; the two obsolete Polity rows are retired.
+The Ireland family and Kingdom of Italy 3-way split are terminal `FIXED` as of 2026-10-06. Italy now has three distinct historical Polity identities: the medieval Kingdom of Italy associated with the Holy Roman imperial complex, the Napoleonic Kingdom of Italy (1805–1814), and the existing modern Kingdom of Italy (1861–1946). Canonical and Runtime projections both contain 2 / 1 / 6 Activities respectively.
 
-After Kingdom of Italy closes, continue through the current review registry's carry-forward audit groups until every seed has a terminal disposition, then run the fresh whole-Production discovery scan.
+Continue through the current review registry's carry-forward audit groups in current order until every seed has a terminal disposition, then run the fresh whole-Production discovery scan.
 
 If the user selects a Person candidate or registration target, that explicit choice may run independently through #1374/#1375 without changing the active-project backlog.
