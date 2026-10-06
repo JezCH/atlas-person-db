@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-thales-20261007:miletus:intellectual-activity:c585-bce:v1",
+  "person": {
+    "canonical_name_en": "Thales",
+    "display_name_ko": "탈레스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "science"
+  },
+  "polity": {
+    "canonical_name_en": "Miletus",
+    "display_name_ko": "밀레토스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Philosopher and natural philosopher",
+    "role_display_name_ko": "철학자·자연철학자",
+    "period_basis": "intellectual_activity",
+    "start_year": -585,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -585,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Thales is securely treated as an early sixth-century BCE Milesian thinker and a foundational figure in Greek natural philosophy. ATLAS uses c.585 BCE only as a representative floruit point anchored in the ancient eclipse tradition; it does not assert that the eclipse prediction itself is historically certain or fabricate a career-long activity interval."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Presocratic Philosophy — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/presocratics/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy identifies Thales of Miletus as the earliest Milesian natural philosopher, places him around the beginning of the sixth century BCE, and distinguishes the later eclipse-prediction tradition from secure historical claims."
+    },
+    {
+      "source_type": "primary_source_translation",
+      "title": "Diogenes Laertius, Lives of Eminent Philosophers, Book I, Chapter 1: Thales — Perseus Digital Library",
+      "canonical_url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0258%3Abook%3D1%3Achapter%3D1",
+      "citation_text": "Diogenes Laertius preserves the ancient tradition of Thales as a Milesian sage and student of nature and gives his floruit as approximately 585 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-07",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_static",
+    "evidence": "Miletus is a securely identified Ionian polis on the western Anatolian coast, and Thales is consistently identified as a Milesian. A static historical display disposition is therefore appropriate; no speculative polity-place function is asserted."
+  },
+  "review_context": {
+    "request_batch": "USER-THALES-20261007",
+    "selection": "user_selected_immediate_registration"
+  }
+}
