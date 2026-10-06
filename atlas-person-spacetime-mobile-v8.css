@@ -379,6 +379,22 @@
   }
 }
 
+/* SPACETIME-M2 — Mobile instrument token parity.
+ * Final V8 material bridge only. Mobile camera/status geometry and hierarchy stay
+ * fully owned by the existing V8 rules above.
+ */
+@media (max-width: 760px) {
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera output,
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button:first-of-type {
+    border-left-color: var(--atlas-material-hairline-soft);
+  }
+
+  .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-more-content {
+    border-top-color: var(--atlas-material-hairline-soft);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-toolbar,
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-status-row,
