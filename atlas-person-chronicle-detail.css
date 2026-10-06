@@ -1,4 +1,11 @@
-/* ATLAS UI V5 — Person Chronicle Detail\n * Presentation-only layer for the selected Person surface.\n * The Detail is an editorial chronicle, not a nested admin dashboard.\n * DETAIL-M1 — Chronicle material normalization consumes the shared\n * monumental hairline / sheen / rail / recessed-edge scale.\n */
+/* ATLAS UI V5 — Person Chronicle Detail
+ * Presentation-only layer for the selected Person surface.
+ * The Detail is an editorial chronicle, not a nested admin dashboard.
+ * DETAIL-M1 — Chronicle material normalization consumes the shared
+ * monumental hairline / sheen / rail / recessed-edge scale.
+ * DETAIL-M2 — Chronicle interaction luminance consumes the shared
+ * hover / active material wash scale without changing geometry.
+ */
 
 #personMainDetail.person-main-detail {
   --person-detail-domain-wash: rgba(156, 146, 125, .025);
@@ -12,7 +19,12 @@
     linear-gradient(180deg, var(--atlas-material-sheen-strong), transparent 16rem),
     var(--atlas-surface-1);
   color: var(--atlas-text);
-  box-shadow:\n    inset 0 1px 0 var(--atlas-material-sheen-strong),\n    inset 1px 0 0 var(--atlas-material-hairline-soft),\n    inset 0 -1px 0 var(--atlas-material-edge-dark-strong),\n    -18px 0 56px rgba(0,0,0,.28),\n    0 24px 80px rgba(0,0,0,.34);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    inset 1px 0 0 var(--atlas-material-hairline-soft),
+    inset 0 -1px 0 var(--atlas-material-edge-dark-strong),
+    -18px 0 56px rgba(0,0,0,.28),
+    0 24px 80px rgba(0,0,0,.34);
   scrollbar-color: #4a5054 transparent;
 }
 
@@ -74,8 +86,12 @@
 }
 
 .person-detail-overlay-close:hover {
-  background: transparent;
+  background: var(--atlas-material-wash-hover);
   color: var(--atlas-text-strong);
+}
+
+.person-detail-overlay-close:active {
+  background: var(--atlas-material-wash-active);
 }
 
 .person-detail-overlay-close:focus-visible {
@@ -549,6 +565,17 @@
   min-height: 0;
   padding: 10px 0 0;
   color: #777f83;
+  background: transparent;
+}
+
+.person-chronicle-activity .person-evidence-inspector > summary:hover,
+.person-chronicle-activity .person-evidence-inspector > summary:focus-visible {
+  background: var(--atlas-material-wash-hover);
+}
+
+.person-chronicle-activity .person-evidence-inspector > summary:active,
+.person-chronicle-activity .person-evidence-inspector[open] > summary {
+  background: var(--atlas-material-wash-active);
 }
 
 .person-chronicle-activity .person-evidence-inspector > summary b {
@@ -581,7 +608,7 @@
 
 .person-chronicle-activity .person-evidence-inspector[open] > summary {
   border-bottom: 0;
-  background: transparent;
+  background: var(--atlas-material-wash-active);
 }
 
 .person-chronicle-activity .person-evidence-body {
@@ -721,6 +748,16 @@
 
 .person-detail-authoring > summary::-webkit-details-marker {
   display: none;
+}
+
+.person-detail-authoring > summary:hover,
+.person-detail-authoring > summary:focus-visible {
+  background: var(--atlas-material-wash-hover);
+}
+
+.person-detail-authoring > summary:active,
+.person-detail-authoring[open] > summary {
+  background: var(--atlas-material-wash-active);
 }
 
 .person-detail-authoring > summary > span {
