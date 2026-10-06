@@ -44,19 +44,6 @@
     execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
       {
-        id: "portugal-county-kingdom",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "County of Portugal → Kingdom of Portugal",
-        left: { name: "County of Portugal" },
-        right: { name: "Kingdom of Portugal" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "sicily-county-kingdom",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -784,6 +771,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "portugal-county-kingdom",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "County of Portugal → Kingdom of Portugal state-form merge",
+        left: { name: "County of Portugal", ko: "포르투갈 백국", polity_id: "ac18509d-6239-42e6-971c-42f3fe86d464" },
+        right: { name: "Kingdom of Portugal", ko: "포르투갈 왕국", polity_id: "356c77d1-f2e1-5ad8-8716-e06d9fb3cdcc" },
+        rationale: "아폰수 엔히크스가 1128년 포르투갈 백국의 실질 통치를 확보한 뒤 c.1139–1140에 왕호를 사용하기 시작하고 1143년 사모라 조약, 1179년 교황 인준을 거쳐 왕국 지위가 확립된 same-identity state-form 전환으로 통합했습니다. #1991에서 Count Activity를 Kingdom of Portugal survivor로 재연결하고 County of Portugal을 1128–c.1139 temporal state_form designation으로 보존했습니다. 왕호 성립은 단일 확정 accession day가 아니라 단계적 과정이므로 기존 approximate year 경계를 유지했습니다. #1992에서 zero-external-reference legacy County Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["Assembleia da República: São Mamede in 1128 marks the start of Afonso Henriques's government of the Condado Portucalense; Ourique in 1139 precedes royal titulature", "Journal of Ecclesiastical History: last extant infans charter 1139-07-07, first extant royal charter 1140-04-10; Zamora recognition 1143; papal recognition 1179", "#1991 Portugal continuity merge; Correction Apply 37543151073 SUCCESS", "#1992 legacy County Polity retirement; Correction Apply 37543389958 SUCCESS", "Runtime compile 37543479617 SUCCESS", "2026-10-07 canonical + runtime exact readback"],
+        locked: true
+      },
       {
         id: "lithuania-grand-duchy-kingdom",
         review_group: "resolved_history",
