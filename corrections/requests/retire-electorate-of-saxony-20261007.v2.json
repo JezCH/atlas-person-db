@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:electorate-of-saxony-after-kingdom-state-form-merge:2026-10-07:v1",
+  "release_order": 1986,
+  "evidence": {
+    "decision": "Electorate of Saxony is the pre-royal state-form phase of the continuous Saxon polity and is preserved as a temporal state_form designation on canonical Kingdom of Saxony.",
+    "continuity_apply_run": "37538393044",
+    "survivor_polity_id": "be139c7d-f43c-4bf6-8542-9a372d64c06d",
+    "production_readback": "2026-10-07 exact readback: legacy Electorate row has zero external references and only two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:electorate-of-saxony-after-kingdom-state-form-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "a3f683a4-34fe-4839-9dd0-f6ae96b52a06",
+        "canonical_key": "Electorate of Saxony",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "be139c7d-f43c-4bf6-8542-9a372d64c06d",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Electorate of Saxony",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "작센 선제후국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
