@@ -10,7 +10,7 @@ const mergeSource = fs.readFileSync(new URL('../server/atlas-person-merge-servic
 const readinessSource = fs.readFileSync(new URL('../server/atlas-person-merge-reference-readiness.js', import.meta.url), 'utf8');
 
 test('P10 Person merge reference policy is explicit and includes every reviewed live Person pointer', () => {
-  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v9');
+  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v10');
   assert.deepEqual(readiness.EXPECTED_PERSON_FKS.map((row) => [row.key, row.delete_action]), [
     ['atlas_v2.authoring_manifest_runs.person_id', 'SET NULL'],
     ['atlas_v2.person_candidate_registration_states.person_id', 'RESTRICT'],
@@ -25,6 +25,9 @@ test('P10 Person merge reference policy is explicit and includes every reviewed 
     ['atlas_v2.person_portraits.person_id', 'RESTRICT'],
     ['atlas_v2.person_sources.person_id', 'CASCADE'],
     ['atlas_v2.person_timeline_dispositions.person_id', 'CASCADE']
+  ]);
+  assert.deepEqual(readiness.OPTIONAL_RUNTIME_PERSON_FKS.map((row) => [row.key, row.delete_action]), [
+    ['atlas_v2.runtime_person_politics_v1.person_id', 'RESTRICT']
   ]);
   assert.deepEqual(readiness.EXPECTED_RELATIONSHIP_FKS.map((row) => [row.key, row.delete_action]), [
     ['atlas_v2.authoring_manifest_runs.relationship_id', 'SET NULL'],
@@ -46,6 +49,9 @@ test('P10-B base snapshots and optional P10-C requirement snapshots are both exp
     'atlas_v2.person_merge_audits.survivor_person_id',
     'atlas_v2.person_profile_mutation_audits.person_id'
   ]);
+  assert.deepEqual(readiness.OPTIONAL_RUNTIME_NON_FK_PERSON_UUID_COLUMNS, [
+    'atlas_v2.runtime_compile_exclusions.person_id'
+  ]);
   assert.deepEqual(readiness.P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS, [
     'atlas_v2.person_duplicate_revalidation_requirements.person_high_id',
     'atlas_v2.person_duplicate_revalidation_requirements.person_low_id'
@@ -57,6 +63,13 @@ test('P10-B base snapshots and optional P10-C requirement snapshots are both exp
   assert.match(readinessSource, /RELATIONSHIP_UUID_REFERENCE_UNREVIEWED/);
   assert.match(readinessSource, /MERGE_SURFACE_TRIGGER_UNREVIEWED/);
   assert.match(readinessSource, /P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT/);
+});
+
+test('runtime projection and compile-exclusion ledger are reviewed when those schema surfaces exist', () => {
+  assert.match(readinessSource, /runtime_person_politics_v1/);
+  assert.match(readinessSource, /runtime_compile_exclusions/);
+  assert.match(readinessSource, /runtimeProjectionTablePresent/);
+  assert.match(readinessSource, /runtimeCompileExclusionsTablePresent/);
 });
 
 test('profile external references and the single current portrait are live merge data', () => {
