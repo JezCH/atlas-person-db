@@ -115,6 +115,9 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   ].map(row => [row.id, row]));
 
   assert.equal(byId.get('irish-free-state-ireland').terminal_status, 'SUPERSEDED');
+  assert.equal(byId.get('sicily-county-kingdom').terminal_status, 'KEEP_SEPARATE');
+  assert.equal(byId.get('sicily-county-kingdom').reviewed_decision, 'keep_both');
+  assert.equal(byId.get('sicily-county-kingdom').locked, true);
   assert.equal(byId.get('joseon-korean-empire').terminal_status, 'KEEP_SEPARATE');
   assert.equal(byId.get('russian-sfsr-federation').terminal_status, 'KEEP_SEPARATE');
   assert.equal(byId.get('nicaea-byzantine').terminal_status, 'SUPERSEDED');
@@ -140,7 +143,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 42);
+  assert.equal(unresolved.length, 41);
   assert.equal(byId.get('northern-southern-song').terminal_status, null);
   assert.equal(byId.get('roman-west-east').terminal_status, null);
   assert.equal(byId.get('byzantine-nicaea-rupture').terminal_status, null);
