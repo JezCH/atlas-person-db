@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-namuwiki:jacques-cartier:review-reason-regression-repair:2026-10-06:v1",
+  "release_order": 961,
+  "evidence": {
+    "decision": "Restore Jacques Cartier's terminal NamuWiki absence reason after a replay regression. The prior #1917 correction set related_or_derivative_only successfully, but the retired 20260821 human-authoring external-reference sync migration remained in AUTHORING_APPLY_MIGRATION_PATHS. A later Authoring Apply/bootstrap replayed an older immutable Jacques Cartier authoring snapshot with the same checked_at date and no review_reason; its >= upsert downgraded the canonical live review_reason back to null. PR #1924 removed that obsolete migration from the live replay registry before this repair.",
+    "reviewed_at": "2026-10-06",
+    "root_cause": {
+      "historical_sync_migration": "db/migrations/20260821_human_authoring_external_reference_sync.sql",
+      "unsafe_tie_rule": "EXCLUDED.checked_at >= atlas_v2.person_external_references.checked_at",
+      "stale_snapshot_condition": "Jacques Cartier authoring snapshots store status=not_found and checked_at=2026-10-05 without review_reason",
+      "prevention_merge_sha": "c2fd14cf67e8add3431474ae58a7c0bc58d38c39",
+      "prevention_pr": 1924,
+      "prevention_runtime_verified": true
+    },
+    "person_id": "dd2719b0-95b3-414c-be27-c94e2f73a2d6",
+    "exact_before": {
+      "provider": "namuwiki",
+      "status": "not_found",
+      "checked_at": "2026-10-05",
+      "review_state": "reviewed_absent",
+      "review_reason": null
+    },
+    "intended_after": {
+      "provider": "namuwiki",
+      "status": "not_found",
+      "checked_at": "2026-10-05",
+      "review_state": "reviewed_absent",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "operations": [
+    {
+      "type": "set_person_namuwiki_review_reason",
+      "case_id": "jacques-cartier-repair-replay-regression",
+      "person_id": "dd2719b0-95b3-414c-be27-c94e2f73a2d6",
+      "expected_checked_at": "2026-10-05",
+      "expected_review_reason": null,
+      "replacement_review_reason": "related_or_derivative_only"
+    }
+  ]
+}
