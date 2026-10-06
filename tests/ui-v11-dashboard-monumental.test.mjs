@@ -80,6 +80,29 @@ test("DASH-M2 removes the final desktop completeness pill without changing table
   assert.doesNotMatch(material, /\n\s*height\s*:/);
 });
 
+test("MOBILE-DASH1 keeps mobile Dashboard geometry while adopting ledger material parity", () => {
+  const css = read("atlas-dashboard-monumental-v11.css");
+  const start = css.indexOf("MOBILE-DASH1 — Mobile ledger material parity");
+  const end = css.indexOf("@media (prefers-reduced-motion: reduce)", start);
+  assert.ok(start >= 0 && end > start);
+  const mobileMaterial = css.slice(start, end);
+
+  assert.match(mobileMaterial, /var\(--atlas-material-hairline\)/);
+  assert.match(mobileMaterial, /var\(--atlas-material-hairline-soft\)/);
+  assert.match(mobileMaterial, /var\(--atlas-material-sheen\)/);
+  assert.match(mobileMaterial, /var\(--atlas-material-edge-dark\)/);
+  assert.match(mobileMaterial, /\.dashboard-completeness td button/);
+
+  assert.doesNotMatch(mobileMaterial, /grid-template-columns\s*:/);
+  assert.doesNotMatch(mobileMaterial, /border-radius\s*:/);
+  assert.doesNotMatch(mobileMaterial, /padding\s*:/);
+  assert.doesNotMatch(mobileMaterial, /font-size\s*:/);
+  assert.doesNotMatch(mobileMaterial, /line-height\s*:/);
+  assert.doesNotMatch(mobileMaterial, /\n\s*width\s*:/);
+  assert.doesNotMatch(mobileMaterial, /\n\s*height\s*:/);
+  assert.doesNotMatch(mobileMaterial, /min-height\s*:/);
+});
+
 test("UI V11 keeps mobile Dashboard compact and reduced-motion safe", () => {
   const css = read("atlas-dashboard-monumental-v11.css");
   assert.match(css, /@media \(max-width: 600px\)/);

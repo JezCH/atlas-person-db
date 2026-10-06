@@ -738,6 +738,86 @@
   }
 }
 
+/* MOBILE-DASH1 — Mobile ledger material parity.
+ * Material-only parity with the desktop Dashboard ledger system.
+ * Card dimensions, grids, padding, typography scale, touch targets, pill
+ * geometry, tables, and data semantics remain unchanged.
+ */
+@media (max-width: 600px) {
+  .dashboard-control-center .card {
+    border-color: var(--atlas-material-hairline);
+    background-color: var(--dashboard-surface);
+    background-image:
+      linear-gradient(180deg,var(--atlas-material-sheen),var(--atlas-material-sheen-soft) 52%,rgba(0,0,0,.024) 100%);
+    box-shadow:
+      inset 0 1px 0 var(--atlas-material-sheen-strong),
+      inset 0 -1px 0 var(--atlas-material-edge-dark);
+  }
+
+  .dashboard-kpi {
+    border-color: var(--atlas-material-hairline);
+    background-color: var(--dashboard-surface) !important;
+    background-image:
+      linear-gradient(180deg,var(--atlas-material-sheen),var(--atlas-material-sheen-soft) 60%,rgba(0,0,0,.022) 100%) !important;
+    box-shadow:
+      inset 0 1px 0 var(--atlas-material-sheen),
+      inset 0 -1px 0 var(--atlas-material-edge-dark);
+  }
+
+  .dashboard-panel,
+  .dashboard-tools {
+    border-color: var(--atlas-material-hairline);
+    background-color: var(--dashboard-surface) !important;
+    background-image:
+      linear-gradient(180deg,var(--atlas-material-sheen-soft),transparent 64%) !important;
+    box-shadow:
+      inset 0 1px 0 var(--atlas-material-sheen),
+      inset 0 -1px 0 var(--atlas-material-edge-dark);
+  }
+
+  .dashboard-issue-grid button,
+  .dashboard-issue-grid .dashboard-attention-link,
+  .dashboard-breakdown-row,
+  .dashboard-domain-row,
+  .dashboard-source-card,
+  .dashboard-publication-stage,
+  .dashboard-drift-card,
+  .dashboard-polity-summary article,
+  .dashboard-polity-row,
+  .dashboard-work-segment-item,
+  .dashboard-namuwiki-legend-item {
+    border-color: var(--atlas-material-hairline-soft);
+    background-color: var(--dashboard-surface);
+    background-image: linear-gradient(180deg,var(--atlas-material-sheen-soft),transparent 72%);
+    box-shadow:
+      inset 0 1px 0 var(--atlas-material-sheen-soft),
+      inset 0 -1px 0 var(--atlas-material-edge-dark);
+  }
+
+  .dashboard-heatmap-wrap,
+  .dashboard-completeness-wrap,
+  .dashboard-runtime-exclusion-wrap {
+    border-color: var(--atlas-material-hairline-soft);
+    background-color: var(--dashboard-bg);
+    background-image: linear-gradient(180deg,var(--atlas-material-sheen-soft),transparent 72%);
+    box-shadow: inset 0 1px 0 var(--atlas-material-sheen-soft);
+  }
+
+  .dashboard-completeness td button {
+    border-color: var(--atlas-material-hairline);
+    background-color: var(--dashboard-surface);
+    background-image: linear-gradient(180deg,var(--atlas-material-sheen),transparent 72%);
+    box-shadow: inset 0 1px 0 var(--atlas-material-sheen);
+  }
+
+  .dashboard-polity-toolbar > div {
+    border-color: var(--atlas-material-hairline-soft);
+    background-color: var(--dashboard-bg);
+    background-image: linear-gradient(180deg,var(--atlas-material-sheen-soft),transparent 72%);
+    box-shadow: inset 0 1px 0 var(--atlas-material-sheen-soft);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dashboard-loading-grid span {
     animation: none;
