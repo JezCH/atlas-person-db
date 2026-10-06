@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:duchy-of-bavaria-after-electorate-state-form-merge:2026-10-07:v1",
+  "release_order": 1966,
+  "evidence": {
+    "decision": "Duchy of Bavaria is the pre-electoral state-form phase of the continuous Bavarian polity and is preserved as a temporal state_form designation on canonical Electorate of Bavaria.",
+    "continuity_apply_run": "37487650177",
+    "survivor_polity_id": "aab6a809-8231-4e0b-9214-4eb076975928",
+    "production_readback": "2026-10-07 exact readback: legacy Duchy row has zero external references and only two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:duchy-of-bavaria-after-electorate-state-form-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "0907e17c-76b1-41f1-ac20-0d8efb5f0320",
+        "canonical_key": "Duchy of Bavaria",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "aab6a809-8231-4e0b-9214-4eb076975928",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Duchy of Bavaria",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "바이에른 공국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
