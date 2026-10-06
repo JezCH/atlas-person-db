@@ -3,7 +3,7 @@
 **As of:** 2026-10-06  
 **Authority:** current `main` + current Production + latest durable checkpoint  
 **Workstream state baseline:** verified against current repository state on 2026-10-05  
-**Latest Polity data-mutation checkpoint:** Correction Apply `37477006345` SUCCESS after #1944; `Union of South Africa` legacy Polity retired to canonical South Africa after preserving the 1910–1961 Union as a temporal `state_form`; Runtime compile `37477122597` SUCCESS
+**Latest Polity data-mutation checkpoint:** Correction Apply `37479974581` SUCCESS after #1948; legacy `Kingdom of Siam` retired to canonical Kingdom of Thailand after preserving Siam as temporal `official_name` designations; Runtime compile `37480086104` SUCCESS
 **Repository/Production state:** current executable cleanup is deployed; closed one-shot NamuWiki, Person Domain v2 cutover and Place authority backfill mutation surfaces are retired, and live Person Domain verification is independent from the historical cutover snapshot.  
 **P14:** `PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`
 
@@ -26,7 +26,7 @@ The registry distinguishes **execution order** from **audit obligation**. Histor
 Current sequence:
 
 1. **Carry-forward closure audit** — re-review every still-unclosed historical seed against current Production:
-   - 28 same-identity / continuity candidates;
+   - 27 same-identity / continuity candidates;
    - 16 separate historical-family judgments;
    - 2 temporal-designation residuals (Russia, Sweden);
    - 2 KO/EN naming-collision residuals;
@@ -40,7 +40,7 @@ Important distinction:
 - **Do not discard old audit seeds merely because they are historical.**
 - Rebuild the decision from current Production + current identity rules, then assign a terminal status.
 
-Already completed Polity fixes remain closed unless contradictory current evidence appears, including the South Africa continuity merge, the Ireland family correction, the Kingdom of Italy 3-way split, Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, the Kingdom-of-France generic/formal duplicate correction and the Japan lineage/occupation/designation rebuild. France's wider regime-family audit is a separate open seed and must not be conflated with the completed duplicate correction.
+Already completed Polity fixes remain closed unless contradictory current evidence appears, including the Siam/Thailand continuity merge, the South Africa continuity merge, the Ireland family correction, the Kingdom of Italy 3-way split, Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, the Kingdom-of-France generic/formal duplicate correction and the Japan lineage/occupation/designation rebuild. France's wider regime-family audit is a separate open seed and must not be conflated with the completed duplicate correction.
 
 ### B. UI information coverage / completeness — #1896
 
@@ -157,9 +157,9 @@ Portrait content, P14 historical-map Geometry and the broad legacy census are pa
 
 If no different task is explicitly selected by the user:
 
-**Resume #1895 at `Kingdom of Siam → Kingdom of Thailand`, the first still-unclosed carry-forward continuity seed.**
+**Resume #1895 at `Autonomous State of South Kasai → Federated Kingdom of South Kasai`, the first still-unclosed carry-forward continuity seed.**
 
-The South Africa continuity seed, Ireland family and Kingdom of Italy 3-way split are terminal `FIXED` as of 2026-10-06. South Africa now uses one canonical polity identity across the 1961 constitutional transition, with `Union of South Africa / 남아프리카 연방` preserved as the 1910-05-31 through 1961-05-30 temporal `state_form` designation.
+The Siam/Thailand and South Africa continuity seeds, Ireland family and Kingdom of Italy 3-way split are terminal `FIXED` as of 2026-10-06. Siam is preserved as temporal `official_name` designations on canonical Kingdom of Thailand, including the exact 1945-09-07 through 1949-05-10 restoration interval.
 
 Continue through the current review registry's carry-forward audit groups in current order until every seed has a terminal disposition, then run the fresh whole-Production discovery scan.
 
