@@ -324,7 +324,7 @@ async function insertStage2AssertionBundle(client, operation) {
   }
   if (operation.type === "assert_governance_context") {
     const row = operation.exact_after.context;
-    await client.query(`insert into atlas_v2.governance_contexts(${GOVERNANCE_CONTEXT_FIELDS.join(",")}) values(${GOVERNANCE_CONTEXT_FIELDS.map((_, i) => `${i + 1}`).join(",")})`, GOVERNANCE_CONTEXT_FIELDS.map((field) => row[field]));
+    await client.query(`insert into atlas_v2.governance_contexts(${GOVERNANCE_CONTEXT_FIELDS.join(",")}) values(${GOVERNANCE_CONTEXT_FIELDS.map((_, i) => `$${i + 1}`).join(",")})`, GOVERNANCE_CONTEXT_FIELDS.map((field) => row[field]));
     for (const name of operation.exact_after.names) {
       await client.query(`insert into atlas_v2.governance_context_names(id,governance_context_id,locale,name,name_type,is_preferred) values($1::uuid,$2::uuid,$3,$4,$5,$6)`,
         [name.id,name.governance_context_id,name.locale,name.name,name.name_type,name.is_preferred]);
