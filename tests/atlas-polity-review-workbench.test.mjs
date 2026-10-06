@@ -202,6 +202,25 @@ test('Polity surface uses the canonical dark monumental token system without leg
   assert.match(nav, /atlas-polity-review-workbench\.css\?v=20261006-ui-v10-dark-polity-v1/);
 });
 
+test('POL-C1 gives canonical Polity cards plaque material without changing card geometry', () => {
+  const start = css.indexOf('UI POL-C1 — Polity plaque material');
+  assert.ok(start >= 0);
+  const material = css.slice(start);
+
+  assert.match(material, /\.polity-browser-card\{/);
+  assert.match(material, /\.polity-browser-card\[open\]/);
+  assert.match(material, /inset 2px 0 0 rgba\(208,188,145,\.52\)/);
+  assert.match(material, /\.polity-dossier-overview>div/);
+  assert.match(material, /\.polity-dossier-person>header/);
+
+  assert.doesNotMatch(material, /\n\s*grid-template-columns\s*:/);
+  assert.doesNotMatch(material, /\n\s*padding\s*:/);
+  assert.doesNotMatch(material, /\n\s*font-size\s*:/);
+  assert.doesNotMatch(material, /\n\s*line-height\s*:/);
+  assert.doesNotMatch(material, /\n\s*width\s*:/);
+  assert.doesNotMatch(material, /\n\s*height\s*:/);
+});
+
 test('combined polity browser and review layout remains responsive', () => {
   assert.match(css, /polity-browser-kpis/);
   assert.match(css, /polity-browser-card/);
