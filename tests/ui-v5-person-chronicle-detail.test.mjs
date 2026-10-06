@@ -11,8 +11,21 @@ test("UI V5 loads Chronicle Detail after the global shell and Person Register", 
   const detail = html.indexOf("atlas-person-chronicle-detail.css");
   assert.ok(foundation >= 0 && register > foundation);
   assert.ok(detail > register, "Chronicle Detail must override the older detail/table presentation layers");
-  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261004-detail-d1-domain-semantics-v1/);
+  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261007-detail-m1-material-v1/);
   assert.match(html, /atlas-person-main\.js\?v=20261003-ui-v5-detail-v1/);
+});
+
+test("DETAIL-M1 binds Chronicle material to the shared monumental token scale", () => {
+  const css = read("atlas-person-chronicle-detail.css");
+  assert.match(css, /DETAIL-M1 — Chronicle material normalization/);
+  assert.match(css, /border: 1px solid var\(--atlas-material-hairline\)/);
+  assert.match(css, /linear-gradient\(180deg, var\(--atlas-material-sheen-strong\), transparent 16rem\)/);
+  assert.match(css, /inset 0 -1px 0 var\(--atlas-material-edge-dark-strong\)/);
+  assert.match(css, /0 0 0 1px var\(--atlas-material-hairline-soft\)/);
+  assert.match(css, /var\(--atlas-material-wash-selected\)/);
+  assert.match(css, /var\(--atlas-material-rail-soft\)/);
+  assert.doesNotMatch(css, /rgba\(48,54,59,\.(?:48|5|58|62)\)/);
+  assert.doesNotMatch(css, /rgba\(192,174,136,\.4\)/);
 });
 
 test("UI V5 makes Person identity and chronology the detail hierarchy", () => {
