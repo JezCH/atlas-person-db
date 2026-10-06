@@ -702,6 +702,141 @@
   .person-monumental-register .person-register-count { grid-area: count; }
 }
 
+/* UI REG-M1 — Memorial material finish.
+ * Pure presentation finish inspired by polished memorial stone, aged bronze,
+ * restrained institutional gold, and precision museum metalwork.
+ * Geometry, columns, spacing, typography scale, domain semantics, and data stay owned
+ * by the existing Register rules above.
+ */
+.person-monumental-register {
+  --atlas-register-sheen: rgba(239, 235, 226, .022);
+  --atlas-register-sheen-soft: rgba(239, 235, 226, .009);
+  --atlas-register-bronze-hairline: rgba(192, 174, 136, .11);
+  --atlas-register-bronze-mid: rgba(208, 188, 145, .22);
+  --atlas-register-bronze-bright: rgba(226, 211, 178, .72);
+  --atlas-register-black-edge: rgba(0, 0, 0, .30);
+}
+
+@media (min-width: 761px) {
+  /* Polished-black header: material hierarchy without changing table geometry. */
+  .person-monumental-register > .person-table-head {
+    background-color: rgba(18, 21, 24, .985);
+    background-image:
+      linear-gradient(180deg, var(--atlas-register-sheen), rgba(239, 235, 226, .004) 42%, rgba(0, 0, 0, .055) 100%);
+    border-top-color: var(--atlas-register-bronze-hairline);
+    border-bottom-color: rgba(208, 188, 145, .18);
+    box-shadow:
+      inset 0 1px 0 rgba(239, 235, 226, .025),
+      inset 0 -1px 0 var(--atlas-register-black-edge),
+      0 6px 14px rgba(0, 0, 0, .14);
+  }
+
+  .person-monumental-register > .person-table-head .person-table-head-cell {
+    border-right-color: rgba(192, 174, 136, .075);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .38);
+  }
+
+  .person-monumental-register > .person-table-head .person-table-head-cell.is-sort-active,
+  .person-monumental-register > .person-table-head .person-table-activity-subhead > span.is-sort-active {
+    box-shadow: inset 0 -1px 0 rgba(208, 188, 145, .34);
+  }
+
+  /* Era boundary reads as an architectural bronze hairline, not another box. */
+  .person-monumental-register .person-era-group,
+  .person-monumental-register .person-register-era {
+    border-bottom-color: rgba(192, 174, 136, .09);
+  }
+
+  .person-monumental-register .person-era-band::after,
+  .person-monumental-register .person-register-era-band::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    right: 0;
+    bottom: 8px;
+    width: 1px;
+    background:
+      linear-gradient(
+        180deg,
+        transparent,
+        rgba(192, 174, 136, .07) 12%,
+        var(--atlas-register-bronze-mid) 50%,
+        rgba(192, 174, 136, .07) 88%,
+        transparent
+      );
+    pointer-events: none;
+  }
+
+  .person-monumental-register .person-era-band > span {
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .52);
+  }
+
+  /* Rows stay flat by default. Material appears only as a nearly invisible sheen. */
+  .person-monumental-register .person-era-rows > .person-card,
+  .person-monumental-register .person-register-entry {
+    background-image:
+      linear-gradient(90deg, var(--atlas-register-sheen-soft), transparent 24%);
+    box-shadow: inset 0 1px 0 rgba(239, 235, 226, .006);
+  }
+
+  .person-monumental-register .person-register-entry:hover {
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(192, 174, 136, .022) 0,
+        rgba(239, 235, 226, .014) 26%,
+        rgba(239, 235, 226, .006) 68%,
+        transparent 100%
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(239, 235, 226, .018),
+      inset 0 -1px 0 rgba(0, 0, 0, .10);
+  }
+
+  /* Selection is illumination on the existing register, never a gold card. */
+  .person-monumental-register .person-register-entry.is-selected {
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(192, 174, 136, .050) 0,
+        rgba(239, 235, 226, .022) 24%,
+        rgba(239, 235, 226, .008) 66%,
+        transparent 100%
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(239, 235, 226, .028),
+      inset 0 -1px 0 rgba(0, 0, 0, .18);
+  }
+
+  .person-monumental-register .person-register-entry::after {
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(192, 174, 136, .34),
+        var(--atlas-register-bronze-bright) 48%,
+        rgba(192, 174, 136, .34)
+      );
+  }
+
+  .person-monumental-register .person-register-entry.is-selected::after {
+    box-shadow:
+      0 0 0 1px rgba(208, 188, 145, .055),
+      0 0 10px rgba(208, 188, 145, .028);
+  }
+
+  /* Engraved-register impression: contrast comes from edge definition, not glow. */
+  .person-monumental-register .person-table-identity > strong,
+  .person-monumental-register .person-table-range,
+  .person-monumental-register .person-register-range,
+  .person-monumental-register .person-table-activities .person-card-activity-head b {
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .46);
+  }
+
+  .person-monumental-register .person-table-activities .person-card-activity {
+    border-bottom-color: rgba(192, 174, 136, .065);
+  }
+}
+
 /* Mobile becomes a compact two-line register, not a stack of mini cards.
  * Typical one-Activity rows render as:
  *   name | range | count
