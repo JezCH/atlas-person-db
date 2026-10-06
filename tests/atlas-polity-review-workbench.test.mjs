@@ -171,6 +171,23 @@ test('Polity Atlas routes connected Persons through canonical deep links', () =>
   assert.match(css, /polity-dossier-person/);
 });
 
+test('Polity surface uses the canonical dark monumental token system without legacy bright SaaS colors', () => {
+  assert.match(css, /ATLAS Polity surface — V10 dark monumental integration/);
+  assert.match(css, /var\(--atlas-surface-1\)/);
+  assert.match(css, /var\(--atlas-surface-2\)/);
+  assert.match(css, /var\(--atlas-surface-3\)/);
+  assert.match(css, /var\(--atlas-divider\)/);
+  assert.match(css, /var\(--atlas-text\)/);
+  assert.match(css, /var\(--atlas-text-strong\)/);
+  assert.match(css, /var\(--atlas-honor-metal\)/);
+  assert.match(css, /var\(--atlas-success\)/);
+  assert.match(css, /var\(--atlas-danger\)/);
+  assert.match(css, /var\(--atlas-warning\)/);
+  assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b/);
+  assert.doesNotMatch(css, /border-radius:999px/);
+  assert.match(nav, /atlas-polity-review-workbench\.css\?v=20261006-ui-v10-dark-polity-v1/);
+});
+
 test('combined polity browser and review layout remains responsive', () => {
   assert.match(css, /polity-browser-kpis/);
   assert.match(css, /polity-browser-card/);
