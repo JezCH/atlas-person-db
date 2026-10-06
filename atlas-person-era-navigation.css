@@ -209,4 +209,81 @@
 @media(max-width:390px){
   .person-era-nav-current{overflow:hidden;text-overflow:ellipsis}
 }
+/* MOBILE-NAV1 — Mobile instrument material parity.
+ * Material-only alignment with desktop Person navigation.
+ * Radius, control dimensions, 16px input text, grid structure, padding,
+ * overflow behavior, and touch geometry remain unchanged.
+ */
+@media(max-width:760px){
+  .person-era-navigator{
+    border-color:var(--atlas-material-hairline);
+    background-color:rgba(18,21,24,.97);
+    background-image:
+      linear-gradient(180deg,var(--atlas-material-sheen-strong),transparent 44%,rgba(0,0,0,.035) 100%);
+    box-shadow:
+      inset 0 1px 0 var(--atlas-material-sheen-strong),
+      inset 0 -1px 0 var(--atlas-material-edge-dark-strong),
+      0 8px 20px rgba(0,0,0,.18);
+  }
+
+  .person-era-search,
+  .person-era-polity-filter,
+  .person-era-relation-filter{
+    border-color:var(--atlas-material-hairline);
+    background-color:var(--atlas-canvas-deep);
+    background-image:linear-gradient(180deg,var(--atlas-material-sheen),transparent 70%);
+    box-shadow:
+      inset 0 1px 0 var(--atlas-material-sheen),
+      inset 0 -1px 0 var(--atlas-material-edge-dark);
+  }
+
+  .person-era-nav-step,
+  .person-era-jump{
+    border-color:var(--atlas-material-hairline);
+    background-color:var(--atlas-surface-1);
+    background-image:linear-gradient(180deg,var(--atlas-material-sheen),transparent 72%);
+    box-shadow:
+      inset 0 1px 0 var(--atlas-material-sheen),
+      inset 0 -1px 0 var(--atlas-material-edge-dark);
+  }
+
+  .person-era-jump.is-current{
+    outline-color:var(--atlas-material-hairline-strong);
+    background-color:var(--atlas-surface-2);
+    background-image:
+      linear-gradient(180deg,var(--atlas-material-wash-active),var(--atlas-material-sheen-soft) 62%,transparent);
+    box-shadow:
+      inset 0 1px 0 var(--atlas-material-sheen-strong),
+      inset 0 -1px 0 var(--atlas-material-edge-dark-strong);
+  }
+
+  .person-era-jump.is-current::after{
+    background:linear-gradient(90deg,transparent,var(--atlas-material-glint),transparent);
+  }
+
+  .person-era-jump-count,
+  .person-domain-filter em{
+    border:1px solid var(--atlas-material-hairline-soft);
+    background:var(--atlas-surface-2);
+    box-shadow:inset 0 1px 0 var(--atlas-material-sheen-soft);
+  }
+
+  .person-domain-filter-row{
+    border-top-color:var(--atlas-material-hairline-soft);
+  }
+
+  .person-domain-filter{
+    border-color:var(--atlas-material-hairline);
+    background-color:var(--atlas-surface-1);
+    background-image:linear-gradient(180deg,var(--atlas-material-sheen),transparent 72%);
+    box-shadow:inset 0 1px 0 var(--atlas-material-sheen);
+  }
+
+  .person-domain-filter.is-active{
+    background-color:var(--atlas-surface-2);
+    box-shadow:
+      inset 2px 0 0 var(--person-filter-domain-color),
+      inset 0 1px 0 var(--atlas-material-sheen-strong);
+  }
+}
 @media(prefers-reduced-motion:reduce){.person-era-jump-list{scroll-behavior:auto}}
