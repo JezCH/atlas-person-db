@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-ancientcards-20261006:puduhepa:hittite:diplomatic-activity:1259-bce:v1",
+  "person": {
+    "canonical_name_en": "Puduhepa",
+    "display_name_ko": "푸두헤파",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "fc8fc733-d72c-4e87-a202-2732d4e0c8fa",
+    "canonical_name_en": "Hittite Empire",
+    "display_name_ko": "히타이트 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Queen and diplomatic actor",
+    "role_display_name_ko": "왕비·외교 행위자",
+    "period_basis": "general_activity",
+    "start_year": -1259,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1259,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Puduhepa is independently attested as Hattusili III's queen. A seal on the 1259 BCE peace treaty with Ramesses II identifies her, and surviving Hittite material also preserves her diplomatic correspondence. ATLAS uses the treaty year as a bounded representative political-diplomatic milestone rather than inventing a full queenly tenure."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "The Silver Stag Vessel: A Royal Gift — Metropolitan Museum Journal 53",
+      "canonical_url": "https://resources.metmuseum.org/resources/metpublications/pdf/Metropolitan_Museum_Journal_v_53_2018.pdf",
+      "citation_text": "Theo van den Hout discusses the Fraktin relief of Hattusili III and Puduhepa and the seal identifying Puduhepa on the 1259 BCE Hittite-Egyptian peace treaty, together with cuneiform and diplomatic correspondence evidence."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-06",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-ANCIENT-CARDS-STRONG5-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}

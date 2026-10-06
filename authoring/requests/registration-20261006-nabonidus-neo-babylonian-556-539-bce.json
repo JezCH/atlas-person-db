@@ -1,0 +1,66 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-ancientcards-20261006:nabonidus:neo-babylonian:reign:556-539-bce:v1",
+  "person": {
+    "canonical_name_en": "Nabonidus",
+    "display_name_ko": "나보니두스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "f15861e6-3769-5d40-87b8-be24fc1df20e",
+    "canonical_name_en": "Neo-Babylonian Empire",
+    "display_name_ko": "신바빌로니아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "period_basis": "reign",
+    "start_year": -556,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -539,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nabonidus was the final ruler of the Neo-Babylonian Empire before Cyrus captured Babylon in 539 BCE. British Museum objects made under Nabonidus span 556/555–539 BCE; ATLAS therefore keeps the accession boundary approximate while treating the 539 BCE termination as secure."
+  },
+  "sources": [
+    {
+      "source_type": "museum_research",
+      "title": "Cylinder of Nabonidus — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/W_K-1689",
+      "citation_text": "The British Museum identifies this royal cylinder with Nabonidus, the Neo-Babylonian Dynasty, and dates it to 556–539 BCE."
+    },
+    {
+      "source_type": "museum_research",
+      "title": "The Cyrus Cylinder — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/W_1880-0617-1941",
+      "citation_text": "The British Museum describes Nabonidus as the last king of Babylon and records Cyrus's capture of Babylon in 539 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-06",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-ANCIENT-CARDS-STRONG5-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}

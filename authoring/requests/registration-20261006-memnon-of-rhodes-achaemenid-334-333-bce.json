@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-ancientcards-20261006:memnon-of-rhodes:achaemenid:military:334-333-bce:v1",
+  "person": {
+    "canonical_name_en": "Memnon of Rhodes",
+    "display_name_ko": "로도스의 멤논",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military"
+  },
+  "polity": {
+    "existing_id": "7c31fb02-88c9-5804-b34e-d9c08b7b5bee",
+    "canonical_name_en": "Achaemenid Empire",
+    "display_name_ko": "아케메네스 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "General and fleet commander",
+    "role_display_name_ko": "장군·함대 지휘관",
+    "period_basis": "military_activity",
+    "start_year": -334,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -333,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Memnon of Rhodes fought Alexander's invasion for the Achaemenid Empire in 334 BCE, led the counterattack and fleet operations, and died suddenly in 333 BCE. ATLAS records the securely bounded final Achaemenid command phase, not his earlier service and exile history."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "MENTOR and MEMNON — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/mentor-and-memnon/",
+      "citation_text": "Encyclopaedia Iranica identifies Mentor and Memnon as Rhodian brothers and condottieri of the late Achaemenid period and traces Memnon's service in the Persian west."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "DASCYLIUM — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/dascylium/",
+      "citation_text": "Encyclopaedia Iranica records Memnon fighting at Granicus in 334 BCE, then leading the Achaemenid counterattack until his sudden death in 333 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-06",
+      "document_title": "멤논(페르시아)",
+      "url": "https://namu.wiki/w/%EB%A9%A4%EB%85%BC(%ED%8E%98%EB%A5%B4%EC%8B%9C%EC%95%84)"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-ANCIENT-CARDS-STRONG5-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}
