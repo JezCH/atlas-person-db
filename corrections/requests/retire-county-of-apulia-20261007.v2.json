@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:county-of-apulia-after-duchy-state-form-merge:2026-10-07:v1",
+  "release_order": 2002,
+  "evidence": {
+    "decision": "County of Apulia is the modeled 1057-1059 comital state-form phase of the continuous Norman Apulian polity and is preserved as a temporal state_form designation on canonical Duchy of Apulia and Calabria.",
+    "continuity_request_id": "apulia_county_duchy_continuity_20261007_v1",
+    "continuity_applied_at": "2026-10-06T23:24:26.328392+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:ce6b9b119492941ea51b443a9de5a2eb4abca5ef320efa936ae863e67f59435a",
+    "runtime_compiled_at": "2026-10-06T23:24:56.643322+00:00",
+    "survivor_polity_id": "b030c005-1c9c-56fa-9d7e-1ce0a0da66bf",
+    "production_readback": "2026-10-07 exact post-compile readback: legacy County row has zero external references in authoring and runtime and only two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:county-of-apulia-after-duchy-state-form-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "eceb5f79-dfab-43c5-a38e-22b6520ad0b0",
+        "canonical_key": "County of Apulia",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "b030c005-1c9c-56fa-9d7e-1ce0a0da66bf",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "County of Apulia",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "아풀리아 백국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
