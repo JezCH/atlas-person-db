@@ -1,0 +1,180 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "italy_three_way_split_relink_original_activities_20261006_v1",
+  "as_of": "2026-10-06",
+  "status": "REVIEWED_ITALY_THREE_WAY_SPLIT_RELINK",
+  "release_order": 1939,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 Kingdom of Italy 3-way split current frontier; #1936/#1937 created distinct medieval and Napoleonic Polity identities; #1938 retired seed Activities and transferred reviewed provenance; exact Production read-back after source transfer 2026-10-06.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "modern_kingdom_of_italy_survivor": "88921412-76c8-431c-a6e6-8c43d5a8b94a",
+    "medieval_kingdom_of_italy": "ba97250b-84be-41d8-a5d9-3890e83996a8",
+    "napoleonic_kingdom_of_italy": "5b721fcc-c736-48bf-97bc-23f5608dcebe",
+    "seed_retirement_apply_run": "37472703940",
+    "historical_decision": "The medieval regnum Italicum tied to the Holy Roman imperial complex, Napoleon's 1805-1814 Kingdom of Italy, and the 1861-1946 Kingdom of Italy are distinct historical Polity identities despite sharing the English conventional name."
+  },
+  "operations": [
+    {
+      "case_id": "italy-split-relink-otto-i-to-medieval-kingdom",
+      "type": "rewrite_activity",
+      "activity_id": "c504ad11-13f4-4abd-8541-f3a66cb62f46",
+      "baseline_before": {
+        "person_id": "a9b1f443-ab51-4bda-8f69-263208a6be00",
+        "polity_id": "88921412-76c8-431c-a6e6-8c43d5a8b94a",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 951,
+        "activity_end": 973,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 4
+      },
+      "after": {
+        "activity_id": "c504ad11-13f4-4abd-8541-f3a66cb62f46",
+        "person_id": "a9b1f443-ab51-4bda-8f69-263208a6be00",
+        "polity_id": "ba97250b-84be-41d8-a5d9-3890e83996a8",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 951,
+        "activity_start_detail": {
+          "year": 951,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 973,
+        "activity_end_detail": {
+          "year": 973,
+          "month": 5,
+          "day": 7,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "italy-split-relink-frederick-i-to-medieval-kingdom",
+      "type": "rewrite_activity",
+      "activity_id": "5b52e0b1-167a-4d2f-8e3f-494a4974977f",
+      "baseline_before": {
+        "person_id": "1d2e250d-1f41-58f6-8aff-17fff0962ec8",
+        "polity_id": "88921412-76c8-431c-a6e6-8c43d5a8b94a",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1155,
+        "activity_end": 1190,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "5b52e0b1-167a-4d2f-8e3f-494a4974977f",
+        "person_id": "1d2e250d-1f41-58f6-8aff-17fff0962ec8",
+        "polity_id": "ba97250b-84be-41d8-a5d9-3890e83996a8",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1155,
+        "activity_start_detail": {
+          "year": 1155,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1190,
+        "activity_end_detail": {
+          "year": 1190,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "italy-split-relink-napoleon-i-to-napoleonic-kingdom",
+      "type": "rewrite_activity",
+      "activity_id": "d2b6231a-4e11-4976-8402-89b16e295d7b",
+      "baseline_before": {
+        "person_id": "945b78a7-3941-5e05-a6c9-ce57e7395727",
+        "polity_id": "88921412-76c8-431c-a6e6-8c43d5a8b94a",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1805,
+        "activity_end": 1814,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "d2b6231a-4e11-4976-8402-89b16e295d7b",
+        "person_id": "945b78a7-3941-5e05-a6c9-ce57e7395727",
+        "polity_id": "5b721fcc-c736-48bf-97bc-23f5608dcebe",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1805,
+        "activity_start_detail": {
+          "year": 1805,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1814,
+        "activity_end_detail": {
+          "year": 1814,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 3,
+    "medieval_activity_count": 2,
+    "napoleonic_activity_count": 1,
+    "modern_existing_activity_count_after_split": 6,
+    "original_activity_uuids_preserved": true,
+    "production_mutation_authorized": false
+  }
+}
