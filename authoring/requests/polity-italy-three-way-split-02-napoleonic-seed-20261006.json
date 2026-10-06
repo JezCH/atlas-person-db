@@ -59,5 +59,9 @@
     "requested_item": 2,
     "decision_authority": "#1895 current Kingdom of Italy 3-way split frontier; Production exact read-back 2026-10-06; Lombardia Beni Culturali institutional history reviewed.",
     "identity_note": "Create the distinct Napoleonic Kingdom of Italy identity. Reuse the existing Napoleon I Person. A governed correction stage will transfer seed provenance, retire this seed Activity, and relink the original Napoleon I 1805–1814 Activity to this polity while preserving its original Activity UUID."
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "#1895 Kingdom of Italy 3-way identity split, 2026-10-06: Napoleonic Kingdom of Italy is registered as a distinct historical Polity identity, but P14 Territory/Geometry remains PARKED_BY_USER. No capital/place-function or territory geometry is inferred in this bounded identity repair."
   }
 }
