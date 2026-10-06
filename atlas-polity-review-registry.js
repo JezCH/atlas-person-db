@@ -44,19 +44,6 @@
     execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
       {
-        id: "lithuania-grand-duchy-kingdom",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Grand Duchy of Lithuania → Kingdom of Lithuania",
-        left: { name: "Grand Duchy of Lithuania" },
-        right: { name: "Kingdom of Lithuania" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "portugal-county-kingdom",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -797,6 +784,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "lithuania-grand-duchy-kingdom",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Grand Duchy of Lithuania → Kingdom of Lithuania state-form merge",
+        left: { name: "Grand Duchy of Lithuania", ko: "리투아니아 대공국", polity_id: "09d99219-3553-480d-bb56-30a21e535b88" },
+        right: { name: "Kingdom of Lithuania", ko: "리투아니아 왕국", polity_id: "a91ef245-d5a8-480a-b27f-43bec3ddffbd" },
+        rationale: "민다우가스의 기존 Lithuanian state가 1253–1263에 왕국 지위를 획득한 same-identity state-form 전환으로 통합했습니다. #1988에서 Mindaugas King Activity를 Grand Duchy of Lithuania survivor로 재연결하고 Kingdom of Lithuania를 1253–1263 year-granularity temporal state_form designation으로 보존했습니다. 정확한 1253 coronation day는 사료·현대 연구에서 확정적이지 않아 day-level 정밀화를 만들지 않았습니다. #1989에서 zero-external-reference legacy Kingdom Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["Visuotinė lietuvių enciklopedija: Mindaugas grand duke before 1253, king 1253–1263; the Lithuanian state he created survived after the royal phase", "#1988 Lithuania continuity merge; Correction Apply 37540279082 SUCCESS", "#1989 legacy Kingdom Polity retirement; Correction Apply 37540548526 SUCCESS", "Runtime compile 37540629613 SUCCESS", "2026-10-07 canonical + runtime exact readback"],
+        locked: true
+      },
       {
         id: "saxony-electorate-kingdom",
         review_group: "resolved_history",
