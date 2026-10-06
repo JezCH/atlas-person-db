@@ -14,6 +14,7 @@ const U = Object.freeze({
   source: "33333333-3333-4333-8333-333333333333",
   source2: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
   context: "44444444-4444-4444-8444-444444444444",
+  contextName: "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
   governance: "55555555-5555-4555-8555-555555555555",
   designation: "66666666-6666-4666-8666-666666666666",
   designationName: "77777777-7777-4777-8777-777777777777",
@@ -59,6 +60,29 @@ function plan() {
             canonical_url: "https://example.com/unit-source",
             citation_text: "Unit citation."
           }
+        }
+      },
+      {
+        type: "assert_governance_context",
+        decision_id: "gc",
+        exact_before: { governance_context_absent_id: U.context },
+        exact_after: {
+          context: {
+            id: U.context,
+            canonical_key: "stage2:unit-government",
+            governance_type: "government",
+            historicity: "historical"
+          },
+          names: [
+            {
+              id: U.contextName,
+              governance_context_id: U.context,
+              locale: "en",
+              name: "Unit Government",
+              name_type: "canonical",
+              is_preferred: true
+            }
+          ]
         }
       },
       {
@@ -126,6 +150,7 @@ test("unified plan synthesizer appends all literal Stage 2 assertion families an
   const manifest = synthesizeUnifiedCorrectionV2Manifest(plan(), snapshot);
   assert.deepEqual(manifest.operations.map((op) => op.type), [
     "assert_source",
+    "assert_governance_context",
     "assert_governance_period",
     "assert_polity_designation",
     "assert_polity_identity_relation"
