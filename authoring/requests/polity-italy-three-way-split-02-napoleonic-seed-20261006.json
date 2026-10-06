@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "polity-italy-three-way-split-20261006:napoleonic-seed",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Napoleon I",
+    "display_name_ko": "나폴레옹 1세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Italy (Napoleonic)",
+    "display_name_ko": "이탈리아 왕국(나폴레옹)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1805,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1814,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Reviewed seed Activity used only to create the distinct Napoleonic Kingdom of Italy identity of 1805–1814. The Italian Republic was transformed into the hereditary Kingdom of Italy in March 1805; Napoleon assumed the throne and the kingdom ceased in April 1814. The parenthetical English and Korean labels are ATLAS disambiguators separating this polity from the medieval regnum Italicum and the modern Kingdom of Italy of 1861–1946."
+  },
+  "sources": [
+    {
+      "title": "Regno d'Italia, 1805–1814 — Lombardia Beni Culturali",
+      "canonical_url": "https://www.lombardiabeniculturali.it/istituzioni/schede/8000364/",
+      "citation_text": "Lombardia Beni Culturali states that the Italian Republic became the hereditary Kingdom of Italy in March 1805, Napoleon assumed its throne, and the kingdom ceased in April 1814.",
+      "source_type": "government_cultural_heritage"
+    },
+    {
+      "title": "Il Regno d'Italia (1805 marzo 19 - 1814 aprile 20) — Lombardia Beni Culturali",
+      "canonical_url": "https://www.lombardiabeniculturali.it/istituzioni/storia/?unita=04.05",
+      "citation_text": "The historical institutions record dates the Napoleonic Kingdom of Italy from 19 March 1805 to 20 April 1814 and describes its formation from the Italian Republic.",
+      "source_type": "government_cultural_heritage"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "나폴레옹 1세",
+      "url": "https://namu.wiki/w/%EB%82%98%ED%8F%B4%EB%A0%88%EC%98%B9%201%EC%84%B8"
+    }
+  },
+  "review_context": {
+    "request_batch": "polity-italy-three-way-split-20261006",
+    "requested_item": 2,
+    "decision_authority": "#1895 current Kingdom of Italy 3-way split frontier; Production exact read-back 2026-10-06; Lombardia Beni Culturali institutional history reviewed.",
+    "identity_note": "Create the distinct Napoleonic Kingdom of Italy identity. Reuse the existing Napoleon I Person. A governed correction stage will transfer seed provenance, retire this seed Activity, and relink the original Napoleon I 1805–1814 Activity to this polity while preserving its original Activity UUID."
+  }
+}

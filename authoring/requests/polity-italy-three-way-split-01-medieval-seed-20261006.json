@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "polity-italy-three-way-split-20261006:medieval-seed",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Otto I",
+    "display_name_ko": "오토 1세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Italy (Holy Roman Empire)",
+    "display_name_ko": "이탈리아 왕국(신성 로마 제국)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 951,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 973,
+    "end_month": 5,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Reviewed seed Activity used only to create the distinct medieval Kingdom of Italy identity associated with the Holy Roman imperial polity complex. Otto I acquired the Italian kingship in 951 and retained it until his death in 973. The parenthetical English and Korean labels are ATLAS disambiguators used to distinguish this medieval regnum Italicum from the separate Napoleonic kingdom of 1805–1814 and the modern Kingdom of Italy of 1861–1946."
+  },
+  "sources": [
+    {
+      "title": "Il regno italico — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/il-regno-italico_%28Storia-della-civilta-Europea%29/",
+      "citation_text": "Treccani describes the medieval regnum Italicum and explains that under Otto I the kingdom was incorporated into the Holy Roman imperial context.",
+      "source_type": "reference_work"
+    },
+    {
+      "title": "Italia — Dizionario di Storia, Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/italia_%28Dizionario-di-Storia%29/",
+      "citation_text": "Treccani states that Otto entered Italy in 951–952, was proclaimed King of Italy at Pavia, and in 962 united the Italian crown with the Holy Roman imperial crown.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "오토 1세",
+      "url": "https://namu.wiki/w/%EC%98%A4%ED%86%A0%201%EC%84%B8"
+    }
+  },
+  "review_context": {
+    "request_batch": "polity-italy-three-way-split-20261006",
+    "requested_item": 1,
+    "decision_authority": "#1895 current Kingdom of Italy 3-way split frontier; Production exact read-back 2026-10-06; Treccani medieval Italy references reviewed.",
+    "identity_note": "Create the distinct medieval Kingdom of Italy identity. Reuse the existing Otto I Person. A governed correction stage will transfer seed provenance, retire this seed Activity, and relink the original Otto I and Frederick I Barbarossa Activities to this polity while preserving their original Activity UUIDs."
+  }
+}
