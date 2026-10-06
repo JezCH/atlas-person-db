@@ -50,7 +50,7 @@ test("DASH-M1 adds museum ledger material without changing Dashboard geometry", 
   assert.match(material, /\.dashboard-panel,/);
   assert.match(material, /\.dashboard-issue-grid button,/);
   assert.match(material, /\.dashboard-polity-toolbar > div/);
-  assert.match(material, /inset 2px 0 0 rgba\(208,188,145,\.50\)/);
+  assert.match(material, /inset 2px 0 0 var\(--atlas-material-rail\)/);
 
   assert.doesNotMatch(material, /\n\s*grid-template-columns\s*:/);
   assert.doesNotMatch(material, /\n\s*padding\s*:/);
@@ -69,7 +69,7 @@ test("DASH-M2 removes the final desktop completeness pill without changing table
 
   assert.match(material, /\.dashboard-completeness td button \{/);
   assert.match(material, /border-radius: 3px/);
-  assert.match(material, /inset 2px 0 0 rgba\(208,188,145,\.40\)/);
+  assert.match(material, /inset 2px 0 0 var\(--atlas-material-rail-soft\)/);
 
   assert.doesNotMatch(material, /border-radius:\s*999px/);
   assert.doesNotMatch(material, /\n\s*grid-template-columns\s*:/);
