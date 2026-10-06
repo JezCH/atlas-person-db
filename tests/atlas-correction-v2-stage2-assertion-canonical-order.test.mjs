@@ -9,6 +9,8 @@ const U = Object.freeze({
   polityA: "11111111-1111-4111-8111-111111111111",
   polityB: "22222222-2222-4222-8222-222222222222",
   context: "33333333-3333-4333-8333-333333333333",
+  contextNameA: "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+  contextNameB: "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
   governance: "44444444-4444-4444-8444-444444444444",
   designation: "55555555-5555-4555-8555-555555555555",
   nameA: "66666666-6666-4666-8666-666666666666",
@@ -52,6 +54,27 @@ function assertCanonicalLinks(links) {
     ]
   );
 }
+
+test("governance context names normalize to DB canonical order", () => {
+  const operation = normalizeStage2AssertionOperation({
+    type: "assert_governance_context",
+    decision_id: "canonical-governance-context",
+    exact_before: { governance_context_absent_id: U.context },
+    exact_after: {
+      context: {
+        id: U.context,
+        canonical_key: "stage2:unit-government",
+        governance_type: "government",
+        historicity: "historical"
+      },
+      names: [
+        { id: U.contextNameB, governance_context_id: U.context, locale: "ko", name: "단위 정부", name_type: "canonical", is_preferred: true },
+        { id: U.contextNameA, governance_context_id: U.context, locale: "en", name: "Unit Government", name_type: "canonical", is_preferred: true }
+      ]
+    }
+  }, 1);
+  assert.deepEqual(operation.exact_after.names.map((name) => name.locale), ["en", "ko"]);
+});
 
 test("governance assertion source links normalize to DB canonical order", () => {
   const operation = normalizeStage2AssertionOperation({
