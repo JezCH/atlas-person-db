@@ -11,7 +11,7 @@ test("UI V5 loads Chronicle Detail after the global shell and Person Register", 
   const detail = html.indexOf("atlas-person-chronicle-detail.css");
   assert.ok(foundation >= 0 && register > foundation);
   assert.ok(detail > register, "Chronicle Detail must override the older detail/table presentation layers");
-  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261007-detail-m1-material-v1/);
+  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261007-detail-m2-interaction-v1/);
   assert.match(html, /atlas-person-main\.js\?v=20261003-ui-v5-detail-v1/);
 });
 
@@ -26,6 +26,18 @@ test("DETAIL-M1 binds Chronicle material to the shared monumental token scale", 
   assert.match(css, /var\(--atlas-material-rail-soft\)/);
   assert.doesNotMatch(css, /rgba\(48,54,59,\.(?:48|5|58|62)\)/);
   assert.doesNotMatch(css, /rgba\(192,174,136,\.4\)/);
+});
+
+test("DETAIL-M2 uses the shared hover / active luminance scale and keeps Detail state local", () => {
+  const css = read("atlas-person-chronicle-detail.css");
+  assert.match(css, /DETAIL-M2 — Chronicle interaction luminance/);
+  assert.match(css, /\.person-detail-overlay-close:hover \{[\s\S]*?var\(--atlas-material-wash-hover\)/);
+  assert.match(css, /\.person-detail-overlay-close:active \{[\s\S]*?var\(--atlas-material-wash-active\)/);
+  assert.match(css, /person-evidence-inspector > summary:hover,[\s\S]*?var\(--atlas-material-wash-hover\)/);
+  assert.match(css, /person-evidence-inspector\[open\] > summary \{[\s\S]*?var\(--atlas-material-wash-active\)/);
+  assert.match(css, /person-detail-authoring > summary:hover,[\s\S]*?var\(--atlas-material-wash-hover\)/);
+  assert.match(css, /person-detail-authoring\[open\] > summary \{[\s\S]*?var\(--atlas-material-wash-active\)/);
+  assert.doesNotMatch(css, /\\n/);
 });
 
 test("UI V5 makes Person identity and chronology the detail hierarchy", () => {

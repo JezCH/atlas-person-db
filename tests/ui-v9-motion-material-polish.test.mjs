@@ -7,7 +7,7 @@ const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "
 test("UI V9 loads last after the V8 mobile layer", () => {
   const html = read("index.html");
   const v8 = html.indexOf("atlas-ui-mobile-v8.css?v=20261004-ui-p4-mobile-compact-v1");
-  const v9 = html.indexOf("atlas-ui-motion-material-v9.css?v=20261004-ui-p5-interaction-state-v1");
+  const v9 = html.indexOf("atlas-ui-motion-material-v9.css?v=20261007-detail-m2-ownership-v1");
   assert.ok(v8 >= 0);
   assert.ok(v9 > v8);
 });
@@ -32,6 +32,18 @@ test("UI P5 keeps Register semantic state out of the motion layer", () => {
   assert.match(register, /P5 interaction precedence/);
   assert.match(register, /\.person-register-entry::after \{[\s\S]*?background: var\(--atlas-honor-metal-strong\)/);
   assert.match(register, /\.person-register-entry\.is-selected::after \{\s*opacity: 1;\s*transform: scaleY\(1\)/s);
+});
+
+test("DETAIL-M2 keeps late V9 from overriding Chronicle material and interaction ownership", () => {
+  const css = read("atlas-ui-motion-material-v9.css");
+  assert.match(css, /\.person-detail-authoring > summary,/);
+  assert.match(css, /\.person-chronicle-activity \.person-evidence-inspector > summary,/);
+  assert.match(css, /\.person-detail-authoring > summary:focus-visible,/);
+  assert.match(css, /\.person-chronicle-activity \.person-evidence-inspector > summary:focus-visible,/);
+  assert.match(css, /\.person-main-detail \{\n  border-color: var\(--atlas-material-hairline\);\n\}/);
+  assert.doesNotMatch(css, /\.sidebar,[\s\S]{0,120}\.person-main-detail,[\s\S]{0,180}background-image:/);
+  assert.match(css, /person-chronicle-activity:hover::before,[\s\S]*?var\(--atlas-material-wash-hover\)/);
+  assert.doesNotMatch(css, /0 0 0 5px rgba\(192,174,136,\.07\)/);
 });
 
 test("UI V9 uses short entrance motion only for Detail and mobile drawer", () => {

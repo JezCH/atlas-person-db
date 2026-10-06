@@ -30,6 +30,7 @@
 .person-register-sortbar .person-table-sort-button,
 .person-detail-overlay-close,
 .person-detail-authoring > summary,
+.person-chronicle-activity .person-evidence-inspector > summary,
 .spacetime-camera button,
 .spacetime-precision-legend > summary,
 .spacetime-search-result-list button,
@@ -79,6 +80,8 @@ textarea,
 .person-domain-filter:focus-visible,
 .person-monumental-register .person-table-sort-button:focus-visible,
 .person-detail-overlay-close:focus-visible,
+.person-detail-authoring > summary:focus-visible,
+.person-chronicle-activity .person-evidence-inspector > summary:focus-visible,
 .spacetime-camera button:focus-visible,
 .spacetime-search-result-list button:focus-visible,
 .spacetime-meanwhile-activities button:focus-visible,
@@ -93,7 +96,6 @@ textarea,
 
 .sidebar,
 .mobile-drawer,
-.person-main-detail,
 .spacetime-sticky-inspector,
 .spacetime-precision-content,
 .spacetime-status-more-content {
@@ -262,11 +264,11 @@ textarea,
 
 .person-chronicle-activity:hover::before,
 .person-chronicle-activity:focus-within::before {
-  border-color: var(--atlas-honor-metal-strong);
-  background: #191d20;
+  border-color: var(--atlas-material-hairline-strong);
+  background: var(--atlas-surface-1);
   box-shadow:
     0 0 0 4px var(--atlas-surface-1),
-    0 0 0 5px rgba(192,174,136,.07);
+    0 0 0 5px var(--atlas-material-wash-hover);
 }
 
 /* ---------- Mobile drawer: controlled entrance, no bouncing ---------- */
@@ -379,9 +381,12 @@ textarea,
 }
 
 .person-era-navigator,
-.spacetime-sticky-inspector,
-.person-main-detail {
+.spacetime-sticky-inspector {
   border-color: #343b40;
+}
+
+.person-main-detail {
+  border-color: var(--atlas-material-hairline);
 }
 
 .person-detail-authoring[open],
