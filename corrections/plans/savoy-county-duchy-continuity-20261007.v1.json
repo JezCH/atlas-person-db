@@ -1,0 +1,217 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "savoy_county_duchy_continuity_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_SAVOY_COUNTY_DUCHY_CONTINUITY",
+  "release_order": 1963,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Treccani Amedeo VIII / Savoy histories; current ATLAS same-identity rank/state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "county_polity_id": "45a8c3f3-cf7e-415a-a51c-b651b2761828",
+    "duchy_survivor": "f48c1835-d324-4b02-9e41-efb4a70d9e26",
+    "historical_decision": "County of Savoy and Duchy of Savoy are rank/state-form phases of the same Savoy state. Treccani states that on 9 February 1416 Emperor Sigismund transformed the County of Savoy into a duchy and solemnly invested Amadeus VIII; the same ruler continued from count to duke.",
+    "activity_rule": "Keep Amadeus VIII's Count and Duke Activities separate because his sovereign title changed, but place both under one continuous Savoy polity identity.",
+    "designation_rule": "Preserve County of Savoy as the pre-ducal state-form from the earliest currently modeled Amadeus VIII coverage in 1391 through 8 February 1416. The 1391 lower bound is a modeled coverage floor, not a claim that the county originated in 1391. Duchy remains the canonical survivor and this bounded seed does not assert its ultimate termination."
+  },
+  "operations": [
+    {
+      "case_id": "savoy-relink-amadeus-count-to-duchy-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "ae20ed12-0a61-4e7d-9dfb-68124c00f523",
+      "baseline_before": {
+        "person_id": "1302697a-a835-45df-a836-ff9267c8f14d",
+        "polity_id": "45a8c3f3-cf7e-415a-a51c-b651b2761828",
+        "role_id": "26b4b1e9-3619-47ad-b096-c31944e33ca0",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1391,
+        "activity_end": 1416,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "ae20ed12-0a61-4e7d-9dfb-68124c00f523",
+        "person_id": "1302697a-a835-45df-a836-ff9267c8f14d",
+        "polity_id": "f48c1835-d324-4b02-9e41-efb4a70d9e26",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "26b4b1e9-3619-47ad-b096-c31944e33ca0",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1391,
+        "activity_start_detail": {
+          "year": 1391,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1416,
+        "activity_end_detail": {
+          "year": 1416,
+          "month": 2,
+          "day": 8,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Amadeus VIII ruled Savoy as count from 1391 until the day before Emperor Sigismund elevated the same Savoy state from county to duchy on 9 February 1416. ATLAS preserves the Count and Duke roles as separate Activities under one continuous Savoy polity identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": [
+          {
+            "source_id": "8f4e7bc1-64de-4a9b-8c85-7e8f0f0db6d2",
+            "source_locator_key": "https://www.treccani.it/enciclopedia/amedeo-viii-duca-di-savoia_%28Enciclopedia-Italiana%29/"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "savoy-refine-amadeus-duke-start",
+      "type": "rewrite_activity",
+      "activity_id": "7e0a95ce-d3e2-4827-bb7e-0bca1e0a8856",
+      "baseline_before": {
+        "person_id": "1302697a-a835-45df-a836-ff9267c8f14d",
+        "polity_id": "f48c1835-d324-4b02-9e41-efb4a70d9e26",
+        "role_id": "2d2f3b9c-5518-5469-961b-e9e8f2a15870",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1416,
+        "activity_end": 1440,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "7e0a95ce-d3e2-4827-bb7e-0bca1e0a8856",
+        "person_id": "1302697a-a835-45df-a836-ff9267c8f14d",
+        "polity_id": "f48c1835-d324-4b02-9e41-efb4a70d9e26",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2d2f3b9c-5518-5469-961b-e9e8f2a15870",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1416,
+        "activity_start_detail": {
+          "year": 1416,
+          "month": 2,
+          "day": 9,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1440,
+        "activity_end_detail": {
+          "year": 1440,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Amadeus VIII became Duke of Savoy on 9 February 1416 when Emperor Sigismund transformed the County of Savoy into a duchy and invested him. His formal abdication is modeled at 1440 at current source granularity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": [
+          {
+            "source_id": "8f4e7bc1-64de-4a9b-8c85-7e8f0f0db6d2",
+            "source_locator_key": "https://www.treccani.it/enciclopedia/amedeo-viii-duca-di-savoia_%28Enciclopedia-Italiana%29/"
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "savoy-source-treccani-amedeo-viii-1416",
+      "exact_before": {
+        "source_absent_id": "8f4e7bc1-64de-4a9b-8c85-7e8f0f0db6d2"
+      },
+      "exact_after": {
+        "source": {
+          "id": "8f4e7bc1-64de-4a9b-8c85-7e8f0f0db6d2",
+          "source_key": "bibliographic:treccani:amedeo-viii-duca-di-savoia:1416",
+          "source_type": "reference_work",
+          "title": "Amedeo VIII, duca di Savoia — Enciclopedia Italiana, Treccani",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.treccani.it/enciclopedia/amedeo-viii-duca-di-savoia_%28Enciclopedia-Italiana%29/",
+          "citation_text": "Treccani states that on 9 February 1416 Emperor Sigismund transformed the County of Savoy into a duchy and solemnly invested Amadeus VIII."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "savoy-county-state-form-modeled-period",
+      "exact_before": {
+        "designation_absent_id": "a80fb305-8fb2-4d66-9c0a-4c29be0c5d96"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "a80fb305-8fb2-4d66-9c0a-4c29be0c5d96",
+          "polity_id": "f48c1835-d324-4b02-9e41-efb4a70d9e26",
+          "designation_type": "state_form",
+          "valid_from_year": 1391,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "approximate",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1416,
+          "valid_to_month": 2,
+          "valid_to_day": 8,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "County of Savoy is preserved as the pre-ducal state-form of the continuous Savoy polity. The 1391 lower boundary is the earliest currently modeled ATLAS Amadeus VIII county Activity and is a coverage floor, not a claim of the county's historical foundation. The phase ends the day before the 9 February 1416 elevation to a duchy."
+        },
+        "names": [
+          {
+            "id": "cc9bbf39-9e03-45a8-a4f2-bf65e8d0bb7f",
+            "polity_designation_id": "a80fb305-8fb2-4d66-9c0a-4c29be0c5d96",
+            "locale": "en",
+            "name": "County of Savoy",
+            "is_preferred": true
+          },
+          {
+            "id": "4a0c7d91-4030-45df-a644-96b384dc8b9c",
+            "polity_designation_id": "a80fb305-8fb2-4d66-9c0a-4c29be0c5d96",
+            "locale": "ko",
+            "name": "사보이 백국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "a80fb305-8fb2-4d66-9c0a-4c29be0c5d96",
+            "source_id": "8f4e7bc1-64de-4a9b-8c85-7e8f0f0db6d2",
+            "source_locator_key": "https://www.treccani.it/enciclopedia/amedeo-viii-duca-di-savoia_%28Enciclopedia-Italiana%29/"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 2,
+    "asserted_source_count": 1,
+    "asserted_polity_designation_count": 1,
+    "county_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
