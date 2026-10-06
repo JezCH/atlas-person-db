@@ -559,7 +559,7 @@
     border-color: var(--atlas-material-hairline-strong);
     background-color: var(--dashboard-surface-2) !important;
     background-image:
-      linear-gradient(90deg,rgba(192,174,136,.030),rgba(239,235,226,.004) 42%,transparent 86%) !important;
+      linear-gradient(90deg,var(--atlas-material-wash-hover),rgba(239,235,226,.004) 42%,transparent 86%) !important;
     box-shadow:
       inset 2px 0 0 var(--atlas-material-rail),
       inset 0 1px 0 rgba(239,235,226,.015);
@@ -607,7 +607,7 @@
     border-color: var(--atlas-material-hairline-strong);
     background-color: var(--dashboard-surface-2);
     background-image:
-      linear-gradient(90deg,rgba(192,174,136,.026),rgba(239,235,226,.004) 40%,transparent 84%);
+      linear-gradient(90deg,var(--atlas-material-wash-hover),rgba(239,235,226,.004) 40%,transparent 84%);
     box-shadow:
       inset 2px 0 0 var(--atlas-material-rail-soft),
       inset 0 1px 0 var(--atlas-material-sheen);
