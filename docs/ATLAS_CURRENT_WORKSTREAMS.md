@@ -3,7 +3,7 @@
 **As of:** 2026-10-06  
 **Authority:** current `main` + current Production + latest durable checkpoint  
 **Workstream state baseline:** verified against current repository state on 2026-10-05  
-**Latest READY Production deployment:** Vercel `dpl_DwdyKuijfepC6keJGResFJXFR6Wu` at `dbccd49cf6b858af7834bc763b48c9eb8a06b13a` (#1933)
+**Latest Ireland data-mutation checkpoint:** Correction Apply `37465423564` SUCCESS on Production after #1933; obsolete Irish Free State / Provisional Government Polity rows retired to canonical Ireland
 **Repository/Production state:** current executable cleanup is deployed; closed one-shot NamuWiki, Person Domain v2 cutover and Place authority backfill mutation surfaces are retired, and live Person Domain verification is independent from the historical cutover snapshot.  
 **P14:** `PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`
 
