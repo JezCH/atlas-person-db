@@ -44,19 +44,6 @@
     execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
       {
-        id: "siam-thailand",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Kingdom of Siam → Kingdom of Thailand",
-        left: { name: "Kingdom of Siam" },
-        right: { name: "Kingdom of Thailand" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "south-kasai-state-form",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -901,6 +888,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "siam-thailand",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Kingdom of Siam → Kingdom of Thailand continuity merge",
+        left: { name: "Kingdom of Siam", ko: "시암 왕국", polity_id: "74846644-0ea1-57be-81c0-f31f475da748" },
+        right: { name: "Kingdom of Thailand", ko: "태국 왕국", polity_id: "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc" },
+        rationale: "Siam과 Thailand를 동일 태국 정치체의 official-name 단계로 통합했습니다. #1946에서 쁠랙 피분송크람의 1939·1949 국호 경계 Activity 조각 두 건을 source-transfer retirement했고, #1947에서 몽꿋·쭐랄롱꼰을 Thailand survivor로 재연결하고 피분송크람의 두 총리 임기를 각각 1938-12-16~1944-08-01, 1948-04-08~1957-09-16으로 복원했습니다. Siam은 1851~1939 approximate coverage 구간과 1945-09-07~1949-05-10 exact 구간의 temporal official_name designation으로 보존했습니다. #1948에서 zero-external-reference legacy Siam Polity를 Thailand survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["#1946 name-boundary Activity retirement; Correction Apply 37478452443 SUCCESS; Runtime compile 37478561853 SUCCESS", "#1947 continuity merge / Siam official-name designations; Correction Apply 37479160490 SUCCESS; Runtime compile 37479289491 SUCCESS", "#1948 legacy Siam Polity retirement; Correction Apply 37479974581 SUCCESS; Runtime compile 37480086104 SUCCESS", "UN 1949 Thailand name-change record", "U.S. Office of the Historian 1945 Siam-name restoration record", "2026-10-06 canonical + runtime exact readback"],
+        locked: true
+      },
       {
         id: "south-africa-union-state",
         review_group: "resolved_history",
