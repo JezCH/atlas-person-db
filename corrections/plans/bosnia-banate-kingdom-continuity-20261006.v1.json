@@ -1,0 +1,312 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "bosnia_banate_kingdom_continuity_20261006_v1",
+  "as_of": "2026-10-06",
+  "status": "REVIEWED_BOSNIA_BANATE_KINGDOM_CONTINUITY",
+  "release_order": 1953,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-06; Hrvatska enciklopedija Tvrtko I / Bosnia entries; Museum of the Bosnian Kingdom chronology; current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "banate_polity_id": "26f33a14-67a6-4b46-91b0-90f31d96799c",
+    "kingdom_survivor": "15c1eb86-afc0-4bc5-91ed-a01d1652160a",
+    "historical_decision": "Banate of Bosnia and Kingdom of Bosnia are rank/state-form phases of the same medieval Bosnian state identity. Tvrtko I is continuously described as Bosnian ban 1353-1377 and king 1377-1391; his October 1377 coronation elevated the Bosnian state to royal rank rather than replacing it with a successor state.",
+    "activity_rule": "Keep Tvrtko's Ban and King Activities separate because his sovereign title changed, while relinking all Banate-era Activities to one continuous Kingdom of Bosnia polity identity.",
+    "boundary_note": "The Banate designation begins at 1180 only as the earliest currently modeled ATLAS Ban-of-Bosnia Activity coverage floor (Kulin), not as a claim that the banate began in 1180. The royal phase begins on 26 October 1377, the coronation date preserved by the Museum of the Bosnian Kingdom chronology."
+  },
+  "operations": [
+    {
+      "case_id": "bosnia-relink-kulin-ban-to-continuous-kingdom",
+      "type": "rewrite_activity",
+      "activity_id": "c7812489-be1e-4cf7-bd31-95e09a2e9933",
+      "baseline_before": {
+        "person_id": "b28ca7f5-d594-4679-b58f-3c59f3998447",
+        "polity_id": "26f33a14-67a6-4b46-91b0-90f31d96799c",
+        "role_id": "c7c9a5f1-7849-4987-b9e5-f10144eb273e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1180,
+        "activity_end": 1204,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "c7812489-be1e-4cf7-bd31-95e09a2e9933",
+        "person_id": "b28ca7f5-d594-4679-b58f-3c59f3998447",
+        "polity_id": "15c1eb86-afc0-4bc5-91ed-a01d1652160a",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "c7c9a5f1-7849-4987-b9e5-f10144eb273e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1180,
+        "activity_start_detail": {
+          "year": 1180,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1204,
+        "activity_end_detail": {
+          "year": 1204,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "bosnia-relink-tvrtko-first-banate-to-continuous-kingdom",
+      "type": "rewrite_activity",
+      "activity_id": "7615086d-6980-4c32-b943-c26a0efd3b4a",
+      "baseline_before": {
+        "person_id": "f1875641-6542-4a89-bd35-9fe2e82b4723",
+        "polity_id": "26f33a14-67a6-4b46-91b0-90f31d96799c",
+        "role_id": "c7c9a5f1-7849-4987-b9e5-f10144eb273e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1353,
+        "activity_end": 1366,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "7615086d-6980-4c32-b943-c26a0efd3b4a",
+        "person_id": "f1875641-6542-4a89-bd35-9fe2e82b4723",
+        "polity_id": "15c1eb86-afc0-4bc5-91ed-a01d1652160a",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "c7c9a5f1-7849-4987-b9e5-f10144eb273e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1353,
+        "activity_start_detail": {
+          "year": 1353,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1366,
+        "activity_end_detail": {
+          "year": 1366,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "bosnia-relink-tvrtko-restored-banate-to-continuous-kingdom",
+      "type": "rewrite_activity",
+      "activity_id": "3be98708-5cde-42c2-82cf-8598a191a487",
+      "baseline_before": {
+        "person_id": "f1875641-6542-4a89-bd35-9fe2e82b4723",
+        "polity_id": "26f33a14-67a6-4b46-91b0-90f31d96799c",
+        "role_id": "c7c9a5f1-7849-4987-b9e5-f10144eb273e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1367,
+        "activity_end": 1377,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "after": {
+        "activity_id": "3be98708-5cde-42c2-82cf-8598a191a487",
+        "person_id": "f1875641-6542-4a89-bd35-9fe2e82b4723",
+        "polity_id": "15c1eb86-afc0-4bc5-91ed-a01d1652160a",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "c7c9a5f1-7849-4987-b9e5-f10144eb273e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1367,
+        "activity_start_detail": {
+          "year": 1367,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1377,
+        "activity_end_detail": {
+          "year": 1377,
+          "month": 10,
+          "day": null,
+          "granularity": "month",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "bosnia-source-kotromanici-1463",
+      "exact_before": {
+        "source_absent_id": "db6fcdb3-a677-43e0-94ba-2f7628b8df18"
+      },
+      "exact_after": {
+        "source": {
+          "id": "db6fcdb3-a677-43e0-94ba-2f7628b8df18",
+          "source_key": "bibliographic:enciklopedija-hr:kotromanici:bosnia-1463",
+          "source_type": "web_bibliographic_reference",
+          "title": "Hrvatska enciklopedija - Kotromanići",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.enciklopedija.hr/clanak/kotromanici",
+          "citation_text": "The Croatian Encyclopedia describes Tvrtko I as ban 1353-1377 and king 1377-1391 and notes the Ottoman conquest of medieval Bosnia in 1463."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "bosnia-banate-state-form-modeled-period",
+      "exact_before": {
+        "designation_absent_id": "b78b2249-bf01-4da9-8a46-d4f0bd33dd4d"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "b78b2249-bf01-4da9-8a46-d4f0bd33dd4d",
+          "polity_id": "15c1eb86-afc0-4bc5-91ed-a01d1652160a",
+          "designation_type": "state_form",
+          "valid_from_year": 1180,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "approximate",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1377,
+          "valid_to_month": 10,
+          "valid_to_day": 25,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Banate of Bosnia is preserved as the pre-royal state-form of the continuous medieval Bosnian polity. The 1180 lower boundary is the earliest currently modeled ATLAS Ban-of-Bosnia Activity coverage floor, not a claim of first institutional creation. The designation ends the day before Tvrtko I's 26 October 1377 coronation."
+        },
+        "names": [
+          {
+            "id": "65d80bf8-f3a5-492e-a7fd-1cb40d65b00d",
+            "polity_designation_id": "b78b2249-bf01-4da9-8a46-d4f0bd33dd4d",
+            "locale": "en",
+            "name": "Banate of Bosnia",
+            "is_preferred": true
+          },
+          {
+            "id": "2f4dc9d9-da88-4b31-ab7f-87bafcdbd194",
+            "polity_designation_id": "b78b2249-bf01-4da9-8a46-d4f0bd33dd4d",
+            "locale": "ko",
+            "name": "보스니아 반샤그",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "b78b2249-bf01-4da9-8a46-d4f0bd33dd4d",
+            "source_id": "3438c649-bc55-4084-ac7e-64e74b40cfbd",
+            "source_locator_key": "https://muzejbosanskogkraljevstva.ba/en/calendar-of-medieval-bosnia/"
+          },
+          {
+            "polity_designation_id": "b78b2249-bf01-4da9-8a46-d4f0bd33dd4d",
+            "source_id": "49fe4573-7add-4aaa-9661-cc545ef9f034",
+            "source_locator_key": "https://www.enciklopedija.hr/clanak/tvrtko-i-kotromanic"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "bosnia-kingdom-state-form-1377-1463",
+      "exact_before": {
+        "designation_absent_id": "02ad9076-e700-4c54-9fbc-7d8cb92e4f93"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "02ad9076-e700-4c54-9fbc-7d8cb92e4f93",
+          "polity_id": "15c1eb86-afc0-4bc5-91ed-a01d1652160a",
+          "designation_type": "state_form",
+          "valid_from_year": 1377,
+          "valid_from_month": 10,
+          "valid_from_day": 26,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1463,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Kingdom of Bosnia is preserved as the royal state-form of the same medieval Bosnian polity from Tvrtko I's coronation on 26 October 1377 through the Ottoman conquest of the medieval Bosnian kingdom in 1463."
+        },
+        "names": [
+          {
+            "id": "3af7a97c-3e6b-4d4f-8ea8-2f28c95e8432",
+            "polity_designation_id": "02ad9076-e700-4c54-9fbc-7d8cb92e4f93",
+            "locale": "en",
+            "name": "Kingdom of Bosnia",
+            "is_preferred": true
+          },
+          {
+            "id": "ec512374-e67d-471e-8620-bf6491b785b7",
+            "polity_designation_id": "02ad9076-e700-4c54-9fbc-7d8cb92e4f93",
+            "locale": "ko",
+            "name": "보스니아 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "02ad9076-e700-4c54-9fbc-7d8cb92e4f93",
+            "source_id": "3438c649-bc55-4084-ac7e-64e74b40cfbd",
+            "source_locator_key": "https://muzejbosanskogkraljevstva.ba/en/calendar-of-medieval-bosnia/"
+          },
+          {
+            "polity_designation_id": "02ad9076-e700-4c54-9fbc-7d8cb92e4f93",
+            "source_id": "db6fcdb3-a677-43e0-94ba-2f7628b8df18",
+            "source_locator_key": "https://www.enciklopedija.hr/clanak/kotromanici"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 3,
+    "asserted_source_count": 1,
+    "asserted_polity_designation_count": 2,
+    "banate_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
