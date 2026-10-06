@@ -1,0 +1,326 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "hanover_electorate_kingdom_continuity_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_HANOVER_ELECTORATE_KINGDOM_CONTINUITY",
+  "release_order": 1969,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Deutsche Biographie Ernst Graf von Münster / Georg III; Hannover.de chronology; current ATLAS same-identity rank/state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "electorate_polity_id": "c9c41233-523f-4357-b526-5c20dd58d36b",
+    "kingdom_survivor": "15236151-3a4c-4e08-acab-bbf0f51f96eb",
+    "historical_decision": "Electorate of Hanover and Kingdom of Hanover are rank/state-form phases of the same Hanoverian state identity. Hanover was restored after French occupation in 1813 and the royal title was adopted at Vienna on 12 October 1814; this elevation did not create a successor polity.",
+    "occupation_rule": "Preserve the existing 1803-1813 effective-rule interruption. Do not merge George III's two electoral Activities across the French occupation/displacement interval.",
+    "designation_rule": "Preserve Electorate of Hanover as two temporal state_form intervals corresponding to the modeled effective Hanoverian electoral phases: 1760-10-25 through 1803 at current year granularity, and restored 1813-11-04 through 1814-10-11. The Kingdom phase begins 1814-10-12 and remains represented by the canonical survivor."
+  },
+  "operations": [
+    {
+      "case_id": "hanover-relink-george-iii-elector-first-phase",
+      "type": "rewrite_activity",
+      "activity_id": "bf3e16e3-3b08-46ee-8e1e-1251e94331f6",
+      "baseline_before": {
+        "person_id": "6ca23ece-ac45-4b3f-abed-eaa19a8ca5f2",
+        "polity_id": "c9c41233-523f-4357-b526-5c20dd58d36b",
+        "role_id": "87886052-3624-499a-bc57-b486d0d3e269",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1760,
+        "activity_end": 1803,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "bf3e16e3-3b08-46ee-8e1e-1251e94331f6",
+        "person_id": "6ca23ece-ac45-4b3f-abed-eaa19a8ca5f2",
+        "polity_id": "15236151-3a4c-4e08-acab-bbf0f51f96eb",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "87886052-3624-499a-bc57-b486d0d3e269",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1760,
+        "activity_start_detail": {
+          "year": 1760,
+          "month": 10,
+          "day": 25,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1803,
+        "activity_end_detail": {
+          "year": 1803,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "hanover-relink-george-iii-restored-elector-phase",
+      "type": "rewrite_activity",
+      "activity_id": "ffbe54ce-9273-4c5c-af05-b8b3ce9d98c1",
+      "baseline_before": {
+        "person_id": "6ca23ece-ac45-4b3f-abed-eaa19a8ca5f2",
+        "polity_id": "c9c41233-523f-4357-b526-5c20dd58d36b",
+        "role_id": "87886052-3624-499a-bc57-b486d0d3e269",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1813,
+        "activity_end": 1814,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "ffbe54ce-9273-4c5c-af05-b8b3ce9d98c1",
+        "person_id": "6ca23ece-ac45-4b3f-abed-eaa19a8ca5f2",
+        "polity_id": "15236151-3a4c-4e08-acab-bbf0f51f96eb",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "87886052-3624-499a-bc57-b486d0d3e269",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1813,
+        "activity_start_detail": {
+          "year": 1813,
+          "month": 11,
+          "day": 4,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1814,
+        "activity_end_detail": {
+          "year": 1814,
+          "month": 10,
+          "day": 11,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "After the French withdrawal, the Hanoverian governmental order was restored on 4 November 1813. George III's restored electoral phase continued through 11 October 1814. On 12 October 1814 the same Hanoverian state adopted royal rank as the Kingdom of Hanover.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": [
+          {
+            "source_id": "3b6f8a12-4c97-4f2e-9c41-2d8e7f5a6b30",
+            "source_locator_key": "https://www.deutsche-biographie.de/gnd118585509.html"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "hanover-refine-george-iii-king-start",
+      "type": "rewrite_activity",
+      "activity_id": "a5dcce77-7b89-4621-a08d-25e656c7380c",
+      "baseline_before": {
+        "person_id": "6ca23ece-ac45-4b3f-abed-eaa19a8ca5f2",
+        "polity_id": "15236151-3a4c-4e08-acab-bbf0f51f96eb",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1814,
+        "activity_end": 1820,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "a5dcce77-7b89-4621-a08d-25e656c7380c",
+        "person_id": "6ca23ece-ac45-4b3f-abed-eaa19a8ca5f2",
+        "polity_id": "15236151-3a4c-4e08-acab-bbf0f51f96eb",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1814,
+        "activity_start_detail": {
+          "year": 1814,
+          "month": 10,
+          "day": 12,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1820,
+        "activity_end_detail": {
+          "year": 1820,
+          "month": 1,
+          "day": 29,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "The restored Hanoverian state assumed royal rank on 12 October 1814 and George III became King of Hanover. This was a rank/state-form transition within the same Hanoverian polity identity, not the creation of a successor state.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": [
+          {
+            "source_id": "3b6f8a12-4c97-4f2e-9c41-2d8e7f5a6b30",
+            "source_locator_key": "https://www.deutsche-biographie.de/gnd118585509.html"
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "hanover-source-deutsche-biographie-muenster-1814",
+      "exact_before": {
+        "source_absent_id": "3b6f8a12-4c97-4f2e-9c41-2d8e7f5a6b30"
+      },
+      "exact_after": {
+        "source": {
+          "id": "3b6f8a12-4c97-4f2e-9c41-2d8e7f5a6b30",
+          "source_key": "bibliographic:deutsche-biographie:ernst-graf-von-muenster:hanover-1814",
+          "source_type": "academic_reference",
+          "title": "Münster, Ernst Graf von — Deutsche Biographie",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.deutsche-biographie.de/gnd118585509.html",
+          "citation_text": "Deutsche Biographie discusses Münster's note of 12 October 1814 by which Hanover adopted the title of kingdom during the Vienna settlement."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "hanover-electorate-first-effective-state-form",
+      "exact_before": {
+        "designation_absent_id": "0c8d2e5a-7f31-4b9e-a6c2-1d5f8a7b3c40"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "0c8d2e5a-7f31-4b9e-a6c2-1d5f8a7b3c40",
+          "polity_id": "15236151-3a4c-4e08-acab-bbf0f51f96eb",
+          "designation_type": "state_form",
+          "valid_from_year": 1760,
+          "valid_from_month": 10,
+          "valid_from_day": 25,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1803,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Electorate of Hanover is preserved as the pre-royal state-form during George III's first modeled effective Hanoverian ruling phase. The interval ends at current year granularity in 1803 when French occupation displaced the Hanoverian governmental order."
+        },
+        "names": [
+          {
+            "id": "51d8a3c7-9e24-4b60-a1f5-7c2d8e6b3a90",
+            "polity_designation_id": "0c8d2e5a-7f31-4b9e-a6c2-1d5f8a7b3c40",
+            "locale": "en",
+            "name": "Electorate of Hanover",
+            "is_preferred": true
+          },
+          {
+            "id": "84a1c6e3-2d75-4f90-b8c1-5e7a2d3f6b40",
+            "polity_designation_id": "0c8d2e5a-7f31-4b9e-a6c2-1d5f8a7b3c40",
+            "locale": "ko",
+            "name": "하노버 선제후국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "0c8d2e5a-7f31-4b9e-a6c2-1d5f8a7b3c40",
+            "source_id": "1f4ab3ab-0f47-46d0-9b68-5d5da709a00e",
+            "source_locator_key": "https://www.deutsche-biographie.de/sfz57020.html"
+          },
+          {
+            "polity_designation_id": "0c8d2e5a-7f31-4b9e-a6c2-1d5f8a7b3c40",
+            "source_id": "6f715312-bf85-45de-bd37-44a835a890e9",
+            "source_locator_key": "https://www.hannover.de/Kultur-Freizeit/Geschichte-Geschichten/Echt-hann%C3%B6versch/Historisches-aus-Hannover/Stadtgeschichte-in-der-Station-Waterloo/Hannover-von-1777-bis-1821"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "hanover-electorate-restored-state-form-1813-1814",
+      "exact_before": {
+        "designation_absent_id": "6a4f1d8c-2e75-4b30-9f61-3c8d5a7e2b90"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "6a4f1d8c-2e75-4b30-9f61-3c8d5a7e2b90",
+          "polity_id": "15236151-3a4c-4e08-acab-bbf0f51f96eb",
+          "designation_type": "state_form",
+          "valid_from_year": 1813,
+          "valid_from_month": 11,
+          "valid_from_day": 4,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1814,
+          "valid_to_month": 10,
+          "valid_to_day": 11,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Electorate of Hanover is preserved as the restored pre-royal state-form from the 4 November 1813 re-establishment of Hanoverian government through 11 October 1814. The same polity assumed royal rank on 12 October 1814."
+        },
+        "names": [
+          {
+            "id": "29f7b4c1-6e83-4d50-a2c9-8b1d5e7f3a60",
+            "polity_designation_id": "6a4f1d8c-2e75-4b30-9f61-3c8d5a7e2b90",
+            "locale": "en",
+            "name": "Electorate of Hanover",
+            "is_preferred": true
+          },
+          {
+            "id": "73c2e8a5-1d49-4b70-9f36-2a5e8c1d7b90",
+            "polity_designation_id": "6a4f1d8c-2e75-4b30-9f61-3c8d5a7e2b90",
+            "locale": "ko",
+            "name": "하노버 선제후국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "6a4f1d8c-2e75-4b30-9f61-3c8d5a7e2b90",
+            "source_id": "d7995014-338f-4337-ab67-2447a9c039d1",
+            "source_locator_key": "https://www.hannover.de/content/download/742032/file/Chronik%201%20bis%201988.pdf"
+          },
+          {
+            "polity_designation_id": "6a4f1d8c-2e75-4b30-9f61-3c8d5a7e2b90",
+            "source_id": "3b6f8a12-4c97-4f2e-9c41-2d8e7f5a6b30",
+            "source_locator_key": "https://www.deutsche-biographie.de/gnd118585509.html"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 3,
+    "asserted_source_count": 1,
+    "asserted_polity_designation_count": 2,
+    "electorate_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
