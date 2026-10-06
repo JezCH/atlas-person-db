@@ -1063,6 +1063,72 @@
 }
 
 
+/* MOBILE-REG1 — Mobile memorial material parity.
+ * Presentation-only parity with the desktop Register material language.
+ * Compact row geometry, column areas, font scale, padding, touch behavior,
+ * domain semantics, and Activity stacking remain unchanged.
+ */
+@media (max-width: 760px) {
+  .person-monumental-register .person-era-band,
+  .person-monumental-register .person-register-era-band {
+    box-shadow: inset 0 -1px 0 var(--atlas-material-hairline-soft);
+  }
+
+  .person-monumental-register .person-era-rows > .person-card,
+  .person-monumental-register .person-register-entry {
+    background-color: transparent;
+    box-shadow:
+      inset 0 1px 0 var(--atlas-material-sheen-soft),
+      inset 0 -1px 0 var(--atlas-material-edge-dark);
+  }
+
+  .person-monumental-register .person-register-entry:hover {
+    background-color: transparent;
+    background-image:
+      linear-gradient(90deg,var(--atlas-material-wash-hover),transparent 58%),
+      linear-gradient(
+        90deg,
+        var(--person-register-domain-wash) 0%,
+        var(--person-register-domain-wash) 16%,
+        transparent 62%
+      );
+    box-shadow:
+      inset 0 1px 0 var(--atlas-material-sheen),
+      inset 0 -1px 0 var(--atlas-material-edge-dark);
+  }
+
+  .person-monumental-register .person-register-entry.is-selected {
+    background-color: transparent;
+    background-image:
+      linear-gradient(90deg,var(--atlas-material-wash-selected),transparent 62%),
+      linear-gradient(
+        90deg,
+        var(--person-register-domain-wash) 0%,
+        var(--person-register-domain-wash) 16%,
+        transparent 62%
+      );
+    box-shadow:
+      inset 0 1px 0 var(--atlas-material-sheen-strong),
+      inset 0 -1px 0 var(--atlas-material-edge-dark-strong);
+  }
+
+  .person-monumental-register .person-register-entry::after {
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(192,174,136,.34),
+        var(--atlas-material-glint) 48%,
+        rgba(192,174,136,.34)
+      );
+  }
+
+  .person-monumental-register .person-table-identity > strong,
+  .person-monumental-register .person-register-range,
+  .person-monumental-register .person-table-activities .person-card-activity-head b {
+    text-shadow: 0 1px 0 rgba(0,0,0,.42);
+  }
+}
+
 @media (max-width: 340px) {
   .person-monumental-register .person-era-rows > .person-card,
   .person-monumental-register .person-register-entry {
