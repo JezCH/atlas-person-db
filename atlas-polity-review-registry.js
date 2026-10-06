@@ -44,19 +44,6 @@
     execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
       {
-        id: "northumbria-generic-kingdom",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Northumbria → Kingdom of Northumbria",
-        left: { name: "Northumbria" },
-        right: { name: "Kingdom of Northumbria" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "savoy-county-duchy",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -862,6 +849,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "northumbria-generic-kingdom",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Northumbria → Kingdom of Northumbria generic/formal duplicate merge",
+        left: { name: "Northumbria", ko: "노섬브리아", polity_id: "2b9eb85d-3f92-47cd-8f3d-59c9058c03b8" },
+        right: { name: "Kingdom of Northumbria", ko: "노섬브리아 왕국", polity_id: "a5ff7155-9325-404d-ae42-6dd4284bc5fc" },
+        rationale: "같은 초기중세 노섬브리아 왕국의 generic/formal naming 중복으로 통합했습니다. #1958에서 Oswiu의 642–670 왕권 Activity를 formal Kingdom of Northumbria survivor로 재연결했고, generic Northumbria는 특정 시기의 별도 state-form이나 official-name phase가 아니므로 temporal designation을 만들지 않았습니다. #1959 retirement는 미지원 review reason으로 fail-closed되었고 Production을 변경하지 않았으며, #1960에서 지원되는 orphan-cleanup reason으로 수정한 뒤 zero-external-reference generic Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["English Heritage: Oswald and Oswiu belong to the same Northumbrian kingdom", "#1958 Oswiu relink; Correction Apply 37484924930 SUCCESS; Runtime compile 37485017903 SUCCESS", "#1959 retirement attempt failed closed before mutation: CORRECTION_POLITY_RETIRE_REVIEW_REASON_REQUIRED", "#1960 corrected retirement reason; Correction Apply 37485404510 SUCCESS; Runtime compile 37485538686 SUCCESS", "2026-10-07 canonical + runtime exact readback"],
+        locked: true
+      },
       {
         id: "bosnia-banate-kingdom",
         review_group: "resolved_history",
