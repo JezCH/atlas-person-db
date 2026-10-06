@@ -56,7 +56,6 @@ const expectedAuthoringReplayMigrations = [
   '20260814_authoring_ledger_live_reference_lifecycle.sql',
   '20260815_human_authoring_manifest_schema.sql',
   '20260821_person_external_references.sql',
-  '20260821_human_authoring_external_reference_sync.sql',
   '20260902_ongoing_activity_terms.sql',
   '20260904_person_representative_domains.sql',
   '20261004_person_representative_domain_standard_v2_replay_safe.sql',
