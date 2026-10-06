@@ -1,0 +1,142 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "apulia_county_duchy_continuity_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_APULIA_COUNTY_DUCHY_CONTINUITY",
+  "release_order": 1996,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Treccani Roberto I detto il Guiscardo / Roberto d'Altavilla; Cambridge history of Norman southern Italy and papal investiture; current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "duchy_survivor": "b030c005-1c9c-56fa-9d7e-1ce0a0da66bf",
+    "county_polity_id": "eceb5f79-dfab-43c5-a38e-22b6520ad0b0",
+    "historical_decision": "County of Apulia and Duchy of Apulia and Calabria represent one continuous Norman Apulian polity identity across Robert Guiscard's elevation from count to duke. Robert succeeded as Count of Apulia in 1057; at Melfi in 1059 Pope Nicholas II invested the same ruler with ducal authority over Apulia and Calabria (with Sicily claimed prospectively). The investiture legitimized and elevated the existing Norman rulership rather than creating a separate successor polity.",
+    "activity_rule": "Keep Robert Guiscard's Count and Duke Activities separate because his office/title changed, but place both under one continuous Apulian polity identity.",
+    "precision_rule": "Preserve the current reviewed 1059 boundary at exact year granularity. Sources place the papal investiture at the Council of Melfi in August 1059, but current normalized Activity evidence does not justify inventing an exact day.",
+    "designation_rule": "Preserve County of Apulia as the modeled comital state_form from 1057 through 1059 on the Duchy of Apulia and Calabria survivor; this matches the current reviewed Activity coverage rather than inventing earlier Person coverage."
+  },
+  "operations": [
+    {
+      "case_id": "apulia-relink-robert-guiscard-count-to-duchy-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "38e4a8f9-05d5-4016-bbb5-2a9c9d15f115",
+      "baseline_before": {
+        "person_id": "253f8bbe-772f-545d-b3c6-a3ee0f2b9958",
+        "polity_id": "eceb5f79-dfab-43c5-a38e-22b6520ad0b0",
+        "role_id": "26b4b1e9-3619-47ad-b096-c31944e33ca0",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1057,
+        "activity_end": 1059,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "38e4a8f9-05d5-4016-bbb5-2a9c9d15f115",
+        "person_id": "253f8bbe-772f-545d-b3c6-a3ee0f2b9958",
+        "polity_id": "b030c005-1c9c-56fa-9d7e-1ce0a0da66bf",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "26b4b1e9-3619-47ad-b096-c31944e33ca0",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1057,
+        "activity_start_detail": {
+          "year": 1057,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1059,
+        "activity_end_detail": {
+          "year": 1059,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Robert Guiscard succeeded his brother Humphrey as Count of Apulia in 1057. At the Council of Melfi in August 1059 Pope Nicholas II invested the same ruler with ducal authority over Apulia and Calabria, with Sicily included as a prospective claim. ATLAS treats the comital and ducal phases as one continuous Norman Apulian polity identity while preserving Count and Duke as separate Activities. The transition remains at year granularity because the current normalized Activity evidence does not justify an invented exact day.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "apulia-county-state-form-1057-1059",
+      "exact_before": {
+        "designation_absent_id": "e92d4549-5882-4967-be69-e7443daf09e8"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "e92d4549-5882-4967-be69-e7443daf09e8",
+          "polity_id": "b030c005-1c9c-56fa-9d7e-1ce0a0da66bf",
+          "designation_type": "state_form",
+          "valid_from_year": 1057,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1059,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "County of Apulia is preserved as the comital state-form phase of the continuous Norman Apulian polity during Robert Guiscard's modeled rule from 1057 to 1059. The papal ducal investiture occurred at Melfi in August 1059; ATLAS retains the existing year-level boundary rather than inventing an exact day."
+        },
+        "names": [
+          {
+            "id": "bddf565c-e398-4e82-bd6d-8d554cf3087b",
+            "polity_designation_id": "e92d4549-5882-4967-be69-e7443daf09e8",
+            "locale": "en",
+            "name": "County of Apulia",
+            "is_preferred": true
+          },
+          {
+            "id": "8ff588d5-8896-461e-8498-4e24712105e7",
+            "polity_designation_id": "e92d4549-5882-4967-be69-e7443daf09e8",
+            "locale": "ko",
+            "name": "아풀리아 백국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "e92d4549-5882-4967-be69-e7443daf09e8",
+            "source_id": "28aa7668-dada-4b21-9b00-05849230670e",
+            "source_locator_key": "https://www.treccani.it/enciclopedia/roberto-i-detto-il-guiscardo_%28Dizionario-di-Storia%29/"
+          },
+          {
+            "polity_designation_id": "e92d4549-5882-4967-be69-e7443daf09e8",
+            "source_id": "76591d70-cde3-47bb-bbbd-4ac1cc1ddc08",
+            "source_locator_key": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Robert_Guiscard"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_polity_designation_count": 1,
+    "county_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
