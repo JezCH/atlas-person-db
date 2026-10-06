@@ -709,11 +709,11 @@
  * by the existing Register rules above.
  */
 .person-monumental-register {
-  --atlas-register-sheen: rgba(239, 235, 226, .022);
-  --atlas-register-sheen-soft: rgba(239, 235, 226, .009);
-  --atlas-register-bronze-hairline: rgba(192, 174, 136, .11);
-  --atlas-register-bronze-mid: rgba(208, 188, 145, .22);
-  --atlas-register-bronze-bright: rgba(226, 211, 178, .72);
+  --atlas-register-sheen: var(--atlas-material-sheen-strong);
+  --atlas-register-sheen-soft: var(--atlas-material-sheen-soft);
+  --atlas-register-bronze-hairline: var(--atlas-material-hairline);
+  --atlas-register-bronze-mid: var(--atlas-material-hairline-strong);
+  --atlas-register-bronze-bright: var(--atlas-material-glint);
   --atlas-register-black-edge: rgba(0, 0, 0, .30);
 }
 
@@ -724,7 +724,7 @@
     background-image:
       linear-gradient(180deg, var(--atlas-register-sheen), rgba(239, 235, 226, .004) 42%, rgba(0, 0, 0, .055) 100%);
     border-top-color: var(--atlas-register-bronze-hairline);
-    border-bottom-color: rgba(208, 188, 145, .18);
+    border-bottom-color: var(--atlas-material-hairline-strong);
     box-shadow:
       inset 0 1px 0 rgba(239, 235, 226, .025),
       inset 0 -1px 0 var(--atlas-register-black-edge),
@@ -732,7 +732,7 @@
   }
 
   .person-monumental-register > .person-table-head .person-table-head-cell {
-    border-right-color: rgba(192, 174, 136, .075);
+    border-right-color: var(--atlas-material-hairline-soft);
     text-shadow: 0 1px 0 rgba(0, 0, 0, .38);
   }
 
@@ -744,7 +744,7 @@
   /* Era boundary reads as an architectural bronze hairline, not another box. */
   .person-monumental-register .person-era-group,
   .person-monumental-register .person-register-era {
-    border-bottom-color: rgba(192, 174, 136, .09);
+    border-bottom-color: var(--atlas-material-hairline);
   }
 
   .person-monumental-register .person-era-band::after,
@@ -759,9 +759,9 @@
       linear-gradient(
         180deg,
         transparent,
-        rgba(192, 174, 136, .07) 12%,
+        var(--atlas-material-hairline-soft) 12%,
         var(--atlas-register-bronze-mid) 50%,
-        rgba(192, 174, 136, .07) 88%,
+        var(--atlas-material-hairline-soft) 88%,
         transparent
       );
     pointer-events: none;
@@ -784,12 +784,12 @@
       linear-gradient(
         90deg,
         rgba(192, 174, 136, .022) 0,
-        rgba(239, 235, 226, .014) 26%,
+        var(--atlas-material-sheen) 26%,
         rgba(239, 235, 226, .006) 68%,
         transparent 100%
       );
     box-shadow:
-      inset 0 1px 0 rgba(239, 235, 226, .018),
+      inset 0 1px 0 var(--atlas-material-sheen-strong),
       inset 0 -1px 0 rgba(0, 0, 0, .10);
   }
 
@@ -799,8 +799,8 @@
       linear-gradient(
         90deg,
         rgba(192, 174, 136, .050) 0,
-        rgba(239, 235, 226, .022) 24%,
-        rgba(239, 235, 226, .008) 66%,
+        var(--atlas-material-sheen-strong) 24%,
+        var(--atlas-material-sheen-soft) 66%,
         transparent 100%
       );
     box-shadow:
@@ -833,7 +833,7 @@
   }
 
   .person-monumental-register .person-table-activities .person-card-activity {
-    border-bottom-color: rgba(192, 174, 136, .065);
+    border-bottom-color: var(--atlas-material-hairline-soft);
   }
 }
 
