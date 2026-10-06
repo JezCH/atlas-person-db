@@ -136,6 +136,28 @@ test('REG-M2 applies museum instrument material without changing navigation geom
   assert.doesNotMatch(material, /\n\s*line-height\s*:/);
 });
 
+test('MOBILE-NAV1 keeps mobile navigation geometry while adopting instrument material parity', () => {
+  const start = navCss.indexOf('MOBILE-NAV1 — Mobile instrument material parity');
+  const end = navCss.indexOf('@media(prefers-reduced-motion:reduce)', start);
+  assert.ok(start >= 0 && end > start);
+  const material = navCss.slice(start, end);
+
+  assert.match(material, /var\(--atlas-material-hairline\)/);
+  assert.match(material, /var\(--atlas-material-sheen\)/);
+  assert.match(material, /var\(--atlas-material-wash-active\)/);
+  assert.match(material, /var\(--atlas-material-glint\)/);
+  assert.match(material, /var\(--person-filter-domain-color\)/);
+
+  assert.doesNotMatch(material, /grid-template-columns\s*:/);
+  assert.doesNotMatch(material, /border-radius\s*:/);
+  assert.doesNotMatch(material, /padding\s*:/);
+  assert.doesNotMatch(material, /font-size\s*:/);
+  assert.doesNotMatch(material, /line-height\s*:/);
+  assert.doesNotMatch(material, /\n\s*width\s*:/);
+  assert.doesNotMatch(material, /\n\s*height\s*:/);
+  assert.doesNotMatch(material, /min-height\s*:/);
+});
+
 test('era navigation assets load after the shared era model/table grouping and before Person Main initializes', () => {
   const eraModelJs = 'atlas-person-era-model.js?v=20260909-era-10-band-v1';
   const tableJs = 'atlas-person-table-view.js?v=20261004-ui-p13-column-balance-polity-height-v1';
