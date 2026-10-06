@@ -59,5 +59,5 @@ test("Detail D1 keeps governance semantic gold separate from neutral honor metal
 });
 
 test("Detail D1 publishes the superseding Chronicle Detail asset", () => {
-  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261004-detail-d1-domain-semantics-v1/);
+  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261007-detail-m1-material-v1/);
 });
