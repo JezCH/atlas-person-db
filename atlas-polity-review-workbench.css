@@ -267,3 +267,17 @@
   border-top-color:var(--atlas-material-hairline-soft);
 }
 
+
+
+/* GLOBAL-M3 — Inscription typography.
+ * Shared institutional display type for historical identity headings only.
+ * Font size, line height, spacing, layout, metadata typography, and operational
+ * controls remain unchanged.
+ */
+.polity-browser-title strong,
+.polity-review-card-head h3,
+.polity-dossier-section-head h4{
+  font-family:var(--atlas-font-inscription);
+  font-weight:620;
+  letter-spacing:-.015em;
+}

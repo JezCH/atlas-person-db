@@ -11,14 +11,7 @@
  */
 
 :root {
-  --atlas-font-display:
-    "Noto Serif KR",
-    "Nanum Myeongjo",
-    "AppleMyungjo",
-    "Batang",
-    "Times New Roman",
-    Georgia,
-    serif;
+  --atlas-font-display: var(--atlas-font-inscription);
   --atlas-register-era-width: 78px;
   --atlas-register-person-columns:
     minmax(190px, 1fr)
