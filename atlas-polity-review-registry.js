@@ -11,7 +11,7 @@
 
   window.ATLAS_POLITY_REVIEW_REGISTRY = Object.freeze({
     schema: "atlas-polity-review-registry/v3",
-    generated_at: "2026-10-05",
+    generated_at: "2026-10-06",
     authority: Object.freeze({
       issue: 1895,
       workstream: "docs/ATLAS_CURRENT_WORKSTREAMS.md",
@@ -42,19 +42,6 @@
       entry({ code: "hold", label: "보류" })
     ]),
     execution_frontier: freezeRows([
-      {
-        id: "ireland-family-correction",
-        review_group: "execution",
-        kind: "repair_review",
-        title: "Ireland family correction",
-        left: { name: "Ireland", ko: "아일랜드", polity_id: "c9490230-d6cb-4f6b-a3ed-8baa0248c37e" },
-        right: { name: "Irish Free State / Provisional Government of Ireland", ko: "아일랜드 자유국 / 아일랜드 임시정부" },
-        rationale: "현재 #1895의 exact resume point입니다. pre-state·revolutionary Activity를 올바른 identity로 분리한 뒤 Irish Free State→Ireland continuity를 최신 Production에서 닫아야 합니다.",
-        suggested_action: "repair",
-        status: "EXECUTION_REPAIR_REQUIRED",
-        terminal_status: null,
-        evidence: ["#1895 current resume point", "fresh Production verification required before write"]
-      },
       {
         id: "kingdom-of-italy-three-way-split",
         review_group: "execution",
@@ -941,6 +928,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "ireland-family-correction",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Ireland family identity / governance correction",
+        left: { name: "Ireland", ko: "아일랜드", polity_id: "c9490230-d6cb-4f6b-a3ed-8baa0248c37e" },
+        right: { name: "Irish Republic / Irish Free State / Provisional Government of Ireland", ko: "아일랜드 공화국 / 아일랜드 자유국 / 아일랜드 임시정부" },
+        rationale: "1919 Irish Republic은 별도 혁명 Polity로 보존하고, Daniel O'Connell의 1823–1847 Activity는 동시대 United Kingdom으로 재연결했습니다. Michael Collins의 1922 임시정부 의장 Activity와 Éamon de Valera의 1932–1937 자유국 정부 Activity는 canonical Ireland에 재연결했으며, Provisional Government는 governance context/period로, Irish Free State는 1922–1937 temporal state-form designation으로 보존했습니다. 이후 두 obsolete Polity row는 zero-external-reference orphan retirement로 제거했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["#1929 Irish Republic authoring", "#1931 Ireland bounded correction; Correction Apply run 37461759445 attempt 2 SUCCESS", "#1933 obsolete polity retirement; Correction Apply run 37465423564 SUCCESS", "2026-10-06 Production exact readback"],
+        locked: true
+      },
       {
         id: "later-jin-fixed",
         review_group: "resolved_history",
