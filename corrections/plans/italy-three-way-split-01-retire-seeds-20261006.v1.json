@@ -1,0 +1,80 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "italy_three_way_split_seed_retirement_20261006_v1",
+  "as_of": "2026-10-06",
+  "status": "REVIEWED_ITALY_THREE_WAY_SPLIT_SEED_RETIREMENT",
+  "release_order": 1938,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 Kingdom of Italy 3-way split current frontier; #1936/#1937 created distinct medieval and Napoleonic Polity identities; current Production exact read-back 2026-10-06.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "existing_modern_kingdom_of_italy": "88921412-76c8-431c-a6e6-8c43d5a8b94a",
+    "medieval_polity": "ba97250b-84be-41d8-a5d9-3890e83996a8",
+    "napoleonic_polity": "5b721fcc-c736-48bf-97bc-23f5608dcebe",
+    "runtime_compile_after_seed_authoring": "37472179157",
+    "rationale": "The Human Authoring seed Activities exist only to create the two distinct Polity identities. Their reviewed sources must be transferred to the original Activity UUIDs before the seed rows are deleted. Relinking is intentionally deferred to the next exact-read correction unit."
+  },
+  "operations": [
+    {
+      "case_id": "italy-split-retire-medieval-otto-authoring-seed",
+      "type": "retire_activity",
+      "activity_id": "f8396328-9318-4457-bf8b-f5111b6ae421",
+      "baseline_before": {
+        "person_id": "a9b1f443-ab51-4bda-8f69-263208a6be00",
+        "polity_id": "ba97250b-84be-41d8-a5d9-3890e83996a8",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 951,
+        "activity_end": 973,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "replacement_activity_ids": [
+        "c504ad11-13f4-4abd-8541-f3a66cb62f46"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    },
+    {
+      "case_id": "italy-split-retire-napoleonic-napoleon-authoring-seed",
+      "type": "retire_activity",
+      "activity_id": "c0ba4463-6983-41a7-a179-10b4bcf1c8cd",
+      "baseline_before": {
+        "person_id": "945b78a7-3941-5e05-a6c9-ce57e7395727",
+        "polity_id": "5b721fcc-c736-48bf-97bc-23f5608dcebe",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1805,
+        "activity_end": 1814,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "replacement_activity_ids": [
+        "d2b6231a-4e11-4976-8402-89b16e295d7b"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "seed_activities_retired": 2,
+    "replacement_activity_count": 2,
+    "source_transfer_required": true,
+    "original_activity_uuids_preserved": true,
+    "production_mutation_authorized": false
+  }
+}
