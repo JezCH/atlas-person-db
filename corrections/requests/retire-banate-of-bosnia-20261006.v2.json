@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:banate-of-bosnia-after-kingdom-continuity-merge:2026-10-06:v1",
+  "release_order": 1954,
+  "evidence": {
+    "decision": "Banate of Bosnia is the pre-royal state-form phase of the continuous medieval Bosnian polity and is preserved as a temporal state_form designation on canonical Kingdom of Bosnia.",
+    "continuity_apply_run": "37482503120",
+    "continuity_runtime_compile": "37482645483",
+    "survivor_polity_id": "15c1eb86-afc0-4bc5-91ed-a01d1652160a",
+    "production_readback": "2026-10-06 exact readback: legacy Banate row has zero external references and only two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:banate-of-bosnia-after-kingdom-state-form-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "26f33a14-67a6-4b46-91b0-90f31d96799c",
+        "canonical_key": "Banate of Bosnia",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "15c1eb86-afc0-4bc5-91ed-a01d1652160a",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Banate of Bosnia",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "보스니아 반샤그",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
