@@ -1,0 +1,196 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "south_kasai_state_form_continuity_20261006_v1",
+  "as_of": "2026-10-06",
+  "status": "REVIEWED_SOUTH_KASAI_STATE_FORM_CONTINUITY",
+  "release_order": 1950,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-06; UN contemporary record of autonomous South Kasai; reviewed South Kasai / Kalonji historical sources; current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "survivor_polity_id": "0e0d2c95-6ffb-40f2-8e2f-e98ab15c6f5a",
+    "state_form_duplicate_polity_id": "9d978d31-92d8-4330-999d-161a8cf01547",
+    "historical_decision": "The Federated Kingdom of South Kasai was a state-form/title change of the same short-lived South Kasai political community. Contemporary and later accounts describe Kalonji's 16 July 1961 accession as Mulopwe as changing the state's title to the Federated Kingdom of South Kasai, not creating a successor state.",
+    "activity_rule": "Keep the two Kalonji Activities separate because his governing role actually changed from President and Head of State to Mulopwe (King), while relinking both to one continuous South Kasai polity identity."
+  },
+  "operations": [
+    {
+      "case_id": "south-kasai-relink-kalonji-mulopwe-to-continuous-polity",
+      "type": "rewrite_activity",
+      "activity_id": "04af2517-fc38-459d-9069-41c86e4a979d",
+      "baseline_before": {
+        "person_id": "e4d1ce89-3991-417d-b513-75f6714484d7",
+        "polity_id": "9d978d31-92d8-4330-999d-161a8cf01547",
+        "role_id": "5f38e1d0-2512-4d2b-b58a-5e8d3c068290",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1961,
+        "activity_end": 1962,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "04af2517-fc38-459d-9069-41c86e4a979d",
+        "person_id": "e4d1ce89-3991-417d-b513-75f6714484d7",
+        "polity_id": "0e0d2c95-6ffb-40f2-8e2f-e98ab15c6f5a",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "5f38e1d0-2512-4d2b-b58a-5e8d3c068290",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1961,
+        "activity_start_detail": {
+          "year": 1961,
+          "month": 7,
+          "day": 16,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1962,
+        "activity_end_detail": {
+          "year": 1962,
+          "month": 10,
+          "day": 5,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "On 16 July 1961 Albert Kalonji assumed the Luba sovereign title Mulopwe and the same South Kasai state adopted the styling Federated Kingdom of South Kasai. ATLAS keeps this Activity separate from his earlier presidential headship because his governing role changed, while modeling both phases under one continuous South Kasai polity identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "south-kasai-autonomous-state-form-1960-1961",
+      "exact_before": {
+        "designation_absent_id": "12b5c8a6-6770-4d6b-9e04-d8b73761d4a2"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "12b5c8a6-6770-4d6b-9e04-d8b73761d4a2",
+          "polity_id": "0e0d2c95-6ffb-40f2-8e2f-e98ab15c6f5a",
+          "designation_type": "state_form",
+          "valid_from_year": 1960,
+          "valid_from_month": 8,
+          "valid_from_day": 9,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1961,
+          "valid_to_month": 7,
+          "valid_to_day": 15,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Autonomous State of South Kasai is preserved as the initial state-form/designation of the continuous South Kasai polity from its 9 August 1960 proclamation through the day before Kalonji's 16 July 1961 accession as Mulopwe."
+        },
+        "names": [
+          {
+            "id": "82f23a45-5538-4f64-a4ec-f72706bb4c42",
+            "polity_designation_id": "12b5c8a6-6770-4d6b-9e04-d8b73761d4a2",
+            "locale": "en",
+            "name": "Autonomous State of South Kasai",
+            "is_preferred": true
+          },
+          {
+            "id": "71727dad-acde-4098-84d8-56dcc995ce18",
+            "polity_designation_id": "12b5c8a6-6770-4d6b-9e04-d8b73761d4a2",
+            "locale": "ko",
+            "name": "남카사이 자치국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "12b5c8a6-6770-4d6b-9e04-d8b73761d4a2",
+            "source_id": "8a951de6-cba4-4a72-b9be-1e79889f1f04",
+            "source_locator_key": "https://www.qeh.ox.ac.uk/sites/default/files/pdf_docs/qehwps95.pdf"
+          },
+          {
+            "polity_designation_id": "12b5c8a6-6770-4d6b-9e04-d8b73761d4a2",
+            "source_id": "ea949207-b297-4a65-ab3b-91352a191b37",
+            "source_locator_key": "https://en.wikipedia.org/wiki/South_Kasai"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "south-kasai-federated-kingdom-state-form-1961-1962",
+      "exact_before": {
+        "designation_absent_id": "7790696a-0e03-4db2-9078-71776f034f58"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "7790696a-0e03-4db2-9078-71776f034f58",
+          "polity_id": "0e0d2c95-6ffb-40f2-8e2f-e98ab15c6f5a",
+          "designation_type": "state_form",
+          "valid_from_year": 1961,
+          "valid_from_month": 7,
+          "valid_from_day": 16,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1962,
+          "valid_to_month": 10,
+          "valid_to_day": 5,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Federated Kingdom of South Kasai is preserved as the monarchical state-form/designation adopted when Kalonji became Mulopwe on 16 July 1961, continuing until the modeled end of his South Kasai rule on 5 October 1962."
+        },
+        "names": [
+          {
+            "id": "30277345-12ef-4e1d-a518-491afbc7cedf",
+            "polity_designation_id": "7790696a-0e03-4db2-9078-71776f034f58",
+            "locale": "en",
+            "name": "Federated Kingdom of South Kasai",
+            "is_preferred": true
+          },
+          {
+            "id": "c91a8c73-5c8c-42bd-bc11-62a7cf21556a",
+            "polity_designation_id": "7790696a-0e03-4db2-9078-71776f034f58",
+            "locale": "ko",
+            "name": "남카사이 연방왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "7790696a-0e03-4db2-9078-71776f034f58",
+            "source_id": "ea949207-b297-4a65-ab3b-91352a191b37",
+            "source_locator_key": "https://en.wikipedia.org/wiki/South_Kasai"
+          },
+          {
+            "polity_designation_id": "7790696a-0e03-4db2-9078-71776f034f58",
+            "source_id": "3bb38098-f5e0-45f3-850d-1a256fc8f714",
+            "source_locator_key": "https://en.wikipedia.org/wiki/Albert_Kalonji"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_polity_designation_count": 2,
+    "duplicate_polity_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
