@@ -168,3 +168,102 @@
   border-top-color:rgba(192,174,136,.06);
 }
 
+
+
+/* UI POL-C2 — Review card material.
+ * Visual-only refinement for Polity audit/review surfaces.
+ * Canonical browser cards, layout geometry, typography scale, review semantics,
+ * evidence content, and authoring behavior remain unchanged.
+ */
+.polity-review-filter,
+.polity-review-card,
+.polity-review-entity,
+.polity-review-evidence,
+.polity-review-model-note,
+.polity-review-presentation-note{
+  border-color:rgba(192,174,136,.09);
+  background-color:var(--atlas-surface-1);
+  background-image:
+    linear-gradient(180deg,rgba(239,235,226,.011),rgba(239,235,226,.002) 46%,rgba(0,0,0,.028) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(239,235,226,.012),
+    inset 0 -1px 0 rgba(0,0,0,.16);
+}
+
+.polity-review-filter{
+  transition:
+    border-color var(--atlas-motion-fast,110ms) var(--atlas-motion-ease,ease),
+    background-color var(--atlas-motion-fast,110ms) var(--atlas-motion-ease,ease),
+    box-shadow var(--atlas-motion-fast,110ms) var(--atlas-motion-ease,ease);
+}
+
+.polity-review-filter:hover{
+  border-color:rgba(208,188,145,.18);
+  background-color:var(--atlas-surface-2);
+}
+
+.polity-review-filter.is-active{
+  outline-color:rgba(208,188,145,.24);
+  border-color:rgba(208,188,145,.28);
+  background-image:
+    linear-gradient(90deg,rgba(192,174,136,.040),rgba(239,235,226,.006) 40%,transparent 86%);
+  box-shadow:
+    inset 2px 0 0 rgba(208,188,145,.58),
+    inset 0 1px 0 rgba(239,235,226,.018);
+}
+
+.polity-review-card{
+  box-shadow:
+    inset 0 1px 0 rgba(239,235,226,.016),
+    inset 0 -1px 0 rgba(0,0,0,.20);
+}
+
+.polity-review-card-head h3{
+  color:var(--atlas-text-strong);
+  text-shadow:0 1px 0 rgba(0,0,0,.46);
+}
+
+.polity-review-kind,
+.polity-review-state,
+.polity-review-entity-stats span,
+.polity-review-person-name span{
+  border:1px solid rgba(192,174,136,.07);
+  box-shadow:inset 0 1px 0 rgba(239,235,226,.010);
+}
+
+.polity-review-entity{
+  background-color:var(--atlas-surface-2);
+}
+
+.polity-review-evidence{
+  border-left:1px solid rgba(208,188,145,.20);
+  background-color:var(--atlas-surface-2);
+}
+
+.polity-review-model-note{
+  border-left-color:rgba(208,188,145,.62);
+  background-image:
+    linear-gradient(90deg,rgba(192,174,136,.030),rgba(239,235,226,.004) 36%,transparent 82%);
+}
+
+.polity-review-presentation-note{
+  border-color:rgba(208,188,145,.16);
+  background-image:
+    linear-gradient(90deg,rgba(192,174,136,.024),rgba(239,235,226,.004) 42%,transparent 84%);
+}
+
+.polity-review-controls{
+  border-top-color:rgba(192,174,136,.08);
+}
+
+.polity-review-person-list li{
+  border-color:rgba(192,174,136,.065);
+  background-color:var(--atlas-surface-1);
+  background-image:
+    linear-gradient(180deg,rgba(239,235,226,.008),transparent 70%);
+}
+
+.polity-review-person-links{
+  border-top-color:rgba(192,174,136,.07);
+}
+
