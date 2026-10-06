@@ -115,6 +115,27 @@ test('mobile Person facet controls stay inside the viewport without browser focu
   assert.doesNotMatch(narrowCss, /\.person-era-search\{grid-column:1\/-1\}/);
 });
 
+test('REG-M2 applies museum instrument material without changing navigation geometry', () => {
+  const start = navCss.indexOf('UI REG-M2 — Museum instrument chrome');
+  const end = navCss.indexOf('@media(max-width:900px)', start);
+  assert.ok(start >= 0 && end > start);
+  const material = navCss.slice(start, end);
+
+  assert.match(material, /polished|instrument|background-image/);
+  assert.match(material, /\.person-era-navigator\{/);
+  assert.match(material, /\.person-era-jump\.is-current/);
+  assert.match(material, /\.person-domain-filter\.is-active/);
+  assert.match(material, /inset 2px 0 0 var\(--person-filter-domain-color\)/);
+  assert.match(material, /border-radius:3px/);
+
+  assert.doesNotMatch(material, /grid-template-columns\s*:/);
+  assert.doesNotMatch(material, /width\s*:/);
+  assert.doesNotMatch(material, /height\s*:/);
+  assert.doesNotMatch(material, /padding\s*:/);
+  assert.doesNotMatch(material, /font-size\s*:/);
+  assert.doesNotMatch(material, /line-height\s*:/);
+});
+
 test('era navigation assets load after the shared era model/table grouping and before Person Main initializes', () => {
   const eraModelJs = 'atlas-person-era-model.js?v=20260909-era-10-band-v1';
   const tableJs = 'atlas-person-table-view.js?v=20261004-ui-p13-column-balance-polity-height-v1';
