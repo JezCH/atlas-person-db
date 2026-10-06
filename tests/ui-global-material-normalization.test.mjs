@@ -90,3 +90,29 @@ test("GLOBAL-M2 interaction luminance uses one hover / active / selected wash sc
   assert.match(dashboardMaterial, /var\(--atlas-material-wash-hover\)/);
   assert.doesNotMatch(dashboardMaterial, /rgba\(192,174,136,\.(?:026|030)\)/);
 });
+
+
+test("GLOBAL-M3 inscription typography is globally owned and limited to identity headings", () => {
+  const foundation = read("atlas-ui-visual-foundation.css");
+  const register = read("atlas-person-monumental-register.css");
+  const polity = read("atlas-polity-review-workbench.css");
+  const dashboard = read("atlas-dashboard-monumental-v11.css");
+
+  assert.match(foundation, /--atlas-font-inscription:[\s\S]*"Noto Serif KR"[\s\S]*Georgia,[\s\S]*serif;/);
+  assert.match(foundation, /--atlas-font-display: var\(--atlas-font-inscription\)/);
+  assert.match(register, /--atlas-font-display: var\(--atlas-font-inscription\)/);
+  assert.match(dashboard, /font-family: var\(--atlas-font-display/);
+
+  const start = polity.indexOf("GLOBAL-M3 — Inscription typography");
+  assert.ok(start >= 0);
+  const typography = polity.slice(start);
+  assert.match(typography, /\.polity-browser-title strong,/);
+  assert.match(typography, /\.polity-review-card-head h3,/);
+  assert.match(typography, /\.polity-dossier-section-head h4/);
+  assert.match(typography, /font-family:var\(--atlas-font-inscription\)/);
+  assert.match(typography, /font-weight:620/);
+  assert.doesNotMatch(typography, /font-size\s*:/);
+  assert.doesNotMatch(typography, /line-height\s*:/);
+  assert.doesNotMatch(typography, /padding\s*:/);
+  assert.doesNotMatch(typography, /margin\s*:/);
+});
