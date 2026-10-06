@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:kingdom-of-lithuania-after-grand-duchy-state-form-merge:2026-10-07:v1",
+  "release_order": 1989,
+  "evidence": {
+    "decision": "Kingdom of Lithuania is the 1253-1263 royal state-form phase of the continuous Lithuanian polity and is preserved as a temporal state_form designation on canonical Grand Duchy of Lithuania.",
+    "continuity_apply_run": "37540279082",
+    "survivor_polity_id": "09d99219-3553-480d-bb56-30a21e535b88",
+    "production_readback": "2026-10-07 exact readback: legacy Kingdom row has zero external references and only two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:kingdom-of-lithuania-after-grand-duchy-state-form-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "a91ef245-d5a8-480a-b27f-43bec3ddffbd",
+        "canonical_key": "Kingdom of Lithuania",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "09d99219-3553-480d-bb56-30a21e535b88",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Kingdom of Lithuania",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "리투아니아 왕국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
