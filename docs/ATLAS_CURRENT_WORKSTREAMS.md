@@ -3,7 +3,7 @@
 **As of:** 2026-10-06  
 **Authority:** current `main` + current Production + latest durable checkpoint  
 **Workstream state baseline:** verified against current repository state on 2026-10-05  
-**Latest Polity data-mutation checkpoint:** Correction Apply `37479974581` SUCCESS after #1948; legacy `Kingdom of Siam` retired to canonical Kingdom of Thailand after preserving Siam as temporal `official_name` designations; Runtime compile `37480086104` SUCCESS
+**Latest Polity data-mutation checkpoint:** Correction Apply `37481215988` SUCCESS after #1951; legacy `Federated Kingdom of South Kasai` retired to continuous South Kasai after preserving both state forms as temporal designations; Runtime compile `37481332457` SUCCESS
 **Repository/Production state:** current executable cleanup is deployed; closed one-shot NamuWiki, Person Domain v2 cutover and Place authority backfill mutation surfaces are retired, and live Person Domain verification is independent from the historical cutover snapshot.  
 **P14:** `PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`
 
@@ -26,7 +26,7 @@ The registry distinguishes **execution order** from **audit obligation**. Histor
 Current sequence:
 
 1. **Carry-forward closure audit** — re-review every still-unclosed historical seed against current Production:
-   - 27 same-identity / continuity candidates;
+   - 26 same-identity / continuity candidates;
    - 16 separate historical-family judgments;
    - 2 temporal-designation residuals (Russia, Sweden);
    - 2 KO/EN naming-collision residuals;
@@ -40,7 +40,7 @@ Important distinction:
 - **Do not discard old audit seeds merely because they are historical.**
 - Rebuild the decision from current Production + current identity rules, then assign a terminal status.
 
-Already completed Polity fixes remain closed unless contradictory current evidence appears, including the Siam/Thailand continuity merge, the South Africa continuity merge, the Ireland family correction, the Kingdom of Italy 3-way split, Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, the Kingdom-of-France generic/formal duplicate correction and the Japan lineage/occupation/designation rebuild. France's wider regime-family audit is a separate open seed and must not be conflated with the completed duplicate correction.
+Already completed Polity fixes remain closed unless contradictory current evidence appears, including the South Kasai state-form continuity merge, the Siam/Thailand continuity merge, the South Africa continuity merge, the Ireland family correction, the Kingdom of Italy 3-way split, Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, the Kingdom-of-France generic/formal duplicate correction and the Japan lineage/occupation/designation rebuild. France's wider regime-family audit is a separate open seed and must not be conflated with the completed duplicate correction.
 
 ### B. UI information coverage / completeness — #1896
 
@@ -157,9 +157,9 @@ Portrait content, P14 historical-map Geometry and the broad legacy census are pa
 
 If no different task is explicitly selected by the user:
 
-**Resume #1895 at `Autonomous State of South Kasai → Federated Kingdom of South Kasai`, the first still-unclosed carry-forward continuity seed.**
+**Resume #1895 at `Banate of Bosnia → Kingdom of Bosnia`, the first still-unclosed carry-forward continuity seed.**
 
-The Siam/Thailand and South Africa continuity seeds, Ireland family and Kingdom of Italy 3-way split are terminal `FIXED` as of 2026-10-06. Siam is preserved as temporal `official_name` designations on canonical Kingdom of Thailand, including the exact 1945-09-07 through 1949-05-10 restoration interval.
+The South Kasai, Siam/Thailand and South Africa continuity seeds, Ireland family and Kingdom of Italy 3-way split are terminal `FIXED` as of 2026-10-06. South Kasai preserves the Autonomous State and Federated Kingdom phases as temporal `state_form` designations while retaining Kalonji's actual role change as separate Activities.
 
 Continue through the current review registry's carry-forward audit groups in current order until every seed has a terminal disposition, then run the fresh whole-Production discovery scan.
 
