@@ -2,7 +2,7 @@
 
 const { discoverIdentityReferences } = require("./atlas-destructive-lifecycle-service.js");
 
-const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v9";
+const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v10";
 const CONTEXT_POLITY_RELATIONSHIP_FK_KEY = "atlas_v2.person_politics_context_polities.person_politics_id";
 
 const EXPECTED_PERSON_FKS = Object.freeze([
@@ -18,7 +18,8 @@ const EXPECTED_PERSON_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.person_politics_v2.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_portraits.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_sources.person_id", delete_action: "CASCADE" }),
-  Object.freeze({ key: "atlas_v2.person_timeline_dispositions.person_id", delete_action: "CASCADE" })
+  Object.freeze({ key: "atlas_v2.person_timeline_dispositions.person_id", delete_action: "CASCADE" }),
+  Object.freeze({ key: "atlas_v2.runtime_person_politics_v1.person_id", delete_action: "RESTRICT" })
 ]);
 const EXPECTED_RELATIONSHIP_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.authoring_manifest_runs.relationship_id", delete_action: "SET NULL" }),
@@ -34,7 +35,9 @@ const EXPECTED_NON_FK_PERSON_UUID_COLUMNS = Object.freeze([
   "atlas_v2.person_duplicate_reviews.person_low_id",
   "atlas_v2.person_merge_audits.source_person_id",
   "atlas_v2.person_merge_audits.survivor_person_id",
-  "atlas_v2.person_profile_mutation_audits.person_id"
+  "atlas_v2.person_profile_mutation_audits.person_id",
+  // Runtime compile exclusions are immutable compile-ledger snapshots, not live Person ownership.
+  "atlas_v2.runtime_compile_exclusions.person_id"
 ]);
 const P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS = Object.freeze([
   "atlas_v2.person_duplicate_revalidation_requirements.person_high_id",
@@ -127,7 +130,8 @@ async function inspectPersonMergeReferenceReadiness(client) {
       "persons","person_names","person_sources","person_descriptions","person_politics_v2","person_politics_sources",
       "chronology_claims","relationship_descriptions","person_people_affiliations","person_people_affiliation_sources",
       "person_event_participations","person_event_participation_sources","person_external_references","person_portraits","person_place_facts",
-      "person_timeline_dispositions","person_profile_mutation_audits","person_candidate_registration_states","person_registration_candidates","authoring_manifest_runs","person_duplicate_revalidation_requirements"
+      "person_timeline_dispositions","person_profile_mutation_audits","person_candidate_registration_states","person_registration_candidates","authoring_manifest_runs","person_duplicate_revalidation_requirements",
+      "runtime_person_politics_v1","runtime_compile_exclusions"
     ]]);
   const allUserTriggers = (triggerResult.rows || []).map((row) => `${row.table_schema}.${row.table_name}.${row.trigger_name}`);
   const unreviewedUserTriggers = difference(allUserTriggers,EXPECTED_USER_TRIGGERS);
