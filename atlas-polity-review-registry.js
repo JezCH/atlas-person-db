@@ -41,21 +41,7 @@
       entry({ code: "repair", label: "재연결·분리 수정" }),
       entry({ code: "hold", label: "보류" })
     ]),
-    execution_frontier: freezeRows([
-      {
-        id: "kingdom-of-italy-three-way-split",
-        review_group: "execution",
-        kind: "split_review",
-        title: "Kingdom of Italy 3-way split",
-        left: { name: "Kingdom of Italy", ko: "이탈리아 왕국", polity_id: "88921412-76c8-431c-a6e6-8c43d5a8b94a" },
-        right: { name: "Medieval / Napoleonic / 1861–1946 Kingdoms of Italy", ko: "중세 / 나폴레옹기 / 1861–1946 이탈리아 왕국" },
-        rationale: "중세 Regnum Italiae, 1805–1814 나폴레옹 왕국, 1861–1946 근대 왕국을 서로 다른 historical identity로 분리하는 판정이 완료되어 있으며 fresh read 후 적용해야 합니다.",
-        suggested_action: "split_required",
-        status: "EXECUTION_REPAIR_REQUIRED",
-        terminal_status: null,
-        evidence: ["#1895 confirmed family after Ireland", "reviewed 3-way split"]
-      }
-    ]),
+    execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
       {
         id: "south-africa-union-state",
@@ -928,6 +914,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "kingdom-of-italy-three-way-split",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Kingdom of Italy 3-way historical identity split",
+        left: { name: "Kingdom of Italy", ko: "이탈리아 왕국", polity_id: "88921412-76c8-431c-a6e6-8c43d5a8b94a" },
+        right: { name: "Kingdom of Italy (Holy Roman Empire) / Kingdom of Italy (Napoleonic)", ko: "이탈리아 왕국(신성 로마 제국) / 이탈리아 왕국(나폴레옹)" },
+        rationale: "동일한 영어 관용명이 세 시기의 서로 다른 역사적 정치체를 합쳐 놓고 있던 false merge를 수정했습니다. 기존 UUID 88921412-76c8-431c-a6e6-8c43d5a8b94a는 1861–1946 근대 이탈리아 왕국에 유지하고, 중세 regnum Italicum 계열은 ba97250b-84be-41d8-a5d9-3890e83996a8, 1805–1814 나폴레옹 왕국은 5b721fcc-c736-48bf-97bc-23f5608dcebe로 분리했습니다. temporary seed Activity 두 건은 source provenance를 원본 Activity로 이전한 뒤 제거했고, 오토 1세·프리드리히 1세·나폴레옹 1세의 원본 Activity UUID는 모두 보존했습니다. 최종 canonical/runtime Activity 분포는 medieval=2, Napoleonic=1, modern=6입니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["#1936 distinct medieval/Napoleonic Polity authoring", "#1937 reviewed spatial holds; Runtime compile 37472179157 SUCCESS", "#1938 seed retirement/provenance transfer; Correction Apply 37472703940 SUCCESS", "#1939 original Activity relink; Correction Apply 37473452899 SUCCESS; Runtime compile 37473567698 SUCCESS", "2026-10-06 canonical + runtime exact readback"],
+        locked: true
+      },
       {
         id: "ireland-family-correction",
         review_group: "resolved_history",
