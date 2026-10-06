@@ -1,0 +1,260 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "south_africa_continuity_merge_20261006_v1",
+  "as_of": "2026-10-06",
+  "status": "REVIEWED_SOUTH_AFRICA_CONTINUITY_STAGE2",
+  "release_order": 1942,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; #1941 retired the Union-side Verwoerd boundary fragment; fresh Production exact read 2026-10-06; Republic of South Africa Constitution Act 32 of 1961 sections 1 and 3 reviewed against current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "union_polity": "3d88574b-0196-4678-a3b1-88ae5f37b7bf",
+    "south_africa_survivor": "87a3aa3b-f453-4915-bf4a-9e8c19842af2",
+    "stage1_apply_run": "37475436401",
+    "stage1_runtime_compile": "37475540028",
+    "historical_decision": "Act 32 of 1961 states that the Union of South Africa shall, from 31 May 1961, be a republic under the name Republic of South Africa and construes pre-Republic references to the Union/State as references to the Republic. ATLAS therefore treats 1961 as a constitutional/state-form transition within one South African polity identity, not a state extinction and replacement.",
+    "designation_rule": "Preserve Union of South Africa as the temporal state-form/name for the survivor from the Union's establishment on 31 May 1910 through 30 May 1961. The Republic begins on 31 May 1961."
+  },
+  "operations": [
+    {
+      "case_id": "south-africa-continuity-relink-smuts-1919-1924",
+      "type": "rewrite_activity",
+      "activity_id": "5eb03673-f627-4bb8-9737-67f15f2d42bb",
+      "baseline_before": {
+        "person_id": "b3feccc3-210e-4549-b970-d093a319c6b6",
+        "polity_id": "3d88574b-0196-4678-a3b1-88ae5f37b7bf",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1919,
+        "activity_end": 1924,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "5eb03673-f627-4bb8-9737-67f15f2d42bb",
+        "person_id": "b3feccc3-210e-4549-b970-d093a319c6b6",
+        "polity_id": "87a3aa3b-f453-4915-bf4a-9e8c19842af2",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1919,
+        "activity_start_detail": {
+          "year": 1919,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1924,
+        "activity_end_detail": {
+          "year": 1924,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "south-africa-continuity-relink-smuts-1939-1948",
+      "type": "rewrite_activity",
+      "activity_id": "5d2eb36b-3325-4f4f-92a7-c82975ffcb22",
+      "baseline_before": {
+        "person_id": "b3feccc3-210e-4549-b970-d093a319c6b6",
+        "polity_id": "3d88574b-0196-4678-a3b1-88ae5f37b7bf",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1939,
+        "activity_end": 1948,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "5d2eb36b-3325-4f4f-92a7-c82975ffcb22",
+        "person_id": "b3feccc3-210e-4549-b970-d093a319c6b6",
+        "polity_id": "87a3aa3b-f453-4915-bf4a-9e8c19842af2",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1939,
+        "activity_start_detail": {
+          "year": 1939,
+          "month": 9,
+          "day": 5,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1948,
+        "activity_end_detail": {
+          "year": 1948,
+          "month": 6,
+          "day": 4,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "south-africa-continuity-extend-verwoerd-premiership-across-1961",
+      "type": "rewrite_activity",
+      "activity_id": "4bfe3dec-3ae9-4996-83ac-7a2aa658db55",
+      "baseline_before": {
+        "person_id": "b12a3e11-9966-4859-b6f6-fec0a48aeb4d",
+        "polity_id": "87a3aa3b-f453-4915-bf4a-9e8c19842af2",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1961,
+        "activity_end": 1966,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "4bfe3dec-3ae9-4996-83ac-7a2aa658db55",
+        "person_id": "b12a3e11-9966-4859-b6f6-fec0a48aeb4d",
+        "polity_id": "87a3aa3b-f453-4915-bf4a-9e8c19842af2",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1958,
+        "activity_start_detail": {
+          "year": 1958,
+          "month": 9,
+          "day": 2,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1966,
+        "activity_end_detail": {
+          "year": 1966,
+          "month": 9,
+          "day": 6,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Hendrik Verwoerd served continuously as Prime Minister from 2 September 1958 until his assassination on 6 September 1966. The 31 May 1961 transition from the Union of South Africa to the Republic of South Africa changed the constitutional state-form and name without interrupting the South African polity identity or Verwoerd's premiership.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": [
+          {
+            "source_id": "4e1d6cb0-6d44-4bdf-8e9f-4e2d81c3c92a",
+            "source_locator_key": "https://lawlibrary.org.za/akn/za/act/1961/32/eng@1961-04-25"
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "south-africa-source-constitution-act-32-1961",
+      "exact_before": {
+        "source_absent_id": "4e1d6cb0-6d44-4bdf-8e9f-4e2d81c3c92a"
+      },
+      "exact_after": {
+        "source": {
+          "id": "4e1d6cb0-6d44-4bdf-8e9f-4e2d81c3c92a",
+          "source_key": "bibliographic:lawlibrary:republic-south-africa-constitution-act-32-1961",
+          "source_type": "primary_legislation",
+          "title": "Republic of South Africa Constitution Act, 1961 (Act 32 of 1961)",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://lawlibrary.org.za/akn/za/act/1961/32/eng@1961-04-25",
+          "citation_text": "Act 32 of 1961 section 1 provides that the Union of South Africa shall from 31 May 1961 be a republic under the name Republic of South Africa; section 3 provides that references in pre-Republic law to the Union or State are thereafter construed as references to the Republic."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "south-africa-union-temporal-state-form-1910-1961",
+      "exact_before": {
+        "designation_absent_id": "9c1e6a23-7d48-4bc4-a7be-2b3cc857da11"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "9c1e6a23-7d48-4bc4-a7be-2b3cc857da11",
+          "polity_id": "87a3aa3b-f453-4915-bf4a-9e8c19842af2",
+          "designation_type": "state_form",
+          "valid_from_year": 1910,
+          "valid_from_month": 5,
+          "valid_from_day": 31,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1961,
+          "valid_to_month": 5,
+          "valid_to_day": 30,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Union of South Africa is preserved as the temporal state-form/designation of the continuous South Africa polity from establishment on 31 May 1910 through 30 May 1961. Act 32 of 1961 made the Union a republic under the name Republic of South Africa from 31 May 1961 and preserved legal continuity by construing pre-Republic references to the Union/State as references to the Republic."
+        },
+        "names": [
+          {
+            "id": "1d8af264-92a3-47db-b16a-2a0f16b7d5ce",
+            "polity_designation_id": "9c1e6a23-7d48-4bc4-a7be-2b3cc857da11",
+            "locale": "en",
+            "name": "Union of South Africa",
+            "is_preferred": true
+          },
+          {
+            "id": "6f9b2aa1-9f01-4f70-8c9a-4e2d1cf7e833",
+            "polity_designation_id": "9c1e6a23-7d48-4bc4-a7be-2b3cc857da11",
+            "locale": "ko",
+            "name": "남아프리카 연방",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "9c1e6a23-7d48-4bc4-a7be-2b3cc857da11",
+            "source_id": "4e1d6cb0-6d44-4bdf-8e9f-4e2d81c3c92a",
+            "source_locator_key": "https://lawlibrary.org.za/akn/za/act/1961/32/eng@1961-04-25"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 3,
+    "asserted_source_count": 1,
+    "asserted_polity_designation_count": 1,
+    "union_activity_refs_after_expected": 0,
+    "verwoerd_boundary_fragments_after_expected": 1,
+    "production_mutation_authorized": false
+  }
+}
