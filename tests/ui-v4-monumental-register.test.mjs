@@ -53,6 +53,29 @@ test("UI REG-M1 adds memorial material without changing Register composition", (
   assert.doesNotMatch(material, /line-height\s*:/);
 });
 
+test("MOBILE-REG1 keeps compact geometry while adopting memorial material parity", () => {
+  const css = read("atlas-person-monumental-register.css");
+  const start = css.indexOf("MOBILE-REG1 — Mobile memorial material parity");
+  const end = css.indexOf("@media (max-width: 340px)", start);
+  assert.ok(start >= 0 && end > start);
+  const mobileMaterial = css.slice(start, end);
+
+  assert.match(mobileMaterial, /var\(--atlas-material-hairline-soft\)/);
+  assert.match(mobileMaterial, /var\(--atlas-material-wash-hover\)/);
+  assert.match(mobileMaterial, /var\(--atlas-material-wash-selected\)/);
+  assert.match(mobileMaterial, /var\(--atlas-material-glint\)/);
+  assert.match(mobileMaterial, /var\(--person-register-domain-wash\)/);
+
+  assert.doesNotMatch(mobileMaterial, /grid-template-columns\s*:/);
+  assert.doesNotMatch(mobileMaterial, /grid-template-areas\s*:/);
+  assert.doesNotMatch(mobileMaterial, /padding\s*:/);
+  assert.doesNotMatch(mobileMaterial, /font-size\s*:/);
+  assert.doesNotMatch(mobileMaterial, /line-height\s*:/);
+  assert.doesNotMatch(mobileMaterial, /min-height\s*:/);
+  assert.doesNotMatch(mobileMaterial, /\n\s*width\s*:/);
+  assert.doesNotMatch(mobileMaterial, /\n\s*height\s*:/);
+});
+
 test("UI P2 keeps semantic domain, dense geometry, and neutral selection separate", () => {
   const css = read("atlas-person-monumental-register.css");
   assert.match(css, /--atlas-font-display/);
