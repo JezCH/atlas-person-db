@@ -1,0 +1,365 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "siam_thailand_continuity_merge_20261006_v1",
+  "as_of": "2026-10-06",
+  "status": "REVIEWED_SIAM_THAILAND_CONTINUITY_STAGE2",
+  "release_order": 1947,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; #1946 retired the Siam-side Phibunsongkhram boundary fragments; fresh Production exact read 2026-10-06; United Nations member-state record; U.S. Office of the Historian 1945 Siam restoration notice; current ATLAS same-identity official-name rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "siam_polity": "74846644-0ea1-57be-81c0-f31f475da748",
+    "thailand_survivor": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+    "stage1_apply_run": "37478452443",
+    "stage1_runtime_compile": "37478561853",
+    "historical_decision": "Siam and Thailand are official-name phases of one Thai state identity. The government changed the country name to Thailand in 1939, restored Siam in September 1945, and Siam notified the United Nations on 11 May 1949 that it had changed its name to Thailand. The name changes do not constitute state extinction/replacement.",
+    "first_siam_designation_boundary_note": "The first Siam designation begins in 1851 only as the earliest currently modeled ATLAS Activity that explicitly uses the Siam name; this is a coverage floor, not a claim that Siam was first adopted in 1851. The 1939 end is kept at year granularity/approximate because reviewed sources distinguish the June policy announcement from later legislative/royal-assent steps.",
+    "second_siam_designation_boundary_note": "U.S. diplomatic records state that Thailand/Thais were discarded as of 7 September 1945 and replaced by Siam/Siamese. The United Nations records the subsequent change from Siam to Thailand on 11 May 1949."
+  },
+  "operations": [
+    {
+      "case_id": "siam-thailand-relink-mongkut-to-thailand-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "1125a649-1bff-475c-8a0c-c4293cca8eb0",
+      "baseline_before": {
+        "person_id": "5649df29-c591-40a8-8a6c-5c2df979e100",
+        "polity_id": "74846644-0ea1-57be-81c0-f31f475da748",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1851,
+        "activity_end": 1868,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "1125a649-1bff-475c-8a0c-c4293cca8eb0",
+        "person_id": "5649df29-c591-40a8-8a6c-5c2df979e100",
+        "polity_id": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1851,
+        "activity_start_detail": {
+          "year": 1851,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1868,
+        "activity_end_detail": {
+          "year": 1868,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Mongkut, Rama IV, ruled Siam from 1851 until his death in 1868. ATLAS models Siam and Thailand as one continuous Thai polity identity and preserves Siam as a temporal official-name designation rather than a separate Polity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "siam-thailand-relink-chulalongkorn-to-thailand-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "0d0d5621-d456-553a-8728-57b88f9a5980",
+      "baseline_before": {
+        "person_id": "1cd161df-fa84-57de-8dc5-a09c7e344b0e",
+        "polity_id": "74846644-0ea1-57be-81c0-f31f475da748",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1868,
+        "activity_end": 1910,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-11.json:3:2ca853a08d24c926",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "0d0d5621-d456-553a-8728-57b88f9a5980",
+        "person_id": "1cd161df-fa84-57de-8dc5-a09c7e344b0e",
+        "polity_id": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1868,
+        "activity_start_detail": {
+          "year": 1868,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1910,
+        "activity_end_detail": {
+          "year": 1910,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-11.json:3:2ca853a08d24c926",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "siam-thailand-restore-phibun-first-premiership",
+      "type": "rewrite_activity",
+      "activity_id": "c87e8391-af69-432f-a0be-d755df9e78eb",
+      "baseline_before": {
+        "person_id": "90bb4107-0330-462e-b3a6-773150be2e83",
+        "polity_id": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1939,
+        "activity_end": 1944,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "after": {
+        "activity_id": "c87e8391-af69-432f-a0be-d755df9e78eb",
+        "person_id": "90bb4107-0330-462e-b3a6-773150be2e83",
+        "polity_id": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1938,
+        "activity_start_detail": {
+          "year": 1938,
+          "month": 12,
+          "day": 16,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1944,
+        "activity_end_detail": {
+          "year": 1944,
+          "month": 8,
+          "day": 1,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Plaek Phibunsongkhram served continuously as Prime Minister from 16 December 1938 to 1 August 1944. The 1939 change of the country's official name from Siam to Thailand was a name change within the same polity identity and does not split his premiership.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "siam-thailand-restore-phibun-second-premiership",
+      "type": "rewrite_activity",
+      "activity_id": "67cf6297-a217-4240-8c90-d6af3244f9ea",
+      "baseline_before": {
+        "person_id": "90bb4107-0330-462e-b3a6-773150be2e83",
+        "polity_id": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1949,
+        "activity_end": 1957,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "after": {
+        "activity_id": "67cf6297-a217-4240-8c90-d6af3244f9ea",
+        "person_id": "90bb4107-0330-462e-b3a6-773150be2e83",
+        "polity_id": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1948,
+        "activity_start_detail": {
+          "year": 1948,
+          "month": 4,
+          "day": 8,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1957,
+        "activity_end_detail": {
+          "year": 1957,
+          "month": 9,
+          "day": 16,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Plaek Phibunsongkhram served continuously as Prime Minister from 8 April 1948 to 16 September 1957. The 11 May 1949 change of the official country name from Siam to Thailand was a name change within the same polity identity and does not split his premiership.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "siam-thailand-source-us-frus-1945-name-restoration",
+      "exact_before": {
+        "source_absent_id": "b0fe221b-28b0-427d-9c98-f2ae7bacd6c0"
+      },
+      "exact_after": {
+        "source": {
+          "id": "b0fe221b-28b0-427d-9c98-f2ae7bacd6c0",
+          "source_key": "bibliographic:history-state-gov:frus1945v06:siam-name-restoration",
+          "source_type": "government_archive",
+          "title": "Foreign Relations of the United States, 1945 — Siam",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://history.state.gov/historicaldocuments/frus1945v06/ch13",
+          "citation_text": "The U.S. Office of the Historian notes that on 10 September 1945 the Siamese Chargé notified the Secretary of State that the terms Thailand and Thais had been discarded as of 7 September and replaced by Siam and Siamese."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "siam-thailand-official-name-siam-first-modeled-period",
+      "exact_before": {
+        "designation_absent_id": "21c8e737-5e88-422a-88a5-d0581e6f5922"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "21c8e737-5e88-422a-88a5-d0581e6f5922",
+          "polity_id": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+          "designation_type": "official_name",
+          "valid_from_year": 1851,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "approximate",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1939,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "approximate",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Siam is preserved as the historical official-name designation for the continuous Thailand polity. The 1851 lower boundary is the earliest currently modeled ATLAS Activity that explicitly uses the Siam name and is a coverage floor, not a claim of first historical adoption. The 1939 upper boundary remains year-granularity/approximate because reviewed sources distinguish the June name-change announcement from later legislative and royal-assent steps."
+        },
+        "names": [
+          {
+            "id": "e87ec7b6-2a0a-449a-9d9d-85e31fafd1a2",
+            "polity_designation_id": "21c8e737-5e88-422a-88a5-d0581e6f5922",
+            "locale": "en",
+            "name": "Kingdom of Siam",
+            "is_preferred": true
+          },
+          {
+            "id": "0e36b823-744c-43c9-9b17-0b479898ff23",
+            "polity_designation_id": "21c8e737-5e88-422a-88a5-d0581e6f5922",
+            "locale": "ko",
+            "name": "시암 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "21c8e737-5e88-422a-88a5-d0581e6f5922",
+            "source_id": "b74d2afe-b165-48e1-aee7-1728f8338239",
+            "source_locator_key": "https://en.wikipedia.org/wiki/Mongkut"
+          },
+          {
+            "polity_designation_id": "21c8e737-5e88-422a-88a5-d0581e6f5922",
+            "source_id": "27f5ed3c-e54a-4a0d-a5dc-e1fb1da21d98",
+            "source_locator_key": "https://media.unesco.org/sites/default/files/webform/mow001/thailand_minute_books_council_of_siam_society.pdf"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "siam-thailand-official-name-siam-1945-1949",
+      "exact_before": {
+        "designation_absent_id": "4ec753fc-7e52-425c-a9fc-c87ae7b3b884"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "4ec753fc-7e52-425c-a9fc-c87ae7b3b884",
+          "polity_id": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+          "designation_type": "official_name",
+          "valid_from_year": 1945,
+          "valid_from_month": 9,
+          "valid_from_day": 7,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1949,
+          "valid_to_month": 5,
+          "valid_to_day": 10,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "The country restored the Siam/Siamese names effective 7 September 1945. The United Nations records that Siam informed the Secretary-General on 11 May 1949 that it had changed its name to Thailand; this designation therefore ends on 10 May 1949."
+        },
+        "names": [
+          {
+            "id": "8d8d5680-5043-4976-84c4-75ab70ff0fee",
+            "polity_designation_id": "4ec753fc-7e52-425c-a9fc-c87ae7b3b884",
+            "locale": "en",
+            "name": "Kingdom of Siam",
+            "is_preferred": true
+          },
+          {
+            "id": "61ea04af-7378-4dd1-95d0-2610ca3f51f7",
+            "polity_designation_id": "4ec753fc-7e52-425c-a9fc-c87ae7b3b884",
+            "locale": "ko",
+            "name": "시암 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "4ec753fc-7e52-425c-a9fc-c87ae7b3b884",
+            "source_id": "b0fe221b-28b0-427d-9c98-f2ae7bacd6c0",
+            "source_locator_key": "https://history.state.gov/historicaldocuments/frus1945v06/ch13"
+          },
+          {
+            "polity_designation_id": "4ec753fc-7e52-425c-a9fc-c87ae7b3b884",
+            "source_id": "f4ad9b9b-975d-43cf-8292-447c67c4ce12",
+            "source_locator_key": "https://www.un.org/en/about-us/member-states/thailand"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 4,
+    "asserted_source_count": 1,
+    "asserted_polity_designation_count": 2,
+    "siam_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
