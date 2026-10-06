@@ -38,6 +38,28 @@ test("UI V11 preserves semantic domain signals and uses the global honor metal f
   assert.doesNotMatch(css, /--atlas-person-domain-military:\s*#/);
 });
 
+test("DASH-M1 adds museum ledger material without changing Dashboard geometry", () => {
+  const css = read("atlas-dashboard-monumental-v11.css");
+  const start = css.indexOf("UI DASH-M1 — Museum ledger material");
+  const end = css.indexOf("@media (max-width: 600px)", start);
+  assert.ok(start >= 0 && end > start);
+  const material = css.slice(start, end);
+
+  assert.match(material, /\.dashboard-control-center \.card/);
+  assert.match(material, /\.dashboard-kpi \{/);
+  assert.match(material, /\.dashboard-panel,/);
+  assert.match(material, /\.dashboard-issue-grid button,/);
+  assert.match(material, /\.dashboard-polity-toolbar > div/);
+  assert.match(material, /inset 2px 0 0 rgba\(208,188,145,\.50\)/);
+
+  assert.doesNotMatch(material, /\n\s*grid-template-columns\s*:/);
+  assert.doesNotMatch(material, /\n\s*padding\s*:/);
+  assert.doesNotMatch(material, /\n\s*font-size\s*:/);
+  assert.doesNotMatch(material, /\n\s*line-height\s*:/);
+  assert.doesNotMatch(material, /\n\s*width\s*:/);
+  assert.doesNotMatch(material, /\n\s*height\s*:/);
+});
+
 test("UI V11 keeps mobile Dashboard compact and reduced-motion safe", () => {
   const css = read("atlas-dashboard-monumental-v11.css");
   assert.match(css, /@media \(max-width: 600px\)/);
