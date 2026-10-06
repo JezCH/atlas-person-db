@@ -44,19 +44,6 @@
     execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
       {
-        id: "saxony-electorate-kingdom",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Electorate of Saxony → Kingdom of Saxony",
-        left: { name: "Electorate of Saxony" },
-        right: { name: "Kingdom of Saxony" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "lithuania-grand-duchy-kingdom",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -810,6 +797,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "saxony-electorate-kingdom",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Electorate of Saxony → Kingdom of Saxony state-form merge",
+        left: { name: "Electorate of Saxony", ko: "작센 선제후국", polity_id: "a3f683a4-34fe-4839-9dd0-f6ae96b52a06" },
+        right: { name: "Kingdom of Saxony", ko: "작센 왕국", polity_id: "be139c7d-f43c-4bf6-8542-9a372d64c06d" },
+        rationale: "동일 Saxon 정치체의 rank/state-form 전환으로 통합했습니다. #1985에서 Electorate에 붙어 있던 Martin Luther·Johann Sebastian Bach의 active_in Activity와 Friedrich August III의 Elector Activity를 모두 Kingdom of Saxony survivor로 재연결했습니다. Elector→King 역할 변화는 별도 Activity로 유지하되 Elector 종료를 1806-12-19, King 시작을 1806-12-20으로 맞춰 inclusive-date overlap을 제거했습니다. Electorate of Saxony는 earliest modeled coverage floor 1517부터 1806-12-19까지 temporal state_form designation으로 보존했고, #1986에서 zero-external-reference legacy Electorate Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["British Museum: Frederick Augustus as Elector before becoming King of Saxony", "Deutsche Biographie Wettiner / Friedrich August I: Saxony elevated to a kingdom in 1806", "#1985 Saxony continuity merge; Correction Apply 37538393044 SUCCESS", "#1986 legacy Electorate Polity retirement; Correction Apply 37538706786 SUCCESS", "Runtime compile 37538794625 SUCCESS", "2026-10-07 canonical + runtime exact readback"],
+        locked: true
+      },
       {
         id: "hanover-electorate-kingdom",
         review_group: "resolved_history",
