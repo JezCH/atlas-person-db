@@ -639,6 +639,34 @@
   }
 }
 
+
+
+/* UI DASH-M2 — Completeness action finish.
+ * Removes the final desktop SaaS pill from the active Dashboard visual layer.
+ * Drill-down behavior, table geometry, touch targets, and mobile treatment remain unchanged.
+ */
+@media (min-width: 601px) {
+  .dashboard-completeness td button {
+    border-color: rgba(192,174,136,.10);
+    border-radius: 3px;
+    background-color: var(--dashboard-surface);
+    background-image: linear-gradient(180deg,rgba(239,235,226,.010),transparent 70%);
+    color: var(--dashboard-text);
+    box-shadow:
+      inset 0 1px 0 rgba(239,235,226,.012),
+      inset 0 -1px 0 rgba(0,0,0,.14);
+  }
+
+  .dashboard-completeness td button:hover {
+    border-color: rgba(208,188,145,.22);
+    background-color: var(--dashboard-surface-2);
+    color: var(--dashboard-text-strong);
+    box-shadow:
+      inset 2px 0 0 rgba(208,188,145,.40),
+      inset 0 1px 0 rgba(239,235,226,.012);
+  }
+}
+
 @media (max-width: 600px) {
   .dashboard-control-center {
     gap: 9px;

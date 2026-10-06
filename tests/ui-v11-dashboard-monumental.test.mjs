@@ -60,6 +60,26 @@ test("DASH-M1 adds museum ledger material without changing Dashboard geometry", 
   assert.doesNotMatch(material, /\n\s*height\s*:/);
 });
 
+test("DASH-M2 removes the final desktop completeness pill without changing table geometry", () => {
+  const css = read("atlas-dashboard-monumental-v11.css");
+  const start = css.indexOf("UI DASH-M2 — Completeness action finish");
+  const end = css.indexOf("@media (max-width: 600px)", start);
+  assert.ok(start >= 0 && end > start);
+  const material = css.slice(start, end);
+
+  assert.match(material, /\.dashboard-completeness td button \{/);
+  assert.match(material, /border-radius: 3px/);
+  assert.match(material, /inset 2px 0 0 rgba\(208,188,145,\.40\)/);
+
+  assert.doesNotMatch(material, /border-radius:\s*999px/);
+  assert.doesNotMatch(material, /\n\s*grid-template-columns\s*:/);
+  assert.doesNotMatch(material, /\n\s*padding\s*:/);
+  assert.doesNotMatch(material, /\n\s*font-size\s*:/);
+  assert.doesNotMatch(material, /\n\s*line-height\s*:/);
+  assert.doesNotMatch(material, /\n\s*width\s*:/);
+  assert.doesNotMatch(material, /\n\s*height\s*:/);
+});
+
 test("UI V11 keeps mobile Dashboard compact and reduced-motion safe", () => {
   const css = read("atlas-dashboard-monumental-v11.css");
   assert.match(css, /@media \(max-width: 600px\)/);
