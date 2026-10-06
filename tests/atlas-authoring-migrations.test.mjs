@@ -16,7 +16,7 @@ const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
   assert.equal(AUTHORING_MIGRATION_PATHS.length, 29);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 27);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 26);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
@@ -46,8 +46,9 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.equal(AUTHORING_MIGRATION_PATHS[26].endsWith("20261003_shah_abbas_registration_queue_binding.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[27].endsWith("20261004_person_representative_domain_standard_v2_replay_safe.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[28].endsWith("20261006_user_selected_person_registration_queue_07.sql"), true);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS[8].endsWith("20261004_person_representative_domain_standard_v2_replay_safe.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS[7].endsWith("20261004_person_representative_domain_standard_v2_replay_safe.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.some((value)=>value.endsWith("20260919_person_representative_domain_standard_replay_safe.sql")), false);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.some((value)=>value.endsWith("20260821_human_authoring_external_reference_sync.sql")), false);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-7).endsWith("20260930_reviewed_candidate_boundary.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-6).endsWith("20261001_spatial_registration_dispositions.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-5).endsWith("20261001_polity_place_function_authority.sql"), true);

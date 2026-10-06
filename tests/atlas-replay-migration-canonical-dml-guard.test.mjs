@@ -70,6 +70,8 @@ test("all live replay registries are canonical-DML-free", () => {
 test("historical one-time data migrations stay outside live replay registries", () => {
   const authoringFull = basenameList(authoring.AUTHORING_MIGRATION_PATHS);
   const authoringLive = basenameList(authoring.AUTHORING_APPLY_MIGRATION_PATHS);
+  assert.ok(authoringFull.includes("20260821_human_authoring_external_reference_sync.sql"));
+  assert.ok(!authoringLive.includes("20260821_human_authoring_external_reference_sync.sql"));
   assert.ok(authoringFull.includes("20260905_person_representative_domain_standard_v1.sql"));
   assert.ok(!authoringLive.includes("20260905_person_representative_domain_standard_v1.sql"));
   assert.ok(authoringFull.includes("20260919_person_representative_domain_standard_replay_safe.sql"));

@@ -42,7 +42,6 @@ const AUTHORING_APPLY_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260814_authoring_ledger_live_reference_lifecycle.sql"),
   path.resolve(__dirname, "../db/migrations/20260815_human_authoring_manifest_schema.sql"),
   path.resolve(__dirname, "../db/migrations/20260821_person_external_references.sql"),
-  path.resolve(__dirname, "../db/migrations/20260821_human_authoring_external_reference_sync.sql"),
   path.resolve(__dirname, "../db/migrations/20260902_ongoing_activity_terms.sql"),
   path.resolve(__dirname, "../db/migrations/20260904_person_representative_domains.sql"),
   path.resolve(__dirname, "../db/migrations/20261004_person_representative_domain_standard_v2_replay_safe.sql"),

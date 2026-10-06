@@ -25,6 +25,8 @@ test('sync migration backfills pre-trigger immutable authoring snapshots', () =>
   assert.match(migration, /url LIKE 'https:\/\/namu\.wiki\/w\/%'/);
 });
 
-test('authoring schema bootstrap includes the external-reference sync migration', () => {
-  assert.match(migrationRegistry, /20260821_human_authoring_external_reference_sync\.sql/);
+test('retired external-reference sync remains historical evidence but is excluded from live authoring replay', () => {
+  assert.match(migrationRegistry, /const AUTHORING_MIGRATION_PATHS[\s\S]*20260821_human_authoring_external_reference_sync\.sql/);
+  const liveRegistry = migrationRegistry.slice(migrationRegistry.indexOf('const AUTHORING_APPLY_MIGRATION_PATHS'));
+  assert.doesNotMatch(liveRegistry, /20260821_human_authoring_external_reference_sync\.sql/);
 });
