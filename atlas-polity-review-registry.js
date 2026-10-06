@@ -44,19 +44,6 @@
     execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
       {
-        id: "south-kasai-state-form",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Autonomous State of South Kasai → Federated Kingdom of South Kasai",
-        left: { name: "Autonomous State of South Kasai" },
-        right: { name: "Federated Kingdom of South Kasai" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "bosnia-banate-kingdom",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -888,6 +875,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "south-kasai-state-form",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Autonomous State of South Kasai → Federated Kingdom of South Kasai state-form merge",
+        left: { name: "Autonomous State of South Kasai", ko: "남카사이 자치국", polity_id: "0e0d2c95-6ffb-40f2-8e2f-e98ab15c6f5a" },
+        right: { name: "Federated Kingdom of South Kasai", ko: "남카사이 연방왕국", polity_id: "9d978d31-92d8-4330-999d-161a8cf01547" },
+        rationale: "같은 South Kasai 정치체의 state-form 전환으로 통합했습니다. #1950에서 1961-07-16 이후 Albert Kalonji의 Mulopwe Activity를 survivor South Kasai에 재연결하되, 대통령·국가원수 역할에서 Mulopwe(왕) 역할로 실제 직위가 바뀐 점 때문에 두 Activity 자체는 분리 유지했습니다. Autonomous State는 1960-08-09~1961-07-15, Federated Kingdom은 1961-07-16~1962-10-05 temporal state_form designation으로 보존했습니다. #1951에서 zero-external-reference legacy Federated Kingdom Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["#1950 South Kasai state-form continuity merge; Correction Apply 37480902227 SUCCESS; Runtime compile 37481031039 SUCCESS", "#1951 legacy Federated Kingdom Polity retirement; Correction Apply 37481215988 SUCCESS; Runtime compile 37481332457 SUCCESS", "2026-10-06 canonical + runtime exact readback"],
+        locked: true
+      },
       {
         id: "siam-thailand",
         review_group: "resolved_history",
