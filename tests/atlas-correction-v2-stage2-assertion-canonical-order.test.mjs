@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const { normalizeStage2AssertionOperation } = require("../server/atlas-correction-v2-stage2-assertions.js");
+const { normalizeStage2AssertionOperation, insertStage2AssertionBundle } = require("../server/atlas-correction-v2-stage2-assertions.js");
 
 const U = Object.freeze({
   polityA: "11111111-1111-4111-8111-111111111111",
@@ -74,6 +74,36 @@ test("governance context names normalize to DB canonical order", () => {
     }
   }, 1);
   assert.deepEqual(operation.exact_after.names.map((name) => name.locale), ["en", "ko"]);
+});
+
+test("governance context writer uses PostgreSQL bind parameters", async () => {
+  const operation = normalizeStage2AssertionOperation({
+    type: "assert_governance_context",
+    decision_id: "governance-context-bind-parameters",
+    exact_before: { governance_context_absent_id: U.context },
+    exact_after: {
+      context: {
+        id: U.context,
+        canonical_key: "stage2:unit-government",
+        governance_type: "government",
+        historicity: "historical"
+      },
+      names: [
+        { id: U.contextNameA, governance_context_id: U.context, locale: "en", name: "Unit Government", name_type: "canonical", is_preferred: true }
+      ]
+    }
+  }, 1);
+  const calls = [];
+  const client = {
+    async query(sql, values) {
+      calls.push({ sql, values });
+      return { rowCount: 1, rows: [] };
+    }
+  };
+  await insertStage2AssertionBundle(client, operation);
+  assert.match(calls[0].sql, /values\(\$1,\$2,\$3,\$4\)/);
+  assert.deepEqual(calls[0].values, [U.context, "stage2:unit-government", "government", "historical"]);
+  assert.match(calls[1].sql, /values\(\$1::uuid,\$2::uuid,\$3,\$4,\$5,\$6\)/);
 });
 
 test("governance assertion source links normalize to DB canonical order", () => {
