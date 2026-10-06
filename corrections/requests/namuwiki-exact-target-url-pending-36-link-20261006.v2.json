@@ -1,0 +1,380 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-namuwiki-reference:exact-target-url-pending-36:2026-10-06:v1",
+  "release_order": 962,
+  "evidence": {
+    "decision": "Resolve all 36 live exact_target_url_pending NamuWiki Person references after re-checking exact independent target titles under the current NamuWiki registration policy. The retired one-shot NamuWiki command surface is not restored; this uses governed Correction v2 with exact-before drift protection.",
+    "reviewed_at": "2026-10-06",
+    "production_preflight": {
+      "pending_count": 36,
+      "status": "not_found",
+      "review_state": "reviewed_absent",
+      "review_reason": "exact_target_url_pending"
+    },
+    "canonicalization_rule": "Verified NamuWiki document title is converted to canonical https://namu.wiki/w/<encoded title>; direct namu.wiki retrieval is not required by current policy.",
+    "invariant": "Only the existing NamuWiki external-reference decision may transition from reviewed_absent exact_target_url_pending to linked. Person identity, Activity rows, Person count, and external-reference count must not change."
+  },
+  "operations": [
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-01",
+      "person_id": "7aeb78bc-2be1-466b-bb0d-13b5e55a9f9c",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "라마누자",
+      "replacement_url": "https://namu.wiki/w/%EB%9D%BC%EB%A7%88%EB%88%84%EC%9E%90"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-02",
+      "person_id": "bccccaef-fcaf-4a49-ab9b-97d523a5bc49",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "미나모토노 요리토모",
+      "replacement_url": "https://namu.wiki/w/%EB%AF%B8%EB%82%98%EB%AA%A8%ED%86%A0%EB%85%B8%20%EC%9A%94%EB%A6%AC%ED%86%A0%EB%AA%A8"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-03",
+      "person_id": "186aab39-b7d1-4cba-810b-eb7da6cf7d58",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "알라 웃 딘 무함마드",
+      "replacement_url": "https://namu.wiki/w/%EC%95%8C%EB%9D%BC%20%EC%9B%83%20%EB%94%98%20%EB%AC%B4%ED%95%A8%EB%A7%88%EB%93%9C"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-04",
+      "person_id": "a9375644-e94f-49fe-b679-53786e6eff06",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "레오나르도 피보나치",
+      "replacement_url": "https://namu.wiki/w/%EB%A0%88%EC%98%A4%EB%82%98%EB%A5%B4%EB%8F%84%20%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-05",
+      "person_id": "7c82b545-ee1a-4810-8ec9-aa4a6710ff85",
+      "expected_checked_at": "2026-09-29",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "니치렌",
+      "replacement_url": "https://namu.wiki/w/%EB%8B%88%EC%B9%98%EB%A0%8C"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-06",
+      "person_id": "e4e46c6c-5c31-4bbe-95d0-3122679110cb",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "훌라구 칸",
+      "replacement_url": "https://namu.wiki/w/%ED%9B%8C%EB%9D%BC%EA%B5%AC%20%EC%B9%B8"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-07",
+      "person_id": "25c3d716-a426-406d-90b1-85b67eb136dc",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "사디(시인)",
+      "replacement_url": "https://namu.wiki/w/%EC%82%AC%EB%94%94(%EC%8B%9C%EC%9D%B8)"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-08",
+      "person_id": "826ba15d-12dc-45a2-952e-23a9a205163c",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "알라 웃 딘 할지",
+      "replacement_url": "https://namu.wiki/w/%EC%95%8C%EB%9D%BC%20%EC%9B%83%20%EB%94%98%20%ED%95%A0%EC%A7%80"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-09",
+      "person_id": "8d8f78e6-4cc8-4433-b6b6-e2a9777a0bc8",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "조토 디 본도네",
+      "replacement_url": "https://namu.wiki/w/%EC%A1%B0%ED%86%A0%20%EB%94%94%20%EB%B3%B8%EB%8F%84%EB%84%A4"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-10",
+      "person_id": "97981e09-e791-49d6-9dea-78d56e472102",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "아시카가 다카우지",
+      "replacement_url": "https://namu.wiki/w/%EC%95%84%EC%8B%9C%EC%B9%B4%EA%B0%80%20%EB%8B%A4%EC%B9%B4%EC%9A%B0%EC%A7%80"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-11",
+      "person_id": "e0035e50-9f08-4a32-81c2-a9544b65ebde",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "알기르다스",
+      "replacement_url": "https://namu.wiki/w/%EC%95%8C%EA%B8%B0%EB%A5%B4%EB%8B%A4%EC%8A%A4"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-12",
+      "person_id": "f7e47ad0-c71a-4af4-b3cd-d520e41e4819",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "드미트리 돈스코이",
+      "replacement_url": "https://namu.wiki/w/%EB%93%9C%EB%AF%B8%ED%8A%B8%EB%A6%AC%20%EB%8F%88%EC%8A%A4%EC%BD%94%EC%9D%B4"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-13",
+      "person_id": "5fdf2ccd-41ce-456c-b687-dcae8ce4b05b",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "바예지트 1세",
+      "replacement_url": "https://namu.wiki/w/%EB%B0%94%EC%98%88%EC%A7%80%ED%8A%B8%201%EC%84%B8"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-14",
+      "person_id": "34770660-c98c-4a3c-b540-b4f392184a75",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "얀 후스",
+      "replacement_url": "https://namu.wiki/w/%EC%96%80%20%ED%9B%84%EC%8A%A4"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-15",
+      "person_id": "c068e2b4-4204-4de6-a448-d191167e594b",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "필리포 브루넬레스키",
+      "replacement_url": "https://namu.wiki/w/%ED%95%84%EB%A6%AC%ED%8F%AC%20%EB%B8%8C%EB%A3%A8%EB%84%AC%EB%A0%88%EC%8A%A4%ED%82%A4"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-16",
+      "person_id": "a73103e4-a4fd-4103-9346-c0c697585966",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "얀 반 에이크",
+      "replacement_url": "https://namu.wiki/w/%EC%96%80%20%EB%B0%98%20%EC%97%90%EC%9D%B4%ED%81%AC"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-17",
+      "person_id": "40098999-60f1-4995-b323-3abc18bbda73",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "지기스문트",
+      "replacement_url": "https://namu.wiki/w/%EC%A7%80%EA%B8%B0%EC%8A%A4%EB%AC%B8%ED%8A%B8"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-18",
+      "person_id": "013ba1f0-52e0-484c-9f06-54cf08af663b",
+      "expected_checked_at": "2026-08-27",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "앙주의 마르그리트",
+      "replacement_url": "https://namu.wiki/w/%EC%95%99%EC%A3%BC%EC%9D%98%20%EB%A7%88%EB%A5%B4%EA%B7%B8%EB%A6%AC%ED%8A%B8"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-19",
+      "person_id": "1a2730fa-d5ff-461b-ab1f-db15b5bb1e88",
+      "expected_checked_at": "2026-09-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "이반 3세",
+      "replacement_url": "https://namu.wiki/w/%EC%9D%B4%EB%B0%98%203%EC%84%B8"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-20",
+      "person_id": "8fb92689-0f37-5983-bafe-58f6ecebccf6",
+      "expected_checked_at": "2026-09-29",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "레프트라루",
+      "replacement_url": "https://namu.wiki/w/%EB%A0%88%ED%94%84%ED%8A%B8%EB%9D%BC%EB%A3%A8"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-21",
+      "person_id": "12cf31de-4baf-4324-9dcc-48682d2a9a41",
+      "expected_checked_at": "2026-09-30",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "칼 14세 요한",
+      "replacement_url": "https://namu.wiki/w/%EC%B9%BC%2014%EC%84%B8%20%EC%9A%94%ED%95%9C"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-22",
+      "person_id": "015bf9be-c853-4c27-922a-c502d3839af2",
+      "expected_checked_at": "2026-08-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "호세 데산 마르틴",
+      "replacement_url": "https://namu.wiki/w/%ED%98%B8%EC%84%B8%20%EB%8D%B0%EC%82%B0%20%EB%A7%88%EB%A5%B4%ED%8B%B4"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-23",
+      "person_id": "1ac98850-fee5-43bb-8a45-f5315136f136",
+      "expected_checked_at": "2026-08-27",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "존 로스(체로키)",
+      "replacement_url": "https://namu.wiki/w/%EC%A1%B4%20%EB%A1%9C%EC%8A%A4(%EC%B2%B4%EB%A1%9C%ED%82%A4)"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-24",
+      "person_id": "878c6494-4238-466f-909e-8e0632897904",
+      "expected_checked_at": "2026-09-29",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "안드레스 데산타 크루스",
+      "replacement_url": "https://namu.wiki/w/%EC%95%88%EB%93%9C%EB%A0%88%EC%8A%A4%20%EB%8D%B0%EC%82%B0%ED%83%80%20%ED%81%AC%EB%A3%A8%EC%8A%A4"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-25",
+      "person_id": "1eb0be3d-eaec-4d27-af13-cae40f686d26",
+      "expected_checked_at": "2026-09-02",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "이반 마주라니치",
+      "replacement_url": "https://namu.wiki/w/%EC%9D%B4%EB%B0%98%20%EB%A7%88%EC%A3%BC%EB%9D%BC%EB%8B%88%EC%B9%98"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-26",
+      "person_id": "09b544e3-7721-4c28-b045-d9bb943396e4",
+      "expected_checked_at": "2026-08-28",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "호세 마르티",
+      "replacement_url": "https://namu.wiki/w/%ED%98%B8%EC%84%B8%20%EB%A7%88%EB%A5%B4%ED%8B%B0"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-27",
+      "person_id": "87eff9f3-3b7b-4532-913e-db51a7b272d7",
+      "expected_checked_at": "2026-09-29",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "압둘아지즈 이븐 사우드",
+      "replacement_url": "https://namu.wiki/w/%EC%95%95%EB%91%98%EC%95%84%EC%A7%80%EC%A6%88%20%EC%9D%B4%EB%B8%90%20%EC%82%AC%EC%9A%B0%EB%93%9C"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-28",
+      "person_id": "115beb3b-5b5b-49b0-9ef7-71411d6d4eec",
+      "expected_checked_at": "2026-09-30",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "호콘 7세",
+      "replacement_url": "https://namu.wiki/w/%ED%98%B8%EC%BD%98%207%EC%84%B8"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-29",
+      "person_id": "878d976d-b345-41ba-b0d8-b288782f7c25",
+      "expected_checked_at": "2026-09-29",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "샤리프 후세인",
+      "replacement_url": "https://namu.wiki/w/%EC%83%A4%EB%A6%AC%ED%94%84%20%ED%9B%84%EC%84%B8%EC%9D%B8"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-30",
+      "person_id": "a6b9190b-e4e9-463e-b407-92c6a2eee1e9",
+      "expected_checked_at": "2026-09-30",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "요르요스 2세",
+      "replacement_url": "https://namu.wiki/w/%EC%9A%94%EB%A5%B4%EC%9A%94%EC%8A%A4%202%EC%84%B8"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-31",
+      "person_id": "7c16a731-0d78-4731-8b4d-e863ae4bff5b",
+      "expected_checked_at": "2026-09-29",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "성스차이",
+      "replacement_url": "https://namu.wiki/w/%EC%84%B1%EC%8A%A4%EC%B0%A8%EC%9D%B4"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-32",
+      "person_id": "84445967-287c-4718-aaca-d4b7aa034bb6",
+      "expected_checked_at": "2026-09-29",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "풀헨시오 바티스타",
+      "replacement_url": "https://namu.wiki/w/%ED%92%80%ED%97%A8%EC%8B%9C%EC%98%A4%20%EB%B0%94%ED%8B%B0%EC%8A%A4%ED%83%80"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-33",
+      "person_id": "7ef3851e-3927-4600-9953-bc03c15d08f7",
+      "expected_checked_at": "2026-09-29",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "수카르노",
+      "replacement_url": "https://namu.wiki/w/%EC%88%98%EC%B9%B4%EB%A5%B4%EB%85%B8"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-34",
+      "person_id": "8f4e5def-e933-47e2-ac8d-59a7c5fd58e6",
+      "expected_checked_at": "2026-09-29",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "크리스티아운 엘디아우르든",
+      "replacement_url": "https://namu.wiki/w/%ED%81%AC%EB%A6%AC%EC%8A%A4%ED%8B%B0%EC%95%84%EC%9A%B4%20%EC%97%98%EB%94%94%EC%95%84%EC%9A%B0%EB%A5%B4%EB%93%A0"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-35",
+      "person_id": "7fb64e67-ce64-4f7c-b6e2-e39a78b9621a",
+      "expected_checked_at": "2026-09-29",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "데시 바우테르서",
+      "replacement_url": "https://namu.wiki/w/%EB%8D%B0%EC%8B%9C%20%EB%B0%94%EC%9A%B0%ED%85%8C%EB%A5%B4%EC%84%9C"
+    },
+    {
+      "type": "set_person_namuwiki_reference",
+      "case_id": "pending-to-linked-36",
+      "person_id": "258717ed-936b-44cb-b194-01f001fa14e1",
+      "expected_checked_at": "2026-08-31",
+      "expected_review_reason": "exact_target_url_pending",
+      "replacement_checked_at": "2026-10-06",
+      "replacement_document_title": "프랜시스 오나",
+      "replacement_url": "https://namu.wiki/w/%ED%94%84%EB%9E%9C%EC%8B%9C%EC%8A%A4%20%EC%98%A4%EB%82%98"
+    }
+  ]
+}
