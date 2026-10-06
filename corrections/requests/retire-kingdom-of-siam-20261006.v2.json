@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:kingdom-of-siam-after-thailand-continuity-merge:2026-10-06:v1",
+  "release_order": 1948,
+  "evidence": {
+    "decision": "Kingdom of Siam is an official-name phase of the continuous Thailand polity identity and is now preserved through temporal official_name designations on canonical Kingdom of Thailand.",
+    "stage1_apply_run": "37478452443",
+    "stage2_apply_run": "37479160490",
+    "stage2_runtime_compile": "37479289491",
+    "survivor_polity_id": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+    "production_readback": "2026-10-06 exact readback: legacy Siam row has activities=0, descriptions=0, place_functions=0, governance_periods=0, designations=0, polity relations=0, identity relations=0; owned rows are two polity_names plus one polity_source.",
+    "provenance_note": "The owned polity_source points to repository dataset pending-records-supplement-11.json; that same source remains linked with locator pending-records-supplement-11.json:3 to Chulalongkorn Activity 0d0d5621-d456-553a-8728-57b88f9a5980 after relink, so retirement does not remove the underlying evidence provenance from the normalized corpus."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:kingdom-of-siam-after-thailand-official-name-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "74846644-0ea1-57be-81c0-f31f475da748",
+        "canonical_key": "Kingdom of Siam",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Kingdom of Siam",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "시암 왕국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
