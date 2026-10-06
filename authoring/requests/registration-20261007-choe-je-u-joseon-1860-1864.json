@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-choe-je-u-20261007:joseon:religious-activity:1860-1864:v1",
+  "person": {
+    "canonical_name_en": "Choe Je-u",
+    "display_name_ko": "최제우",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "religion"
+  },
+  "polity": {
+    "existing_id": "5fb816f2-2d44-55f9-a9c4-35e31625df38",
+    "canonical_name_en": "Joseon",
+    "display_name_ko": "조선",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Founder and first leader of Donghak",
+    "role_display_name_ko": "동학 창시자·초대 교주",
+    "period_basis": "religious_activity",
+    "start_year": 1860,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1864,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Choe Je-u founded Donghak in 1860 and led the early religious movement until his arrest and execution in 1864. The activity interval represents his documented period as founder and first leader of Donghak, not his full lifetime."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_historical_reference",
+      "title": "최제우와 동학 — 우리역사넷",
+      "canonical_url": "https://contents.history.go.kr/mobile/kc/view.do?levelId=kc_i401600",
+      "citation_text": "국사편찬위원회 우리역사넷은 최제우가 1860년 동학을 창도하고 포교와 교단 조직을 전개하다 1864년 처형된 과정을 설명한다."
+    },
+    {
+      "source_type": "encyclopedic_reference",
+      "title": "최제우 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0057640",
+      "citation_text": "한국민족문화대백과사전은 최제우를 동학을 창도한 종교창시자로 설명하고 그의 생애, 동학 창도, 저술과 처형을 정리한다."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-07",
+      "document_title": "최제우",
+      "url": "https://namu.wiki/w/%EC%B5%9C%EC%A0%9C%EC%9A%B0"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-CHOE-JE-U-20261007",
+    "selection": "user_selected_immediate_registration"
+  }
+}
