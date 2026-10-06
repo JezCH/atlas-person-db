@@ -47,13 +47,14 @@ test('current registry restores every required carry-forward audit family withou
   assert.equal(registry.schema, 'atlas-polity-review-registry/v3');
   assert.equal(registry.generated_at, '2026-10-06');
   assert.equal(registry.authority.issue, 1895);
-  assert.equal(registry.execution_frontier.length, 1);
-  assert.deepEqual(Array.from(registry.execution_frontier, row => row.id), [
-    'kingdom-of-italy-three-way-split'
-  ]);
+  assert.equal(registry.execution_frontier.length, 0);
+  assert.deepEqual(Array.from(registry.execution_frontier, row => row.id), []);
   const ireland = registry.resolved_history.find(row => row.id === 'ireland-family-correction');
   assert.equal(ireland?.terminal_status, 'FIXED');
   assert.equal(ireland?.locked, true);
+  const italy = registry.resolved_history.find(row => row.id === 'kingdom-of-italy-three-way-split');
+  assert.equal(italy?.terminal_status, 'FIXED');
+  assert.equal(italy?.locked, true);
   assert.equal(registry.carry_forward_same_identity.length, 29);
   assert.equal(registry.historical_family_reviews.length, 16);
   assert.equal(registry.designation_residuals.length, 2);
@@ -106,7 +107,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 54);
+  assert.equal(unresolved.length, 53);
   assert.equal(byId.get('northern-southern-song').terminal_status, null);
   assert.equal(byId.get('roman-west-east').terminal_status, null);
   assert.equal(byId.get('byzantine-nicaea-rupture').terminal_status, null);
