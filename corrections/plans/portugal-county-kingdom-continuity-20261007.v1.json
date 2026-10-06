@@ -1,0 +1,142 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "portugal_county_kingdom_continuity_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_PORTUGAL_COUNTY_KINGDOM_CONTINUITY",
+  "release_order": 1991,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Assembleia da República D. Afonso Henriques; Journal of Ecclesiastical History study of Portuguese kingship; Universidade de Coimbra / CHSC work on the Condado Portucalense; current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "kingdom_survivor": "356c77d1-f2e1-5ad8-8716-e06d9fb3cdcc",
+    "county_polity_id": "ac18509d-6239-42e6-971c-42f3fe86d464",
+    "historical_decision": "County of Portugal and Kingdom of Portugal represent one continuous Portuguese polity identity across Afonso Henriques's transition from comital rule to royal kingship. The County was the immediate political substrate of the kingdom; Afonso secured rule over Portugal in 1128, adopted/asserted royal status around 1139-1140, obtained recognition from Alfonso VII at Zamora in 1143, and papal recognition in 1179. These recognition stages do not create a separate successor identity.",
+    "activity_rule": "Keep Afonso Henriques's Count and King Activities separate because his sovereign title changed, but place both under one continuous Portuguese polity identity.",
+    "precision_rule": "Preserve the existing reviewed c.1139 transition at approximate year granularity. Contemporary and modern evidence shows a process: last extant infans charter in July 1139, first extant royal charter in April 1140, Leonese recognition in 1143, and papal recognition in 1179. Do not fabricate an exact accession day.",
+    "designation_rule": "Preserve County of Portugal as the modeled comital state_form from 1128 through c.1139 on the Kingdom of Portugal survivor; this matches the current reviewed Activity coverage rather than inventing unmodeled earlier Person coverage."
+  },
+  "operations": [
+    {
+      "case_id": "portugal-relink-afonso-count-to-kingdom-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "d616f821-4832-4a0e-932c-e0028829e67a",
+      "baseline_before": {
+        "person_id": "a4308886-c245-4078-9a37-7f46cd5820b1",
+        "polity_id": "ac18509d-6239-42e6-971c-42f3fe86d464",
+        "role_id": "26b4b1e9-3619-47ad-b096-c31944e33ca0",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1128,
+        "activity_end": 1139,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "d616f821-4832-4a0e-932c-e0028829e67a",
+        "person_id": "a4308886-c245-4078-9a37-7f46cd5820b1",
+        "polity_id": "356c77d1-f2e1-5ad8-8716-e06d9fb3cdcc",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "26b4b1e9-3619-47ad-b096-c31944e33ca0",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1128,
+        "activity_start_detail": {
+          "year": 1128,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1139,
+        "activity_end_detail": {
+          "year": 1139,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Afonso Henriques secured effective rule over the County of Portugal after São Mamede in 1128. His royal title emerged around 1139-1140 and was recognised by Alfonso VII at Zamora in 1143, with papal recognition following in 1179. ATLAS treats the comital and royal phases as one continuous Portuguese polity identity while preserving the Count and King titles as separate Activities. The transition remains approximate at year granularity rather than inventing a single accession day.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "portugal-county-state-form-1128-c1139",
+      "exact_before": {
+        "designation_absent_id": "ad3c527f-d663-438f-86c7-10373b8cb52f"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "ad3c527f-d663-438f-86c7-10373b8cb52f",
+          "polity_id": "356c77d1-f2e1-5ad8-8716-e06d9fb3cdcc",
+          "designation_type": "state_form",
+          "valid_from_year": 1128,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1139,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "approximate",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "County of Portugal is preserved as the comital state-form phase of the continuous Portuguese polity during Afonso Henriques's modeled rule from 1128 to c.1139. Royal status emerged around 1139-1140 and was recognised in stages; the boundary therefore remains approximate at year granularity."
+        },
+        "names": [
+          {
+            "id": "d3d8b714-1fde-4df8-b1ed-efe63bcbd1f4",
+            "polity_designation_id": "ad3c527f-d663-438f-86c7-10373b8cb52f",
+            "locale": "en",
+            "name": "County of Portugal",
+            "is_preferred": true
+          },
+          {
+            "id": "da3a6538-f207-4875-a5e7-ba69f15b29e3",
+            "polity_designation_id": "ad3c527f-d663-438f-86c7-10373b8cb52f",
+            "locale": "ko",
+            "name": "포르투갈 백국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "ad3c527f-d663-438f-86c7-10373b8cb52f",
+            "source_id": "c16680a0-d5b6-4082-8d2b-c1d5c0013f45",
+            "source_locator_key": "https://www.parlamento.pt/VisitaParlamento/Paginas/BiogDAfonsoHenriques.aspx"
+          },
+          {
+            "polity_designation_id": "ad3c527f-d663-438f-86c7-10373b8cb52f",
+            "source_id": "db61ae65-2836-4419-b5a5-5372df2321eb",
+            "source_locator_key": "https://www.cambridge.org/core/journals/journal-of-ecclesiastical-history/article/papacy-and-the-establishment-of-the-kingdoms-of-jerusalem-sicily-and-portugal-twelfthcentury-papal-political-thought-on-incipient-kingship/C1C5F8F8DF68F33F0DF642133085379F"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_polity_designation_count": 1,
+    "county_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
