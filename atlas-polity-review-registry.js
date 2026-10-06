@@ -11,7 +11,7 @@
 
   window.ATLAS_POLITY_REVIEW_REGISTRY = Object.freeze({
     schema: "atlas-polity-review-registry/v3",
-    generated_at: "2026-10-06",
+    generated_at: "2026-10-07",
     authority: Object.freeze({
       issue: 1895,
       workstream: "docs/ATLAS_CURRENT_WORKSTREAMS.md",
@@ -43,32 +43,6 @@
     ]),
     execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
-      {
-        id: "savoy-county-duchy",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "County of Savoy → Duchy of Savoy",
-        left: { name: "County of Savoy" },
-        right: { name: "Duchy of Savoy" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
-        id: "bavaria-duchy-electorate",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Duchy of Bavaria → Electorate of Bavaria",
-        left: { name: "Duchy of Bavaria" },
-        right: { name: "Electorate of Bavaria" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
       {
         id: "hanover-electorate-kingdom",
         review_group: "carry_forward_same_identity",
@@ -849,6 +823,34 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "bavaria-duchy-electorate",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Duchy of Bavaria → Electorate of Bavaria state-form merge",
+        left: { name: "Duchy of Bavaria", ko: "바이에른 공국", polity_id: "0907e17c-76b1-41f1-ac20-0d8efb5f0320" },
+        right: { name: "Electorate of Bavaria", ko: "바이에른 선제후국", polity_id: "aab6a809-8231-4e0b-9214-4eb076975928" },
+        rationale: "동일 바이에른 Wittelsbach 정치체의 rank/state-form 전환으로 통합했습니다. #1965에서 Maximilian I의 Duke Activity를 Electorate survivor로 재연결하고 공개 선제후위 수여일인 1623-02-25를 기준으로 Duke 종료를 1623-02-24, Elector 시작을 1623-02-25로 정밀화했습니다. Duchy of Bavaria는 modeled coverage floor 1597-10-15부터 1623-02-24까지 temporal state_form designation으로 보존했고, #1966에서 zero-external-reference legacy Duchy Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["Historisches Lexikon Bayerns: Bavaria received the electoral dignity in 1623", "Deutsche Biographie: public investiture at Regensburg on 25 February 1623", "#1965 Bavaria continuity merge; Correction Apply 37487650177 SUCCESS", "#1966 legacy Duchy Polity retirement; Correction Apply 37487933968 SUCCESS", "Runtime compile 37488050506 SUCCESS", "2026-10-07 canonical + runtime exact readback"],
+        locked: true
+      },
+      {
+        id: "savoy-county-duchy",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "County of Savoy → Duchy of Savoy state-form merge",
+        left: { name: "County of Savoy", ko: "사보이 백국", polity_id: "45a8c3f3-cf7e-415a-a51c-b651b2761828" },
+        right: { name: "Duchy of Savoy", ko: "사보이 공국", polity_id: "f48c1835-d324-4b02-9e41-efb4a70d9e26" },
+        rationale: "동일 Savoy 정치체의 rank/state-form 전환으로 통합했습니다. #1963에서 Amadeus VIII의 Count Activity를 Duchy survivor로 재연결하고 1416-02-09 공국 승격에 맞춰 Count 종료를 1416-02-08, Duke 시작을 1416-02-09로 정밀화했습니다. County of Savoy는 modeled coverage floor 1391부터 1416-02-08까지 temporal state_form designation으로 보존했고, #1964에서 zero-external-reference legacy County Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["Treccani: on 9 February 1416 Sigismund transformed the County of Savoy into a duchy", "#1963 Savoy continuity merge; Correction Apply 37486419744 SUCCESS", "#1964 legacy County Polity retirement; Correction Apply 37486705692 SUCCESS", "Runtime compile 37487764323 SUCCESS after Savoy retirement and 37488050506 SUCCESS at latest canonical state", "2026-10-07 canonical + runtime exact readback"],
+        locked: true
+      },
       {
         id: "northumbria-generic-kingdom",
         review_group: "resolved_history",
