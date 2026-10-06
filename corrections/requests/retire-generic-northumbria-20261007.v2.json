@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:generic-northumbria-after-formal-merge:2026-10-07:v1",
+  "release_order": 1959,
+  "evidence": {
+    "decision": "Northumbria is the generic short form of the same polity represented canonically as Kingdom of Northumbria.",
+    "continuity_apply_run": "37484924930",
+    "survivor_polity_id": "a5ff7155-9325-404d-ae42-6dd4284bc5fc",
+    "production_readback": "2026-10-07 exact readback: Oswiu Activity now targets Kingdom of Northumbria; legacy generic Northumbria has zero external references and only two owned preferred polity_names.",
+    "naming_note": "No temporal designation is asserted because generic Northumbria is not a distinct time-bounded official-name or state-form phase."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:generic-northumbria-after-formal-kingdom-merge",
+      "review_reason": "GENERIC_FORMAL_DUPLICATE",
+      "expected_polity": {
+        "id": "2b9eb85d-3f92-47cd-8f3d-59c9058c03b8",
+        "canonical_key": "Northumbria",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "a5ff7155-9325-404d-ae42-6dd4284bc5fc",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Northumbria",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "노섬브리아",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
