@@ -118,7 +118,7 @@
 }
 
 .polity-browser-title strong{
-  color:#e9e4d9;
+  color:var(--atlas-text-strong);
   text-shadow:0 1px 0 rgba(0,0,0,.48);
 }
 
