@@ -1,9 +1,9 @@
 # ATLAS CURRENT WORKSTREAMS
 
-**As of:** 2026-10-06  
+**As of:** 2026-10-07  
 **Authority:** current `main` + current Production + latest durable checkpoint  
 **Workstream state baseline:** verified against current repository state on 2026-10-05  
-**Latest Polity data-mutation checkpoint:** Correction Apply `37485404510` SUCCESS after #1960; generic `Northumbria` retired to canonical `Kingdom of Northumbria` after Oswiu relink; Runtime compile `37485538686` SUCCESS
+**Latest Polity data-mutation checkpoint:** Correction Apply `37487933968` SUCCESS after #1966; legacy `Duchy of Bavaria` retired to canonical Electorate of Bavaria after preserving the ducal phase as a temporal `state_form`; Runtime compile `37488050506` SUCCESS (also contains completed Savoy retirement)
 **Repository/Production state:** current executable cleanup is deployed; closed one-shot NamuWiki, Person Domain v2 cutover and Place authority backfill mutation surfaces are retired, and live Person Domain verification is independent from the historical cutover snapshot.  
 **P14:** `PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`
 
@@ -26,7 +26,7 @@ The registry distinguishes **execution order** from **audit obligation**. Histor
 Current sequence:
 
 1. **Carry-forward closure audit** — re-review every still-unclosed historical seed against current Production:
-   - 24 same-identity / continuity candidates;
+   - 22 same-identity / continuity candidates;
    - 16 separate historical-family judgments;
    - 2 temporal-designation residuals (Russia, Sweden);
    - 2 KO/EN naming-collision residuals;
@@ -40,7 +40,7 @@ Important distinction:
 - **Do not discard old audit seeds merely because they are historical.**
 - Rebuild the decision from current Production + current identity rules, then assign a terminal status.
 
-Already completed Polity fixes remain closed unless contradictory current evidence appears, including the Northumbria generic/formal duplicate merge, the Bosnia banate/kingdom continuity merge, the South Kasai state-form continuity merge, the Siam/Thailand continuity merge, the South Africa continuity merge, the Ireland family correction, the Kingdom of Italy 3-way split, Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, the Kingdom-of-France generic/formal duplicate correction and the Japan lineage/occupation/designation rebuild. France's wider regime-family audit is a separate open seed and must not be conflated with the completed duplicate correction.
+Already completed Polity fixes remain closed unless contradictory current evidence appears, including the Bavaria duchy/electorate and Savoy county/duchy continuity merges, the Northumbria generic/formal duplicate merge, the Bosnia banate/kingdom continuity merge, the South Kasai state-form continuity merge, the Siam/Thailand continuity merge, the South Africa continuity merge, the Ireland family correction, the Kingdom of Italy 3-way split, Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, the Kingdom-of-France generic/formal duplicate correction and the Japan lineage/occupation/designation rebuild. France's wider regime-family audit is a separate open seed and must not be conflated with the completed duplicate correction.
 
 ### B. UI information coverage / completeness — #1896
 
@@ -157,9 +157,9 @@ Portrait content, P14 historical-map Geometry and the broad legacy census are pa
 
 If no different task is explicitly selected by the user:
 
-**Resume #1895 at `County of Savoy → Duchy of Savoy`, the first still-unclosed carry-forward continuity seed.**
+**Resume #1895 at `Electorate of Hanover → Kingdom of Hanover`, the first still-unclosed carry-forward continuity seed.**
 
-The Northumbria generic/formal duplicate, Bosnia, South Kasai, Siam/Thailand and South Africa continuity seeds, Ireland family and Kingdom of Italy 3-way split are terminal `FIXED`. Northumbria now uses the formal `Kingdom of Northumbria` survivor for both Oswald and Oswiu; the generic duplicate is retired without inventing a false temporal designation.
+The Bavaria, Savoy, Northumbria, Bosnia, South Kasai, Siam/Thailand and South Africa continuity seeds, Ireland family and Kingdom of Italy 3-way split are terminal `FIXED`. Bavaria and Savoy preserve their pre-elevation Duchy/County phases as temporal `state_form` designations while keeping the actual ruler-title changes as separate Activities.
 
 Continue through the current review registry's carry-forward audit groups in current order until every seed has a terminal disposition, then run the fresh whole-Production discovery scan.
 
