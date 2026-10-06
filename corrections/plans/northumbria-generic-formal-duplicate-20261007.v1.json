@@ -1,0 +1,80 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "northumbria_generic_formal_duplicate_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_NORTHUMBRIA_GENERIC_FORMAL_DUPLICATE",
+  "release_order": 1957,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; English Heritage Northumbrian kingdom history; current ATLAS same-identity generic/formal naming rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "generic_polity_id": "2b9eb85d-3f92-47cd-8f3d-59c9058c03b8",
+    "formal_survivor_polity_id": "a5ff7155-9325-404d-ae42-6dd4284bc5fc",
+    "historical_decision": "Northumbria and Kingdom of Northumbria denote the same early medieval Northumbrian kingdom. English Heritage treats Oswald and Oswiu as successive kings of the same Northumbrian kingdom; the Production split is only generic versus formal naming.",
+    "designation_rule": "Do not create a temporal designation because Northumbria is not a distinct time-bounded state form or official-name phase; it is the generic short form of the same kingdom."
+  },
+  "operations": [
+    {
+      "case_id": "northumbria-relink-oswiu-to-formal-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "577e628b-ac78-4184-9092-7be110dcbdb5",
+      "baseline_before": {
+        "person_id": "8a0eefd6-9bc5-4e0a-bb7d-2bccc801d957",
+        "polity_id": "2b9eb85d-3f92-47cd-8f3d-59c9058c03b8",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 642,
+        "activity_end": 670,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "577e628b-ac78-4184-9092-7be110dcbdb5",
+        "person_id": "8a0eefd6-9bc5-4e0a-bb7d-2bccc801d957",
+        "polity_id": "a5ff7155-9325-404d-ae42-6dd4284bc5fc",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 642,
+        "activity_start_detail": {
+          "year": 642,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 670,
+        "activity_end_detail": {
+          "year": 670,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "generic_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
