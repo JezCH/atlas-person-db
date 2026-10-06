@@ -1,0 +1,222 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "bavaria_duchy_electorate_continuity_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_BAVARIA_DUCHY_ELECTORATE_CONTINUITY",
+  "release_order": 1965,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Historisches Lexikon Bayerns; Deutsche Biographie Maximilian I; current ATLAS same-identity rank/state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "duchy_polity_id": "0907e17c-76b1-41f1-ac20-0d8efb5f0320",
+    "electorate_survivor": "aab6a809-8231-4e0b-9214-4eb076975928",
+    "historical_decision": "Duchy of Bavaria and Electorate of Bavaria are rank/state-form phases of the same Bavarian Wittelsbach state. The Bavarian state did not terminate when Maximilian I received the Palatine electoral dignity; his public investiture as elector took place at Regensburg on 25 February 1623.",
+    "activity_rule": "Keep Maximilian I's Duke and Elector Activities separate because his sovereign rank/title changed, while placing both phases under one continuous Bavarian polity identity.",
+    "designation_rule": "Preserve Duchy of Bavaria as the pre-electoral state-form from Maximilian I's modeled accession coverage floor on 15 October 1597 through 24 February 1623. This lower bound is not a claim that the duchy originated in 1597."
+  },
+  "operations": [
+    {
+      "case_id": "bavaria-relink-maximilian-duke-to-electorate-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "b45a687a-3e75-4fba-b801-2bb1a5c60003",
+      "baseline_before": {
+        "person_id": "42e74395-6810-4fd4-ba4f-3f9a789f271b",
+        "polity_id": "0907e17c-76b1-41f1-ac20-0d8efb5f0320",
+        "role_id": "2d2f3b9c-5518-5469-961b-e9e8f2a15870",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1597,
+        "activity_end": 1623,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "b45a687a-3e75-4fba-b801-2bb1a5c60003",
+        "person_id": "42e74395-6810-4fd4-ba4f-3f9a789f271b",
+        "polity_id": "aab6a809-8231-4e0b-9214-4eb076975928",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2d2f3b9c-5518-5469-961b-e9e8f2a15870",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1597,
+        "activity_start_detail": {
+          "year": 1597,
+          "month": 10,
+          "day": 15,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1623,
+        "activity_end_detail": {
+          "year": 1623,
+          "month": 2,
+          "day": 24,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Maximilian I governed the same Bavarian state as Duke from 15 October 1597 through 24 February 1623. His public investiture with the electoral dignity at Regensburg on 25 February 1623 changed Bavaria's imperial rank without replacing its polity identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": [
+          {
+            "source_id": "7f3d0e3f-73bc-4d5a-9ca7-695dc27e4db1",
+            "source_locator_key": "https://www.deutsche-biographie.de/gnd118579355.html?language=en"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "bavaria-refine-maximilian-elector-start",
+      "type": "rewrite_activity",
+      "activity_id": "b4385232-1700-47c1-9908-b79447169faf",
+      "baseline_before": {
+        "person_id": "42e74395-6810-4fd4-ba4f-3f9a789f271b",
+        "polity_id": "aab6a809-8231-4e0b-9214-4eb076975928",
+        "role_id": "fb3fe275-7234-4d38-905d-d17e914fec42",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1623,
+        "activity_end": 1651,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "b4385232-1700-47c1-9908-b79447169faf",
+        "person_id": "42e74395-6810-4fd4-ba4f-3f9a789f271b",
+        "polity_id": "aab6a809-8231-4e0b-9214-4eb076975928",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "fb3fe275-7234-4d38-905d-d17e914fec42",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1623,
+        "activity_start_detail": {
+          "year": 1623,
+          "month": 2,
+          "day": 25,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1651,
+        "activity_end_detail": {
+          "year": 1651,
+          "month": 9,
+          "day": 27,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Maximilian I was publicly invested with the electoral dignity at Regensburg on 25 February 1623 and thereafter ruled the same Bavarian polity as prince-elector until his death on 27 September 1651.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": [
+          {
+            "source_id": "7f3d0e3f-73bc-4d5a-9ca7-695dc27e4db1",
+            "source_locator_key": "https://www.deutsche-biographie.de/gnd118579355.html?language=en"
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "bavaria-source-deutsche-biographie-maximilian-1623",
+      "exact_before": {
+        "source_absent_id": "7f3d0e3f-73bc-4d5a-9ca7-695dc27e4db1"
+      },
+      "exact_after": {
+        "source": {
+          "id": "7f3d0e3f-73bc-4d5a-9ca7-695dc27e4db1",
+          "source_key": "bibliographic:deutsche-biographie:maximilian-i-bavaria:1623",
+          "source_type": "reference_work",
+          "title": "Maximilian I. — Deutsche Biographie",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.deutsche-biographie.de/gnd118579355.html?language=en",
+          "citation_text": "Deutsche Biographie records Maximilian I as Duke of Bavaria and Elector from 1623 and dates his public investiture with the electoral dignity at Regensburg to 25 February 1623."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "bavaria-duchy-state-form-modeled-period",
+      "exact_before": {
+        "designation_absent_id": "26cfc73f-6da1-4bd1-a50d-d1e76c72b574"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "26cfc73f-6da1-4bd1-a50d-d1e76c72b574",
+          "polity_id": "aab6a809-8231-4e0b-9214-4eb076975928",
+          "designation_type": "state_form",
+          "valid_from_year": 1597,
+          "valid_from_month": 10,
+          "valid_from_day": 15,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "approximate",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1623,
+          "valid_to_month": 2,
+          "valid_to_day": 24,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Duchy of Bavaria is preserved as the pre-electoral state-form of the continuous Bavarian polity. The 15 October 1597 lower boundary is the earliest currently modeled ATLAS Maximilian I ducal coverage and is not a claim of the duchy's institutional origin. The phase ends the day before his public electoral investiture on 25 February 1623."
+        },
+        "names": [
+          {
+            "id": "ac64f9fa-af6b-4f60-9242-fc965d86a2d6",
+            "polity_designation_id": "26cfc73f-6da1-4bd1-a50d-d1e76c72b574",
+            "locale": "en",
+            "name": "Duchy of Bavaria",
+            "is_preferred": true
+          },
+          {
+            "id": "eddf5829-73a3-4401-90dc-b0479fb0bb81",
+            "polity_designation_id": "26cfc73f-6da1-4bd1-a50d-d1e76c72b574",
+            "locale": "ko",
+            "name": "바이에른 공국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "26cfc73f-6da1-4bd1-a50d-d1e76c72b574",
+            "source_id": "026b81b2-2b9e-47d2-8198-97e9cd5cbda1",
+            "source_locator_key": "https://www.historisches-lexikon-bayerns.de/Lexikon/EN%3AElectors"
+          },
+          {
+            "polity_designation_id": "26cfc73f-6da1-4bd1-a50d-d1e76c72b574",
+            "source_id": "7f3d0e3f-73bc-4d5a-9ca7-695dc27e4db1",
+            "source_locator_key": "https://www.deutsche-biographie.de/gnd118579355.html?language=en"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 2,
+    "asserted_source_count": 1,
+    "asserted_polity_designation_count": 1,
+    "duchy_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
