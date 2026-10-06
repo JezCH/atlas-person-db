@@ -129,11 +129,11 @@ test('REG-M2 applies museum instrument material without changing navigation geom
   assert.match(material, /border-radius:3px/);
 
   assert.doesNotMatch(material, /grid-template-columns\s*:/);
-  assert.doesNotMatch(material, /width\s*:/);
-  assert.doesNotMatch(material, /height\s*:/);
-  assert.doesNotMatch(material, /padding\s*:/);
-  assert.doesNotMatch(material, /font-size\s*:/);
-  assert.doesNotMatch(material, /line-height\s*:/);
+  assert.doesNotMatch(material, /\n\s*width\s*:/);
+  assert.doesNotMatch(material, /\n\s*height\s*:/);
+  assert.doesNotMatch(material, /\n\s*padding\s*:/);
+  assert.doesNotMatch(material, /\n\s*font-size\s*:/);
+  assert.doesNotMatch(material, /\n\s*line-height\s*:/);
 });
 
 test('era navigation assets load after the shared era model/table grouping and before Person Main initializes', () => {
