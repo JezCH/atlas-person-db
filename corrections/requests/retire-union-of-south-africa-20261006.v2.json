@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:union-of-south-africa-after-continuity-merge:2026-10-06:v1",
+  "release_order": 1944,
+  "evidence": {
+    "decision": "Union of South Africa is a temporal state-form/designation of the continuous South Africa polity identity, not a distinct surviving Polity after the 1961 constitutional transition.",
+    "continuity_apply_run": "37476473097",
+    "survivor_polity_id": "87a3aa3b-f453-4915-bf4a-9e8c19842af2",
+    "union_designation_id": "9c1e6a23-7d48-4bc4-a7be-2b3cc857da11",
+    "production_readback": "2026-10-06 exact readback: legacy Union row has activity_refs=0, descriptions=0, sources=0, place_functions=0, governance_periods=0, designations=0, polity relations=0, identity relations=0; only two owned preferred polity_names remain."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:union-of-south-africa-after-south-africa-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "3d88574b-0196-4678-a3b1-88ae5f37b7bf",
+        "canonical_key": "Union of South Africa",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "87a3aa3b-f453-4915-bf4a-9e8c19842af2",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Union of South Africa",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "남아프리카 연방",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
