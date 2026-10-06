@@ -33,6 +33,26 @@ test("UI P2 restores an aligned factual header instead of a detached sort toolba
   assert.match(sorting, /const header = grid\?\.querySelector\?\.\(":scope > \.person-table-head"\)/);
 });
 
+test("UI REG-M1 adds memorial material without changing Register composition", () => {
+  const css = read("atlas-person-monumental-register.css");
+  const start = css.indexOf("UI REG-M1 — Memorial material finish");
+  const end = css.indexOf("/* Mobile becomes", start);
+  assert.ok(start >= 0 && end > start, "REG-M1 material scope must remain bounded before mobile rules");
+  const material = css.slice(start, end);
+
+  assert.match(material, /--atlas-register-bronze-hairline/);
+  assert.match(material, /Polished-black header/);
+  assert.match(material, /.person-era-band::after/);
+  assert.match(material, /Selection is illumination on the existing register, never a gold card/);
+  assert.match(material, /Engraved-register impression/);
+  assert.match(material, /@media \(min-width: 761px\)/);
+
+  assert.doesNotMatch(material, /grid-template-columns\s*:/);
+  assert.doesNotMatch(material, /padding\s*:/);
+  assert.doesNotMatch(material, /font-size\s*:/);
+  assert.doesNotMatch(material, /line-height\s*:/);
+});
+
 test("UI P2 keeps semantic domain, dense geometry, and neutral selection separate", () => {
   const css = read("atlas-person-monumental-register.css");
   assert.match(css, /--atlas-font-display/);
