@@ -1,0 +1,81 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "siam_thailand_continuity_boundary_retirement_20261006_v1",
+  "as_of": "2026-10-06",
+  "status": "REVIEWED_SIAM_THAILAND_CONTINUITY_STAGE1",
+  "release_order": 1946,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-06; United Nations Thailand member-state record; U.S. Office of the Historian 1945 Siam name restoration record; current ATLAS same-identity official-name rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "siam_polity": "74846644-0ea1-57be-81c0-f31f475da748",
+    "thailand_survivor": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+    "historical_decision": "Siam and Thailand are successive official names of the same Thai state identity. The country name changed to Thailand in 1939, reverted to Siam after World War II, and Siam notified the United Nations on 11 May 1949 that it had changed its name to Thailand. These name changes do not represent state extinction/replacement.",
+    "rationale": "The legacy model split both of Plaek Phibunsongkhram's continuous premierships solely at country-name boundaries. Retire the Siam-side fragments first with source transfer; a fresh exact-read correction will extend the Thailand-side survivors back to the actual term starts."
+  },
+  "operations": [
+    {
+      "case_id": "siam-thailand-retire-phibun-first-term-siam-fragment",
+      "type": "retire_activity",
+      "activity_id": "3e7c6280-1a0d-40b6-86ba-fa939b303270",
+      "baseline_before": {
+        "person_id": "90bb4107-0330-462e-b3a6-773150be2e83",
+        "polity_id": "74846644-0ea1-57be-81c0-f31f475da748",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1938,
+        "activity_end": 1939,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "replacement_activity_ids": [
+        "c87e8391-af69-432f-a0be-d755df9e78eb"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    },
+    {
+      "case_id": "siam-thailand-retire-phibun-second-term-siam-fragment",
+      "type": "retire_activity",
+      "activity_id": "1e58adbd-e234-4474-bb87-1bb22455502b",
+      "baseline_before": {
+        "person_id": "90bb4107-0330-462e-b3a6-773150be2e83",
+        "polity_id": "74846644-0ea1-57be-81c0-f31f475da748",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1948,
+        "activity_end": 1949,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "replacement_activity_ids": [
+        "67cf6297-a217-4240-8c90-d6af3244f9ea"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retired_activity_count": 2,
+    "surviving_activity_ids": [
+      "c87e8391-af69-432f-a0be-d755df9e78eb",
+      "67cf6297-a217-4240-8c90-d6af3244f9ea"
+    ],
+    "source_transfer_required": true,
+    "production_mutation_authorized": false
+  }
+}
