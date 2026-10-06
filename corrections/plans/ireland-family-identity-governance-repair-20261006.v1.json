@@ -1,0 +1,436 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "ireland_family_identity_governance_repair_20261006_v1",
+  "as_of": "2026-10-06",
+  "status": "REVIEWED_IRELAND_FAMILY_IDENTITY_GOVERNANCE_REPAIR",
+  "release_order": 1931,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 Ireland family current frontier; current Production exact read-back 2026-10-06; Irish official constitutional and parliamentary sources reviewed before mutation.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "governance_context_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "historical_decision": {
+      "irish_republic": "Distinct revolutionary polity ratified by the First Dail in 1919; canonical Irish Republic and Collins 1919-1921 Activity were already created by #1929 and exact Production read-back.",
+      "free_state_continuity": "Irish Free State is preserved as the 1922-1937 state-form/designation of the Ireland survivor rather than a separate long-term UUID.",
+      "provisional_government": "Provisional Government is a government/governance context, not a Polity identity; Collins's chairmanship remains an Activity on Ireland with the 1922 government represented structurally.",
+      "oconnell": "O'Connell's 1823-1847 reform Activity belongs to the contemporaneous United Kingdom polity; Ireland is the geographic/national target of his movement, not a separate sovereign polity in that interval."
+    },
+    "canonical_survivor_ireland": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+    "irish_republic": "efc2941b-948d-4e3b-8a6e-ab58c766a729",
+    "united_kingdom": "08c06b79-58de-508a-9ace-2948baa9e9e6"
+  },
+  "operations": [
+    {
+      "case_id": "ireland-collins-retire-generic-ireland-revolutionary-activity",
+      "type": "retire_activity",
+      "activity_id": "511c6cdc-82ae-4ec0-b70f-3b9e1b9b9e6c",
+      "baseline_before": {
+        "person_id": "93bc6d48-f232-4555-bcd3-782791a2693f",
+        "polity_id": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+        "role_id": "89ea92a3-db49-43f0-8940-598fbb31073e",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1919,
+        "activity_end": 1921,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true,
+      "replacement_activity_ids": [
+        "dc3f192c-0142-4f44-9427-9bf548e45eee"
+      ]
+    },
+    {
+      "case_id": "ireland-oconnell-relink-to-united-kingdom",
+      "type": "rewrite_activity",
+      "activity_id": "acec613f-b3e2-4b48-96e9-d5bf216261e2",
+      "baseline_before": {
+        "person_id": "627b6aac-ca0d-4975-8b40-ae77c357f4bf",
+        "polity_id": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+        "role_id": "d95a237d-d2cc-4747-9765-38267836ca84",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1823,
+        "activity_end": 1847,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "acec613f-b3e2-4b48-96e9-d5bf216261e2",
+        "person_id": "627b6aac-ca0d-4975-8b40-ae77c357f4bf",
+        "polity_id": "08c06b79-58de-508a-9ace-2948baa9e9e6",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "d95a237d-d2cc-4747-9765-38267836ca84",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1823,
+        "activity_start_detail": {
+          "year": 1823,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1847,
+        "activity_end_detail": {
+          "year": 1847,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "O'Connell's representative reform activity is modeled within the United Kingdom of Great Britain and Ireland, the contemporaneous polity after the 1801 Union. His Catholic Emancipation and Repeal campaigns were Irish national-political movements seeking reform and repeal of that union; Ireland is not back-projected here as a separate sovereign polity for 1823-1847.",
+        "add_source_links": [
+          {
+            "source_id": "62e34a31-07f9-51d0-af2d-cfabc6cc137c",
+            "source_locator_key": "https://www.parliament.uk/about/living-heritage/evolutionofparliament/legislativescrutiny/parliamentandireland/overview/repeal/"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ireland-collins-provisional-government-to-ireland-governance-context",
+      "type": "rewrite_activity",
+      "activity_id": "044a9859-9b91-4fc9-9b3a-d93507c0c517",
+      "baseline_before": {
+        "person_id": "93bc6d48-f232-4555-bcd3-782791a2693f",
+        "polity_id": "9f43ac5f-c96e-448c-81f8-112e2f6e8424",
+        "role_id": "7c809f1f-37cf-4328-b2fa-57ba4357535a",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1922,
+        "activity_end": 1922,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "044a9859-9b91-4fc9-9b3a-d93507c0c517",
+        "person_id": "93bc6d48-f232-4555-bcd3-782791a2693f",
+        "polity_id": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "7c809f1f-37cf-4328-b2fa-57ba4357535a",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1922,
+        "activity_start_detail": {
+          "year": 1922,
+          "month": 1,
+          "day": 16,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1922,
+        "activity_end_detail": {
+          "year": 1922,
+          "month": 8,
+          "day": 22,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Collins chaired the Provisional Government from 16 January 1922 until his death on 22 August 1922. ATLAS binds the Person Activity to the canonical Ireland successor-state lineage while preserving the Provisional Government itself as a first-class governance context rather than a duplicate Polity. The Irish Free State state-form begins on 6 December 1922, after Collins's death.",
+        "add_source_links": [
+          {
+            "source_id": "1c79f6f6-fad6-51e5-8c1a-3d9e5a6ddaa3",
+            "source_locator_key": "https://www.gov.ie/en/department-of-the-taoiseach/publications/second-d%C3%A1il/"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ireland-de-valera-free-state-to-ireland-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "bcfa752c-ef50-419a-a29f-69232af60876",
+      "baseline_before": {
+        "person_id": "505a0bdb-8ef1-41da-9b1a-34f8ce66c838",
+        "polity_id": "a0a6810a-9ebf-4e63-acfe-572608fdf3e3",
+        "role_id": "f24f9cf2-db91-4c1c-9ef2-71084bfcdabe",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1932,
+        "activity_end": 1937,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "bcfa752c-ef50-419a-a29f-69232af60876",
+        "person_id": "505a0bdb-8ef1-41da-9b1a-34f8ce66c838",
+        "polity_id": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "f24f9cf2-db91-4c1c-9ef2-71084bfcdabe",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1932,
+        "activity_start_detail": {
+          "year": 1932,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1937,
+        "activity_end_detail": {
+          "year": 1937,
+          "month": 12,
+          "day": 28,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "De Valera served as President of the Executive Council during the Irish Free State phase of the same Ireland polity identity. The 1937 Constitution came into operation on 29 December 1937; ATLAS preserves Irish Free State as the temporal state-form designation through 28 December and keeps the canonical polity UUID continuous into Ireland thereafter.",
+        "add_source_links": [
+          {
+            "source_id": "bab858da-4858-5c3a-ad12-ac96da5c7180",
+            "source_locator_key": "https://www.irishstatutebook.ie/eli/1937/act/40/section/2/enacted/en/html"
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "ireland-source-uk-parliament-oconnell-union-repeal",
+      "exact_before": {
+        "source_absent_id": "62e34a31-07f9-51d0-af2d-cfabc6cc137c"
+      },
+      "exact_after": {
+        "source": {
+          "id": "62e34a31-07f9-51d0-af2d-cfabc6cc137c",
+          "source_key": "bibliographic:uk-parliament:ireland-union-repeal-oconnell",
+          "source_type": "official_parliamentary_historical_reference",
+          "title": "Repeal of the Union",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.parliament.uk/about/living-heritage/evolutionofparliament/legislativescrutiny/parliamentandireland/overview/repeal/",
+          "citation_text": "UK Parliament Living Heritage: the Act of Union took effect on 1 January 1801, creating the United Kingdom of Great Britain and Ireland; Daniel O'Connell led the later campaign to repeal the Union."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "ireland-source-gov-ie-second-dail-provisional-government",
+      "exact_before": {
+        "source_absent_id": "1c79f6f6-fad6-51e5-8c1a-3d9e5a6ddaa3"
+      },
+      "exact_after": {
+        "source": {
+          "id": "1c79f6f6-fad6-51e5-8c1a-3d9e5a6ddaa3",
+          "source_key": "bibliographic:gov-ie:second-dail-provisional-government-1922",
+          "source_type": "official_government_historical_reference",
+          "title": "Second Dáil — Provisional Government",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.gov.ie/en/department-of-the-taoiseach/publications/second-d%C3%A1il/",
+          "citation_text": "Department of the Taoiseach: the Provisional Government was constituted on 14 January 1922, took office on 16 January, Michael Collins was elected Chairman that day, and the government continued until superseded by the first Executive Council on 6 December 1922."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "ireland-source-free-state-constitution-1922",
+      "exact_before": {
+        "source_absent_id": "d597202c-3592-5a06-a796-f676cc1c9c6f"
+      },
+      "exact_after": {
+        "source": {
+          "id": "d597202c-3592-5a06-a796-f676cc1c9c6f",
+          "source_key": "bibliographic:irishstatutebook:irish-free-state-constitution-1922",
+          "source_type": "official_legislation",
+          "title": "Constitution of the Irish Free State (Saorstát Eireann) Act, 1922",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.irishstatutebook.ie/eli/1922/act/1/enacted/en/index.html",
+          "citation_text": "Irish Statute Book: the 1922 Act proclaims the establishment of the Irish Free State (Saorstát Éireann); Article 83 provides for the Constitution to come into operation by proclamation not later than 6 December 1922."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "ireland-source-constitution-continuity-1937",
+      "exact_before": {
+        "source_absent_id": "bab858da-4858-5c3a-ad12-ac96da5c7180"
+      },
+      "exact_after": {
+        "source": {
+          "id": "bab858da-4858-5c3a-ad12-ac96da5c7180",
+          "source_key": "bibliographic:irishstatutebook:constitution-continuity-1937",
+          "source_type": "official_legislation",
+          "title": "Constitution (Consequential Provisions) Act, 1937 — Section 2",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.irishstatutebook.ie/eli/1937/act/40/section/2/enacted/en/html",
+          "citation_text": "Irish Statute Book: section 2 preserves legal continuity across the 1937 constitutional transition by adapting references to Saorstát Éireann / Irish Free State to Ireland for periods after the Constitution came into operation on 29 December 1937."
+        }
+      }
+    },
+    {
+      "type": "assert_governance_context",
+      "decision_id": "ireland-provisional-government-governance-context",
+      "exact_before": {
+        "governance_context_absent_id": "d756571a-c446-5011-8ac3-76e112c701b3"
+      },
+      "exact_after": {
+        "context": {
+          "id": "d756571a-c446-5011-8ac3-76e112c701b3",
+          "canonical_key": "stage2:irish-provisional-government-1922",
+          "governance_type": "government",
+          "historicity": "historical"
+        },
+        "names": [
+          {
+            "id": "cca80367-8f0a-5e97-969c-28095c31f51b",
+            "governance_context_id": "d756571a-c446-5011-8ac3-76e112c701b3",
+            "locale": "en",
+            "name": "Provisional Government of Ireland",
+            "name_type": "canonical",
+            "is_preferred": true
+          },
+          {
+            "id": "c048c895-a68f-54ee-a567-da86a4d99adf",
+            "governance_context_id": "d756571a-c446-5011-8ac3-76e112c701b3",
+            "locale": "ko",
+            "name": "아일랜드 임시정부",
+            "name_type": "canonical",
+            "is_preferred": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_governance_period",
+      "decision_id": "ireland-provisional-government-period-1922",
+      "exact_before": {
+        "period_absent_id": "7573d870-526c-51e5-9852-a4549da7f106"
+      },
+      "exact_after": {
+        "period": {
+          "id": "7573d870-526c-51e5-9852-a4549da7f106",
+          "polity_id": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+          "governance_context_id": "d756571a-c446-5011-8ac3-76e112c701b3",
+          "valid_from_year": 1922,
+          "valid_from_month": 1,
+          "valid_from_day": 16,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1922,
+          "valid_to_month": 12,
+          "valid_to_day": 5,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "The Provisional Government took office on 16 January 1922. After the 9 September fusion it continued as the sole government until it was superseded on 6 December 1922 by the first Executive Council under the Irish Free State Constitution."
+        },
+        "source_links": [
+          {
+            "polity_governance_period_id": "7573d870-526c-51e5-9852-a4549da7f106",
+            "source_id": "1c79f6f6-fad6-51e5-8c1a-3d9e5a6ddaa3",
+            "source_locator_key": "https://www.gov.ie/en/department-of-the-taoiseach/publications/second-d%C3%A1il/"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "ireland-free-state-temporal-designation-1922-1937",
+      "exact_before": {
+        "designation_absent_id": "70e67b4b-5132-57b5-993d-6e91595b01f3"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "70e67b4b-5132-57b5-993d-6e91595b01f3",
+          "polity_id": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+          "designation_type": "state_form",
+          "valid_from_year": 1922,
+          "valid_from_month": 12,
+          "valid_from_day": 6,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1937,
+          "valid_to_month": 12,
+          "valid_to_day": 28,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Irish Free State / Saorstát Éireann is preserved as the state-form designation of the continuous Ireland identity from the constitutional establishment on 6 December 1922 through 28 December 1937. The Constitution of Ireland came into operation on 29 December 1937 and the 1937 consequential legislation explicitly preserves continuity while adapting the former state name to Ireland."
+        },
+        "names": [
+          {
+            "id": "b46cd21c-ee52-5bd9-8f6a-79456e2a2cd4",
+            "polity_designation_id": "70e67b4b-5132-57b5-993d-6e91595b01f3",
+            "locale": "en",
+            "name": "Irish Free State",
+            "is_preferred": true
+          },
+          {
+            "id": "062a9564-28f9-54af-9db9-5715249aa5e5",
+            "polity_designation_id": "70e67b4b-5132-57b5-993d-6e91595b01f3",
+            "locale": "ga",
+            "name": "Saorstát Éireann",
+            "is_preferred": true
+          },
+          {
+            "id": "4cab5476-6323-5494-a6cc-ae9d8d370f38",
+            "polity_designation_id": "70e67b4b-5132-57b5-993d-6e91595b01f3",
+            "locale": "ko",
+            "name": "아일랜드 자유국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "70e67b4b-5132-57b5-993d-6e91595b01f3",
+            "source_id": "d597202c-3592-5a06-a796-f676cc1c9c6f",
+            "source_locator_key": "https://www.irishstatutebook.ie/eli/1922/act/1/enacted/en/index.html"
+          },
+          {
+            "polity_designation_id": "70e67b4b-5132-57b5-993d-6e91595b01f3",
+            "source_id": "bab858da-4858-5c3a-ad12-ac96da5c7180",
+            "source_locator_key": "https://www.irishstatutebook.ie/eli/1937/act/40/section/2/enacted/en/html"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "retire_activity_count": 1,
+    "rewrite_activity_count": 3,
+    "asserted_source_count": 4,
+    "asserted_governance_context_count": 1,
+    "asserted_governance_period_count": 1,
+    "asserted_polity_designation_count": 1,
+    "production_mutation_authorized": false
+  }
+}
