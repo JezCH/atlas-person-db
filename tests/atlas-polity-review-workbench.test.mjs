@@ -45,7 +45,7 @@ test('canonical Polity listing stays live while expanded rows render a first-cla
 
 test('current registry restores every required carry-forward audit family without making it an execution queue', () => {
   assert.equal(registry.schema, 'atlas-polity-review-registry/v3');
-  assert.equal(registry.generated_at, '2026-10-06');
+  assert.equal(registry.generated_at, '2026-10-07');
   assert.equal(registry.authority.issue, 1895);
   assert.equal(registry.execution_frontier.length, 0);
   assert.deepEqual(Array.from(registry.execution_frontier, row => row.id), []);
@@ -70,7 +70,13 @@ test('current registry restores every required carry-forward audit family withou
   const northumbria = registry.resolved_history.find(row => row.id === 'northumbria-generic-kingdom');
   assert.equal(northumbria?.terminal_status, 'FIXED');
   assert.equal(northumbria?.locked, true);
-  assert.equal(registry.carry_forward_same_identity.length, 24);
+  const savoy = registry.resolved_history.find(row => row.id === 'savoy-county-duchy');
+  assert.equal(savoy?.terminal_status, 'FIXED');
+  assert.equal(savoy?.locked, true);
+  const bavaria = registry.resolved_history.find(row => row.id === 'bavaria-duchy-electorate');
+  assert.equal(bavaria?.terminal_status, 'FIXED');
+  assert.equal(bavaria?.locked, true);
+  assert.equal(registry.carry_forward_same_identity.length, 22);
   assert.equal(registry.historical_family_reviews.length, 16);
   assert.equal(registry.designation_residuals.length, 2);
   assert.equal(registry.naming_residuals.length, 2);
@@ -122,7 +128,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 48);
+  assert.equal(unresolved.length, 46);
   assert.equal(byId.get('northern-southern-song').terminal_status, null);
   assert.equal(byId.get('roman-west-east').terminal_status, null);
   assert.equal(byId.get('byzantine-nicaea-rupture').terminal_status, null);
