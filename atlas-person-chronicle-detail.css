@@ -5,6 +5,8 @@
  * monumental hairline / sheen / rail / recessed-edge scale.
  * DETAIL-M2 — Chronicle interaction luminance consumes the shared
  * hover / active material wash scale without changing geometry.
+ * DETAIL-M3 — Chronicle historical identity headings consume the shared
+ * institutional inscription type without changing typography scale.
  */
 
 #personMainDetail.person-main-detail {
@@ -148,7 +150,7 @@
 .person-chronicle-identity h2 {
   margin: 0;
   color: #f2eee6;
-  font-family: var(--atlas-font-display, "Noto Serif KR", "Nanum Myeongjo", AppleMyungjo, Batang, Georgia, serif);
+  font-family: var(--atlas-font-inscription);
   font-size: clamp(31px, 3.1vw, 46px);
   font-weight: 600;
   line-height: 1.08;
@@ -299,7 +301,7 @@
 
 .person-name-register b {
   color: #d7d3cb;
-  font-family: var(--atlas-font-display, Georgia, serif);
+  font-family: var(--atlas-font-inscription);
   font-size: 13px;
   font-weight: 600;
   line-height: 1.4;
@@ -427,7 +429,7 @@
 .person-chronicle-activity header h4 {
   margin: 0;
   color: #e0dcd4;
-  font-family: var(--atlas-font-display, Georgia, serif);
+  font-family: var(--atlas-font-inscription);
   font-size: 18px;
   font-weight: 600;
   line-height: 1.3;

@@ -11,7 +11,7 @@ test("UI V5 loads Chronicle Detail after the global shell and Person Register", 
   const detail = html.indexOf("atlas-person-chronicle-detail.css");
   assert.ok(foundation >= 0 && register > foundation);
   assert.ok(detail > register, "Chronicle Detail must override the older detail/table presentation layers");
-  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261007-detail-m2-interaction-v1/);
+  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261007-detail-m3-inscription-v1/);
   assert.match(html, /atlas-person-main\.js\?v=20261003-ui-v5-detail-v1/);
 });
 
@@ -38,6 +38,17 @@ test("DETAIL-M2 uses the shared hover / active luminance scale and keeps Detail 
   assert.match(css, /person-detail-authoring > summary:hover,[\s\S]*?var\(--atlas-material-wash-hover\)/);
   assert.match(css, /person-detail-authoring\[open\] > summary \{[\s\S]*?var\(--atlas-material-wash-active\)/);
   assert.doesNotMatch(css, /\\n/);
+});
+
+test("DETAIL-M3 uses one shared inscription type for historical identity headings", () => {
+  const css = read("atlas-person-chronicle-detail.css");
+  assert.match(css, /DETAIL-M3 — Chronicle historical identity headings consume the shared/);
+  assert.match(css, /\.person-chronicle-identity h2 \{[\s\S]*?font-family: var\(--atlas-font-inscription\);/);
+  assert.match(css, /\.person-name-register b \{[\s\S]*?font-family: var\(--atlas-font-inscription\);/);
+  assert.match(css, /\.person-chronicle-activity header h4 \{[\s\S]*?font-family: var\(--atlas-font-inscription\);/);
+  assert.equal((css.match(/font-family: var\(--atlas-font-inscription\);/g) || []).length, 3);
+  assert.doesNotMatch(css, /font-family: var\(--atlas-font-display,/);
+  assert.doesNotMatch(css, /font-family: var\(--atlas-font-display\)/);
 });
 
 test("UI V5 makes Person identity and chronology the detail hierarchy", () => {
