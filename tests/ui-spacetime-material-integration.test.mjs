@@ -75,3 +75,16 @@ test("SPACETIME-M1 does not move semantic domain ownership into the material lay
   assert.match(domain, /var\(--atlas-person-domain-governance/);
   assert.match(domain, /var\(--atlas-person-domain-military/);
 });
+
+
+test("SPACETIME-M2 keeps V8 mobile geometry while normalizing final instrument dividers", () => {
+  const css = read("atlas-person-spacetime-mobile-v8.css");
+  const start = css.indexOf("SPACETIME-M2 — Mobile instrument token parity");
+  const end = css.indexOf("@media (prefers-reduced-motion: reduce)", start);
+  assert.ok(start >= 0 && end > start);
+  const material = css.slice(start, end);
+
+  assert.match(material, /border-left-color: var\(--atlas-material-hairline-soft\)/);
+  assert.match(material, /border-top-color: var\(--atlas-material-hairline-soft\)/);
+  assert.doesNotMatch(material, /\n\s*(?:width|height|min-width|max-width|min-height|max-height|padding|margin|font-size|line-height|left|right|top|bottom|transform|grid-template-columns|grid-template-rows)\s*:/);
+});
