@@ -26,7 +26,7 @@ The registry distinguishes **execution order** from **audit obligation**. Histor
 Current sequence:
 
 1. **Carry-forward closure audit** — re-review every still-unclosed historical seed against current Production:
-   - 18 same-identity / continuity candidates;
+   - 18 carried same-identity / continuity ledger entries; 15 remain unresolved after the Sicily seed was locked `KEEP_SEPARATE`;
    - 16 separate historical-family judgments;
    - 2 temporal-designation residuals (Russia, Sweden);
    - 2 KO/EN naming-collision residuals;
@@ -157,9 +157,9 @@ Portrait content, P14 historical-map Geometry and the broad legacy census are pa
 
 If no different task is explicitly selected by the user:
 
-**Resume #1895 at `County of Sicily → Kingdom of Sicily`, the first still-unclosed carry-forward continuity seed.**
+**Resume #1895 at `County of Apulia → Duchy of Apulia and Calabria`, the first still-unclosed carry-forward continuity seed.**
 
-The Saxony, Hanover, Bavaria, Savoy, Northumbria, Bosnia, South Kasai, Siam/Thailand and South Africa continuity seeds, Ireland family and Kingdom of Italy 3-way split are terminal `FIXED`. Saxony now uses one continuous polity identity across Electorate and Kingdom while preserving the pre-1806 Electorate as a temporal `state_form` and keeping the actual Elector→King title change as separate Activities.
+The Sicily county/kingdom seed is terminal `KEEP_SEPARATE`: the County remains a distinct predecessor because the 1130 kingdom was created as a new composite monarchy after the unification of Sicily with south-Italian dominions, not as a simple state-form rename of the County. The Saxony, Hanover, Bavaria, Savoy, Northumbria, Bosnia, South Kasai, Siam/Thailand and South Africa continuity seeds, Ireland family and Kingdom of Italy 3-way split are terminal `FIXED`. Saxony now uses one continuous polity identity across Electorate and Kingdom while preserving the pre-1806 Electorate as a temporal `state_form` and keeping the actual Elector→King title change as separate Activities.
 
 Continue through the current review registry's carry-forward audit groups in current order until every seed has a terminal disposition, then run the fresh whole-Production discovery scan.
 

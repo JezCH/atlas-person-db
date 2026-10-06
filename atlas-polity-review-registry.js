@@ -48,13 +48,15 @@
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
         title: "County of Sicily → Kingdom of Sicily",
-        left: { name: "County of Sicily" },
-        right: { name: "Kingdom of Sicily" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
+        left: { name: "County of Sicily", ko: "시칠리아 백국", polity_id: "033c244d-d86f-4d44-b284-e21125b72e34" },
+        right: { name: "Kingdom of Sicily", ko: "시칠리아 왕국", polity_id: "a6361737-7d95-4df8-a76d-869b1dd2026a" },
+        rationale: "최신 Production과 사료를 다시 대조한 결과 KEEP_SEPARATE로 종결합니다. Roger II의 County of Sicily는 1130년에 단순히 동일 정치체의 작위만 왕국으로 승격된 것이 아니라, 1127–1130년 Sicily와 남부 이탈리아의 기존 지배권을 통합한 뒤 Sicily·Calabria·Apulia를 포괄하는 새 왕국이 창설된 전사(前史) 정치체입니다. Cambridge 중세사와 교황권 연구는 이 과정을 각각 southern Italy and Sicily의 unification과 new Kingdom of Sicily의 creation, 그리고 1130-09-27 Anacletus II의 왕국 창설 칙서로 설명합니다. 현 Production의 별도 Polity 경계와 Roger II의 Count/King Activities는 이 구분과 양립하므로 canonical mutation은 하지 않습니다.",
+        suggested_action: "keep_both",
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        reviewed_decision: "keep_both",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "2026-10-07 fresh Production: County of Sicily 033c244d-d86f-4d44-b284-e21125b72e34 has Roger II Count Activity 1105→1130-12-25; Kingdom of Sicily a6361737-7d95-4df8-a76d-869b1dd2026a is separately modeled with Roger II King Activity from 1130 and later Sicilian rulers", "Treccani, RUGGERO II: Roger inherited the County in 1105, was invested with the Duchy of Apulia, Calabria and Sicily in 1128, and obtained/crowned the royal title in 1130", "G. A. Loud, New Cambridge Medieval History: 1127–30 unification of southern Italy and Sicily followed by creation of the new Kingdom of Sicily in 1130", "Journal of Ecclesiastical History: Anacletus II's 1130-09-27 bull created the kingdom of Sicily, Calabria and Apulia; Roger was inaugurated king on Christmas Day 1130", "2026-10-07 no-write canonical + runtime readback: both identities remain separately present and internally consistent"],
+        locked: true
       },
       {
         id: "apulia-county-duchy",
