@@ -3,7 +3,7 @@
 **As of:** 2026-10-07  
 **Authority:** current `main` + current Production + latest durable checkpoint  
 **Workstream state baseline:** verified against current repository state on 2026-10-05  
-**Latest Polity data-mutation checkpoint:** Correction Apply `37540548526` SUCCESS after #1989; legacy `Kingdom of Lithuania` retired to canonical Grand Duchy of Lithuania after preserving the 1253–1263 royal phase as temporal `state_form`; Runtime compile `37540629613` SUCCESS
+**Latest Polity data-mutation checkpoint:** Correction Apply `37543389958` SUCCESS after #1992; legacy `County of Portugal` retired to canonical Kingdom of Portugal after preserving the 1128–c.1139 comital phase as temporal `state_form`; Runtime compile `37543479617` SUCCESS
 **Repository/Production state:** current executable cleanup is deployed; closed one-shot NamuWiki, Person Domain v2 cutover and Place authority backfill mutation surfaces are retired, and live Person Domain verification is independent from the historical cutover snapshot.  
 **P14:** `PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`
 
@@ -26,7 +26,7 @@ The registry distinguishes **execution order** from **audit obligation**. Histor
 Current sequence:
 
 1. **Carry-forward closure audit** — re-review every still-unclosed historical seed against current Production:
-   - 19 same-identity / continuity candidates;
+   - 18 same-identity / continuity candidates;
    - 16 separate historical-family judgments;
    - 2 temporal-designation residuals (Russia, Sweden);
    - 2 KO/EN naming-collision residuals;
@@ -40,7 +40,7 @@ Important distinction:
 - **Do not discard old audit seeds merely because they are historical.**
 - Rebuild the decision from current Production + current identity rules, then assign a terminal status.
 
-Already completed Polity fixes remain closed unless contradictory current evidence appears, including the Lithuania grand-duchy/kingdom, the Saxony electorate/kingdom, the Hanover electorate/kingdom, Bavaria duchy/electorate and Savoy county/duchy continuity merges, the Northumbria generic/formal duplicate merge, the Bosnia banate/kingdom continuity merge, the South Kasai state-form continuity merge, the Siam/Thailand continuity merge, the South Africa continuity merge, the Ireland family correction, the Kingdom of Italy 3-way split, Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, the Kingdom-of-France generic/formal duplicate correction and the Japan lineage/occupation/designation rebuild. France's wider regime-family audit is a separate open seed and must not be conflated with the completed duplicate correction.
+Already completed Polity fixes remain closed unless contradictory current evidence appears, including the Portugal county/kingdom, the Lithuania grand-duchy/kingdom, the Saxony electorate/kingdom, the Hanover electorate/kingdom, Bavaria duchy/electorate and Savoy county/duchy continuity merges, the Northumbria generic/formal duplicate merge, the Bosnia banate/kingdom continuity merge, the South Kasai state-form continuity merge, the Siam/Thailand continuity merge, the South Africa continuity merge, the Ireland family correction, the Kingdom of Italy 3-way split, Later Jin, Kingdom of Serbia, Egypt, Poland, Germany, Han 韓/漢, the Kingdom-of-France generic/formal duplicate correction and the Japan lineage/occupation/designation rebuild. France's wider regime-family audit is a separate open seed and must not be conflated with the completed duplicate correction.
 
 ### B. UI information coverage / completeness — #1896
 
@@ -157,7 +157,7 @@ Portrait content, P14 historical-map Geometry and the broad legacy census are pa
 
 If no different task is explicitly selected by the user:
 
-**Resume #1895 at `County of Portugal → Kingdom of Portugal`, the first still-unclosed carry-forward continuity seed.**
+**Resume #1895 at `County of Sicily → Kingdom of Sicily`, the first still-unclosed carry-forward continuity seed.**
 
 The Saxony, Hanover, Bavaria, Savoy, Northumbria, Bosnia, South Kasai, Siam/Thailand and South Africa continuity seeds, Ireland family and Kingdom of Italy 3-way split are terminal `FIXED`. Saxony now uses one continuous polity identity across Electorate and Kingdom while preserving the pre-1806 Electorate as a temporal `state_form` and keeping the actual Elector→King title change as separate Activities.
 
