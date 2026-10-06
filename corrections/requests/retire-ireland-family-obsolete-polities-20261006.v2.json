@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:ireland-family-obsolete-polities:2026-10-06:v1",
+  "release_order": 1933,
+  "evidence": {
+    "decision": "Ireland-family repair is committed in Production. Irish Free State is now represented as the 1922-1937 temporal state-form designation on the canonical Ireland polity. Provisional Government of Ireland is now represented as a governance context/period on Ireland. Their legacy Polity rows are zero-external-reference orphans and should be retired.",
+    "ireland_repair_apply_run": "37461759445",
+    "ireland_repair_apply_attempt": 2,
+    "ireland_survivor": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+    "production_readback": "2026-10-06 post-apply exact readback: both targets have person_activity_refs=0, description_refs=0, source_refs=0, place_function_refs=0, governance_period_refs=0, designation_refs=0, polity_relation refs=0, identity_relation refs=0; each retains exactly two preferred polity_names owned rows."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:irish-free-state-after-ireland-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "a0a6810a-9ebf-4e63-acfe-572608fdf3e3",
+        "canonical_key": "Irish Free State",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Irish Free State",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "아일랜드 자유국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:provisional-government-of-ireland-after-governance-context-migration",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "9f43ac5f-c96e-448c-81f8-112e2f6e8424",
+        "canonical_key": "Provisional Government of Ireland",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Provisional Government of Ireland",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "아일랜드 임시정부",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
