@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:electorate-of-hanover-after-kingdom-state-form-merge:2026-10-07:v1",
+  "release_order": 1976,
+  "evidence": {
+    "decision": "Electorate of Hanover is the pre-royal state-form phase of the continuous Hanoverian polity and is preserved as two temporal state_form designations on canonical Kingdom of Hanover, with the 1803-1813 effective-rule interruption retained.",
+    "continuity_apply_run": "37491765668",
+    "survivor_polity_id": "15236151-3a4c-4e08-acab-bbf0f51f96eb",
+    "production_readback": "2026-10-07 exact readback: legacy Electorate row has zero external references and only two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:electorate-of-hanover-after-kingdom-state-form-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "c9c41233-523f-4357-b526-5c20dd58d36b",
+        "canonical_key": "Electorate of Hanover",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "15236151-3a4c-4e08-acab-bbf0f51f96eb",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Electorate of Hanover",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "하노버 선제후국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
