@@ -173,6 +173,8 @@ test('Polity Atlas routes connected Persons through canonical deep links', () =>
 
 test('Polity surface uses the canonical dark monumental token system without legacy bright SaaS colors', () => {
   assert.match(css, /ATLAS Polity surface — V10 dark monumental integration/);
+  assert.match(css, /Polity owns its nested card surfaces explicitly/);
+  assert.match(css, /\.polity-browser-summary,[\s\S]*\.polity-review-card \{[\s\S]*background: var\(--atlas-surface-1\)/);
   assert.match(css, /var\(--atlas-surface-1\)/);
   assert.match(css, /var\(--atlas-surface-2\)/);
   assert.match(css, /var\(--atlas-surface-3\)/);
