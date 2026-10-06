@@ -434,6 +434,112 @@
   outline-offset: 1px;
 }
 
+/* SPACETIME-M1 — Shared chronology material integration.
+ * Material-only bridge into the global ATLAS monumental system.
+ * Chronology geometry, camera, LOD, label packing, rail widths, domain colors,
+ * uncertainty grammar, and mobile hierarchy remain unchanged.
+ */
+.spacetime-frame[data-spacetime-visual="chronology-v6"] {
+  border-color: var(--atlas-material-hairline);
+  background-color: var(--spacetime-ink);
+  background-image:
+    linear-gradient(180deg,var(--atlas-material-sheen-soft),transparent 22%,rgba(0,0,0,.018) 100%);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen),
+    inset 0 -1px 0 var(--atlas-material-edge-dark);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-scroll {
+  background-color: var(--spacetime-ink);
+  background-image:
+    linear-gradient(180deg,var(--atlas-material-sheen-soft),transparent 180px);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-sticky-corner,
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-region-head {
+  border-color: var(--atlas-material-hairline);
+  background-color: rgba(18,21,24,.975);
+  background-image: linear-gradient(180deg,var(--atlas-material-sheen),transparent 72%);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen),
+    inset 0 -1px 0 var(--atlas-material-edge-dark);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-axis,
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis {
+  border-color: var(--atlas-material-hairline);
+  box-shadow: inset 0 1px 0 var(--atlas-material-sheen-soft);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-boundary {
+  background:
+    linear-gradient(
+      90deg,
+      var(--atlas-material-rail) 0,
+      var(--spacetime-line-major) 72px,
+      var(--spacetime-line) 100%
+    );
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-boundary-emblem {
+  border-color: var(--atlas-material-glint);
+  box-shadow: 0 0 0 1px var(--atlas-material-hairline-soft);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-label:hover {
+  background:
+    linear-gradient(
+      90deg,
+      var(--spacetime-person-domain-tint),
+      var(--atlas-material-wash-hover) 44%,
+      rgba(18,21,24,.72)
+    );
+  box-shadow: inset 0 -1px 0 var(--atlas-material-hairline-strong);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-label.is-selected {
+  background:
+    linear-gradient(
+      90deg,
+      var(--spacetime-person-domain-tint),
+      var(--atlas-material-wash-selected) 44%,
+      rgba(18,21,24,.78)
+    );
+  box-shadow:
+    inset 0 -1px 0 var(--spacetime-selection-metal-strong),
+    0 0 0 1px var(--atlas-material-hairline-strong);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-activity-glyph {
+  border-color: var(--atlas-material-hairline-soft);
+  background-color: rgba(19,23,26,.88);
+  background-image: linear-gradient(180deg,var(--atlas-material-sheen-soft),transparent 72%);
+  box-shadow: inset 0 1px 0 var(--atlas-material-sheen-soft);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-activity-glyph:hover {
+  border-color: var(--atlas-material-hairline-strong);
+  background-color: rgba(28,33,36,.96);
+  background-image: linear-gradient(90deg,var(--atlas-material-wash-hover),transparent 78%);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-activity-glyph.is-selected,
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-activity-glyph.is-activity-selected {
+  border-color: var(--spacetime-selection-metal);
+  background-color: rgba(31,31,29,.96);
+  background-image: linear-gradient(90deg,var(--atlas-material-wash-active),transparent 78%);
+  box-shadow: 0 0 0 1px var(--atlas-material-hairline-soft);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-meanwhile-line {
+  border-top-color: var(--atlas-material-glint);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] button:focus-visible,
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-scroll:focus-visible {
+  outline-color: var(--atlas-material-rail);
+}
+
 @media (max-width: 760px) {
   .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-boundary b {
     display: none;
