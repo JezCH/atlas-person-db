@@ -209,7 +209,7 @@ test('POL-C1 gives canonical Polity cards plaque material without changing card 
 
   assert.match(material, /\.polity-browser-card\{/);
   assert.match(material, /\.polity-browser-card\[open\]/);
-  assert.match(material, /inset 2px 0 0 var\\\(--atlas-material-rail\\\)/);
+  assert.match(material, /inset 2px 0 0 var\(--atlas-material-rail\)/);
   assert.match(material, /\.polity-dossier-overview>div/);
   assert.match(material, /\.polity-dossier-person>header/);
 
@@ -229,7 +229,7 @@ test('POL-C2 refines Polity review cards without changing review geometry', () =
   assert.match(material, /\.polity-review-filter,/);
   assert.match(material, /\.polity-review-card,/);
   assert.match(material, /\.polity-review-filter\.is-active/);
-  assert.match(material, /inset 2px 0 0 var\\\(--atlas-material-rail\\\)/);
+  assert.match(material, /inset 2px 0 0 var\(--atlas-material-rail\)/);
   assert.match(material, /\.polity-review-evidence/);
   assert.match(material, /\.polity-review-model-note/);
 
