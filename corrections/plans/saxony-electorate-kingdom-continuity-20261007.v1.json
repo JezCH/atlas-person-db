@@ -1,0 +1,238 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "saxony_electorate_kingdom_continuity_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_SAXONY_ELECTORATE_KINGDOM_CONTINUITY",
+  "release_order": 1985,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; existing Deutsche Biographie / British Museum evidence; current ATLAS same-identity rank/state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "electorate_polity_id": "a3f683a4-34fe-4839-9dd0-f6ae96b52a06",
+    "kingdom_survivor": "be139c7d-f43c-4bf6-8542-9a372d64c06d",
+    "historical_decision": "Electorate of Saxony and Kingdom of Saxony are rank/state-form phases of the same Saxon state identity. Production evidence identifies Frederick Augustus III as Elector from 1763 and as the first King of Saxony from 20 December 1806 after Saxony's elevation to a kingdom.",
+    "activity_rule": "Relink all Activities attached to the Electorate polity, including Martin Luther and Johann Sebastian Bach active_in Activities, because the legacy split is polity-identity level rather than ruler-only. Keep Frederick Augustus's Elector and King roles separate because his sovereign title changed.",
+    "boundary_rule": "Kingdom begins 20 December 1806. End the Elector Activity and Electorate state_form on 19 December 1806 to avoid an inclusive-date overlap.",
+    "designation_rule": "Preserve Electorate of Saxony as the pre-royal state_form from the earliest currently modeled ATLAS Electorate Activity coverage floor in 1517 through 19 December 1806. The 1517 lower boundary is not a claim that the electorate originated in 1517."
+  },
+  "operations": [
+    {
+      "case_id": "saxony-relink-luther-active-in-to-kingdom-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "3546ae10-418a-42bf-8cbc-619cc85c0651",
+      "baseline_before": {
+        "person_id": "3c778add-f1aa-4211-9c7b-98ab20d22388",
+        "polity_id": "a3f683a4-34fe-4839-9dd0-f6ae96b52a06",
+        "role_id": "37d80657-bd70-4aeb-bccf-680dab4bf75a",
+        "period_basis_id": "71d6a7c6-2bbe-53b6-b898-067623ab27dc",
+        "activity_start": 1517,
+        "activity_end": 1546,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "3546ae10-418a-42bf-8cbc-619cc85c0651",
+        "person_id": "3c778add-f1aa-4211-9c7b-98ab20d22388",
+        "polity_id": "be139c7d-f43c-4bf6-8542-9a372d64c06d",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "37d80657-bd70-4aeb-bccf-680dab4bf75a",
+        "period_basis_id": "71d6a7c6-2bbe-53b6-b898-067623ab27dc",
+        "activity_start": 1517,
+        "activity_start_detail": {
+          "year": 1517,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1546,
+        "activity_end_detail": {
+          "year": 1546,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "saxony-relink-bach-active-in-to-kingdom-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "728a7ff7-3d8d-46e4-8a2e-5d5866010f06",
+      "baseline_before": {
+        "person_id": "f2740ecc-a868-4156-bc68-bf8f0d9fc4fc",
+        "polity_id": "a3f683a4-34fe-4839-9dd0-f6ae96b52a06",
+        "role_id": "82492d17-54e8-4921-9e4f-f519114e9679",
+        "period_basis_id": "7e26c1ed-b4d9-547a-ac42-af523ec12d1b",
+        "activity_start": 1723,
+        "activity_end": 1750,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "728a7ff7-3d8d-46e4-8a2e-5d5866010f06",
+        "person_id": "f2740ecc-a868-4156-bc68-bf8f0d9fc4fc",
+        "polity_id": "be139c7d-f43c-4bf6-8542-9a372d64c06d",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "82492d17-54e8-4921-9e4f-f519114e9679",
+        "period_basis_id": "7e26c1ed-b4d9-547a-ac42-af523ec12d1b",
+        "activity_start": 1723,
+        "activity_start_detail": {
+          "year": 1723,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1750,
+        "activity_end_detail": {
+          "year": 1750,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "saxony-relink-frederick-augustus-elector-to-kingdom-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "4016ede7-98ef-4ae4-97f9-cec7b3a6c5cb",
+      "baseline_before": {
+        "person_id": "94f4a00c-5527-439f-8b11-e33880eb78c2",
+        "polity_id": "a3f683a4-34fe-4839-9dd0-f6ae96b52a06",
+        "role_id": "87886052-3624-499a-bc57-b486d0d3e269",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1763,
+        "activity_end": 1806,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "4016ede7-98ef-4ae4-97f9-cec7b3a6c5cb",
+        "person_id": "94f4a00c-5527-439f-8b11-e33880eb78c2",
+        "polity_id": "be139c7d-f43c-4bf6-8542-9a372d64c06d",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "87886052-3624-499a-bc57-b486d0d3e269",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1763,
+        "activity_start_detail": {
+          "year": 1763,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1806,
+        "activity_end_detail": {
+          "year": 1806,
+          "month": 12,
+          "day": 19,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Frederick Augustus III ruled the same Saxon state as Elector from 1763 through 19 December 1806. On 20 December 1806 Saxony was elevated to a kingdom and he became King Frederick Augustus I. ATLAS keeps the Elector and King roles separate while using one continuous Saxon polity identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "saxony-electorate-state-form-modeled-period",
+      "exact_before": {
+        "designation_absent_id": "f2a14c8e-7b53-4d90-a621-3e8c5b7f1049"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "f2a14c8e-7b53-4d90-a621-3e8c5b7f1049",
+          "polity_id": "be139c7d-f43c-4bf6-8542-9a372d64c06d",
+          "designation_type": "state_form",
+          "valid_from_year": 1517,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "approximate",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1806,
+          "valid_to_month": 12,
+          "valid_to_day": 19,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Electorate of Saxony is preserved as the pre-royal state-form of the continuous Saxon polity. The 1517 lower boundary is the earliest currently modeled ATLAS Activity attached to the Electorate and is a coverage floor, not a claim of institutional origin. The phase ends the day before Saxony's elevation to a kingdom on 20 December 1806."
+        },
+        "names": [
+          {
+            "id": "b418e2d7-6c35-4f90-a1e8-7d2b5c9f3041",
+            "polity_designation_id": "f2a14c8e-7b53-4d90-a621-3e8c5b7f1049",
+            "locale": "en",
+            "name": "Electorate of Saxony",
+            "is_preferred": true
+          },
+          {
+            "id": "6d2c9a51-8e47-4b30-b6f1-2a7d5c8e9034",
+            "polity_designation_id": "f2a14c8e-7b53-4d90-a621-3e8c5b7f1049",
+            "locale": "ko",
+            "name": "작센 선제후국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "f2a14c8e-7b53-4d90-a621-3e8c5b7f1049",
+            "source_id": "8e544d0e-f55a-401b-9124-3610e3bc54ec",
+            "source_locator_key": "https://www.deutsche-biographie.de/sfz135137.html"
+          },
+          {
+            "polity_designation_id": "f2a14c8e-7b53-4d90-a621-3e8c5b7f1049",
+            "source_id": "c7288427-901d-424c-ba55-2f571a2ec731",
+            "source_locator_key": "https://www.deutsche-biographie.de/sfz56990.html"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 3,
+    "asserted_polity_designation_count": 1,
+    "electorate_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
