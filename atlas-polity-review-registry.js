@@ -44,19 +44,6 @@
     execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
       {
-        id: "south-africa-union-state",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Union of South Africa → South Africa",
-        left: { name: "Union of South Africa" },
-        right: { name: "South Africa" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "siam-thailand",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -914,6 +901,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "south-africa-union-state",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Union of South Africa → South Africa continuity merge",
+        left: { name: "Union of South Africa", ko: "남아프리카 연방", polity_id: "3d88574b-0196-4678-a3b1-88ae5f37b7bf" },
+        right: { name: "South Africa", ko: "남아프리카 공화국", polity_id: "87a3aa3b-f453-4915-bf4a-9e8c19842af2" },
+        rationale: "1961년 공화제 전환은 국가 소멸·신설이 아니라 동일 남아프리카 정치체의 헌정·state-form 전환으로 정리했습니다. #1941에서 Hendrik Verwoerd의 1961 경계 중복 Activity를 source-transfer retirement했고, #1943에서 Jan Smuts의 Union-era Activity 두 건을 canonical South Africa로 재연결하고 Verwoerd의 연속 총리 재임을 1958-09-02~1966-09-06으로 통합했습니다. Union of South Africa는 1910-05-31~1961-05-30 temporal state_form designation으로 보존했으며, #1944에서 zero-external-reference legacy Union Polity를 survivor South Africa로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["#1941 Verwoerd boundary-fragment retirement; Correction Apply 37475436401 SUCCESS", "#1943 continuity merge/designation; Correction Apply 37476473097 SUCCESS; Runtime compile 37476598940 SUCCESS", "#1944 legacy Union Polity retirement; Correction Apply 37477006345 SUCCESS; Runtime compile 37477122597 SUCCESS", "2026-10-06 canonical + runtime exact readback"],
+        locked: true
+      },
       {
         id: "kingdom-of-italy-three-way-split",
         review_group: "resolved_history",
