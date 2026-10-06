@@ -783,7 +783,7 @@
     background-image:
       linear-gradient(
         90deg,
-        rgba(192, 174, 136, .022) 0,
+        var(--atlas-material-wash-hover) 0,
         var(--atlas-material-sheen) 26%,
         rgba(239, 235, 226, .006) 68%,
         transparent 100%
@@ -798,7 +798,7 @@
     background-image:
       linear-gradient(
         90deg,
-        rgba(192, 174, 136, .050) 0,
+        var(--atlas-material-wash-selected) 0,
         var(--atlas-material-sheen-strong) 24%,
         var(--atlas-material-sheen-soft) 66%,
         transparent 100%
