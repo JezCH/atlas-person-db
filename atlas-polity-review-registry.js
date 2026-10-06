@@ -44,19 +44,6 @@
     execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
       {
-        id: "bosnia-banate-kingdom",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Banate of Bosnia → Kingdom of Bosnia",
-        left: { name: "Banate of Bosnia" },
-        right: { name: "Kingdom of Bosnia" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "northumbria-generic-kingdom",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -875,6 +862,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "bosnia-banate-kingdom",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Banate of Bosnia → Kingdom of Bosnia state-form merge",
+        left: { name: "Banate of Bosnia", ko: "보스니아 반샤그", polity_id: "26f33a14-67a6-4b46-91b0-90f31d96799c" },
+        right: { name: "Kingdom of Bosnia", ko: "보스니아 왕국", polity_id: "15c1eb86-afc0-4bc5-91ed-a01d1652160a" },
+        rationale: "동일 중세 보스니아 정치체의 rank/state-form 전환으로 통합했습니다. #1953에서 Kulin과 Tvrtko I의 Ban-era Activity 세 건을 Kingdom of Bosnia survivor로 재연결하되 Tvrtko의 Ban→King 역할 변화는 실제 군주 칭호 변화이므로 별도 Activity로 유지했습니다. Banate of Bosnia는 modeled coverage floor 1180부터 1377-10-25까지, Kingdom of Bosnia는 1377-10-26 대관부터 1463 오스만 정복까지 temporal state_form designation으로 보존했습니다. #1954에서 zero-external-reference legacy Banate Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["#1953 Bosnia state-form continuity merge; Correction Apply 37482503120 SUCCESS; Runtime compile 37482645483 SUCCESS", "#1954 legacy Banate Polity retirement; Correction Apply 37482837058 SUCCESS; Runtime compile 37482947621 SUCCESS", "Hrvatska enciklopedija Tvrtko I / Kotromanići chronology", "Museum of the Bosnian Kingdom 26 October 1377 coronation chronology", "2026-10-06 canonical + runtime exact readback"],
+        locked: true
+      },
       {
         id: "south-kasai-state-form",
         review_group: "resolved_history",
