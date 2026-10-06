@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ireland-family-20261006:michael-collins:irish-republic:revolutionary-leader:1919-1921:v1",
+  "person": {
+    "canonical_name_en": "Michael Collins",
+    "display_name_ko": "마이클 콜린스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "canonical_name_en": "Irish Republic",
+    "display_name_ko": "아일랜드 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Revolutionary leader",
+    "role_display_name_ko": "혁명 지도자",
+    "period_basis": "general_activity",
+    "start_year": 1919,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1921,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Collins was a leading revolutionary and intelligence organizer during the War of Independence within the Irish Republic proclaimed and ratified by the First Dáil in 1919. This Activity replaces the former generic-Ireland political-community binding; the modern Ireland state identity is not back-projected over the revolutionary republic."
+  },
+  "sources": [
+    {
+      "source_id": "587ac9da-3016-4fea-8ecb-aa6526f79a0b",
+      "locator": "https://catalogue.nli.ie/Record/vtls000246993"
+    },
+    {
+      "source_type": "official_primary_source",
+      "title": "Declaration of Independence — First Dáil, 21 January 1919",
+      "canonical_url": "https://www.oireachtas.ie/en/debates/debate/dail/1919-01-21/8/",
+      "citation_text": "The First Dáil formally ratified the establishment of the Irish Republic on 21 January 1919 and claimed sole legislative authority for the Irish Parliament."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-29",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Ireland-family identity correction 2026-10-06: Irish Republic is registered as a distinct 1919 revolutionary polity, but P14 Territory/Geometry remains PARKED_BY_USER. No capital/place-function or territory geometry is inferred in this bounded identity unit."
+  },
+  "review_context": {
+    "workstream": "#1895",
+    "case": "ireland-family-correction",
+    "decision": "Irish Republic 1919-1922 remains distinct from the Irish Free State/Ireland continuity identity"
+  }
+}
