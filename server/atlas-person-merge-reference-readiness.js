@@ -18,7 +18,9 @@ const EXPECTED_PERSON_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.person_politics_v2.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_portraits.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_sources.person_id", delete_action: "CASCADE" }),
-  Object.freeze({ key: "atlas_v2.person_timeline_dispositions.person_id", delete_action: "CASCADE" }),
+  Object.freeze({ key: "atlas_v2.person_timeline_dispositions.person_id", delete_action: "CASCADE" })
+]);
+const OPTIONAL_RUNTIME_PERSON_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.runtime_person_politics_v1.person_id", delete_action: "RESTRICT" })
 ]);
 const EXPECTED_RELATIONSHIP_FKS = Object.freeze([
@@ -35,7 +37,9 @@ const EXPECTED_NON_FK_PERSON_UUID_COLUMNS = Object.freeze([
   "atlas_v2.person_duplicate_reviews.person_low_id",
   "atlas_v2.person_merge_audits.source_person_id",
   "atlas_v2.person_merge_audits.survivor_person_id",
-  "atlas_v2.person_profile_mutation_audits.person_id",
+  "atlas_v2.person_profile_mutation_audits.person_id"
+]);
+const OPTIONAL_RUNTIME_NON_FK_PERSON_UUID_COLUMNS = Object.freeze([
   // Runtime compile exclusions are immutable compile-ledger snapshots, not live Person ownership.
   "atlas_v2.runtime_compile_exclusions.person_id"
 ]);
@@ -103,11 +107,19 @@ async function inspectPersonMergeReferenceReadiness(client) {
   const requirementLedgerPresent = Boolean(requirementTable.rows[0]?.requirements);
   const contextPolityTable = await client.query(`select to_regclass('atlas_v2.person_politics_context_polities')::text as context_polities`);
   const contextPolityTablePresent = Boolean(contextPolityTable.rows[0]?.context_polities);
+  const runtimeProjectionTable = await client.query(`select to_regclass('atlas_v2.runtime_person_politics_v1')::text as runtime_projection`);
+  const runtimeProjectionTablePresent = Boolean(runtimeProjectionTable.rows[0]?.runtime_projection);
+  const runtimeCompileExclusionsTable = await client.query(`select to_regclass('atlas_v2.runtime_compile_exclusions')::text as runtime_compile_exclusions`);
+  const runtimeCompileExclusionsTablePresent = Boolean(runtimeCompileExclusionsTable.rows[0]?.runtime_compile_exclusions);
   const expectedPersonSnapshots = [
     ...EXPECTED_NON_FK_PERSON_UUID_COLUMNS,
-    ...(requirementLedgerPresent ? P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS : [])
+    ...(requirementLedgerPresent ? P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS : []),
+    ...(runtimeCompileExclusionsTablePresent ? OPTIONAL_RUNTIME_NON_FK_PERSON_UUID_COLUMNS : [])
   ].sort();
-  const expectedPersonFks = EXPECTED_PERSON_FKS;
+  const expectedPersonFks = [
+    ...EXPECTED_PERSON_FKS,
+    ...(runtimeProjectionTablePresent ? OPTIONAL_RUNTIME_PERSON_FKS : [])
+  ];
   const expectedRelationshipFks = EXPECTED_RELATIONSHIP_FKS.filter(
     (rule) => contextPolityTablePresent || rule.key !== CONTEXT_POLITY_RELATIONSHIP_FK_KEY
   );
@@ -151,6 +163,8 @@ async function inspectPersonMergeReferenceReadiness(client) {
     policy_version:PERSON_REFERENCE_POLICY_VERSION,ready:blockers.length===0,blockers:Object.freeze(blockers.sort()),
     requirement_ledger_present:requirementLedgerPresent,
     context_polity_table_present:contextPolityTablePresent,
+    runtime_projection_table_present:runtimeProjectionTablePresent,
+    runtime_compile_exclusions_table_present:runtimeCompileExclusionsTablePresent,
     expected_non_fk_person_uuid_columns:Object.freeze(expectedPersonSnapshots), lifecycle_person_references:lifecyclePersonReferences,
     person_fks:Object.freeze(personFks),relationship_fks:Object.freeze(relationshipFks),
     non_fk_person_uuid_columns:Object.freeze(nonFkPersonUuidColumns),non_fk_relationship_uuid_columns:Object.freeze(nonFkRelationshipUuidColumns),
@@ -166,7 +180,7 @@ async function assertPersonMergeReferenceReadiness(client) {
   return readiness;
 }
 module.exports=Object.freeze({
-  PERSON_REFERENCE_POLICY_VERSION,EXPECTED_PERSON_FKS,EXPECTED_RELATIONSHIP_FKS,
-  EXPECTED_NON_FK_PERSON_UUID_COLUMNS,P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS,EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS,
+  PERSON_REFERENCE_POLICY_VERSION,EXPECTED_PERSON_FKS,OPTIONAL_RUNTIME_PERSON_FKS,EXPECTED_RELATIONSHIP_FKS,
+  EXPECTED_NON_FK_PERSON_UUID_COLUMNS,OPTIONAL_RUNTIME_NON_FK_PERSON_UUID_COLUMNS,P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS,EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS,
   EXPECTED_USER_TRIGGERS,inspectPersonMergeReferenceReadiness,assertPersonMergeReferenceReadiness
 });
