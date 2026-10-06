@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-ancientcards-20261006:berossus:seleucid:babyloniaca:c281-bce:v1",
+  "person": {
+    "canonical_name_en": "Berossus",
+    "display_name_ko": "베로수스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture"
+  },
+  "polity": {
+    "existing_id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
+    "canonical_name_en": "Seleucid Empire",
+    "display_name_ko": "셀레우코스 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Priest and historian",
+    "role_display_name_ko": "사제·역사가",
+    "period_basis": "intellectual_activity",
+    "start_year": -281,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -281,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Berossus was a Babylonian priest-chronicler who survived into the reign of Antiochus I. Encyclopaedia Iranica dates the Babyloniaca probably to 281 BCE. ATLAS uses c.281 BCE as a representative intellectual-activity point rather than fabricating an undocumented career span."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "BEROSSUS — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/berossus-babylonian-4th-3rd-century-priest-chronicler-whose-work-has-some-bearing-on-iranian-history/",
+      "citation_text": "Encyclopaedia Iranica identifies Berossus as a Babylonian priest-chronicler, contemporary with Alexander who survived into the reign of Antiochus I, and states that the Babyloniaca was probably written in 281 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-06",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-ANCIENT-CARDS-STRONG5-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}

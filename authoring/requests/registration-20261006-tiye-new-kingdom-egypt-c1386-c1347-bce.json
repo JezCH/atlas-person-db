@@ -1,0 +1,66 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-ancientcards-20261006:tiye:new-kingdom-egypt:great-royal-wife:c1386-c1347-bce:v1",
+  "person": {
+    "canonical_name_en": "Tiye",
+    "display_name_ko": "티예",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-06",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "0200ceec-534a-5604-88a8-e0520a3259a0",
+    "canonical_name_en": "New Kingdom of Egypt",
+    "display_name_ko": "이집트 신왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Great Royal Wife",
+    "role_display_name_ko": "대왕비",
+    "period_basis": "general_activity",
+    "start_year": -1386,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1347,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Queen Tiye is directly attested as Amenhotep III's principal/Great Royal Wife by commemorative scarabs and other royal material. ATLAS uses the Met's c.1386–1347 BCE Amenhotep III reign-context dating as an approximate representative activity envelope only; it is not asserted as exact marriage or death chronology."
+  },
+  "sources": [
+    {
+      "source_type": "museum_research",
+      "title": "Scarab Commemorating the King's Marriage to Queen Tiye — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/548625",
+      "citation_text": "The Met identifies a New Kingdom commemorative scarab for Amenhotep III's marriage to Queen Tiye, dated to the reign context ca. 1386–1347 BCE."
+    },
+    {
+      "source_type": "museum_research",
+      "title": "Shabti of Yuya — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/544515",
+      "citation_text": "The Met identifies Tiye as the principal wife of Amenhotep III, mother of Akhenaten, and daughter of Yuya and Tjuyu."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-06",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-ANCIENT-CARDS-STRONG5-20261006",
+    "selection": "user_selected_strong_recommendation"
+  }
+}
