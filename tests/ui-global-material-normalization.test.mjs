@@ -60,3 +60,33 @@ test("GLOBAL-M1 Dashboard uses the same material rail system without changing se
   assert.doesNotMatch(material, /inset 2px 0 0 rgba\(208,188,145,\.(?:40|42|50)\)/);
   assert.doesNotMatch(material, /--atlas-person-domain-[a-z-]+\s*:/);
 });
+
+
+test("GLOBAL-M2 interaction luminance uses one hover / active / selected wash scale", () => {
+  const foundation = read("atlas-ui-visual-foundation.css");
+  const register = read("atlas-person-monumental-register.css");
+  const nav = read("atlas-person-era-navigation.css");
+  const polity = read("atlas-polity-review-workbench.css");
+  const dashboard = read("atlas-dashboard-monumental-v11.css");
+
+  assert.ok(foundation.includes("--atlas-material-wash-hover: rgba(192, 174, 136, .026)"));
+  assert.ok(foundation.includes("--atlas-material-wash-active: rgba(192, 174, 136, .040)"));
+  assert.ok(foundation.includes("--atlas-material-wash-selected: rgba(192, 174, 136, .050)"));
+
+  const registerMaterial = register.slice(register.indexOf("UI REG-M1 — Memorial material finish"), register.indexOf("/* Mobile becomes"));
+  assert.match(registerMaterial, /var\(--atlas-material-wash-hover\)/);
+  assert.match(registerMaterial, /var\(--atlas-material-wash-selected\)/);
+  assert.doesNotMatch(registerMaterial, /rgba\(192, 174, 136, \.(?:022|050)\)/);
+
+  const navMaterial = nav.slice(nav.indexOf("UI REG-M2 — Museum instrument chrome"), nav.indexOf("@media(max-width:900px)"));
+  assert.match(navMaterial, /var\(--atlas-material-wash-active\)/);
+  assert.doesNotMatch(navMaterial, /rgba\(208,188,145,\.026\)/);
+
+  const polityMaterial = polity.slice(polity.indexOf("UI POL-C1 — Polity plaque material"));
+  assert.match(polityMaterial, /var\(--atlas-material-wash-active\)/);
+  assert.doesNotMatch(polityMaterial, /rgba\(192,174,136,\.(?:035|040)\)/);
+
+  const dashboardMaterial = dashboard.slice(dashboard.indexOf("UI DASH-M1 — Museum ledger material"), dashboard.indexOf("@media (max-width: 600px)"));
+  assert.match(dashboardMaterial, /var\(--atlas-material-wash-hover\)/);
+  assert.doesNotMatch(dashboardMaterial, /rgba\(192,174,136,\.(?:026|030)\)/);
+});

@@ -36,6 +36,9 @@
   --atlas-material-edge-dark: rgba(0, 0, 0, .16);
   --atlas-material-edge-dark-strong: rgba(0, 0, 0, .20);
   --atlas-material-glint: rgba(226, 211, 178, .72);
+  --atlas-material-wash-hover: rgba(192, 174, 136, .026);
+  --atlas-material-wash-active: rgba(192, 174, 136, .040);
+  --atlas-material-wash-selected: rgba(192, 174, 136, .050);
 
   /* Legacy aliases: keep existing components functional while removing the
    * purple SaaS identity from the global shell.
