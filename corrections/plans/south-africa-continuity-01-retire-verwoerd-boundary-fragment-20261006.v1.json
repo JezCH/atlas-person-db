@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "south_africa_continuity_verwoerd_boundary_retirement_20261006_v1",
+  "as_of": "2026-10-06",
+  "status": "REVIEWED_SOUTH_AFRICA_CONTINUITY_STAGE1",
+  "release_order": 1941,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production read 2026-10-06; South African Presidency constitutional history and current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "union_polity": "3d88574b-0196-4678-a3b1-88ae5f37b7bf",
+    "south_africa_survivor": "87a3aa3b-f453-4915-bf4a-9e8c19842af2",
+    "historical_decision": "The 31 May 1961 transition from the Union of South Africa to the Republic of South Africa is treated as a constitutional/state-form transition within the same South African polity identity. Hendrik Verwoerd's premiership was continuous across that transition.",
+    "rationale": "The legacy model split Verwoerd's single continuous premiership into two Activities solely because it split Union and Republic into separate Polity rows. Retire the Union-side duplicate into the existing South Africa Activity first; a later exact-read correction will extend the surviving Activity back to 2 September 1958."
+  },
+  "operations": [
+    {
+      "case_id": "south-africa-continuity-retire-verwoerd-union-boundary-fragment",
+      "type": "retire_activity",
+      "activity_id": "e6fba1ad-99b7-4de6-bc3b-6995219e8698",
+      "baseline_before": {
+        "person_id": "b12a3e11-9966-4859-b6f6-fec0a48aeb4d",
+        "polity_id": "3d88574b-0196-4678-a3b1-88ae5f37b7bf",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1958,
+        "activity_end": 1961,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "replacement_activity_ids": [
+        "4bfe3dec-3ae9-4996-83ac-7a2aa658db55"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retired_activity_count": 1,
+    "survivor_activity_id": "4bfe3dec-3ae9-4996-83ac-7a2aa658db55",
+    "source_transfer_required": true,
+    "production_mutation_authorized": false
+  }
+}
