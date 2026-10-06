@@ -1,0 +1,142 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "lithuania_grand_duchy_kingdom_continuity_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_LITHUANIA_GRAND_DUCHY_KINGDOM_CONTINUITY",
+  "release_order": 1988,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Visuotinė lietuvių enciklopedija Mindaugas / Lietuvos karalystė / Lietuvos valstybė iki Krėvos sutarties; current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "grand_duchy_survivor": "09d99219-3553-480d-bb56-30a21e535b88",
+    "kingdom_polity_id": "a91ef245-d5a8-480a-b27f-43bec3ddffbd",
+    "historical_decision": "The Kingdom of Lithuania (1253-1263) was the royal state-form phase of Mindaugas's existing Lithuanian state, not a separate successor polity. VLE describes Mindaugas as grand duke before 1253, king from 1253 to 1263, and states that although the royal phase did not continue after his dynasty was destroyed in 1263, the Lithuanian state he created survived for centuries and later rulers used grand-ducal titulature.",
+    "activity_rule": "Keep Mindaugas's Grand Duke and King Activities separate because his sovereign title changed, but place both under one continuous Lithuanian polity identity.",
+    "precision_rule": "Keep year granularity for the 1253 transition because the secure evidence supports July 1253 but the precise coronation day is disputed in modern scholarship/commemoration. Do not fabricate a day-level boundary or force the grand-ducal phase to end in 1252.",
+    "designation_rule": "Preserve Kingdom of Lithuania as a temporal state_form from 1253 through 1263 at year granularity on the Grand Duchy of Lithuania survivor."
+  },
+  "operations": [
+    {
+      "case_id": "lithuania-relink-mindaugas-king-to-grand-duchy-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "8aaac52c-a2cc-4017-bf0d-c0cc7ad8ab02",
+      "baseline_before": {
+        "person_id": "940eec6e-32cd-4040-8909-ac51f0b6e628",
+        "polity_id": "a91ef245-d5a8-480a-b27f-43bec3ddffbd",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1253,
+        "activity_end": 1263,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "8aaac52c-a2cc-4017-bf0d-c0cc7ad8ab02",
+        "person_id": "940eec6e-32cd-4040-8909-ac51f0b6e628",
+        "polity_id": "09d99219-3553-480d-bb56-30a21e535b88",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1253,
+        "activity_start_detail": {
+          "year": 1253,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1263,
+        "activity_end_detail": {
+          "year": 1263,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Mindaugas was crowned King of Lithuania in July 1253 with papal sanction and remained king until his assassination in 1263. ATLAS treats this as the royal state-form phase of the same Lithuanian polity identity represented canonically by Grand Duchy of Lithuania. The boundaries remain at year precision because the exact coronation day is disputed.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "lithuania-kingdom-state-form-1253-1263",
+      "exact_before": {
+        "designation_absent_id": "3e86d7a1-8c42-4b9f-a5d6-217c90ef4b31"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "3e86d7a1-8c42-4b9f-a5d6-217c90ef4b31",
+          "polity_id": "09d99219-3553-480d-bb56-30a21e535b88",
+          "designation_type": "state_form",
+          "valid_from_year": 1253,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1263,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "Kingdom of Lithuania is preserved as the royal state-form phase of the continuous Lithuanian polity during Mindaugas's kingship, 1253-1263. The state did not become a separate successor polity; after Mindaugas's dynasty was destroyed, later Lithuanian rulers reverted to grand-ducal titulature."
+        },
+        "names": [
+          {
+            "id": "7f3a2d91-6c45-4eb8-b172-5d9e0a3c84f1",
+            "polity_designation_id": "3e86d7a1-8c42-4b9f-a5d6-217c90ef4b31",
+            "locale": "en",
+            "name": "Kingdom of Lithuania",
+            "is_preferred": true
+          },
+          {
+            "id": "2c8b6e54-1a73-4fd0-9e25-6b4c87a31d90",
+            "polity_designation_id": "3e86d7a1-8c42-4b9f-a5d6-217c90ef4b31",
+            "locale": "ko",
+            "name": "리투아니아 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "3e86d7a1-8c42-4b9f-a5d6-217c90ef4b31",
+            "source_id": "6df8ae4c-191f-4897-a3af-a5b6c964ad6c",
+            "source_locator_key": "https://www.vle.lt/straipsnis/mindaugas/"
+          },
+          {
+            "polity_designation_id": "3e86d7a1-8c42-4b9f-a5d6-217c90ef4b31",
+            "source_id": "032f132f-975b-46a3-9610-a6559cde29c0",
+            "source_locator_key": "https://www.vle.lt/straipsnis/mindaugas/"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_polity_designation_count": 1,
+    "kingdom_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
