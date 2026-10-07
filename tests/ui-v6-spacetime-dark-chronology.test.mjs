@@ -10,10 +10,10 @@ test("UI V6 loads a dedicated chronology canvas after the base Spacetime stylesh
   assert.match(html, /atlas-main-authority-nav\.js\?v=20261004-dashboard-v11-r2/);
   assert.match(html, /atlas-domain-surface-owner\.js\?v=20261004-ui-p1-dark-name-v1/);
   const base = 'atlas-person-spacetime-view.css?v=20260923-runtime-ownership-v1';
-  const v6 = 'atlas-person-spacetime-monumental-canvas.css?v=20261003-ui-v6-canvas-v1';
+  const v6 = 'atlas-person-spacetime-monumental-canvas.css?v=20261007-spacetime-m2-focus-v1';
   assert.ok(nav.includes(base));
   assert.ok(nav.includes(v6));
-  const v7 = 'atlas-person-spacetime-instrument-tools.css?v=20261003-ui-v7-tools-v1';
+  const v7 = 'atlas-person-spacetime-instrument-tools.css?v=20261007-spacetime-m2-focus-v1';
   assert.ok(nav.indexOf(base) < nav.indexOf(v6));
   assert.ok(nav.indexOf(v6) < nav.indexOf(v7));
   assert.match(nav, /atlas-person-spacetime-view\.js\?v=20261003-ui-v7-tools-v1/);
