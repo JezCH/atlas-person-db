@@ -271,3 +271,32 @@ test("DASHBOARD-M1 restores the shared focus language after late Monumental V11 
   assert.match(focus, /outline-offset: 2px/);
   assert.doesNotMatch(focus, /rgba\(/);
 });
+
+
+test("DASHBOARD-M2 keeps hover, pressed, and selected luminance semantically distinct", () => {
+  const dashboard = read("atlas-dashboard-monumental-v11.css");
+  const start = dashboard.indexOf("DASHBOARD-M2 — Interaction luminance ownership");
+  const end = dashboard.indexOf("@media (prefers-reduced-motion: reduce)", start);
+  assert.ok(start >= 0 && end > start);
+  const interaction = dashboard.slice(start, end);
+
+  assert.match(interaction, /@media \(hover: hover\)/);
+  assert.match(interaction, /\.dashboard-completeness td button:hover \{[^}]*var\(--atlas-material-wash-hover\)/);
+
+  for (const selector of [
+    ".dashboard-kpi-action:active:not(:disabled)",
+    ".dashboard-issue-grid button:active:not(:disabled)",
+    ".dashboard-issue-grid .dashboard-attention-link:active",
+    ".dashboard-breakdown-action:active",
+    ".dashboard-polity-row:active:not(:disabled)",
+    ".dashboard-completeness td button:active",
+    ".dashboard-polity-toolbar button:active:not([aria-pressed=\"true\"])"
+  ]) {
+    assert.ok(interaction.includes(selector), `missing Dashboard pressed selector: ${selector}`);
+  }
+  assert.match(interaction, /var\(--atlas-material-wash-active\)/);
+
+  assert.match(interaction, /\.dashboard-polity-toolbar button\[aria-pressed="true"\] \{[^}]*var\(--atlas-material-wash-selected\)/);
+  assert.match(interaction, /inset 0 -1px 0 var\(--atlas-material-rail-soft\)/);
+  assert.doesNotMatch(interaction, /rgba\(192,174,136,\.(?:026|040|050)\)/);
+});
