@@ -56,30 +56,21 @@
     return { total,historical,activities,nonTimeline };
   }
 
-  function renderRegistered(payload) {
+  function renderRegistered(payload, queuePayload) {
     const host=activeRoot?.querySelector("#registrationRegisteredStats");
     if (!host) return;
     const stats=registeredStats(payload);
+    const pending=queuePayload?.summary?.pending_count;
     host.innerHTML=[
       statCard(number(stats.total),"기등록 Person"),
       statCard(number(stats.historical),"historical"),
       statCard(number(stats.activities),"Authoring Activity"),
-      statCard(number(stats.nonTimeline),"비연대표 인물")
+      statCard(number(stats.nonTimeline),"비연대표 인물"),
+      statCard(number(pending),"등록대기열","현재 미등록 후보")
     ].join("");
   }
 
   function renderQueue(payload) {
-    const summary=payload?.summary || {};
-    const stats=activeRoot?.querySelector("#registrationQueueStats");
-    if (stats) {
-      stats.innerHTML=[
-        statCard(
-          number(summary.pending_count),
-          "현재 등록대기",
-          "기등록 Person은 자동 제외 · 10초마다 최신 DB 상태 동기화"
-        )
-      ].join("");
-    }
     queueRows=Array.isArray(payload?.candidates) ? payload.candidates : [];
     renderQueueTable();
   }
