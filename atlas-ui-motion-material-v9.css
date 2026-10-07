@@ -97,8 +97,18 @@ textarea,
 
 /* ---------- Material system: graphite + aged metal + ivory ---------- */
 
+/* SHELL-M3 — Late material ownership consolidation.
+ * V9 loads after the foundation, so shell-only sheen/edge treatment must keep
+ * consuming the shared GLOBAL-M1 scale instead of reintroducing local literals.
+ * Spacetime and operational controls retain their existing V9 material ownership.
+ */
 .sidebar,
-.mobile-drawer,
+.mobile-drawer {
+  background-image:
+    linear-gradient(180deg, var(--atlas-material-sheen), transparent 84px);
+  box-shadow: inset -1px 0 0 var(--atlas-material-sheen-strong);
+}
+
 .spacetime-sticky-inspector,
 .spacetime-precision-content,
 .spacetime-status-more-content {
@@ -106,14 +116,9 @@ textarea,
     linear-gradient(180deg, rgba(255,255,255,.012), transparent 84px);
 }
 
-.sidebar,
-.mobile-drawer {
-  box-shadow: inset -1px 0 0 var(--atlas-material-edge-soft);
-}
-
 .topbar,
 .mobile-appbar {
-  box-shadow: inset 0 -1px 0 rgba(255,255,255,.012);
+  box-shadow: inset 0 -1px 0 var(--atlas-material-sheen);
 }
 
 .btn,
