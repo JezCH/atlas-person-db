@@ -7,7 +7,7 @@ const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "
 test("UI V8 loads the static mobile hierarchy layer after Person Chronicle Detail", () => {
   const html = read("index.html");
   const detail = html.indexOf("atlas-person-chronicle-detail.css?v=20261007-detail-m3-inscription-v1");
-  const mobile = html.indexOf("atlas-ui-mobile-v8.css?v=20261004-ui-p4-mobile-compact-v1");
+  const mobile = html.indexOf("atlas-ui-mobile-v8.css?v=20261007-mobile-era1-ownership-v1");
   assert.ok(detail >= 0);
   assert.ok(mobile > detail);
   assert.match(html, /atlas-main-authority-nav\.js\?v=20261004-dashboard-v11-r2/);
@@ -133,4 +133,26 @@ test("SPACETIME-M4 keeps mobile late edges on shared material tokens", () => {
   assert.match(css, /\.spacetime-camera button:first-of-type \{[\s\S]*?border-left: 1px solid var\(--atlas-material-hairline-soft\)/);
   assert.match(css, /\.spacetime-status-more-content \{[\s\S]*?border-top: 1px solid var\(--atlas-material-hairline-soft\)/);
   assert.doesNotMatch(css, /#2c3338|#2d3439/);
+});
+
+
+test("MOBILE-ERA1 restores shared Era focus and interaction ownership after Mobile V8", () => {
+  const css = read("atlas-ui-mobile-v8.css");
+  const start = css.indexOf("MOBILE-ERA1 — Late Era ownership repair");
+  const end = css.indexOf("@media (prefers-reduced-motion: reduce)", start);
+  assert.ok(start >= 0 && end > start);
+  const ownership = css.slice(start, end);
+
+  assert.match(ownership, /\.person-era-search:focus,[\s\S]*?outline: 1px solid var\(--atlas-focus-ring\)/);
+  assert.match(ownership, /\.person-era-nav-step:hover:not\(:disabled\) \{[^}]*var\(--atlas-material-wash-hover\)/);
+  assert.match(ownership, /\.person-era-nav-step:focus-visible \{[^}]*var\(--atlas-focus-ring\)/);
+  assert.match(ownership, /\.person-era-jump:hover \{[^}]*var\(--atlas-material-wash-hover\)[^}]*!important/);
+  assert.match(ownership, /\.person-era-jump\.is-current \{[^}]*var\(--atlas-material-wash-selected\)[^}]*var\(--atlas-material-rail-soft\)/);
+  assert.match(ownership, /\.person-era-jump\.person-era-unknown::before \{[^}]*var\(--atlas-material-hairline-strong\)/);
+  assert.match(ownership, /\.person-domain-filter-row \{[^}]*var\(--atlas-material-hairline-soft\)/);
+  assert.match(ownership, /\.person-domain-filter\.is-active \{[^}]*var\(--atlas-material-wash-selected\)[^}]*var\(--person-filter-domain-color\)/);
+  assert.match(ownership, /@media \(max-width: 760px\) and \(hover: hover\) \{[\s\S]*?\.person-domain-filter:hover:not\(\.is-active\) \{[^}]*var\(--atlas-material-wash-hover\)/);
+
+  assert.doesNotMatch(ownership, /rgba\(255,255,255,\.(?:018|02)\)|rgba\(192,174,136,\.35\)|#343b40|#3a4247|#2d3439/);
+  assert.doesNotMatch(ownership, /\n\s*(?:width|height|min-width|min-height|padding|font-size|line-height|border-radius)\s*:/);
 });
