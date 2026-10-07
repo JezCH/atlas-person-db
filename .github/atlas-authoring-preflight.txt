@@ -1,1 +1,1 @@
-preflight authoring/requests/zog-i-albanian-republic-1925-1928.json
+apply authoring/requests/registration-20261007-agitators-sss-friedrich-engels.json
