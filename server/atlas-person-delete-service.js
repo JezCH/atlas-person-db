@@ -4,6 +4,7 @@ const crypto = require("node:crypto");
 const { lockPersonDuplicateFrontier } = require("./atlas-person-duplicate-frontier-lock.js");
 const { deletePersonExternalReferences } = require("./atlas-person-external-reference-lifecycle.js");
 const { deletePersonPortrait } = require("./atlas-person-portrait-lifecycle.js");
+const { compileRuntimeProjectionInTransaction } = require("./atlas-runtime-compile-service.js");
 
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -88,7 +89,10 @@ async function verifyNoLiveReferences(client, personId, { requirementLedgerPrese
 function createPersonDeleteService({
   client,
   frontierLock = lockPersonDuplicateFrontier,
-  dependencyGuard = null
+  dependencyGuard = null,
+  runtimeCompiler = compileRuntimeProjectionInTransaction,
+  runtimeSha = null,
+  authoringSha = null
 } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
   if (typeof frontierLock !== "function") throw new Error("frontierLock must be a function");
@@ -126,6 +130,12 @@ function createPersonDeleteService({
         `select id from atlas_v2.person_people_affiliations where person_id=$1 order by id for update`, [personId]);
       const participationIds = await collectIds(client,
         `select id from atlas_v2.person_event_participations where person_id=$1 order by id for update`, [personId]);
+      const runtimeActivityCount = runtimeProjectionPresent
+        ? Number((await client.query(
+            `select count(*)::int as runtime_activity_count from atlas_v2.runtime_person_politics_v1 where person_id=$1`,
+            [personId]
+          )).rows?.[0]?.runtime_activity_count || 0)
+        : 0;
 
       const deleted = {
         relationship_sources: await deleteIds(client, "atlas_v2.person_politics_sources", "person_politics_id", relationshipIds),
@@ -142,10 +152,25 @@ function createPersonDeleteService({
         deleted.authoring_relationship_refs_cleared = 0;
       }
 
-      deleted.runtime_activities = runtimeProjectionPresent
-        ? (await client.query(`delete from atlas_v2.runtime_person_politics_v1 where person_id=$1 returning id`, [personId])).rowCount
-        : 0;
       deleted.activities = (await client.query(`delete from atlas_v2.person_politics_v2 where person_id=$1 returning id`, [personId])).rowCount;
+      deleted.runtime_activities = runtimeActivityCount;
+      if (runtimeProjectionPresent) {
+        if (typeof runtimeCompiler !== "function") throw new Error("PERSON_DELETE_RUNTIME_COMPILER_REQUIRED");
+        const runtimeRefresh = await runtimeCompiler(client, {
+          runtimeSha,
+          authoringSha,
+          recordActivation:true
+        });
+        deleted.runtime_projection_refresh = Object.freeze({
+          compile_key:runtimeRefresh.compile_key,
+          input_row_count:runtimeRefresh.input_row_count,
+          output_row_count:runtimeRefresh.output_row_count,
+          excluded_row_count:runtimeRefresh.excluded_row_count,
+          activation_id:runtimeRefresh.activation?.id || null
+        });
+      } else {
+        deleted.runtime_projection_refresh = null;
+      }
       deleted.people_affiliations = (await client.query(`delete from atlas_v2.person_people_affiliations where person_id=$1 returning id`, [personId])).rowCount;
       deleted.event_participations = (await client.query(`delete from atlas_v2.person_event_participations where person_id=$1 returning id`, [personId])).rowCount;
       deleted.person_sources = (await client.query(`delete from atlas_v2.person_sources where person_id=$1 returning source_id`, [personId])).rowCount;
