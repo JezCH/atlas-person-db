@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "human-authoring:hungary-restored-kingdom-horthy-1920-1944:2026-10-08:v1",
+  "person": {
+    "canonical_name_en": "Miklós Horthy",
+    "display_name_ko": "호르티 미클로시",
+    "canonical_key": "Miklós Horthy",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-08",
+    "life_status_basis": "documented_death"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hungary (1920–1946)",
+    "display_name_ko": "헝가리 왕국 (1920–1946)",
+    "canonical_key": "Kingdom of Hungary (1920-1946)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 1920,
+    "start_month": 3,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1944,
+    "end_month": 10,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Hungarian National Assembly elected Miklós Horthy Regent on 1 March 1920 after the 1918-1919 republican and Soviet-republican rupture. ATLAS models the restored Kingdom of Hungary of the interwar period as a separate polity identity from the medieval/Habsburg Kingdom of Hungary, while preserving the monarchy-without-a-king state form and Horthy's exact regency term through 16 October 1944."
+  },
+  "sources": [
+    {
+      "source_id": "82557ae4-56fd-4cd2-9235-efa3a12757b5",
+      "locator": "https://mnl.gov.hu/mnl/ol/hirek/horthy_miklos_kormanyzova_valasztasa"
+    },
+    {
+      "source_id": "e273167f-3aef-4177-a8a1-0a9834fa6f41",
+      "locator": "https://www.museum.hu/hir/11196/Tenyleg_lemondott_Horthy_1944-ben"
+    },
+    {
+      "title": "Az 1918-as forradalmi átalakulás napjai — Magyar Nemzeti Levéltár",
+      "canonical_url": "https://mnl.gov.hu/mnl/ol/hirek/az_1918_as_forradalmi_atalakulas_napjai?theme=mnl",
+      "citation_text": "The Hungarian National Archives records the 16 November 1918 proclamation that Hungary was an independent people's republic, marking the abolition of the preceding monarchical state form before the monarchy was restored in 1920.",
+      "source_type": "government_reference",
+      "locator": "https://mnl.gov.hu/mnl/ol/hirek/az_1918_as_forradalmi_atalakulas_napjai?theme=mnl"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-31",
+      "document_title": "호르티 미클로시",
+      "url": "https://namu.wiki/w/%ED%98%B8%EB%A5%B4%ED%8B%B0%20%EB%AF%B8%ED%81%B4%EB%A1%9C%EC%8B%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "This bounded historical-identity split creates the restored 1920-1946 Kingdom of Hungary polity without asserting a new capital/place-function or territory geometry. Spatial registration is explicitly held for later reviewed spatial work; no silent omission is permitted."
+  }
+}
