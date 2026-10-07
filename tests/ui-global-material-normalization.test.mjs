@@ -300,3 +300,19 @@ test("DASHBOARD-M2 keeps hover, pressed, and selected luminance semantically dis
   assert.match(interaction, /inset 0 -1px 0 var\(--atlas-material-rail-soft\)/);
   assert.doesNotMatch(interaction, /rgba\(192,174,136,\.(?:026|040|050)\)/);
 });
+
+
+test("DASHBOARD-M3 restores shared neutral button material for Dashboard operations", () => {
+  const dashboard = read("atlas-dashboard-monumental-v11.css");
+  const start = dashboard.indexOf("DASHBOARD-M3 — Operational control material ownership");
+  const end = dashboard.indexOf("@media (prefers-reduced-motion: reduce)", start);
+  assert.ok(start >= 0 && end > start);
+  const controls = dashboard.slice(start, end);
+
+  assert.match(controls, /#atlasDashboardRefresh,[\s\S]*?\.dashboard-tool-actions \.btn \{[^}]*border-color: var\(--atlas-material-hairline\)[^}]*--atlas-control-fill: #191e22[^}]*background: var\(--atlas-control-fill\)[^}]*color: #d9d6cf[^}]*box-shadow: none/);
+  assert.match(controls, /#atlasDashboardRefresh:hover,[\s\S]*?\.dashboard-tool-actions \.btn:hover \{[^}]*var\(--atlas-material-wash-hover\)[^}]*var\(--atlas-control-fill\)/);
+  assert.match(controls, /#atlasDashboardRefresh:active:not\(:disabled\) \{[^}]*var\(--atlas-material-wash-active\)[^}]*var\(--atlas-control-fill\)/);
+
+  assert.doesNotMatch(controls, /#3a4247|#394147|#15191c|#171c20|#6f6652|#1d2225/);
+  assert.doesNotMatch(controls, /\n\s*(?:width|height|min-height|padding|font-size|line-height|border-radius)\s*:/);
+});
