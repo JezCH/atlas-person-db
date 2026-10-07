@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:lordship-of-milan-after-duchy-continuity-merge:2026-10-07:v1",
+  "release_order": 2088,
+  "evidence": {
+    "decision": "Lordship of Milan is the formal signorial state-form phase of one continuous Milanese / Visconti state identity later legally elevated into the Duchy of Milan. #2087 relinked Gian Galeazzo Visconti's 1385-1395 Lord Activity to the Duchy survivor while preserving his separate 1395-1402 Duke Activity, and preserved Lordship of Milan / 밀라노 영주국 as a reviewed temporal state_form designation for 1330-03-15→1395-05-10.",
+    "stage2_request_id": "milan_lordship_duchy_continuity_merge_20261007_v1",
+    "stage2_applied_at": "2026-10-07T09:44:08.094598+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:7bbfd0dd5a7db04e7cd416e7a1e6e98c97cf25750f4a9aabfce8eeb5959289e3",
+    "runtime_compiled_at": "2026-10-07T09:44:40.256948+00:00",
+    "survivor_polity_id": "7a42d8c3-ab50-45b4-a654-bca96cf5da70",
+    "production_readback": "2026-10-07 exhaustive post-compile FK audit: legacy Lordship of Milan has zero references in person_politics_context_polities, person_politics_v2, runtime_person_politics_v1, polity_descriptions, polity_designations, polity_governance_periods, polity_identity_relations, polity_relations, polity_place_functions, polity_sources, runtime_compile_exclusions, spatial_registration_dispositions, and territory_records; exactly two owned preferred polity_names remain."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:lordship-of-milan-after-duchy-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "858edb30-2100-4bc1-a366-ca9df138a9be",
+        "canonical_key": "Lordship of Milan",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "7a42d8c3-ab50-45b4-a654-bca96cf5da70",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Lordship of Milan",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "밀라노 영주국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
