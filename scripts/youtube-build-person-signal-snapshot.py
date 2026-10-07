@@ -14,7 +14,7 @@ try:
 except Exception:
     pycountry = None
 
-BATCH_LABEL_RE = re.compile(r"(?:youtube-)?batch(\\d{3})", re.I)
+BATCH_LABEL_RE = re.compile(r"(?:youtube-)?batch(\d{3})", re.I)
 SEP_RE = re.compile(r"\s*(?:\||:|\s[-–—]\s)\s*")
 PAREN_TRAIL_RE = re.compile(r"\s*[\[(][^\])]{0,80}[\])]?\s*$")
 SPACE_RE = re.compile(r"\s+")
@@ -177,9 +177,14 @@ def load_manifest_paths(root):
         if label in found:
             raise RuntimeError(f"duplicate manifest for {label}: {found[label]} and {path}")
         found[label] = path
-    expected = {"batch008","batch009","batch010","batch011"}
-    if set(found) != expected:
-        raise RuntimeError(f"expected {sorted(expected)}, found {sorted(found)}")
+    if not found:
+        raise RuntimeError("no YouTube batch manifests found")
+    numbers = sorted(int(label.removeprefix("batch")) for label in found)
+    if numbers[0] != 8:
+        raise RuntimeError(f"reconstructable corpus must start at batch008, found batch{numbers[0]:03d}")
+    expected = list(range(8, numbers[-1] + 1))
+    if numbers != expected:
+        raise RuntimeError(f"batch sequence is not contiguous: found={numbers}, expected={expected}")
     return found
 
 
