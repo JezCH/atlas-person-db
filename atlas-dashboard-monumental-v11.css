@@ -884,6 +884,37 @@
 }
 
 
+/* DASHBOARD-M3 — Operational control material ownership.
+ * Dashboard-specific late selectors must not override the shared neutral .btn
+ * material contract. Geometry and action semantics remain owned elsewhere.
+ */
+#atlasDashboardRefresh,
+.dashboard-tool-actions .btn {
+  border-color: var(--atlas-material-hairline);
+  --atlas-control-fill: #191e22;
+  background: var(--atlas-control-fill);
+  color: #d9d6cf;
+  box-shadow: none;
+}
+
+#atlasDashboardRefresh:hover,
+.dashboard-tool-actions .btn:hover {
+  border-color: #50575d;
+  background:
+    linear-gradient(var(--atlas-material-wash-hover),var(--atlas-material-wash-hover)),
+    var(--atlas-control-fill);
+  color: #d9d6cf;
+  box-shadow: none;
+  transform: none;
+}
+
+#atlasDashboardRefresh:active:not(:disabled) {
+  background:
+    linear-gradient(var(--atlas-material-wash-active),var(--atlas-material-wash-active)),
+    var(--atlas-control-fill);
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   .dashboard-loading-grid span {
     animation: none;
