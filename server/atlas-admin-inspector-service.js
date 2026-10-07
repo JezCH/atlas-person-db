@@ -4,6 +4,7 @@ const SUPPORTED_KINDS = Object.freeze([
   "person",
   "activity",
   "polity",
+  "polity_retirement",
   "role",
   "period_basis",
   "relation_type",
@@ -334,10 +335,52 @@ where s.id = $1::uuid
 limit 1
 `;
 
+const POLITY_RETIREMENT_INSPECT_SQL = `
+select
+  r.retired_polity_id,
+  r.survivor_polity_id,
+  r.canonical_key,
+  r.polity_type,
+  r.historicity,
+  r.review_reason,
+  r.source_request_id,
+  r.source_case_id,
+  r.retired_at,
+  coalesce((
+    select jsonb_agg(jsonb_build_object(
+      'locale', rn.locale,
+      'name', rn.name,
+      'is_preferred', rn.is_preferred
+    ) order by rn.is_preferred desc, rn.locale, rn.name)
+    from atlas_v2.polity_identity_retirement_names rn
+    where rn.retired_polity_id = r.retired_polity_id
+  ), '[]'::jsonb) as retired_names,
+  case when p.id is null then null else jsonb_build_object(
+    'id', p.id,
+    'canonical_key', p.canonical_key,
+    'polity_type', p.polity_type,
+    'historicity', p.historicity,
+    'names', coalesce((
+      select jsonb_agg(jsonb_build_object(
+        'locale', pn.locale,
+        'name', pn.name,
+        'is_preferred', pn.is_preferred
+      ) order by pn.is_preferred desc, pn.locale, pn.name)
+      from atlas_v2.polity_names pn
+      where pn.polity_id = p.id
+    ), '[]'::jsonb)
+  ) end as survivor
+from atlas_v2.polity_identity_retirements r
+left join atlas_v2.polities p on p.id = r.survivor_polity_id
+where r.retired_polity_id = $1::uuid
+limit 1
+`;
+
 const SQL_BY_KIND = Object.freeze({
   person: PERSON_INSPECT_SQL,
   activity: ACTIVITY_INSPECT_SQL,
   polity: POLITY_INSPECT_SQL,
+  polity_retirement: POLITY_RETIREMENT_INSPECT_SQL,
   role: ROLE_INSPECT_SQL,
   period_basis: PERIOD_BASIS_INSPECT_SQL,
   relation_type: RELATION_TYPE_INSPECT_SQL,
@@ -359,6 +402,7 @@ module.exports = Object.freeze({
   PERSON_INSPECT_SQL,
   ACTIVITY_INSPECT_SQL,
   POLITY_INSPECT_SQL,
+  POLITY_RETIREMENT_INSPECT_SQL,
   ROLE_INSPECT_SQL,
   PERIOD_BASIS_INSPECT_SQL,
   RELATION_TYPE_INSPECT_SQL,
