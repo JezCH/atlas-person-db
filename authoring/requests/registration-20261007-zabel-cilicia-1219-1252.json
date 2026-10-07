@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-zabel-of-cilicia-20261007:armenian-kingdom-of-cilicia:reign:1219-1252:v1",
+  "person": {
+    "canonical_name_en": "Zabel of Cilicia",
+    "display_name_ko": "자벨",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "canonical_name_en": "Armenian Kingdom of Cilicia",
+    "display_name_ko": "킬리키아 아르메니아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Queen Regnant",
+    "role_display_name_ko": "여왕",
+    "period_basis": "reign",
+    "start_year": 1219,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1252,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Zabel succeeded Levon I as queen regnant in 1219 and remained queen until her death in 1252. Her minority regencies and later co-rule with Philip and Hethum do not erase her own regnal continuity. ATLAS therefore records one 1219-1252 reign Activity, while preserving the co-ruling context in notes rather than truncating her reign to 1226."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_numismatic_reference",
+      "title": "Zabel - 1219-1252 & Hethoum - 1226-1269 — Cilician Armenian Numismatic Archive",
+      "canonical_url": "https://cilicia.armnumres.org/collections/show/14",
+      "citation_text": "The Cilician Armenian Numismatic Archive identifies Zabel as queen regnant from 1219, records her 1226 marriage to Hethoum and their co-rule, and states that she reigned until her death in 1252."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "On the Genealogy of Zabel Queen of Cilicia — Fundamental Armenology",
+      "canonical_url": "https://fundamentalarmenology.am/Article/15/574/ON-THE-GENEALOGY-OF-ZABEL-QUEEN-OF-CILICIA.html",
+      "citation_text": "Research published through Fundamental Armenology, Institute of Oriental Studies of the National Academy of Sciences of Armenia, treats Zabel as queen of the Armenian Cilician kingdom and documents her dynastic context."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-07",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_static",
+    "evidence": "The Armenian Kingdom of Cilicia was a distinct medieval Armenian polity based in Cilicia, geographically discontinuous from the earlier Armenian kingdoms on the Armenian Highland. It therefore requires its own canonical polity identity and may use a reviewed static Cilician spatial disposition at registration; no speculative capital/place-function claim is introduced."
+  },
+  "review_context": {
+    "request_batch": "USER-ARMENIA-TRIO-20261007",
+    "selection": "user_selected_immediate_registration"
+  }
+}
