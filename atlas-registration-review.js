@@ -113,9 +113,22 @@
     const snapshot=payload?.snapshot || null;
     const telemetry=activeRoot?.querySelector("#youtubeSignalTelemetry");
     if (telemetry) {
-      telemetry.innerHTML=snapshot
-        ? `<strong>${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>스냅샷 ${escapeHtml(dateTime(snapshot.generated_at))} · ${escapeHtml(snapshot.parser_version || "parser 미상")}</span>`
-        : "<strong>아직 YouTube 신호 스냅샷이 없습니다.</strong>";
+      if (!snapshot) {
+        telemetry.innerHTML="<strong>아직 YouTube 신호 스냅샷이 없습니다.</strong>";
+      } else {
+        const source=snapshot.source_state || {};
+        const coverageMode=String(source.coverage_mode || "");
+        const coverageBatches=Array.isArray(source.coverage_batches) ? source.coverage_batches : [];
+        const legacyCount=Number(source.legacy_baseline_channel_count);
+        const batchLabel=coverageBatches.length
+          ? `${coverageBatches[0]}–${coverageBatches[coverageBatches.length-1]}`
+          : "범위 미상";
+        if (coverageMode === "reconstructable_id_preserved") {
+          telemetry.innerHTML=`<strong>${number(snapshot.channel_count)}개 ID보존 채널 · ${number(snapshot.video_count)}개 영상</strong><span>재구축 범위 ${escapeHtml(batchLabel)} · ${Number.isFinite(legacyCount) ? `이전 레거시 ${number(legacyCount)}채널과 중복 미확정 · 합산하지 않음 · ` : ""}스냅샷 ${escapeHtml(dateTime(snapshot.generated_at))} · ${escapeHtml(snapshot.parser_version || "parser 미상")}</span>`;
+        } else {
+          telemetry.innerHTML=`<strong>${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>레거시 스냅샷 ${escapeHtml(dateTime(snapshot.generated_at))} · ${escapeHtml(snapshot.parser_version || "parser 미상")}</span>`;
+        }
+      }
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
     if (count) count.textContent=`${number(payload?.available_count || 0)}명 · 현재 ${number(signalRows.length)}행 표시`;
@@ -159,7 +172,7 @@
       renderRegistered(persons,queue);
       renderQueue(queue);
       renderSignals(signals);
-      setStatus(`최신 상태 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
+      setStatus(`DB 최신 스냅샷 조회 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
     } catch (error) {
       if (serial !== requestSerial || root !== activeRoot) return;
       console.error("ATLAS registration review refresh failed",error);
@@ -178,7 +191,7 @@
       const signals=await getJson(`${SIGNAL_URL}&min_channels=${encodeURIComponent(minChannels)}&limit=300`);
       if (serial !== requestSerial || root !== activeRoot) return;
       renderSignals(signals);
-      setStatus(`최신 상태 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
+      setStatus(`DB 최신 스냅샷 조회 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
     } catch (error) {
       if (serial !== requestSerial || root !== activeRoot) return;
       setStatus(`YouTube 신호 갱신 실패 · ${error?.message || error}`,"error");
@@ -197,7 +210,7 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>서로 다른 채널이 같은 raw 인물명을 단독 주제로 다룬 횟수입니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong> alias 병합 전 raw 문자열 기준입니다.</p></div>
+          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>서로 다른 채널이 같은 raw 인물명을 단독 주제로 다룬 횟수입니다. 화면은 10초마다 DB의 최신 발행 스냅샷을 다시 읽습니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong> alias 병합 전 raw 문자열 기준이며, Channel ID가 없는 레거시 집계는 새 ID보존 corpus와 임의 합산하지 않습니다.</p></div>
         </div>
         <div class="registration-review-signal-toolbar">
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
