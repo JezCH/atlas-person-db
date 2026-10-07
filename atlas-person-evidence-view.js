@@ -8,6 +8,32 @@
 
   function text(value){ return value==null?"":String(value).trim(); }
 
+  // Presentation-only labels. Evidence records and Admin retain the canonical enum.
+  const EVIDENCE_LABELS=Object.freeze({
+    granularity:Object.freeze({year:"연 단위",month:"월 단위",day:"일 단위"}),
+    certainty:Object.freeze({exact:"정확",approximate:"근사",uncertain:"불확실"}),
+    calendar:Object.freeze({gregorian:"그레고리력",julian:"율리우스력",unspecified_historical:"역법 미특정"}),
+    chronology_status:Object.freeze({
+      reviewed:"연대 검토됨",
+      exact_as_recorded:"기록된 연대 그대로",
+      reviewed_traditional_chronology_uncertain:"전통 연대 검토 · 불확실",
+      TRADITIONAL_RETROSPECTIVE_UNCERTAIN:"전통적 후대 연대 · 불확실"
+    }),
+    confidence:Object.freeze({
+      well_established:"근거 확립",
+      legacy_asserted:"기존 기록에 따른 기재",
+      likely:"가능성 높음",
+      disputed:"이견 있음",
+      reviewed:"검토됨",
+      direct_asserted:"직접 명시된 주장"
+    })
+  });
+
+  function humanEvidenceValue(kind,value){
+    const raw=text(value);
+    return raw ? (EVIDENCE_LABELS[kind]?.[raw] || raw) : "";
+  }
+
   function boundaryMeta(boundary){
     if(!boundary) return Object.freeze([]);
     const rows=[
@@ -49,12 +75,16 @@
       calendar:"달력"
     });
 
-    function rawValue(value){
-      return value?escapeHtml(value):'<span class="person-evidence-missing">미기록</span>';
+    function rawValue(value,kind){
+      const raw=text(value);
+      if(!raw)return '<span class="person-evidence-missing">미기록</span>';
+      const human=humanEvidenceValue(kind,raw);
+      // Unknown or case-specific status codes are not guessed or flattened.
+      return human===raw?escapeHtml(raw):`<span title="${escapeHtml(raw)}">${escapeHtml(human)}</span>`;
     }
 
     function boundaryHtml(label,row){
-      const meta=row.meta.map((item)=>`<span><small>${labelForMeta[item.key]||escapeHtml(item.key)}</small><b>${escapeHtml(item.value)}</b></span>`).join("");
+      const meta=row.meta.map((item)=>`<span><small>${labelForMeta[item.key]||escapeHtml(item.key)}</small><b>${rawValue(item.value,item.key)}</b></span>`).join("");
       return `<div class="person-evidence-boundary"><small>${escapeHtml(label)}</small><strong>${escapeHtml(boundaryLabel(row.boundary))}</strong>${meta?`<div class="person-evidence-boundary-meta">${meta}</div>`:""}</div>`;
     }
 
@@ -65,13 +95,13 @@
       return `<details class="person-evidence-inspector" data-activity-evidence-id="${activityId}">
         <summary>
           <span><b>근거 보기</b><small>이 Activity의 연대·기간·출처 근거</small></span>
-          <span class="person-evidence-summary-badges"><i>${escapeHtml(sourceLabel)}</i>${evidence.chronology_status?`<i>${escapeHtml(evidence.chronology_status)}</i>`:""}${evidence.confidence?`<i>${escapeHtml(evidence.confidence)}</i>`:""}</span>
+          <span class="person-evidence-summary-badges"><i>${escapeHtml(sourceLabel)}</i>${evidence.chronology_status?`<i>${rawValue(evidence.chronology_status,"chronology_status")}</i>`:""}${evidence.confidence?`<i>${rawValue(evidence.confidence,"confidence")}</i>`:""}</span>
         </summary>
         <div class="person-evidence-body">
           <div class="person-evidence-facts">
             <div><small>기간 기준</small><strong>${rawValue(evidence.period_basis)}</strong></div>
-            <div><small>연대 상태</small><strong>${rawValue(evidence.chronology_status)}</strong></div>
-            <div><small>신뢰도</small><strong>${rawValue(evidence.confidence)}</strong></div>
+            <div><small>연대 상태</small><strong>${rawValue(evidence.chronology_status,"chronology_status")}</strong></div>
+            <div><small>신뢰도</small><strong>${rawValue(evidence.confidence,"confidence")}</strong></div>
           </div>
           <div class="person-evidence-boundaries">
             ${boundaryHtml("시작 경계",evidence.start)}
@@ -88,5 +118,5 @@
     return Object.freeze({activityEvidenceHtml});
   }
 
-  return Object.freeze({boundaryMeta,evidenceForActivity,createRenderer});
+  return Object.freeze({boundaryMeta,evidenceForActivity,humanEvidenceValue,createRenderer});
 });
