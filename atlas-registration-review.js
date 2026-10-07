@@ -89,12 +89,12 @@
       return;
     }
     body.innerHTML=rows.map((row)=>`<tr>
-      <td class="registration-review-name">${escapeHtml(row.name || "—")}</td>
-      <td>${escapeHtml(row.representative_domain || "미분류")}</td>
-      <td>${escapeHtml(row.legacy_priority || row.priority || "—")}</td>
-      <td>${escapeHtml(row.review_state || "—")}</td>
-      <td>${escapeHtml(row.origin || "—")}</td>
-      <td><time>${escapeHtml(row.updated_at ? dateTime(row.updated_at) : "—")}</time></td>
+      <td class="registration-review-name" data-label="이름">${escapeHtml(row.name || "—")}</td>
+      <td data-label="대표 분야">${escapeHtml(row.representative_domain || "미분류")}</td>
+      <td data-label="우선순위">${escapeHtml(row.legacy_priority || row.priority || "—")}</td>
+      <td data-label="검토 상태">${escapeHtml(row.review_state || "—")}</td>
+      <td data-label="출처">${escapeHtml(row.origin || "—")}</td>
+      <td data-label="갱신"><time>${escapeHtml(row.updated_at ? dateTime(row.updated_at) : "—")}</time></td>
     </tr>`).join("");
   }
 
