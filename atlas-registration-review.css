@@ -145,3 +145,12 @@
   .registration-review-stats{grid-template-columns:1fr}
   .registration-review-stats .registration-review-stat:nth-child(5){grid-column:auto}
 }
+
+
+/* REVIEW-M6 — Remove duplicated local page heading while preserving live controls. */
+.registration-review-overview-head{align-items:center}
+.registration-review-overview-head .registration-review-head-actions{margin-left:auto}
+@media(max-width:600px){
+  .registration-review-overview-head{align-items:flex-start;flex-direction:column}
+  .registration-review-overview-head .registration-review-head-actions{margin-left:0}
+}
