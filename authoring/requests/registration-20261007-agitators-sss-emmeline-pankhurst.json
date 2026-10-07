@@ -63,6 +63,7 @@
   "review_context": {
     "request_batch": "USER-AGITATORS-SSS12-20261007",
     "selection": "user_selected_immediate_registration",
-    "tier": "SSS"
+    "tier": "SSS",
+    "transport_retry": "runtime-ancestry-refresh-20261007-v2"
   }
 }
