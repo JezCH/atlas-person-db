@@ -1,0 +1,66 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-mesrop-mashtots-20261007:kingdom-of-armenia:intellectual-activity:405:v1",
+  "person": {
+    "canonical_name_en": "Mesrop Mashtots",
+    "display_name_ko": "메스로프 마슈토츠",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "science"
+  },
+  "polity": {
+    "existing_id": "e39222dc-bebe-422f-8b75-97db9709cee7",
+    "canonical_name_en": "Kingdom of Armenia",
+    "display_name_ko": "아르메니아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Scholar and creator of the Armenian alphabet",
+    "role_display_name_ko": "학자·아르메니아 문자 창제자",
+    "period_basis": "intellectual_activity",
+    "start_year": 405,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 405,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mesrop Mashtots is represented at the securely attested 405 CE creation of the Armenian alphabet. This is a person-specific historical milestone and not a fabricated lifetime or career interval. The existing Kingdom of Armenia identity is reused for the early-fifth-century Armenian royal context."
+  },
+  "sources": [
+    {
+      "source_type": "intergovernmental_cultural_heritage_reference",
+      "title": "Armenian letter art and its cultural expressions — UNESCO Intangible Cultural Heritage",
+      "canonical_url": "https://ich.unesco.org/en/RL/armenian-letter-art-and-its-cultural-expressions-01513",
+      "citation_text": "UNESCO states that Armenian letter art is based on the Armenian alphabet created in 405 AD by Mesrop Mashtots."
+    },
+    {
+      "source_type": "national_library_authority_reference",
+      "title": "Մեսրոպ Մաշտոց, 362-440 — National Library of Armenia authority record",
+      "canonical_url": "https://haygirk.nla.am/cgi-bin/koha/opac-authoritiesdetail.pl?authid=34990",
+      "citation_text": "The National Library of Armenia authority record identifies Mesrop Mashtots as the creator of Armenian writing and a founder of Armenian literary and school traditions."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-07",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-ARMENIA-TRIO-20261007",
+    "selection": "user_selected_immediate_registration"
+  }
+}
