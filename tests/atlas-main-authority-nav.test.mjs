@@ -35,7 +35,7 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /atlas-dashboard-model\.js/);
   assert.match(nav, /atlas-dashboard\.js/);
   assert.match(nav, /atlas-dashboard\.css/);
-  assert.match(nav, /atlas-dashboard-monumental-v11\.css\?v=20261007-dashboard-m2-luminance-v1/);
+  assert.match(nav, /atlas-dashboard-monumental-v11\.css\?v=20261007-dashboard-m3-operational-controls-v1/);
   assert.match(nav, /function activateDashboard\(\)/);
   assert.match(nav, /function activateRegistrationReview\(\)/);
   assert.doesNotMatch(html, /atlas-dashboard-model\.js/);
