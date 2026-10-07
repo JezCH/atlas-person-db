@@ -245,3 +245,29 @@ test("CONTROLS-M2 layers shared hover / active luminance above neutral graphite 
   assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-controls-m2-luminance-v1/);
   assert.match(html, /atlas-ui-motion-material-v9\.css\?v=20261007-controls-m2-luminance-v1/);
 });
+
+
+test("DASHBOARD-M1 restores the shared focus language after late Monumental V11 CSS", () => {
+  const dashboard = read("atlas-dashboard-monumental-v11.css");
+  const start = dashboard.indexOf("DASHBOARD-M1 — Late focus ownership");
+  assert.ok(start >= 0);
+  const end = dashboard.indexOf("/* Shared dashboard panels.", start);
+  const focus = dashboard.slice(start, end);
+
+  for (const selector of [
+    ".dashboard-kpi-action:focus-visible",
+    ".dashboard-issue-grid button:focus-visible",
+    ".dashboard-issue-grid .dashboard-attention-link:focus-visible",
+    ".dashboard-breakdown-action:focus-visible",
+    ".dashboard-completeness td button:focus-visible",
+    ".dashboard-polity-toolbar button:focus-visible",
+    ".dashboard-polity-row:focus-visible",
+    ".dashboard-tool-actions .btn:focus-visible"
+  ]) {
+    assert.ok(focus.includes(selector), `missing Dashboard focus selector: ${selector}`);
+  }
+
+  assert.match(focus, /outline: 1px solid var\(--atlas-focus-ring\)/);
+  assert.match(focus, /outline-offset: 2px/);
+  assert.doesNotMatch(focus, /rgba\(/);
+});
