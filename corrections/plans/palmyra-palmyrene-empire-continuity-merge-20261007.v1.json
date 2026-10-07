@@ -1,0 +1,215 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "palmyra_palmyrene_empire_continuity_merge_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_PALMYRA_PALMYRENE_EMPIRE_CONTINUITY",
+  "release_order": 2098,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Oxford Classical Dictionary Odaenathus/Zenobia; Andrade, Zenobia: Shooting Star of Palmyra; Oxford Handbook of Palmyra; Metropolitan Museum of Art; current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "palmyra_polity": "7db938c5-9385-4c17-86b8-f289514cc221",
+    "palmyrene_empire_survivor": "0b3a09b0-de70-471a-8d41-c24fa2ef0ca3",
+    "historical_decision": "The Odaenathid Palmyrene realm and Zenobia's 272 imperial phase are successive sovereignty/state-form phases of one continuous Palmyrene political regime. Oxford describes Odaenathus as establishing Palmyra with himself as king while carefully acknowledging Roman suzerainty, and describes Zenobia after his death as securing power for herself in the name of Vaballathus and governing Odaenathus's territories. In 270-271 she expanded while still recognizing Aurelian. Only in early 272, after Aurelian moved against her, did Zenobia and Vaballathus adopt Augusta/Augustus, marking the explicit imperial break. This is a constitutional/sovereignty transition within the same dynasty, capital, territorial regime and governing apparatus, not extinction and replacement by an unrelated state.",
+    "activity_rule": "Odaenathus c.261-c.267 sovereign Activity, Zenobia's 267-271 regency, and Zenobia's distinct 272 Augusta Activity remain separate because ruler/office and constitutional claims genuinely differ. The first two Activities are relinked to the Palmyrene Empire survivor; the 272 Augusta Activity already uses that survivor and is unchanged.",
+    "designation_rule": "Preserve the pre-imperial royal phase as temporal state_form 'Palmyrene Kingdom / 팔미라 왕국' from c.261 through 271. This is a modern normalized state-form label supported by Odaenathus's attested kingship and the continued Odaenathid royal regime under Vaballathus/Zenobia; it does not retroject Zenobia's explicit 272 independent imperial claim backward."
+  },
+  "operations": [
+    {
+      "case_id": "palmyra-relink-odaenathus-king-to-empire-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "ca8da424-9db7-4f99-9f6e-ab7a82bb5297",
+      "baseline_before": {
+        "person_id": "828b9672-8a2a-4436-b114-87afc8e52a85",
+        "polity_id": "7db938c5-9385-4c17-86b8-f289514cc221",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 261,
+        "activity_end": 267,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "after": {
+        "activity_id": "ca8da424-9db7-4f99-9f6e-ab7a82bb5297",
+        "person_id": "828b9672-8a2a-4436-b114-87afc8e52a85",
+        "polity_id": "0b3a09b0-de70-471a-8d41-c24fa2ef0ca3",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 261,
+        "activity_start_detail": {
+          "year": 261,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 267,
+        "activity_end_detail": {
+          "year": 267,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Odaenathus was the Palmyrene ruler and dominant Roman-aligned power in the eastern provinces after the crisis of 260. Oxford and PLRE-based evidence identify him as king of Palmyra while also holding Roman eastern authority and continuing to acknowledge Roman suzerainty. ATLAS therefore models his c.261-c.267 royal Activity as the pre-imperial phase of one continuous Palmyrene political identity that later entered Zenobia's explicit 272 imperial phase; it does not model Odaenathus himself as an independent Roman emperor.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "palmyra-relink-zenobia-regency-to-empire-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "a4f9f78a-69db-4fb3-af77-93050e4edb8a",
+      "baseline_before": {
+        "person_id": "1b87f8a3-3258-44e4-ab3e-eec02690d0dc",
+        "polity_id": "7db938c5-9385-4c17-86b8-f289514cc221",
+        "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 267,
+        "activity_end": 271,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "after": {
+        "activity_id": "a4f9f78a-69db-4fb3-af77-93050e4edb8a",
+        "person_id": "1b87f8a3-3258-44e4-ab3e-eec02690d0dc",
+        "polity_id": "0b3a09b0-de70-471a-8d41-c24fa2ef0ca3",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 267,
+        "activity_start_detail": {
+          "year": 267,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "uncertain",
+          "calendar": "gregorian"
+        },
+        "activity_end": 271,
+        "activity_end_detail": {
+          "year": 271,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "After Odaenathus's death in 267, Zenobia secured authority on behalf of Vaballathus and continued the same Odaenathid Palmyrene regime. In 270-271 she expanded into Egypt and Asia Minor while still formally recognizing Aurelian. ATLAS therefore keeps this regency as the pre-imperial phase of the same Palmyrene polity identity and preserves a separate 272 Augusta Activity for the explicit imperial-title break.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "palmyra-source-oxford-third-century-crisis",
+      "exact_before": {
+        "source_absent_id": "72621a69-6b68-4d23-a9b2-6e3232de8a37"
+      },
+      "exact_after": {
+        "source": {
+          "id": "72621a69-6b68-4d23-a9b2-6e3232de8a37",
+          "source_key": "bibliographic:oxford-handbook-palmyra:third-century-crisis",
+          "source_type": "academic_reference",
+          "title": "Palmyra and the Third-Century Crisis — The Oxford Handbook of Palmyra",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://academic.oup.com/edited-volume/55821/chapter-abstract/437562505",
+          "citation_text": "The Oxford Handbook of Palmyra characterizes the Palmyrene realm that emerged in the 260s under Odaenathus as local Roman rule led by a Palmyrene senatorial dynasty and treats the Odaenathid-Zenobian episode as one brief Palmyrene political interlude in the Roman East."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "palmyra-state-form-kingdom-c261-271",
+      "exact_before": {
+        "designation_absent_id": "4f94526e-35e1-4f66-90de-a6603ab9a5db"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "4f94526e-35e1-4f66-90de-a6603ab9a5db",
+          "polity_id": "0b3a09b0-de70-471a-8d41-c24fa2ef0ca3",
+          "designation_type": "state_form",
+          "valid_from_year": 261,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "approximate",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 271,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Palmyrene Kingdom is used as a normalized state-form label for the Odaenathid royal regime before the explicit imperial-title rupture of 272. Odaenathus is attested as king of Palmyra while acknowledging Roman suzerainty; Zenobia then governed Odaenathus's territories for Vaballathus and expanded them while continuing to recognize Aurelian through 270-271. The designation ends with the last full pre-imperial year; Zenobia and Vaballathus adopted Augusta/Augustus in early 272."
+        },
+        "names": [
+          {
+            "id": "4ac50a74-bf76-45f4-a60c-b17dd5eab414",
+            "polity_designation_id": "4f94526e-35e1-4f66-90de-a6603ab9a5db",
+            "locale": "en",
+            "name": "Palmyrene Kingdom",
+            "is_preferred": true
+          },
+          {
+            "id": "d05463bd-e5ca-4e67-8673-2ab1cb8f23a3",
+            "polity_designation_id": "4f94526e-35e1-4f66-90de-a6603ab9a5db",
+            "locale": "ko",
+            "name": "팔미라 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "4f94526e-35e1-4f66-90de-a6603ab9a5db",
+            "source_id": "79768a4b-b804-47cb-8e56-098d2ffa832c",
+            "source_locator_key": "https://connectinglateantiquities.org/text.html?id=plre-1-odaenathus"
+          },
+          {
+            "polity_designation_id": "4f94526e-35e1-4f66-90de-a6603ab9a5db",
+            "source_id": "651b099a-de1e-4081-94db-e7a638b0b4d0",
+            "source_locator_key": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548205292"
+          },
+          {
+            "polity_designation_id": "4f94526e-35e1-4f66-90de-a6603ab9a5db",
+            "source_id": "72621a69-6b68-4d23-a9b2-6e3232de8a37",
+            "source_locator_key": "https://academic.oup.com/edited-volume/55821/chapter-abstract/437562505"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 2,
+    "asserted_source_count": 1,
+    "asserted_polity_designation_count": 1,
+    "palmyra_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
