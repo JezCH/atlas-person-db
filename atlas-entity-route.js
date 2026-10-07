@@ -6,7 +6,7 @@
 })(typeof globalThis!=="undefined"?globalThis:this,()=>{
   "use strict";
 
-  const DOMAIN_ORDER=Object.freeze(["dashboard","persons","spacetime","polities","places","events","sources","geometry"]);
+  const DOMAIN_ORDER=Object.freeze(["dashboard","persons","registration","spacetime","polities","places","events","sources","geometry"]);
   const ENTITY_BY_DOMAIN=Object.freeze({
     persons:"person",
     polities:"polity"

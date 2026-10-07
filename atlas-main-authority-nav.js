@@ -2,7 +2,7 @@
   "use strict";
 
   const routeModel = window.ATLAS_ENTITY_ROUTE;
-  const DOMAIN_ORDER = routeModel?.DOMAIN_ORDER || ["dashboard", "persons", "spacetime", "polities", "places", "events", "sources", "geometry"];
+  const DOMAIN_ORDER = routeModel?.DOMAIN_ORDER || ["dashboard", "persons", "registration", "spacetime", "polities", "places", "events", "sources", "geometry"];
   const DOMAINS = window.ATLAS_UI_AUTHORITY_CATALOG_KO;
 
   function syncNavigationStatusLabels(buttons) {
@@ -39,7 +39,29 @@
     return;
   }
 
+  function ensureRegistrationReviewNavButtons() {
+    const meta = DOMAINS?.registration;
+    const label = meta?.label || "등록검토";
+    const status = meta?.status_label || "사용 가능";
+    const desktopNav = document.querySelector(".nav-list");
+    if (desktopNav && !desktopNav.querySelector('[data-atlas-domain="registration"]')) {
+      const button = document.createElement("button");
+      button.className = "nav-item";
+      button.dataset.atlasDomain = "registration";
+      button.innerHTML = `<span>▥</span>${label}<small>${status}</small>`;
+      desktopNav.querySelector('[data-atlas-domain="persons"]')?.insertAdjacentElement("afterend", button);
+    }
+    const mobileNav = document.querySelector(".mobile-nav");
+    if (mobileNav && !mobileNav.querySelector('[data-atlas-domain="registration"]')) {
+      const button = document.createElement("button");
+      button.dataset.atlasDomain = "registration";
+      button.innerHTML = `▥ <span>${label}</span><small>${status}</small>`;
+      mobileNav.querySelector('[data-atlas-domain="persons"]')?.insertAdjacentElement("afterend", button);
+    }
+  }
+
   ensureSpacetimeNavButtons();
+  ensureRegistrationReviewNavButtons();
 
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
@@ -73,6 +95,7 @@
   let spacetimeModelPromise = null;
   let dashboardAssetsPromise = null;
   let spacetimeAssetsPromise = null;
+  let registrationReviewAssetsPromise = null;
   let polityAssetsPromise = null;
 
   function escapeHtml(value) {
@@ -94,6 +117,7 @@
     const domain = DOMAINS[key];
     if (!domain) return "";
     if (key === "dashboard") return '<div id="atlasDashboardMount" class="atlas-dashboard-mount"></div>';
+    if (key === "registration") return '<div id="atlasRegistrationReviewMount" class="atlas-registration-review-mount"></div>';
     if (key === "spacetime") return '<div id="personSpacetimeMount" class="person-spacetime-mount"></div>';
     if (key === "polities") return '<div class="atlas-polity-composite-shell"><div id="atlasPolityMount" class="atlas-polity-review-mount"></div><div id="atlasPolityReviewMount" class="atlas-polity-review-mount atlas-polity-review-section"></div></div>';
     return `<div class="authority-shell-head card">
@@ -209,6 +233,34 @@
     });
   }
 
+  function ensureRegistrationReviewAssets() {
+    if (window.ATLAS_REGISTRATION_REVIEW) return Promise.resolve(window.ATLAS_REGISTRATION_REVIEW);
+    if (registrationReviewAssetsPromise) return registrationReviewAssetsPromise;
+    appendStylesheetOnce("./atlas-registration-review.css?v=20261007-registration-review-v1");
+    registrationReviewAssetsPromise = loadScriptOnce("./atlas-registration-review.js?v=20261007-registration-review-v1", () => Boolean(window.ATLAS_REGISTRATION_REVIEW))
+      .then(() => window.ATLAS_REGISTRATION_REVIEW)
+      .catch((error) => {
+        registrationReviewAssetsPromise = null;
+        throw error;
+      });
+    return registrationReviewAssetsPromise;
+  }
+
+  function activateRegistrationReview() {
+    const mount = document.getElementById("atlasRegistrationReviewMount");
+    if (!mount) return;
+    if (!mount.firstElementChild) mount.innerHTML = '<section class="card" style="padding:24px"><strong>등록검토 데이터를 불러오는 중입니다.</strong></section>';
+    ensureRegistrationReviewAssets().then((view) => {
+      if (currentDomain === "registration") view?.mount?.(mount);
+    }).catch((error) => {
+      console.error(error);
+      const currentMount = document.getElementById("atlasRegistrationReviewMount");
+      if (currentDomain === "registration" && currentMount) {
+        currentMount.innerHTML = `<section class="card" style="padding:24px"><strong>등록검토 데이터를 불러오지 못했습니다.</strong><p>${escapeHtml(error?.message || error)}</p></section>`;
+      }
+    });
+  }
+
   function ensurePolityAssets() {
     if (window.ATLAS_POLITY_BROWSER_VIEW && window.ATLAS_POLITY_REVIEW_PANEL) return Promise.resolve(Object.freeze({ browser: window.ATLAS_POLITY_BROWSER_VIEW, review: window.ATLAS_POLITY_REVIEW_PANEL }));
     if (polityAssetsPromise) return polityAssetsPromise;
@@ -317,6 +369,7 @@
     shell.hidden = isPersons;
     if (!isPersons && (previousDomain !== next || !shell.firstElementChild)) shell.innerHTML = domainHtml(next);
     if (next === "dashboard") activateDashboard();
+    if (next === "registration") activateRegistrationReview();
     setNavigationActive(next);
     setTopbar(next);
 

@@ -167,6 +167,11 @@ const registrationQueueReadHandler = createLazyHandler(() => {
   return createRegistrationQueueReadHandler({ clientFactory:getPostgresClientFactory() });
 });
 
+const youtubePersonSignalReadHandler = createLazyHandler(() => {
+  const { createYoutubePersonSignalReadHandler } = require("../server/atlas-youtube-person-signal-read-handler.js");
+  return createYoutubePersonSignalReadHandler({ clientFactory:getPostgresClientFactory() });
+});
+
 function selectReadSurface(req) {
   const direct = req?.query?.__atlas_read_surface;
   if (Array.isArray(direct)) return direct.length === 1 ? String(direct[0] || "").trim() : "";
@@ -193,6 +198,7 @@ async function consolidatedReadHandler(req, res) {
   if (surface === "runtime-publication") return runtimePublicationReadHandler(req, res);
   if (surface === "runtime-exclusions") return runtimeExclusionsReadHandler(req, res);
   if (surface === "registration-queue") return registrationQueueReadHandler(req, res);
+  if (surface === "youtube-person-signals") return youtubePersonSignalReadHandler(req, res);
   if (surface === "admin-inspector") return adminInspectorHandler(req, res);
   if (surface === "admin-system-status") return adminSystemStatusHandler(req, res);
   return normalizedReadHandler(req, res);
