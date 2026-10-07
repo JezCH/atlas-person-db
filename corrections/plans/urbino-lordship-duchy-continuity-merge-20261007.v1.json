@@ -5,7 +5,7 @@
   "status": "REVIEWED_URBINO_LORDSHIP_DUCHY_CONTINUITY",
   "release_order": 2092,
   "contract": "stage2/contracts/correction-v2-current.v1.json",
-  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Italian State Archives SIAS Governo del Ducato di Urbino; Archivio di Stato di Firenze Ducato di Urbino inventory; Treccani Oddantonio/Federico da Montefeltro; current ATLAS same-identity state-form rules.",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Italian State Archives SIAS Governo del Ducato di Urbino; Archivio di Stato di Firenze Ducato di Urbino inventory; Treccani Oddantonio/Federico da Montefeltro; current ATLAS same-identity state-form rules. Exact-before correction after Production readback confirmed Federico's current period_basis UUID and Julian day calendars.",
   "execution_rules": {
     "exact_live_before_snapshot_required": true,
     "preserve_all_existing_normalized_source_links_and_locators": true,
@@ -19,7 +19,7 @@
     "lordship_polity": "51c7c947-9728-4209-b107-f9481d6b7ed3",
     "duchy_survivor": "1f771de0-a4f9-440c-94c0-1a9bb8f83ae0",
     "historical_decision": "Current Production incorrectly lets Federico da Montefeltro's personal 1444-1474 Lord title imply a separate Lordship polity after the Duchy already existed. Italian State Archives SIAS dates the Government of the Duchy of Urbino to 1443-1631 and states that the County of Urbino, existing from 1213, was transformed into a duchy when Pope Eugenius IV appointed Oddantonio II da Montefeltro. The Archivio di Stato di Firenze inventory dates the papal bull granting Oddantonio the title Duke of Urbino to 25 April 1443. Treccani likewise records Oddantonio as first Duke in 1443 and Federico as his successor in the signoria in 1444, with Federico personally receiving the ducal title only in 1474. Therefore there is one continuous Urbino state identity: County/signorial governance is the pre-1443 state-form phase; Duchy begins in 1443 and remains the polity during Federico's 1444-1474 personal Lord tenure.",
-    "activity_rule": "Federico da Montefeltro's 1444-07-23→1474-08-21 Lord Activity and 1474-08-21→1482-09-10 Duke Activity remain distinct because his personal legal title genuinely changed in 1474. The 1444-1474 Lord Activity must be relinked to the already-existing Duchy of Urbino survivor; it must not create a separate 1444-1474 Lordship polity phase.",
+    "activity_rule": "Federico da Montefeltro's 1444-07-23→1474-08-21 Lord Activity and 1474-08-21→1482-09-10 Duke Activity remain distinct because his personal legal title genuinely changed in 1474. The 1444-1474 Lord Activity must be relinked to the already-existing Duchy of Urbino survivor; it must not create a separate 1444-1474 Lordship polity phase. Existing Production exact-day calendars are Julian and must remain Julian; this correction does not silently convert the historical dates to Gregorian.",
     "designation_rule": "Do not preserve legacy 'Lordship of Urbino / 우르비노 영주국' as a 1444-1474 polity designation because that would conflate Federico's personal title with the state's legal form. Instead preserve the source-backed pre-ducal 'County of Urbino / 우르비노 백국' as temporal state_form from 1213 through 24 April 1443, ending the day before the papal bull of 25 April 1443 granted Oddantonio the ducal title."
   },
   "operations": [
@@ -31,7 +31,7 @@
         "person_id": "c1488472-15c0-491f-9629-2535e958c629",
         "polity_id": "51c7c947-9728-4209-b107-f9481d6b7ed3",
         "role_id": "61038584-5468-415a-9853-d49379ad44b2",
-        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
         "activity_start": 1444,
         "activity_end": 1474,
         "confidence": "well_established",
@@ -45,7 +45,7 @@
         "polity_id": "1f771de0-a4f9-440c-94c0-1a9bb8f83ae0",
         "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
         "role_id": "61038584-5468-415a-9853-d49379ad44b2",
-        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
         "activity_start": 1444,
         "activity_start_detail": {
           "year": 1444,
@@ -53,7 +53,7 @@
           "day": 23,
           "granularity": "day",
           "certainty": "exact",
-          "calendar": "gregorian"
+          "calendar": "julian"
         },
         "activity_end": 1474,
         "activity_end_detail": {
@@ -62,7 +62,7 @@
           "day": 21,
           "granularity": "day",
           "certainty": "exact",
-          "calendar": "gregorian"
+          "calendar": "julian"
         },
         "confidence": "well_established",
         "chronology_status": "reviewed",
@@ -134,7 +134,7 @@
           "valid_to_day": 24,
           "valid_to_granularity": "day",
           "valid_to_certainty": "exact",
-          "valid_to_calendar": "gregorian",
+          "valid_to_calendar": "julian",
           "confidence": "reviewed",
           "notes": "County of Urbino is preserved as the source-backed pre-ducal state-form phase of the continuous Urbino polity. Italian State Archives SIAS states that the County existed from 1213 and was transformed into the Duchy in 1443. The Archivio di Stato di Firenze dates Eugenius IV's bull granting Oddantonio the title Duke of Urbino to 25 April 1443, so the County designation ends on 24 April 1443. Legacy 'Lordship of Urbino' is not preserved as a 1444-1474 state-form designation because Federico's Lord title was personal and the Duchy already existed."
         },
