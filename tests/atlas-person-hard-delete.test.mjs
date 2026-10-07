@@ -302,6 +302,9 @@ test('browser uses one confirmation and UUID-only delete while retaining DB veri
   assert.match(adapter, /person-hard-delete-v4/);
   assert.match(index, /atlas-server-write-adapter\.js\?v=20260821-person-profile-v1/);
   assert.match(handler, /operation\s*===\s*"delete_person"/);
+  assert.match(handler, /VERCEL_GIT_COMMIT_SHA/);
+  assert.match(handler, /runtimeSha:\s*mutationRuntimeSha/);
+  assert.match(handler, /authoringSha:\s*mutationRuntimeSha/);
   assert.match(ui, /window\.confirm/);
   assert.doesNotMatch(ui, /window\.prompt/);
   assert.match(ui, /deletePerson\(personId\)/);
