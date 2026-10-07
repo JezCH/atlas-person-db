@@ -3,7 +3,8 @@
 **As of:** 2026-10-07  
 **Authority:** current `main` + current Production + latest durable checkpoint  
 **Workstream state baseline:** verified against current repository state on 2026-10-05  
-**Latest Polity data-mutation checkpoint:** #2001 merged the County of Apulia continuity correction (`8158661cb8f67c7b6fe9808440956a65cc07dc9f`); #2002 retired legacy `County of Apulia` to canonical `Duchy of Apulia and Calabria` (`472fceca10ef9e9321328b7c038edc606818e353`); fresh Production read-back confirms the 1057–1059 `County of Apulia` temporal `state_form`, Robert Guiscard's Count/Duke continuity, and the retirement ledger entry.\n**Repository/Production state:** current executable cleanup is deployed; closed one-shot NamuWiki, Person Domain v2 cutover and Place authority backfill mutation surfaces are retired, and live Person Domain verification is independent from the historical cutover snapshot.  
+**Latest Polity data-mutation checkpoint:** #2001 merged the County of Apulia continuity correction (`8158661cb8f67c7b6fe9808440956a65cc07dc9f`); #2002 retired legacy `County of Apulia` to canonical `Duchy of Apulia and Calabria` (`472fceca10ef9e9321328b7c038edc606818e353`); fresh Production read-back confirms the 1057–1059 `County of Apulia` temporal `state_form`, Robert Guiscard's Count/Duke continuity, and the retirement ledger entry.
+**Repository/Production state:** current executable cleanup is deployed; closed one-shot NamuWiki, Person Domain v2 cutover and Place authority backfill mutation surfaces are retired, and live Person Domain verification is independent from the historical cutover snapshot.  
 **P14:** `PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`
 
 This file is the compact current-state board. Historical issue comments, merged PRs, old queue bodies and old audit documents are evidence, not execution frontiers. User-selected candidate/registration pools are not backlog debt.
