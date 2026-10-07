@@ -14,7 +14,7 @@ try:
 except Exception:
     pycountry = None
 
-BATCH_LABEL_RE = re.compile(r"(?:youtube-)?batch(00[8-9]|010|011)", re.I)
+BATCH_LABEL_RE = re.compile(r"(?:youtube-)?batch(\\d{3})", re.I)
 SEP_RE = re.compile(r"\s*(?:\||:|\s[-–—]\s)\s*")
 PAREN_TRAIL_RE = re.compile(r"\s*[\[(][^\])]{0,80}[\])]?\s*$")
 SPACE_RE = re.compile(r"\s+")
@@ -275,7 +275,7 @@ def build(root, artifact_id, artifact_digest, legacy_snapshot_id, legacy_channel
     source_state = {
         "workspace": "yt-discovery-core-v2",
         "coverage_mode": "reconstructable_id_preserved",
-        "coverage_batches": ["batch008","batch009","batch010","batch011"],
+        "coverage_batches": sorted(manifests, key=lambda label: int(label.removeprefix("batch"))),
         "selected_channel_count": len(channels),
         "successful_channel_count": len(ok_ids),
         "failed_channel_count": sum(1 for row in channels if row["scan_status"] == "ERR"),
@@ -284,7 +284,7 @@ def build(root, artifact_id, artifact_digest, legacy_snapshot_id, legacy_channel
         "legacy_baseline_snapshot_id": legacy_snapshot_id,
         "legacy_baseline_channel_count": int(legacy_channel_count),
         "legacy_overlap_status": "unknown_not_additive",
-        "next_batch": "batch012",
+        "next_batch": f"batch{max(int(label.removeprefix('batch')) for label in manifests) + 1:03d}",
         "minimum_stored_signal_channels": 3,
         "artifact_id": int(artifact_id),
         "artifact_digest": artifact_digest,
