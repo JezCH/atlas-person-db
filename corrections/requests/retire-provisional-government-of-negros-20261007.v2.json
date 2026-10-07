@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:provisional-government-of-negros-after-cantonal-continuity-merge:2026-10-07:v1",
+  "release_order": 2115,
+  "evidence": {
+    "decision": "Provisional Government of Negros and Cantonal Republic of Negros are successive provisional and cantonal constitutional phases of one continuous Negrense revolutionary polity. #2114 relinked the 5-26 November 1898 provisional Activity to the Cantonal Republic survivor, preserved Provisional Government of Negros / 네그로스 임시정부 as a 5-26 November temporal state_form, and corrected Lacson's Cantonal Republic presidency to end on 4 March 1899 in accordance with National Museum evidence. Later U.S.-protected or American administrative arrangements are not represented as continued independent Cantonal Republic presidency.",
+    "continuity_request_id": "negros_provisional_cantonal_continuity_merge_20261007_v1",
+    "continuity_applied_at": "2026-10-07T21:42:05.920016+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:18949b33d13f006dcfd2e1801dcc45f89c2dca4d4d877c86104899ce2d5c1a3d",
+    "runtime_compiled_at": "2026-10-07T21:42:39.749192+00:00",
+    "survivor_polity_id": "94a4b95a-437a-4359-bff2-3c560c3f30b0",
+    "production_readback": "2026-10-07 exhaustive post-compile FK audit: legacy Provisional Government of Negros has zero references in person_politics_context_polities, person_politics_v2, runtime_person_politics_v1, polity_descriptions, polity_designations, polity_governance_periods, polity_identity_relations, polity_relations, polity_place_functions, polity_sources, runtime_compile_exclusions, spatial_registration_dispositions, and territory_records; exactly two owned preferred polity_names remain."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:provisional-government-of-negros-after-cantonal-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "755e850a-3e74-43ad-927c-21153ab9a758",
+        "canonical_key": "Provisional Government of Negros",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "94a4b95a-437a-4359-bff2-3c560c3f30b0",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Provisional Government of Negros",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "네그로스 임시정부",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
