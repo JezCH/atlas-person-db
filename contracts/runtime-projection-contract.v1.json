@@ -55,7 +55,8 @@
   "publication": {
     "automatic_producers": [
       "ATLAS Authoring Apply",
-      "ATLAS Correction Apply"
+      "ATLAS Correction Apply",
+      "ATLAS Person hard-delete"
     ],
     "runtime_code_change_requires_exact_deployed_runtime_sha": true,
     "data_only_publication_uses_current_deployed_runtime_sha": true,
