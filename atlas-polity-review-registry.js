@@ -59,19 +59,6 @@
         locked: true
       },
       {
-        id: "libya-republic-jamahiriya",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Libyan Arab Republic → Libyan Arab Jamahiriya",
-        left: { name: "Libyan Arab Republic" },
-        right: { name: "Libyan Arab Jamahiriya" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "milan-lordship-duchy",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -682,6 +669,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "libya-republic-jamahiriya",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Libyan Arab Republic → Libyan Arab Jamahiriya official-name / constitutional continuity merge",
+        left: { name: "Libyan Arab Republic", ko: "리비아 아랍 공화국", polity_id: "333274e4-e616-491c-8446-c4261f8b007d" },
+        right: { name: "Libyan Arab Jamahiriya", ko: "리비아 아랍 자마히리야", polity_id: "7e1a3ced-d4fc-4eb0-b12f-2752e5255014" },
+        rationale: "1977-03-02 Declaration on the Establishment of the Authority of the People는 1969-12-11 Constitutional Declaration을 전제로 인민권력 체제를 선포하고 Article 1에서 공식 국호를 Socialist People's Libyan Arab Jamahiriya로 변경했습니다. U.N.의 Libya 회원국 명칭 이력도 1969 Libyan Arab Republic, 1977 Jamahiriya, 1986 후속 Jamahiriya 명칭을 같은 Libya 회원국의 연속 명칭으로 취급합니다. 따라서 1977년 경계는 새 sovereign state 탄생이 아니라 동일 Libyan state의 헌정·국호 전환으로 처리했습니다. #2081에서 Gaddafi의 1969-09-01→1977-03-02 Revolutionary Command Council chairmanship을 Jamahiriya survivor로 재연결했고, 실제 제도 변화인 RCC chairmanship → GPC Secretary-General → Leader of the Revolution 세 Activity는 서로 다른 역할로 유지했습니다. Libyan Arab Republic은 1969-09-01→1977-03-01 temporal official_name으로 보존했으며, post-compile exhaustive FK audit 뒤 #2082에서 zero-external-reference legacy Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "2 March 1977 Declaration on the Establishment of the Authority of the People: Article 1 changes Libya's official name to the Socialist People's Libyan Arab Jamahiriya while the preamble expressly reviews the 1969 Constitutional Declaration", "United Nations Libya member-state naming history: post-1969 Libyan Arab Republic and later Jamahiriya names are successive names of the same Libya membership", "#2081 continuity merge squash merge 706416220cb9ba795209a5eec48984c6e01f6be8; correction request libya_republic_jamahiriya_continuity_merge_20261007_v1 applied 2026-10-07T09:25:17.539516Z", "Runtime compile runtime-person-politics-v1:82d5f03086e84ee869b1058350ceb572b89372f86c73463f5de67f8bf5c42657 at 2026-10-07T09:25:47.367258Z resolves all three Gaddafi Libya Activities to Jamahiriya survivor", "#2082 legacy Libyan Arab Republic retirement squash merge a9b703a288543d53e9b9dbd4e8952523a6680338; retirement applied 2026-10-07T09:27:52.685758Z", "2026-10-07 final Production readback: legacy Libyan Arab Republic live row 0; retirement ledger points to Jamahiriya survivor; 1969-09-01→1977-03-01 official_name designation exists; Gaddafi RCC chairmanship 1969-09-01→1977-03-02, GPC Secretary-General 1977-03-02→1979-03-02 and Leader of the Revolution 1979-03-02→2011 all use survivor"],
+        locked: true
+      },
       {
         id: "yugoslavia-continuity-family",
         review_group: "resolved_history",
