@@ -7,7 +7,7 @@ const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "
 test("UI V11 loads Dashboard Monumental presentation after the canonical Dashboard CSS", () => {
   const nav = read("atlas-main-authority-nav.js");
   const base = nav.indexOf('appendStylesheetOnce("./atlas-dashboard.css?v=20261001-canonical-nontimeline-v1")');
-  const v11 = nav.indexOf('appendStylesheetOnce("./atlas-dashboard-monumental-v11.css?v=20261004-dashboard-v11-r2")');
+  const v11 = nav.indexOf('appendStylesheetOnce("./atlas-dashboard-monumental-v11.css?v=20261007-dashboard-m1-focus-v1")');
   assert.ok(base >= 0);
   assert.ok(v11 > base);
 });
