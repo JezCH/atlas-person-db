@@ -21,6 +21,16 @@
       status_label: "사용 가능",
       summary: "인물 식별자, 역사성, 이름, 설명, 활동 관계와 사람이 읽을 수 있는 출처 정보를 제공합니다."
     }),
+    registration: entry({
+      label: "등록검토",
+      eyebrow: "REGISTRATION REVIEW",
+      status_code: "ready",
+      status_label: "사용 가능",
+      summary: "기등록 Person 통계, canonical 등록대기열 통계·목록, YouTube 반복 인물 발굴 신호를 최신 read model에서 함께 확인합니다.",
+      available: "기등록 Person/Activity 현황과 person_registration_candidates 현재 대기열, 최신 YouTube 채널 모집단에서 파생한 반복 raw 인물명 순위를 조회합니다.",
+      missing: "YouTube raw 이름은 alias 병합·실존 인물 확정 전의 discovery signal입니다. 이 값만으로 Person 등록·등급·역사적 사실을 확정하지 않습니다.",
+      principle: "등록 사실은 atlas_v2 Person/queue authority가 담당하고, YouTube 반복도는 별도 파생 read model로만 유지하여 discovery signal과 canonical truth를 섞지 않습니다."
+    }),
     spacetime: entry({
       label: "시공간 인물도",
       eyebrow: "인물 시공간 분포",
