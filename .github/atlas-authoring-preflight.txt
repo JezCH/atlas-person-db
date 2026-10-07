@@ -1,1 +1,1 @@
-apply authoring/requests/registration-20261007-agitators-sss-pierre-joseph-proudhon.json
+preflight authoring/requests/registration-20261007-agitators-sss-pierre-joseph-proudhon.json
