@@ -262,6 +262,11 @@ body {
  * Static control edges consume the shared GLOBAL-M1 hairline scale while
  * fills, interaction luminance, focus, primary emphasis, and danger semantics
  * remain locally owned.
+ *
+ * CONTROLS-M2 — Operational interaction luminance.
+ * Neutral controls retain their graphite base fill and layer the shared
+ * GLOBAL-M2 hover / active wash above it. Primary and danger controls remain
+ * semantic exceptions; focus remains owned by the common V9 focus language.
  */
 
 input,
@@ -291,16 +296,19 @@ textarea:focus {
   min-height: 35px;
   border-color: var(--atlas-material-hairline);
   border-radius: var(--atlas-radius-control);
-  background: #191e22;
+  --atlas-control-fill: #191e22;
+  background: var(--atlas-control-fill);
   color: #d9d6cf;
   box-shadow: none;
   font-size: 11px;
   font-weight: 700;
 }
 
-.btn:hover {
+.btn:not(.btn-primary):hover {
   border-color: #50575d;
-  background: #20262b;
+  background:
+    linear-gradient(var(--atlas-material-wash-hover), var(--atlas-material-wash-hover)),
+    var(--atlas-control-fill);
 }
 
 .btn-primary {
@@ -317,12 +325,15 @@ textarea:focus {
 .mini-btn {
   border: 1px solid var(--atlas-material-hairline-soft);
   border-radius: 4px;
-  background: #20252a;
+  --atlas-control-fill: #20252a;
+  background: var(--atlas-control-fill);
   color: #c8c7c2;
 }
 
-.mini-btn:hover {
-  background: #282e33;
+.mini-btn:not(.danger):hover {
+  background:
+    linear-gradient(var(--atlas-material-wash-hover), var(--atlas-material-wash-hover)),
+    var(--atlas-control-fill);
 }
 
 .mini-btn.danger {
@@ -574,14 +585,17 @@ textarea:focus {
 .sidebar-collapse-toggle {
   border-color: var(--atlas-material-hairline-soft);
   border-radius: 4px;
-  background: #151a1e;
+  --atlas-control-fill: #151a1e;
+  background: var(--atlas-control-fill);
   color: #a8afb4;
   box-shadow: 0 8px 22px rgba(0,0,0,.28);
 }
 
 .sidebar-collapse-toggle:hover {
   border-color: #4a5157;
-  background: #20252a;
+  background:
+    linear-gradient(var(--atlas-material-wash-hover), var(--atlas-material-wash-hover)),
+    var(--atlas-control-fill);
   color: var(--atlas-text-strong);
 }
 
@@ -619,7 +633,8 @@ textarea:focus {
     border: 1px solid var(--atlas-material-hairline-soft);
     border-radius: 4px;
     color: #c5c4bf;
-    background: #191d21;
+    --atlas-control-fill: #191d21;
+    background: var(--atlas-control-fill);
   }
 
   .mobile-appbar-title strong {
@@ -714,12 +729,22 @@ textarea:focus {
   .person-main-actions .btn {
     border-color: var(--atlas-material-hairline-soft);
     border-radius: 4px;
-    background: #191d21;
+    --atlas-control-fill: #191d21;
+    background: var(--atlas-control-fill);
     color: #dad7d0;
   }
 
   .person-table-head {
     box-shadow: 0 3px 12px rgba(0,0,0,.18);
+  }
+}
+
+@media (max-width: 760px) and (hover: hover) {
+  .mobile-menu-button:hover,
+  .person-main-actions .btn:not(.btn-primary):hover {
+    background:
+      linear-gradient(var(--atlas-material-wash-hover), var(--atlas-material-wash-hover)),
+      var(--atlas-control-fill);
   }
 }
 

@@ -64,8 +64,15 @@ textarea,
   background-color: var(--atlas-material-wash-active);
 }
 
-.btn:active:not(:disabled),
-.mini-btn:active:not(:disabled),
+.btn:not(.btn-primary):active:not(:disabled),
+.mini-btn:not(.danger):active:not(:disabled),
+.mobile-menu-button:active:not(:disabled),
+.sidebar-collapse-toggle:active:not(:disabled) {
+  background:
+    linear-gradient(var(--atlas-material-wash-active), var(--atlas-material-wash-active)),
+    var(--atlas-control-fill);
+}
+
 .spacetime-camera button:active:not(:disabled),
 .spacetime-inspector-actions button:active:not(:disabled) {
   background-color: rgba(255,255,255,.038);
