@@ -427,6 +427,79 @@
   }
 }
 
+/* MOBILE-ERA1 — Late Era ownership repair.
+ * atlas-ui-mobile-v8.css loads after the Era material/focus stylesheet.
+ * Restore shared interaction and focus semantics without changing compact geometry.
+ */
+@media (max-width: 760px) {
+  .person-era-search:focus,
+  .person-era-polity-filter:focus,
+  .person-era-relation-filter:focus {
+    border-color: var(--atlas-material-hairline-strong);
+    outline: 1px solid var(--atlas-focus-ring);
+    outline-offset: 2px;
+    box-shadow: inset 0 1px 0 var(--atlas-material-sheen-strong);
+  }
+
+  .person-era-nav-step:hover:not(:disabled) {
+    background: var(--atlas-material-wash-hover);
+    color: #d8d4cc;
+  }
+
+  .person-era-nav-step:focus-visible {
+    background: transparent;
+    outline: 1px solid var(--atlas-focus-ring);
+    outline-offset: 2px;
+  }
+
+  .person-era-jump {
+    border-left-color: var(--atlas-material-hairline);
+  }
+
+  .person-era-jump:hover {
+    background: var(--atlas-material-wash-hover) !important;
+  }
+
+  .person-era-jump.is-current {
+    border-left-color: var(--atlas-honor-metal);
+    background: var(--atlas-material-wash-selected) !important;
+    box-shadow: inset 2px 0 0 var(--atlas-material-rail-soft);
+  }
+
+  .person-era-jump.is-current::after {
+    background: linear-gradient(90deg,transparent,var(--atlas-material-glint),transparent);
+  }
+
+  .person-era-jump.person-era-unknown::before {
+    background: var(--atlas-material-hairline-strong);
+  }
+
+  .person-domain-filter-row {
+    border-top-color: var(--atlas-material-hairline-soft);
+  }
+
+  .person-domain-filter:not(.is-active) {
+    background: transparent;
+  }
+
+  .person-domain-filter.is-active {
+    border-color: var(--person-filter-domain-color);
+    background: var(--atlas-material-wash-selected);
+    box-shadow:
+      inset 2px 0 0 var(--person-filter-domain-color),
+      inset 0 1px 0 var(--atlas-material-sheen-strong);
+    color: #c5c3bd;
+  }
+}
+
+@media (max-width: 760px) and (hover: hover) {
+  .person-domain-filter:hover:not(.is-active) {
+    background: var(--atlas-material-wash-hover);
+    color: #c9c3b8;
+  }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   .mobile-menu-button,
   .person-era-search,
