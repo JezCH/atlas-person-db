@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "austria_federal_state_continuity_boundary_retirement_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_AUSTRIA_FEDERAL_STATE_CONTINUITY_STAGE1",
+  "release_order": 2102,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Austrian Parliament official Dollfuss office record and 1933-1938 constitutional history; Austrian RIS 1934 Constitution and 1938 annexation law; current ATLAS same-identity official-name rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "austria_survivor": "ebee3963-6246-4b8e-9730-574001ec247d",
+    "federal_state_legacy": "ad85b693-1ee1-444d-8454-9f0f29bec36e",
+    "historical_decision": "Republic of Austria and the 1934-1938 Federal State of Austria are successive constitutional and official-name phases of the same Austrian state identity. Austrian Parliament records that the authoritarian May Constitution of 1 May 1934 changed the official state name to Bundesstaat Österreich and replaced the democratic constitutional order, while Austria's state existence itself ended only with the forced annexation into Nazi Germany in March 1938. The Austrian Parliament's official Engelbert Dollfuss record gives one uninterrupted Bundeskanzler tenure from 20 May 1932 to 25 July 1934, proving that the 1 May 1934 boundary did not create a new chancellorship.",
+    "rationale": "Production currently splits Dollfuss's one continuous chancellorship at the 1 May 1934 constitutional/name boundary: 1932-05-20→1934-05-01 on canonical Austria and 1934-05-01→1934-07-25 on legacy Federal State of Austria. Retire the Federal-State-side fragment first with source transfer. A fresh exact-read Stage 2 will extend the Austria survivor Activity through 25 July 1934, add authoritative Austrian sources, and preserve Federal State of Austria / 오스트리아 연방국 as a temporal official-name phase through the eve of the 13 March 1938 annexation law."
+  },
+  "operations": [
+    {
+      "case_id": "austria-retire-dollfuss-federal-state-name-boundary-fragment",
+      "type": "retire_activity",
+      "activity_id": "bd482183-d37d-4e33-87b0-f36562d10dcc",
+      "baseline_before": {
+        "person_id": "c13581f3-d712-41ae-a859-8bea88194943",
+        "polity_id": "ad85b693-1ee1-444d-8454-9f0f29bec36e",
+        "role_id": "6d5c65cd-baee-5cb0-b272-a9b9cb1ac355",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1934,
+        "activity_end": 1934,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "replacement_activity_ids": [
+        "d380bec7-54de-4f61-bfcb-15dae6a3dcfd"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retired_activity_count": 1,
+    "surviving_activity_ids": [
+      "d380bec7-54de-4f61-bfcb-15dae6a3dcfd"
+    ],
+    "source_transfer_required": true,
+    "production_mutation_authorized": false
+  }
+}
