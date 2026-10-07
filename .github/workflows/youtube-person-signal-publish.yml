@@ -80,7 +80,7 @@ jobs:
     timeout-minutes: 20
     environment: production
     env:
-      PUBLISH_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-youtube-person-signal-publish
+      PUBLISH_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply?__atlas_authoring_apply_surface=youtube-person-signal-publish
       RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
       PUBLISH_AUDIENCE: atlas-person-db-youtube-signal-publish
       ARTIFACT_RUN_ID: ${{ inputs.artifact_run_id || '37604763364' }}
