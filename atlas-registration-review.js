@@ -187,13 +187,11 @@
 
   function template() {
     return `<section class="registration-review">
-      <header class="registration-review-head">
-        <div><p class="eyebrow">REGISTRATION REVIEW</p><h2>등록검토</h2><p>기등록 Person, canonical 등록대기열, YouTube 반복 인물 발굴 신호를 한 화면에서 확인합니다.</p></div>
-        <div class="registration-review-head-actions"><span id="registrationReviewStatus" data-state="loading">불러오는 중</span><button id="registrationReviewRefresh" class="btn" type="button">새로고침</button></div>
-      </header>
-
       <section class="registration-review-section">
-        <div class="registration-review-section-head"><div><small>REGISTRATION</small><h3>등록 현황</h3></div></div>
+        <div class="registration-review-section-head registration-review-overview-head">
+          <div><small>REGISTRATION</small><h3>등록 현황</h3></div>
+          <div class="registration-review-head-actions"><span id="registrationReviewStatus" data-state="loading">불러오는 중</span><button id="registrationReviewRefresh" class="btn" type="button">새로고침</button></div>
+        </div>
         <div id="registrationRegisteredStats" class="registration-review-stats">${statCard("—","기등록 Person")}${statCard("—","historical")}${statCard("—","Authoring Activity")}${statCard("—","비연대표 인물")}${statCard("—","등록대기열","현재 미등록 후보")}</div>
       </section>
 
