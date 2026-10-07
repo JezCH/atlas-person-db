@@ -21,7 +21,8 @@
     "historical_decision": "Albanian Republic and Kingdom of Albania represent one continuous Albanian state identity across the 1 September 1928 constitutional change from republic to monarchy under the same ruler, Ahmet Zogu/Zog I. Contemporary U.S. diplomatic correspondence explicitly describes the Constituent Assembly as changing the form of government of Albania to a constitutional monarchy, while existing U.S.-Albanian legal arrangements continued in force. This supports a state-form transition rather than a state-identity rupture.",
     "activity_rule": "Keep Zog's President and King Activities separate because the office/title changed, but place both under one continuous Albanian polity identity.",
     "precision_rule": "Preserve the exact 1 September 1928 transition boundary already present in the reviewed Activities.",
-    "designation_rule": "Preserve Albanian Republic as the modeled republican state_form from 31 January 1925 through 1 September 1928 on the Kingdom of Albania survivor, matching current reviewed presidential Activity coverage rather than inventing an earlier Person-linked boundary."
+    "designation_rule": "Preserve Albanian Republic as the modeled republican state_form from 31 January 1925 through 1 September 1928 on the Kingdom of Albania survivor, matching current reviewed presidential Activity coverage rather than inventing an earlier Person-linked boundary.",
+    "primary_transition_reference": "U.S. Foreign Relations 1928 documents 706 and 709: on 1 September 1928 Ahmet Zogu was proclaimed King; the U.S. described the event as a regular change in the form of Albania's government to constitutional monarchy and explicitly continued prior U.S.-Albanian legal arrangements."
   },
   "operations": [
     {
