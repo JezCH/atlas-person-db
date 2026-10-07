@@ -165,7 +165,7 @@
         getJson(`${SIGNAL_URL}&min_channels=${encodeURIComponent(minChannels)}&limit=300`)
       ]);
       if (serial !== requestSerial || root !== activeRoot) return;
-      renderRegistered(persons);
+      renderRegistered(persons,queue);
       renderQueue(queue);
       renderSignals(signals);
       setStatus(`최신 상태 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
@@ -202,15 +202,8 @@
       </header>
 
       <section class="registration-review-section">
-        <div class="registration-review-section-head"><div><small>REGISTERED</small><h3>기등록 통계</h3></div></div>
-        <div id="registrationRegisteredStats" class="registration-review-stats">${statCard("—","기등록 Person")}${statCard("—","historical")}${statCard("—","Authoring Activity")}${statCard("—","비연대표 인물")}</div>
-      </section>
-
-      <section class="registration-review-section registration-review-queue-summary">
-        <div class="registration-review-section-head registration-review-queue-summary-head">
-          <div><small>QUEUE</small><h3>현재 등록대기열</h3><p>현재 미등록 후보만 포함합니다. Person 등록과 동시에 자동 제외됩니다.</p></div>
-          <div id="registrationQueueStats" class="registration-review-stats registration-review-stats-compact">${statCard("—","현재 등록대기","기등록 Person 자동 제외 · 10초 동기화")}</div>
-        </div>
+        <div class="registration-review-section-head"><div><small>REGISTRATION</small><h3>등록 현황</h3></div></div>
+        <div id="registrationRegisteredStats" class="registration-review-stats">${statCard("—","기등록 Person")}${statCard("—","historical")}${statCard("—","Authoring Activity")}${statCard("—","비연대표 인물")}${statCard("—","등록대기열","현재 미등록 후보")}</div>
       </section>
 
       <section class="registration-review-section">
