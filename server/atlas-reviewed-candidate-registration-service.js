@@ -243,11 +243,6 @@ function createReviewedCandidateRegistrationService({
           if (String(registration.person_id || "") !== readback.person_id) {
             throw new Error("CANDIDATE_REGISTERED_PERSON_DRIFT");
           }
-          await bindQueueCandidate(client, {
-            candidate_id:ref.candidate_id,
-            person_id:readback.person_id,
-            required:false
-          });
           await client.query("commit");
           return Object.freeze({
             candidate_id:ref.candidate_id,
