@@ -136,10 +136,10 @@
       return;
     }
     body.innerHTML=signalRows.map((row)=>`<tr>
-      <td class="registration-review-rank">${number(row.rank)}</td>
-      <td class="registration-review-name">${escapeHtml(row.raw_name)}</td>
-      <td class="registration-review-number">${number(row.distinct_channel_count)}</td>
-      <td class="registration-review-number">${number(row.video_count)}</td>
+      <td class="registration-review-rank" data-label="순위">${number(row.rank)}</td>
+      <td class="registration-review-name" data-label="인물">${escapeHtml(row.raw_name)}</td>
+      <td class="registration-review-number" data-label="채널">${number(row.distinct_channel_count)}</td>
+      <td class="registration-review-number" data-label="영상">${number(row.video_count)}</td>
     </tr>`).join("");
   }
 
@@ -206,9 +206,11 @@
         <div id="registrationRegisteredStats" class="registration-review-stats">${statCard("—","기등록 Person")}${statCard("—","historical")}${statCard("—","Authoring Activity")}${statCard("—","비연대표 인물")}</div>
       </section>
 
-      <section class="registration-review-section">
-        <div class="registration-review-section-head"><div><small>QUEUE</small><h3>현재 등록대기열</h3><p>이 화면의 등록대기열은 현재 미등록 후보만 포함합니다. Person 등록과 동시에 자동 제외됩니다.</p></div></div>
-        <div id="registrationQueueStats" class="registration-review-stats">${statCard("—","현재 등록대기","기등록 Person은 자동 제외 · 10초마다 최신 DB 상태 동기화")}</div>
+      <section class="registration-review-section registration-review-queue-summary">
+        <div class="registration-review-section-head registration-review-queue-summary-head">
+          <div><small>QUEUE</small><h3>현재 등록대기열</h3><p>현재 미등록 후보만 포함합니다. Person 등록과 동시에 자동 제외됩니다.</p></div>
+          <div id="registrationQueueStats" class="registration-review-stats registration-review-stats-compact">${statCard("—","현재 등록대기","기등록 Person 자동 제외 · 10초 동기화")}</div>
+        </div>
       </section>
 
       <section class="registration-review-section">
@@ -217,8 +219,14 @@
           <div id="youtubeSignalTelemetry" class="registration-review-telemetry"><strong>스냅샷 확인 중</strong></div>
         </div>
         <div class="registration-review-filterline"><div id="youtubeSignalThresholds" class="registration-review-thresholds"></div><span id="youtubeSignalVisibleCount">—</span></div>
-        <div class="registration-review-table-wrap">
-          <table class="registration-review-table">
+        <div class="registration-review-table-wrap registration-review-signal-wrap">
+          <table class="registration-review-table registration-review-signal-table">
+            <colgroup>
+              <col class="registration-review-signal-col-rank" />
+              <col class="registration-review-signal-col-name" />
+              <col class="registration-review-signal-col-channels" />
+              <col class="registration-review-signal-col-videos" />
+            </colgroup>
             <thead><tr><th>순위</th><th>인물 raw 이름</th><th>서로 다른 채널</th><th>영상</th></tr></thead>
             <tbody id="youtubeSignalBody"><tr><td colspan="4" class="registration-review-empty">불러오는 중</td></tr></tbody>
           </table>
