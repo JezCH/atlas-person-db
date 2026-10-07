@@ -232,7 +232,7 @@ test('Polity surface uses the canonical dark monumental token system without leg
   assert.match(css, /var\(--atlas-warning\)/);
   assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b/);
   assert.doesNotMatch(css, /border-radius:999px/);
-  assert.match(nav, /atlas-polity-review-workbench\.css\?v=20261006-ui-v10-dark-polity-v1/);
+  assert.match(nav, /atlas-polity-review-workbench\.css\?v=20261007-polity-m1-focus-v1/);
 });
 
 test('POL-C1 gives canonical Polity cards plaque material without changing card geometry', () => {
@@ -286,4 +286,28 @@ test('combined polity browser and review layout remains responsive', () => {
   assert.match(css, /@media\(max-width:900px\)/);
   assert.match(css, /@media\(max-width:700px\)/);
   assert.match(css, /@media\(max-width:600px\)/);
+});
+
+
+test('POLITY-M1 restores the shared focus language after late Polity CSS', () => {
+  const start = css.indexOf('POLITY-M1 — Late focus ownership');
+  assert.ok(start >= 0);
+  const focus = css.slice(start, css.indexOf('/* GLOBAL-M3 — Inscription typography.', start));
+
+  for (const selector of [
+    '.polity-browser-filters button:focus-visible',
+    '.polity-browser-card>summary:focus-visible',
+    '.polity-review-filter:focus-visible',
+    '.polity-dossier-person>header button:focus-visible'
+  ]) {
+    assert.ok(focus.includes(selector), `missing focus selector: ${selector}`);
+  }
+
+  assert.match(focus, /outline:1px solid var\(--atlas-focus-ring\)/);
+  assert.match(focus, /outline-offset:2px/);
+  assert.match(focus, /\.polity-browser-controls input:focus,[\s\S]*?\.polity-review-controls textarea:focus\{[^}]*border-color:var\(--atlas-material-hairline-strong\)[^}]*outline:1px solid var\(--atlas-focus-ring\)[^}]*box-shadow:none/);
+  assert.doesNotMatch(focus, /rgba\(/);
+
+  assert.match(css, /\.polity-review-filter\.is-active\{[^}]*border-color:rgba\(208,188,145,\.28\)/);
+  assert.match(css, /\.polity-review-filter\.is-active\{[\s\S]*?inset 2px 0 0 var\(--atlas-material-rail\)/);
 });
