@@ -1,0 +1,253 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "negros_provisional_cantonal_continuity_merge_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_NEGROS_PROVISIONAL_CANTONAL_CONTINUITY",
+  "release_order": 2114,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 final carry-forward continuity frontier; fresh Production exact read 2026-10-07; National Museum of the Philippines Aniceto Lacson Ancestral House history; Provincial Government of Negros Occidental history; NHCP capitulation marker; existing reviewed Negros chronology source; current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "provisional_legacy": "755e850a-3e74-43ad-927c-21153ab9a758",
+    "cantonal_survivor": "94a4b95a-437a-4359-bff2-3c560c3f30b0",
+    "historical_decision": "The provisional revolutionary government formed after the 5 November 1898 Negros uprising and the Cantonal Republic proclaimed later that month are successive constitutional/state-form phases of one continuous Negrense revolutionary polity. The Provincial Government of Negros Occidental describes the 5 November revolt under Aniceto Lacson and Juan Araneta as leading to the short-lived Negros Republic and the Cantonal Government that reunited the island's two provinces. The National Museum of the Philippines identifies the Lacson ancestral house as the official presidential residence and seat of the Negros government from the November 1898 revolution through 4 March 1899, and identifies Lacson as the first and only president of the Negros Republic. The NHCP capitulation marker independently establishes the 6 November 1898 termination of Spanish rule in Negros Occidental. This is a provisional-to-cantonal constitutional transition, not extinction and replacement by an unrelated state.",
+    "activity_rule": "Preserve Lacson's 5-26 November 1898 provisional-government Activity and 27 November 1898-4 March 1899 Cantonal-Republic Activity as separate reviewed phases because the institutional state form changed on 27 November. Both use the same generic President role in the current catalog, but the boundary remains meaningful in Activity chronology and notes. Relink the provisional Activity to the Cantonal Republic survivor and correct the later Activity's end from 22 July 1899 to 4 March 1899. National Museum evidence identifies the Negros Republic itself as ending on 4 March 1899; later U.S.-protected/administrative arrangements must not be represented as continued presidency of the independent Cantonal Republic.",
+    "designation_rule": "Preserve Provisional Government of Negros / 네그로스 임시정부 as temporal state_form on the Cantonal Republic survivor from 5 November through 26 November 1898. The canonical Cantonal Republic identity then covers the republican phase beginning 27 November. No post-4-March-1899 state-form extension is asserted by this correction."
+  },
+  "operations": [
+    {
+      "case_id": "negros-relink-provisional-government-lacson-to-cantonal-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "55c3d9f1-34d2-4944-bdc7-84d57f5a4bd8",
+      "baseline_before": {
+        "person_id": "b8bd1143-6aa5-426e-81f4-5742d0b7ff14",
+        "polity_id": "755e850a-3e74-43ad-927c-21153ab9a758",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1898,
+        "activity_end": 1898,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "55c3d9f1-34d2-4944-bdc7-84d57f5a4bd8",
+        "person_id": "b8bd1143-6aa5-426e-81f4-5742d0b7ff14",
+        "polity_id": "94a4b95a-437a-4359-bff2-3c560c3f30b0",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1898,
+        "activity_start_detail": {
+          "year": 1898,
+          "month": 11,
+          "day": 5,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1898,
+        "activity_end_detail": {
+          "year": 1898,
+          "month": 11,
+          "day": 26,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Aniceto Lacson headed the provisional revolutionary government formed during the successful Negros uprising beginning 5 November 1898. ATLAS treats this provisional government as the first state-form phase of the same Negrense revolutionary polity that became the Cantonal Republic on 27 November; the Activity remains a separate constitutional phase but now resolves to the common Cantonal Republic identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "negros-correct-lacson-cantonal-presidency-end",
+      "type": "rewrite_activity",
+      "activity_id": "cdcfce3c-e2bc-427f-a05d-ce6d619cef5f",
+      "baseline_before": {
+        "person_id": "b8bd1143-6aa5-426e-81f4-5742d0b7ff14",
+        "polity_id": "94a4b95a-437a-4359-bff2-3c560c3f30b0",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1898,
+        "activity_end": 1899,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "cdcfce3c-e2bc-427f-a05d-ce6d619cef5f",
+        "person_id": "b8bd1143-6aa5-426e-81f4-5742d0b7ff14",
+        "polity_id": "94a4b95a-437a-4359-bff2-3c560c3f30b0",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1898,
+        "activity_start_detail": {
+          "year": 1898,
+          "month": 11,
+          "day": 27,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1899,
+        "activity_end_detail": {
+          "year": 1899,
+          "month": 3,
+          "day": 4,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Aniceto Lacson was the first and only President of the Negros Republic during the Cantonal Republic phase beginning 27 November 1898. National Museum of the Philippines material identifies the Negros Republic as lasting until 4 March 1899. ATLAS therefore ends this republican presidency on 4 March 1899 and does not extend the independent Cantonal Republic office into later U.S.-protected or American administrative arrangements.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "negros-source-national-museum-lacson-house",
+      "exact_before": {
+        "source_absent_id": "d2d5eaa7-9c0f-4d23-98f4-b9a755ef73d9"
+      },
+      "exact_after": {
+        "source": {
+          "id": "d2d5eaa7-9c0f-4d23-98f4-b9a755ef73d9",
+          "source_key": "bibliographic:national-museum-ph:aniceto-lacson-house-negros-republic",
+          "source_type": "government_reference",
+          "title": "NMP Receives Donated General Aniceto L. Lacson Ancestral House — National Museum of the Philippines",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.nationalmuseum.gov.ph/2024/11/06/nmp-receives-donated-general-aniceto-l-lacson-ancestral-house/",
+          "citation_text": "The National Museum of the Philippines identifies the house as the presidential residence and seat of the Negros Republic during the November 1898 revolution through 4 March 1899 and commemorates the proclamation of the Republica Cantonal de Negros."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "negros-source-provincial-government-history",
+      "exact_before": {
+        "source_absent_id": "cfe342c4-acde-46bf-8577-0f3bec14dc52"
+      },
+      "exact_after": {
+        "source": {
+          "id": "cfe342c4-acde-46bf-8577-0f3bec14dc52",
+          "source_key": "bibliographic:negros-occidental-government:history-cantonal-government",
+          "source_type": "government_reference",
+          "title": "The History & Geography — Provincial Government of Negros Occidental",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.negros-occ.gov.ph/the-history-geography/",
+          "citation_text": "The Provincial Government of Negros Occidental records the 5 November 1898 revolutionary victory and states that it resulted in the short-lived Cantonal Government of the Republic of Negros reuniting the island's two provinces."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "negros-source-nhcp-capitulation",
+      "exact_before": {
+        "source_absent_id": "1b0c0ce4-7a52-4520-8508-a030258d39aa"
+      },
+      "exact_after": {
+        "source": {
+          "id": "1b0c0ce4-7a52-4520-8508-a030258d39aa",
+          "source_key": "bibliographic:nhcp:negros-capitulation-1898-11-06",
+          "source_type": "government_reference",
+          "title": "The Signing of the Terms of Capitulation — NHCP Registry",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://philhistoricsites.nhcp.gov.ph/registry_database/the-signing-of-the-terms-of-capitulation/",
+          "citation_text": "The NHCP historical marker records the 6 November 1898 capitulation between Spanish and Filipino representatives under Aniceto Lacson and Juan Araneta, signifying the end of Spanish rule on Negros."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "negros-provisional-government-state-form-1898-11-05-to-11-26",
+      "exact_before": {
+        "designation_absent_id": "a72fdb1b-5d18-4ec9-847f-f3d247cff28b"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "a72fdb1b-5d18-4ec9-847f-f3d247cff28b",
+          "polity_id": "94a4b95a-437a-4359-bff2-3c560c3f30b0",
+          "designation_type": "state_form",
+          "valid_from_year": 1898,
+          "valid_from_month": 11,
+          "valid_from_day": 5,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1898,
+          "valid_to_month": 11,
+          "valid_to_day": 26,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Provisional Government of Negros is preserved as the provisional revolutionary state-form phase immediately following the 5 November 1898 uprising and preceding the Cantonal Republic phase beginning 27 November. This designation preserves the constitutional transition without creating two unrelated polity identities."
+        },
+        "names": [
+          {
+            "id": "ae8d381d-0fab-4db8-bfca-e64f607b8251",
+            "polity_designation_id": "a72fdb1b-5d18-4ec9-847f-f3d247cff28b",
+            "locale": "en",
+            "name": "Provisional Government of Negros",
+            "is_preferred": true
+          },
+          {
+            "id": "34f3898d-7659-4d54-8d12-f66dbb2cb45a",
+            "polity_designation_id": "a72fdb1b-5d18-4ec9-847f-f3d247cff28b",
+            "locale": "ko",
+            "name": "네그로스 임시정부",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "a72fdb1b-5d18-4ec9-847f-f3d247cff28b",
+            "source_id": "48ca4276-0e2a-4c77-9c2e-d51110c8c23a",
+            "source_locator_key": "https://worldstatesmen.org/Philippines.htm"
+          },
+          {
+            "polity_designation_id": "a72fdb1b-5d18-4ec9-847f-f3d247cff28b",
+            "source_id": "d2d5eaa7-9c0f-4d23-98f4-b9a755ef73d9",
+            "source_locator_key": "https://www.nationalmuseum.gov.ph/2024/11/06/nmp-receives-donated-general-aniceto-l-lacson-ancestral-house/"
+          },
+          {
+            "polity_designation_id": "a72fdb1b-5d18-4ec9-847f-f3d247cff28b",
+            "source_id": "cfe342c4-acde-46bf-8577-0f3bec14dc52",
+            "source_locator_key": "https://www.negros-occ.gov.ph/the-history-geography/"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 2,
+    "asserted_source_count": 3,
+    "asserted_polity_designation_count": 1,
+    "provisional_government_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
