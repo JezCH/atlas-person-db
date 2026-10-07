@@ -89,12 +89,12 @@
       return;
     }
     body.innerHTML=rows.map((row)=>`<tr>
-      <td class="registration-review-name">${escapeHtml(row.name || "—")}</td>
-      <td>${escapeHtml(row.representative_domain || "미분류")}</td>
-      <td>${escapeHtml(row.legacy_priority || row.priority || "—")}</td>
-      <td>${escapeHtml(row.review_state || "—")}</td>
-      <td>${escapeHtml(row.origin || "—")}</td>
-      <td><time>${escapeHtml(row.updated_at ? dateTime(row.updated_at) : "—")}</time></td>
+      <td class="registration-review-name" data-label="이름">${escapeHtml(row.name || "—")}</td>
+      <td data-label="대표 분야">${escapeHtml(row.representative_domain || "미분류")}</td>
+      <td data-label="우선순위">${escapeHtml(row.legacy_priority || row.priority || "—")}</td>
+      <td data-label="검토 상태">${escapeHtml(row.review_state || "—")}</td>
+      <td data-label="출처">${escapeHtml(row.origin || "—")}</td>
+      <td data-label="갱신"><time>${escapeHtml(row.updated_at ? dateTime(row.updated_at) : "—")}</time></td>
     </tr>`).join("");
   }
 
@@ -219,7 +219,7 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-queue-head"><div><small>REGISTRATION QUEUE</small><h3>등록대기열</h3></div><label>검색<input id="registrationQueueSearch" type="search" placeholder="이름 · 분야 · 상태" /></label></div>
-        <div class="registration-review-table-wrap">
+        <div class="registration-review-table-wrap registration-review-queue-wrap">
           <table class="registration-review-table registration-review-queue-table">
             <thead><tr><th>이름</th><th>대표 분야</th><th>legacy 우선순위</th><th>검토 상태</th><th>출처</th><th>갱신</th></tr></thead>
             <tbody id="registrationQueueBody"><tr><td colspan="6" class="registration-review-empty">불러오는 중</td></tr></tbody>

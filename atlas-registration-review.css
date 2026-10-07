@@ -24,3 +24,124 @@
   .registration-review-signal-table .registration-review-number{position:relative;text-align:right;padding-top:9px;font-size:11px}
   .registration-review-signal-table .registration-review-number::before{content:attr(data-label);position:absolute;top:0;right:0;color:var(--atlas-text-muted);font-size:7px;font-weight:700;letter-spacing:.04em}
 }
+
+
+/* REVIEW-M5 — Responsive information invariant.
+   Breakpoints may rearrange fields, but they must not remove semantic data. */
+@media(max-width:1100px){
+  .registration-review-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+.registration-review-signal-wrap{width:100%;overflow:hidden}
+.registration-review-signal-table{display:block;width:100%;min-width:0;table-layout:auto}
+.registration-review-signal-table colgroup{display:none}
+.registration-review-signal-table thead,
+.registration-review-signal-table tbody{display:block;width:100%}
+.registration-review-signal-table thead tr,
+.registration-review-signal-table tbody tr{
+  display:grid;
+  grid-template-columns:56px minmax(260px,460px) 120px 90px;
+  justify-content:start;
+  width:100%;
+}
+.registration-review-signal-table th,
+.registration-review-signal-table td{min-width:0}
+.registration-review-signal-table th:nth-child(3),
+.registration-review-signal-table th:nth-child(4),
+.registration-review-signal-table .registration-review-number{text-align:right}
+
+@media(max-width:900px){
+  .registration-review-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .registration-review-signal-table thead tr,
+  .registration-review-signal-table tbody tr{
+    grid-template-columns:48px minmax(180px,1fr) 104px 76px;
+  }
+}
+
+@media(max-width:700px){
+  .registration-review-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .registration-review-stats .registration-review-stat:nth-child(5){grid-column:1 / -1}
+
+  .registration-review-queue-wrap{overflow:visible;border:0}
+  .registration-review-queue-table{display:block;width:100%;min-width:0;background:transparent}
+  .registration-review-queue-table thead{display:none}
+  .registration-review-queue-table tbody{display:grid;gap:7px}
+  .registration-review-queue-table tbody tr{
+    display:grid;
+    gap:0;
+    padding:4px 10px;
+    border:1px solid var(--atlas-material-hairline-soft);
+    border-radius:4px;
+    background:var(--atlas-surface-1);
+  }
+  .registration-review-queue-table td{
+    display:grid;
+    grid-template-columns:minmax(82px,30%) minmax(0,1fr);
+    gap:10px;
+    align-items:start;
+    padding:7px 0;
+    border-bottom:1px solid var(--atlas-material-hairline-soft);
+    background:transparent!important;
+    overflow-wrap:anywhere;
+  }
+  .registration-review-queue-table td:last-child{border-bottom:0}
+  .registration-review-queue-table td::before{
+    content:attr(data-label);
+    color:var(--atlas-text-muted);
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:.04em;
+  }
+  .registration-review-queue-table .registration-review-name{
+    font-size:12px;
+    line-height:1.4;
+  }
+  .registration-review-queue-table time{
+    white-space:normal;
+    line-height:1.35;
+  }
+  .registration-review-queue-table .registration-review-empty{
+    display:block;
+    padding:20px!important;
+    border:1px solid var(--atlas-material-hairline-soft)!important;
+  }
+  .registration-review-queue-table .registration-review-empty::before{display:none}
+}
+
+@media(max-width:600px){
+  .registration-review-signal-wrap{overflow:visible;border:0}
+  .registration-review-signal-table thead{display:none}
+  .registration-review-signal-table tbody{display:grid;gap:6px}
+  .registration-review-signal-table tbody tr{
+    grid-template-columns:38px minmax(0,1fr) 46px 42px;
+    gap:8px;
+    align-items:center;
+    padding:8px 9px;
+    border:1px solid var(--atlas-material-hairline-soft);
+    border-radius:4px;
+    background:var(--atlas-surface-1);
+  }
+  .registration-review-signal-table td{
+    display:block;
+    padding:0;
+    border:0!important;
+    background:transparent!important;
+  }
+  .registration-review-signal-table .registration-review-rank{width:auto;text-align:center}
+  .registration-review-signal-table .registration-review-number{position:relative;padding-top:9px}
+  .registration-review-signal-table .registration-review-number::before{
+    content:attr(data-label);
+    position:absolute;
+    top:0;
+    right:0;
+    color:var(--atlas-text-muted);
+    font-size:7px;
+    font-weight:700;
+    letter-spacing:.04em;
+  }
+}
+
+@media(max-width:420px){
+  .registration-review-stats{grid-template-columns:1fr}
+  .registration-review-stats .registration-review-stat:nth-child(5){grid-column:auto}
+}
