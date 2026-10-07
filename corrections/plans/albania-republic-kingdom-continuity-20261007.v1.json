@@ -1,0 +1,143 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "albania_republic_kingdom_continuity_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_ALBANIA_REPUBLIC_KINGDOM_CONTINUITY",
+  "release_order": 2016,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Presidency of Albania institutional history; U.S. Foreign Relations 1928 recognition correspondence; current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "kingdom_survivor": "d8ff4c80-e0a5-4257-aa94-ce27f3e6a9ab",
+    "republic_polity_id": "6b5c6d19-49ee-41cc-ada2-e07509cf5a91",
+    "historical_decision": "Albanian Republic and Kingdom of Albania represent one continuous Albanian state identity across the 1 September 1928 constitutional change from republic to monarchy under the same ruler, Ahmet Zogu/Zog I. Contemporary U.S. diplomatic correspondence explicitly describes the Constituent Assembly as changing the form of government of Albania to a constitutional monarchy, while existing U.S.-Albanian legal arrangements continued in force. This supports a state-form transition rather than a state-identity rupture.",
+    "activity_rule": "Keep Zog's President and King Activities separate because the office/title changed, but place both under one continuous Albanian polity identity.",
+    "precision_rule": "Preserve the exact 1 September 1928 transition boundary already present in the reviewed Activities.",
+    "designation_rule": "Preserve Albanian Republic as the modeled republican state_form from 31 January 1925 through 1 September 1928 on the Kingdom of Albania survivor, matching current reviewed presidential Activity coverage rather than inventing an earlier Person-linked boundary.",
+    "primary_transition_reference": "U.S. Foreign Relations 1928 documents 706 and 709: on 1 September 1928 Ahmet Zogu was proclaimed King; the U.S. described the event as a regular change in the form of Albania's government to constitutional monarchy and explicitly continued prior U.S.-Albanian legal arrangements."
+  },
+  "operations": [
+    {
+      "case_id": "albania-relink-zog-president-to-kingdom-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "bcea4aaa-faf9-4f0c-8b5b-24d85c2c051d",
+      "baseline_before": {
+        "person_id": "f44baebf-9996-4c03-9f3d-5f9ee9e6ee7e",
+        "polity_id": "6b5c6d19-49ee-41cc-ada2-e07509cf5a91",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1925,
+        "activity_end": 1928,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "bcea4aaa-faf9-4f0c-8b5b-24d85c2c051d",
+        "person_id": "f44baebf-9996-4c03-9f3d-5f9ee9e6ee7e",
+        "polity_id": "d8ff4c80-e0a5-4257-aa94-ce27f3e6a9ab",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1925,
+        "activity_start_detail": {
+          "year": 1925,
+          "month": 1,
+          "day": 31,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1928,
+        "activity_end_detail": {
+          "year": 1928,
+          "month": 9,
+          "day": 1,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Ahmet Zogu was elected President on 31 January 1925. On 1 September 1928 the Albanian Constituent Assembly changed the form of government to a constitutional monarchy and the same ruler became Zog I. ATLAS therefore treats the republican and royal phases as one continuous Albanian polity identity while preserving President and King as separate Activities. The transition is retained at the exact reviewed date of 1 September 1928.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "albania-republic-state-form-1925-1928",
+      "exact_before": {
+        "designation_absent_id": "16151187-790a-4dbc-b431-42a1986c3538"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "16151187-790a-4dbc-b431-42a1986c3538",
+          "polity_id": "d8ff4c80-e0a5-4257-aa94-ce27f3e6a9ab",
+          "designation_type": "state_form",
+          "valid_from_year": 1925,
+          "valid_from_month": 1,
+          "valid_from_day": 31,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1928,
+          "valid_to_month": 9,
+          "valid_to_day": 1,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Albanian Republic is preserved as the republican state-form phase of the continuous Albanian polity during Zogu's modeled presidency from 31 January 1925 to the constitutional-monarchy transition on 1 September 1928."
+        },
+        "names": [
+          {
+            "id": "bcbd8b57-4c7d-4e27-b9cb-b64b3a695942",
+            "polity_designation_id": "16151187-790a-4dbc-b431-42a1986c3538",
+            "locale": "en",
+            "name": "Albanian Republic",
+            "is_preferred": true
+          },
+          {
+            "id": "be9b7aef-7a30-403a-ba7c-207fcc64d3ff",
+            "polity_designation_id": "16151187-790a-4dbc-b431-42a1986c3538",
+            "locale": "ko",
+            "name": "알바니아 공화국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "16151187-790a-4dbc-b431-42a1986c3538",
+            "source_id": "fd4588ab-7128-4504-baec-10f74f3e93fd",
+            "source_locator_key": "https://president.al/the-history-of-the-institution/?lang=en"
+          },
+          {
+            "polity_designation_id": "16151187-790a-4dbc-b431-42a1986c3538",
+            "source_id": "63824e87-ac9a-4411-87b0-fa6190425689",
+            "source_locator_key": "https://history.state.gov/historicaldocuments/frus1928v01/d709"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_polity_designation_count": 1,
+    "republic_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
