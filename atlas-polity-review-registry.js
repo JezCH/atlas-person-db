@@ -88,19 +88,6 @@
         evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority", "2026-10-05 fresh Production: Joseon and Korean Empire are distinct identities with the intended 1897 boundary; current project model intentionally preserves the split"],
         locked: true
       },
-      {
-        id: "negros-provisional-cantonal",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Provisional Republic of Negros → Cantonal Republic of Negros",
-        left: { name: "Provisional Republic of Negros" },
-        right: { name: "Cantonal Republic of Negros" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      }
     ]),
     historical_family_reviews: freezeRows([
       {
@@ -591,6 +578,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "negros-provisional-cantonal",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Provisional Government of Negros → Cantonal Republic of Negros continuity/state-form merge",
+        left: { name: "Provisional Government of Negros", ko: "네그로스 임시정부", polity_id: "755e850a-3e74-43ad-927c-21153ab9a758" },
+        right: { name: "Cantonal Republic of Negros", ko: "네그로스 칸톤 공화국", polity_id: "94a4b95a-437a-4359-bff2-3c560c3f30b0" },
+        rationale: "The inherited seed label said Provisional Republic of Negros, but fresh Production contained Provisional Government of Negros and Cantonal Republic of Negros. Official Philippine evidence supports one continuous Negrense revolutionary polity across a provisional-to-cantonal constitutional transition: the Provincial Government of Negros Occidental states that the 5 November 1898 uprising led to the short-lived Cantonal Government of the Republic of Negros; the National Museum of the Philippines identifies the Lacson house as the presidential residence and seat of the Negros government through 4 March 1899; NHCP records the 6 November capitulation ending Spanish rule in Negros Occidental. ATLAS therefore relinked Lacson's 5-26 November provisional-government Activity to the Cantonal Republic survivor, preserved Provisional Government of Negros / 네그로스 임시정부 as a 5-26 November temporal state_form, retained the 27 November constitutional transition as a separate Activity phase, and corrected the Cantonal Republic presidency to end on 4 March 1899 rather than extending it into later U.S.-protected/administrative arrangements. The zero-external-reference legacy provisional Polity is retired.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; inherited 'Provisional Republic' label was evidence only and current Production used Provisional Government of Negros", "National Museum of the Philippines: Lacson house served as presidential residence and seat of the Negros Republic during the November 1898 revolution through 1899-03-04", "Provincial Government of Negros Occidental: 1898-11-05 uprising led to the short-lived Cantonal Government of the Republic of Negros", "NHCP capitulation marker: 1898-11-06 surrender ended Spanish rule in Negros Occidental", "#2114 continuity correction squash merge ffad34452144c10cb920f25048a68e4b9609eb5d; request negros_provisional_cantonal_continuity_merge_20261007_v1 applied 2026-10-07T21:42:05.920016Z", "Runtime compile runtime-person-politics-v1:18949b33d13f006dcfd2e1801dcc45f89c2dca4d4d877c86104899ce2d5c1a3d at 2026-10-07T21:42:39.749192Z resolves both Lacson phases to the Cantonal Republic survivor and ends the later phase on 1899-03-04", "#2115 legacy Provisional Government of Negros retirement squash merge ad2d85999d68c37eb51de355495e3d49578c5a60; retirement applied 2026-10-07T21:44:28.893026Z", "2026-10-07 final Production readback: legacy provisional live row 0; retirement ledger points to Cantonal Republic survivor; 1898-11-05→11-26 provisional state_form exists; Lacson Activities remain separate 1898-11-05→11-26 and 1898-11-27→1899-03-04 phases on one identity"],
+        locked: true
+      },
       {
         id: "paraguay-republic",
         review_group: "resolved_history",
