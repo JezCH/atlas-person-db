@@ -1,0 +1,223 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "austria_federal_state_continuity_merge_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_AUSTRIA_FEDERAL_STATE_CONTINUITY_STAGE2",
+  "release_order": 2103,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read after Stage 1 on 2026-10-07; Austrian Parliament official Engelbert Dollfuss office record; Austrian Parliament 1933-1938 constitutional history; Austrian RIS Constitution 1934 and 13 March 1938 annexation law; current ATLAS same-identity official-name rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_rewrite": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "austria_survivor": "ebee3963-6246-4b8e-9730-574001ec247d",
+    "federal_state_legacy": "ad85b693-1ee1-444d-8454-9f0f29bec36e",
+    "historical_decision": "The Republic of Austria and Federal State of Austria are constitutional and official-name phases of the same Austrian state identity. Austrian Parliament states that the 1 May 1934 May Constitution replaced the democratic order and that the official state name became Bundesstaat Österreich. Austrian RIS promulgated the 1934 Constitution on 1 May 1934 under the Bundesgesetzblatt für den Bundesstaat Österreich. Austria's independent state existence ended with the forced annexation into Nazi Germany on 13 March 1938; the 1938 constitutional law is therefore the terminal boundary for this official-name phase. This merge makes no claim that Austria continued as an independent polity during the 1938-1945 annexation.",
+    "activity_rule": "Austrian Parliament's official person record lists Engelbert Dollfuss as Bundeskanzler continuously from 20 May 1932 to 25 July 1934. The Production split at 1 May 1934 is therefore an artificial polity-name/constitution boundary, not an office boundary. The surviving Austria Activity keeps its UUID and is extended through Dollfuss's assassination on 25 July 1934.",
+    "designation_rule": "Preserve Federal State of Austria / 오스트리아 연방국 as temporal official_name on the Austria survivor from 1 May 1934 through 12 March 1938, ending the day before the 13 March 1938 constitutional annexation law."
+  },
+  "operations": [
+    {
+      "case_id": "austria-restore-dollfuss-continuous-chancellorship",
+      "type": "rewrite_activity",
+      "activity_id": "d380bec7-54de-4f61-bfcb-15dae6a3dcfd",
+      "baseline_before": {
+        "person_id": "c13581f3-d712-41ae-a859-8bea88194943",
+        "polity_id": "ebee3963-6246-4b8e-9730-574001ec247d",
+        "role_id": "6d5c65cd-baee-5cb0-b272-a9b9cb1ac355",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1932,
+        "activity_end": 1934,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "d380bec7-54de-4f61-bfcb-15dae6a3dcfd",
+        "person_id": "c13581f3-d712-41ae-a859-8bea88194943",
+        "polity_id": "ebee3963-6246-4b8e-9730-574001ec247d",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "6d5c65cd-baee-5cb0-b272-a9b9cb1ac355",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1932,
+        "activity_start_detail": {
+          "year": 1932,
+          "month": 5,
+          "day": 20,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1934,
+        "activity_end_detail": {
+          "year": 1934,
+          "month": 7,
+          "day": 25,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Engelbert Dollfuss served continuously as Austrian Federal Chancellor from 20 May 1932 until his assassination on 25 July 1934. The 1 May 1934 May Constitution replaced the democratic constitutional order and changed the official state name to Bundesstaat Österreich, but it did not create a new chancellorship or a new Austrian sovereign identity. ATLAS therefore preserves one continuous Dollfuss chancellorship on the canonical Austria polity while representing the 1934-1938 Federal State phase as a temporal official-name designation.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "austria-source-parliament-dollfuss-office-record",
+      "exact_before": {
+        "source_absent_id": "256ddb96-05ae-4a4d-9f46-46a6b27268d4"
+      },
+      "exact_after": {
+        "source": {
+          "id": "256ddb96-05ae-4a4d-9f46-46a6b27268d4",
+          "source_key": "bibliographic:austrian-parliament:engelbert-dollfuss-office-record",
+          "source_type": "government_reference",
+          "title": "Dr. Engelbert Dollfuß — Austrian Parliament",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.parlament.gv.at/person/64201",
+          "citation_text": "The Austrian Parliament lists Engelbert Dollfuss as Bundeskanzler continuously from 20 May 1932 to 25 July 1934."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "austria-source-parliament-end-democracy-1934",
+      "exact_before": {
+        "source_absent_id": "2ec88ca8-f886-4e18-8d8e-2a6a186d6138"
+      },
+      "exact_after": {
+        "source": {
+          "id": "2ec88ca8-f886-4e18-8d8e-2a6a186d6138",
+          "source_key": "bibliographic:austrian-parliament:1934-may-constitution-federal-state-name",
+          "source_type": "government_reference",
+          "title": "Ende der Demokratie 1933/34 — Austrian Parliament",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.parlament.gv.at/verstehen/historisches/1918-1945/ende-der-demokratie/index.html",
+          "citation_text": "The Austrian Parliament states that the authoritarian constitution was issued on 1 May 1934 and that the state's official name thereafter was Bundesstaat Österreich."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "austria-source-ris-constitution-1934",
+      "exact_before": {
+        "source_absent_id": "c0ba2e0e-3b4c-4f61-9630-d4e2f111e33e"
+      },
+      "exact_after": {
+        "source": {
+          "id": "c0ba2e0e-3b4c-4f61-9630-d4e2f111e33e",
+          "source_key": "bibliographic:austrian-ris:constitution-1934-bgbl-1",
+          "source_type": "government_reference",
+          "title": "Kundmachung der Bundesregierung vom 1. Mai 1934, womit die Verfassung 1934 verlautbart wird — RIS",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.ris.bka.gv.at/Dokument.wxe?Abfrage=BgblAlt&Dokumentnummer=bgl1934_0001_00001",
+          "citation_text": "Austrian RIS records the promulgation of the 1934 Constitution on 1 May 1934 in the Bundesgesetzblatt für den Bundesstaat Österreich."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "austria-source-ris-annexation-law-1938",
+      "exact_before": {
+        "source_absent_id": "f8bed220-514e-4f0d-9422-7f8c1417ce04"
+      },
+      "exact_after": {
+        "source": {
+          "id": "f8bed220-514e-4f0d-9422-7f8c1417ce04",
+          "source_key": "bibliographic:austrian-ris:annexation-law-1938-bgbl-75",
+          "source_type": "government_reference",
+          "title": "Bundesverfassungsgesetz über die Wiedervereinigung Österreichs mit dem Deutschen Reich — RIS",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.ris.bka.gv.at/Dokument.wxe?Abfrage=BgblAlt&Dokumentnummer=bgl1938_0075_00259",
+          "citation_text": "Austrian RIS records the constitutional law of 13 March 1938 on the incorporation of Austria into the German Reich, providing the terminal boundary for the independent Federal State phase."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "austria-official-name-federal-state-1934-1938",
+      "exact_before": {
+        "designation_absent_id": "347f6f7b-6a2e-4d82-a2b6-30c775362be1"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "347f6f7b-6a2e-4d82-a2b6-30c775362be1",
+          "polity_id": "ebee3963-6246-4b8e-9730-574001ec247d",
+          "designation_type": "official_name",
+          "valid_from_year": 1934,
+          "valid_from_month": 5,
+          "valid_from_day": 1,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1938,
+          "valid_to_month": 3,
+          "valid_to_day": 12,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Federal State of Austria / Bundesstaat Österreich is preserved as the official-name phase of the continuous Austrian state beginning with the 1 May 1934 May Constitution. The designation ends on 12 March 1938, the day before the 13 March constitutional annexation law incorporated Austria into Nazi Germany. This designation does not assert independent Austrian state continuity during the 1938-1945 annexation."
+        },
+        "names": [
+          {
+            "id": "1c71a955-2f3e-4b3f-9d6b-922372a60ea8",
+            "polity_designation_id": "347f6f7b-6a2e-4d82-a2b6-30c775362be1",
+            "locale": "en",
+            "name": "Federal State of Austria",
+            "is_preferred": true
+          },
+          {
+            "id": "ba686dbf-1f22-4378-aed4-4bf8f96542b1",
+            "polity_designation_id": "347f6f7b-6a2e-4d82-a2b6-30c775362be1",
+            "locale": "ko",
+            "name": "오스트리아 연방국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "347f6f7b-6a2e-4d82-a2b6-30c775362be1",
+            "source_id": "2ec88ca8-f886-4e18-8d8e-2a6a186d6138",
+            "source_locator_key": "https://www.parlament.gv.at/verstehen/historisches/1918-1945/ende-der-demokratie/index.html"
+          },
+          {
+            "polity_designation_id": "347f6f7b-6a2e-4d82-a2b6-30c775362be1",
+            "source_id": "c0ba2e0e-3b4c-4f61-9630-d4e2f111e33e",
+            "source_locator_key": "https://www.ris.bka.gv.at/Dokument.wxe?Abfrage=BgblAlt&Dokumentnummer=bgl1934_0001_00001"
+          },
+          {
+            "polity_designation_id": "347f6f7b-6a2e-4d82-a2b6-30c775362be1",
+            "source_id": "f8bed220-514e-4f0d-9422-7f8c1417ce04",
+            "source_locator_key": "https://www.ris.bka.gv.at/Dokument.wxe?Abfrage=BgblAlt&Dokumentnummer=bgl1938_0075_00259"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_source_count": 4,
+    "asserted_polity_designation_count": 1,
+    "federal_state_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
