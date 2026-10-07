@@ -166,7 +166,7 @@ test('era navigation assets load after the shared era model/table grouping and b
   const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
   const mainJs = html.match(/atlas-person-main\.js\?v=[^"'\s>]+/)?.[0] || '';
   const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
-  const navCssAsset = 'atlas-person-era-navigation.css?v=20261007-era-m3-focus-v1';
+  const navCssAsset = 'atlas-person-era-navigation.css?v=20261007-era-m4-unknown-material-v1';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1';
 
   for (const asset of [eraModelJs, tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
@@ -250,4 +250,13 @@ test('ERA-M3 unifies Era control focus without changing selected-state semantics
 
   assert.match(navCss, /\.person-era-jump\.is-current\{[^}]*outline:1px solid rgba\(192,174,136,\.78\)/);
   assert.match(navCss, /\.person-era-jump\.is-current\{[\s\S]*?outline-color:rgba\(208,188,145,\.54\)/);
+});
+
+
+test('ERA-M4 keeps unknown chronology recessed on shared material tokens', () => {
+  assert.match(navCss, /ERA-M4 — Unknown chronology material normalization/);
+  assert.match(navCss, /\.person-era-jump\.person-era-unknown\{[^}]*margin-left:14px[^}]*border-color:var\(--atlas-material-hairline-soft\)[^}]*background:var\(--atlas-canvas-deep\)[^}]*color:#858d92/);
+  assert.match(navCss, /\.person-era-jump\.person-era-unknown::before\{[^}]*left:-10px[^}]*width:1px[^}]*background:var\(--atlas-material-hairline-strong\)/);
+  assert.doesNotMatch(navCss, /\.person-era-jump\.person-era-unknown\{[^}]*#3a4247|\.person-era-jump\.person-era-unknown\{[^}]*#14181b/);
+  assert.doesNotMatch(navCss, /\.person-era-jump\.person-era-unknown::before\{[^}]*#41494e/);
 });
