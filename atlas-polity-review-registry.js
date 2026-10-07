@@ -59,19 +59,6 @@
         locked: true
       },
       {
-        id: "iran-imperial-state",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Iran → Imperial State of Iran",
-        left: { name: "Iran" },
-        right: { name: "Imperial State of Iran" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "upper-volta-burkina-faso",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -734,6 +721,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "iran-imperial-state",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Iran → Imperial State of Iran generic/formal identity merge",
+        left: { name: "Iran", ko: "이란", polity_id: "dc6ffb85-4cc1-4570-b845-549a650f8f29" },
+        right: { name: "Imperial State of Iran", ko: "이란 제국", polity_id: "31f1be4e-4e24-4728-9b1b-c62bf38bc19e" },
+        rationale: "1951–1953년 모하마드 모사데그의 두 총리 Activity가 generic Iran에, 같은 시기 모하마드 레자 팔라비의 1941–1979 Shah Activity가 Imperial State of Iran에 분리되어 있었으나 모두 동일 Pahlavi monarchical state의 직위였습니다. Encyclopaedia Iranica와 동시대 FRUS는 모사데그가 샤에 의해 총리로 임명·재임명되었고 1952년 내각/국방장관 권한을 두고 같은 샤와 헌정 갈등을 벌였음을 확인합니다. #2038에서 모사데그의 두 Activity UUID와 정확한 재임 경계·출처를 보존한 채 Imperial State survivor로 재연결했습니다. Iran은 별도 역사적 state-form이 아니라 generic short country label이므로 근거 없는 temporal designation은 만들지 않았고, Islamic Republic of Iran은 별도 identity로 유지했습니다. #2041에서 Runtime을 재컴파일하고 #2045에서 zero-external-reference generic Iran Polity를 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "Encyclopaedia Iranica, COUP D’ETAT OF 1332 Š./1953 and IRAN ii. Islamic period: Mosaddegh was selected by the Majles and appointed prime minister by the Shah in 1951", "FRUS 1952–1954 Iran documents 82 and 97: Mosaddegh submitted his cabinet to the Shah, resigned after the Shah refused his War Ministry demand, and returned after the Shah signed the royal decree appointing him prime minister", "#2038 Iran continuity plan squash merge 52266b99e0b7086dfd0ff431a9c2cbc465b0d2f5; Correction Apply committed 2026-10-07T04:32:46.622404Z", "2026-10-07 exact Production after correction: Mosaddegh Activities bb39bbd3-198a-46de-80ce-8827b1fcaf81 and 29a034b5-9b09-40f1-a393-f639fd4f0978 both point to Imperial State survivor 31f1be4e-4e24-4728-9b1b-c62bf38bc19e", "#2041 Runtime refresh squash merge 3ff8f6aec83aa47d5066524fb729eedb667011cb; runtime compile runtime-person-politics-v1:977607239f2dc8c7035cd0064e06c1f3a2025a9610a14aa03861b70543f4f057 at 2026-10-07T04:34:49.200009Z", "#2045 legacy generic Iran retirement squash merge d66ab1ed56006d1d14af3d85ce0461e9cafe5962; retirement applied 2026-10-07T04:38:52.626322Z", "2026-10-07 final Production + Runtime readback: both Mosaddegh Activities authoring/runtime on Imperial State survivor; legacy Iran live row 0; survivor live row 1; retirement ledger entry 1"],
+        locked: true
+      },
       {
         id: "albania-republic-kingdom",
         review_group: "resolved_history",
