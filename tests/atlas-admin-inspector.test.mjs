@@ -9,6 +9,7 @@ const {
   PERSON_INSPECT_SQL,
   ACTIVITY_INSPECT_SQL,
   POLITY_INSPECT_SQL,
+  POLITY_RETIREMENT_INSPECT_SQL,
   ROLE_INSPECT_SQL,
   PERIOD_BASIS_INSPECT_SQL,
   RELATION_TYPE_INSPECT_SQL,
@@ -54,6 +55,7 @@ test('Admin inspector supports the bounded core authoritative object set only', 
     'person',
     'activity',
     'polity',
+    'polity_retirement',
     'role',
     'period_basis',
     'relation_type',
@@ -96,6 +98,18 @@ test('Admin inspector SQL is read-only, parameterized, and exposes raw safe iden
 
   assert.match(POLITY_INSPECT_SQL, /canonical_key/);
   assert.match(POLITY_INSPECT_SQL, /activity_ids/);
+  for (const field of [
+    'polity_identity_retirements',
+    'polity_identity_retirement_names',
+    'retired_polity_id',
+    'survivor_polity_id',
+    'retired_names',
+    'survivor',
+    'review_reason',
+    'source_request_id',
+    'source_case_id',
+    'retired_at'
+  ]) assert.match(POLITY_RETIREMENT_INSPECT_SQL, new RegExp(field));
   assert.match(ROLE_INSPECT_SQL, /source_label/);
   assert.match(PERIOD_BASIS_INSPECT_SQL, /activity_ids/);
   assert.match(RELATION_TYPE_INSPECT_SQL, /category/);
@@ -132,6 +146,31 @@ test('readAdminObject selects a fixed projection by kind and preserves raw datab
     () => readAdminObject({ client, kind: 'future_object', id: PERSON_ID }),
     /ADMIN_INSPECTOR_KIND_UNSUPPORTED/
   );
+});
+
+test('Admin inspector returns an authoritative retirement record and its survivor binding', async () => {
+  const retiredId = '00000000-0000-4000-8000-000000000301';
+  const survivorId = '00000000-0000-4000-8000-000000000302';
+  const row = {
+    retired_polity_id: retiredId,
+    survivor_polity_id: survivorId,
+    canonical_key: 'Legacy polity',
+    review_reason: 'REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE',
+    retired_names: [{ locale: 'ko', name: '옛 정치체', is_preferred: true }],
+    survivor: { id: survivorId, canonical_key: 'Survivor', names: [] }
+  };
+  const client = {
+    async query(sql, params) {
+      assert.equal(sql, POLITY_RETIREMENT_INSPECT_SQL);
+      assert.deepEqual(params, [retiredId]);
+      return { rowCount: 1, rows: [row] };
+    }
+  };
+  const result = await readAdminObject({ client, kind: 'polity_retirement', id: retiredId });
+  assert.equal(result.kind, 'polity_retirement');
+  assert.equal(result.object.retired_polity_id, retiredId);
+  assert.equal(result.object.survivor.id, survivorId);
+  assert.equal(result.object.retired_names[0].name, '옛 정치체');
 });
 
 test('readAdminObject returns null for a valid UUID that is absent', async () => {
