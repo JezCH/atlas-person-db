@@ -136,7 +136,7 @@ test("SHELL-M1 global shell consumes shared structural material tokens without i
   assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-shell-m2-luminance-v1/);
 
   const shellStart = foundation.indexOf("SHELL-M1 — Structural material normalization");
-  const shellEnd = foundation.indexOf("/* ---------- Operational controls ----------", shellStart);
+  const shellEnd = foundation.indexOf("SHELL-M2 — Navigation interaction luminance", shellStart);
   const shell = foundation.slice(shellStart, shellEnd);
   assert.doesNotMatch(shell, /\.nav-item:hover:not\(:disabled\)[\s\S]*?var\(--atlas-material-wash-hover\)/);
   assert.doesNotMatch(shell, /\.nav-item\.active[\s\S]*?var\(--atlas-material-wash-(?:active|selected)\)/);
