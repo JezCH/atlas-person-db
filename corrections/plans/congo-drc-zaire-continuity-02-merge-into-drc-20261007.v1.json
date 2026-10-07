@@ -1,0 +1,338 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "congo_drc_zaire_continuity_merge_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_CONGO_DRC_ZAIRE_CONTINUITY_STAGE2",
+  "release_order": 2063,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; #2064 retired the Léopoldville-side Tshombe and Zaire-side Mobutu name-boundary fragments; fresh Production exact read 2026-10-07; United Nations authority records for Republic of the Congo (Léopoldville) and Zaire; U.S. Department of State Congo records; current ATLAS same-identity official-name rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "leopoldville_polity": "14ea7cd5-b0ee-4e63-a7a6-0995a9a3a018",
+    "zaire_polity": "c6a2181d-3263-4e46-9349-214b85eead32",
+    "drc_survivor": "05242fe7-eefa-4140-806b-4a058e3c2c8a",
+    "stage1_request_id": "congo_drc_zaire_continuity_boundary_retirement_20261007_v1",
+    "stage1_applied_at": "2026-10-07T07:37:46.459937+00:00",
+    "historical_decision": "The sovereign state admitted to the U.N. in 1960 continued through successive official names: Republic of the Congo (Léopoldville), Democratic Republic of the Congo from 1 August 1964, Republic of Zaire from 27 October 1971, and Democratic Republic of the Congo again from 17 May 1997. U.N. authority records explicitly describe each transition as a name change. ATLAS therefore models one continuous polity identity rather than separate state extinctions/replacements.",
+    "activity_rule": "Patrice Lumumba's sovereign-state premiership, Moïse Tshombe's continuous 10 July 1964–13 October 1965 premiership, and Mobutu Sese Seko's continuous 25 November 1965–16 May 1997 presidency all belong to the same DRC polity identity. Official-name changes must not split continuous office tenures.",
+    "designation_rule": "Preserve Republic of the Congo (Léopoldville) / 콩고 공화국(레오폴드빌) as official_name from independence on 30 June 1960 through 31 July 1964. Preserve Republic of Zaire / 자이르 공화국 as official_name from 27 October 1971 through 16 May 1997."
+  },
+  "operations": [
+    {
+      "case_id": "congo-drc-relink-lumumba-to-drc-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "23286cf5-4f7a-4883-b3e3-10c2c85c7144",
+      "baseline_before": {
+        "person_id": "11624134-e89d-45e0-ada6-28d1b3eb4e0a",
+        "polity_id": "14ea7cd5-b0ee-4e63-a7a6-0995a9a3a018",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1960,
+        "activity_end": 1960,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "23286cf5-4f7a-4883-b3e3-10c2c85c7144",
+        "person_id": "11624134-e89d-45e0-ada6-28d1b3eb4e0a",
+        "polity_id": "05242fe7-eefa-4140-806b-4a058e3c2c8a",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1960,
+        "activity_start_detail": {
+          "year": 1960,
+          "month": 6,
+          "day": 30,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1960,
+        "activity_end_detail": {
+          "year": 1960,
+          "month": 9,
+          "day": 5,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Patrice Lumumba headed the government of the sovereign Congolese state from independence on 30 June 1960 until President Joseph Kasavubu dismissed him on 5 September 1960. ATLAS models the Republic of the Congo (Léopoldville), later Democratic Republic of the Congo and Zaire as successive official names of one continuous polity identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "congo-drc-restore-tshombe-continuous-premiership",
+      "type": "rewrite_activity",
+      "activity_id": "c044b7f6-a1e0-48e2-858d-b46bee1d8ebe",
+      "baseline_before": {
+        "person_id": "c2124219-2d9c-4568-b4e4-34907d2d6462",
+        "polity_id": "05242fe7-eefa-4140-806b-4a058e3c2c8a",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1964,
+        "activity_end": 1965,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "after": {
+        "activity_id": "c044b7f6-a1e0-48e2-858d-b46bee1d8ebe",
+        "person_id": "c2124219-2d9c-4568-b4e4-34907d2d6462",
+        "polity_id": "05242fe7-eefa-4140-806b-4a058e3c2c8a",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1964,
+        "activity_start_detail": {
+          "year": 1964,
+          "month": 7,
+          "day": 10,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1965,
+        "activity_end_detail": {
+          "year": 1965,
+          "month": 10,
+          "day": 13,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Moïse Tshombe served continuously as prime minister from 10 July 1964 until his dismissal on 13 October 1965. The 1 August 1964 change from Republic of the Congo (Léopoldville) to Democratic Republic of the Congo was an official-name transition within the same polity and does not split his premiership.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "congo-drc-restore-mobutu-continuous-presidency",
+      "type": "rewrite_activity",
+      "activity_id": "1ec377cb-14cc-43fc-aba1-59da4d1c1f7a",
+      "baseline_before": {
+        "person_id": "e19cedd6-9eaf-4d4f-9a41-7eb6d44966a0",
+        "polity_id": "05242fe7-eefa-4140-806b-4a058e3c2c8a",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1965,
+        "activity_end": 1971,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "after": {
+        "activity_id": "1ec377cb-14cc-43fc-aba1-59da4d1c1f7a",
+        "person_id": "e19cedd6-9eaf-4d4f-9a41-7eb6d44966a0",
+        "polity_id": "05242fe7-eefa-4140-806b-4a058e3c2c8a",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1965,
+        "activity_start_detail": {
+          "year": 1965,
+          "month": 11,
+          "day": 25,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1997,
+        "activity_end_detail": {
+          "year": 1997,
+          "month": 5,
+          "day": 16,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Mobutu Sese Seko held presidential power continuously from the 25 November 1965 coup until he fled Kinshasa on 16 May 1997. The 27 October 1971 renaming of the state to the Republic of Zaire was an official-name change within the same polity and does not split his presidency.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "congo-drc-source-un-leopoldville-authority",
+      "exact_before": {
+        "source_absent_id": "be3f41b6-c1cb-4f14-a8d4-d60c2fb11de3"
+      },
+      "exact_after": {
+        "source": {
+          "id": "be3f41b6-c1cb-4f14-a8d4-d60c2fb11de3",
+          "source_key": "bibliographic:un-digital-library:authority-republic-congo-leopoldville",
+          "source_type": "government_archive",
+          "title": "Republic of the Congo (Leopoldville) — United Nations authority record",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://digitallibrary.un.org/record/1202065",
+          "citation_text": "The United Nations authority record treats Republic of the Congo (Leopoldville) as the name used from independence on 30 June 1960 through 31 July 1964 and records the change to Democratic Republic of the Congo on 1 August 1964."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "congo-drc-source-un-zaire-authority",
+      "exact_before": {
+        "source_absent_id": "90a9020c-5fa7-49e9-8488-55ec884ed8f1"
+      },
+      "exact_after": {
+        "source": {
+          "id": "90a9020c-5fa7-49e9-8488-55ec884ed8f1",
+          "source_key": "bibliographic:un-digital-library:authority-zaire",
+          "source_type": "government_archive",
+          "title": "Zaire — United Nations authority record",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://digitallibrary.un.org/record/878251",
+          "citation_text": "The United Nations authority record states that the country changed its name to Zaire on 27 October 1971 and changed back to Democratic Republic of the Congo on 17 May 1997."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "congo-drc-official-name-leopoldville-1960-1964",
+      "exact_before": {
+        "designation_absent_id": "227e1d70-c191-42f9-9d76-231cd7de267e"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "227e1d70-c191-42f9-9d76-231cd7de267e",
+          "polity_id": "05242fe7-eefa-4140-806b-4a058e3c2c8a",
+          "designation_type": "official_name",
+          "valid_from_year": 1960,
+          "valid_from_month": 6,
+          "valid_from_day": 30,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1964,
+          "valid_to_month": 7,
+          "valid_to_day": 31,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Republic of the Congo (Léopoldville) is preserved as the official-name phase of the continuous Democratic Republic of the Congo polity from independence on 30 June 1960 through 31 July 1964. The United Nations records the change to Democratic Republic of the Congo on 1 August 1964."
+        },
+        "names": [
+          {
+            "id": "6bfbe0ec-6f2b-46df-a1fb-a76b22c42eca",
+            "polity_designation_id": "227e1d70-c191-42f9-9d76-231cd7de267e",
+            "locale": "en",
+            "name": "Republic of the Congo (Léopoldville)",
+            "is_preferred": true
+          },
+          {
+            "id": "5acec235-9f59-49bf-922b-c10615ef7b85",
+            "polity_designation_id": "227e1d70-c191-42f9-9d76-231cd7de267e",
+            "locale": "ko",
+            "name": "콩고 공화국(레오폴드빌)",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "227e1d70-c191-42f9-9d76-231cd7de267e",
+            "source_id": "5e00c65f-1b37-4e9d-908c-dda4c0349f44",
+            "source_locator_key": "https://history.state.gov/milestones/1961-1968/congo-decolonization"
+          },
+          {
+            "polity_designation_id": "227e1d70-c191-42f9-9d76-231cd7de267e",
+            "source_id": "be3f41b6-c1cb-4f14-a8d4-d60c2fb11de3",
+            "source_locator_key": "https://digitallibrary.un.org/record/1202065"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "congo-drc-official-name-zaire-1971-1997",
+      "exact_before": {
+        "designation_absent_id": "aa4ca285-a63c-4c21-8817-dc6c0a6d5c7e"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "aa4ca285-a63c-4c21-8817-dc6c0a6d5c7e",
+          "polity_id": "05242fe7-eefa-4140-806b-4a058e3c2c8a",
+          "designation_type": "official_name",
+          "valid_from_year": 1971,
+          "valid_from_month": 10,
+          "valid_from_day": 27,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1997,
+          "valid_to_month": 5,
+          "valid_to_day": 16,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Republic of Zaire is preserved as the official-name phase of the continuous Democratic Republic of the Congo polity from 27 October 1971 through 16 May 1997. The United Nations records the change back to Democratic Republic of the Congo effective 17 May 1997."
+        },
+        "names": [
+          {
+            "id": "2088841e-91a9-49cd-929e-ce5d3ea01890",
+            "polity_designation_id": "aa4ca285-a63c-4c21-8817-dc6c0a6d5c7e",
+            "locale": "en",
+            "name": "Republic of Zaire",
+            "is_preferred": true
+          },
+          {
+            "id": "f3860c89-fc1e-4861-953c-c34783263c28",
+            "polity_designation_id": "aa4ca285-a63c-4c21-8817-dc6c0a6d5c7e",
+            "locale": "ko",
+            "name": "자이르 공화국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "aa4ca285-a63c-4c21-8817-dc6c0a6d5c7e",
+            "source_id": "cb3970cc-3393-4567-a006-d621131de1c9",
+            "source_locator_key": "https://2009-2017.state.gov/s/cpr/rls/91592.htm"
+          },
+          {
+            "polity_designation_id": "aa4ca285-a63c-4c21-8817-dc6c0a6d5c7e",
+            "source_id": "90a9020c-5fa7-49e9-8488-55ec884ed8f1",
+            "source_locator_key": "https://digitallibrary.un.org/record/878251"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 3,
+    "asserted_source_count": 2,
+    "asserted_polity_designation_count": 2,
+    "leopoldville_activity_refs_after_expected": 0,
+    "zaire_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
