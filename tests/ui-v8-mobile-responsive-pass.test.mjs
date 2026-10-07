@@ -68,7 +68,7 @@ test("UI V8 keeps Detail rich on mobile while centering the portrait-first hero"
 test("UI V8 loads Spacetime mobile CSS after V7 and keeps the toolbar two-tier", () => {
   const nav = read("atlas-main-authority-nav.js");
   const v7 = "atlas-person-spacetime-instrument-tools.css?v=20261007-spacetime-m3-luminance-v1";
-  const v8 = "atlas-person-spacetime-mobile-v8.css?v=20261003-ui-v8-mobile-v1";
+  const v8 = "atlas-person-spacetime-mobile-v8.css?v=20261007-spacetime-m4-mobile-material-v1";
   const css = read("atlas-person-spacetime-mobile-v8.css");
 
   assert.ok(nav.includes(v7));
@@ -122,4 +122,15 @@ test("UI V8 leaves Spacetime geometry constants and data paths unchanged", () =>
   assert.match(view, /const MOBILE_PRESENTATION_SCALE = 0\.46;/);
   assert.match(view, /dataStore\.loadSpatialIndex/);
   assert.match(view, /dataStore\.loadPersons/);
+});
+
+
+test("SPACETIME-M4 keeps mobile late edges on shared material tokens", () => {
+  const css = read("atlas-person-spacetime-mobile-v8.css");
+
+  assert.match(css, /SPACETIME-M4 — Mobile late material ownership/);
+  assert.match(css, /\.spacetime-camera button,[\s\S]*?\.spacetime-camera output \{[\s\S]*?border-left: 1px solid var\(--atlas-material-hairline-soft\)/);
+  assert.match(css, /\.spacetime-camera button:first-of-type \{[\s\S]*?border-left: 1px solid var\(--atlas-material-hairline-soft\)/);
+  assert.match(css, /\.spacetime-status-more-content \{[\s\S]*?border-top: 1px solid var\(--atlas-material-hairline-soft\)/);
+  assert.doesNotMatch(css, /#2c3338|#2d3439/);
 });
