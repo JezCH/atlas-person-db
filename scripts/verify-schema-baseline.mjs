@@ -47,7 +47,8 @@ const expectedAuthoringMigrations = [
   '20261003_person_registration_queue_authority.sql',
   '20261003_shah_abbas_registration_queue_binding.sql',
   '20261004_person_representative_domain_standard_v2_replay_safe.sql',
-  '20261006_user_selected_person_registration_queue_07.sql'
+  '20261006_user_selected_person_registration_queue_07.sql',
+  '20261007_youtube_person_signal_read_model.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -76,7 +77,8 @@ const expectedAuthoringReplayMigrations = [
   '20260930_unit16_retire_external_reference_sync_trigger.sql',
   '20261003_person_registration_queue_authority.sql',
   '20261003_shah_abbas_registration_queue_binding.sql',
-  '20261006_user_selected_person_registration_queue_07.sql'
+  '20261006_user_selected_person_registration_queue_07.sql',
+  '20261007_youtube_person_signal_read_model.sql'
 ];
 
 const expectedCorrectionMigrations = [
@@ -343,6 +345,30 @@ try {
   assertAuthoringMigrationRegistry(firstAuthoringReplay, 'first authoring replay');
   assertAuthoringMigrationRegistry(secondAuthoringReplay, 'second authoring replay');
 
+  const youtubeSignalTables = await client.query(`
+    select table_name
+      from information_schema.tables
+     where table_schema='atlas_v2'
+       and table_name in ('youtube_person_signal_snapshots','youtube_person_signals')
+     order by table_name`);
+  same(
+    youtubeSignalTables.rows.map((row) => row.table_name),
+    ['youtube_person_signal_snapshots','youtube_person_signals'],
+    'YouTube person signal read-model tables'
+  );
+
+  const youtubeSignalIndexes = await client.query(`
+    select indexname
+      from pg_indexes
+     where schemaname='atlas_v2'
+       and indexname in ('youtube_person_signal_snapshots_generated_idx','youtube_person_signals_channel_rank_idx')
+     order by indexname`);
+  same(
+    youtubeSignalIndexes.rows.map((row) => row.indexname),
+    ['youtube_person_signal_snapshots_generated_idx','youtube_person_signals_channel_rank_idx'],
+    'YouTube person signal read-model indexes'
+  );
+
   const p9Readback = await inspectP9Cutover(client);
   if (p9Readback.old_index_present || !p9Readback.new_index_present || p9Readback.duplicate_groups !== 0 || p9Readback.ready !== true) {
     throw new Error(`current P9 schema read-back failed: ${JSON.stringify(p9Readback)}`);
@@ -561,6 +587,7 @@ try {
     maintenance_indexes: expectedIndexes.length,
     authoring_migrations: firstAuthoringReplay.applied.length,
     authoring_migration_replay: true,
+    youtube_person_signal_read_model_tables: youtubeSignalTables.rows.length,
     person_profile_authoring_tables: profileTables.rows.length,
     reviewed_candidate_boundary_tables: candidateTables.rows.length,
     person_timeline_disposition_table: timelineTables.rows.length,
