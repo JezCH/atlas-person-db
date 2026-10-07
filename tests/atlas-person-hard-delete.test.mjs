@@ -54,6 +54,9 @@ function createFakeClient({ personExists = true, verification = verificationRow(
         }
         return { rowCount: 1, rows: [{ relation: null }] };
       }
+      if (text.startsWith('select count(*)::int as runtime_activity_count from atlas_v2.runtime_person_politics_v1')) {
+        return { rowCount: 1, rows: [{ runtime_activity_count: runtimeProjectionPresent ? 1 : 0 }] };
+      }
       if (text.includes('as active_duplicate_candidates')) return { rowCount: 1, rows: [verification] };
       if (text.startsWith('select count(*)::int as source_count from atlas_v2.person_portrait_sources')) {
         return { rowCount: 1, rows: [{ source_count: 1 }] };
@@ -76,10 +79,26 @@ function createFakeClient({ personExists = true, verification = verificationRow(
 }
 
 function dependencies() {
-  const calls = { lock: 0 };
+  const calls = { lock: 0, runtimeCompile: 0, runtimeCompileCallIndex: null };
   return {
     calls,
-    frontierLock: async () => { calls.lock += 1; }
+    frontierLock: async () => { calls.lock += 1; },
+    runtimeCompiler: async (client, { runtimeSha, authoringSha, recordActivation }) => {
+      calls.runtimeCompile += 1;
+      calls.runtimeCompileCallIndex = client.calls.length;
+      assert.equal(runtimeSha, 'a'.repeat(40));
+      assert.equal(authoringSha, 'b'.repeat(40));
+      assert.equal(recordActivation, true);
+      return Object.freeze({
+        compile_key: 'runtime-person-politics-v1:post-delete',
+        input_row_count: 0,
+        output_row_count: 0,
+        excluded_row_count: 0,
+        activation: Object.freeze({ id: '99' })
+      });
+    },
+    runtimeSha: 'a'.repeat(40),
+    authoringSha: 'b'.repeat(40)
   };
 }
 
@@ -176,7 +195,6 @@ test('successful Person hard-delete removes live references, stales only target 
     'delete from atlas_v2.relationship_descriptions',
     'delete from atlas_v2.person_people_affiliation_sources',
     'delete from atlas_v2.person_event_participation_sources',
-    'delete from atlas_v2.runtime_person_politics_v1',
     'delete from atlas_v2.person_politics_v2',
     'delete from atlas_v2.person_people_affiliations',
     'delete from atlas_v2.person_event_participations',
@@ -188,9 +206,20 @@ test('successful Person hard-delete removes live references, stales only target 
     'delete from atlas_v2.persons'
   ]) assert.ok(sql.some((text) => text.startsWith(expected)), `missing ${expected}`);
 
-  const runtimeDeleteIndex = sql.findIndex((text) => text.startsWith('delete from atlas_v2.runtime_person_politics_v1'));
+  const activityDeleteIndex = sql.findIndex((text) => text.startsWith('delete from atlas_v2.person_politics_v2'));
   const personDeleteIndex = sql.findIndex((text) => text.startsWith('delete from atlas_v2.persons'));
-  assert.ok(runtimeDeleteIndex >= 0 && runtimeDeleteIndex < personDeleteIndex, 'runtime projection must be deleted before Person FK target');
+  assert.equal(sql.some((text) => text.startsWith('delete from atlas_v2.runtime_person_politics_v1 where person_id=')), false);
+  assert.equal(deps.calls.runtimeCompile, 1);
+  assert.ok(activityDeleteIndex >= 0 && activityDeleteIndex < deps.calls.runtimeCompileCallIndex, 'Authoring Activity must be removed before Runtime recompilation');
+  assert.ok(deps.calls.runtimeCompileCallIndex < personDeleteIndex, 'Runtime projection must be canonically recompiled before Person FK target is deleted');
+  assert.equal(outcome.v2.deleted_counts.runtime_activities, 1);
+  assert.deepEqual(outcome.v2.deleted_counts.runtime_projection_refresh, {
+    compile_key: 'runtime-person-politics-v1:post-delete',
+    input_row_count: 0,
+    output_row_count: 0,
+    excluded_row_count: 0,
+    activation_id: '99'
+  });
 
   assert.ok(sql.some((text) => text.startsWith('update atlas_v2.person_duplicate_candidates') && text.includes("candidate_state='stale'")));
   assert.ok(sql.some((text) => text.includes('person_duplicate_revalidation_requirements') && text.startsWith('update ')));
@@ -199,6 +228,29 @@ test('successful Person hard-delete removes live references, stales only target 
   assert.equal(sql.some((text) => text.includes('delete from atlas_v2.person_duplicate_candidates')), false);
   assert.equal(sql.some((text) => text.includes('person_portrait_sources')), false);
   assert.equal(sql.at(-1), 'commit');
+});
+
+test('runtime-backed hard-delete fails closed instead of mutating Runtime outside the compiler', async () => {
+  const client = createFakeClient();
+  const deps = dependencies();
+  const service = createPersonDeleteService({
+    client,
+    ...deps,
+    runtimeCompiler: null
+  });
+  const outcome = await service.mutate({
+    request_id: 'hard-delete-runtime-compiler-missing',
+    operation: 'delete_person',
+    payload: { person_id: PERSON }
+  });
+
+  assert.equal(outcome.committed, false);
+  assert.equal(outcome.rollback, true);
+  assert.match(outcome.transaction_failure, /PERSON_DELETE_RUNTIME_COMPILER_REQUIRED/);
+  const sql = client.calls.map(({ text }) => text);
+  assert.equal(sql.some((text) => text.startsWith('delete from atlas_v2.runtime_person_politics_v1 where person_id=')), false);
+  assert.equal(sql.includes('commit'), false);
+  assert.equal(sql.at(-1), 'rollback');
 });
 
 test('remaining live reference after destructive statements fails closed and rolls the whole transaction back', async () => {
