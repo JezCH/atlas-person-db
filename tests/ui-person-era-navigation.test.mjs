@@ -144,7 +144,9 @@ test('MOBILE-NAV1 keeps mobile navigation geometry while adopting instrument mat
 
   assert.match(material, /var\(--atlas-material-hairline\)/);
   assert.match(material, /var\(--atlas-material-sheen\)/);
-  assert.match(material, /var\(--atlas-material-wash-active\)/);
+  assert.match(material, /var\(--atlas-material-wash-hover\)/);
+  assert.match(material, /var\(--atlas-material-wash-selected\)/);
+  assert.doesNotMatch(material, /var\(--atlas-material-wash-active\)/);
   assert.match(material, /var\(--atlas-material-glint\)/);
   assert.match(material, /var\(--person-filter-domain-color\)/);
 
