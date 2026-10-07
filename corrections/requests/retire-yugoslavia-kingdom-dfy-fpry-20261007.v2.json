@@ -1,0 +1,95 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:yugoslavia-kingdom-dfy-fpry-after-sfry-continuity-merge:2026-10-07:v1",
+  "release_order": 2073,
+  "evidence": {
+    "decision": "Kingdom of Yugoslavia, Democratic Federal Yugoslavia, Federal People's Republic of Yugoslavia and Socialist Federal Republic of Yugoslavia are successive constitutional/name phases of one continuous international Yugoslav state identity. The pre-SFRY historical phases are preserved as reviewed temporal designations on the SFRY survivor. Federal Republic of Yugoslavia (1992) is excluded and remains a separate succession question; it is not present in current Production.",
+    "continuity_request_id": "yugoslavia_continuity_merge_20261007_v1",
+    "continuity_applied_at": "2026-10-07T08:10:03.245701+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:196eb0fc244c33a99e58f5d3305b5ba9f5245fbc9bef57ac452dd786f550c6ab",
+    "runtime_compiled_at": "2026-10-07T08:10:41.826722+00:00",
+    "survivor_polity_id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+    "production_readback": "2026-10-07 exhaustive post-compile audit: Kingdom of Yugoslavia, Democratic Federal Yugoslavia and Federal People's Republic of Yugoslavia each have zero external references across authoring, runtime, Person context, descriptions, designations, governance, polity/identity relations, place functions, polity sources, runtime exclusions, spatial dispositions and territory records; each retains exactly two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:kingdom-of-yugoslavia-after-sfry-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "a098ffac-513d-4847-9a59-8d45c6b31cc3",
+        "canonical_key": "Kingdom of Yugoslavia",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Kingdom of Yugoslavia",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "유고슬라비아 왕국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:democratic-federal-yugoslavia-after-sfry-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "9f47c3c0-dcbd-4f9e-ace4-24272e1e9109",
+        "canonical_key": "Democratic Federal Yugoslavia",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Democratic Federal Yugoslavia",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "민주연방 유고슬라비아",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:federal-peoples-republic-yugoslavia-after-sfry-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "eac9dcd3-f388-48bc-a89b-8750fa5f7750",
+        "canonical_key": "Federal People's Republic of Yugoslavia",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Federal People's Republic of Yugoslavia",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "유고슬라비아 연방인민공화국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
