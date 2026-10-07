@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:albanian-republic-after-kingdom-state-form-merge:2026-10-07:v1",
+  "release_order": 2028,
+  "evidence": {
+    "decision": "Albanian Republic is the modeled 1925-01-31 to 1928-09-01 republican state-form phase of one continuous Albanian polity identity and is preserved as a temporal state_form designation on canonical Kingdom of Albania.",
+    "continuity_request_id": "albania_republic_kingdom_continuity_20261007_v1",
+    "continuity_applied_at": "2026-10-07T03:22:44.881022+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:961c410e947cfa1778aa2e8b8eaf3c75be915d198964531999bef784c9697d6d",
+    "runtime_compiled_at": "2026-10-07T03:23:16.564405+00:00",
+    "survivor_polity_id": "d8ff4c80-e0a5-4257-aa94-ce27f3e6a9ab",
+    "production_readback": "2026-10-07 exact post-compile readback: legacy Albanian Republic row has zero external references in authoring and runtime and only two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:albanian-republic-after-kingdom-state-form-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "6b5c6d19-49ee-41cc-ada2-e07509cf5a91",
+        "canonical_key": "Albanian Republic",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "d8ff4c80-e0a5-4257-aa94-ce27f3e6a9ab",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Albanian Republic",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "알바니아 공화국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
