@@ -15,8 +15,8 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 30);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 27);
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 31);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.length, 28);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
@@ -46,7 +46,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.equal(AUTHORING_MIGRATION_PATHS[26].endsWith("20261003_shah_abbas_registration_queue_binding.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[27].endsWith("20261004_person_representative_domain_standard_v2_replay_safe.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[28].endsWith("20261006_user_selected_person_registration_queue_07.sql"), true);
-  assert.equal(AUTHORING_MIGRATION_PATHS[29].endsWith("20261007_youtube_person_signal_read_model.sql"), true);
+  assert.equal(AUTHORING_MIGRATION_PATHS[29].endsWith("20261007_youtube_person_signal_read_model.sql"), true);\n  assert.equal(AUTHORING_MIGRATION_PATHS[30].endsWith("20261008_youtube_discovery_channel_registry.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS[7].endsWith("20261004_person_representative_domain_standard_v2_replay_safe.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.some((value)=>value.endsWith("20260919_person_representative_domain_standard_replay_safe.sql")), false);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.some((value)=>value.endsWith("20260821_human_authoring_external_reference_sync.sql")), false);
@@ -57,7 +57,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-4).endsWith("20261003_person_registration_queue_authority.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-3).endsWith("20261003_shah_abbas_registration_queue_binding.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-2).endsWith("20261006_user_selected_person_registration_queue_07.sql"), true);
-  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20261007_youtube_person_signal_read_model.sql"), true);
+  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-2).endsWith("20261007_youtube_person_signal_read_model.sql"), true);\n  assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.at(-1).endsWith("20261008_youtube_discovery_channel_registry.sql"), true);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
