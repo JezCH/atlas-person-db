@@ -1,0 +1,66 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-gagik-i-20261007:kingdom-of-armenia:reign:989-1020:v1",
+  "person": {
+    "canonical_name_en": "Gagik I of Armenia",
+    "display_name_ko": "가긱 1세",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "e39222dc-bebe-422f-8b75-97db9709cee7",
+    "canonical_name_en": "Kingdom of Armenia",
+    "display_name_ko": "아르메니아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "period_basis": "reign",
+    "start_year": 989,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1020,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gagik I Bagratuni succeeded Smbat II and ruled the Bagratid Kingdom of Armenia from 989 to 1020. His reign is associated with the high point of Ani's political, commercial, and architectural development. ATLAS reuses the existing Kingdom of Armenia identity already used for Bagratid ruler Ashot I rather than creating a duplicate Bagratid polity."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_museum_reference",
+      "title": "Statuette of King Gagik I — History Museum of Armenia",
+      "canonical_url": "https://shop.historymuseum.am/en/product/statuette-of-king-gagik-i/",
+      "citation_text": "The History Museum of Armenia identifies Gagik I Bagratuni as the Armenian king who reigned from 989 to 1020 and describes the royal statue from Gagkashen at Ani."
+    },
+    {
+      "source_type": "institutional_architectural_reference",
+      "title": "Ani — Research on Armenian Architecture",
+      "canonical_url": "https://armenianarchitecture.org/en/locationsprint/163",
+      "citation_text": "Research on Armenian Architecture describes the peaceful reign of Gagik I from 989 to 1020 as a period of major development at Ani, the capital of Armenia."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-07",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-ARMENIA-TRIO-20261007",
+    "selection": "user_selected_immediate_registration"
+  }
+}
