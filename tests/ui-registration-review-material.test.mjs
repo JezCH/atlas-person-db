@@ -128,3 +128,25 @@ test("REVIEW-M7 compacts YouTube signal metadata into one responsive toolbar wit
   assert.match(js, /payload\?\.available_count/);
   assert.match(js, /signalRows\.length/);
 });
+
+
+test("REVIEW-M8 visualizes YouTube signal strength with bars while preserving all numeric fields", () => {
+  const css = read("atlas-registration-review.css");
+  const js = read("atlas-registration-review.js");
+
+  assert.match(css, /REVIEW-M8 — Ranked YouTube signal bars/);
+  assert.match(css, /\.registration-review-signal-table tbody\{[\s\S]*display:grid[\s\S]*gap:7px/);
+  assert.match(css, /\.registration-review-signal-bar\{[\s\S]*grid-column:2 \/ 5[\s\S]*background:#0f1215/);
+  assert.match(css, /\.registration-review-signal-bar span\{[\s\S]*width:var\(--signal-strength,0%\)[\s\S]*background:var\(--atlas-honor-metal\)/);
+  assert.match(css, /@media\(max-width:600px\)\{[\s\S]*\.registration-review-signal-bar\{[\s\S]*grid-column:2 \/ 5/);
+
+  assert.match(js, /const maxChannels=Math\.max\(1,\.\.\.signalRows\.map/);
+  assert.match(js, /const strength=Math\.max\(0,Math\.min\(100,\(channels\/maxChannels\)\*100\)\)/);
+  assert.match(js, /class="registration-review-signal-row" style="--signal-strength:/);
+  assert.match(js, /class="registration-review-signal-bar" aria-hidden="true"/);
+
+  assert.match(js, /data-label="순위"/);
+  assert.match(js, /data-label="인물"/);
+  assert.match(js, /data-label="채널"/);
+  assert.match(js, /data-label="영상"/);
+});
