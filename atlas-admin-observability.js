@@ -3,6 +3,7 @@
 
   const STATUS_ENDPOINT = "/api/atlas-admin-system-status";
   const INSPECTOR_ENDPOINT = "/api/atlas-admin-inspector";
+  const KIND_LABELS = Object.freeze({ polity_retirement: "정치체 퇴역 · 승계 이력" });
 
   const statusBadge = document.getElementById("systemStatusBadge");
   const statusBody = document.getElementById("systemStatusBody");
@@ -142,7 +143,7 @@
     try {
       const payload = await getJson(INSPECTOR_ENDPOINT);
       const kinds = Array.isArray(payload.supported_kinds) ? payload.supported_kinds : [];
-      inspectorKind.innerHTML = '<option value="">Object kind 선택</option>' + kinds.map((kind) => `<option value="${escapeHtml(kind)}">${escapeHtml(kind)}</option>`).join("");
+      inspectorKind.innerHTML = '<option value="">Object kind 선택</option>' + kinds.map((kind) => `<option value="${escapeHtml(kind)}">${escapeHtml(KIND_LABELS[kind] || kind)}</option>`).join("");
       setBadge(inspectorBadge, kinds.length ? `${kinds.length} kinds` : "kind 없음", kinds.length ? "ready" : "error");
     } catch (error) {
       inspectorKind.innerHTML = '<option value="">Capabilities 조회 실패</option>';
