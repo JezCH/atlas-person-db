@@ -59,19 +59,6 @@
         locked: true
       },
       {
-        id: "apulia-county-duchy",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "County of Apulia → Duchy of Apulia and Calabria",
-        left: { name: "County of Apulia" },
-        right: { name: "Duchy of Apulia and Calabria" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "croatia-principality-kingdom",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -773,6 +760,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "apulia-county-duchy",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "County of Apulia → Duchy of Apulia and Calabria state-form merge",
+        left: { name: "County of Apulia", ko: "아풀리아 백국", polity_id: "eceb5f79-dfab-43c5-a38e-22b6520ad0b0" },
+        right: { name: "Duchy of Apulia and Calabria", ko: "아풀리아와 칼라브리아 공국", polity_id: "b030c005-1c9c-56fa-9d7e-1ce0a0da66bf" },
+        rationale: "Robert Guiscard가 1057년 Apulia 백작위를 계승한 뒤 1059년 Melfi에서 교황 Nicholas II에게 Apulia·Calabria의 공작 권위를 수여받은 과정을 동일 Norman Apulian 정치체의 rank/state-form 전환으로 통합했습니다. #2001에서 Robert Guiscard의 1057–1059 Count Activity를 Duchy survivor로 재연결하고 County of Apulia를 1057–1059 temporal state_form designation으로 보존했습니다. Count와 Duke의 역사적 역할 변화는 별도 Activities로 유지했고, 현재 정규화 자료가 정확한 전환일을 정당화하지 않으므로 year granularity를 유지했습니다. #2002에서 zero-external-reference legacy County Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "#2001 continuity merge merged as 8158661cb8f67c7b6fe9808440956a65cc07dc9f", "2026-10-07 fresh Production: Robert Guiscard Count Activity 38e4a8f9-05d5-4016-bbb5-2a9c9d15f115 is on Duchy survivor b030c005-1c9c-56fa-9d7e-1ce0a0da66bf and County of Apulia is preserved as reviewed 1057→1059 temporal state_form", "#2002 legacy County Polity retirement merged as 472fceca10ef9e9321328b7c038edc606818e353", "2026-10-07 fresh Production retirement ledger: retired eceb5f79-dfab-43c5-a38e-22b6520ad0b0 → survivor b030c005-1c9c-56fa-9d7e-1ce0a0da66bf; REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE; retired_at 2026-10-06T23:27:55Z", "2026-10-07 exact Production readback: survivor carries Robert Guiscard Count 1057–1059, Duke 1059–1085, Roger II Duke 1128-08-22→1130-12-25; legacy County identity absent"],
+        locked: true
+      },
       {
         id: "portugal-county-kingdom",
         review_group: "resolved_history",
