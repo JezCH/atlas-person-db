@@ -126,12 +126,18 @@
       body.innerHTML='<tr><td colspan="4" class="registration-review-empty">현재 조건의 반복 인물 신호가 없습니다.</td></tr>';
       return;
     }
-    body.innerHTML=signalRows.map((row)=>`<tr>
-      <td class="registration-review-rank" data-label="순위">${number(row.rank)}</td>
-      <td class="registration-review-name" data-label="인물">${escapeHtml(row.raw_name)}</td>
-      <td class="registration-review-number" data-label="채널">${number(row.distinct_channel_count)}</td>
-      <td class="registration-review-number" data-label="영상">${number(row.video_count)}</td>
-    </tr>`).join("");
+    const maxChannels=Math.max(1,...signalRows.map((row)=>Number(row?.distinct_channel_count || 0)));
+    body.innerHTML=signalRows.map((row)=>{
+      const channels=Math.max(0,Number(row?.distinct_channel_count || 0));
+      const strength=Math.max(0,Math.min(100,(channels/maxChannels)*100));
+      return `<tr class="registration-review-signal-row" style="--signal-strength:${strength.toFixed(2)}%">
+        <td class="registration-review-rank" data-label="순위">${number(row.rank)}</td>
+        <td class="registration-review-name" data-label="인물">${escapeHtml(row.raw_name)}</td>
+        <td class="registration-review-number" data-label="채널">${number(row.distinct_channel_count)}</td>
+        <td class="registration-review-number" data-label="영상">${number(row.video_count)}</td>
+        <td class="registration-review-signal-bar" aria-hidden="true"><span></span></td>
+      </tr>`;
+    }).join("");
   }
 
   function setStatus(message,state="idle") {
