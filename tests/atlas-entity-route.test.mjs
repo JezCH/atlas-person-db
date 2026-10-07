@@ -21,6 +21,12 @@ test("entity route preserves existing domain-only hashes",()=>{
     entity_id:null,
     canonical_hash:"#atlas-persons"
   });
+  assert.deepEqual(route.parseHash("#atlas-registration"),{
+    domain:"registration",
+    entity_type:null,
+    entity_id:null,
+    canonical_hash:"#atlas-registration"
+  });
 });
 
 test("entity route canonicalizes exact Person and Polity UUID deep links",()=>{
