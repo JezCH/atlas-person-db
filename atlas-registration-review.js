@@ -4,7 +4,7 @@
   const dataStore=window.ATLAS_CLIENT_DATA_STORE;
   const QUEUE_URL="/api/atlas-read?__atlas_read_surface=registration-queue";
   const SIGNAL_URL="/api/atlas-read?__atlas_read_surface=youtube-person-signals";
-  const REFRESH_INTERVAL_MS=60000;
+  const REFRESH_INTERVAL_MS=10000;
   let activeRoot=null;
   let refreshTimer=null;
   let requestSerial=0;
@@ -73,10 +73,11 @@
     const stats=activeRoot?.querySelector("#registrationQueueStats");
     if (stats) {
       stats.innerHTML=[
-        statCard(number(summary.pending_count),"현재 등록대기"),
-        statCard(number(summary.registered_bound),"기등록 연결"),
-        statCard(number(summary.source_admissions),"누적 후보"),
-        statCard(number(summary.dangling_person_ids),"dangling Person ID")
+        statCard(
+          number(summary.pending_count),
+          "현재 등록대기",
+          "기등록 Person은 자동 제외 · 10초마다 최신 DB 상태 동기화"
+        )
       ].join("");
     }
     queueRows=Array.isArray(payload?.candidates) ? payload.candidates : [];
@@ -206,8 +207,8 @@
       </section>
 
       <section class="registration-review-section">
-        <div class="registration-review-section-head"><div><small>QUEUE</small><h3>등록대기열 통계</h3></div></div>
-        <div id="registrationQueueStats" class="registration-review-stats">${statCard("—","현재 등록대기")}${statCard("—","기등록 연결")}${statCard("—","누적 후보")}${statCard("—","dangling Person ID")}</div>
+        <div class="registration-review-section-head"><div><small>QUEUE</small><h3>현재 등록대기열</h3><p>이 화면의 등록대기열은 현재 미등록 후보만 포함합니다. Person 등록과 동시에 자동 제외됩니다.</p></div></div>
+        <div id="registrationQueueStats" class="registration-review-stats">${statCard("—","현재 등록대기","기등록 Person은 자동 제외 · 10초마다 최신 DB 상태 동기화")}</div>
       </section>
 
       <section class="registration-review-section">
@@ -252,6 +253,7 @@
       refreshSignalsOnly();
     });
     refresh({ forcePersons:true });
+    window.addEventListener("focus",()=>refresh({ forcePersons:true }),{ passive:true });
     refreshTimer=setInterval(()=>{
       if (!activeRoot?.isConnected) {
         clearInterval(refreshTimer);
