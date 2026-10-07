@@ -59,19 +59,6 @@
         locked: true
       },
       {
-        id: "yugoslavia-continuity-family",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Yugoslavia family → Kingdom / SFRY / FR Yugoslavia identities",
-        left: { name: "Yugoslavia family" },
-        right: { name: "Kingdom / SFRY / FR Yugoslavia identities" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "libya-republic-jamahiriya",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -695,6 +682,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "yugoslavia-continuity-family",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Kingdom / DFY / FPRY → SFRY continuity merge; 1992 FR Yugoslavia excluded",
+        left: { name: "Kingdom of Yugoslavia / Democratic Federal Yugoslavia / Federal People's Republic of Yugoslavia", ko: "유고슬라비아 왕국 / 민주연방 유고슬라비아 / 유고슬라비아 연방인민공화국", polity_id: "a098ffac-513d-4847-9a59-8d45c6b31cc3 / 9f47c3c0-dcbd-4f9e-ace4-24272e1e9109 / eac9dcd3-f388-48bc-a89b-8750fa5f7750" },
+        right: { name: "Socialist Federal Republic of Yugoslavia", ko: "유고슬라비아 사회주의 연방공화국", polity_id: "e40a7202-2036-4d7a-a31b-e88598743e61" },
+        rationale: "Kingdom of Yugoslavia, Democratic Federal Yugoslavia, Federal People's Republic of Yugoslavia and Socialist Federal Republic of Yugoslavia를 하나의 internationally continuous Yugoslav state identity로 통합했습니다. 1945년 왕정 정부와 NKOJ의 통합 및 이후의 공화정·1963년 국명 전환은 같은 국제법상 Yugoslavia의 constitutional/name phases로 보존하되, Person Activity를 국명 경계에서 인위적으로 분할하지 않습니다. Peter II의 1934-10-09→1945-11-29 kingship, Tito의 1945-03-07→1953-01-14 premiership 및 1953-01-14→1980-05-04 presidency는 모두 SFRY survivor에 연속 Activity로 복원했습니다. Kingdom은 1929-10-03→1945-11-28 temporal state_form, DFY는 1945-03-07→1945-11-28 official_name, FPRY는 1945-11-29→1963-04-06 official_name으로 보존했습니다. 세 legacy Polity는 최종 FK/Runtime 검증 후 survivor로 retire했습니다. 1992 Federal Republic of Yugoslavia는 current Production에 존재하지 않으며, SFRY의 자동 국가연속으로 취급하지 않는 별도 승계 문제로 이 merge에서 명시적으로 제외했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "Archives of Yugoslavia constitutional history: 1943–45 internal constitutional rupture did not interrupt Yugoslavia's international legal continuity; on 1945-03-07 the Royal Yugoslav Government and NKOJ were dissolved into one provisional government", "U.N. Security Council resolution 777 (1992): SFRY had ceased to exist and the Federal Republic of Yugoslavia could not automatically continue the former Yugoslavia's U.N. membership; FR Yugoslavia therefore remains outside this merged identity and is absent from current Production", "#2069 Stage 1 squash merge 3608f6ce1aff92bc537fda6e7424c235d9ae2550; two artificial Tito name-boundary fragments retired with source transfer; apply committed 2026-10-07T08:04:39.128373Z", "#2071 Stage 2 squash merge 5ad1f4ed3b28dcf237eea7d73522b6bfe86b9084; continuity correction applied 2026-10-07T08:10:03.245701Z", "Runtime compile runtime-person-politics-v1:196eb0fc244c33a99e58f5d3305b5ba9f5245fbc9bef57ac452dd786f550c6ab at 2026-10-07T08:10:41.826722Z contains Peter II and Tito continuous Activities on SFRY survivor", "#2073 legacy polity retirement squash merge 99fdc443a37c8828be4148a9cee13b5e1846f919; Production retirement ledger records Kingdom, DFY and FPRY retired to SFRY survivor at 2026-10-07T08:14:48.280244Z", "2026-10-07 final Production readback: only SFRY survivor e40a7202-2036-4d7a-a31b-e88598743e61 remains live among Yugoslavia identities; three reviewed designations remain on survivor; Peter II 1934-10-09→1945-11-29, Tito PM 1945-03-07→1953-01-14 and Tito President 1953-01-14→1980-05-04 match in Authoring and latest Runtime; FR Yugoslavia search returns no live polity"],
+        locked: true
+      },
       {
         id: "congo-drc-zaire-family",
         review_group: "resolved_history",
