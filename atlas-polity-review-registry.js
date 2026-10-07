@@ -59,19 +59,6 @@
         locked: true
       },
       {
-        id: "upper-volta-burkina-faso",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Upper Volta → Burkina Faso",
-        left: { name: "Upper Volta" },
-        right: { name: "Burkina Faso" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "congo-drc-zaire-family",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -721,6 +708,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "upper-volta-burkina-faso",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Republic of Upper Volta → Burkina Faso official-name merge",
+        left: { name: "Republic of Upper Volta", ko: "오트볼타 공화국", polity_id: "6d89e23a-1eaf-4af3-a310-07ed03e828d6" },
+        right: { name: "Burkina Faso", ko: "부르키나파소", polity_id: "e29ed7c4-fe05-405f-b85e-2ddeaee79902" },
+        rationale: "오트볼타 공화국과 부르키나파소는 1984-08-04의 국명 변경을 사이에 둔 동일 sovereign state identity로 통합했습니다. 미국 국무부 외교사 기록은 1960-08-05 Upper Volta 승인을 기록하고 이후 국가명이 Burkina Faso로 변경되었다고 명시하며, 부르키나파소 대통령실은 혁명 1주년인 1984-08-04 Sankara가 국명을 Haute-Volta에서 Burkina Faso로 바꿨다고 기록합니다. 기존 데이터는 같은 Thomas Sankara 대통령직을 국명 경계에서 1983-08-04→1984-08-03과 1984-08-04→1987-10-15 두 Activity로 잘라두었으므로 #2050에서 전반부 fragment를 source-transfer 후 retire하고 #2051에서 Burkina survivor를 1983-08-04까지 연장해 하나의 연속 재임으로 복원했습니다. Republic of Upper Volta / 오트볼타 공화국은 1960-08-05→1984-08-03 temporal official_name으로 보존했고, 최종 Runtime readback 뒤 #2053에서 zero-external-reference legacy Polity를 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "U.S. Office of the Historian, Burkina Faso (Upper Volta): U.S. recognition of Upper Volta on 1960-08-05 and subsequent state-name change to Burkina Faso", "U.N. Security Council S/16696 (1984-08-13): official notification on 1984-08-06 stated that the name of Upper Volta had been changed to Burkina Faso", "Présidence du Faso, Thomas Sankara: Sankara became head of state on 1983-08-04 and at the first anniversary changed the country's name; Haute-Volta became Burkina Faso", "#2050 name-boundary Activity retirement squash merge 0a2cb6473efcefd8f5c9ea204c2ad277a24435db; Correction Apply 37573295251 committed 2026-10-07T04:49:46.998449Z", "#2051 continuity merge squash merge 1183b23668689a35fe6578068249d4741c7f6ea5; Correction Apply 37573612254 committed 2026-10-07T04:53:46.823305Z", "2026-10-07 post-Stage2 Runtime compile runtime-person-politics-v1:497d6037dab3a50730c7baf6b6fface2b14a02cca478a3629f469e8e45ba5f48 at 2026-10-07T04:54:18.487398Z: Sankara Runtime Activity starts 1983-08-04 on Burkina Faso survivor", "#2053 legacy Republic of Upper Volta retirement squash merge f0e725e8c1825ac9fd8899d67c6e33416afd362b; Correction Apply 37573993422 SUCCESS; retirement applied 2026-10-07T04:58:28.188297Z", "2026-10-07 final Production + Runtime readback: one continuous Sankara presidency 1983-08-04→1987-10-15 on Burkina Faso; reviewed Upper Volta official_name designation count 1 with 2 normalized source links; legacy Upper Volta live row 0; Burkina Faso survivor live row 1; retirement ledger entry 1"],
+        locked: true
+      },
       {
         id: "iran-imperial-state",
         review_group: "resolved_history",
