@@ -318,7 +318,7 @@ test('Runtime contract forbids public live Authoring joins', () => {
   assert.equal(contract.snapshot.current_authoring_match,'compile_key/input_fingerprint exact');
   assert.equal(contract.readiness.start_boundary,'known_complete');
   assert.equal(contract.readiness.end_boundary,'known_complete_or_verified_ongoing');
-  assert.deepEqual(contract.publication.automatic_producers,['ATLAS Authoring Apply','ATLAS Correction Apply']);
+  assert.deepEqual(contract.publication.automatic_producers,['ATLAS Authoring Apply','ATLAS Correction Apply','ATLAS Person hard-delete']);
   assert.equal(contract.publication.workflow_dispatch_role,'recovery_only');
 });
 
