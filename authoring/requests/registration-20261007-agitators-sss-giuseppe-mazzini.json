@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-sss12-20261007:giuseppe-mazzini:v1",
+  "person": {
+    "canonical_name_en": "Giuseppe Mazzini",
+    "display_name_ko": "주세페 마치니",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Founder of Young Italy",
+    "role_display_name_ko": "청년 이탈리아 창립자",
+    "period_basis": "general_activity",
+    "start_year": 1831,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1831,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative milestone for Mazzini's founding of Young Italy in Marseille in 1831 while in French exile. France is used only for this specific documented activity, not as a claim about the geographic scope of his Italian nationalist career."
+  },
+  "sources": [
+    {
+      "source_type": "encyclopedic_reference",
+      "title": "MAZZINI, Giuseppe — Treccani Dizionario Biografico",
+      "canonical_url": "https://www.treccani.it/enciclopedia/giuseppe-mazzini_%28Dizionario-Biografico%29/",
+      "citation_text": "Treccani documents Mazzini's 1831 exile and the founding of Giovine Italia in Marseille in July 1831."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-07",
+      "document_title": "주세페 마치니",
+      "url": "https://namu.wiki/w/%EC%A3%BC%EC%84%B8%ED%8E%98%20%EB%A7%88%EC%B9%98%EB%8B%88"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSS12-20261007",
+    "selection": "user_selected_immediate_registration",
+    "tier": "SSS"
+  }
+}

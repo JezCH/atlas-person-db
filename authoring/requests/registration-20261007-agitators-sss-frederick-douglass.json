@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-sss12-20261007:frederick-douglass:v1",
+  "person": {
+    "canonical_name_en": "Frederick Douglass",
+    "display_name_ko": "프레드릭 더글러스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "7d09bc56-1ea0-515e-a3e7-9863361b6f15",
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Abolitionist leader and civil-rights advocate",
+    "role_display_name_ko": "노예제 폐지운동 지도자·민권운동가",
+    "period_basis": "general_activity",
+    "start_year": 1841,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1895,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative public-activism interval from Douglass's 1841 entry into antislavery lecturing through his death in 1895; it does not represent his full lifetime."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_historical_reference",
+      "title": "Frederick Douglass — Library of Congress",
+      "canonical_url": "https://www.loc.gov/exhibits/civil-war-in-america/biographies/frederick-douglass.html",
+      "citation_text": "Library of Congress identifies Douglass (1818–1895) as a foremost nineteenth-century African American leader and records his 1841 antislavery speaking career and lifelong advocacy."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-07",
+      "document_title": "프레드릭 더글러스",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%A0%88%EB%93%9C%EB%A6%AD%20%EB%8D%94%EA%B8%80%EB%9F%AC%EC%8A%A4"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSS12-20261007",
+    "selection": "user_selected_immediate_registration",
+    "tier": "SSS"
+  }
+}

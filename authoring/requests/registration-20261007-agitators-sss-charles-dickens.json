@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-sss12-20261007:charles-dickens:v1",
+  "person": {
+    "canonical_name_en": "Charles Dickens",
+    "display_name_ko": "찰스 디킨스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture"
+  },
+  "polity": {
+    "existing_id": "08c06b79-58de-508a-9ace-2948baa9e9e6",
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Novelist and social critic",
+    "role_display_name_ko": "소설가·사회비평가",
+    "period_basis": "artistic_activity",
+    "start_year": 1836,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1870,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative literary interval from the serialization of The Pickwick Papers beginning in 1836 through Dickens's final unfinished work and death in 1870."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_archive",
+      "title": "Charles Dickens Legal Papers — British Library Archives and Manuscripts",
+      "canonical_url": "https://searcharchives.bl.uk/catalog/036-000001283",
+      "citation_text": "British Library records Dickens's publishing activity from 1836 onward and notes his continuing relationship with publishers until his death in 1870."
+    },
+    {
+      "source_type": "museum_reference",
+      "title": "Who is Charles Dickens — Charles Dickens Museum",
+      "canonical_url": "https://dickensmuseum.com/en-de/pages/about-us",
+      "citation_text": "The Charles Dickens Museum identifies Dickens as one of the great English writers, notes his early major works at Doughty Street, and records his death in 1870."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-07",
+      "document_title": "찰스 디킨스",
+      "url": "https://namu.wiki/w/%EC%B0%B0%EC%8A%A4%20%EB%94%94%ED%82%A8%EC%8A%A4"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSS12-20261007",
+    "selection": "user_selected_immediate_registration",
+    "tier": "SSS"
+  }
+}

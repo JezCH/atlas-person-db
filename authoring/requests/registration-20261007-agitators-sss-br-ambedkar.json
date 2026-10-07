@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-sss12-20261007:br-ambedkar:v1",
+  "person": {
+    "canonical_name_en": "B. R. Ambedkar",
+    "display_name_ko": "B. R. 암베드카르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "00ec4b0c-6002-5791-825c-43465632102d",
+    "canonical_name_en": "India",
+    "display_name_ko": "인도",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Chairman of the Constitution Drafting Committee and Law Minister",
+    "role_display_name_ko": "헌법초안위원회 위원장·법무장관",
+    "period_basis": "term",
+    "start_year": 1947,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1950,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative constitutional-statebuilding interval beginning with Ambedkar's unanimous election as Drafting Committee chairman in 1947 and covering the Constitution-making period through its commencement in 1950; not a full political-career rail."
+  },
+  "sources": [
+    {
+      "source_type": "primary_source_archive",
+      "title": "Constituent Assembly Debates — 29 August 1947",
+      "canonical_url": "https://www.constitutionofindia.net/debates/29-aug-1947/",
+      "citation_text": "The Constituent Assembly record lists B. R. Ambedkar among the members appointed to the Drafting Committee on 29 August 1947."
+    },
+    {
+      "source_type": "primary_source_archive",
+      "title": "Constituent Assembly Debates — 4 November 1948",
+      "canonical_url": "https://www.constitutionofindia.net/debates/04-nov-1948/",
+      "citation_text": "Ambedkar, as chairman of the Drafting Committee, formally presented and explained the Draft Constitution to the Constituent Assembly."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-07",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSS12-20261007",
+    "selection": "user_selected_immediate_registration",
+    "tier": "SSS"
+  }
+}

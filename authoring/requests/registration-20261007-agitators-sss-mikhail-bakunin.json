@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-sss12-20261007:mikhail-bakunin:v1",
+  "person": {
+    "canonical_name_en": "Mikhail Bakunin",
+    "display_name_ko": "미하일 바쿠닌",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "240d846f-049d-4b86-8f7e-4666d456e35e",
+    "canonical_name_en": "Switzerland",
+    "display_name_ko": "스위스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Anarchist organizer and founder of the International Alliance of Socialist Democracy",
+    "role_display_name_ko": "아나키스트 조직가·사회민주주의 국제동맹 창립자",
+    "period_basis": "general_activity",
+    "start_year": 1868,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1868,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative Swiss activity point for Bakunin's 1868 organization of the International Alliance of Socialist Democracy in Geneva; not a lifetime or nationality rail."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Anarchism — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/anarchism/",
+      "citation_text": "Stanford Encyclopedia of Philosophy treats Bakunin as a classical anarchist and a paradigm historical critic of state authority."
+    },
+    {
+      "source_type": "primary_source_archive",
+      "title": "Mikhail Bakunin Reference Archive",
+      "canonical_url": "https://www.marxists.org/reference/archive/bakunin/",
+      "citation_text": "The archive records Bakunin's 1868 activity in the International Working Men's Association and the International Alliance of Socialist Democracy."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-07",
+      "document_title": "미하일 바쿠닌",
+      "url": "https://namu.wiki/w/%EB%AF%B8%ED%95%98%EC%9D%BC%20%EB%B0%94%EC%BF%A0%EB%8B%8C"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSS12-20261007",
+    "selection": "user_selected_immediate_registration",
+    "tier": "SSS"
+  }
+}
