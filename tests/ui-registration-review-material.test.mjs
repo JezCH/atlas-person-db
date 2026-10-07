@@ -50,18 +50,20 @@ test("REVIEW-M3 gives Registration Review controls the shared focus language", (
 });
 
 
-test("REVIEW-M4 compacts the queue summary and prevents YouTube signal horizontal overflow on mobile", () => {
+test("REVIEW-M4 uses one five-card registration row and prevents YouTube signal horizontal overflow on mobile", () => {
   const css = read("atlas-registration-review.css");
   const js = read("atlas-registration-review.js");
 
   assert.match(css, /REVIEW-M4 — Registration Review density and responsive signal table/);
-  assert.match(css, /\.registration-review-stats-compact\{[^}]*grid-template-columns:minmax\(240px,300px\)[^}]*width:min\(100%,300px\)/);
+  assert.match(css, /\.registration-review-stats\{[^}]*grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/);
+  assert.doesNotMatch(css, /registration-review-stats-compact/);
   assert.match(css, /\.registration-review-signal-wrap\{[^}]*width:min\(100%,980px\)[^}]*overflow:hidden/);
   assert.match(css, /\.registration-review-signal-table\{[^}]*min-width:0[^}]*table-layout:fixed/);
   assert.match(css, /@media\(max-width:600px\)\{[\s\S]*\.registration-review-signal-table tbody tr\{[^}]*grid-template-columns:38px minmax\(0,1fr\) 46px 42px/);
   assert.match(css, /\.registration-review-signal-table colgroup,[\s\S]*\.registration-review-signal-table thead\{display:none\}/);
 
-  assert.match(js, /registration-review-stats registration-review-stats-compact/);
+  assert.match(js, /statCard\(number\(pending\),"등록대기열","현재 미등록 후보"\)/);
+  assert.doesNotMatch(js, /registration-review-queue-summary/);
   assert.match(js, /registration-review-table registration-review-signal-table/);
   assert.match(js, /data-label="채널"/);
   assert.match(js, /data-label="영상"/);
