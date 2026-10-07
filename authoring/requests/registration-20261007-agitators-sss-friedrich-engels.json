@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-sss12-20261007:friedrich-engels:v1",
+  "person": {
+    "canonical_name_en": "Friedrich Engels",
+    "display_name_ko": "프리드리히 엥겔스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "08c06b79-58de-508a-9ace-2948baa9e9e6",
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Socialist theorist and social critic",
+    "role_display_name_ko": "사회주의 이론가·사회비평가",
+    "period_basis": "intellectual_activity",
+    "start_year": 1844,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1845,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative interval for Engels's Manchester-based investigation and writing of The Condition of the Working Class in England (written 1844–1845; published 1845), not a lifetime political-activity rail."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Friedrich Engels — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/engels/",
+      "citation_text": "Stanford Encyclopedia of Philosophy identifies Engels (1820–1895) as a preeminent figure in the formation of modern socialist politics and Marx's lifelong collaborator."
+    },
+    {
+      "source_type": "primary_source_archive",
+      "title": "The Condition of the Working Class in England — Marx/Engels Internet Archive",
+      "canonical_url": "https://www.marxists.org/archive/marx/works/1845/condition-working-class/",
+      "citation_text": "The archive records the work as written from September 1844 to March 1845 and published in 1845, grounding this representative intellectual-activity interval."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-07",
+      "document_title": "프리드리히 엥겔스",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%A6%AC%EB%93%9C%EB%A6%AC%ED%9E%88%20%EC%97%A5%EA%B2%94%EC%8A%A4"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSS12-20261007",
+    "selection": "user_selected_immediate_registration",
+    "tier": "SSS"
+  }
+}

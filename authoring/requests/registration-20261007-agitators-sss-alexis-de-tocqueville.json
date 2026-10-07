@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-sss12-20261007:alexis-de-tocqueville:v1",
+  "person": {
+    "canonical_name_en": "Alexis de Tocqueville",
+    "display_name_ko": "알렉시 드 토크빌",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Political thinker and author of Democracy in America",
+    "role_display_name_ko": "정치사상가·《미국의 민주주의》 저자",
+    "period_basis": "intellectual_activity",
+    "start_year": 1835,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1840,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative interval for publication of Democracy in America, issued in volumes from 1835 to 1840; it is not a claim that all of Tocqueville's public career fits this interval."
+  },
+  "sources": [
+    {
+      "source_type": "primary_source_catalog",
+      "title": "Democracy in America — Library of Congress",
+      "canonical_url": "https://www.loc.gov/item/09021576/",
+      "citation_text": "Library of Congress catalogs Alexis de Tocqueville's Democracy in America as published in 1835–1840 and identifies Tocqueville as 1805–1859."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-07",
+      "document_title": "알렉시 드 토크빌",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%A0%89%EC%8B%9C%20%EB%93%9C%20%ED%86%A0%ED%81%AC%EB%B9%8C"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSS12-20261007",
+    "selection": "user_selected_immediate_registration",
+    "tier": "SSS"
+  }
+}

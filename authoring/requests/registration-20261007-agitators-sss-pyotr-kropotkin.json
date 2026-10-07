@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-sss12-20261007:pyotr-kropotkin:v1",
+  "person": {
+    "canonical_name_en": "Pyotr Kropotkin",
+    "display_name_ko": "표트르 크로포트킨",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "08c06b79-58de-508a-9ace-2948baa9e9e6",
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Anarchist theorist and Freedom Group co-founder",
+    "role_display_name_ko": "아나키즘 이론가·프리덤 그룹 공동창립자",
+    "period_basis": "intellectual_activity",
+    "start_year": 1886,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1917,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative British intellectual and organizing interval: Kropotkin settled in Britain in 1886, helped form the Freedom Group, and remained based there until returning to Russia in 1917."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "The Interplay of Politics and Science in the Making of Petr Kropotkin’s Modern Anarchism — UCL Discovery",
+      "canonical_url": "https://discovery.ucl.ac.uk/id/eprint/1462352/",
+      "citation_text": "UCL research examines Kropotkin's modern anarchism and the interplay between his political and scientific thought."
+    },
+    {
+      "source_type": "historical_movement_reference",
+      "title": "Kropotkin and Freedom — Freedom News",
+      "canonical_url": "https://freedomnews.org.uk/2021/02/28/kropotkin-and-freedom/",
+      "citation_text": "Freedom's historical account records Kropotkin settling in England in March 1886, helping form the Freedom Group, and remaining largely in Britain until his 1917 return to Russia."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-07",
+      "document_title": "표트르 크로포트킨",
+      "url": "https://namu.wiki/w/%ED%91%9C%ED%8A%B8%EB%A5%B4%20%ED%81%AC%EB%A1%9C%ED%8F%AC%ED%8A%B8%ED%82%A8"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSS12-20261007",
+    "selection": "user_selected_immediate_registration",
+    "tier": "SSS"
+  }
+}

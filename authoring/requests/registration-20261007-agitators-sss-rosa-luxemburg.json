@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-sss12-20261007:rosa-luxemburg:v1",
+  "person": {
+    "canonical_name_en": "Rosa Luxemburg",
+    "display_name_ko": "로자 룩셈부르크",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "4203b03f-524f-5466-b718-37b72ae61e38",
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Socialist theorist and political organizer",
+    "role_display_name_ko": "사회주의 이론가·정치운동가",
+    "period_basis": "general_activity",
+    "start_year": 1898,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative interval for Luxemburg's political work in Imperial Germany from her move there in 1898 through the 1918 German Revolution; her final 1919 revolutionary activity falls outside the German Empire polity interval."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_historical_reference",
+      "title": "The Life of Rosa Luxemburg — Rosa-Luxemburg-Stiftung",
+      "canonical_url": "https://www.rosalux.de/en/foundation/historical-centre-for-democratic-socialism-1/rosa-luxemburg/the-life-of-rosa-luxemburg",
+      "citation_text": "The Rosa-Luxemburg-Stiftung records Luxemburg's move to Germany in 1898, her socialist and anti-war political activity, imprisonment, and role in the 1918–1919 revolution."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-07",
+      "document_title": "로자 룩셈부르크",
+      "url": "https://namu.wiki/w/%EB%A1%9C%EC%9E%90%20%EB%A3%A9%EC%85%88%EB%B6%80%EB%A5%B4%ED%81%AC"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSS12-20261007",
+    "selection": "user_selected_immediate_registration",
+    "tier": "SSS"
+  }
+}

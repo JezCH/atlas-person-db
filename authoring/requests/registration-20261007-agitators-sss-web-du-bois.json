@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-sss12-20261007:web-du-bois:v1",
+  "person": {
+    "canonical_name_en": "W. E. B. Du Bois",
+    "display_name_ko": "W. E. B. 듀보이스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "7d09bc56-1ea0-515e-a3e7-9863361b6f15",
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Civil-rights leader and NAACP intellectual organizer",
+    "role_display_name_ko": "민권운동 지도자·NAACP 지식인 조직가",
+    "period_basis": "general_activity",
+    "start_year": 1909,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1934,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative first NAACP-era interval: Du Bois helped found the NAACP in 1909, became director of publicity and research and editor of The Crisis, and served in that central role until 1934."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_historical_reference",
+      "title": "W.E.B. Du Bois — NAACP",
+      "canonical_url": "https://naacp.org/find-resources/history-explained/civil-rights-leaders/web-du-bois",
+      "citation_text": "NAACP identifies Du Bois as a founding member, director of publicity and research, and editor of The Crisis from 1910 until 1934."
+    },
+    {
+      "source_type": "institutional_historical_reference",
+      "title": "Founding and Early Years — Library of Congress NAACP Exhibition",
+      "canonical_url": "https://www.loc.gov/exhibits/naacp/founding-and-early-years.html",
+      "citation_text": "Library of Congress documents Du Bois's participation in the 1909 National Negro Conference and early NAACP organization."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-07",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSS12-20261007",
+    "selection": "user_selected_immediate_registration",
+    "tier": "SSS"
+  }
+}
