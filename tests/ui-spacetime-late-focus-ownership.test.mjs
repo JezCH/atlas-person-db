@@ -35,7 +35,40 @@ test("SPACETIME-M2 restores shared focus ownership after late lazy-loaded CSS", 
   assert.doesNotMatch(m2, /outline:\s*none|rgba\(/);
 
   assert.match(nav, /atlas-person-spacetime-monumental-canvas\.css\?v=20261007-spacetime-m2-focus-v1/);
-  assert.match(nav, /atlas-person-spacetime-instrument-tools\.css\?v=20261007-spacetime-m2-focus-v1/);
+  assert.match(nav, /atlas-person-spacetime-instrument-tools\.css\?v=20261007-spacetime-m3-luminance-v1/);
   assert.match(nav, /atlas-person-spacetime-mobile-v8\.css\?v=20261003-ui-v8-mobile-v1/);
   assert.match(nav, /atlas-person-spacetime-view\.js\?v=20261003-ui-v7-tools-v1/);
+});
+
+
+test("SPACETIME-M3 keeps instrument hover, pressed, and selected luminance semantically distinct", () => {
+  const tools = read("atlas-person-spacetime-instrument-tools.css");
+  const nav = read("atlas-main-authority-nav.js");
+  const m1 = tools.indexOf("SPACETIME-M1 — Shared instrument material integration");
+  const m3 = tools.indexOf("SPACETIME-M3 — Instrument interaction luminance ownership");
+  const m2 = tools.indexOf("SPACETIME-M2 — Late focus ownership repair");
+  assert.ok(m1 >= 0 && m3 > m1 && m2 > m3);
+
+  const material = tools.slice(m1, m2);
+  assert.match(material, /\.spacetime-search-result-list button:hover,[\s\S]*?background: var\(--atlas-material-wash-hover\)/);
+  assert.match(material, /\.spacetime-meanwhile-activities button:hover,[\s\S]*?background: var\(--atlas-material-wash-hover\)/);
+  assert.doesNotMatch(material, /\.spacetime-search-result-list button:hover,[\s\S]*?background: var\(--atlas-material-wash-active\)/);
+  assert.doesNotMatch(material, /\.spacetime-meanwhile-activities button:hover,[\s\S]*?background: var\(--atlas-material-wash-selected\)/);
+
+  const active = tools.slice(m3, m2);
+  for (const selector of [
+    ".spacetime-camera button:active:not(:disabled)",
+    ".spacetime-precision-legend > summary:active",
+    ".spacetime-search-result-list button:active",
+    ".spacetime-meanwhile-activities button:active",
+    ".spacetime-inspector-actions button:active:not(:disabled)",
+    ".spacetime-inspector-activity-select:active"
+  ]) {
+    assert.ok(active.includes(selector), `missing active selector: ${selector}`);
+  }
+  assert.match(active, /background: var\(--atlas-material-wash-active\)/);
+
+  assert.match(tools, /\.spacetime-inspector-activity\.is-selected \{[\s\S]*?var\(--atlas-material-wash-selected\)/);
+  assert.match(nav, /atlas-person-spacetime-instrument-tools\.css\?v=20261007-spacetime-m3-luminance-v1/);
+  assert.match(nav, /atlas-person-spacetime-monumental-canvas\.css\?v=20261007-spacetime-m2-focus-v1/);
 });
