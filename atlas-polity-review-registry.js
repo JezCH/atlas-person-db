@@ -89,19 +89,6 @@
         locked: true
       },
       {
-        id: "paraguay-republic",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Paraguay → Republic of Paraguay",
-        left: { name: "Paraguay" },
-        right: { name: "Republic of Paraguay" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "negros-provisional-cantonal",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -604,6 +591,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "paraguay-republic",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Paraguay → Republic of Paraguay formal-name identity merge",
+        left: { name: "Paraguay", ko: "파라과이", polity_id: "fc7fd185-6801-4e16-a13e-6a5983318345" },
+        right: { name: "Republic of Paraguay", ko: "파라과이 공화국", polity_id: "0e4464d1-4e86-45aa-9b0b-e74539fde8b8" },
+        rationale: "Official Paraguayan evidence establishes República del Paraguay as the formal republican name of one continuous Paraguayan state rather than a replacement sovereign identity. Law 6576/2020 commemorates 12 October 1813 as the proclamation of Paraguay as a Republic; the Archivo Nacional de Asunción preserves the same Congress resolutions appointing Francia and Yegros as Cónsules de la República; the 1870 Constitution and current 1992 Constitution continue to use República del Paraguay. Production had Francia's constitutionally distinct 1813-1840 phases on canonical Paraguay but later placed Francisco Solano López and Alfredo Stroessner on a separate Republic of Paraguay row. #2111 relinked those three later Activities to canonical Paraguay without altering their genuine office boundaries. No closed temporal designation was fabricated because República del Paraguay remains a current formal constitutional name. After fresh Runtime verification and exhaustive zero-external-reference audit, the duplicate Republic of Paraguay polity was retired to Paraguay.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "Paraguayan BACN Law 6576/2020: 12 October commemorates the 1813 proclamation of Paraguay as a Republic", "Archivo Nacional de Asunción, Resoluciones del Congreso Supremo 1813-10-12→1813-11-23: Francia and Yegros designated Cónsules de la República and the Government Regulation preserved", "Constitución Nacional de la República del Paraguay 1870: enacted for the República del Paraguay and Article 1 constitutes Paraguay as a republic", "Constitución de la República del Paraguay 1992 Article 1: La República del Paraguay is forever free and independent", "#2111 continuity correction squash merge 7fbf4f5db72bb0e3394de1b7da2a836d2eb0e71a; request paraguay_republic_continuity_merge_20261007_v1 applied 2026-10-07T18:26:25.500242Z", "Runtime compile runtime-person-politics-v1:f544c7485a53b5d79a71082fca9fdfcfc8d05ae869d9ceb9136be7259109b45e at 2026-10-07T18:26:58.851524Z resolves Francisco Solano López and both Stroessner phases to canonical Paraguay", "#2112 legacy Republic of Paraguay retirement squash merge 91a1464087f87b8b7bff38f350b0ac159d25e1a9; retirement applied 2026-10-07T18:28:44.205588Z", "2026-10-07 final Production readback: legacy Republic of Paraguay live row 0; retirement ledger points to Paraguay; Francia's consul/supreme-dictator/perpetual-dictator Activities remain distinct on canonical Paraguay; later Solano López and Stroessner Activities now share the same survivor identity"],
+        locked: true
+      },
       {
         id: "argentine-republic-argentina",
         review_group: "resolved_history",
