@@ -118,6 +118,49 @@ test('Admin inspector SQL is read-only, parameterized, and exposes raw safe iden
   assert.match(SOURCE_INSPECT_SQL, /activity_links/);
 });
 
+test('Source bibliography fields are available in direct and nested Admin inspector reads', async () => {
+  const fields = [
+    'author_creator', 'institution', 'publisher', 'publication_date',
+    'publication_year', 'external_identifier', 'citation_metadata', 'artifact_metadata'
+  ];
+  for (const sql of [PERSON_INSPECT_SQL, ACTIVITY_INSPECT_SQL, POLITY_INSPECT_SQL]) {
+    for (const field of fields) {
+      assert.match(sql, new RegExp("'"+field+"',\\s*s\\."+field+"\\b"));
+    }
+  }
+  for (const field of fields) {
+    assert.match(SOURCE_INSPECT_SQL, new RegExp("\\bs\\."+field+"\\b"));
+  }
+
+  const sourceId = '00000000-0000-4000-8000-000000000087';
+  const row = {
+    id: sourceId,
+    source_type: 'book',
+    title: 'Recorded history',
+    author_creator: 'Historian',
+    institution: 'History institute',
+    publisher: 'Academic Press',
+    publication_date: '2005-04-12',
+    publication_year: 2005,
+    external_identifier: 'ISBN:123',
+    citation_metadata: { page: 42 },
+    artifact_metadata: { format: 'scan' },
+    person_ids: [],
+    polity_ids: [],
+    activity_links: []
+  };
+  const client = {
+    async query(sql, params) {
+      assert.equal(sql, SOURCE_INSPECT_SQL);
+      assert.deepEqual(params, [sourceId]);
+      return { rowCount: 1, rows: [row] };
+    }
+  };
+  const read = await readAdminObject({ client, kind: 'source', id: sourceId });
+  assert.deepEqual(read.object, row);
+  assert.deepEqual(read.object.citation_metadata, { page: 42 });
+});
+
 test('readAdminObject selects a fixed projection by kind and preserves raw database object shape', async () => {
   const row = {
     id: PERSON_ID,
