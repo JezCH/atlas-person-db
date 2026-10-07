@@ -37,7 +37,7 @@
 .person-domain-filter[data-domain="culture"]{--person-filter-domain-color:var(--atlas-person-domain-culture)}
 .person-domain-filter[data-domain="religion"]{--person-filter-domain-color:var(--atlas-person-domain-religion-edge,var(--atlas-person-domain-religion))}
 .person-domain-filter[data-domain="exploration"]{--person-filter-domain-color:var(--atlas-person-domain-exploration)}
-.person-domain-filter:hover{background:#1a1f22;color:#c9c3b8}.person-domain-filter.is-active{border-color:var(--person-filter-domain-color);box-shadow:inset 0 0 0 1px var(--person-filter-domain-color);background:#1a1f22;color:#e2ddd2}
+.person-domain-filter.is-active{border-color:var(--person-filter-domain-color);box-shadow:inset 0 0 0 1px var(--person-filter-domain-color);background:#1a1f22;color:#e2ddd2}
 .person-domain-filter em{min-width:18px;padding:1px 5px;border-radius:999px;background:#20262a;color:#969ea3;font-size:9px;font-style:normal;font-weight:900;text-align:center}
 .person-domain-filter:focus-visible{outline:1px solid rgba(208,188,145,.62);outline-offset:2px}
 .person-era-group{scroll-margin-top:calc(var(--person-table-sticky-top,122px) + 54px)}
@@ -165,14 +165,25 @@
     box-shadow:inset 0 1px 0 var(--atlas-material-sheen);
   }
 
-  .person-domain-filter:hover{
+  /* ERA-M2 — Semantic domain filter interaction luminance.
+   * Surface luminance uses the shared GLOBAL-M2 hover / selected scale while
+   * semantic domain hue remains owned by the border / inset rail.
+   */
+  .person-domain-filter:hover:not(.is-active){
     border-color:var(--atlas-material-hairline-strong);
-    background-color:#191e21;
+    background-color:#15191c;
+    background-image:
+      linear-gradient(var(--atlas-material-wash-hover),var(--atlas-material-wash-hover)),
+      linear-gradient(180deg,var(--atlas-material-sheen),transparent 72%);
+    color:#c9c3b8;
   }
 
   .person-domain-filter.is-active{
     border-color:color-mix(in srgb,var(--person-filter-domain-color) 66%,#7f7560);
-    background-color:#191e21;
+    background-color:#15191c;
+    background-image:
+      linear-gradient(var(--atlas-material-wash-selected),var(--atlas-material-wash-selected)),
+      linear-gradient(180deg,var(--atlas-material-sheen),transparent 72%);
     box-shadow:
       inset 2px 0 0 var(--person-filter-domain-color),
       inset 0 1px 0 var(--atlas-material-sheen);
@@ -298,10 +309,22 @@
   }
 
   .person-domain-filter.is-active{
-    background-color:var(--atlas-surface-2);
+    background-color:var(--atlas-surface-1);
+    background-image:
+      linear-gradient(var(--atlas-material-wash-selected),var(--atlas-material-wash-selected)),
+      linear-gradient(180deg,var(--atlas-material-sheen),transparent 72%);
     box-shadow:
       inset 2px 0 0 var(--person-filter-domain-color),
       inset 0 1px 0 var(--atlas-material-sheen-strong);
+  }
+}
+@media(max-width:760px) and (hover:hover){
+  .person-domain-filter:hover:not(.is-active){
+    background-color:var(--atlas-surface-1);
+    background-image:
+      linear-gradient(var(--atlas-material-wash-hover),var(--atlas-material-wash-hover)),
+      linear-gradient(180deg,var(--atlas-material-sheen),transparent 72%);
+    color:#c9c3b8;
   }
 }
 @media(prefers-reduced-motion:reduce){.person-era-jump-list{scroll-behavior:auto}}

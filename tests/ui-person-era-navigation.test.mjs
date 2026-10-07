@@ -166,7 +166,7 @@ test('era navigation assets load after the shared era model/table grouping and b
   const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
   const mainJs = html.match(/atlas-person-main\.js\?v=[^"'\s>]+/)?.[0] || '';
   const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
-  const navCssAsset = 'atlas-person-era-navigation.css?v=20261007-era-m1-luminance-v1';
+  const navCssAsset = 'atlas-person-era-navigation.css?v=20261007-era-m2-domain-luminance-v1';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1';
 
   for (const asset of [eraModelJs, tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
@@ -208,4 +208,27 @@ test('ERA-M1 normalizes neutral era hover and current luminance without taking d
   assert.match(mobile, /\.person-era-jump\.is-current[\s\S]*?var\(--atlas-material-wash-selected\)/);
 
   assert.match(navCss, /\.person-domain-filter\.is-active[\s\S]*?var\(--person-filter-domain-color\)/);
+});
+
+
+test('ERA-M2 keeps domain hue semantic while sharing hover and selected surface luminance', () => {
+  const desktopStart = navCss.indexOf('ERA-M2 — Semantic domain filter interaction luminance');
+  const desktopEnd = navCss.indexOf('.person-domain-filter em{', desktopStart);
+  assert.ok(desktopStart >= 0 && desktopEnd > desktopStart);
+  const desktop = navCss.slice(desktopStart, desktopEnd);
+
+  assert.match(desktop, /\.person-domain-filter:hover:not\(\.is-active\)[\s\S]*?var\(--atlas-material-wash-hover\)/);
+  assert.match(desktop, /\.person-domain-filter\.is-active[\s\S]*?var\(--atlas-material-wash-selected\)/);
+  assert.match(desktop, /\.person-domain-filter\.is-active[\s\S]*?var\(--person-filter-domain-color\)/);
+  assert.doesNotMatch(desktop, /background-color:#191e21/);
+
+  const mobileStart = navCss.indexOf('MOBILE-NAV1 — Mobile instrument material parity');
+  const mobileEnd = navCss.indexOf('@media(prefers-reduced-motion:reduce)', mobileStart);
+  const mobile = navCss.slice(mobileStart, mobileEnd);
+  assert.match(mobile, /\.person-domain-filter\.is-active[\s\S]*?var\(--atlas-material-wash-selected\)/);
+  assert.match(mobile, /\.person-domain-filter\.is-active[\s\S]*?var\(--person-filter-domain-color\)/);
+  assert.match(mobile, /@media\(max-width:760px\) and \(hover:hover\)[\s\S]*?\.person-domain-filter:hover:not\(\.is-active\)[\s\S]*?var\(--atlas-material-wash-hover\)/);
+
+  assert.match(navCss, /data-domain="science"\]\{--person-filter-domain-color:var\(--atlas-person-domain-science\)\}/);
+  assert.doesNotMatch(navCss, /data-domain="knowledge"/);
 });

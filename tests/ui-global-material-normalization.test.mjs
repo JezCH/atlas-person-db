@@ -81,6 +81,7 @@ test("GLOBAL-M2 interaction luminance uses one hover / active / selected wash sc
   const navMaterial = nav.slice(nav.indexOf("ERA-M1 — Neutral Era navigation interaction luminance"), nav.indexOf("@media(max-width:900px)"));
   assert.match(navMaterial, /var\(--atlas-material-wash-hover\)/);
   assert.match(navMaterial, /var\(--atlas-material-wash-selected\)/);
+  assert.match(navMaterial, /ERA-M2 — Semantic domain filter interaction luminance/);
   assert.doesNotMatch(navMaterial, /\.person-era-jump\.is-current[\s\S]*?var\(--atlas-material-wash-active\)/);
   assert.doesNotMatch(navMaterial, /rgba\(208,188,145,\.026\)/);
 
