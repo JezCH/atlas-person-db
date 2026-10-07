@@ -1,30 +1,108 @@
 "use strict";
 
-const QUEUE_SCHEMA = "atlas-registration-queue/v2";
+const QUEUE_SCHEMA = "atlas-registration-queue/v3";
 const QUEUE_TABLE = "atlas_v2.person_registration_candidates";
+const QUEUE_MEMBERSHIP_RULE = "candidate has no unique exact normalized identity match in current Production persons/person_names";
+
+const DIACRITIC_SOURCE = "áàäâãåāăąǎǟȧạảấầẩẫậắằẳẵặçćčĉċďđéèëêēěĕėęěẹẻẽếềểễệğģĝġíìïîīĭįıǐịỉĩłĺļľŀñńņňóòöôõōŏőǒøọỏốồổỗộớờởỡợŕŗřśšşŝťţŧúùüûūŭůűųǔụủũứừửữựýÿŷỳỵỷỹžźż";
+const DIACRITIC_TARGET = "aaaaaaaaaaaaaaaaaaaaaaaacccccddeeeeeeeeeeeeeeeeeeggggiiiiiiiiiiiilllllnnnnoooooooooooooooooooooorrrsssstttuuuuuuuuuuuuuuuuuuyyyyyyyzzz";
+
+function identityKeySql(expression) {
+  return `regexp_replace(
+    translate(
+      lower(replace(replace(replace(${expression}, 'æ', 'ae'), 'œ', 'oe'), 'ß', 'ss')),
+      '${DIACRITIC_SOURCE}',
+      '${DIACRITIC_TARGET}'
+    ),
+    '[^a-z0-9가-힣]+',
+    '',
+    'g'
+  )`;
+}
+
+const CANDIDATE_IDENTITY_CTES = `
+candidate_aliases as (
+  select
+    c.candidate_id,
+    nullif(btrim(alias_name),'') as alias_name
+  from atlas_v2.person_registration_candidates c
+  cross join lateral (
+    select c.name as alias_name
+    union all
+    select btrim(part)
+      from regexp_split_to_table(c.name, E'\\s*[|/]\\s*') as part
+    union all
+    select jsonb_array_elements_text(
+      case
+        when jsonb_typeof(c.review_metadata->'lookup_names')='array'
+          then c.review_metadata->'lookup_names'
+        else '[]'::jsonb
+      end
+    )
+    union all
+    select c.review_metadata->>'display_name_ko'
+  ) aliases
+),
+candidate_identity_keys as (
+  select distinct
+    candidate_id,
+    ${identityKeySql("alias_name")} as identity_key
+  from candidate_aliases
+  where alias_name is not null
+),
+person_aliases as (
+  select p.id as person_id, pn.name as alias_name
+    from atlas_v2.persons p
+    join atlas_v2.person_names pn on pn.person_id=p.id
+  union all
+  select p.id, p.canonical_key
+    from atlas_v2.persons p
+),
+person_identity_keys as (
+  select distinct
+    person_id,
+    ${identityKeySql("alias_name")} as identity_key
+  from person_aliases
+  where alias_name is not null
+),
+candidate_identity_matches as (
+  select
+    c.candidate_id,
+    count(distinct p.person_id)::int as matched_person_count,
+    min(p.person_id::text) as matched_person_id
+  from candidate_identity_keys c
+  join person_identity_keys p
+    on p.identity_key=c.identity_key
+   and c.identity_key<>''
+  group by c.candidate_id
+)
+`;
 
 const PENDING_SQL = `
+with
+${CANDIDATE_IDENTITY_CTES}
 select
-  candidate_id,
-  name,
-  representative_domain,
-  priority,
-  review_metadata,
-  created_at,
-  updated_at
-from atlas_v2.person_registration_candidates
-where person_id is null
-order by coalesce(representative_domain,''), name, candidate_id
+  c.candidate_id,
+  c.name,
+  c.representative_domain,
+  c.priority,
+  c.review_metadata,
+  c.created_at,
+  c.updated_at,
+  coalesce(m.matched_person_count,0)::int as identity_match_count
+from atlas_v2.person_registration_candidates c
+left join candidate_identity_matches m on m.candidate_id=c.candidate_id
+left join atlas_v2.persons bound_person on bound_person.id=c.person_id
+where bound_person.id is null
+  and coalesce(m.matched_person_count,0) <> 1
+order by coalesce(c.representative_domain,''), c.name, c.candidate_id
 `;
 
 const SUMMARY_SQL = `
 select
-  count(*)::int as candidate_total,
-  count(*) filter (where q.person_id is null)::int as current_total,
-  count(*) filter (where q.person_id is not null)::int as registered_bound,
-  count(*) filter (where q.person_id is not null and p.id is null)::int as dangling_person_ids
-from atlas_v2.person_registration_candidates q
-left join atlas_v2.persons p on p.id=q.person_id
+  count(*)::int as ledger_candidate_total,
+  count(*) filter (where person_id is not null)::int as legacy_bound_count
+from atlas_v2.person_registration_candidates
 `;
 
 function text(value) {
@@ -52,9 +130,9 @@ function normalizeMetadata(value) {
 async function readCurrentRegistrationQueue({ client } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
 
-  const summaryResult = await client.query(SUMMARY_SQL);
   const pendingResult = await client.query(PENDING_SQL);
-  const row = summaryResult.rows?.[0] || {};
+  const summaryResult = await client.query(SUMMARY_SQL);
+  const ledger = summaryResult.rows?.[0] || {};
   const candidates = (pendingResult.rows || []).map((item) => {
     const reviewMetadata = normalizeMetadata(item.review_metadata);
     const priority = item.priority == null ? null : text(item.priority) || null;
@@ -78,22 +156,20 @@ async function readCurrentRegistrationQueue({ client } = {}) {
     byDomain[domain] = (byDomain[domain] || 0) + 1;
   }
 
-  const candidateTotal = Number(row.candidate_total || 0);
-  const currentTotal = Number(row.current_total || 0);
-  const registeredBound = Number(row.registered_bound || 0);
+  const currentTotal = candidates.length;
+  const ambiguousIdentityCount = (pendingResult.rows || []).filter((item) => Number(item.identity_match_count || 0) > 1).length;
   return Object.freeze({
     schema:QUEUE_SCHEMA,
     authority:QUEUE_TABLE,
-    membership_rule:"person_id IS NULL",
+    membership_rule:QUEUE_MEMBERSHIP_RULE,
     summary:Object.freeze({
-      candidate_total:candidateTotal,
-      source_admissions:candidateTotal,
+      candidate_total:currentTotal,
       current_total:currentTotal,
-      registered_bound:registeredBound,
       pending_count:currentTotal,
-      dangling_person_ids:Number(row.dangling_person_ids || 0),
-      duplicate_candidate_ids:0,
-      by_domain:Object.freeze(byDomain)
+      by_domain:Object.freeze(byDomain),
+      ambiguous_identity_count:ambiguousIdentityCount,
+      ledger_candidate_total:Number(ledger.ledger_candidate_total || 0),
+      legacy_bound_count:Number(ledger.legacy_bound_count || 0)
     }),
     candidates:Object.freeze(candidates)
   });
@@ -123,29 +199,21 @@ async function admitRegistrationQueueCandidate(client, {
            representative_domain=excluded.representative_domain,
            priority=excluded.priority,
            review_metadata=excluded.review_metadata,
+           person_id=null,
            updated_at=now()
-     where atlas_v2.person_registration_candidates.person_id is null
-     returning candidate_id,person_id::text`,
+     returning candidate_id`,
     [candidateId,candidateName,domain,normalizedPriority,JSON.stringify(metadata)]
   );
 
-  if (result.rowCount === 1) {
-    return Object.freeze({ candidate_id:candidateId, person_id:null });
-  }
-
-  const current = await loadRegistrationQueueCandidate(client, candidateId, { forUpdate:true });
-  if (!current) throw new Error("REGISTRATION_QUEUE_ADMISSION_FAILED");
-  return Object.freeze({
-    candidate_id:candidateId,
-    person_id:current.person_id == null ? null : requiredPersonId(current.person_id)
-  });
+  if (result.rowCount !== 1) throw new Error("REGISTRATION_QUEUE_ADMISSION_FAILED");
+  return Object.freeze({ candidate_id:candidateId });
 }
 
 async function loadRegistrationQueueCandidate(client, candidateId, { forUpdate = false } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   const id = requiredCandidateId(candidateId);
   const result = await client.query(
-    `select candidate_id,person_id::text
+    `select candidate_id
        from atlas_v2.person_registration_candidates
       where candidate_id=$1
       ${forUpdate ? "for update" : ""}`,
@@ -154,6 +222,8 @@ async function loadRegistrationQueueCandidate(client, candidateId, { forUpdate =
   return result.rows?.[0] || null;
 }
 
+// Backward-compatible validator only.
+// Queue membership is derived from Production identity and no longer mutates candidate.person_id.
 async function bindRegistrationQueueCandidate(client, {
   candidate_id,
   person_id,
@@ -161,35 +231,32 @@ async function bindRegistrationQueueCandidate(client, {
 } = {}) {
   const candidateId = requiredCandidateId(candidate_id);
   const personId = requiredPersonId(person_id);
-  const current = await loadRegistrationQueueCandidate(client, candidateId, { forUpdate:true });
+  const current = await loadRegistrationQueueCandidate(client, candidateId, { forUpdate:false });
 
   if (!current) {
     if (required) throw new Error("REGISTRATION_QUEUE_CANDIDATE_NOT_FOUND");
     return null;
   }
 
-  const currentPersonId = current.person_id == null ? null : requiredPersonId(current.person_id);
-  if (currentPersonId != null) {
-    if (currentPersonId !== personId) throw new Error("REGISTRATION_QUEUE_PERSON_BINDING_CONFLICT");
-    return Object.freeze({ candidate_id:candidateId, person_id:personId, replay:true });
-  }
-
-  const result = await client.query(
-    `update atlas_v2.person_registration_candidates
-        set person_id=$2::uuid,
-            updated_at=now()
-      where candidate_id=$1
-        and person_id is null
-      returning candidate_id,person_id::text`,
-    [candidateId, personId]
+  const person = await client.query(
+    `select id::text from atlas_v2.persons where id=$1::uuid`,
+    [personId]
   );
-  if (result.rowCount !== 1) throw new Error("REGISTRATION_QUEUE_PERSON_BINDING_FAILED");
-  return Object.freeze({ candidate_id:candidateId, person_id:personId, replay:false });
+  if (person.rowCount !== 1) throw new Error("REGISTRATION_QUEUE_PERSON_NOT_FOUND");
+
+  return Object.freeze({
+    candidate_id:candidateId,
+    person_id:personId,
+    replay:true,
+    membership_mutated:false
+  });
 }
 
 module.exports = Object.freeze({
   QUEUE_SCHEMA,
   QUEUE_TABLE,
+  QUEUE_MEMBERSHIP_RULE,
+  CANDIDATE_IDENTITY_CTES,
   PENDING_SQL,
   SUMMARY_SQL,
   text,
