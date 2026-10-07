@@ -1,1 +1,1 @@
-apply authoring/requests/registration-20261007-agitators-sss-friedrich-engels.json
+apply authoring/requests/registration-20261007-agitators-sss-alexis-de-tocqueville.json
