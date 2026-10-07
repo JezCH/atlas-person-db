@@ -198,9 +198,14 @@
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
           <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>서로 다른 채널이 같은 raw 인물명을 단독 주제로 다룬 횟수입니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong> alias 병합 전 raw 문자열 기준입니다.</p></div>
-          <div id="youtubeSignalTelemetry" class="registration-review-telemetry"><strong>스냅샷 확인 중</strong></div>
         </div>
-        <div class="registration-review-filterline"><div id="youtubeSignalThresholds" class="registration-review-thresholds"></div><span id="youtubeSignalVisibleCount">—</span></div>
+        <div class="registration-review-signal-toolbar">
+          <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
+          <div class="registration-review-signal-meta">
+            <div id="youtubeSignalTelemetry" class="registration-review-telemetry"><strong>스냅샷 확인 중</strong></div>
+            <span id="youtubeSignalVisibleCount" class="registration-review-signal-visible">—</span>
+          </div>
+        </div>
         <div class="registration-review-table-wrap registration-review-signal-wrap">
           <table class="registration-review-table registration-review-signal-table">
             <colgroup>
