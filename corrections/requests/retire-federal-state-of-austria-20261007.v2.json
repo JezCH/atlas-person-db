@@ -1,0 +1,45 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:federal-state-of-austria-after-continuity-merge:2026-10-07:v1",
+  "release_order": 2104,
+  "evidence": {
+    "decision": "Federal State of Austria is the 1934-1938 constitutional and official-name phase of the continuous Austria identity, not a replacement sovereign state. Stage 1 retired the artificial 1 May 1934 Dollfuss chancellorship fragment with source transfer; Stage 2 restored one continuous 1932-05-20→1934-07-25 chancellorship on canonical Austria and preserved Federal State of Austria / 오스트리아 연방국 as a reviewed temporal official_name for 1934-05-01→1938-03-12. The 13 March 1938 annexation remains the terminal boundary of the independent Federal-State phase.",
+    "stage1_request_id": "austria_federal_state_continuity_boundary_retirement_20261007_v1",
+    "stage1_applied_at": "2026-10-07T10:59:20.185972+00:00",
+    "stage2_request_id": "austria_federal_state_continuity_merge_20261007_v1",
+    "stage2_applied_at": "2026-10-07T11:01:56.620556+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:c63f3da831a44ed509168d022cb1e945836492204475d9d2788defd91ab289b6",
+    "runtime_compiled_at": "2026-10-07T11:02:30.757366+00:00",
+    "survivor_polity_id": "ebee3963-6246-4b8e-9730-574001ec247d",
+    "production_readback": "2026-10-07 exhaustive post-compile FK audit: legacy Federal State of Austria has zero references in person_politics_context_polities, person_politics_v2, runtime_person_politics_v1, polity_descriptions, polity_designations, polity_governance_periods, polity_identity_relations, polity_relations, polity_place_functions, polity_sources, runtime_compile_exclusions, spatial_registration_dispositions, and territory_records; exactly two owned preferred polity_names remain."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:federal-state-of-austria-after-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "ad85b693-1ee1-444d-8454-9f0f29bec36e",
+        "canonical_key": "Federal State of Austria",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "ebee3963-6246-4b8e-9730-574001ec247d",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Federal State of Austria",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "오스트리아 연방국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
