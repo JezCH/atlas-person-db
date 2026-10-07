@@ -33,6 +33,8 @@ test('observability browser module is GET-only and session-cookie based', () => 
 test('Inspector kinds come from authenticated server capabilities instead of a frontend authority list', () => {
   assert.match(observability, /payload\.supported_kinds/);
   assert.match(observability, /loadInspectorCapabilities/);
+  assert.match(observability, /polity_retirement: "정치체 퇴역 · 승계 이력"/);
+  assert.match(observability, /KIND_LABELS\[kind\] \|\| kind/);
   assert.doesNotMatch(observability, /new Set\(\[\s*["']person["']/);
   assert.match(observability, /encodeURIComponent\(kind\)/);
   assert.match(observability, /encodeURIComponent\(id\)/);
