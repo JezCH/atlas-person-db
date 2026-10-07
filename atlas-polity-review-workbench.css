@@ -269,6 +269,35 @@
 
 
 
+/* POLITY-M3 — Structural edge material ownership.
+ * Late-loaded top-level Polity panels, KPI cells, browser filter base edges,
+ * and the browser/review separator consume the shared GLOBAL-M1 hairline scale.
+ * Existing fills, semantics, geometry, and responsive layout remain unchanged.
+ */
+.polity-browser-summary,
+.polity-browser-dataset,
+.polity-browser-controls,
+.polity-browser-state,
+.polity-review-summary,
+.polity-review-dataset,
+.polity-review-toolbar{
+  border-color:var(--atlas-material-hairline);
+}
+
+.polity-browser-kpis>div,
+.polity-review-dataset-kpis>div{
+  border-color:var(--atlas-material-hairline-soft);
+}
+
+.polity-browser-filters button{
+  border-color:var(--atlas-material-hairline);
+}
+
+.atlas-polity-review-section::before{
+  background:var(--atlas-material-hairline);
+}
+
+
 /* POLITY-M2 — Filter interaction luminance ownership.
  * Late-loaded Polity filters consume the shared GLOBAL-M2 state scale:
  * hover 2.6%, pressed 4.0%, selected 5.0%, while selection border / rail semantics stay local.
