@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:palmyra-after-palmyrene-empire-continuity-merge:2026-10-07:v1",
+  "release_order": 2100,
+  "evidence": {
+    "decision": "Legacy Palmyra and canonical Palmyrene Empire are successive state-form/sovereignty phases of one continuous Odaenathid-Zenobian political regime. The pre-imperial royal phase is preserved as Palmyrene Kingdom / 팔미라 왕국 c.261→271; Odaenathus's c.261-c.267 royal Activity and Zenobia's 267-271 regency now resolve to the Palmyrene Empire survivor, while Zenobia's separate 272 Augusta Activity remains the explicit imperial phase.",
+    "stage2_request_id": "palmyra_palmyrene_empire_continuity_merge_20261007_v1",
+    "stage2_applied_at": "2026-10-07T10:13:42.823848+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:ac8e9bf5352232f1b2c698a63872ba1728db29e3cb7724a01cd4d3a657b3ace3",
+    "runtime_compiled_at": "2026-10-07T10:14:18.725751+00:00",
+    "survivor_polity_id": "0b3a09b0-de70-471a-8d41-c24fa2ef0ca3",
+    "production_readback": "2026-10-07 exhaustive post-compile FK audit: legacy Palmyra has zero references in person_politics_context_polities, person_politics_v2, runtime_person_politics_v1, polity_descriptions, polity_designations, polity_governance_periods, polity_identity_relations, polity_relations, polity_place_functions, polity_sources, runtime_compile_exclusions, spatial_registration_dispositions, and territory_records; exactly two owned preferred polity_names remain."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:palmyra-after-palmyrene-empire-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "7db938c5-9385-4c17-86b8-f289514cc221",
+        "canonical_key": "Palmyra",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "0b3a09b0-de70-471a-8d41-c24fa2ef0ca3",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Palmyra",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "팔미라",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
