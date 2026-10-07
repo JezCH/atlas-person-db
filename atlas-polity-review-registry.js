@@ -89,19 +89,6 @@
         locked: true
       },
       {
-        id: "argentine-republic-argentina",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Argentine Republic → Argentina",
-        left: { name: "Argentine Republic" },
-        right: { name: "Argentina" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "paraguay-republic",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -617,6 +604,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "argentine-republic-argentina",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Argentine Republic → Argentina official-name identity merge",
+        left: { name: "Argentine Republic", ko: "아르헨티나 공화국", polity_id: "d4c7a2c4-207e-4d58-854f-8223a28eec44" },
+        right: { name: "Argentina", ko: "아르헨티나", polity_id: "ac181549-e327-4982-93b5-2c411ad2bc9d" },
+        rationale: "Article 35 of the Argentine National Constitution expressly recognizes República Argentina as an official name of the same government and territory, while Argentina.gob.ar records the 8 October 1860 administrative standardization of that denomination. Production had only one Activity on the duplicate legacy polity: Domingo Faustino Sarmiento's 1868-10-12→1874-10-12 presidency. The reviewed correction relinked that Activity unchanged to canonical Argentina. No closed temporal designation was fabricated because República Argentina remains a valid constitutional official name rather than a superseded historical phase. The separately modeled Argentine Confederation is not merged by this case. After fresh Runtime verification and exhaustive zero-external-reference audit, the duplicate Argentine Republic polity was retired to Argentina.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "Argentine National Constitution Article 35: República Argentina remains one of the official names of the government and territory", "Argentina.gob.ar country-denomination history: President Santiago Derqui standardized República Argentina for administrative acts on 1860-10-08", "Casa Rosada: Domingo Faustino Sarmiento presidential term 1868-10-12→1874-10-12", "#2106 continuity correction squash merge 48dd3534954767fdcf790a968982d8d7c37c81fa; request argentine_republic_argentina_continuity_20261007_v1 applied 2026-10-07T11:12:43.626547Z", "Runtime compile runtime-person-politics-v1:b33ba12ff673ab8accef82c992da6075ac6ac06c27eb0abbcd0bd23d037ceb37 at 2026-10-07T11:13:15.168624Z resolves Sarmiento to canonical Argentina", "#2107 was a later duplicate plan and failed closed on exact-live polity_id drift; #2108 removed that stale plan before retirement", "#2109 fixed the retirement review_reason to the accepted executor enum; retirement applied 2026-10-07T11:18:34.249010Z", "2026-10-07 final Production readback: legacy Argentine Republic live row 0; retirement ledger points to Argentina; Sarmiento remains one 1868-10-12→1874-10-12 presidential Activity on Argentina"],
+        locked: true
+      },
       {
         id: "austria-republic-federal-state",
         review_group: "resolved_history",
