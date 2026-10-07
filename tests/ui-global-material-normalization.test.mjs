@@ -116,3 +116,28 @@ test("GLOBAL-M3 inscription typography is globally owned and limited to identity
   assert.doesNotMatch(typography, /padding\s*:/);
   assert.doesNotMatch(typography, /margin\s*:/);
 });
+
+
+test("SHELL-M1 global shell consumes shared structural material tokens without interaction drift", () => {
+  const foundation = read("atlas-ui-visual-foundation.css");
+  const html = read("index.html");
+
+  assert.match(foundation, /SHELL-M1 — Structural material normalization/);
+  assert.match(foundation, /\.sidebar \{[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline-soft\)/);
+  assert.match(foundation, /\.brand \{[\s\S]*?border-bottom: 1px solid var\(--atlas-material-hairline-soft\)/);
+  assert.match(foundation, /\.brand-mark \{[\s\S]*?border-left: 1px solid var\(--atlas-material-rail-soft\)[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline-strong\)/);
+  assert.match(foundation, /\.sidebar-foot \{[\s\S]*?border-top: 1px solid var\(--atlas-material-hairline-soft\)/);
+  assert.match(foundation, /\.main-area \{[\s\S]*?linear-gradient\(180deg, var\(--atlas-material-sheen\), transparent 14rem\)/);
+  assert.match(foundation, /\.topbar \{[\s\S]*?border-bottom: 1px solid var\(--atlas-material-hairline\)/);
+  assert.match(foundation, /\.mobile-appbar \{[\s\S]*?border-bottom: 1px solid var\(--atlas-material-hairline-soft\)/);
+  assert.match(foundation, /\.mobile-drawer \{[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline\)/);
+  assert.match(foundation, /\.mobile-brand \{[\s\S]*?border-bottom: 1px solid var\(--atlas-material-hairline-soft\)/);
+  assert.match(foundation, /\.mobile-brand-mark \{[\s\S]*?border-left: 1px solid var\(--atlas-material-rail-soft\)[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline-strong\)/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-shell-m1-material-v1/);
+
+  const shellStart = foundation.indexOf("SHELL-M1 — Structural material normalization");
+  const shellEnd = foundation.indexOf("/* ---------- Operational controls ----------", shellStart);
+  const shell = foundation.slice(shellStart, shellEnd);
+  assert.doesNotMatch(shell, /\.nav-item:hover:not\(:disabled\)[\s\S]*?var\(--atlas-material-wash-hover\)/);
+  assert.doesNotMatch(shell, /\.nav-item\.active[\s\S]*?var\(--atlas-material-wash-(?:active|selected)\)/);
+});
