@@ -1,0 +1,142 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "croatia_principality_kingdom_continuity_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_CROATIA_PRINCIPALITY_KINGDOM_CONTINUITY",
+  "release_order": 2007,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Hrvatska enciklopedija Tomislav / kralj / Hrvatska; current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "kingdom_survivor": "d6f38022-db09-4a60-a7c8-18abb85965de",
+    "principality_polity_id": "03824379-85aa-41f3-a2ef-82502832c26c",
+    "historical_decision": "Principality of Croatia and Kingdom of Croatia are modeled as one continuous medieval Croatian polity identity across Tomislav's change in ruler title/status. Hrvatska enciklopedija places Tomislav's rule approximately 910-928, records him as dux in 914, and notes that papal correspondence associated with the 925 Split council addresses the same ruler as rex. Modern historiography does not securely establish a specific coronation event or exact transition day.",
+    "activity_rule": "Keep Tomislav's Duke and King Activities separate because the ruler title changed, but place both under one continuous Croatian polity identity.",
+    "precision_rule": "Preserve the current reviewed c.925 boundary at approximate year granularity. Do not invent a coronation date or ceremony.",
+    "designation_rule": "Preserve Principality of Croatia as the modeled pre-royal state_form from c.910 through c.925 on the Kingdom of Croatia survivor, matching current reviewed Activity coverage."
+  },
+  "operations": [
+    {
+      "case_id": "croatia-relink-tomislav-duke-to-kingdom-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "04c2ca29-773d-43ae-bec5-2a6d85865557",
+      "baseline_before": {
+        "person_id": "b234ee2e-3b23-4f6a-a5ce-187ecc93d788",
+        "polity_id": "03824379-85aa-41f3-a2ef-82502832c26c",
+        "role_id": "2d2f3b9c-5518-5469-961b-e9e8f2a15870",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 910,
+        "activity_end": 925,
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "04c2ca29-773d-43ae-bec5-2a6d85865557",
+        "person_id": "b234ee2e-3b23-4f6a-a5ce-187ecc93d788",
+        "polity_id": "d6f38022-db09-4a60-a7c8-18abb85965de",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2d2f3b9c-5518-5469-961b-e9e8f2a15870",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 910,
+        "activity_start_detail": {
+          "year": 910,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 925,
+        "activity_end_detail": {
+          "year": 925,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Modern Croatian reference scholarship places Tomislav's rule approximately from 910 to 928. Thomas the Archdeacon explicitly calls him dux in 914, while papal correspondence associated with the 925 Split council addresses the same ruler as rex. ATLAS therefore treats the princely and royal phases as one continuous Croatian polity identity while preserving Duke and King as separate Activities. The transition remains approximate at year granularity and does not assert a specific coronation date or ceremony.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "croatia-principality-state-form-c910-c925",
+      "exact_before": {
+        "designation_absent_id": "7990b5b0-1105-4e91-ba7a-d9358990c152"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "7990b5b0-1105-4e91-ba7a-d9358990c152",
+          "polity_id": "d6f38022-db09-4a60-a7c8-18abb85965de",
+          "designation_type": "state_form",
+          "valid_from_year": 910,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "approximate",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 925,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "approximate",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "Principality of Croatia is preserved as the pre-royal state-form phase of the continuous medieval Croatian polity during Tomislav's modeled rule c.910-c.925. The evidence supports dux in 914 and rex by 925 but does not securely establish a coronation date, so ATLAS retains approximate year-level boundaries."
+        },
+        "names": [
+          {
+            "id": "3d04b3ff-a446-4f0e-92f2-0111ed7625ae",
+            "polity_designation_id": "7990b5b0-1105-4e91-ba7a-d9358990c152",
+            "locale": "en",
+            "name": "Principality of Croatia",
+            "is_preferred": true
+          },
+          {
+            "id": "f969a9ea-24f8-49ba-90b3-e8bdbc2bbd4e",
+            "polity_designation_id": "7990b5b0-1105-4e91-ba7a-d9358990c152",
+            "locale": "ko",
+            "name": "크로아티아 공국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "7990b5b0-1105-4e91-ba7a-d9358990c152",
+            "source_id": "0ab0ff04-0077-457d-9026-e00a34f8503f",
+            "source_locator_key": "https://www.enciklopedija.hr/clanak/tomislav"
+          },
+          {
+            "polity_designation_id": "7990b5b0-1105-4e91-ba7a-d9358990c152",
+            "source_id": "2d57644c-8363-42c7-a11a-0e641ad591fe",
+            "source_locator_key": "https://www.enciklopedija.hr/clanak/26396"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_polity_designation_count": 1,
+    "principality_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
