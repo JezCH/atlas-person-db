@@ -1,3 +1,4 @@
+/* SPACETIME-M4 — Mobile late material ownership. Camera cell dividers and the expanded status separator consume the shared GLOBAL-M1 soft hairline without altering V8 responsive hierarchy. */
 /* ATLAS UI V8 — Spacetime Mobile Hierarchy
  * Loaded after V7 instrument tools.
  * Keeps camera, geometry, semantic LOD and interaction handlers unchanged.
@@ -62,11 +63,11 @@
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera output {
     height: 34px;
     min-width: 0;
-    border-left: 1px solid #2c3338;
+    border-left: 1px solid var(--atlas-material-hairline-soft);
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button:first-of-type {
-    border-left: 1px solid #2c3338;
+    border-left: 1px solid var(--atlas-material-hairline-soft);
   }
 
   .person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button#spacetimeCameraZoomReset {
@@ -135,7 +136,7 @@
     margin-top: 2px;
     padding: 4px 0;
     border: 0;
-    border-top: 1px solid #2d3439;
+    border-top: 1px solid var(--atlas-material-hairline-soft);
     background: transparent;
     box-shadow: none;
   }
