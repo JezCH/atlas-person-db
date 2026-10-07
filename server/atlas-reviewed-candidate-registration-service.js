@@ -1,8 +1,7 @@
 "use strict";
 
 const {
-  admitRegistrationQueueCandidate,
-  bindRegistrationQueueCandidate
+  admitRegistrationQueueCandidate
 } = require("./atlas-registration-queue-read-service.js");
 const {
   recordReviewRevision,
@@ -153,13 +152,11 @@ function createReviewedCandidateRegistrationService({
   client,
   prepare = prepareAnyHumanAuthoringRequest,
   applyPrepared = applyPreparedWithinTransaction,
-  admitQueueCandidate = admitRegistrationQueueCandidate,
-  bindQueueCandidate = bindRegistrationQueueCandidate
+  admitQueueCandidate = admitRegistrationQueueCandidate
 } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   if (typeof prepare !== "function" || typeof applyPrepared !== "function") throw new Error("Candidate authoring primitives are required");
   if (typeof admitQueueCandidate !== "function") throw new Error("Candidate queue admission writer is required");
-  if (typeof bindQueueCandidate !== "function") throw new Error("Candidate queue binder is required");
 
   return Object.freeze({
     async recordHumanReview(rawReview) {
@@ -246,11 +243,6 @@ function createReviewedCandidateRegistrationService({
           if (String(registration.person_id || "") !== readback.person_id) {
             throw new Error("CANDIDATE_REGISTERED_PERSON_DRIFT");
           }
-          await bindQueueCandidate(client, {
-            candidate_id:ref.candidate_id,
-            person_id:readback.person_id,
-            required:false
-          });
           await client.query("commit");
           return Object.freeze({
             candidate_id:ref.candidate_id,
@@ -289,12 +281,6 @@ function createReviewedCandidateRegistrationService({
         const ledger = await readLedger(client, prepared.request.requestId);
         const readback = exactLedgerSnapshot(ledger, prepared, replay);
         if (String(first.person_id) !== readback.person_id) throw new Error("CANDIDATE_AUTHORING_PERSON_DRIFT");
-        await bindQueueCandidate(client, {
-          candidate_id:ref.candidate_id,
-          person_id:readback.person_id,
-          required:false
-        });
-
         const resultSnapshot = Object.freeze({
           version:1,
           candidate_id:ref.candidate_id,

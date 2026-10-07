@@ -1,6 +1,5 @@
 "use strict";
 
-const { bindRegistrationQueueCandidate } = require("./atlas-registration-queue-read-service.js");
 const { createPerson, createPolity, createRole, normalizeExact, normalizePersonLifeStatusReview } = require("./atlas-identity-service.js");
 const { temporalContextFromHumanActivity } = require("./atlas-polity-identity-resolver.js");
 const { createStage2NativeActivityTx, loadStage2NativeActivity } = require("./atlas-stage2-native-activity-service.js");
@@ -907,22 +906,18 @@ function normalizeQueueCandidateId(value) {
   return candidateId;
 }
 
-function createHumanAuthoringService({ client, prepare = prepareAnyHumanAuthoringRequest, applyPrepared = applyPreparedWithinTransaction, bindQueueCandidate = bindRegistrationQueueCandidate } = {}) {
+function createHumanAuthoringService({ client, prepare = prepareAnyHumanAuthoringRequest, applyPrepared = applyPreparedWithinTransaction } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   if (typeof prepare !== "function") throw new Error("prepare is required");
   if (typeof applyPrepared !== "function") throw new Error("applyPrepared is required");
-  if (typeof bindQueueCandidate !== "function") throw new Error("bindQueueCandidate is required");
   return Object.freeze({
     async apply(rawRequest, { transport = null, allowLegacyNamuWikiOmission = true, candidate_id = null } = {}) {
       const prepared = prepare(rawRequest, { allowLegacyNamuWikiOmission:true });
-      const queueCandidateId = normalizeQueueCandidateId(candidate_id);
+      if (candidate_id != null) normalizeQueueCandidateId(candidate_id);
       await client.query("begin isolation level serializable");
       try {
         await lockRequestIds(client, [prepared.request.requestId]);
         const result = await applyPrepared(client, prepared, { transport, catalogCache:new Map(), allowLegacyNamuWikiOmission:false });
-        if (queueCandidateId) {
-          await bindQueueCandidate(client, { candidate_id:queueCandidateId, person_id:result.person_id, required:true });
-        }
         await client.query("commit");
         return result;
       } catch (error) {
@@ -1057,13 +1052,6 @@ function createHumanAuthoringService({ client, prepare = prepareAnyHumanAuthorin
             catalogCache,
             allowLegacyNamuWikiOmission:false
           });
-          if (normalizedCandidateIds[index]) {
-            await bindQueueCandidate(client, {
-              candidate_id:normalizedCandidateIds[index],
-              person_id:result.person_id,
-              required:true
-            });
-          }
           await client.query("commit");
           results.push(result);
         } catch (error) {
