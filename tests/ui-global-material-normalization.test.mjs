@@ -154,8 +154,12 @@ test("SHELL-M2 navigation uses the shared hover / active / selected luminance sc
   assert.match(foundation, /\.mobile-nav button\.active \{[\s\S]*?var\(--atlas-material-wash-selected\)/);
   assert.match(foundation, /@media \(max-width: 760px\) and \(hover: hover\) \{[\s\S]*?\.mobile-nav button:hover:not\(:disabled\)[\s\S]*?var\(--atlas-material-wash-hover\)/);
 
-  assert.match(motion, /\.nav-item:active:not\(:disabled\),\n\.mobile-nav button:active:not\(:disabled\) \{\n  background-color: var\(--atlas-material-wash-active\);\n\}/);
-  assert.match(motion, /\.btn:active:not\(:disabled\),[\s\S]*?background-color: rgba\(255,255,255,\.038\)/);
+  const navActiveStart = motion.indexOf(".nav-item:active:not(:disabled),");
+  const controlsActiveStart = motion.indexOf(".btn:not(.btn-primary):active:not(:disabled),", navActiveStart);
+  assert.ok(navActiveStart >= 0 && controlsActiveStart > navActiveStart);
+  const navActive = motion.slice(navActiveStart, controlsActiveStart);
+  assert.match(navActive, /\.nav-item:active:not\(:disabled\),\n\.mobile-nav button:active:not\(:disabled\) \{\n  background-color: var\(--atlas-material-wash-active\);\n\}/);
+  assert.doesNotMatch(navActive, /\.btn/);
 
   assert.doesNotMatch(foundation, /\.nav-item:hover:not\(:disabled\) \{[\s\S]*?rgba\(255, 255, 255, \.025\)/);
   assert.doesNotMatch(foundation, /\.nav-item\.active \{[\s\S]*?rgba\(192, 174, 136, \.09\)/);
@@ -198,7 +202,9 @@ test("CONTROLS-M1 keeps operational chrome quiet while sharing structural hairli
   assert.match(foundation, /\.mobile-menu-button \{\n    border: 1px solid var\(--atlas-material-hairline-soft\);/);
   assert.match(foundation, /\.person-main-actions \.btn \{\n    border-color: var\(--atlas-material-hairline-soft\);/);
 
-  assert.match(foundation, /\.btn:hover \{\n  border-color: #50575d;\n  background: #20262b;\n\}/);
+  const controlsM1 = foundation.indexOf("CONTROLS-M1 — Quiet operational material normalization");
+  const controlsM2 = foundation.indexOf("CONTROLS-M2 — Operational interaction luminance", controlsM1);
+  assert.ok(controlsM1 >= 0 && controlsM2 > controlsM1);
   assert.match(foundation, /input:focus,[\s\S]*?border-color: var\(--atlas-honor-metal\);/);
   assert.match(foundation, /\.btn-primary \{[\s\S]*?background: rgba\(192, 174, 136, \.08\)/);
   assert.match(foundation, /\.mini-btn\.danger \{[\s\S]*?rgba\(215, 114, 114, \.32\)/);
