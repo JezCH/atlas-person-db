@@ -1,1 +1,1 @@
-apply authoring/requests/registration-20261007-zabel-cilicia-1219-1252.json
+preflight authoring/requests/zog-i-albanian-republic-1925-1928.json
