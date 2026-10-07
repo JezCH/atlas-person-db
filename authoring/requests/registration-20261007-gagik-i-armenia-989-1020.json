@@ -61,6 +61,7 @@
   },
   "review_context": {
     "request_batch": "USER-ARMENIA-TRIO-20261007",
-    "selection": "user_selected_immediate_registration"
+    "selection": "user_selected_immediate_registration",
+    "transport_retry": "runtime-ancestry-refresh-20261007"
   }
 }
