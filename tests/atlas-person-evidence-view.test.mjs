@@ -76,3 +76,45 @@ test("Evidence Inspector renderer groups chronology metadata and exact source lo
   assert.match(html,/p\. 10\|§2/);
   assert.doesNotMatch(html,/fetch\s*\(|XMLHttpRequest|\/api\//);
 });
+
+test("Main evidence labels translate known codes while preserving the canonical values",()=>{
+  assert.equal(evidenceView.humanEvidenceValue("granularity","day"),"일 단위");
+  assert.equal(evidenceView.humanEvidenceValue("certainty","approximate"),"근사");
+  assert.equal(evidenceView.humanEvidenceValue("calendar","unspecified_historical"),"역법 미특정");
+  assert.equal(evidenceView.humanEvidenceValue("chronology_status","exact_as_recorded"),"기록된 연대 그대로");
+  assert.equal(evidenceView.humanEvidenceValue("confidence","legacy_asserted"),"기존 기록에 따른 기재");
+  assert.equal(evidenceView.humanEvidenceValue("confidence","disputed"),"이견 있음");
+  assert.equal(evidenceView.humanEvidenceValue("chronology_status","reviewed_stage2_phase"),"reviewed_stage2_phase");
+  assert.equal(evidenceView.humanEvidenceValue("calendar",""),"");
+});
+
+test("Main Activity Evidence renders Korean meanings and raw-code tooltips, never rewrites evidence",()=>{
+  const renderer=evidenceView.createRenderer({
+    escapeHtml:(value)=>String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;"),
+    boundaryLabel:(boundary)=>boundary?.year?String(boundary.year):"연도 미상",
+    sourceListHtml:()=>""
+  });
+  const canonical={
+    ...activity,
+    chronology_status:"reviewed",
+    confidence:"well_established",
+    start:{...activity.start,certainty:"uncertain",calendar:"unspecified_historical"},
+    end:{...activity.end,certainty:"approximate",calendar:"julian"}
+  };
+  const original=JSON.stringify(canonical);
+  const html=renderer.activityEvidenceHtml(canonical);
+  for(const [raw,human] of [
+    ["reviewed","연대 검토됨"],
+    ["well_established","근거 확립"],
+    ["day","일 단위"],
+    ["uncertain","불확실"],
+    ["unspecified_historical","역법 미특정"],
+    ["approximate","근사"],
+    ["julian","율리우스력"]
+  ]){
+    assert.ok(html.includes(`title="${raw}">${human}`),`missing label for ${raw}`);
+  }
+  assert.equal(JSON.stringify(canonical),original);
+  const unknownHtml=renderer.activityEvidenceHtml({...activity,chronology_status:"reviewed_stage2_phase"});
+  assert.match(unknownHtml,/reviewed_stage2_phase/);
+});
