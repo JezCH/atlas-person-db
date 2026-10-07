@@ -1,0 +1,83 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "yugoslavia_continuity_boundary_retirement_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_YUGOSLAVIA_CONTINUITY_STAGE1",
+  "release_order": 2069,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Archives of Yugoslavia constitutional-history authority; U.S. FRUS 1945 records on the united Yugoslav government; U.N. Yugoslavia membership/succession records; current ATLAS same-identity continuity rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "kingdom_polity": "a098ffac-513d-4847-9a59-8d45c6b31cc3",
+    "dfy_polity": "9f47c3c0-dcbd-4f9e-ace4-24272e1e9109",
+    "fpry_polity": "eac9dcd3-f388-48bc-a89b-8750fa5f7750",
+    "sfry_survivor": "e40a7202-2036-4d7a-a31b-e88598743e61",
+    "historical_decision": "Kingdom of Yugoslavia, Democratic Federal Yugoslavia, Federal People's Republic of Yugoslavia and Socialist Federal Republic of Yugoslavia are successive constitutional/name phases of one continuing international Yugoslav state identity. The Archives of Yugoslavia explicitly states that the 1943 AVNOJ decisions suspended internal continuity with the Kingdom but did not interrupt Yugoslavia's international legal continuity as a subject of international law. On 7 March 1945 the Royal Yugoslav Government and NKOJ were dissolved and replaced by one united provisional government. The U.N. later treats the former Yugoslavia/SFRY as one original Member from the 1945 Charter signature until dissolution. Federal Republic of Yugoslavia (1992) is excluded from this merge: U.N. Security Council resolution 777 states the SFRY had ceased to exist and FRY could not automatically continue its membership.",
+    "rationale": "The legacy model splits Tito's continuous Prime Minister tenure at 29 November 1945 and his continuous President tenure at 7 April 1963 solely because the Yugoslav state's official name/constitutional form changed. Retire those two artificial name-boundary fragments first with source transfer. A fresh exact-read Stage 2 will restore each surviving SFRY Activity to the full tenure, relink Peter II to the same continuous polity identity, and preserve the historical phases as temporal designations."
+  },
+  "operations": [
+    {
+      "case_id": "yugoslavia-retire-tito-dfy-prime-minister-name-boundary-fragment",
+      "type": "retire_activity",
+      "activity_id": "b28b7cdd-58a9-45cf-a517-002548e53741",
+      "baseline_before": {
+        "person_id": "d1698f13-2e02-427b-a4a9-33074f0b51ab",
+        "polity_id": "9f47c3c0-dcbd-4f9e-ace4-24272e1e9109",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1945,
+        "activity_end": 1945,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "replacement_activity_ids": [
+        "f8f25787-fc27-4a77-84e6-2888f2aa5a40"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    },
+    {
+      "case_id": "yugoslavia-retire-tito-fpry-president-name-boundary-fragment",
+      "type": "retire_activity",
+      "activity_id": "b6bffad6-0c68-4b22-b548-01952ccf25bc",
+      "baseline_before": {
+        "person_id": "d1698f13-2e02-427b-a4a9-33074f0b51ab",
+        "polity_id": "eac9dcd3-f388-48bc-a89b-8750fa5f7750",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1953,
+        "activity_end": 1963,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "replacement_activity_ids": [
+        "5d506d43-6518-426f-b3de-8e5877cf8bb4"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retired_activity_count": 2,
+    "surviving_activity_ids": [
+      "f8f25787-fc27-4a77-84e6-2888f2aa5a40",
+      "5d506d43-6518-426f-b3de-8e5877cf8bb4"
+    ],
+    "source_transfer_required": true,
+    "production_mutation_authorized": false
+  }
+}
