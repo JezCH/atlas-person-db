@@ -166,7 +166,7 @@ test('era navigation assets load after the shared era model/table grouping and b
   const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
   const mainJs = html.match(/atlas-person-main\.js\?v=[^"'\s>]+/)?.[0] || '';
   const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
-  const navCssAsset = 'atlas-person-era-navigation.css?v=20261007-era-m2-domain-luminance-v1';
+  const navCssAsset = 'atlas-person-era-navigation.css?v=20261007-era-m3-focus-v1';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1';
 
   for (const asset of [eraModelJs, tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
@@ -231,4 +231,23 @@ test('ERA-M2 keeps domain hue semantic while sharing hover and selected surface 
 
   assert.match(navCss, /data-domain="science"\]\{--person-filter-domain-color:var\(--atlas-person-domain-science\)\}/);
   assert.doesNotMatch(navCss, /data-domain="knowledge"/);
+});
+
+
+test('ERA-M3 unifies Era control focus without changing selected-state semantics', () => {
+  assert.match(navCss, /ERA-M3 — Focus language consolidation/);
+  assert.match(navCss, /\.person-era-search:focus,\.person-era-polity-filter:focus,\.person-era-relation-filter:focus\{[^}]*border-color:var\(--atlas-material-hairline-strong\)[^}]*outline:1px solid var\(--atlas-focus-ring\)[^}]*outline-offset:2px/);
+  assert.match(navCss, /\.person-era-nav-step:focus-visible,\.person-era-jump:focus-visible\{outline:1px solid var\(--atlas-focus-ring\);outline-offset:2px\}/);
+  assert.match(navCss, /\.person-domain-filter:focus-visible\{outline:1px solid var\(--atlas-focus-ring\);outline-offset:2px\}/);
+
+  const desktopStart = navCss.indexOf('ERA-M3 — Focus language consolidation');
+  const desktopEnd = navCss.indexOf('.person-era-nav-step{', desktopStart);
+  const desktop = navCss.slice(desktopStart, desktopEnd);
+  assert.match(desktop, /border-color:var\(--atlas-material-hairline-strong\)/);
+  assert.match(desktop, /outline:1px solid var\(--atlas-focus-ring\)/);
+  assert.match(desktop, /box-shadow:inset 0 1px 0 var\(--atlas-material-sheen-strong\)/);
+  assert.doesNotMatch(desktop, /rgba\(208,188,145,\.46\)|rgba\(208,188,145,\.11\)/);
+
+  assert.match(navCss, /\.person-era-jump\.is-current\{[^}]*outline:1px solid rgba\(192,174,136,\.78\)/);
+  assert.match(navCss, /\.person-era-jump\.is-current\{[\s\S]*?outline-color:rgba\(208,188,145,\.54\)/);
 });

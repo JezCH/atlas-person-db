@@ -9,12 +9,12 @@
 .person-era-search::placeholder{color:#747d83;font-weight:600}
 .person-era-polity-filter,.person-era-relation-filter{height:30px;padding:0 28px 0 9px;border:1px solid #343b40;border-radius:6px;background:#111518;color:#d7d3ca;font:inherit;font-size:11px;font-weight:750;outline:none}
 .person-era-polity-filter{width:190px;max-width:28vw}.person-era-relation-filter{width:130px;max-width:20vw}
-.person-era-search:focus,.person-era-polity-filter:focus,.person-era-relation-filter:focus{border-color:rgba(192,174,136,.54);box-shadow:0 0 0 2px rgba(192,174,136,.10)}
+.person-era-search:focus,.person-era-polity-filter:focus,.person-era-relation-filter:focus{border-color:var(--atlas-material-hairline-strong);outline:1px solid var(--atlas-focus-ring);outline-offset:2px}
 .person-era-nav-track{display:grid;grid-template-columns:34px minmax(0,1fr) 34px;align-items:center;gap:8px}
 .person-era-nav-step{display:grid;width:34px;height:34px;place-items:center;border:1px solid #343b40;border-radius:6px;background:#15191c;color:#9ca4a8;font:inherit;font-size:21px;line-height:1;cursor:pointer}
 .person-era-nav-step:hover:not(:disabled){border-color:#6f6652;background:#1b2024;color:#e6dfd0}
 .person-era-nav-step:disabled{opacity:.35;cursor:default}
-.person-era-nav-step:focus-visible,.person-era-jump:focus-visible{outline:1px solid rgba(208,188,145,.62);outline-offset:2px}
+.person-era-nav-step:focus-visible,.person-era-jump:focus-visible{outline:1px solid var(--atlas-focus-ring);outline-offset:2px}
 .person-era-jump-list{display:flex;min-width:0;gap:6px;overflow-x:auto;overscroll-behavior-x:contain;padding:2px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
 .person-era-jump{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"label count" "range count";column-gap:7px;flex:0 0 auto;min-width:104px;min-height:42px;align-items:center;padding:6px 8px;border:1px solid #343b40;border-radius:7px;background:#15191c;color:#9aa1a4;box-shadow:inset 0 1px 0 rgba(255,255,255,.012);font:inherit;text-align:left;cursor:pointer}
 .person-era-jump:hover{filter:none;border-color:#4c555b;background:#1a1f22;color:#d8d2c5}
@@ -39,7 +39,7 @@
 .person-domain-filter[data-domain="exploration"]{--person-filter-domain-color:var(--atlas-person-domain-exploration)}
 .person-domain-filter.is-active{border-color:var(--person-filter-domain-color);box-shadow:inset 0 0 0 1px var(--person-filter-domain-color);background:#1a1f22;color:#e2ddd2}
 .person-domain-filter em{min-width:18px;padding:1px 5px;border-radius:999px;background:#20262a;color:#969ea3;font-size:9px;font-style:normal;font-weight:900;text-align:center}
-.person-domain-filter:focus-visible{outline:1px solid rgba(208,188,145,.62);outline-offset:2px}
+.person-domain-filter:focus-visible{outline:1px solid var(--atlas-focus-ring);outline-offset:2px}
 .person-era-group{scroll-margin-top:calc(var(--person-table-sticky-top,122px) + 54px)}
 /* ERA-M1 — Neutral Era navigation interaction luminance.
  * Previous/next and era-jump hover use the shared GLOBAL-M2 hover wash.
@@ -90,13 +90,17 @@
     border-color:var(--atlas-material-hairline-strong);
   }
 
+  /* ERA-M3 — Focus language consolidation.
+   * Era inputs and navigation controls share the global V9 focus ring while
+   * selection outlines remain a separate semantic state.
+   */
   .person-era-search:focus,
   .person-era-polity-filter:focus,
   .person-era-relation-filter:focus{
-    border-color:rgba(208,188,145,.46);
-    box-shadow:
-      inset 0 1px 0 rgba(239,235,226,.018),
-      0 0 0 1px rgba(208,188,145,.11);
+    border-color:var(--atlas-material-hairline-strong);
+    outline:1px solid var(--atlas-focus-ring);
+    outline-offset:2px;
+    box-shadow:inset 0 1px 0 var(--atlas-material-sheen-strong);
   }
 
   .person-era-nav-step{
