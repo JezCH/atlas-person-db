@@ -1,0 +1,166 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "libya_republic_jamahiriya_continuity_merge_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_LIBYA_REPUBLIC_JAMAHIRIYA_CONTINUITY",
+  "release_order": 2080,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; 2 March 1977 Declaration on the Establishment of the Authority of the People; U.N. Libya member-state naming history; current ATLAS same-identity official-name/state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "libyan_arab_republic_polity": "333274e4-e616-491c-8446-c4261f8b007d",
+    "jamahiriya_survivor": "7e1a3ced-d4fc-4eb0-b12f-2752e5255014",
+    "historical_decision": "The Libyan Arab Republic and the Socialist People's Libyan Arab Jamahiriya are successive constitutional and official-name phases of one continuing Libyan sovereign state identity. The 2 March 1977 Declaration expressly reviews the 11 December 1969 Constitutional Declaration, proclaims the new people's-authority system, and in Article 1 changes Libya's official name to the Socialist People's Libyan Arab Jamahiriya. United Nations member-state history treats the post-1969 names as successive names of the same Libya membership rather than a new admission or state succession. Therefore the 1977 boundary is modeled as an internal constitutional/name transition, not state extinction/replacement.",
+    "activity_rule": "Muammar Gaddafi's 1969-09-01→1977-03-02 Revolutionary Command Council chairmanship remains a distinct Activity because the RCC itself was replaced by the Jamahiriya institutions on 2 March 1977. The Activity is relinked to the continuous Libya polity identity but is not merged with his 1977-1979 Secretary-General or 1979-2011 Leader of the Revolution Activities, because those are genuinely different roles.",
+    "designation_rule": "Preserve Libyan Arab Republic / 리비아 아랍 공화국 as the temporal official_name of the continuous Libya/Jamahiriya polity from 1 September 1969 through 1 March 1977, ending the day before the 2 March 1977 declaration changed the official name."
+  },
+  "operations": [
+    {
+      "case_id": "libya-relink-gaddafi-rcc-chairman-to-jamahiriya-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "8de9c23b-435e-46c3-807c-32827cd63c2f",
+      "baseline_before": {
+        "person_id": "0c8a4bb9-1f73-4809-a57e-6f660071a37e",
+        "polity_id": "333274e4-e616-491c-8446-c4261f8b007d",
+        "role_id": "95ec4a6e-4156-45dd-ac70-98e9ad3428ec",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1969,
+        "activity_end": 1977,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "8de9c23b-435e-46c3-807c-32827cd63c2f",
+        "person_id": "0c8a4bb9-1f73-4809-a57e-6f660071a37e",
+        "polity_id": "7e1a3ced-d4fc-4eb0-b12f-2752e5255014",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "95ec4a6e-4156-45dd-ac70-98e9ad3428ec",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1969,
+        "activity_start_detail": {
+          "year": 1969,
+          "month": 9,
+          "day": 1,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1977,
+        "activity_end_detail": {
+          "year": 1977,
+          "month": 3,
+          "day": 2,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Muammar Gaddafi led the 1 September 1969 overthrow of the monarchy and served as chairman of the Revolutionary Command Council until 2 March 1977. On that date the Declaration on the Establishment of the Authority of the People replaced the RCC-era constitutional structure with the Jamahiriya institutions and changed Libya's official name. ATLAS preserves the actual office boundary while modeling the Libyan Arab Republic and Jamahiriya as phases of one continuous sovereign Libyan polity identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "libya-source-un-member-state-name-history",
+      "exact_before": {
+        "source_absent_id": "0c0effa0-6c1e-4bb5-9f88-036c9cefb833"
+      },
+      "exact_after": {
+        "source": {
+          "id": "0c0effa0-6c1e-4bb5-9f88-036c9cefb833",
+          "source_key": "bibliographic:un-member-states:libya-name-history",
+          "source_type": "government_archive",
+          "title": "Libya — United Nations Member State naming history",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.un.org/ru/about-us/member-states/libya",
+          "citation_text": "The United Nations member-state history records Libya's post-independence names as successive names of the same member state: Libyan Arab Republic after the 1969 change, Socialist People's Libyan Arab Jamahiriya from March 1977, and a further Jamahiriya name change in 1986."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "libya-official-name-libyan-arab-republic-1969-1977",
+      "exact_before": {
+        "designation_absent_id": "86a2b92c-e640-42d0-b204-65052ce64526"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "86a2b92c-e640-42d0-b204-65052ce64526",
+          "polity_id": "7e1a3ced-d4fc-4eb0-b12f-2752e5255014",
+          "designation_type": "official_name",
+          "valid_from_year": 1969,
+          "valid_from_month": 9,
+          "valid_from_day": 1,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1977,
+          "valid_to_month": 3,
+          "valid_to_day": 1,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Libyan Arab Republic is preserved as the official-name phase of the continuous Libyan state from the 1 September 1969 revolution through 1 March 1977. The Declaration on the Establishment of the Authority of the People, adopted on 2 March 1977, established the Jamahiriya political system and changed the official name to the Socialist People's Libyan Arab Jamahiriya."
+        },
+        "names": [
+          {
+            "id": "508e5135-2055-4d85-a6b6-48acdcf55d3d",
+            "polity_designation_id": "86a2b92c-e640-42d0-b204-65052ce64526",
+            "locale": "en",
+            "name": "Libyan Arab Republic",
+            "is_preferred": true
+          },
+          {
+            "id": "339c0424-2f5d-470a-9744-321ec05204e1",
+            "polity_designation_id": "86a2b92c-e640-42d0-b204-65052ce64526",
+            "locale": "ko",
+            "name": "리비아 아랍 공화국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "86a2b92c-e640-42d0-b204-65052ce64526",
+            "source_id": "60ea20b3-4240-4c5c-91ce-5b4b5f9dc82f",
+            "source_locator_key": "https://history.state.gov/historicaldocuments/frus1969-76ve05p2/d74"
+          },
+          {
+            "polity_designation_id": "86a2b92c-e640-42d0-b204-65052ce64526",
+            "source_id": "394594ed-fd98-412b-88c1-1d52dcb11ab8",
+            "source_locator_key": "https://www.refworld.org/legal/decreees/natlegbod/1977/14592"
+          },
+          {
+            "polity_designation_id": "86a2b92c-e640-42d0-b204-65052ce64526",
+            "source_id": "0c0effa0-6c1e-4bb5-9f88-036c9cefb833",
+            "source_locator_key": "https://www.un.org/ru/about-us/member-states/libya"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_source_count": 1,
+    "asserted_polity_designation_count": 1,
+    "libyan_arab_republic_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
