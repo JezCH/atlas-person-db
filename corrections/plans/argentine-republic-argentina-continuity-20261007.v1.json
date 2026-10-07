@@ -1,0 +1,88 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "argentine_republic_argentina_continuity_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_ARGENTINE_REPUBLIC_ARGENTINA_CONTINUITY",
+  "release_order": 2106,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Constitución de la Nación Argentina Article 35; Argentina.gob.ar denomination history citing Instituto Geográfico Nacional; Casa Rosada Sarmiento presidential chronology; current ATLAS same-identity formal-name rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "argentina_survivor": "ac181549-e327-4982-93b5-2c411ad2bc9d",
+    "argentine_republic_legacy": "d4c7a2c4-207e-4d58-854f-8223a28eec44",
+    "historical_decision": "Argentine Republic is not a separate sovereign state from Argentina. Article 35 of the Argentine Constitution declares Provincias Unidas del Río de la Plata, República Argentina and Confederación Argentina to be official names used indistinctly for the government and territory, with Nación Argentina used in legislation. Argentina's official denomination history further records that on 8 October 1860 President Santiago Derqui standardized República Argentina for administrative acts. Domingo Faustino Sarmiento's 1868-1874 presidency therefore belongs to the same continuous Argentina polity already used for later presidents; the duplicate Argentine Republic row is a formal-name identity split rather than a historical-state boundary.",
+    "naming_rule": "Do not invent a bounded temporal official_name designation for Argentine Republic. República Argentina remains a current constitutional official name, while ATLAS polity_designations currently model closed temporal phases and an all-null end boundary means unresolved rather than ongoing. Preserve the formal-name fact in correction evidence and, after exhaustive orphan verification, in the polity retirement ledger; keep Argentina as the canonical survivor.",
+    "activity_rule": "Preserve Domingo Faustino Sarmiento's Activity UUID, exact 12 October 1868 to 12 October 1874 dates, President role, governs relation, term period basis, chronology/confidence, and the existing Casa Rosada source link. Change only the polity identity to the canonical Argentina survivor and replace notes with reviewed canonicalization context.",
+    "primary_references": [
+      "Constitución de la Nación Argentina, Article 35: Provincias Unidas del Río de la Plata, República Argentina and Confederación Argentina are official names used indistinctly for the government and territory; Nación Argentina is used in legislation.",
+      "Argentina.gob.ar, Denominación: the 1853 Constitution included República Argentina among official names and the 8 October 1860 executive act standardized República Argentina for administrative acts.",
+      "Casa Rosada, Domingo Faustino Sarmiento (1868–1874): presidential term 12 October 1868 to 12 October 1874."
+    ]
+  },
+  "operations": [
+    {
+      "case_id": "argentina-relink-sarmiento-presidency-from-formal-name-duplicate",
+      "type": "rewrite_activity",
+      "activity_id": "2087bea4-3b7d-4662-8c57-2f6b011b94bc",
+      "baseline_before": {
+        "person_id": "2ddbedfd-8844-484f-92d4-86656194484a",
+        "polity_id": "d4c7a2c4-207e-4d58-854f-8223a28eec44",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1868,
+        "activity_end": 1874,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "2087bea4-3b7d-4662-8c57-2f6b011b94bc",
+        "person_id": "2ddbedfd-8844-484f-92d4-86656194484a",
+        "polity_id": "ac181549-e327-4982-93b5-2c411ad2bc9d",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1868,
+        "activity_start_detail": {
+          "year": 1868,
+          "month": 10,
+          "day": 12,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1874,
+        "activity_end_detail": {
+          "year": 1874,
+          "month": 10,
+          "day": 12,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Domingo Faustino Sarmiento served as President from 12 October 1868 to 12 October 1874. Article 35 of the Argentine Constitution treats República Argentina as an official name of the same government and territory, not a separate polity. ATLAS therefore binds this presidency to the canonical Argentina identity while preserving the formal-name evidence separately from polity identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_polity_designation_count": 0,
+    "argentine_republic_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
