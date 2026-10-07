@@ -50,10 +50,10 @@ test("SPACETIME-M3 keeps instrument hover, pressed, and selected luminance seman
   assert.ok(m1 >= 0 && m3 > m1 && m2 > m3);
 
   const material = tools.slice(m1, m2);
-  assert.match(material, /\.spacetime-search-result-list button:hover,[\s\S]*?background: var\(--atlas-material-wash-hover\)/);
-  assert.match(material, /\.spacetime-meanwhile-activities button:hover,[\s\S]*?background: var\(--atlas-material-wash-hover\)/);
-  assert.doesNotMatch(material, /\.spacetime-search-result-list button:hover,[\s\S]*?background: var\(--atlas-material-wash-active\)/);
-  assert.doesNotMatch(material, /\.spacetime-meanwhile-activities button:hover,[\s\S]*?background: var\(--atlas-material-wash-selected\)/);
+  assert.match(material, /\.spacetime-search-result-list button:hover,[^}]*background: var\(--atlas-material-wash-hover\)/);
+  assert.match(material, /\.spacetime-meanwhile-activities button:hover,[^}]*background: var\(--atlas-material-wash-hover\)/);
+  assert.doesNotMatch(material, /\.spacetime-search-result-list button:hover,[^}]*background: var\(--atlas-material-wash-active\)/);
+  assert.doesNotMatch(material, /\.spacetime-meanwhile-activities button:hover,[^}]*background: var\(--atlas-material-wash-selected\)/);
 
   const active = tools.slice(m3, m2);
   for (const selector of [
