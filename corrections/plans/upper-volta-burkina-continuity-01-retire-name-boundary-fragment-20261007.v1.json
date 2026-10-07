@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "upper_volta_burkina_continuity_boundary_retirement_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_UPPER_VOLTA_BURKINA_CONTINUITY_STAGE1",
+  "release_order": 2048,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; U.S. Office of the Historian Burkina Faso (Upper Volta) recognition record; United Nations Security Council S/16696 (13 August 1984); current ATLAS same-identity official-name rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "upper_volta_polity": "6d89e23a-1eaf-4af3-a310-07ed03e828d6",
+    "burkina_survivor": "e29ed7c4-fe05-405f-b85e-2ddeaee79902",
+    "historical_decision": "Republic of Upper Volta and Burkina Faso are successive official-name phases of the same sovereign state. U.S. diplomatic history states that the state's name changed from Upper Volta to Burkina Faso in 1984; the U.N. Security Council recorded official notification that the name of Upper Volta had been changed to Burkina Faso. The 4 August 1984 renaming therefore does not constitute state extinction or replacement.",
+    "rationale": "The legacy model splits Thomas Sankara's single continuous presidency solely at the country-name boundary: 1983-08-04→1984-08-03 on Republic of Upper Volta and 1984-08-04→1987-10-15 on Burkina Faso. Retire the Upper-Volta-side fragment first with source transfer; a fresh exact-read correction will extend the Burkina Faso survivor back to Sankara's actual 1983-08-04 accession and preserve Republic of Upper Volta as a temporal official-name designation."
+  },
+  "operations": [
+    {
+      "case_id": "upper-volta-burkina-retire-sankara-name-boundary-fragment",
+      "type": "retire_activity",
+      "activity_id": "e4df02b3-c967-490a-8d50-59fe35e7991e",
+      "baseline_before": {
+        "person_id": "b2dfd2e9-7d65-4dd7-8d9b-8fafca9034e0",
+        "polity_id": "6d89e23a-1eaf-4af3-a310-07ed03e828d6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1983,
+        "activity_end": 1984,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "replacement_activity_ids": [
+        "0f8be991-7bbf-43e9-85f5-5a37b080ba75"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retired_activity_count": 1,
+    "surviving_activity_ids": [
+      "0f8be991-7bbf-43e9-85f5-5a37b080ba75"
+    ],
+    "source_transfer_required": true,
+    "production_mutation_authorized": false
+  }
+}
