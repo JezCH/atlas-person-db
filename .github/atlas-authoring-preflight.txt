@@ -1,1 +1,1 @@
-apply authoring/requests/registration-20261007-mesrop-mashtots-armenia-405.json
+apply authoring/requests/registration-20261007-zabel-cilicia-1219-1252.json
