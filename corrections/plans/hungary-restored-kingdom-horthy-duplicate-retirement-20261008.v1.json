@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "hungary_restored_kingdom_horthy_duplicate_retirement_20261008_v1",
+  "as_of": "2026-10-08",
+  "status": "REVIEWED_HUNGARY_RESTORED_KINGDOM_STAGE2",
+  "release_order": 2119,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current Hungary historical-family review; #2118 reviewed Human Authoring result; fresh Production exact read 2026-10-08; Hungarian National Archives evidence already normalized on the replacement Activity.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "pre_1918_kingdom_polity": "b07ef629-2fd6-59f9-bac8-ec685b371aac",
+    "restored_kingdom_polity": "83292f3d-caad-43bb-86e6-05259b90eac9",
+    "historical_decision": "The medieval/Habsburg Kingdom of Hungary ends as a polity identity at the 1918 republican rupture. The 1920 restoration created a restored monarchical polity identity, Kingdom of Hungary (1920–1946), rather than an uninterrupted continuation of the pre-1918 Kingdom UUID. #2118 successfully authored that restored identity and Horthy's reviewed 1920-03-01→1944-10-16 regency on it.",
+    "rationale": "Fresh Production now contains two otherwise identical Horthy regency Activities: the legacy Activity on the pre-1918 Kingdom and the reviewed #2118 replacement on Kingdom of Hungary (1920–1946). The replacement already carries all two normalized source links from the legacy Activity plus the additional Hungarian National Archives 1918 rupture source. Retire only the obsolete legacy Activity, transferring its normalized source links to the reviewed replacement with deduplication before deletion."
+  },
+  "operations": [
+    {
+      "case_id": "hungary-restored-kingdom-retire-legacy-horthy-regency",
+      "type": "retire_activity",
+      "activity_id": "09a06f23-4c76-46f0-9558-dd8b88c6cc08",
+      "baseline_before": {
+        "person_id": "80f5abf5-337f-496d-b553-98e5f521e6f6",
+        "polity_id": "b07ef629-2fd6-59f9-bac8-ec685b371aac",
+        "role_id": "c1fff3f9-9c0b-4e45-9bed-c3b206695f17",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1920,
+        "activity_end": 1944,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "replacement_activity_ids": [
+        "a49e1194-99cf-4210-a85c-e866464a7c9e"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retired_activity_count": 1,
+    "survivor_activity_id": "a49e1194-99cf-4210-a85c-e866464a7c9e",
+    "source_transfer_required": true,
+    "production_mutation_authorized": false
+  }
+}
