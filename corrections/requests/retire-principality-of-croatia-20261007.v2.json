@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:principality-of-croatia-after-kingdom-state-form-merge:2026-10-07:v1",
+  "release_order": 2012,
+  "evidence": {
+    "decision": "Principality of Croatia is the modeled c.910-c.925 pre-royal state-form phase of one continuous medieval Croatian polity identity and is preserved as a temporal state_form designation on canonical Kingdom of Croatia.",
+    "continuity_request_id": "croatia_principality_kingdom_continuity_20261007_v1",
+    "continuity_applied_at": "2026-10-07T03:02:15.374160+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:35fa72e311eead07c31d420c93c4ca62a5faa24b52c1758699eafb418c1fbaf1",
+    "runtime_compiled_at": "2026-10-07T03:02:47.974274+00:00",
+    "survivor_polity_id": "d6f38022-db09-4a60-a7c8-18abb85965de",
+    "production_readback": "2026-10-07 exact post-compile readback: legacy Principality row has zero external references in authoring and runtime and only two owned preferred polity_names."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:principality-of-croatia-after-kingdom-state-form-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "03824379-85aa-41f3-a2ef-82502832c26c",
+        "canonical_key": "Principality of Croatia",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "d6f38022-db09-4a60-a7c8-18abb85965de",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Principality of Croatia",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "크로아티아 공국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
