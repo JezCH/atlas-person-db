@@ -16,9 +16,15 @@ test('Main navigation exposes all authority domains through static controls plus
     assert.match(html, new RegExp(`data-atlas-domain="${domain}"`));
   }
   assert.doesNotMatch(html, /data-atlas-domain="(?:dashboard|polities|places|events|sources|geometry)"[^>]*disabled/);
-  assert.match(nav, /"dashboard", "persons", "spacetime", "polities", "places", "events", "sources", "geometry"/);
+  assert.match(nav, /"dashboard", "persons", "registration", "spacetime", "polities", "places", "events", "sources", "geometry"/);
   assert.match(nav, /dataAtlasDomain|dataset\.atlasDomain|data-atlas-domain="spacetime"/i);
   assert.match(catalog, /spacetime: entry/);
+  assert.match(catalog, /registration: entry/);
+  assert.match(nav, /function ensureRegistrationReviewNavButtons\(\)/);
+  assert.match(nav, /data-atlas-domain="registration"/);
+  assert.match(nav, /atlasRegistrationReviewMount/);
+  assert.match(nav, /ATLAS_REGISTRATION_REVIEW/);
+  assert.match(nav, /atlas-registration-review\.js/);
   assert.match(html, /atlas-main-authority-nav\.css\?v=20260923-root-batch1/);
   assert.match(html, /atlas-main-authority-nav\.js\?v=[^"]+/);
   assert.match(nav, /atlasDashboardMount/);
@@ -29,6 +35,7 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /atlas-dashboard\.js/);
   assert.match(nav, /atlas-dashboard\.css/);
   assert.match(nav, /function activateDashboard\(\)/);
+  assert.match(nav, /function activateRegistrationReview\(\)/);
   assert.doesNotMatch(html, /atlas-dashboard-model\.js/);
   assert.doesNotMatch(html, /atlas-person-spacetime-model\.js/);
   assert.doesNotMatch(html, /atlas-dashboard\.js/);
