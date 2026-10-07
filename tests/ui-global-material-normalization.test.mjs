@@ -31,6 +31,8 @@ test("GLOBAL-M1 Person Register and navigation consume the shared material scale
   assert.match(nav, /border-color:var\(--atlas-material-hairline\)/);
   assert.match(nav, /var\(--atlas-material-sheen\)/);
   assert.match(nav, /var\(--atlas-material-hairline-strong\)/);
+  assert.match(nav, /\.person-era-jump\.person-era-unknown\{[^}]*var\(--atlas-material-hairline-soft\)[^}]*var\(--atlas-canvas-deep\)/);
+  assert.match(nav, /\.person-era-jump\.person-era-unknown::before\{[^}]*var\(--atlas-material-hairline-strong\)/);
 });
 
 test("GLOBAL-M1 Polity canonical and review cards share the same rail and hairline strengths", () => {
