@@ -143,6 +143,10 @@
   transform: none;
 }
 
+/* DASHBOARD-M1 — Late focus ownership.
+ * Dashboard Monumental V11 loads after global V9; keep all Dashboard-specific
+ * interactive controls on the shared focus language at final cascade ownership.
+ */
 .dashboard-kpi-action:focus-visible,
 .dashboard-issue-grid button:focus-visible,
 .dashboard-issue-grid .dashboard-attention-link:focus-visible,
@@ -151,7 +155,7 @@
 .dashboard-polity-toolbar button:focus-visible,
 .dashboard-polity-row:focus-visible,
 .dashboard-tool-actions .btn:focus-visible {
-  outline: 1px solid rgba(208,188,145,.62);
+  outline: 1px solid var(--atlas-focus-ring);
   outline-offset: 2px;
 }
 
