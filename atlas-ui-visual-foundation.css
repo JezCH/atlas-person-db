@@ -257,12 +257,17 @@ body {
 /* ---------- Operational controls ----------
  * Keep them contemporary and quiet. Monumentality belongs to historical
  * content, not to form controls.
+ *
+ * CONTROLS-M1 — Quiet operational material normalization.
+ * Static control edges consume the shared GLOBAL-M1 hairline scale while
+ * fills, interaction luminance, focus, primary emphasis, and danger semantics
+ * remain locally owned.
  */
 
 input,
 select,
 textarea {
-  border-color: #3a4147;
+  border-color: var(--atlas-material-hairline);
   border-radius: var(--atlas-radius-control);
   background: #171b1f;
   color: var(--atlas-text);
@@ -284,7 +289,7 @@ textarea:focus {
 
 .btn {
   min-height: 35px;
-  border-color: #3a4147;
+  border-color: var(--atlas-material-hairline);
   border-radius: var(--atlas-radius-control);
   background: #191e22;
   color: #d9d6cf;
@@ -310,7 +315,7 @@ textarea:focus {
 }
 
 .mini-btn {
-  border: 1px solid #343b41;
+  border: 1px solid var(--atlas-material-hairline-soft);
   border-radius: 4px;
   background: #20252a;
   color: #c8c7c2;
@@ -331,7 +336,7 @@ textarea:focus {
 }
 
 .toast {
-  border: 1px solid #3b4247;
+  border: 1px solid var(--atlas-material-hairline);
   border-radius: 4px;
   background: #20252a;
   color: var(--atlas-text-strong);
@@ -567,7 +572,7 @@ textarea:focus {
 /* ---------- Responsive shell ---------- */
 
 .sidebar-collapse-toggle {
-  border-color: #343b41;
+  border-color: var(--atlas-material-hairline-soft);
   border-radius: 4px;
   background: #151a1e;
   color: #a8afb4;
@@ -611,7 +616,7 @@ textarea:focus {
   }
 
   .mobile-menu-button {
-    border: 1px solid #343b41;
+    border: 1px solid var(--atlas-material-hairline-soft);
     border-radius: 4px;
     color: #c5c4bf;
     background: #191d21;
@@ -707,7 +712,7 @@ textarea:focus {
   }
 
   .person-main-actions .btn {
-    border-color: #343b41;
+    border-color: var(--atlas-material-hairline-soft);
     border-radius: 4px;
     background: #191d21;
     color: #dad7d0;

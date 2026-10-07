@@ -133,7 +133,7 @@ test("SHELL-M1 global shell consumes shared structural material tokens without i
   assert.match(foundation, /\.mobile-drawer \{[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline\)/);
   assert.match(foundation, /\.mobile-brand \{[\s\S]*?border-bottom: 1px solid var\(--atlas-material-hairline-soft\)/);
   assert.match(foundation, /\.mobile-brand-mark \{[\s\S]*?border-left: 1px solid var\(--atlas-material-rail-soft\)[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline-strong\)/);
-  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-shell-m2-luminance-v1/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-controls-m1-material-v1/);
 
   const shellStart = foundation.indexOf("SHELL-M1 — Structural material normalization");
   const shellEnd = foundation.indexOf("SHELL-M2 — Navigation interaction luminance", shellStart);
@@ -161,7 +161,7 @@ test("SHELL-M2 navigation uses the shared hover / active / selected luminance sc
   assert.doesNotMatch(foundation, /\.nav-item\.active \{[\s\S]*?rgba\(192, 174, 136, \.09\)/);
   assert.doesNotMatch(foundation, /\.mobile-nav button\.active \{[\s\S]*?rgba\(192,174,136,\.09\)/);
 
-  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-shell-m2-luminance-v1/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-controls-m1-material-v1/);
   assert.match(html, /atlas-ui-motion-material-v9\.css\?v=20261007-shell-m3-ownership-v1/);
 });
 
@@ -182,4 +182,26 @@ test("SHELL-M3 keeps late V9 shell material on shared GLOBAL-M1 tokens", () => {
   assert.match(motion, /\.btn,[\s\S]*?var\(--atlas-material-edge-soft\)/);
   assert.match(motion, /\.btn:hover,[\s\S]*?var\(--atlas-material-edge\)/);
   assert.match(html, /atlas-ui-motion-material-v9\.css\?v=20261007-shell-m3-ownership-v1/);
+});
+
+
+test("CONTROLS-M1 keeps operational chrome quiet while sharing structural hairlines", () => {
+  const foundation = read("atlas-ui-visual-foundation.css");
+  const html = read("index.html");
+
+  assert.match(foundation, /CONTROLS-M1 — Quiet operational material normalization/);
+  assert.match(foundation, /input,\nselect,\ntextarea \{\n  border-color: var\(--atlas-material-hairline\);/);
+  assert.match(foundation, /\.btn \{[\s\S]*?border-color: var\(--atlas-material-hairline\);/);
+  assert.match(foundation, /\.mini-btn \{\n  border: 1px solid var\(--atlas-material-hairline-soft\);/);
+  assert.match(foundation, /\.toast \{\n  border: 1px solid var\(--atlas-material-hairline\);/);
+  assert.match(foundation, /\.sidebar-collapse-toggle \{\n  border-color: var\(--atlas-material-hairline-soft\);/);
+  assert.match(foundation, /\.mobile-menu-button \{\n    border: 1px solid var\(--atlas-material-hairline-soft\);/);
+  assert.match(foundation, /\.person-main-actions \.btn \{\n    border-color: var\(--atlas-material-hairline-soft\);/);
+
+  assert.match(foundation, /\.btn:hover \{\n  border-color: #50575d;\n  background: #20262b;\n\}/);
+  assert.match(foundation, /input:focus,[\s\S]*?border-color: var\(--atlas-honor-metal\);/);
+  assert.match(foundation, /\.btn-primary \{[\s\S]*?background: rgba\(192, 174, 136, \.08\)/);
+  assert.match(foundation, /\.mini-btn\.danger \{[\s\S]*?rgba\(215, 114, 114, \.32\)/);
+
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-controls-m1-material-v1/);
 });
