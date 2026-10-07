@@ -206,7 +206,7 @@
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
     appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260923-runtime-ownership-v1");
     appendStylesheetOnce("./atlas-person-spacetime-monumental-canvas.css?v=20261007-spacetime-m2-focus-v1");
-    appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261007-spacetime-m2-focus-v1");
+    appendStylesheetOnce("./atlas-person-spacetime-instrument-tools.css?v=20261007-spacetime-m3-luminance-v1");
     appendStylesheetOnce("./atlas-person-spacetime-mobile-v8.css?v=20261003-ui-v8-mobile-v1");
     spacetimeAssetsPromise = ensureSpacetimeModel()
       .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20261003-ui-v7-tools-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
