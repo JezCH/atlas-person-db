@@ -1,0 +1,180 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "argentine_republic_argentina_continuity_merge_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_ARGENTINE_REPUBLIC_ARGENTINA_CONTINUITY",
+  "release_order": 2106,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Argentina.gob.ar country-denomination authority; Argentine National Constitution Article 35; Casa Rosada presidential chronology; current ATLAS same-identity official-name rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "argentine_republic_legacy": "d4c7a2c4-207e-4d58-854f-8223a28eec44",
+    "argentina_survivor": "ac181549-e327-4982-93b5-2c411ad2bc9d",
+    "historical_decision": "Argentine Republic is not a separate sovereign identity from Argentina. Article 35 of the Argentine National Constitution expressly provides that Provincias Unidas del Río de la Plata, República Argentina and Confederación Argentina are official names that may be used indistinctly for the government and territory, while Nación Argentina is used in the enactment of laws. Argentina.gob.ar further records that on 8 October 1860 President Santiago Derqui standardized República Argentina for administrative acts. Therefore the Production split placing Sarmiento's 1868-1874 presidency on a separate Argentine Republic polity is a naming duplication, not a real state succession.",
+    "activity_rule": "Domingo Faustino Sarmiento's 12 October 1868→12 October 1874 presidency is relinked unchanged to canonical Argentina. Casa Rosada gives exactly this presidential term and describes him as President of the Nación Argentina; no office boundary or state-identity boundary occurs.",
+    "designation_rule": "Preserve Argentine Republic / 아르헨티나 공화국 as an open-ended official_name on canonical Argentina beginning 8 October 1860, when President Santiago Derqui standardized República Argentina for administrative acts. The designation has no terminal date because Article 35 of the current Constitution continues to recognize República Argentina as an official name; this is an official co-name, not a superseded historical phase. This correction does not merge the separately modeled Argentine Confederation polity."
+  },
+  "operations": [
+    {
+      "case_id": "argentina-relink-sarmiento-from-argentine-republic-to-argentina",
+      "type": "rewrite_activity",
+      "activity_id": "2087bea4-3b7d-4662-8c57-2f6b011b94bc",
+      "baseline_before": {
+        "person_id": "2ddbedfd-8844-484f-92d4-86656194484a",
+        "polity_id": "d4c7a2c4-207e-4d58-854f-8223a28eec44",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1868,
+        "activity_end": 1874,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "2087bea4-3b7d-4662-8c57-2f6b011b94bc",
+        "person_id": "2ddbedfd-8844-484f-92d4-86656194484a",
+        "polity_id": "ac181549-e327-4982-93b5-2c411ad2bc9d",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1868,
+        "activity_start_detail": {
+          "year": 1868,
+          "month": 10,
+          "day": 12,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1874,
+        "activity_end_detail": {
+          "year": 1874,
+          "month": 10,
+          "day": 12,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Domingo Faustino Sarmiento served as President from 12 October 1868 to 12 October 1874. Casa Rosada gives this exact presidential chronology. Argentine Republic is an official constitutional name of the same Argentine state, not a separate polity identity, so ATLAS binds Sarmiento's presidency to canonical Argentina while preserving República Argentina as an official-name designation.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "argentina-source-official-country-denomination",
+      "exact_before": {
+        "source_absent_id": "c8f1d7f1-6b15-4a54-a0d8-b898f54aa8fd"
+      },
+      "exact_after": {
+        "source": {
+          "id": "c8f1d7f1-6b15-4a54-a0d8-b898f54aa8fd",
+          "source_key": "bibliographic:argentina-gob-ar:country-denomination",
+          "source_type": "government_reference",
+          "title": "Denominación — Argentina.gob.ar",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.argentina.gob.ar/pais/territorio/denominacion",
+          "citation_text": "Argentina.gob.ar explains that Article 35 recognizes República Argentina among the country's official names and that President Santiago Derqui standardized República Argentina for administrative acts on 8 October 1860."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "argentina-source-constitution-article-35",
+      "exact_before": {
+        "source_absent_id": "6b8ca297-b45c-48ff-93ec-93c1fd11dc5b"
+      },
+      "exact_after": {
+        "source": {
+          "id": "6b8ca297-b45c-48ff-93ec-93c1fd11dc5b",
+          "source_key": "bibliographic:argentina-national-constitution:article-35",
+          "source_type": "government_reference",
+          "title": "Constitución de la Nación Argentina — Article 35",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.argentina.gob.ar/normativa/nacional/804/texto",
+          "citation_text": "Article 35 provides that Provincias Unidas del Río de la Plata, República Argentina and Confederación Argentina are official names used indistinctly for the government and territory, with Nación Argentina used in the enactment of laws."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "argentina-official-name-argentine-republic-open-ended",
+      "exact_before": {
+        "designation_absent_id": "fc11ec51-c786-43a6-9ac0-1b6d102f7ff3"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "fc11ec51-c786-43a6-9ac0-1b6d102f7ff3",
+          "polity_id": "ac181549-e327-4982-93b5-2c411ad2bc9d",
+          "designation_type": "official_name",
+          "valid_from_year": 1860,
+          "valid_from_month": 10,
+          "valid_from_day": 8,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": null,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": null,
+          "valid_to_certainty": null,
+          "valid_to_calendar": null,
+          "confidence": "reviewed",
+          "notes": "Argentine Republic / República Argentina is an open-ended official co-name of canonical Argentina. Argentina.gob.ar records that President Santiago Derqui standardized República Argentina for administrative acts on 8 October 1860, and Article 35 of the current Constitution continues to recognize República Argentina among the official names. The absence of a valid_to boundary is intentional and does not imply a separate state identity or a merger of the separately modeled Argentine Confederation polity."
+        },
+        "names": [
+          {
+            "id": "930243ca-9b1c-4ee8-98d3-078e1e4e053a",
+            "polity_designation_id": "fc11ec51-c786-43a6-9ac0-1b6d102f7ff3",
+            "locale": "en",
+            "name": "Argentine Republic",
+            "is_preferred": true
+          },
+          {
+            "id": "83c7c034-3519-4f79-954b-b532ac80f3aa",
+            "polity_designation_id": "fc11ec51-c786-43a6-9ac0-1b6d102f7ff3",
+            "locale": "ko",
+            "name": "아르헨티나 공화국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "fc11ec51-c786-43a6-9ac0-1b6d102f7ff3",
+            "source_id": "c8f1d7f1-6b15-4a54-a0d8-b898f54aa8fd",
+            "source_locator_key": "https://www.argentina.gob.ar/pais/territorio/denominacion"
+          },
+          {
+            "polity_designation_id": "fc11ec51-c786-43a6-9ac0-1b6d102f7ff3",
+            "source_id": "6b8ca297-b45c-48ff-93ec-93c1fd11dc5b",
+            "source_locator_key": "https://www.argentina.gob.ar/normativa/nacional/804/texto"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_source_count": 2,
+    "asserted_polity_designation_count": 1,
+    "argentine_republic_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
