@@ -89,19 +89,6 @@
         locked: true
       },
       {
-        id: "austria-republic-federal-state",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Republic of Austria → Federal State of Austria",
-        left: { name: "Republic of Austria" },
-        right: { name: "Federal State of Austria" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "argentine-republic-argentina",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -630,6 +617,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "austria-republic-federal-state",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Republic of Austria → Federal State of Austria constitutional / official-name continuity merge",
+        left: { name: "Republic of Austria", ko: "오스트리아 공화국", polity_id: "ebee3963-6246-4b8e-9730-574001ec247d" },
+        right: { name: "Federal State of Austria", ko: "오스트리아 연방국", polity_id: "ad85b693-1ee1-444d-8454-9f0f29bec36e" },
+        rationale: "Austrian Parliament and RIS evidence show that the 1 May 1934 May Constitution replaced the democratic constitutional order and changed the official state name to Bundesstaat Österreich, while the Austrian state itself remained the same state until the forced 13 March 1938 annexation. Austrian Parliament's official Dollfuss record lists one uninterrupted Bundeskanzler tenure from 20 May 1932 to 25 July 1934. ATLAS therefore models the Republic/Federal-State boundary as a constitutional and official-name transition within canonical Austria, not state extinction/replacement: the artificial 1 May Dollfuss Activity fragment was retired, the surviving Austria Activity was restored to 1932-05-20→1934-07-25, Federal State of Austria / 오스트리아 연방국 is preserved as a 1934-05-01→1938-03-12 temporal official_name, and the zero-external-reference Federal State legacy Polity is retired.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "Austrian Parliament official Engelbert Dollfuss record: Bundeskanzler 1932-05-20→1934-07-25 continuously", "Austrian Parliament 1933/34 constitutional history: 1 May 1934 May Constitution and official state name Bundesstaat Österreich", "Austrian RIS BGBl. 1/1934: Constitution 1934 promulgated 1934-05-01 under Bundesstaat Österreich", "Austrian RIS BGBl. 75/1938: constitutional annexation law dated 1938-03-13", "#2102 Stage 1 fragment retirement squash merge b3bb68cdb1a650d1ac59538b01492eb0a1307d73; applied 2026-10-07T10:59:20.185972Z", "#2103 Stage 2 continuity merge squash merge 0c0235168ab8111e8c50b152d9be430b1168aaed; applied 2026-10-07T11:01:56.620556Z", "Runtime compile runtime-person-politics-v1:c63f3da831a44ed509168d022cb1e945836492204475d9d2788defd91ab289b6 at 2026-10-07T11:02:30.757366Z resolves the full Dollfuss chancellorship to canonical Austria", "#2104 legacy Federal State of Austria retirement squash merge 5c314ef6927c306f93d32d1b00d4ec4f5a38dee4; retirement applied 2026-10-07T11:04:13.447424Z", "2026-10-07 final Production readback: legacy Federal State live row 0; retirement ledger points to Austria; 1934-05-01→1938-03-12 official_name designation exists; Dollfuss is one 1932-05-20→1934-07-25 Activity on Austria"],
+        locked: true
+      },
       {
         id: "palmyra-empire",
         review_group: "resolved_history",
