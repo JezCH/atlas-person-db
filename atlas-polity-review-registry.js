@@ -59,19 +59,6 @@
         locked: true
       },
       {
-        id: "congo-drc-zaire-family",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Congo / Democratic Republic of the Congo → Zaire / Democratic Republic of the Congo",
-        left: { name: "Congo / Democratic Republic of the Congo" },
-        right: { name: "Zaire / Democratic Republic of the Congo" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "yugoslavia-continuity-family",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -708,6 +695,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "congo-drc-zaire-family",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Republic of the Congo (Léopoldville) / Zaire → Democratic Republic of the Congo official-name merge",
+        left: { name: "Republic of the Congo (Léopoldville) / Republic of Zaire", ko: "콩고 공화국(레오폴드빌) / 자이르 공화국", polity_id: "14ea7cd5-b0ee-4e63-a7a6-0995a9a3a018 / c6a2181d-3263-4e46-9349-214b85eead32" },
+        right: { name: "Democratic Republic of the Congo", ko: "콩고 민주 공화국", polity_id: "05242fe7-eefa-4140-806b-4a058e3c2c8a" },
+        rationale: "1960년 독립한 Republic of the Congo (Léopoldville), 1964년부터의 Democratic Republic of the Congo, 1971–1997년 Republic of Zaire, 1997년 이후 다시 Democratic Republic of the Congo는 동일 sovereign state identity의 연속 official-name phases로 통합했습니다. U.N. authority records는 1964-08-01, 1971-10-27, 1997-05-17의 변화를 모두 name change로 기록합니다. 기존 데이터는 Moïse Tshombe의 총리직과 Mobutu Sese Seko의 대통령직을 국명 경계에서 각각 둘로 잘랐으므로 #2064에서 Léopoldville/Zaire 경계 fragments를 source-transfer 후 retire하고 #2065에서 Tshombe 1964-07-10→1965-10-13, Mobutu 1965-11-25→1997-05-16의 연속 재임으로 복원했습니다. Patrice Lumumba의 1960-06-30→1960-09-05 총리 Activity도 canonical DRC survivor로 재연결했습니다. Republic of the Congo (Léopoldville)은 1960-06-30→1964-07-31, Republic of Zaire는 1971-10-27→1997-05-16 temporal official_name으로 보존했고, 최종 Runtime/FK audit 뒤 #2066에서 두 zero-external-reference legacy Polity를 DRC survivor로 retire했습니다. Congo Free State와 Kingdom of Kongo는 별도 identity로 유지했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "United Nations authority record, Republic of the Congo (Leopoldville): 1960-06-30→1964-07-31; name changed to Democratic Republic of the Congo on 1964-08-01", "United Nations authority record, Zaire: Democratic Republic of the Congo changed to Zaire on 1971-10-27 and back to Democratic Republic of the Congo on 1997-05-17", "#2064 name-boundary Activity retirement squash merge 5dad9026658fee58ed62571feb2cbb6ba98c1856; ATLAS Integrity 37588307829 SUCCESS; Correction Apply 37588455127 committed 2026-10-07T07:37:46.459937Z", "#2065 continuity merge squash merge 4a08ef214762322b3a159a1a7e2d67f3a21c323e; ATLAS Integrity 37588743457 SUCCESS; Correction Apply 37588893565 committed 2026-10-07T07:41:58.845934Z", "2026-10-07 Runtime compile runtime-person-politics-v1:119b9c2b326b322ba6595c3a72a5e26e0a82995fab23eb978919dc9f161459d5 at 2026-10-07T07:42:33.076002Z: Lumumba, Tshombe and Mobutu all resolve to canonical DRC with continuous reviewed boundaries", "#2066 legacy Léopoldville + Zaire retirement squash merge 7f4984a07bdcdae3fd4502f60624b5deb720c65c; ATLAS Integrity 37589271201 SUCCESS; Correction Apply 37589427920 SUCCESS; both retirements applied 2026-10-07T07:47:08.261409Z", "2026-10-07 final Production + Runtime readback: Lumumba 1960-06-30→1960-09-05, Tshombe 1964-07-10→1965-10-13 and Mobutu 1965-11-25→1997-05-16 all use DRC survivor; Léopoldville and Zaire official_name designations each count 1 with 2 normalized source links; both legacy polity live rows 0; DRC survivor live row 1; retirement ledger rows 2"],
+        locked: true
+      },
       {
         id: "upper-volta-burkina-faso",
         review_group: "resolved_history",
