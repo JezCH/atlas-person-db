@@ -1,0 +1,138 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "iran_imperial_state_continuity_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_IRAN_IMPERIAL_STATE_CONTINUITY",
+  "release_order": 2037,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Encyclopaedia Iranica on Mosaddegh and the Pahlavi period; U.S. Foreign Relations 1951-1954 Iran documents; current ATLAS same-identity continuity rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "imperial_survivor": "31f1be4e-4e24-4728-9b1b-c62bf38bc19e",
+    "generic_iran_polity_id": "dc6ffb85-4cc1-4570-b845-549a650f8f29",
+    "historical_decision": "The two Mohammad Mosaddegh prime-minister Activities currently modeled under generic Iran occurred inside the same Pahlavi monarchical state already modeled as Imperial State of Iran for Mohammad Reza Pahlavi's 1941-1979 Shah Activity. Encyclopaedia Iranica states that the Shah appointed Mosaddegh prime minister in 1951; contemporary U.S. diplomatic records show Mosaddegh submitting his cabinet to the Shah in 1952, resigning when the Shah refused his defense-ministry demand, and later returning by royal decree. This is simultaneous officeholding inside one constitutional state, not a separate polity.",
+    "naming_rule": "Do not create a new temporal designation merely to preserve the generic short label Iran. The duplicate row is a generic identity used for two 1951-1953 governmental Activities, while the canonical Pahlavi monarchical identity is Imperial State of Iran. The Islamic Republic of Iran is a separate existing polity and is untouched.",
+    "activity_rule": "Preserve both Mosaddegh premiership Activity UUIDs, exact dates, role, chronology, confidence, notes meaning, and all normalized source links; change only their polity identity to the Imperial State survivor, with reviewed notes clarifying canonicalization.",
+    "primary_references": [
+      "Encyclopaedia Iranica, COUP D’ETAT OF 1332 Š./1953: Mosaddegh appointed prime minister on 29 April 1951 and overthrown on 19 August 1953.",
+      "Encyclopaedia Iranica, IRAN ii. IRANIAN HISTORY (2), page 6: the Majles selected Mosaddegh and the Shah appointed him prime minister.",
+      "Foreign Relations of the United States, 1952–1954, Iran, document 82: Mosaddegh submitted a cabinet to the Shah in July 1952; the Shah refused his War Ministry demand; Mosaddegh resigned and Qavam replaced him.",
+      "Foreign Relations of the United States, 1952–1954, Iran, document 97: after Qavam resigned, the Shah signed the royal decree reappointing Mosaddegh prime minister."
+    ]
+  },
+  "operations": [
+    {
+      "case_id": "iran-relink-mosaddegh-first-premiership-to-imperial-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "bb39bbd3-198a-46de-80ce-8827b1fcaf81",
+      "baseline_before": {
+        "person_id": "a597734d-8639-4ca2-83a2-0a76b4971e81",
+        "polity_id": "dc6ffb85-4cc1-4570-b845-549a650f8f29",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1951,
+        "activity_end": 1952,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "bb39bbd3-198a-46de-80ce-8827b1fcaf81",
+        "person_id": "a597734d-8639-4ca2-83a2-0a76b4971e81",
+        "polity_id": "31f1be4e-4e24-4728-9b1b-c62bf38bc19e",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1951,
+        "activity_start_detail": {
+          "year": 1951,
+          "month": 4,
+          "day": 29,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1952,
+        "activity_end_detail": {
+          "year": 1952,
+          "month": 7,
+          "day": 16,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Mohammad Mosaddegh's first premiership began on 29 April 1951 and ended with his resignation on 16 July 1952. ATLAS canonicalizes this Activity to the continuous Pahlavi monarchical polity, Imperial State of Iran; it is not a separate generic Iran polity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "iran-relink-mosaddegh-second-premiership-to-imperial-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "29a034b5-9b09-40f1-a393-f639fd4f0978",
+      "baseline_before": {
+        "person_id": "a597734d-8639-4ca2-83a2-0a76b4971e81",
+        "polity_id": "dc6ffb85-4cc1-4570-b845-549a650f8f29",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1952,
+        "activity_end": 1953,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "29a034b5-9b09-40f1-a393-f639fd4f0978",
+        "person_id": "a597734d-8639-4ca2-83a2-0a76b4971e81",
+        "polity_id": "31f1be4e-4e24-4728-9b1b-c62bf38bc19e",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1952,
+        "activity_start_detail": {
+          "year": 1952,
+          "month": 7,
+          "day": 21,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1953,
+        "activity_end_detail": {
+          "year": 1953,
+          "month": 8,
+          "day": 19,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Mohammad Mosaddegh returned to the premiership on 21 July 1952 and remained in office until the 19 August 1953 coup. ATLAS canonicalizes this Activity to the continuous Pahlavi monarchical polity, Imperial State of Iran; it is not a separate generic Iran polity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 2,
+    "asserted_polity_designation_count": 0,
+    "generic_iran_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
