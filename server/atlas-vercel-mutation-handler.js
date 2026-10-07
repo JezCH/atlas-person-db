@@ -54,7 +54,13 @@ function createVercelMutationHandler({ clientFactory, env = process.env, transac
       client = await clientFactory(databaseUrl);
       const { transactionFactory, verificationVerifier } = createV2AuthoritativeTransactionFactory({ client, ...transactionOptions });
       const activityMutationService = createV2AuthoritativeMutationService({ planner, transactionFactory, verificationVerifier });
-      const personDeleteService = createPersonDeleteService({ client, dependencyGuard: assertPersonMergeReferenceReadiness });
+      const mutationRuntimeSha = String(env?.VERCEL_GIT_COMMIT_SHA || "").trim().toLowerCase();
+      const personDeleteService = createPersonDeleteService({
+        client,
+        dependencyGuard: assertPersonMergeReferenceReadiness,
+        runtimeSha: mutationRuntimeSha,
+        authoringSha: mutationRuntimeSha
+      });
       const personProfileService = createPersonProfileMutationService({ client });
       const mutationService = Object.freeze({
         mutate: (mutationRequest) => {

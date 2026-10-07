@@ -288,6 +288,25 @@ test('committed compile captures pre-existing Runtime baseline once and writes a
   assert.equal(queries.some(({sql})=>/^commit$/i.test(sql.trim())),true);
 });
 
+test('transaction-scoped Runtime compiler owns projection refresh but not transaction boundaries', () => {
+  const source=fs.readFileSync(new URL('../server/atlas-runtime-compile-service.js',import.meta.url),'utf8');
+  const start=source.indexOf('async function compileRuntimeProjectionInTransaction');
+  const end=source.indexOf('async function compileRuntimeProjection(',start);
+  assert.ok(start >= 0 && end > start);
+  const scoped=source.slice(start,end);
+  assert.match(scoped,/delete from atlas_v2\.runtime_person_politics_v1/);
+  assert.match(scoped,/recordRuntimeActivation/);
+  assert.doesNotMatch(scoped,/begin isolation level serializable/i);
+  assert.doesNotMatch(scoped,/client\.query\(["'`]commit["'`]\)/i);
+  assert.doesNotMatch(scoped,/client\.query\(["'`]rollback["'`]\)/i);
+
+  const wrapper=source.slice(end,source.indexOf('module.exports',end));
+  assert.match(wrapper,/compileRuntimeProjectionInTransaction/);
+  assert.match(wrapper,/begin isolation level serializable/i);
+  assert.match(wrapper,/client\.query\("commit"\)/);
+  assert.match(wrapper,/client\.query\("rollback"\)/);
+});
+
 test('Runtime contract forbids public live Authoring joins', () => {
   const contract=JSON.parse(fs.readFileSync(new URL('../contracts/runtime-projection-contract.v1.json',import.meta.url),'utf8'));
   assert.equal(contract.principles.public_runtime_reads_must_use_projection,true);
@@ -299,7 +318,7 @@ test('Runtime contract forbids public live Authoring joins', () => {
   assert.equal(contract.snapshot.current_authoring_match,'compile_key/input_fingerprint exact');
   assert.equal(contract.readiness.start_boundary,'known_complete');
   assert.equal(contract.readiness.end_boundary,'known_complete_or_verified_ongoing');
-  assert.deepEqual(contract.publication.automatic_producers,['ATLAS Authoring Apply','ATLAS Correction Apply']);
+  assert.deepEqual(contract.publication.automatic_producers,['ATLAS Authoring Apply','ATLAS Correction Apply','ATLAS Person hard-delete']);
   assert.equal(contract.publication.workflow_dispatch_role,'recovery_only');
 });
 

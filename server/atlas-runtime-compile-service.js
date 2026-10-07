@@ -364,55 +364,74 @@ async function insertRuntimeRows(client, compileKey, rows, { batchSize=RUNTIME_I
   return batchCount;
 }
 
-async function compileRuntimeProjection(client, { dryRun=false, runtimeSha=null, authoringSha=null } = {}) {
+async function compileRuntimeProjectionInTransaction(client, { runtimeSha=null, authoringSha=null, recordActivation=true } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   const normalizedRuntimeSha = requiredSha(runtimeSha, "RUNTIME_ACTIVATION_RUNTIME_SHA_REQUIRED");
   const normalizedAuthoringSha = requiredSha(authoringSha, "RUNTIME_ACTIVATION_AUTHORING_SHA_REQUIRED");
+
+  await client.query("select pg_advisory_xact_lock(hashtext($1))", [LOCK_KEY]);
+  const baselineActivation = recordActivation ? await ensureRuntimeActivationBaseline(client) : null;
+  const source = await client.query(AUTHORING_SNAPSHOT_SQL);
+  const compiled = compileSnapshot(source.rows || []);
+  const ledgerReplay = await ensureCompileRun(client, compiled);
+  const exclusionLedgerReplay = await ensureCompileExclusions(client, compiled);
+
+  await client.query("delete from atlas_v2.runtime_person_politics_v1");
+  await insertRuntimeRows(client, compiled.compile_key, compiled.rows);
+
+  const verify = await client.query(`
+    select count(*)::int as row_count,
+           count(distinct compile_key)::int as compile_count,
+           min(compile_key) as compile_key
+      from atlas_v2.runtime_person_politics_v1`);
+  if (Number(verify.rows[0]?.row_count || 0) !== compiled.output_row_count
+    || (compiled.output_row_count > 0 && (Number(verify.rows[0]?.compile_count || 0) !== 1 || verify.rows[0]?.compile_key !== compiled.compile_key))) {
+    throw new Error("RUNTIME_COMPILE_POSTCONDITION_FAILED");
+  }
+
+  const activation = recordActivation ? await recordRuntimeActivation(client, {
+    compileKey:compiled.compile_key,
+    rowCount:compiled.output_row_count,
+    runtimeSha:normalizedRuntimeSha,
+    authoringSha:normalizedAuthoringSha
+  }) : null;
+
+  return Object.freeze({
+    marker:"ATLAS_RUNTIME_PERSON_POLITICS_COMPILE_V1",
+    ledger_replay:ledgerReplay,
+    exclusion_ledger_replay:exclusionLedgerReplay,
+    exclusion_target_count:compiled.exclusions.length,
+    disposition_counts:Object.freeze({
+      published:compiled.output_row_count,
+      excluded:compiled.excluded_row_count
+    }),
+    activation_baseline_recorded:Boolean(baselineActivation),
+    activation,
+    activation_replay:Boolean(activation?.replay),
+    compile_key:compiled.compile_key,
+    input_fingerprint:compiled.input_fingerprint,
+    output_fingerprint:compiled.output_fingerprint,
+    input_row_count:compiled.input_row_count,
+    output_row_count:compiled.output_row_count,
+    excluded_row_count:compiled.excluded_row_count,
+    exclusion_summary:compiled.exclusion_summary
+  });
+}
+
+async function compileRuntimeProjection(client, { dryRun=false, runtimeSha=null, authoringSha=null } = {}) {
+  if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   await client.query("begin isolation level serializable");
   try {
-    await client.query("select pg_advisory_xact_lock(hashtext($1))", [LOCK_KEY]);
-    const baselineActivation = dryRun ? null : await ensureRuntimeActivationBaseline(client);
-    const source = await client.query(AUTHORING_SNAPSHOT_SQL);
-    const compiled = compileSnapshot(source.rows || []);
-    const ledgerReplay = await ensureCompileRun(client, compiled);
-    const exclusionLedgerReplay = await ensureCompileExclusions(client, compiled);
-    await client.query("delete from atlas_v2.runtime_person_politics_v1");
-    await insertRuntimeRows(client, compiled.compile_key, compiled.rows);
-    const verify = await client.query(`
-      select count(*)::int as row_count,
-             count(distinct compile_key)::int as compile_count,
-             min(compile_key) as compile_key
-        from atlas_v2.runtime_person_politics_v1`);
-    if (Number(verify.rows[0]?.row_count || 0) !== compiled.output_row_count
-      || (compiled.output_row_count > 0 && (Number(verify.rows[0]?.compile_count || 0) !== 1 || verify.rows[0]?.compile_key !== compiled.compile_key))) {
-      throw new Error("RUNTIME_COMPILE_POSTCONDITION_FAILED");
-    }
-    const activation = dryRun ? null : await recordRuntimeActivation(client, {
-      compileKey:compiled.compile_key,
-      rowCount:compiled.output_row_count,
-      runtimeSha:normalizedRuntimeSha,
-      authoringSha:normalizedAuthoringSha
+    const outcome = await compileRuntimeProjectionInTransaction(client, {
+      runtimeSha,
+      authoringSha,
+      recordActivation:!dryRun
     });
     if (dryRun) await client.query("rollback"); else await client.query("commit");
     return Object.freeze({
-      marker:"ATLAS_RUNTIME_PERSON_POLITICS_COMPILE_V1",
-      dry_run:Boolean(dryRun), committed:!dryRun, ledger_replay:ledgerReplay,
-      exclusion_ledger_replay:exclusionLedgerReplay,
-      exclusion_target_count:compiled.exclusions.length,
-      disposition_counts:Object.freeze({
-        published:compiled.output_row_count,
-        excluded:compiled.excluded_row_count
-      }),
-      activation_baseline_recorded:Boolean(baselineActivation),
-      activation,
-      activation_replay:Boolean(activation?.replay),
-      compile_key:compiled.compile_key,
-      input_fingerprint:compiled.input_fingerprint,
-      output_fingerprint:compiled.output_fingerprint,
-      input_row_count:compiled.input_row_count,
-      output_row_count:compiled.output_row_count,
-      excluded_row_count:compiled.excluded_row_count,
-      exclusion_summary:compiled.exclusion_summary
+      ...outcome,
+      dry_run:Boolean(dryRun),
+      committed:!dryRun
     });
   } catch (error) {
     try { await client.query("rollback"); } catch {}
@@ -427,5 +446,5 @@ module.exports = Object.freeze({
   classifyReadiness, provenanceSnapshot, runtimeRow, compileSnapshot,
   ensureCompileExclusions,
   runtimeInsertParams, runtimeInsertTuple, insertRuntimeRows,
-  compileRuntimeProjection
+  compileRuntimeProjectionInTransaction, compileRuntimeProjection
 });
