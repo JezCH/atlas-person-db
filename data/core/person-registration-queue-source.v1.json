@@ -5,10 +5,10 @@
   "generated_at": "2026-10-03",
   "semantics": {
     "user_facing_current_view": "/api/atlas-read?__atlas_read_surface=registration-queue",
-    "current_view_rule": "read atlas_v2.person_registration_candidates where person_id IS NULL",
+    "current_view_rule": "derive the current registration queue from atlas_v2.person_registration_candidates candidates that have no unique exact normalized identity match in current Production atlas_v2.persons/person_names; candidate.person_id is not a membership predicate",
     "history_rule": "this JSON is retained only as the PR #1802 / 2026-10-03 bootstrap audit artifact",
-    "future_add_rule": "do not append here; insert new candidates directly into atlas_v2.person_registration_candidates with person_id = NULL",
-    "completion_rule": "registration completes when the same canonical DB row receives the canonical Person UUID in person_id"
+    "future_add_rule": "do not append here; insert reviewed candidates directly into atlas_v2.person_registration_candidates",
+    "completion_rule": "a candidate leaves the current queue whenever current Production contains the same unique exact normalized Person identity, regardless of registration path or candidate_id transport"
   },
   "bootstrap": {
     "historical_queued_candidates": 646,
