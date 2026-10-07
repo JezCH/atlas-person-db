@@ -34,3 +34,17 @@ test("REVIEW-M2 uses the shared hover / active / selected luminance scale for th
   assert.doesNotMatch(css, /\.registration-review-thresholds button\.is-active\{[^}]*background:rgba\(192,174,136,\.08\)/);
   assert.match(css, /\.registration-review-table tbody tr:hover td\{background:var\(--atlas-material-wash-hover\)\}/);
 });
+
+
+test("REVIEW-M3 gives Registration Review controls the shared focus language", () => {
+  const css = read("atlas-registration-review.css");
+
+  assert.match(css, /REVIEW-M3 — Registration Review focus language/);
+  assert.match(css, /\.registration-review-thresholds button:focus-visible\{outline:1px solid var\(--atlas-focus-ring\);outline-offset:2px\}/);
+  assert.match(css, /\.registration-review-queue-head input:focus\{[^}]*border-color:var\(--atlas-material-hairline-strong\)[^}]*outline:1px solid var\(--atlas-focus-ring\)[^}]*outline-offset:2px[^}]*box-shadow:none/);
+
+  assert.match(css, /REVIEW-M2 — Threshold interaction luminance/);
+  assert.match(css, /\.registration-review-table tbody tr:hover td\{background:var\(--atlas-material-wash-hover\)\}/);
+  assert.doesNotMatch(css, /\.registration-review-thresholds button:focus-visible\{[^}]*rgba\(/);
+  assert.doesNotMatch(css, /\.registration-review-queue-head input:focus\{[^}]*rgba\(/);
+});
