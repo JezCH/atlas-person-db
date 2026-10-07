@@ -128,6 +128,10 @@ body {
   letter-spacing: .08em;
 }
 
+/* SHELL-M2 — Navigation interaction luminance.
+ * Desktop/mobile navigation use the shared GLOBAL-M2 wash scale:
+ * hover 2.6%, pressed 4.0%, selected 5.0%. Focus remains owned by V9.
+ */
 .nav-list {
   gap: 2px;
   margin-top: 18px;
@@ -156,13 +160,13 @@ body {
 
 .nav-item:hover:not(:disabled) {
   color: #d7d5cf;
-  background: rgba(255, 255, 255, .025);
+  background: var(--atlas-material-wash-hover);
 }
 
 .nav-item.active {
   color: var(--atlas-text-strong);
   border-left-color: var(--atlas-honor-metal-strong);
-  background: linear-gradient(90deg, rgba(192, 174, 136, .09), rgba(192, 174, 136, .018) 74%, transparent);
+  background: linear-gradient(90deg, var(--atlas-material-wash-selected), var(--atlas-material-sheen-strong) 74%, transparent);
 }
 
 .nav-item.active > span:first-child {
@@ -688,7 +692,7 @@ textarea:focus {
   .mobile-nav button.active {
     color: var(--atlas-text-strong);
     border-left-color: var(--atlas-honor-metal-strong);
-    background: linear-gradient(90deg, rgba(192,174,136,.09), transparent 80%);
+    background: linear-gradient(90deg, var(--atlas-material-wash-selected), var(--atlas-material-sheen-soft) 58%, transparent 80%);
   }
 
   .mobile-drawer-version {
@@ -711,6 +715,13 @@ textarea:focus {
 
   .person-table-head {
     box-shadow: 0 3px 12px rgba(0,0,0,.18);
+  }
+}
+
+@media (max-width: 760px) and (hover: hover) {
+  .mobile-nav button:hover:not(:disabled) {
+    color: #d7d5cf;
+    background: var(--atlas-material-wash-hover);
   }
 }
 

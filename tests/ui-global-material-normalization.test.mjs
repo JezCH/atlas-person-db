@@ -133,11 +133,34 @@ test("SHELL-M1 global shell consumes shared structural material tokens without i
   assert.match(foundation, /\.mobile-drawer \{[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline\)/);
   assert.match(foundation, /\.mobile-brand \{[\s\S]*?border-bottom: 1px solid var\(--atlas-material-hairline-soft\)/);
   assert.match(foundation, /\.mobile-brand-mark \{[\s\S]*?border-left: 1px solid var\(--atlas-material-rail-soft\)[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline-strong\)/);
-  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-shell-m1-material-v1/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-shell-m2-luminance-v1/);
 
   const shellStart = foundation.indexOf("SHELL-M1 — Structural material normalization");
   const shellEnd = foundation.indexOf("/* ---------- Operational controls ----------", shellStart);
   const shell = foundation.slice(shellStart, shellEnd);
   assert.doesNotMatch(shell, /\.nav-item:hover:not\(:disabled\)[\s\S]*?var\(--atlas-material-wash-hover\)/);
   assert.doesNotMatch(shell, /\.nav-item\.active[\s\S]*?var\(--atlas-material-wash-(?:active|selected)\)/);
+});
+
+
+test("SHELL-M2 navigation uses the shared hover / active / selected luminance scale", () => {
+  const foundation = read("atlas-ui-visual-foundation.css");
+  const motion = read("atlas-ui-motion-material-v9.css");
+  const html = read("index.html");
+
+  assert.match(foundation, /SHELL-M2 — Navigation interaction luminance/);
+  assert.match(foundation, /\.nav-item:hover:not\(:disabled\) \{[\s\S]*?background: var\(--atlas-material-wash-hover\)/);
+  assert.match(foundation, /\.nav-item\.active \{[\s\S]*?var\(--atlas-material-wash-selected\)/);
+  assert.match(foundation, /\.mobile-nav button\.active \{[\s\S]*?var\(--atlas-material-wash-selected\)/);
+  assert.match(foundation, /@media \(max-width: 760px\) and \(hover: hover\) \{[\s\S]*?\.mobile-nav button:hover:not\(:disabled\)[\s\S]*?var\(--atlas-material-wash-hover\)/);
+
+  assert.match(motion, /\.nav-item:active:not\(:disabled\),\n\.mobile-nav button:active:not\(:disabled\) \{\n  background-color: var\(--atlas-material-wash-active\);\n\}/);
+  assert.match(motion, /\.btn:active:not\(:disabled\),[\s\S]*?background-color: rgba\(255,255,255,\.038\)/);
+
+  assert.doesNotMatch(foundation, /\.nav-item:hover:not\(:disabled\) \{[\s\S]*?rgba\(255, 255, 255, \.025\)/);
+  assert.doesNotMatch(foundation, /\.nav-item\.active \{[\s\S]*?rgba\(192, 174, 136, \.09\)/);
+  assert.doesNotMatch(foundation, /\.mobile-nav button\.active \{[\s\S]*?rgba\(192,174,136,\.09\)/);
+
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-shell-m2-luminance-v1/);
+  assert.match(html, /atlas-ui-motion-material-v9\.css\?v=20261007-shell-m2-luminance-v1/);
 });

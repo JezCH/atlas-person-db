@@ -60,7 +60,10 @@ textarea,
 }
 
 .nav-item:active:not(:disabled),
-.mobile-nav button:active:not(:disabled),
+.mobile-nav button:active:not(:disabled) {
+  background-color: var(--atlas-material-wash-active);
+}
+
 .btn:active:not(:disabled),
 .mini-btn:active:not(:disabled),
 .spacetime-camera button:active:not(:disabled),
