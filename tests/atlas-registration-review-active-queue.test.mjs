@@ -6,9 +6,10 @@ const source = fs.readFileSync(new URL("../atlas-registration-review.js", import
 
 test("registration review presents only the live pending queue as queue state", () => {
   assert.match(source, /const REFRESH_INTERVAL_MS=10000;/);
-  assert.match(source, /"현재 등록대기"/);
-  assert.match(source, /기등록 Person 자동 제외/);
-  assert.match(source, /Person 등록과 동시에 자동 제외됩니다/);
+  assert.match(source, /"등록대기열"/);
+  assert.match(source, /"현재 미등록 후보"/);
+  assert.match(source, /renderRegistered\(persons,queue\)/);
+  assert.doesNotMatch(source, /id="registrationQueueStats"/);
   assert.doesNotMatch(source, /statCard\(number\(summary\.registered_bound\),"기등록 연결"\)/);
   assert.doesNotMatch(source, /statCard\(number\(summary\.source_admissions\),"누적 후보"\)/);
   assert.doesNotMatch(source, /statCard\(number\(summary\.dangling_person_ids\),"dangling Person ID"\)/);
