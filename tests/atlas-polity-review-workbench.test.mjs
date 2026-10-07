@@ -165,6 +165,9 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.equal(byId.get('sicily-county-kingdom').reviewed_decision, 'keep_both');
   assert.equal(byId.get('sicily-county-kingdom').locked, true);
   assert.equal(byId.get('joseon-korean-empire').terminal_status, 'KEEP_SEPARATE');
+  assert.equal(byId.get('hungary-regime-family').terminal_status, 'FIXED');
+  assert.equal(byId.get('hungary-regime-family').locked, true);
+  assert.match(byId.get('hungary-regime-family').rationale, /1918-1920 republican\/Soviet interlude/);
   assert.equal(byId.get('russian-sfsr-federation').terminal_status, 'KEEP_SEPARATE');
   assert.equal(byId.get('nicaea-byzantine').terminal_status, 'SUPERSEDED');
 
@@ -189,7 +192,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 26);
+  assert.equal(unresolved.length, 25);
   assert.equal(byId.get('northern-southern-song').terminal_status, null);
   assert.equal(byId.get('roman-west-east').terminal_status, null);
   assert.equal(byId.get('byzantine-nicaea-rupture').terminal_status, null);

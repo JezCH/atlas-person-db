@@ -95,13 +95,14 @@
         review_group: "historical_family_review",
         kind: "family_review",
         title: "Kingdom of Hungary family ↔ medieval / Habsburg / 1920 restoration",
-        left: { name: "Kingdom of Hungary family" },
+        left: { name: "Kingdom of Hungary family", polity_id: "b07ef629-2fd6-59f9-bac8-ec685b371aac" },
         right: { name: "medieval / Habsburg / 1920 restoration" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
+        rationale: "Fresh Production and source review does not support splitting the medieval, Habsburg and 1920-restoration royal phases into separate Kingdom of Hungary Polity identities. Hungarian National Archives evidence shows the Habsburg rulers continuing as kings of the Kingdom of Hungary under the Hungarian crown, laws and coronation obligations, including Maria Theresa and the 1916 coronation diploma of Charles IV. The 1918-1920 revolutionary period was a genuine constitutional/state-form rupture in lived chronology, but 1920 Act I invalidated the revolutionary republic and Soviet-republic enactments and restored Hungarian constitutional state authority; the 2394/1920 decree expressly treated the legal state form as the continuing kingdom. ATLAS therefore retains one Kingdom of Hungary identity for the medieval, Habsburg/dualist and Horthy-restoration royal phases. This identity judgment does not erase the factual 1918-1920 republican/Soviet interlude: no Kingdom Activity crosses that interval in current Production, and any future temporal-designation completeness for those regimes must preserve them without manufacturing a second Kingdom UUID.",
         suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit family-review seed; same-name continuity versus 1918-1920 catastrophic rupture required explicit re-review", "2026-10-08 fresh Production: one Kingdom of Hungary UUID b07ef629-2fd6-59f9-bac8-ec685b371aac carries Stephen I, Hunyadi János, Matthias Corvinus, Maria Theresa, Franz Joseph I and Miklós Horthy; no Kingdom Activity spans the 1918-1920 interlude", "Hungarian National Archives, Maria Theresa coronation diploma: Habsburg rulers held the Hungarian crown while undertaking to preserve the Kingdom's laws, legal order and privileges", "Hungarian National Archives, Charles IV coronation diploma: the 1916 king of Hungary accepted the constitutional rights and legal order through the same coronation-diploma institution whose roots reach back to the Árpád era", "Hungarian Parliament history: on 1918-11-16 the National Council declared Hungary an independent People's Republic, establishing a real constitutional regime break in chronology", "1920 Act I on restoration of constitutionality: royal power had ceased in 1918, revolutionary People's Republic and Soviet Republic enactments were declared invalid, and the National Assembly reconstituted state authority", "2394/1920 M.E. decree: the government interpreted Act I as leaving Hungary's historic state form legally a kingdom and vested interim exercise of royal-state powers in the Regent", "2026-10-08 no-write Production/Runtime review: Habsburg and Horthy Activities are internally consistent on the same survivor; Austria-Hungary remains a separate composite-union Polity; no duplicate Kingdom identity requires merge or retirement"],
+        locked: true
       },
       {
         id: "france-regime-family",
