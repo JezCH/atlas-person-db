@@ -1,1 +1,1 @@
-apply authoring/requests/registration-20261007-agitators-sss-alexis-de-tocqueville.json
+apply authoring/requests/registration-20261007-agitators-sss-giuseppe-mazzini.json
