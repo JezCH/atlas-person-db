@@ -47,7 +47,7 @@ test("UI V10 exact-SHA parity and workflow include the corrected Person surfaces
 
 test("UI V10 does not alter the mobile hierarchy layer", () => {
   const html = read("index.html");
-  const era = html.indexOf("atlas-person-era-navigation.css?v=20261004-ui-v10-dark-surfaces-v1");
+  const era = html.indexOf("atlas-person-era-navigation.css?v=20261007-era-d1-science-v1");
   const mobile = html.indexOf("atlas-ui-mobile-v8.css?v=20261004-ui-p4-mobile-compact-v1");
   const motion = html.indexOf("atlas-ui-motion-material-v9.css?v=20261007-controls-m2-luminance-v1");
   assert.ok(era >= 0);

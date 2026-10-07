@@ -31,7 +31,7 @@
 .person-domain-filter[data-domain]::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--person-filter-domain-color);box-shadow:0 0 0 1px #15191c inset}
 .person-domain-filter[data-domain="governance"]{--person-filter-domain-color:var(--atlas-person-domain-governance)}
 .person-domain-filter[data-domain="military"]{--person-filter-domain-color:var(--atlas-person-domain-military)}
-.person-domain-filter[data-domain="knowledge"]{--person-filter-domain-color:var(--atlas-person-domain-knowledge)}
+.person-domain-filter[data-domain="science"]{--person-filter-domain-color:var(--atlas-person-domain-science)}
 .person-domain-filter[data-domain="technology"]{--person-filter-domain-color:var(--atlas-person-domain-technology)}
 .person-domain-filter[data-domain="commerce"]{--person-filter-domain-color:var(--atlas-person-domain-commerce)}
 .person-domain-filter[data-domain="culture"]{--person-filter-domain-color:var(--atlas-person-domain-culture)}

@@ -164,7 +164,7 @@ test('era navigation assets load after the shared era model/table grouping and b
   const navJs = 'atlas-person-era-navigation.js?v=20260920-person-facets-sticky-v1';
   const mainJs = html.match(/atlas-person-main\.js\?v=[^"'\s>]+/)?.[0] || '';
   const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
-  const navCssAsset = 'atlas-person-era-navigation.css?v=20261004-ui-v10-dark-surfaces-v1';
+  const navCssAsset = 'atlas-person-era-navigation.css?v=20261007-era-d1-science-v1';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260921-mobile-card-fit-v1';
 
   for (const asset of [eraModelJs, tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
@@ -174,4 +174,15 @@ test('era navigation assets load after the shared era model/table grouping and b
   assert.ok(html.indexOf(paletteCss) < html.indexOf(navCssAsset));
   assert.ok(html.indexOf(navCssAsset) < html.indexOf(geometryCss));
   assert.doesNotMatch(html, /atlas-person-mobile-column-widths\.css/);
+});
+
+
+test('era domain strip styles canonical science and rejects retired knowledge', () => {
+  const canonical = ['governance','military','science','technology','commerce','culture','religion','exploration'];
+  for (const code of canonical) {
+    assert.match(navCss, new RegExp(`\\.person-domain-filter\\[data-domain="${code}"\\]`));
+  }
+  assert.match(navCss, /data-domain="science"\]\{--person-filter-domain-color:var\(--atlas-person-domain-science\)\}/);
+  assert.doesNotMatch(navCss, /data-domain="knowledge"/);
+  assert.doesNotMatch(navCss, /--atlas-person-domain-knowledge/);
 });
