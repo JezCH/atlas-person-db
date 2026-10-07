@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:republic-of-paraguay-after-paraguay-continuity-merge:2026-10-07:v1",
+  "release_order": 2112,
+  "evidence": {
+    "decision": "Republic of Paraguay is the formal republican name of the same continuous Paraguayan state represented canonically as Paraguay, not a replacement sovereign identity. Paraguayan Law 6576/2020 commemorates 12 October 1813 as the proclamation of Paraguay as a Republic; the Archivo Nacional de Asunción preserves the 1813 Congress resolutions appointing Francia and Yegros as Cónsules de la República; the 1870 and current 1992 constitutions continue to use República del Paraguay. The reviewed continuity correction relinked Francisco Solano López's 1862-1870 presidency and Alfredo Stroessner's 1954 de facto and 1954-1989 presidential Activities to canonical Paraguay while leaving Francia's constitutionally distinct early Activities unchanged.",
+    "continuity_request_id": "paraguay_republic_continuity_merge_20261007_v1",
+    "continuity_applied_at": "2026-10-07T18:26:25.500242+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:f544c7485a53b5d79a71082fca9fdfcfc8d05ae869d9ceb9136be7259109b45e",
+    "runtime_compiled_at": "2026-10-07T18:26:58.851524+00:00",
+    "survivor_polity_id": "fc7fd185-6801-4e16-a13e-6a5983318345",
+    "production_readback": "2026-10-07 exhaustive post-compile FK audit: legacy Republic of Paraguay has zero references in person_politics_context_polities, person_politics_v2, runtime_person_politics_v1, polity_descriptions, polity_designations, polity_governance_periods, polity_identity_relations, polity_relations, polity_place_functions, polity_sources, runtime_compile_exclusions, spatial_registration_dispositions, and territory_records; exactly two owned preferred polity_names remain."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:republic-of-paraguay-after-paraguay-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "0e4464d1-4e86-45aa-9b0b-e74539fde8b8",
+        "canonical_key": "Republic of Paraguay",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "fc7fd185-6801-4e16-a13e-6a5983318345",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Republic of Paraguay",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "파라과이 공화국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
