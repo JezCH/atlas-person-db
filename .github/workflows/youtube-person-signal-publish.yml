@@ -1,0 +1,203 @@
+name: YouTube Person Signal Publish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/youtube-person-signal-publish.yml"
+      - "api/atlas-youtube-person-signal-publish.js"
+      - "server/atlas-youtube-person-signal-publish-handler.js"
+      - "server/atlas-youtube-person-signal-publish-service.js"
+      - "scripts/youtube-build-person-signal-snapshot.py"
+      - "db/migrations/20261008_youtube_discovery_channel_registry.sql"
+  workflow_dispatch:
+    inputs:
+      artifact_run_id:
+        description: "Workflow run containing the cumulative YouTube artifact"
+        required: true
+        default: "37604763364"
+        type: string
+      artifact_name:
+        description: "Cumulative artifact name"
+        required: true
+        default: "youtube-batch011-staging-longterm"
+        type: string
+      artifact_id:
+        description: "Artifact numeric ID for provenance"
+        required: true
+        default: "11474777563"
+        type: string
+      artifact_digest:
+        description: "Artifact SHA-256 digest"
+        required: true
+        default: "sha256:a58fab60d0b7873e2b4534869f3942075060526c62445c20eaff2663ac1132a6"
+        type: string
+      legacy_snapshot_id:
+        description: "Last pre-registry snapshot"
+        required: true
+        default: "yt-20261007T050219Z-2715ch"
+        type: string
+      legacy_channel_count:
+        description: "Legacy aggregate channel count; never added without IDs"
+        required: true
+        default: "2715"
+        type: string
+  workflow_call:
+    inputs:
+      artifact_run_id:
+        required: true
+        type: string
+      artifact_name:
+        required: true
+        type: string
+      artifact_id:
+        required: true
+        type: string
+      artifact_digest:
+        required: true
+        type: string
+      legacy_snapshot_id:
+        required: false
+        default: "yt-20261007T050219Z-2715ch"
+        type: string
+      legacy_channel_count:
+        required: false
+        default: "2715"
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+  id-token: write
+
+concurrency:
+  group: atlas-youtube-person-signal-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      PUBLISH_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply?__atlas_authoring_apply_surface=youtube-person-signal-publish
+      RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
+      PUBLISH_AUDIENCE: atlas-person-db-youtube-signal-publish
+      ARTIFACT_RUN_ID: ${{ inputs.artifact_run_id || '37604763364' }}
+      ARTIFACT_NAME: ${{ inputs.artifact_name || 'youtube-batch011-staging-longterm' }}
+      ARTIFACT_ID: ${{ inputs.artifact_id || '11474777563' }}
+      ARTIFACT_DIGEST: ${{ inputs.artifact_digest || 'sha256:a58fab60d0b7873e2b4534869f3942075060526c62445c20eaff2663ac1132a6' }}
+      LEGACY_SNAPSHOT_ID: ${{ inputs.legacy_snapshot_id || 'yt-20261007T050219Z-2715ch' }}
+      LEGACY_CHANNEL_COUNT: ${{ inputs.legacy_channel_count || '2715' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download cumulative discovery artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: corpus
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.ARTIFACT_RUN_ID }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install parser dependency
+        run: python -m pip install --disable-pip-version-check pycountry
+
+      - name: Build exact reconstructable snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/atlas-youtube-publication
+          python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/atlas-youtube-publication/snapshot.json             --artifact-id "$ARTIFACT_ID"             --artifact-digest "$ARTIFACT_DIGEST"             --legacy-snapshot-id "$LEGACY_SNAPSHOT_ID"             --legacy-channel-count "$LEGACY_CHANNEL_COUNT"
+          jq '.snapshot + {
+            stored_signal_rows:(input_filename | length)
+          }' /tmp/atlas-youtube-publication/snapshot.json >/dev/null || true
+          jq '{snapshot:.snapshot, publication_fingerprint, channel_rows:(.channels|length), signal_rows:(.signals|length)}'             /tmp/atlas-youtube-publication/snapshot.json
+
+      - name: Wait for publication route and resolve deployed runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 90); do
+            route_status="$(curl --silent --show-error --output /tmp/atlas-youtube-publication/route.json --write-out '%{http_code}' "$PUBLISH_ENDPOINT")"
+            if [[ "$route_status" == "405" ]]; then
+              identity_status="$(curl --silent --show-error --output /tmp/atlas-youtube-publication/runtime.json --write-out '%{http_code}' "$RUNTIME_IDENTITY_ENDPOINT")"
+              if [[ "$identity_status" == "200" ]]; then
+                runtime_sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/atlas-youtube-publication/runtime.json)"
+                runtime_ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/atlas-youtube-publication/runtime.json)"
+                if [[ "$runtime_sha" =~ ^[0-9a-f]{40}$ && "$runtime_ref" == "main" ]]; then
+                  echo "ATLAS_YOUTUBE_RUNTIME_SHA=$runtime_sha" >> "$GITHUB_ENV"
+                  echo "Publication route live on runtime $runtime_sha"
+                  exit 0
+                fi
+              fi
+            fi
+            echo "Publication route/runtime not ready (attempt $attempt/90); retrying in 5s."
+            sleep 5
+          done
+          cat /tmp/atlas-youtube-publication/route.json >&2 || true
+          cat /tmp/atlas-youtube-publication/runtime.json >&2 || true
+          echo "YOUTUBE_PUBLICATION_RUNTIME_NOT_READY" >&2
+          exit 1
+
+      - name: Publish append-only snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          oidc_token="$(curl --fail-with-body --silent --show-error             -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN"             "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=$PUBLISH_AUDIENCE" | jq -er '.value')"
+
+          jq             --arg runtime "$ATLAS_YOUTUBE_RUNTIME_SHA"             --arg publication "$GITHUB_SHA"             '. + {runtime_sha:$runtime, publication_sha:$publication}'             /tmp/atlas-youtube-publication/snapshot.json             > /tmp/atlas-youtube-publication/request.json
+
+          status="$(curl --silent --show-error             --output /tmp/atlas-youtube-publication/response.json             --write-out '%{http_code}'             --request POST             -H 'content-type: application/json'             -H "authorization: Bearer $oidc_token"             --data-binary @/tmp/atlas-youtube-publication/request.json             "$PUBLISH_ENDPOINT")"
+          [[ "$status" == "200" ]] || {
+            cat /tmp/atlas-youtube-publication/response.json >&2 || true
+            echo "YouTube publication failed: HTTP $status" >&2
+            exit 1
+          }
+          jq -e '
+            .ok==true
+            and .marker=="ATLAS_YOUTUBE_PERSON_SIGNAL_PUBLICATION_V2"
+            and (.outcome.committed==true or .outcome.idempotent==true)
+            and (.outcome.snapshot_id | type=="string")
+          ' /tmp/atlas-youtube-publication/response.json >/dev/null
+          jq . /tmp/atlas-youtube-publication/response.json
+
+      - name: Verify Production read model switched to published snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          snapshot_id="$(jq -r '.snapshot.snapshot_id' /tmp/atlas-youtube-publication/snapshot.json)"
+          expected_channels="$(jq -r '.snapshot.channel_count' /tmp/atlas-youtube-publication/snapshot.json)"
+          expected_videos="$(jq -r '.snapshot.video_count' /tmp/atlas-youtube-publication/snapshot.json)"
+          for attempt in $(seq 1 30); do
+            status="$(curl --silent --show-error               --output /tmp/atlas-youtube-publication/verify.json               --write-out '%{http_code}'               'https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=youtube-person-signals&min_channels=3&limit=5')"
+            if [[ "$status" == "200" ]] && jq -e               --arg id "$snapshot_id"               --argjson channels "$expected_channels"               --argjson videos "$expected_videos" '
+                .ok==true
+                and .snapshot.snapshot_id==$id
+                and .snapshot.channel_count==$channels
+                and .snapshot.video_count==$videos
+                and .snapshot.source_state.channel_ids_persisted==true
+                and .snapshot.source_state.legacy_overlap_status=="unknown_not_additive"
+              ' /tmp/atlas-youtube-publication/verify.json >/dev/null; then
+              jq . /tmp/atlas-youtube-publication/verify.json
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/atlas-youtube-publication/verify.json >&2 || true
+          echo "YOUTUBE_PUBLICATION_READBACK_MISMATCH" >&2
+          exit 1
+
+      - name: Upload publication evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-person-signal-publication-${{ github.sha }}
+          path: /tmp/atlas-youtube-publication/
+          if-no-files-found: error
+          retention-days: 90
