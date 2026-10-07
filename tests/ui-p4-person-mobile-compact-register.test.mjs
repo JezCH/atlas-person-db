@@ -45,6 +45,6 @@ test("P12 narrow fallback keeps all multi-Activity rows full-width", () => {
 
 test("P12 browser assets publish the always-visible alignment fix", () => {
   assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p13-column-balance-polity-height-v1/);
-  assert.match(html, /atlas-ui-mobile-v8\.css\?v=20261004-ui-p4-mobile-compact-v1/);
+  assert.match(html, /atlas-ui-mobile-v8\.css\?v=20261007-mobile-era1-ownership-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20261004-ui-p13-column-balance-polity-height-v1/);
 });
