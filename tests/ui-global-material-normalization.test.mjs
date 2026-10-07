@@ -155,7 +155,7 @@ test("SHELL-M2 navigation uses the shared hover / active / selected luminance sc
   assert.match(foundation, /@media \(max-width: 760px\) and \(hover: hover\) \{[\s\S]*?\.mobile-nav button:hover:not\(:disabled\)[\s\S]*?var\(--atlas-material-wash-hover\)/);
 
   assert.match(motion, /\.nav-item:active:not\(:disabled\),\n\.mobile-nav button:active:not\(:disabled\) \{\n  background-color: var\(--atlas-material-wash-active\);\n\}/);
-  assert.match(motion, /\.btn:active:not\(:disabled\),[\s\S]*?background-color: rgba\(255,255,255,\.038\)/);
+  assert.match(motion, /\.spacetime-camera button:active:not\(:disabled\),[\s\S]*?background-color: rgba\(255,255,255,\.038\)/);
 
   assert.doesNotMatch(foundation, /\.nav-item:hover:not\(:disabled\) \{[\s\S]*?rgba\(255, 255, 255, \.025\)/);
   assert.doesNotMatch(foundation, /\.nav-item\.active \{[\s\S]*?rgba\(192, 174, 136, \.09\)/);
@@ -198,7 +198,7 @@ test("CONTROLS-M1 keeps operational chrome quiet while sharing structural hairli
   assert.match(foundation, /\.mobile-menu-button \{\n    border: 1px solid var\(--atlas-material-hairline-soft\);/);
   assert.match(foundation, /\.person-main-actions \.btn \{\n    border-color: var\(--atlas-material-hairline-soft\);/);
 
-  assert.match(foundation, /\.btn:hover \{\n  border-color: #50575d;\n  background: #20262b;\n\}/);
+  assert.match(foundation, /\.btn:not\(\.btn-primary\):hover \{[\s\S]*?border-color: #50575d;[\s\S]*?var\(--atlas-material-wash-hover\)/);
   assert.match(foundation, /input:focus,[\s\S]*?border-color: var\(--atlas-honor-metal\);/);
   assert.match(foundation, /\.btn-primary \{[\s\S]*?background: rgba\(192, 174, 136, \.08\)/);
   assert.match(foundation, /\.mini-btn\.danger \{[\s\S]*?rgba\(215, 114, 114, \.32\)/);
