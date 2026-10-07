@@ -21,7 +21,7 @@ test("UI V10 keeps Person operational surfaces dark on desktop", () => {
 
 test("UI V10 cache-busts the final dark-surface assets", () => {
   const html = read("index.html");
-  assert.match(html, /atlas-person-era-navigation\.css\?v=20261004-ui-v10-dark-surfaces-v1/);
+  assert.match(html, /atlas-person-era-navigation\.css\?v=20261007-era-d1-science-v1/);
   assert.match(html, /status-summary\.js\?v=20261004-ui-v10-dark-surfaces-v1/);
 });
 
