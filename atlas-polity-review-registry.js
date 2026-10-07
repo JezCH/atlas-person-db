@@ -59,19 +59,6 @@
         locked: true
       },
       {
-        id: "albania-republic-kingdom",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Albanian Republic → Kingdom of Albania",
-        left: { name: "Albanian Republic" },
-        right: { name: "Kingdom of Albania" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "iran-imperial-state",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -747,6 +734,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "albania-republic-kingdom",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Albanian Republic → Kingdom of Albania state-form merge",
+        left: { name: "Albanian Republic", ko: "알바니아 공화국", polity_id: "6b5c6d19-49ee-41cc-ada2-e07509cf5a91" },
+        right: { name: "Kingdom of Albania", ko: "알바니아 왕국", polity_id: "d8ff4c80-e0a5-4257-aa94-ce27f3e6a9ab" },
+        rationale: "Ahmet Zogu의 1925-01-31 대통령 취임부터 1928-09-01 왕정 전환까지를 동일 Albanian state identity의 연속으로 통합했습니다. 동시대 미국 외교문서는 1928-09-01의 사건을 Albania의 government form을 constitutional monarchy로 바꾸는 조치로 기술하고 기존 대미 법적 약정의 계속 유효성을 명시합니다. #2020에서 Zogu의 President Activity를 Kingdom of Albania survivor로 재연결하고 Albanian Republic을 1925-01-31→1928-09-01 temporal state_form designation으로 보존했습니다. President와 King은 실제 직위 변화이므로 별도 Activities로 유지했습니다. #2026으로 Runtime Projection을 재컴파일했고, #2029에서 zero-external-reference legacy Republic Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "U.S. Foreign Relations 1928 correspondence: on 1928-09-01 the Constituent Assembly changed the form of Albania's government to a constitutional monarchy; Zogu became Zog I and prior U.S.-Albanian legal arrangements remained in force", "#2020 Albania continuity plan squash merge eea6a8b6a87be36936cdf54fa2a85ee2adc103a4; Correction Apply committed 2026-10-07T03:22:44.881022Z", "2026-10-07 exact Production: President Activity bcea4aaa-faf9-4f0c-8b5b-24d85c2c051d is on Kingdom survivor d8ff4c80-e0a5-4257-aa94-ce27f3e6a9ab and Albanian Republic / 알바니아 공화국 is preserved as reviewed state_form 1925-01-31→1928-09-01", "#2026 Runtime refresh squash merge 402c8f712773c4bbaa773547389f0bcbe7f639da; runtime compile runtime-person-politics-v1:961c410e947cfa1778aa2e8b8eaf3c75be915d198964531999bef784c9697d6d at 2026-10-07T03:23:16.564405Z", "#2029 legacy Albanian Republic retirement squash merge fe33ccb45ec157672618bdc96dcbed51c19c0a8c; retirement applied 2026-10-07T03:30:59.569739Z", "2026-10-07 final Production + Runtime readback: authoring/runtime President both on Kingdom survivor; reviewed Republic designation count 1 with 2 normalized source links; legacy Republic live row 0; Kingdom live row 1; retirement ledger entry 1"],
+        locked: true
+      },
       {
         id: "croatia-principality-kingdom",
         review_group: "resolved_history",
