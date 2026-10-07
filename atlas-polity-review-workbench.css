@@ -269,6 +269,29 @@
 
 
 
+/* POLITY-M1 — Late focus ownership.
+ * The Polity stylesheet is lazy-loaded after V9, so Polity-specific controls
+ * reassert the shared focus ring here without changing selection semantics.
+ */
+.polity-browser-filters button:focus-visible,
+.polity-browser-card>summary:focus-visible,
+.polity-review-filter:focus-visible,
+.polity-dossier-person>header button:focus-visible{
+  outline:1px solid var(--atlas-focus-ring);
+  outline-offset:2px;
+}
+
+.polity-browser-controls input:focus,
+.polity-review-toolbar input:focus,
+.polity-review-controls select:focus,
+.polity-review-controls textarea:focus{
+  border-color:var(--atlas-material-hairline-strong);
+  outline:1px solid var(--atlas-focus-ring);
+  outline-offset:2px;
+  box-shadow:none;
+}
+
+
 /* GLOBAL-M3 — Inscription typography.
  * Shared institutional display type for historical identity headings only.
  * Font size, line height, spacing, layout, metadata typography, and operational
