@@ -68,3 +68,23 @@ test("REVIEW-M4 uses one five-card registration row and prevents YouTube signal 
   assert.match(js, /data-label="채널"/);
   assert.match(js, /data-label="영상"/);
 });
+
+
+test("REVIEW-M5 preserves every registration-review field across responsive breakpoints", () => {
+  const css = read("atlas-registration-review.css");
+  const js = read("atlas-registration-review.js");
+
+  assert.match(css, /REVIEW-M5 — Responsive information invariant/);
+  assert.match(css, /@media\(max-width:1100px\)\{[\s\S]*\.registration-review-stats\{grid-template-columns:repeat\(3,minmax\(0,1fr\)\)\}/);
+  assert.match(css, /@media\(max-width:700px\)\{[\s\S]*\.registration-review-stats\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)\}/);
+  assert.match(css, /@media\(max-width:420px\)\{[\s\S]*\.registration-review-stats\{grid-template-columns:1fr\}/);
+
+  assert.match(css, /\.registration-review-signal-table thead tr,[\s\S]*grid-template-columns:56px minmax\(260px,460px\) 120px 90px/);
+  assert.match(css, /\.registration-review-queue-table td\{[\s\S]*grid-template-columns:minmax\(82px,30%\) minmax\(0,1fr\)/);
+  assert.doesNotMatch(css, /\.registration-review-queue-table td\{[^}]*display:none/);
+
+  for (const label of ["이름","대표 분야","우선순위","검토 상태","출처","갱신"]) {
+    assert.match(js, new RegExp(`data-label="${label}"`));
+  }
+  assert.match(js, /registration-review-table-wrap registration-review-queue-wrap/);
+});
