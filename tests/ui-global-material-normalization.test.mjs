@@ -162,5 +162,24 @@ test("SHELL-M2 navigation uses the shared hover / active / selected luminance sc
   assert.doesNotMatch(foundation, /\.mobile-nav button\.active \{[\s\S]*?rgba\(192,174,136,\.09\)/);
 
   assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-shell-m2-luminance-v1/);
-  assert.match(html, /atlas-ui-motion-material-v9\.css\?v=20261007-shell-m2-luminance-v1/);
+  assert.match(html, /atlas-ui-motion-material-v9\.css\?v=20261007-shell-m3-ownership-v1/);
+});
+
+
+test("SHELL-M3 keeps late V9 shell material on shared GLOBAL-M1 tokens", () => {
+  const motion = read("atlas-ui-motion-material-v9.css");
+  const html = read("index.html");
+
+  assert.match(motion, /SHELL-M3 — Late material ownership consolidation/);
+  assert.match(motion, /\.sidebar,\n\.mobile-drawer \{\n  background-image:\n    linear-gradient\(180deg, var\(--atlas-material-sheen\), transparent 84px\);\n  box-shadow: inset -1px 0 0 var\(--atlas-material-sheen-strong\);\n\}/);
+  assert.match(motion, /\.topbar,\n\.mobile-appbar \{\n  box-shadow: inset 0 -1px 0 var\(--atlas-material-sheen\);\n\}/);
+
+  const spacetimeStart = motion.indexOf(".spacetime-sticky-inspector,");
+  const controlsStart = motion.indexOf(".btn,", spacetimeStart);
+  const spacetimeMaterial = motion.slice(spacetimeStart, controlsStart);
+  assert.match(spacetimeMaterial, /linear-gradient\(180deg, rgba\(255,255,255,\.012\), transparent 84px\)/);
+
+  assert.match(motion, /\.btn,[\s\S]*?var\(--atlas-material-edge-soft\)/);
+  assert.match(motion, /\.btn:hover,[\s\S]*?var\(--atlas-material-edge\)/);
+  assert.match(html, /atlas-ui-motion-material-v9\.css\?v=20261007-shell-m3-ownership-v1/);
 });
