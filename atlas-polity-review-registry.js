@@ -59,19 +59,6 @@
         locked: true
       },
       {
-        id: "palmyra-empire",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Palmyra → Palmyrene Empire",
-        left: { name: "Palmyra" },
-        right: { name: "Palmyrene Empire" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "irish-free-state-ireland",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -643,6 +630,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "palmyra-empire",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Palmyra → Palmyrene Empire sovereignty/state-form continuity merge",
+        left: { name: "Palmyra", ko: "팔미라", polity_id: "7db938c5-9385-4c17-86b8-f289514cc221" },
+        right: { name: "Palmyrene Empire", ko: "팔미라 제국", polity_id: "0b3a09b0-de70-471a-8d41-c24fa2ef0ca3" },
+        rationale: "Oxford scholarship treats the Odaenathid-Zenobian Palmyrene realm as one continuous political regime across changing relations with Rome. Odaenathus established Palmyra as a major eastern power while acknowledging Roman suzerainty; after his death Zenobia assumed authority for Vaballathus and continued governing Odaenathus's territories, expanding into Egypt and Asia Minor while still recognizing Aurelian. In early 272 Zenobia and Vaballathus adopted Augusta/Augustus, marking an explicit imperial sovereignty phase rather than the birth of an unrelated replacement polity. ATLAS therefore binds Odaenathus's c.261-c.267 royal Activity, Zenobia's 267-271 regency, and her separate 272 Augusta Activity to one Palmyrene Empire survivor. The pre-imperial royal phase is preserved as temporal state_form Palmyrene Kingdom / 팔미라 왕국 c.261→271, and the zero-external-reference legacy Palmyra polity is retired.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["2026-09-20 exhaustive similarity audit carry-forward; old direction is evidence only, not execution authority", "Oxford Classical Dictionary, Septimius Odaenathus: Odaenathus made Palmyra a major eastern power as its king while carefully acknowledging Roman suzerainty; Zenobia effectively succeeded him", "Nathanael Andrade, Zenobia: Shooting Star of Palmyra: Zenobia governed Odaenathus's territories for Vaballathus and maintained the claim to act within Roman authority before the 272 imperial-title break", "Oxford Classical Dictionary, Zenobia: in 270 Zenobia expanded while still recognizing Aurelian; in 272 she and Vaballathus adopted Augusta/Augustus", "#2099 continuity correction squash merge b222afc7757a179ff0c2b9a2c581c0bdfe8b37c2; correction request palmyra_palmyrene_empire_continuity_merge_20261007_v1 applied 2026-10-07T10:13:42.823848Z", "Runtime compile runtime-person-politics-v1:ac8e9bf5352232f1b2c698a63872ba1728db29e3cb7724a01cd4d3a657b3ace3 at 2026-10-07T10:14:18.725751Z resolves Odaenathus, Zenobia regency and Zenobia Augusta Activities to the Palmyrene Empire survivor", "#2100 legacy Palmyra retirement squash merge 9de907180b0d4c318ad42a2a811dd9e773462d0a; retirement applied 2026-10-07T10:15:54.156963Z", "2026-10-07 final Production readback: legacy Palmyra live row 0; retirement ledger points to Palmyrene Empire survivor; Palmyrene Kingdom c.261→271 state_form exists; all three Activities remain distinct on one survivor identity"],
+        locked: true
+      },
       {
         id: "urbino-lordship-duchy",
         review_group: "resolved_history",
