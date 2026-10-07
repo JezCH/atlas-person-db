@@ -41,6 +41,10 @@
 .person-domain-filter em{min-width:18px;padding:1px 5px;border-radius:999px;background:#20262a;color:#969ea3;font-size:9px;font-style:normal;font-weight:900;text-align:center}
 .person-domain-filter:focus-visible{outline:1px solid rgba(208,188,145,.62);outline-offset:2px}
 .person-era-group{scroll-margin-top:calc(var(--person-table-sticky-top,122px) + 54px)}
+/* ERA-M1 — Neutral Era navigation interaction luminance.
+ * Previous/next and era-jump hover use the shared GLOBAL-M2 hover wash.
+ * The current era uses the selected wash; semantic domain filters remain separate.
+ */
 /* UI REG-M2 — Museum instrument chrome.
  * Presentation-only refinement around the Person Register.
  * Layout, control dimensions, typography scale, filtering semantics, and mobile
@@ -104,7 +108,10 @@
 
   .person-era-nav-step:hover:not(:disabled){
     border-color:rgba(208,188,145,.30);
-    background-color:#1a1f22;
+    background-color:#15191c;
+    background-image:
+      linear-gradient(var(--atlas-material-wash-hover),var(--atlas-material-wash-hover)),
+      linear-gradient(180deg,var(--atlas-material-sheen),transparent 70%);
     color:#e2dccf;
   }
 
@@ -120,13 +127,16 @@
 
   .person-era-jump:hover{
     border-color:rgba(208,188,145,.20);
-    background-color:#191e21;
+    background-color:#15191c;
+    background-image:
+      linear-gradient(var(--atlas-material-wash-hover),var(--atlas-material-wash-hover)),
+      linear-gradient(180deg,var(--atlas-material-sheen),rgba(239,235,226,.003) 58%,rgba(0,0,0,.025));
   }
 
   .person-era-jump.is-current{
     outline-color:rgba(208,188,145,.54);
     background-image:
-      linear-gradient(180deg,var(--atlas-material-wash-active),rgba(239,235,226,.006) 60%,rgba(0,0,0,.025));
+      linear-gradient(180deg,var(--atlas-material-wash-selected),rgba(239,235,226,.006) 60%,rgba(0,0,0,.025));
     box-shadow:
       inset 0 1px 0 rgba(239,235,226,.022),
       inset 0 -1px 0 var(--atlas-material-edge-dark-strong);
@@ -247,11 +257,19 @@
       inset 0 -1px 0 var(--atlas-material-edge-dark);
   }
 
+  .person-era-nav-step:hover:not(:disabled),
+  .person-era-jump:hover{
+    background-color:var(--atlas-surface-1);
+    background-image:
+      linear-gradient(var(--atlas-material-wash-hover),var(--atlas-material-wash-hover)),
+      linear-gradient(180deg,var(--atlas-material-sheen),transparent 72%);
+  }
+
   .person-era-jump.is-current{
     outline-color:var(--atlas-material-hairline-strong);
     background-color:var(--atlas-surface-2);
     background-image:
-      linear-gradient(180deg,var(--atlas-material-wash-active),var(--atlas-material-sheen-soft) 62%,transparent);
+      linear-gradient(180deg,var(--atlas-material-wash-selected),var(--atlas-material-sheen-soft) 62%,transparent);
     box-shadow:
       inset 0 1px 0 var(--atlas-material-sheen-strong),
       inset 0 -1px 0 var(--atlas-material-edge-dark-strong);
