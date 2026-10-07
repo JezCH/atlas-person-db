@@ -232,7 +232,7 @@ test('Polity surface uses the canonical dark monumental token system without leg
   assert.match(css, /var\(--atlas-warning\)/);
   assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b/);
   assert.doesNotMatch(css, /border-radius:999px/);
-  assert.match(nav, /atlas-polity-review-workbench\.css\?v=20261007-polity-m2-luminance-v1/);
+  assert.match(nav, /atlas-polity-review-workbench\.css\?v=20261007-polity-m3-structural-material-v1/);
 });
 
 test('POL-C1 gives canonical Polity cards plaque material without changing card geometry', () => {
@@ -332,4 +332,32 @@ test('POLITY-M2 keeps filter hover, pressed, and selected luminance semantically
   assert.doesNotMatch(interaction, /background:rgba\(192,174,136,\.08\)/);
   assert.match(css, /\.polity-review-filter\.is-active\{[^}]*border-color:rgba\(208,188,145,\.28\)/);
   assert.match(css, /\.polity-review-filter\.is-active\{[\s\S]*?inset 2px 0 0 var\(--atlas-material-rail\)/);
+});
+
+
+test('POLITY-M3 moves top-level structural edges onto shared GLOBAL-M1 hairlines', () => {
+  const start = css.indexOf('POLITY-M3 — Structural edge material ownership');
+  assert.ok(start >= 0);
+  const end = css.indexOf('/* POLITY-M2 — Filter interaction luminance ownership.', start);
+  const material = css.slice(start, end);
+
+  for (const selector of [
+    '.polity-browser-summary',
+    '.polity-browser-dataset',
+    '.polity-browser-controls',
+    '.polity-browser-state',
+    '.polity-review-summary',
+    '.polity-review-dataset',
+    '.polity-review-toolbar'
+  ]) {
+    assert.ok(material.includes(selector), `missing structural selector: ${selector}`);
+  }
+
+  assert.match(material, /border-color:var\(--atlas-material-hairline\)/);
+  assert.match(material, /\.polity-browser-kpis>div,[\s\S]*?\.polity-review-dataset-kpis>div\{[^}]*border-color:var\(--atlas-material-hairline-soft\)/);
+  assert.match(material, /\.polity-browser-filters button\{[^}]*border-color:var\(--atlas-material-hairline\)/);
+  assert.match(material, /\.atlas-polity-review-section::before\{[^}]*background:var\(--atlas-material-hairline\)/);
+
+  assert.doesNotMatch(material, /atlas-divider/);
+  assert.doesNotMatch(material, /\n\s*(?:padding|grid-template-columns|font-size|line-height|width|height)\s*:/);
 });
