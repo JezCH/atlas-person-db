@@ -112,7 +112,10 @@ test('current registry restores every required carry-forward audit family withou
   const libya = registry.resolved_history.find(row => row.id === 'libya-republic-jamahiriya');
   assert.equal(libya?.terminal_status, 'FIXED');
   assert.equal(libya?.locked, true);
-  assert.equal(registry.carry_forward_same_identity.length, 10);
+  const milan = registry.resolved_history.find(row => row.id === 'milan-lordship-duchy');
+  assert.equal(milan?.terminal_status, 'FIXED');
+  assert.equal(milan?.locked, true);
+  assert.equal(registry.carry_forward_same_identity.length, 9);
   assert.equal(registry.historical_family_reviews.length, 16);
   assert.equal(registry.designation_residuals.length, 2);
   assert.equal(registry.naming_residuals.length, 2);
@@ -167,7 +170,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 33);
+  assert.equal(unresolved.length, 32);
   assert.equal(byId.get('northern-southern-song').terminal_status, null);
   assert.equal(byId.get('roman-west-east').terminal_status, null);
   assert.equal(byId.get('byzantine-nicaea-rupture').terminal_status, null);
