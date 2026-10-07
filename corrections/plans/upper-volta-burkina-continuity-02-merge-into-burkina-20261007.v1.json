@@ -1,0 +1,163 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "upper_volta_burkina_continuity_merge_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_UPPER_VOLTA_BURKINA_CONTINUITY_STAGE2",
+  "release_order": 2049,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; #2050 retired the Upper-Volta-side Sankara name-boundary fragment; fresh Production exact read 2026-10-07; U.S. Office of the Historian Burkina Faso (Upper Volta) recognition record; Présidence du Faso Thomas Sankara institutional history; current ATLAS same-identity official-name rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "upper_volta_polity": "6d89e23a-1eaf-4af3-a310-07ed03e828d6",
+    "burkina_survivor": "e29ed7c4-fe05-405f-b85e-2ddeaee79902",
+    "stage1_request_id": "upper_volta_burkina_continuity_boundary_retirement_20261007_v1",
+    "stage1_applied_at": "2026-10-07T04:49:46.998449+00:00",
+    "historical_decision": "Republic of Upper Volta and Burkina Faso are successive official names of one sovereign state. The U.S. Office of the Historian records U.S. recognition of Upper Volta on 5 August 1960 and states that the state's name changed from Upper Volta to Burkina Faso in 1984. Burkina Faso's Presidency records that on the first anniversary of the 4 August 1983 revolution, Sankara changed the country's name and Upper Volta became Burkina Faso. This is an official-name change, not state extinction/replacement.",
+    "activity_rule": "Thomas Sankara's presidency is one continuous Activity from 4 August 1983 through 15 October 1987. The 4 August 1984 country-name change must not split the tenure.",
+    "designation_rule": "Preserve Republic of Upper Volta / 오트볼타 공화국 as the temporal official_name of the continuous Burkina Faso polity from independence/recognition on 5 August 1960 through 3 August 1984, ending the day before the documented 4 August 1984 renaming."
+  },
+  "operations": [
+    {
+      "case_id": "upper-volta-burkina-restore-sankara-continuous-presidency",
+      "type": "rewrite_activity",
+      "activity_id": "0f8be991-7bbf-43e9-85f5-5a37b080ba75",
+      "baseline_before": {
+        "person_id": "b2dfd2e9-7d65-4dd7-8d9b-8fafca9034e0",
+        "polity_id": "e29ed7c4-fe05-405f-b85e-2ddeaee79902",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1984,
+        "activity_end": 1987,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "0f8be991-7bbf-43e9-85f5-5a37b080ba75",
+        "person_id": "b2dfd2e9-7d65-4dd7-8d9b-8fafca9034e0",
+        "polity_id": "e29ed7c4-fe05-405f-b85e-2ddeaee79902",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1983,
+        "activity_start_detail": {
+          "year": 1983,
+          "month": 8,
+          "day": 4,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1987,
+        "activity_end_detail": {
+          "year": 1987,
+          "month": 10,
+          "day": 15,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Thomas Sankara became head of state on 4 August 1983 and remained in office until he was killed in the coup of 15 October 1987. The country's official name changed from Republic of Upper Volta to Burkina Faso on 4 August 1984; ATLAS models this as one continuous presidency within one continuous polity identity and preserves the former name as a temporal official-name designation.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "upper-volta-burkina-source-us-office-historian-recognition",
+      "exact_before": {
+        "source_absent_id": "43bf3d40-6b67-474d-9612-abfa9d256201"
+      },
+      "exact_after": {
+        "source": {
+          "id": "43bf3d40-6b67-474d-9612-abfa9d256201",
+          "source_key": "bibliographic:history-state-gov:countries-burkina-faso-upper-volta",
+          "source_type": "government_archive",
+          "title": "Burkina Faso (Upper Volta) — U.S. Office of the Historian",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://history.state.gov/countries/burkina-faso",
+          "citation_text": "The U.S. Office of the Historian records recognition of Upper Volta on 5 August 1960 and states that the state's name changed from Upper Volta to Burkina Faso in 1984."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "upper-volta-burkina-official-name-1960-1984",
+      "exact_before": {
+        "designation_absent_id": "5ccc5623-f75f-4b23-93cc-75120b2e352f"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "5ccc5623-f75f-4b23-93cc-75120b2e352f",
+          "polity_id": "e29ed7c4-fe05-405f-b85e-2ddeaee79902",
+          "designation_type": "official_name",
+          "valid_from_year": 1960,
+          "valid_from_month": 8,
+          "valid_from_day": 5,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1984,
+          "valid_to_month": 8,
+          "valid_to_day": 3,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Republic of Upper Volta is preserved as the former official name of the continuous Burkina Faso state from independence/recognition on 5 August 1960 through 3 August 1984. The Presidency of Burkina Faso records that the country was renamed Burkina Faso on 4 August 1984."
+        },
+        "names": [
+          {
+            "id": "83dc1668-36c2-410d-8200-1e16fdfc06ee",
+            "polity_designation_id": "5ccc5623-f75f-4b23-93cc-75120b2e352f",
+            "locale": "en",
+            "name": "Republic of Upper Volta",
+            "is_preferred": true
+          },
+          {
+            "id": "1c33f169-7498-40bf-b438-17bba0d5ace1",
+            "polity_designation_id": "5ccc5623-f75f-4b23-93cc-75120b2e352f",
+            "locale": "ko",
+            "name": "오트볼타 공화국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "5ccc5623-f75f-4b23-93cc-75120b2e352f",
+            "source_id": "43bf3d40-6b67-474d-9612-abfa9d256201",
+            "source_locator_key": "https://history.state.gov/countries/burkina-faso"
+          },
+          {
+            "polity_designation_id": "5ccc5623-f75f-4b23-93cc-75120b2e352f",
+            "source_id": "035cfeba-cfc4-45bd-911a-c3250d8a1046",
+            "source_locator_key": "https://www.presidencedufaso.bf/thomas-sankara/"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_source_count": 1,
+    "asserted_polity_designation_count": 1,
+    "upper_volta_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
