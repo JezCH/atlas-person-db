@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-ssplus-20261007:lajos-kossuth:v1",
+  "person": {
+    "canonical_name_en": "Lajos Kossuth",
+    "display_name_ko": "코슈트 러요시",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "b07ef629-2fd6-59f9-bac8-ec685b371aac",
+    "canonical_name_en": "Kingdom of Hungary",
+    "display_name_ko": "헝가리 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Finance Minister and President of the National Defence Committee",
+    "role_display_name_ko": "재무장관·국방위원회 의장",
+    "period_basis": "term",
+    "start_year": 1848,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1848,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative 1848 state-leadership interval: Kossuth served as finance minister of the first Hungarian government and then led the National Defence Committee during the revolution. His 1849 Governing-President role is intentionally not stretched across this Kingdom-of-Hungary activity rail."
+  },
+  "sources": [
+    {
+      "source_type": "national_library_reference",
+      "title": "Biographies of Key Personalities — National Széchényi Library",
+      "canonical_url": "https://mek.oszk.hu/03400/03407/html/445.html",
+      "citation_text": "The National Széchényi Library identifies Kossuth (1802–1894) as finance minister of the first Hungarian government in 1848, president of the Hungarian Defense Committee, and Governing President of Hungary in 1849."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-07",
+      "document_title": "코슈트 러요시",
+      "url": "https://namu.wiki/w/%EC%BD%94%EC%8A%88%ED%8A%B8%20%EB%9F%AC%EC%9A%94%EC%8B%9C"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSPLUS-BATCH01-20261007",
+    "selection": "user_approved_registration_queue",
+    "tier": "SS+",
+    "candidate_id": "agitators-20261007-lajos-kossuth"
+  }
+}

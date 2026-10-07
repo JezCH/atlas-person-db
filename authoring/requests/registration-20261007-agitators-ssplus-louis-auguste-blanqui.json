@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-ssplus-20261007:louis-auguste-blanqui:v1",
+  "person": {
+    "canonical_name_en": "Louis-Auguste Blanqui",
+    "display_name_ko": "루이 오귀스트 블랑키",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Revolutionary socialist leader of the Society of the Seasons uprising",
+    "role_display_name_ko": "계절협회 봉기 혁명사회주의 지도자",
+    "period_basis": "general_activity",
+    "start_year": 1839,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1839,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative milestone for Blanqui's leadership in the Society of the Seasons armed insurrection in Paris on 12 May 1839; not a lifetime revolutionary-activity rail."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Chronology — The Blanqui Archive, Kingston University",
+      "canonical_url": "https://blanqui.kingston.ac.uk/chronology/",
+      "citation_text": "The Blanqui Archive chronology records Blanqui leading, with Barbès and Martin Bernard, the Société des Saisons armed insurrection in Paris on 12 May 1839."
+    },
+    {
+      "source_type": "primary_source_archive",
+      "title": "Appeal of the Committee of the Society of the Seasons — Auguste Blanqui, 1839",
+      "canonical_url": "https://www.marxists.org/reference/archive/blanqui/1839/appeal.htm",
+      "citation_text": "The 12 May 1839 insurgent appeal names Auguste Blanqui as commander-in-chief and a member of the provisional government."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-07",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSPLUS-BATCH01-20261007",
+    "selection": "user_approved_registration_queue",
+    "tier": "SS+",
+    "candidate_id": "agitators-20261007-louis-auguste-blanqui"
+  }
+}

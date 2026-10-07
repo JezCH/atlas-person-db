@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-agitators-ssplus-20261007:bal-gangadhar-tilak:v1",
+  "person": {
+    "canonical_name_en": "Bal Gangadhar Tilak",
+    "display_name_ko": "발 강가다르 틸라크",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-07",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "polity": {
+    "existing_id": "82203ec1-60b7-5f5c-bab2-9b8df1fd8040",
+    "canonical_name_en": "British Raj",
+    "display_name_ko": "영국령 인도",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Indian nationalist leader and Home Rule League founder",
+    "role_display_name_ko": "인도 민족운동 지도자·홈 룰 리그 창립자",
+    "period_basis": "general_activity",
+    "start_year": 1916,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1916,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative milestone for Tilak's establishment of his Home Rule League in April 1916 and mass campaigning for self-government; not a lifetime nationalism rail."
+  },
+  "sources": [
+    {
+      "source_type": "government_historical_reference",
+      "title": "Establishment of Tilak’s Home Rule League — Azadi Ka Amrit Mahotsav",
+      "canonical_url": "https://cmsadmin.amritmahotsav.nic.in/district-reopsitory-detail.htm?9725=",
+      "citation_text": "India's Ministry of Culture history portal records that Bal Gangadhar Tilak established his Home Rule League in April 1916 and campaigned across western and central India for self-government."
+    },
+    {
+      "source_type": "government_historical_reference",
+      "title": "Tilak’s Death ceremonies, 1920 — Azadi Ka Amrit Mahotsav",
+      "canonical_url": "https://amritmahotsav.nic.in/district-reopsitory-detail.htm?19536=",
+      "citation_text": "India's Ministry of Culture records Tilak's death on 1 August 1920 and describes him as a major national leader of the independence movement."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-07",
+      "document_title": "발 강가다르 틸라크",
+      "url": "https://namu.wiki/w/%EB%B0%9C%20%EA%B0%95%EA%B0%80%EB%8B%A4%EB%A5%B4%20%ED%8B%B8%EB%9D%BC%ED%81%AC"
+    }
+  },
+  "review_context": {
+    "request_batch": "USER-AGITATORS-SSPLUS-BATCH01-20261007",
+    "selection": "user_approved_registration_queue",
+    "tier": "SS+",
+    "candidate_id": "agitators-20261007-bal-gangadhar-tilak"
+  }
+}
