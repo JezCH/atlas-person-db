@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:libyan-arab-republic-after-jamahiriya-continuity-merge:2026-10-07:v1",
+  "release_order": 2082,
+  "evidence": {
+    "decision": "Libyan Arab Republic is the former official-name / constitutional phase of one continuous Libyan sovereign state now canonically represented by Libyan Arab Jamahiriya. #2081 relinked Gaddafi's 1969-09-01→1977-03-02 RCC chairmanship to the Jamahiriya survivor and preserved Libyan Arab Republic / 리비아 아랍 공화국 as a reviewed temporal official_name designation for 1969-09-01→1977-03-01. The genuine RCC→GPC office change remains a separate Activity boundary.",
+    "stage2_request_id": "libya_republic_jamahiriya_continuity_merge_20261007_v1",
+    "stage2_applied_at": "2026-10-07T09:25:17.539516+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:82d5f03086e84ee869b1058350ceb572b89372f86c73463f5de67f8bf5c42657",
+    "runtime_compiled_at": "2026-10-07T09:25:47.367258+00:00",
+    "survivor_polity_id": "7e1a3ced-d4fc-4eb0-b12f-2752e5255014",
+    "production_readback": "2026-10-07 exhaustive post-compile FK audit: legacy Libyan Arab Republic has zero references in person_politics_context_polities, person_politics_v2, runtime_person_politics_v1, polity_descriptions, polity_designations, polity_governance_periods, polity_identity_relations, polity_relations, polity_place_functions, polity_sources, runtime_compile_exclusions, spatial_registration_dispositions, and territory_records; exactly two owned preferred polity_names remain."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:libyan-arab-republic-after-jamahiriya-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "333274e4-e616-491c-8446-c4261f8b007d",
+        "canonical_key": "Libyan Arab Republic",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "7e1a3ced-d4fc-4eb0-b12f-2752e5255014",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Libyan Arab Republic",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "리비아 아랍 공화국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
