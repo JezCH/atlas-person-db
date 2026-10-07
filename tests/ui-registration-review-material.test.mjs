@@ -88,3 +88,19 @@ test("REVIEW-M5 preserves every registration-review field across responsive brea
   }
   assert.match(js, /registration-review-table-wrap registration-review-queue-wrap/);
 });
+
+
+test("REVIEW-M6 removes the duplicate local page header without losing refresh/status controls", () => {
+  const css = read("atlas-registration-review.css");
+  const js = read("atlas-registration-review.js");
+
+  assert.match(css, /REVIEW-M6 — Remove duplicated local page heading while preserving live controls/);
+  assert.match(css, /\.registration-review-overview-head\{align-items:center\}/);
+  assert.match(css, /@media\(max-width:600px\)\{[\s\S]*\.registration-review-overview-head\{align-items:flex-start;flex-direction:column\}/);
+
+  assert.doesNotMatch(js, /<header class="registration-review-head">/);
+  assert.doesNotMatch(js, /<h2>등록검토<\/h2>/);
+  assert.match(js, /registration-review-section-head registration-review-overview-head/);
+  assert.match(js, /id="registrationReviewStatus"/);
+  assert.match(js, /id="registrationReviewRefresh"/);
+});
