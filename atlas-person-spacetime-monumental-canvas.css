@@ -535,9 +535,14 @@
   border-top-color: var(--atlas-material-glint);
 }
 
+/* SPACETIME-M2 — Late focus ownership repair.
+ * Monumental canvas loads after V9; reassert the shared focus ring instead of
+ * retaining chronology-local rail opacity / offset.
+ */
 .spacetime-frame[data-spacetime-visual="chronology-v6"] button:focus-visible,
 .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-scroll:focus-visible {
-  outline-color: var(--atlas-material-rail);
+  outline: 1px solid var(--atlas-focus-ring);
+  outline-offset: 2px;
 }
 
 @media (max-width: 760px) {
