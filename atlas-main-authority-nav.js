@@ -236,7 +236,7 @@
   function ensureRegistrationReviewAssets() {
     if (window.ATLAS_REGISTRATION_REVIEW) return Promise.resolve(window.ATLAS_REGISTRATION_REVIEW);
     if (registrationReviewAssetsPromise) return registrationReviewAssetsPromise;
-    appendStylesheetOnce("./atlas-registration-review.css?v=20261007-review-m2-luminance-v1");
+    appendStylesheetOnce("./atlas-registration-review.css?v=20261007-review-m3-focus-v1");
     registrationReviewAssetsPromise = loadScriptOnce("./atlas-registration-review.js?v=20261007-registration-review-v1", () => Boolean(window.ATLAS_REGISTRATION_REVIEW))
       .then(() => window.ATLAS_REGISTRATION_REVIEW)
       .catch((error) => {
