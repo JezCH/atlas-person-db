@@ -636,7 +636,7 @@ textarea:focus {
 
   .mobile-brand {
     padding-bottom: 14px;
-    border-bottom: 1px solid var(--atlas-divider-soft);
+    border-bottom: 1px solid var(--atlas-material-hairline-soft);
   }
 
   .mobile-brand-mark {
