@@ -1,0 +1,187 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "paraguay_republic_continuity_merge_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_PARAGUAY_REPUBLIC_CONTINUITY",
+  "release_order": 2111,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Paraguayan BACN Constitution 1992 and Law 6576/2020; Archivo Nacional de Asunción 1813 Congress records; BACN Constitution 1870; current ATLAS same-identity formal-name rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "paraguay_survivor": "fc7fd185-6801-4e16-a13e-6a5983318345",
+    "republic_of_paraguay_legacy": "0e4464d1-4e86-45aa-9b0b-e74539fde8b8",
+    "historical_decision": "Paraguay and Republic of Paraguay are not separate sovereign identities. Paraguayan Law 6576/2020 designates 12 October as the Day of the Proclamation of Paraguay as a Republic in commemoration of the Government Regulation approved by the Sovereign Congress on 12 October 1813. The Archivo Nacional de Asunción preserves the 1813 Congress resolutions appointing José Gaspar Rodríguez de Francia and Fulgencio Yegros as Cónsules de la República del Paraguay. The 1870 Constitution was expressly enacted for the República del Paraguay, and the current 1992 Constitution begins by declaring that La República del Paraguay is forever free and independent. Production therefore contains a duplicate formal-name polity split: Francia's 1813-1840 activities already use canonical Paraguay, while later presidents and Stroessner phases were placed on a separate Republic of Paraguay row even though the formal republic identity is continuous.",
+    "naming_rule": "Do not invent a bounded temporal official_name designation for Republic of Paraguay. República del Paraguay is an ongoing official constitutional name from the republican proclamation onward, while current ATLAS polity_designations are used for closed temporal phases and an all-null end boundary is treated as unresolved rather than ongoing. Preserve the formal-name fact in correction evidence and, after exhaustive orphan verification, in the polity retirement ledger; keep Paraguay as the canonical survivor.",
+    "activity_rule": "Relink only the three Activities currently attached to the duplicate Republic of Paraguay row: Francisco Solano López's 1862-1870 presidency, Alfredo Stroessner's 4 May-15 August 1954 de facto leadership, and Stroessner's 15 August 1954-3 February 1989 presidency. Preserve their UUIDs, exact temporal precision, roles, relations, period bases, chronology/confidence, and normalized source links. Do not alter the constitutionally distinct Francia consul/supreme-dictator/perpetual-dictator Activities already on canonical Paraguay.",
+    "primary_references": [
+      "Paraguayan BACN Law 6576/2020: 12 October is the Day of the Proclamation of Paraguay as a Republic, commemorating the Government Regulation approved by the Sovereign Congress on 12 October 1813.",
+      "Archivo Nacional de Asunción, Resoluciones del Congreso Supremo, 1813-10-12→1813-11-23: Francia and Yegros were appointed Cónsules de la República and the Government Regulation and consular proclamation are preserved in the file.",
+      "Constitución Nacional de la República del Paraguay, 1870: enacted for the República del Paraguay; Article 1 states Paraguay is free and independent and constitutes itself as a republic.",
+      "Constitución de la República del Paraguay, 1992, Article 1: La República del Paraguay is forever free and independent and adopts representative, participatory and pluralist democracy."
+    ]
+  },
+  "operations": [
+    {
+      "case_id": "paraguay-relink-solano-lopez-presidency-from-formal-name-duplicate",
+      "type": "rewrite_activity",
+      "activity_id": "327ffcb4-a918-46fb-b851-1bc667dd38b3",
+      "baseline_before": {
+        "person_id": "204aeffd-650b-4209-a494-6e13b0ea0280",
+        "polity_id": "0e4464d1-4e86-45aa-9b0b-e74539fde8b8",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1862,
+        "activity_end": 1870,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "327ffcb4-a918-46fb-b851-1bc667dd38b3",
+        "person_id": "204aeffd-650b-4209-a494-6e13b0ea0280",
+        "polity_id": "fc7fd185-6801-4e16-a13e-6a5983318345",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1862,
+        "activity_start_detail": {
+          "year": 1862,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1870,
+        "activity_end_detail": {
+          "year": 1870,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Francisco Solano López served as President of Paraguay from 1862 until his death in 1870. República del Paraguay is the formal republican name of the same continuous Paraguayan state proclaimed in 1813, not a separate polity identity. ATLAS therefore binds this presidency to canonical Paraguay while preserving the formal-name evidence separately from polity identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "paraguay-relink-stroessner-de-facto-rule-from-formal-name-duplicate",
+      "type": "rewrite_activity",
+      "activity_id": "842b2025-bfe3-4d02-948a-a65cec969357",
+      "baseline_before": {
+        "person_id": "2c7205db-c09f-4fb7-817e-f3048592737f",
+        "polity_id": "0e4464d1-4e86-45aa-9b0b-e74539fde8b8",
+        "role_id": "73933205-6903-4cc7-be64-e9ac3f1ba5d8",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 1954,
+        "activity_end": 1954,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "842b2025-bfe3-4d02-948a-a65cec969357",
+        "person_id": "2c7205db-c09f-4fb7-817e-f3048592737f",
+        "polity_id": "fc7fd185-6801-4e16-a13e-6a5983318345",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "73933205-6903-4cc7-be64-e9ac3f1ba5d8",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 1954,
+        "activity_start_detail": {
+          "year": 1954,
+          "month": 5,
+          "day": 4,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1954,
+        "activity_end_detail": {
+          "year": 1954,
+          "month": 8,
+          "day": 15,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Alfredo Stroessner led the 4 May 1954 coup and was Paraguay's de facto ruler until assuming the presidency on 15 August 1954. Republic of Paraguay is the formal name of the same Paraguayan state, so this coup-to-presidency Activity belongs to canonical Paraguay. ATLAS retains this phase separately from his formal presidency because the role boundary is genuine.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "paraguay-relink-stroessner-presidency-from-formal-name-duplicate",
+      "type": "rewrite_activity",
+      "activity_id": "ec394bf0-4f52-43cd-bd14-cbd16aff628c",
+      "baseline_before": {
+        "person_id": "2c7205db-c09f-4fb7-817e-f3048592737f",
+        "polity_id": "0e4464d1-4e86-45aa-9b0b-e74539fde8b8",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1954,
+        "activity_end": 1989,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "ec394bf0-4f52-43cd-bd14-cbd16aff628c",
+        "person_id": "2c7205db-c09f-4fb7-817e-f3048592737f",
+        "polity_id": "fc7fd185-6801-4e16-a13e-6a5983318345",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1954,
+        "activity_start_detail": {
+          "year": 1954,
+          "month": 8,
+          "day": 15,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1989,
+        "activity_end_detail": {
+          "year": 1989,
+          "month": 2,
+          "day": 3,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Alfredo Stroessner served as President of Paraguay from 15 August 1954 until his overthrow on 3 February 1989. República del Paraguay is the formal republican name of the same state represented canonically as Paraguay, so the entire presidential tenure resolves to canonical Paraguay without a state-identity break.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 3,
+    "asserted_polity_designation_count": 0,
+    "republic_of_paraguay_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
