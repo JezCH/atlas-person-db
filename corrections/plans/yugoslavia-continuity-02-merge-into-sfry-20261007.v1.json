@@ -1,0 +1,415 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "yugoslavia_continuity_merge_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_YUGOSLAVIA_CONTINUITY_STAGE2",
+  "release_order": 2070,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; #2069 retired two artificial Yugoslav name-boundary Activity fragments; fresh Production exact read 2026-10-07; Archives of Yugoslavia constitutional-history authority; U.S. FRUS 1945 records; U.N. Yugoslavia membership/succession records; current ATLAS same-identity rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "kingdom_polity": "a098ffac-513d-4847-9a59-8d45c6b31cc3",
+    "dfy_polity": "9f47c3c0-dcbd-4f9e-ace4-24272e1e9109",
+    "fpry_polity": "eac9dcd3-f388-48bc-a89b-8750fa5f7750",
+    "sfry_survivor": "e40a7202-2036-4d7a-a31b-e88598743e61",
+    "stage1_request_id": "yugoslavia_continuity_boundary_retirement_20261007_v1",
+    "stage1_applied_at": "2026-10-07T08:04:39.128373+00:00",
+    "historical_decision": "Kingdom of Yugoslavia, Democratic Federal Yugoslavia, Federal People's Republic of Yugoslavia and Socialist Federal Republic of Yugoslavia are successive constitutional/name phases of one continuing international Yugoslav state identity. The Archives of Yugoslavia states that the AVNOJ constitutional rupture suspended internal continuity with the Kingdom but did not interrupt Yugoslavia's international legal continuity as a subject of international law. It records that on 7 March 1945 the Royal Yugoslav Government and NKOJ were dissolved and replaced by one provisional government of Democratic Federal Yugoslavia. The U.N. treats the former Yugoslavia/SFRY as an original Member from 1945 until dissolution. Federal Republic of Yugoslavia (1992) is not present in current Production and is excluded from this merge because U.N. Security Council resolution 777 states that the SFRY had ceased to exist and FRY could not automatically continue its membership.",
+    "activity_rule": "Peter II's kingship remains a distinct King Activity, while Tito's Prime Minister and President offices remain distinct roles. Official-name or constitutional-form transitions within the same state must not split Tito's continuous tenure in the same role.",
+    "designation_rule": "Preserve Kingdom of Yugoslavia as temporal state_form from the 3 October 1929 naming/constitutional phase through the day before the 29 November 1945 abolition of the monarchy. Preserve Democratic Federal Yugoslavia as temporal official_name from formation of the united provisional government on 7 March 1945 through 28 November 1945. Preserve Federal People's Republic of Yugoslavia as temporal official_name from proclamation on 29 November 1945 through 6 April 1963, the day before the 1963 Constitution renamed the state the Socialist Federal Republic of Yugoslavia. The partial 1945 overlap of Kingdom state_form and DFY official_name is intentional: royal legal form persisted under a Regency while the united provisional DFY government operated until the Constituent Assembly abolished the monarchy."
+  },
+  "operations": [
+    {
+      "case_id": "yugoslavia-relink-peter-ii-king-to-sfry-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "0aad25a7-56f6-4c3b-8c3c-7aabf5762183",
+      "baseline_before": {
+        "person_id": "d429e592-9bd0-42fa-87c5-1c4465d5c573",
+        "polity_id": "a098ffac-513d-4847-9a59-8d45c6b31cc3",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1934,
+        "activity_end": 1945,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "0aad25a7-56f6-4c3b-8c3c-7aabf5762183",
+        "person_id": "d429e592-9bd0-42fa-87c5-1c4465d5c573",
+        "polity_id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1934,
+        "activity_start_detail": {
+          "year": 1934,
+          "month": 10,
+          "day": 9,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1945,
+        "activity_end_detail": {
+          "year": 1945,
+          "month": 11,
+          "day": 29,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Peter II was King of Yugoslavia from 9 October 1934 until the Constituent Assembly abolished the monarchy on 29 November 1945. The monarchy continued in exile after the Axis invasion and in 1945 royal powers were exercised through a Regency while the united provisional Yugoslav government operated. ATLAS preserves his kingship as a distinct role within the same internationally continuous Yugoslav polity identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "yugoslavia-restore-tito-continuous-prime-ministership",
+      "type": "rewrite_activity",
+      "activity_id": "f8f25787-fc27-4a77-84e6-2888f2aa5a40",
+      "baseline_before": {
+        "person_id": "d1698f13-2e02-427b-a4a9-33074f0b51ab",
+        "polity_id": "eac9dcd3-f388-48bc-a89b-8750fa5f7750",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1945,
+        "activity_end": 1953,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 4
+      },
+      "after": {
+        "activity_id": "f8f25787-fc27-4a77-84e6-2888f2aa5a40",
+        "person_id": "d1698f13-2e02-427b-a4a9-33074f0b51ab",
+        "polity_id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1945,
+        "activity_start_detail": {
+          "year": 1945,
+          "month": 3,
+          "day": 7,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1953,
+        "activity_end_detail": {
+          "year": 1953,
+          "month": 1,
+          "day": 14,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Josip Broz Tito headed the united Yugoslav government continuously from 7 March 1945 until 14 January 1953, when the constitutional arrangement created the presidency and he became President of the Republic. The 29 November 1945 abolition of the monarchy and proclamation of the Federal People's Republic changed Yugoslavia's constitutional form and official name but did not interrupt this Prime Minister tenure or the state's international legal identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "yugoslavia-restore-tito-continuous-presidency",
+      "type": "rewrite_activity",
+      "activity_id": "5d506d43-6518-426f-b3de-8e5877cf8bb4",
+      "baseline_before": {
+        "person_id": "d1698f13-2e02-427b-a4a9-33074f0b51ab",
+        "polity_id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1963,
+        "activity_end": 1980,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 4
+      },
+      "after": {
+        "activity_id": "5d506d43-6518-426f-b3de-8e5877cf8bb4",
+        "person_id": "d1698f13-2e02-427b-a4a9-33074f0b51ab",
+        "polity_id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1953,
+        "activity_start_detail": {
+          "year": 1953,
+          "month": 1,
+          "day": 14,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1980,
+        "activity_end_detail": {
+          "year": 1980,
+          "month": 5,
+          "day": 4,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Josip Broz Tito served continuously as President of Yugoslavia from 14 January 1953 until his death on 4 May 1980. The Constitution of 7 April 1963 renamed the state the Socialist Federal Republic of Yugoslavia but did not interrupt his presidency or create a new international state identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "yugoslavia-source-archives-kingdom-name-1929",
+      "exact_before": {
+        "source_absent_id": "f7094069-9bd2-4cab-8cf6-a29eb6bb37bc"
+      },
+      "exact_after": {
+        "source": {
+          "id": "f7094069-9bd2-4cab-8cf6-a29eb6bb37bc",
+          "source_key": "bibliographic:archives-yugoslavia:permanent-exhibition-kingdom-1929",
+          "source_type": "government_archive",
+          "title": "Permanent Exhibition — Archives of Yugoslavia: Kingdom of Yugoslavia",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://arhivyu.rs/en/izlozbe/stalna-izlozba",
+          "citation_text": "The Archives of Yugoslavia states that the Law of 3 October 1929 changed the name of the Kingdom of Serbs, Croats and Slovenes to the Kingdom of Yugoslavia."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "yugoslavia-source-frus-united-government-1945",
+      "exact_before": {
+        "source_absent_id": "116d939e-cb97-4db8-bd2f-a656b7696978"
+      },
+      "exact_after": {
+        "source": {
+          "id": "116d939e-cb97-4db8-bd2f-a656b7696978",
+          "source_key": "bibliographic:frus1945v05:d964-united-yugoslav-government",
+          "source_type": "government_archive",
+          "title": "U.S. FRUS 1945 — Formation of the United Yugoslav Government",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://history.state.gov/historicaldocuments/frus1945v05/d964",
+          "citation_text": "The U.S. Department of State recorded that the Royal Yugoslav Government and the National Committee of Liberation resigned and that a united Yugoslav Government was formed under Tito on 7 March 1945 after royal powers had been transferred to a Regency Council."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "yugoslavia-source-frus-republic-proclamation-1945",
+      "exact_before": {
+        "source_absent_id": "472f87f0-3b5b-4a3c-b840-44995de279e8"
+      },
+      "exact_after": {
+        "source": {
+          "id": "472f87f0-3b5b-4a3c-b840-44995de279e8",
+          "source_key": "bibliographic:frus1945v05:d1046-yugoslav-republic-proclamation",
+          "source_type": "government_archive",
+          "title": "U.S. FRUS 1945 — Yugoslav Republic proclaimed and monarchy abolished",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://history.state.gov/historicaldocuments/frus1945v05/d1046",
+          "citation_text": "The U.S. Embassy reported that on 29 November 1945 the Yugoslav Constituent Assembly proclaimed the federal people's republic and abolished the monarchy."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "yugoslavia-state-form-kingdom-1929-1945",
+      "exact_before": {
+        "designation_absent_id": "8ace1e30-f31a-497a-99cb-bac9240af269"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "8ace1e30-f31a-497a-99cb-bac9240af269",
+          "polity_id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+          "designation_type": "state_form",
+          "valid_from_year": 1929,
+          "valid_from_month": 10,
+          "valid_from_day": 3,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1945,
+          "valid_to_month": 11,
+          "valid_to_day": 28,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Kingdom of Yugoslavia is preserved as the monarchical state-form phase of the continuous Yugoslav international state identity from the 3 October 1929 renaming through the day before the Constituent Assembly abolished the monarchy on 29 November 1945. During the 1945 transition royal authority was exercised through a Regency while the united provisional government operated."
+        },
+        "names": [
+          {
+            "id": "5dab3756-a4b4-43c8-859b-22785ece1058",
+            "polity_designation_id": "8ace1e30-f31a-497a-99cb-bac9240af269",
+            "locale": "en",
+            "name": "Kingdom of Yugoslavia",
+            "is_preferred": true
+          },
+          {
+            "id": "51556fc3-bbcf-4c2e-97f5-5f3d5abf0394",
+            "polity_designation_id": "8ace1e30-f31a-497a-99cb-bac9240af269",
+            "locale": "ko",
+            "name": "유고슬라비아 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "8ace1e30-f31a-497a-99cb-bac9240af269",
+            "source_id": "f7094069-9bd2-4cab-8cf6-a29eb6bb37bc",
+            "source_locator_key": "https://arhivyu.rs/en/izlozbe/stalna-izlozba"
+          },
+          {
+            "polity_designation_id": "8ace1e30-f31a-497a-99cb-bac9240af269",
+            "source_id": "472f87f0-3b5b-4a3c-b840-44995de279e8",
+            "source_locator_key": "https://history.state.gov/historicaldocuments/frus1945v05/d1046"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "yugoslavia-official-name-dfy-1945",
+      "exact_before": {
+        "designation_absent_id": "e04a36c5-e342-4302-a455-717059df41ae"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "e04a36c5-e342-4302-a455-717059df41ae",
+          "polity_id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+          "designation_type": "official_name",
+          "valid_from_year": 1945,
+          "valid_from_month": 3,
+          "valid_from_day": 7,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1945,
+          "valid_to_month": 11,
+          "valid_to_day": 28,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Democratic Federal Yugoslavia is preserved as the official-name phase associated with the united provisional government formed on 7 March 1945 through the day before proclamation of the Federal People's Republic on 29 November 1945. The partial overlap with the Kingdom state-form designation reflects the 1945 Regency transition rather than separate sovereign state identity."
+        },
+        "names": [
+          {
+            "id": "05de26aa-056f-4856-bd56-cc5240b49c64",
+            "polity_designation_id": "e04a36c5-e342-4302-a455-717059df41ae",
+            "locale": "en",
+            "name": "Democratic Federal Yugoslavia",
+            "is_preferred": true
+          },
+          {
+            "id": "c3e68e23-d3ae-40b2-a131-b27b55d37f2c",
+            "polity_designation_id": "e04a36c5-e342-4302-a455-717059df41ae",
+            "locale": "ko",
+            "name": "민주연방 유고슬라비아",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "e04a36c5-e342-4302-a455-717059df41ae",
+            "source_id": "116d939e-cb97-4db8-bd2f-a656b7696978",
+            "source_locator_key": "https://history.state.gov/historicaldocuments/frus1945v05/d964"
+          },
+          {
+            "polity_designation_id": "e04a36c5-e342-4302-a455-717059df41ae",
+            "source_id": "472f87f0-3b5b-4a3c-b840-44995de279e8",
+            "source_locator_key": "https://history.state.gov/historicaldocuments/frus1945v05/d1046"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "yugoslavia-official-name-fpry-1945-1963",
+      "exact_before": {
+        "designation_absent_id": "6c011530-c417-4bc9-a4de-a5f5ac4b40fd"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "6c011530-c417-4bc9-a4de-a5f5ac4b40fd",
+          "polity_id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+          "designation_type": "official_name",
+          "valid_from_year": 1945,
+          "valid_from_month": 11,
+          "valid_from_day": 29,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1963,
+          "valid_to_month": 4,
+          "valid_to_day": 6,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Federal People's Republic of Yugoslavia is preserved as the official-name phase of the continuous Yugoslav state from proclamation of the republic on 29 November 1945 through 6 April 1963. The Constitution of 7 April 1963 renamed the state the Socialist Federal Republic of Yugoslavia."
+        },
+        "names": [
+          {
+            "id": "11573296-39af-41bc-86bc-759ac701cedc",
+            "polity_designation_id": "6c011530-c417-4bc9-a4de-a5f5ac4b40fd",
+            "locale": "en",
+            "name": "Federal People's Republic of Yugoslavia",
+            "is_preferred": true
+          },
+          {
+            "id": "9eb84628-ece2-4f08-8b6b-425f1c4c7733",
+            "polity_designation_id": "6c011530-c417-4bc9-a4de-a5f5ac4b40fd",
+            "locale": "ko",
+            "name": "유고슬라비아 연방인민공화국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "6c011530-c417-4bc9-a4de-a5f5ac4b40fd",
+            "source_id": "472f87f0-3b5b-4a3c-b840-44995de279e8",
+            "source_locator_key": "https://history.state.gov/historicaldocuments/frus1945v05/d1046"
+          },
+          {
+            "polity_designation_id": "6c011530-c417-4bc9-a4de-a5f5ac4b40fd",
+            "source_id": "dbe1dd9f-eec8-4e39-99a3-523e689c51bc",
+            "source_locator_key": "https://www.arhivyu.rs/en/leksikon-jugoslavije/konstitutivni_akti_jugoslavije"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 3,
+    "asserted_source_count": 3,
+    "asserted_polity_designation_count": 3,
+    "kingdom_activity_refs_after_expected": 0,
+    "dfy_activity_refs_after_expected": 0,
+    "fpry_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
