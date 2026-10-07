@@ -1,0 +1,82 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "congo_drc_zaire_continuity_boundary_retirement_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_CONGO_DRC_ZAIRE_CONTINUITY_STAGE1",
+  "release_order": 2062,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; United Nations authority records for Republic of the Congo (Leopoldville), Zaire, and Democratic Republic of the Congo; current ATLAS same-identity official-name rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "leopoldville_polity": "14ea7cd5-b0ee-4e63-a7a6-0995a9a3a018",
+    "zaire_polity": "c6a2181d-3263-4e46-9349-214b85eead32",
+    "drc_survivor": "05242fe7-eefa-4140-806b-4a058e3c2c8a",
+    "historical_decision": "Republic of the Congo (Léopoldville), Democratic Republic of the Congo, and Republic of Zaire are successive official-name phases of one sovereign state identity. U.N. authority records state that the Republic of the Congo (Léopoldville) changed its name to Democratic Republic of the Congo on 1 August 1964, to Zaire on 27 October 1971, and back to Democratic Republic of the Congo on 17 May 1997. These changes are name changes within one continuing U.N. member state, not state extinction/replacement.",
+    "rationale": "The legacy model splits two continuous office tenures solely at official-name boundaries: Moïse Tshombe's premiership at 1964-08-01 and Mobutu Sese Seko's presidency at 1971-10-27. Retire the name-boundary fragments first with source transfer; a fresh exact-read correction will restore each surviving DRC Activity to the full tenure, relink Patrice Lumumba's independent-state premiership to the same survivor polity, and preserve the historical names as temporal official_name designations."
+  },
+  "operations": [
+    {
+      "case_id": "congo-drc-retire-tshombe-leopoldville-name-boundary-fragment",
+      "type": "retire_activity",
+      "activity_id": "a7e31c30-0123-48e0-a34c-ea7da2ce29e2",
+      "baseline_before": {
+        "person_id": "c2124219-2d9c-4568-b4e4-34907d2d6462",
+        "polity_id": "14ea7cd5-b0ee-4e63-a7a6-0995a9a3a018",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1964,
+        "activity_end": 1964,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "replacement_activity_ids": [
+        "c044b7f6-a1e0-48e2-858d-b46bee1d8ebe"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    },
+    {
+      "case_id": "congo-drc-retire-mobutu-zaire-name-boundary-fragment",
+      "type": "retire_activity",
+      "activity_id": "e00d1c6c-9f30-4aed-b9ab-bd3db9b3d3a2",
+      "baseline_before": {
+        "person_id": "e19cedd6-9eaf-4d4f-9a41-7eb6d44966a0",
+        "polity_id": "c6a2181d-3263-4e46-9349-214b85eead32",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1971,
+        "activity_end": 1997,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "replacement_activity_ids": [
+        "1ec377cb-14cc-43fc-aba1-59da4d1c1f7a"
+      ],
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retired_activity_count": 2,
+    "surviving_activity_ids": [
+      "c044b7f6-a1e0-48e2-858d-b46bee1d8ebe",
+      "1ec377cb-14cc-43fc-aba1-59da4d1c1f7a"
+    ],
+    "source_transfer_required": true,
+    "production_mutation_authorized": false
+  }
+}
