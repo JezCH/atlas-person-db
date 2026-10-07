@@ -1,0 +1,45 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:republic-of-upper-volta-after-burkina-official-name-merge:2026-10-07:v1",
+  "release_order": 2052,
+  "evidence": {
+    "decision": "Republic of Upper Volta is the former official-name phase of one continuous sovereign state now canonically modeled as Burkina Faso. #2050 retired the artificial pre-renaming Thomas Sankara presidency fragment; #2051 restored one continuous 1983-08-04→1987-10-15 presidency on Burkina Faso and preserved Republic of Upper Volta / 오트볼타 공화국 as a reviewed temporal official_name designation for 1960-08-05→1984-08-03.",
+    "stage1_request_id": "upper_volta_burkina_continuity_boundary_retirement_20261007_v1",
+    "stage1_applied_at": "2026-10-07T04:49:46.998449+00:00",
+    "stage2_request_id": "upper_volta_burkina_continuity_merge_20261007_v1",
+    "stage2_applied_at": "2026-10-07T04:53:46.823305+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:497d6037dab3a50730c7baf6b6fface2b14a02cca478a3629f469e8e45ba5f48",
+    "runtime_compiled_at": "2026-10-07T04:54:18.487398+00:00",
+    "survivor_polity_id": "e29ed7c4-fe05-405f-b85e-2ddeaee79902",
+    "production_readback": "2026-10-07 exhaustive post-compile FK audit: legacy Republic of Upper Volta has zero references in person_politics_context_polities, person_politics_v2, runtime_person_politics_v1, polity_descriptions, polity_designations, polity_governance_periods, polity_identity_relations, polity_relations, polity_place_functions, polity_sources, spatial_registration_dispositions, and territory_records; exactly two owned preferred polity_names remain."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:republic-of-upper-volta-after-burkina-official-name-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "6d89e23a-1eaf-4af3-a310-07ed03e828d6",
+        "canonical_key": "Republic of Upper Volta",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "e29ed7c4-fe05-405f-b85e-2ddeaee79902",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Republic of Upper Volta",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "오트볼타 공화국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
