@@ -232,7 +232,7 @@ test('Polity surface uses the canonical dark monumental token system without leg
   assert.match(css, /var\(--atlas-warning\)/);
   assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b/);
   assert.doesNotMatch(css, /border-radius:999px/);
-  assert.match(nav, /atlas-polity-review-workbench\.css\?v=20261007-polity-m1-focus-v1/);
+  assert.match(nav, /atlas-polity-review-workbench\.css\?v=20261007-polity-m2-luminance-v1/);
 });
 
 test('POL-C1 gives canonical Polity cards plaque material without changing card geometry', () => {
@@ -308,6 +308,28 @@ test('POLITY-M1 restores the shared focus language after late Polity CSS', () =>
   assert.match(focus, /\.polity-browser-controls input:focus,[\s\S]*?\.polity-review-controls textarea:focus\{[^}]*border-color:var\(--atlas-material-hairline-strong\)[^}]*outline:1px solid var\(--atlas-focus-ring\)[^}]*box-shadow:none/);
   assert.doesNotMatch(focus, /rgba\(/);
 
+  assert.match(css, /\.polity-review-filter\.is-active\{[^}]*border-color:rgba\(208,188,145,\.28\)/);
+  assert.match(css, /\.polity-review-filter\.is-active\{[\s\S]*?inset 2px 0 0 var\(--atlas-material-rail\)/);
+});
+
+
+test('POLITY-M2 keeps filter hover, pressed, and selected luminance semantically distinct', () => {
+  const start = css.indexOf('POLITY-M2 — Filter interaction luminance ownership');
+  assert.ok(start >= 0);
+  const end = css.indexOf('/* POLITY-M1 — Late focus ownership.', start);
+  const interaction = css.slice(start, end);
+
+  assert.match(interaction, /@media\(hover:hover\)/);
+  assert.match(interaction, /\.polity-browser-filters button:hover:not\(\.is-active\)\{[^}]*var\(--atlas-material-wash-hover\)/);
+  assert.match(interaction, /\.polity-review-filter:hover:not\(\.is-active\)\{[^}]*var\(--atlas-material-wash-hover\)/);
+
+  assert.match(interaction, /\.polity-browser-filters button:active:not\(\.is-active\)\{[^}]*var\(--atlas-material-wash-active\)/);
+  assert.match(interaction, /\.polity-review-filter:active:not\(\.is-active\)\{[^}]*var\(--atlas-material-wash-active\)/);
+
+  assert.match(interaction, /\.polity-browser-filters button\.is-active\{[^}]*border-color:var\(--atlas-honor-metal\)[^}]*var\(--atlas-material-wash-selected\)[^}]*color:var\(--atlas-honor-metal-strong\)/);
+  assert.match(interaction, /\.polity-review-filter\.is-active\{[^}]*var\(--atlas-material-wash-selected\)/);
+
+  assert.doesNotMatch(interaction, /background:rgba\(192,174,136,\.08\)/);
   assert.match(css, /\.polity-review-filter\.is-active\{[^}]*border-color:rgba\(208,188,145,\.28\)/);
   assert.match(css, /\.polity-review-filter\.is-active\{[\s\S]*?inset 2px 0 0 var\(--atlas-material-rail\)/);
 });

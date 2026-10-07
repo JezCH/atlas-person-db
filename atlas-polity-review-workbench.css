@@ -269,6 +269,56 @@
 
 
 
+/* POLITY-M2 — Filter interaction luminance ownership.
+ * Late-loaded Polity filters consume the shared GLOBAL-M2 state scale:
+ * hover 2.6%, pressed 4.0%, selected 5.0%, while selection border / rail semantics stay local.
+ */
+@media(hover:hover){
+  .polity-browser-filters button:hover:not(.is-active){
+    border-color:var(--atlas-material-hairline-strong);
+    background:
+      linear-gradient(var(--atlas-material-wash-hover),var(--atlas-material-wash-hover)),
+      var(--atlas-surface-1);
+  }
+
+  .polity-review-filter:hover:not(.is-active){
+    border-color:var(--atlas-material-hairline-strong);
+    background-color:var(--atlas-surface-1);
+    background-image:
+      linear-gradient(var(--atlas-material-wash-hover),var(--atlas-material-wash-hover)),
+      linear-gradient(180deg,var(--atlas-material-sheen),rgba(239,235,226,.002) 46%,rgba(0,0,0,.028) 100%);
+  }
+}
+
+.polity-browser-filters button:active:not(.is-active){
+  background:
+    linear-gradient(var(--atlas-material-wash-active),var(--atlas-material-wash-active)),
+    var(--atlas-surface-1);
+}
+
+.polity-browser-filters button.is-active{
+  border-color:var(--atlas-honor-metal);
+  background:
+    linear-gradient(var(--atlas-material-wash-selected),var(--atlas-material-wash-selected)),
+    var(--atlas-surface-1);
+  color:var(--atlas-honor-metal-strong);
+}
+
+.polity-review-filter:active:not(.is-active){
+  background-color:var(--atlas-surface-1);
+  background-image:
+    linear-gradient(var(--atlas-material-wash-active),var(--atlas-material-wash-active)),
+    linear-gradient(180deg,var(--atlas-material-sheen),rgba(239,235,226,.002) 46%,rgba(0,0,0,.028) 100%);
+}
+
+.polity-review-filter.is-active{
+  background-color:var(--atlas-surface-1);
+  background-image:
+    linear-gradient(var(--atlas-material-wash-selected),var(--atlas-material-wash-selected)),
+    linear-gradient(180deg,var(--atlas-material-sheen),rgba(239,235,226,.002) 46%,rgba(0,0,0,.028) 100%);
+}
+
+
 /* POLITY-M1 — Late focus ownership.
  * The Polity stylesheet is lazy-loaded after V9, so Polity-specific controls
  * reassert the shared focus ring here without changing selection semantics.

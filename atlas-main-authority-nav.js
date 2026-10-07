@@ -264,7 +264,7 @@
   function ensurePolityAssets() {
     if (window.ATLAS_POLITY_BROWSER_VIEW && window.ATLAS_POLITY_REVIEW_PANEL) return Promise.resolve(Object.freeze({ browser: window.ATLAS_POLITY_BROWSER_VIEW, review: window.ATLAS_POLITY_REVIEW_PANEL }));
     if (polityAssetsPromise) return polityAssetsPromise;
-    appendStylesheetOnce("./atlas-polity-review-workbench.css?v=20261007-polity-m1-focus-v1");
+    appendStylesheetOnce("./atlas-polity-review-workbench.css?v=20261007-polity-m2-luminance-v1");
     polityAssetsPromise = loadScriptOnce("./atlas-polity-browser-reader.js?v=20260925-polity-frontier-v3", () => Boolean(window.ATLAS_POLITY_BROWSER_READER))
       .then(() => loadScriptOnce("./atlas-polity-dossier-view.js?v=20260926-polity-atlas-v1", () => Boolean(window.ATLAS_POLITY_DOSSIER_VIEW)))
       .then(() => loadScriptOnce("./atlas-polity-review-registry.js?v=20261005-polity-registry-v3", () => Boolean(window.ATLAS_POLITY_REVIEW_REGISTRY)))
