@@ -1,0 +1,43 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:lordship-of-urbino-after-duchy-continuity-merge:2026-10-07:v1",
+  "release_order": 2095,
+  "evidence": {
+    "decision": "Legacy Lordship of Urbino conflated Federico da Montefeltro's personal 1444-1474 Lord title with the polity's state form. Italian State Archives evidence establishes that the County of Urbino was transformed into the Duchy in 1443 under Oddantonio, before Federico succeeded in 1444. #2093/#2094 relinked Federico's Lord Activity to the Duchy survivor, preserved his separate 1474-1482 Duke Activity, and modeled the accurate pre-ducal County of Urbino / 우르비노 백국 as a 1213→1443-04-24 temporal state_form rather than preserving a false 1444-1474 Lordship state phase.",
+    "stage2_request_id": "urbino_lordship_duchy_continuity_merge_20261007_v1",
+    "stage2_applied_at": "2026-10-07T10:02:25.831566+00:00",
+    "runtime_compile_key": "runtime-person-politics-v1:1bb3721a6de5c35beadfc021c7f3031e9d57883de37e898a52810874bcf776d8",
+    "runtime_compiled_at": "2026-10-07T10:03:00.836945+00:00",
+    "survivor_polity_id": "1f771de0-a4f9-440c-94c0-1a9bb8f83ae0",
+    "production_readback": "2026-10-07 exhaustive post-compile FK audit: legacy Lordship of Urbino has zero references in person_politics_context_polities, person_politics_v2, runtime_person_politics_v1, polity_descriptions, polity_designations, polity_governance_periods, polity_identity_relations, polity_relations, polity_place_functions, polity_sources, runtime_compile_exclusions, spatial_registration_dispositions, and territory_records; exactly two owned preferred polity_names remain."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:lordship-of-urbino-after-duchy-continuity-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "51c7c947-9728-4209-b107-f9481d6b7ed3",
+        "canonical_key": "Lordship of Urbino",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "survivor_polity_id": "1f771de0-a4f9-440c-94c0-1a9bb8f83ae0",
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Lordship of Urbino",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "우르비노 영주국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
