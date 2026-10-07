@@ -1,0 +1,166 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "milan_lordship_duchy_continuity_merge_20261007_v1",
+  "as_of": "2026-10-07",
+  "status": "REVIEWED_MILAN_LORDSHIP_DUCHY_CONTINUITY",
+  "release_order": 2087,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 current carry-forward frontier; fresh Production exact read 2026-10-07; Treccani Azzone Visconti, Gian Galeazzo Visconti, Visconti, and Milano institutional histories; current ATLAS same-identity state-form rules.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "lordship_polity": "858edb30-2100-4bc1-a366-ca9df138a9be",
+    "duchy_survivor": "7a42d8c3-ab50-45b4-a654-bca96cf5da70",
+    "historical_decision": "Lordship of Milan and Duchy of Milan are successive constitutional/state-form phases of one continuing Milanese/Visconti state identity. Treccani states that on 15 March 1330 Azzone Visconti was solemnly proclaimed perpetual lord of Milan with broad powers, marking the replacement of the communal regime by single lordship. Gian Galeazzo reunited the Visconti dominion under his sole lordship in 1385 and on 11 May 1395 received the ducal dignity of Milan from Wenceslaus. Treccani explicitly describes the territorial formation of the Visconti state as receiving official recognition in 1395 through the grant of the ducal title to Gian Galeazzo and his successors. The 1395 act therefore elevated and legally consolidated the existing state; it did not extinguish it and create a new sovereign identity.",
+    "activity_rule": "Gian Galeazzo Visconti's 1385-1395 Lord Activity and 1395-1402 Duke Activity remain distinct because the ruler's legal title genuinely changed in 1395. The pre-ducal Lord Activity is relinked to the continuous Duchy-of-Milan survivor identity rather than merged with or rewritten into the Duke Activity. Existing year-level Activity precision is preserved; exact day precision is used only for the state-form designation where the sources support it.",
+    "designation_rule": "Preserve Lordship of Milan / 밀라노 영주국 as the temporal state_form of the continuous Milan polity from Azzone Visconti's formal proclamation as perpetual lord on 15 March 1330 through 10 May 1395, the day before Wenceslaus granted Gian Galeazzo the ducal dignity on 11 May 1395."
+  },
+  "operations": [
+    {
+      "case_id": "milan-relink-gian-galeazzo-lord-to-duchy-survivor",
+      "type": "rewrite_activity",
+      "activity_id": "7fd09d0b-671a-4277-b18c-f815e65f415d",
+      "baseline_before": {
+        "person_id": "41596e6b-3183-4bf7-b4a6-96d6fbcabd28",
+        "polity_id": "858edb30-2100-4bc1-a366-ca9df138a9be",
+        "role_id": "61038584-5468-415a-9853-d49379ad44b2",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1385,
+        "activity_end": 1395,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "7fd09d0b-671a-4277-b18c-f815e65f415d",
+        "person_id": "41596e6b-3183-4bf7-b4a6-96d6fbcabd28",
+        "polity_id": "7a42d8c3-ab50-45b4-a654-bca96cf5da70",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "61038584-5468-415a-9853-d49379ad44b2",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1385,
+        "activity_start_detail": {
+          "year": 1385,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1395,
+        "activity_end_detail": {
+          "year": 1395,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Gian Galeazzo Visconti captured Bernabò Visconti in 1385 and reunited the Visconti dominion under his sole lordship. In 1395 Emperor Wenceslaus granted him the hereditary ducal dignity of Milan, legally elevating and consolidating the existing Visconti state. ATLAS therefore preserves 1385-1395 as Gian Galeazzo's distinct Lord office and 1395-1402 as his distinct Duke office while binding both Activities to one continuous Milan polity identity.",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "milan-source-azzone-visconti-lordship-1330",
+      "exact_before": {
+        "source_absent_id": "ce08ce86-08fd-41ec-98c1-bb2905d42c2d"
+      },
+      "exact_after": {
+        "source": {
+          "id": "ce08ce86-08fd-41ec-98c1-bb2905d42c2d",
+          "source_key": "bibliographic:treccani:dizionario-biografico:azzone-visconti",
+          "source_type": "academic_reference",
+          "title": "Azzone Visconti — Dizionario Biografico, Treccani",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.treccani.it/enciclopedia/azzone-visconti_%28Dizionario-Biografico%29/",
+          "citation_text": "Treccani states that on 15 March 1330 Milan's restored communal institutions solemnly proclaimed Azzone Visconti perpetual lord of Milan and granted him extensive powers over the city and district."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "milan-state-form-lordship-1330-1395",
+      "exact_before": {
+        "designation_absent_id": "24bd2f2e-bfda-4b39-92de-8790d6e956f2"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "24bd2f2e-bfda-4b39-92de-8790d6e956f2",
+          "polity_id": "7a42d8c3-ab50-45b4-a654-bca96cf5da70",
+          "designation_type": "state_form",
+          "valid_from_year": 1330,
+          "valid_from_month": 3,
+          "valid_from_day": 15,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1395,
+          "valid_to_month": 5,
+          "valid_to_day": 10,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Lordship of Milan is preserved as the formal signorial state-form phase of the continuous Milanese state from Azzone Visconti's proclamation as perpetual lord on 15 March 1330 through 10 May 1395. On 11 May 1395 Emperor Wenceslaus granted Gian Galeazzo Visconti the hereditary ducal dignity of Milan, legally elevating the existing Visconti state into the Duchy of Milan rather than creating a new state identity."
+        },
+        "names": [
+          {
+            "id": "b04bc67f-e83a-4d5d-a460-1211d5755e0d",
+            "polity_designation_id": "24bd2f2e-bfda-4b39-92de-8790d6e956f2",
+            "locale": "en",
+            "name": "Lordship of Milan",
+            "is_preferred": true
+          },
+          {
+            "id": "c821e3bb-529c-477d-a70c-fb2167631c21",
+            "polity_designation_id": "24bd2f2e-bfda-4b39-92de-8790d6e956f2",
+            "locale": "ko",
+            "name": "밀라노 영주국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "24bd2f2e-bfda-4b39-92de-8790d6e956f2",
+            "source_id": "ce08ce86-08fd-41ec-98c1-bb2905d42c2d",
+            "source_locator_key": "https://www.treccani.it/enciclopedia/azzone-visconti_%28Dizionario-Biografico%29/"
+          },
+          {
+            "polity_designation_id": "24bd2f2e-bfda-4b39-92de-8790d6e956f2",
+            "source_id": "0db3d406-def5-42ca-bfef-b74ac30a5196",
+            "source_locator_key": "https://www.treccani.it/enciclopedia/gian-galeazzo-visconti_%28Dizionario-di-Storia%29/"
+          },
+          {
+            "polity_designation_id": "24bd2f2e-bfda-4b39-92de-8790d6e956f2",
+            "source_id": "a72822b3-d8df-40b2-800b-9cdf14e4940e",
+            "source_locator_key": "https://www.treccani.it/enciclopedia/gian-galeazzo-visconti-duca-di-milano_%28Dizionario-Biografico%29/"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_source_count": 1,
+    "asserted_polity_designation_count": 1,
+    "lordship_activity_refs_after_expected": 0,
+    "production_mutation_authorized": false
+  }
+}
