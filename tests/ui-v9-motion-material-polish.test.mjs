@@ -7,7 +7,7 @@ const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "
 test("UI V9 loads last after the V8 mobile layer", () => {
   const html = read("index.html");
   const v8 = html.indexOf("atlas-ui-mobile-v8.css?v=20261004-ui-p4-mobile-compact-v1");
-  const v9 = html.indexOf("atlas-ui-motion-material-v9.css?v=20261007-shell-m2-luminance-v1");
+  const v9 = html.indexOf("atlas-ui-motion-material-v9.css?v=20261007-shell-m3-ownership-v1");
   assert.ok(v8 >= 0);
   assert.ok(v9 > v8);
 });
