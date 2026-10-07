@@ -59,19 +59,6 @@
         locked: true
       },
       {
-        id: "croatia-principality-kingdom",
-        review_group: "carry_forward_same_identity",
-        kind: "continuity_review",
-        title: "Principality of Croatia → Kingdom of Croatia",
-        left: { name: "Principality of Croatia" },
-        right: { name: "Kingdom of Croatia" },
-        rationale: "2026-09-20 same-identity 고확률 후보에서 carry-forward된 감사 seed입니다. 과거 병합 방향을 실행하지 말고 최신 Production·최신 identity 원칙으로 MERGE / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD 중 하나로 종결해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-20 exhaustive similarity audit carry-forward", "old direction is evidence only, not execution authority"]
-      },
-      {
         id: "albania-republic-kingdom",
         review_group: "carry_forward_same_identity",
         kind: "continuity_review",
@@ -760,6 +747,20 @@
       }
     ]),
     resolved_history: freezeRows([
+      {
+        id: "croatia-principality-kingdom",
+        review_group: "resolved_history",
+        kind: "resolved_review",
+        title: "Principality of Croatia → Kingdom of Croatia state-form merge",
+        left: { name: "Principality of Croatia", ko: "크로아티아 공국", polity_id: "03824379-85aa-41f3-a2ef-82502832c26c" },
+        right: { name: "Kingdom of Croatia", ko: "크로아티아 왕국", polity_id: "d6f38022-db09-4a60-a7c8-18abb85965de" },
+        rationale: "Tomislav의 약 910–928 통치는 동일 Croatian polity의 연속 통치로 유지하고, 914년 dux에서 925년경 rex로 확인되는 변화는 Principality→Kingdom state-form 및 Duke→King 역할 전환으로 모델링했습니다. #2008에서 Tomislav의 c.910–c.925 Duke Activity를 Kingdom of Croatia survivor로 재연결하고 Principality of Croatia를 c.910–c.925 temporal state_form designation으로 보존했습니다. 사료는 925년의 특정 대관식 날짜·장소를 확정하지 않으므로 기존 approximate year granularity를 유지했습니다. #2011의 read-only Authoring preflight를 통해 Runtime Projection을 재컴파일했고, #2012에서 zero-external-reference legacy Principality Polity를 survivor로 retire했습니다.",
+        suggested_action: "hold",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: ["Hrvatska enciklopedija, Tomislav: ruler approximately 910–928; dux in 914; papal correspondence associated with 925 addresses the same ruler as rex; a specific coronation is not securely established", "Hrvatska enciklopedija, kralj: Croatian rulers were initially styled dux and Tomislav is called rex around 925", "#2008 Croatia continuity plan squash merge 3835c2ed38ea35ff15e368c97d42e6a73734fd70; correction applied 2026-10-07T03:02:15.374160Z", "Correction result preserved both normalized Tomislav source links and created reviewed Principality of Croatia / 크로아티아 공국 state_form c.910→c.925", "#2011 Runtime refresh squash merge 4e53a5ca21e301ef29ae4921645fe5bdc91e480f; runtime compile runtime-person-politics-v1:35fa72e311eead07c31d420c93c4ca62a5faa24b52c1758699eafb418c1fbaf1 at 2026-10-07T03:02:47.974274Z", "#2012 legacy Principality retirement squash merge d9f089aaeb32a57e74557db2ab7a72eebc7c27f1; retirement applied 2026-10-07T03:09:03.522304Z", "2026-10-07 exact Production readback: legacy Principality live row absent; Kingdom survivor present; retirement ledger points legacy UUID to Kingdom survivor"],
+        locked: true
+      },
       {
         id: "apulia-county-duchy",
         review_group: "resolved_history",
