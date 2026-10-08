@@ -6,6 +6,7 @@ const require = createRequire(import.meta.url);
 const {
   POLITY_LIST_SQL,
   POLITY_DETAIL_SQL,
+  POLITY_GOVERNANCE_PERIODS_SQL,
   projectPolity,
   buildSummary,
   readPolities,
@@ -142,6 +143,10 @@ test('Polity read service supports list and UUID detail reads', async () => {
         assert.deepEqual(params, [POLITY_ID]);
         return { rowCount: 1, rows: [polityRow()] };
       }
+      if (sql === POLITY_GOVERNANCE_PERIODS_SQL) {
+        assert.deepEqual(params, [POLITY_ID]);
+        return { rows: [] };
+      }
       throw new Error('unexpected query');
     }
   };
@@ -153,6 +158,7 @@ test('Polity read service supports list and UUID detail reads', async () => {
   const detail = await readPolityDetail({ client, polityId: POLITY_ID });
   assert.equal(detail.id, POLITY_ID);
   assert.equal(detail.person_count, 2);
+  assert.deepEqual(detail.governance_periods, []);
 });
 
 test('Polity read handler exposes list/detail modes and rejects malformed UUIDs before DB access', async () => {
