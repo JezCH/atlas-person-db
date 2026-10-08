@@ -1,0 +1,42 @@
+/* VIS2-03 — Inscription and numeric rhythm, no new font or geometry.
+ * Display family remains Noto Serif KR -> existing Korean/Latin fallbacks;
+ * semantic colors and source data are owned by their existing components.
+ * No font-size, line-height, letter-spacing, width or wrapping changes.
+ * Revert this opt-in layer independently without disturbing VIS2-01/02.
+ */
+
+/* Read-only Chrome gating token: proves the optional stylesheet is active. */
+:root { --atlas-vis2-03-type-active: 1; }
+
+/* Mixed Hangul/Hanja/Latin nameplates: explicitly enable native glyph
+ * kerning without introducing forced Latin substitution or fake bold fonts.
+ * East-Asian default glyph metrics are retained (not proportional or full).
+ */
+.person-monumental-register .person-table-identity > strong,
+.person-chronicle-identity h2,
+.person-chronicle-activity header h4,
+.polity-browser-title strong,
+.polity-dossier-section-head h4 {
+  font-kerning: normal;
+  font-variant-east-asian: normal;
+}
+
+/* Fixed-width numerals across mixed BC/AD glyphs and modern counters.
+ * Existing tabular-nums for Person range / Chronicle / KPI stay intact.
+ * Apply the missing contract only to numeric *presentation*, not names.
+ */
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis span,
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-axis > div span,
+.person-monumental-register .person-era-band-range,
+.person-monumental-register .person-table-range,
+.person-monumental-register .person-register-range,
+.person-monumental-register .person-card-activity-period,
+.person-detail-era,
+.person-activity-period-display,
+.dashboard-kpi strong,
+.polity-dossier-overview strong,
+.polity-browser-card-stats b,
+.polity-review-dataset-kpis strong,
+.polity-browser-kpis strong {
+  font-variant-numeric: tabular-nums lining-nums;
+}

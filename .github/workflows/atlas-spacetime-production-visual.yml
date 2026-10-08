@@ -11,6 +11,7 @@ on:
       - "atlas-main-authority-nav.js"
       - "atlas-ui-visual-foundation.css"
       - "atlas-ui-precision-engraving-v2.css"
+      - "atlas-ui-mixed-script-typography-v2.css"
       - "atlas-person-monumental-register.css"
       - "atlas-person-chronicle-detail.css"
       - "atlas-ui-mobile-v8.css"
@@ -26,6 +27,7 @@ on:
       - "scripts/capture-vis2-production-baseline.mjs"
       - "scripts/verify-vis2-01-production-material.mjs"
       - "scripts/verify-vis2-02-production-engraving.mjs"
+      - "scripts/verify-vis2-03-production-typography.mjs"
       - ".github/workflows/atlas-spacetime-production-visual.yml"
   workflow_dispatch:
     inputs:
@@ -137,6 +139,8 @@ jobs:
           node scripts/verify-vis2-01-production-material.mjs
           node --check scripts/verify-vis2-02-production-engraving.mjs
           node scripts/verify-vis2-02-production-engraving.mjs
+          node --check scripts/verify-vis2-03-production-typography.mjs
+          node scripts/verify-vis2-03-production-typography.mjs
           for report in "$ATLAS_VISUAL_OUT_DIR"/*.json; do
             echo "===== $report ====="
             cat "$report"
