@@ -987,6 +987,69 @@
   background: var(--atlas-material-wash-active);
 }
 
+/* SPACETIME-L2 — Precision instrument finish.
+ * P1b follows the already-merged L1 chronology canvas. Keep toolbar, minimap
+ * and selected dossier visually aligned with the etched Graphite / Champagne
+ * material system. Pure paint only: no panel/tool dimensions, grid, chronology,
+ * evidence visibility, hover/active/focus meaning or Person domain-color edits.
+ */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-toolbar {
+  background-image: linear-gradient(180deg,
+    var(--atlas-material-sheen-strong), transparent 58%);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-soft),
+    inset 0 -1px 0 var(--atlas-material-edge-dark);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap {
+  background-image: linear-gradient(180deg,
+    var(--atlas-material-sheen-soft), transparent 70%);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-surface {
+  background-image: linear-gradient(180deg,
+    var(--atlas-material-sheen-strong), transparent 72%);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen),
+    inset 0 -1px 0 var(--atlas-material-edge-dark),
+    0 0 0 1px var(--atlas-material-hairline-soft);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-viewport {
+  box-shadow: inset 0 0 0 1px var(--atlas-material-wash-selected);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector:not(.is-empty) {
+  background-image:
+    linear-gradient(145deg, var(--atlas-material-sheen-strong), transparent 48%),
+    linear-gradient(180deg, var(--atlas-material-sheen-soft), transparent 86px);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen),
+    inset 0 -1px 0 var(--atlas-material-edge-dark),
+    0 12px 30px rgba(0,0,0,.12);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > strong {
+  color: var(--atlas-text-strong);
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity.is-selected {
+  background-image:
+    linear-gradient(90deg, var(--atlas-material-wash-selected), transparent 78%),
+    linear-gradient(180deg, var(--atlas-material-sheen-soft), transparent 72%);
+  box-shadow:
+    inset 2px 0 0 var(--atlas-material-rail),
+    inset 0 1px 0 var(--atlas-material-sheen-strong);
+}
+
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-selection-evidence-row,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-evidence .spacetime-selection-evidence-row {
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-soft),
+    inset 0 -1px 0 var(--atlas-material-edge-dark);
+}
+
 /* SPACETIME-M2 — Late focus ownership repair.
  * instrument-tools.css is lazy-loaded after V9, so controls that locally clear
  * outlines must explicitly restore the shared global focus ring here.

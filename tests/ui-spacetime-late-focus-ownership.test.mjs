@@ -35,7 +35,7 @@ test("SPACETIME-M2 restores shared focus ownership after late lazy-loaded CSS", 
   assert.doesNotMatch(m2, /outline:\s*none|rgba\(/);
 
   assert.match(nav, /atlas-person-spacetime-monumental-canvas\.css\?v=20261008-spacetime-l1-chronograph-v1/);
-  assert.match(nav, /atlas-person-spacetime-instrument-tools\.css\?v=20261007-spacetime-m3-luminance-v1/);
+  assert.match(nav, /atlas-person-spacetime-instrument-tools\.css\?v=20261008-spacetime-l2-instrument-finish-v1/);
   assert.match(nav, /atlas-person-spacetime-mobile-v8\.css\?v=20261007-spacetime-m4-mobile-material-v1/);
   assert.match(nav, /atlas-person-spacetime-view\.js\?v=20261003-ui-v7-tools-v1/);
 });
@@ -69,6 +69,6 @@ test("SPACETIME-M3 keeps instrument hover, pressed, and selected luminance seman
   assert.match(active, /background: var\(--atlas-material-wash-active\)/);
 
   assert.match(tools, /\.spacetime-inspector-activity\.is-selected \{[\s\S]*?var\(--atlas-material-wash-selected\)/);
-  assert.match(nav, /atlas-person-spacetime-instrument-tools\.css\?v=20261007-spacetime-m3-luminance-v1/);
+  assert.match(nav, /atlas-person-spacetime-instrument-tools\.css\?v=20261008-spacetime-l2-instrument-finish-v1/);
   assert.match(nav, /atlas-person-spacetime-monumental-canvas\.css\?v=20261008-spacetime-l1-chronograph-v1/);
 });
