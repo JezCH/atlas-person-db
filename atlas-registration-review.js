@@ -47,10 +47,21 @@
   }
 
   function prepareSignalIdentities(personPayload,queuePayload) {
-    personIdentityIndex=identityIndex(personPayload?.persons || [],person=>[
+    const persons=Array.isArray(personPayload?.persons) ? personPayload.persons : [];
+    personIdentityIndex=identityIndex(persons,person=>[
       person?.canonical_name_en,person?.preferred_name_ko,person?.display_name,
       ...(Array.isArray(person?.names) ? person.names.map(name=>name?.name) : [])
     ],"id");
+    // The queue API resolves each reviewed alias to an existing Person UUID.
+    // Never mark a raw label registered merely because an alias was listed.
+    const validPersonIds=new Set(persons.map(person=>String(person?.id||"")).filter(Boolean));
+    for(const alias of queuePayload?.reviewed_person_aliases || []) {
+      const id=String(alias?.person_id||"");
+      const key=identityKey(alias?.alias_name);
+      if(!key||!validPersonIds.has(id)) continue;
+      if(!personIdentityIndex.has(key)) personIdentityIndex.set(key,new Set());
+      personIdentityIndex.get(key).add(id);
+    }
     queueIdentityIndex=identityIndex(queuePayload?.candidates || [],candidate=>{
       const metadata=candidate?.review_metadata || {};
       return [
@@ -335,7 +346,7 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 등록 상태는 인물명·별칭의 정규화된 정확 일치로 대조하며, 일치 없음은 실제 미등록을 확정하지 않습니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
+          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 등록 상태는 Person의 이름·별칭과 검증된 동일인 별칭을 현재 등록된 Person ID에 연결해 대조합니다. 일치 없음은 실제 미등록을 확정하지 않습니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
         </div>
         <div class="registration-review-signal-toolbar">
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>

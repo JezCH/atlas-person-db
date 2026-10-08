@@ -9,6 +9,7 @@ const {
   QUEUE_MEMBERSHIP_RULE,
   PENDING_SQL,
   SUMMARY_SQL,
+  REVIEWED_PERSON_ALIASES_SQL,
   readCurrentRegistrationQueue,
   admitRegistrationQueueCandidate,
   bindRegistrationQueueCandidate
@@ -24,6 +25,9 @@ test("registration queue is derived from current Production identity, not a queu
   assert.match(PENDING_SQL, /atlas_v2\.person_names/i);
   assert.match(PENDING_SQL, /review_metadata->'lookup_names'/i);
   assert.match(PENDING_SQL, /candidate_identity_matches/i);
+  assert.match(PENDING_SQL, /Napoleon Bonaparte/);
+  assert.match(PENDING_SQL, /Avicenna/);
+  assert.match(REVIEWED_PERSON_ALIASES_SQL, /atlas_v2\.persons/);
   assert.match(PENDING_SQL, /matched_person_count/i);
   assert.match(PENDING_SQL, /<> 1/);
   assert.doesNotMatch(PENDING_SQL, /where\s+person_id\s+is\s+null/i);
@@ -43,6 +47,9 @@ test("queue read exposes only unresolved current candidates and keeps ledger cou
       if (String(sql) === SUMMARY_SQL) {
         return { rows:[{ ledger_candidate_total:7, legacy_bound_count:3 }] };
       }
+      if (String(sql) === REVIEWED_PERSON_ALIASES_SQL) {
+        return { rows:[{alias_name:"Napoleon Bonaparte",canonical_key:"Napoleon I",person_id:PERSON_ID}] };
+      }
       throw new Error("unexpected query");
     }
   };
@@ -57,7 +64,9 @@ test("queue read exposes only unresolved current candidates and keeps ledger cou
   assert.equal(queue.summary.ambiguous_identity_count, 1);
   assert.equal(queue.summary.ledger_candidate_total, 7);
   assert.equal(queue.summary.legacy_bound_count, 3);
-  assert.equal(calls.length, 2);
+  assert.equal(calls.length, 3);
+  assert.equal(queue.reviewed_person_aliases[0].person_id,PERSON_ID);
+  assert.equal(queue.reviewed_person_aliases[0].alias_name,"Napoleon Bonaparte");
 });
 
 test("approved review materializes canonical queue candidate metadata", () => {
