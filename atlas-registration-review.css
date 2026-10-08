@@ -320,6 +320,11 @@
   }
 }
 
-/* YouTube cross-snapshot bounds stay legible below raw names on mobile. */
-.registration-review-scope-detail{display:block;margin-top:2px;color:var(--atlas-text-muted);font-size:9px;font-weight:400;line-height:1.3;overflow-wrap:anywhere}
-.registration-review-signal-table .registration-review-number{overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+/* Cumulative YouTube toolbar: long metadata must never overlay the filters. */
+.registration-review-signal-toolbar{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:8px}
+.registration-review-thresholds{min-width:0;max-width:100%;width:100%}
+.registration-review-signal-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:5px 12px;width:100%;min-width:0;max-width:100%;margin-left:0}
+.registration-review-telemetry{display:flex;flex-wrap:wrap;justify-content:flex-start;text-align:left;gap:4px 10px;min-width:0;max-width:100%}
+.registration-review-telemetry strong,.registration-review-telemetry span{white-space:normal;overflow-wrap:anywhere}
+.registration-review-signal-visible{white-space:normal;overflow-wrap:anywhere}
+.registration-review-signal-table .registration-review-number{font-variant-numeric:tabular-nums}
