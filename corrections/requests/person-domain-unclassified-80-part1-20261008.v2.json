@@ -1,0 +1,377 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-domain:unclassified-80:2026-10-08:part-1:v1",
+  "release_order": 2200,
+  "evidence": {
+    "decision": "Apply reviewed representative_domain decisions for the 2026-10-08 exact Production NULL inventory. This part contains 50 explicit NULL -> canonical-domain assignments; no Role->Domain inference is used. HOLD Persons are excluded from mutation and preserved in research/person-domain/unclassified-80-review-20261008.v1.json.",
+    "canonical_standard": "docs/person/PERSON_DOMAIN_STANDARD_V2.md",
+    "reviewed_evidence": "research/person-domain/unclassified-80-review-20261008.v1.json",
+    "source_main_sha": "6018277c1cdd9572b2689c9512b5769a27e8e003",
+    "source_production_null_inventory": 80,
+    "expected_domain_before": null,
+    "reviewed_assignment_count": 50,
+    "distribution": {
+      "governance": 35,
+      "military": 8,
+      "religion": 4,
+      "exploration": 1,
+      "commerce": 1,
+      "culture": 1,
+      "science": 0,
+      "technology": 0
+    }
+  },
+  "operations": [
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-001-abraham",
+      "person_id": "67d1b5f7-7851-447b-b275-a5df61877656",
+      "expected_domain": null,
+      "replacement_domain": "religion"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-002-achish-abimelech",
+      "person_id": "ecc64877-3cc8-48c3-a231-c327af657a45",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-003-adoni-zedek",
+      "person_id": "39a5060c-95e6-47a9-b67a-2be6a8913c49",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-004-apanuugpak",
+      "person_id": "624dcfcd-9c0f-4e48-92c3-ed756f2820f0",
+      "expected_domain": null,
+      "replacement_domain": "military"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-005-asa-haraldsdottir-of-agder",
+      "person_id": "629300e7-3e1c-4b1e-be9c-5d955ea65699",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-006-beowulf",
+      "person_id": "58bfea87-e713-4a9c-9912-870f5bf3c4ec",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-007-bilqis",
+      "person_id": "54c0ea7e-c227-469a-a941-0990021e86d8",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-008-bjorn-ironside",
+      "person_id": "ebd1a7e3-6a1a-4e02-87f6-7ec5aacf0641",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-009-bulan",
+      "person_id": "4aa750c8-8526-426e-aba9-bb79a2de0538",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-010-ce-acatl-topiltzin",
+      "person_id": "219bf09d-c0aa-422f-be49-68ed23378d18",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-011-chiksa",
+      "person_id": "bd506489-de93-4029-9c29-245f6dd653b2",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-012-damahaar",
+      "person_id": "4560f171-7256-4e8a-90f1-2cd59e56da84",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-013-dangun-wanggeom",
+      "person_id": "4ae9c10b-c202-443f-8a01-8202429d70ea",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-014-dayang-kalangitan",
+      "person_id": "2c10f3f6-a1d1-4527-bac2-b832b2afde01",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-015-dido",
+      "person_id": "dbfc3700-6a84-4448-8f0f-669b0c858f16",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-016-dinga-cisse",
+      "person_id": "6504196e-399d-4cbc-a69e-1b80375ae6d2",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-017-domitian-of-carantania",
+      "person_id": "ac555496-899b-49de-aa72-4e269ca0758e",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-018-dragos-of-moldavia",
+      "person_id": "98d52f4f-ad3d-4cab-aae9-0c4eb900ac2a",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-019-duttabaung",
+      "person_id": "5334e951-8457-42b6-8203-f3df69078079",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-020-edai-siabo",
+      "person_id": "25a21e32-c244-49dc-ad25-6faeae47d342",
+      "expected_domain": null,
+      "replacement_domain": "commerce"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-021-edward-blondin",
+      "person_id": "ff4da770-cbf1-452c-991f-6d7c2aa88a58",
+      "expected_domain": null,
+      "replacement_domain": "religion"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-022-erendira",
+      "person_id": "60d9dda1-bb09-441d-b5ee-5228e4eb5cd0",
+      "expected_domain": null,
+      "replacement_domain": "military"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-023-great-peacemaker-deganawida",
+      "person_id": "b341256a-cfe9-497a-9594-f7031296c923",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-024-guacanaoma",
+      "person_id": "e63e6d59-1589-46c7-a105-ae20f3920d11",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-025-gudit",
+      "person_id": "0838ffb3-8142-4ec8-a506-6f6dc31c8d91",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-026-hanno-the-navigator",
+      "person_id": "8ff3519e-bf47-4e17-beca-e7814b0e18a6",
+      "expected_domain": null,
+      "replacement_domain": "exploration"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-027-hotu-matu-a",
+      "person_id": "2d7aa825-2c31-43f8-8690-7d2cc23972c8",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-028-ahoeitu",
+      "person_id": "9a8d68f4-8cd6-45cc-952c-7488a6bc3c6a",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-029-inal-the-great",
+      "person_id": "77989f83-249f-485d-8e2d-dec729be484c",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-030-isingoma-mpuga-rukidi-i",
+      "person_id": "2c7d10a3-5bb9-4db2-910a-d7256d0c0863",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-031-janequeo",
+      "person_id": "0c939700-dc4c-437f-a95b-2997a9087435",
+      "expected_domain": null,
+      "replacement_domain": "military"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-032-joshua",
+      "person_id": "e75c3062-fe23-4829-a3b7-fb22b7bf2ba1",
+      "expected_domain": null,
+      "replacement_domain": "military"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-033-king-arthur",
+      "person_id": "068cbbdb-05b2-40f0-be77-2a310e73ad71",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-034-kirmu-karmu",
+      "person_id": "20871f56-4c37-4c60-8453-5c5d747e3f73",
+      "expected_domain": null,
+      "replacement_domain": "military"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-035-klaus-stortebeker",
+      "person_id": "76adc2b7-cc1d-49b8-b087-f9ee2475f28c",
+      "expected_domain": null,
+      "replacement_domain": "military"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-036-laozi",
+      "person_id": "80efafd6-094d-43ea-a616-5057a4e07250",
+      "expected_domain": null,
+      "replacement_domain": "culture"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-037-lawtylywalyn",
+      "person_id": "efb47d00-8eab-4309-8207-f34d207e1ad8",
+      "expected_domain": null,
+      "replacement_domain": "military"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-038-manas",
+      "person_id": "0df7e958-15cc-4b5a-9348-4654c3a7c990",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-039-manco-capac",
+      "person_id": "036ae543-3503-4c12-bc8f-c67b40aa8911",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-040-maniilaq",
+      "person_id": "0d811960-9f8d-4eea-8a3a-50c8416137c8",
+      "expected_domain": null,
+      "replacement_domain": "religion"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-041-moses",
+      "person_id": "a38c2f11-394c-490f-83f4-b290fa85b54d",
+      "expected_domain": null,
+      "replacement_domain": "religion"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-042-niall-noigiallach",
+      "person_id": "a0f6650d-00aa-47ef-ac11-2c1b5d170166",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-043-nkongolo-mwamba",
+      "person_id": "c1871bf4-30ad-4bb3-8534-2d26e20fe583",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-044-ntare-i-rushatsi-cambarantama",
+      "person_id": "9cefc952-fef5-4151-b2c7-6d97b4c23b36",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-045-numa-pompilius",
+      "person_id": "7dae08d2-72e5-4225-8a27-541e70ee69ad",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-046-nunuku-whenua",
+      "person_id": "9c60171d-7f6a-4099-9b99-7e085e702a5f",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-047-nyatri-tsenpo",
+      "person_id": "c1e9432c-5986-4f2b-accb-392069b87e6f",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-048-palnatoki",
+      "person_id": "eba0e96c-dc82-47e1-96de-54201f3b4757",
+      "expected_domain": null,
+      "replacement_domain": "military"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-049-prabu-siliwangi",
+      "person_id": "5cdaad10-8e51-4e15-8f00-0de5c6f67017",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "unclassified-80-050-priam",
+      "person_id": "1fe1c8e6-a6fd-43ce-812e-b36248e405c0",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    }
+  ]
+}
