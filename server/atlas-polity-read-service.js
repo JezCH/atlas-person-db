@@ -75,6 +75,31 @@ function projectPolity(row) {
   });
 }
 
+function normalizeGovernancePeriods(rows) {
+  if (!Array.isArray(rows)) return Object.freeze([]);
+  const numeric = (value) => value == null ? null : Number(value);
+  return Object.freeze(rows.map((row) => Object.freeze({
+    id: String(row.id),
+    governance_context_id: String(row.governance_context_id),
+    governance_context_key: String(row.governance_context_key),
+    governance_type: String(row.governance_type),
+    historicity: String(row.historicity),
+    name_en: row.name_en == null ? null : String(row.name_en),
+    name_fr: row.name_fr == null ? null : String(row.name_fr),
+    name_ko: row.name_ko == null ? null : String(row.name_ko),
+    valid_from_year: numeric(row.valid_from_year),
+    valid_from_month: numeric(row.valid_from_month),
+    valid_from_day: numeric(row.valid_from_day),
+    valid_from_granularity: row.valid_from_granularity == null ? null : String(row.valid_from_granularity),
+    valid_to_year: numeric(row.valid_to_year),
+    valid_to_month: numeric(row.valid_to_month),
+    valid_to_day: numeric(row.valid_to_day),
+    valid_to_granularity: row.valid_to_granularity == null ? null : String(row.valid_to_granularity),
+    confidence: row.confidence == null ? null : String(row.confidence),
+    notes: row.notes == null ? null : String(row.notes)
+  })));
+}
+
 function comparePolities(left, right) {
   return String(left.display_name || left.canonical_name_en || left.id)
     .localeCompare(String(right.display_name || right.canonical_name_en || right.id), "ko")
@@ -174,6 +199,37 @@ left join atlas_v2.polity_names ko
   on ko.polity_id = p.id and ko.locale = 'ko' and ko.is_preferred = true
 `;
 
+// Only the UUID detail view loads Governance Contexts; the all-polity list remains unchanged.
+// Deliberately match the EXACT requested polity_id: country/Republic/contested regimes are
+// not projected across distinct Polity UUIDs, and no relationship is inferred.
+const POLITY_GOVERNANCE_PERIODS_SQL = `
+select
+  gp.id::text as id,
+  gc.id::text as governance_context_id,
+  gc.canonical_key as governance_context_key,
+  gc.governance_type,
+  gc.historicity,
+  (select gn.name from atlas_v2.governance_context_names gn
+    where gn.governance_context_id=gc.id and gn.locale='en'
+    order by gn.is_preferred desc, gn.id::text limit 1) as name_en,
+  (select gn.name from atlas_v2.governance_context_names gn
+    where gn.governance_context_id=gc.id and gn.locale='fr'
+    order by gn.is_preferred desc, gn.id::text limit 1) as name_fr,
+  (select gn.name from atlas_v2.governance_context_names gn
+    where gn.governance_context_id=gc.id and gn.locale='ko'
+    order by gn.is_preferred desc, gn.id::text limit 1) as name_ko,
+  gp.valid_from_year, gp.valid_from_month, gp.valid_from_day, gp.valid_from_granularity,
+  gp.valid_to_year, gp.valid_to_month, gp.valid_to_day, gp.valid_to_granularity,
+  gp.confidence, gp.notes
+from atlas_v2.polity_governance_periods gp
+join atlas_v2.governance_contexts gc on gc.id=gp.governance_context_id
+where gp.polity_id=$1::uuid
+order by gp.valid_from_year nulls last,
+         coalesce(gp.valid_from_month,1),
+         coalesce(gp.valid_from_day,1),
+         gp.id::text
+`;
+
 const POLITY_LIST_SQL = `${POLITY_SELECT_SQL}
 order by coalesce(ko.name, en.name, p.canonical_key, p.id::text), p.id
 `;
@@ -194,13 +250,20 @@ async function readPolityDetail({ client, polityId } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   const result = await client.query(POLITY_DETAIL_SQL, [polityId]);
   if (result.rowCount === 0 || !(result.rows || []).length) return null;
-  return projectPolity(result.rows[0]);
+  const existing = projectPolity(result.rows[0]);
+  const periods = await client.query(POLITY_GOVERNANCE_PERIODS_SQL, [polityId]);
+  return Object.freeze({
+    ...existing,
+    governance_periods: normalizeGovernancePeriods(periods.rows || [])
+  });
 }
 
 module.exports = Object.freeze({
   POLITY_SELECT_SQL,
   POLITY_LIST_SQL,
   POLITY_DETAIL_SQL,
+  POLITY_GOVERNANCE_PERIODS_SQL,
+  normalizeGovernancePeriods,
   normalizeNames,
   normalizeActivities,
   projectPolity,
