@@ -1,0 +1,40 @@
+/* VIS2-05 EXPERIMENT ONLY: no index or route stylesheet includes this file.
+ * Production is default-OFF. The Chrome harness injects it only for A/B.
+ */
+.spacetime-frame[data-spacetime-visual="chronology-v6"][data-vis2-05-watermark="experiment"] .spacetime-canvas[data-vis2-05-watermark-year]::before {
+  content: attr(data-vis2-05-watermark-year);
+  position: absolute;
+  z-index: 7;
+  left: var(--vis2-05-x, 50%);
+  top: var(--vis2-05-y, 0px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  color: rgba(192,174,136,.19);
+  font-family: var(--atlas-font-inscription, "Noto Serif KR", Georgia, serif);
+  font-size: clamp(62px, 7vw, 132px);
+  font-weight: 720;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -.04em;
+  line-height: 1;
+  text-shadow: 0 1px 0 rgba(0,0,0,.12);
+}
+.spacetime-frame[data-spacetime-visual="chronology-v6"][data-vis2-05-watermark="experiment"] .spacetime-era-boundary[data-vis2-05-watermark-era]::after {
+  content: attr(data-vis2-05-watermark-era);
+  position: absolute;
+  z-index: 7;
+  top: -44px;
+  left: var(--vis2-05-era-x, 42%);
+  transform: translateX(-50%);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  color: rgba(192,174,136,.17);
+  font-family: var(--atlas-font-inscription, "Noto Serif KR", Georgia, serif);
+  font-size: clamp(36px, 4.6vw, 76px);
+  font-weight: 620;
+  letter-spacing: -.035em;
+  line-height: 1;
+  text-shadow: 0 1px 0 rgba(0,0,0,.12);
+}
