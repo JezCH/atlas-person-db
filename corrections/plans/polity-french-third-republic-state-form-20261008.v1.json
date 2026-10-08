@@ -1,0 +1,223 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_french_third_republic_dual_identity_relink_20261008_v1",
+  "as_of": "2026-10-08",
+  "status": "REVIEWED_THIRD_REPUBLIC_TEMPORAL_STATE_FORM_RELINK",
+  "release_order": 2160,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 POLITY-P2-01B; Production exact 16-Activity census and 2 targeted sources on 2026-10-08; National Assembly official 1870-09-04 to 1940-07-10 Third Republic chronology; Élysée Poincaré presidency; P2-01 French family source/identity review #2155 and P2-01A Production parity #2157/#2159",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "third_republic_live_uuid": "3d72277f-c92e-476c-8174-804f700d10cc",
+    "french_republic_survivor_uuid": "b138f5e4-ff83-40f6-bdb1-83b08c0256cb",
+    "before_counts": {
+      "third_republic": 2,
+      "generic_french_republic": 14,
+      "france_proper_family": 65
+    },
+    "target_source_count_each": 1,
+    "source_links_policy": "2 original normalized Activity Source links must be preserved; no user-visible Third Republic label loss; no Chronology change",
+    "historical_boundary": "French National Assembly Third Republic 1870-09-04 to 1940-07-10; Fifth Republic is already modeled as a 1958-10-04 constitutional governance context on the generic French Republic. Only resolve same-time overlap 1878–1931 and the two 1910/1913–1920 Activity fragments, without claiming a resolution of the 1940 wartime rupture or Fourth/Fifth identity.",
+    "retirement_policy": "Former French Third Republic polity UUID must stay LIVE with original two preferred names, and may not be retired/deleted absent separate explicit user authorization."
+  },
+  "operations": [
+    {
+      "case_id": "france-republic-third-chanel-1910",
+      "type": "rewrite_activity",
+      "activity_id": "6b528503-9cb7-4015-8c0d-b89b8cfe7fff",
+      "baseline_before": {
+        "person_id": "3d0dbe11-765f-47db-a14c-69f3fd35d107",
+        "polity_id": "3d72277f-c92e-476c-8174-804f700d10cc",
+        "role_id": "d6839fd3-2636-4452-a1a1-121b363ec92a",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1910,
+        "activity_end": 1910,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "6b528503-9cb7-4015-8c0d-b89b8cfe7fff",
+        "person_id": "3d0dbe11-765f-47db-a14c-69f3fd35d107",
+        "polity_id": "b138f5e4-ff83-40f6-bdb1-83b08c0256cb",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "d6839fd3-2636-4452-a1a1-121b363ec92a",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1910,
+        "activity_start_detail": {
+          "year": 1910,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1910,
+        "activity_end_detail": {
+          "year": 1910,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "france-republic-third-poincare-1913-1920",
+      "type": "rewrite_activity",
+      "activity_id": "93bace7c-b31e-494e-ac60-a5d173659b1d",
+      "baseline_before": {
+        "person_id": "84c25388-d09a-4096-96b5-8eb17e982dea",
+        "polity_id": "3d72277f-c92e-476c-8174-804f700d10cc",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1913,
+        "activity_end": 1920,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "93bace7c-b31e-494e-ac60-a5d173659b1d",
+        "person_id": "84c25388-d09a-4096-96b5-8eb17e982dea",
+        "polity_id": "b138f5e4-ff83-40f6-bdb1-83b08c0256cb",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1913,
+        "activity_start_detail": {
+          "year": 1913,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1920,
+        "activity_end_detail": {
+          "year": 1920,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "france-third-republic-national-assembly-1870-1940",
+      "exact_before": {
+        "source_absent_id": "7bd626d5-ccbb-4d31-bfeb-f6e4df167fa6"
+      },
+      "exact_after": {
+        "source": {
+          "id": "7bd626d5-ccbb-4d31-bfeb-f6e4df167fa6",
+          "source_key": "bibliographic:assemblee-nationale:third-republic-1870-1940",
+          "source_type": "official_government_reference",
+          "title": "1870–1940: la IIIème République, ou l'avènement du suffrage universel masculin — Assemblée nationale",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www2.assemblee-nationale.fr/decouvrir-l-assemblee/histoire/le-suffrage-universel/la-republique-et-le-suffrage-universel/1870-1940-la-iiieme-republique-ou-l-avenement-du-suffrage-universel-masculin",
+          "citation_text": "The French National Assembly traces the Third Republic's proclamation on 4 September 1870 and the democratic-constitutional collapse on 10 July 1940. This anchors the labeled constitutional state-form window, not continuity over the 1940–44 rupture."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "french-third-republic-temporal-state-form-1870-1940",
+      "exact_before": {
+        "designation_absent_id": "0a6e5f40-1052-41fc-ba21-2c312919327b"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "0a6e5f40-1052-41fc-ba21-2c312919327b",
+          "polity_id": "b138f5e4-ff83-40f6-bdb1-83b08c0256cb",
+          "designation_type": "state_form",
+          "valid_from_year": 1870,
+          "valid_from_month": 9,
+          "valid_from_day": 4,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1940,
+          "valid_to_month": 7,
+          "valid_to_day": 10,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed historical constitutional-regime state-form display 'French Third Republic / Troisième République / 프랑스 제3공화국' on the stable French Republic Polity. Official National Assembly: proclamation on 4 September 1870; collapse of democratic parliamentary system on 10 July 1940. This designation covers third-republic-era representative and governmental Activities, including Poincaré 1913–1920. It does not extend across the Vichy/war/Provisional/Fourth Republic questions (P2-01C), does not redefine 1944 state continuity, and does not overlap the existing French Fifth Republic constitutional Governance Context from 4 October 1958."
+        },
+        "names": [
+          {
+            "id": "7b001fa9-94ef-4dd8-9022-c2096b7bc869",
+            "polity_designation_id": "0a6e5f40-1052-41fc-ba21-2c312919327b",
+            "locale": "en",
+            "name": "French Third Republic",
+            "is_preferred": true
+          },
+          {
+            "id": "3dece59e-d9fe-4123-bfca-d79ffb43e8a3",
+            "polity_designation_id": "0a6e5f40-1052-41fc-ba21-2c312919327b",
+            "locale": "fr",
+            "name": "Troisième République",
+            "is_preferred": true
+          },
+          {
+            "id": "9bc27cfb-09c7-4c6d-b3f6-d7b68ca3e514",
+            "polity_designation_id": "0a6e5f40-1052-41fc-ba21-2c312919327b",
+            "locale": "ko",
+            "name": "프랑스 제3공화국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "0a6e5f40-1052-41fc-ba21-2c312919327b",
+            "source_id": "7bd626d5-ccbb-4d31-bfeb-f6e4df167fa6",
+            "source_locator_key": "https://www2.assemblee-nationale.fr/decouvrir-l-assemblee/histoire/le-suffrage-universel/la-republique-et-le-suffrage-universel/1870-1940-la-iiieme-republique-ou-l-avenement-du-suffrage-universel-masculin"
+          },
+          {
+            "polity_designation_id": "0a6e5f40-1052-41fc-ba21-2c312919327b",
+            "source_id": "75586017-b4b5-4a93-9148-d00db06bbdc9",
+            "source_locator_key": "https://www.elysee.fr/en/raymond-poincare"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "results": {
+    "activity_relinks": 2,
+    "source_assertions": 1,
+    "designation_assertions": 1,
+    "third_republic_activities_after_expected": 0,
+    "generic_french_republic_activities_after_expected": 16,
+    "france_family_total_activities_preserved": 65,
+    "production_mutation_authorized": false
+  }
+}
