@@ -1,6 +1,15 @@
 "use strict";
 
 const QUEUE_SCHEMA = "atlas-registration-queue/v3";
+const { reviewedPersonAliasesValuesSql } = require("./atlas-reviewed-person-registration-aliases.js");
+const REVIEWED_PERSON_ALIAS_VALUES_SQL=reviewedPersonAliasesValuesSql();
+
+const REVIEWED_PERSON_ALIASES_SQL = `
+select aliases.alias_name,p.id::text as person_id,p.canonical_key
+from (${REVIEWED_PERSON_ALIAS_VALUES_SQL}) as aliases(alias_name,canonical_key)
+join atlas_v2.persons p on p.canonical_key=aliases.canonical_key
+order by aliases.alias_name,p.id
+`;
 const QUEUE_TABLE = "atlas_v2.person_registration_candidates";
 const QUEUE_MEMBERSHIP_RULE = "candidate has no unique exact normalized identity match in current Production persons/person_names";
 
@@ -57,6 +66,11 @@ person_aliases as (
   union all
   select p.id, p.canonical_key
     from atlas_v2.persons p
+  union all
+  select p.id,aliases.alias_name
+    from atlas_v2.persons p
+    join (${REVIEWED_PERSON_ALIAS_VALUES_SQL}) as aliases(alias_name,canonical_key)
+      on p.canonical_key=aliases.canonical_key
 ),
 person_identity_keys as (
   select distinct
@@ -132,6 +146,7 @@ async function readCurrentRegistrationQueue({ client } = {}) {
 
   const pendingResult = await client.query(PENDING_SQL);
   const summaryResult = await client.query(SUMMARY_SQL);
+  const aliasesResult = await client.query(REVIEWED_PERSON_ALIASES_SQL);
   const ledger = summaryResult.rows?.[0] || {};
   const candidates = (pendingResult.rows || []).map((item) => {
     const reviewMetadata = normalizeMetadata(item.review_metadata);
@@ -162,6 +177,11 @@ async function readCurrentRegistrationQueue({ client } = {}) {
     schema:QUEUE_SCHEMA,
     authority:QUEUE_TABLE,
     membership_rule:QUEUE_MEMBERSHIP_RULE,
+    reviewed_person_aliases:Object.freeze((aliasesResult.rows||[]).map(row=>Object.freeze({
+      alias_name:text(row.alias_name),
+      person_id:String(row.person_id),
+      canonical_key:text(row.canonical_key)
+    }))),
     summary:Object.freeze({
       candidate_total:currentTotal,
       current_total:currentTotal,
@@ -256,6 +276,8 @@ module.exports = Object.freeze({
   QUEUE_SCHEMA,
   QUEUE_TABLE,
   QUEUE_MEMBERSHIP_RULE,
+  REVIEWED_PERSON_ALIAS_VALUES_SQL,
+  REVIEWED_PERSON_ALIASES_SQL,
   CANDIDATE_IDENTITY_CTES,
   PENDING_SQL,
   SUMMARY_SQL,
