@@ -11,6 +11,63 @@
   let minChannels=3;
   let queueRows=[];
   let signalRows=[];
+  let personIdentityIndex=null;
+  let queueIdentityIndex=null;
+
+  // The same exact-identity rule used by the registration queue: do not
+  // equate partial names or infer an unregistered Person from an absent alias.
+  function identityKey(value) {
+    return String(value ?? "")
+      .normalize("NFKD")
+      .toLowerCase()
+      .replaceAll("æ","ae").replaceAll("œ","oe").replaceAll("ß","ss")
+      .replace(/[\u0300-\u036f]/g,"")
+      .replace(/[^a-z0-9가-힣]/g,"");
+  }
+
+  function identityIndex(rows, aliases, idField) {
+    const index=new Map();
+    for (const [position,row] of rows.entries()) {
+      const id=String(row?.[idField] ?? position);
+      for (const alias of aliases(row)) {
+        if (typeof alias!=="string") continue;
+        const key=identityKey(alias);
+        if (!key) continue;
+        if (!index.has(key)) index.set(key,new Set());
+        index.get(key).add(id);
+      }
+    }
+    return index;
+  }
+
+  function prepareSignalIdentities(personPayload,queuePayload) {
+    personIdentityIndex=identityIndex(personPayload?.persons || [],person=>[
+      person?.canonical_name_en,person?.preferred_name_ko,person?.display_name,
+      ...(Array.isArray(person?.names) ? person.names.map(name=>name?.name) : [])
+    ],"id");
+    queueIdentityIndex=identityIndex(queuePayload?.candidates || [],candidate=>{
+      const metadata=candidate?.review_metadata || {};
+      return [
+        ...(typeof candidate?.name==="string" ? candidate.name.split(/\s*[|/]\s*/) : []),
+        ...(Array.isArray(metadata.lookup_names) ? metadata.lookup_names : []),
+        metadata.display_name_ko
+      ];
+    },"candidate_id");
+  }
+
+  function signalRegistrationBadges(name) {
+    if (!personIdentityIndex || !queueIdentityIndex) {
+      return '<span class="registration-review-signal-identity" data-status="unknown">등록 대조 중</span>';
+    }
+    const key=identityKey(name);
+    const matches=key ? (personIdentityIndex.get(key)?.size || 0) : 0;
+    if (matches>1) return '<span class="registration-review-signal-identity" data-status="ambiguous">동명이인 확인</span>';
+    if (matches===1) return '<span class="registration-review-signal-identity" data-status="registered">기등록</span>';
+    const pending=key ? (queueIdentityIndex.get(key)?.size || 0) : 0;
+    const queueLabel=pending>1 ? "대기열 복수 후보" : pending===1 ? "대기열 등재" : "대기열 미등재";
+    return `<span class="registration-review-signal-identity" data-status="unmatched">기등록 일치 없음</span><span class="registration-review-signal-identity" data-status="${pending===1 ? "queued" : pending>1 ? "ambiguous" : "unqueued"}">${queueLabel}</span>`;
+  }
+
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -132,7 +189,7 @@
       const strength=Math.min(100,(channels/maxChannels)*100);
       return `<tr class="registration-review-signal-row" style="--signal-strength:${strength.toFixed(2)}%">
         <td class="registration-review-rank" data-label="순위">${number(row.rank)}</td>
-        <td class="registration-review-name" data-label="인물">${escapeHtml(row.raw_name)}</td>
+        <td class="registration-review-name" data-label="인물"><span class="registration-review-signal-raw-name">${escapeHtml(row.raw_name)}</span>${signalRegistrationBadges(row.raw_name)}</td>
         <td class="registration-review-number" data-label="채널">${number(row.distinct_channel_count)}</td>
         <td class="registration-review-number" data-label="영상">${number(row.video_count)}</td>
         <td class="registration-review-signal-bar" aria-hidden="true"><span></span></td>
@@ -162,6 +219,7 @@
         getJson(`${SIGNAL_URL}&min_channels=${encodeURIComponent(minChannels)}&limit=300`)
       ]);
       if (serial !== requestSerial || root !== activeRoot) return;
+      prepareSignalIdentities(persons,queue);
       renderRegistered(persons,queue);
       renderQueue(queue);
       renderSignals(signals);
@@ -203,7 +261,7 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
+          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 등록 상태는 인물명·별칭의 정규화된 정확 일치로 대조하며, 일치 없음은 실제 미등록을 확정하지 않습니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
         </div>
         <div class="registration-review-signal-toolbar">
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
