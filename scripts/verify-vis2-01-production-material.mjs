@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import path from "node:path";
 
 const EXPECTED=String(process.env.ATLAS_EXPECTED_RUNTIME_SHA||"");
 const CDP=process.env.ATLAS_CDP_URL||"http://127.0.0.1:9222";
