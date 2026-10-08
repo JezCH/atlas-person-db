@@ -9,13 +9,13 @@ test("VIS2-06 is a single opt-in Spacetime-only stylesheet after VIS2-04",()=>{
  assert.ok(html.indexOf(href)>html.indexOf("atlas-person-spacetime-precision-ticks-v2.css"));
  assert.match(css,/--atlas-vis2-06-instrument-active:\s*1\s*;/);
 });
-test("VIS2-06 has seven selectors in six scoped paint declarations and no geometry, content, focus or interactions",()=>{
+test("VIS2-06 has seven scoped paint declarations and no geometry, content, focus or interactions",()=>{
  const stripped=css.replace(/\/\*[\s\S]*?\*\//g,"");
  const rules=[...stripped.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
- assert.equal(rules.length,7);
+ assert.equal(rules.length,8);
  assert.equal(rules[0][1].trim(),":root");
  const targets=rules.slice(1);
- assert.equal(targets.length,6);
+ assert.equal(targets.length,7);
  for(const [,selector,body] of targets){
   const parts=selector.split(",").map(x=>x.trim()).filter(Boolean);
   for(const part of parts){
