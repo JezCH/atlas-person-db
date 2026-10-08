@@ -1,0 +1,75 @@
+name: YouTube cumulative recovery and validation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/youtube-cumulative-recovery.yml"
+      - "scripts/youtube-build-person-signal-snapshot.py"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve exact preserved batches 008–011
+        uses: actions/download-artifact@v4
+        with:
+          name: youtube-batch011-staging-longterm
+          path: prior/archive
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: 37604763364
+      - name: Retrieve six successful batch012–017 scan artifacts, without rescanning
+        uses: actions/download-artifact@v4
+        with:
+          pattern: youtube-recollection-part-*
+          path: parts/
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: 37754755415
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install parsing dependency
+        run: python -m pip install --disable-pip-version-check pycountry
+      - name: Verify Python syntax first
+        run: python -m py_compile scripts/youtube-build-person-signal-snapshot.py scripts/youtube-cumulative-recollect.py
+      - name: Assemble exact Channel-ID deduplicated cumulative corpus
+        run: |
+          set -euo pipefail
+          python scripts/youtube-cumulative-recollect.py pack --prior prior/archive --parts parts --output cumulative --shards 6
+          python scripts/youtube-build-person-signal-snapshot.py --root cumulative --output /tmp/youtube-validated-snapshot.json --artifact-id 1 --artifact-digest staging
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          summary=json.loads(Path("cumulative/recollection-summary.json").read_text())
+          payload=json.loads(Path("/tmp/youtube-validated-snapshot.json").read_text())
+          assert summary["new_success"]>=2715,summary
+          assert summary["new_videos"]>=818595,summary
+          assert payload["snapshot"]["channel_count"]==6011,payload["snapshot"]
+          assert payload["snapshot"]["video_count"]==1536512,payload["snapshot"]
+          assert len(payload["channels"])==6770
+          assert len({row["channel_id"] for row in payload["channels"]})==6770
+          assert payload["snapshot"]["source_state"]["next_batch"]=="batch018"
+          print("VERIFIED_CUMULATIVE",json.dumps({"summary":summary,"snapshot":payload["snapshot"],"signals":len(payload["signals"])}))
+          PY
+      - name: Archive validated, complete cumulative collection
+        id: archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-cumulative-batch017-validated
+          path: cumulative/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Emit exact artifact provenance for Production publisher
+        run: |
+          echo "artifact_run_id=${{ github.run_id }}"
+          echo "artifact_name=youtube-cumulative-batch017-validated"
+          echo "artifact_id=${{ steps.archive.outputs.artifact-id }}"
+          echo "artifact_digest=${{ steps.archive.outputs.artifact-digest }}"
