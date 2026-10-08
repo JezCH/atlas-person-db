@@ -50,6 +50,25 @@ function groupByIdentity(rows) {
   }
   return map;
 }
+function registeredPersonIndex(payload) {
+  if(!payload) return new Map();
+  if(!Array.isArray(payload.persons)||payload.ok!==true||payload.mode!=="list")
+    throw Error("YOUTUBE_AUDIT_PERSON_RUNTIME_INVALID");
+  const index=new Map();
+  function add(name,id) {
+    const key=nameKey(name);
+    if(!key||!id)return;
+    if(!index.has(key))index.set(key,new Set());
+    index.get(key).add(String(id));
+  }
+  for(const person of payload.persons) {
+    if(!person?.id)continue;
+    const candidates=[person.canonical_name_en,person.preferred_name_ko,person.display_name,
+      ...(Array.isArray(person.names)?person.names.map(x=>x?.name):[])];
+    for(const name of candidates)add(name,person.id);
+  }
+  return index;
+}
 function reviewedDecisions(raw) {
   const entries=Array.isArray(raw?.decisions)?raw.decisions:[];
   const map=new Map();
@@ -63,7 +82,7 @@ function reviewedDecisions(raw) {
   return map;
 }
 export function computeIncrementalAudit(current,previous,{
-  decisions={decisions:[]},registeredAliases=[],livingNames=[],currentAsOf=new Date().toISOString()
+  decisions={decisions:[]},registeredAliases=[],livingNames=[],persons=null,currentAsOf=new Date().toISOString()
 }={}) {
   const curr=validateSignals(current,"CURRENT");
   const prev=validateSignals(previous,"PREVIOUS");
@@ -72,6 +91,7 @@ export function computeIncrementalAudit(current,previous,{
   const old=groupByIdentity(prev.rows),newMap=groupByIdentity(curr.rows);
   const resolved=reviewedDecisions(decisions);
   const registered=new Set(registeredAliases.map(nameKey));
+  const personIndex=registeredPersonIndex(persons);
   const living=new Set(livingNames.map(nameKey));
   const queued=[];
   let added=0,reappeared=0,upgraded=0,channelGrowth=0,unchanged=0;
@@ -86,8 +106,10 @@ export function computeIncrementalAudit(current,previous,{
       :s.distinct_channel_count<prevChannels?"CHANNEL_LOSS":"UNCHANGED";
     const priorDiff=past?.raw_name!==s.raw_name&&past!==undefined;
     const decision=resolved.get(key);
+    const matchedPersonIds=[...(personIndex.get(key)||[])];
     const evidence=decision?.disposition||
-      (living.has(key)?"REVIEWED_LIVING_NAME":registered.has(key)?"REVIEWED_PERSON_ALIAS":"UNRESOLVED");
+      (matchedPersonIds.length?"REGISTERED_PERSON_ID":living.has(key)?"REVIEWED_LIVING_NAME"
+        :registered.has(key)?"REVIEWED_PERSON_ALIAS":"UNRESOLVED");
     const needsAttention=(
       evidence==="UNRESOLVED"&&
       (change==="NEW"||change==="PRIORITY_UP"||collision)
@@ -100,7 +122,8 @@ export function computeIncrementalAudit(current,previous,{
       identity_key:key,raw_name:s.raw_name,rank:s.rank,
       channels:s.distinct_channel_count,previous_channels:prevChannels,
       videos:s.video_count,delta:change,tier:tier(s.distinct_channel_count),
-      disposition:evidence,needs_review:needsAttention,
+      disposition:evidence,registered_person_ids:matchedPersonIds,
+      needs_review:needsAttention,
       normalized_name_collision:collision,alias_spelling_changed:priorDiff,
       reviewed_at:decision?.reviewed_at??null
     });
@@ -127,7 +150,7 @@ export function computeIncrementalAudit(current,previous,{
 function csvEscape(v){return '"'+String(v??"").replaceAll('"','""').replace(/[\r\n]/g," ")+'"';}
 export function attentionCsv(result) {
   const keys=["tier","rank","raw_name","channels","previous_channels","delta",
-    "disposition","normalized_name_collision","alias_spelling_changed","identity_key"];
+    "disposition","registered_person_ids","normalized_name_collision","alias_spelling_changed","identity_key"];
   return keys.join(",")+"\n"+result.attention.map(item=>keys.map(k=>csvEscape(item[k])).join(",")).join("\n")+"\n";
 }
 export function main(args=process.argv.slice(2)) {
@@ -140,7 +163,8 @@ export function main(args=process.argv.slice(2)) {
   const result=computeIncrementalAudit(file(opts.current),file(opts.previous),{
     decisions:opts.decisions?file(opts.decisions):{decisions:[]},
     registeredAliases:REVIEWED_REGISTRATION_ALIASES.map(x=>x.alias_name),
-    livingNames:REVIEWED_LIVING_NAMES
+    livingNames:REVIEWED_LIVING_NAMES,
+    persons:opts.persons?file(opts.persons):null
   });
   fs.mkdirSync(opts.output,{recursive:true});
   fs.writeFileSync(path.join(opts.output,"audit.json"),JSON.stringify(result,null,2)+"\n");
