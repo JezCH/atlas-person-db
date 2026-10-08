@@ -1,0 +1,677 @@
+{
+  "schema": "atlas-person-domain-reviewed-null-inventory/v1",
+  "status": "reviewed",
+  "reviewed_at": "2026-10-08",
+  "source_main_sha": "6018277c1cdd9572b2689c9512b5769a27e8e003",
+  "source_production_null_inventory": 80,
+  "source_artifact": {
+    "name": "ATLAS_분야미지정_80명_개별판정_20261008.xlsx",
+    "sha256": "eae80a15d179441f88e45cd635ec2cb0594d526d49046dfdcc4c924956261210"
+  },
+  "canonical_standard": "docs/person/PERSON_DOMAIN_STANDARD_V2.md",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "one_person_one_domain_or_null": true,
+    "hold_is_not_a_write": true
+  },
+  "summary": {
+    "reviewed": 80,
+    "assigned": 74,
+    "hold": 6,
+    "distribution": {
+      "governance": 52,
+      "military": 11,
+      "religion": 7,
+      "exploration": 2,
+      "commerce": 1,
+      "culture": 1,
+      "science": 0,
+      "technology": 0
+    }
+  },
+  "assignments": [
+    {
+      "ordinal": 1,
+      "person_id": "67d1b5f7-7851-447b-b275-a5df61877656",
+      "canonical_name_en": "Abraham",
+      "preferred_name_ko": "아브라함",
+      "disposition": "ASSIGN",
+      "representative_domain": "religion"
+    },
+    {
+      "ordinal": 2,
+      "person_id": "ecc64877-3cc8-48c3-a231-c327af657a45",
+      "canonical_name_en": "Achish (Abimelech)",
+      "preferred_name_ko": "아기스(아비멜렉)",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 3,
+      "person_id": "39a5060c-95e6-47a9-b67a-2be6a8913c49",
+      "canonical_name_en": "Adoni-zedek",
+      "preferred_name_ko": "아도니세덱",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 4,
+      "person_id": "624dcfcd-9c0f-4e48-92c3-ed756f2820f0",
+      "canonical_name_en": "Apanuugpak",
+      "preferred_name_ko": "아파누그파크",
+      "disposition": "ASSIGN",
+      "representative_domain": "military"
+    },
+    {
+      "ordinal": 5,
+      "person_id": "629300e7-3e1c-4b1e-be9c-5d955ea65699",
+      "canonical_name_en": "Åsa Haraldsdottir of Agder",
+      "preferred_name_ko": "아그데르의 오사 하랄스도티르",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 6,
+      "person_id": "58bfea87-e713-4a9c-9912-870f5bf3c4ec",
+      "canonical_name_en": "Beowulf",
+      "preferred_name_ko": "베오울프",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 7,
+      "person_id": "54c0ea7e-c227-469a-a941-0990021e86d8",
+      "canonical_name_en": "Bilqis",
+      "preferred_name_ko": "빌키스",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 8,
+      "person_id": "ebd1a7e3-6a1a-4e02-87f6-7ec5aacf0641",
+      "canonical_name_en": "Bjorn Ironside",
+      "preferred_name_ko": "비요른 아이언사이드",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 9,
+      "person_id": "4aa750c8-8526-426e-aba9-bb79a2de0538",
+      "canonical_name_en": "Bulan",
+      "preferred_name_ko": "불란",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 10,
+      "person_id": "219bf09d-c0aa-422f-be49-68ed23378d18",
+      "canonical_name_en": "Ce Acatl Topiltzin",
+      "preferred_name_ko": "세 아카틀 토필친",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 11,
+      "person_id": "bd506489-de93-4029-9c29-245f6dd653b2",
+      "canonical_name_en": "Chiksa'",
+      "preferred_name_ko": "칙사",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 12,
+      "person_id": "4560f171-7256-4e8a-90f1-2cd59e56da84",
+      "canonical_name_en": "Damahaar",
+      "preferred_name_ko": "다마하르",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 13,
+      "person_id": "4ae9c10b-c202-443f-8a01-8202429d70ea",
+      "canonical_name_en": "Dangun Wanggeom",
+      "preferred_name_ko": "단군왕검",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 14,
+      "person_id": "2c10f3f6-a1d1-4527-bac2-b832b2afde01",
+      "canonical_name_en": "Dayang Kalangitan",
+      "preferred_name_ko": "다양 칼랑이탄",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 15,
+      "person_id": "dbfc3700-6a84-4448-8f0f-669b0c858f16",
+      "canonical_name_en": "Dido",
+      "preferred_name_ko": "디도",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 16,
+      "person_id": "6504196e-399d-4cbc-a69e-1b80375ae6d2",
+      "canonical_name_en": "Dinga Cisse",
+      "preferred_name_ko": "딩가 시세",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 17,
+      "person_id": "ac555496-899b-49de-aa72-4e269ca0758e",
+      "canonical_name_en": "Domitian of Carantania",
+      "preferred_name_ko": "카란타니아의 도미티안",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 18,
+      "person_id": "98d52f4f-ad3d-4cab-aae9-0c4eb900ac2a",
+      "canonical_name_en": "Dragoș of Moldavia",
+      "preferred_name_ko": "몰다비아의 드라고슈",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 19,
+      "person_id": "5334e951-8457-42b6-8203-f3df69078079",
+      "canonical_name_en": "Duttabaung",
+      "preferred_name_ko": "두타바웅",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 20,
+      "person_id": "25a21e32-c244-49dc-ad25-6faeae47d342",
+      "canonical_name_en": "Edai Siabo",
+      "preferred_name_ko": "에다이 시아보",
+      "disposition": "ASSIGN",
+      "representative_domain": "commerce"
+    },
+    {
+      "ordinal": 21,
+      "person_id": "ff4da770-cbf1-452c-991f-6d7c2aa88a58",
+      "canonical_name_en": "Edward Blondin",
+      "preferred_name_ko": "에드워드 블론딘",
+      "disposition": "ASSIGN",
+      "representative_domain": "religion"
+    },
+    {
+      "ordinal": 22,
+      "person_id": "60d9dda1-bb09-441d-b5ee-5228e4eb5cd0",
+      "canonical_name_en": "Eréndira",
+      "preferred_name_ko": "에렌디라",
+      "disposition": "ASSIGN",
+      "representative_domain": "military"
+    },
+    {
+      "ordinal": 23,
+      "person_id": "b341256a-cfe9-497a-9594-f7031296c923",
+      "canonical_name_en": "Great Peacemaker (Deganawida)",
+      "preferred_name_ko": "위대한 평화중재자(데가나위다)",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 24,
+      "person_id": "e63e6d59-1589-46c7-a105-ae20f3920d11",
+      "canonical_name_en": "Guacanaoma",
+      "preferred_name_ko": "과카나오마",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 25,
+      "person_id": "0838ffb3-8142-4ec8-a506-6f6dc31c8d91",
+      "canonical_name_en": "Gudit",
+      "preferred_name_ko": "구디트",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 26,
+      "person_id": "8ff3519e-bf47-4e17-beca-e7814b0e18a6",
+      "canonical_name_en": "Hanno the Navigator",
+      "preferred_name_ko": "항해자 한노",
+      "disposition": "ASSIGN",
+      "representative_domain": "exploration"
+    },
+    {
+      "ordinal": 27,
+      "person_id": "2d7aa825-2c31-43f8-8690-7d2cc23972c8",
+      "canonical_name_en": "Hotu Matu'a",
+      "preferred_name_ko": "호투 마투아",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 28,
+      "person_id": "9a8d68f4-8cd6-45cc-952c-7488a6bc3c6a",
+      "canonical_name_en": "ʻAhoʻeitu",
+      "preferred_name_ko": "아호에이투",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 29,
+      "person_id": "77989f83-249f-485d-8e2d-dec729be484c",
+      "canonical_name_en": "Inal the Great",
+      "preferred_name_ko": "이날 대왕",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 30,
+      "person_id": "2c7d10a3-5bb9-4db2-910a-d7256d0c0863",
+      "canonical_name_en": "Isingoma Mpuga Rukidi I",
+      "preferred_name_ko": "이싱고마 음푸가 루키디 1세",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 31,
+      "person_id": "0c939700-dc4c-437f-a95b-2997a9087435",
+      "canonical_name_en": "Janequeo",
+      "preferred_name_ko": "야네케오",
+      "disposition": "ASSIGN",
+      "representative_domain": "military"
+    },
+    {
+      "ordinal": 32,
+      "person_id": "e75c3062-fe23-4829-a3b7-fb22b7bf2ba1",
+      "canonical_name_en": "Joshua",
+      "preferred_name_ko": "여호수아",
+      "disposition": "ASSIGN",
+      "representative_domain": "military"
+    },
+    {
+      "ordinal": 33,
+      "person_id": "068cbbdb-05b2-40f0-be77-2a310e73ad71",
+      "canonical_name_en": "King Arthur",
+      "preferred_name_ko": "아서 왕",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 34,
+      "person_id": "20871f56-4c37-4c60-8453-5c5d747e3f73",
+      "canonical_name_en": "Kirmu-Karmu",
+      "preferred_name_ko": "키르무카르무",
+      "disposition": "ASSIGN",
+      "representative_domain": "military"
+    },
+    {
+      "ordinal": 35,
+      "person_id": "76adc2b7-cc1d-49b8-b087-f9ee2475f28c",
+      "canonical_name_en": "Klaus Störtebeker",
+      "preferred_name_ko": "클라우스 슈퇴르테베커",
+      "disposition": "ASSIGN",
+      "representative_domain": "military"
+    },
+    {
+      "ordinal": 36,
+      "person_id": "80efafd6-094d-43ea-a616-5057a4e07250",
+      "canonical_name_en": "Laozi",
+      "preferred_name_ko": "노자",
+      "disposition": "ASSIGN",
+      "representative_domain": "culture"
+    },
+    {
+      "ordinal": 37,
+      "person_id": "efb47d00-8eab-4309-8207-f34d207e1ad8",
+      "canonical_name_en": "Lawtylywalyn",
+      "preferred_name_ko": "라우틸리왈린",
+      "disposition": "ASSIGN",
+      "representative_domain": "military"
+    },
+    {
+      "ordinal": 38,
+      "person_id": "0df7e958-15cc-4b5a-9348-4654c3a7c990",
+      "canonical_name_en": "Manas",
+      "preferred_name_ko": "마나스",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 39,
+      "person_id": "036ae543-3503-4c12-bc8f-c67b40aa8911",
+      "canonical_name_en": "Manco Capac",
+      "preferred_name_ko": "망코 카팍",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 40,
+      "person_id": "0d811960-9f8d-4eea-8a3a-50c8416137c8",
+      "canonical_name_en": "Maniiḷaq",
+      "preferred_name_ko": "마니일라크",
+      "disposition": "ASSIGN",
+      "representative_domain": "religion"
+    },
+    {
+      "ordinal": 41,
+      "person_id": "a38c2f11-394c-490f-83f4-b290fa85b54d",
+      "canonical_name_en": "Moses",
+      "preferred_name_ko": "모세",
+      "disposition": "ASSIGN",
+      "representative_domain": "religion"
+    },
+    {
+      "ordinal": 42,
+      "person_id": "a0f6650d-00aa-47ef-ac11-2c1b5d170166",
+      "canonical_name_en": "Niall Noígíallach",
+      "preferred_name_ko": "니얼 노이기알라흐",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 43,
+      "person_id": "c1871bf4-30ad-4bb3-8534-2d26e20fe583",
+      "canonical_name_en": "Nkongolo Mwamba",
+      "preferred_name_ko": "응콩골로 음왐바",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 44,
+      "person_id": "9cefc952-fef5-4151-b2c7-6d97b4c23b36",
+      "canonical_name_en": "Ntare I Rushatsi Cambarantama",
+      "preferred_name_ko": "은타레 1세 루샤치 캄바란타마",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 45,
+      "person_id": "7dae08d2-72e5-4225-8a27-541e70ee69ad",
+      "canonical_name_en": "Numa Pompilius",
+      "preferred_name_ko": "누마 폼필리우스",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 46,
+      "person_id": "9c60171d-7f6a-4099-9b99-7e085e702a5f",
+      "canonical_name_en": "Nunuku-whenua",
+      "preferred_name_ko": "누누쿠훼누아",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 47,
+      "person_id": "c1e9432c-5986-4f2b-accb-392069b87e6f",
+      "canonical_name_en": "Nyatri Tsenpo",
+      "preferred_name_ko": "냐트리 첸포",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 48,
+      "person_id": "eba0e96c-dc82-47e1-96de-54201f3b4757",
+      "canonical_name_en": "Pálnatóki",
+      "preferred_name_ko": "팔나토키",
+      "disposition": "ASSIGN",
+      "representative_domain": "military"
+    },
+    {
+      "ordinal": 49,
+      "person_id": "5cdaad10-8e51-4e15-8f00-0de5c6f67017",
+      "canonical_name_en": "Prabu Siliwangi",
+      "preferred_name_ko": "프라부 실리왕이",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 50,
+      "person_id": "1fe1c8e6-a6fd-43ce-812e-b36248e405c0",
+      "canonical_name_en": "Priam",
+      "preferred_name_ko": "프리아모스",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 51,
+      "person_id": "f3cde17e-0d51-486d-8d45-3c66169e8daf",
+      "canonical_name_en": "Protis",
+      "preferred_name_ko": "프로티스",
+      "disposition": "ASSIGN",
+      "representative_domain": "exploration"
+    },
+    {
+      "ordinal": 52,
+      "person_id": "d62b4afe-fb24-4fb6-aa35-322ddf6bf8ce",
+      "canonical_name_en": "Qillerkavialuk",
+      "preferred_name_ko": "킬레르카비알루크",
+      "disposition": "ASSIGN",
+      "representative_domain": "military"
+    },
+    {
+      "ordinal": 53,
+      "person_id": "676c252e-23b6-4a00-9bf7-a15a76af1586",
+      "canonical_name_en": "Queen Conori",
+      "preferred_name_ko": "코노리 여왕",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 54,
+      "person_id": "30e55676-ec9b-4553-b0d6-8ab89acdfc50",
+      "canonical_name_en": "Queen Soma",
+      "preferred_name_ko": "소마 여왕",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 55,
+      "person_id": "da7f43c1-aea9-4be3-a887-096f9a897ec9",
+      "canonical_name_en": "Qutb al-Din Tahamtan of Hormuz",
+      "preferred_name_ko": "호르무즈의 쿠트브 앗딘 타함탄",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 56,
+      "person_id": "9d317619-d549-4051-b8a1-46cd44604d94",
+      "canonical_name_en": "Ragnar Lodbrok",
+      "preferred_name_ko": "라그나르 로드브로크",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 57,
+      "person_id": "22ddeedc-02bd-4ff8-b841-b25a795d7309",
+      "canonical_name_en": "Salamasina",
+      "preferred_name_ko": "살라마시나",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 58,
+      "person_id": "0eb54ebf-0772-4ce5-84fa-dd43f86856bb",
+      "canonical_name_en": "San'ai Isoba",
+      "preferred_name_ko": "산아이 이소바",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 59,
+      "person_id": "764b8e84-2b54-4349-a91b-836ea8f62898",
+      "canonical_name_en": "Saraiden Sapw",
+      "preferred_name_ko": "사라이덴 삽",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 60,
+      "person_id": "eaa8060a-6a93-4734-a38d-5222ebd0cb67",
+      "canonical_name_en": "Siward Barn",
+      "preferred_name_ko": "시워드 반",
+      "disposition": "ASSIGN",
+      "representative_domain": "military"
+    },
+    {
+      "ordinal": 61,
+      "person_id": "183e1361-4033-486f-a9aa-f957ab7486ec",
+      "canonical_name_en": "Tadodaho",
+      "preferred_name_ko": "타도다호",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 62,
+      "person_id": "90f0124a-b238-4ddb-969c-bad4364b043d",
+      "canonical_name_en": "Tariácuri",
+      "preferred_name_ko": "타리아쿠리",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 63,
+      "person_id": "4ec3cab2-02df-49f2-89c8-0079856034f7",
+      "canonical_name_en": "Taycanamo",
+      "preferred_name_ko": "타이카나모",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 64,
+      "person_id": "8be326d4-2ab5-4548-a741-c761b72592cd",
+      "canonical_name_en": "Thomas the Apostle",
+      "preferred_name_ko": "사도 토마스",
+      "disposition": "ASSIGN",
+      "representative_domain": "religion"
+    },
+    {
+      "ordinal": 65,
+      "person_id": "af2d0a76-c6fc-47b9-b845-e78f71480db3",
+      "canonical_name_en": "Tin Hinan",
+      "preferred_name_ko": "틴 히난",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 66,
+      "person_id": "8bddf7e5-f9e1-4300-ac18-39d6b3a0574e",
+      "canonical_name_en": "Tomgraka",
+      "preferred_name_ko": "톰그라카",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 67,
+      "person_id": "b55357c6-6beb-4d9b-9099-0551371afc8a",
+      "canonical_name_en": "Tróndur í Gøtu",
+      "preferred_name_ko": "트론두르 이 괴투",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 68,
+      "person_id": "52d071ac-7a8f-4d81-99b7-3d5e50659b66",
+      "canonical_name_en": "Waqah'il Sadiq I",
+      "preferred_name_ko": "와카힐 사디크 1세",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 69,
+      "person_id": "f231e67f-d1e8-4e9a-8e6e-c3bef1827566",
+      "canonical_name_en": "Wëikayoma",
+      "preferred_name_ko": "웨이카요마",
+      "disposition": "ASSIGN",
+      "representative_domain": "religion"
+    },
+    {
+      "ordinal": 70,
+      "person_id": "d322b829-aef3-4e37-aa76-6aac0e1be7c1",
+      "canonical_name_en": "Xochitl",
+      "preferred_name_ko": "소치틀",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 71,
+      "person_id": "64b0ccdc-eb3e-470c-9397-57524f427ebf",
+      "canonical_name_en": "Yennenga",
+      "preferred_name_ko": "옌넹가",
+      "disposition": "ASSIGN",
+      "representative_domain": "military"
+    },
+    {
+      "ordinal": 72,
+      "person_id": "d62c171a-43c1-4548-a533-e6ebba22f75e",
+      "canonical_name_en": "Yu the Great",
+      "preferred_name_ko": "우왕",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 73,
+      "person_id": "231996ff-5fca-452d-aed1-b89b3c69a7ec",
+      "canonical_name_en": "Yujiulü Mugulü",
+      "preferred_name_ko": "욱구려 목골려",
+      "disposition": "ASSIGN",
+      "representative_domain": "governance"
+    },
+    {
+      "ordinal": 74,
+      "person_id": "51cc164c-5325-43e4-b4e9-cc9dc4b5ecec",
+      "canonical_name_en": "Zoroaster",
+      "preferred_name_ko": "자라투스트라",
+      "disposition": "ASSIGN",
+      "representative_domain": "religion"
+    }
+  ],
+  "holds": [
+    {
+      "person_id": "02e42496-0f8a-413c-b173-c76367981171",
+      "canonical_name_en": "Atanarjuat",
+      "preferred_name_ko": "아타나르주아트",
+      "disposition": "HOLD",
+      "representative_domain": null,
+      "reason": "역사적 공직·전쟁지휘·창작활동 어느 분야도 입증되지 않음"
+    },
+    {
+      "person_id": "cbe5911a-6462-4ff5-9e33-83ca0277b3e5",
+      "canonical_name_en": "Daji",
+      "preferred_name_ko": "달기",
+      "disposition": "HOLD",
+      "representative_domain": null,
+      "reason": "왕비·총희 신분 자체는 권력행사 근거가 아니며 문화 생산자로도 볼 수 없음"
+    },
+    {
+      "person_id": "6f71fd73-045f-4227-80c5-78ceb6d87633",
+      "canonical_name_en": "Eri",
+      "preferred_name_ko": "에리",
+      "disposition": "HOLD",
+      "representative_domain": null,
+      "reason": "조상·시조라는 지위만으로 통치·종교·군사 역할을 확정할 수 없음"
+    },
+    {
+      "person_id": "8f32ca07-5a74-4aa9-95e8-7010c8b2c8f0",
+      "canonical_name_en": "Javraganak",
+      "preferred_name_ko": "자브라가낙",
+      "disposition": "HOLD",
+      "representative_domain": null,
+      "reason": "전쟁·정치·문화의 창작자라는 직접 역할을 귀속하기 어려움"
+    },
+    {
+      "person_id": "b165d74c-0e94-4584-b71e-81a763722a04",
+      "canonical_name_en": "Lady of Huarmey",
+      "preferred_name_ko": "우아르메이의 귀부인",
+      "disposition": "HOLD",
+      "representative_domain": null,
+      "reason": "고고학적으로 고위층 확실하지만 개인의 정치 직책·권력행사·직업 불명"
+    },
+    {
+      "person_id": "88505550-4a3e-49a5-ab8c-1c04379bec9a",
+      "canonical_name_en": "Yarima",
+      "preferred_name_ko": "야리마",
+      "disposition": "HOLD",
+      "representative_domain": null,
+      "reason": "독립적 지휘·전투·권력 행사 근거가 현재 기록상 부족"
+    }
+  ]
+}
