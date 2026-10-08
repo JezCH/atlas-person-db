@@ -185,18 +185,36 @@ test("REVIEW-M11 labels only unique exact registered aliases and current pending
     {id:"p-napoleon",canonical_name_en:"Napoleon I",names:[],historicity:"historical"},
     {id:"p-ibn",canonical_name_en:"Ibn Sina",names:[],historicity:"historical"},
     {id:"p-cleopatra-1",canonical_name_en:"Cleopatra VII",names:[{name:"Cleopatra"}],historicity:"historical"},
-    {id:"p-cleopatra-2",canonical_name_en:"Cléopatra",names:[],historicity:"historical"}
-  ],summary:{total:7}};
+    {id:"p-cleopatra-2",canonical_name_en:"Cléopatra",names:[],historicity:"historical"},
+    {id:"p-audit-0",canonical_name_en:"Grigori Rasputin",names:[],historicity:"historical"},
+    {id:"p-audit-1",canonical_name_en:"Gautama Buddha",names:[],historicity:"historical"},
+    {id:"p-audit-2",canonical_name_en:"Ivan IV",names:[],historicity:"historical"},
+    {id:"p-audit-3",canonical_name_en:"Haile Selassie I",names:[],historicity:"historical"},
+    {id:"p-audit-4",canonical_name_en:"Sun Wu",names:[],historicity:"historical"},
+    {id:"p-audit-5",canonical_name_en:"Ashoka",names:[],historicity:"historical"},
+    {id:"p-audit-6",canonical_name_en:"Friedrich Nietzsche",names:[],historicity:"historical"},
+    {id:"p-audit-7",canonical_name_en:"Thales",names:[],historicity:"historical"},
+    {id:"p-audit-8",canonical_name_en:"Marcus Tullius Cicero",names:[],historicity:"historical"}
+  ],summary:{total:16}};
   const queue={ok:true,summary:{pending_count:3},reviewed_person_aliases:[
     {alias_name:"Napoleon Bonaparte",person_id:"p-napoleon",canonical_key:"Napoleon I"},
     {alias_name:"Avicenna",person_id:"p-ibn",canonical_key:"Ibn Sina"},
-    {alias_name:"Cleopatra",person_id:"p-cleopatra-1",canonical_key:"Cleopatra VII",representative_default:true}
+    {alias_name:"Cleopatra",person_id:"p-cleopatra-1",canonical_key:"Cleopatra VII",representative_default:true},
+    {alias_name:"Rasputin",person_id:"p-audit-0",canonical_key:"Grigori Rasputin",representative_default:false},
+    {alias_name:"Buddha",person_id:"p-audit-1",canonical_key:"Gautama Buddha",representative_default:true},
+    {alias_name:"Ivan the Terrible",person_id:"p-audit-2",canonical_key:"Ivan IV",representative_default:false},
+    {alias_name:"Haile Selassie",person_id:"p-audit-3",canonical_key:"Haile Selassie I",representative_default:false},
+    {alias_name:"Sun Tzu",person_id:"p-audit-4",canonical_key:"Sun Wu",representative_default:true},
+    {alias_name:"Ashoka the Great",person_id:"p-audit-5",canonical_key:"Ashoka",representative_default:false},
+    {alias_name:"Nietzsche",person_id:"p-audit-6",canonical_key:"Friedrich Nietzsche",representative_default:false},
+    {alias_name:"Thales of Miletus",person_id:"p-audit-7",canonical_key:"Thales",representative_default:false},
+    {alias_name:"Cicero",person_id:"p-audit-8",canonical_key:"Marcus Tullius Cicero",representative_default:false}
   ],candidates:[
     {candidate_id:"q-hypatia",name:"Hypatia of Alexandria",review_metadata:{lookup_names:["Hypatia"]}},
     {candidate_id:"q-galois",name:"Évariste Galois",review_metadata:{}},
     {candidate_id:"q-leonardo",name:"Leonardo da Vinci",review_metadata:{}}
   ]};
-  const signals={ok:true,available_count:10,rows:[
+  const signals={ok:true,available_count:19,rows:[
     {rank:1,raw_name:"Abraham Lincoln",distinct_channel_count:95,video_count:105},
     {rank:2,raw_name:"Leonardo da Vinci",distinct_channel_count:80,video_count:100},
     {rank:3,raw_name:"Cleopatra",distinct_channel_count:72,video_count:95},
@@ -206,8 +224,17 @@ test("REVIEW-M11 labels only unique exact registered aliases and current pending
     {rank:7,raw_name:"Abraham Lincoln Biography",distinct_channel_count:7,video_count:8},
     {rank:8,raw_name:"세종대왕",distinct_channel_count:6,video_count:7},
     {rank:9,raw_name:"Napoleon Bonaparte",distinct_channel_count:82,video_count:94},
-    {rank:10,raw_name:"Avicenna",distinct_channel_count:18,video_count:22}
-  ],snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":10},source_state:{next_batch:"batch018"}}};
+    {rank:10,raw_name:"Avicenna",distinct_channel_count:18,video_count:22},
+    {rank:11,raw_name:"Rasputin",distinct_channel_count:18,video_count:22},
+    {rank:12,raw_name:"Buddha",distinct_channel_count:18,video_count:22},
+    {rank:13,raw_name:"Ivan the Terrible",distinct_channel_count:18,video_count:22},
+    {rank:14,raw_name:"Haile Selassie",distinct_channel_count:18,video_count:22},
+    {rank:15,raw_name:"Sun Tzu",distinct_channel_count:18,video_count:22},
+    {rank:16,raw_name:"Ashoka the Great",distinct_channel_count:18,video_count:22},
+    {rank:17,raw_name:"Nietzsche",distinct_channel_count:18,video_count:22},
+    {rank:18,raw_name:"Thales of Miletus",distinct_channel_count:18,video_count:22},
+    {rank:19,raw_name:"Cicero",distinct_channel_count:18,video_count:22}
+  ],snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":19},source_state:{next_batch:"batch018"}}};
   const context={
     window:{ATLAS_CLIENT_DATA_STORE:{loadPersons:async()=>persons},addEventListener(){}},
     fetch:async url=>({ok:true,status:200,json:async()=>url.includes("registration-queue")?queue:signals}),
@@ -229,6 +256,17 @@ test("REVIEW-M11 labels only unique exact registered aliases and current pending
   assert.match(matchingRow("Leonardo da Vinci"),/data-status="registered">기등록/);
   assert.match(matchingRow("Napoleon Bonaparte"),/data-status="registered">기등록/);
   assert.match(matchingRow("Avicenna"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Rasputin"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Buddha"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Ivan the Terrible"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Haile Selassie"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Sun Tzu"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Ashoka the Great"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Nietzsche"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Thales of Miletus"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Cicero"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Buddha"),/data-status="representative">대표 간주: Gautama Buddha/);
+  assert.match(matchingRow("Sun Tzu"),/data-status="representative">대표 간주: Sun Wu/);
   assert.doesNotMatch(matchingRow("Leonardo da Vinci"),/대기열 등재/);
   assert.match(matchingRow("Cleopatra"),/data-status="registered">기등록/);
   assert.match(matchingRow("Cleopatra"),/data-status="representative">대표 간주: Cleopatra VII/);
