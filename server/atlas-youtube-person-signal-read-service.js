@@ -83,7 +83,7 @@ async function readYoutubePersonSignals({client,minChannels=3,limit=300,offset=0
   if(!client || typeof client.query!=="function") throw new Error("PostgreSQL client is required");
   const threshold=integerOption(minChannels,3,{min:3,max:1000});
   const pageSize=integerOption(limit,300,{min:1,max:1000});
-  const pageOffset=integerOption(offset,0,{min:0,max:10000});
+  const pageOffset=integerOption(offset,0,{min:0,max:100000});
 
   const snapshot=projectSnapshot((await client.query(GLOBAL_SNAPSHOT_SQL)).rows?.[0]);
   if(!snapshot) return Object.freeze({
