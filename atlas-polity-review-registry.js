@@ -112,16 +112,19 @@
         title: "France regime family ↔ kingdom / republic / empire / restoration / republics",
         left: { name: "France regime family" },
         right: { name: "kingdom / republic / empire / restoration / republics" },
-        rationale: "2026-10-08 P2-01 Production census: France 본토 관련 live Polity 8개, Authoring/Runtime Activity 각 65건이 Activity/Person/Polity/Role/기간에서 모두 일치합니다. 그러나 #1357의 왕국→France 21 Activity 합병과 #1378의 구 Kingdom UUID 퇴역 이후 현재 새 Kingdom of France UUID 7e090994-f196-4957-8295-dcfa08c53fba에 Philip II, Cartier 3개 항해, Jacques-Louis David의 5건이 새로 분산됐습니다. France에는 1226–1792, 1814–1815, 1815–1830 왕국 state_form 3개가 이미 있고 Philip II 1180–1223은 기존 첫 designation 기간보다 앞섭니다. French Third Republic 2건은 1878–1969에 14건을 담는 generic stage2:french-republic과 병존하며 latter에는 1958→ Fifth Republic governance_context가 있습니다. 헌정체 경계와 지속국가 모델 혼합을 별도 P2-01A(왕국 5건), P2-01B(제3공화국), P2-01C(전시·제4·제5공화국/France umbrella)로 검증·정정하기 전 전체 family를 terminal 처리하지 않습니다. 삭제/자동 병합 금지. 자료: docs/POLITY_P2_01_FRANCE_REGIME_FAMILY_AUDIT_20261008.md.",
+        rationale: "2026-10-08 P2-01A 실적: 기존 #1357/#1378 France 동일 Identity 왕국 state_form 통합 판정에 따라 재생성 Kingdom UUID 7e090994-f196-4957-8295-dcfa08c53fba의 Philip II 1180–1223, Cartier 3차 항해, Jacques-Louis David 1785 등 활동 5건을 정식 Correction으로 안정된 France 1eaa48b6-dc60-49d6-91c4-49db556f4ddf에 재연결했습니다. Source 8개 링크 및 Activity 5 UUID·기간 보존, 왕국 5→0 / France 32→37, 전체 France family Authoring/Runtime 65/65 불일치 0. BnF 필리프 2세·루이 8세 증거로 기존 1226~1792 지정 구간을 바꾸지 않고 별도의 1180~1225 King of France state_form 추가. 왕국 레거시 UUID는 삭제 승인 없이 보존 중입니다. French Third Republic 2건과 generic stage2:french-republic 14건 혼재 및 제4·제5공화국/France umbrella 등은 P2-01B/C에서 별도 검토해야 하므로 family REVIEW_REQUIRED 유지, 전수 씨앗 25건 변동 없음. 근거 docs/POLITY_P2_01A_FRANCE_KINGDOM_FIVE_RELINK_20261008.md.",
         suggested_action: "hold",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
         evidence: [
-          "2026-10-08 connected Production: 8 live France-family Polities, 65 Authoring / 65 exact matching Runtime Activities, 0 mismatches",
-          "2026-10-08 Kingdom of France new live UUID 7e090994-f196-4957-8295-dcfa08c53fba: Philip II (1180–1223), Cartier voyages (1534, 1535–1536, 1541–1542), Jacques-Louis David (1785)",
-          "#1357 existing 21-Activity stable France consolidation + three Kingdom temporal designations; #1378 old Kingdom UUID 2fcc634c-9806-5fe8-96fe-e4310124908a retirement; #1905 later Cartier registration",
-          "2026-10-08 French Third Republic 2 Activities versus generic stage2:french-republic 14 Activities and one Fifth Republic governance period",
+          "2026-10-08 P2-01 census: 8 live France-family Polities; 65 Authoring and 65 exact matching Runtime Activities; 0 core mismatches",
+          "P2-01A Correction Applied 2026-10-08 09:06 UTC: request polity_france_reintroduced_kingdom_five_relink_20261008_v1; #2157 merge a0352752298053ecde2c4a4c437b2912cf2bd704",
+          "Production verified 5 exact Activity UUIDs relinked from reintroduced Kingdom 7e090994-f196-4957-8295-dcfa08c53fba to stable France 1eaa48b6-dc60-49d6-91c4-49db556f4ddf; counts Kingdom 0, France 37, source links 8 conserved, Runtime 65/65",
+          "BnF Philippe II 1180–1223 and Louis VIII 1223–1226; new non-overlapping 1180–1225 state_form on France, earlier 1226–1792 and 1814–1830 designations untouched",
+          "#1357 earlier Kingdom→France 21-Activity consolidation and #1378 retired different earlier Kingdom UUID 2fcc634c-9806-5fe8-96fe-e4310124908a remain historical precedent",
+          "P2-01B pending Third Republic 2 vs generic French Republic 14; P2-01C pending France country/war/4th/5th boundaries; no terminal family decision",
           "French National Assembly regime chronology: https://www.assemblee-nationale.fr/gouv_parl/regimes.asp"
+
         ]
       },
       {
