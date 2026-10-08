@@ -124,7 +124,7 @@ test("REVIEW-M8 visualizes YouTube signal strength with bars while preserving al
   assert.match(css, /\.registration-review-signal-table tbody\{[\s\S]*display:grid[\s\S]*gap:7px/);
   assert.match(css, /\.registration-review-signal-bar\{[\s\S]*grid-column:2 \/ 5[\s\S]*background:#0f1215/);
   assert.match(css, /\.registration-review-signal-bar span\{[\s\S]*width:var\(--signal-strength,0%\)[\s\S]*background:var\(--atlas-honor-metal\)/);
-  assert.match(css, /@media\(max-width:600px\)\{[\s\S]*\.registration-review-signal-bar\{[\s\S]*grid-column:2 \/ 5/);
+  assert.match(css, /@media\(max-width:600px\)\{[\s\S]*\.registration-review-signal-row \.registration-review-signal-bar\{[\s\S]*grid-column:2 \/ -1/);
 
   assert.match(js, /const maxChannels=Math\.max\(1,\.\.\.signalRows\.map/);
   assert.match(js, /const strength=Math\.min\(100,\(channels\/maxChannels\)\*100\)/);
@@ -147,4 +147,20 @@ test("REVIEW-M9 uses one exact cumulative channel ranking and a non-overlapping 
  assert.ok(!js.includes("channel_count_upper_bound"));
  assert.ok(css.includes(".registration-review-signal-toolbar{display:grid"));
  assert.ok(css.includes("white-space:normal;overflow-wrap:anywhere"));
+});
+
+test("REVIEW-M10 keeps mobile YouTube names and counts in separate grid rows",()=>{
+  const css=read("atlas-registration-review.css");
+  const js=read("atlas-registration-review.js");
+  const mobile=css.slice(css.indexOf("/* REVIEW-M8"),css.indexOf("/* Cumulative YouTube toolbar"));
+  assert.match(mobile,/grid-template-columns:38px repeat\(2,minmax\(0,1fr\)\)/);
+  assert.match(mobile,/grid-template-rows:auto auto 5px/);
+  assert.match(mobile,/\.registration-review-name\{\s*grid-column:2 \/ -1;\s*grid-row:1/);
+  assert.match(mobile,/td:nth-child\(3\)\{\s*grid-column:2;\s*grid-row:2/);
+  assert.match(mobile,/td:nth-child\(4\)\{\s*grid-column:3;\s*grid-row:2/);
+  assert.match(mobile,/\.registration-review-number\{\s*position:static;\s*padding-top:0;\s*text-align:left/);
+  assert.match(mobile,/\.registration-review-number::before\{\s*position:static/);
+  assert.match(mobile,/\.registration-review-signal-bar\{\s*grid-column:2 \/ -1;\s*grid-row:3/);
+  assert.match(js,/data-label="채널"/);
+  assert.match(js,/data-label="영상"/);
 });
