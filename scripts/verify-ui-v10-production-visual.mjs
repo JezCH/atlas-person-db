@@ -169,6 +169,10 @@ async function collectMain(client){
     const medianActivityWidthRatio=median(centerSamples.map((sample)=>sample.widthRatio));
     const medianIdentityWidthRatio=median(centerSamples.map((sample)=>sample.identityWidthRatio));
     const medianActivityToIdentityRatio=median(centerSamples.map((sample)=>sample.activityToIdentityRatio));
+    const personRowSurfaceSamples=rows.slice(0,5).map((row)=>{
+      const computed=style(row);
+      return {classes:String(row.className),border_radius:computed?.borderRadius,box_shadow:computed?.boxShadow,background:computed?.backgroundColor,selector_matches:{monumental:!!row.closest(".person-monumental-register"),era_rows:!!row.closest(".person-era-rows")}};
+    });
     const cardLikeCount=rows.filter((row)=>{
       const s=style(row);
       const radius=Math.max(...String(s?.borderRadius||"0").split(/\s+/).map((value)=>Number.parseFloat(value)||0));
@@ -203,6 +207,7 @@ async function collectMain(client){
       medianActivityToIdentityRatio,
       centerSamples,
       cardLikeCount,
+      personRowSurfaceSamples,
       quietCountVisible:quietCounts.filter(visible).length,
       activityDomIntegrity,
       tableHeadVisible:visible(tableHead),
@@ -411,6 +416,7 @@ async function main(){
   try{
     await navigatePerson(client,DESKTOP);
     const desktopMain=await collectMain(client);
+    await screenshot(client,"person-main-pre-assert-1600x1000.png");
     assert(desktopMain.viewport.width===1600&&desktopMain.viewport.height===1000,"Unexpected desktop viewport",desktopMain);
     assert(desktopMain.mainVisible&&desktopMain.registerCount>0,"Person Register did not render on desktop",desktopMain);
     assert(desktopMain.mainPortraitCount===0,"Person Main must not render portraits",desktopMain);
