@@ -8,7 +8,7 @@ import {fileURLToPath} from "node:url";
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const text=(p)=>fs.readFileSync(path.join(root,p),"utf8");
 
-test("P2-01 France family remains open after P2-01A/B repairs pending wartime/umbrella judgment",()=>{
+test("P2-01 France family remains open after P2-01A/B/D corrections pending de facto/umbrella judgment",()=>{
   const context={window:{}};
   vm.runInNewContext(text("atlas-polity-review-registry.js"),context);
   const reg=context.window.ATLAS_POLITY_REVIEW_REGISTRY;
@@ -33,13 +33,19 @@ test("P2-01 France family remains open after P2-01A/B repairs pending wartime/um
   assert.match(audit,/65 Authoring/);
   assert.match(audit,/65 Runtime/);
   assert.match(audit,/P2-01A/);
-  assert.match(text("docs/ATLAS_CURRENT_WORKSTREAMS.md"),/Immediate bounded next unit: `POLITY-P2-01D`/);
+  assert.match(text("docs/ATLAS_CURRENT_WORKSTREAMS.md"),/Immediate bounded next unit: `POLITY-P2-01E`/);
   const correction=text("docs/POLITY_P2_01A_FRANCE_KINGDOM_FIVE_RELINK_20261008.md");
   assert.match(correction,/CORRECTION_APPLIED/);
   assert.match(correction,/65 \/ 0 difference/);
   assert.match(france.rationale,/왕국 5→0/);
   assert.match(france.rationale,/P2-01C/);
   assert.match(france.rationale,/P2-01D/);
+  assert.match(france.rationale,/P2-01E/);
+  assert.ok(france.evidence.some(x=>x.includes('P2-01D')&&x.includes('APPLIED')));
+  const govern=text('docs/POLITY_P2_01D_FRANCE_GPRF_FOURTH_GOVERNANCE_20261008.md');
+  assert.match(govern,/AUTHENTICATED_CORRECTION_APPLIED/);
+  assert.match(govern,/65 Authoring \/ 65 Runtime \/ 0 identity/);
+  assert.match(govern,/P2-01E/);
   const war=text("docs/POLITY_P2_01C_FRANCE_WARTIME_REPUBLICAN_CONTINUITY_AUDIT_20261008.md");
   assert.match(war,/65 Authoring \/ 65 matching Runtime \/ 0 mismatches/);
   assert.match(war,/NO PRODUCTION MUTATION/);
