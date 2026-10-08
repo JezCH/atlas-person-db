@@ -45,7 +45,12 @@ function requireOperation(raw, index) {
   }
   const caseId = requireNonEmpty(raw.case_id, `CORRECTION_PERSON_DOMAIN_OP${index}_CASE_ID_REQUIRED`);
   const personId = requireUuid(raw.person_id, `CORRECTION_PERSON_DOMAIN_OP${index}_PERSON_ID_INVALID`);
-  const expectedDomain = requireDomain(raw.expected_domain, `CORRECTION_PERSON_DOMAIN_OP${index}_EXPECTED_DOMAIN_INVALID`);
+  if (!Object.prototype.hasOwnProperty.call(raw, "expected_domain")) {
+    throw new Error(`CORRECTION_PERSON_DOMAIN_OP${index}_EXPECTED_DOMAIN_REQUIRED`);
+  }
+  const expectedDomain = raw.expected_domain === null
+    ? null
+    : requireDomain(raw.expected_domain, `CORRECTION_PERSON_DOMAIN_OP${index}_EXPECTED_DOMAIN_INVALID`);
   const replacementDomain = requireDomain(raw.replacement_domain, `CORRECTION_PERSON_DOMAIN_OP${index}_REPLACEMENT_DOMAIN_INVALID`);
   if (expectedDomain === replacementDomain) {
     throw new Error(`CORRECTION_PERSON_DOMAIN_OP${index}_NO_CHANGE`);
@@ -144,7 +149,8 @@ async function domainCounts(client) {
 function expectedDomainCounts(before, operations) {
   const expected = { ...before };
   for (const operation of operations) {
-    expected[operation.expected_domain] -= 1;
+    const sourceKey = operation.expected_domain == null ? "unclassified" : operation.expected_domain;
+    expected[sourceKey] -= 1;
     expected[operation.replacement_domain] += 1;
   }
   return Object.freeze(expected);
