@@ -16,6 +16,9 @@
  *
  * Other entries are conservative editorial defaults for living, widely
  * documented contemporaries, not a full life-status authority.
+ * Known counterexample: Dolly Parton died on 2026-08-25 (Reuters), so must
+ * never be classified living from earlier press coverage.
+ * https://www.reuters.com/lifestyle/dolly-parton-has-died-family-says-2026-08-25/
  */
 const REVIEWED_AS_OF="2026-10-09";
 const REVIEW_EXPIRES_AT="2027-01-09T00:00:00.000Z";
@@ -31,7 +34,6 @@ const REVIEWED_LIVING_NAMES=Object.freeze([
   "Bill Gates",
   "Cristiano Ronaldo",
   "Cristiano Ronaldo dos Santos Aveiro",
-  "Dolly Parton",
   "Donald Trump",
   "Elon Musk",
   "Giorgia Meloni",
