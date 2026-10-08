@@ -37,4 +37,45 @@ Run [Spacetime Production Visual Acceptance workflow](https://github.com/JezCH/a
 
 After actual Production capture and A/B inspection, record the **decision** as one of `ACCEPT` (explicit justification and separately gated safe opt-in) or `REJECT` (no production change). Then check VIS2-05 in #2158 as a completed experiment, without starting VIS2-06 or shipping any watermark by implication.
 
-**Current decision:** PENDING VISUAL REVIEW — default remains REJECT/OFF.
+**Final decision: REJECT — VIS2-05 EXPERIMENT COMPLETE.** The watermark was not and will not be shipped; production remains unchanged. See the exact-sha Chrome evidence and A/B inspection below. **Next VIS2-06 NOT STARTED.**
+
+
+## 2026-10-09 KST — actual Production acceptance, human A/B and decisive rejection
+
+### Provenance, exact runtime and complete captures
+
+- Feature/research-only [PR #2202](https://github.com/JezCH/atlas-person-db/pull/2202), squash merged SHA `b2ec024e449838fafffc121772b234940e5fb43b`; original UI `index.html`, dynamic Spacetime CSS loader and all historical data are **unchanged**, and the candidate file under `experiments/` remains disconnected from Production rendering.
+- [Production Chrome SUCCESS #37817749988](https://github.com/JezCH/atlas-person-db/actions/runs/37817749988), exact source/deployed runtime `b2ec024e449838fafffc121772b234940e5fb43b`; [84-PNG plus machine JSON artifact #11567514381](https://github.com/JezCH/atlas-person-db/actions/runs/37817749988/artifacts/11567514381). Downloaded artifact valid ZIP, **96 entries / 84 PNGs**, `vis2-05-watermark-ab.json` status `CAPTURED_PENDING_VISUAL_REJECTION_REVIEW` with **12 geometric PASS scenes and 24 matched PNGs**. This machine status means captured for human review, not an automated endorsement of the design.
+- Prior Spacetime, Person, Polity, 29-image common baseline, VIS2-01/02/03/04 tests all passed in the same exact-SHA workflow. Trial CSS is only injected temporarily into Chrome for screenshot B; strict style/attribute cleanup and release DEFAULT OFF gates passed.
+
+### Actual same-state A/B evidence
+
+Every `A-default`/`B-experiment` pair was compared in RGB pixel space, and representative mobile boundary, tablet dense, 1600px boundary and 1500% zoom captures were opened side by side. Nonzero changes occurred solely because the trial inscriptions rendered; the test separately confirms **unchanged history tick text/positions, world/axis boxes, scrollLeft/scrollTop, actual zoom, Person label geometry/count and no horizontal page overflow**.
+
+| Viewport | Zoom | Scene | Original year; era | Person label DOM sample | Pixels changed |
+|---|---:|---|---|---:|---:|
+| 390×844 | 500% | Era boundary | AD 625 · 전기중세 | 21 | 5,717 (1.737%) |
+| 390×844 | 500% | Label-dense | AD 1375 | 39 | 4,010 (1.218%) |
+| 768×1000 | 500% | Era boundary | AD 625 · 전기중세 | 48 | 5,723 (0.745%) |
+| 768×1000 | 500% | Label-dense | AD 1125 | 84 | 3,960 (0.516%) |
+| 1440×1000 | 500% | Era boundary | AD 1000 · 후기중세 | 34 | 15,132 (1.051%) |
+| 1440×1000 | 500% | Label-dense | AD 1375 | 33 | 9,932 (0.690%) |
+| 1600×1000 | 500% | Era boundary | AD 1000 · 후기중세 | 34 | 18,068 (1.129%) |
+| 1600×1000 | 500% | Label-dense | AD 1375 | 34 | 12,185 (0.762%) |
+| 1600×1000 | 1000% | Era boundary | AD 1000 · 후기중세 | 7 | 18,068 (1.129%) |
+| 1600×1000 | 1000% | Label-dense | AD 950 | 7 | 11,916 (0.745%) |
+| 1600×1000 | 1500% | Era boundary | AD 1500 · 근세 | **0** | 16,824 (1.052%) |
+| 1600×1000 | 1500% | Label-dense | AD 1350 | 6 | 13,088 (0.818%) |
+
+**Qualification:** these Person label counts are the screenshot's *virtualized DOM samples*, not claims of 84 unobstructed labels simultaneously readable on screen; the separate dense-scene selector scanned eleven scroll positions for the maximum number of *visible* labels. The 1500% boundary scene contained zero labels, and is **not** counted as dense-frame readability evidence; its paired 1500% dense scene had six.
+
+### Visual adjudication: REJECT
+
+1. **Redundant information:** the monument-sized `AD 1000`/`후기중세` duplicates already-readable AD year ticks and era band/boundary text, rather than adding new historical information.
+2. **Direct visual competition:** in the opened 390px AD 625/전기중세 boundary frame, the pale watermark lies across the populated Person line and middle of the limited mobile canvas; at 768px AD 1125 dense it competes with nearby labels, dense semantic rails and fine 1px time guides.
+3. **Desktop archive hierarchy degrades:** the opened 1600px AD 1000 boundary view puts an oversized era title and date at the center of the active Person chart, diverting attention from the precise tick axis and existing domain-colored labels; the same 1600px A screen has clearer prioritization.
+4. **No justified rollout:** unchanged geometry alone does not imply a superior reading experience. The extra 0.516–1.737% rendered content is decorative rather than informative, and at 1500% only makes otherwise sparse areas visually louder.
+
+**Result: unequivocal REJECT.** Do not enable, opt in, or include the watermark in any production route. Preserve the non-shipping CSS *only as an isolated experiment evidence fixture*, and keep VIS2-04's improved precision ticks. All original visual/user-facing UI remains **A-default**, including mobile and high zoom. A future separate proposal would need a demonstrated accessibility/information benefit before any release decision.
+
+**Work-unit gate:** VIS2-05 is finished as a *rejected experiment*, not an accepted feature; next VIS2-06 Spacetime instrument/marginalia is a distinct **NOT STARTED** user-triggered unit.
