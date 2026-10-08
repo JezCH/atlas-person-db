@@ -18,6 +18,8 @@
   let signalRows=[];
   let personIdentityIndex=null;
   let queueIdentityIndex=null;
+  let representativeIdByName=null;
+  let personById=null;
 
   // The same exact-identity rule used by the registration queue: do not
   // equate partial names or infer an unregistered Person from an absent alias.
@@ -48,6 +50,8 @@
 
   function prepareSignalIdentities(personPayload,queuePayload) {
     const persons=Array.isArray(personPayload?.persons) ? personPayload.persons : [];
+    personById=new Map(persons.map(person=>[String(person?.id||""),person]));
+    representativeIdByName=new Map();
     personIdentityIndex=identityIndex(persons,person=>[
       person?.canonical_name_en,person?.preferred_name_ko,person?.display_name,
       ...(Array.isArray(person?.names) ? person.names.map(name=>name?.name) : [])
@@ -61,6 +65,7 @@
       if(!key||!validPersonIds.has(id)) continue;
       if(!personIdentityIndex.has(key)) personIdentityIndex.set(key,new Set());
       personIdentityIndex.get(key).add(id);
+      if(alias?.representative_default===true) representativeIdByName.set(key,id);
     }
     queueIdentityIndex=identityIndex(queuePayload?.candidates || [],candidate=>{
       const metadata=candidate?.review_metadata || {};
@@ -72,14 +77,46 @@
     },"candidate_id");
   }
 
+  function representativePerson(name) {
+    const key=identityKey(name);
+    const matched=key ? personIdentityIndex?.get(key) : null;
+    if(!matched?.size) return null;
+    const preference=representativeIdByName?.get(key);
+    const candidates=[...matched].map(id=>personById?.get(id)).filter(Boolean);
+    if(!candidates.length) return null;
+    // Reviewed representative defaults take precedence. For unreviewed exact
+    // homonyms, use the historical Runtime record with the most evidenced
+    // activity rows, then a stable canonical-name/id tie-break.
+    candidates.sort((a,b)=>{
+      if(a.id===preference) return -1;
+      if(b.id===preference) return 1;
+      const historical=Number(b.historicity==="historical")-Number(a.historicity==="historical");
+      if(historical) return historical;
+      const activities=Number(b.activity_count||0)-Number(a.activity_count||0);
+      if(activities) return activities;
+      const labels=String(a.canonical_name_en||a.display_name||"").localeCompare(String(b.canonical_name_en||b.display_name||""),"en");
+      return labels||String(a.id).localeCompare(String(b.id),"en");
+    });
+    const selected=candidates[0];
+    return {
+      id:String(selected.id),
+      label:String(selected.canonical_name_en||selected.display_name||selected.preferred_name_ko||selected.id),
+      representative:matched.size>1||Boolean(preference)
+    };
+  }
+
   function signalRegistrationBadges(name) {
     if (!personIdentityIndex || !queueIdentityIndex) {
       return '<span class="registration-review-signal-identity" data-status="unknown">등록 대조 중</span>';
     }
+    const selected=representativePerson(name);
+    if(selected) {
+      const base='<span class="registration-review-signal-identity" data-status="registered">기등록</span>';
+      return selected.representative
+        ? base+`<span class="registration-review-signal-identity" data-status="representative">대표 간주: ${escapeHtml(selected.label)}</span>`
+        : base;
+    }
     const key=identityKey(name);
-    const matches=key ? (personIdentityIndex.get(key)?.size || 0) : 0;
-    if (matches>1) return '<span class="registration-review-signal-identity" data-status="ambiguous">동명이인 확인</span>';
-    if (matches===1) return '<span class="registration-review-signal-identity" data-status="registered">기등록</span>';
     const pending=key ? (queueIdentityIndex.get(key)?.size || 0) : 0;
     const queueLabel=pending>1 ? "대기열 복수 후보" : pending===1 ? "대기열 등재" : "대기열 미등재";
     return `<span class="registration-review-signal-identity" data-status="unmatched">기등록 일치 없음</span><span class="registration-review-signal-identity" data-status="${pending===1 ? "queued" : pending>1 ? "ambiguous" : "unqueued"}">${queueLabel}</span>`;
@@ -182,10 +219,7 @@
     }).join("");
   }
 
-  function matchesRegistered(name) {
-    const key=identityKey(name);
-    return Boolean(key && (personIdentityIndex?.get(key)?.size || 0)===1);
-  }
+  function matchesRegistered(name) { return representativePerson(name)!==null; }
 
   function signalQuery(limit,offset=0) {
     return SIGNAL_URL+"&min_channels="+encodeURIComponent(minChannels)+"&limit="+limit+"&offset="+offset;
@@ -346,7 +380,7 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 등록 상태는 Person의 이름·별칭과 검증된 동일인 별칭을 현재 등록된 Person ID에 연결해 대조합니다. 일치 없음은 실제 미등록을 확정하지 않습니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
+          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 등록 상태는 Person 이름과 별칭을 대조하며, 동명이인은 대표 인물을 기본값으로 간주합니다. 대표 인물은 표시하며 확정적인 개인 식별을 뜻하지 않습니다. 일치 없음은 실제 미등록을 확정하지 않습니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
         </div>
         <div class="registration-review-signal-toolbar">
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
