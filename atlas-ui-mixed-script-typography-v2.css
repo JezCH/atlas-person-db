@@ -5,6 +5,9 @@
  * Revert this opt-in layer independently without disturbing VIS2-01/02.
  */
 
+/* Read-only Chrome gating token: proves the optional stylesheet is active. */
+:root { --atlas-vis2-03-type-active: 1; }
+
 /* Mixed Hangul/Hanja/Latin nameplates: explicitly enable native glyph
  * kerning without introducing forced Latin substitution or fake bold fonts.
  * East-Asian default glyph metrics are retained (not proportional or full).
