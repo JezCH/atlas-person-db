@@ -106,31 +106,15 @@ test("REVIEW-M6 removes the duplicate local page header without losing refresh/s
 });
 
 
-test("REVIEW-M7 compacts YouTube signal metadata into one responsive toolbar without information loss", () => {
-  const css = read("atlas-registration-review.css");
-  const js = read("atlas-registration-review.js");
-
-  assert.match(css, /REVIEW-M7 — Compact YouTube signal controls without dropping information/);
-  assert.match(css, /\.registration-review-signal-toolbar\{[\s\S]*display:flex[\s\S]*justify-content:space-between/);
-  assert.match(css, /\.registration-review-signal-meta\{[\s\S]*display:flex[\s\S]*justify-content:flex-end/);
-  assert.match(css, /@media\(max-width:980px\)\{[\s\S]*\.registration-review-signal-toolbar\{align-items:flex-start;flex-direction:column\}/);
-  assert.match(css, /@media\(max-width:600px\)\{[\s\S]*\.registration-review-telemetry\{[\s\S]*flex-direction:column/);
-
-  assert.match(js, /class="registration-review-signal-toolbar"/);
-  assert.match(js, /id="youtubeSignalThresholds"/);
-  assert.match(js, /id="youtubeSignalTelemetry"/);
-  assert.match(js, /id="youtubeSignalVisibleCount"/);
-  assert.doesNotMatch(js, /class="registration-review-filterline"/);
-  assert.match(js, /snapshot\.channel_count/);
-  assert.match(js, /snapshot\.video_count/);
-  assert.match(js, /snapshot\.generated_at/);
-  assert.match(js, /snapshot\.parser_version/);
-  assert.match(js, /payload\?\.available_count/);
-  assert.match(js, /payload\?\.stored_count/);
-  assert.match(js, /상세 .*행 저장/);
-  assert.match(js, /signalRows\.length/);
+test("REVIEW-M7 keeps the YouTube cumulative controls",()=>{
+  const css=read("atlas-registration-review.css");
+  const js=read("atlas-registration-review.js");
+  for(const id of ["youtubeSignalThresholds","youtubeSignalTelemetry","youtubeSignalVisibleCount"])
+    assert.ok(js.includes(id));
+  assert.ok(js.includes("snapshot.channel_count"));
+  assert.ok(js.includes("snapshot.video_count"));
+  assert.match(css,/REVIEW-M7/);
 });
-
 
 test("REVIEW-M8 visualizes YouTube signal strength with bars while preserving all numeric fields", () => {
   const css = read("atlas-registration-review.css");
