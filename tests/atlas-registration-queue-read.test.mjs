@@ -27,6 +27,14 @@ test("registration queue is derived from current Production identity, not a queu
   assert.match(PENDING_SQL, /candidate_identity_matches/i);
   assert.match(PENDING_SQL, /Napoleon Bonaparte/);
   assert.match(PENDING_SQL, /Avicenna/);
+  // These source strings were all displayed as unmatched in the user's
+  // 51-person shortlist, despite verified canonical Person UUIDs.
+  for(const name of ["Rasputin","Buddha","Ivan the Terrible","Haile Selassie","Sun Tzu",
+    "Ashoka the Great","Nietzsche","Thales of Miletus","Cicero"]){
+    assert.ok(PENDING_SQL.includes(name),`missing reviewed alias: ${name}`);
+    assert.ok(REVIEWED_PERSON_ALIASES_SQL.includes(name),`missing UI alias: ${name}`);
+  }
+
   assert.match(REVIEWED_PERSON_ALIASES_SQL, /atlas_v2\.persons/);
   assert.match(PENDING_SQL, /matched_person_count/i);
   assert.match(PENDING_SQL, /= 0/);

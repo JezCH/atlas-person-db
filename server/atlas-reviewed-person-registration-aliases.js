@@ -4,6 +4,16 @@
 // canonical Person. These aliases are *not* candidate-name substring guesses,
 // and do not mutate atlas_v2.persons or atlas_v2.person_names.
 const REVIEWED_REGISTRATION_ALIASES=Object.freeze([
+  // Live Production Person-UUID matches for 51-row filtered YouTube audit, 2026-10-09.
+  Object.freeze({alias_name:"Rasputin",canonical_key:"Grigori Rasputin"}),
+  Object.freeze({alias_name:"Buddha",canonical_key:"Gautama Buddha",representative_default:true}),
+  Object.freeze({alias_name:"Ivan the Terrible",canonical_key:"Ivan IV"}),
+  Object.freeze({alias_name:"Haile Selassie",canonical_key:"Haile Selassie I"}),
+  Object.freeze({alias_name:"Sun Tzu",canonical_key:"Sun Wu",representative_default:true}),
+  Object.freeze({alias_name:"Ashoka the Great",canonical_key:"Ashoka"}),
+  Object.freeze({alias_name:"Nietzsche",canonical_key:"Friedrich Nietzsche"}),
+  Object.freeze({alias_name:"Thales of Miletus",canonical_key:"Thales"}),
+  Object.freeze({alias_name:"Cicero",canonical_key:"Marcus Tullius Cicero"}),
   Object.freeze({alias_name:"Napoleon Bonaparte",canonical_key:"Napoleon I"}),
   Object.freeze({alias_name:"Avicenna",canonical_key:"Ibn Sina"}),
   Object.freeze({alias_name:"Queen Victoria",canonical_key:"Victoria"}),
