@@ -6,7 +6,7 @@ const html=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const clean=css.replace(/\/\*[\s\S]*?\*\//g,"");
 const rules=[...clean.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
 test("VIS2-08 is one self-contained late Person-register-only opt-in",()=>{
- const href="atlas-person-register-selection-focus-v2.css?v=20261009-vis2-08-interaction-v1";
+ const href="atlas-person-register-selection-focus-v2.css?v=20261009-vis2-08-interaction-v2";
  assert.equal(html.split(href).length-1,1);
  assert.ok(html.indexOf(href)>html.indexOf("atlas-person-register-inscription-v2.css"));
  assert.match(css,/--atlas-vis2-08-register-interaction-active:\s*1\s*;/);
@@ -21,7 +21,8 @@ test("Selection and focus cannot recolor semantic name ink or alter row geometry
    for(const p of props)assert.ok(["box-shadow","outline","outline-color","outline-offset"].includes(p),"Geometry/ink mutation "+p);
  }
  assert.doesNotMatch(clean,/[\s{;](?:height|width|min-width|min-height|max-height|padding|margin|position|display|transform|opacity|font-|line-height|letter-spacing|color|background|border|grid-|content|z-index)\s*:/);
- assert.doesNotMatch(clean,/--atlas-person-domain|--person-register-domain|data-representative-domain|\.person-table-identity|\.person-table-range|\.person-card-activity|\.spacetime-|\.polity-|!important|@media|@font-face/);
+ assert.doesNotMatch(clean,/--atlas-person-domain|--person-register-domain|\.person-table-identity|\.person-table-range|\.person-card-activity|\.spacetime-|\.polity-|!important|@media|@font-face/);
+ assert.equal(clean.split("data-representative-domain").length-1,1,"Only the linked Person focus selector may qualify by domain; colors stay immutable");
 });
 test("Existing neutral selected ::after and true keyboard focus are the only visual targets",()=>{
  assert.ok(css.includes(".person-register-entry.is-selected::after"));

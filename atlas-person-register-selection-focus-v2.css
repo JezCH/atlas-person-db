@@ -34,7 +34,9 @@
   box-shadow: inset 0 0 0 1px rgba(221,199,152,.23);
 }
 
-.person-card-grid.person-table-grid.person-monumental-register .person-main-name-link:focus-visible {
-  outline: 1px solid rgba(221,199,152,.88);
+/* Dynamic semantic palette owns name INK, but this more specific scoped
+ * selector owns only the outline paint (it loads before that lazy palette). */
+.person-card-grid.person-table-grid.person-monumental-register .person-card[data-representative-domain] .person-main-name-link:focus-visible {
+  outline: 2px solid rgba(221,199,152,.88);
   outline-offset: 1px;
 }
