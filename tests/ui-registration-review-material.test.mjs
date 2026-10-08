@@ -180,24 +180,26 @@ test("REVIEW-M11 labels only unique exact registered aliases and current pending
   const root={isConnected:true,innerHTML:"",querySelector:node};
   const persons={persons:[
     {id:"p-lincoln",canonical_name_en:"Abraham Lincoln",names:[{name:"Abraham Lincoln"}],historicity:"historical"},
+    {id:"p-sejong",canonical_name_en:"Sejong the Great",preferred_name_ko:"세종",names:[{name:"세종대왕"}],historicity:"historical"},
     {id:"p-leonardo",canonical_name_en:"Leonardo da Vinci",names:[],historicity:"historical"},
     {id:"p-cleopatra-1",canonical_name_en:"Cleopatra",names:[],historicity:"historical"},
     {id:"p-cleopatra-2",canonical_name_en:"Cléopatra",names:[],historicity:"historical"}
-  ],summary:{total:4}};
+  ],summary:{total:5}};
   const queue={ok:true,summary:{pending_count:3},candidates:[
     {candidate_id:"q-hypatia",name:"Hypatia of Alexandria",review_metadata:{lookup_names:["Hypatia"]}},
     {candidate_id:"q-galois",name:"Évariste Galois",review_metadata:{}},
     {candidate_id:"q-leonardo",name:"Leonardo da Vinci",review_metadata:{}}
   ]};
-  const signals={ok:true,available_count:7,rows:[
+  const signals={ok:true,available_count:8,rows:[
     {rank:1,raw_name:"Abraham Lincoln",distinct_channel_count:95,video_count:105},
     {rank:2,raw_name:"Leonardo da Vinci",distinct_channel_count:80,video_count:100},
     {rank:3,raw_name:"Cleopatra",distinct_channel_count:72,video_count:95},
     {rank:4,raw_name:"Hypatia",distinct_channel_count:42,video_count:50},
     {rank:5,raw_name:"Evariste Galois",distinct_channel_count:23,video_count:30},
     {rank:6,raw_name:"Mansa Musa",distinct_channel_count:18,video_count:21},
-    {rank:7,raw_name:"Abraham Lincoln Biography",distinct_channel_count:7,video_count:8}
-  ],snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":7},source_state:{next_batch:"batch018"}}};
+    {rank:7,raw_name:"Abraham Lincoln Biography",distinct_channel_count:7,video_count:8},
+    {rank:8,raw_name:"세종대왕",distinct_channel_count:6,video_count:7}
+  ],snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":8},source_state:{next_batch:"batch018"}}};
   const context={
     window:{ATLAS_CLIENT_DATA_STORE:{loadPersons:async()=>persons},addEventListener(){}},
     fetch:async url=>({ok:true,status:200,json:async()=>url.includes("registration-queue")?queue:signals}),
@@ -215,6 +217,7 @@ test("REVIEW-M11 labels only unique exact registered aliases and current pending
     return item.slice(0,item.indexOf("</tr>"));
   };
   assert.match(matchingRow("Abraham Lincoln"),/data-status="registered">기등록/);
+  assert.match(matchingRow("세종대왕"),/data-status="registered">기등록/);
   assert.match(matchingRow("Leonardo da Vinci"),/data-status="registered">기등록/);
   assert.doesNotMatch(matchingRow("Leonardo da Vinci"),/대기열 등재/);
   assert.match(matchingRow("Cleopatra"),/data-status="ambiguous">동명이인 확인/);
