@@ -13,7 +13,7 @@ test("UI V6 loads a dedicated chronology canvas after the base Spacetime stylesh
   const v6 = 'atlas-person-spacetime-monumental-canvas.css?v=20261008-spacetime-l1-chronograph-v1';
   assert.ok(nav.includes(base));
   assert.ok(nav.includes(v6));
-  const v7 = 'atlas-person-spacetime-instrument-tools.css?v=20261007-spacetime-m3-luminance-v1';
+  const v7 = 'atlas-person-spacetime-instrument-tools.css?v=20261008-spacetime-l2-instrument-finish-v1';
   assert.ok(nav.indexOf(base) < nav.indexOf(v6));
   assert.ok(nav.indexOf(v6) < nav.indexOf(v7));
   assert.match(nav, /atlas-person-spacetime-view\.js\?v=20261003-ui-v7-tools-v1/);
