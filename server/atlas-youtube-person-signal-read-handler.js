@@ -36,7 +36,8 @@ function createYoutubePersonSignalReadHandler({ clientFactory, env = process.env
     try {
       const minChannels=queryValue(req,"min_channels");
       const limit=queryValue(req,"limit");
-      if (minChannels === "__INVALID_MULTI__" || limit === "__INVALID_MULTI__") {
+      const offset=queryValue(req,"offset");
+      if (minChannels === "__INVALID_MULTI__" || limit === "__INVALID_MULTI__" || offset === "__INVALID_MULTI__") {
         sendJson(res,400,{ ok:false,code:"INVALID_YOUTUBE_PERSON_SIGNAL_QUERY",error:"query parameters must be singular" });
         return;
       }
@@ -44,12 +45,13 @@ function createYoutubePersonSignalReadHandler({ clientFactory, env = process.env
       const result=await readSignals({
         client,
         ...(minChannels == null ? {} : { minChannels }),
-        ...(limit == null ? {} : { limit })
+        ...(limit == null ? {} : { limit }),
+        ...(offset == null ? {} : { offset })
       });
       sendJson(res,200,{ ok:true,source:"youtube-person-signal-read-model",...result });
     } catch (error) {
       if (error?.code === "INVALID_YOUTUBE_PERSON_SIGNAL_QUERY" || error?.message === "INVALID_YOUTUBE_PERSON_SIGNAL_QUERY") {
-        sendJson(res,400,{ ok:false,code:"INVALID_YOUTUBE_PERSON_SIGNAL_QUERY",error:"invalid min_channels or limit" });
+        sendJson(res,400,{ ok:false,code:"INVALID_YOUTUBE_PERSON_SIGNAL_QUERY",error:"invalid min_channels, limit or offset" });
         return;
       }
       console.error("ATLAS YouTube person signal read failed",error);
