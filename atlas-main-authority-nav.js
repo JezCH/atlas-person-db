@@ -174,7 +174,7 @@
     if (window.ATLAS_DASHBOARD) return Promise.resolve(window.ATLAS_DASHBOARD);
     if (dashboardAssetsPromise) return dashboardAssetsPromise;
     appendStylesheetOnce("./atlas-dashboard.css?v=20261001-canonical-nontimeline-v1");
-    appendStylesheetOnce("./atlas-dashboard-monumental-v11.css?v=20261007-dashboard-m3-operational-controls-v1");
+    appendStylesheetOnce("./atlas-dashboard-monumental-v11.css?v=20261008-dashboard-lux1-ledger-v1");
     dashboardAssetsPromise = ensureSpacetimeModel()
       .then(() => loadScriptOnce("./atlas-dashboard-model.js?v=20261001-canonical-nontimeline-v1", () => Boolean(window.ATLAS_DASHBOARD_MODEL)))
       .then(() => loadScriptOnce("./atlas-dashboard.js?v=20261001-canonical-nontimeline-v1", () => Boolean(window.ATLAS_DASHBOARD)))
