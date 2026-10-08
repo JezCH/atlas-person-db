@@ -11,7 +11,15 @@ const REVIEWED_REGISTRATION_ALIASES=Object.freeze([
   Object.freeze({alias_name:"Shaka Zulu",canonical_key:"Shaka kaSenzangakhona"}),
   Object.freeze({alias_name:"Attila the Hun",canonical_key:"Attila"}),
   Object.freeze({alias_name:"Richard the Lionheart",canonical_key:"Richard I"}),
-  Object.freeze({alias_name:"Vlad the Impaler",canonical_key:"Vlad III"})
+  Object.freeze({alias_name:"Vlad the Impaler",canonical_key:"Vlad III"}),
+  Object.freeze({alias_name:"Constantine the Great",canonical_key:"Constantine I"}),
+  Object.freeze({alias_name:"Suleiman the Magnificent",canonical_key:"Suleiman I"}),
+  Object.freeze({alias_name:"Emperor Hirohito",canonical_key:"Hirohito"}),
+  Object.freeze({alias_name:"Robert Oppenheimer",canonical_key:"J. Robert Oppenheimer"}),
+  Object.freeze({alias_name:"Saint Augustine",canonical_key:"Augustine of Hippo"}),
+  Object.freeze({alias_name:"Queen Nzinga",canonical_key:"Nzinga Mbande"}),
+  Object.freeze({alias_name:"Frederick the Great",canonical_key:"Frederick II of Prussia"}),
+  Object.freeze({alias_name:"Ragnar Lothbrok",canonical_key:"Ragnar Lodbrok"})
 ]);
 
 function sqlLiteral(value) {
