@@ -51,3 +51,20 @@ test("invalid limits fail closed and empty snapshots are handled",async()=>{
   assert.equal(empty.available,false);
   assert.deepEqual(empty.rows,[]);
 });
+
+test("filtered ranking pages from the global snapshot without changing absolute rank",async()=>{
+  const calls=[];
+  const client={async query(sql,params=[]){
+    calls.push({sql,params});
+    if(sql===service.GLOBAL_SNAPSHOT_SQL) return {rows:[{snapshot_id:"snapshot",snapshot_scope:"global_reconciled",threshold_counts:{"3":6445}}]};
+    if(sql===service.SIGNAL_COUNT_SQL) return {rows:[{count:6445}]};
+    if(sql===service.PAGED_SIGNAL_ROWS_SQL) return {rows:[{raw_name:"Candidate",rank:1001,distinct_channel_count:5,video_count:6}]};
+    throw new Error("unexpected SQL");
+  }};
+  const result=await service.readYoutubePersonSignals({client,minChannels:3,limit:1000,offset:1000});
+  assert.equal(result.offset,1000);
+  assert.equal(result.rows[0].rank,1001);
+  assert.deepEqual(calls.find(call=>call.sql===service.PAGED_SIGNAL_ROWS_SQL).params,["snapshot",3,1000,1000]);
+  await assert.rejects(()=>service.readYoutubePersonSignals({client,offset:-1}),/INVALID_YOUTUBE_PERSON_SIGNAL_QUERY/);
+  await assert.rejects(()=>service.readYoutubePersonSignals({client,offset:10001}),/INVALID_YOUTUBE_PERSON_SIGNAL_QUERY/);
+});
