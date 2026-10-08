@@ -545,6 +545,97 @@
   outline-offset: 2px;
 }
 
+/* SPACETIME-L1 — Precision chronograph finish.
+ * Borrow the light discipline of finely machined watch dials: an engraved
+ * time gutter, a quiet brushed header, and one precise focus glint. These
+ * refinements change only color/material; chronology and world geometry,
+ * label sizing/packing, domain colors and camera stay canonical.
+ */
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-axis,
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis {
+  background-image: linear-gradient(
+    90deg,
+    var(--atlas-material-sheen-soft),
+    transparent 34%,
+    rgba(0,0,0,.09) 100%
+  );
+  box-shadow:
+    inset -1px 0 0 var(--atlas-material-hairline),
+    inset 1px 0 0 var(--atlas-material-sheen-soft);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-sticky-corner,
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-region-head {
+  background-image: linear-gradient(
+    180deg,
+    var(--atlas-material-sheen-strong),
+    transparent 78%
+  );
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    inset 0 -1px 0 var(--atlas-material-hairline-strong);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-axis > div span {
+  color: var(--spacetime-chronograph);
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis span {
+  color: var(--spacetime-label-muted);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis span.is-major {
+  color: var(--spacetime-chronograph-strong);
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis span.is-major::before {
+  background: var(--atlas-material-rail);
+  opacity: 1;
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-century-line.is-major {
+  background-image: linear-gradient(
+    90deg,
+    var(--atlas-material-hairline-strong),
+    var(--spacetime-line-major) 12%,
+    var(--spacetime-line-major) 90%
+  );
+  box-shadow: 0 1px 0 var(--atlas-material-edge-dark);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-boundary {
+  background-image: linear-gradient(
+    90deg,
+    var(--atlas-material-rail),
+    var(--atlas-material-hairline-strong) 20%,
+    var(--spacetime-line-major) 70%,
+    var(--spacetime-line) 100%
+  );
+  box-shadow: 0 -1px 0 var(--atlas-material-sheen-soft);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-boundary b {
+  color: var(--spacetime-chronograph-strong);
+  background-color: var(--spacetime-ink-deep);
+  background-image: linear-gradient(
+    180deg,
+    var(--atlas-material-sheen),
+    transparent
+  );
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+  box-shadow: inset 0 -1px 0 var(--atlas-material-hairline-soft);
+}
+
+/* Highlight the selected inscription, never recolor its semantic domain rail. */
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-label.is-selected {
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    inset 0 -1px 0 var(--spacetime-selection-metal-strong),
+    0 0 0 1px var(--atlas-material-hairline-strong);
+}
+
 @media (max-width: 760px) {
   .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-boundary b {
     display: none;
