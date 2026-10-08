@@ -1,0 +1,46 @@
+/* VIS2-09 — archive biography hero / authentic portrait edge.
+ * Pure presentation: existing hero, genuine-portrait conditional and
+ * absent-portrait neutral fallback. No generated portrait, image, fake source,
+ * DOM, typography metric, domain color or Person data change.
+ * One link deletes/reverts this treatment independently of DETAIL-LUX1.
+ */
+:root { --atlas-vis2-09-hero-active: 1; }
+
+/* Existing hero retains its grid and hairline, only the archival surface changes. */
+#personMainDetail.person-main-detail .person-chronicle-hero {
+  background-image:
+    linear-gradient(135deg, rgba(221,207,179,.048), transparent 52%),
+    linear-gradient(0deg, rgba(0,0,0,.085), transparent 74%);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    inset 0 -1px 0 var(--atlas-material-hairline-strong);
+}
+
+/* Actual stored portrait only. No image substitution, mask or canvas overlay. */
+#personMainDetail.person-main-detail .person-chronicle-hero .person-detail-portrait.has-portrait {
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    0 0 0 1px var(--atlas-material-hairline-strong),
+    0 0 0 2px rgba(8,10,12,.76),
+    0 18px 40px rgba(0,0,0,.28);
+}
+
+/* Missing portrait stays explicitly unclaimed and quieter than a real likeness. */
+#personMainDetail.person-main-detail .person-chronicle-hero .person-detail-portrait:not(.has-portrait) {
+  box-shadow:
+    0 0 0 1px var(--atlas-material-hairline-soft),
+    inset 0 1px 0 var(--atlas-material-sheen-soft);
+}
+
+/* Historical name, date and domain markers remain under existing owners. */
+#personMainDetail.person-main-detail .person-chronicle-identity .eyebrow {
+  color: #cbb68f;
+}
+
+#personMainDetail.person-main-detail .person-chronicle-hero .person-detail-canonical {
+  color: #adb2ae;
+}
+
+#personMainDetail.person-main-detail .person-chronicle-hero .person-detail-status {
+  color: #929a95;
+}
