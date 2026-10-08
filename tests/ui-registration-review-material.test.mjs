@@ -256,12 +256,15 @@ test("REVIEW-M12 toggles registered and living exclusions independently with unk
   };
   const root={isConnected:true,querySelector:node,innerHTML:""};
   const persons={persons:[{id:"p-lincoln",canonical_name_en:"Abraham Lincoln",names:[{name:"Abraham Lincoln"}]},
-    {id:"p-napoleon",canonical_name_en:"Napoleon I",names:[{name:"Napoleon I"}]}],summary:{total:2}};
+    {id:"p-napoleon",canonical_name_en:"Napoleon I",names:[{name:"Napoleon I"}]},
+    {id:"p-cleopatra-primary",canonical_name_en:"Cleopatra VII",names:[{name:"Cleopatra"}],historicity:"historical",activity_count:5},
+    {id:"p-cleopatra-other",canonical_name_en:"Cléopatra",names:[],historicity:"historical",activity_count:1}],summary:{total:4}};
   const queue={ok:true,summary:{pending_count:0},reviewed_person_aliases:[
     {alias_name:"Napoleon Bonaparte",person_id:"p-napoleon",canonical_key:"Napoleon I"}],candidates:[]};
   const raw=[
     {raw_name:"Abraham Lincoln",rank:1,distinct_channel_count:95,video_count:105},
     {raw_name:"Napoleon Bonaparte",rank:2,distinct_channel_count:80,video_count:100},
+    {raw_name:"Cleopatra",rank:3,distinct_channel_count:71,video_count:90},
     {raw_name:"Taylor Swift",rank:2,distinct_channel_count:22,video_count:29},
     {raw_name:"Hypatia",rank:3,distinct_channel_count:12,video_count:15},
     {raw_name:"Unknown Figure",rank:4,distinct_channel_count:8,video_count:12}
@@ -292,6 +295,7 @@ test("REVIEW-M12 toggles registered and living exclusions independently with unk
   const html=()=>node("#youtubeSignalBody").innerHTML;
   assert.match(html(),/Abraham Lincoln/);
   assert.match(html(),/Napoleon Bonaparte/);
+  assert.match(html(),/대표 간주: Cleopatra VII/);
   assert.match(html(),/Taylor Swift/);
   assert.match(js,/id="youtubeExcludeRegistered"/);
   assert.match(js,/id="youtubeExcludeLiving"/);
@@ -304,6 +308,7 @@ test("REVIEW-M12 toggles registered and living exclusions independently with unk
   await toggle("youtubeExcludeRegistered",true);
   assert.doesNotMatch(html(),/Abraham Lincoln/);
   assert.doesNotMatch(html(),/Napoleon Bonaparte/);
+  assert.doesNotMatch(html(),/Cleopatra/);
   assert.match(html(),/Taylor Swift/);
   await toggle("youtubeExcludeLiving",true);
   assert.doesNotMatch(html(),/Taylor Swift/);
