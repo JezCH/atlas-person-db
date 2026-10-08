@@ -101,7 +101,8 @@ async function person(c,width){
       await capture(c,"vis2-person-filter-"+width+".png","person-main",{width,mode:"domain-filter",domain:filter});
       await evaluate(c,()=>{window.ATLAS_PERSON_MAIN?.setDomainFilter?.("");return true;});
     }
-    await evaluate(c,()=>{document.querySelector(".person-register-entry .person-main-name-link")?.click();return true;});
+    const selected=await evaluate(c,()=>{const entry=document.querySelector(".person-register-entry");if(!entry)return false;entry.click();return true;});
+    insist(selected,"Cannot select first Person register row");
     await until(c,()=>Boolean(document.querySelector("#personMainDetail:not([hidden]) .person-chronicle-hero")),35000);
     await until(c,()=>document.querySelector("#personMainDetail .person-chronicle-identity")?.textContent?.trim().length>0,15000);
     await sleep(300); // let async detail typography/portrait settle before baseline shot
