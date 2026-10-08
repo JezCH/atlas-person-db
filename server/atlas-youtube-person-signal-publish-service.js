@@ -152,8 +152,8 @@ where snapshot_id=$1
 const INSERT_SNAPSHOT_SQL = `
 insert into atlas_v2.youtube_person_signal_snapshots(
   snapshot_id, generated_at, channel_count, video_count, threshold_counts,
-  parser_version, source_state, publication_fingerprint
-) values ($1,$2,$3,$4,$5::jsonb,$6,$7::jsonb,$8)
+  parser_version, source_state, publication_fingerprint, snapshot_scope
+) values ($1,$2,$3,$4,$5::jsonb,$6,$7::jsonb,$8,'global_reconciled')
 `;
 
 const INSERT_SIGNALS_SQL = `
