@@ -767,6 +767,9 @@ async function main() {
     const modelState=await collectCanonicalSnapshot(client);
     verifyCanonicalContracts(modelState, desktopDom);
     const drilldowns=await verifyDrilldowns(client, modelState);
+    // Drilldowns scroll the document; capture the visual design at its real top.
+    await client.call("Runtime.evaluate",{expression:"window.scrollTo(0,0); document.scrollingElement?.scrollTo(0,0);"});
+    await sleep(200);
     const desktopScreenshot=await screenshot(client, "dashboard-desktop.png");
 
     await client.call("Emulation.setDeviceMetricsOverride", MOBILE);
@@ -791,6 +794,8 @@ async function main() {
     assert(overflowingMeta.length === 0, "Mobile Dashboard metadata rows overflow horizontally", { overflow:overflowingMeta, all:mobileDom.progress_meta });
     const overflowingHeads=mobileDom.panel_heads.filter((row)=>row.scroll_width > row.client_width + 1);
     assert(overflowingHeads.length === 0, "Mobile Dashboard panel headers overflow horizontally", { overflow:overflowingHeads, all:mobileDom.panel_heads });
+    await client.call("Runtime.evaluate",{expression:"window.scrollTo(0,0); document.scrollingElement?.scrollTo(0,0);"});
+    await sleep(200);
     const mobileScreenshot=await screenshot(client, "dashboard-mobile.png");
 
     const majorNetworkErrors=resourceErrors.filter((row)=>{
