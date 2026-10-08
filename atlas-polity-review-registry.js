@@ -110,13 +110,19 @@
         review_group: "historical_family_review",
         kind: "family_review",
         title: "France regime family ↔ kingdom / republic / empire / restoration / republics",
-        left: { name: "France regime family" },
-        right: { name: "kingdom / republic / empire / restoration / republics" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
+        left: { name: "France regime family", polity_id: "1eaa48b6-dc60-49d6-91c4-49db556f4ddf" },
+        right: { name: "kingdom / republic / empire / restoration / republics", polity_id: "7e090994-f196-4957-8295-dcfa08c53fba" },
+        rationale: "2026-10-08 P2-01 Production census: France 본토 관련 live Polity 8개, Authoring/Runtime Activity 각 65건이 Activity/Person/Polity/Role/기간에서 모두 일치합니다. 그러나 #1357의 왕국→France 21 Activity 합병과 #1378의 구 Kingdom UUID 퇴역 이후 현재 새 Kingdom of France UUID 7e090994-f196-4957-8295-dcfa08c53fba에 Philip II, Cartier 3개 항해, Jacques-Louis David의 5건이 새로 분산됐습니다. France에는 1226–1792, 1814–1815, 1815–1830 왕국 state_form 3개가 이미 있고 Philip II 1180–1223은 기존 첫 designation 기간보다 앞섭니다. French Third Republic 2건은 1878–1969에 14건을 담는 generic stage2:french-republic과 병존하며 latter에는 1958→ Fifth Republic governance_context가 있습니다. 헌정체 경계와 지속국가 모델 혼합을 별도 P2-01A(왕국 5건), B(제3공화국), C(전시·제4·제5공화국/France umbrella)로 검증·정정하기 전 전체 family를 terminal 처리하지 않습니다. 삭제/자동 병합 금지. 자료: docs/POLITY_P2_01_FRANCE_REGIME_FAMILY_AUDIT_20261008.md.",
         suggested_action: "hold",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        evidence: [
+          "2026-10-08 connected Production: 8 live France-family Polities, 65 Authoring / 65 exact matching Runtime Activities, 0 mismatches",
+          "2026-10-08 Kingdom of France new live UUID 7e090994-f196-4957-8295-dcfa08c53fba: Philip II (1180–1223), Cartier voyages (1534, 1535–1536, 1541–1542), Jacques-Louis David (1785)",
+          "#1357 existing 21-Activity stable France consolidation + three Kingdom temporal designations; #1378 old Kingdom UUID 2fcc634c-9806-5fe8-96fe-e4310124908a retirement; #1905 later Cartier registration",
+          "2026-10-08 French Third Republic 2 Activities versus generic stage2:french-republic 14 Activities and one Fifth Republic governance period",
+          "French National Assembly regime chronology: https://www.assemblee-nationale.fr/gouv_parl/regimes.asp"
+        ]
       },
       {
         id: "macedon-empire",
