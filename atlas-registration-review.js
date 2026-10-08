@@ -113,21 +113,23 @@
     const snapshot=payload?.snapshot || null;
     const telemetry=activeRoot?.querySelector("#youtubeSignalTelemetry");
     if (telemetry) {
-      if (!snapshot) {
-        telemetry.innerHTML="<strong>아직 YouTube 신호 스냅샷이 없습니다.</strong>";
+      const progress=payload?.progress || null;
+      const segment=payload?.segment_snapshot || null;
+      if (progress) {
+        const lower=number(progress.unique_channel_lower_bound);
+        const upper=number(progress.unique_channel_upper_bound);
+        const exact=progress.exact_unique_channel_count == null ? null : number(progress.exact_unique_channel_count);
+        const uniqueText=exact
+          ? `전체 unique ${exact}채널`
+          : `전체 unique ${lower}–${upper}채널 범위`;
+        telemetry.innerHTML=`<strong>누적 처리 ${number(progress.gross_success_channel_rows)} 성공 채널행 · ${number(progress.gross_video_rows)} 영상행</strong><span>batch001–007 global ${number(progress.baseline_unique_channel_count)}채널/${number(progress.baseline_video_count)}영상 + batch008–011 segment ${number(progress.supplemental_success_channel_count)}성공/${number(progress.supplemental_selected_channel_count)}선정 · ${uniqueText} · baseline Channel ID 미보존으로 cross-dedupe 미완료 · 다음 ${escapeHtml(progress.next_batch || "미정")}</span>`;
+      } else if (snapshot) {
+        telemetry.innerHTML=`<strong>${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>스냅샷 ${escapeHtml(dateTime(snapshot.generated_at))} · ${escapeHtml(snapshot.parser_version || "parser 미상")}</span>`;
       } else {
-        const source=snapshot.source_state || {};
-        const coverageMode=String(source.coverage_mode || "");
-        const coverageBatches=Array.isArray(source.coverage_batches) ? source.coverage_batches : [];
-        const legacyCount=Number(source.legacy_baseline_channel_count);
-        const batchLabel=coverageBatches.length
-          ? `${coverageBatches[0]}–${coverageBatches[coverageBatches.length-1]}`
-          : "범위 미상";
-        if (coverageMode === "reconstructable_id_preserved") {
-          telemetry.innerHTML=`<strong>${number(snapshot.channel_count)}개 ID보존 채널 · ${number(snapshot.video_count)}개 영상</strong><span>재구축 범위 ${escapeHtml(batchLabel)} · ${Number.isFinite(legacyCount) ? `이전 레거시 ${number(legacyCount)}채널과 중복 미확정 · 합산하지 않음 · ` : ""}스냅샷 ${escapeHtml(dateTime(snapshot.generated_at))} · ${escapeHtml(snapshot.parser_version || "parser 미상")}</span>`;
-        } else {
-          telemetry.innerHTML=`<strong>${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>레거시 스냅샷 ${escapeHtml(dateTime(snapshot.generated_at))} · ${escapeHtml(snapshot.parser_version || "parser 미상")}</span>`;
-        }
+        telemetry.innerHTML="<strong>아직 YouTube 신호 데이터가 없습니다.</strong>";
+      }
+      if (snapshot && segment && progress) {
+        telemetry.innerHTML += `<span>신호표 기준: global ${number(snapshot.channel_count)}채널 snapshot · 별도 segment snapshot ${number(segment.channel_count)}채널은 총량으로 대체하지 않음</span>`;
       }
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
@@ -216,7 +218,7 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>서로 다른 채널이 같은 raw 인물명을 단독 주제로 다룬 횟수입니다. 화면은 10초마다 DB의 최신 발행 스냅샷을 다시 읽습니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong> alias 병합 전 raw 문자열 기준이며, Channel ID가 없는 레거시 집계는 새 ID보존 corpus와 임의 합산하지 않습니다.</p></div>
+          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>서로 다른 채널이 같은 raw 인물명을 단독 주제로 다룬 횟수입니다. 화면은 10초마다 DB를 다시 읽습니다. 현재 수집기는 아직 batch publish 방식이며 live incremental 전환 전입니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong> batch001–007과 batch008 이후의 수집 이력은 DB 원장에서 분리 보존하며, 검증되지 않은 교집합을 임의로 합산하지 않습니다.</p></div>
         </div>
         <div class="registration-review-signal-toolbar">
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
