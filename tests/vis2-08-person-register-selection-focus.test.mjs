@@ -6,7 +6,7 @@ const html=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const clean=css.replace(/\/\*[\s\S]*?\*\//g,"");
 const rules=[...clean.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
 test("VIS2-08 is one self-contained late Person-register-only opt-in",()=>{
- const href="atlas-person-register-selection-focus-v2.css?v=20261009-vis2-08-interaction-v1";
+ const href="atlas-person-register-selection-focus-v2.css?v=20261009-vis2-08-interaction-v2";
  assert.equal(html.split(href).length-1,1);
  assert.ok(html.indexOf(href)>html.indexOf("atlas-person-register-inscription-v2.css"));
  assert.match(css,/--atlas-vis2-08-register-interaction-active:\s*1\s*;/);
