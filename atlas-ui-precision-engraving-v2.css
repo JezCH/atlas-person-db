@@ -1,0 +1,40 @@
+/* ATLAS VIS2-02 — Precision Engraving.
+ *
+ * A matched 1px highlight / recessed-cut pair makes existing structural
+ * separators read as precision-machined graphite rather than generic boxes.
+ * Shadow-only, inset where the element already owns its border; zero
+ * changes to box geometry, line width, typography, interactive states,
+ * semantic Person colors, Spacetime canvas or source data.
+ *
+ * Phase I already engraves the register, Spacetime tools, Chronicle,
+ * Polity and Dashboard. Do NOT add another rail to their internal nodes.
+ * Delete this single opt-in stylesheet to revert this exact work unit.
+ */
+:root {
+  --atlas-engraving-light: var(--atlas-material-sheen-strong);
+  --atlas-engraving-cut: var(--atlas-material-edge-dark);
+}
+
+/* Existing 1px header separation gains an adjacent shadow-cut impression.
+ * The V9 sheen is retained, paired with a dark cut on the outside.
+ */
+.topbar,
+.mobile-appbar {
+  box-shadow:
+    inset 0 -1px 0 var(--atlas-engraving-light),
+    0 1px 0 var(--atlas-engraving-cut);
+}
+
+/* Sidebar brand plaque: a recessed finish below its existing thin border. */
+.brand,
+.mobile-brand {
+  box-shadow: inset 0 -1px 0 var(--atlas-engraving-cut);
+}
+
+/* Passive archive/header surfaces, never Person rows or spacetime rails. */
+.person-main-toolbar.card,
+.authority-shell-head.card {
+  box-shadow:
+    inset 0 1px 0 var(--atlas-engraving-light),
+    inset 0 -1px 0 var(--atlas-engraving-cut);
+}
