@@ -32,16 +32,6 @@ on:
         required: true
         default: "sha256:a58fab60d0b7873e2b4534869f3942075060526c62445c20eaff2663ac1132a6"
         type: string
-      legacy_snapshot_id:
-        description: "Last pre-registry snapshot"
-        required: true
-        default: "yt-20261007T050219Z-2715ch"
-        type: string
-      legacy_channel_count:
-        description: "Legacy aggregate channel count; never added without IDs"
-        required: true
-        default: "2715"
-        type: string
   workflow_call:
     inputs:
       artifact_run_id:
@@ -55,14 +45,6 @@ on:
         type: string
       artifact_digest:
         required: true
-        type: string
-      legacy_snapshot_id:
-        required: false
-        default: "yt-20261007T050219Z-2715ch"
-        type: string
-      legacy_channel_count:
-        required: false
-        default: "2715"
         type: string
 
 permissions:
@@ -87,8 +69,6 @@ jobs:
       ARTIFACT_NAME: ${{ inputs.artifact_name || 'youtube-batch011-staging-longterm' }}
       ARTIFACT_ID: ${{ inputs.artifact_id || '11474777563' }}
       ARTIFACT_DIGEST: ${{ inputs.artifact_digest || 'sha256:a58fab60d0b7873e2b4534869f3942075060526c62445c20eaff2663ac1132a6' }}
-      LEGACY_SNAPSHOT_ID: ${{ inputs.legacy_snapshot_id || 'yt-20261007T050219Z-2715ch' }}
-      LEGACY_CHANNEL_COUNT: ${{ inputs.legacy_channel_count || '2715' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -113,7 +93,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p /tmp/atlas-youtube-publication
-          python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/atlas-youtube-publication/snapshot.json             --artifact-id "$ARTIFACT_ID"             --artifact-digest "$ARTIFACT_DIGEST"             --legacy-snapshot-id "$LEGACY_SNAPSHOT_ID"             --legacy-channel-count "$LEGACY_CHANNEL_COUNT"
+          python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/atlas-youtube-publication/snapshot.json             --artifact-id "$ARTIFACT_ID"             --artifact-digest "$ARTIFACT_DIGEST"
           jq '.snapshot + {
             stored_signal_rows:(input_filename | length)
           }' /tmp/atlas-youtube-publication/snapshot.json >/dev/null || true
@@ -182,7 +162,7 @@ jobs:
                 and .snapshot.channel_count==$channels
                 and .snapshot.video_count==$videos
                 and .snapshot.source_state.channel_ids_persisted==true
-                and .snapshot.source_state.legacy_overlap_status=="unknown_not_additive"
+                and .snapshot.snapshot_scope=="global_reconciled"
               ' /tmp/atlas-youtube-publication/verify.json >/dev/null; then
               jq . /tmp/atlas-youtube-publication/verify.json
               exit 0
