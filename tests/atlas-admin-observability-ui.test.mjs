@@ -61,6 +61,12 @@ test('System Status exposes active Runtime compile diagnostics without creating 
   assert.doesNotMatch(observability, /__atlas_read_surface=runtime-publication/);
 });
 
+test('Admin displays latest applied Authoring / Correction headers using the authenticated System Status read', () => {
+  assert.match(observability, /payload\.manifest_history/);
+  assert.match(observability, /최근 Authoring \/ Correction 적용 이력/);
+  assert.doesNotMatch(observability, /result_snapshot|manifest_hash\s*=\s*["']/);
+});
+
 test('System Status renders unknown states without fabricating GitHub Actions health', () => {
   assert.match(observability, /unknown \/ not supplied/);
   assert.match(observability, /github_actions_status_embedded/);
