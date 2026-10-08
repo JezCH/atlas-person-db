@@ -49,7 +49,8 @@ const expectedAuthoringMigrations = [
   '20261004_person_representative_domain_standard_v2_replay_safe.sql',
   '20261006_user_selected_person_registration_queue_07.sql',
   '20261007_youtube_person_signal_read_model.sql',
-  '20261008_youtube_discovery_channel_registry.sql'
+  '20261008_youtube_discovery_channel_registry.sql',
+  '20261008_youtube_history_reconciliation.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -80,7 +81,8 @@ const expectedAuthoringReplayMigrations = [
   '20261003_shah_abbas_registration_queue_binding.sql',
   '20261006_user_selected_person_registration_queue_07.sql',
   '20261007_youtube_person_signal_read_model.sql',
-  '20261008_youtube_discovery_channel_registry.sql'
+  '20261008_youtube_discovery_channel_registry.sql',
+  '20261008_youtube_history_reconciliation.sql'
 ];
 
 const expectedCorrectionMigrations = [
