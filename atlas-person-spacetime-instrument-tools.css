@@ -987,22 +987,6 @@
   background: var(--atlas-material-wash-active);
 }
 
-/* SPACETIME-M2 — Late focus ownership repair.
- * instrument-tools.css is lazy-loaded after V9, so controls that locally clear
- * outlines must explicitly restore the shared global focus ring here.
- */
-.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input:focus,
-.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button:focus-visible,
-.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend > summary:focus-visible,
-.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list button:focus-visible,
-.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities button:focus-visible,
-.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-surface:focus-visible,
-.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button:focus-visible,
-.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select:focus-visible {
-  outline: 1px solid var(--atlas-focus-ring);
-  outline-offset: 2px;
-}
-
 /* SPACETIME-L2 — Precision instrument finish.
  * P1b follows the already-merged L1 chronology canvas. Keep toolbar, minimap
  * and selected dossier visually aligned with the etched Graphite / Champagne
@@ -1064,6 +1048,22 @@
   box-shadow:
     inset 0 1px 0 var(--atlas-material-sheen-soft),
     inset 0 -1px 0 var(--atlas-material-edge-dark);
+}
+
+/* SPACETIME-M2 — Late focus ownership repair.
+ * instrument-tools.css is lazy-loaded after V9, so controls that locally clear
+ * outlines must explicitly restore the shared global focus ring here.
+ */
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-controls input:focus,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-camera button:focus-visible,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-precision-legend > summary:focus-visible,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-search-result-list button:focus-visible,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-meanwhile-activities button:focus-visible,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-surface:focus-visible,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-actions button:focus-visible,
+.person-spacetime-mount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-activity-select:focus-visible {
+  outline: 1px solid var(--atlas-focus-ring);
+  outline-offset: 2px;
 }
 
 /* V8 owns responsive hierarchy. V7 changes only the skin at current breakpoints. */
