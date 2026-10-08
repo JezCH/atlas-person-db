@@ -65,7 +65,16 @@ jobs:
               jq -e '
                 .schema == "atlas-stage2-correction-v2-execution-plan/v1" and
                 (.batch_id | type == "string" and length > 0) and
-                (.operations | type == "array" and length > 0) and
+                (.operations | type == "array") and
+                (
+                  (.operations | length > 0) or
+                  (
+                    (.operations | length == 0) and
+                    (.stage2_assertions | type == "array" and length > 0) and
+                    ([.stage2_assertions[].type] | all(. == "assert_source" or . == "assert_governance_context" or . == "assert_governance_period")) and
+                    ([.stage2_assertions[].type] | any(. == "assert_governance_context" or . == "assert_governance_period"))
+                  )
+                ) and
                 (.execution_rules.production_executable == false) and
                 (.execution_rules.production_mutation_authorized == false) and
                 ((.release_order // 500) | type == "number") and
