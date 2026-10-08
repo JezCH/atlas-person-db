@@ -25,7 +25,7 @@
   position: absolute;
   z-index: 7;
   top: -44px;
-  left: 42%;
+  left: var(--vis2-05-era-x, 42%);
   transform: translateX(-50%);
   pointer-events: none;
   user-select: none;
