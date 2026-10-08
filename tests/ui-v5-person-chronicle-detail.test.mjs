@@ -11,7 +11,7 @@ test("UI V5 loads Chronicle Detail after the global shell and Person Register", 
   const detail = html.indexOf("atlas-person-chronicle-detail.css");
   assert.ok(foundation >= 0 && register > foundation);
   assert.ok(detail > register, "Chronicle Detail must override the older detail/table presentation layers");
-  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261008-detail-lux1-hero-v1/);
+  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261008-detail-lux2-chronicle-v1/);
   assert.match(html, /atlas-person-main\.js\?v=20261003-ui-v5-detail-v1/);
 });
 
