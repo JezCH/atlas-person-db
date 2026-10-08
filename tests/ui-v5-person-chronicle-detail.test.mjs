@@ -11,7 +11,7 @@ test("UI V5 loads Chronicle Detail after the global shell and Person Register", 
   const detail = html.indexOf("atlas-person-chronicle-detail.css");
   assert.ok(foundation >= 0 && register > foundation);
   assert.ok(detail > register, "Chronicle Detail must override the older detail/table presentation layers");
-  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261007-detail-m3-inscription-v1/);
+  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261008-detail-m4-evidence-legibility-v1/);
   assert.match(html, /atlas-person-main\.js\?v=20261003-ui-v5-detail-v1/);
 });
 
@@ -114,4 +114,29 @@ test("UI V5 removes nested card visual grammar from names, activities, sources, 
   assert.match(css, /person-chronicle-activity \.person-evidence-inspector/);
   assert.match(css, /person-detail-authoring/);
   assert.match(css, /@media \(max-width: 760px\)/);
+});
+
+
+test("DETAIL-M4 preserves the Chronicle disclosure while making evidence metadata legible", () => {
+  const css=read("atlas-person-chronicle-detail.css");
+  const start=css.indexOf("/* DETAIL-M4 — Evidence microtypography readability.");
+  const stop=css.indexOf("/* ---------- Sources: citation register rather than cards ---------- */",start);
+  assert.ok(start>=0&&stop>start);
+  const evidence=css.slice(start,stop);
+  assert.doesNotMatch(evidence,/font-size:\s*(?:6(?:\.5)?|7(?:\.5)?|8(?:\.5)?)px/);
+  for(const selector of [
+    "person-evidence-inspector > summary b",
+    "person-evidence-inspector > summary small",
+    "person-evidence-summary-badges i",
+    "person-evidence-facts small",
+    "person-evidence-facts strong",
+    "person-evidence-boundary-meta b"
+  ]) assert.ok(evidence.includes(selector),selector);
+  assert.match(evidence,/font-size:\s*9px/);
+  assert.match(evidence,/font-size:\s*10px/);
+  assert.match(evidence,/color:\s*var\(--atlas-text-secondary\)/);
+  assert.match(evidence,/color:\s*var\(--atlas-text\)/);
+  assert.match(css,/\.person-chronicle-section \.person-source-item small\s*\{\s*color: var\(--atlas-text-secondary\);\s*font-size: 9px;/);
+  assert.match(evidence,/\.person-chronicle-activity \.person-evidence-inspector \{/);
+  assert.match(evidence,/\.person-chronicle-activity \.person-evidence-boundaries/);
 });
