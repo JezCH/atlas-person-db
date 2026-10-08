@@ -28,7 +28,7 @@ function state(){
   panelHidden:Boolean(panel?.hidden),panelScrollTop:panel?.scrollTop||0,domain:panel?.dataset.representativeDomain||"",
   genuinePortrait:Boolean(portrait?.classList.contains("has-portrait")),imageSource:img?.getAttribute("src")||null,imageAlt:img?.getAttribute("alt")||null,
   activityCount:document.querySelectorAll("#personMainDetail .person-chronicle-activity").length,sourceCount:document.querySelectorAll("#personMainDetail .person-source-item").length,
-  mainRowCount:document.querySelectorAll(".person-register-entry").length,mainPortraitCount:document.querySelectorAll("#personMainView .person-detail-portrait").length,
+  mainRowCount:document.querySelectorAll(".person-register-entry").length,mainPortraitCount:document.querySelectorAll("#personMainView .person-main-groups .person-detail-portrait").length,
   elements:result};
 }
 const sameRect=(a,b)=>a.length===b.length&&a.every((v,i)=>Math.abs(v-b[i])<=.05);
