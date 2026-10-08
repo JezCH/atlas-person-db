@@ -22,6 +22,7 @@
       .toLowerCase()
       .replaceAll("æ","ae").replaceAll("œ","oe").replaceAll("ß","ss")
       .replace(/[\u0300-\u036f]/g,"")
+      .normalize("NFC") // Recompose Korean Hangul after stripping Latin diacritics.
       .replace(/[^a-z0-9가-힣]/g,"");
   }
 
