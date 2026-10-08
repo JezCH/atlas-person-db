@@ -49,6 +49,8 @@ test("P2-01 France family remains open after P2-01H direct governance detail dec
   const detailContract=text('docs/POLITY_P2_01H_GOVERNANCE_CONTEXT_DETAIL_PROJECTION_20261009.md');
   assert.match(detailContract,/NOT_APPLICABLE/);
   assert.match(detailContract,/POLITY-P2-01I/);
+  assert.match(detailContract,/READ_ONLY_DETAIL_PROJECTION_MERGED/);
+  assert.match(detailContract,/LIVE_API_JSON_DIRECT_RESPONSE_NOT_VERIFIED/);
   assert.ok(france.evidence.some(x=>x.includes('P2-01G') && x.includes('AUDIT COMPLETE')));
   const relationAudit=text('docs/POLITY_P2_01G_FRANCE_COUNTRY_UMBRELLA_REPUBLIC_IDENTITY_CONTRACT_20261009.md');
   assert.match(relationAudit,/NO SUPPORTED DIRECT EDGE/);
