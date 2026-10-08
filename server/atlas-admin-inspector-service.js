@@ -37,6 +37,15 @@ select
     from atlas_v2.person_descriptions pd
     where pd.person_id = p.id
   ), '[]'::jsonb) as descriptions,
+  (
+    select jsonb_build_object(
+      'asset_sha256', pp.asset_sha256,
+      'updated_at', pp.updated_at
+    )
+    from atlas_v2.person_portraits pp
+    where pp.person_id = p.id
+    limit 1
+  ) as current_portrait,
   coalesce((
     select jsonb_agg(jsonb_build_object(
       'id', s.id,
