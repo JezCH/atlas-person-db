@@ -35,7 +35,8 @@ test("P2-01J closes the 1830 France boundary while the parent family remains app
   assert.match(audit,/P2-01A/);
   const workstreams=text("docs/ATLAS_CURRENT_WORKSTREAMS.md");
   assert.match(workstreams,/POLITY-P2-01J CLOSED/);
-  assert.match(workstreams,/Macedon → Macedonian Empire/);
+  assert.match(workstreams,/POLITY-P2-02 CLOSED/);
+  assert.match(workstreams,/Empire of Brazil/);
   assert.match(workstreams,/approval-gated residual/);
   const correction=text("docs/POLITY_P2_01A_FRANCE_KINGDOM_FIVE_RELINK_20261008.md");
   assert.match(correction,/CORRECTION_APPLIED/);

@@ -202,7 +202,11 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 25);
+  assert.equal(unresolved.length, 24);
+  const macedon = byId.get('macedon-empire');
+  assert.equal(macedon.terminal_status, 'KEEP_SEPARATE');
+  assert.equal(macedon.reviewed_decision, 'keep_both');
+  assert.equal(macedon.locked, true);
   assert.equal(byId.get('northern-southern-song').terminal_status, null);
   assert.equal(byId.get('roman-west-east').terminal_status, null);
   assert.equal(byId.get('byzantine-nicaea-rupture').terminal_status, null);

@@ -135,13 +135,15 @@
         review_group: "historical_family_review",
         kind: "family_review",
         title: "Macedon ↔ Macedonian Empire",
-        left: { name: "Macedon" },
-        right: { name: "Macedonian Empire" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        left: { name: "Macedon", polity_id: "87517d54-5a6f-42f0-88aa-12c2239bf36f" },
+        right: { name: "Macedonian Empire", polity_id: "2f6e890f-1704-5c76-aa94-f18d7f905e06" },
+        rationale: "2026-10-09 Production confirms Macedon 8 Activities/6 Persons and Macedonian Empire 1 Activity/1 Person. Macedon is the continuing regional kingdom before and after Alexander, while Macedonian Empire denotes Alexander's vast imperial dominion after conquest of Achaemenid territories. These are linked and partly overlapping political scopes, not unrelated independent states. Merging would erase the distinction between a durable Macedonian kingdom and Alexander's transient imperial territory. Keep both UUIDs, no changes to Alexander's existing single 336–323 BCE imperial-scope Activity or the eight Macedon Activities. Oxford histories of Alexander, the Argeads, and Diadochi support the distinction and successor fragmentation. No direct Production mutation; P2-02 CLOSED KEEP_SEPARATE.",
+        suggested_action: "keep_both",
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        reviewed_decision: "keep_both",
+        evidence: ["2026-10-09 connected Production exact two UUIDs; Macedon 8 Activities and 6 Persons; Macedonian Empire 1 Activity and 1 Person", "Alexander imperial Activity 1aff946b-e4fa-560c-9eff-37571baf8199 recorded -336 to -323", "Oxford University Press Alexander the Great: A Very Short Introduction (2014)", "Oxford Classical Dictionary Diadochi (2015): partition after 323 BCE", "Oxford University Press Macedonia under the Argead Kings (2026)", "No merge, retirement, new Source, Activity, relation or geometry writes; docs/POLITY_P2_02_MACEDON_EMPIRE_SCOPE_JUDGMENT_20261009.md"],
+        locked: true
       },
       {
         id: "brazil-regime-family",
