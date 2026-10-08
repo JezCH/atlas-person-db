@@ -13,6 +13,7 @@
   let excludeRegistered=false;
   let excludeLiving=false;
   const livingEvidence=new Map();
+  let livingEvidenceUnavailableUntil=0;
   let queueRows=[];
   let signalRows=[];
   let personIdentityIndex=null;
@@ -180,6 +181,7 @@
   }
 
   async function ensureLivingEvidence(names) {
+    if(Date.now()<livingEvidenceUnavailableUntil) return true;
     const missing=[...new Set(names)].filter(name=>name && !livingEvidence.has(name));
     let unavailable=false;
     for(let index=0;index<missing.length;index+=25) {
@@ -193,7 +195,9 @@
         }
       } catch(error) {
         unavailable=true;
+        livingEvidenceUnavailableUntil=Date.now()+60000;
         console.warn("ATLAS living evidence unavailable; leaving unknown people visible",error);
+        break;
       }
     }
     return unavailable;
@@ -288,7 +292,9 @@
       prepareSignalIdentities(persons,queue);
       renderRegistered(persons,queue);
       renderQueue(queue);
-      renderSignals(await collectVisibleSignals(signals));
+      const filtered=await collectVisibleSignals(signals);
+      if(serial!==requestSerial||root!==activeRoot) return;
+      renderSignals(filtered);
       setStatus(`DB 최신 스냅샷 조회 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
     } catch (error) {
       if (serial !== requestSerial || root !== activeRoot) return;
@@ -307,7 +313,9 @@
     try {
       const signals=await getJson(signalQuery(filterRequestLimit()));
       if (serial !== requestSerial || root !== activeRoot) return;
-      renderSignals(await collectVisibleSignals(signals));
+      const filtered=await collectVisibleSignals(signals);
+      if(serial!==requestSerial||root!==activeRoot) return;
+      renderSignals(filtered);
       setStatus(`DB 최신 스냅샷 조회 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
     } catch (error) {
       if (serial !== requestSerial || root !== activeRoot) return;
