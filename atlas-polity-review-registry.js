@@ -122,7 +122,7 @@
           "Production verified 5 exact Activity UUIDs relinked from reintroduced Kingdom 7e090994-f196-4957-8295-dcfa08c53fba to stable France 1eaa48b6-dc60-49d6-91c4-49db556f4ddf; counts Kingdom 0, France 37, source links 8 conserved, Runtime 65/65",
           "BnF Philippe II 1180–1223 and Louis VIII 1223–1226; new non-overlapping 1180–1225 state_form on France, earlier 1226–1792 and 1814–1830 designations untouched",
           "#1357 earlier Kingdom→France 21-Activity consolidation and #1378 retired different earlier Kingdom UUID 2fcc634c-9806-5fe8-96fe-e4310124908a remain historical precedent",
-          "P2-01B pending Third Republic 2 vs generic French Republic 14; P2-01C pending France country/war/4th/5th boundaries; no terminal family decision",
+          "P2-01B #2166 Correction APPLIED: Third Republic 2→0, generic French Republic 14→16; 1870-09-04→1940-07-10 sourced EN/FR/KO designation; 65 Authoring/65 Runtime parity after #37775750359 compile. P2-01C wartime and country-umbrella pending; no terminal France family decision",
           "French National Assembly regime chronology: https://www.assemblee-nationale.fr/gouv_parl/regimes.asp"
 
         ]
