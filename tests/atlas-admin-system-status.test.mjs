@@ -12,7 +12,8 @@ const {
   exactTableCounts,
   normalizeExclusionSummary,
   runtimePublicationDiagnostics,
-  duplicateLifecycle
+  duplicateLifecycle,
+  recentManifestRuns
 } = require('../server/atlas-admin-system-status-service.js');
 const {
   createAdminSystemStatusHandler
@@ -209,6 +210,49 @@ test('duplicate lifecycle reports aggregate queue/review/merge/requirement state
   assert.equal(calls.some((sql) => /select\s+id,person_low_id|evidence|rationale/i.test(sql)), false);
 });
 
+test('Admin exposes only the last five applied Authoring / Correction manifest headers', async () => {
+  const calls=[];
+  const client={
+    async query(sql) {
+      calls.push(sql);
+      assert.match(sql,/select request_id, manifest_schema, manifest_hash, applied_at/);
+      assert.match(sql,/order by applied_at desc, request_id desc/);
+      assert.match(sql,/limit 5/);
+      assert.doesNotMatch(sql,/result_snapshot|insert|delete|update/i);
+      if(sql.includes('atlas_v2.authoring_manifest_runs')) return {rows:[{
+        request_id:'authoring-example',manifest_schema:'atlas-human-authoring/v1',
+        manifest_hash:'hash-a',applied_at:'2026-10-07T02:00:00Z',result_snapshot:{must_not_leak:'SECRET'}
+      }]};
+      if(sql.includes('atlas_v2.correction_manifest_runs')) return {rows:[{
+        request_id:'correction-example',manifest_schema:'atlas-correction-manifest/v2',
+        manifest_hash:'hash-b',applied_at:'2026-10-07T03:00:00Z'
+      }]};
+      throw new Error('Unexpected query');
+    }
+  };
+  const history=await recentManifestRuns(
+    client, ['authoring_manifest_runs','correction_manifest_runs'],
+    {authoring_manifest_runs:2318,correction_manifest_runs:266}
+  );
+  assert.equal(calls.length,2);
+  assert.equal(history.authoring.total,2318);
+  assert.equal(history.correction.total,266);
+  assert.deepEqual(history.authoring.latest_applied[0],{
+    request_id:'authoring-example',manifest_schema:'atlas-human-authoring/v1',
+    manifest_hash:'hash-a',applied_at:'2026-10-07T02:00:00Z'
+  });
+  assert.equal(JSON.stringify(history).includes('SECRET'),false);
+  assert.equal(JSON.stringify(history).includes('result_snapshot'),false);
+});
+
+test('Missing manifest ledgers are reported unavailable without querying fabricated tables', async () => {
+  let queries=0;
+  const history=await recentManifestRuns({async query(){queries++;throw new Error('not expected');}},[],{});
+  assert.equal(queries,0);
+  assert.deepEqual(history.authoring,{available:false,reason:'MANIFEST_LEDGER_TABLE_NOT_PRESENT'});
+  assert.deepEqual(history.correction,{available:false,reason:'MANIFEST_LEDGER_TABLE_NOT_PRESENT'});
+});
+
 test('system status composes authoritative semantic/readiness services and never fabricates GitHub Actions state', () => {
   assert.match(serviceSource, /inspectAuthoringReadiness/);
   assert.match(serviceSource, /SEMANTIC_KEY_VERSION/);
@@ -216,6 +260,8 @@ test('system status composes authoritative semantic/readiness services and never
   assert.match(serviceSource, /REVALIDATION_SEMANTIC_VERSION/);
   assert.match(serviceSource, /personMergeExecutionState/);
   assert.match(serviceSource, /runtimePublicationDiagnostics/);
+  assert.match(serviceSource, /recentManifestRuns/);
+  assert.match(serviceSource, /manifest_history: manifestHistory/);
   assert.match(serviceSource, /projection_matches_compile_output/);
   assert.match(serviceSource, /compile_balance_valid/);
   assert.match(serviceSource, /exclusion_summary_matches_excluded/);
