@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-person-domain-final-holds-review/v1",
+  "review_date": "2026-10-08",
+  "scope": "User-approved final disposition of the 3 remaining NULL representative_domain Persons from the original 80; supersedes earlier HOLD decisions only for these exact UUIDs.",
+  "classification_standard": "docs/person/PERSON_DOMAIN_STANDARD_V2.md",
+  "previous_reviews": [
+    "research/person-domain/unclassified-80-review-20261008.v1.json",
+    "research/person-domain/unclassified-80-six-holds-followup-20261008.v1.json"
+  ],
+  "review_policy": "Explicit user-directed representative categorization; maintain transparency about evidentiary limitations. Do not treat classified military domain as proof of armed forces leadership, actual historical military activity, or proven historicity.",
+  "counts": {
+    "reviewed": 3,
+    "assign_religion": 1,
+    "assign_military": 2,
+    "retain_null": 0
+  },
+  "classifications": [
+    {
+      "person_id": "6f71fd73-045f-4227-80c5-78ceb6d87633",
+      "canonical_key": "Eri",
+      "name_ko": "에리",
+      "expected_domain": null,
+      "replacement_domain": "religion",
+      "rationale": "In Igbo/Nri tradition Eri is a sacred ancestral founder linked to Chukwu and the establishment of sacred order. 'Religion' is an interpretive representative identity anchored in traditions, not proof of a documented priestly office or reign.",
+      "evidence_level": "traditional-religious-role; noncontemporary narrative",
+      "sources": [
+        "https://biography.igbopeople.org/eri-ancestral-founder-of-the-nri-civilization/",
+        "https://en.wikipedia.org/wiki/Eri_(king)"
+      ]
+    },
+    {
+      "person_id": "8f32ca07-5a74-4aa9-95e8-7010c8b2c8f0",
+      "canonical_key": "Javraganak",
+      "name_ko": "자브라가낙",
+      "expected_domain": null,
+      "replacement_domain": "military",
+      "rationale": "Recorded Inuit narrative places Navaranak/Javraganak as an instigator/participant in intergroup attacks. Per user's express instruction, cataloged under the 'military' thematic domain while distinguishing participation/provocation from command: no independent evidence of military command.",
+      "evidence_level": "editorial-choice; armed-conflict-related tale, command unverified",
+      "sources": [
+        "https://doi.org/10.1017/CBO9781107281172.028",
+        "https://original.sacred-texts.com/nam/inu/tte/index.htm"
+      ]
+    },
+    {
+      "person_id": "02e42496-0f8a-413c-b173-c76367981171",
+      "canonical_key": "Atanarjuat",
+      "name_ko": "아타나르주아트",
+      "expected_domain": null,
+      "replacement_domain": "military",
+      "rationale": "An Inuit traditional hero known for personal violent conflict, vengeance and overcoming adversaries. User explicitly selects 'military' as an editorial/thematic choice. The narrative does not document military command or organized warfare; must not add commander roles or other unsupported facts.",
+      "evidence_level": "editorial-choice; personal combat/vengeance, military command unverified",
+      "sources": [
+        "https://www.washingtonpost.com/archive/lifestyle/2002/08/01/the-direction-of-true-north/c6aa2455-b542-4527-a0b1-a07e5558f616/"
+      ]
+    }
+  ],
+  "invariants": [
+    "Three Person representative_domain updates only, with exact UUID and expected NULL preconditions",
+    "No new Person, Activity, Polity, Role or chronology rows",
+    "Retain historicity and person_type attributes unchanged",
+    "Prior review evidence is immutable; this follow-up represents the latest explicit editorial disposition"
+  ]
+}
