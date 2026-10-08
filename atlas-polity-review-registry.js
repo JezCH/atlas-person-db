@@ -11,7 +11,7 @@
 
   window.ATLAS_POLITY_REVIEW_REGISTRY = Object.freeze({
     schema: "atlas-polity-review-registry/v3",
-    generated_at: "2026-10-07",
+    generated_at: "2026-10-08",
     authority: Object.freeze({
       issue: 1895,
       workstream: "docs/ATLAS_CURRENT_WORKSTREAMS.md",
