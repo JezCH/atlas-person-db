@@ -2,7 +2,7 @@
 
 **Unit:** VIS2-07 only · [Phase II issue #2158](https://github.com/JezCH/atlas-person-db/issues/2158) · 2026-10-09 KST.  
 **Prior gate:** VIS2-06 signed off at [PR #2207](https://github.com/JezCH/atlas-person-db/pull/2207) after exact-Production [run #37843633724](https://github.com/JezCH/atlas-person-db/actions/runs/37843633724).  
-**Implementation state:** Ready for GitHub review and exact-Production A/B; signoff pending.
+**State: VIS2-07 COMPLETE — exact-Production Chrome, matched A/B screenshot review and all eight register geometry gates PASS. VIS2-08 remains NOT STARTED.**
 
 ## Current source audit and deliberate exclusions
 
@@ -33,3 +33,43 @@ Allowlist: `color`, `background-image`, `border-bottom-color` and a read-only `-
 ## One-unit closure
 
 After exact-Production technical results and actual before/after image inspection, record run/artifact/per-state results in this document, merge a docs-only signoff and mark #2158 VIS2-07 complete. **VIS2-08 name selection/focus is NOT STARTED and must remain separate.**
+
+
+## Final acceptance / signed 2026-10-09 KST
+
+### Source, deployed runtime and testing provenance
+
+- Implemented via [PR #2208](https://github.com/JezCH/atlas-person-db/pull/2208) at initial SHA `1c1796c7b56f2a876c11185e42c62f5febb5f46a`, then independent VIS2-07-only [Activity hairline color correction PR #2209](https://github.com/JezCH/atlas-person-db/pull/2209) to final implementation SHA **`21f8ae331c4bd32b024b3c4c9c8850bdf65db6c0`**. The second change did not alter border width, Activity content, row/column geometry or domain tint; it made a color change in the existing hairline actually measurable instead of repeating its old Material token.
+- [Exact-deployed-SHA Production Chrome run #37848318185](https://github.com/JezCH/atlas-person-db/actions/runs/37848318185): **SUCCESS** with source/runtime SHA `21f8ae331c4bd32b024b3c4c9c8850bdf65db6c0`. All earlier Spacetime, Person, Polity and Phase II VIS2-00/01/02/03/04/05/06 gates **PASS**; VIS2-05 watermark experiment remains **rejected and default OFF**.
+- [Production evidence artifact #11581895215](https://github.com/JezCH/atlas-person-db/actions/runs/37848318185/artifacts/11581895215) was downloaded, ZIP-validated, inspected: **116 archive entries / 102 PNGs**. `vis2-07-production-register.json` says `status: PASS`, **8 cases**, **10 new A/B screenshots**. Original baseline, earlier phase evidence and this unit's proof coexist in the artifact.
+
+### Eight directly observed Production states
+
+| Chrome viewport | Register state | Rendered rows | Person rows sampled | Result |
+|---|---|---:|---:|---|
+| 390×844 | Default time order | 2,120 | 80 | PASS |
+| 768×1000 | Default time order | 2,120 | 80 | PASS |
+| 768×1000 | Actual existing domain filter | 1,435 | 80 | PASS |
+| 1440×1000 | Default time order | 2,120 | 80 | PASS |
+| 1440×1000 | Actual existing domain filter | 1,435 | 80 | PASS |
+| 1440×1000 | Name ascending sort | 2,120 | 80 | PASS |
+| 1440×1000 | Actual long-name row, scrolled | 2,120 | 80 | PASS |
+| 1600×1000 | Default time order | 2,120 | 80 | PASS |
+
+Each state toggled ONLY the new stylesheet on the **same live DOM** with before/after CSS activation assertions. Chrome verified invariant row count, header columns/group counts, header text, primary historical person name ink (including all domain colors), first Activity count per row, Person name/BC-AD chronology text, all 80 sampled row/name/year/Activity bounding boxes and scrollWidth/scrollHeight, content visibility, name-sort order/filter results, viewport/document width and no horizontal overflow. Computed header/era/canonical/status/Activity neutral color or material painted differences were actually observed; focus/selection semantics remained out of scope.
+
+### Visually reviewed screenshot A/B
+
+**All five exact-image OFF/ON pairs** from the real Production artifact were opened or inspected in a five-state comparison contact sheet, plus the full 1440 long-name register and 390 mobile shots individually. The 390×844 mobile view keeps the same compact name/polity/BC-AD Activity-line hierarchy; desktop preserves flat register rows and separate columns. No new cards, blank fields, portraits, oversized headers, lost names, scrollbars beyond the prior content, chronology shifts or domain-rail recoloring observed.
+
+| Exact A/B case | RGB pixels differing | Fraction of full screenshot |
+|---|---:|---:|
+| 390px default | 4,693 | 1.4258% |
+| 1440px default | 20,084 | 1.3947% |
+| 1440px filtered | 20,123 | 1.3974% |
+| 1440px person-sorted | 28,139 | 1.9541% |
+| 1440px actual long-name | 30,054 | 2.0871% |
+
+The only image changes are modest contrast/sheen and the original 1px Activity rule tone. Pixel-difference percentages are descriptive, **not** alone a proof of improved readability; the image-level judgment is that neutral secondary facts are easier to read without changing the dominant semantic Person name hierarchy. The live Chrome geometry gate is the separate proof of layout invariance. Filter and name-sort scenarios were tested with actual Production data, not synthetic rows.
+
+**Decision: ACCEPT VIS2-07 / COMPLETED.** Scope remains exclusively Person main register *surface and inscription*. [Phase II tracker #2158](https://github.com/JezCH/atlas-person-db/issues/2158) may mark VIS2-07 checked upon docs merge. Next **VIS2-08 (selection/focus) is NOT STARTED** and requires a separate user turn.
