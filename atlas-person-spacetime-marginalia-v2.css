@@ -1,0 +1,45 @@
+/* VIS2-06 — Instrument readout and archival marginalia, paint only.
+ * Existing V7/SPACETIME-L2 own dimensions, borders, material, controls and
+ * interactive behavior. Do not introduce pseudo-elements, markup or imagery.
+ * ID scope deliberately outranks the lazy-loaded instrument-tools.css.
+ * Dropping this stylesheet independently reverts this work unit.
+ */
+:root { --atlas-vis2-06-instrument-active: 1; }
+
+/* An instrument readout, not a button or another title inscription. */
+#personSpacetimeMount[data-spacetime-tools="instrument-v7"] .spacetime-camera output {
+  color: #eee3cc;
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+/* Existing telemetry stays an inline register: numbers gain priority but
+ * alerts and domain-related semantic colors keep their current owners. */
+#personSpacetimeMount[data-spacetime-tools="instrument-v7"] .spacetime-status-row > .spacetime-status-primary b {
+  color: #d0c4ae;
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark);
+}
+
+#personSpacetimeMount[data-spacetime-tools="instrument-v7"] .spacetime-status-row {
+  background-image: linear-gradient(180deg,
+    var(--atlas-material-sheen-soft), transparent 90%);
+}
+
+/* Marginalia on an already-etched atlas tool: no new frame or etched line. */
+#personSpacetimeMount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-head strong {
+  color: #c8bfb1;
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+#personSpacetimeMount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-head span,
+#personSpacetimeMount[data-spacetime-tools="instrument-v7"] .spacetime-minimap-status {
+  color: #969d9c;
+}
+
+/* Empty and selected inspector are the two existing real UI states.
+ * They remain compact; only their existing hierarchy becomes easier to read.
+ */
+#personSpacetimeMount[data-spacetime-tools="instrument-v7"] .spacetime-sticky-inspector.is-empty strong {
+  color: #c2bcb1;
+}
+#personSpacetimeMount[data-spacetime-tools="instrument-v7"] .spacetime-inspector-person > small {
+  color: #979fa0;
+}
