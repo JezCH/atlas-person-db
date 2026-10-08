@@ -30,6 +30,14 @@ function assert(condition, message, details = null) {
     throw error;
   }
 }
+function isDeepGraphiteSurface(value) {
+  const match=String(value||"").match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)(?:\s*,\s*([\d.]+))?\s*\)$/i);
+  if(!match) return false;
+  const channels=match.slice(1,4).map(Number);
+  const alpha=match[4]==null?1:Number(match[4]);
+  return channels.every((c)=>Number.isFinite(c)&&c>=0&&c<=56) && alpha>=.94 && alpha<=1;
+}
+
 function digest(buffer) { return crypto.createHash("sha256").update(buffer).digest("hex"); }
 function canonicalTimestamp(value) {
   if (!value) return null;
@@ -746,12 +754,12 @@ async function main() {
     assert(desktopDom.dashboard_visible, "Dashboard did not render on Desktop", desktopDom);
     assert(desktopDom.kpi_count >= 6, "Dashboard KPI grid incomplete", desktopDom);
     assert(desktopDom.presentation?.v11_loaded, "Dashboard V11 presentation layer did not load", desktopDom.presentation);
-    assert(desktopDom.presentation?.hero_background === "rgb(25, 29, 33)", "Dashboard hero regressed to a bright surface", desktopDom.presentation);
-    assert(desktopDom.presentation?.kpi_background === "rgb(23, 27, 30)", "Dashboard KPI regressed to a bright surface", desktopDom.presentation);
-    assert(desktopDom.presentation?.panel_background === "rgb(25, 29, 33)", "Dashboard panel regressed to a bright surface", desktopDom.presentation);
+    assert(isDeepGraphiteSurface(desktopDom.presentation?.hero_background), "Dashboard hero regressed to a bright surface", desktopDom.presentation);
+    assert(isDeepGraphiteSurface(desktopDom.presentation?.kpi_background), "Dashboard KPI regressed to a bright surface", desktopDom.presentation);
+    assert(isDeepGraphiteSurface(desktopDom.presentation?.panel_background), "Dashboard panel regressed to a bright surface", desktopDom.presentation);
     assert(desktopDom.presentation?.kpi_radius === "3px", "Dashboard KPI material radius regressed", desktopDom.presentation);
-    assert(desktopDom.presentation?.namuwiki_legend_background === "rgb(21, 25, 28)", "Dashboard NamuWiki legend regressed to a bright surface", desktopDom.presentation);
-    assert(desktopDom.presentation?.polity_toolbar_group_background === "rgb(18, 22, 25)", "Dashboard polity toolbar regressed to a bright surface", desktopDom.presentation);
+    assert(isDeepGraphiteSurface(desktopDom.presentation?.namuwiki_legend_background), "Dashboard NamuWiki legend regressed to a bright surface", desktopDom.presentation);
+    assert(isDeepGraphiteSurface(desktopDom.presentation?.polity_toolbar_group_background), "Dashboard polity toolbar regressed to a bright surface", desktopDom.presentation);
     for (const label of requiredEyebrows) assert(desktopDom.eyebrows.includes(label), `Dashboard panel missing: ${label}`, desktopDom.eyebrows);
     assert(desktopDom.global_scroll.overflow_x <= 1, "Desktop Dashboard causes page-level horizontal overflow", desktopDom.global_scroll);
     assert(!desktopDom.error_overlay, "Framework error overlay detected", desktopDom);

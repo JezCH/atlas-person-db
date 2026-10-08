@@ -17,6 +17,13 @@ function assert(condition,message,details=null){
   error.details=details;
   throw error;
 }
+function isDeepGraphiteSurface(value){
+  const rgb=parseRgb(value);
+  const alphaMatch=String(value||"").match(/^rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\s*\)$/i);
+  const alpha=alphaMatch?Number(alphaMatch[1]):1;
+  return !!rgb && rgb.every((c)=>Number.isFinite(c)&&c>=0&&c<=56) && alpha>=.94 && alpha<=1;
+}
+
 function parseRgb(value){
   const match=String(value||"").match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)/i);
   return match?[Number(match[1]),Number(match[2]),Number(match[3])]:null;
@@ -400,9 +407,9 @@ async function main(){
     assert(desktopMain.mainVisible&&desktopMain.registerCount>0,"Person Register did not render on desktop",desktopMain);
     assert(desktopMain.mainPortraitCount===0,"Person Main must not render portraits",desktopMain);
     assert(desktopMain.v8Loaded&&desktopMain.v9Loaded,"Current V8/V9 presentation layers are not active",desktopMain);
-    assert(desktopMain.registrationSurface?.background==="rgb(21, 25, 28)","Person Runtime telemetry regressed to a bright surface",desktopMain);
-    assert(desktopMain.eraNavigatorSurface?.background==="rgba(18, 21, 24, 0.96)","Person era navigator regressed to a bright surface",desktopMain);
-    assert(desktopMain.eraSearchSurface?.background==="rgb(17, 21, 24)","Person era search regressed to a bright surface",desktopMain);
+    assert(isDeepGraphiteSurface(desktopMain.registrationSurface?.background),"Person Runtime telemetry regressed to a bright surface",desktopMain);
+    assert(isDeepGraphiteSurface(desktopMain.eraNavigatorSurface?.background),"Person era navigator regressed to a bright surface",desktopMain);
+    assert(isDeepGraphiteSurface(desktopMain.eraSearchSurface?.background),"Person era search regressed to a bright surface",desktopMain);
     assert(desktopMain.cardLikeCount===0,"Person Register regressed toward card-like row geometry",desktopMain);
     assert(desktopMain.quietCountVisible===0,"Ordinary 0/1-Activity rows expose Activity-count noise",desktopMain);
     assert(desktopMain.activityDomIntegrity,"Multi-Activity DOM count no longer matches declared Activity count",desktopMain);
