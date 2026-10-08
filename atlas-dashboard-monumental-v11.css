@@ -915,6 +915,54 @@
 }
 
 
+/* DASH-LUX1 — Precision-ledger premium finish.
+ * Align the existing V11 graphite control center with the historical identity
+ * surfaces. Strict paint-only pass: no KPI data, chart/semantic-domain colors,
+ * control behavior, dashboard panel geometry or mobile grid changes.
+ */
+.dashboard-hero {
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    inset 0 -1px 0 var(--atlas-material-edge-dark-strong),
+    0 12px 28px rgba(0,0,0,.11);
+}
+
+.dashboard-hero h2,
+.dashboard-panel-head h3,
+.dashboard-tools h3 {
+  color: var(--atlas-text-strong);
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+.dashboard-control-center .dashboard-kpi:not(.dashboard-kpi-action) {
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    inset 0 -1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+.dashboard-kpi strong {
+  text-shadow:
+    0 1px 0 var(--atlas-material-edge-dark-strong),
+    0 6px 18px rgba(0,0,0,.13);
+}
+
+.dashboard-control-center .dashboard-panel {
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen),
+    inset 0 -1px 0 var(--atlas-material-edge-dark-strong),
+    0 12px 30px rgba(0,0,0,.075);
+}
+
+.dashboard-panel-head {
+  box-shadow: inset 0 -1px 0 var(--atlas-material-hairline-soft);
+}
+
+.dashboard-progress-track {
+  box-shadow:
+    inset 0 1px 1px var(--atlas-material-edge-dark-strong),
+    0 0 0 1px var(--atlas-material-hairline-soft);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dashboard-loading-grid span {
     animation: none;
