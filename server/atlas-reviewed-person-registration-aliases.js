@@ -19,8 +19,33 @@ const REVIEWED_REGISTRATION_ALIASES=Object.freeze([
   Object.freeze({alias_name:"Saint Augustine",canonical_key:"Augustine of Hippo"}),
   Object.freeze({alias_name:"Queen Nzinga",canonical_key:"Nzinga Mbande"}),
   Object.freeze({alias_name:"Frederick the Great",canonical_key:"Frederick II of Prussia"}),
-  Object.freeze({alias_name:"Ragnar Lothbrok",canonical_key:"Ragnar Lodbrok"})
+  Object.freeze({alias_name:"Ragnar Lothbrok",canonical_key:"Ragnar Lodbrok"}),
+  Object.freeze({alias_name:"Alexander",canonical_key:"Alexander the Great",representative_default:true}),
+  Object.freeze({alias_name:"Beethoven",canonical_key:"Ludwig van Beethoven",representative_default:true}),
+  Object.freeze({alias_name:"Caesar",canonical_key:"Julius Caesar",representative_default:true}),
+  Object.freeze({alias_name:"Cleopatra",canonical_key:"Cleopatra VII",representative_default:true}),
+  Object.freeze({alias_name:"Da Vinci",canonical_key:"Leonardo da Vinci",representative_default:true}),
+  Object.freeze({alias_name:"Darwin",canonical_key:"Charles Darwin",representative_default:true}),
+  Object.freeze({alias_name:"Einstein",canonical_key:"Albert Einstein",representative_default:true}),
+  Object.freeze({alias_name:"Gandhi",canonical_key:"Mahatma Gandhi",representative_default:true}),
+  Object.freeze({alias_name:"Hannibal",canonical_key:"Hannibal Barca",representative_default:true}),
+  Object.freeze({alias_name:"Hitler",canonical_key:"Adolf Hitler",representative_default:true}),
+  Object.freeze({alias_name:"Lenin",canonical_key:"Vladimir Lenin",representative_default:true}),
+  Object.freeze({alias_name:"Leonardo",canonical_key:"Leonardo da Vinci",representative_default:true}),
+  Object.freeze({alias_name:"Mao",canonical_key:"Mao Zedong",representative_default:true}),
+  Object.freeze({alias_name:"Mozart",canonical_key:"Wolfgang Amadeus Mozart",representative_default:true}),
+  Object.freeze({alias_name:"Napoleon",canonical_key:"Napoleon I",representative_default:true}),
+  Object.freeze({alias_name:"Oppenheimer",canonical_key:"J. Robert Oppenheimer",representative_default:true}),
+  Object.freeze({alias_name:"Shakespeare",canonical_key:"William Shakespeare",representative_default:true}),
+  Object.freeze({alias_name:"Stalin",canonical_key:"Joseph Stalin",representative_default:true}),
+  Object.freeze({alias_name:"Van Gogh",canonical_key:"Vincent van Gogh",representative_default:true}),
+  Object.freeze({alias_name:"Washington",canonical_key:"George Washington",representative_default:true})
 ]);
+
+const REVIEWED_REPRESENTATIVE_ALIASES=Object.freeze(
+  REVIEWED_REGISTRATION_ALIASES.filter(entry=>entry.representative_default===true)
+);
+
 
 function sqlLiteral(value) {
   return "'"+String(value).replaceAll("'","''")+"'";
@@ -32,4 +57,4 @@ function reviewedPersonAliasesValuesSql() {
     .join(",\n    ");
 }
 
-module.exports=Object.freeze({REVIEWED_REGISTRATION_ALIASES,reviewedPersonAliasesValuesSql});
+module.exports=Object.freeze({REVIEWED_REGISTRATION_ALIASES,REVIEWED_REPRESENTATIVE_ALIASES,reviewedPersonAliasesValuesSql});
