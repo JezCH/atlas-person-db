@@ -184,13 +184,13 @@ test("REVIEW-M11 labels only unique exact registered aliases and current pending
     {id:"p-leonardo",canonical_name_en:"Leonardo da Vinci",names:[],historicity:"historical"},
     {id:"p-napoleon",canonical_name_en:"Napoleon I",names:[],historicity:"historical"},
     {id:"p-ibn",canonical_name_en:"Ibn Sina",names:[],historicity:"historical"},
-    {id:"p-cleopatra-1",canonical_name_en:"Cleopatra",names:[],historicity:"historical"},
+    {id:"p-cleopatra-1",canonical_name_en:"Cleopatra VII",names:[{name:"Cleopatra"}],historicity:"historical"},
     {id:"p-cleopatra-2",canonical_name_en:"Cléopatra",names:[],historicity:"historical"}
   ],summary:{total:7}};
   const queue={ok:true,summary:{pending_count:3},reviewed_person_aliases:[
     {alias_name:"Napoleon Bonaparte",person_id:"p-napoleon",canonical_key:"Napoleon I"},
     {alias_name:"Avicenna",person_id:"p-ibn",canonical_key:"Ibn Sina"},
-    {alias_name:"Cleopatra",person_id:"p-cleopatra-1",canonical_key:"Cleopatra VII"}
+    {alias_name:"Cleopatra",person_id:"p-cleopatra-1",canonical_key:"Cleopatra VII",representative_default:true}
   ],candidates:[
     {candidate_id:"q-hypatia",name:"Hypatia of Alexandria",review_metadata:{lookup_names:["Hypatia"]}},
     {candidate_id:"q-galois",name:"Évariste Galois",review_metadata:{}},
@@ -230,13 +230,15 @@ test("REVIEW-M11 labels only unique exact registered aliases and current pending
   assert.match(matchingRow("Napoleon Bonaparte"),/data-status="registered">기등록/);
   assert.match(matchingRow("Avicenna"),/data-status="registered">기등록/);
   assert.doesNotMatch(matchingRow("Leonardo da Vinci"),/대기열 등재/);
-  assert.match(matchingRow("Cleopatra"),/data-status="ambiguous">동명이인 확인/);
+  assert.match(matchingRow("Cleopatra"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Cleopatra"),/data-status="representative">대표 간주: Cleopatra VII/);
   assert.match(matchingRow("Hypatia"),/data-status="queued">대기열 등재/);
   assert.match(matchingRow("Evariste Galois"),/data-status="queued">대기열 등재/);
   assert.match(matchingRow("Mansa Musa"),/기등록 일치 없음/);
   assert.match(matchingRow("Mansa Musa"),/대기열 미등재/);
   assert.doesNotMatch(matchingRow("Abraham Lincoln Biography"),/data-status="registered"/);
   assert.match(css,/REVIEW-M11/);
+  assert.match(css,/REVIEW-M13/);
   assert.match(css,/\.registration-review-signal-identity\[data-status="registered"\]/);
   assert.match(js,/일치 없음은 실제 미등록을 확정하지 않습니다/);
 });
