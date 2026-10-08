@@ -553,6 +553,10 @@
   white-space: pre-wrap;
 }
 
+/* DETAIL-M4 — Evidence microtypography readability.
+ * Keep the existing chronology disclosure layout and raw source semantics;
+ * raise tiny metadata to the approved 9–11px operational typography scale.
+ */
 /* Evidence stays available, but reads as a disclosure in the chronology. */
 .person-chronicle-activity .person-evidence-inspector {
   margin-top: 13px;
@@ -581,13 +585,13 @@
 }
 
 .person-chronicle-activity .person-evidence-inspector > summary b {
-  color: #8f9699;
-  font-size: 8.5px;
+  color: var(--atlas-text);
+  font-size: 10px;
 }
 
 .person-chronicle-activity .person-evidence-inspector > summary small {
-  color: #575f64;
-  font-size: 7.5px;
+  color: var(--atlas-text-secondary);
+  font-size: 9px;
 }
 
 .person-chronicle-activity .person-evidence-summary-badges {
@@ -598,8 +602,8 @@
   padding: 0;
   border-radius: 0;
   background: transparent;
-  color: #666e73;
-  font-size: 7.5px;
+  color: var(--atlas-text-secondary);
+  font-size: 9px;
 }
 
 .person-chronicle-activity .person-evidence-summary-badges i + i::before {
@@ -642,15 +646,15 @@
 .person-chronicle-activity .person-evidence-facts small,
 .person-chronicle-activity .person-evidence-boundary > small,
 .person-chronicle-activity .person-evidence-sources-head span {
-  color: #596166;
-  font-size: 7px;
+  color: var(--atlas-text-secondary);
+  font-size: 9px;
 }
 
 .person-chronicle-activity .person-evidence-facts strong,
 .person-chronicle-activity .person-evidence-boundary > strong,
 .person-chronicle-activity .person-evidence-sources-head strong {
-  color: #92989a;
-  font-size: 8.5px;
+  color: var(--atlas-text);
+  font-size: 10px;
 }
 
 .person-chronicle-activity .person-evidence-boundary-meta > span {
@@ -661,8 +665,8 @@
 
 .person-chronicle-activity .person-evidence-boundary-meta small,
 .person-chronicle-activity .person-evidence-boundary-meta b {
-  color: #60686d;
-  font-size: 6.5px;
+  color: var(--atlas-text-secondary);
+  font-size: 9px;
 }
 
 /* ---------- Sources: citation register rather than cards ---------- */
@@ -709,8 +713,8 @@
 }
 
 .person-chronicle-section .person-source-item small {
-  color: #60686d;
-  font-size: 7.5px;
+  color: var(--atlas-text-secondary);
+  font-size: 9px;
 }
 
 .person-chronicle-section .person-source-type {
