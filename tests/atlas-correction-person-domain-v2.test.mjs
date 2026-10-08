@@ -35,6 +35,22 @@ test("Person domain correction accepts an exact guarded canonical rewrite", () =
   assert.equal(operation.replacement_domain, "science");
 });
 
+test("Person domain correction accepts an explicit NULL precondition for reviewed classification", () => {
+  const operation = requireOperation(validOperation({ expected_domain: null, replacement_domain: "governance" }), 1);
+  assert.equal(operation.expected_domain, null);
+  assert.equal(operation.replacement_domain, "governance");
+  assert.throws(
+    () => requireOperation(validOperation({ expected_domain: "" }), 1),
+    /CORRECTION_PERSON_DOMAIN_OP1_EXPECTED_DOMAIN_INVALID/
+  );
+  const { expected_domain, ...missingExpected } = validOperation();
+  assert.equal(expected_domain, "technology");
+  assert.throws(
+    () => requireOperation(missingExpected, 1),
+    /CORRECTION_PERSON_DOMAIN_OP1_EXPECTED_DOMAIN_REQUIRED/
+  );
+});
+
 test("Person domain correction rejects invalid and no-op domain rewrites", () => {
   assert.throws(
     () => requireOperation(validOperation({ replacement_domain: "knowledge" }), 1),
@@ -85,6 +101,13 @@ test("Person domain correction computes expected count deltas only for reviewed 
   assert.equal(after.science, 79);
   assert.equal(after.commerce, 29);
   assert.equal(after.unclassified, 113);
+
+  const classifiedFromNull = expectedDomainCounts(before, [
+    validOperation({ expected_domain: null, replacement_domain: "governance" })
+  ]);
+  assert.equal(classifiedFromNull.unclassified, 112);
+  assert.equal(classifiedFromNull.governance, 1351);
+  assert.equal(classifiedFromNull.technology, 38);
 });
 
 test("v2 dispatcher forbids mixing Person domain rewrites with another correction family", () => {
