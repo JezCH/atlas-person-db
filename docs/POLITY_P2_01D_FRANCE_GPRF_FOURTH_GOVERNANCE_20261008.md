@@ -1,6 +1,6 @@
 # POLITY-P2-01D — Source-backed French GPRF and Fourth Republic Governance Context registration
 
-**2026-10-08 | Initial status: reviewed, protected assertion-only Correction prepared. Production apply + exact read-back pending.**
+**2026-10-08 | Final status: AUTHENTICATED_CORRECTION_APPLIED / SOURCE_BACKED_GOVERNANCE_CONTEXTS_VERIFIED / 65_AUTHORING_65_RUNTIME_0_DRIFT / NO_ACTIVITY_CHANGE / NO_DELETION.**
 
 ## 1. Historical model judgment and evidence
 
@@ -47,3 +47,19 @@ No altered Person/Polity/Activity UUID; no deletion, no Vichy synthetic authorit
 Before declaring APPLIED, require: PR Integrity SUCCESS + merged; authenticated Correction Apply SUCCESS with exact request ID in Production `atlas_v2.correction_manifest_runs`; 2 correct typed `atlas_v2.governance_contexts`, six EN/FR/KO `governance_context_names`, two accurate `polity_governance_periods` with three normalized documentary `polity_governance_period_sources`, two unique normalized `atlas_v2.sources`; **pre-existing Fifth Context and dates unchanged**, French Person Activities and normalized links unchanged; 65 Authoring / 65 Runtime / 0 mismatches after compile. If any gate fails, do not say applied; retain exact failure and bounded re-entry.
 
 France family remains `REVIEW_REQUIRED` pending the larger unresolved 1940 Vichy de facto representation, other 18th–19th constitutional period identities and country umbrella/Republic relation. Root #1895 stays OPEN, **75 seeded / 50 terminal / 25 pending** unchanged. Empty Kingdom and Third Republic Polity UUIDs remain live absent explicit user deletion approval. Japan P1-02, Place P1-03R stay separate acceptance blockers; P14 geometry user-parked.
+
+## 5. Verified production closeout (2026-10-08 14:25:29 UTC; 23:25:29 KST)
+
+1. **PR #2181** merged to main at `88a353c8aa5ad2c37b451d323c1a4ccad044e74a`; full Integrity PR workflow `37791947512` **SUCCESS** including new assertion-only snapshot safeguards and exact period/bilingual provenance tests. This change includes the minimal protected writer path and the actual reviewed six-assertion correction plan.
+2. Initial Correction Apply workflow `37792167616` **attempt 1 FAILED** on `CORRECTION_V2_EXECUTION_PLAN_OPERATIONS_REQUIRED` because it started against the **previous Production deployment** before the merged handler was available. No Production governance rows/ledger had been created by the failed attempt; this is a real transport/deployment race, not historical data evidence. The main Production Vercel deployment was independently observed `READY` at merged SHA `88a353c8aa5ad2c37b451d323c1a4ccad044e74a`.
+3. Re-ran **only failed jobs** of the same approved GitHub Correction workflow; `37792167616` final conclusion **SUCCESS**. Connected `atlas_v2.correction_manifest_runs` ledger confirms exact request `polity_france_gprf_fourth_governance_context_20261008_v1`, schema `atlas-correction-manifest/v2`, **committed 2026-10-08 14:25:29.422782 UTC**. The OIDC-authenticated writer—not ad hoc SQL—performed the atomic schema-typed registration.
+4. Exact live `atlas_v2.governance_contexts` materialized:
+   - GPRF UUID `d62d6cb9-4f36-4e7e-aa36-9c99a8b417cd`, key `stage2:french-provisional-government-1944-1946`, type **`government`**, **3 preferred EN/FR/KO names**.
+   - Fourth UUID `ce3e52df-59d7-470d-be1e-18e6198f8690`, key `stage2:french-fourth-republic`, type **`constitutional_regime`**, **3 preferred EN/FR/KO names**.
+5. Their exact normalized `atlas_v2.polity_governance_periods`, both tied to established French Republic UUID `b138f5e4-ff83-40f6-bdb1-83b08c0256cb`:
+   - GPRF `662ce129-ae66-46d9-90ba-f829e77d90e2` **1944-06-03 through 1946-12-24**; **2 Source links**.
+   - Fourth `b8e65dc6-4de2-4ef3-8545-238dc8e23124` **1946-12-24 through 1958-10-03**; **1 Source link**. The 1946-10-27 promulgation versus 1946-12-24 legal effectiveness is separately recorded in sourced notes. Ending Oct 3 is the explicitly documented ATLAS last-full-day boundary convention.
+   - Both official National Assembly Sources authored, UUIDs `4c0ef4bf-c14c-4577-ae2e-f10f779f66ea`, `cc050adf-b172-4dea-ae97-8277185ccb16` with exact original institution URLs and bibliography text.
+6. Pre-existing Fifth Republic Governance Context `078c50b9-4a15-46b4-9181-567cf07ee838` remains at existing **1958-10-04 → open**; no regnal time, PeriodBasis, Person or Activity UUID changed. GitHub Runtime Projection Compile runs `37792212361` and `37792383565` both **SUCCESS**. Independent full eight-UUID France family read-back: **65 Authoring / 65 Runtime / 0 identity and full temporal mismatches**; the earlier 37 `France`, 16 French Republic Activity distribution is unchanged.
+
+**Unit conclusion:** P2-01D has **actual Production writes and verified registration** of two legitimate typed governance contexts, without a manufactured Person change. It does **not** make Vichy a legitimate Republican government, invent wartime leaders, alter the France country umbrella, or merge/retire any Polity. Root France family `REVIEW_REQUIRED` (75 total / 50 terminal / 25 pending) remains open until the remaining Vichy/Free-France de facto authority and France country/Republic-umbrella distinction are satisfactorily reviewed. **Immediate next separate bounded unit: POLITY-P2-01E — Vichy versus Free France de facto regime modeling and persistent France umbrella final identity review, with exact sourced authority preflight, no automatic deletions.** P1-02 Japan tombstones and P1-03R Place remain distinct acceptance blockers; P14 Territory Geometry remains parked by user.
