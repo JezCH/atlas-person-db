@@ -383,3 +383,48 @@
   font-weight:620;
   letter-spacing:-.015em;
 }
+
+
+/* POLITY-LUX1 — Canonical polity and dossier inscription finish.
+ * A restrained graphite plaque with precise metallic hairlines. This is
+ * presentation-only: keep browser summary/card content, grid geometry,
+ * review workbench, provenance, filter and authoring semantics unchanged.
+ */
+.polity-browser-card {
+  background-image:
+    linear-gradient(180deg, var(--atlas-material-sheen-strong), transparent 42%),
+    linear-gradient(0deg, var(--atlas-material-edge-dark), transparent 70%);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    inset 0 -1px 0 var(--atlas-material-edge-dark-strong),
+    0 8px 24px rgba(0,0,0,.075);
+}
+.polity-browser-card>summary {
+  box-shadow: inset 0 1px 0 var(--atlas-material-sheen-soft);
+}
+.polity-browser-card[open]>summary {
+  background-image: linear-gradient(90deg,
+    var(--atlas-material-wash-selected),
+    var(--atlas-material-sheen-soft) 42%, transparent 84%);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    inset 0 -1px 0 var(--atlas-material-hairline-soft);
+}
+.polity-browser-title strong,
+.polity-dossier-section-head h4 {
+  color: var(--atlas-text-strong);
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+.polity-browser-title span {
+  color: var(--atlas-text-secondary);
+}
+.polity-dossier-overview>div,
+.polity-dossier-identity>span {
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    inset 0 -1px 0 var(--atlas-material-edge-dark);
+}
+.polity-dossier-overview strong {
+  color: var(--atlas-text-strong);
+  font-variant-numeric: tabular-nums;
+}

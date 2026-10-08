@@ -263,7 +263,7 @@ test('Polity surface uses the canonical dark monumental token system without leg
   assert.match(css, /var\(--atlas-warning\)/);
   assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b/);
   assert.doesNotMatch(css, /border-radius:999px/);
-  assert.match(nav, /atlas-polity-review-workbench\.css\?v=20261007-polity-m3-structural-material-v1/);
+  assert.match(nav, /atlas-polity-review-workbench\.css\?v=20261008-polity-lux1-inscription-v1/);
 });
 
 test('POL-C1 gives canonical Polity cards plaque material without changing card geometry', () => {
