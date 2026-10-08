@@ -47,7 +47,8 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.equal(AUTHORING_MIGRATION_PATHS[27].endsWith("20261004_person_representative_domain_standard_v2_replay_safe.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[28].endsWith("20261006_user_selected_person_registration_queue_07.sql"), true);
   assert.equal(AUTHORING_MIGRATION_PATHS[29].endsWith("20261007_youtube_person_signal_read_model.sql"), true);
-  assert.equal(AUTHORING_MIGRATION_PATHS[30].endsWith("20261008_youtube_discovery_channel_registry.sql"), true);\n  assert.equal(AUTHORING_MIGRATION_PATHS[31].endsWith("20261008_youtube_history_reconciliation.sql"), true);
+  assert.equal(AUTHORING_MIGRATION_PATHS[30].endsWith("20261008_youtube_discovery_channel_registry.sql"), true);
+  assert.equal(AUTHORING_MIGRATION_PATHS[31].endsWith("20261008_youtube_history_reconciliation.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS[7].endsWith("20261004_person_representative_domain_standard_v2_replay_safe.sql"), true);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.some((value)=>value.endsWith("20260919_person_representative_domain_standard_replay_safe.sql")), false);
   assert.equal(AUTHORING_APPLY_MIGRATION_PATHS.some((value)=>value.endsWith("20260821_human_authoring_external_reference_sync.sql")), false);
