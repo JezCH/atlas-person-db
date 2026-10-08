@@ -8,7 +8,7 @@ Production 점검 기준: 등록 Person **2,120명**, Person 이름 **4,267개**
 
 ## 검증된 이명/호칭 연결
 
-다음 이름은 **정확하게 한 명의 기존 Person canonical_key**로 연결됨을 Production에서 확인했고, 동일 별칭으로 다른 등록 인물이 조회되지 않음을 확인했다.
+다음 16개 이름은 **정확하게 한 명의 기존 Person canonical_key**로 연결됨을 Production에서 확인했고, 동일 별칭으로 다른 등록 인물이 조회되지 않음을 확인했다.
 
 | 유튜브/대기열 표현 | 기존 Person canonical_key | 검증 이유 |
 | --- | --- | --- |
@@ -20,8 +20,16 @@ Production 점검 기준: 등록 Person **2,120명**, Person 이름 **4,267개**
 | Attila the Hun | Attila | 훈족 아틸라 |
 | Richard the Lionheart | Richard I | 사자심왕 리처드 1세 |
 | Vlad the Impaler | Vlad III | 블라드 3세 체페슈 |
+| Constantine the Great | Constantine I | 콘스탄티누스 대제 |
+| Suleiman the Magnificent | Suleiman I | 쉴레이만 대제 |
+| Emperor Hirohito | Hirohito | 일본 천황 히로히토 |
+| Robert Oppenheimer | J. Robert Oppenheimer | J. 로버트 오펜하이머의 통용 축약명 |
+| Saint Augustine | Augustine of Hippo | 히포의 아우구스티누스 |
+| Queen Nzinga | Nzinga Mbande | 은징가 여왕 |
+| Frederick the Great | Frederick II of Prussia | 프로이센의 프리드리히 대왕 |
+| Ragnar Lothbrok | Ragnar Lodbrok | 표기 차이; 등록 인물의 historicity 판정은 그대로 유지 |
 
-이 8건은 **Person UUID 조회 시점에서만** 활성화된다. 해당 Person이 존재하지 않으면 등록 판정에서 제외한다.
+이 16건은 **Person UUID 조회 시점에서만** 활성화된다. 해당 Person이 존재하지 않으면 등록 판정에서 제외한다.
 
 기등록 상태와 등록대기열은 동일한 읽기 전용 판정 규칙(`server/atlas-reviewed-person-registration-aliases.js`)을 사용한다. 등록대기열에 Avicenna·Napoleon Bonaparte 등 과거에 입력된 후보가 있어도 현재 Person ID에 단일 연결되면 **현재 대기열에서 제외**한다. 원래 후보 기록이나 Person 이름은 삭제·변경하지 않는다.
 
