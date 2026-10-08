@@ -52,7 +52,7 @@ async function openPerson(c,kind,id){
  const result=await evaluate(c,"(()=>{const rows=[...document.querySelectorAll('.person-register-entry')];let row=null;const kind="+JSON.stringify(kind)+",id="+JSON.stringify(id||"")+";if(id)row=rows.find(r=>r.dataset.personId===id);else if(kind==='multi')row=rows.find(r=>r.classList.contains('has-multiple-activities'));else row=rows[0];if(!row)return null;const name=row.querySelector('.person-table-identity > strong')?.textContent?.trim()||'';row.click();return {id:row.dataset.personId||null,name,multi:row.classList.contains('has-multiple-activities')};})()");
  check(result?.id&&result.name,"Actual source Person row missing",{kind,result});
  await until(c,"Boolean(document.querySelector('#personMainDetail:not([hidden]) .person-chronicle-hero .person-detail-portrait'))",45000);
- await until(c,"document.querySelector('#personMainDetail .person-chronicle-identity h2')?.textContent?.trim().length>0",20000);
+ await until(c,"document.querySelector('#personMainDetail .person-chronicle-identity h2')?.textContent?.trim()==="+JSON.stringify(result.name),20000);
  await sleep(480);
  return result;
 }
