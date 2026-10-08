@@ -1,6 +1,6 @@
 # ATLAS Premium Visual Execution Plan — 2026-10-08
 
-> **Status: ACTIVE · canonical user-approved UI visual direction.**
+> **Status: COMPLETED / VERIFIED 2026-10-08 · canonical preserved design direction.**
 > **Project:** `JezCH/atlas-person-db`. Read this file and `ATLAS_UI_VISUAL_GUIDELINES.md` before any subsequent UI design change.
 > **Purpose:** Raise the deployed ATLAS experience to a truly premium, refined, visually coherent historical interface. This is a visual-design workstream, **not** the Admin Information Coverage workstream (#1896), and not data/identity correction.
 > **Design thesis:** Monumental Chronographic Modernism / **Chronographic Luxury**.
@@ -54,8 +54,12 @@
 
 - **2026-10-08 P0:** Current main already contains V3 Graphite/Champagne foundation, shared GLOBAL-M1 material scale, V9 motion, V11 Dashboard, Chronicle Detail, Polity plaque and V6/V7 Spacetime presentation. Do not rebuild completed layers.
 - **2026-10-08 P1a — MERGED:** PR #2134, main commit `6c721cb30939a8d97cb20c799b732caeff1992aa`, implements existing Spacetime premium time-axis / year-seam / selected-label finish. Do not reproduce this work. CI and Vercel deployed; true rendered visual acceptance remains separate.
-- **2026-10-08 P1b — MERGED:** PR #2135, main commit `23b1e49487afe9871efd820cc31c5c6beb4ffcde`. Instrument/minimap/inspector precision material; CI and Vercel successful. Real paired screenshot acceptance remains **P1 VISUAL ACCEPTANCE PENDING**, not a reason to repeat finished CSS.
-- **2026-10-08 P2a — MERGED:** PR #2137, main commit `6ba699f804abb71d80a40015bbdba557ff17b826`. Person Detail biography opening / existing genuine-portrait frame / editorial name and period, CSS-only. ATLAS Integrity and Vercel **SUCCESS**; paired real browser screenshot acceptance **PENDING**. No Person table conversion, geometry, content, semantic domain, data or API change. P2b Activity/source polish requires a separately verified actual visual gap.
-- **Next checkpoint:** Capture real matched 1440/768/390px desktop/mobile browser states for P1/P2, log visual acceptance distinctly from CI and Vercel, and only then pick a bounded, actually observed visual defect for P2b or P3. If this environment has no browser rendering access, the visual acceptance remains PENDING; do not falsely close it.
+- **2026-10-08 P1b — VERIFIED:** PR #2135, main commit `23b1e49487afe9871efd820cc31c5c6beb4ffcde`. Instrument/minimap/inspector precision material. Exact-SHA Production Chrome visual run [37730898739](https://github.com/JezCH/atlas-person-db/actions/runs/37730898739) **PASS**, 1600px Spacetime 500%/1500%/Meanwhile and 390px mobile screenshots.
+- **2026-10-08 P2a — VERIFIED:** PR #2137, main commit `6ba699f804abb71d80a40015bbdba557ff17b826`. Biography/real portrait frame/editorial name and period, CSS-only; desktop/mobile Person Detail Chrome captures and semantic/geometry contracts **PASS**.
+- **2026-10-08 P2b — VERIFIED:** PR #2139, main `ba8feba25b964864532c27ef6c2da7060a4b3b94`, Chronicle activities and source archive paint only; desktop/mobile Person Detail Chrome **PASS**.
+- **2026-10-08 P3 — VERIFIED:** PR #2143, main `d9c5bf1334eff74c8ec8c969ac6da273028b75c6`, canonical Polity plaque/dossier skin; desktop/mobile collapsed/expanded real browser screenshots, 390px width, **PASS**.
+- **2026-10-08 P4 — VERIFIED:** PR #2144, main `ae57cfba5c115e76e7c1036db0904f1d87e804a5`, Dashboard precision ledger; [Production Chrome run 37730044578](https://github.com/JezCH/atlas-person-db/actions/runs/37730044578) **PASS** with 1440px desktop and 390px mobile screenshots.
+- **2026-10-08 P5 — VERIFIED:** QA PRs #2142, #2145, #2146, #2147. Corrected stale exact RGB checks and a nested browser-evaluation shadow-parser regex false positive. Actual Person rows measured **0px border radius, inset-only hairline**, desktop/mobile 2,120 rows, **0 real cards**. All exact-SHA Production visual + domain colors + Polity + main Person Detail acceptance at commit `092743c3bb606da437871aafcb4e07061d75ef30` **PASS** [run 37730898739](https://github.com/JezCH/atlas-person-db/actions/runs/37730898739); ATLAS Integrity, CORE, Vercel **PASS**.
+- **CLOSE:** Scope P1–P5 finished. Current visual QA includes real screenshots; not an automated pixel-perfect baseline comparison. No invented portraits, table cardification, history/DB/semantic/camera/LOD changes. Out-of-scope first-camera empty periods or other UX/data logic need separately approved work; do not start without direction.
 
 **Resume anchor:** Read this file, `ATLAS_UI_VISUAL_GUIDELINES.md`, the latest `main` source and the linked P1a PR. **Do not branch back into #1896 or Person cards.**
