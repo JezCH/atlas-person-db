@@ -165,9 +165,19 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.equal(byId.get('sicily-county-kingdom').reviewed_decision, 'keep_both');
   assert.equal(byId.get('sicily-county-kingdom').locked, true);
   assert.equal(byId.get('joseon-korean-empire').terminal_status, 'KEEP_SEPARATE');
-  assert.equal(byId.get('hungary-regime-family').terminal_status, 'FIXED');
-  assert.equal(byId.get('hungary-regime-family').locked, true);
-  assert.match(byId.get('hungary-regime-family').rationale, /1918-1920 republican\/Soviet interlude/);
+  const hungary = byId.get('hungary-regime-family');
+  assert.equal(hungary.terminal_status, 'FIXED');
+  assert.equal(hungary.status, 'FIXED');
+  assert.equal(hungary.reviewed_decision, 'keep_both');
+  assert.equal(hungary.suggested_action, 'keep_both');
+  assert.equal(hungary.left.polity_id, 'b07ef629-2fd6-59f9-bac8-ec685b371aac');
+  assert.equal(hungary.right.polity_id, '83292f3d-caad-43bb-86e6-05259b90eac9');
+  assert.equal(hungary.locked, true);
+  assert.match(hungary.rationale, /1918-1920 republican\/Soviet interlude/);
+  assert.match(hungary.rationale, /supersedes PR #2117/);
+  assert.match(hungary.rationale, /PR #2118/);
+  assert.match(hungary.rationale, /PR #2119/);
+  assert.doesNotMatch(hungary.rationale, /one Kingdom of Hungary identity for the medieval, Habsburg\/dualist and Horthy/);
   assert.equal(byId.get('russian-sfsr-federation').terminal_status, 'KEEP_SEPARATE');
   assert.equal(byId.get('nicaea-byzantine').terminal_status, 'SUPERSEDED');
 
