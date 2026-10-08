@@ -233,8 +233,13 @@
       try {
         const payload=await getJson(LIVING_URL+"&names="+encodeURIComponent(JSON.stringify(missing.slice(index,index+25))));
         if(!Array.isArray(payload.rows)) throw new Error("INVALID_LIVING_EVIDENCE_RESPONSE");
+        if(payload.evidence_unavailable===true) unavailable=true;
         for(const row of payload.rows) {
           if(typeof row?.name==="string" && ["living_likely","deceased","unknown"].includes(row?.status)) {
+            // An upstream outage must not cache an unverified "unknown" for an
+            // hour and hide future successful checks. Reviewed living records
+            // still exclude immediately, even when the provider is down.
+            if(payload.evidence_unavailable===true && row.status==="unknown") continue;
             livingEvidence.set(row.name,{status:row.status,expires_at:Date.now()+60*60*1000});
           }
         }
