@@ -39,7 +39,8 @@ WHERE snapshot_scope IN ('global_baseline','global_checkpoint');
 
 -- Batch records 001–007 are retired. Retain batch008+ provenance only.
 DELETE FROM atlas_v2.youtube_discovery_run_ledger
-WHERE phase IN ('canonical_baseline','ephemeral_preflight');
+WHERE run_key IN ('prelude-ephemeral','batch001','batch002','batch003',
+                  'batch004b','batch004','batch005','batch006','batch007');
 UPDATE atlas_v2.youtube_discovery_run_ledger
 SET phase='canonical_baseline',
     metric_scope='global_unique',
