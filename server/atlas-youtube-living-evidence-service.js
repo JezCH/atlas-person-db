@@ -4,8 +4,10 @@
 // A single exact English human label with a plausible birth date and no recorded
 // death is a *likely living* match. Ambiguities and missing data stay unknown.
 const WIKIDATA_QUERY_URL="https://query.wikidata.org/sparql";
+const {reviewedLivingStatus}=require("./atlas-youtube-reviewed-living-people.js");
 const CACHE_TTL_MS=6*60*60*1000;
 const statusCache=new Map();
+let upstreamUnavailableUntil=0;
 const MAX_NAMES=25;
 const MAX_AGE=115;
 
@@ -58,36 +60,57 @@ function resolveMatches(names,bindings,asOfYear=new Date().getUTCFullYear()) {
 
 async function readLivingEvidence({names,fetchImpl=globalThis.fetch,now=Date.now()}={}) {
   const selected=validatedNames(names);
+  const reviewed=new Map();
+  for(const name of selected) {
+    const finding=reviewedLivingStatus(name,now);
+    if(finding) reviewed.set(name,finding);
+  }
   const missing=selected.filter(name=>{
+    if(reviewed.has(name)) return false;
     const item=statusCache.get(name);
     return !item||item.expires_at<=now;
   });
+  let evidenceUnavailable=false;
   if(missing.length) {
-    if(typeof fetchImpl!=="function") throw new Error("WIKIDATA_FETCH_UNAVAILABLE");
-    const url=new URL(WIKIDATA_QUERY_URL);
-    url.searchParams.set("query",buildQuery(missing));
-    url.searchParams.set("format","json");
-    const response=await fetchImpl(url.toString(),{
-      headers:{"accept":"application/sparql-results+json","user-agent":"ATLAS-YouTube-Discovery/1.0 (evidence-only)"},
-      signal:AbortSignal.timeout(8500)
-    });
-    if(!response.ok) throw new Error("WIKIDATA_LOOKUP_UNAVAILABLE");
-    const payload=await response.json();
-    const rows=payload?.results?.bindings;
-    if(!Array.isArray(rows)||rows.length>=800) throw new Error("WIKIDATA_LOOKUP_INCOMPLETE");
-    for(const item of resolveMatches(missing,rows,new Date(now).getUTCFullYear())) {
-      statusCache.set(item.name,{...item,expires_at:now+CACHE_TTL_MS});
-    }
-    if(statusCache.size>3000) {
-      for(let index=0;index<1000;index++) statusCache.delete(statusCache.keys().next().value);
+    if(now < upstreamUnavailableUntil) {
+      evidenceUnavailable=true;
+    } else {
+      try {
+        if(typeof fetchImpl!=="function") throw new Error("WIKIDATA_FETCH_UNAVAILABLE");
+        const url=new URL(WIKIDATA_QUERY_URL);
+        url.searchParams.set("query",buildQuery(missing));
+        url.searchParams.set("format","json");
+        const response=await fetchImpl(url.toString(),{
+          headers:{"accept":"application/sparql-results+json","user-agent":"ATLAS-YouTube-Discovery/1.0 (evidence-only)"},
+          signal:AbortSignal.timeout(8500)
+        });
+        if(!response.ok) throw new Error("WIKIDATA_LOOKUP_UNAVAILABLE");
+        const payload=await response.json();
+        const rows=payload?.results?.bindings;
+        if(!Array.isArray(rows)||rows.length>=800) throw new Error("WIKIDATA_LOOKUP_INCOMPLETE");
+        for(const item of resolveMatches(missing,rows,new Date(now).getUTCFullYear())) {
+          statusCache.set(item.name,{...item,expires_at:now+CACHE_TTL_MS});
+        }
+        if(statusCache.size>3000) {
+          for(let index=0;index<1000;index++) statusCache.delete(statusCache.keys().next().value);
+        }
+      } catch(error) {
+        // Never let a Wikidata outage erase a locally reviewed living Person.
+        // Unknown people remain visible; signal the incomplete filter to UI.
+        evidenceUnavailable=true;
+        upstreamUnavailableUntil=now+60000;
+        console.warn("ATLAS Wikidata living evidence unavailable; using reviewed people only",error?.message);
+      }
     }
   }
   return Object.freeze({
-    evidence_source:"Wikidata P31/P569/P570 (unique exact English label, unverified living inference)",
+    evidence_source:"Reviewed current public figures (time-limited) + Wikidata P31/P569/P570 for other exact names",
     checked_at:new Date(now).toISOString(),
+    evidence_unavailable:evidenceUnavailable,
     rows:Object.freeze(selected.map(name=>{
-      const item=statusCache.get(name);
-      return Object.freeze({name,status:item?.status||"unknown",wikidata_id:item?.wikidata_id||null});
+      const item=reviewed.get(name)||statusCache.get(name);
+      return Object.freeze({name,status:item?.status||"unknown",wikidata_id:item?.wikidata_id||null,
+        evidence_type:item?.evidence_type||"wikidata_exact_label"});
     }))
   });
 }
