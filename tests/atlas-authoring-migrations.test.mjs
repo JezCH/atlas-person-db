@@ -225,13 +225,13 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(youtubeDiscoveryRegistry, /Persistent YouTube Channel-ID registry/i);
 
   const youtubeHistoryReconciliation = migrations[31].sql;
-  assert.match(youtubeHistoryReconciliation, /CREATE TABLE IF NOT EXISTS atlas_v2\\.youtube_discovery_run_ledger/i);
-  assert.match(youtubeHistoryReconciliation, /CREATE TABLE IF NOT EXISTS atlas_v2\\.youtube_discovery_progress_state/i);
-  assert.doesNotMatch(youtubeHistoryReconciliation, /INSERT INTO atlas_v2\\.youtube_discovery_run_ledger/i);
+  assert.match(youtubeHistoryReconciliation, /CREATE TABLE IF NOT EXISTS atlas_v2\.youtube_discovery_run_ledger/i);
+  assert.match(youtubeHistoryReconciliation, /CREATE TABLE IF NOT EXISTS atlas_v2\.youtube_discovery_progress_state/i);
+  assert.doesNotMatch(youtubeHistoryReconciliation, /INSERT INTO atlas_v2\.youtube_discovery_run_ledger/i);
   assert.match(youtubeHistoryReconciliation, /snapshot_scope/i);
 
   const youtubeRetirement = migrations[32].sql;
-  assert.match(youtubeRetirement, /DELETE FROM atlas_v2\\.youtube_person_signal_snapshots/i);
+  assert.match(youtubeRetirement, /DELETE FROM atlas_v2\.youtube_person_signal_snapshots/i);
   assert.match(youtubeRetirement, /snapshot_scope='global_reconciled'/i);
 
 });
