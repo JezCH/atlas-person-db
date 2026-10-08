@@ -16,6 +16,7 @@
   let livingEvidenceUnavailableUntil=0;
   let queueRows=[];
   let signalRows=[];
+  let lastSignalPayload=null;
   let personIdentityIndex=null;
   let queueIdentityIndex=null;
   let representativeIdByName=null;
@@ -225,9 +226,39 @@
     return SIGNAL_URL+"&min_channels="+encodeURIComponent(minChannels)+"&limit="+limit+"&offset="+offset;
   }
 
+  function isVerifiedLiving(name) {
+    // Shared browser/server reviewed evidence always applies immediately,
+    // including when Wikidata is slow, unavailable or the previous result was unknown.
+    const local=window.ATLAS_REVIEWED_LIVING_PEOPLE?.reviewedLivingStatus?.(name,Date.now());
+    return local?.status==="living_likely" || livingEvidence.get(name)?.status==="living_likely";
+  }
+
+  function excludedByActiveFilters(row) {
+    return Boolean(
+      (excludeRegistered && matchesRegistered(row.raw_name)) ||
+      (excludeLiving && isVerifiedLiving(row.raw_name))
+    );
+  }
+
+  function immediatelyApplyVisibleFilters() {
+    const body=activeRoot?.querySelector("#youtubeSignalBody");
+    if(!body) return;
+    const filtered=signalRows.filter(row=>!excludedByActiveFilters(row));
+    // Remove stale rows before starting any async request. A checked filter
+    // must never display an excluded Person while the provider is pending.
+    if(lastSignalPayload) {
+      renderSignals({...lastSignalPayload,rows:filtered,
+        filtered_checked_count:lastSignalPayload.filtered_checked_count ?? signalRows.length});
+    } else {
+      body.innerHTML='<tr><td colspan="4" class="registration-review-empty">필터 적용 중</td></tr>';
+    }
+  }
+
   async function ensureLivingEvidence(names) {
     if(Date.now()<livingEvidenceUnavailableUntil) return true;
-    const missing=[...new Set(names)].filter(name=>name && (!livingEvidence.has(name)||livingEvidence.get(name).expires_at<=Date.now()));
+    const missing=[...new Set(names)].filter(name=>
+      name && !window.ATLAS_REVIEWED_LIVING_PEOPLE?.reviewedLivingStatus?.(name,Date.now()) &&
+      (!livingEvidence.has(name)||livingEvidence.get(name).expires_at<=Date.now()));
     let unavailable=false;
     for(let index=0;index<missing.length;index+=25) {
       try {
@@ -264,12 +295,12 @@
     for(let page=0;page<11;page++) {
       const rows=Array.isArray(payload.rows) ? payload.rows : [];
       scanned+=rows.length;
-      const candidates=rows.filter(row=>!excludeRegistered || !matchesRegistered(row.raw_name));
+      const candidates=rows.filter(row=>!excludedByActiveFilters(row));
       for(let i=0;i<candidates.length && visible.length<300;i+=25) {
         const batch=candidates.slice(i,i+25);
         if(excludeLiving && await ensureLivingEvidence(batch.map(row=>row.raw_name))) evidenceUnavailable=true;
         for(const row of batch) {
-          if(excludeLiving && livingEvidence.get(row.raw_name)?.status==="living_likely") continue;
+          if(excludedByActiveFilters(row)) continue;
           visible.push(row);
           if(visible.length===300) break;
         }
@@ -284,6 +315,7 @@
   function filterRequestLimit() { return excludeRegistered||excludeLiving ? 1000 : 300; }
 
   function renderSignals(payload) {
+    lastSignalPayload=payload;
     signalRows=Array.isArray(payload?.rows) ? payload.rows : [];
     const snapshot=payload?.snapshot || null;
     const telemetry=activeRoot?.querySelector("#youtubeSignalTelemetry");
@@ -429,6 +461,8 @@
     activeRoot=root;
     if (refreshTimer) clearInterval(refreshTimer);
     root.innerHTML=template();
+    lastSignalPayload=null;
+    signalRows=[];
     root.querySelector("#youtubeExcludeRegistered").checked=excludeRegistered;
     root.querySelector("#youtubeExcludeLiving").checked=excludeLiving;
     root.querySelector("#registrationReviewRefresh")?.addEventListener("click",()=>refresh({ forcePersons:true }));
@@ -437,6 +471,7 @@
       if(event.target?.id==="youtubeExcludeRegistered") excludeRegistered=event.target.checked;
       else if(event.target?.id==="youtubeExcludeLiving") excludeLiving=event.target.checked;
       else return;
+      immediatelyApplyVisibleFilters();
       if(personIdentityIndex) refreshSignalsOnly();
       else refresh({forcePersons:true});
     });
