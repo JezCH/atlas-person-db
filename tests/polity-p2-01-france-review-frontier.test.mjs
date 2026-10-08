@@ -48,7 +48,7 @@ test("P2-01 France family remains open after bounded P2-01G semantic audit pendi
   const relationAudit=text('docs/POLITY_P2_01G_FRANCE_COUNTRY_UMBRELLA_REPUBLIC_IDENTITY_CONTRACT_20261009.md');
   assert.match(relationAudit,/NO SUPPORTED DIRECT EDGE/);
   assert.match(relationAudit,/65.*Runtime/);
-  assert.match(relationAudit,/NO_PRODUCTION_MUTATION/);
+  assert.match(relationAudit,/NO PRODUCTION MUTATION/);
   assert.match(relationAudit,/POLITY-P2-01H/);
   assert.match(france.rationale,/P2-01G/);
   assert.ok(france.evidence.some(x=>x.includes('P2-01F') && x.includes('APPLIED')));
