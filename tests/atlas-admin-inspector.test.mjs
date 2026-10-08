@@ -96,6 +96,10 @@ test('Admin inspector SQL is read-only, parameterized, and exposes raw safe iden
     'source_locator_key'
   ]) assert.match(ACTIVITY_INSPECT_SQL, new RegExp(field));
 
+  assert.match(PERSON_INSPECT_SQL, /atlas_v2\.person_portraits/);
+  assert.match(PERSON_INSPECT_SQL, /current_portrait/);
+  assert.match(PERSON_INSPECT_SQL, /asset_sha256/);
+  assert.match(PERSON_INSPECT_SQL, /updated_at/);
   assert.match(POLITY_INSPECT_SQL, /canonical_key/);
   assert.match(POLITY_INSPECT_SQL, /activity_ids/);
   for (const field of [
@@ -169,6 +173,7 @@ test('readAdminObject selects a fixed projection by kind and preserves raw datab
     historicity: 'historical',
     names: [{ id: '00000000-0000-4000-8000-000000000011', locale: 'en', name: 'Ateas', name_type: 'canonical', is_preferred: true }],
     descriptions: [],
+    current_portrait: { asset_sha256: 'abc123', updated_at: '2026-09-24T07:51:38Z' },
     sources: [{ id: '00000000-0000-4000-8000-000000000021', source_key: 'source:ateas', sha256: null, bytes: null }],
     activities: [{ id: ACTIVITY_ID }]
   };
@@ -184,6 +189,8 @@ test('readAdminObject selects a fixed projection by kind and preserves raw datab
   assert.equal(result.object.id, PERSON_ID);
   assert.equal(result.object.canonical_key, 'ateas');
   assert.equal(result.object.sources[0].source_key, 'source:ateas');
+  assert.equal(result.object.current_portrait.asset_sha256, 'abc123');
+  assert.equal(result.object.current_portrait.updated_at, '2026-09-24T07:51:38Z');
 
   await assert.rejects(
     () => readAdminObject({ client, kind: 'future_object', id: PERSON_ID }),
