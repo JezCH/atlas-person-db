@@ -170,3 +170,18 @@ test("REVIEW-M9 distinguishes total work progress from exact global unique chann
   assert.match(js, /live incremental 전환 전/);
   assert.match(js, /별도 segment snapshot .* 총량으로 대체하지 않음/);
 });
+
+test("REVIEW-M10 shows honest two-snapshot channel bounds and keeps mobile evidence visible",()=>{
+  const js=read("atlas-registration-review.js");
+  const css=read("atlas-registration-review.css");
+  assert.match(js,/ranking_scope==="cross_segment_bounds"/);
+  assert.match(js,/channel_count_upper_bound/);
+  assert.match(js,/baseline_channel_count/);
+  assert.match(js,/supplemental_channel_count/);
+  assert.match(js,/기준선 전체/);
+  assert.match(js,/양 구간 결합/);
+  assert.match(js,/기존 .*추가 /);
+  assert.match(js,/순위는 하한 기준 잠정 순위/);
+  assert.match(js,/영상 수는 구간별 영상행 합계/);
+  assert.match(css,/\.registration-review-scope-detail\{display:block/);
+});

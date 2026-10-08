@@ -133,7 +133,8 @@
       }
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
-    if (count) count.textContent=`전체 ${number(payload?.available_count || 0)}명 · 상세 ${number(payload?.stored_count ?? signalRows.length)}행 저장 · 현재 ${number(signalRows.length)}행 표시`;
+    const bounded=payload?.ranking_scope==="cross_segment_bounds";
+    if (count) count.textContent=`${bounded ? "기준선 전체" : "전체"} ${number(payload?.available_count || 0)}명 · 상세 ${number(payload?.stored_count ?? signalRows.length)}행 저장${bounded ? " (양 구간 결합)" : ""} · 현재 ${number(signalRows.length)}행 표시${payload?.detail_limited ? " · 상세 일부만 반영" : ""}`;
     renderSignalThresholds(snapshot);
     const body=activeRoot?.querySelector("#youtubeSignalBody");
     if (!body) return;
@@ -142,13 +143,17 @@
       return;
     }
     const maxChannels=Math.max(1,...signalRows.map((row)=>Number(row?.distinct_channel_count || 0)));
+    const scoped=(lower,high)=>Number(high)>Number(lower) ? `${number(lower)}–${number(high)}` : number(lower);
     body.innerHTML=signalRows.map((row)=>{
       const channels=Math.max(0,Number(row?.distinct_channel_count || 0));
       const strength=Math.max(0,Math.min(100,(channels/maxChannels)*100));
+      const upper=Number(row?.channel_count_upper_bound ?? channels);
+      const channelText=upper>channels ? `${number(channels)}–${number(upper)}` : number(channels);
+      const scopeDetail=bounded ? `<small class="registration-review-scope-detail">기존 ${scoped(row.baseline_channel_count,row.baseline_channel_upper_bound)} · 추가 ${scoped(row.supplemental_channel_count,row.supplemental_channel_upper_bound)}</small>` : "";
       return `<tr class="registration-review-signal-row" style="--signal-strength:${strength.toFixed(2)}%">
         <td class="registration-review-rank" data-label="순위">${number(row.rank)}</td>
-        <td class="registration-review-name" data-label="인물">${escapeHtml(row.raw_name)}</td>
-        <td class="registration-review-number" data-label="채널">${number(row.distinct_channel_count)}</td>
+        <td class="registration-review-name" data-label="인물">${escapeHtml(row.raw_name)}${scopeDetail}</td>
+        <td class="registration-review-number" data-label="채널">${channelText}</td>
         <td class="registration-review-number" data-label="영상">${number(row.video_count)}</td>
         <td class="registration-review-signal-bar" aria-hidden="true"><span></span></td>
       </tr>`;
@@ -218,7 +223,7 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>서로 다른 채널이 같은 raw 인물명을 단독 주제로 다룬 횟수입니다. 화면은 10초마다 DB를 다시 읽습니다. 현재 수집기는 아직 batch publish 방식이며 live incremental 전환 전입니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong> batch001–007과 batch008 이후의 수집 이력은 DB 원장에서 분리 보존하며, 검증되지 않은 교집합을 임의로 합산하지 않습니다.</p></div>
+          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>서로 다른 채널이 같은 raw 인물명을 단독 주제로 다룬 횟수입니다. 화면은 10초마다 DB를 다시 읽습니다. 현재 수집기는 아직 batch publish 방식이며 live incremental 전환 전입니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong> batch001–007과 batch008 이후의 인물 신호를 함께 반영합니다. 기존 채널 ID가 없어 중복 제거가 불가능한 경우 채널 수는 하한–상한 범위로 표시하고, 순위는 하한 기준 잠정 순위입니다. 영상 수는 구간별 영상행 합계로 중복될 수 있습니다.</p></div>
         </div>
         <div class="registration-review-signal-toolbar">
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
@@ -235,7 +240,7 @@
               <col class="registration-review-signal-col-channels" />
               <col class="registration-review-signal-col-videos" />
             </colgroup>
-            <thead><tr><th>순위</th><th>인물 raw 이름</th><th>서로 다른 채널</th><th>영상</th></tr></thead>
+            <thead><tr><th>순위</th><th>인물 raw 이름</th><th>채널 수 범위</th><th>영상행</th></tr></thead>
             <tbody id="youtubeSignalBody"><tr><td colspan="4" class="registration-review-empty">불러오는 중</td></tr></tbody>
           </table>
         </div>

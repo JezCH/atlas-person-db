@@ -165,6 +165,51 @@ function projectSignal(row) {
   });
 }
 
+// The legacy baseline has no preserved channel IDs. Consequently cross-snapshot
+// union sizes are bounded, never an exact sum. Normalize only casing/spacing;
+// transliterations and other potentially different people remain separate.
+function mergeBoundedSignals(baselineRows,segmentRows,minChannels,limit) {
+  const signals=new Map();
+  for (const [scope,rows] of [["baseline",baselineRows],["supplemental",segmentRows]]) {
+    for (const row of rows) {
+      const name=String(row.raw_name || "").normalize("NFKC").trim().replace(/\s+/g," ");
+      if (!name) continue;
+      const key=name.toLowerCase();
+      const channels=Number(row.distinct_channel_count || 0);
+      const videos=Number(row.video_count || 0);
+      if (!signals.has(key)) signals.set(key,{
+        raw_name:name,display_channels:-1,
+        baseline_channel_count:0,baseline_channel_upper_bound:0,
+        supplemental_channel_count:0,supplemental_channel_upper_bound:0,
+        video_count:0
+      });
+      const item=signals.get(key);
+      if (channels > item.display_channels) {
+        item.raw_name=name;
+        item.display_channels=channels;
+      }
+      item[`${scope}_channel_count`]=Math.max(item[`${scope}_channel_count`],channels);
+      item[`${scope}_channel_upper_bound`]+=channels;
+      item.video_count+=videos;
+    }
+  }
+  const ordered=[...signals.values()].map(({display_channels,...item})=>({
+    ...item,
+    distinct_channel_count:Math.max(item.baseline_channel_count,item.supplemental_channel_count),
+    channel_count_upper_bound:item.baseline_channel_upper_bound+item.supplemental_channel_upper_bound
+  })).sort((a,b)=>
+    b.distinct_channel_count-a.distinct_channel_count ||
+    b.channel_count_upper_bound-a.channel_count_upper_bound ||
+    b.video_count-a.video_count ||
+    a.raw_name.localeCompare(b.raw_name)
+  );
+  const qualified=ordered.filter(row=>row.distinct_channel_count>=minChannels);
+  return {
+    stored_count:qualified.length,
+    rows:Object.freeze(qualified.slice(0,limit).map((row,index)=>Object.freeze({rank:index+1,...row})))
+  };
+}
+
 async function optionalQuery(client, sql, params = []) {
   try {
     return await client.query(sql,params);
@@ -193,6 +238,8 @@ async function readYoutubePersonSignals({ client, minChannels = 3, limit = 300 }
       snapshot:null,
       segment_snapshot:null,
       progress:null,
+      ranking_scope:"unavailable",
+      detail_limited:false,
       min_channels:normalizedMinChannels,
       available_count:0,
       stored_count:0,
@@ -200,23 +247,54 @@ async function readYoutubePersonSignals({ client, minChannels = 3, limit = 300 }
     });
   }
 
-  const [progressResult,segmentResult,countResult,rowsResult] = await Promise.all([
+  const [progressResult,segmentResult] = await Promise.all([
     optionalQuery(client,PROGRESS_SQL),
-    optionalQuery(client,SEGMENT_SNAPSHOT_SQL),
+    optionalQuery(client,SEGMENT_SNAPSHOT_SQL)
+  ]);
+  const segment=projectSnapshot(segmentResult.rows?.[0] || null);
+  const progress=projectProgress(progressResult.rows?.[0] || null);
+  const aggregateCount=Number(snapshot.threshold_counts?.[String(normalizedMinChannels)]);
+
+  // A fully reconciled global snapshot already has exact channel counts.
+  // Only the unreconciled baseline+supplement pair needs bounded merging.
+  if (snapshot.snapshot_scope==="global_baseline" && segment) {
+    const detailLimit=1000;
+    const [baselineRows,segmentRows]=await Promise.all([
+      client.query(SIGNAL_ROWS_SQL,[snapshot.snapshot_id,3,detailLimit]),
+      client.query(SIGNAL_ROWS_SQL,[segment.snapshot_id,3,detailLimit])
+    ]);
+    const combined=mergeBoundedSignals(baselineRows.rows || [],segmentRows.rows || [],normalizedMinChannels,normalizedLimit);
+    return Object.freeze({
+      schema:YOUTUBE_PERSON_SIGNAL_SCHEMA,
+      available:true,
+      snapshot,
+      segment_snapshot:segment,
+      progress,
+      ranking_scope:"cross_segment_bounds",
+      detail_limited:(baselineRows.rows || []).length===detailLimit || (segmentRows.rows || []).length===detailLimit,
+      min_channels:normalizedMinChannels,
+      // This aggregate is from the baseline; no global merged total is known.
+      available_count:Number.isInteger(aggregateCount) && aggregateCount>=0 ? aggregateCount : combined.stored_count,
+      stored_count:combined.stored_count,
+      rows:combined.rows
+    });
+  }
+
+  const [countResult,rowsResult]=await Promise.all([
     client.query(SIGNAL_COUNT_SQL,[snapshot.snapshot_id,normalizedMinChannels]),
     client.query(SIGNAL_ROWS_SQL,[snapshot.snapshot_id,normalizedMinChannels,normalizedLimit])
   ]);
-
   const storedCount=Number(countResult.rows?.[0]?.count || 0);
-  const aggregateCount=Number(snapshot.threshold_counts?.[String(normalizedMinChannels)]);
   return Object.freeze({
     schema:YOUTUBE_PERSON_SIGNAL_SCHEMA,
     available:true,
     snapshot,
-    segment_snapshot:projectSnapshot(segmentResult.rows?.[0] || null),
-    progress:projectProgress(progressResult.rows?.[0] || null),
+    segment_snapshot:segment,
+    progress,
+    ranking_scope:snapshot.snapshot_scope==="global_reconciled" ? "exact_global" : "single_snapshot",
+    detail_limited:false,
     min_channels:normalizedMinChannels,
-    available_count:Number.isInteger(aggregateCount) && aggregateCount >= 0 ? aggregateCount : storedCount,
+    available_count:Number.isInteger(aggregateCount) && aggregateCount>=0 ? aggregateCount : storedCount,
     stored_count:storedCount,
     rows:Object.freeze((rowsResult.rows || []).map(projectSignal))
   });
@@ -235,6 +313,7 @@ module.exports = Object.freeze({
   projectSnapshot,
   projectProgress,
   projectSignal,
+  mergeBoundedSignals,
   optionalQuery,
   readYoutubePersonSignals
 });
