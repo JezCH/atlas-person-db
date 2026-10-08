@@ -140,17 +140,21 @@ async function spacetimeReady(c,width){
   await until(c,()=>document.querySelectorAll("[data-spacetime-search-result]").length>0,30000);
   await evaluate(c,()=>{document.querySelector("[data-spacetime-search-result]")?.click();return true;});
   await until(c,()=>Boolean(document.querySelector("#spacetimeInspector:not(.is-empty)")),30000);
-  await sleep(400);
+  await sleep(700);
+  // Mirror the already-proven Production verifier's focus sequence:
+  // clear search, allow the unfiltered viewport to settle, then clear selection.
+  // Clearing selection/resetting the camera before this settle can jump to an
+  // empty historical interval with no virtualized labels.
   await evaluate(c,()=>{
     const el=document.querySelector("#spacetimeSearch");
     if(el){el.value="";el.dispatchEvent(new Event("input",{bubbles:true}));}
-    document.querySelector("#spacetimeClearPerson")?.click();
-    document.querySelector("#spacetimeCameraZoomReset")?.click();
     return true;
   });
   await until(c,()=>document.querySelectorAll(".spacetime-track-label").length>0,30000);
+  await evaluate(c,()=>{document.querySelector("#spacetimeClearPerson")?.click();return true;});
+  await until(c,()=>Boolean(document.querySelector("#spacetimeInspector.is-empty")),10000);
   await until(c,()=>document.querySelector("#spacetimeCameraZoomValue")?.textContent?.trim()==="500%",12000);
-  await sleep(350);
+  await sleep(400);
 }
 async function focusRegion(c,needle){
   const match=await evaluate(c,()=>{
