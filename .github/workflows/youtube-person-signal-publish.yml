@@ -15,22 +15,22 @@ on:
       artifact_run_id:
         description: "Workflow run containing the cumulative YouTube artifact"
         required: true
-        default: "37604763364"
+        default: "37771318676"
         type: string
       artifact_name:
         description: "Cumulative artifact name"
         required: true
-        default: "youtube-batch011-staging-longterm"
+        default: "youtube-cumulative-batch017-validated"
         type: string
       artifact_id:
         description: "Artifact numeric ID for provenance"
         required: true
-        default: "11474777563"
+        default: "11548326100"
         type: string
       artifact_digest:
         description: "Artifact SHA-256 digest"
         required: true
-        default: "sha256:a58fab60d0b7873e2b4534869f3942075060526c62445c20eaff2663ac1132a6"
+        default: "sha256:b40f8efdccfacce194afb44cc7cca3e93a4ab12a2153c5a19b70ceb3f56b0b1f"
         type: string
   workflow_call:
     inputs:
@@ -65,10 +65,10 @@ jobs:
       PUBLISH_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply?__atlas_authoring_apply_surface=youtube-person-signal-publish
       RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
       PUBLISH_AUDIENCE: atlas-person-db-youtube-signal-publish
-      ARTIFACT_RUN_ID: ${{ inputs.artifact_run_id || '37604763364' }}
-      ARTIFACT_NAME: ${{ inputs.artifact_name || 'youtube-batch011-staging-longterm' }}
-      ARTIFACT_ID: ${{ inputs.artifact_id || '11474777563' }}
-      ARTIFACT_DIGEST: ${{ inputs.artifact_digest || 'sha256:a58fab60d0b7873e2b4534869f3942075060526c62445c20eaff2663ac1132a6' }}
+      ARTIFACT_RUN_ID: ${{ inputs.artifact_run_id || '37771318676' }}
+      ARTIFACT_NAME: ${{ inputs.artifact_name || 'youtube-cumulative-batch017-validated' }}
+      ARTIFACT_ID: ${{ inputs.artifact_id || '11548326100' }}
+      ARTIFACT_DIGEST: ${{ inputs.artifact_digest || 'sha256:b40f8efdccfacce194afb44cc7cca3e93a4ab12a2153c5a19b70ceb3f56b0b1f' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -92,11 +92,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          python -m py_compile scripts/youtube-build-person-signal-snapshot.py
           mkdir -p /tmp/atlas-youtube-publication
           python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/atlas-youtube-publication/snapshot.json             --artifact-id "$ARTIFACT_ID"             --artifact-digest "$ARTIFACT_DIGEST"
-          jq '.snapshot + {
-            stored_signal_rows:(input_filename | length)
-          }' /tmp/atlas-youtube-publication/snapshot.json >/dev/null || true
+          jq -e '
+            .snapshot.channel_count==6011
+            and .snapshot.video_count==1536512
+            and .snapshot.source_state.channel_ids_persisted==true
+            and (.channels|length)==6770
+            and (.signals|length)==(.snapshot.threshold_counts["3"])
+            and (.snapshot.source_state.next_batch)=="batch018"
+          ' /tmp/atlas-youtube-publication/snapshot.json >/dev/null
           jq '{snapshot:.snapshot, publication_fingerprint, channel_rows:(.channels|length), signal_rows:(.signals|length)}'             /tmp/atlas-youtube-publication/snapshot.json
 
       - name: Wait for publication route and resolve deployed runtime
