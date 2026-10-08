@@ -93,7 +93,7 @@ test("publish uses new corpus artifacts and reports increments without replaying
   assert.doesNotMatch(yml,/next_batch\)=="batch018"/);
   assert.match(yml,/youtube-fetch-previous-signals\.py/);
   assert.match(yml,/youtube-incremental-review\.mjs/);
-  assert.match(yml,/--persons \/tmp\/atlas-youtube-publication\/persons\.json/);
+  assert.match(yml,/--persons \/tmp\/atlas-youtube-current-persons\.json/);
   assert.match(yml,/--decisions audits\/youtube-reviewed-dispositions\.json/);
   assert.match(yml,/GITHUB_STEP_SUMMARY/);
   assert.match(yml,/Upload publication evidence/);
