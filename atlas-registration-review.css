@@ -426,3 +426,11 @@
   .registration-review-signal-filters{width:100%;gap:6px}
   .registration-review-signal-filters label{flex:1 1 auto;font-size:10px}
 }
+
+/* REVIEW-M13 — Assumed representative identity remains visible, not silently merged. */
+.registration-review-signal-identity[data-status="representative"]{
+  color:var(--atlas-text-secondary);
+  max-width:100%;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
