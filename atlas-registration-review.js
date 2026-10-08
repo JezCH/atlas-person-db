@@ -133,7 +133,7 @@
       }
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
-    if (count) count.textContent=`${number(payload?.available_count || 0)}명 · 현재 ${number(signalRows.length)}행 표시`;
+    if (count) count.textContent=`전체 ${number(payload?.available_count || 0)}명 · 상세 ${number(payload?.stored_count ?? signalRows.length)}행 저장 · 현재 ${number(signalRows.length)}행 표시`;
     renderSignalThresholds(snapshot);
     const body=activeRoot?.querySelector("#youtubeSignalBody");
     if (!body) return;
