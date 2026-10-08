@@ -8,7 +8,7 @@ import {fileURLToPath} from "node:url";
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const text=(p)=>fs.readFileSync(path.join(root,p),"utf8");
 
-test("P2-01 France family remains open after P2-01A repair while Republic/regime overlap remains",()=>{
+test("P2-01 France family remains open after P2-01A/B repairs pending wartime/umbrella judgment",()=>{
   const context={window:{}};
   vm.runInNewContext(text("atlas-polity-review-registry.js"),context);
   const reg=context.window.ATLAS_POLITY_REVIEW_REGISTRY;
@@ -33,9 +33,14 @@ test("P2-01 France family remains open after P2-01A repair while Republic/regime
   assert.match(audit,/65 Authoring/);
   assert.match(audit,/65 Runtime/);
   assert.match(audit,/P2-01A/);
-  assert.match(text("docs/ATLAS_CURRENT_WORKSTREAMS.md"),/Immediate bounded next unit: `POLITY-P2-01B`/);
+  assert.match(text("docs/ATLAS_CURRENT_WORKSTREAMS.md"),/Immediate bounded next unit: `POLITY-P2-01C`/);
   const correction=text("docs/POLITY_P2_01A_FRANCE_KINGDOM_FIVE_RELINK_20261008.md");
   assert.match(correction,/CORRECTION_APPLIED/);
   assert.match(correction,/65 \/ 0 difference/);
   assert.match(france.rationale,/왕국 5→0/);
+  assert.match(france.rationale,/P2-01B/);
+  assert.ok(france.evidence.some(x=>x.includes("P2-01B")&&x.includes("APPLIED")));
+  const third= text("docs/POLITY_P2_01B_FRENCH_THIRD_REPUBLIC_20261008.md");
+  assert.match(third,/CORRECTION_APPLIED/);
+  assert.match(third,/65 Authoring \/ 65 Runtime \/ 0 drift/);
 });
