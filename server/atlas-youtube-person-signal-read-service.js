@@ -27,6 +27,14 @@ order by rank
 limit $3
 `;
 
+const PAGED_SIGNAL_ROWS_SQL=`
+select raw_name,rank,distinct_channel_count,video_count
+from atlas_v2.youtube_person_signals
+where snapshot_id=$1 and distinct_channel_count >= $2
+order by rank
+limit $3 offset $4
+`;
+
 function integerOption(value,fallback,{min,max}) {
   if(value==null || value==="") return fallback;
   const number=Number(value);
@@ -71,10 +79,11 @@ function projectSignal(row) {
   });
 }
 
-async function readYoutubePersonSignals({client,minChannels=3,limit=300}={}) {
+async function readYoutubePersonSignals({client,minChannels=3,limit=300,offset=0}={}) {
   if(!client || typeof client.query!=="function") throw new Error("PostgreSQL client is required");
   const threshold=integerOption(minChannels,3,{min:3,max:1000});
   const pageSize=integerOption(limit,300,{min:1,max:1000});
+  const pageOffset=integerOption(offset,0,{min:0,max:10000});
 
   const snapshot=projectSnapshot((await client.query(GLOBAL_SNAPSHOT_SQL)).rows?.[0]);
   if(!snapshot) return Object.freeze({
@@ -84,13 +93,14 @@ async function readYoutubePersonSignals({client,minChannels=3,limit=300}={}) {
 
   const [countResult,rowsResult]=await Promise.all([
     client.query(SIGNAL_COUNT_SQL,[snapshot.snapshot_id,threshold]),
-    client.query(SIGNAL_ROWS_SQL,[snapshot.snapshot_id,threshold,pageSize])
+    client.query(pageOffset ? PAGED_SIGNAL_ROWS_SQL : SIGNAL_ROWS_SQL,pageOffset ? [snapshot.snapshot_id,threshold,pageSize,pageOffset] : [snapshot.snapshot_id,threshold,pageSize])
   ]);
   const storedCount=Number(countResult.rows?.[0]?.count || 0);
   const aggregateCount=Number(snapshot.threshold_counts?.[String(threshold)]);
   return Object.freeze({
     schema:YOUTUBE_PERSON_SIGNAL_SCHEMA,available:true,snapshot,
     min_channels:threshold,
+    offset:pageOffset,
     available_count:Number.isInteger(aggregateCount)&&aggregateCount>=0?aggregateCount:storedCount,
     stored_count:storedCount,
     rows:Object.freeze((rowsResult.rows || []).map(projectSignal))
@@ -99,6 +109,6 @@ async function readYoutubePersonSignals({client,minChannels=3,limit=300}={}) {
 
 module.exports=Object.freeze({
   YOUTUBE_PERSON_SIGNAL_SCHEMA,GLOBAL_SNAPSHOT_SQL,
-  SIGNAL_COUNT_SQL,SIGNAL_ROWS_SQL,integerOption,normalizeThresholdCounts,
+  SIGNAL_COUNT_SQL,SIGNAL_ROWS_SQL,PAGED_SIGNAL_ROWS_SQL,integerOption,normalizeThresholdCounts,
   projectSnapshot,projectSignal,readYoutubePersonSignals
 });

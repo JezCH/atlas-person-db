@@ -5,10 +5,15 @@
   const QUEUE_URL="/api/atlas-read?__atlas_read_surface=registration-queue";
   const SIGNAL_URL="/api/atlas-read?__atlas_read_surface=youtube-person-signals";
   const REFRESH_INTERVAL_MS=10000;
+  const LIVING_URL="/api/atlas-read?__atlas_read_surface=youtube-person-living";
   let activeRoot=null;
   let refreshTimer=null;
   let requestSerial=0;
   let minChannels=3;
+  let excludeRegistered=false;
+  let excludeLiving=false;
+  const livingEvidence=new Map();
+  let livingEvidenceUnavailableUntil=0;
   let queueRows=[];
   let signalRows=[];
   let personIdentityIndex=null;
@@ -166,6 +171,68 @@
     }).join("");
   }
 
+  function matchesRegistered(name) {
+    const key=identityKey(name);
+    return Boolean(key && (personIdentityIndex?.get(key)?.size || 0)===1);
+  }
+
+  function signalQuery(limit,offset=0) {
+    return SIGNAL_URL+"&min_channels="+encodeURIComponent(minChannels)+"&limit="+limit+"&offset="+offset;
+  }
+
+  async function ensureLivingEvidence(names) {
+    if(Date.now()<livingEvidenceUnavailableUntil) return true;
+    const missing=[...new Set(names)].filter(name=>name && (!livingEvidence.has(name)||livingEvidence.get(name).expires_at<=Date.now()));
+    let unavailable=false;
+    for(let index=0;index<missing.length;index+=25) {
+      try {
+        const payload=await getJson(LIVING_URL+"&names="+encodeURIComponent(JSON.stringify(missing.slice(index,index+25))));
+        if(!Array.isArray(payload.rows)) throw new Error("INVALID_LIVING_EVIDENCE_RESPONSE");
+        for(const row of payload.rows) {
+          if(typeof row?.name==="string" && ["living_likely","deceased","unknown"].includes(row?.status)) {
+            livingEvidence.set(row.name,{status:row.status,expires_at:Date.now()+60*60*1000});
+          }
+        }
+      } catch(error) {
+        unavailable=true;
+        livingEvidenceUnavailableUntil=Date.now()+60000;
+        console.warn("ATLAS living evidence unavailable; leaving unknown people visible",error);
+        break;
+      }
+    }
+    return unavailable;
+  }
+
+  async function collectVisibleSignals(initial) {
+    if(!excludeRegistered && !excludeLiving) return initial;
+    const visible=[];
+    const pageSize=1000;
+    let offset=0;
+    let scanned=0;
+    let evidenceUnavailable=false;
+    let payload=initial;
+    for(let page=0;page<11;page++) {
+      const rows=Array.isArray(payload.rows) ? payload.rows : [];
+      scanned+=rows.length;
+      const candidates=rows.filter(row=>!excludeRegistered || !matchesRegistered(row.raw_name));
+      for(let i=0;i<candidates.length && visible.length<300;i+=25) {
+        const batch=candidates.slice(i,i+25);
+        if(excludeLiving && await ensureLivingEvidence(batch.map(row=>row.raw_name))) evidenceUnavailable=true;
+        for(const row of batch) {
+          if(excludeLiving && livingEvidence.get(row.raw_name)?.status==="living_likely") continue;
+          visible.push(row);
+          if(visible.length===300) break;
+        }
+      }
+      if(visible.length>=300||rows.length<pageSize||offset+rows.length>=Number(initial.stored_count||initial.available_count||0)) break;
+      offset+=rows.length;
+      payload=await getJson(signalQuery(pageSize,offset));
+    }
+    return {...initial,rows:visible,filtered_checked_count:scanned,filter_evidence_unavailable:evidenceUnavailable};
+  }
+
+  function filterRequestLimit() { return excludeRegistered||excludeLiving ? 1000 : 300; }
+
   function renderSignals(payload) {
     signalRows=Array.isArray(payload?.rows) ? payload.rows : [];
     const snapshot=payload?.snapshot || null;
@@ -176,12 +243,14 @@
         : "<strong>아직 YouTube 수집 데이터가 없습니다.</strong>";
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
-    if(count) count.textContent=`전체 ${number(payload?.available_count ?? 0)}명 · 현재 ${number(signalRows.length)}명 표시`;
+    if(count) count.textContent=(excludeRegistered||excludeLiving)
+      ? `상위 ${number(payload?.filtered_checked_count ?? signalRows.length)}명 확인 · 조건 일치 ${number(signalRows.length)}명 표시${excludeLiving ? " · 생존 미확인 포함" : ""}${payload?.filter_evidence_unavailable ? " · 생존 조회 실패(제외 불완전)" : ""}`
+      : `전체 ${number(payload?.available_count ?? 0)}명 · 현재 ${number(signalRows.length)}명 표시`;
     renderSignalThresholds(snapshot);
     const body=activeRoot?.querySelector("#youtubeSignalBody");
     if(!body) return;
     if(!signalRows.length) {
-      body.innerHTML='<tr><td colspan="4" class="registration-review-empty">현재 조건의 반복 인물 신호가 없습니다.</td></tr>';
+      body.innerHTML='<tr><td colspan="4" class="registration-review-empty">현재 필터 조건에 맞는 인물이 없습니다.</td></tr>';
       return;
     }
     const maxChannels=Math.max(1,...signalRows.map(row=>Number(row?.distinct_channel_count || 0)));
@@ -217,13 +286,15 @@
       const [persons,queue,signals]=await Promise.all([
         dataStore.loadPersons({ force:forcePersons }),
         getJson(QUEUE_URL),
-        getJson(`${SIGNAL_URL}&min_channels=${encodeURIComponent(minChannels)}&limit=300`)
+        getJson(signalQuery(filterRequestLimit()))
       ]);
       if (serial !== requestSerial || root !== activeRoot) return;
       prepareSignalIdentities(persons,queue);
       renderRegistered(persons,queue);
       renderQueue(queue);
-      renderSignals(signals);
+      const filtered=await collectVisibleSignals(signals);
+      if(serial!==requestSerial||root!==activeRoot) return;
+      renderSignals(filtered);
       setStatus(`DB 최신 스냅샷 조회 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
     } catch (error) {
       if (serial !== requestSerial || root !== activeRoot) return;
@@ -240,9 +311,11 @@
     const serial=++requestSerial;
     setStatus("YouTube 신호 조건 갱신 중","loading");
     try {
-      const signals=await getJson(`${SIGNAL_URL}&min_channels=${encodeURIComponent(minChannels)}&limit=300`);
+      const signals=await getJson(signalQuery(filterRequestLimit()));
       if (serial !== requestSerial || root !== activeRoot) return;
-      renderSignals(signals);
+      const filtered=await collectVisibleSignals(signals);
+      if(serial!==requestSerial||root!==activeRoot) return;
+      renderSignals(filtered);
       setStatus(`DB 최신 스냅샷 조회 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
     } catch (error) {
       if (serial !== requestSerial || root !== activeRoot) return;
@@ -262,10 +335,14 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 등록 상태는 인물명·별칭의 정규화된 정확 일치로 대조하며, 일치 없음은 실제 미등록을 확정하지 않습니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
+          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 등록 상태는 인물명·별칭의 정규화된 정확 일치로 대조하며, 일치 없음은 실제 미등록을 확정하지 않습니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
         </div>
         <div class="registration-review-signal-toolbar">
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
+          <div id="youtubeSignalFilters" class="registration-review-signal-filters" aria-label="유튜브 인물 필터">
+            <label><input type="checkbox" id="youtubeExcludeRegistered">기등록 제외</label>
+            <label><input type="checkbox" id="youtubeExcludeLiving">생존 추정 인물 제외</label>
+          </div>
           <div class="registration-review-signal-meta">
             <div id="youtubeSignalTelemetry" class="registration-review-telemetry"><strong>스냅샷 확인 중</strong></div>
             <span id="youtubeSignalVisibleCount" class="registration-review-signal-visible">—</span>
@@ -302,8 +379,17 @@
     activeRoot=root;
     if (refreshTimer) clearInterval(refreshTimer);
     root.innerHTML=template();
+    root.querySelector("#youtubeExcludeRegistered").checked=excludeRegistered;
+    root.querySelector("#youtubeExcludeLiving").checked=excludeLiving;
     root.querySelector("#registrationReviewRefresh")?.addEventListener("click",()=>refresh({ forcePersons:true }));
     root.querySelector("#registrationQueueSearch")?.addEventListener("input",renderQueueTable);
+    root.querySelector("#youtubeSignalFilters")?.addEventListener("change",(event)=>{
+      if(event.target?.id==="youtubeExcludeRegistered") excludeRegistered=event.target.checked;
+      else if(event.target?.id==="youtubeExcludeLiving") excludeLiving=event.target.checked;
+      else return;
+      if(personIdentityIndex) refreshSignalsOnly();
+      else refresh({forcePersons:true});
+    });
     root.querySelector("#youtubeSignalThresholds")?.addEventListener("click",(event)=>{
       const button=event.target.closest("[data-min-channels]");
       if (!button) return;
@@ -320,6 +406,9 @@
         refreshTimer=null;
         return;
       }
+      // A live evidence request may outlast 10 seconds; never invalidate it
+      // with an automatic refresh while the filter is still resolving.
+      if (activeRoot.querySelector("#registrationReviewStatus")?.dataset.state==="loading") return;
       refresh({ forcePersons:true });
     },REFRESH_INTERVAL_MS);
   }

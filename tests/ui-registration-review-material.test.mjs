@@ -230,3 +230,120 @@ test("REVIEW-M11 labels only unique exact registered aliases and current pending
   assert.match(css,/\.registration-review-signal-identity\[data-status="registered"\]/);
   assert.match(js,/일치 없음은 실제 미등록을 확정하지 않습니다/);
 });
+
+test("REVIEW-M12 toggles registered and living exclusions independently with unknowns retained",async()=>{
+  const vm=await import("node:vm");
+  const js=read("atlas-registration-review.js");
+  const css=read("atlas-registration-review.css");
+  const events=new Map(),nodes=new Map();
+  const node=id=>{
+    if(!nodes.has(id)) nodes.set(id,{innerHTML:"",textContent:"",dataset:{},checked:false,isConnected:true,disabled:false,
+      addEventListener(event,callback){events.set(id+":"+event,callback)}
+    });
+    return nodes.get(id);
+  };
+  const root={isConnected:true,querySelector:node,innerHTML:""};
+  const persons={persons:[{id:"p-lincoln",canonical_name_en:"Abraham Lincoln",names:[{name:"Abraham Lincoln"}]}],summary:{total:1}};
+  const queue={ok:true,summary:{pending_count:0},candidates:[]};
+  const raw=[
+    {raw_name:"Abraham Lincoln",rank:1,distinct_channel_count:95,video_count:105},
+    {raw_name:"Taylor Swift",rank:2,distinct_channel_count:22,video_count:29},
+    {raw_name:"Hypatia",rank:3,distinct_channel_count:12,video_count:15},
+    {raw_name:"Unknown Figure",rank:4,distinct_channel_count:8,video_count:12}
+  ];
+  const fetchCalls=[];
+  const context={
+    window:{ATLAS_CLIENT_DATA_STORE:{loadPersons:async()=>persons},addEventListener(){}},
+    fetch:async url=>{
+      fetchCalls.push(url);
+      const parsed=new URL(url,"http://localhost");
+      const surface=parsed.searchParams.get("__atlas_read_surface");
+      const payload=surface==="registration-queue" ? queue
+        : surface==="youtube-person-living"
+          ? {ok:true,rows:JSON.parse(parsed.searchParams.get("names")).map(name=>({name,status:name==="Taylor Swift"?"living_likely":"unknown"}))}
+          : {ok:true,stored_count:4,available_count:4,rows:raw,
+            snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":4},source_state:{next_batch:"batch018"}}};
+      return {ok:true,status:200,json:async()=>payload};
+    },
+    console,Date,URL,setInterval:()=>1,clearInterval(){}
+  };
+  vm.runInNewContext(js,context);
+  context.window.ATLAS_REGISTRATION_REVIEW.mount(root);
+  async function ready(){
+    for(let i=0;i<40 && node("#registrationReviewStatus").dataset.state!=="ready";i++) await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(node("#registrationReviewStatus").dataset.state,"ready");
+  }
+  await ready();
+  const html=()=>node("#youtubeSignalBody").innerHTML;
+  assert.match(html(),/Abraham Lincoln/);
+  assert.match(html(),/Taylor Swift/);
+  assert.match(js,/id="youtubeExcludeRegistered"/);
+  assert.match(js,/id="youtubeExcludeLiving"/);
+  const toggle=async(id,checked)=>{
+    node("#registrationReviewStatus").dataset.state="loading";
+    node("#"+id).checked=checked;
+    events.get("#youtubeSignalFilters:change")({target:{id,checked}});
+    await ready();
+  };
+  await toggle("youtubeExcludeRegistered",true);
+  assert.doesNotMatch(html(),/Abraham Lincoln/);
+  assert.match(html(),/Taylor Swift/);
+  await toggle("youtubeExcludeLiving",true);
+  assert.doesNotMatch(html(),/Taylor Swift/);
+  assert.match(html(),/Hypatia/);
+  assert.match(html(),/Unknown Figure/);
+  assert.match(node("#youtubeSignalVisibleCount").textContent,/생존 미확인 포함/);
+  assert.ok(fetchCalls.some(url=>url.includes("youtube-person-living")));
+  await toggle("youtubeExcludeRegistered",false);
+  assert.match(html(),/Abraham Lincoln/);
+  assert.doesNotMatch(html(),/Taylor Swift/);
+  await toggle("youtubeExcludeLiving",false);
+  assert.match(html(),/Taylor Swift/);
+  assert.match(css,/REVIEW-M12/);
+});
+
+test("REVIEW-M12 refills after excluding the first 1000 registered ranks",async()=>{
+  const vm=await import("node:vm");
+  const js=read("atlas-registration-review.js");
+  const events=new Map(),nodes=new Map();
+  const node=id=>{
+    if(!nodes.has(id)) nodes.set(id,{innerHTML:"",textContent:"",dataset:{},disabled:false,checked:false,
+      addEventListener(event,handler){events.set(id+":"+event,handler)}
+    });
+    return nodes.get(id);
+  };
+  const root={isConnected:true,querySelector:node,innerHTML:""};
+  const persons={persons:[{id:"p-1",canonical_name_en:"Registered Individual",names:[]}],summary:{total:1}};
+  const queue={ok:true,summary:{pending_count:0},candidates:[]};
+  const first=Array.from({length:1000},(_,i)=>({rank:i+1,raw_name:"Registered Individual",distinct_channel_count:6,video_count:7}));
+  const urls=[];
+  const context={
+    window:{ATLAS_CLIENT_DATA_STORE:{loadPersons:async()=>persons},addEventListener(){}},
+    fetch:async url=>{
+      urls.push(url);
+      const parsed=new URL(url,"http://localhost");
+      const surface=parsed.searchParams.get("__atlas_read_surface");
+      const payload=surface==="registration-queue" ? queue
+        : {ok:true,stored_count:1001,available_count:1001,
+          rows:Number(parsed.searchParams.get("offset"))===1000 ? [{rank:1001,raw_name:"New Historical Figure",distinct_channel_count:3,video_count:4}]
+            : first.slice(0,Number(parsed.searchParams.get("limit"))||300),
+          snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":1001},source_state:{next_batch:"batch018"}}};
+      return {ok:true,status:200,json:async()=>payload};
+    },
+    console,Date,URL,setInterval:()=>1,clearInterval(){}
+  };
+  vm.runInNewContext(js,context);
+  context.window.ATLAS_REGISTRATION_REVIEW.mount(root);
+  const ready=async()=>{
+    for(let i=0;i<40 && node("#registrationReviewStatus").dataset.state!=="ready";i++) await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(node("#registrationReviewStatus").dataset.state,"ready");
+  };
+  await ready();
+  node("#registrationReviewStatus").dataset.state="loading";
+  events.get("#youtubeSignalFilters:change")({target:{id:"youtubeExcludeRegistered",checked:true}});
+  await ready();
+  assert.match(node("#youtubeSignalBody").innerHTML,/New Historical Figure/);
+  assert.match(node("#youtubeSignalBody").innerHTML,/>1,001</);
+  assert.doesNotMatch(node("#youtubeSignalBody").innerHTML,/Registered Individual/);
+  assert.ok(urls.some(url=>url.includes("offset=1000")));
+});

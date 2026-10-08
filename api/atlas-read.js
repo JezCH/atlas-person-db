@@ -172,6 +172,11 @@ const youtubePersonSignalReadHandler = createLazyHandler(() => {
   return createYoutubePersonSignalReadHandler({ clientFactory:getPostgresClientFactory() });
 });
 
+const youtubeLivingEvidenceHandler = createLazyHandler(() => {
+  const { createYoutubeLivingEvidenceHandler } = require("../server/atlas-youtube-living-evidence-handler.js");
+  return createYoutubeLivingEvidenceHandler();
+});
+
 function selectReadSurface(req) {
   const direct = req?.query?.__atlas_read_surface;
   if (Array.isArray(direct)) return direct.length === 1 ? String(direct[0] || "").trim() : "";
@@ -199,6 +204,7 @@ async function consolidatedReadHandler(req, res) {
   if (surface === "runtime-exclusions") return runtimeExclusionsReadHandler(req, res);
   if (surface === "registration-queue") return registrationQueueReadHandler(req, res);
   if (surface === "youtube-person-signals") return youtubePersonSignalReadHandler(req, res);
+  if (surface === "youtube-person-living") return youtubeLivingEvidenceHandler(req, res);
   if (surface === "admin-inspector") return adminInspectorHandler(req, res);
   if (surface === "admin-system-status") return adminSystemStatusHandler(req, res);
   return normalizedReadHandler(req, res);
