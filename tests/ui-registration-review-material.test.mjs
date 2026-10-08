@@ -164,3 +164,66 @@ test("REVIEW-M10 keeps mobile YouTube names and counts in separate grid rows",()
   assert.match(js,/data-label="채널"/);
   assert.match(js,/data-label="영상"/);
 });
+
+test("REVIEW-M11 labels only unique exact registered aliases and current pending-queue matches",async()=>{
+  const vm=await import("node:vm");
+  const js=read("atlas-registration-review.js");
+  const css=read("atlas-registration-review.css");
+  const nodes=new Map();
+  const node=id=>{
+    if(!nodes.has(id)) nodes.set(id,{
+      innerHTML:"",textContent:"",value:"",dataset:{},disabled:false,
+      addEventListener(){}
+    });
+    return nodes.get(id);
+  };
+  const root={isConnected:true,innerHTML:"",querySelector:node};
+  const persons={persons:[
+    {id:"p-lincoln",canonical_name_en:"Abraham Lincoln",names:[{name:"Abraham Lincoln"}],historicity:"historical"},
+    {id:"p-leonardo",canonical_name_en:"Leonardo da Vinci",names:[],historicity:"historical"},
+    {id:"p-cleopatra-1",canonical_name_en:"Cleopatra",names:[],historicity:"historical"},
+    {id:"p-cleopatra-2",canonical_name_en:"Cléopatra",names:[],historicity:"historical"}
+  ],summary:{total:4}};
+  const queue={ok:true,summary:{pending_count:3},candidates:[
+    {candidate_id:"q-hypatia",name:"Hypatia of Alexandria",review_metadata:{lookup_names:["Hypatia"]}},
+    {candidate_id:"q-galois",name:"Évariste Galois",review_metadata:{}},
+    {candidate_id:"q-leonardo",name:"Leonardo da Vinci",review_metadata:{}}
+  ]};
+  const signals={ok:true,available_count:7,rows:[
+    {rank:1,raw_name:"Abraham Lincoln",distinct_channel_count:95,video_count:105},
+    {rank:2,raw_name:"Leonardo da Vinci",distinct_channel_count:80,video_count:100},
+    {rank:3,raw_name:"Cleopatra",distinct_channel_count:72,video_count:95},
+    {rank:4,raw_name:"Hypatia",distinct_channel_count:42,video_count:50},
+    {rank:5,raw_name:"Evariste Galois",distinct_channel_count:23,video_count:30},
+    {rank:6,raw_name:"Mansa Musa",distinct_channel_count:18,video_count:21},
+    {rank:7,raw_name:"Abraham Lincoln Biography",distinct_channel_count:7,video_count:8}
+  ],snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":7},source_state:{next_batch:"batch018"}}};
+  const context={
+    window:{ATLAS_CLIENT_DATA_STORE:{loadPersons:async()=>persons},addEventListener(){}},
+    fetch:async url=>({ok:true,status:200,json:async()=>url.includes("registration-queue")?queue:signals}),
+    console,Date,setInterval:()=>7,clearInterval:()=>{}
+  };
+  vm.runInNewContext(js,context,{filename:"atlas-registration-review.js"});
+  context.window.ATLAS_REGISTRATION_REVIEW.mount(root);
+  for(let i=0;i<25 && node("#registrationReviewStatus").dataset.state!=="ready";i++)
+    await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(node("#registrationReviewStatus").dataset.state,"ready");
+  const html=node("#youtubeSignalBody").innerHTML;
+  const matchingRow=name=>{
+    const item=html.split('<tr class="registration-review-signal-row"').find(part=>part.includes(`<span class="registration-review-signal-raw-name">${name}</span>`));
+    assert.ok(item,`missing ${name}`);
+    return item.slice(0,item.indexOf("</tr>"));
+  };
+  assert.match(matchingRow("Abraham Lincoln"),/data-status="registered">기등록/);
+  assert.match(matchingRow("Leonardo da Vinci"),/data-status="registered">기등록/);
+  assert.doesNotMatch(matchingRow("Leonardo da Vinci"),/대기열 등재/);
+  assert.match(matchingRow("Cleopatra"),/data-status="ambiguous">동명이인 확인/);
+  assert.match(matchingRow("Hypatia"),/data-status="queued">대기열 등재/);
+  assert.match(matchingRow("Evariste Galois"),/data-status="queued">대기열 등재/);
+  assert.match(matchingRow("Mansa Musa"),/기등록 일치 없음/);
+  assert.match(matchingRow("Mansa Musa"),/대기열 미등재/);
+  assert.doesNotMatch(matchingRow("Abraham Lincoln Biography"),/data-status="registered"/);
+  assert.match(css,/REVIEW-M11/);
+  assert.match(css,/\.registration-review-signal-identity\[data-status="registered"\]/);
+  assert.match(js,/일치 없음은 실제 미등록을 확정하지 않습니다/);
+});
