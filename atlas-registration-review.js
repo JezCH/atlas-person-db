@@ -143,12 +143,12 @@
       return;
     }
     const maxChannels=Math.max(1,...signalRows.map((row)=>Number(row?.distinct_channel_count || 0)));
+    const scoped=(lower,high)=>Number(high)>Number(lower) ? `${number(lower)}–${number(high)}` : number(lower);
     body.innerHTML=signalRows.map((row)=>{
       const channels=Math.max(0,Number(row?.distinct_channel_count || 0));
       const strength=Math.max(0,Math.min(100,(channels/maxChannels)*100));
       const upper=Number(row?.channel_count_upper_bound ?? channels);
       const channelText=upper>channels ? `${number(channels)}–${number(upper)}` : number(channels);
-      const scoped=(lower,high)=>Number(high)>Number(lower) ? `${number(lower)}–${number(high)}` : number(lower);
       const scopeDetail=bounded ? `<small class="registration-review-scope-detail">기존 ${scoped(row.baseline_channel_count,row.baseline_channel_upper_bound)} · 추가 ${scoped(row.supplemental_channel_count,row.supplemental_channel_upper_bound)}</small>` : "";
       return `<tr class="registration-review-signal-row" style="--signal-strength:${strength.toFixed(2)}%">
         <td class="registration-review-rank" data-label="순위">${number(row.rank)}</td>
