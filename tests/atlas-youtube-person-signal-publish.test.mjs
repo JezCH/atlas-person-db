@@ -84,3 +84,47 @@ test("YouTube publication is idempotent only for the same fingerprint",async()=>
   assert.equal(result.committed,false);
   assert.equal(result.idempotent,true);
 });
+
+
+test("YouTube publication rejects lower cumulative totals before any inserts",async()=>{
+  const calls=[];
+  const client={async query(sql){
+    calls.push(sql);
+    if(sql===service.EXISTING_SNAPSHOT_SQL)return {rows:[]};
+    if(sql===service.LATEST_GLOBAL_SNAPSHOT_SQL)return {rows:[{snapshot_id:"previous",channel_count:4,video_count:8}]};
+    return {rows:[]};
+  }};
+  await assert.rejects(service.publishYoutubePersonSignalSnapshot(client,payload()),
+    /YOUTUBE_PUBLICATION_CUMULATIVE_REGRESSION/);
+  assert.ok(calls.includes("ROLLBACK"));
+  assert.ok(!calls.includes(service.INSERT_SNAPSHOT_SQL));
+});
+
+test("YouTube publication rejects a missing known Channel ID even when totals grow",async()=>{
+  const calls=[];
+  const client={async query(sql){
+    calls.push(sql);
+    if(sql===service.EXISTING_SNAPSHOT_SQL)return {rows:[]};
+    if(sql===service.LATEST_GLOBAL_SNAPSHOT_SQL)return {rows:[{snapshot_id:"previous",channel_count:2,video_count:4}]};
+    if(sql===service.KNOWN_DISCOVERY_CHANNELS_SQL)return {rows:[{channel_id:"UC1"},{channel_id:"UC2"},{channel_id:"UC_LEGACY"}]};
+    return {rows:[]};
+  }};
+  await assert.rejects(service.publishYoutubePersonSignalSnapshot(client,payload()),
+    /YOUTUBE_PUBLICATION_KNOWN_CHANNEL_MISSING/);
+  assert.ok(calls.includes("ROLLBACK"));
+  assert.ok(!calls.includes(service.INSERT_SNAPSHOT_SQL));
+});
+
+test("YouTube publication permits monotonic growth preserving every known Channel ID",async()=>{
+  const calls=[];
+  const client={async query(sql){
+    calls.push(sql);
+    if(sql===service.EXISTING_SNAPSHOT_SQL)return {rows:[]};
+    if(sql===service.LATEST_GLOBAL_SNAPSHOT_SQL)return {rows:[{snapshot_id:"previous",channel_count:2,video_count:4}]};
+    if(sql===service.KNOWN_DISCOVERY_CHANNELS_SQL)return {rows:[{channel_id:"UC1"},{channel_id:"UC2"}]};
+    return {rows:[]};
+  }};
+  const result=await service.publishYoutubePersonSignalSnapshot(client,payload());
+  assert.equal(result.committed,true);
+  assert.equal(calls.at(-1),"COMMIT");
+});

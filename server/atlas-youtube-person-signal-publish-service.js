@@ -151,6 +151,20 @@ from atlas_v2.youtube_person_signal_snapshots
 where snapshot_id=$1
 `;
 
+// The publisher must never silently replace known discovery coverage with a
+// narrower cumulative artifact. Read these under the publication advisory lock.
+const LATEST_GLOBAL_SNAPSHOT_SQL = `
+select snapshot_id, channel_count, video_count
+from atlas_v2.youtube_person_signal_snapshots
+where snapshot_scope='global_reconciled'
+order by created_at desc, snapshot_id desc
+limit 1
+`;
+
+const KNOWN_DISCOVERY_CHANNELS_SQL = `
+select channel_id from atlas_v2.youtube_discovery_channels
+`;
+
 const INSERT_SNAPSHOT_SQL = `
 insert into atlas_v2.youtube_person_signal_snapshots(
   snapshot_id, generated_at, channel_count, video_count, threshold_counts,
@@ -242,6 +256,24 @@ async function publishYoutubePersonSignalSnapshot(client, input) {
       throw new Error("YOUTUBE_PUBLICATION_SNAPSHOT_ID_CONFLICT");
     }
 
+    const latest = await client.query(LATEST_GLOBAL_SNAPSHOT_SQL);
+    const prior = latest.rows?.[0];
+    if (prior) {
+      if (snapshot.channel_count < Number(prior.channel_count) ||
+          snapshot.video_count < Number(prior.video_count)) {
+        throw new Error("YOUTUBE_PUBLICATION_CUMULATIVE_REGRESSION");
+      }
+      // A larger total is not proof that old Channel IDs survived. Protect
+      // the immutable cumulative identity set, even when totals increased.
+      const known = await client.query(KNOWN_DISCOVERY_CHANNELS_SQL);
+      const incomingIds = new Set(payload.channels.map(row=>row.channel_id));
+      for (const row of known.rows || []) {
+        if (!incomingIds.has(row.channel_id)) {
+          throw new Error("YOUTUBE_PUBLICATION_KNOWN_CHANNEL_MISSING");
+        }
+      }
+    }
+
     await client.query(INSERT_SNAPSHOT_SQL,[
       snapshot.snapshot_id,
       snapshot.generated_at,
@@ -284,6 +316,8 @@ module.exports=Object.freeze({
   applyYoutubeSignalMigrations,
   publishYoutubePersonSignalSnapshot,
   EXISTING_SNAPSHOT_SQL,
+  LATEST_GLOBAL_SNAPSHOT_SQL,
+  KNOWN_DISCOVERY_CHANNELS_SQL,
   INSERT_SNAPSHOT_SQL,
   INSERT_SIGNALS_SQL,
   UPSERT_CHANNELS_SQL
