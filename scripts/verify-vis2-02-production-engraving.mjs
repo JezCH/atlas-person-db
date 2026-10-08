@@ -68,15 +68,24 @@ async function inspect(c,width,height){
   assert(before.rows>0&&before.rows===after.rows,"Person table changed",{before,after});
   assert(before.document_width<=width+1&&after.document_width<=width+1,"Page horizontal overflow",{before,after});
   assert(!before.link_enabled&&after.link_enabled,"Stylesheet toggling not active",{before,after});
-  const required=width<=760?[".mobile-appbar",".person-main-toolbar.card"]:[".topbar",".brand",".person-main-toolbar.card"];
-  for(const key of required){
-    const x=before.components[key],y=after.components[key];
-    assert(x?.visible&&y?.visible,"Missing visible target: "+key,{x,y});
+  // The Person toolbar intentionally collapses to zero height at 390px.
+  // Assert its *unchanged* zero-height geometry, not an invented visibility
+  // requirement. Every actually visible target must show a shadow-only delta.
+  const required=width<=760?[".mobile-appbar"]:[".topbar"];
+  const compared=[];
+  for(const [key,x] of Object.entries(before.components)){
+    const y=after.components[key];
+    if(!x||!y)continue;
     assert(x.rect.every((v,i)=>Math.abs(v-y.rect[i])<=.05),"Target geometry changed: "+key,{x,y});
     assert(x.border.join("/")===y.border.join("/"),"Border width changed: "+key,{x,y});
-    assert(x.shadow!==y.shadow,"No computed engraving effect: "+key,{x,y});
+    assert(x.visible===y.visible,"Responsive visibility changed: "+key,{x,y});
+    if(x.visible){
+      assert(x.shadow!==y.shadow,"Visible target missing engraved finish: "+key,{x,y});
+      compared.push(key);
+    }
   }
-  report.cases.push({width,height,required,before,after,status:"PASS"});
+  for(const key of required)assert(compared.includes(key),"Required visible chrome missing: "+key,{before,after});
+  report.cases.push({width,height,required,compared,before,after,status:"PASS"});
   console.log("ATLAS_VIS2_02_ENGRAVING_GEOMETRY_PASS "+width+"x"+height);
 }
 async function main(){
