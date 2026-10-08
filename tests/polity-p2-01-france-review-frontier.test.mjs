@@ -8,7 +8,7 @@ import {fileURLToPath} from "node:url";
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const text=(p)=>fs.readFileSync(path.join(root,p),"utf8");
 
-test("P2-01 France family remains open after bounded P2-01G semantic audit pending typed relation contract",()=>{
+test("P2-01 France family remains open after P2-01H direct governance detail decision pending finite whole-family acceptance",()=>{
   const context={window:{}};
   vm.runInNewContext(text("atlas-polity-review-registry.js"),context);
   const reg=context.window.ATLAS_POLITY_REVIEW_REGISTRY;
@@ -33,7 +33,7 @@ test("P2-01 France family remains open after bounded P2-01G semantic audit pendi
   assert.match(audit,/65 Authoring/);
   assert.match(audit,/65 Runtime/);
   assert.match(audit,/P2-01A/);
-  assert.match(text("docs/ATLAS_CURRENT_WORKSTREAMS.md"),/Immediate bounded next unit: `POLITY-P2-01H`/);
+  assert.match(text("docs/ATLAS_CURRENT_WORKSTREAMS.md"),/Immediate bounded next unit: `POLITY-P2-01I`/);
   const correction=text("docs/POLITY_P2_01A_FRANCE_KINGDOM_FIVE_RELINK_20261008.md");
   assert.match(correction,/CORRECTION_APPLIED/);
   assert.match(correction,/65 \/ 0 difference/);
@@ -44,6 +44,11 @@ test("P2-01 France family remains open after bounded P2-01G semantic audit pendi
   assert.match(france.rationale,/P2-01F/);
   assert.match(france.rationale,/P2-01G/);
   assert.match(france.rationale,/P2-01H/);
+  assert.match(france.rationale,/P2-01I/);
+  assert.ok(france.evidence.some(x=>x.includes('P2-01H')&&x.includes('NOT_APPLICABLE')));
+  const detailContract=text('docs/POLITY_P2_01H_GOVERNANCE_CONTEXT_DETAIL_PROJECTION_20261009.md');
+  assert.match(detailContract,/NOT_APPLICABLE/);
+  assert.match(detailContract,/POLITY-P2-01I/);
   assert.ok(france.evidence.some(x=>x.includes('P2-01G') && x.includes('AUDIT COMPLETE')));
   const relationAudit=text('docs/POLITY_P2_01G_FRANCE_COUNTRY_UMBRELLA_REPUBLIC_IDENTITY_CONTRACT_20261009.md');
   assert.match(relationAudit,/NO SUPPORTED DIRECT EDGE/);
