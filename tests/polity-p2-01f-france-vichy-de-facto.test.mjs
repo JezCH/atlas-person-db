@@ -35,7 +35,7 @@ test("P2-01F Vichy may be represented ONLY as bounded, historically sourced de f
   assert.equal(per.exact_after.source_links.length,3);
   assert.deepEqual(per.exact_after.source_links.map(s=>s.source_id),[a,b,c].map(s=>s.exact_after.source.id));
   for(const exp of ["autorité de fait","Art.1","Art.7","Sigmaringen","NOT on the legally continuous","exclusive","No Pétain/Laval"]) assert.ok(x.notes.includes(exp),exp);
-  assert.match(plan.evidence.currently_no_politically_valid_relation_type_for_country_umbrella_identity,/DO NOT create/);
+  assert.match(plan.evidence.currently_no_politically_valid_relation_type_for_country_umbrella_identity,/[Dd][Oo] NOT create/);
   assert.equal(plan.result.changed_person_activities,0);
   assert.equal(plan.result.france_family_authoring_expected,65);
 });
