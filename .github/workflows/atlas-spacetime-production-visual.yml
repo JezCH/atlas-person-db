@@ -22,6 +22,7 @@ on:
       - "scripts/verify-spacetime-production-*.mjs"
       - "scripts/verify-ui-v10-production-visual.mjs"
       - "scripts/verify-polity-production-visual.mjs"
+      - "scripts/capture-vis2-production-baseline.mjs"
       - ".github/workflows/atlas-spacetime-production-visual.yml"
   workflow_dispatch:
     inputs:
@@ -127,6 +128,8 @@ jobs:
           node scripts/verify-spacetime-production-domain-colors.mjs
           node scripts/verify-ui-v10-production-visual.mjs
           node scripts/verify-polity-production-visual.mjs
+          node --check scripts/capture-vis2-production-baseline.mjs
+          node scripts/capture-vis2-production-baseline.mjs
           for report in "$ATLAS_VISUAL_OUT_DIR"/*.json; do
             echo "===== $report ====="
             cat "$report"
