@@ -1,6 +1,6 @@
 # POLITY-P2-01E — Vichy de facto, Free France CNF/CFLN and France-umbrella identity
 
-**2026-10-08 | Status at proposal: reviewed, narrowly source-backed CNF/CFLN typed Context Correction awaiting CI/Production apply. Vichy/umbrella non-write hold.**
+**2026-10-08 | FINAL: CORRECTION_APPLIED / SOURCE_BACKED_CNF_CFLN_VERIFIED / 65_AUTHORING_65_RUNTIME_0_DRIFT / NO_PERSON_MUTATION / VICHY_AND_UMBRELLA_HELD.**
 
 ## 1. Connected Production and bounded preflight
 
@@ -42,4 +42,16 @@ Canonical reviewed `corrections/plans/polity-france-cnf-cfln-governance-only-202
 
 This unit adds the **two missing sourced Free France committee governance periods**, but not the questionable Vichy government/identity model or ambiguous France-country identity-edge. Those are held as a **separate bounded P2-01F source/authority-axis design** (not a new general review seed). The family stays `REVIEW_REQUIRED`, total review registry remains **75 entries / 50 terminal / 25 pending**, root #1895 OPEN. Zero-Activity historical Kingdom and Third Republic Polities remain LIVE without explicit user deletion consent; Japan P1-02 tombstones, Place P1-03R source/Production gaps are independent acceptance blockers. P14 Territory Geometry stays user-PARKED; no mass discovery.
 
-**Closeout requires verified PR + authenticated Correction Apply ledger + independent Production and Runtime parity.** Until that evidence exists this is an **approved proposal**, not proof of a completed Production write.
+**Closeout gates achieved for the CNF/CFLN structural Correction.** Vichy and umbrella remain explicitly held; this family seed is not terminal. See verified live read-back below.
+
+## 5. Exact applied Production closeout — 2026-10-08 15:00:56 UTC
+
+- [Correction PR #2189](https://github.com/JezCH/atlas-person-db/pull/2189) squash **MERGED** into main SHA `22e7fcdae2b87debeb2d02c6b6d3bb6292f92d5e`. ATLAS Integrity `37796901949` **SUCCESS** (regression test and 5 structural assertions).
+- Authenticated `ATLAS Correction Apply` workflow **`37797155586` SUCCESS**. Connected Production `atlas_v2.correction_manifest_runs` shows request `polity_france_cnf_cfln_wartime_authority_20261008_v1` committed **2026-10-08 15:00:56.048676 UTC**, schema `atlas-correction-manifest/v2`. No direct SQL writes, false no-op Activity rewrite or deletion.
+- **New CNF** Context `aeeeef67-3e31-4b4c-8e3e-e5b458136a72`, key `stage2:free-french-national-committee-1941-1943`, type `government`, **3 English/French/Korean preferred names**; period `e8fa78f0-ad90-4e6a-a039-2e0e1fc9601b` on existing French Republic UUID `b138f5e4-ff83-40f6-bdb1-83b08c0256cb` **1941-09-24→1943-06-02**, one normalized evidence link to **new** official French National Assembly CNF Source `2b873a92-8095-454e-9231-d76302a59813`.
+- **New CFLN** Context `27c1f5aa-2194-4e09-9c82-fb5d0f08187d`, key `stage2:french-committee-of-national-liberation-1943-1944`, type `government`, **3 English/French/Korean preferred names**; period `114e79cb-57c5-4cce-9e20-a51a77b61721` on same French Republic UUID **1943-06-03→1944-06-02**, one normalized evidence link to **reused existing** French National Assembly CFLN Source `4c0ef4bf-c14c-4577-ae2e-f10f779f66ea`. Its GPRF successor retains its original **1944-06-03** date, unchanged.
+- Verified existing GPRF `stage2:french-provisional-government-1944-1946` **1944-06-03→1946-12-24**, Fourth `stage2:french-fourth-republic` **1946-12-24→1958-10-03**, Fifth `stage2:french-fifth-republic` **1958-10-04→open**, all preserved.
+- `ATLAS Runtime Projection Compile` workflow **`37797290138` SUCCESS**. Exact independent read-back of eight-polity France family: **65 Authoring /65 Runtime /0 Person/Polity/Role/PeriodBasis/relation/temporal-boundary mismatches**. Existing distribution remains France country umbrella 37, established French Republic 16, other six Polities 12. No Person Activity registration/retirement/update in this unit; no source links to existing Person Activities lost.
+- The registration does **not** settle the independently real Vichy de facto `État français` regime, its historical jurisdiction and ending dates, or whether a future typed subject/relation should bind it to the country umbrella versus the legally continuous French Republic. It also does not fabricate missing Pétain, Laval or Giraud Persons to fill the wartime year gap.
+
+**Unit conclusion:** P2-01E **APPLIED and verified** only for CNF/CFLN government authority periods; Vichy government and the country `France` umbrella relation remain **REVIEW_REQUIRED** within the same seeded `france-regime-family` (75 review seeds / 50 terminal / 25 pending). The next exact independent bounded work unit is **POLITY-P2-01F — Vichy de facto authority subject/relation contract and France country-umbrella legal identity edge, source-based preflight; no automatic Polity/Person deletion or fictitious state merger**. P1-02 Japan tombstones, P1-03R Place Production authority, and user-PARKED P14 Geometry unchanged.
