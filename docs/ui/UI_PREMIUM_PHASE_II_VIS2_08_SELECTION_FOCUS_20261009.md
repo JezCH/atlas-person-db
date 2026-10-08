@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-09 KST · **Tracking:** [#2158](https://github.com/JezCH/atlas-person-db/issues/2158)  
 **Unit:** VIS2-08 ONLY. Prior VIS2-07 [signed #2213](https://github.com/JezCH/atlas-person-db/pull/2213), Chrome [SUCCESS #37848318185](https://github.com/JezCH/atlas-person-db/actions/runs/37848318185) with 102 PNGs.  
-**State:** implementation submitted, not yet Production visual accepted. **VIS2-09 NOT STARTED.**
+**State: VIS2-08 COMPLETE / PRODUCTION SIGNED OFF.** Source+runtime exact Chrome PASS after one explicitly recorded CSS specificity correction; **VIS2-09 NOT STARTED.**
 
 ## Existing visual language / nonduplication audit
 
@@ -42,3 +42,46 @@ Capture paired **16 VIS2-08 screenshots** (4 states × OFF/ON × mobile 390 and 
 **Regression gates:** source/deployed SHA must match precisely; existing Person main V10 selection/link domain acceptance, Polity, Spacetime, 29-common visual baseline and VIS2-01–07 must all pass in the same exact-SHA Chrome run. Pixel difference evidence + restored geometry prove improvement is confined to selected/focused interaction, not a default row re-layout.
 
 **Closeout:** document exact Production run, screenshots, comparison verdict, then docs-only signoff PR and tracker [#2158](https://github.com/JezCH/atlas-person-db/issues/2158). Stop before VIS2-09 (Detail hero/portrait).
+
+
+## Verified 2026-10-09 KST — actual exact-SHA Production and visual acceptance
+
+### Feature, failure and correction provenance
+
+1. Initial VIS2-08 [PR #2214](https://github.com/JezCH/atlas-person-db/pull/2214), merged SHA `af2b03673bd366d9fb0249b8f957e81dac4a129d`, implemented selected/keyboard row/link paint and the 16-case read-only Production visual verifier. All GitHub static/whole-repo checks succeeded.
+2. **Do not mark the initial attempt passed:** [Production run #37850578187](https://github.com/JezCH/atlas-person-db/actions/runs/37850578187) concluded **FAILURE** after passing existing prior gates and the 390px selected/row-focus cases. The focus-link A/B property was unchanged (`rgb(192,174,136) solid 1px` both OFF and ON). Read-before-fix audit traced this to dynamically loaded `atlas-person-domain-palette.css`: its domain-qualified `.person-main-name-link:focus-visible` selector had equal specificity and later CSS precedence than the early linked VIS2-08 selector.
+3. Focus-specificity correction [PR #2217](https://github.com/JezCH/atlas-person-db/pull/2217), merged SHA **`84f7152f95916edcd36f0fceb432ab983a6192dd`**, added `.person-card[data-representative-domain]` qualification to the VIS2-08 **outline-only** focus selector, kept actual `--person-domain-on-dark` name/link ink and `::before` domain rail untouched, set a 2px neutral keyboard outline with 1px optical offset, incremented CSS query v2 and updated strict owner tests. No historical data, input handlers, URL, scroll, Person geometry or domain palette values changed.
+
+### Final exact-Production gate
+
+- [Production Chrome run #37851784735](https://github.com/JezCH/atlas-person-db/actions/runs/37851784735) **SUCCESS**, with deployed/source SHA exactly **`84f7152f95916edcd36f0fceb432ab983a6192dd`**.
+- [Complete artifact #11582298204](https://github.com/JezCH/atlas-person-db/actions/runs/37851784735/artifacts/11582298204): downloaded and verified ZIP (**22,408,725 bytes**, **133 archive entries**, **118 PNGs**). `vis2-08-production-register-interaction.json` records `status: PASS` with **16/16 same-DOM A/B gates and 16 new VIS2-08 screenshots**. The other **102 PNGs** are inherited Phase II and existing screen acceptance captures. All legacy Person V10, Polity, Spacetime and VIS2-00–07 gates passed in the *same exact runtime*.
+- Four states × four viewport widths (390×844, 768×1000, 1440×1000, 1600×1000): existing-row **selected**, real keyboard **row-focus**, real keyboard **external name-link focus**, **selected+keyboard-focus**. All **2,120 Production Person rows** remained, 80 scanned for geometry/domain/name/date/Activity/scroll dimension invariants per case, eight-domain semantic name/rail inks unchanged; neutral selected `::after` marker stays `opacity=1`. The selected CSS class is set deliberately on an existing genuine Person row to isolate same-DOM styling; the existing Product click/selection behavior is independently tested by Person V10 acceptance. CDP sends actual Tab key events and demands `:focus-visible` true for every keyboard scene; **12/12 focus-bearing cases passed**.
+
+| Width | Selected | Keyboard row | Keyboard name link | Selected + keyboard |
+|---|---|---|---|---|
+| 390 px | PASS | PASS | PASS | PASS |
+| 768 px | PASS | PASS | PASS | PASS |
+| 1440 px | PASS | PASS | PASS | PASS |
+| 1600 px | PASS | PASS | PASS | PASS |
+
+### Matched screenshot A/B human review
+
+Actual OFF/ON PNGs for all **eight mobile/desktop pairs** (390px and 1440px at four states) were pixel-compared using exactly corresponding RGB arrays; the four-state contact sheet plus full 390px focused link and full 1440px selected+focus screenshots were opened and visually reviewed. Changes were confined to existing neutral selection row optical inset, selected gold marker shadow, and link/row keyboard-focus outlines, without added title, card, portrait, new rail or semantic recoloring.
+
+| Exact screenshot case | Changed RGB pixels | Share of full screenshot |
+|---|---:|---:|
+| 390×844 selected | 1,029 | 0.3126% |
+| 390×844 keyboard row | 1,224 | 0.3719% |
+| 390×844 keyboard name-link | 1,204 | 0.3658% |
+| 390×844 selected + keyboard | 1,409 | 0.4281% |
+| 1440×1000 selected | 33,113 | 2.2995% |
+| 1440×1000 keyboard row | 3,343 | 0.2322% |
+| 1440×1000 keyboard name-link | 2,643 | 0.1835% |
+| 1440×1000 selected + keyboard | 34,415 | 2.3899% |
+
+The larger desktop selected screenshot changes are primarily low-amplitude RGB luminance alterations in the existing first selected Person row (`mean absolute channel difference 1.72` among changed pixels) with only scattered edge/shadow changes below it; **this is not evidence of a changed row geometry**. The separate Chrome DOM measurements prove invariant row/name/link/Activity bounds and scroll dimensions. The selected Person is actual Production `governance` domain, preserving link/name `rgb(230,198,90)` and existing narrow semantic rail `rgb(176,139,0)`; selection marker is neutral champagne, not a second governance signal.
+
+**Final visual verdict: ACCEPT VIS2-08.** The prior absence of a distinct external-link focus treatment was corrected and proven in production; the neutral selected state and keyboard-focus rings now distinguish interaction meanings at mobile and desktop widths without a new card, new Person field or changed semantic domain foreground. Preserve `VIS2-07` factual/table appearance and rejected/default-OFF `VIS2-05` watermark.
+
+**Single-unit barrier:** VIS2-08 is closed only after this signed document merges and the Phase II tracker is checked. **VIS2-09 Person Detail hero / portrait frame is NOT STARTED.**
