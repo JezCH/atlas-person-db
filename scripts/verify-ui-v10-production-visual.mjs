@@ -172,7 +172,15 @@ async function collectMain(client){
     const cardLikeCount=rows.filter((row)=>{
       const s=style(row);
       const radius=Math.max(...String(s?.borderRadius||"0").split(/\s+/).map((value)=>Number.parseFloat(value)||0));
-      return radius>0.5 || (s?.boxShadow&&s.boxShadow!=="none");
+      // Memorial Register rows deliberately use subtle INSET hairline engravings.
+      // Only OUTER elevation/drop shadows are evidence of a card-like row.
+      // Strip rgb/rgba commas before splitting a CSS shadow stack.
+      const shadows=String(s?.boxShadow||"none").replace(/rgba?\([^)]*\)/g,"COLOR");
+      const hasRaisedShadow=shadows.split(",").some((part)=>{
+        const shadow=part.trim();
+        return shadow && shadow!=="none" && !/\binset\b/.test(shadow);
+      });
+      return radius>0.5 || hasRaisedShadow;
     }).length;
     const quietCounts=qa('.person-register-count.is-activity-count-quiet');
     const multiRows=rows.filter((row)=>row.classList.contains('has-multiple-activities'));

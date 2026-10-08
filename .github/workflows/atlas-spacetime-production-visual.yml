@@ -21,6 +21,7 @@ on:
       - "atlas-person-spacetime-*.css"
       - "scripts/verify-spacetime-production-*.mjs"
       - "scripts/verify-ui-v10-production-visual.mjs"
+      - "scripts/verify-polity-production-visual.mjs"
       - ".github/workflows/atlas-spacetime-production-visual.yml"
   workflow_dispatch:
     inputs:
@@ -125,6 +126,7 @@ jobs:
           node scripts/verify-spacetime-production-visual.mjs
           node scripts/verify-spacetime-production-domain-colors.mjs
           node scripts/verify-ui-v10-production-visual.mjs
+          node scripts/verify-polity-production-visual.mjs
           for report in "$ATLAS_VISUAL_OUT_DIR"/*.json; do
             echo "===== $report ====="
             cat "$report"
