@@ -8,15 +8,7 @@ const GLOBAL_SNAPSHOT_SQL=`
 select snapshot_id,generated_at,channel_count,video_count,threshold_counts,
        parser_version,source_state,snapshot_scope
 from atlas_v2.youtube_person_signal_snapshots
-where snapshot_scope in ('global_reconciled','segment_supplement')
-order by generated_at desc,snapshot_id desc
-limit 1
-`;
-
-const LEGACY_LATEST_SNAPSHOT_SQL=`
-select snapshot_id,generated_at,channel_count,video_count,threshold_counts,
-       parser_version,source_state
-from atlas_v2.youtube_person_signal_snapshots
+where snapshot_scope='global_reconciled'
 order by generated_at desc,snapshot_id desc
 limit 1
 `;
@@ -84,15 +76,7 @@ async function readYoutubePersonSignals({client,minChannels=3,limit=300}={}) {
   const threshold=integerOption(minChannels,3,{min:3,max:1000});
   const pageSize=integerOption(limit,300,{min:1,max:1000});
 
-  let snapshot;
-  try {
-    const result=await client.query(GLOBAL_SNAPSHOT_SQL);
-    snapshot=projectSnapshot(result.rows?.[0]);
-  } catch(error) {
-    if(error?.code!=="42P01" && error?.code!=="42703") throw error;
-    const result=await client.query(LEGACY_LATEST_SNAPSHOT_SQL);
-    snapshot=projectSnapshot(result.rows?.[0]);
-  }
+  const snapshot=projectSnapshot((await client.query(GLOBAL_SNAPSHOT_SQL)).rows?.[0]);
   if(!snapshot) return Object.freeze({
     schema:YOUTUBE_PERSON_SIGNAL_SCHEMA,available:false,snapshot:null,
     min_channels:threshold,available_count:0,stored_count:0,rows:Object.freeze([])
@@ -114,7 +98,7 @@ async function readYoutubePersonSignals({client,minChannels=3,limit=300}={}) {
 }
 
 module.exports=Object.freeze({
-  YOUTUBE_PERSON_SIGNAL_SCHEMA,GLOBAL_SNAPSHOT_SQL,LEGACY_LATEST_SNAPSHOT_SQL,
+  YOUTUBE_PERSON_SIGNAL_SCHEMA,GLOBAL_SNAPSHOT_SQL,
   SIGNAL_COUNT_SQL,SIGNAL_ROWS_SQL,integerOption,normalizeThresholdCounts,
   projectSnapshot,projectSignal,readYoutubePersonSignals
 });
