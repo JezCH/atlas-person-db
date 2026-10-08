@@ -5,11 +5,11 @@ const crypto = require("node:crypto");
 const MAX_V2_SNAPSHOT_ACTIVITY_IDS = 100;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
-function normalizeV2SnapshotActivityIds(value) {
-  if (!Array.isArray(value) || value.length === 0) throw new Error("CORRECTION_V2_SNAPSHOT_ACTIVITY_IDS_REQUIRED");
+function normalizeV2SnapshotActivityIds(value, { allowEmpty = false } = {}) {
+  if (!Array.isArray(value) || (value.length === 0 && !allowEmpty)) throw new Error("CORRECTION_V2_SNAPSHOT_ACTIVITY_IDS_REQUIRED");
   if (value.length > MAX_V2_SNAPSHOT_ACTIVITY_IDS) throw new Error("CORRECTION_V2_SNAPSHOT_ACTIVITY_IDS_LIMIT_EXCEEDED");
   const ids = [...new Set(value.map((item) => String(item || "").trim().toLowerCase()))].sort();
-  if (ids.length === 0 || ids.some((id) => !UUID_RE.test(id))) throw new Error("CORRECTION_V2_SNAPSHOT_ACTIVITY_ID_INVALID");
+  if (ids.some((id) => !UUID_RE.test(id))) throw new Error("CORRECTION_V2_SNAPSHOT_ACTIVITY_ID_INVALID");
   return ids;
 }
 
@@ -32,9 +32,9 @@ function lowerUuidFields(row, fields) {
   return out;
 }
 
-async function createCorrectionV2TargetSnapshot(client, activityIds) {
+async function createCorrectionV2TargetSnapshot(client, activityIds, { allowEmpty = false } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
-  const ids = normalizeV2SnapshotActivityIds(activityIds);
+  const ids = normalizeV2SnapshotActivityIds(activityIds, { allowEmpty });
   await client.query("begin isolation level repeatable read read only");
   try {
     const readOnly = await client.query("select current_setting('transaction_read_only') as read_only");
