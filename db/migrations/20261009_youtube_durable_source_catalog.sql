@@ -2,9 +2,17 @@
 -- No existing snapshots/channels/signals are changed or backfilled.
 BEGIN;
 
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('atlas-youtube-source', 'atlas-youtube-source', false)
-ON CONFLICT (id) DO NOTHING;
+-- Local CI rebuilds vanilla PostgreSQL without Supabase Storage installed.
+-- On Production Supabase, provision the bucket without weakening RLS.
+DO $atlas$
+BEGIN
+  IF to_regclass('storage.buckets') IS NOT NULL THEN
+    EXECUTE 'INSERT INTO storage.buckets (id, name, public)
+      VALUES (''atlas-youtube-source'', ''atlas-youtube-source'', false)
+      ON CONFLICT (id) DO NOTHING';
+  END IF;
+END
+$atlas$;
 
 CREATE TABLE IF NOT EXISTS atlas_v2.youtube_source_archives (
   object_key text PRIMARY KEY,
