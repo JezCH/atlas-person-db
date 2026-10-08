@@ -110,6 +110,7 @@
         ${statusSection("Authoring & P10 readiness", payload.readiness, { open: true })}
         ${statusSection("Runtime publication / active compile", payload.runtime_publication, { open: true })}
         ${statusSection("Duplicate lifecycle", payload.duplicate_lifecycle, { open: true })}
+        ${statusSection("최근 Authoring / Correction 적용 이력 — 각 5건", payload.manifest_history)}
         <details class="obs-section"><summary>atlas_v2 exact row counts</summary><div class="obs-section-body">${renderTableCounts(payload.counts?.tables)}</div></details>
         ${statusSection("Runtime verification boundary", payload.verification)}
       </div>`;
