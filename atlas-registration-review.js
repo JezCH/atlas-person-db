@@ -404,6 +404,9 @@
         refreshTimer=null;
         return;
       }
+      // A live evidence request may outlast 10 seconds; never invalidate it
+      // with an automatic refresh while the filter is still resolving.
+      if (activeRoot.querySelector("#registrationReviewStatus")?.dataset.state==="loading") return;
       refresh({ forcePersons:true });
     },REFRESH_INTERVAL_MS);
   }
