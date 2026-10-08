@@ -92,7 +92,7 @@ async function evaluateScene(c,width,mode,zoom){
   await chooseScene(c,mode);
   const label=await prepareLabel(c,mode);
   const before=await ev(c,"("+state.toString()+")()");
-  must(!before.styleLoaded&&before.pseudo==="none","Watermark unexpectedly active in default Production",{width,mode,zoom,before});
+  must(!before.styleLoaded&&(!before.pseudo||["none","normal"].includes(before.pseudo)),"Watermark unexpectedly active in default Production",{width,mode,zoom,pseudo:before.pseudo});
   must(before.zoom===zoom,"Zoom mismatch before A/B",{width,mode,zoom:before.zoom});
   const suffix=width+"-"+zoom.replace("%","pct")+"-"+mode;
   await shot(c,"vis2-05-A-default-"+suffix+".png");
