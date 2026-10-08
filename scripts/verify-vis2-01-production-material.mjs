@@ -1,9 +1,8 @@
 import fs from "node:fs";
-import path from "node:path";
 
 const EXPECTED=String(process.env.ATLAS_EXPECTED_RUNTIME_SHA||"");
 const CDP=process.env.ATLAS_CDP_URL||"http://127.0.0.1:9222";
-const ORIGIN=(process.env.ATLAS_PRODUCTION_ORIGIN||"https://atlas-person-db.vercel.app").replace(/\\/$/,"");
+const ORIGIN=(process.env.ATLAS_PRODUCTION_ORIGIN||"https://atlas-person-db.vercel.app").replace(/\/$/,"");
 const OUT=process.env.ATLAS_VISUAL_OUT_DIR||"artifacts/spacetime-visual-acceptance";
 const report={schema:"atlas-vis2-01-production-material/v1",expected_sha:EXPECTED,checked_at:new Date().toISOString(),samples:[],status:"PENDING"};
 fs.mkdirSync(OUT,{recursive:true});
