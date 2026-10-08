@@ -10,7 +10,7 @@ test("UI V6 loads a dedicated chronology canvas after the base Spacetime stylesh
   assert.match(html, /atlas-main-authority-nav\.js\?v=20261004-dashboard-v11-r2/);
   assert.match(html, /atlas-domain-surface-owner\.js\?v=20261004-ui-p1-dark-name-v1/);
   const base = 'atlas-person-spacetime-view.css?v=20260923-runtime-ownership-v1';
-  const v6 = 'atlas-person-spacetime-monumental-canvas.css?v=20261007-spacetime-m2-focus-v1';
+  const v6 = 'atlas-person-spacetime-monumental-canvas.css?v=20261008-spacetime-l1-chronograph-v1';
   assert.ok(nav.includes(base));
   assert.ok(nav.includes(v6));
   const v7 = 'atlas-person-spacetime-instrument-tools.css?v=20261007-spacetime-m3-luminance-v1';
@@ -88,4 +88,39 @@ test("UI V6 refreshes dynamically loaded domain-color CSS", () => {
   const owner = read("atlas-domain-surface-owner.js");
   assert.match(owner, /atlas-person-spacetime-domain-colors\.css\?v=20261004-person-domain-v2/);
   assert.match(owner, /if \(domain === "spacetime"\)/);
+});
+
+test("SPACETIME-L1 engraves the time gutter and selected inscription without changing world geometry", () => {
+  const css = read("atlas-person-spacetime-monumental-canvas.css");
+  const start = css.indexOf("SPACETIME-L1 — Precision chronograph finish");
+  const end = css.indexOf("@media (max-width: 760px)", start);
+  const m2 = css.indexOf("SPACETIME-M2 — Late focus ownership repair");
+  assert.ok(start > m2 && end > start, "precision layer must follow existing material and focus ownership");
+  const finish = css.slice(start, end);
+  for (const selector of [
+    ".spacetime-era-axis,",
+    ".spacetime-year-axis {",
+    ".spacetime-sticky-corner,",
+    ".spacetime-region-head {",
+    ".spacetime-year-axis span.is-major {",
+    ".spacetime-year-axis span.is-major::before {",
+    ".spacetime-century-line.is-major {",
+    ".spacetime-era-boundary {",
+    ".spacetime-era-boundary b {",
+    ".spacetime-track-label.is-selected {"
+  ]) assert.ok(finish.includes(selector), `missing precision finish: ${selector}`);
+  for (const token of [
+    "--atlas-material-sheen-soft",
+    "--atlas-material-sheen-strong",
+    "--atlas-material-hairline-strong",
+    "--atlas-material-rail",
+    "--spacetime-chronograph-strong",
+    "--spacetime-selection-metal-strong"
+  ]) assert.ok(finish.includes(`var(${token})`), `missing material token: ${token}`);
+  assert.doesNotMatch(finish, /\n\s*(?:width|height|min-width|max-width|min-height|max-height|padding|margin|font-size|line-height|left|right|top|bottom|transform|position|grid-template-columns|grid-template-rows)\s*:/);
+  assert.doesNotMatch(finish, /--atlas-person-domain-[a-z-]+\s*:|data-representative-domain|!important|@keyframes/);
+  const nav = read("atlas-main-authority-nav.js");
+  assert.match(nav, /atlas-person-spacetime-monumental-canvas\.css\?v=20261008-spacetime-l1-chronograph-v1/);
+  assert.ok(nav.indexOf("atlas-person-spacetime-view.css") < nav.indexOf("atlas-person-spacetime-monumental-canvas.css"));
+  assert.ok(nav.indexOf("atlas-person-spacetime-monumental-canvas.css") < nav.indexOf("atlas-person-spacetime-mobile-v8.css"));
 });
