@@ -1,0 +1,45 @@
+# POLITY-P2-01E — Vichy de facto, Free France CNF/CFLN and France-umbrella identity
+
+**2026-10-08 | Status at proposal: reviewed, narrowly source-backed CNF/CFLN typed Context Correction awaiting CI/Production apply. Vichy/umbrella non-write hold.**
+
+## 1. Connected Production and bounded preflight
+
+Read-only connected Supabase `wfrbxltvpmlprgwfysxq`, `atlas_v2` after P2-01D #2181 and #2184:
+
+- Exactly eight **France-proper** currently live canonical Polities within the reviewed France family, **65 Authoring/65 Runtime/zero full Person/Polity/Role/temporal drift**.
+- Stable `France` country-umbrella UUID `1eaa48b6-dc60-49d6-91c4-49db556f4ddf`: **37** existing Person Activities, including royalty and later `active_in` culture, four temporal royal designation periods; **zero Governance Context**, zero explicit context links and zero identity relations.
+- `stage2:french-republic` juridical/political entity UUID `b138f5e4-ff83-40f6-bdb1-83b08c0256cb`: **16** existing Person Activities, the historical Third Republic sourced state-form plus three completed, preserved typed governance contexts: GPRF 1944-06-03→1946-12-24, Fourth constitutional 1946-12-24→1958-10-03, Fifth constitutional 1958-10-04→open.
+- Specific key/UUID/name search: **NO** live polity/context `Vichy`, `French State` (regime), `Free France`, `CNF` or `CFLN`; no original official CNF Source; existing exact National Assembly CFLN/GPRF Source `4c0ef4bf-c14c-4577-ae2e-f10f779f66ea` is reusable.
+- Bounded Person canonical key + normalized EN/KO name search for **Philippe Pétain, Pierre Laval, Henri Giraud, François Darlan, Jean Moulin and Charles de Gaulle**: **only Charles de Gaulle present**, with exactly three existing unrelated government Activities (1944–46 GPRF, 1958–59 prime minister, 1959–69 President), all to remain unchanged. No claim of comprehensive worldwide Person database census or historical absence for the others. Existing 1940–1943 France-family Person Activity count is **0**; one activity begins 1944 (de Gaulle), not a 1940–43 proxy.
+
+## 2. Independent documented history and legal classification
+
+**Légifrance original [Ordonnance du 9 août 1944 sur le rétablissement de la légalité républicaine](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=LEGITEXT000006071212):** Art. 1 expressly holds that the legal Republican form had never ceased; Art. 3 annuls the July 10, 1940 Vichy constitutional act; Art. 7 designates the Vichy `gouvernement de l'Etat français` **authority de facto**, and allows provisional effects of specified administrative acts. **This does not mean the de facto Vichy regime did not exist, that its persecution/collaboration was a legitimate Republican Cabinet, or that Free France's military movement is identical to a sovereign country.**
+
+**[French National Assembly — National Committee](https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/institution-du-comite-national-francais):** de Gaulle organized **Comité national français (CNF)** via ordinance **24 September 1941** in London to exercise provisional public authority; meeting first held 27 September. `Free France` (started as a movement following the 18 June 1940 appeal) predated this **government organ**. The 1940 Free France movement is **NOT** backdated into a CNF government starting 1940.
+
+**[French National Assembly — CFLN and Consultative Assembly](https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/institution-du-comite-francais-de-la-liberation-nationale-cfln-et-creation-de-l-assemblee-consultative-provisoire):** **CFLN founded 3 June 1943 in Algiers** by joint de Gaulle/Henri Giraud ordinance, unified the former CNF/Free French committee with Algeria/North African authority; co-chaired until November 1943, then solely de Gaulle. On **3 June 1944** CFLN took the name **GPRF** (already authored in P2-01D). The historical committee authority is distinct from Vichy de facto power. Neither Giraud nor Pétain or Laval is registered solely to satisfy governance chronology.
+
+**[Memorial de la Shoah — Vichy 1940–1944 authority and persecution](https://cnrd-2022-2023.memorialdelashoah.org/exposition.html)** distinguishes the 10 July 1940 transfer of powers and 11 July consolidation of the `État français` from Free France. This confirms an actual de facto administrative and political regime; it does not settle when its territorial power **ended** in all occupied or unoccupied parts of metropolitan France and colonies.
+
+### Date/authority gate — NO Vichy autonomous write in this unit
+
+For Vichy, a simple `constitutional_regime` on the canonical **French Republic** falsely imputes legal constitutional legitimacy; a naive `governing_regime` on the persistent **France country-umbrella** might represent non-sovereign de facto authorities as the territorial state's sole government despite contemporaneous Free French rival authority, colonial split and mixed German occupation. A separate `French State (Vichy)` **Polity UUID** would be a new sovereign identity that current evidence and user-approved normalization conventions do not authorize. **Therefore Vichy is classified as historically real, de facto `État français` government/authority candidate, held for a separate historically sourced typed-authority/subject-contract decision rather than being erased, illegitimately legitimized, or automatically inserted.**
+
+`France` and `stage2:french-republic` are overlapping higher-order country and specific political authority labels. Their direct Person Activity distribution (37/16) is not prima facie a duplicate row-set: royal names, country-level culture and constitutional-period office contexts may all legitimately reference France at different semantic scope. **Zero explicit `polity_identity_relations` currently connect them**. Do not assert that they are two different physical countries simply because UUIDs differ; equally, do not link them with an invented identity-relation type or merge all 53 Activities by matching dates and geography. The reviewed distinction is **country umbrella versus historically periodized republican constitutional polity**, pending explicit edge semantic contract.
+
+## 3. Safe non-destructive CNF/CFLN correction
+
+Canonical reviewed `corrections/plans/polity-france-cnf-cfln-governance-only-20261008.v1.json` declares **0** Person Activity changes, **5** structural assertions:
+
+1. One original French National Assembly CNF Source UUID `2b873a92-8095-454e-9231-d76302a59813` protected by exact absence/unique key, official URL.
+2. CNF government Context UUID `aeeeef67-3e31-4b4c-8e3e-e5b458136a72`, canonical key `stage2:free-french-national-committee-1941-1943`, **three EN/FR/KO preferred names**, exact period `e8fa78f0-ad90-4e6a-a039-2e0e1fc9601b`, **1941-09-24→1943-06-02**, linked to the new CNF official Source. End is ATLAS last-full-day convention ahead of successor.
+3. CFLN government Context UUID `27c1f5aa-2194-4e09-9c82-fb5d0f08187d`, key `stage2:french-committee-of-national-liberation-1943-1944`, **three preferred EN/FR/KO names**, exact period `114e79cb-57c5-4cce-9e20-a51a77b61721` **1943-06-03→1944-06-02**, linked to **existing** exact official National Assembly Source UUID `4c0ef4bf-c14c-4577-ae2e-f10f779f66ea`. GPRF already begins June 3, 1944, no gap invented.
+4. The two Contexts both attach to the **already-established French Republic legal-identity UUID**; they represent actual resistance-era provisional governance, **not** Vichy de facto rule nor a new independent French state. No Person/Activity, role, source link or chronology touched.
+5. OIDC-authenticated Correction plan `operations:[]` uses the previously tested fail-closed assertion-only writer and read-only empty-Activity snapshot, standard serializable ledger transaction. After apply require full exact live Context, locale, governance Period, Source-link verification plus Runtime compile, **65/65/0 drift**, live pre-existing GPRF/Fourth/Fifth unchanged. Fail if exact before state differs.
+
+## 4. No deletion, acceptance, and next boundary
+
+This unit adds the **two missing sourced Free France committee governance periods**, but not the questionable Vichy government/identity model or ambiguous France-country identity-edge. Those are held as a **separate bounded P2-01F source/authority-axis design** (not a new general review seed). The family stays `REVIEW_REQUIRED`, total review registry remains **75 entries / 50 terminal / 25 pending**, root #1895 OPEN. Zero-Activity historical Kingdom and Third Republic Polities remain LIVE without explicit user deletion consent; Japan P1-02 tombstones, Place P1-03R source/Production gaps are independent acceptance blockers. P14 Territory Geometry stays user-PARKED; no mass discovery.
+
+**Closeout requires verified PR + authenticated Correction Apply ledger + independent Production and Runtime parity.** Until that evidence exists this is an **approved proposal**, not proof of a completed Production write.
