@@ -1,0 +1,53 @@
+/* VIS2-07 — dense Person register's existing inscriptions and rules only.
+ * Zero new boxes, fields, illustrations, fonts or chronology.
+ * The Person name/domain paint and focus/selection are explicitly NOT owned.
+ * Drop one linked stylesheet to revert the entire unit.
+ */
+:root { --atlas-vis2-07-register-active: 1; }
+
+/* Polished graphite title, preserving the existing one-pixel header border. */
+.person-card-grid.person-table-grid.person-monumental-register > .person-table-head {
+  background-image: linear-gradient(180deg,
+    var(--atlas-material-sheen-strong) 0%,
+    rgba(239,235,226,.006) 38%,
+    rgba(0,0,0,.065) 100%);
+}
+
+.person-card-grid.person-table-grid.person-monumental-register > .person-table-head .person-table-head-cell:not(.is-sort-active) {
+  color: #a5aaa7;
+}
+
+.person-card-grid.person-table-grid.person-monumental-register > .person-table-head .person-table-head-title {
+  color: #929c9a;
+}
+
+/* Aged archive secondary inscriptions, not Person-name color overrides. */
+.person-card-grid.person-table-grid.person-monumental-register .person-era-band-range {
+  color: #909b99;
+}
+
+.person-card-grid.person-table-grid.person-monumental-register .person-table-identity > .person-card-canonical {
+  color: #a0a6a3;
+}
+
+.person-card-grid.person-table-grid.person-monumental-register .person-table-status-inline {
+  color: #898f8a;
+}
+
+/* Existing factual Activity columns retain their exact typography and geometry. */
+.person-card-grid.person-table-grid.person-monumental-register .person-table-activities .person-card-activity-role {
+  color: #b3b7b2;
+}
+
+.person-card-grid.person-table-grid.person-monumental-register .person-table-activities .person-card-activity-period {
+  color: #ccc6ba;
+}
+
+.person-card-grid.person-table-grid.person-monumental-register .person-table-activities .person-card-activity > small {
+  color: #929b99;
+}
+
+/* Preserve the same hairline and all subrow content. */
+.person-card-grid.person-table-grid.person-monumental-register .person-table-activities .person-card-activity {
+  border-bottom-color: var(--atlas-material-hairline-soft);
+}
