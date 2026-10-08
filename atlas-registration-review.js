@@ -134,7 +134,7 @@
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
     const bounded=payload?.ranking_scope==="cross_segment_bounds";
-    if (count) count.textContent=`${bounded ? "기준선 전체" : "전체"} ${number(payload?.available_count || 0)}명 · 상세 ${number(payload?.stored_count ?? signalRows.length)}행 저장${bounded ? " (양 구간 결합)" : ""} · 현재 ${number(signalRows.length)}행 표시${payload?.detail_limited ? " · 상세 일부만 반영" : ""}`;
+    if (count) count.textContent=`${bounded ? "기준선 전체" : "전체"} ${number(payload?.available_count || 0)}명 · 상세 ${number(payload?.stored_count ?? signalRows.length)}행 저장${bounded ? " (양 구간 결합)" : ""} · 현재 ${number(signalRows.length)}행 표시`;
     renderSignalThresholds(snapshot);
     const body=activeRoot?.querySelector("#youtubeSignalBody");
     if (!body) return;
@@ -223,7 +223,7 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>서로 다른 채널이 같은 raw 인물명을 단독 주제로 다룬 횟수입니다. 화면은 10초마다 DB를 다시 읽습니다. 현재 수집기는 아직 batch publish 방식이며 live incremental 전환 전입니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong> batch001–007과 batch008 이후의 인물 신호를 함께 반영합니다. 기존 채널 ID가 없어 중복 제거가 불가능한 경우 채널 수는 하한–상한 범위로 표시하고, 순위는 하한 기준 잠정 순위입니다. 영상 수는 구간별 영상행 합계로 중복될 수 있습니다.</p></div>
+          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>서로 다른 채널이 같은 raw 인물명을 단독 주제로 다룬 횟수입니다. 화면은 10초마다 DB를 다시 읽습니다. 현재 수집기는 아직 batch publish 방식이며 live incremental 전환 전입니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong> batch001–007과 batch008 이후의 인물 신호를 함께 반영합니다. 기존 채널 ID가 없어 중복 제거가 불가능한 경우 <strong>저장된 상세 신호에 한해</strong> 채널 수를 하한–상한 범위로 표시하며, 순위는 하한 기준 잠정 순위입니다. 기존 기준선의 상세 자료는 전체 집계보다 적게 보존되어 있습니다. 영상 수는 구간별 영상행 합계로 중복될 수 있습니다.</p></div>
         </div>
         <div class="registration-review-signal-toolbar">
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
