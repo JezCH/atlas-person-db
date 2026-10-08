@@ -69,3 +69,47 @@ test("living evidence read failures remain an explicit unavailable response",asy
   const method=await call("/api/atlas-read","POST");
   assert.equal(method.statusCode,405);
 });
+
+test("reviewed currently living people exclude Musk and Trump without consulting Wikidata",async()=>{
+  const {reviewedLivingStatus,REVIEWED_LIVING_NAMES,REVIEW_EXPIRES_AT}=require("../server/atlas-youtube-reviewed-living-people.js");
+  const now=Date.parse("2026-10-09T00:00:00Z");
+  assert.ok(REVIEWED_LIVING_NAMES.length>=40);
+  assert.equal(reviewedLivingStatus("Elon Musk",now)?.status,"living_likely");
+  assert.equal(reviewedLivingStatus("Donald Trump",now)?.status,"living_likely");
+  assert.equal(reviewedLivingStatus("Trump",now)?.status,"living_likely");
+  assert.equal(reviewedLivingStatus("President Donald Trump",now)?.status,"living_likely");
+  assert.equal(reviewedLivingStatus("Taylor Swift",now)?.status,"living_likely");
+  assert.equal(reviewedLivingStatus("Beyonce",now)?.status,"living_likely");
+  assert.equal(reviewedLivingStatus("Trump vs Musk",now),null);
+  assert.equal(reviewedLivingStatus("Donald Trump Biography",now),null);
+  assert.equal(reviewedLivingStatus("Kim Jong-il",now),null);
+  assert.equal(reviewedLivingStatus("Elon Musk",Date.parse(REVIEW_EXPIRES_AT)),null);
+  let fetchCalls=0;
+  const payload=await service.readLivingEvidence({
+    names:["Elon Musk","Donald Trump","Trump","Taylor Swift"],
+    now,fetchImpl:async()=>{fetchCalls++;throw new Error("should not call Wikidata")}
+  });
+  assert.equal(fetchCalls,0);
+  assert.equal(payload.evidence_unavailable,false);
+  assert.deepEqual(payload.rows.map(row=>row.status),["living_likely","living_likely","living_likely","living_likely"]);
+});
+
+test("mixed reviewed living and unknown names keep definite exclusions on provider outage",async()=>{
+  const now=Date.parse("2026-10-09T00:01:00Z");
+  let called=0;
+  const failingFetch=async()=>{called++;throw new Error("fake wikidata timeout")};
+  const payload=await service.readLivingEvidence({
+    names:["Elon Musk","Donald Trump","Case Unknown For Outage"],
+    fetchImpl:failingFetch,now
+  });
+  assert.equal(called,1);
+  assert.equal(payload.evidence_unavailable,true);
+  assert.deepEqual(payload.rows.map(row=>row.status),["living_likely","living_likely","unknown"]);
+  const next=await service.readLivingEvidence({
+    names:["President Trump","Another Unknown Case"],
+    fetchImpl:failingFetch,now:now+1000
+  });
+  assert.equal(called,1,"provider must be suppressed for the 60s cooldown");
+  assert.equal(next.evidence_unavailable,true);
+  assert.deepEqual(next.rows.map(row=>row.status),["living_likely","unknown"]);
+});
