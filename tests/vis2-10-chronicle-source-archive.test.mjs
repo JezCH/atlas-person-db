@@ -15,7 +15,7 @@ test("VIS2-10 is opt-in and modifies existing chronology/source presentation onl
 });
 test("VIS2-10 touches only pre-existing detail nodes and paint properties",()=>{
  const blocks=[...css.replace(/\/\*[\s\S]*?\*\//g,"").matchAll(/([^{}]+)\{([^{}]*)\}/g)];
- assert.equal(blocks.length,10);
+ assert.equal(blocks.length,11);
  assert.equal(blocks[0][1].trim(),":root");
  for(const [,selector,body] of blocks.slice(1)){
   assert.ok(selector.trim().startsWith("#personMainDetail.person-main-detail "),selector);
