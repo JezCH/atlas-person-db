@@ -8,7 +8,7 @@ import {fileURLToPath} from "node:url";
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const text=(p)=>fs.readFileSync(path.join(root,p),"utf8");
 
-test("P2-01 France review must not be terminal while known duplicate UUID and regime overlaps remain",()=>{
+test("P2-01 France family remains open after P2-01A repair while Republic/regime overlap remains",()=>{
   const context={window:{}};
   vm.runInNewContext(text("atlas-polity-review-registry.js"),context);
   const reg=context.window.ATLAS_POLITY_REVIEW_REGISTRY;
@@ -33,5 +33,9 @@ test("P2-01 France review must not be terminal while known duplicate UUID and re
   assert.match(audit,/65 Authoring/);
   assert.match(audit,/65 Runtime/);
   assert.match(audit,/P2-01A/);
-  assert.match(text("docs/ATLAS_CURRENT_WORKSTREAMS.md"),/Immediate bounded next unit: `POLITY-P2-01A`/);
+  assert.match(text("docs/ATLAS_CURRENT_WORKSTREAMS.md"),/Immediate bounded next unit: `POLITY-P2-01B`/);
+  const correction=text("docs/POLITY_P2_01A_FRANCE_KINGDOM_FIVE_RELINK_20261008.md");
+  assert.match(correction,/CORRECTION_APPLIED/);
+  assert.match(correction,/65 \/ 0 difference/);
+  assert.match(france.rationale,/왕국 5→0/);
 });
