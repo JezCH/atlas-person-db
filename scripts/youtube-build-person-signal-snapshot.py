@@ -290,7 +290,7 @@ def build(root, artifact_id, artifact_digest):
         "failed_channel_count": sum(1 for row in channels if row["scan_status"] == "ERR"),
         "empty_channel_count": sum(1 for row in channels if row["scan_status"] == "EMPTY"),
         "channel_ids_persisted": True,
-         "next_batch": f"batch{max(int(label.removeprefix('batch')) for label in manifests) + 1:03d}",
+        "next_batch": f"batch{max(int(label.removeprefix('batch')) for label in manifests) + 1:03d}",
         "minimum_stored_signal_channels": 3,
         "artifact_id": int(artifact_id),
         "artifact_digest": artifact_digest,
@@ -321,7 +321,7 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--artifact-id", type=int, required=True)
     parser.add_argument("--artifact-digest", required=True)
-     args = parser.parse_args()
+    args = parser.parse_args()
 
     payload = build(
         args.root,
