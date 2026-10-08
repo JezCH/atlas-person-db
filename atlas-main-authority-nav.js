@@ -236,8 +236,8 @@
   function ensureRegistrationReviewAssets() {
     if (window.ATLAS_REGISTRATION_REVIEW) return Promise.resolve(window.ATLAS_REGISTRATION_REVIEW);
     if (registrationReviewAssetsPromise) return registrationReviewAssetsPromise;
-    appendStylesheetOnce("./atlas-registration-review.css?v=20261008-youtube-representative-default-v8");
-    registrationReviewAssetsPromise = loadScriptOnce("./atlas-registration-review.js?v=20261008-youtube-representative-default-v8", () => Boolean(window.ATLAS_REGISTRATION_REVIEW))
+    appendStylesheetOnce("./atlas-registration-review.css?v=20261009-youtube-living-evidence-v9");
+    registrationReviewAssetsPromise = loadScriptOnce("./atlas-registration-review.js?v=20261009-youtube-living-evidence-v9", () => Boolean(window.ATLAS_REGISTRATION_REVIEW))
       .then(() => window.ATLAS_REGISTRATION_REVIEW)
       .catch((error) => {
         registrationReviewAssetsPromise = null;
