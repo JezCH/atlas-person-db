@@ -45,3 +45,13 @@ Production 점검 기준: 등록 Person **2,120명**, Person 이름 **4,267개**
 - 등록대기열: 같은 이명을 `person_aliases` CTE에 포함해 정확히 한 Person과 일치한 후보를 미등록 대기열에서 제외한다.
 - 등록검토 UI: Person UUID에 실제로 포함된 별칭만 기등록 배지와 '기등록 제외' 필터에 사용한다. 여러 Person과 이름이 충돌하면 '동명이인 확인'으로 보존한다.
 - Canonical Person 데이터, 대기열 원본 기록, YouTube 스냅샷·영상·채널 ID는 변경하지 않는다.
+
+## 후속 변경 — 대표 인물 기본 간주
+
+사용자 결정에 따라 유튜브에서 **동명이인·단독 이름으로 추출된 신호**는 역사적으로 가장 일반적으로 지칭되는 대표 인물을 기본 대상으로 간주한다. 통용명이 정확히 하나의 사람을 나타낸다는 역사적 증거가 아니라 **유튜브 발굴용 기본 표시·필터 판단**이다.
+
+- 관리된 대표 인물 기본값 20건: Cleopatra→Cleopatra VII, Napoleon→Napoleon I, Alexander→Alexander the Great, Hannibal→Hannibal Barca, Beethoven→Ludwig van Beethoven, Mozart→Wolfgang Amadeus Mozart, Oppenheimer→J. Robert Oppenheimer, Shakespeare→William Shakespeare, Stalin→Joseph Stalin, Gandhi→Mahatma Gandhi, Caesar→Julius Caesar, Da Vinci/Leonardo→Leonardo da Vinci, Mao→Mao Zedong, Van Gogh→Vincent van Gogh, Lenin→Vladimir Lenin, Hitler→Adolf Hitler, Einstein→Albert Einstein, Washington→George Washington, Darwin→Charles Darwin.
+- 위 20건은 현재 Production에서 각 기존 canonical_key가 정확히 한 명의 Person에 연결됨을 확인했다. 비슷한 다른 **명시적** 이름(예: Napoleon III, Cleopatra VII, Alexander Graham Bell)은 대표 기본값에 흡수하지 않는다.
+- Person 이름이 둘 이상 일치하고 검토된 기본값이 없으면 웹 UI는 **historical 구분 우선 → Runtime의 activity_count 내림차순 → 영문 인명/UUID 순**으로 한 명을 결정론적으로 선택한다. 활동 레코드 수는 역사적 영향력을 직접 증명하는 값이 아니므로 '대표 간주' 표시를 동반한다.
+- 현재 등록된 Person에 하나라도 매칭되는 이름은 '기등록 제외' 옵션에서 제외한다. 등록대기열도 현재 Person에 하나 이상 일치하는 후보는 원본 레저를 삭제하지 않고 대기 목록에서 제외한다.
+- 원본 사람·이름·후보·영상 데이터는 불변. 이 규칙은 **신규 인물 자동 등록·본체 병합·유튜브 채널 수 합산**으로 사용해서는 안 된다.
