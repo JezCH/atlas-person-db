@@ -783,6 +783,60 @@
   font-size: 9.5px;
 }
 
+/* DETAIL-LUX2 — Chronographic editorial linework.
+ * The history timeline, evidence and source register read as a finely etched
+ * archive, not a wall of cards. Paint only: no activity ordering, dimensions,
+ * typography sizes, content, source metadata or authoring behavior changes.
+ */
+.person-chronicle-activities .person-activity-list::before {
+  background: linear-gradient(180deg,
+    var(--atlas-material-rail),
+    var(--atlas-material-hairline-strong) 45%,
+    var(--atlas-material-hairline-soft));
+}
+
+.person-chronicle-activity::before {
+  border-color: var(--atlas-material-hairline-strong);
+  box-shadow:
+    0 0 0 4px var(--atlas-surface-1),
+    inset 0 1px 0 var(--atlas-material-sheen-strong);
+}
+
+.person-chronicle-activity:hover::before,
+.person-chronicle-activity:focus-within::before {
+  border-color: var(--atlas-honor-metal-strong);
+  box-shadow:
+    0 0 0 4px var(--atlas-surface-1),
+    0 0 0 5px var(--atlas-material-hairline-soft),
+    inset 0 1px 0 var(--atlas-material-sheen-strong);
+}
+
+.person-chronicle-activity .person-activity-period-display {
+  color: var(--atlas-text) !important;
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+.person-chronicle-activity header h4 {
+  color: var(--atlas-text-strong);
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+.person-chronicle-section .person-source-item {
+  border-bottom-color: var(--atlas-material-hairline);
+  background-image: linear-gradient(90deg,
+    var(--atlas-material-sheen-soft), transparent 76%);
+}
+
+.person-chronicle-section .person-source-item a:hover,
+.person-chronicle-section .person-source-item a:focus-visible {
+  color: var(--atlas-text-strong);
+  text-decoration-color: var(--atlas-honor-metal-strong);
+}
+
+.person-chronicle-section .person-source-item small {
+  color: var(--atlas-text-secondary);
+}
+
 /* ---------- Authoring: retained, but deliberately subordinate ---------- */
 
 .person-detail-authoring {
