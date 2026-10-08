@@ -224,6 +224,55 @@
   color: #4d5459;
 }
 
+/* DETAIL-LUX1 — Premium historical biography opening.
+ * Bvlgari's archival typographic restraint + Grand Seiko's quiet surface edge.
+ * Paint-only Chronicle hero refinement: no Person table/card conversion, no
+ * generated portraits, no identity/content/era/date/semantic-domain changes.
+ * Existing desktop/mobile hero grid, image size, type scale and navigation stay.
+ */
+.person-chronicle-hero {
+  border-bottom-color: var(--atlas-material-hairline-strong);
+  background:
+    linear-gradient(126deg, var(--atlas-material-sheen-strong), transparent 56%),
+    linear-gradient(0deg, var(--atlas-material-edge-dark), transparent 68%);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-soft),
+    inset 0 -1px 0 var(--atlas-material-hairline-soft);
+}
+
+.person-chronicle-hero .person-detail-portrait.has-portrait {
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    0 0 0 1px var(--atlas-material-hairline-strong),
+    0 16px 36px rgba(0,0,0,.25),
+    0 28px 52px rgba(0,0,0,.12);
+}
+
+/* Absence is not a fabricated portrait or a collectible placeholder card. */
+.person-chronicle-hero .person-detail-portrait:not(.has-portrait) {
+  box-shadow: 0 0 0 1px var(--atlas-material-hairline-soft);
+}
+
+.person-chronicle-identity .eyebrow {
+  color: var(--atlas-honor-metal-strong);
+}
+
+.person-chronicle-identity h2 {
+  color: var(--atlas-text-strong);
+  text-shadow:
+    0 1px 0 var(--atlas-material-edge-dark-strong),
+    0 12px 26px rgba(0,0,0,.16);
+}
+
+.person-chronicle-hero .person-detail-canonical {
+  color: var(--atlas-text-secondary);
+}
+
+.person-chronicle-hero .person-detail-era {
+  color: var(--atlas-text);
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
 /* ---------- Editorial sections ---------- */
 
 .person-chronicle-body {
