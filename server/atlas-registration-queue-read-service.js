@@ -1,17 +1,20 @@
 "use strict";
 
 const QUEUE_SCHEMA = "atlas-registration-queue/v3";
-const { reviewedPersonAliasesValuesSql } = require("./atlas-reviewed-person-registration-aliases.js");
+const { reviewedPersonAliasesValuesSql, REVIEWED_REPRESENTATIVE_ALIASES } = require("./atlas-reviewed-person-registration-aliases.js");
 const REVIEWED_PERSON_ALIAS_VALUES_SQL=reviewedPersonAliasesValuesSql();
+const REVIEWED_REPRESENTATIVE_NAMES_SQL=REVIEWED_REPRESENTATIVE_ALIASES
+  .map(row=>"'"+row.alias_name.replaceAll("'","''")+"'").join(",");
 
 const REVIEWED_PERSON_ALIASES_SQL = `
-select aliases.alias_name,p.id::text as person_id,p.canonical_key
+select aliases.alias_name,p.id::text as person_id,p.canonical_key,
+       aliases.alias_name in (${REVIEWED_REPRESENTATIVE_NAMES_SQL}) as representative_default
 from (${REVIEWED_PERSON_ALIAS_VALUES_SQL}) as aliases(alias_name,canonical_key)
 join atlas_v2.persons p on p.canonical_key=aliases.canonical_key
 order by aliases.alias_name,p.id
 `;
 const QUEUE_TABLE = "atlas_v2.person_registration_candidates";
-const QUEUE_MEMBERSHIP_RULE = "candidate has no unique exact normalized identity match in current Production persons/person_names";
+const QUEUE_MEMBERSHIP_RULE = "candidate has no registered normalized Person identity match; homonyms use a representative Person by default";
 
 const DIACRITIC_SOURCE = "áàäâãåāăąǎǟȧạảấầẩẫậắằẳẵặçćčĉċďđéèëêēěĕėęěẹẻẽếềểễệğģĝġíìïîīĭįıǐịỉĩłĺļľŀñńņňóòöôõōŏőǒøọỏốồổỗộớờởỡợŕŗřśšşŝťţŧúùüûūŭůűųǔụủũứừửữựýÿŷỳỵỷỹžźż";
 const DIACRITIC_TARGET = "aaaaaaaaaaaaaaaaaaaaaaaacccccddeeeeeeeeeeeeeeeeeeggggiiiiiiiiiiiilllllnnnnoooooooooooooooooooooorrrsssstttuuuuuuuuuuuuuuuuuuyyyyyyyzzz";
@@ -108,7 +111,7 @@ from atlas_v2.person_registration_candidates c
 left join candidate_identity_matches m on m.candidate_id=c.candidate_id
 left join atlas_v2.persons bound_person on bound_person.id=c.person_id
 where bound_person.id is null
-  and coalesce(m.matched_person_count,0) <> 1
+  and coalesce(m.matched_person_count,0) = 0
 order by coalesce(c.representative_domain,''), c.name, c.candidate_id
 `;
 
@@ -180,7 +183,8 @@ async function readCurrentRegistrationQueue({ client } = {}) {
     reviewed_person_aliases:Object.freeze((aliasesResult.rows||[]).map(row=>Object.freeze({
       alias_name:text(row.alias_name),
       person_id:String(row.person_id),
-      canonical_key:text(row.canonical_key)
+      canonical_key:text(row.canonical_key),
+      representative_default:row.representative_default===true
     }))),
     summary:Object.freeze({
       candidate_total:currentTotal,
