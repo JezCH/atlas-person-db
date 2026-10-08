@@ -22,6 +22,10 @@ const {
   createCorrectionPolityDesignationRetireV2Service
 } = require("./atlas-correction-polity-designation-retire-v2-service.js");
 const {
+  OPERATION_TYPE: POLITY_DESIGNATION_REWRITE_OPERATION_TYPE,
+  createCorrectionPolityDesignationRewriteV2Service
+} = require("./atlas-correction-polity-designation-rewrite-v2-service.js");
+const {
   OPERATION_TYPE: PERSON_DOMAIN_OPERATION_TYPE,
   createCorrectionPersonDomainV2Service
 } = require("./atlas-correction-person-domain-v2-service.js");
@@ -47,6 +51,7 @@ function createCorrectionManifestV2DispatchService({ client } = {}) {
   const polityRestoreService = createCorrectionPolityRestoreV2Service({ client });
   const sourceCitationService = createCorrectionSourceCitationV2Service({ client });
   const polityDesignationRetireService = createCorrectionPolityDesignationRetireV2Service({ client });
+  const polityDesignationRewriteService = createCorrectionPolityDesignationRewriteV2Service({ client });
   const personDomainService = createCorrectionPersonDomainV2Service({ client });
   const personNamuWikiReviewService = createCorrectionPersonNamuWikiReviewV2Service({ client });
   const personNamuWikiReferenceService = createCorrectionPersonNamuWikiReferenceV2Service({ client });
@@ -59,6 +64,7 @@ function createCorrectionManifestV2DispatchService({ client } = {}) {
       const hasPolityRestore = types.includes(POLITY_RESTORE_OPERATION_TYPE);
       const hasSourceCitation = types.includes(SOURCE_CITATION_OPERATION_TYPE);
       const hasPolityDesignationRetire = types.includes(POLITY_DESIGNATION_RETIRE_OPERATION_TYPE);
+      const hasPolityDesignationRewrite = types.includes(POLITY_DESIGNATION_REWRITE_OPERATION_TYPE);
       const hasPersonDomain = types.includes(PERSON_DOMAIN_OPERATION_TYPE);
       const hasPersonNamuWikiReview = types.includes(PERSON_NAMUWIKI_REVIEW_OPERATION_TYPE);
       const hasPersonNamuWikiReference = types.includes(PERSON_NAMUWIKI_REFERENCE_OPERATION_TYPE);
@@ -78,6 +84,9 @@ function createCorrectionManifestV2DispatchService({ client } = {}) {
       if (hasPolityDesignationRetire && !types.every((type) => type === POLITY_DESIGNATION_RETIRE_OPERATION_TYPE)) {
         throw new Error("CORRECTION_V2_POLITY_DESIGNATION_RETIRE_MIXED_OPERATION_FAMILY_FORBIDDEN");
       }
+      if (hasPolityDesignationRewrite && !types.every((type) => type === POLITY_DESIGNATION_REWRITE_OPERATION_TYPE)) {
+        throw new Error("CORRECTION_V2_POLITY_DESIGNATION_REWRITE_MIXED_OPERATION_FAMILY_FORBIDDEN");
+      }
       if (hasPersonDomain && !types.every((type) => type === PERSON_DOMAIN_OPERATION_TYPE)) {
         throw new Error("CORRECTION_V2_PERSON_DOMAIN_MIXED_OPERATION_FAMILY_FORBIDDEN");
       }
@@ -93,6 +102,7 @@ function createCorrectionManifestV2DispatchService({ client } = {}) {
       if (hasPolityRestore) return polityRestoreService.execute(rawManifest, options);
       if (hasSourceCitation) return sourceCitationService.execute(rawManifest, options);
       if (hasPolityDesignationRetire) return polityDesignationRetireService.execute(rawManifest, options);
+      if (hasPolityDesignationRewrite) return polityDesignationRewriteService.execute(rawManifest, options);
       if (hasPersonDomain) return personDomainService.execute(rawManifest, options);
       if (hasPersonNamuWikiReview) return personNamuWikiReviewService.execute(rawManifest, options);
       if (hasPersonNamuWikiReference) return personNamuWikiReferenceService.execute(rawManifest, options);
@@ -107,6 +117,7 @@ module.exports = Object.freeze({
   POLITY_RESTORE_OPERATION_TYPE,
   SOURCE_CITATION_OPERATION_TYPE,
   POLITY_DESIGNATION_RETIRE_OPERATION_TYPE,
+  POLITY_DESIGNATION_REWRITE_OPERATION_TYPE,
   PERSON_DOMAIN_OPERATION_TYPE,
   PERSON_NAMUWIKI_REVIEW_OPERATION_TYPE,
   PERSON_NAMUWIKI_REFERENCE_OPERATION_TYPE,
