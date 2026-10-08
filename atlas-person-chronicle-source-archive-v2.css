@@ -1,0 +1,37 @@
+/* VIS2-10: archival chronology and provenance, existing nodes, paint-only. */
+:root { --atlas-vis2-10-archive-active: 1; }
+#personMainDetail.person-main-detail .person-chronicle-activities .person-activity-list::before {
+  background-image: linear-gradient(180deg, rgba(183,158,111,.56), rgba(118,130,138,.32) 44%, rgba(183,158,111,.11));
+}
+#personMainDetail.person-main-detail .person-chronicle-activity::before {
+  border-color: rgba(192,174,136,.57);
+  box-shadow: 0 0 0 4px var(--atlas-surface-1), inset 0 1px 0 rgba(238,221,186,.35);
+}
+#personMainDetail.person-main-detail .person-chronicle-activity .person-evidence-inspector {
+  border-top-color: rgba(188,169,127,.29);
+}
+#personMainDetail.person-main-detail .person-chronicle-activity .person-evidence-inspector > summary {
+  color: #939b9b;
+  background-image: linear-gradient(90deg, rgba(190,171,131,.04), transparent 72%);
+}
+#personMainDetail.person-main-detail .person-chronicle-activity .person-evidence-inspector[open] > summary {
+  background-image: linear-gradient(90deg, rgba(190,171,131,.11), transparent 88%);
+  box-shadow: inset 0 1px 0 rgba(213,194,151,.13);
+}
+#personMainDetail.person-main-detail .person-chronicle-activity .person-evidence-inspector > summary:focus-visible {
+  outline-color: rgba(222,200,153,.85);
+}
+#personMainDetail.person-main-detail .person-chronicle-section .person-source-item {
+  border-bottom-color: rgba(184,172,149,.29);
+  background-image: linear-gradient(90deg, rgba(185,172,143,.055), transparent 77%);
+}
+#personMainDetail.person-main-detail .person-chronicle-section .person-source-item a {
+  text-decoration-color: rgba(190,172,132,.51);
+}
+#personMainDetail.person-main-detail .person-chronicle-section .person-source-item a:focus-visible {
+  outline-color: rgba(222,200,153,.85);
+  text-decoration-color: rgba(224,203,164,.94);
+}
+#personMainDetail.person-main-detail .person-chronicle-section .person-source-item small {
+  color: #9aa3a3;
+}
