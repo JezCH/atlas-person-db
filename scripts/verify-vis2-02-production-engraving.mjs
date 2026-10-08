@@ -43,6 +43,9 @@ function snapshot(){
   return {width:innerWidth,height:innerHeight,document_width:document.documentElement.scrollWidth,
     rows:document.querySelectorAll(".person-register-entry").length,
     link_enabled:!document.querySelector('link[href*="atlas-ui-precision-engraving-v2.css"]')?.disabled,
+    link_sheet_ready:Boolean(document.querySelector('link[href*="atlas-ui-precision-engraving-v2.css"]')?.sheet),
+    root_engraving_light:getComputedStyle(document.documentElement).getPropertyValue("--atlas-engraving-light").trim(),
+    root_engraving_cut:getComputedStyle(document.documentElement).getPropertyValue("--atlas-engraving-cut").trim(),
     components};
 }
 async function toggle(c,disable){
@@ -57,11 +60,20 @@ async function inspect(c,width,height){
   await waitFor(c,"document.querySelectorAll('.person-register-entry').length>0",90000);
   await waitFor(c,"document.fonts.status==='loaded'",15000);
   await waitFor(c,"Boolean(document.querySelector('link[href*=\"atlas-ui-precision-engraving-v2.css\"]'))",10000);
+  // CSS activation is asynchronous in headless Chrome. Require stylesheet
+  // parsing + resolved engraving aliases *before* and *after* link toggling.
+  await waitFor(c,"Boolean(document.querySelector('link[href*=\"atlas-ui-precision-engraving-v2.css\"]')?.sheet)",30000);
+  await waitFor(c,"getComputedStyle(document.documentElement).getPropertyValue('--atlas-engraving-light').trim().length>0",30000);
   await sleep(350);
+  const loaded=await evaluate(c,"("+snapshot.toString()+")()");
+  console.log("ATLAS_VIS2_02_CSS_LOADED "+width+" "+JSON.stringify({link_sheet_ready:loaded.link_sheet_ready,light:loaded.root_engraving_light,cut:loaded.root_engraving_cut,appbar:loaded.components[".mobile-appbar"]?.shadow}));
   await toggle(c,true);
+  await waitFor(c,"getComputedStyle(document.documentElement).getPropertyValue('--atlas-engraving-light').trim().length===0",20000);
   const before=await evaluate(c,"("+snapshot.toString()+")()");
   if(width===390||width===1440)await screenshot(c,"vis2-02-without-engraving-"+width+".png");
   await toggle(c,false);
+  await waitFor(c,"getComputedStyle(document.documentElement).getPropertyValue('--atlas-engraving-light').trim().length>0",30000);
+  await sleep(150);
   const after=await evaluate(c,"("+snapshot.toString()+")()");
   if(width===390||width===1440)await screenshot(c,"vis2-02-with-engraving-"+width+".png");
   assert(before.width===width&&after.width===width&&before.height===height&&after.height===height,"Viewport changed",{before,after});
