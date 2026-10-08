@@ -545,6 +545,96 @@
   outline-offset: 2px;
 }
 
+
+/* SPACETIME-LUX1 — engraved chronograph and selective illumination.
+ * Premium finish for time/region identity and an actively selected Person.
+ * Pure paint: no size, layout, positioning, zoom, label packing or semantic
+ * representative-domain color changes. Resting historical data stays quiet.
+ */
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-axis {
+  background-color: var(--spacetime-ink-deep);
+  background-image: linear-gradient(90deg,
+    var(--atlas-material-sheen-strong),
+    rgba(0,0,0,.045) 54%,
+    rgba(0,0,0,.12));
+  box-shadow:
+    inset 1px 0 0 var(--atlas-material-sheen-soft),
+    inset -1px 0 0 var(--atlas-material-hairline-strong);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis {
+  background-color: var(--spacetime-ink-deep);
+  background-image: linear-gradient(90deg,
+    rgba(0,0,0,.13),
+    var(--atlas-material-sheen-strong) 84%,
+    transparent);
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-soft),
+    inset -1px 0 0 var(--atlas-material-hairline);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-axis > div span {
+  color: var(--atlas-text-secondary);
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis span {
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis span.is-major {
+  color: var(--spacetime-chronograph-strong);
+  text-shadow:
+    0 1px 0 var(--atlas-material-edge-dark-strong),
+    0 0 11px rgba(208,188,145,.07);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-region-head-layer.is-macro .spacetime-region-head-band strong {
+  color: var(--atlas-text-strong);
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-century-line.is-major {
+  background: linear-gradient(90deg,
+    var(--atlas-material-hairline-strong),
+    var(--spacetime-line-major) 140px,
+    var(--spacetime-line-major));
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-boundary b {
+  color: var(--atlas-text-secondary);
+  text-shadow: 0 1px 0 var(--atlas-material-edge-dark-strong);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-boundary-emblem {
+  box-shadow:
+    inset 1px 1px 0 var(--atlas-material-sheen-strong),
+    0 0 0 1px var(--atlas-material-hairline-soft);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-label.is-selected {
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    inset 0 -1px 0 var(--spacetime-selection-metal-strong),
+    0 0 0 1px var(--atlas-material-hairline-strong),
+    0 5px 16px var(--atlas-material-edge-dark-strong);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-track-rail.is-selected {
+  box-shadow:
+    0 0 0 1px var(--spacetime-selection-metal-strong),
+    0 0 0 3px var(--atlas-material-wash-selected),
+    0 0 13px rgba(208,188,145,.095);
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-activity-glyph.is-activity-selected {
+  box-shadow:
+    inset 0 1px 0 var(--atlas-material-sheen-strong),
+    0 0 0 1px var(--atlas-material-hairline-strong),
+    0 4px 12px var(--atlas-material-edge-dark-strong);
+}
+
 @media (max-width: 760px) {
   .spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-era-boundary b {
     display: none;
