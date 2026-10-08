@@ -46,9 +46,9 @@ function resolveMatches(names,bindings,asOfYear=new Date().getUTCFullYear()) {
   }
   return names.map(name=>{
     const people=matches.get(name);
-    const matches=[...people.entries()];
-    if(matches.length!==1) return {name,status:"unknown",wikidata_id:null};
-    const [qid,item]=matches[0];
+    const matchedPeople=[...people.entries()];
+    if(matchedPeople.length!==1) return {name,status:"unknown",wikidata_id:null};
+    const [qid,item]=matchedPeople[0];
     if(item.death) return {name,status:"deceased",wikidata_id:qid};
     const year=Number(item.birth);
     if(!Number.isInteger(year)||year>asOfYear||year<asOfYear-MAX_AGE) return {name,status:"unknown",wikidata_id:null};
