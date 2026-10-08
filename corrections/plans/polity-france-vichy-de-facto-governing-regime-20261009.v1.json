@@ -1,0 +1,190 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_france_vichy_de_facto_governing_regime_20261009_v1",
+  "as_of": "2026-10-09",
+  "status": "REVIEWED_DE_FACTO_GOVERNING_REGIME_ON_COUNTRY_UMBRELLA_NO_SOVEREIGN_POLITY",
+  "release_order": 2200,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 POLITY-P2-01F; official Assemblée nationale July 10 1940 Pétain full powers, Ministère des Armées Aug 20 1944 Vichy end, Légifrance Aug 9 1944 Art.7 autorité de fait and Art.1 legal Republic continuity; evidence reviewed Oct 9 2026",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "production_executable": false,
+    "production_mutation_authorized": false,
+    "assertion_only_scope": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "polity_deletion_forbidden": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true
+  },
+  "evidence": {
+    "country_umbrella_uuid": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+    "republic_legal_authority_uuid": "b138f5e4-ff83-40f6-bdb1-83b08c0256cb",
+    "existing_CNF_period_uuid": "e8fa78f0-ad90-4e6a-a039-2e0e1fc9601b",
+    "existing_CFLN_period_uuid": "114e79cb-57c5-4cce-9e20-a51a77b61721",
+    "existing_GPRF_period_uuid": "662ce129-ae66-46d9-90ba-f829e77d90e2",
+    "country_umbrella_activities": 37,
+    "republic_person_activities": 16,
+    "france_family_total_authoring_runtime": 65,
+    "currently_no_politically_valid_relation_type_for_country_umbrella_identity": "Polity_relation_types only constituent/dependency, polity_identity_relation_types empty. Do NOT create same-country/same-sovereignty identity edge without a separately reviewed relation type and direction contract.",
+    "historical_caveat": "Governing regime labels real Vichy actual power over parts of France, under German occupation, without claiming legitimate republican constitutional power, territorial exclusivity, or new sovereign polity. The 20 August 1944 end is Vichy regime end per official French history calendar, NOT full liberation date.",
+    "no_deletion": "Country France and French Republic Polities and historic empty Kingdom and Third Republic Polities stay LIVE. No Person or Activity creations/deletions without explicit user approval."
+  },
+  "operations": [],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "p2-01f-assembly-vichy-begins",
+      "exact_before": {
+        "source_absent_id": "232d4e27-fd52-4514-8313-1815b176c493"
+      },
+      "exact_after": {
+        "source": {
+          "id": "232d4e27-fd52-4514-8313-1815b176c493",
+          "source_key": "bibliographic:assemblee-nationale:vichy-1940-07-10-full-powers",
+          "source_type": "official_government_reference",
+          "title": "10 juillet 1940 — les pleins pouvoirs au maréchal Pétain — Assemblée nationale",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/des-decrets-lois-du-gouvernement-daladier-au-vote-par-la-chambre-des-deputes-et-le-senat-des-pleins-pouvoirs-au-marechal-petain",
+          "citation_text": "French National Assembly records the 10 July 1940 legislative full-powers vote to Philippe Pétain for creating constitutional acts of the État français. The former Republican President of Council had been appointed 16 June and the July 10 authority transfer is not identical to the Constitutional Acts dated 11 July; this is the modeled Vichy regime-start milestone."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "p2-01f-defense-vichy-ends",
+      "exact_before": {
+        "source_absent_id": "2971f3b9-b00f-45db-9087-04d9a94ed16d"
+      },
+      "exact_after": {
+        "source": {
+          "id": "2971f3b9-b00f-45db-9087-04d9a94ed16d",
+          "source_key": "bibliographic:chemins-memoire:vichy-end-1944-08-20",
+          "source_type": "official_government_reference",
+          "title": "20 août 1944 — Fin du régime de Vichy — Ministère des Armées, Chemins de mémoire",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.cheminsdememoire.gouv.fr/fr/1944-08-20-fin-du-regime-de-vichy",
+          "citation_text": "French Ministry of Armed Forces memory-history calendar explicitly records the end of the Vichy regime on 20 August 1944. This does not imply all occupied territories had been liberated that day, nor deny the German-controlled Sigmaringen exile succession."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "p2-01f-legal-vichy-de-facto",
+      "exact_before": {
+        "source_absent_id": "d4c7329d-16b3-43c6-b010-026aa8149f4c"
+      },
+      "exact_after": {
+        "source": {
+          "id": "d4c7329d-16b3-43c6-b010-026aa8149f4c",
+          "source_key": "bibliographic:legifrance:1944-08-09-ordonnance-article-7",
+          "source_type": "official_government_reference",
+          "title": "Ordonnance du 9 août 1944 — Article 7 — Légifrance",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000006530181",
+          "citation_text": "Official French legal text Article 7 identifies the Vichy 'gouvernement de l'Etat français' as an 'autorité de fait'. Article 1 of the same ordinance confirms the French Republic's juridical continuity. Including this as documentary evidence of the de facto authority does NOT legitimize the Vichy constitutional regime."
+        }
+      }
+    },
+    {
+      "type": "assert_governance_context",
+      "decision_id": "p2-01f-vichy-neutral-governing-regime-typed",
+      "exact_before": {
+        "governance_context_absent_id": "be34df5e-f43f-4645-bf04-1aaf4b213867"
+      },
+      "exact_after": {
+        "context": {
+          "id": "be34df5e-f43f-4645-bf04-1aaf4b213867",
+          "canonical_key": "stage2:vichy-etat-francais-de-facto-regime-1940-1944",
+          "governance_type": "governing_regime",
+          "historicity": "historical"
+        },
+        "names": [
+          {
+            "id": "05d35f40-cedd-4d52-a3f8-19bcf1b3670a",
+            "governance_context_id": "be34df5e-f43f-4645-bf04-1aaf4b213867",
+            "locale": "en",
+            "name": "Vichy regime (de facto French State)",
+            "name_type": "canonical",
+            "is_preferred": true
+          },
+          {
+            "id": "191a4a75-5366-49aa-8a92-a480f0b41adb",
+            "governance_context_id": "be34df5e-f43f-4645-bf04-1aaf4b213867",
+            "locale": "fr",
+            "name": "Régime de Vichy (État français, autorité de fait)",
+            "name_type": "canonical",
+            "is_preferred": true
+          },
+          {
+            "id": "8e36ede1-5969-4b00-a68b-a7dc4f6f036c",
+            "governance_context_id": "be34df5e-f43f-4645-bf04-1aaf4b213867",
+            "locale": "ko",
+            "name": "비시 정권(사실상 프랑스국 정부)",
+            "name_type": "canonical",
+            "is_preferred": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_governance_period",
+      "decision_id": "p2-01f-vichy-country-umbrella-de-facto-power-period",
+      "exact_before": {
+        "period_absent_id": "2e71211b-94e2-405e-82d9-88394f2f8bad"
+      },
+      "exact_after": {
+        "period": {
+          "id": "2e71211b-94e2-405e-82d9-88394f2f8bad",
+          "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+          "governance_context_id": "be34df5e-f43f-4645-bf04-1aaf4b213867",
+          "valid_from_year": 1940,
+          "valid_from_month": 7,
+          "valid_from_day": 10,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1944,
+          "valid_to_month": 8,
+          "valid_to_day": 20,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "This is only the historically operative de facto Vichy governing regime (État français), recorded as a governing_regime on the stable France COUNTRY UMBRELLA, NOT on the legally continuous stage2:french-republic authority. The French National Assembly records the 10 July 1940 constitutional full-powers vote; the Vichy constitutional acts formalized on 11 July must not be conflated with Pétain's earlier legitimate 16 June Republic appointment. The French armed-forces history calendar dates the regime end at Vichy to 20 August 1944; this is not a day of full liberation of all France nor cessation of any Sigmaringen puppet activity. The official French 9 August 1944 ordinance Art.1 maintains the Republic's legal continuity and Art.7 calls Vichy an autorité de fait; some acts were provisionally preserved by law pending invalidation. The regime was authoritarian and collaborated in discriminatory and persecutory policies. Its context can coincide with CNF/CFLN/GPRF rival authorities on another axis: it claims NEITHER constitutional legitimacy NOR exclusive countrywide territorial control NOR the existence of a separate new sovereign French Polity. No Pétain/Laval Person Activity is fabricated and no populated regional geometry is inferred."
+        },
+        "source_links": [
+          {
+            "polity_governance_period_id": "2e71211b-94e2-405e-82d9-88394f2f8bad",
+            "source_id": "232d4e27-fd52-4514-8313-1815b176c493",
+            "source_locator_key": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/des-decrets-lois-du-gouvernement-daladier-au-vote-par-la-chambre-des-deputes-et-le-senat-des-pleins-pouvoirs-au-marechal-petain"
+          },
+          {
+            "polity_governance_period_id": "2e71211b-94e2-405e-82d9-88394f2f8bad",
+            "source_id": "2971f3b9-b00f-45db-9087-04d9a94ed16d",
+            "source_locator_key": "https://www.cheminsdememoire.gouv.fr/fr/1944-08-20-fin-du-regime-de-vichy"
+          },
+          {
+            "polity_governance_period_id": "2e71211b-94e2-405e-82d9-88394f2f8bad",
+            "source_id": "d4c7329d-16b3-43c6-b010-026aa8149f4c",
+            "source_locator_key": "https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000006530181"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "asserted_official_sources": 3,
+    "asserted_governance_contexts": 1,
+    "asserted_preferred_names": 3,
+    "asserted_governance_periods": 1,
+    "asserted_period_source_links": 3,
+    "changed_person_activities": 0,
+    "france_family_authoring_expected": 65,
+    "france_family_runtime_expected": 65,
+    "production_mutation_authorized": false
+  }
+}
