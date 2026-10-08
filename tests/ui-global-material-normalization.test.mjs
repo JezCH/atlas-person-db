@@ -138,7 +138,7 @@ test("SHELL-M1 global shell consumes shared structural material tokens without i
   assert.match(foundation, /\.mobile-drawer \{[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline\)/);
   assert.match(foundation, /\.mobile-brand \{[\s\S]*?border-bottom: 1px solid var\(--atlas-material-hairline-soft\)/);
   assert.match(foundation, /\.mobile-brand-mark \{[\s\S]*?border-left: 1px solid var\(--atlas-material-rail-soft\)[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline-strong\)/);
-  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-controls-m2-luminance-v1/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261008-vis2-01-material-roles-v1/);
 
   const shellStart = foundation.indexOf("SHELL-M1 — Structural material normalization");
   const shellEnd = foundation.indexOf("SHELL-M2 — Navigation interaction luminance", shellStart);
@@ -170,7 +170,7 @@ test("SHELL-M2 navigation uses the shared hover / active / selected luminance sc
   assert.doesNotMatch(foundation, /\.nav-item\.active \{[\s\S]*?rgba\(192, 174, 136, \.09\)/);
   assert.doesNotMatch(foundation, /\.mobile-nav button\.active \{[\s\S]*?rgba\(192,174,136,\.09\)/);
 
-  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-controls-m2-luminance-v1/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261008-vis2-01-material-roles-v1/);
   assert.match(html, /atlas-ui-motion-material-v9\.css\?v=20261007-controls-m2-luminance-v1/);
 });
 
@@ -211,10 +211,10 @@ test("CONTROLS-M1 keeps operational chrome quiet while sharing structural hairli
   const controlsM2 = foundation.indexOf("CONTROLS-M2 — Operational interaction luminance", controlsM1);
   assert.ok(controlsM1 >= 0 && controlsM2 > controlsM1);
   assert.match(foundation, /input:focus,[\s\S]*?border-color: var\(--atlas-honor-metal\);/);
-  assert.match(foundation, /\.btn-primary \{[\s\S]*?background: rgba\(192, 174, 136, \.08\)/);
+  assert.match(foundation, /\.btn-primary \{[\s\S]*?background:[\s\S]*?var\(--atlas-material-m3\)/);
   assert.match(foundation, /\.mini-btn\.danger \{[\s\S]*?rgba\(215, 114, 114, \.32\)/);
 
-  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-controls-m2-luminance-v1/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261008-vis2-01-material-roles-v1/);
 });
 
 
@@ -224,25 +224,25 @@ test("CONTROLS-M2 layers shared hover / active luminance above neutral graphite 
   const html = read("index.html");
 
   assert.match(foundation, /CONTROLS-M2 — Operational interaction luminance/);
-  assert.match(foundation, /\.btn \{[\s\S]*?--atlas-control-fill: #191e22;[\s\S]*?background: var\(--atlas-control-fill\)/);
+  assert.match(foundation, /\.btn \{[\s\S]*?--atlas-control-fill: var\(--atlas-material-m2\);[\s\S]*?background: var\(--atlas-control-fill\)/);
   assert.match(foundation, /\.btn:not\(\.btn-primary\):hover \{[\s\S]*?var\(--atlas-material-wash-hover\)[\s\S]*?var\(--atlas-control-fill\)/);
-  assert.match(foundation, /\.mini-btn \{[\s\S]*?--atlas-control-fill: #20252a;/);
+  assert.match(foundation, /\.mini-btn \{[\s\S]*?--atlas-control-fill: var\(--atlas-material-m2\);/);
   assert.match(foundation, /\.mini-btn:not\(\.danger\):hover \{[\s\S]*?var\(--atlas-material-wash-hover\)/);
-  assert.match(foundation, /\.sidebar-collapse-toggle \{[\s\S]*?--atlas-control-fill: #151a1e;/);
+  assert.match(foundation, /\.sidebar-collapse-toggle \{[\s\S]*?--atlas-control-fill: var\(--atlas-material-m1\);/);
   assert.match(foundation, /\.sidebar-collapse-toggle:hover \{[\s\S]*?var\(--atlas-material-wash-hover\)/);
-  assert.match(foundation, /\.mobile-menu-button \{[\s\S]*?--atlas-control-fill: #191d21;/);
-  assert.match(foundation, /\.person-main-actions \.btn \{[\s\S]*?--atlas-control-fill: #191d21;/);
+  assert.match(foundation, /\.mobile-menu-button \{[\s\S]*?--atlas-control-fill: var\(--atlas-material-m2\);/);
+  assert.match(foundation, /\.person-main-actions \.btn \{[\s\S]*?--atlas-control-fill: var\(--atlas-material-m2\);/);
   assert.match(foundation, /@media \(max-width: 760px\) and \(hover: hover\) \{[\s\S]*?\.mobile-menu-button:hover,[\s\S]*?\.person-main-actions \.btn:not\(\.btn-primary\):hover[\s\S]*?var\(--atlas-material-wash-hover\)/);
 
   assert.match(motion, /\.btn:not\(\.btn-primary\):active:not\(:disabled\),[\s\S]*?\.mini-btn:not\(\.danger\):active:not\(:disabled\),[\s\S]*?\.mobile-menu-button:active:not\(:disabled\),[\s\S]*?\.sidebar-collapse-toggle:active:not\(:disabled\)[\s\S]*?var\(--atlas-material-wash-active\)[\s\S]*?var\(--atlas-control-fill\)/);
   assert.match(motion, /\.spacetime-camera button:active:not\(:disabled\),[\s\S]*?background-color: rgba\(255,255,255,\.038\)/);
 
-  assert.match(foundation, /\.btn-primary:hover \{[\s\S]*?background: rgba\(192, 174, 136, \.13\)/);
+  assert.match(foundation, /\.btn-primary:hover \{[\s\S]*?background:[\s\S]*?var\(--atlas-material-wash-active\)[\s\S]*?var\(--atlas-material-m3\)/);
   assert.match(foundation, /\.mini-btn\.danger \{[\s\S]*?background: rgba\(215, 114, 114, \.06\)/);
   assert.doesNotMatch(motion, /\.btn-primary:active/);
   assert.doesNotMatch(motion, /\.mini-btn\.danger:active/);
 
-  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261007-controls-m2-luminance-v1/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261008-vis2-01-material-roles-v1/);
   assert.match(html, /atlas-ui-motion-material-v9\.css\?v=20261007-controls-m2-luminance-v1/);
 });
 

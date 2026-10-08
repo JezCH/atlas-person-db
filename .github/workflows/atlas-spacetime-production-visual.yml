@@ -23,6 +23,7 @@ on:
       - "scripts/verify-ui-v10-production-visual.mjs"
       - "scripts/verify-polity-production-visual.mjs"
       - "scripts/capture-vis2-production-baseline.mjs"
+      - "scripts/verify-vis2-01-production-material.mjs"
       - ".github/workflows/atlas-spacetime-production-visual.yml"
   workflow_dispatch:
     inputs:
@@ -130,6 +131,8 @@ jobs:
           node scripts/verify-polity-production-visual.mjs
           node --check scripts/capture-vis2-production-baseline.mjs
           node scripts/capture-vis2-production-baseline.mjs
+          node --check scripts/verify-vis2-01-production-material.mjs
+          node scripts/verify-vis2-01-production-material.mjs
           for report in "$ATLAS_VISUAL_OUT_DIR"/*.json; do
             echo "===== $report ====="
             cat "$report"
