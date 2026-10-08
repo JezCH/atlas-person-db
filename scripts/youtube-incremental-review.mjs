@@ -159,11 +159,11 @@ export function main(args=process.argv.slice(2)) {
   for(const key of ["current","previous","output"])if(!opts[key])throw Error("MISSING_"+key.toUpperCase());
   const file=p=>JSON.parse(fs.readFileSync(p,"utf8"));
   const {REVIEWED_REGISTRATION_ALIASES}=require(path.join(BASE,"server/atlas-reviewed-person-registration-aliases.js"));
-  const {REVIEWED_LIVING_NAMES}=require(path.join(BASE,"atlas-youtube-reviewed-living-people.js"));
+  const {REVIEWED_LIVING_NAMES,REVIEW_EXPIRES_AT}=require(path.join(BASE,"atlas-youtube-reviewed-living-people.js"));
   const result=computeIncrementalAudit(file(opts.current),file(opts.previous),{
     decisions:opts.decisions?file(opts.decisions):{decisions:[]},
     registeredAliases:REVIEWED_REGISTRATION_ALIASES.map(x=>x.alias_name),
-    livingNames:REVIEWED_LIVING_NAMES,
+    livingNames:Date.now()<Date.parse(REVIEW_EXPIRES_AT)?REVIEWED_LIVING_NAMES:[],
     persons:opts.persons?file(opts.persons):null
   });
   fs.mkdirSync(opts.output,{recursive:true});
