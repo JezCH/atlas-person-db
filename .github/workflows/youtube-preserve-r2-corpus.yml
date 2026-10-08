@@ -1,0 +1,48 @@
+name: Preserve verified YouTube corpus in independent R2
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: youtube-r2-original-archive
+  cancel-in-progress: false
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: youtube-cumulative-batch017-validated
+          run-id: "37771318676"
+          repository: ${{ github.repository }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: corpus
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate exact source corpus before upload
+        run: |
+          python -m pip install --disable-pip-version-check pycountry boto3
+          python scripts/youtube-build-person-signal-snapshot.py \
+            --root corpus --output /tmp/youtube-r2-preflight.json \
+            --artifact-id 11548326100 \
+            --artifact-digest sha256:b40f8efdccfacce194afb44cc7cca3e93a4ab12a2153c5a19b70ceb3f56b0b1f
+          jq -e '.snapshot.channel_count==6011 and .snapshot.video_count==1536512 and (.channels|length)==6770 and .snapshot.source_state.next_batch=="batch018"' /tmp/youtube-r2-preflight.json >/dev/null
+      - name: Archive and independently verify bytes in R2
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_BUCKET: ${{ vars.R2_BUCKET }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          python scripts/youtube-preserve-r2-corpus.py --root corpus --output /tmp/youtube-r2-verification.json
+      - name: Publish checksum receipt to GitHub Actions
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-r2-source-verification
+          path: /tmp/youtube-r2-verification.json
+          retention-days: 90
