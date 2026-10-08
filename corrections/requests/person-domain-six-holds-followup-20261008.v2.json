@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-domain:unclassified-80:six-holds-followup:2026-10-08:v1",
+  "release_order": 2202,
+  "evidence": {
+    "decision": "Apply 3 explicit reviewed representative domains (NULL -> governance) for Daji, Lady of Huarmey and Yarima; preserve Atanarjuat, Eri and Javraganak as NULL. Do not infer domains from Activity Role. No other Person fields or Activity mutations.",
+    "canonical_standard": "docs/person/PERSON_DOMAIN_STANDARD_V2.md",
+    "reviewed_evidence": "research/person-domain/unclassified-80-six-holds-followup-20261008.v1.json",
+    "predecessor_review": "research/person-domain/unclassified-80-review-20261008.v1.json",
+    "source_main_sha": "c13379d01bb96f5a9f07bc9d66ecaa5dbf083f6d",
+    "expected_domain_before": null,
+    "reviewed_assignment_count": 3,
+    "distribution": {
+      "governance": 3,
+      "military": 0,
+      "religion": 0,
+      "exploration": 0,
+      "commerce": 0,
+      "culture": 0,
+      "science": 0,
+      "technology": 0
+    },
+    "retained_null_person_count": 3
+  },
+  "operations": [
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "six-holds-review-daji",
+      "person_id": "cbe5911a-6462-4ff5-9e33-83ca0277b3e5",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "six-holds-review-lady-of-huarmey",
+      "person_id": "b165d74c-0e94-4584-b71e-81a763722a04",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    },
+    {
+      "type": "set_person_representative_domain",
+      "case_id": "six-holds-review-yarima",
+      "person_id": "88505550-4a3e-49a5-ab8c-1c04379bec9a",
+      "expected_domain": null,
+      "replacement_domain": "governance"
+    }
+  ]
+}

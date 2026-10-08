@@ -1,0 +1,76 @@
+{
+  "schema": "atlas-person-domain-followup-review/v1",
+  "review_date": "2026-10-08",
+  "scope": "Re-review of the 6 HOLD Persons remaining after the 74/80 representative_domain correction; explicitly approved 3 assignments, preserve 3 NULL.",
+  "canonical_standard": "docs/person/PERSON_DOMAIN_STANDARD_V2.md",
+  "previous_review": "research/person-domain/unclassified-80-review-20261008.v1.json",
+  "source_main_sha": "c13379d01bb96f5a9f07bc9d66ecaa5dbf083f6d",
+  "decision_counts": {
+    "reviewed": 6,
+    "assign_governance": 3,
+    "retain_null": 3
+  },
+  "limits": [
+    "Representative historical identity may be drawn from documented tradition but tradition is not independent confirmation of historical events.",
+    "Do not fabricate reign terms, offices, military commands, Person activities, or Polity relationships.",
+    "The predecessor review is immutable audit evidence; this follow-up supersedes only these three domain HOLD dispositions."
+  ],
+  "assignments": [
+    {
+      "person_id": "cbe5911a-6462-4ff5-9e33-83ca0277b3e5",
+      "canonical_name_en": "Daji",
+      "name_ko": "달기",
+      "expected_domain": null,
+      "replacement_domain": "governance",
+      "basis": "The Yin Zhou Daji chapter of Lie Nü Zhuan attributes promotion and execution decisions of King Zhou to her preferences. This is a representation of political influence in later tradition, not independent proof of acts or formal office.",
+      "sources": [
+        "https://ctext.org/lie-nv-zhuan/yin-zhou-da-ji"
+      ]
+    },
+    {
+      "person_id": "b165d74c-0e94-4584-b71e-81a763722a04",
+      "canonical_name_en": "Lady of Huarmey",
+      "name_ko": "우아르메이의 귀부인",
+      "expected_domain": null,
+      "replacement_domain": "governance",
+      "basis": "Giersz (2025) interprets the Principal Lady of Castillo de Huarmey as a regional leader whose authority legitimized provincial Wari rule. This is a scholarly interpretation of archaeological evidence, not an attested office or term.",
+      "sources": [
+        "https://doi.org/10.1080/21500894.2025.2456196"
+      ]
+    },
+    {
+      "person_id": "88505550-4a3e-49a5-ab8c-1c04379bec9a",
+      "canonical_name_en": "Yarima",
+      "name_ko": "야리마",
+      "expected_domain": null,
+      "replacement_domain": "governance",
+      "basis": "Barrancabermeja local heritage account identifies Yarima as a cacica alongside cacique Pipatón who led indigenous resistance. Cacica/leadership represents governance; independent battlefield command is not established. This is local historical tradition, not direct proof of chronology.",
+      "sources": [
+        "https://mibarrancabermeja.co/monumentos/"
+      ]
+    }
+  ],
+  "holds": [
+    {
+      "person_id": "02e42496-0f8a-413c-b173-c76367981171",
+      "canonical_name_en": "Atanarjuat",
+      "name_ko": "아타나르주아트",
+      "expected_domain": null,
+      "reason": "Narrative survival and revenge do not establish command, rulership or other canonical representative domain."
+    },
+    {
+      "person_id": "6f71fd73-045f-4227-80c5-78ceb6d87633",
+      "canonical_name_en": "Eri",
+      "name_ko": "에리",
+      "expected_domain": null,
+      "reason": "Ancestor/founder status alone does not establish personally exercised governance or religious leadership."
+    },
+    {
+      "person_id": "8f32ca07-5a74-4aa9-95e8-7010c8b2c8f0",
+      "canonical_name_en": "Javraganak",
+      "name_ko": "자브라가낙",
+      "expected_domain": null,
+      "reason": "Causing or appearing in conflict narratives is insufficient proof of direct military command, independent political rule or other representative role."
+    }
+  ]
+}
