@@ -54,6 +54,8 @@
 
 - **2026-10-08 P0:** Current main already contains V3 Graphite/Champagne foundation, shared GLOBAL-M1 material scale, V9 motion, V11 Dashboard, Chronicle Detail, Polity plaque and V6/V7 Spacetime presentation. Do not rebuild completed layers.
 - **2026-10-08 P1a — MERGED:** PR #2134, main commit `6c721cb30939a8d97cb20c799b732caeff1992aa`, implements existing Spacetime premium time-axis / year-seam / selected-label finish. Do not reproduce this work. CI and Vercel deployed; true rendered visual acceptance remains separate.
-- **2026-10-08 P1b — IN PROGRESS:** On top of merged P1a, independently refine Spacetime instrument/minimap/inspector visual finish, no canvas geometry or data changes. Confirm PR/CI/deployment and note visual evidence status.\n- **Next after P1b:** Capture comparable desktop/mobile Spacetime states, refine only visible gaps, then Person Detail P2.
+- **2026-10-08 P1b — MERGED:** PR #2135, main commit `23b1e49487afe9871efd820cc31c5c6beb4ffcde`. Instrument/minimap/inspector precision material; CI and Vercel successful. Real paired screenshot acceptance remains **P1 VISUAL ACCEPTANCE PENDING**, not a reason to repeat finished CSS.
+- **2026-10-08 P2a — IN PROGRESS:** Person Detail historical biography opening, genuine-portrait frame, archival identity/chronology hierarchy; CSS presentation only. Follow-up P2b editorial activity/source depth only if a real visual gap is observed.
+- **Next checkpoint:** Source/CI/deploy of P2a; obtain 1440/768/390px real browser before/after evidence for P1/P2 and record that separately. If genuine rendering is unavailable, mark visual acceptance explicitly pending.
 
 **Resume anchor:** Read this file, `ATLAS_UI_VISUAL_GUIDELINES.md`, the latest `main` source and the linked P1a PR. **Do not branch back into #1896 or Person cards.**
