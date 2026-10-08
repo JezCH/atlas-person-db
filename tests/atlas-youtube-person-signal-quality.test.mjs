@@ -20,7 +20,11 @@ for title in (
     "Interview | Important things","The Odyssey: Homer explained",
     "Pearl Harbor | Historic War","Rome: The Eternal City",
     "Sherlock Holmes: Fictional character","Dracula: Vampire legend",
-    "King Arthur: Myth and legend"
+    "King Arthur: Myth and legend",
+    "Pompeii: Ancient City","Preview: Coming Soon",
+    "Knights Templar: Historical Order","The Holocaust: Documentary",
+    "Spider-Man: Fiction","Athena: Goddess",
+    "Chapter 3: How it Ends","Day 4: Travels","Ep 2: The Mystery"
 ):
     candidate=module.title_candidate(title)
     assert candidate and not module.valid_candidate(candidate),(title,candidate)
@@ -29,6 +33,7 @@ for title in (
     "Rollo the Viking: Who was he",
     "Napoleon III: History of his reign",
     "Ibn Sina: Philosopher",
+    "Prince: The Musician","Paris: The Trojan Prince",
 ):
     candidate=module.title_candidate(title)
     assert candidate and module.valid_candidate(candidate),(title,candidate)
@@ -38,9 +43,13 @@ assert module.normalize_person_candidate("Albert Einstein |")=="Albert Einstein"
 assert module.normalize_person_candidate("Avicenna")=="Ibn Sina"
 assert module.normalize_person_candidate("Napoléon Bonaparte")=="Napoleon Bonaparte"
 assert module.normalize_person_candidate("Kim Jong Un")=="Kim Jong-un"
+assert module.normalize_person_candidate("Abraham Lincoln for Kids")=="Abraham Lincoln"
+assert module.normalize_person_candidate("Tamerlane")=="Timur"
+assert module.normalize_person_candidate("Queen Elizabeth I")=="Elizabeth I"
 assert module.normalize_person_candidate("Napoleon")=="Napoleon"
 assert module.normalize_person_candidate("Napoleon III")=="Napoleon III"
 assert module.normalize_person_candidate("Caesar")=="Caesar"
+assert module.title_candidate("The Rise of Napoleon Bonaparte: History")=="Napoleon Bonaparte"
 
 with tempfile.TemporaryDirectory() as tmp:
     root=Path(tmp)
@@ -94,10 +103,10 @@ with tempfile.TemporaryDirectory() as tmp:
     assert signals["Ibn Sina"]["video_count"]==4
     assert result["snapshot"]["channel_count"]==3
     assert result["snapshot"]["video_count"]==sum(len(v) for v in videos.values())
-    assert result["snapshot"]["parser_version"]=="yt-title-person-reviewed-v3"
+    assert result["snapshot"]["parser_version"]=="yt-title-person-reviewed-v4"
     assert result["snapshot"]["source_state"]["quality_counters"]["reviewed_non_person"]>=3
-    assert result["snapshot"]["source_state"]["quality_rules_version"]=="reviewed-20261008-v1"
-    assert result["snapshot"]["snapshot_id"].endswith("-rebuild-v3")
+    assert result["snapshot"]["source_state"]["quality_rules_version"]=="reviewed-20261008-v2"
+    assert result["snapshot"]["snapshot_id"].endswith("-rebuild-v4")
     print(json.dumps({"signal_count":len(signals),"Ibn_Sina_channels":signals["Ibn Sina"]["distinct_channel_count"],"Ibn_Sina_videos":signals["Ibn Sina"]["video_count"],"rejected_non_person":result["snapshot"]["source_state"]["quality_counters"]["reviewed_non_person"]}))
 `;
 
