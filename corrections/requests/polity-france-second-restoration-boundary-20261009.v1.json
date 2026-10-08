@@ -1,0 +1,117 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-france-second-restoration-boundary-20261009:v1",
+  "release_order": 2231,
+  "decision_authority": "#1895 POLITY-P2-01J source-backed Second Bourbon Restoration exact 1830 boundary",
+  "operations": [
+    {
+      "type": "rewrite_polity_designation",
+      "case_id": "p2-01j-second-bourbon-restoration-end-1830-08-02",
+      "review_reason": "SOURCE_BACKED_TEMPORAL_PRECISION",
+      "exact_before": {
+        "designation": {
+          "id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+          "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+          "designation_type": "state_form",
+          "valid_from_year": 1815,
+          "valid_from_month": 7,
+          "valid_from_day": 9,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1830,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed second Bourbon Restoration state-form designation on the stable France identity. It begins with the exact modeled post-Hundred-Days Talleyrand ministry and extends through the latest currently modeled Restoration Activity in 1830; it does not merge or relabel the separately modeled First Empire or later French regime Polities."
+        },
+        "names": [
+          {
+            "id": "9c39dc5b-45b5-4b24-aec4-9b49ca299d89",
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "locale": "en",
+            "name": "Kingdom of France",
+            "is_preferred": true
+          },
+          {
+            "id": "ca527188-0fa2-4356-a9f5-9d9079732e03",
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "locale": "ko",
+            "name": "프랑스 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "source_id": "194bffc0-1f80-4255-b19c-4c4ad25c0328",
+            "source_locator_key": "Biographical history: 1815 appointment as Foreign Minister and President of the Council, followed by replacement"
+          },
+          {
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "source_id": "521297b7-7252-548d-b600-4dc89b9b651b",
+            "source_locator_key": "pending-records-supplement-4.json:6"
+          }
+        ]
+      },
+      "exact_after": {
+        "designation": {
+          "id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+          "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+          "designation_type": "state_form",
+          "valid_from_year": 1815,
+          "valid_from_month": 7,
+          "valid_from_day": 9,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1830,
+          "valid_to_month": 8,
+          "valid_to_day": 2,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed Second Bourbon Restoration state-form designation on stable France. Existing 1815-07-09 modeled start and all prior provenance are preserved. The end is now source-backed day precision: the French National Assembly historical regime table ends the Deuxième Restauration on 2 August 1830, the day Charles X abdicated. The same official chronology starts the broad Monarchie de juillet category on 2 August, while Louis-Philippe's separate constitutional oath occurred 9 August. The shared transition date is intentional; no one-day gap is invented. Lafayette's 1827–1830 year-granularity Activity remains untouched and must not be shortened or treated as day-exact."
+        },
+        "names": [
+          {
+            "id": "9c39dc5b-45b5-4b24-aec4-9b49ca299d89",
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "locale": "en",
+            "name": "Kingdom of France",
+            "is_preferred": true
+          },
+          {
+            "id": "ca527188-0fa2-4356-a9f5-9d9079732e03",
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "locale": "ko",
+            "name": "프랑스 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "source_id": "194bffc0-1f80-4255-b19c-4c4ad25c0328",
+            "source_locator_key": "Biographical history: 1815 appointment as Foreign Minister and President of the Council, followed by replacement"
+          },
+          {
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "source_id": "521297b7-7252-548d-b600-4dc89b9b651b",
+            "source_locator_key": "pending-records-supplement-4.json:6"
+          },
+          {
+            "polity_designation_id": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+            "source_id": "f4d11488-2e4c-49f7-b64c-7191976d5e42",
+            "source_locator_key": "https://www.assemblee-nationale.fr/gouv_parl/regimes.asp"
+          }
+        ]
+      }
+    }
+  ]
+}
