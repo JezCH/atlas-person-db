@@ -65,14 +65,14 @@ function requireExecutionPlan(raw) {
   if (String(raw.schema || "").trim() !== PLAN_SCHEMA) throw new Error("CORRECTION_V2_EXECUTION_PLAN_SCHEMA_INVALID");
   if (!String(raw.batch_id || "").trim()) throw new Error("CORRECTION_V2_EXECUTION_PLAN_BATCH_ID_REQUIRED");
   if (!Array.isArray(raw.operations)) throw new Error("CORRECTION_V2_EXECUTION_PLAN_OPERATIONS_REQUIRED");
-  // Permit source-backed Stage 2 Governance Context/period assertions without touching unrelated Person Activities.
+  // Permit source-backed Stage 2 structural assertions without touching unrelated Person Activities.
   // Source-only or unknown assertion-only plans remain rejected.
   if (raw.operations.length === 0) {
     const assertions = raw.stage2_assertions;
-    const allowed = new Set(["assert_source", "assert_governance_context", "assert_governance_period"]);
+    const allowed = new Set(["assert_source", "assert_governance_context", "assert_governance_period", "assert_polity_designation"]);
     if (!Array.isArray(assertions) || assertions.length === 0 ||
         !assertions.every((item) => allowed.has(item?.type)) ||
-        !assertions.some((item) => item?.type === "assert_governance_context" || item?.type === "assert_governance_period")) {
+        !assertions.some((item) => item?.type === "assert_governance_context" || item?.type === "assert_governance_period" || item?.type === "assert_polity_designation")) {
       throw new Error("CORRECTION_V2_EXECUTION_PLAN_ASSERTION_ONLY_SCOPE_INVALID");
     }
   }

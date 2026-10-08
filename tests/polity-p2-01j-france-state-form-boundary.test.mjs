@@ -1,6 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import { createRequire } from "node:module";
+
+const require=createRequire(import.meta.url);
+const { requireExecutionPlan }=require("../server/atlas-correction-apply-handler.js");
 
 const request=JSON.parse(fs.readFileSync(new URL("../corrections/requests/polity-france-second-restoration-boundary-20261009.v1.json",import.meta.url),"utf8"));
 const plan=JSON.parse(fs.readFileSync(new URL("../corrections/plans/polity-france-july-monarchy-state-form-20261009.v1.json",import.meta.url),"utf8"));
@@ -42,8 +46,9 @@ test("P2-01J adds a separate July Monarchy state_form on France using the Assemb
   assert.deepEqual(designation.exact_after.names.map((name)=>name.locale),["en","fr","ko"]);
 });
 
-test("assertion-only correction workflow explicitly accepts reviewed polity designations",()=>{
+test("assertion-only correction workflow and endpoint both accept reviewed polity designations",()=>{
   assert.match(workflow,/assert_polity_designation/);
+  assert.equal(requireExecutionPlan(plan),plan);
 });
 
 test("coarse year-only Activity display still fails closed unless exactly one designation fully contains it",()=>{
