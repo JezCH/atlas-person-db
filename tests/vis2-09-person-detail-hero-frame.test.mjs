@@ -4,6 +4,7 @@ import fs from "node:fs";
 const css=fs.readFileSync(new URL("../atlas-person-detail-hero-frame-v2.css",import.meta.url),"utf8");
 const html=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const source=fs.readFileSync(new URL("../atlas-person-main.js",import.meta.url),"utf8");
+const verifier=fs.readFileSync(new URL("../scripts/verify-vis2-09-production-detail-hero.mjs",import.meta.url),"utf8");
 
 test("VIS2-09 alone loads after VIS2-08 and keeps real portrait conditional",()=>{
  const link="atlas-person-detail-hero-frame-v2.css?v=20261009-vis2-09-hero-v1";
@@ -27,4 +28,12 @@ test("VIS2-09 is paint-only scoped to existing biography hero; no invented portr
  }
  assert.doesNotMatch(noComments,/(?:width|height|margin|padding|grid-template|gap|position|z-index|transform|font|line-height|letter-spacing|content|opacity|display|border-width|background-size|animation|transition)\s*:/);
  assert.doesNotMatch(noComments,/url\(|@font-face|@keyframes|::before|::after|!important|data-representative-domain|person-register-entry|person-table-/);
+});
+
+test("VIS2-09 genuine portrait A/B waits for actual decoded pixels",()=>{
+ assert.match(verifier,/img\.complete&&img\.naturalWidth>0&&img\.naturalHeight>0/);
+ assert.match(verifier,/imageComplete/);
+ assert.match(verifier,/imageNaturalWidth/);
+ assert.match(verifier,/imageNaturalHeight/);
+ assert.match(verifier,/Genuine portrait pixels must be loaded before A\/B capture/);
 });
