@@ -8,7 +8,7 @@ import {fileURLToPath} from "node:url";
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const text=(p)=>fs.readFileSync(path.join(root,p),"utf8");
 
-test("P2-01 France family remains open after P2-01I applied July Monarchy pending 1830 Restoration source/date precision",()=>{
+test("P2-01J closes the 1830 France boundary while the parent family remains approval-gated",()=>{
   const context={window:{}};
   vm.runInNewContext(text("atlas-polity-review-registry.js"),context);
   const reg=context.window.ATLAS_POLITY_REVIEW_REGISTRY;
@@ -33,7 +33,10 @@ test("P2-01 France family remains open after P2-01I applied July Monarchy pendin
   assert.match(audit,/65 Authoring/);
   assert.match(audit,/65 Runtime/);
   assert.match(audit,/P2-01A/);
-  assert.match(text("docs/ATLAS_CURRENT_WORKSTREAMS.md"),/Immediate bounded next unit: `POLITY-P2-01J`/);
+  const workstreams=text("docs/ATLAS_CURRENT_WORKSTREAMS.md");
+  assert.match(workstreams,/POLITY-P2-01J CLOSED/);
+  assert.match(workstreams,/Macedon → Macedonian Empire/);
+  assert.match(workstreams,/approval-gated residual/);
   const correction=text("docs/POLITY_P2_01A_FRANCE_KINGDOM_FIVE_RELINK_20261008.md");
   assert.match(correction,/CORRECTION_APPLIED/);
   assert.match(correction,/65 \/ 0 difference/);
@@ -47,6 +50,13 @@ test("P2-01 France family remains open after P2-01I applied July Monarchy pendin
   assert.match(france.rationale,/P2-01I/);
   assert.match(france.rationale,/P2-01J/);
   assert.ok(france.evidence.some(x=>x.includes('P2-01I') && x.includes('SUCCESS')));
+  assert.ok(france.evidence.some(x=>x.includes('P2-01J') && x.includes('#37852316406') && x.includes('#37852774201')));
+  const boundary=text('docs/POLITY_P2_01J_FRANCE_RESTORATION_JULY_STATE_FORM_20261009.md');
+  assert.match(boundary,/Status:\*\* CLOSED/);
+  assert.match(boundary,/1830-08-02/);
+  assert.match(boundary,/1830-08-09/);
+  assert.match(boundary,/2495 → 2495/);
+  assert.match(boundary,/Macedon → Macedonian Empire/);
   const julyAudit=text('docs/POLITY_P2_01I_FRANCE_FAMILY_ACCEPTANCE_JULY_MONARCHY_20261009.md');
   assert.match(julyAudit,/CORRECTION_APPLIED/);
   assert.match(julyAudit,/65 Authoring \/65 Runtime \/0/);
