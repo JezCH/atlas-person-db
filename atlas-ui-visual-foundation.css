@@ -49,6 +49,16 @@
   --atlas-material-wash-active: rgba(192, 174, 136, .040);
   --atlas-material-wash-selected: rgba(192, 174, 136, .050);
 
+  /* VIS2-01: semantic MATERIAL ROLES over the pre-existing graphite scale.
+   * M0 field | M1 archive panel | M2 operable control | M3 primary action.
+   * No additional hues; semantic domain palette remains separately owned.
+   */
+  --atlas-material-m0: var(--atlas-canvas);
+  --atlas-material-m0-deep: var(--atlas-canvas-deep);
+  --atlas-material-m1: var(--atlas-surface-1);
+  --atlas-material-m2: var(--atlas-surface-2);
+  --atlas-material-m3: var(--atlas-surface-3);
+
   /* Legacy aliases: keep existing components functional while removing the
    * purple SaaS identity from the global shell.
    */
@@ -82,11 +92,11 @@ body {
 
 .workspace-shell {
   grid-template-columns: 208px minmax(0, 1fr);
-  background: var(--atlas-canvas);
+  background: var(--atlas-material-m0);
 }
 
 .sidebar {
-  background: var(--atlas-canvas-deep);
+  background: var(--atlas-material-m0-deep);
   color: var(--atlas-text);
   padding: 22px 14px 18px;
   border-right: 1px solid var(--atlas-material-hairline-soft);
@@ -193,7 +203,7 @@ body {
   color: var(--atlas-text);
   background:
     linear-gradient(180deg, var(--atlas-material-sheen), transparent 14rem),
-    var(--atlas-canvas);
+    var(--atlas-material-m0);
 }
 
 .topbar {
@@ -274,7 +284,7 @@ select,
 textarea {
   border-color: var(--atlas-material-hairline);
   border-radius: var(--atlas-radius-control);
-  background: #171b1f;
+  background: var(--atlas-material-m1);
   color: var(--atlas-text);
   box-shadow: none;
 }
@@ -296,7 +306,7 @@ textarea:focus {
   min-height: 35px;
   border-color: var(--atlas-material-hairline);
   border-radius: var(--atlas-radius-control);
-  --atlas-control-fill: #191e22;
+  --atlas-control-fill: var(--atlas-material-m2);
   background: var(--atlas-control-fill);
   color: #d9d6cf;
   box-shadow: none;
@@ -312,20 +322,25 @@ textarea:focus {
 }
 
 .btn-primary {
+  /* M3: graphite elevation; Champagne remains a restrained action outline. */
   border-color: rgba(192, 174, 136, .56);
-  background: rgba(192, 174, 136, .08);
+  background:
+    linear-gradient(180deg, var(--atlas-material-sheen-strong), transparent 100%),
+    var(--atlas-material-m3);
   color: #e7dfcf;
 }
 
 .btn-primary:hover {
   border-color: var(--atlas-honor-metal-strong);
-  background: rgba(192, 174, 136, .13);
+  background:
+    linear-gradient(var(--atlas-material-wash-active), var(--atlas-material-wash-active)),
+    var(--atlas-material-m3);
 }
 
 .mini-btn {
   border: 1px solid var(--atlas-material-hairline-soft);
   border-radius: 4px;
-  --atlas-control-fill: #20252a;
+  --atlas-control-fill: var(--atlas-material-m2);
   background: var(--atlas-control-fill);
   color: #c8c7c2;
 }
@@ -349,7 +364,7 @@ textarea:focus {
 .toast {
   border: 1px solid var(--atlas-material-hairline);
   border-radius: 4px;
-  background: #20252a;
+  background: var(--atlas-material-m2);
   color: var(--atlas-text-strong);
   box-shadow: 0 14px 38px rgba(0,0,0,.3);
 }
@@ -362,7 +377,7 @@ textarea:focus {
 .person-main-toolbar.card {
   border-color: var(--atlas-divider);
   border-radius: var(--atlas-radius-panel);
-  background: var(--atlas-surface-1);
+  background: var(--atlas-material-m1);
   box-shadow: none;
 }
 
@@ -377,7 +392,7 @@ textarea:focus {
 .person-group {
   border-color: var(--atlas-divider);
   border-radius: var(--atlas-radius-panel);
-  background: var(--atlas-surface-1);
+  background: var(--atlas-material-m1);
   box-shadow: none;
 }
 
@@ -522,7 +537,7 @@ textarea:focus {
 .authority-state-grid > .card {
   border-color: var(--atlas-divider);
   border-radius: var(--atlas-radius-panel);
-  background: var(--atlas-surface-1);
+  background: var(--atlas-material-m1);
   box-shadow: none;
 }
 
@@ -539,7 +554,7 @@ textarea:focus {
 .atlas-polity-review-mount > .card {
   border-color: var(--atlas-divider);
   border-radius: var(--atlas-radius-panel);
-  background: var(--atlas-surface-1);
+  background: var(--atlas-material-m1);
   color: var(--atlas-text);
   box-shadow: none;
 }
@@ -585,7 +600,7 @@ textarea:focus {
 .sidebar-collapse-toggle {
   border-color: var(--atlas-material-hairline-soft);
   border-radius: 4px;
-  --atlas-control-fill: #151a1e;
+  --atlas-control-fill: var(--atlas-material-m1);
   background: var(--atlas-control-fill);
   color: #a8afb4;
   box-shadow: 0 8px 22px rgba(0,0,0,.28);
@@ -633,7 +648,7 @@ textarea:focus {
     border: 1px solid var(--atlas-material-hairline-soft);
     border-radius: 4px;
     color: #c5c4bf;
-    --atlas-control-fill: #191d21;
+    --atlas-control-fill: var(--atlas-material-m2);
     background: var(--atlas-control-fill);
   }
 
@@ -723,15 +738,22 @@ textarea:focus {
 
   .main-area {
     padding: 6px 8px 28px;
-    background: var(--atlas-canvas);
+    background: var(--atlas-material-m0);
   }
 
   .person-main-actions .btn {
     border-color: var(--atlas-material-hairline-soft);
     border-radius: 4px;
-    --atlas-control-fill: #191d21;
+    --atlas-control-fill: var(--atlas-material-m2);
     background: var(--atlas-control-fill);
     color: #dad7d0;
+  }
+
+  /* Keep primary-action elevation legible when compact styles override .btn. */
+  .person-main-actions .btn-primary {
+    background:
+      linear-gradient(180deg, var(--atlas-material-sheen-strong), transparent 100%),
+      var(--atlas-material-m3);
   }
 
   .person-table-head {
