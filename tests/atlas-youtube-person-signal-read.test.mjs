@@ -40,7 +40,7 @@ test("YouTube person signal read keeps the exact global baseline separate from t
         source_state:{coverage_batches:["batch008","batch009","batch010","batch011"]},
         snapshot_scope:"segment_supplement"
       }]};
-      if(sql===service.SIGNAL_COUNT_SQL) return { rows:[{count:63}] };
+      if(sql===service.SIGNAL_COUNT_SQL) return { rows:[{count:30}] };
       if(sql===service.SIGNAL_ROWS_SQL) return { rows:[{raw_name:"Abraham Lincoln",rank:1,distinct_channel_count:55,video_count:60}] };
       throw new Error("unexpected sql");
     }
@@ -55,6 +55,7 @@ test("YouTube person signal read keeps the exact global baseline separate from t
   assert.equal(result.progress.exact_unique_channel_count,null);
   assert.equal(result.progress.next_batch,"batch012");
   assert.equal(result.available_count,63);
+  assert.equal(result.stored_count,30);
   assert.deepEqual(result.rows,[{raw_name:"Abraham Lincoln",rank:1,distinct_channel_count:55,video_count:60}]);
   assert.deepEqual(calls.at(-2).params,["yt-global",20]);
   assert.deepEqual(calls.at(-1).params,["yt-global",20,100]);
