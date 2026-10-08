@@ -16,8 +16,7 @@ BEGIN
   END IF;
 END $$;
 
-DELETE FROM atlas_v2.youtube_discovery_progress_state
-WHERE state_key='current';
+DROP TABLE IF EXISTS atlas_v2.youtube_discovery_progress_state;
 
 -- The surviving channel-ID corpus is the canonical global corpus, not a
 -- supplement to an unrecoverable collection.

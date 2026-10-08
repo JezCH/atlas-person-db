@@ -72,44 +72,9 @@ CREATE TABLE IF NOT EXISTS atlas_v2.youtube_discovery_run_ledger (
   )
 );
 
-CREATE TABLE IF NOT EXISTS atlas_v2.youtube_discovery_progress_state (
-  state_key text PRIMARY KEY,
-  baseline_snapshot_id text NOT NULL REFERENCES atlas_v2.youtube_person_signal_snapshots(snapshot_id) ON DELETE RESTRICT,
-  supplemental_snapshot_id text REFERENCES atlas_v2.youtube_person_signal_snapshots(snapshot_id) ON DELETE RESTRICT,
-  baseline_unique_channel_count integer NOT NULL,
-  baseline_video_count bigint NOT NULL,
-  supplemental_selected_channel_count integer NOT NULL,
-  supplemental_success_channel_count integer NOT NULL,
-  supplemental_video_count bigint NOT NULL,
-  gross_success_channel_rows integer NOT NULL,
-  gross_video_rows bigint NOT NULL,
-  unique_channel_lower_bound integer NOT NULL,
-  unique_channel_upper_bound integer NOT NULL,
-  exact_unique_channel_count integer,
-  reconciliation_status text NOT NULL,
-  next_batch text NOT NULL,
-  live_ingestion_enabled boolean NOT NULL DEFAULT false,
-  updated_at timestamptz NOT NULL DEFAULT now(),
-  CONSTRAINT youtube_discovery_progress_state_key_ck CHECK (state_key='current'),
-  CONSTRAINT youtube_discovery_progress_state_bounds_ck CHECK (
-    baseline_unique_channel_count >= 0
-    AND supplemental_selected_channel_count >= 0
-    AND supplemental_success_channel_count >= 0
-    AND gross_success_channel_rows >= 0
-    AND unique_channel_lower_bound >= 0
-    AND unique_channel_upper_bound >= unique_channel_lower_bound
-    AND (exact_unique_channel_count IS NULL OR exact_unique_channel_count BETWEEN unique_channel_lower_bound AND unique_channel_upper_bound)
-  ),
-  CONSTRAINT youtube_discovery_progress_state_status_ck CHECK (
-    reconciliation_status IN ('baseline_channel_ids_missing','reconciled_exact')
-  )
-);
-
 COMMENT ON TABLE atlas_v2.youtube_discovery_run_ledger IS
   'Canonical reconstruction of every YouTube discovery work unit from the initial discarded exploratory crawl through the current batch frontier.';
-COMMENT ON TABLE atlas_v2.youtube_discovery_progress_state IS
-  'Current YouTube discovery progress. Separates the exact batch001-007 global baseline from the internally deduplicated batch008+ supplemental segment until cross-segment Channel-ID reconciliation is possible.';
 COMMENT ON COLUMN atlas_v2.youtube_person_signal_snapshots.snapshot_scope IS
-  'Whether a signal snapshot represents an exact global corpus checkpoint/baseline or only a supplemental ID-preserved segment.';
+  'Historical scope marker retained for compatible replay; current publications use one Channel-ID based global_reconciled corpus.';
 
 COMMIT;
