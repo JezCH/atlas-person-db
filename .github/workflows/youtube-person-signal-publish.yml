@@ -39,6 +39,7 @@ on:
 permissions:
   contents: read
   actions: read
+  issues: write
   id-token: write
 
 concurrency:
@@ -226,6 +227,34 @@ jobs:
           cat /tmp/atlas-youtube-publication/verify.json >&2 || true
           echo "YOUTUBE_PUBLICATION_READBACK_MISMATCH" >&2
           exit 1
+
+      - name: Notify existing full-review backlog of new high-priority names
+        # GitHub Issue posting is advisory. A permission failure must never
+        # roll back a successfully published immutable signal snapshot.
+        if: ${{ success() }}
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          count="$(jq -r '.summary.attention_total' /tmp/atlas-youtube-publication/audit/audit.json)"
+          if [[ "$count" -gt 0 ]]; then
+            jq -r \
+              --arg run "https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" '
+              "### 새 스냅샷 증분 인물 검토 대기열\n" +
+              "- Snapshot: `" + .summary.current_snapshot + "`\n" +
+              "- 신규 표시명: " + (.summary.new_raw_names|tostring) + "\n" +
+              "- 검토가 필요한 신규/등급 상승: " + (.summary.attention_total|tostring) + "\n" +
+              "- P0/P1/P2: " + (.summary.attention_p0|tostring) + "/" +
+                  (.summary.attention_p1|tostring) + "/" + (.summary.attention_p2|tostring) + "\n" +
+              "- 검토용 CSV와 JSON 아티팩트: " + $run + "\n" +
+              "- 기존 #2216 검토 누적 건수는 재계산하기 전까지 종결하지 않음."
+            ' /tmp/atlas-youtube-publication/audit/audit.json \
+              > /tmp/atlas-youtube-publication/audit/issue-update.md
+            gh issue comment 2216 --repo "$GITHUB_REPOSITORY" \
+              --body-file /tmp/atlas-youtube-publication/audit/issue-update.md
+          fi
 
       - name: Upload publication evidence
         if: always()
