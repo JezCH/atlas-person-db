@@ -14,6 +14,15 @@
  * Reuters 2026-10-04 https://www.reuters.com/business/media-telecom/musk-says-he-will-rename-spacexai-spacexsi-2026-10-04/
  * White House 2026-10-05 https://www.whitehouse.gov/gallery/departure-and-arrival-october-5-2026/
  *
+ * Added with October 2026 contemporaneous evidence:
+ * King Charles III — 2026-10-07 official Royal Court Circular:
+ * https://www.royal.uk/media-centre/court-circulars
+ * Pope Leo XIV — 2026-10-07 official Vatican audiences:
+ * https://www.vatican.va/content/leo-xiv/en/speeches/2026/october.html
+ * Warren Buffett — 2026-10-07 Wall Street Journal reporting and 2026-09-18 Reuters:
+ * https://www.wsj.com/lifestyle/warren-buffett-youtube-watching-cb6bd1d4
+ * https://www.reuters.com/business/retail-consumer/berkshire-hathaway-names-warren-buffett-chairman-emeritus-2026-09-18/
+ *
  * Other entries are conservative editorial defaults for living, widely
  * documented contemporaries, not a full life-status authority.
  * Known counterexample: Dolly Parton died on 2026-08-25 (Reuters), so must
@@ -50,6 +59,7 @@ const REVIEWED_LIVING_NAMES=Object.freeze([
   "Justin Bieber",
   "Kamala Harris",
   "Keanu Reeves",
+  "King Charles III",
   "Kim Jong-un",
   "LeBron James",
   "Leonardo DiCaprio",
@@ -68,6 +78,7 @@ const REVIEWED_LIVING_NAMES=Object.freeze([
   "Oprah Winfrey",
   "President Donald Trump",
   "President Trump",
+  "Pope Leo XIV",
   "Putin",
   "Ronaldo",
   "Satya Nadella",
@@ -79,6 +90,7 @@ const REVIEWED_LIVING_NAMES=Object.freeze([
   "Tom Cruise",
   "Trump",
   "Virat Kohli",
+  "Warren Buffett",
   "Vladimir Putin",
   "Will Smith",
   "Xi Jinping"
