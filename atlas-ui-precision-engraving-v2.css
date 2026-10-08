@@ -16,10 +16,11 @@
 }
 
 /* Existing 1px header separation gains an adjacent shadow-cut impression.
- * The V9 sheen is retained, paired with a dark cut on the outside.
+ * More-specific structural anchors win over existing responsive shell rules
+ * while preserving the V9 sheen, paired with a dark cut on the outside.
  */
-.topbar,
-.mobile-appbar {
+.main-area > .topbar,
+body > .mobile-appbar {
   box-shadow:
     inset 0 -1px 0 var(--atlas-engraving-light),
     0 1px 0 var(--atlas-engraving-cut);
