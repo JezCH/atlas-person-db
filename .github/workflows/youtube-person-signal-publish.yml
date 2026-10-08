@@ -100,7 +100,7 @@ jobs:
             and .snapshot.video_count==1536512
             and .snapshot.source_state.channel_ids_persisted==true
             and (.channels|length)==6770
-            and (.signals|length)==(.snapshot.threshold_counts["3"])
+            and ((.signals|length)==(.snapshot.threshold_counts["3"]))
             and (.snapshot.source_state.next_batch)=="batch018"
           ' /tmp/atlas-youtube-publication/snapshot.json >/dev/null
           jq '{snapshot:.snapshot, publication_fingerprint, channel_rows:(.channels|length), signal_rows:(.signals|length)}'             /tmp/atlas-youtube-publication/snapshot.json
