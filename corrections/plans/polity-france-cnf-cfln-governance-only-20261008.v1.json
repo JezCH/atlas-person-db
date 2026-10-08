@@ -1,0 +1,221 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_france_cnf_cfln_wartime_authority_20261008_v1",
+  "as_of": "2026-10-08",
+  "status": "REVIEWED_ASSERTION_ONLY_FREE_FRANCE_CNF_CFLN_PRODUCTION_CORRECTION",
+  "release_order": 2187,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 P2-01E source-backed Free French governance preflight after #2181 GPRF/Fourth. French National Assembly 24 Sep 1941 CNF, 3 Jun 1943 CFLN, 3 Jun 1944 GPRF transition; Légifrance 9 Aug 1944 Ordonnance Articles 1 & 7 distinguishes juridical continuity and Vichy de facto authority.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "production_executable": false,
+    "production_mutation_authorized": false,
+    "assertion_only_scope": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "polity_deletion_forbidden": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true
+  },
+  "evidence": {
+    "existing_french_republic_uuid": "b138f5e4-ff83-40f6-bdb1-83b08c0256cb",
+    "existing_gprf_governance_uuid": "d62d6cb9-4f36-4e7e-aa36-9c99a8b417cd",
+    "existing_gprf_start": "1944-06-03",
+    "existing_fourth_governance_uuid": "ce3e52df-59d7-470d-be1e-18e6198f8690",
+    "existing_fifth_governance_uuid": "078c50b9-4a15-46b4-9181-567cf07ee838",
+    "existing_cfln_official_source_id": "4c0ef4bf-c14c-4577-ae2e-f10f779f66ea",
+    "source_cnf_url": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/institution-du-comite-national-francais",
+    "source_cfln_url": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/institution-du-comite-francais-de-la-liberation-nationale-cfln-et-creation-de-l-assemblee-consultative-provisoire",
+    "france_umbrella_uuid": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+    "france_family_activities_baseline": 65,
+    "french_republic_activities_baseline": 16,
+    "scope_caveat": "The higher-order French Republic legal-continuity context is used to represent Free French constitutional aspirations; this does not identify all Free France operational authorities as sovereign country France or as identical to Vichy. Vichy de facto authority is independently sourced but held from write pending a distinct non-legitimating polity/authority-axis contract and exact July/Aug 1940/1944 boundaries. Country France umbrella is not merged into French Republic merely because they refer to the same geographic nation.",
+    "no_deletion": "Historic now-empty Kingdom and Third Republic Polities are LIVE, must remain absent explicit user approval. Person Activities and provenance must stay byte-for-byte unchanged."
+  },
+  "operations": [],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "france-p2-01e-source-national-assembly-cnf-1941",
+      "exact_before": {
+        "source_absent_id": "2b873a92-8095-454e-9231-d76302a59813"
+      },
+      "exact_after": {
+        "source": {
+          "id": "2b873a92-8095-454e-9231-d76302a59813",
+          "source_key": "bibliographic:assemblee-nationale:cnf-formed-1941-09-24",
+          "source_type": "official_government_reference",
+          "title": "24 septembre 1941 — Institution du Comité national français — Assemblée nationale",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/institution-du-comite-national-francais",
+          "citation_text": "French National Assembly: 24 September 1941 Charles de Gaulle as head of Free French signed ordinance establishing the French National Committee (CNF) in London to exercise provisional public authority; first meeting 27 September 1941. Not equivalent to recognition of Vichy as legal republican government."
+        }
+      }
+    },
+    {
+      "type": "assert_governance_context",
+      "decision_id": "france-p2-01e-cnf-free-france-government-context",
+      "exact_before": {
+        "governance_context_absent_id": "aeeeef67-3e31-4b4c-8e3e-e5b458136a72"
+      },
+      "exact_after": {
+        "context": {
+          "id": "aeeeef67-3e31-4b4c-8e3e-e5b458136a72",
+          "canonical_key": "stage2:free-french-national-committee-1941-1943",
+          "governance_type": "government",
+          "historicity": "historical"
+        },
+        "names": [
+          {
+            "id": "5c3dbfb5-c02e-402b-9e54-5bdbfceea5b2",
+            "governance_context_id": "aeeeef67-3e31-4b4c-8e3e-e5b458136a72",
+            "locale": "en",
+            "name": "French National Committee (Free France)",
+            "name_type": "canonical",
+            "is_preferred": true
+          },
+          {
+            "id": "bf32bb36-01a1-4745-9eb8-9cd9d71466ea",
+            "governance_context_id": "aeeeef67-3e31-4b4c-8e3e-e5b458136a72",
+            "locale": "fr",
+            "name": "Comité national français",
+            "name_type": "canonical",
+            "is_preferred": true
+          },
+          {
+            "id": "c84171f6-0fdb-4971-8a8a-c4e898f1805b",
+            "governance_context_id": "aeeeef67-3e31-4b4c-8e3e-e5b458136a72",
+            "locale": "ko",
+            "name": "프랑스 국민위원회",
+            "name_type": "canonical",
+            "is_preferred": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_governance_context",
+      "decision_id": "france-p2-01e-cfln-national-liberation-government-context",
+      "exact_before": {
+        "governance_context_absent_id": "27c1f5aa-2194-4e09-9c82-fb5d0f08187d"
+      },
+      "exact_after": {
+        "context": {
+          "id": "27c1f5aa-2194-4e09-9c82-fb5d0f08187d",
+          "canonical_key": "stage2:french-committee-of-national-liberation-1943-1944",
+          "governance_type": "government",
+          "historicity": "historical"
+        },
+        "names": [
+          {
+            "id": "d2fcbc69-f0f7-4967-bc2d-11dc42504ada",
+            "governance_context_id": "27c1f5aa-2194-4e09-9c82-fb5d0f08187d",
+            "locale": "en",
+            "name": "French Committee of National Liberation",
+            "name_type": "canonical",
+            "is_preferred": true
+          },
+          {
+            "id": "e3d6fa54-0515-4f60-b300-76ab88b5e6b7",
+            "governance_context_id": "27c1f5aa-2194-4e09-9c82-fb5d0f08187d",
+            "locale": "fr",
+            "name": "Comité français de la Libération nationale",
+            "name_type": "canonical",
+            "is_preferred": true
+          },
+          {
+            "id": "8c8db385-e809-4fdb-bdb9-68c665a8a12f",
+            "governance_context_id": "27c1f5aa-2194-4e09-9c82-fb5d0f08187d",
+            "locale": "ko",
+            "name": "프랑스 민족해방위원회",
+            "name_type": "canonical",
+            "is_preferred": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_governance_period",
+      "decision_id": "france-p2-01e-cnf-free-france-period",
+      "exact_before": {
+        "period_absent_id": "e8fa78f0-ad90-4e6a-a039-2e0e1fc9601b"
+      },
+      "exact_after": {
+        "period": {
+          "id": "e8fa78f0-ad90-4e6a-a039-2e0e1fc9601b",
+          "polity_id": "b138f5e4-ff83-40f6-bdb1-83b08c0256cb",
+          "governance_context_id": "aeeeef67-3e31-4b4c-8e3e-e5b458136a72",
+          "valid_from_year": 1941,
+          "valid_from_month": 9,
+          "valid_from_day": 24,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1943,
+          "valid_to_month": 6,
+          "valid_to_day": 2,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Free French National Committee (CNF) organized by Charles de Gaulle on 24 September 1941, according to official French National Assembly. It exercised provisional public powers for Free France/France combattante and represented Free French authorities, without claiming that Vichy was a legitimate Republic cabinet. It was absorbed into the French Committee of National Liberation created on 3 June 1943. End 2 June 1943 is the ATLAS last-full-day before successor context begins, not independent evidence of exact legal extinguishment at midnight. Free France's 18 June 1940 appeal and preceding Free French military activity are NOT retroactively treated as 1941 CNF government."
+        },
+        "source_links": [
+          {
+            "polity_governance_period_id": "e8fa78f0-ad90-4e6a-a039-2e0e1fc9601b",
+            "source_id": "2b873a92-8095-454e-9231-d76302a59813",
+            "source_locator_key": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/institution-du-comite-national-francais"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_governance_period",
+      "decision_id": "france-p2-01e-cfln-liberation-period",
+      "exact_before": {
+        "period_absent_id": "114e79cb-57c5-4cce-9e20-a51a77b61721"
+      },
+      "exact_after": {
+        "period": {
+          "id": "114e79cb-57c5-4cce-9e20-a51a77b61721",
+          "polity_id": "b138f5e4-ff83-40f6-bdb1-83b08c0256cb",
+          "governance_context_id": "27c1f5aa-2194-4e09-9c82-fb5d0f08187d",
+          "valid_from_year": 1943,
+          "valid_from_month": 6,
+          "valid_from_day": 3,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1944,
+          "valid_to_month": 6,
+          "valid_to_day": 2,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "CFLN instituted in Algiers by joint de Gaulle-Giraud ordinance 3 June 1943. It coordinated the armed and civil Free French and North African liberation authorities, was initially co-chaired by Charles de Gaulle and Henri Giraud, and was renamed Gouvernement provisoire de la République française on 3 June 1944. 2 June 1944 is the last full day before that name transition (ATLAS convention). This government context concerns resistance/liberation provisional authority and asserts no parallel sovereign French country, no recognition of Vichy as legitimate Republic government, and no unregistered Persons or Activity creation."
+        },
+        "source_links": [
+          {
+            "polity_governance_period_id": "114e79cb-57c5-4cce-9e20-a51a77b61721",
+            "source_id": "4c0ef4bf-c14c-4577-ae2e-f10f779f66ea",
+            "source_locator_key": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/institution-du-comite-francais-de-la-liberation-nationale-cfln-et-creation-de-l-assemblee-consultative-provisoire"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "new_source_count": 1,
+    "reused_normalized_source_count": 1,
+    "new_governance_contexts": 2,
+    "new_governance_names": 6,
+    "new_governance_periods": 2,
+    "new_governance_period_source_links": 2,
+    "mutated_person_activities": 0,
+    "france_family_authoring_expected": 65,
+    "france_family_runtime_expected": 65,
+    "production_mutation_authorized": false
+  }
+}
