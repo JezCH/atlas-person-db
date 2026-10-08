@@ -96,10 +96,38 @@
     ));
   }
 
+  function governanceDate(row, prefix){
+    const year=yearValue(row?.["valid_"+prefix+"_year"]);
+    if(year==null) return null;
+    let label=formatYear(year);
+    const month=row?.["valid_"+prefix+"_month"];
+    const day=row?.["valid_"+prefix+"_day"];
+    if(Number.isInteger(month)&&month>=1&&month<=12) label+="-"+String(month).padStart(2,"0");
+    if(Number.isInteger(day)&&day>=1&&day<=31&&Number.isInteger(month)) label+="-"+String(day).padStart(2,"0");
+    return label;
+  }
+
+  // Display only contexts directly attached to THIS polity UUID.
+  // No synthetic country↔Republic merge or Person-Activity inheritance.
+  function directGovernancePeriods(polity){
+    const rows=Array.isArray(polity?.governance_periods)?polity.governance_periods:[];
+    return Object.freeze(rows.map((row)=>Object.freeze({
+      id:text(row?.id),
+      governance_context_id:text(row?.governance_context_id),
+      title:text(row?.name_ko||row?.name_en||row?.name_fr||row?.governance_context_key)||"이름 미등록",
+      original_name:text(row?.name_en||row?.name_fr)||null,
+      governance_type:text(row?.governance_type)||"unresolved",
+      confidence:text(row?.confidence)||null,
+      notes:text(row?.notes)||null,
+      period_label:(governanceDate(row,"from")||"시작 미상")+"–"+(governanceDate(row,"to")||"종료일 미등록")
+    })));
+  }
+
   function dossierForPolity(polity){
     const activities=Array.isArray(polity?.activities)?polity.activities:[];
     const people=groupPeople(polity);
     const designations=observedDesignations(polity);
+    const governancePeriods=directGovernancePeriods(polity);
     const unresolved=Number(polity?.unresolved_activity_count||0);
     const ongoing=activities.filter((row)=>row?.chronology_status==="ongoing").length;
     return Object.freeze({
@@ -118,6 +146,7 @@
       ongoing_activity_count:ongoing,
       unresolved_activity_count:unresolved,
       designations,
+      governance_periods:governancePeriods,
       people
     });
   }
@@ -143,6 +172,22 @@
         '<article><div><strong>'+escapeHtml(row.display_name)+'</strong>'+
           (row.canonical_name_en&&row.canonical_name_en!==row.display_name?'<small>'+escapeHtml(row.canonical_name_en)+'</small>':"")+
         '</div><span>'+escapeHtml(row.observed_span.label)+'</span><span>'+row.person_count+'명 · '+row.activity_count+' Activity</span></article>'
+      ).join("")+'</div>';
+    }
+
+    function governanceHtml(rows){
+      if(!rows.length) return '<p class="polity-dossier-empty">이 정치체에 직접 연결된 통치체계 기록 없음</p>';
+      const typeLabel=(type)=>({
+        government:"정부",
+        constitutional_regime:"헌정 체제",
+        governing_regime:"통치체계"
+      })[type]||"유형 미상";
+      return '<div class="polity-dossier-designations">'+rows.map((row)=>
+        '<article><div><strong>'+escapeHtml(row.title)+'</strong>'+
+        (row.original_name&&row.original_name!==row.title?'<small>'+escapeHtml(row.original_name)+'</small>':"")+
+        '</div><span>'+escapeHtml(row.period_label)+'</span><span>'+
+        escapeHtml(typeLabel(row.governance_type))+' · '+escapeHtml(row.confidence||"검증 상태 미기록")+
+        '</span></article>'
       ).join("")+'</div>';
     }
 
@@ -191,6 +236,9 @@
         '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>TEMPORAL DESIGNATION</small><h4>Activity에서 관측된 시대 명칭</h4></div><p>표시 범위는 명칭 자체의 존속기간이 아니라 해당 명칭으로 연결된 Activity의 관측 범위입니다.</p></div>'+
           designationsHtml(dossier.designations)+
         '</section>'+
+        '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>GOVERNANCE</small><h4>등록된 통치체계</h4></div><p>이 정치체 UUID에 직접 연결된 사료 기반 통치기간만 표시합니다. 국가 포괄체·헌정체계·사실상 통치권을 자동으로 합치거나 법적 정통성을 추정하지 않습니다. 종료일 미등록은 현재까지 존속했다는 보증이 아닙니다.</p></div>'+
+          governanceHtml(dossier.governance_periods)+
+        '</section>'+
         '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>PEOPLE</small><h4>연결 인물</h4></div><p>동일 인물의 여러 Activity를 한 묶음으로 표시합니다.</p></div>'+
           peopleHtml(dossier.people)+
         '</section>'+
@@ -206,6 +254,7 @@
     observedSpan,
     groupPeople,
     observedDesignations,
+    directGovernancePeriods,
     dossierForPolity,
     createRenderer
   });
