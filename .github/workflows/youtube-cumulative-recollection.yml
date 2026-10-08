@@ -1,0 +1,105 @@
+name: YouTube cumulative recollection 012-017
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/youtube-cumulative-recollection.yml"
+      - "scripts/youtube-cumulative-recollect.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: youtube-batch011-staging-longterm
+          path: prior/archive
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: 37604763364
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --disable-pip-version-check yt-dlp
+      - name: Discover previously unseen historical-person channels
+        run: python scripts/youtube-cumulative-recollect.py discover --prior prior/archive --output selection --target 4200
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-recollection-selection
+          path: selection/
+          retention-days: 90
+          if-no-files-found: error
+
+  scan:
+    needs: discover
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: youtube-recollection-selection
+          path: selection
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --disable-pip-version-check yt-dlp
+      - name: Scrape selected new Channel IDs and preserve video titles
+        run: python scripts/youtube-cumulative-recollect.py scan --selection selection/candidates.json --output out --shard ${{ matrix.shard }} --shards 6
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-recollection-part-${{ matrix.shard }}
+          path: out/
+          retention-days: 90
+          if-no-files-found: error
+
+  pack:
+    needs: scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: youtube-batch011-staging-longterm
+          path: prior/archive
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: 37604763364
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: youtube-recollection-part-*
+          path: parts/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --disable-pip-version-check pycountry
+      - name: Validate channel union and archived video counts
+        run: |
+          python scripts/youtube-cumulative-recollect.py pack --prior prior/archive --parts parts --output cumulative --shards 6
+          python scripts/youtube-build-person-signal-snapshot.py --root cumulative --output /tmp/youtube-cumulative-snapshot.json --artifact-id 1 --artifact-digest staging
+          cat cumulative/recollection-summary.json
+      - uses: actions/upload-artifact@v4
+        id: archive
+        with:
+          name: youtube-cumulative-batch017-longterm
+          path: cumulative/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Display verified publication handoff
+        run: |
+          echo "ARTIFACT_ID=${{ steps.archive.outputs.artifact-id }}"
+          echo "ARTIFACT_DIGEST=${{ steps.archive.outputs.artifact-digest }}"
+          echo "ARTIFACT_RUN_ID=${{ github.run_id }}"
