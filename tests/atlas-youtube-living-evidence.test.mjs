@@ -83,6 +83,7 @@ test("reviewed currently living people exclude Musk and Trump without consulting
   assert.equal(reviewedLivingStatus("Trump vs Musk",now),null);
   assert.equal(reviewedLivingStatus("Donald Trump Biography",now),null);
   assert.equal(reviewedLivingStatus("Kim Jong-il",now),null);
+  assert.equal(reviewedLivingStatus("Dolly Parton",now),null,"verified deceased in August 2026");
   assert.equal(reviewedLivingStatus("Elon Musk",Date.parse(REVIEW_EXPIRES_AT)),null);
   let fetchCalls=0;
   const payload=await service.readLivingEvidence({
