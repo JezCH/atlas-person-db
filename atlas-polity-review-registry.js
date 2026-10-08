@@ -152,11 +152,11 @@
         title: "Empire of Brazil ↔ United States of Brazil / Brazil",
         left: { name: "Empire of Brazil" },
         right: { name: "United States of Brazil / Brazil" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
+        rationale: "P2-03 2026-10-09 primary-source review completed. Brazilian federal Decree No. 1 of 1889-11-15 explicitly overthrew imperial monarchy and proclaimed a federative republic under Estados Unidos do Brasil; the 1891 constitution affirmed that proclamation. The 1967 constitution continues a federal republic titled Republica Federativa do Brasil; republican nomenclature change alone is not evidence of a new sovereign identity. Existing approved authoring requests use Empire of Brazil (Pedro I), United States of Brazil (Afonso Pena), and Brazil (Medici), but those do not establish current Production UUIDs or actual loaded Activity links. The Supabase live-read connector was unavailable this session, so no exact Production counts/designations/Source parity could be checked. Keep REVIEW_REQUIRED and HOLD pending direct database census; do not mutate or advance frontier. See docs/POLITY_P2_03_BRAZIL_REGIME_SOURCE_AUDIT_20261009.md.",
         suggested_action: "hold",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        evidence: ["Brazilian Senate Decree No. 1 (1889-11-15): https://legis.senado.leg.br/norma/385329/publicacao/15772955", "Brazilian Presidency 1891 and 1967 constitutions", "Three approved repository authoring records show distinct historical labels but not current Production identities", "2026-10-09 bounded live Production access missing; no merge, retirement, relink, Source, Activity, relation or geometry mutations"]
       },
       {
         id: "oman-empire-oman",
