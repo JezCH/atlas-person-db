@@ -182,7 +182,7 @@
 
   async function ensureLivingEvidence(names) {
     if(Date.now()<livingEvidenceUnavailableUntil) return true;
-    const missing=[...new Set(names)].filter(name=>name && !livingEvidence.has(name));
+    const missing=[...new Set(names)].filter(name=>name && (!livingEvidence.has(name)||livingEvidence.get(name).expires_at<=Date.now()));
     let unavailable=false;
     for(let index=0;index<missing.length;index+=25) {
       try {
@@ -190,7 +190,7 @@
         if(!Array.isArray(payload.rows)) throw new Error("INVALID_LIVING_EVIDENCE_RESPONSE");
         for(const row of payload.rows) {
           if(typeof row?.name==="string" && ["living_likely","deceased","unknown"].includes(row?.status)) {
-            livingEvidence.set(row.name,row.status);
+            livingEvidence.set(row.name,{status:row.status,expires_at:Date.now()+60*60*1000});
           }
         }
       } catch(error) {
@@ -219,7 +219,7 @@
         const batch=candidates.slice(i,i+25);
         if(excludeLiving && await ensureLivingEvidence(batch.map(row=>row.raw_name))) evidenceUnavailable=true;
         for(const row of batch) {
-          if(excludeLiving && livingEvidence.get(row.raw_name)==="living_likely") continue;
+          if(excludeLiving && livingEvidence.get(row.raw_name)?.status==="living_likely") continue;
           visible.push(row);
           if(visible.length===300) break;
         }
@@ -379,6 +379,8 @@
     activeRoot=root;
     if (refreshTimer) clearInterval(refreshTimer);
     root.innerHTML=template();
+    root.querySelector("#youtubeExcludeRegistered").checked=excludeRegistered;
+    root.querySelector("#youtubeExcludeLiving").checked=excludeLiving;
     root.querySelector("#registrationReviewRefresh")?.addEventListener("click",()=>refresh({ forcePersons:true }));
     root.querySelector("#registrationQueueSearch")?.addEventListener("input",renderQueueTable);
     root.querySelector("#youtubeSignalFilters")?.addEventListener("change",(event)=>{
