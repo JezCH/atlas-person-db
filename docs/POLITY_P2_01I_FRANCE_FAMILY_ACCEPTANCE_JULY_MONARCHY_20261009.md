@@ -1,0 +1,67 @@
+# POLITY-P2-01I — eight-Polity France family acceptance audit; July Monarchy constitutional governance gap
+
+**Date:** 2026-10-09.
+**Status at PR creation:** COMPLETED FINITE READ-ONLY 8-POLITY ACTIVITY/SOURCE AND REGIME AUDIT; ONE ADDITIVE JULY MONARCHY CORRECTION REVIEWED AND SUBMITTED; NOT YET PRODUCTION-APPLIED; WHOLE FAMILY REVIEW_REQUIRED.
+
+## 1. Live bounded Production truth — exact eight identified polity UUIDs
+
+Read-only connected Supabase `wfrbxltvpmlprgwfysxq` / `atlas_v2` only for the **eight already-known French-family Polity UUIDs** and their registered Activity, temporal designation, governance, source-link relations. These numbers are current; `docs/POLITY_P2_01_FRANCE_REGIME_FAMILY_AUDIT_20261008.md` is a **pre-P2-01A snapshot**, not a current tally.
+
+| Current live canonical key | UUID | Activity count | Direct designation / governance state | Decision |
+|---|---|---:|---|---|
+| `France` (country umbrella) | `1eaa48b6-dc60-49d6-91c4-49db556f4ddf` | **37** | 4 historical royal `state_form` periods, 1 *de facto* Vichy `governing_regime`; **July Monarchy 1830–1848 governance missing** | additive precise government Context; don't collapse culture and earlier monarchy |
+| `French First Republic` | `24c975e9-f93c-548b-bfcb-60043d9e6c4f` | **4** | Direct regime Polity; no named temporal designation or governance context | preserve separate source-backed revolutionary & Consulate Activities |
+| `First French Empire` | `3ff63558-6761-5585-9dcf-f9a6da53606a` | **5** | Direct imperial polity; no distinct governance context | preserve 1804–1814 imperial & 1815 Hundred Days **separate** reign fragments |
+| `French Second Republic` | `fdb99251-0df5-4c6b-9ca0-c1ce51ae1578` | **1** | Direct separate Polity, Louis-Napoleon President 1848–1852 | preserve 1852 boundary; no false monarchical emperor during presidency |
+| `Second French Empire` | `4f473a9c-4aab-4668-8092-8b370f8d4990` | **2** | Napoleon III emperor 1852–1870 plus Jules Verne 1863 literary activity | preserve; cultural Activity `active_in` does not imply political office |
+| `stage2:french-republic` | `b138f5e4-ff83-40f6-bdb1-83b08c0256cb` | **16** | Third Republic source-backed `state_form`, distinct CNF/CFLN/GPRF/Fourth/Fifth government & constitutional Contexts | legal Republic continuity, not Vichy legitimacy |
+| `Kingdom of France` (later reintroduced legacy identity) | `7e090994-f196-4957-8295-dcfa08c53fba` | **0** | no designation/context; two canonical names | **LIVE**; no unapproved retirement/deletion |
+| `French Third Republic` (later reintroduced legacy identity) | `3d72277f-c92e-476c-8174-804f700d10cc` | **0** | no designation/context; two canonical names | **LIVE**; no unapproved retirement/deletion |
+
+**Current checksum** eight Polities, **65 Authoring /65 Runtime /0 full tuple mismatches** across Person, Polity, Role, PeriodBasis, RelationType, start/end year/month/day/granularity/certainty/calendar. Source links exist for **all 12** First/Second Republic and First/Second Empire Activities (four First Republic: 1+2+2+2 sources, five First Empire: 2+2+1+1+1 sources, Second Republic: 2, Second Empire: 1+1); every Activity UUID and its status/role and notes are preserved.
+
+### Detailed already-registered 12-Activity minister/consular/imperial bridge
+
+- **First Republic 4**: Robespierre (1793–1794, Committee of Public Safety source); Talleyrand Directory foreign minister **1797-07-15→1799-07-20**; the same Person's separate **Consulate 1799-11-22→1804-05-18** ministerial segment; Napoleon First Consul **1799→1804-05-18**. The Consulate is a separate institutional regime (9 November 1799 coup), but the political identity remained republican pending establishment of hereditary Empire. The two Talleyrand ministry Activities are historically separate segments, not duplicated service.
+- **First Empire 5**: Talleyrand's continuous personal Foreign Minister office on the **post-1804-05-18 imperial polity** **1804-05-18→1807-08-09**; Bernadotte's 1804–1810 Marshal service; Napoleon I Emperor **1804–1814**; Lafayette political activity **1815**, `active_in` not `rules`; and Napoleon I's **separate 1815** Hundred Days imperial reign. Never merge the two Napoleon reign Activities, and never label 1814–1815 Restoration as continuous imperial rule.
+- **Second Republic 1**: Louis-Napoleon elected president **1848–1852**. **Second Empire 2**: the same Person's distinctly imperial **1852–1870** reign; Jules Verne representative French literary `active_in` 1863, not cabinet office. The 1852 presidential/imperial distinction is a substantive constitutional boundary, despite coarse-year endpoints.
+
+**Official source verification**: [French National Assembly regime dates](https://www.assemblee-nationale.fr/gouv_parl/regimes.asp) distinguishes First Republic, Consulate, First Empire, first Bourbon Restoration, Hundred Days, second Bourbon Restoration, July Monarchy, Second Republic, Second Empire; [Assemblée nationale Napoleon biography](https://www.assemblee-nationale.fr/gouv_parl/fiches_personnalites/Bonaparte.asp) separately dates First Consul 1799–1804 and Emperor 1804–1814 and 1815; [Élysée constitutional text](https://www.elysee.fr/la-presidence/la-constitution-du-14-janvier-1852-et-ses-modifications) distinguishes constitutional presidential 1852 and 2 December imperial proclamation; [Élysée Louis-Napoléon biography](https://www.elysee.fr/en/louis-napoleon-bonaparte) distinguishes 7 Nov 1852 sénatus-consulte and 2 Dec 1852 Empire commencement. Calendar-year granularity in old Napoleon/Second Empire Activities is not silently converted into specific days unsupported by their original Activity provenance.
+
+## 2. Actual missing July Monarchy constitutional representation — explicit date type
+
+Connected Production before this PR had **zero** `governance_context` key involving July Monarchy, `Monarchie de Juillet`, Orléans or Louis-Philippe; `France` had only the 1940s Vichy de facto Government context. Yet France country-umbrella directly holds Victor Hugo **1831**, exile/founder Mazzini Marseille **1831**, Tocqueville **1835–1840** and Proudhon **1840** `active_in` literary/intellectual activities that occurred **during the July Monarchy**. Those should be visibly anchored to a real contemporary government form **without** assigning political office, claiming cultural work was royal service or rewriting Person Activity UUIDs.
+
+Two exact primary-source event dates:
+
+- [National Assembly — `La Charte constitutionnelle révisée`](https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/monarchie-de-juillet/la-charte-constitutionnelle-revisee): Louis-Philippe **swore oath / accepted designation as King of the French on 9 August 1830** under the amended 1814 Charter. The text was **promulgated on 14 August 1830**; Charles X had **abdicated on 2 August**. These are three different historical events and not three equally valid literal labels for the same event.
+- [National Assembly — `Révolution de février`](https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/monarchie-de-juillet/revolution-de-fevrier): Louis-Philippe **abdicated 24 February 1848**, provisional government formed that evening; separate subsequent Republic **25 February** proclamation chronology. Another National Assembly [general governmental-period table](https://www.assemblee-nationale.fr/gouv_parl/regimes.asp) records `Monarchie de juillet` **2 August 1830→24 February 1848** (uses regime-category start at Charles X's abdication rather than the oath). P2-01I deliberately represents **effective Louis-Philippe constitutional royal government** on **9 August 1830→24 February 1848**, not all earlier July 1830 revolutionary days. No source disagreement is erased.
+
+**Important 1830 overlap**: The second Bourbon Restoration `state_form` designation UUID `21d2913e-c71a-40e9-865c-2d8a3a421b15` has **year-granularity end 1830**, representing uncertain last-covered Activity 1827–1830 (Lafayette). Taken literally by the current day-aware read, it can extend to 31 Dec 1830 and thus formally **overlap** the new historically accurate July Monarchy government start **9 Aug 1830**, albeit on different `state_form` and `governance_context` axes. The existing `state_form` period cannot be silently rewritten without auditing its original official source links and the year-only Lafayette Activity. **No old designation/date is rewritten here.** The separate precision cleanup and a choice whether a 1830–1848 `state_form` designation is needed remain a true residual acceptance gate.
+
+**No claimed discovery of missing Persons:** bounded exact canonical/names search returned no matched Louis-Philippe, Charles X, Lamartine, Guizot profiles. It is **NOT evidence those persons never existed**, nor authorization to manufacture Person or reign Activities. Existing 65 reviewed Person Activities remain untouched.
+
+## 3. One safe additive correction for P2-01I
+
+Official Correction-v2 assertion-only plan `corrections/plans/polity-france-july-monarchy-governance-20261009.v1.json`:
+
+1. Assert **two** French National Assembly official Sources, unique source keys and exact original URLs — 9 August 1830 revised Charter oath; 24 February 1848 abdication/revolution.
+2. Assert **one** historic `constitutional_regime` Governance Context `stage2:france-july-monarchy-constitutional-regime-1830-1848`, stable UUID `0463f1ec-e7fe-4879-8cea-dacbd6de681d`; **three preferred EN/FR/KO names**: `July Monarchy (France)`, `Monarchie de Juillet`, `프랑스 7월 왕정`.
+3. Assert one exact-source-linked `polity_governance_periods` UUID `7adb1a16-514b-41f8-936b-05f26421deca` on existing **France country umbrella** `1eaa48b6-dc60-49d6-91c4-49db556f4ddf`, **1830-08-09→1848-02-24**, Gregorian/day/exact, `reviewed` and **two normalized period–Source joins**. The current P2-01H political-dossier read now surfaces it automatically without deploying a new UI change or creating an independent July Monarchy sovereign Polity. No political successor edge or naming collision.
+4. `operations:[]`: **ZERO** Person Activity rewrites, 0 additional Polities, 0 `state_form` edits, 0 retirements/deletions, no physical Person merge, no P14 geometry. Existing Correction OIDC canonical writer is fail-closed by exact absent IDs/keys. **Only count as Production-applied after run/ledger+readback.**
+
+**Expected postwrite** France umbrella governance periods **1→2** (new July Monarchy plus existing de facto Vichy); French Republic direct governance stays **5**. All 8 live Polities, 65 Person Activities and 65 matching Runtime rows remain unchanged.
+
+## 4. Terminal-acceptance blockers and exact next unit
+
+The 12 historic 1789–1870 First/Second Republic and Empire Activity semantics and chronology are **preserved and pass bounded evidence comparison**. P2-01A/B/D/E/F/H established source-backed monarchy/Third Republic/Vichy/Free France/GPRF/Fourth/Fifth contexts and added direct governance UI.
+
+**But the entire France family should NOT be marked FIXED at P2-01I** merely because one missing governance era was registered:
+- Second Restoration `state_form` end 1830 *year precision* overlaps new July Monarchy institutional date after 9 Aug 1830 if naïvely projected; a **precise source-backed `state_form` boundary choice**, and treatment of the coarse Lafayette 1827–1830 Activity, remains outstanding. Do not fake 9 Aug as original Restoration designation evidence.
+- July Monarchy has no `state_form` label yet on `France`; decide whether to extend legitimate chronology in an additive precise designation versus leave the derived governance Context and avoid label ambiguity in 1830. 1831–1840 broad `active_in` records may be enhanced purely by direct government display already built in P2-01H.
+- Two `Kingdom of France` and `French Third Republic` rows remain **LIVE with zero Activities**, 2 names each. They were created in earlier unrelated register processes. **User approval is mandatory for retirement/deletion**, so do not secretly mark them retired while accepting their normalized Activities elsewhere. `France` broader country and `stage2:french-republic` scoped constitutional-political authority remain separately meaningful, NOT duplicated sovereign nations.
+- Full family terminal closure also demands current all-source/temporal/identity render evidence, no forced forced-reparenting and explicitly preserved original legacy authority. A prior gap repair alone is not such proof.
+
+**Next one bounded unit `POLITY-P2-01J`**: reconcile exact Second Restoration/July Monarchy **`state_form`** day boundary and lawful naming/display precision based on the original restoration sources and French official 2 Aug/9 Aug/14 Aug 1830 date axes; preserve all Person/Activity provenance, and retain empty legacy UUIDs pending user authorization. Decide *family terminal only if* the remaining accepted identity semantics are exhaustive; otherwise hold explicit blocker. Root Issue #1895 **OPEN**, review registry same **75 seeded /50 terminal /25 pending**, France family `REVIEW_REQUIRED`. Independent P1-02 Japan tombstones and P1-03R Place authority untouched, and P14 Geometry stays `PARKED_BY_USER / NOT_ACTIVE / DO_NOT_AUTO_RESUME`. No broad Production scan.
+
+**Status note:** P2-01I correction requires CI/main merge, authenticated Correction Apply and independent Production/Runtime readbacks before this report can truthfully say the governance gap is fixed.
