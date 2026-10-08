@@ -1,38 +1,25 @@
 name: YouTube Person Signal Publish
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/youtube-person-signal-publish.yml"
-      - "api/atlas-youtube-person-signal-publish.js"
-      - "server/atlas-youtube-person-signal-publish-handler.js"
-      - "server/atlas-youtube-person-signal-publish-service.js"
-      - "scripts/youtube-build-person-signal-snapshot.py"
-      - "scripts/youtube-person-signal-quality-rules.v1.json"
-      - "scripts/youtube-person-signal-quality-rules.v2.json"
-      - "db/migrations/20261008_youtube_discovery_channel_registry.sql"
+  # Publish only when a new cumulative artifact is explicitly supplied.
+  # A code push must NOT replay stale pinned batch017 artifacts.
   workflow_dispatch:
     inputs:
       artifact_run_id:
         description: "Workflow run containing the cumulative YouTube artifact"
         required: true
-        default: "37771318676"
         type: string
       artifact_name:
         description: "Cumulative artifact name"
         required: true
-        default: "youtube-cumulative-batch017-validated"
         type: string
       artifact_id:
         description: "Artifact numeric ID for provenance"
         required: true
-        default: "11548326100"
         type: string
       artifact_digest:
         description: "Artifact SHA-256 digest"
         required: true
-        default: "sha256:b40f8efdccfacce194afb44cc7cca3e93a4ab12a2153c5a19b70ceb3f56b0b1f"
         type: string
   workflow_call:
     inputs:
@@ -67,10 +54,10 @@ jobs:
       PUBLISH_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply?__atlas_authoring_apply_surface=youtube-person-signal-publish
       RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
       PUBLISH_AUDIENCE: atlas-person-db-youtube-signal-publish
-      ARTIFACT_RUN_ID: ${{ inputs.artifact_run_id || '37771318676' }}
-      ARTIFACT_NAME: ${{ inputs.artifact_name || 'youtube-cumulative-batch017-validated' }}
-      ARTIFACT_ID: ${{ inputs.artifact_id || '11548326100' }}
-      ARTIFACT_DIGEST: ${{ inputs.artifact_digest || 'sha256:b40f8efdccfacce194afb44cc7cca3e93a4ab12a2153c5a19b70ceb3f56b0b1f' }}
+      ARTIFACT_RUN_ID: ${{ inputs.artifact_run_id }}
+      ARTIFACT_NAME: ${{ inputs.artifact_name }}
+      ARTIFACT_ID: ${{ inputs.artifact_id }}
+      ARTIFACT_DIGEST: ${{ inputs.artifact_digest }}
     steps:
       - uses: actions/checkout@v4
 
@@ -98,16 +85,17 @@ jobs:
           mkdir -p /tmp/atlas-youtube-publication
           python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/atlas-youtube-publication/snapshot.json             --artifact-id "$ARTIFACT_ID"             --artifact-digest "$ARTIFACT_DIGEST"
           jq -e '
-            .snapshot.channel_count==6011
-            and .snapshot.video_count==1536512
+            .snapshot.channel_count>=6011
+            and .snapshot.video_count>=1536512
             and .snapshot.source_state.channel_ids_persisted==true
-            and (.channels|length)==6770
+            and (.channels|length)>=6770
+            and (.channels|length)>=.snapshot.channel_count
             and ((.signals|length)==(.snapshot.threshold_counts["3"]))
             and .snapshot.parser_version=="yt-title-person-reviewed-v4"
             and .snapshot.source_state.quality_rules_version=="reviewed-20261008-v2"
             and (.snapshot.source_state.quality_counters.reviewed_non_person>0)
             and (.snapshot.source_state.quality_counters.numbered_title_metadata>0)
-            and ((.signals | length)<6445)
+            and (.signals | length)>0
             and ([.signals[].raw_name | ascii_downcase] | index("covid-19")==null)
             and ([.signals[].raw_name | ascii_downcase] | index("exclusive")==null)
             and ([.signals[].raw_name | ascii_downcase] | index("pompeii")==null)
@@ -117,7 +105,7 @@ jobs:
             and ([.signals[].raw_name | ascii_downcase] | index("abraham lincoln biography")==null)
             and ([.signals[].raw_name | ascii_downcase] | index("avicenna")==null)
             and ([.signals[].raw_name | ascii_downcase] | index("ibn sina")!=null)
-            and (.snapshot.source_state.next_batch)=="batch018"
+            and (.snapshot.source_state.next_batch | test("^batch[0-9]{3,}$"))
           ' /tmp/atlas-youtube-publication/snapshot.json >/dev/null
           jq '{snapshot:.snapshot, publication_fingerprint, channel_rows:(.channels|length), signal_rows:(.signals|length)}'             /tmp/atlas-youtube-publication/snapshot.json
 
@@ -146,6 +134,38 @@ jobs:
           cat /tmp/atlas-youtube-publication/runtime.json >&2 || true
           echo "YOUTUBE_PUBLICATION_RUNTIME_NOT_READY" >&2
           exit 1
+
+      - name: Snapshot active Production before publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/youtube-fetch-previous-signals.py \
+            --endpoint 'https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=youtube-person-signals' \
+            --output /tmp/atlas-youtube-publication/previous.json
+
+      - name: Generate automatic incremental Person audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -e --slurpfile prev /tmp/atlas-youtube-publication/previous.json '
+            .snapshot.channel_count >= $prev[0].snapshot.channel_count
+            and .snapshot.video_count >= $prev[0].snapshot.video_count
+            and (.channels|length) >= $prev[0].snapshot.channel_count
+          ' /tmp/atlas-youtube-publication/snapshot.json >/dev/null
+          node scripts/youtube-incremental-review.mjs \
+            --current /tmp/atlas-youtube-publication/snapshot.json \
+            --previous /tmp/atlas-youtube-publication/previous.json \
+            --decisions audits/youtube-reviewed-dispositions.json \
+            --output /tmp/atlas-youtube-publication/audit
+          jq -r '
+            "### YouTube Person incremental review\n" +
+            "- Previous: " + .summary.previous_snapshot + "\n" +
+            "- Current: " + .summary.current_snapshot + "\n" +
+            "- Newly surfaced names: " + (.summary.new_raw_names|tostring) + "\n" +
+            "- Newly needing evidence: " + (.summary.attention_total|tostring) + "\n" +
+            "- P0/P1/P2: " + (.summary.attention_p0|tostring) + "/" +
+              (.summary.attention_p1|tostring) + "/" + (.summary.attention_p2|tostring)
+          ' /tmp/atlas-youtube-publication/audit/audit.json >> "$GITHUB_STEP_SUMMARY"
 
       - name: Publish append-only snapshot
         shell: bash
