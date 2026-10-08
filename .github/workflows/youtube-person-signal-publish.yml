@@ -9,6 +9,7 @@ on:
       - "server/atlas-youtube-person-signal-publish-handler.js"
       - "server/atlas-youtube-person-signal-publish-service.js"
       - "scripts/youtube-build-person-signal-snapshot.py"
+      - "scripts/youtube-person-signal-quality-rules.v1.json"
       - "db/migrations/20261008_youtube_discovery_channel_registry.sql"
   workflow_dispatch:
     inputs:
@@ -101,6 +102,15 @@ jobs:
             and .snapshot.source_state.channel_ids_persisted==true
             and (.channels|length)==6770
             and ((.signals|length)==(.snapshot.threshold_counts["3"]))
+            and .snapshot.parser_version=="yt-title-person-reviewed-v3"
+            and .snapshot.source_state.quality_rules_version=="reviewed-20261008-v1"
+            and (.snapshot.source_state.quality_counters.reviewed_non_person>0)
+            and ((.signals | length)<6445)
+            and ([.signals[].raw_name | ascii_downcase] | index("covid-19")==null)
+            and ([.signals[].raw_name | ascii_downcase] | index("exclusive")==null)
+            and ([.signals[].raw_name | ascii_downcase] | index("abraham lincoln biography")==null)
+            and ([.signals[].raw_name | ascii_downcase] | index("avicenna")==null)
+            and ([.signals[].raw_name | ascii_downcase] | index("ibn sina")!=null)
             and (.snapshot.source_state.next_batch)=="batch018"
           ' /tmp/atlas-youtube-publication/snapshot.json >/dev/null
           jq '{snapshot:.snapshot, publication_fingerprint, channel_rows:(.channels|length), signal_rows:(.signals|length)}'             /tmp/atlas-youtube-publication/snapshot.json
