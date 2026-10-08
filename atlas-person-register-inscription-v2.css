@@ -49,5 +49,5 @@
 
 /* Preserve the same hairline and all subrow content. */
 .person-card-grid.person-table-grid.person-monumental-register .person-table-activities .person-card-activity {
-  border-bottom-color: var(--atlas-material-hairline-soft);
+  border-bottom-color: rgba(104, 113, 119, .36);
 }
