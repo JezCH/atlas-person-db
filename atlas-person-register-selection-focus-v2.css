@@ -1,0 +1,40 @@
+/* VIS2-08 — selection/focus fidelity on the existing dense Person Register.
+ * The eight domain palettes, left semantic rail, names and row metrics are owned
+ * by prior phases. Add no UI nodes or animations. Scope to the main register.
+ * VIS2-08 can be reverted by removing its single stylesheet link.
+ */
+:root { --atlas-vis2-08-register-interaction-active: 1; }
+
+/* An engraved inset acknowledgment, not a new border or colored Person card.
+ * Mobile and desktop retain their prior (separate) neutral selection wash. */
+.person-card-grid.person-table-grid.person-monumental-register .person-register-entry.is-selected {
+  box-shadow:
+    inset 0 1px 0 rgba(208,188,145,.20),
+    inset 0 -1px 0 rgba(208,188,145,.12),
+    inset 0 0 0 1px rgba(208,188,145,.045);
+}
+
+/* Strengthen the EXISTING one-pixel neutral selected marker. No new rail. */
+.person-card-grid.person-table-grid.person-monumental-register .person-register-entry.is-selected::after {
+  box-shadow:
+    0 0 0 1px rgba(208,188,145,.12),
+    0 0 7px rgba(208,188,145,.10);
+}
+
+/* A keyboard-focused row is distinct from persistent selection.
+ * Outline paints inside existing row edges; box geometry is unchanged. */
+.person-card-grid.person-table-grid.person-monumental-register .person-register-entry:focus-visible {
+  outline-color: rgba(221,199,152,.88);
+  box-shadow: inset 0 0 0 1px rgba(221,199,152,.22);
+}
+
+/* A keyboard-focused nested external source link also identifies its owner.
+ * :focus-visible suppresses mouse-only decoration, and :has() only paints. */
+.person-card-grid.person-table-grid.person-monumental-register .person-register-entry:has(.person-main-name-link:focus-visible) {
+  box-shadow: inset 0 0 0 1px rgba(221,199,152,.23);
+}
+
+.person-card-grid.person-table-grid.person-monumental-register .person-main-name-link:focus-visible {
+  outline: 1px solid rgba(221,199,152,.88);
+  outline-offset: 1px;
+}
