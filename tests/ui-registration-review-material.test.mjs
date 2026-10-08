@@ -150,3 +150,21 @@ test("REVIEW-M8 visualizes YouTube signal strength with bars while preserving al
   assert.match(js, /data-label="채널"/);
   assert.match(js, /data-label="영상"/);
 });
+
+
+test("REVIEW-M9 distinguishes total work progress from exact global unique channels", () => {
+  const js = read("atlas-registration-review.js");
+
+  assert.match(js, /progress\.gross_success_channel_rows/);
+  assert.match(js, /progress\.gross_video_rows/);
+  assert.match(js, /progress\.baseline_unique_channel_count/);
+  assert.match(js, /progress\.supplemental_success_channel_count/);
+  assert.match(js, /progress\.supplemental_selected_channel_count/);
+  assert.match(js, /progress\.unique_channel_lower_bound/);
+  assert.match(js, /progress\.unique_channel_upper_bound/);
+  assert.match(js, /progress\.exact_unique_channel_count/);
+  assert.match(js, /progress\.next_batch/);
+  assert.match(js, /baseline Channel ID 미보존으로 cross-dedupe 미완료/);
+  assert.match(js, /live incremental 전환 전/);
+  assert.match(js, /별도 segment snapshot .* 총량으로 대체하지 않음/);
+});
