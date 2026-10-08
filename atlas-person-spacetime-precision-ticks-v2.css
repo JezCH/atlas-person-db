@@ -1,0 +1,49 @@
+/* VIS2-04 — Chronograph tick presentation only.
+ * Keep the existing year-axis span, major-notch pseudo-element and
+ * century-line nodes. No tick generation, coordinates, axis dimensions,
+ * camera, time projection, major/minor decisions, label metrics or LOD edits.
+ * Opt-in stylesheet can be deleted independently of the earlier phases.
+ */
+:root { --atlas-vis2-04-tick-active: 1; }
+
+/* Measured hierarchy: small dates stay readable but subordinate to
+ * century anchoring numerals. Mixed-script numeric metrics are VIS2-03-owned.
+ */
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis span:not(.is-major) {
+  color: #98a0a3;
+}
+
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis span.is-major {
+  color: #e6ded0;
+}
+
+/* Refinish the pre-existing five-pixel major notch; never add a new tick. */
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-year-axis span.is-major::before {
+  background-image: linear-gradient(90deg,
+    var(--atlas-material-hairline-strong),
+    var(--atlas-material-rail));
+  box-shadow: 0 1px 0 var(--atlas-material-edge-dark);
+}
+
+/* Quiet minor guides so 1px major-century/era hierarchy is more legible.
+ * A continuous fade is painted inside the EXISTING line rectangle.
+ */
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-century-line:not(.is-major) {
+  opacity: .52;
+  background-image: linear-gradient(90deg,
+    var(--atlas-material-hairline-soft) 0%,
+    var(--spacetime-line-soft) 14%,
+    var(--spacetime-line-soft) 90%,
+    transparent 100%);
+}
+
+/* Existing major guide retains its single-pixel height and start/end Y.
+ * The already-owned historical metal tint is concentrated at the gutter.
+ */
+.spacetime-frame[data-spacetime-visual="chronology-v6"] .spacetime-century-line.is-major {
+  background-image: linear-gradient(90deg,
+    var(--atlas-material-rail-soft) 0%,
+    var(--spacetime-line-major) 12%,
+    var(--spacetime-line-major) 92%,
+    var(--spacetime-line-soft) 100%);
+}
