@@ -278,7 +278,7 @@ test("REVIEW-M12 toggles registered and living exclusions independently with unk
       const surface=parsed.searchParams.get("__atlas_read_surface");
       const payload=surface==="registration-queue" ? queue
         : surface==="youtube-person-living"
-          ? {ok:true,rows:JSON.parse(parsed.searchParams.get("names")).map(name=>({name,status:name==="Taylor Swift"?"living_likely":"unknown"}))}
+          ? {ok:true,evidence_unavailable:true,rows:JSON.parse(parsed.searchParams.get("names")).map(name=>({name,status:name==="Taylor Swift"?"living_likely":"unknown"}))}
           : {ok:true,stored_count:4,available_count:4,rows:raw,
             snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":4},source_state:{next_batch:"batch018"}}};
       return {ok:true,status:200,json:async()=>payload};
@@ -315,6 +315,7 @@ test("REVIEW-M12 toggles registered and living exclusions independently with unk
   assert.match(html(),/Hypatia/);
   assert.match(html(),/Unknown Figure/);
   assert.match(node("#youtubeSignalVisibleCount").textContent,/생존 미확인 포함/);
+  assert.match(node("#youtubeSignalVisibleCount").textContent,/생존 조회 실패\(제외 불완전\)/);
   assert.ok(fetchCalls.some(url=>url.includes("youtube-person-living")));
   await toggle("youtubeExcludeRegistered",false);
   assert.match(html(),/Abraham Lincoln/);
