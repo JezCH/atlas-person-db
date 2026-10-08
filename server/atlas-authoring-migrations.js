@@ -35,7 +35,8 @@ const AUTHORING_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20261004_person_representative_domain_standard_v2_replay_safe.sql"),
   path.resolve(__dirname, "../db/migrations/20261006_user_selected_person_registration_queue_07.sql"),
   path.resolve(__dirname, "../db/migrations/20261007_youtube_person_signal_read_model.sql"),
-  path.resolve(__dirname, "../db/migrations/20261008_youtube_discovery_channel_registry.sql")
+  path.resolve(__dirname, "../db/migrations/20261008_youtube_discovery_channel_registry.sql"),
+  path.resolve(__dirname, "../db/migrations/20261008_youtube_history_reconciliation.sql")
 ]);
 
 const AUTHORING_APPLY_MIGRATION_PATHS = Object.freeze([
@@ -66,7 +67,8 @@ const AUTHORING_APPLY_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20261003_shah_abbas_registration_queue_binding.sql"),
   path.resolve(__dirname, "../db/migrations/20261006_user_selected_person_registration_queue_07.sql"),
   path.resolve(__dirname, "../db/migrations/20261007_youtube_person_signal_read_model.sql"),
-  path.resolve(__dirname, "../db/migrations/20261008_youtube_discovery_channel_registry.sql")
+  path.resolve(__dirname, "../db/migrations/20261008_youtube_discovery_channel_registry.sql"),
+  path.resolve(__dirname, "../db/migrations/20261008_youtube_history_reconciliation.sql")
 ]);
 
 function readMigrationPaths(migrationPaths, { readFile = fs.readFileSync } = {}) {
