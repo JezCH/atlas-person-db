@@ -18,8 +18,9 @@ BATCH_LABEL_RE = re.compile(r"(?:youtube-)?batch(\d{3})", re.I)
 SEP_RE = re.compile(r"\s*(?:\||:|\s[-–—]\s)\s*")
 PAREN_TRAIL_RE = re.compile(r"\s*[\[(][^\])]{0,80}[\])]?\s*$")
 SPACE_RE = re.compile(r"\s+")
-TRAILING_BIO_RE = re.compile(r"\s+(?:biography|documentary|biographical documentary|life story|bio)\s*$", re.I)
-QUALITY_RULES_PATH = Path(__file__).with_name("youtube-person-signal-quality-rules.v1.json")
+NUMBERED_META_RE = re.compile(r"^(?:chapter|part|day|ep|episode|panel|session)\s*[-#.]?\s*\d+(?:\s*/\s*\d+)?$", re.I)
+TRAILING_BIO_RE = re.compile(r"\s+(?:biography|documentary|biographical documentary|life story|bio|for kids)\s*$", re.I)
+QUALITY_RULES_PATH = Path(__file__).with_name("youtube-person-signal-quality-rules.v2.json")
 
 
 def load_quality_rules(path=QUALITY_RULES_PATH):
@@ -55,7 +56,7 @@ REVIEWED_NONHISTORICAL = frozenset(
 LEADING_PATTERNS = (
     "the life of ", "life of ", "biography of ", "the biography of ",
     "the story of ", "story of ", "who was ", "who is ",
-    "the rise and fall of ", "rise and fall of ",
+    "the rise and fall of ", "rise and fall of ", "the rise of ", "rise of ",
 )
 
 FUNCTION_WORDS = {
@@ -158,6 +159,8 @@ def candidate_rejection(candidate):
         return "reviewed_non_person"
     if lowered in REVIEWED_NONHISTORICAL:
         return "reviewed_nonhistorical"
+    if NUMBERED_META_RE.fullmatch(candidate):
+        return "numbered_title_metadata"
     return "parser_validation"
 
 
@@ -191,6 +194,8 @@ def valid_candidate(candidate):
     if len(candidate) < 3 or len(candidate) > 70:
         return False
     lowered = candidate.casefold()
+    if NUMBERED_META_RE.fullmatch(candidate):
+        return False
     if lowered in GENERIC_EXACT or lowered in COUNTRY_NAMES or lowered in REVIEWED_NON_PERSON or lowered in REVIEWED_NONHISTORICAL:
         return False
     if BAD_PREFIX_RE.search(candidate) or GENERIC_TOKEN_RE.search(candidate):
@@ -337,7 +342,7 @@ def build(root, artifact_id, artifact_digest):
     }
 
     generated = dt.datetime.now(dt.timezone.utc).replace(microsecond=0)
-    snapshot_id = f"yt-{generated.strftime('%Y%m%dT%H%M%SZ')}-{len(ok_ids)}ch-rebuild-v3"
+    snapshot_id = f"yt-{generated.strftime('%Y%m%dT%H%M%SZ')}-{len(ok_ids)}ch-rebuild-v4"
     source_state = {
         "workspace": "yt-discovery-core-v2",
         "coverage_mode": "single_cumulative_id_preserved",
@@ -363,7 +368,7 @@ def build(root, artifact_id, artifact_digest):
             "channel_count": len(ok_ids),
             "video_count": video_total,
             "threshold_counts": thresholds,
-            "parser_version": "yt-title-person-reviewed-v3",
+            "parser_version": "yt-title-person-reviewed-v4",
             "source_state": source_state,
         },
         "channels": channels,
