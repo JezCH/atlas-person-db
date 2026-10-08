@@ -27,8 +27,7 @@ test("registration queue is derived from current Production identity, not a queu
   assert.match(PENDING_SQL, /candidate_identity_matches/i);
   assert.match(PENDING_SQL, /Napoleon Bonaparte/);
   assert.match(PENDING_SQL, /Avicenna/);
-  for(const name of ["Mussolini","Machiavelli","JFK","Churchill","Prophet Muhammad","Kafka","Tesla"]) {
-    if(name==="Tesla") continue;
+  for(const name of ["Mussolini","Machiavelli","JFK","Churchill","Prophet Muhammad","Kafka"]) {
     assert.ok(PENDING_SQL.includes(name),`missing audited Person synonym: ${name}`);
     assert.ok(REVIEWED_PERSON_ALIASES_SQL.includes(name),`missing UI representative alias: ${name}`);
   }
