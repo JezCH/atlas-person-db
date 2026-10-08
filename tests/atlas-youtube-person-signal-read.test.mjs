@@ -33,26 +33,14 @@ test("YouTube reads one canonical cumulative snapshot and exact threshold counts
 
 test("newer ID-preserved publications win over older ones",()=>{
   assert.match(service.GLOBAL_SNAPSHOT_SQL,/order by generated_at desc/i);
-  assert.match(service.GLOBAL_SNAPSHOT_SQL,/segment_supplement/);
+  assert.doesNotMatch(service.GLOBAL_SNAPSHOT_SQL,/segment_supplement/);
   assert.match(service.GLOBAL_SNAPSHOT_SQL,/global_reconciled/);
 });
 
-test("legacy-schema fallback is limited to a schema-propagation failure",async()=>{
-  const client={async query(sql,params){
-    if(sql===service.GLOBAL_SNAPSHOT_SQL) {
-      const err=new Error("column missing");err.code="42703";throw err;
-    }
-    if(sql===service.LEGACY_LATEST_SNAPSHOT_SQL) return {rows:[{
-      snapshot_id:"replaying",generated_at:"2026-10-08T00:00:00Z",
-      channel_count:2,video_count:3,threshold_counts:{"3":0}
-    }]};
-    if(sql===service.SIGNAL_COUNT_SQL) return {rows:[{count:0}]};
-    if(sql===service.SIGNAL_ROWS_SQL) return {rows:[]};
-    throw new Error("unexpected query");
-  }};
-  const result=await service.readYoutubePersonSignals({client});
-  assert.equal(result.snapshot.snapshot_id,"replaying");
-  assert.equal(result.stored_count,0);
+test("legacy snapshots cannot silently reenter the live ranking",async()=>{
+  assert.doesNotMatch(service.GLOBAL_SNAPSHOT_SQL,/global_baseline|global_checkpoint|segment_supplement/);
+  const error=Object.assign(new Error("column missing"),{code:"42703"});
+  await assert.rejects(()=>service.readYoutubePersonSignals({client:{query:async()=>{throw error;}}}),/column missing/);
 });
 
 test("invalid limits fail closed and empty snapshots are handled",async()=>{
