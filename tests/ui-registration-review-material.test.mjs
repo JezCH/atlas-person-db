@@ -126,6 +126,8 @@ test("REVIEW-M7 compacts YouTube signal metadata into one responsive toolbar wit
   assert.match(js, /snapshot\.generated_at/);
   assert.match(js, /snapshot\.parser_version/);
   assert.match(js, /payload\?\.available_count/);
+  assert.match(js, /payload\?\.stored_count/);
+  assert.match(js, /상세 .*행 저장/);
   assert.match(js, /signalRows\.length/);
 });
 
