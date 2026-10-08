@@ -239,12 +239,14 @@
         : "<strong>아직 YouTube 수집 데이터가 없습니다.</strong>";
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
-    if(count) count.textContent=`전체 ${number(payload?.available_count ?? 0)}명 · 현재 ${number(signalRows.length)}명 표시`;
+    if(count) count.textContent=(excludeRegistered||excludeLiving)
+      ? `상위 ${number(payload?.filtered_checked_count ?? signalRows.length)}명 확인 · 조건 일치 ${number(signalRows.length)}명 표시${excludeLiving ? " · 생존 미확인 포함" : ""}${payload?.filter_evidence_unavailable ? " · 생존 조회 실패(제외 불완전)" : ""}`
+      : `전체 ${number(payload?.available_count ?? 0)}명 · 현재 ${number(signalRows.length)}명 표시`;
     renderSignalThresholds(snapshot);
     const body=activeRoot?.querySelector("#youtubeSignalBody");
     if(!body) return;
     if(!signalRows.length) {
-      body.innerHTML='<tr><td colspan="4" class="registration-review-empty">현재 조건의 반복 인물 신호가 없습니다.</td></tr>';
+      body.innerHTML='<tr><td colspan="4" class="registration-review-empty">현재 필터 조건에 맞는 인물이 없습니다.</td></tr>';
       return;
     }
     const maxChannels=Math.max(1,...signalRows.map(row=>Number(row?.distinct_channel_count || 0)));
@@ -280,13 +282,13 @@
       const [persons,queue,signals]=await Promise.all([
         dataStore.loadPersons({ force:forcePersons }),
         getJson(QUEUE_URL),
-        getJson(`${SIGNAL_URL}&min_channels=${encodeURIComponent(minChannels)}&limit=300`)
+        getJson(signalQuery(filterRequestLimit()))
       ]);
       if (serial !== requestSerial || root !== activeRoot) return;
       prepareSignalIdentities(persons,queue);
       renderRegistered(persons,queue);
       renderQueue(queue);
-      renderSignals(signals);
+      renderSignals(await collectVisibleSignals(signals));
       setStatus(`DB 최신 스냅샷 조회 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
     } catch (error) {
       if (serial !== requestSerial || root !== activeRoot) return;
@@ -303,9 +305,9 @@
     const serial=++requestSerial;
     setStatus("YouTube 신호 조건 갱신 중","loading");
     try {
-      const signals=await getJson(`${SIGNAL_URL}&min_channels=${encodeURIComponent(minChannels)}&limit=300`);
+      const signals=await getJson(signalQuery(filterRequestLimit()));
       if (serial !== requestSerial || root !== activeRoot) return;
-      renderSignals(signals);
+      renderSignals(await collectVisibleSignals(signals));
       setStatus(`DB 최신 스냅샷 조회 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
     } catch (error) {
       if (serial !== requestSerial || root !== activeRoot) return;
@@ -325,10 +327,14 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 등록 상태는 인물명·별칭의 정규화된 정확 일치로 대조하며, 일치 없음은 실제 미등록을 확정하지 않습니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
+          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 등록 상태는 인물명·별칭의 정규화된 정확 일치로 대조하며, 일치 없음은 실제 미등록을 확정하지 않습니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
         </div>
         <div class="registration-review-signal-toolbar">
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
+          <div id="youtubeSignalFilters" class="registration-review-signal-filters" aria-label="유튜브 인물 필터">
+            <label><input type="checkbox" id="youtubeExcludeRegistered">기등록 제외</label>
+            <label><input type="checkbox" id="youtubeExcludeLiving">생존 추정 인물 제외</label>
+          </div>
           <div class="registration-review-signal-meta">
             <div id="youtubeSignalTelemetry" class="registration-review-telemetry"><strong>스냅샷 확인 중</strong></div>
             <span id="youtubeSignalVisibleCount" class="registration-review-signal-visible">—</span>
@@ -367,6 +373,13 @@
     root.innerHTML=template();
     root.querySelector("#registrationReviewRefresh")?.addEventListener("click",()=>refresh({ forcePersons:true }));
     root.querySelector("#registrationQueueSearch")?.addEventListener("input",renderQueueTable);
+    root.querySelector("#youtubeSignalFilters")?.addEventListener("change",(event)=>{
+      if(event.target?.id==="youtubeExcludeRegistered") excludeRegistered=event.target.checked;
+      else if(event.target?.id==="youtubeExcludeLiving") excludeLiving=event.target.checked;
+      else return;
+      if(personIdentityIndex) refreshSignalsOnly();
+      else refresh({forcePersons:true});
+    });
     root.querySelector("#youtubeSignalThresholds")?.addEventListener("click",(event)=>{
       const button=event.target.closest("[data-min-channels]");
       if (!button) return;
