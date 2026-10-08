@@ -59,6 +59,8 @@ async function capture(c,name,kind,extra={}){
       selected_person:selected?.dataset.personId||null,
       visible_person_fields:q(".person-table-head")?.textContent?.trim().slice(0,280)||null,
       detail_visible:Boolean(q("#personMainDetail:not([hidden])")),
+      detail_ready:Boolean(q("#personMainDetail:not([hidden]) .person-chronicle-hero")),
+      detail_identity:(q("#personMainDetail .person-chronicle-identity")?.textContent||"").trim().slice(0,150),
       polity_count:document.querySelectorAll(".polity-browser-card").length,
       polity_open_count:document.querySelectorAll(".polity-browser-card[open]").length,
       dashboard_kpi_count:document.querySelectorAll(".dashboard-kpi").length,
@@ -72,6 +74,7 @@ async function capture(c,name,kind,extra={}){
   });
   insist(state.viewport.width===extra.width,"Viewport drift in baseline",state);
   insist(state.fonts==="loaded","Fonts not stable at screenshot capture",state);
+  if(kind==="person-detail")insist(state.detail_ready&&state.detail_identity,"Person Detail content did not finish loading",state);
   insist(state.document_width<=state.viewport.width+1,"Document horizontal overflow at baseline",state);
   const png=await c.call("Page.captureScreenshot",{format:"png",fromSurface:true,captureBeyondViewport:false});
   insist(Boolean(png.data),"Missing Production screenshot: "+name);
@@ -99,7 +102,9 @@ async function person(c,width){
       await evaluate(c,()=>{window.ATLAS_PERSON_MAIN?.setDomainFilter?.("");return true;});
     }
     await evaluate(c,()=>{document.querySelector(".person-register-entry .person-main-name-link")?.click();return true;});
-    await until(c,()=>Boolean(document.querySelector("#personMainDetail:not([hidden])")),25000);
+    await until(c,()=>Boolean(document.querySelector("#personMainDetail:not([hidden]) .person-chronicle-hero")),35000);
+    await until(c,()=>document.querySelector("#personMainDetail .person-chronicle-identity")?.textContent?.trim().length>0,15000);
+    await sleep(300); // let async detail typography/portrait settle before baseline shot
     await capture(c,"vis2-person-detail-"+width+".png","person-detail",{width,mode:"selected-detail"});
   }
 }
