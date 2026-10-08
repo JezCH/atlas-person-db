@@ -112,7 +112,7 @@
         title: "France regime family ↔ kingdom / republic / empire / restoration / republics",
         left: { name: "France regime family" },
         right: { name: "kingdom / republic / empire / restoration / republics" },
-        rationale: "2026-10-08 P2-01A 실적: 기존 #1357/#1378 France 동일 Identity 왕국 state_form 통합 판정에 따라 재생성 Kingdom UUID 7e090994-f196-4957-8295-dcfa08c53fba의 Philip II 1180–1223, Cartier 3차 항해, Jacques-Louis David 1785 등 활동 5건을 정식 Correction으로 안정된 France 1eaa48b6-dc60-49d6-91c4-49db556f4ddf에 재연결했습니다. Source 8개 링크 및 Activity 5 UUID·기간 보존, 왕국 5→0 / France 32→37, 전체 France family Authoring/Runtime 65/65 불일치 0. BnF 필리프 2세·루이 8세 증거로 기존 1226~1792 지정 구간을 바꾸지 않고 별도의 1180~1225 King of France state_form 추가. 왕국 레거시 UUID는 삭제 승인 없이 보존 중입니다. French Third Republic 2건과 generic stage2:french-republic 14건 혼재 및 제4·제5공화국/France umbrella 등은 P2-01B와 P2-01C에서 별도 검토해야 하므로 family REVIEW_REQUIRED 유지, 전수 씨앗 25건 변동 없음. 근거 docs/POLITY_P2_01A_FRANCE_KINGDOM_FIVE_RELINK_20261008.md.",
+        rationale: "2026-10-08 P2-01A 실적: 기존 #1357/#1378 France 동일 Identity 왕국 state_form 통합 판정에 따라 재생성 Kingdom UUID 7e090994-f196-4957-8295-dcfa08c53fba의 Philip II 1180–1223, Cartier 3차 항해, Jacques-Louis David 1785 등 활동 5건을 정식 Correction으로 안정된 France 1eaa48b6-dc60-49d6-91c4-49db556f4ddf에 재연결했습니다. Source 8개 링크 및 Activity 5 UUID·기간 보존, 왕국 5→0 / France 32→37, 전체 France family Authoring/Runtime 65/65 불일치 0. BnF 필리프 2세·루이 8세 증거로 기존 1226~1792 지정 구간을 바꾸지 않고 별도의 1180~1225 King of France state_form 추가. 왕국 레거시 UUID는 삭제 승인 없이 보존 중입니다. P2-01B에서 제3공화국 2건을 일반 프랑스 공화국으로 재연결하여 제3공화국 0건·프랑스 공화국 16건을 확인했고, 1870~1940년 제3공화국 명칭을 별도 state_form으로 보존했습니다. Production Correction #2166 및 Runtime 65/65 일치 검증을 완료했습니다. 전시 정체와 France umbrella는 P2-01C에서 검토해야 하므로 family REVIEW_REQUIRED 유지, 전수 씨앗 25건 변동 없음. 근거 docs/POLITY_P2_01A_FRANCE_KINGDOM_FIVE_RELINK_20261008.md.",
         suggested_action: "hold",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
@@ -122,7 +122,7 @@
           "Production verified 5 exact Activity UUIDs relinked from reintroduced Kingdom 7e090994-f196-4957-8295-dcfa08c53fba to stable France 1eaa48b6-dc60-49d6-91c4-49db556f4ddf; counts Kingdom 0, France 37, source links 8 conserved, Runtime 65/65",
           "BnF Philippe II 1180–1223 and Louis VIII 1223–1226; new non-overlapping 1180–1225 state_form on France, earlier 1226–1792 and 1814–1830 designations untouched",
           "#1357 earlier Kingdom→France 21-Activity consolidation and #1378 retired different earlier Kingdom UUID 2fcc634c-9806-5fe8-96fe-e4310124908a remain historical precedent",
-          "P2-01B pending Third Republic 2 vs generic French Republic 14; P2-01C pending France country/war/4th/5th boundaries; no terminal family decision",
+          "P2-01B #2166 Correction APPLIED: Third Republic 2→0, generic French Republic 14→16; 1870-09-04→1940-07-10 sourced EN/FR/KO designation; 65 Authoring/65 Runtime parity after #37775750359 compile. P2-01C wartime and country-umbrella pending; no terminal France family decision",
           "French National Assembly regime chronology: https://www.assemblee-nationale.fr/gouv_parl/regimes.asp"
 
         ]
