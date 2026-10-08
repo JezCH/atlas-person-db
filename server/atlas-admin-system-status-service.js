@@ -299,6 +299,40 @@ async function duplicateLifecycle(client, tables) {
   });
 }
 
+// Bounded, read-only visibility into already-applied authoritative manifests.
+// Never expose the unbounded result_snapshot payload or claim CI/deployment status.
+async function recentManifestRuns(client, tables, tableCounts = {}) {
+  const descriptions = [
+    ["authoring", "authoring_manifest_runs"],
+    ["correction", "correction_manifest_runs"]
+  ];
+  const groups = {};
+  for (const [kind, table] of descriptions) {
+    if (!tables.includes(table)) {
+      groups[kind] = Object.freeze({ available: false, reason: "MANIFEST_LEDGER_TABLE_NOT_PRESENT" });
+      continue;
+    }
+    // Table identifiers below come only from the fixed internal allowlist.
+    const result = await client.query(`
+      select request_id, manifest_schema, manifest_hash, applied_at
+        from atlas_v2.${table}
+       order by applied_at desc, request_id desc
+       limit 5
+    `);
+    groups[kind] = Object.freeze({
+      available: true,
+      total: tableCounts[table] ?? null,
+      latest_applied: Object.freeze((result.rows || []).map((row) => Object.freeze({
+        request_id: row.request_id == null ? null : String(row.request_id),
+        manifest_schema: row.manifest_schema == null ? null : String(row.manifest_schema),
+        manifest_hash: row.manifest_hash == null ? null : String(row.manifest_hash),
+        applied_at: row.applied_at ?? null
+      })))
+    });
+  }
+  return Object.freeze(groups);
+}
+
 function optionalReadinessModule() {
   try {
     return require("./atlas-person-duplicate-revalidation-readiness.js");
@@ -318,6 +352,7 @@ async function inspectAdminSystemStatus({ client, env = process.env } = {}) {
   const authoring = db.atlas_v2_schema_present ? await guarded(() => inspectAuthoringReadiness(client), "AUTHORING_READINESS_CHECK_FAILED") : Object.freeze({ available: false, error: { code: "ATLAS_V2_SCHEMA_MISSING" } });
   const duplicates = db.atlas_v2_schema_present ? await guarded(() => duplicateLifecycle(client, tables), "DUPLICATE_STATUS_CHECK_FAILED") : Object.freeze({ available: false, error: { code: "ATLAS_V2_SCHEMA_MISSING" } });
   const runtimePublication = db.atlas_v2_schema_present ? await guarded(() => runtimePublicationDiagnostics(client, tables), "RUNTIME_PUBLICATION_CHECK_FAILED") : Object.freeze({ available: false, error: { code: "ATLAS_V2_SCHEMA_MISSING" } });
+  const manifestHistory = db.atlas_v2_schema_present ? await guarded(() => recentManifestRuns(client, tables, tableCounts), "MANIFEST_HISTORY_READ_FAILED") : Object.freeze({ available: false, error: { code: "ATLAS_V2_SCHEMA_MISSING" } });
 
   const p10Module = optionalReadinessModule();
   const p10Revalidation = !p10Module?.inspectPersonDuplicateRevalidationReadiness
@@ -346,6 +381,7 @@ async function inspectAdminSystemStatus({ client, env = process.env } = {}) {
     }),
     duplicate_lifecycle: duplicates,
     runtime_publication: runtimePublication,
+    manifest_history: manifestHistory,
     verification: Object.freeze({
       github_actions_status_embedded: false,
       reason: "GITHUB_ACTIONS_IS_EXTERNAL_TO_RUNTIME"
@@ -369,6 +405,7 @@ module.exports = Object.freeze({
   normalizeExclusionSummary,
   runtimePublicationDiagnostics,
   duplicateLifecycle,
+  recentManifestRuns,
   optionalReadinessModule,
   inspectAdminSystemStatus
 });
