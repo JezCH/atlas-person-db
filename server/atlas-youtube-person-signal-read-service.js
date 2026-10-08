@@ -195,6 +195,7 @@ async function readYoutubePersonSignals({ client, minChannels = 3, limit = 300 }
       progress:null,
       min_channels:normalizedMinChannels,
       available_count:0,
+      stored_count:0,
       rows:Object.freeze([])
     });
   }
@@ -206,6 +207,8 @@ async function readYoutubePersonSignals({ client, minChannels = 3, limit = 300 }
     client.query(SIGNAL_ROWS_SQL,[snapshot.snapshot_id,normalizedMinChannels,normalizedLimit])
   ]);
 
+  const storedCount=Number(countResult.rows?.[0]?.count || 0);
+  const aggregateCount=Number(snapshot.threshold_counts?.[String(normalizedMinChannels)]);
   return Object.freeze({
     schema:YOUTUBE_PERSON_SIGNAL_SCHEMA,
     available:true,
@@ -213,7 +216,8 @@ async function readYoutubePersonSignals({ client, minChannels = 3, limit = 300 }
     segment_snapshot:projectSnapshot(segmentResult.rows?.[0] || null),
     progress:projectProgress(progressResult.rows?.[0] || null),
     min_channels:normalizedMinChannels,
-    available_count:Number(countResult.rows?.[0]?.count || 0),
+    available_count:Number.isInteger(aggregateCount) && aggregateCount >= 0 ? aggregateCount : storedCount,
+    stored_count:storedCount,
     rows:Object.freeze((rowsResult.rows || []).map(projectSignal))
   });
 }
