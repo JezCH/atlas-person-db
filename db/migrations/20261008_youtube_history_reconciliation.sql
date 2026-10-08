@@ -173,15 +173,25 @@ INSERT INTO atlas_v2.youtube_discovery_progress_state(
   gross_success_channel_rows,gross_video_rows,
   unique_channel_lower_bound,unique_channel_upper_bound,exact_unique_channel_count,
   reconciliation_status,next_batch,live_ingestion_enabled,updated_at
-) VALUES (
+)
+SELECT
   'current',
   'yt-20261007T050219Z-2715ch',
-  'yt-20261007T224614Z-2128ch-rebuild-v2',
+  CASE
+    WHEN EXISTS (
+      SELECT 1 FROM atlas_v2.youtube_person_signal_snapshots
+      WHERE snapshot_id='yt-20261007T224614Z-2128ch-rebuild-v2'
+    ) THEN 'yt-20261007T224614Z-2128ch-rebuild-v2'
+    ELSE NULL
+  END,
   2715,818595,
   2570,2128,444346,
   4843,1262941,
   2715,4843,NULL,
   'baseline_channel_ids_missing','batch012',false,now()
+WHERE EXISTS (
+  SELECT 1 FROM atlas_v2.youtube_person_signal_snapshots
+  WHERE snapshot_id='yt-20261007T050219Z-2715ch'
 )
 ON CONFLICT(state_key) DO UPDATE SET
   baseline_snapshot_id=EXCLUDED.baseline_snapshot_id,
