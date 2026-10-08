@@ -18,6 +18,39 @@ BATCH_LABEL_RE = re.compile(r"(?:youtube-)?batch(\d{3})", re.I)
 SEP_RE = re.compile(r"\s*(?:\||:|\s[-–—]\s)\s*")
 PAREN_TRAIL_RE = re.compile(r"\s*[\[(][^\])]{0,80}[\])]?\s*$")
 SPACE_RE = re.compile(r"\s+")
+TRAILING_BIO_RE = re.compile(r"\s+(?:biography|documentary|biographical documentary|life story|bio)\s*$", re.I)
+QUALITY_RULES_PATH = Path(__file__).with_name("youtube-person-signal-quality-rules.v1.json")
+
+
+def load_quality_rules(path=QUALITY_RULES_PATH):
+    rules = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not rules.get("version") or not isinstance(rules.get("canonical_person_aliases"), dict):
+        raise RuntimeError("invalid reviewed YouTube quality rules")
+    rejected = set()
+    for classification in ("non_person_exact", "nonhistorical_person_exact"):
+        for label in rules[classification]:
+            key = unicodedata.normalize("NFKC", label).casefold().strip()
+            if not key or key in rejected:
+                raise RuntimeError(f"overlapping reviewed non-person label: {label}")
+            rejected.add(key)
+    aliases = {}
+    for alias, canonical in rules["canonical_person_aliases"].items():
+        key = unicodedata.normalize("NFKC", alias).casefold().strip()
+        if key in rejected or not canonical or key in aliases:
+            raise RuntimeError(f"invalid reviewed Person alias: {alias}")
+        aliases[key] = canonical
+    return rules, aliases
+
+
+QUALITY_RULES, EXACT_PERSON_ALIASES = load_quality_rules()
+REVIEWED_NON_PERSON = frozenset(
+    unicodedata.normalize("NFKC", label).casefold().strip()
+    for label in QUALITY_RULES["non_person_exact"]
+)
+REVIEWED_NONHISTORICAL = frozenset(
+    unicodedata.normalize("NFKC", label).casefold().strip()
+    for label in QUALITY_RULES["nonhistorical_person_exact"]
+)
 
 LEADING_PATTERNS = (
     "the life of ", "life of ", "biography of ", "the biography of ",
@@ -110,6 +143,24 @@ def title_candidate(title):
     return None
 
 
+def normalize_person_candidate(candidate):
+    # Titles such as "Albert Einstein Biography | ..." must not create
+    # additional identities. Source titles are kept untouched in gz archives.
+    candidate = clean_text(candidate).strip(" \t\r\n|:–—")
+    candidate = TRAILING_BIO_RE.sub("", candidate).strip()
+    candidate = clean_text(candidate).strip(" \t\r\n|:–—")
+    return EXACT_PERSON_ALIASES.get(candidate.casefold(), candidate)
+
+
+def candidate_rejection(candidate):
+    lowered = candidate.casefold()
+    if lowered in REVIEWED_NON_PERSON:
+        return "reviewed_non_person"
+    if lowered in REVIEWED_NONHISTORICAL:
+        return "reviewed_nonhistorical"
+    return "parser_validation"
+
+
 def titlecase_like(candidate):
     words = candidate.split()
     latin = []
@@ -136,11 +187,11 @@ def titlecase_like(candidate):
 
 
 def valid_candidate(candidate):
-    candidate = clean_text(candidate)
+    candidate = normalize_person_candidate(candidate)
     if len(candidate) < 3 or len(candidate) > 70:
         return False
     lowered = candidate.casefold()
-    if lowered in GENERIC_EXACT or lowered in COUNTRY_NAMES:
+    if lowered in GENERIC_EXACT or lowered in COUNTRY_NAMES or lowered in REVIEWED_NON_PERSON or lowered in REVIEWED_NONHISTORICAL:
         return False
     if BAD_PREFIX_RE.search(candidate) or GENERIC_TOKEN_RE.search(candidate):
         return False
@@ -236,6 +287,7 @@ def build(root, artifact_id, artifact_digest):
     signal_channels = collections.defaultdict(set)
     signal_videos = collections.Counter()
     signal_names = {}
+    quality_counts = collections.Counter()
     parsed_video_rows = 0
     for channel_id in sorted(ok_ids):
         archive = channel_to_video_dir[channel_id] / f"{channel_id}.ndjson.gz"
@@ -246,14 +298,19 @@ def build(root, artifact_id, artifact_digest):
             for line in handle:
                 row = json.loads(line)
                 local_count += 1
-                candidate = title_candidate(row.get("title"))
-                if candidate and valid_candidate(candidate):
-                    candidate = clean_text(candidate)
-                    key = candidate.casefold()
-                    signal_channels[key].add(channel_id)
-                    signal_videos[key] += 1
-                    if key not in signal_names or (signal_names[key].isupper() and not candidate.isupper()):
-                        signal_names[key] = candidate
+                extracted = title_candidate(row.get("title"))
+                if extracted:
+                    quality_counts["extracted"] += 1
+                    candidate = normalize_person_candidate(extracted)
+                    if valid_candidate(candidate):
+                        key = candidate.casefold()
+                        signal_channels[key].add(channel_id)
+                        signal_videos[key] += 1
+                        quality_counts["accepted_video_rows"] += 1
+                        if key not in signal_names or (signal_names[key].isupper() and not candidate.isupper()):
+                            signal_names[key] = candidate
+                    else:
+                        quality_counts[candidate_rejection(candidate)] += 1
         parsed_video_rows += local_count
 
     if parsed_video_rows != video_total:
@@ -280,7 +337,7 @@ def build(root, artifact_id, artifact_digest):
     }
 
     generated = dt.datetime.now(dt.timezone.utc).replace(microsecond=0)
-    snapshot_id = f"yt-{generated.strftime('%Y%m%dT%H%M%SZ')}-{len(ok_ids)}ch-rebuild-v2"
+    snapshot_id = f"yt-{generated.strftime('%Y%m%dT%H%M%SZ')}-{len(ok_ids)}ch-rebuild-v3"
     source_state = {
         "workspace": "yt-discovery-core-v2",
         "coverage_mode": "single_cumulative_id_preserved",
@@ -292,6 +349,8 @@ def build(root, artifact_id, artifact_digest):
         "channel_ids_persisted": True,
         "next_batch": f"batch{max(int(label.removeprefix('batch')) for label in manifests) + 1:03d}",
         "minimum_stored_signal_channels": 3,
+        "quality_rules_version": QUALITY_RULES["version"],
+        "quality_counters": dict(sorted(quality_counts.items())),
         "artifact_id": int(artifact_id),
         "artifact_digest": artifact_digest,
         "batch_stats": batch_stats,
@@ -304,7 +363,7 @@ def build(root, artifact_id, artifact_digest):
             "channel_count": len(ok_ids),
             "video_count": video_total,
             "threshold_counts": thresholds,
-            "parser_version": "yt-title-person-raw-v2",
+            "parser_version": "yt-title-person-reviewed-v3",
             "source_state": source_state,
         },
         "channels": channels,
