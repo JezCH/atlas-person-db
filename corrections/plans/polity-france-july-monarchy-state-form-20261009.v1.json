@@ -1,0 +1,128 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_france_july_monarchy_state_form_20261009_v1",
+  "as_of": "2026-10-09",
+  "status": "REVIEWED_SOURCE_BACKED_JULY_MONARCHY_STATE_FORM_ON_STABLE_FRANCE",
+  "release_order": 2230,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 POLITY-P2-01J: French National Assembly exact regime chronology and 1830 constitutional transition sources",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "production_executable": false,
+    "production_mutation_authorized": false,
+    "assertion_only_scope": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "polity_deletion_forbidden": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true
+  },
+  "evidence": {
+    "france_umbrella_uuid": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+    "second_restoration_designation_uuid": "21d2913e-c71a-40e9-865c-2d8a3a421b15",
+    "july_governance_context_uuid": "0463f1ec-e7fe-4879-8cea-dacbd6de681d",
+    "july_governance_period_uuid": "7adb1a16-514b-41f8-936b-05f26421deca",
+    "official_regime_boundary": "French National Assembly historical regime table: Deuxième Restauration 08/07/1815–02/08/1830; Monarchie de juillet 02/08/1830–24/02/1848.",
+    "constitutional_axis": "Separate National Assembly source: Charles X abdicated 2 Aug 1830; chambers revised the Charter 7 Aug; Louis-Philippe accepted and swore the revised Charter as King of the French on 9 Aug; Charter promulgated 14 Aug.",
+    "coarse_activity_policy": "Lafayette 1827–1830 remains year-granularity and is not shortened or day-precision fabricated. Public temporal designation read requires full containment and exactly one designation, so this Activity safely falls back to stable France after exact state-form boundaries are present.",
+    "no_deletion": "No Person, Activity, Polity, legacy identity or prior designation is retired or deleted."
+  },
+  "operations": [],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "bibliographic:assemblee-nationale:french-regime-chronology-1789",
+      "exact_before": {
+        "source_absent_id": "f4d11488-2e4c-49f7-b64c-7191976d5e42"
+      },
+      "exact_after": {
+        "source": {
+          "id": "f4d11488-2e4c-49f7-b64c-7191976d5e42",
+          "source_key": "bibliographic:assemblee-nationale:french-regime-chronology-1789",
+          "source_type": "official_government_reference",
+          "title": "Régimes français depuis 1789 — Assemblée nationale",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.assemblee-nationale.fr/gouv_parl/regimes.asp",
+          "citation_text": "The French National Assembly historical regime table dates the Second Bourbon Restoration from 8 July 1815 to 2 August 1830 and the July Monarchy from 2 August 1830 to 24 February 1848. This is the broad regime/state-form chronology used by P2-01J, distinct from Louis-Philippe's later 9 August constitutional oath."
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "p2-01j-france-july-monarchy-state-form-1830-1848",
+      "exact_before": {
+        "designation_absent_id": "f198409a-fc42-45e1-80c4-ec2d68903297"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "f198409a-fc42-45e1-80c4-ec2d68903297",
+          "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+          "designation_type": "state_form",
+          "valid_from_year": 1830,
+          "valid_from_month": 8,
+          "valid_from_day": 2,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1848,
+          "valid_to_month": 2,
+          "valid_to_day": 24,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed broad July Monarchy state-form interval on stable France. The French National Assembly regime table uses 2 August 1830, Charles X's abdication, as the regime boundary and 24 February 1848 as its end. This state-form axis intentionally differs from the existing constitutional_regime governance period beginning 9 August 1830, when Louis-Philippe accepted and swore the revised Charter as King of the French. The shared 2 August transition date with the Second Restoration is retained as the official boundary rather than falsified into an invented one-day gap. Coarse year-only Person Activities are never given fabricated day precision."
+        },
+        "names": [
+          {
+            "id": "f9e3efc6-6b08-4a9b-b79d-4911edac063f",
+            "polity_designation_id": "f198409a-fc42-45e1-80c4-ec2d68903297",
+            "locale": "en",
+            "name": "July Monarchy (France)",
+            "is_preferred": true
+          },
+          {
+            "id": "11597f56-5c3f-4d24-927d-91ba318f08e1",
+            "polity_designation_id": "f198409a-fc42-45e1-80c4-ec2d68903297",
+            "locale": "fr",
+            "name": "Monarchie de Juillet",
+            "is_preferred": true
+          },
+          {
+            "id": "ec126f1c-499a-4c1e-96fb-f800bcd3d8d0",
+            "polity_designation_id": "f198409a-fc42-45e1-80c4-ec2d68903297",
+            "locale": "ko",
+            "name": "프랑스 7월 왕정",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "f198409a-fc42-45e1-80c4-ec2d68903297",
+            "source_id": "7fb9e8d4-27ce-45b6-aec3-5f000f2cc960",
+            "source_locator_key": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/monarchie-de-juillet/la-charte-constitutionnelle-revisee"
+          },
+          {
+            "polity_designation_id": "f198409a-fc42-45e1-80c4-ec2d68903297",
+            "source_id": "a1234b30-5fa1-4eda-92c5-b962da8a9f14",
+            "source_locator_key": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/monarchie-de-juillet/revolution-de-fevrier"
+          },
+          {
+            "polity_designation_id": "f198409a-fc42-45e1-80c4-ec2d68903297",
+            "source_id": "f4d11488-2e4c-49f7-b64c-7191976d5e42",
+            "source_locator_key": "https://www.assemblee-nationale.fr/gouv_parl/regimes.asp"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "new_sources": 1,
+    "new_polity_designations": 1,
+    "new_designation_names": 3,
+    "new_designation_source_links": 3,
+    "mutated_person_activities": 0,
+    "production_mutation_authorized": false
+  }
+}
