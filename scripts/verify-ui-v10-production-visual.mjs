@@ -178,11 +178,22 @@ async function collectMain(client){
       const radius=Math.max(...String(s?.borderRadius||"0").split(/\s+/).map((value)=>Number.parseFloat(value)||0));
       // Memorial Register rows deliberately use subtle INSET hairline engravings.
       // Only OUTER elevation/drop shadows are evidence of a card-like row.
-      // Strip rgb/rgba commas before splitting a CSS shadow stack.
-      const shadows=String(s?.boxShadow||"none").replace(/rgba?\([^)]*\)/g,"COLOR");
-      const hasRaisedShadow=shadows.split(",").some((part)=>{
-        const shadow=part.trim();
-        return shadow && shadow!=="none" && !/\binset\b/.test(shadow);
+      // Split CSS shadow layers only at top-level commas, not rgba() commas.
+      // This expression is itself evaluated inside a JS template string: avoid
+      // nested RegExp escapes that silently become control characters.
+      const cssShadow=String(s?.boxShadow||"none");
+      const shadowLayers=[];
+      let layer="",nesting=0;
+      for(const ch of cssShadow){
+        if(ch==="(")nesting++;
+        if(ch===")")nesting=Math.max(0,nesting-1);
+        if(ch===","&&nesting===0){shadowLayers.push(layer.trim());layer="";}
+        else layer+=ch;
+      }
+      shadowLayers.push(layer.trim());
+      const hasRaisedShadow=shadowLayers.some((shadow)=>{
+        if(!shadow||shadow==="none")return false;
+        return !shadow.split(" ").includes("inset");
       });
       return radius>0.5 || hasRaisedShadow;
     }).length;
