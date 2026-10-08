@@ -59,7 +59,7 @@ test("queue read exposes only unresolved current candidates and keeps ledger cou
 
   const queue = await readCurrentRegistrationQueue({ client });
   assert.equal(queue.authority, "atlas_v2.person_registration_candidates");
-  assert.match(queue.membership_rule, /unique exact normalized identity match/i);
+  assert.match(queue.membership_rule, /representative Person by default/i);
   assert.deepEqual(queue.candidates.map((row) => row.candidate_id), ["candidate-a","candidate-b"]);
   assert.equal(queue.summary.pending_count, 2);
   assert.equal(queue.summary.current_total, 2);
@@ -198,5 +198,5 @@ test("bootstrap JSON is retained only as historical audit input, not live queue 
 test("legacy nullable Person FK is not the live queue membership rule", () => {
   const sql = fs.readFileSync(new URL("../db/migrations/20261003_person_registration_queue_authority.sql", import.meta.url), "utf8");
   assert.match(sql, /person_id uuid REFERENCES atlas_v2\.persons\(id\) ON DELETE RESTRICT/i);
-  assert.match(QUEUE_MEMBERSHIP_RULE, /Production persons\/person_names/i);
+  assert.match(QUEUE_MEMBERSHIP_RULE, /representative Person by default/i);
 });
