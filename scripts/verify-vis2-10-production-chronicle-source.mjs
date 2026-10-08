@@ -20,7 +20,7 @@ async function screenshot(c,name){const r=await c.call("Page.captureScreenshot",
 function state(){
  const selectors={timeline:"#personMainDetail .person-chronicle-activities .person-activity-list",track:"#personMainDetail .person-chronicle-activities .person-activity-list",evidence:"#personMainDetail .person-evidence-inspector",evidenceSummary:"#personMainDetail .person-evidence-inspector > summary",sourceRow:"#personMainDetail .person-source-item",sourceLink:"#personMainDetail .person-source-item a",panel:"#personMainDetail",hero:"#personMainDetail .person-chronicle-hero",portrait:"#personMainDetail .person-detail-portrait",identity:"#personMainDetail .person-chronicle-identity",eyebrow:"#personMainDetail .person-chronicle-identity .eyebrow",title:"#personMainDetail .person-chronicle-identity h2",canonical:"#personMainDetail .person-detail-canonical",era:"#personMainDetail .person-detail-era",domain:"#personMainDetail .person-detail-domain",status:"#personMainDetail .person-detail-status",section:"#personMainDetail .person-chronicle-section",activity:"#personMainDetail .person-chronicle-activity",source:"#personMainDetail .person-source-item"};
  const rect=e=>{const r=e.getBoundingClientRect();return [r.x,r.y,r.width,r.height].map(x=>Math.round(x*100)/100);};
- const snap=e=>{if(!e)return null;const s=getComputedStyle(e);return {rect:rect(e),text:e.textContent?.trim().slice(0,500),scrollHeight:e.scrollHeight,scrollWidth:e.scrollWidth,color:s.color,backgroundImage:s.backgroundImage,boxShadow:s.boxShadow,display:s.display,font:s.fontFamily};};
+ const snap=e=>{if(!e)return null;const s=getComputedStyle(e);return {rect:rect(e),text:e.textContent?.trim().slice(0,500),scrollHeight:e.scrollHeight,scrollWidth:e.scrollWidth,color:s.color,backgroundImage:s.backgroundImage,trackImage:e.matches('.person-activity-list')?getComputedStyle(e,'::before').backgroundImage:null,boxShadow:s.boxShadow,display:s.display,font:s.fontFamily};};
  const result=Object.fromEntries(Object.entries(selectors).map(([name,selector])=>[name,snap(document.querySelector(selector))]));
  const panel=document.querySelector("#personMainDetail"),portrait=document.querySelector("#personMainDetail .person-detail-portrait");
  const img=document.querySelector("#personMainDetail [data-person-portrait-image]");
@@ -86,7 +86,7 @@ async function caseAB(c,width,kind,id){
    "Detail typography, content or layout changed "+k,{width,kind,a,b});}
  for(const k of ["track","evidenceSummary"]){
   const a=before.elements[k],b=after.elements[k];
-  if(a&&b)check(a.color!==b.color||a.backgroundImage!==b.backgroundImage||a.boxShadow!==b.boxShadow,"VIS2-10 chronology/evidence paint unchanged "+k,{width,kind});
+  if(a&&b)check(a.color!==b.color||a.backgroundImage!==b.backgroundImage||a.trackImage!==b.trackImage||a.boxShadow!==b.boxShadow,"VIS2-10 chronology/evidence paint unchanged "+k,{width,kind});
  }
  if(before.elements.sourceRow&&after.elements.sourceRow)check(before.elements.sourceRow.backgroundImage!==after.elements.sourceRow.backgroundImage||before.elements.sourceRow.color!==after.elements.sourceRow.color,"VIS2-10 source paint unchanged",{width,kind});
  for(const k of ["title","era","domain"]) {const a=before.elements[k],b=after.elements[k];if(a&&b)check(a.color===b.color,"Semantic foreground changed "+k,{width,kind});}
