@@ -10,7 +10,9 @@ const CHANNEL_STATUS = new Set(["OK","ERR","EMPTY"]);
 
 const YOUTUBE_SIGNAL_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname,"../db/migrations/20261007_youtube_person_signal_read_model.sql"),
-  path.resolve(__dirname,"../db/migrations/20261008_youtube_discovery_channel_registry.sql")
+  path.resolve(__dirname,"../db/migrations/20261008_youtube_discovery_channel_registry.sql"),
+  path.resolve(__dirname,"../db/migrations/20261008_youtube_history_reconciliation.sql"),
+  path.resolve(__dirname,"../db/migrations/20261008_youtube_retire_legacy_batches.sql")
 ]);
 
 function requireString(value, code, max = 512) {
@@ -152,8 +154,8 @@ where snapshot_id=$1
 const INSERT_SNAPSHOT_SQL = `
 insert into atlas_v2.youtube_person_signal_snapshots(
   snapshot_id, generated_at, channel_count, video_count, threshold_counts,
-  parser_version, source_state, publication_fingerprint
-) values ($1,$2,$3,$4,$5::jsonb,$6,$7::jsonb,$8)
+  parser_version, source_state, publication_fingerprint, snapshot_scope
+) values ($1,$2,$3,$4,$5::jsonb,$6,$7::jsonb,$8,'global_reconciled')
 `;
 
 const INSERT_SIGNALS_SQL = `

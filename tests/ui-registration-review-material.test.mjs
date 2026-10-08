@@ -106,31 +106,15 @@ test("REVIEW-M6 removes the duplicate local page header without losing refresh/s
 });
 
 
-test("REVIEW-M7 compacts YouTube signal metadata into one responsive toolbar without information loss", () => {
-  const css = read("atlas-registration-review.css");
-  const js = read("atlas-registration-review.js");
-
-  assert.match(css, /REVIEW-M7 — Compact YouTube signal controls without dropping information/);
-  assert.match(css, /\.registration-review-signal-toolbar\{[\s\S]*display:flex[\s\S]*justify-content:space-between/);
-  assert.match(css, /\.registration-review-signal-meta\{[\s\S]*display:flex[\s\S]*justify-content:flex-end/);
-  assert.match(css, /@media\(max-width:980px\)\{[\s\S]*\.registration-review-signal-toolbar\{align-items:flex-start;flex-direction:column\}/);
-  assert.match(css, /@media\(max-width:600px\)\{[\s\S]*\.registration-review-telemetry\{[\s\S]*flex-direction:column/);
-
-  assert.match(js, /class="registration-review-signal-toolbar"/);
-  assert.match(js, /id="youtubeSignalThresholds"/);
-  assert.match(js, /id="youtubeSignalTelemetry"/);
-  assert.match(js, /id="youtubeSignalVisibleCount"/);
-  assert.doesNotMatch(js, /class="registration-review-filterline"/);
-  assert.match(js, /snapshot\.channel_count/);
-  assert.match(js, /snapshot\.video_count/);
-  assert.match(js, /snapshot\.generated_at/);
-  assert.match(js, /snapshot\.parser_version/);
-  assert.match(js, /payload\?\.available_count/);
-  assert.match(js, /payload\?\.stored_count/);
-  assert.match(js, /상세 .*행 저장/);
-  assert.match(js, /signalRows\.length/);
+test("REVIEW-M7 keeps the YouTube cumulative controls",()=>{
+  const css=read("atlas-registration-review.css");
+  const js=read("atlas-registration-review.js");
+  for(const id of ["youtubeSignalThresholds","youtubeSignalTelemetry","youtubeSignalVisibleCount"])
+    assert.ok(js.includes(id));
+  assert.ok(js.includes("snapshot.channel_count"));
+  assert.ok(js.includes("snapshot.video_count"));
+  assert.match(css,/REVIEW-M7/);
 });
-
 
 test("REVIEW-M8 visualizes YouTube signal strength with bars while preserving all numeric fields", () => {
   const css = read("atlas-registration-review.css");
@@ -143,7 +127,7 @@ test("REVIEW-M8 visualizes YouTube signal strength with bars while preserving al
   assert.match(css, /@media\(max-width:600px\)\{[\s\S]*\.registration-review-signal-bar\{[\s\S]*grid-column:2 \/ 5/);
 
   assert.match(js, /const maxChannels=Math\.max\(1,\.\.\.signalRows\.map/);
-  assert.match(js, /const strength=Math\.max\(0,Math\.min\(100,\(channels\/maxChannels\)\*100\)\)/);
+  assert.match(js, /const strength=Math\.min\(100,\(channels\/maxChannels\)\*100\)/);
   assert.match(js, /class="registration-review-signal-row" style="--signal-strength:/);
   assert.match(js, /class="registration-review-signal-bar" aria-hidden="true"/);
 
@@ -154,34 +138,13 @@ test("REVIEW-M8 visualizes YouTube signal strength with bars while preserving al
 });
 
 
-test("REVIEW-M9 distinguishes total work progress from exact global unique channels", () => {
-  const js = read("atlas-registration-review.js");
-
-  assert.match(js, /progress\.gross_success_channel_rows/);
-  assert.match(js, /progress\.gross_video_rows/);
-  assert.match(js, /progress\.baseline_unique_channel_count/);
-  assert.match(js, /progress\.supplemental_success_channel_count/);
-  assert.match(js, /progress\.supplemental_selected_channel_count/);
-  assert.match(js, /progress\.unique_channel_lower_bound/);
-  assert.match(js, /progress\.unique_channel_upper_bound/);
-  assert.match(js, /progress\.exact_unique_channel_count/);
-  assert.match(js, /progress\.next_batch/);
-  assert.match(js, /baseline Channel ID 미보존으로 cross-dedupe 미완료/);
-  assert.match(js, /live incremental 전환 전/);
-  assert.match(js, /별도 segment snapshot .* 총량으로 대체하지 않음/);
-});
-
-test("REVIEW-M10 shows honest two-snapshot channel bounds and keeps mobile evidence visible",()=>{
-  const js=read("atlas-registration-review.js");
-  const css=read("atlas-registration-review.css");
-  assert.match(js,/ranking_scope==="cross_segment_bounds"/);
-  assert.match(js,/channel_count_upper_bound/);
-  assert.match(js,/baseline_channel_count/);
-  assert.match(js,/supplemental_channel_count/);
-  assert.match(js,/기준선 전체/);
-  assert.match(js,/양 구간 결합/);
-  assert.match(js,/기존 .*추가 /);
-  assert.match(js,/순위는 하한 기준 잠정 순위/);
-  assert.match(js,/영상 수는 구간별 영상행 합계/);
-  assert.match(css,/\.registration-review-scope-detail\{display:block/);
+test("REVIEW-M9 uses one exact cumulative channel ranking and a non-overlapping toolbar",()=>{
+ const js=read("atlas-registration-review.js");
+ const css=read("atlas-registration-review.css");
+ assert.ok(js.includes("Channel ID 기반 누적 데이터"));
+ assert.ok(js.includes("source_state?.next_batch"));
+ assert.ok(!js.includes("cross_segment_bounds"));
+ assert.ok(!js.includes("channel_count_upper_bound"));
+ assert.ok(css.includes(".registration-review-signal-toolbar{display:grid"));
+ assert.ok(css.includes("white-space:normal;overflow-wrap:anywhere"));
 });

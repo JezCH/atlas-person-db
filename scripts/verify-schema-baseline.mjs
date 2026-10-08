@@ -50,7 +50,8 @@ const expectedAuthoringMigrations = [
   '20261006_user_selected_person_registration_queue_07.sql',
   '20261007_youtube_person_signal_read_model.sql',
   '20261008_youtube_discovery_channel_registry.sql',
-  '20261008_youtube_history_reconciliation.sql'
+  '20261008_youtube_history_reconciliation.sql',
+  '20261008_youtube_retire_legacy_batches.sql'
 ];
 
 const expectedAuthoringReplayMigrations = [
@@ -82,7 +83,8 @@ const expectedAuthoringReplayMigrations = [
   '20261006_user_selected_person_registration_queue_07.sql',
   '20261007_youtube_person_signal_read_model.sql',
   '20261008_youtube_discovery_channel_registry.sql',
-  '20261008_youtube_history_reconciliation.sql'
+  '20261008_youtube_history_reconciliation.sql',
+  '20261008_youtube_retire_legacy_batches.sql'
 ];
 
 const expectedCorrectionMigrations = [

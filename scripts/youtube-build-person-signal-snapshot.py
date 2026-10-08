@@ -188,7 +188,7 @@ def load_manifest_paths(root):
     return found
 
 
-def build(root, artifact_id, artifact_digest, legacy_snapshot_id, legacy_channel_count):
+def build(root, artifact_id, artifact_digest):
     manifests = load_manifest_paths(root)
     channels = []
     seen = set()
@@ -235,6 +235,7 @@ def build(root, artifact_id, artifact_digest, legacy_snapshot_id, legacy_channel
 
     signal_channels = collections.defaultdict(set)
     signal_videos = collections.Counter()
+    signal_names = {}
     parsed_video_rows = 0
     for channel_id in sorted(ok_ids):
         archive = channel_to_video_dir[channel_id] / f"{channel_id}.ndjson.gz"
@@ -248,8 +249,11 @@ def build(root, artifact_id, artifact_digest, legacy_snapshot_id, legacy_channel
                 candidate = title_candidate(row.get("title"))
                 if candidate and valid_candidate(candidate):
                     candidate = clean_text(candidate)
-                    signal_channels[candidate].add(channel_id)
-                    signal_videos[candidate] += 1
+                    key = candidate.casefold()
+                    signal_channels[key].add(channel_id)
+                    signal_videos[key] += 1
+                    if key not in signal_names or (signal_names[key].isupper() and not candidate.isupper()):
+                        signal_names[key] = candidate
         parsed_video_rows += local_count
 
     if parsed_video_rows != video_total:
@@ -258,7 +262,7 @@ def build(root, artifact_id, artifact_digest, legacy_snapshot_id, legacy_channel
     raw = []
     for name, channel_ids in signal_channels.items():
         if len(channel_ids) >= 3:
-            raw.append((name, len(channel_ids), int(signal_videos[name])))
+            raw.append((signal_names[name], len(channel_ids), int(signal_videos[name])))
     raw.sort(key=lambda item: (-item[1], -item[2], item[0].casefold(), item[0]))
 
     signals = [
@@ -279,17 +283,14 @@ def build(root, artifact_id, artifact_digest, legacy_snapshot_id, legacy_channel
     snapshot_id = f"yt-{generated.strftime('%Y%m%dT%H%M%SZ')}-{len(ok_ids)}ch-rebuild-v2"
     source_state = {
         "workspace": "yt-discovery-core-v2",
-        "coverage_mode": "reconstructable_id_preserved",
+        "coverage_mode": "single_cumulative_id_preserved",
         "coverage_batches": sorted(manifests, key=lambda label: int(label.removeprefix("batch"))),
         "selected_channel_count": len(channels),
         "successful_channel_count": len(ok_ids),
         "failed_channel_count": sum(1 for row in channels if row["scan_status"] == "ERR"),
         "empty_channel_count": sum(1 for row in channels if row["scan_status"] == "EMPTY"),
         "channel_ids_persisted": True,
-        "legacy_baseline_snapshot_id": legacy_snapshot_id,
-        "legacy_baseline_channel_count": int(legacy_channel_count),
-        "legacy_overlap_status": "unknown_not_additive",
-        "next_batch": f"batch{max(int(label.removeprefix('batch')) for label in manifests) + 1:03d}",
+         "next_batch": f"batch{max(int(label.removeprefix('batch')) for label in manifests) + 1:03d}",
         "minimum_stored_signal_channels": 3,
         "artifact_id": int(artifact_id),
         "artifact_digest": artifact_digest,
@@ -320,16 +321,12 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--artifact-id", type=int, required=True)
     parser.add_argument("--artifact-digest", required=True)
-    parser.add_argument("--legacy-snapshot-id", required=True)
-    parser.add_argument("--legacy-channel-count", type=int, required=True)
-    args = parser.parse_args()
+     args = parser.parse_args()
 
     payload = build(
         args.root,
         args.artifact_id,
         args.artifact_digest,
-        args.legacy_snapshot_id,
-        args.legacy_channel_count,
     )
     Path(args.output).write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     snapshot = payload["snapshot"]
