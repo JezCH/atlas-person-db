@@ -5,10 +5,14 @@
   const QUEUE_URL="/api/atlas-read?__atlas_read_surface=registration-queue";
   const SIGNAL_URL="/api/atlas-read?__atlas_read_surface=youtube-person-signals";
   const REFRESH_INTERVAL_MS=10000;
+  const LIVING_URL="/api/atlas-read?__atlas_read_surface=youtube-person-living";
   let activeRoot=null;
   let refreshTimer=null;
   let requestSerial=0;
   let minChannels=3;
+  let excludeRegistered=false;
+  let excludeLiving=false;
+  const livingEvidence=new Map();
   let queueRows=[];
   let signalRows=[];
   let personIdentityIndex=null;
@@ -165,6 +169,65 @@
       return `<button type="button" data-min-channels="${threshold}" class="${threshold===minChannels ? "is-active" : ""}">${threshold}+ 채널${count == null ? "" : ` · ${number(count)}명`}</button>`;
     }).join("");
   }
+
+  function matchesRegistered(name) {
+    const key=identityKey(name);
+    return Boolean(key && (personIdentityIndex?.get(key)?.size || 0)===1);
+  }
+
+  function signalQuery(limit,offset=0) {
+    return SIGNAL_URL+"&min_channels="+encodeURIComponent(minChannels)+"&limit="+limit+"&offset="+offset;
+  }
+
+  async function ensureLivingEvidence(names) {
+    const missing=[...new Set(names)].filter(name=>name && !livingEvidence.has(name));
+    let unavailable=false;
+    for(let index=0;index<missing.length;index+=25) {
+      try {
+        const payload=await getJson(LIVING_URL+"&names="+encodeURIComponent(JSON.stringify(missing.slice(index,index+25))));
+        if(!Array.isArray(payload.rows)) throw new Error("INVALID_LIVING_EVIDENCE_RESPONSE");
+        for(const row of payload.rows) {
+          if(typeof row?.name==="string" && ["living_likely","deceased","unknown"].includes(row?.status)) {
+            livingEvidence.set(row.name,row.status);
+          }
+        }
+      } catch(error) {
+        unavailable=true;
+        console.warn("ATLAS living evidence unavailable; leaving unknown people visible",error);
+      }
+    }
+    return unavailable;
+  }
+
+  async function collectVisibleSignals(initial) {
+    if(!excludeRegistered && !excludeLiving) return initial;
+    const visible=[];
+    const pageSize=1000;
+    let offset=0;
+    let scanned=0;
+    let evidenceUnavailable=false;
+    let payload=initial;
+    for(let page=0;page<11;page++) {
+      const rows=Array.isArray(payload.rows) ? payload.rows : [];
+      scanned+=rows.length;
+      const candidates=rows.filter(row=>!excludeRegistered || !matchesRegistered(row.raw_name));
+      for(let i=0;i<candidates.length && visible.length<300;i+=25) {
+        const batch=candidates.slice(i,i+25);
+        if(excludeLiving && await ensureLivingEvidence(batch.map(row=>row.raw_name))) evidenceUnavailable=true;
+        for(const row of batch) {
+          if(excludeLiving && livingEvidence.get(row.raw_name)==="living_likely") continue;
+          visible.push(row);
+          if(visible.length===300) break;
+        }
+      }
+      if(visible.length>=300||rows.length<pageSize||offset+rows.length>=Number(initial.stored_count||initial.available_count||0)) break;
+      offset+=rows.length;
+      payload=await getJson(signalQuery(pageSize,offset));
+    }
+    return {...initial,rows:visible,filtered_checked_count:scanned,filter_evidence_unavailable:evidenceUnavailable};
+  }
+
+  function filterRequestLimit() { return excludeRegistered||excludeLiving ? 1000 : 300; }
 
   function renderSignals(payload) {
     signalRows=Array.isArray(payload?.rows) ? payload.rows : [];
