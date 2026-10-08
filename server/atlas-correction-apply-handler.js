@@ -64,7 +64,18 @@ function requireExecutionPlan(raw) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("CORRECTION_V2_EXECUTION_PLAN_OBJECT_REQUIRED");
   if (String(raw.schema || "").trim() !== PLAN_SCHEMA) throw new Error("CORRECTION_V2_EXECUTION_PLAN_SCHEMA_INVALID");
   if (!String(raw.batch_id || "").trim()) throw new Error("CORRECTION_V2_EXECUTION_PLAN_BATCH_ID_REQUIRED");
-  if (!Array.isArray(raw.operations) || raw.operations.length === 0) throw new Error("CORRECTION_V2_EXECUTION_PLAN_OPERATIONS_REQUIRED");
+  if (!Array.isArray(raw.operations)) throw new Error("CORRECTION_V2_EXECUTION_PLAN_OPERATIONS_REQUIRED");
+  // Permit source-backed Stage 2 Governance Context/period assertions without touching unrelated Person Activities.
+  // Source-only or unknown assertion-only plans remain rejected.
+  if (raw.operations.length === 0) {
+    const assertions = raw.stage2_assertions;
+    const allowed = new Set(["assert_source", "assert_governance_context", "assert_governance_period"]);
+    if (!Array.isArray(assertions) || assertions.length === 0 ||
+        !assertions.every((item) => allowed.has(item?.type)) ||
+        !assertions.some((item) => item?.type === "assert_governance_context" || item?.type === "assert_governance_period")) {
+      throw new Error("CORRECTION_V2_EXECUTION_PLAN_ASSERTION_ONLY_SCOPE_INVALID");
+    }
+  }
   if (raw?.execution_rules?.production_executable !== false || raw?.execution_rules?.production_mutation_authorized !== false) {
     throw new Error("CORRECTION_V2_EXECUTION_PLAN_PREMATURE_PRODUCTION_AUTHORIZATION");
   }
@@ -196,7 +207,7 @@ function createCorrectionApplyHandler({
       if (payload.plan) {
         if (payload.mode === "apply") await applyMigrations(client);
         const activityIds = requiredV2SnapshotIds(payload.plan);
-        const snapshot = await createV2Snapshot(client, activityIds);
+        const snapshot = await createV2Snapshot(client, activityIds, { allowEmpty: payload.plan.operations.length === 0 });
         const manifest = synthesizeV2Plan(payload.plan, snapshot);
         const service = createUnifiedV2Service({ client });
         const outcome = await service.execute(manifest, { dryRun: payload.mode === "dry_run" });

@@ -1,0 +1,245 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_france_gprf_fourth_governance_context_20261008_v1",
+  "as_of": "2026-10-08",
+  "status": "REVIEWED_ASSERTION_ONLY_GOVERNANCE_ADDITIONS_WITHOUT_PERSON_ACTIVITY_MUTATIONS",
+  "release_order": 2178,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 P2-01D; P2-01C approved read-only historical boundary audit #2174; direct Assemblée nationale official record 1944 June 3, 1946 Oct27 promulgation and Dec24 constitutional effectiveness; 1958 Oct4 existing Fifth context",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "assertion_only_scope": true,
+    "production_executable": false,
+    "production_mutation_authorized": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "polity_deletion_forbidden": true
+  },
+  "evidence": {
+    "stable_french_republic_uuid": "b138f5e4-ff83-40f6-bdb1-83b08c0256cb",
+    "existing_fifth_governance_context_uuid": "078c50b9-4a15-46b4-9181-567cf07ee838",
+    "existing_fifth_period_uuid": "9c3d4f6a-1478-4b10-a15d-893822fbf38c",
+    "existing_fifth_start": "1958-10-04",
+    "existing_french_republic_activity_count": 16,
+    "france_family_count": 65,
+    "country_umbrella_uuid": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+    "french_republic_person_activities_changed": 0,
+    "retirement_policy": "No Polity/Person/Activity deletions or identity merges. Existing royal and Third Republic empty polity UUIDs remain live until explicit separate user authorization. Vichy de facto wartime authority is not a 1944–46 legitimate Republican cabinet.",
+    "historical_source_urls": [
+      "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/institution-du-comite-francais-de-la-liberation-nationale-cfln-et-creation-de-l-assemblee-consultative-provisoire",
+      "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/quatrieme-republique/la-constitution-de-1946-et-l-instauration-de-la-ive-republique",
+      "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/cinquieme-republique/la-constitution-de-1958-et-l-instauration-de-la-ve-republique"
+    ]
+  },
+  "operations": [],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "france-p2-01d-official-gprf-begins-source",
+      "exact_before": {
+        "source_absent_id": "4c0ef4bf-c14c-4577-ae2e-f10f779f66ea"
+      },
+      "exact_after": {
+        "source": {
+          "id": "4c0ef4bf-c14c-4577-ae2e-f10f779f66ea",
+          "source_key": "bibliographic:assemblee-nationale:gprf-formed-1944-06-03",
+          "source_type": "official_government_reference",
+          "title": "Institution du CFLN et création de l'Assemblée consultative provisoire — Assemblée nationale",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/institution-du-comite-francais-de-la-liberation-nationale-cfln-et-creation-de-l-assemblee-consultative-provisoire",
+          "citation_text": "Official National Assembly: 3 June 1944 the CFLN took the name Gouvernement provisoire de la République française (GPRF) to exercise governing authority in liberated French territory."
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "france-p2-01d-fourth-constitution-effective-source",
+      "exact_before": {
+        "source_absent_id": "cc050adf-b172-4dea-ae97-8277185ccb16"
+      },
+      "exact_after": {
+        "source": {
+          "id": "cc050adf-b172-4dea-ae97-8277185ccb16",
+          "source_key": "bibliographic:assemblee-nationale:constitution-4th-1946-10-27-effective-1946-12-24",
+          "source_type": "official_government_reference",
+          "title": "La Constitution de 1946 et l'instauration de la IVe République — Assemblée nationale",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/quatrieme-republique/la-constitution-de-1946-et-l-instauration-de-la-ive-republique",
+          "citation_text": "Official National Assembly: 1946 Constitution promulgated 27 October; GPRF continues functioning through 24 December 1946, date the new constitution enters into force; the constitutional system supersedes provisional institutions. The constitution is a legal milestone, not a claim that GPRF ended on promulgation day."
+        }
+      }
+    },
+    {
+      "type": "assert_governance_context",
+      "decision_id": "france-p2-01d-gprf-typed-government-context",
+      "exact_before": {
+        "governance_context_absent_id": "d62d6cb9-4f36-4e7e-aa36-9c99a8b417cd"
+      },
+      "exact_after": {
+        "context": {
+          "id": "d62d6cb9-4f36-4e7e-aa36-9c99a8b417cd",
+          "canonical_key": "stage2:french-provisional-government-1944-1946",
+          "governance_type": "government",
+          "historicity": "historical"
+        },
+        "names": [
+          {
+            "id": "bf54e0de-5419-4f63-9d98-2fa51058cbfc",
+            "governance_context_id": "d62d6cb9-4f36-4e7e-aa36-9c99a8b417cd",
+            "locale": "en",
+            "name": "Provisional Government of the French Republic",
+            "name_type": "canonical",
+            "is_preferred": true
+          },
+          {
+            "id": "f2f933eb-fde9-4075-90ac-29c38c2b1221",
+            "governance_context_id": "d62d6cb9-4f36-4e7e-aa36-9c99a8b417cd",
+            "locale": "fr",
+            "name": "Gouvernement provisoire de la République française",
+            "name_type": "canonical",
+            "is_preferred": true
+          },
+          {
+            "id": "983b7b04-70e6-46b7-82e1-317bf7e5bd32",
+            "governance_context_id": "d62d6cb9-4f36-4e7e-aa36-9c99a8b417cd",
+            "locale": "ko",
+            "name": "프랑스 공화국 임시정부",
+            "name_type": "canonical",
+            "is_preferred": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_governance_context",
+      "decision_id": "france-p2-01d-fourth-typed-constitutional-context",
+      "exact_before": {
+        "governance_context_absent_id": "ce3e52df-59d7-470d-be1e-18e6198f8690"
+      },
+      "exact_after": {
+        "context": {
+          "id": "ce3e52df-59d7-470d-be1e-18e6198f8690",
+          "canonical_key": "stage2:french-fourth-republic",
+          "governance_type": "constitutional_regime",
+          "historicity": "historical"
+        },
+        "names": [
+          {
+            "id": "2847634b-1e7a-43d9-83d3-e233721293c5",
+            "governance_context_id": "ce3e52df-59d7-470d-be1e-18e6198f8690",
+            "locale": "en",
+            "name": "French Fourth Republic",
+            "name_type": "canonical",
+            "is_preferred": true
+          },
+          {
+            "id": "63b87a37-775f-4229-ad0c-94948dd8b904",
+            "governance_context_id": "ce3e52df-59d7-470d-be1e-18e6198f8690",
+            "locale": "fr",
+            "name": "Quatrième République française",
+            "name_type": "canonical",
+            "is_preferred": true
+          },
+          {
+            "id": "322bcccd-c267-4400-85a6-fa823ae2a618",
+            "governance_context_id": "ce3e52df-59d7-470d-be1e-18e6198f8690",
+            "locale": "ko",
+            "name": "프랑스 제4공화국",
+            "name_type": "canonical",
+            "is_preferred": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_governance_period",
+      "decision_id": "france-p2-01d-gprf-government-period-1944-1946",
+      "exact_before": {
+        "period_absent_id": "662ce129-ae66-46d9-90ba-f829e77d90e2"
+      },
+      "exact_after": {
+        "period": {
+          "id": "662ce129-ae66-46d9-90ba-f829e77d90e2",
+          "polity_id": "b138f5e4-ff83-40f6-bdb1-83b08c0256cb",
+          "governance_context_id": "d62d6cb9-4f36-4e7e-aa36-9c99a8b417cd",
+          "valid_from_year": 1944,
+          "valid_from_month": 6,
+          "valid_from_day": 3,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1946,
+          "valid_to_month": 12,
+          "valid_to_day": 24,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "GPRF government phase on the higher-order French Republic polity begins when CFLN adopted its name on 3 June 1944. Provisional authorities continued through the constitutional transition on 24 December 1946, when the Fourth Constitution entered into force. This date is the common institutional transition boundary; daily granularity does not mean the two governments operated throughout all hours of 24 December. De Gaulle's personal term (9 Sep 1944–20 Jan 1946) is only a subset and remains unchanged. The regime is not retrospectively conflated with Vichy de facto power or treated as a separate sovereign Polity."
+        },
+        "source_links": [
+          {
+            "polity_governance_period_id": "662ce129-ae66-46d9-90ba-f829e77d90e2",
+            "source_id": "4c0ef4bf-c14c-4577-ae2e-f10f779f66ea",
+            "source_locator_key": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale/institution-du-comite-francais-de-la-liberation-nationale-cfln-et-creation-de-l-assemblee-consultative-provisoire"
+          },
+          {
+            "polity_governance_period_id": "662ce129-ae66-46d9-90ba-f829e77d90e2",
+            "source_id": "cc050adf-b172-4dea-ae97-8277185ccb16",
+            "source_locator_key": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/quatrieme-republique/la-constitution-de-1946-et-l-instauration-de-la-ive-republique"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_governance_period",
+      "decision_id": "france-p2-01d-fourth-constitutional-period-1946-1958",
+      "exact_before": {
+        "period_absent_id": "b8e65dc6-4de2-4ef3-8545-238dc8e23124"
+      },
+      "exact_after": {
+        "period": {
+          "id": "b8e65dc6-4de2-4ef3-8545-238dc8e23124",
+          "polity_id": "b138f5e4-ff83-40f6-bdb1-83b08c0256cb",
+          "governance_context_id": "ce3e52df-59d7-470d-be1e-18e6198f8690",
+          "valid_from_year": 1946,
+          "valid_from_month": 12,
+          "valid_from_day": 24,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1958,
+          "valid_to_month": 10,
+          "valid_to_day": 3,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "French Fourth Republic constitutional-regime period begins 24 December 1946, date of entry into force of the Constitution promulgated 27 October 1946. The end uses 3 October 1958 as the last full day before the 4 October 1958 promulgation of the Fifth Constitution, already represented by stable Fifth Republic Governance Context 078c50b9-4a15-46b4-9181-567cf07ee838. This is an exclusive-successor day-bound convention, not evidence that the Fourth Constitution was repealed precisely at midnight. De Gaulle's single 1 June 1958–8 January 1959 head-of-government Activity remains intact across the constitutional transition. No new sovereign Polity is asserted."
+        },
+        "source_links": [
+          {
+            "polity_governance_period_id": "b8e65dc6-4de2-4ef3-8545-238dc8e23124",
+            "source_id": "cc050adf-b172-4dea-ae97-8277185ccb16",
+            "source_locator_key": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/quatrieme-republique/la-constitution-de-1946-et-l-instauration-de-la-ive-republique"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "asserted_sources": 2,
+    "asserted_governance_contexts": 2,
+    "asserted_governance_names": 6,
+    "asserted_governance_periods": 2,
+    "asserted_governance_period_source_links": 3,
+    "mutated_person_activities": 0,
+    "france_family_authoring_expected": 65,
+    "france_family_runtime_expected": 65,
+    "production_mutation_authorized": false
+  }
+}
