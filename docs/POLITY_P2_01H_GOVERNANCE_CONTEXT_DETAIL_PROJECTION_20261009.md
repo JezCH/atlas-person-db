@@ -1,7 +1,7 @@
 # POLITY-P2-01H — France nation/Republic context relationship: no new Polity edge; expose existing typed eras in the Polity dossier
 
 **Date:** 2026-10-09
-**Status at proposal:** REVIEWED / READ-ONLY DETAIL PROJECTION IMPLEMENTED / CI-AND-DEPLOYMENT VERIFICATION PENDING.
+**Final status:** READ_ONLY_DETAIL_PROJECTION_MERGED / ALL_REGRESSION_TESTS_SUCCESS / VERCEL_PRODUCTION_READY_MATCHES_MERGED_COMMIT / LIVE_API_JSON_DIRECT_RESPONSE_NOT_VERIFIED / NO_CANONICAL_DB_MUTATION.
 **Canonical mutation:** ZERO. **New global Polity relationship code/type/edge:** ZERO. **User-PARKED P14 Geometry:** UNTOUCHED.
 
 ## 1. Exact disposition: NO_GLOBAL_NON_SUCCESSOR_RELATION_NEEDED_FOR_DIRECT_GOVERNANCE_VIEW
@@ -53,3 +53,14 @@ Existing `tests/atlas-polity-read.test.mjs` updated for the detail-only optional
 
 **Exact next one bounded unit: `POLITY-P2-01I` — final France-family acceptance audit across the remaining First/Second Republic, First/Second Empire and temporary royal/July-Monarchy forms, with precise non-deletion decision and 65/65 integrity, terminal ONLY if the whole family demonstrably meets all historic source and canonical representation gates.** This is still the original `france-regime-family` seed, not a new 26th review case. Pending **75 seeded /50 terminal /25 REVIEW_REQUIRED**, root #1895 **OPEN**. P1-02 Japan stale tombstones and P1-03R Place still separate acceptance blockers. P14 Territory Geometry still user-PARKED / NOT_ACTIVE / DO_NOT_AUTO_RESUME. Existing Kingdom and Third Republic UUIDs remain LIVE; user consent mandatory for delete/retirement. No broad Production rediscovery.
 
+
+## 5. Final source-code, Production deployment and DB verification
+
+- Implementation [PR #2205](https://github.com/JezCH/atlas-person-db/pull/2205) **squash MERGED** into `main` at exact SHA `1cc6f32c4f959490e111b7e770b099e1fcc8b796`.
+- Full **ATLAS Integrity #37843696744 SUCCESS** including three new explicit country-umbrella/Republic governance projection tests, HTML escaping, null ends and the unchanged existing Polity list tests. No Correction plan, new Polity relationship type, writer path or Production SQL mutation was run.
+- Authenticated Vercel Production inspection `atlas-person-db.vercel.app` confirmed **READY** deployment ID `dpl_7tZKGQqUpwVhPwg2gbx6hG3V1TK8` with `meta.githubCommitSha=1cc6f32c4f959490e111b7e770b099e1fcc8b796` and the production alias assigned; deployment also appears as the latest READY record in Vercel Production listings.
+- **Verification limitation (do not misstate):** the external HTTP browsing interface did not return the two live `/api/atlas-polity-read?polity_id=<UUID>` JSON responses; therefore **live HTTP detail payload and browser DOM were NOT independently inspected**, even though source CI and the exact matching production deployment are verified. An end-to-end authenticated/browser smoke verification may be advisable before user-facing release acceptance if protection blocks external viewing.
+- A **post-merge independent connected `atlas_v2` read-only audit** confirms original family **65 Authoring /65 Runtime /0 identity and full temporal drift**, direct `France` Governance Contexts **1**, separate direct French Republic Contexts **5**, and both entities' explicit cross-Polity `polity_relations` **0**. Historical period SOURCE owners, Person UUIDs, original Activity links and existing Vichy versus Free-French constitutional distinctions remain unchanged.
+- The separate `country↔Republic` relationship type proposal is now **CLOSED AS `NOT_APPLICABLE_FOR_DIRECT_GOVERNANCE_DETAIL`**, as the existing normalized `polity_governance_periods.polity_id` and detail projection suffice for the bounded display requirement. No global relationship taxonomy is added. Whole `france-regime-family` remains **REVIEW_REQUIRED**, pending `POLITY-P2-01I` finite whole-family historical acceptance across remaining monarchical/First/Second Republic/Empire identities, and is **not prematurely FIXED**.
+
+All 25 existing seeded pending reviews remain open; root Issue #1895 remains OPEN. Japan P1-02 / Place P1-03R and user-PARKED P14 Geometry untouched. STOP after P2-01H.
