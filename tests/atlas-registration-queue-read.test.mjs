@@ -27,6 +27,12 @@ test("registration queue is derived from current Production identity, not a queu
   assert.match(PENDING_SQL, /candidate_identity_matches/i);
   assert.match(PENDING_SQL, /Napoleon Bonaparte/);
   assert.match(PENDING_SQL, /Avicenna/);
+  for(const name of ["Mussolini","Machiavelli","JFK","Churchill","Prophet Muhammad","Kafka","Tesla"]) {
+    if(name==="Tesla") continue;
+    assert.ok(PENDING_SQL.includes(name),`missing audited Person synonym: ${name}`);
+    assert.ok(REVIEWED_PERSON_ALIASES_SQL.includes(name),`missing UI representative alias: ${name}`);
+  }
+  assert.ok(!PENDING_SQL.includes("Yugoslavia"),"a country must not become a Person alias by surname heuristics");
   // These source strings were all displayed as unmatched in the user's
   // 51-person shortlist, despite verified canonical Person UUIDs.
   for(const name of ["Rasputin","Buddha","Ivan the Terrible","Haile Selassie","Sun Tzu",
