@@ -78,7 +78,9 @@ async function readLivingEvidence({names,fetchImpl=globalThis.fetch,now=Date.now
     for(const item of resolveMatches(missing,rows,new Date(now).getUTCFullYear())) {
       statusCache.set(item.name,{...item,expires_at:now+CACHE_TTL_MS});
     }
-    if(statusCache.size>3000) statusCache.clear();
+    if(statusCache.size>3000) {
+      for(let index=0;index<1000;index++) statusCache.delete(statusCache.keys().next().value);
+    }
   }
   return Object.freeze({
     evidence_source:"Wikidata P31/P569/P570 (unique exact English label, unverified living inference)",
