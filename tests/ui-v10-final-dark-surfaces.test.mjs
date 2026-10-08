@@ -28,11 +28,12 @@ test("UI V10 cache-busts the final dark-surface assets", () => {
 test("UI V10 Production verifier rejects bright Person regressions", () => {
   const verifier = read("scripts/verify-ui-v10-production-visual.mjs");
   assert.match(verifier, /registrationSurface/);
-  assert.match(verifier, /rgb\(21, 25, 28\)/);
+  assert.match(verifier, /function isDeepGraphiteSurface\(value\)/);
   assert.match(verifier, /eraNavigatorSurface/);
-  assert.match(verifier, /rgba\(18, 21, 24, 0\.96\)/);
   assert.match(verifier, /eraSearchSurface/);
-  assert.match(verifier, /rgb\(17, 21, 24\)/);
+  assert.match(verifier, /rgb\.every\(\(c\)=>Number\.isFinite\(c\)&&c>=0&&c<=56\)/);
+  assert.match(verifier, /alpha>=\.94/);
+  assert.doesNotMatch(verifier, /eraNavigatorSurface\?\.background==="rgba\(/);
   assert.match(verifier, /regressed to a bright surface/);
 });
 
