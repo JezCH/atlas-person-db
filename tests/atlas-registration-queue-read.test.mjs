@@ -21,7 +21,7 @@ const PERSON_ID = "11111111-1111-4111-8111-111111111111";
 
 test("registration queue is derived from current Production identity, not a queue-binding flag", () => {
   assert.equal(QUEUE_TABLE, "atlas_v2.person_registration_candidates");
-  assert.match(QUEUE_MEMBERSHIP_RULE, /Production persons\/person_names/i);
+  assert.match(QUEUE_MEMBERSHIP_RULE, /representative Person by default/i);
   assert.match(PENDING_SQL, /atlas_v2\.person_names/i);
   assert.match(PENDING_SQL, /review_metadata->'lookup_names'/i);
   assert.match(PENDING_SQL, /candidate_identity_matches/i);
@@ -29,7 +29,10 @@ test("registration queue is derived from current Production identity, not a queu
   assert.match(PENDING_SQL, /Avicenna/);
   assert.match(REVIEWED_PERSON_ALIASES_SQL, /atlas_v2\.persons/);
   assert.match(PENDING_SQL, /matched_person_count/i);
-  assert.match(PENDING_SQL, /<> 1/);
+  assert.match(PENDING_SQL, /= 0/);
+  assert.doesNotMatch(PENDING_SQL, /<> 1/);
+  assert.match(REVIEWED_PERSON_ALIASES_SQL,/representative_default/);
+  assert.match(PENDING_SQL,/Cleopatra/);
   assert.doesNotMatch(PENDING_SQL, /where\s+person_id\s+is\s+null/i);
 });
 
@@ -41,14 +44,14 @@ test("queue read exposes only unresolved current candidates and keeps ledger cou
       if (String(sql) === PENDING_SQL) {
         return { rows:[
           { candidate_id:"candidate-a", name:"Candidate A", representative_domain:"commerce", priority:"SS", review_metadata:{review_state:"APPROVED",origin:"fixture"}, identity_match_count:0 },
-          { candidate_id:"candidate-b", name:"Candidate B", representative_domain:null, priority:null, review_metadata:{}, identity_match_count:2 }
+          { candidate_id:"candidate-b", name:"Candidate B", representative_domain:null, priority:null, review_metadata:{}, identity_match_count:0 }
         ] };
       }
       if (String(sql) === SUMMARY_SQL) {
         return { rows:[{ ledger_candidate_total:7, legacy_bound_count:3 }] };
       }
       if (String(sql) === REVIEWED_PERSON_ALIASES_SQL) {
-        return { rows:[{alias_name:"Napoleon Bonaparte",canonical_key:"Napoleon I",person_id:PERSON_ID}] };
+        return { rows:[{alias_name:"Napoleon Bonaparte",canonical_key:"Napoleon I",person_id:PERSON_ID,representative_default:false}] };
       }
       throw new Error("unexpected query");
     }
@@ -61,7 +64,7 @@ test("queue read exposes only unresolved current candidates and keeps ledger cou
   assert.equal(queue.summary.pending_count, 2);
   assert.equal(queue.summary.current_total, 2);
   assert.equal(queue.summary.candidate_total, 2);
-  assert.equal(queue.summary.ambiguous_identity_count, 1);
+  assert.equal(queue.summary.ambiguous_identity_count, 0);
   assert.equal(queue.summary.ledger_candidate_total, 7);
   assert.equal(queue.summary.legacy_bound_count, 3);
   assert.equal(calls.length, 3);
