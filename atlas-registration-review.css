@@ -302,20 +302,48 @@
 }
 
 @media(max-width:600px){
+  /* Row 1: rank + full name; row 2: two readable counts; row 3: strength bar. */
   .registration-review-signal-table tbody .registration-review-signal-row{
-    grid-template-columns:38px minmax(0,1fr) 46px 42px;
-    grid-template-rows:auto 5px;
-    gap:8px;
-    padding:9px;
+    grid-template-columns:38px repeat(2,minmax(0,1fr));
+    grid-template-rows:auto auto 5px;
+    column-gap:8px;
+    row-gap:7px;
+    padding:10px 9px;
   }
-  .registration-review-signal-table tbody .registration-review-signal-row td{
-    padding:0;
-  }
+  .registration-review-signal-table tbody .registration-review-signal-row td{padding:0}
   .registration-review-signal-table tbody .registration-review-signal-row .registration-review-name{
-    font-size:11px;
+    grid-column:2 / -1;
+    grid-row:1;
+    min-width:0;
+    font-size:12px;
+    overflow-wrap:anywhere;
   }
-  .registration-review-signal-bar{
-    grid-column:2 / 5;
+  .registration-review-signal-table tbody .registration-review-signal-row td:nth-child(3){
+    grid-column:2;
+    grid-row:2;
+  }
+  .registration-review-signal-table tbody .registration-review-signal-row td:nth-child(4){
+    grid-column:3;
+    grid-row:2;
+  }
+  .registration-review-signal-table tbody .registration-review-signal-row .registration-review-number{
+    position:static;
+    padding-top:0;
+    text-align:left;
+    font-size:11px;
+    line-height:1.4;
+    white-space:nowrap;
+  }
+  .registration-review-signal-table tbody .registration-review-signal-row .registration-review-number::before{
+    position:static;
+    display:inline;
+    margin-right:5px;
+    font-size:9px;
+    vertical-align:baseline;
+  }
+  .registration-review-signal-table tbody .registration-review-signal-row .registration-review-signal-bar{
+    grid-column:2 / -1;
+    grid-row:3;
     margin:0;
   }
 }
