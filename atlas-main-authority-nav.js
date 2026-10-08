@@ -237,7 +237,7 @@
     if (window.ATLAS_REGISTRATION_REVIEW) return Promise.resolve(window.ATLAS_REGISTRATION_REVIEW);
     if (registrationReviewAssetsPromise) return registrationReviewAssetsPromise;
     appendStylesheetOnce("./atlas-registration-review.css?v=20261008-youtube-bounds-v1");
-    registrationReviewAssetsPromise = loadScriptOnce("./atlas-registration-review.js?v=20261008-youtube-bounds-v1", () => Boolean(window.ATLAS_REGISTRATION_REVIEW))
+    registrationReviewAssetsPromise = loadScriptOnce("./atlas-registration-review.js?v=20261008-youtube-full-signals-v2", () => Boolean(window.ATLAS_REGISTRATION_REVIEW))
       .then(() => window.ATLAS_REGISTRATION_REVIEW)
       .catch((error) => {
         registrationReviewAssetsPromise = null;
