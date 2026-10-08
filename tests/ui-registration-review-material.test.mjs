@@ -370,3 +370,88 @@ test("REVIEW-M12 refills after excluding the first 1000 registered ranks",async(
   assert.doesNotMatch(node("#youtubeSignalBody").innerHTML,/Registered Individual/);
   assert.ok(urls.some(url=>url.includes("offset=1000")));
 });
+
+test("REVIEW-M14 applies BOTH exclusions instantly while Wikidata is pending or fails",async()=>{
+  const vm=await import("node:vm");
+  const script=read("atlas-registration-review.js");
+  const shared=read("atlas-youtube-reviewed-living-people.js");
+  const serverStatus=(await import("../server/atlas-youtube-reviewed-living-people.js")).default;
+  const events=new Map(),nodes=new Map();
+  const node=id=>{
+    if(!nodes.has(id)) nodes.set(id,{
+      innerHTML:"",textContent:"",dataset:{},disabled:false,checked:false,isConnected:true,
+      addEventListener(type,listener){events.set(id+":"+type,listener)}
+    });
+    return nodes.get(id);
+  };
+  const root={innerHTML:"",isConnected:true,querySelector:node};
+  const people={persons:[{id:"p-lincoln",canonical_name_en:"Abraham Lincoln",names:[],historicity:"historical"}],summary:{total:1}};
+  const queue={ok:true,candidates:[],summary:{pending_count:0},reviewed_person_aliases:[]};
+  const ranks=[
+    {rank:1,raw_name:"Abraham Lincoln",distinct_channel_count:60,video_count:70},
+    {rank:2,raw_name:"Elon Musk",distinct_channel_count:50,video_count:55},
+    {rank:3,raw_name:"Donald Trump",distinct_channel_count:45,video_count:46},
+    {rank:4,raw_name:"Trump",distinct_channel_count:40,video_count:42},
+    {rank:5,raw_name:"Hypatia",distinct_channel_count:30,video_count:32},
+    {rank:6,raw_name:"Isaac Newton",distinct_channel_count:25,video_count:28}
+  ];
+  let unlockEvidence=null;
+  const evidenceStarted=[];
+  const evidencePromise=new Promise(resolve=>{unlockEvidence=resolve});
+  const fetch=async url=>{
+    const parsed=new URL(url,"http://local.test");
+    const surface=parsed.searchParams.get("__atlas_read_surface");
+    const payload=surface==="registration-queue" ? queue
+      : surface==="youtube-person-signals"
+        ? {ok:true,stored_count:ranks.length,available_count:ranks.length,rows:ranks,
+           snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":ranks.length},source_state:{next_batch:"batch018"}}}
+        : await (async()=>{
+          const queried=JSON.parse(parsed.searchParams.get("names"));
+          evidenceStarted.push(...queried);
+          await evidencePromise;
+          return {ok:true,evidence_unavailable:true,rows:queried.map(name=>({name,status:"unknown"}))};
+        })();
+    return {ok:true,status:200,json:async()=>payload};
+  };
+  const context={window:{ATLAS_CLIENT_DATA_STORE:{loadPersons:async()=>people},addEventListener(){}},
+    fetch,Date,URL,console,setInterval:()=>0,clearInterval(){}};
+  vm.runInNewContext(shared,context);
+  assert.equal(typeof context.window.ATLAS_REVIEWED_LIVING_PEOPLE?.reviewedLivingStatus,"function");
+  assert.equal(serverStatus.reviewedLivingStatus("Donald Trump")?.status,"living_likely");
+  assert.equal(context.window.ATLAS_REVIEWED_LIVING_PEOPLE.reviewedLivingStatus("Donald Trump")?.status,"living_likely");
+  vm.runInNewContext(script,context);
+  context.window.ATLAS_REGISTRATION_REVIEW.mount(root);
+  const ready=async()=>{
+    for(let i=0;i<60 && node("#registrationReviewStatus").dataset.state!=="ready";i++)
+      await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(node("#registrationReviewStatus").dataset.state,"ready");
+  };
+  await ready();
+  const html=()=>node("#youtubeSignalBody").innerHTML;
+  assert.match(html(),/Donald Trump/);
+  const click=(id)=>{
+    node("#"+id).checked=true;
+    events.get("#youtubeSignalFilters:change")({target:{id,checked:true}});
+  };
+  click("youtubeExcludeRegistered");
+  assert.doesNotMatch(html(),/Abraham Lincoln/);
+  click("youtubeExcludeLiving");
+  // Exact user reproduction: both checks ON and evidence has not responded.
+  assert.equal(node("#youtubeExcludeLiving").checked,true);
+  assert.equal(node("#youtubeExcludeRegistered").checked,true);
+  assert.doesNotMatch(html(),/Abraham Lincoln/);
+  assert.doesNotMatch(html(),/Elon Musk/);
+  assert.doesNotMatch(html(),/Donald Trump/);
+  assert.doesNotMatch(html(),/Trump</);
+  assert.match(html(),/Hypatia/);
+  unlockEvidence();
+  await ready();
+  assert.doesNotMatch(html(),/Donald Trump/);
+  assert.doesNotMatch(html(),/Elon Musk/);
+  assert.doesNotMatch(html(),/Abraham Lincoln/);
+  assert.match(html(),/Isaac Newton/);
+  assert.ok(evidenceStarted.includes("Hypatia"));
+  assert.ok(!evidenceStarted.includes("Donald Trump"),"reviewed living names need no Wikidata call");
+  assert.ok(!evidenceStarted.includes("Elon Musk"),"reviewed living names need no Wikidata call");
+  assert.match(node("#youtubeSignalVisibleCount").textContent,/제외 불완전/);
+});
