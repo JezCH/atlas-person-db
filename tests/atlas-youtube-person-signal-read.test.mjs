@@ -66,5 +66,7 @@ test("filtered ranking pages from the global snapshot without changing absolute 
   assert.equal(result.rows[0].rank,1001);
   assert.deepEqual(calls.find(call=>call.sql===service.PAGED_SIGNAL_ROWS_SQL).params,["snapshot",3,1000,1000]);
   await assert.rejects(()=>service.readYoutubePersonSignals({client,offset:-1}),/INVALID_YOUTUBE_PERSON_SIGNAL_QUERY/);
-  await assert.rejects(()=>service.readYoutubePersonSignals({client,offset:10001}),/INVALID_YOUTUBE_PERSON_SIGNAL_QUERY/);
+  const larger=await service.readYoutubePersonSignals({client,offset:10001});
+  assert.equal(larger.offset,10001);
+  await assert.rejects(()=>service.readYoutubePersonSignals({client,offset:100001}),/INVALID_YOUTUBE_PERSON_SIGNAL_QUERY/);
 });

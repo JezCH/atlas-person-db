@@ -1,0 +1,188 @@
+{
+  "schema": "atlas-youtube-reviewed-dispositions/v1",
+  "policy": "Non-individual labels are only review dispositions; no raw-title deletion, Person mutation, or parser-level rejection is authorized by this list.",
+  "decisions": [
+    {
+      "name": "the Habsburgs",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Dynastic family, not one Person",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Bonnie and Clyde",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Two distinct individuals, not one Person",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Metamorphosis",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Literary/general noun",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Minecraft",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Game title",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Penguins",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Animal group",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Transnistria",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Territorial/geographic name",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Vatican City",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Sovereign territory / city",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "The Forbidden City",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Historic palatial complex",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "LEGO City",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Product or game title",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "New York City",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "City name",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Kowloon Walled City",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Historical settlement/site",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "the Lost City of Pompeii",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Ancient settlement, not an individual",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Göbeklitepe",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Archaeological site",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Gobekli Tepe",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Archaeological site",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Yoga",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Practice/concept",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Cancer",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Illness/common noun",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Full",
+      "disposition": "NON_INDIVIDUAL",
+      "reason": "Generic video metadata",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Paris",
+      "disposition": "AMBIGUOUS",
+      "reason": "City, historical name or mythological Paris, video context required",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Jane Seymour",
+      "disposition": "AMBIGUOUS",
+      "reason": "Tudor queen versus living actor",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Drake",
+      "disposition": "AMBIGUOUS",
+      "reason": "Living rapper versus historical Francis Drake",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Jack the Ripper",
+      "disposition": "UNIDENTIFIED",
+      "reason": "Unknown offender; cannot assign a unique historical Person UUID",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Barbarossa",
+      "disposition": "AMBIGUOUS",
+      "reason": "Epithet held by more than one figure",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Prince",
+      "disposition": "AMBIGUOUS",
+      "reason": "Living musician versus royalty title",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Diana",
+      "disposition": "AMBIGUOUS",
+      "reason": "Personal name, mythological goddess and Princess Diana",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Alexandria",
+      "disposition": "AMBIGUOUS",
+      "reason": "Most commonly a city, also a personal name",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    },
+    {
+      "name": "Muhammad Ali",
+      "disposition": "AMBIGUOUS",
+      "reason": "Boxer versus other historical Muhammad Alis; source context required",
+      "reviewed_at": "2026-10-09",
+      "source": "docs/YOUTUBE_FULL_6358_REVIEW_20261009.md"
+    }
+  ]
+}
