@@ -40,12 +40,10 @@ test("YouTube person signal read keeps the exact global baseline separate from t
         source_state:{coverage_batches:["batch008","batch009","batch010","batch011"]},
         snapshot_scope:"segment_supplement"
       }]};
-      if(sql===service.SIGNAL_ROWS_SQL && params[0]==="yt-global") return { rows:[
-        {raw_name:"Abraham Lincoln",rank:1,distinct_channel_count:55,video_count:60}
-      ]};
-      if(sql===service.SIGNAL_ROWS_SQL && params[0]==="yt-segment") return { rows:[
-        {raw_name:"Abraham Lincoln",rank:3,distinct_channel_count:37,video_count:44},
-        {raw_name:"ABRAHAM LINCOLN",rank:885,distinct_channel_count:3,video_count:4}
+      if(sql===service.SIGNAL_SCOPED_ROWS_SQL) return { rows:[
+        {snapshot_id:"yt-global",raw_name:"Abraham Lincoln",rank:1,distinct_channel_count:55,video_count:60},
+        {snapshot_id:"yt-segment",raw_name:"Abraham Lincoln",rank:3,distinct_channel_count:37,video_count:44},
+        {snapshot_id:"yt-segment",raw_name:"ABRAHAM LINCOLN",rank:885,distinct_channel_count:3,video_count:4}
       ]};
       throw new Error("unexpected sql");
     }
@@ -62,15 +60,14 @@ test("YouTube person signal read keeps the exact global baseline separate from t
   assert.equal(result.available_count,63); // Baseline aggregate, not a falsely merged total.
   assert.equal(result.stored_count,1);
   assert.equal(result.ranking_scope,"cross_segment_bounds");
-  assert.equal(result.detail_limited,false);
   assert.deepEqual(result.rows,[{
     raw_name:"Abraham Lincoln",rank:1,
     baseline_channel_count:55,baseline_channel_upper_bound:55,
     supplemental_channel_count:37,supplemental_channel_upper_bound:40,
     video_count:108,distinct_channel_count:55,channel_count_upper_bound:95
   }]);
-  assert.deepEqual(calls.filter(call=>call.sql===service.SIGNAL_ROWS_SQL).map(call=>call.params),[
-    ["yt-global",3,1000],["yt-segment",3,1000]
+  assert.deepEqual(calls.filter(call=>call.sql===service.SIGNAL_SCOPED_ROWS_SQL).map(call=>call.params),[
+    ["yt-global","yt-segment"]
   ]);
 });
 
@@ -165,4 +162,27 @@ test("exact reconciled global snapshots must not add supplemental rows again",as
   assert.equal(result.rows[0].distinct_channel_count,79);
   assert.equal(result.rows[0].channel_count_upper_bound,undefined);
   assert.equal(result.available_count,3500);
+});
+
+test("scoped read does not truncate late-ranked aliases above 1000",async()=>{
+  const detail=[
+    {snapshot_id:"global",raw_name:"Abraham Lincoln",rank:1,distinct_channel_count:55,video_count:60},
+    {snapshot_id:"segment",raw_name:"Abraham Lincoln",rank:3,distinct_channel_count:37,video_count:44}
+  ];
+  for(let rank=4;rank<=1099;rank++) detail.push({
+    snapshot_id:"segment",raw_name:`Other Person ${rank}`,rank,
+    distinct_channel_count:3,video_count:3
+  });
+  detail.push({snapshot_id:"segment",raw_name:"ABRAHAM LINCOLN",rank:1100,distinct_channel_count:3,video_count:4});
+  const client={async query(sql) {
+    if(sql===service.GLOBAL_SNAPSHOT_SQL) return {rows:[{snapshot_id:"global",snapshot_scope:"global_baseline",threshold_counts:{"3":2768}}]};
+    if(sql===service.PROGRESS_SQL) return {rows:[]};
+    if(sql===service.SEGMENT_SNAPSHOT_SQL) return {rows:[{snapshot_id:"segment",snapshot_scope:"segment_supplement"}]};
+    if(sql===service.SIGNAL_SCOPED_ROWS_SQL) return {rows:detail};
+    throw new Error("Unexpected query");
+  }};
+  const result=await service.readYoutubePersonSignals({client,minChannels:3,limit:300});
+  assert.equal(result.rows[0].raw_name,"Abraham Lincoln");
+  assert.equal(result.rows[0].channel_count_upper_bound,95);
+  assert.equal(result.stored_count,1097);
 });
