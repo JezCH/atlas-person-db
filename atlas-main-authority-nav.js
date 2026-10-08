@@ -236,8 +236,8 @@
   function ensureRegistrationReviewAssets() {
     if (window.ATLAS_REGISTRATION_REVIEW) return Promise.resolve(window.ATLAS_REGISTRATION_REVIEW);
     if (registrationReviewAssetsPromise) return registrationReviewAssetsPromise;
-    appendStylesheetOnce("./atlas-registration-review.css?v=20261008-youtube-mobile-counts-v4");
-    registrationReviewAssetsPromise = loadScriptOnce("./atlas-registration-review.js?v=20261008-youtube-mobile-counts-v4", () => Boolean(window.ATLAS_REGISTRATION_REVIEW))
+    appendStylesheetOnce("./atlas-registration-review.css?v=20261008-youtube-registration-state-v5");
+    registrationReviewAssetsPromise = loadScriptOnce("./atlas-registration-review.js?v=20261008-youtube-registration-state-v5", () => Boolean(window.ATLAS_REGISTRATION_REVIEW))
       .then(() => window.ATLAS_REGISTRATION_REVIEW)
       .catch((error) => {
         registrationReviewAssetsPromise = null;
