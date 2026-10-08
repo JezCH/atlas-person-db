@@ -8,7 +8,7 @@ test("DETAIL-LUX1 publishes the editorial hero refinement without changing regis
   const html = read("index.html");
   const css = read("atlas-person-chronicle-detail.css");
   const js = read("atlas-person-main.js");
-  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261008-detail-lux1-hero-v1/);
+  assert.match(html, /atlas-person-chronicle-detail\.css\?v=20261008-detail-lux2-chronicle-v1/);
   assert.ok(html.indexOf("atlas-person-monumental-register.css") < html.indexOf("atlas-person-chronicle-detail.css"));
   assert.match(css, /DETAIL-LUX1 — Premium historical biography opening/);
   assert.match(js, /person-chronicle-hero/);
