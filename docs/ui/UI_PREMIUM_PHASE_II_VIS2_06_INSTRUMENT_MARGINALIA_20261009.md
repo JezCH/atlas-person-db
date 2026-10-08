@@ -2,7 +2,7 @@
 
 **Work unit:** VIS2-06 only · [#2158](https://github.com/JezCH/atlas-person-db/issues/2158) · 2026-10-09 KST.  
 **Prior state:** VIS2-05 complete as a **REJECTED, default-OFF** watermark experiment, Production [run #37817749988](https://github.com/JezCH/atlas-person-db/actions/runs/37817749988).  
-**State:** implementation available; awaiting exact-deployed-SHA Chrome, A/B image review and closeout.
+**State:** **VIS2-06 COMPLETE / SIGNED OFF** — actual exact-deployed-SHA Chrome and matched visual screenshots PASS; next VIS2-07 NOT STARTED.
 
 ## Read-before-write and duplication check
 
@@ -38,4 +38,42 @@ Capture matched 390 and 1600 screenshots in both states (**8 VIS2-06 PNGs**). Be
 
 Existing exact-deploy-SHA gate, Person/Polity/Spacetime, 29-image baseline and VIS2-01/02/03/04 and VIS2-05 experimental capture must all pass, resulting in **92 PNGs total** if uninterrupted (84 inherited + 8 VIS2-06). Human screenshot comparison is mandatory, especially whether mobile panel hierarchy improves without obscuring chart content.
 
-**Closeout barrier:** no VIS2-07 Person Register work in this unit. Do not mark VIS2-06 complete until Chrome success and side-by-side visual review, then sign off in #2158.
+**Closeout:** VIS2-06 **COMPLETE**, eight Production same-DOM gates PASS and visually verified matched screenshots. **VIS2-07 Person Register is NOT STARTED; next user turn only.**
+
+
+## Production acceptance — VERIFIED 2026-10-09 KST
+
+### Deployed exact source and technical gates
+
+- Implementation [PR #2204](https://github.com/JezCH/atlas-person-db/pull/2204) merged to `main` as `7071f2f15d54183ffc2bbc0fa0514dd9d7d2acd1`.
+- [Actual exact-deploy-SHA Chrome run #37843633724](https://github.com/JezCH/atlas-person-db/actions/runs/37843633724) completed **SUCCESS** at that same SHA; [artifact #11579600285](https://github.com/JezCH/atlas-person-db/actions/runs/37843633724/artifacts/11579600285) is a valid **17,479,391-byte ZIP with 105 files / 92 PNGs**, containing `vis2-06-production-instrument.json` with `status: PASS`, **8 passing cases / 8 VIS2-06 PNGs**.
+- In the same successful run: Spacetime Production Acceptance, Person V10 dense table, Polity, the 29-image VIS2-00 baseline, VIS2-01 materials, VIS2-02 engraving, VIS2-03 numeric typography, VIS2-04 chronograph ticks, and VIS2-05 watermark **experimental capture only, with default OFF** all passed.
+- This unit's Chrome probe toggled **only** the VIS2-06 stylesheet on the identical rendered DOM, with a live CSS activation marker. It verified all existing tool/frame/canvas/minimap/inspector bounding rectangles and text, 500% camera and scroll coordinates, year counts, minimap canvas resolution, document overflow, label geometry, selected/empty transitions, and expected computed text contrast/paint changes.
+
+| Viewport | Inspector | Year ticks | Person label DOM sample | Result |
+|---|---|---:|---:|---|
+| 390×844 | empty | 105 | 0 | PASS |
+| 390×844 | selected | 105 | 24 | PASS |
+| 768×1000 | empty | 105 | 0 | PASS |
+| 768×1000 | selected | 105 | 24 | PASS |
+| 1440×1000 | empty | 209 | 0 | PASS |
+| 1440×1000 | selected | 209 | 24 | PASS |
+| 1600×1000 | empty | 209 | 0 | PASS |
+| 1600×1000 | selected | 209 | 24 | PASS |
+
+The 24 selected Person labels are a **DOM geometry sample**, not a claim they are all simultaneously visible. The default empty state contains no virtualized labels in this screenshot, and is intentionally included as a distinct instrument state.
+
+### Actual before/after artifact inspection
+
+The exact artifact ZIP was downloaded, verified, extracted and all four matched 390/1600px empty/selected screenshot pairs were pixel-compared. Full desktop contact-sheet, mobile empty and mobile selected screenshots were **opened and visually reviewed**. The paint changes stay on existing upper instrument telemetry, minimap annotations and inspector marginalia; no added icons, historic dates, shadows of panels, substantive area decoration, text clipping or new competing labels were observed.
+
+| Matching A/B state | Changed RGB pixels | Full viewport | Change |
+|---|---:|---:|---:|
+| 390×844 empty | 1,485 | 329,160 | 0.4511% |
+| 390×844 selected | 1,151 | 329,160 | 0.3497% |
+| 1600×1000 empty | 16,234 | 1,600,000 | 1.0146% |
+| 1600×1000 selected | 15,099 | 1,600,000 | 0.9437% |
+
+**Verdict: ACCEPT scoped VIS2-06 only.** The contrast hierarchy is small but visibly more readable against the existing graphite instrument surfaces, and everything else retains the canonical original geometry and behaviors. Existing monumental year watermarks remain **rejected, default OFF**. A subsequent unrelated Polity-source `main` merge did not change the VIS2-06 CSS/test source paths; the acceptance was at its exact deployed SHA, not falsely attributed to an arbitrary newer commit.
+
+**Next work unit: VIS2-07 Person main table finish — NOT STARTED in this conversation.**
