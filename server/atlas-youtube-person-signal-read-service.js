@@ -95,6 +95,13 @@ order by rank
 limit $3
 `;
 
+const SIGNAL_SCOPED_ROWS_SQL = `
+select snapshot_id,raw_name,rank,distinct_channel_count,video_count
+from atlas_v2.youtube_person_signals
+where snapshot_id in ($1,$2)
+order by snapshot_id,rank
+`;
+
 function integerOption(value, fallback, { min, max }) {
   if (value == null || value === "") return fallback;
   const parsed = Number(value);
@@ -166,7 +173,7 @@ function projectSignal(row) {
 }
 
 // The legacy baseline has no preserved channel IDs. Consequently cross-snapshot
-// union sizes are bounded, never an exact sum. Normalize only casing/spacing;
+// union sizes of persisted signals are bounded, never an exact sum. Normalize only casing/spacing;
 // transliterations and other potentially different people remain separate.
 function mergeBoundedSignals(baselineRows,segmentRows,minChannels,limit) {
   const signals=new Map();
@@ -239,7 +246,6 @@ async function readYoutubePersonSignals({ client, minChannels = 3, limit = 300 }
       segment_snapshot:null,
       progress:null,
       ranking_scope:"unavailable",
-      detail_limited:false,
       min_channels:normalizedMinChannels,
       available_count:0,
       stored_count:0,
@@ -258,12 +264,15 @@ async function readYoutubePersonSignals({ client, minChannels = 3, limit = 300 }
   // A fully reconciled global snapshot already has exact channel counts.
   // Only the unreconciled baseline+supplement pair needs bounded merging.
   if (snapshot.snapshot_scope==="global_baseline" && segment) {
-    const detailLimit=1000;
-    const [baselineRows,segmentRows]=await Promise.all([
-      client.query(SIGNAL_ROWS_SQL,[snapshot.snapshot_id,3,detailLimit]),
-      client.query(SIGNAL_ROWS_SQL,[segment.snapshot_id,3,detailLimit])
-    ]);
-    const combined=mergeBoundedSignals(baselineRows.rows || [],segmentRows.rows || [],normalizedMinChannels,normalizedLimit);
+    // Read all persisted detail rows once; a top-N cutoff could omit aliases
+    // and incorrectly understate the claimed upper bound.
+    const scopedRows=(await client.query(SIGNAL_SCOPED_ROWS_SQL,[snapshot.snapshot_id,segment.snapshot_id])).rows || [];
+    const baselineRows=[],segmentRows=[];
+    for (const row of scopedRows) {
+      if (row.snapshot_id===snapshot.snapshot_id) baselineRows.push(row);
+      else if (row.snapshot_id===segment.snapshot_id) segmentRows.push(row);
+    }
+    const combined=mergeBoundedSignals(baselineRows,segmentRows,normalizedMinChannels,normalizedLimit);
     return Object.freeze({
       schema:YOUTUBE_PERSON_SIGNAL_SCHEMA,
       available:true,
@@ -271,7 +280,6 @@ async function readYoutubePersonSignals({ client, minChannels = 3, limit = 300 }
       segment_snapshot:segment,
       progress,
       ranking_scope:"cross_segment_bounds",
-      detail_limited:(baselineRows.rows || []).length===detailLimit || (segmentRows.rows || []).length===detailLimit,
       min_channels:normalizedMinChannels,
       // This aggregate is from the baseline; no global merged total is known.
       available_count:Number.isInteger(aggregateCount) && aggregateCount>=0 ? aggregateCount : combined.stored_count,
@@ -292,7 +300,6 @@ async function readYoutubePersonSignals({ client, minChannels = 3, limit = 300 }
     segment_snapshot:segment,
     progress,
     ranking_scope:snapshot.snapshot_scope==="global_reconciled" ? "exact_global" : "single_snapshot",
-    detail_limited:false,
     min_channels:normalizedMinChannels,
     available_count:Number.isInteger(aggregateCount) && aggregateCount>=0 ? aggregateCount : storedCount,
     stored_count:storedCount,
@@ -308,6 +315,7 @@ module.exports = Object.freeze({
   PROGRESS_SQL,
   SIGNAL_COUNT_SQL,
   SIGNAL_ROWS_SQL,
+  SIGNAL_SCOPED_ROWS_SQL,
   integerOption,
   normalizeThresholdCounts,
   projectSnapshot,
