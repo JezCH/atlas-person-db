@@ -15,6 +15,7 @@ on:
       - "atlas-person-spacetime-marginalia-v2.css"
       - "atlas-person-monumental-register.css"
       - "atlas-person-register-inscription-v2.css"
+      - "atlas-person-register-selection-focus-v2.css"
       - "atlas-person-chronicle-detail.css"
       - "atlas-ui-mobile-v8.css"
       - "atlas-ui-motion-material-v9.css"
@@ -34,6 +35,7 @@ on:
       - "scripts/verify-vis2-05-watermark-ab.mjs"
       - "scripts/verify-vis2-06-production-instrument.mjs"
       - "scripts/verify-vis2-07-production-register.mjs"
+      - "scripts/verify-vis2-08-production-register-interaction.mjs"
       - "experiments/vis2-05-monumental-watermark-candidate.css"
       - ".github/workflows/atlas-spacetime-production-visual.yml"
   workflow_dispatch:
@@ -156,6 +158,8 @@ jobs:
           node scripts/verify-vis2-06-production-instrument.mjs
           node --check scripts/verify-vis2-07-production-register.mjs
           node scripts/verify-vis2-07-production-register.mjs
+          node --check scripts/verify-vis2-08-production-register-interaction.mjs
+          node scripts/verify-vis2-08-production-register-interaction.mjs
           for report in "$ATLAS_VISUAL_OUT_DIR"/*.json; do
             echo "===== $report ====="
             cat "$report"
