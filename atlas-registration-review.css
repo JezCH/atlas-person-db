@@ -356,3 +356,36 @@
 .registration-review-telemetry strong,.registration-review-telemetry span{white-space:normal;overflow-wrap:anywhere}
 .registration-review-signal-visible{white-space:normal;overflow-wrap:anywhere}
 .registration-review-signal-table .registration-review-number{font-variant-numeric:tabular-nums}
+
+/* REVIEW-M11 — Person and pending-queue exact-identity indicators beside raw names. */
+.registration-review-signal-table tbody .registration-review-signal-row .registration-review-name{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:4px 7px;
+  min-width:0;
+}
+.registration-review-signal-raw-name{min-width:0;overflow-wrap:anywhere}
+.registration-review-signal-identity{
+  display:inline-flex;
+  align-items:center;
+  min-height:17px;
+  padding:1px 5px;
+  border:1px solid var(--atlas-material-hairline-soft);
+  border-radius:3px;
+  color:var(--atlas-text-muted);
+  font-size:9px;
+  font-weight:600;
+  line-height:1.2;
+  white-space:nowrap;
+}
+.registration-review-signal-identity[data-status="registered"]{color:var(--atlas-success)}
+.registration-review-signal-identity[data-status="queued"]{color:var(--atlas-honor-metal)}
+.registration-review-signal-identity[data-status="ambiguous"]{color:var(--atlas-text-secondary)}
+@media(max-width:600px){
+  .registration-review-signal-table tbody .registration-review-signal-row .registration-review-name{
+    align-content:center;
+    gap:5px;
+  }
+  .registration-review-signal-identity{font-size:9px}
+}
