@@ -27,6 +27,7 @@ function state(){
  return {marker:getComputedStyle(document.documentElement).getPropertyValue("--atlas-vis2-09-hero-active").trim(),width:innerWidth,docWidth:document.documentElement.scrollWidth,
   panelHidden:Boolean(panel?.hidden),panelScrollTop:panel?.scrollTop||0,domain:panel?.dataset.representativeDomain||"",
   genuinePortrait:Boolean(portrait?.classList.contains("has-portrait")),imageSource:img?.getAttribute("src")||null,imageAlt:img?.getAttribute("alt")||null,
+  imageComplete:Boolean(img?.complete),imageNaturalWidth:img?.naturalWidth||0,imageNaturalHeight:img?.naturalHeight||0,
   activityCount:document.querySelectorAll("#personMainDetail .person-chronicle-activity").length,sourceCount:document.querySelectorAll("#personMainDetail .person-source-item").length,
   mainRowCount:document.querySelectorAll(".person-register-entry").length,mainPortraitCount:document.querySelectorAll("#personMainView .person-main-groups .person-detail-portrait").length,
   elements:result};
@@ -53,6 +54,10 @@ async function openPerson(c,kind,id){
  check(result?.id&&result.name,"Actual source Person row missing",{kind,result});
  await until(c,"Boolean(document.querySelector('#personMainDetail:not([hidden]) .person-chronicle-hero .person-detail-portrait'))",45000);
  await until(c,"document.querySelector('#personMainDetail .person-chronicle-identity h2')?.textContent?.trim()==="+JSON.stringify(result.name),20000);
+ if(kind==="portrait"){
+  await until(c,"(()=>{const img=document.querySelector('#personMainDetail [data-person-portrait-image]');return Boolean(img&&img.getAttribute('src')&&img.complete&&img.naturalWidth>0&&img.naturalHeight>0);})()",30000);
+  await evaluate(c,"(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))))()");
+ }
  await sleep(480);
  return result;
 }
@@ -67,13 +72,13 @@ async function caseAB(c,width,kind,id){
  const after=await evaluate(c,"("+state.toString()+")()");
  if(capture)await screenshot(c,"vis2-09-B-refined-"+name+".png");
  check(before.marker===""&&after.marker==="1","VIS2-09 activation failed",{width,kind});
- for(const k of ["width","docWidth","panelHidden","panelScrollTop","domain","genuinePortrait","imageSource","imageAlt","activityCount","sourceCount","mainRowCount","mainPortraitCount"])
+ for(const k of ["width","docWidth","panelHidden","panelScrollTop","domain","genuinePortrait","imageSource","imageAlt","imageComplete","imageNaturalWidth","imageNaturalHeight","activityCount","sourceCount","mainRowCount","mainPortraitCount"])
   check(JSON.stringify(before[k])===JSON.stringify(after[k]),"Historical/detail state changed "+k,{width,kind,before:before[k],after:after[k]});
  check(before.docWidth<=width+1&&after.docWidth<=width+1,"Page overflow",{width,kind,docWidth:after.docWidth});
  check(!before.panelHidden&&before.elements.title?.text===person.name,"Wrong Person displayed",{width,kind,person,actual:before.elements.title?.text});
  check(before.mainPortraitCount===0,"No portraits on Person main register",{width,kind});
  if(kind==="multi")check(before.activityCount>=2,"Multiple-Activity Person scenario not verified",{width,person,activityCount:before.activityCount});
- if(kind==="portrait")check(before.genuinePortrait&&before.imageSource,"Genuine portrait required",{width,person});
+ if(kind==="portrait")check(before.genuinePortrait&&before.imageSource&&before.imageComplete&&before.imageNaturalWidth>0&&before.imageNaturalHeight>0,"Genuine portrait pixels must be loaded before A/B capture",{width,person,imageSource:before.imageSource,imageComplete:before.imageComplete,imageNaturalWidth:before.imageNaturalWidth,imageNaturalHeight:before.imageNaturalHeight});
  if(kind!=="portrait")report.portraitLookup.firstVisibleClass??=(before.genuinePortrait?"has-portrait":"no-portrait");
  for(const [k,a] of Object.entries(before.elements)){const b=after.elements[k];check(Boolean(a)===Boolean(b),"Detail DOM element presence changed "+k,{width,kind});if(!a)continue;
   check(sameRect(a.rect,b.rect)&&a.text===b.text&&a.scrollHeight===b.scrollHeight&&a.scrollWidth===b.scrollWidth&&a.display===b.display&&a.font===b.font,
