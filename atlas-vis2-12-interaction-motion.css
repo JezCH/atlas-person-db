@@ -1,0 +1,65 @@
+/* VIS2-12 — interaction and reduced-motion harmonization.
+ * No motion geometry, behavioral handlers, domain colors, or semantic states change.
+ * Existing component ownership remains intact; this sheet closes specific gaps.
+ */
+:root {
+  --atlas-vis2-12-interaction-active: 1;
+}
+
+/* Previously uncovered keyboard-only interactive targets across domains. */
+.person-era-polity-filter:focus-visible,
+.person-era-relation-filter:focus-visible,
+.person-chronicle-section .person-source-item a:focus-visible,
+.spacetime-status-more > summary:focus-visible,
+.polity-browser-more:focus-visible,
+.polity-browser-controls input:focus-visible,
+.polity-review-toolbar input:focus-visible,
+.dashboard-control-center #atlasDashboardRefresh:focus-visible,
+.dashboard-control-center .dashboard-polity-toolbar button:focus-visible {
+  outline: 1px solid var(--atlas-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Suppress remaining paint transitions for the user's explicit reduced-motion
+ * preference, including lazy Polity/Dashboard CSS and Spacetime axis layers.
+ * Existing selected/hover/focus appearance is retained; no colors are reset.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .person-era-polity-filter,
+  .person-era-relation-filter,
+  .person-chronicle-section .person-source-item a,
+  .person-chronicle-activity .person-evidence-inspector > summary,
+  .person-detail-authoring > summary,
+  .spacetime-region-head-layer,
+  .spacetime-era-axis,
+  .spacetime-subregion-line,
+  .spacetime-place-guide,
+  .person-spacetime-mount button,
+  .person-spacetime-mount input,
+  .person-spacetime-mount select,
+  .person-spacetime-mount summary,
+  .person-spacetime-mount .spacetime-sticky-inspector,
+  .person-spacetime-mount .spacetime-minimap-surface,
+  .person-spacetime-mount .spacetime-minimap-viewport,
+  .person-spacetime-mount .spacetime-minimap-selected,
+  .polity-browser-shell button,
+  .polity-browser-shell input,
+  .polity-browser-shell select,
+  .polity-browser-shell summary,
+  .polity-review-shell button,
+  .polity-review-shell input,
+  .polity-review-shell select,
+  .polity-review-shell textarea,
+  .dashboard-control-center button,
+  .dashboard-control-center input,
+  .dashboard-control-center a,
+  .dashboard-control-center .dashboard-loading-grid span {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  html,
+  .spacetime-scroll {
+    scroll-behavior: auto !important;
+  }
+}
