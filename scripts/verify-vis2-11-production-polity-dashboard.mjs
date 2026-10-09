@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const ORIGIN=(process.env.ATLAS_PRODUCTION_ORIGIN||"https://atlas-person-db.vercel.app").replace(/\\/$/,"");
+const ORIGIN=(process.env.ATLAS_PRODUCTION_ORIGIN||"https://atlas-person-db.vercel.app").replace(/\/$/,"");
 const SHA=String(process.env.ATLAS_EXPECTED_RUNTIME_SHA||"");
 const CDP_URL=process.env.ATLAS_CDP_URL||"http://127.0.0.1:9222";
 const OUT=process.env.ATLAS_VISUAL_OUT_DIR||"artifacts/spacetime-visual-acceptance";
@@ -37,7 +37,7 @@ function state(domain){
  const snap=e=>{if(!e)return null;const s=getComputedStyle(e);return {rect:rect(e),text:e.textContent?.trim().slice(0,260)||"",font:s.fontFamily,fontSize:s.fontSize,lineHeight:s.lineHeight,display:s.display,color:s.color,backgroundColor:s.backgroundColor,borderColor:s.borderColor,backgroundImage:s.backgroundImage,boxShadow:s.boxShadow,scrollWidth:e.scrollWidth,scrollHeight:e.scrollHeight};};
  const elements=Object.fromEntries(Object.entries(selectors).map(([name,selector])=>[name,snap(document.querySelector(selector))]));
  const root=document.querySelector(domain==="polities"?"#atlasPolityMount .polity-browser-shell":"#atlasDashboardMount .dashboard-control-center");
- return {marker:getComputedStyle(document.documentElement).getPropertyValue("--atlas-vis2-11-archive-active").trim(),domain,width:innerWidth,docWidth:document.documentElement.scrollWidth,rootText:root?.textContent?.replace(/\\s+/g," ").trim().slice(0,600)||"",rootScrollHeight:root?.scrollHeight||0,rootScrollWidth:root?.scrollWidth||0,rootRect:root?rect(root):null,
+ return {marker:getComputedStyle(document.documentElement).getPropertyValue("--atlas-vis2-11-archive-active").trim(),domain,width:innerWidth,docWidth:document.documentElement.scrollWidth,rootText:root?.textContent?.replace(/\s+/g," ").trim().slice(0,600)||"",rootScrollHeight:root?.scrollHeight||0,rootScrollWidth:root?.scrollWidth||0,rootRect:root?rect(root):null,
   polityCardCount:document.querySelectorAll("#atlasPolityMount .polity-browser-card").length,
   polityPersonCount:document.querySelectorAll("#atlasPolityMount .polity-dossier-person").length,
   dashboardKpiCount:document.querySelectorAll("#atlasDashboardMount .dashboard-kpi").length,
@@ -69,7 +69,8 @@ async function activate(c,domain){
  }
 }
 async function toggle(c,disabled){
- const exp="(async()=>{const el=document.querySelector('link[href*=\\\""+CSS+"\\\"]');if(!el)return false;el.disabled="+disabled+";await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return true;})()";
+ const selector='link[href*="'+CSS+'"]';
+ const exp="(async()=>{const el=document.querySelector("+JSON.stringify(selector)+");if(!el)return false;el.disabled="+disabled+";await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return true;})()";
  assert(await evalJS(c,exp),"VIS2-11 stylesheet missing");
  await until(c,"getComputedStyle(document.documentElement).getPropertyValue('--atlas-vis2-11-archive-active').trim()==='"+(disabled?"":"1")+"'",12000);
 }
