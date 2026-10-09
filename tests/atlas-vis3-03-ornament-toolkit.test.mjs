@@ -47,3 +47,21 @@ test('demo uses opt-in components and existing production entry loads none of VI
  assert.match(demo,/data-atlas-o-decor/);
  assert.doesNotMatch(prod,/atlas-ui-phase3-ornaments\.css|assets\/ui-ornaments/);
 });
+
+
+test('one VIS3-03 authority: legacy duplicate toolkit cannot re-enter main',()=>{
+ const retired=[
+  'atlas-ui-ornament-kit-v3.css',
+  'experiments/vis3-03-ornament-showcase.html',
+  'tests/atlas-vis3-03-ornament-kit.test.mjs',
+  'assets/ornaments/atlas-v3-astrolabe.svg',
+  'assets/ornaments/atlas-v3-cartouche.svg',
+  'assets/ornaments/atlas-v3-chapter-flourish.svg',
+  'assets/ornaments/atlas-v3-corner.svg',
+  'assets/ornaments/atlas-v3-illuminated-initial.svg'
+ ];
+ for(const item of retired) assert.ok(!fs.existsSync(path.join(root,item)),item+' must stay retired');
+ const history=fs.readFileSync(path.join(root,'docs/ui/UI_PHASE_III_VIS3_03_ORNAMENT_KIT_20261009.md'),'utf8');
+ assert.match(history,/HISTORICAL \/ SUPERSEDED/);
+ assert.ok(fs.existsSync(cssPath),'canonical toolkit remains intact');
+});

@@ -1,9 +1,11 @@
 # VIS3-03 — Shared Ornament Component Kit / 실사용 SVG·CSS 공통 장식 엔진
 
 **Date:** 2026-10-09  
-**State:** IMPLEMENTED / SOURCE-INTEGRITY TESTED / LIVE ROUTE NOT ACTIVATED  
+**State:** HISTORICAL / SUPERSEDED — original PR #2310 merged, later PR #2320 became canonical; this duplicate asset family was retired on 2026-10-10  
 **Tracker:** [Phase III plan](UI_PHASE_III_ORNAMENT_EXECUTION_PLAN_20261009.md) · [Canonical v2](../../ATLAS_UI_VISUAL_GUIDELINES.md) · [VIS3-02](UI_PHASE_III_VIS3_02_ORNAMENT_GUIDELINE_UPDATE_20261009.md)  
 **Scope:** one bounded VIS3-03 unit: original vector visual language + style components + live-data-free standalone demonstration + deterministic tests. **NO actual app UI injection and no canonical data/geometry changes.**
+
+> **Historical evidence only — do not integrate from this document.** This first implementation was merged as PR #2310 but independently duplicated by the later approved canonical VIS3-03 asset system in PR #2320. The older `assets/ornaments/*`, `atlas-ui-ornament-kit-v3.css`, standalone showcase and duplicate test are retired to maintain one active ornament API. Use [`UI_PHASE_III_VIS3_03_ORNAMENT_TOOLKIT_20261010.md`](UI_PHASE_III_VIS3_03_ORNAMENT_TOOLKIT_20261010.md) and `atlas-ui-phase3-ornaments.css` for VIS3-04 onward. File inventory below records what PR #2310 delivered at that time, **not what remains active in main**.
 
 ## 1. Deliverables — real assets, not another conceptual moodboard
 

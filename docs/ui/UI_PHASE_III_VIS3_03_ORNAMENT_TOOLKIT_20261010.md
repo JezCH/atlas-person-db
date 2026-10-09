@@ -1,6 +1,8 @@
 # VIS3-03 — Opt-in Original Ornament Toolkit (2026-10-10)
 
-**Status: implementation complete as isolated reusable assets. NOT mounted in the Production UI.**
+**Status: CANONICAL / implementation complete as isolated reusable assets. NOT mounted in the Production UI.**
+
+**Single-authority decision (2026-10-10):** PR #2320 is the sole active VIS3-03 toolkit. The earlier merged parallel kit from PR #2310 (`atlas-ui-ornament-kit-v3.css`, `assets/ornaments/atlas-v3-*.svg`, its demo and tests) was retired because maintaining two interchangeable opt-in CSS APIs would fragment VIS3-04+ integration. Its historical completion report is retained as audit evidence. This is not a Production mounting or aesthetic approval.
 
 The user requested *visible historical ornament* rather than another micro-border exercise. These are original vector abstractions, not screenshots of, nor copied pixels from, historical objects. This bounded unit implements reusable design primitives for the screen-specific A Grand Atlas / B Chronometer / C Illuminated Codex direction established in canonical visual guidelines v2.0.
 
