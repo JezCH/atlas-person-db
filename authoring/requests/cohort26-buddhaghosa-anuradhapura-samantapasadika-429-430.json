@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:buddhaghosa-anuradhapura-samantapasadika-429-430:v1",
+  "person": {
+    "canonical_name_en": "Buddhaghosa",
+    "display_name_ko": "붓다고사",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "religion",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Anuradhapura Kingdom",
+    "display_name_ko": "아누라다푸라 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Theravada Mahavihara scholar composing the Samantapasadika Vinaya commentary",
+    "role_display_name_ko": "《사만타파사디카》를 편찬한 상좌부불교 마하비하라 승려·주석가",
+    "start_year": 429,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 430,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "An author-specific inscriptional/colophon-linked scholarly anchor: Buddhaghosa says at the end of Samantapāsādikā that he composed the commentary in the twentieth and twenty-first regnal years of King Sirinivāsa, generally but provisionally identified with King Mahānāma of Sri Lanka. Converting approximate reign 409–431 gives c.429–430; the precise calendar years and identification are not certain and both bounds are explicitly APPROXIMATE. The Oxford Research Encyclopedia independently locates his main Sri Lankan Mahāvihāra scholarship and Visuddhimagga in the first half of the fifth century, but does NOT assert the Visuddhimagga itself was composed precisely in 429 or 430. This is a literary-activity point, not a royal office, a statement that the author personally ruled Anuradhapura, or an invented geographic coordinate."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "K. R. Norman (1983), Pali Literature, pp.129–130, Buddhaghosa / Samantapāsādikā",
+      "canonical_url": "https://theravada.vn/wp-content/uploads/2021/07/pali-literature-norman.pdf",
+      "citation_text": "Norman explains the internal colophon at Samantapāsādikā 1415,18–20: composition during regnal years 20–21 of Sirinivāsa and qualified identity with Mahānāma (traditionally reigning 409–431); thus approximately 429–430, not an exact author lifespan."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Norihisa Baba (2022), Buddhaghosa — Oxford Research Encyclopedia of Religion",
+      "canonical_url": "https://academic.oup.com/edited-volume/62249/chapter-abstract/551400316",
+      "citation_text": "Oxford's peer-reviewed article characterizes Buddhaghosa as a 5th-century Mahāvihāra scholar in Sri Lanka and documents personally attributable exegetical writings in the first half of the century."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Buddhism in Sri Lanka: A Short History — Piyadassi? / Perera, Buddhist Publication Society",
+      "canonical_url": "https://find.dhamma.gift/accesstoinsight.org/lib/authors/perera/wheel100.html",
+      "citation_text": "Perera, Buddhism in Sri Lanka: A Short History, places Buddhaghosa's Sri Lankan monastic and commentarial activity in Mahānāma's reign (c.410–432), at Anurādhapura."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-10",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "2026-10-10 reviewed primary location and political identity: Buddhaghosa's personal commentary work at the Mahāvihāra in Anuradhapura, Sri Lanka, belongs to the Anuradhapura Kingdom under Mahanama (K. R. Norman, Pali Literature 1983 pp.129-130, https://theravada.vn/wp-content/uploads/2021/07/pali-literature-norman.pdf; Oxford https://academic.oup.com/edited-volume/62249/chapter-abstract/551400316). The current Production Polity catalog contains no exact Anuradhapura Kingdom entity. This new Polity is not the Mahāvihāra religious institution itself nor a modern Sri Lanka national state. No verified canonical Place UUID, time-bounded PolityPlaceFunction, or approved static visual placement has been resolved for Atlas. Hold spatial display rather than invent coordinates, territory or static anchors."
+  }
+}

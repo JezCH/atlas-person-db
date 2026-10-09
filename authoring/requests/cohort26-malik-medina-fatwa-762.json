@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:malik-ibn-anas-medina-fatwa-762:v1",
+  "person": {
+    "canonical_name_en": "Malik ibn Anas",
+    "display_name_ko": "말리크 이븐 아나스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "religion",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Abbasid Caliphate",
+    "display_name_ko": "아바스 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "3f39d4f6-eda9-544a-9cbb-32fc30213eab"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Medinan jurist issuing legal opinion on coerced allegiance during the Alid uprising",
+    "role_display_name_ko": "메디나의 이슬람 법학자·강제 충성맹세에 관한 법적 견해 표명",
+    "start_year": 762,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 762,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "A documented personal public legal position during Muhammad al-Nafs al-Zakiyya's Alid uprising at Medina in 762. The fatwa challenged the binding force of allegiance sworn under coercion; it did not make Malik an Abbasid official or the Alid rebel leader, and later punishment may have extended into 763 (do not conflate the fatwa date and the distinct beating date). The Abbasid Caliphate supplies sovereign political context, not employment or ideological allegiance."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Mālik ibn Anas — Encyclopedia of Islam and the Muslim World (Jonathan E. Brockopp)",
+      "canonical_url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/malik-ibn-anas-c-708-795",
+      "citation_text": "Brockopp identifies Malik as a Medinan Sunni jurist and says he was punished under al-Mansur in 762 and 763 for support of Muhammad b. Abdullah."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Mālik ibn Anas — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/environment/encyclopedias-almanacs-transcripts-and-maps/malik-ibn-anas",
+      "citation_text": "A separate scholarly reference describes Malik's participation in the 762 Alid uprising and subsequent punishment by the governor of Medina."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Malik ibn Anas — Encyclopaedia Britannica, 11th ed. (1911)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Malik_ibn_Anas",
+      "citation_text": "The reference places Malik's specific legal opinion on coercive allegiance at the 762 Medina uprising."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-10",
+      "review_reason": "no_exact_document"
+    }
+  }
+}

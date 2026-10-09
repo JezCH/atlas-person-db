@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:al-bukhari-mecca-pilgrimage-825-826:v1",
+  "person": {
+    "canonical_name_en": "Al-Bukhari",
+    "display_name_ko": "알부하리",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "religion",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Abbasid Caliphate",
+    "display_name_ko": "아바스 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "3f39d4f6-eda9-544a-9cbb-32fc30213eab"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Hadith scholar undertaking pilgrimage and study in Mecca",
+    "role_display_name_ko": "메카 순례와 하디스 수학을 시작한 이슬람 전승학자",
+    "start_year": 825,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 826,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Imam al-Bukhari memorial complex in Uzbekistan gives his pilgrimage with family to Mecca in 825 CE, while other traditional biographies place the journey when he was about sixteen (AH 210) and supply somewhat different age/year conversions. This is a conservatively approximated 825–826 pilgrimage/study anchor, NOT an exact publication year for Sahih al-Bukhari or a claim of state office in the Abbasid Caliphate. active_in denotes political context at Mecca during the Abbasid age only."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Imam al-Bukhari Memorial Complex (Uzbekistan) — Heritage and Life of Imam al-Bukhari",
+      "canonical_url": "https://www.imamalbukhari.uz/en/about",
+      "citation_text": "The official Samarkand memorial institution identifies Bukhari, states his 825 CE Meccan Hajj with his mother and brother, and describes his subsequent studies in the Hejaz."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "IslamicFinder — Biography of Imam Bukhari",
+      "canonical_url": "https://www.islamicfinder.org/knowledge/biography/story-of-imam-bukhari/",
+      "citation_text": "Biographical account confirms a pilgrimage to Mecca with his mother and brother during his teen years and a prolonged period of learning in Mecca and Medina; differing age estimates justify approximate dating."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-10",
+      "review_reason": "no_exact_document"
+    }
+  }
+}
