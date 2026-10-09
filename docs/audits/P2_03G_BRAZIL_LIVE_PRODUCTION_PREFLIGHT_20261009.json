@@ -1,0 +1,69 @@
+{
+  "schema": "polity-p2-03g-live-preflight/v1",
+  "as_of_utc": "2026-10-09T10:33:40Z",
+  "status": "SCOPED_READONLY_AUDIT_CLOSED",
+  "actions": {
+    "failed_initial_run": 37917994990,
+    "successful_run": 37918278937,
+    "job_id": 113779711364,
+    "artifact_id": 11610348474
+  },
+  "deployed_sha": "357fee9f2cc5276e3d62221b52144d6d3e58e084",
+  "read_only": true,
+  "committed": false,
+  "canonical_mutations": 0,
+  "family": [
+    {
+      "name": "Empire of Brazil",
+      "polity_id": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+      "authoring_activities": 2,
+      "runtime_refs": 2
+    },
+    {
+      "name": "United States of Brazil",
+      "polity_id": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+      "authoring_activities": 1,
+      "runtime_refs": 1
+    },
+    {
+      "name": "Brazil",
+      "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "authoring_activities": 7,
+      "runtime_refs": 7
+    }
+  ],
+  "activity_before_state": {
+    "expected": 10,
+    "matched": 10,
+    "missing": [],
+    "drift": [],
+    "extra": [],
+    "normalized_person_activity_source_links": 17
+  },
+  "runtime": {
+    "count_parity": true,
+    "full_row_content_parity_asserted": false
+  },
+  "primary_source_url_scan": {
+    "reviewed_exact_urls": 7,
+    "source_catalog_exact_matches": 0,
+    "alternate_urls_exhausted": false
+  },
+  "polity_retirement_records": 0,
+  "scoped_schema_linkage_column_count": 17,
+  "current_direct_sources_from_p2_03e": {
+    "empire": 1,
+    "early_republic": 0,
+    "later_republic": 0
+  },
+  "required_next_conditions": [
+    "Alternative URLs and source_key collisions before Source UUID issuance",
+    "Historical exclusive transition boundary and designation_type unambiguously attested",
+    "Source assertions with verified exact-before and true citations",
+    "Temporal designation complete coverage without overlaps",
+    "Re-evaluate all Polity references and Person/Runtime row-level content before any approved correction",
+    "Deletion or retirement requires explicit user approval"
+  ],
+  "next": "POLITY-P2-03H",
+  "parent_status": "REVIEW_REQUIRED"
+}
