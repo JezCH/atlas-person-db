@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Maimonides",
+    "display_name_ko": "마이모니데스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "representative_domain": "religion"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Fatimid Caliphate",
+    "display_name_ko": "파티마 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "79e75465-8903-495a-aa45-eed64364b96c"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Rabbinic scholar and author",
+    "role_display_name_ko": "유대교 율법학자·저술가",
+    "period_basis": "intellectual_activity",
+    "start_month": null,
+    "start_day": null,
+    "start_calendar": "unspecified_historical",
+    "end_month": null,
+    "end_day": null,
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "start_year": 1168,
+    "start_certainty": "exact",
+    "end_year": 1168,
+    "end_certainty": "exact",
+    "notes": "Completion of Commentary on the Mishnah in 1168 following settlement in Egypt (1166). This is a person-specific work completion event, not the beginning or end of all intellectual activity. Fatimid rule in Egypt ended in 1171."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Maimonides — Stanford Encyclopedia of Philosophy (revised 2024)",
+      "canonical_url": "https://plato.stanford.edu/entries/maimonides/",
+      "citation_text": "Section 1 dates the completion of the Commentary on the Mishnah to 1168 and his arrival in Egypt to 1166."
+    }
+  ],
+  "request_id": "authoring:maimonides:timeline-reentry:commentary-mishnah-1168:v1"
+}
