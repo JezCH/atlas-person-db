@@ -12,7 +12,9 @@ export function nameKey(value) {
   return String(value??"").normalize("NFKD").toLowerCase()
     .replaceAll("æ","ae").replaceAll("œ","oe").replaceAll("ß","ss")
     .replace(/[\u0300-\u036f]/g,"").normalize("NFC")
-    .replace(/[^a-z0-9가-힣]/g,"");
+    // Historical names occur in Greek, Cyrillic, Arabic, CJK, Indic scripts, etc.
+    // Keep every Unicode letter/number/combining mark instead of discarding them.
+    .replace(/[^\p{L}\p{N}\p{M}]/gu,"");
 }
 export function tier(channels) {
   return channels>=10?"P0":channels>=5?"P1":"P2";
