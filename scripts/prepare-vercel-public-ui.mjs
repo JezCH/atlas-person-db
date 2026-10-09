@@ -25,12 +25,25 @@ export function collectPublicUiRootFiles(rootDir = defaultRoot) {
     .sort();
 }
 
+export function syncPublicUiOrnaments({ rootDir = defaultRoot, publicDir = path.join(rootDir, "public") } = {}) {
+  const sourceDir = path.join(rootDir, "assets", "ui-ornaments");
+  if (!fs.existsSync(sourceDir)) return [];
+  const files = fs.readdirSync(sourceDir, {withFileTypes:true})
+    .filter((item) => item.isFile() && item.name.startsWith("atlas-") && item.name.endsWith(".svg"))
+    .map((item) => item.name).sort();
+  const outDir = path.join(publicDir, "assets", "ui-ornaments");
+  fs.mkdirSync(outDir, {recursive:true});
+  for (const name of files) fs.copyFileSync(path.join(sourceDir,name),path.join(outDir,name));
+  return files;
+}
+
 export function syncPublicUi({ rootDir = defaultRoot, publicDir = path.join(rootDir, "public") } = {}) {
   fs.mkdirSync(publicDir, { recursive: true });
   const files = collectPublicUiRootFiles(rootDir);
   for (const file of files) {
     fs.copyFileSync(path.join(rootDir, file), path.join(publicDir, file));
   }
+  syncPublicUiOrnaments({rootDir,publicDir});
   return files;
 }
 

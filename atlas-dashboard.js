@@ -654,8 +654,8 @@
   }
 
   function renderLoading(root) {
-    root.innerHTML = `<section class="dashboard-control-center">
-      <div class="dashboard-hero card"><div><p class="eyebrow">ATLAS CONTROL CENTER</p><h2>프로젝트 현황을 불러오는 중</h2><p>인물·분야·공간·비연대표 기준 원본을 하나의 공통 데이터 경로에서 읽고 있습니다.</p></div></div>
+    root.innerHTML = `<section class="dashboard-control-center atlas-ornament-v3">
+      <div class="dashboard-hero card dashboard-frontispiece" data-atlas-o-decor><div><p class="eyebrow">ATLAS CONTROL CENTER</p><h2>프로젝트 현황을 불러오는 중</h2><p>인물·분야·공간·비연대표 기준 원본을 하나의 공통 데이터 경로에서 읽고 있습니다.</p></div></div>
       <div class="dashboard-loading-grid"><span></span><span></span><span></span><span></span></div>
     </section>`;
   }
@@ -712,13 +712,18 @@
       { key:"activity-missing", label:"활동 연결 없음", count:w.runtime_activity?.remaining, description:"Runtime에서 연결된 Activity가 없는 인물" }
     ];
 
-    root.innerHTML = `<section class="dashboard-control-center">
-      <header class="dashboard-hero card">
+    root.innerHTML = `<section class="dashboard-control-center atlas-ornament-v3">
+      <header class="dashboard-hero card dashboard-frontispiece" data-atlas-o-decor>
         <div><p class="eyebrow">ATLAS CONTROL CENTER</p><h2>데이터·작업·시스템 현황</h2><p>대시보드 전용 숫자를 저장하지 않습니다. 모든 값은 현재 기준 원본에서 즉시 파생됩니다.</p></div>
         <button id="atlasDashboardRefresh" type="button" class="btn">↻ 원본 다시 읽기</button>
+        <span class="dashboard-frontispiece-seal" data-atlas-o-decor aria-hidden="true"></span>
       </header>
 
-      <section class="dashboard-kpi-grid" aria-label="핵심 통계">
+      <div class="dashboard-ledger-heading" data-atlas-o-decor>
+        <h3 id="dashboardKpiHeading">핵심 통계</h3>
+        <span>현재 원본 집계</span>
+      </div>
+      <section class="dashboard-kpi-grid" aria-labelledby="dashboardKpiHeading">
         ${kpiCard({code:"persons",label:"PERSONS",primary:value(k.persons),detail:`historical ${value(k.historical)} · 기타 ${value(k.other_historicity)}`,drilldown:kd.persons})}
         ${kpiCard({code:"activities",label:"RUNTIME ACTIVITIES",primary:value(k.activities),detail:"Person Runtime projection",drilldown:kd.activities})}
         ${kpiCard({code:"polities",label:"USED POLITIES",primary:value(k.polities),detail:"현재 Person Activity에서 참조",drilldown:kd.polities})}
@@ -1025,7 +1030,7 @@
 
     const personResult = settledValue(persons);
     if (!personResult) {
-      root.innerHTML = `<section class="dashboard-control-center"><article class="dashboard-error card"><h2>Person 기준 원본을 읽지 못했습니다.</h2><p>${escapeHtml(persons.reason?.message || persons.reason || "unknown")}</p><button id="atlasDashboardRetry" class="btn" type="button">다시 시도</button></article></section>`;
+      root.innerHTML = `<section class="dashboard-control-center atlas-ornament-v3"><article class="dashboard-error card"><h2>Person 기준 원본을 읽지 못했습니다.</h2><p>${escapeHtml(persons.reason?.message || persons.reason || "unknown")}</p><button id="atlasDashboardRetry" class="btn" type="button">다시 시도</button></article></section>`;
       root.querySelector("#atlasDashboardRetry")?.addEventListener("click", () => refresh({ force:true }));
       return;
     }
