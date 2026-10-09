@@ -1,1 +1,1 @@
-apply authoring/requests/registration-20261007-agitators-sss-mikhail-bakunin.json
+preflight authoring/requests/cohort26-abu-hanifa-kufa-umayyad-c737-20261009.json
