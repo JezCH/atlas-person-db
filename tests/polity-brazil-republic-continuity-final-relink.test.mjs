@@ -58,7 +58,7 @@ test("plan synthesis against true scoped Afonso exact-before preserves canonical
   };
   const link={person_politics_id:id,source_id:"e91990eb-2d4a-4e05-afc0-9a5d9f6b741a",
     source_locator_key:"https://www.biblioteca.presidencia.gov.br/presidencia/ex-presidentes/affonso-penna/nome-do-presidente"};
-  const snapshot={schema:"atlas-correction-v2-live-snapshot/v1",snapshot_digest:"sha256:"+"a".repeat(64),
+  const snapshot={schema:"atlas-correction-v2-target-snapshot/v1",snapshot_digest:"sha256:"+"a".repeat(64),
     activity_ids:[id],activities:[activity],
     normalized_activity_source_links:[link],chronology_claims:[],relationship_descriptions:[]};
   const manifest=synthesizeCorrectionV2Manifest(plan,snapshot);
