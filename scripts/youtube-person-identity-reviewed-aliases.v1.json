@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-youtube-person-identity-aliases/v1",
+  "purpose": "Conservative multilingual name equivalents resolved exclusively through an exact, prior REGISTERED Person UUID in the 2026-10-09 audit. This does not infer identity from matching substrings.",
+  "aliases": [
+    {
+      "alias": "이순신",
+      "registered_basis": "Yi Sun-sin"
+    },
+    {
+      "alias": "李舜臣",
+      "registered_basis": "Yi Sun-sin"
+    },
+    {
+      "alias": "Yi Sunsin",
+      "registered_basis": "Yi Sun-sin"
+    },
+    {
+      "alias": "Yi Sun Sin",
+      "registered_basis": "Yi Sun-sin"
+    },
+    {
+      "alias": "공자",
+      "registered_basis": "Confucius"
+    },
+    {
+      "alias": "孔子",
+      "registered_basis": "Confucius"
+    },
+    {
+      "alias": "Kong Fuzi",
+      "registered_basis": "Confucius"
+    },
+    {
+      "alias": "칭기즈 칸",
+      "registered_basis": "Genghis Khan"
+    },
+    {
+      "alias": "成吉思汗",
+      "registered_basis": "Genghis Khan"
+    },
+    {
+      "alias": "Chinggis Khan",
+      "registered_basis": "Genghis Khan"
+    },
+    {
+      "alias": "나폴레옹 1세",
+      "registered_basis": "Napoleon Bonaparte"
+    },
+    {
+      "alias": "Napoleon I",
+      "registered_basis": "Napoleon Bonaparte"
+    },
+    {
+      "alias": "베토벤",
+      "registered_basis": "Ludwig van Beethoven"
+    },
+    {
+      "alias": "모차르트",
+      "registered_basis": "Wolfgang Amadeus Mozart"
+    },
+    {
+      "alias": "셰익스피어",
+      "registered_basis": "William Shakespeare"
+    },
+    {
+      "alias": "고흐",
+      "registered_basis": "Vincent van Gogh"
+    },
+    {
+      "alias": "빈센트 반 고흐",
+      "registered_basis": "Vincent van Gogh"
+    },
+    {
+      "alias": "윌리엄 셰익스피어",
+      "registered_basis": "William Shakespeare"
+    }
+  ]
+}

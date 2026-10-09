@@ -1,0 +1,119 @@
+name: YouTube Person UUID Identity Audit (read-only)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/youtube-person-identity-audit.yml']
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/youtube-person-identity-audit.yml'
+      - 'scripts/youtube-person-identity-sidecar.py'
+      - 'scripts/youtube-person-identity-reviewed-aliases.v1.json'
+      - 'tests/test_youtube_person_identity_sidecar.py'
+      - 'server/atlas-reviewed-person-registration-aliases.js'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: atlas-youtube-person-uuid-audit
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check pycountry
+      - run: python -m unittest discover -s tests -p test_youtube_person_identity_sidecar.py -v
+
+  audit:
+    # A one-time Batch024 push must have the exact marker in the merge commit.
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[yt-person-identity-b024-once]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SOURCE_RUN: '37921755392'
+      SOURCE_NAME: youtube-cumulative-batch024-validated
+      SOURCE_ID: '11613130249'
+      SOURCE_DIGEST: sha256:8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946
+      SOURCE_SNAPSHOT: yt-20261009T120819Z-10127ch-rebuild-v4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.SOURCE_NAME }}
+          run-id: ${{ env.SOURCE_RUN }}
+          path: corpus
+          repository: ${{ github.repository }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check pycountry
+      - name: Run exact reviewed UUID and dedup tests
+        run: python -m unittest discover -s tests -p test_youtube_person_identity_sidecar.py -v
+      - name: Export canonical registration aliases from repository source
+        shell: bash
+        run: |
+          set -euo pipefail
+          node -e 'const {REVIEWED_REGISTRATION_ALIASES}=require("./server/atlas-reviewed-person-registration-aliases.js"); process.stdout.write(JSON.stringify(REVIEWED_REGISTRATION_ALIASES));' > /tmp/atlas-reviewed-registration-aliases.json
+      - name: Reconcile original Batch024 video evidence by reviewed Person UUID
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/youtube-person-identity-sidecar.py \
+            --root corpus \
+            --audit audits/youtube-6358-registration-living-screen-20261009.csv \
+            --registration-aliases /tmp/atlas-reviewed-registration-aliases.json \
+            --reviewed-aliases scripts/youtube-person-identity-reviewed-aliases.v1.json \
+            --output /tmp/atlas-youtube-person-identity/sidecar.json \
+            --run-id "$SOURCE_RUN" \
+            --artifact-id "$SOURCE_ID" \
+            --artifact-digest "$SOURCE_DIGEST" \
+            --snapshot-id "$SOURCE_SNAPSHOT" \
+            --channels 10127 \
+            --videos 2230031 \
+            --selected 10890
+          jq -e '
+            .schema == "atlas-youtube-person-identity-sidecar/v1"
+            and .source.production_snapshot_id == "yt-20261009T120819Z-10127ch-rebuild-v4"
+            and .source.successful_channel_count == 10127
+            and .source.source_video_rows == 2230031
+            and .source.selected_channel_count == 10890
+            and .summary.person_identities_with_evidence > 100
+            and .method.production_writes == false
+            and .method.raw_title_rankings_modified == false
+            and (.persons | all(.distinct_channel_count > 0 and .distinct_video_count > 0))
+          ' /tmp/atlas-youtube-person-identity/sidecar.json >/dev/null
+      - name: Summarize verified UUID union counts
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -r '
+            "## Batch024 read-only Person UUID evidence audit",
+            "- Source: \(.source.production_snapshot_id)",
+            "- Channels: \(.source.successful_channel_count); original videos: \(.source.source_video_rows)",
+            "- Person UUID identities with at least one title hit: \(.summary.person_identities_with_evidence)",
+            "- Matched video rows: \(.summary.matched_video_rows)",
+            "- Ambiguous candidate rows withheld: \(.summary.ambiguous_video_rows_withheld)",
+            "",
+            "| Person UUID | Unique channels | Unique videos |",
+            "|---|---:|---:|",
+            (.persons[] | select(.person_id=="945b78a7-3941-5e05-a6c9-ce57e7395727" or .person_id=="f363272d-fb69-47e6-8117-b3bf7d740f0b" or .person_id=="cc98bd67-4827-4dd9-89ec-40785f231da5" or .person_id=="dfa49bd5-8672-4f78-8ab6-72932a6726d9" or .person_id=="7763a315-4385-404b-b0d6-92a074a2aa27" or .person_id=="ea13e48a-94ef-5648-98be-f74554778166") | "| \(.person_id) | \(.distinct_channel_count) | \(.distinct_video_count) |")
+          ' /tmp/atlas-youtube-person-identity/sidecar.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload identity evidence without modifying Production
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-batch024-person-uuid-identity-audit
+          path: /tmp/atlas-youtube-person-identity/sidecar.json
+          if-no-files-found: error
+          retention-days: 90
