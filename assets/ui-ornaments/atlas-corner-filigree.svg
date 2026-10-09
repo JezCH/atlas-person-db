@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 230" fill="none" aria-hidden="true"><desc>Non-heraldic ornamental corner flourish, rotate for four corners.</desc>
+<g stroke="#c6ad7c" stroke-width="3"><path d="M11 219V54Q11 11 54 11H219"/><path d="M20 217V53Q20 20 53 20H217" stroke="#f2dfb4" stroke-width=".9"/><path d="M33 219V76Q33 33 76 33H219" opacity=".58"/></g>
+<g stroke="#c6ad7c" stroke-width="3.2"><path d="M22 151C85 135 60 82 108 73C145 66 155 110 131 124C114 134 91 119 103 103C108 97 119 100 119 106"/><path d="M151 22C135 85 82 60 73 108C66 145 110 155 124 131C134 114 119 91 103 103"/><path d="M37 194C94 197 103 171 87 158C75 148 57 163 70 175"/><path d="M194 37C197 94 171 103 158 87C148 75 163 57 175 70"/></g>
+<g fill="#f2dfb4" fill-opacity=".57"><path d="M41 56Q56 34 79 43Q63 62 41 56Z"/><path d="M56 41Q34 56 43 79Q62 63 56 41Z"/><path d="M156 73Q178 62 186 83Q170 100 156 73Z"/><path d="M73 156Q62 178 83 186Q100 170 73 156Z"/></g>
+<circle cx="11" cy="11" r="6" fill="#f2dfb4"/><circle cx="198" cy="11" r="4" fill="#c6ad7c"/><circle cx="11" cy="198" r="4" fill="#c6ad7c"/>
+</svg>

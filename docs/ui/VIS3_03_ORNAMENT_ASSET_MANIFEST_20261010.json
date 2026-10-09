@@ -1,0 +1,30 @@
+{
+  "unit": "VIS3-03",
+  "state": "ASSETS_PREPARED_NOT_MOUNTED",
+  "date": "2026-10-10",
+  "base": "e32bab5adf98ba4cd41f8637d94456b03490d572",
+  "visual_owner": "atlas-ui-phase3-ornaments.css",
+  "assets": [
+    "assets/ui-ornaments/atlas-cartouche.svg",
+    "assets/ui-ornaments/atlas-compass-rosette.svg",
+    "assets/ui-ornaments/atlas-corner-filigree.svg",
+    "assets/ui-ornaments/atlas-chapter-divider.svg",
+    "assets/ui-ornaments/atlas-folio-plaque.svg",
+    "assets/ui-ornaments/atlas-astrolabe.svg",
+    "assets/ui-ornaments/atlas-codex-panel.svg",
+    "assets/ui-ornaments/atlas-illuminated-initial.svg"
+  ],
+  "components": [
+    "cartouche",
+    "corners",
+    "folio",
+    "divider",
+    "instrument",
+    "codex",
+    "initial",
+    "rosette"
+  ],
+  "test": "node --test tests/atlas-vis3-03-ornament-toolkit.test.mjs",
+  "preview": "experiments/vis3-03-ornament-gallery.html",
+  "noProdMount": true
+}

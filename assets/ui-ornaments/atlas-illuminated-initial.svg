@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 224" fill="none" aria-hidden="true"><desc>Illuminated chapter initial frame without any embedded Latin, Korean, or sacred text.</desc>
+<path d="M11 11H213V213H11Z" stroke="#c6ad7c" stroke-width="5"/><path d="M19 19H205V205H19Z" stroke="#507b8e" stroke-width="5"/><path d="M28 28H196V196H28Z" stroke="#b16b66" stroke-width="3"/>
+<path d="M36 112C48 62 77 90 90 54C105 13 135 46 114 69C104 80 92 65 102 61M188 112C176 162 147 134 134 170C119 211 89 178 110 155C120 144 132 159 122 163" stroke="#c6ad7c" stroke-width="3.2"/>
+<g fill="#ba7b63" stroke="#f2dfb4" stroke-width="1.2"><path d="M45 88Q26 61 60 57Q65 71 45 88Z"/><path d="M179 136Q198 163 164 167Q159 153 179 136Z"/></g>
+<g fill="#7695a5" stroke="#c6ad7c"><path d="M72 58Q49 45 63 35Q85 41 72 58Z"/><path d="M152 166Q175 179 161 189Q139 183 152 166Z"/></g>
+<path d="M51 110L64 97L77 110L64 123Z M173 114L160 101L147 114L160 127Z" stroke="#f2dfb4" stroke-width="2" fill="#584731" fill-opacity=".3"/>
+<circle cx="112" cy="112" r="50" stroke="#c6ad7c" stroke-width="3"/><circle cx="112" cy="112" r="42" stroke="#f2dfb4" stroke-opacity=".7"/>
+</svg>
