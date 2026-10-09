@@ -1,0 +1,256 @@
+{
+  "schema": "atlas-polity-p2-03f-source-designation-review/v1",
+  "review_status": "REVIEW_ONLY_NOT_APPROVED",
+  "safe_to_apply": false,
+  "canonical_mutation": false,
+  "evidence_as_of": "2026-10-09",
+  "production_anchors": {
+    "p2_03d_run": 37895503960,
+    "p2_03e_run": 37896793082,
+    "historical_empire_polity_id": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+    "republican_early_polity_id": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+    "republican_survivor_candidate_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+    "verified_authored_activities": {
+      "empire": 2,
+      "early_republic": 1,
+      "later_republic": 7,
+      "total": 10
+    },
+    "verified_source_links": {
+      "person_activity": 17,
+      "direct_polity_empire": 1,
+      "direct_polity_early_republic": 0,
+      "direct_polity_later_republic": 0
+    },
+    "verified_missing": {
+      "designations": 0,
+      "identity_relations": 0,
+      "governance_periods": 0
+    }
+  },
+  "primary_sources": [
+    {
+      "key": "decree_1889_11_15",
+      "title": "Decreto nº 1, de 15 de novembro de 1889",
+      "issuer": "Governo Provisório da República",
+      "canonical_url": "https://www2.camara.leg.br/legin/fed/decret/1824-1899/decreto-1-15-novembro-1889-532625-publicacaooriginal-14906-pe.html",
+      "locator": "Arts. 1º–2º",
+      "attests": [
+        "federal_republic_proclaimed_1889_11_15",
+        "estados_unidos_do_brazil_name_1889_11_15"
+      ],
+      "not_proof_of": "exact later discontinuation date"
+    },
+    {
+      "key": "constitution_1891",
+      "title": "Constituição da República dos Estados Unidos do Brasil (1891)",
+      "issuer": "Congresso Constituinte",
+      "canonical_url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao91.htm",
+      "locator": "Title and Art. 1º",
+      "attests": [
+        "estados_unidos_do_brasil_constitutional_name_1891_02_24"
+      ],
+      "not_proof_of": "1967 name termination"
+    },
+    {
+      "key": "constitution_1934",
+      "title": "Constituição da República dos Estados Unidos do Brasil (1934)",
+      "issuer": "Assembleia Nacional Constituinte",
+      "canonical_url": "https://www.presidencia.gov.br/ccivil_03/constituicao/constituicao34.htm",
+      "locator": "Title and Art. 1º",
+      "attests": [
+        "estados_unidos_do_brasil_title_used_1934_07_16"
+      ],
+      "not_proof_of": "1934 new polity UUID"
+    },
+    {
+      "key": "constitution_1946",
+      "title": "Constituição dos Estados Unidos do Brasil (1946)",
+      "issuer": "Assembleia Constituinte",
+      "canonical_url": "https://legis.senado.gov.br/norma/579492/publicacao/15675026",
+      "locator": "Constitution title and promulgation of 18 September 1946",
+      "attests": [
+        "estados_unidos_do_brasil_title_used_1946_09_18"
+      ],
+      "not_proof_of": "end date of name"
+    },
+    {
+      "key": "constitution_1967",
+      "title": "Constituição de 1967",
+      "issuer": "Congresso Nacional",
+      "canonical_url": "https://www2.camara.leg.br/legin/fed/consti/1960-1969/constituicao-1967-24-janeiro-1967-365194-publicacaooriginal-1-pl.html",
+      "locator": "Art. 1º (federal republic), Art. 189 (entry into force on 15 March 1967)",
+      "attests": [
+        "republican_federal_form_1967",
+        "constitution_effective_1967_03_15"
+      ],
+      "not_proof_of": "first exclusive official naming as República Federativa do Brasil"
+    },
+    {
+      "key": "amendment_1969_1",
+      "title": "Emenda Constitucional nº 1, de 17 de outubro de 1969",
+      "issuer": "Ministros da Marinha, Exército e Aeronáutica",
+      "canonical_url": "https://www2.camara.leg.br/legin/fed/emecon/1960-1969/emendaconstitucional-1-17-outubro-1969-364989-publicacaooriginal-1-pl.html",
+      "locator": "Art. 1º, amended constitution title; Art. 2º (effective 30 October 1969)",
+      "attests": [
+        "republica_federativa_do_brasil_explicit_in_1969_amended_title",
+        "amendment_effective_1969_10_30"
+      ],
+      "not_proof_of": "earliest possible Republica Federativa name use"
+    },
+    {
+      "key": "constitution_1988",
+      "title": "Constituição da República Federativa do Brasil (1988)",
+      "issuer": "Assembleia Nacional Constituinte",
+      "canonical_url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicaocompilado.htm",
+      "locator": "Promulgation 5 October 1988, title and Art. 1º",
+      "attests": [
+        "republica_federativa_do_brasil_title_confirmed_1988_10_05"
+      ],
+      "not_proof_of": "new distinct sovereign-state identity in 1988"
+    }
+  ],
+  "designation_candidates": [
+    {
+      "key": "early_federal_republic",
+      "name_pt": "Estados Unidos do Brasil",
+      "name_ko": "브라질 합중국",
+      "intended_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "positive_evidence_keys": [
+        "decree_1889_11_15",
+        "constitution_1891",
+        "constitution_1934",
+        "constitution_1946"
+      ],
+      "start_boundary": {
+        "year": 1889,
+        "month": 11,
+        "day": 15,
+        "basis": "republic_proclamation_not_yet_authorized_designation_valid_from"
+      },
+      "end_boundary": null,
+      "end_boundary_status": "UNRESOLVED_DO_NOT_APPROVE",
+      "designation_type": null,
+      "source_uuid_links": [],
+      "verified_activity_coverage": [
+        "7a021719-8a81-4367-9fd1-64e75f996563"
+      ]
+    },
+    {
+      "key": "later_federal_republic",
+      "name_pt": "República Federativa do Brasil",
+      "name_ko": "브라질 연방공화국",
+      "intended_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "positive_evidence_keys": [
+        "constitution_1967",
+        "amendment_1969_1",
+        "constitution_1988"
+      ],
+      "start_boundary": null,
+      "start_boundary_status": "UNRESOLVED_1967_EFFECTIVE_NOT_AUTOMATIC_TITLE_CHANGE",
+      "evidenced_on_or_before": {
+        "year": 1969,
+        "month": 10,
+        "day": 30
+      },
+      "end_boundary": null,
+      "designation_type": null,
+      "source_uuid_links": [],
+      "verified_activity_coverage": [
+        "fbd5f4db-fcd1-4782-9b71-56fae2e1e2b7",
+        "21feba6a-db22-4ce2-a51e-fdd65f2ca2dd",
+        "52a26a9a-110e-413b-b516-960413cc39e4"
+      ]
+    }
+  ],
+  "exact_activity_guards": [
+    {
+      "id": "538c90ab-8752-471c-98be-9b388f6c8d9f",
+      "polity_id": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+      "years": [
+        1822,
+        1831
+      ]
+    },
+    {
+      "id": "ae9b7ba9-4c62-508b-b019-2ded901413bc",
+      "polity_id": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+      "years": [
+        1840,
+        1889
+      ]
+    },
+    {
+      "id": "7a021719-8a81-4367-9fd1-64e75f996563",
+      "polity_id": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+      "years": [
+        1906,
+        1909
+      ]
+    },
+    {
+      "id": "e82ebfff-537e-43e0-b1f6-452c1b7cb27c",
+      "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "years": [
+        1930,
+        1934
+      ]
+    },
+    {
+      "id": "b1f52253-fcbf-4ba4-a061-37491658bf38",
+      "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "years": [
+        1934,
+        1945
+      ]
+    },
+    {
+      "id": "ed7c3548-8dd4-479e-94e4-c6a382264a2d",
+      "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "years": [
+        1951,
+        1954
+      ]
+    },
+    {
+      "id": "db3aa305-ff94-460b-a88d-2ed044a4f638",
+      "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "years": [
+        1961,
+        1964
+      ]
+    },
+    {
+      "id": "fbd5f4db-fcd1-4782-9b71-56fae2e1e2b7",
+      "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "years": [
+        1969,
+        1974
+      ]
+    },
+    {
+      "id": "21feba6a-db22-4ce2-a51e-fdd65f2ca2dd",
+      "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "years": [
+        1992,
+        1992
+      ]
+    },
+    {
+      "id": "52a26a9a-110e-413b-b516-960413cc39e4",
+      "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "years": [
+        1992,
+        1995
+      ]
+    }
+  ],
+  "exact_transfer_candidate_activity_id": "7a021719-8a81-4367-9fd1-64e75f996563",
+  "required_decisions": [
+    "Identify actual existing sources by canonical_url/source_key before any assert_source; mint Source UUID only from approved writer with exact-before absence and bibliographic evidence; no invented sha256/bytes.",
+    "Review official-title transition effective bounds independently of constitution commencement: 1967 and 1969 dates do not establish exclusive first use. Supply designation_type, exact Source UUID links and nonoverlapping intervals before assertion.",
+    "Existing reference census under both republican UUIDs must be re-read, including Runtime and retired-identity redirects, before considering relink of Afonso Pena activity.",
+    "Re-check all 10 activity exact-before rows, source locators, year granularity, content_hash, published projection and Runtime parity.",
+    "No retirement/deletion without explicit user approval; retain distinct imperial scope and exclude other Brazil-named unrelated identities."
+  ]
+}
