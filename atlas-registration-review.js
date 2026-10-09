@@ -18,6 +18,7 @@
   let lastSignalPayload=null;
 
   function candidateStatusBadge(row) {
+    if(row?.identity_state==="alias_union_needs_original_ids")return '<span class="registration-review-signal-identity" data-status="ambiguous">별칭 중복 · 원본 ID 재집계 필요</span>';
     if(row?.identity_state==="registered_homonym_review")return '<span class="registration-review-signal-identity" data-status="ambiguous">동명이인 · 등록여부 검토</span>';
     return '<span class="registration-review-signal-identity" data-status="unmatched">미등록 후보 · 검토 필요</span>';
   }
@@ -239,8 +240,8 @@
       return `<tr class="registration-review-signal-row" style="--signal-strength:${strength.toFixed(2)}%">
         <td class="registration-review-rank" data-label="순위">${number(row.rank)}</td>
         <td class="registration-review-name" data-label="인물"><span class="registration-review-signal-raw-name">${escapeHtml(name)}</span>${badge}</td>
-        <td class="registration-review-number" data-label="채널">${number(row.distinct_channel_count)}</td>
-        <td class="registration-review-number" data-label="영상">${number(row.video_count)}</td>
+        <td class="registration-review-number" data-label="채널">${row.count_lower_bound?"≥":""}${number(row.distinct_channel_count)}</td>
+        <td class="registration-review-number" data-label="영상">${row.count_lower_bound?"≥":""}${number(row.video_count)}</td>
         <td class="registration-review-signal-bar" aria-hidden="true"><span></span></td>
       </tr>`;
     }).join("");
