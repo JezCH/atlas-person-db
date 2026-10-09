@@ -52,7 +52,7 @@ def manifests(root):
     for path in root.rglob("manifest.json"):
         # Match the existing validated snapshot parser: nested source folders
         # can contain several batch identifiers; first match is canonical.
-        match = re.search(r"(?:youtube-)?batch(\\d{3})", str(path).replace("\\\\", "/"), re.I)
+        match = re.search(r"(?:youtube-)?batch(\d{3})", str(path).replace("\\\\", "/"), re.I)
         if not match:
             continue
         label = "batch" + match.group(1)
