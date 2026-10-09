@@ -22,7 +22,7 @@ const config={
  persons:{ready:".person-register-entry",target:".person-register-entry",count:".person-register-entry"},
  polities:{ready:"#atlasPolityMount .polity-browser-card",target:"#atlasPolityMount .polity-browser-card > summary",count:"#atlasPolityMount .polity-browser-card"},
  dashboard:{ready:"#atlasDashboardMount .dashboard-kpi",target:"#atlasDashboardMount #atlasDashboardRefresh",count:"#atlasDashboardMount .dashboard-kpi"},
- spacetime:{ready:"#personSpacetimeMount .spacetime-frame",target:"#personSpacetimeMount #spacetimeCameraZoomIn",count:"#personSpacetimeMount .spacetime-track-label"}
+ spacetime:{ready:"#personSpacetimeMount .spacetime-frame",target:"#personSpacetimeMount #spacetimeCameraZoomIn",count:"#personSpacetimeMount .spacetime-frame"}
 };
 async function scenario(c,domain,physicalWidth,zoom){
  const cssWidth=Math.round(physicalWidth/zoom),mobile=cssWidth<=760;
