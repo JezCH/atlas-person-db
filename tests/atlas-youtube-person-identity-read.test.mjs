@@ -91,7 +91,7 @@ test("incomplete UUID publication is rejected, raw API unchanged",async()=>{
 test("handler dispatches explicit person mode and refuses unknown modes",async()=>{
   const cases=[];
   const handler=createYoutubePersonSignalReadHandler({
-    env:{DATABASE_URL:"postgres://localhost/test"},
+    env:{SUPABASE_DB_URL:"postgres://localhost/test"},
     clientFactory:async()=>({end:async()=>{}}),
     readSignals:async()=>{cases.push("raw");return {mode:"raw",rows:[]};},
     readIdentity:async()=>{cases.push("person");return {mode:"person",rows:[]};}
