@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 570" role="img" aria-labelledby="title desc">
+<title id="title">VIS3-01 — Three original ATLAS ornamental signature directions</title>
+<desc id="desc">A Grand Atlas: cartouche and compass; B Chronometer: concentric brass instrument; C Illuminated Codex: secular floral illuminated folio. These are proposed original visual motifs, not actual app data or history.</desc>
+<defs>
+<linearGradient id="gold" x2="1" y2="0"><stop stop-color="#735332"/><stop offset=".48" stop-color="#e3c88d"/><stop offset="1" stop-color="#866143"/></linearGradient>
+<radialGradient id="ink"><stop stop-color="#202627"/><stop offset="1" stop-color="#0c1218"/></radialGradient>
+<linearGradient id="folio" x2="1" y2="1"><stop stop-color="#281e23"/><stop offset="1" stop-color="#14151b"/></linearGradient>
+</defs>
+<rect width="1020" height="570" fill="#e8e5dd"/>
+<g font-family="Georgia,serif"><text x="26" y="38" font-size="24" fill="#1c2228" letter-spacing="1.3">ATLAS / VIS3-01</text><text x="995" y="38" fill="#414950" font-size="14" text-anchor="end">ORNAMENT LANGUAGE STUDIES · NOT PRODUCTION</text></g>
+<rect x="20" y="57" width="312" height="486" rx="5" fill="#111719"/>
+<rect x="354" y="57" width="312" height="486" rx="5" fill="#0c1721"/>
+<rect x="688" y="57" width="312" height="486" rx="5" fill="url(#folio)"/>
+<!-- A: engraved compass, concentric rings, cartouche and arabesque ends -->
+<g transform="translate(176 217)" stroke="#cba86d" fill="none">
+<circle r="83" stroke-width="1"/><circle r="74" stroke-width=".8" opacity=".6"/><circle r="53" stroke-width=".7"/>
+<path d="M0 -93L10 -10L75 0L10 10L0 93L-10 10L-75 0L-10 -10Z" fill="#c9a873" fill-opacity=".2" stroke-width="1.6"/>
+<path d="M-47 -47L47 47M47 -47L-47 47" stroke-width="1" opacity=".6"/>
+<circle r="9" fill="#cba86d" fill-opacity=".6"/><circle r="4" fill="#e6d3a6"/>
+</g>
+<g stroke="url(#gold)" fill="none">
+<path d="M44 339 C75 321 92 341 110 353 C127 365 151 350 147 337 C142 323 130 337 135 341 M308 339C277 321 260 341 242 353C226 364 202 350 206 337C212 323 224 337 219 341" stroke-width="2"/>
+<path d="M63 377L81 358L270 358L290 377L270 401H81Z" stroke-width="2"/>
+<path d="M85 366 H267M85 392 H267" opacity=".6"/>
+<path d="M39 84H313V520H39Z" stroke-width="1" opacity=".75"/><path d="M46 91H306V513H46Z" stroke-width=".65" opacity=".5"/>
+<path d="M48 107H88M264 107H304M48 498H88M264 498H304" stroke-width="2"/>
+</g>
+<g font-family="Georgia,serif" text-anchor="middle"><text x="176" y="381" fill="#eee0bc" font-size="20" letter-spacing="1.6">GRAND ATLAS</text><text x="176" y="449" fill="#bba77d" font-size="13">CARTOUCHE · COMPASS</text><text x="176" y="472" fill="#9d9586" font-size="11">DASHBOARD / POLITY</text></g>
+<g fill="#d9c18c"><circle cx="50" cy="107" r="4"/><circle cx="300" cy="107" r="4"/><circle cx="50" cy="498" r="4"/><circle cx="300" cy="498" r="4"/></g>
+<!-- B: calibrated multi-radius astrolabe and instrument framing -->
+<g transform="translate(510 231)" fill="none">
+<circle r="113" stroke="#b8c4ba" stroke-width="2"/><circle r="106" stroke="#6e8b90" stroke-width="1"/><circle r="88" stroke="#b3ac8d" stroke-width="1"/><circle r="70" stroke="#7d9da6" stroke-width=".85"/><circle r="47" stroke="#b0bdaf" stroke-width=".8"/>
+<path d="M-114 0H114M0 -114V114M-80 -80L80 80M-80 80L80 -80" stroke="#6b929e" opacity=".6"/>
+<path d="M-90 61C-39 -22 23 3 90 -53M-45 -91C-3 -20 -5 41 33 104" stroke="#d2b77b" stroke-width="1.4"/>
+<path d="M0 -105L13 -15L88 0L13 15L0 105L-13 15L-88 0L-13 -15Z" stroke="#d4c29c" stroke-width="1.5"/>
+<circle r="8" stroke="#d1bd8b" stroke-width="1.6"/><circle r="3" fill="#d1bd8b"/>
+</g>
+<g stroke="#98b7b8" opacity=".8" fill="none">
+<path d="M373 86H647M373 508H647"/><path d="M373 86v28 M647 86v28 M373 480v28 M647 480v28" stroke-width="2"/>
+<path d="M397 396H622 M397 403H622" stroke-width="1"/>
+</g>
+<g font-family="Georgia,serif" text-anchor="middle"><text x="510" y="432" fill="#e4d3a7" font-size="20" letter-spacing="1.6">CHRONOMETER</text><text x="510" y="463" fill="#a6bfc2" font-size="13">GRADUATED BRASS · RETICLE</text><text x="510" y="485" fill="#869da5" font-size="11">SPACETIME / INSTRUMENT</text></g>
+<!-- C: secular illuminated floral leaves and richly bordered folio -->
+<rect x="713" y="85" width="262" height="430" fill="none" stroke="#d4b876" stroke-width="3"/>
+<rect x="720" y="92" width="248" height="416" fill="none" stroke="#5d82a4" stroke-width="4"/>
+<rect x="729" y="102" width="230" height="396" fill="none" stroke="#bc655d" stroke-width="1.5"/>
+<g transform="translate(748 136)" stroke-width="2" stroke="#e1bd83" fill="none">
+<path d="M0 175C62 154 62 87 24 79C-16 72 15 31 43 32C71 31 56 62 43 55M0 175C23 202 68 231 40 261"/>
+<path d="M18 105C-2 88 -5 71 8 60 C30 63 31 82 18 105Z" fill="#a8485a"/>
+<path d="M35 154C68 139 71 117 52 112 C32 124 26 138 35 154Z" fill="#537a9d"/>
+<path d="M20 192C-4 198 10 222 30 218 C38 208 32 193 20 192Z" fill="#ad6357"/>
+<path d="M42 58C66 52 81 79 64 87 C51 87 42 72 42 58Z" fill="#698a9c"/>
+<circle cx="42" cy="144" r="9" fill="#b97f4a"/><circle cx="42" cy="144" r="3.5" fill="#e7d08b"/>
+</g>
+<g transform="translate(940 428) rotate(180)" stroke="#dbbc80" fill="none" stroke-width="2">
+<path d="M0 0C60 -8 62 73 22 77C-7 80 12 120 42 118C65 117 55 92 37 98"/>
+<path d="M26 37C-2 31 1 58 20 56Z" fill="#b3585d"/><path d="M31 92C58 84 66 112 43 113Z" fill="#6389b0"/>
+</g>
+<g font-family="Georgia,serif" text-anchor="middle"><text x="844" y="211" font-size="112" fill="#d9bc7b">A</text><text x="844" y="314" fill="#e9d0a1" font-size="20">ILLUMINATED</text><text x="844" y="341" fill="#e9d0a1" font-size="20">CODEX</text><text x="844" y="373" fill="#a9b9bb" font-size="12">FOLIO · INITIAL · GLOSS</text><text x="844" y="393" fill="#a9b9bb" font-size="11">PERSON DETAIL / SOURCES</text></g>
+<text x="26" y="560" font-family="Arial,sans-serif" fill="#4b555a" font-size="11">Original abstract ornamental drawings · Referenced sources in VIS3-01 design decision report · Data/identity/coordinates unaffected</text>
+</svg>
