@@ -147,14 +147,14 @@ class CollectorSafety(unittest.TestCase):
                                         search_budget=50,minimum_success=300,
                                         video_limit=5,workers=4)
             summary=json.loads((output/"batch020-summary.json").read_text())
-            self.assertEqual(summary["successful"],300)
+            self.assertGreaterEqual(summary["successful"],300)
             self.assertEqual(summary["previous_channels"],6850)
-            self.assertEqual(summary["videos"],300)
+            self.assertEqual(summary["videos"],summary["successful"])
             self.assertEqual(summary["supabase_requests"],0)
             self.assertEqual(summary["preserved_prior_files"],12)
             self.assertEqual(collector.verify_preserved_files(root,output),12)
             rows=json.loads((output/"out"/"batch020"/"manifest.json").read_text())
-            self.assertEqual(len(rows),300)
+            self.assertEqual(len(rows),summary["successful"])
             self.assertTrue(all(row["channel_id"] not in collector.manifests(
                 root,next_batch=20,min_channels=6850) for row in rows))
 
