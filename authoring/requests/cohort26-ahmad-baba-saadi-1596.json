@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:ahmad-baba-saadi-marrakesh-release-1596:v1",
+  "person": {
+    "canonical_name_en": "Ahmad Baba al-Timbukti",
+    "display_name_ko": "아흐마드 바바",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "documented_death",
+    "representative_domain": "religion",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Saadi Sultanate",
+    "display_name_ko": "사아드 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "fa19774c-ba5a-5a0a-a12b-788b99a056aa"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Exiled Islamic jurist and scholar released from confinement in Marrakesh",
+    "role_display_name_ko": "마라케시에 강제 체류한 이슬람 법학자·학자",
+    "start_year": 1596,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1596,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The TDV İslâm Ansiklopedisi dates Ahmad Baba's conditional release on 19 May 1596; he was not allowed to leave Marrakesh, continuing scholarly and juridical teaching there. This records a person-specific transition during Moroccan Saadi captivity, NOT service as a Saadi officer, not a politically voluntary allegiance, and not a rule over Timbuktu. Oxford Research Encyclopedia places exile c.1594–1608, providing the distinct historical context. Different publications disagree on the first 1593/1594 transport date; no forced exact 1593 move is asserted."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "AHMED BÂBÂ et-TİNBÜKTÎ — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/ahmed-baba-et-tinbukti",
+      "citation_text": "The Turkish Diyanet encyclopedia states conditional release under a ban on leaving Marrakesh on 19 May 1596 and subsequent instruction in Mālikī jurisprudence while in exile."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ahmed Bâba at-Timbuktî — Oxford Research Encyclopedia of African History",
+      "canonical_url": "https://academic.oup.com/edited-volume/61663/chapter-abstract/553390046",
+      "citation_text": "Oxford's account (Adama, 2021) identifies Ahmed Baba (1556–1627), forced Saadi-Moroccan exile to Marrakesh in 1594, two-year detention and teaching; he rejected administrative office."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-10",
+      "review_reason": "no_exact_document"
+    }
+  }
+}
