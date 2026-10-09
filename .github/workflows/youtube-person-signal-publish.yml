@@ -1,7 +1,10 @@
 name: YouTube Person Signal Publish
 
 on:
-  # Explicit artifact inputs only. Never publish as a side effect of a code push.
+  # One-time Batch019 artifact release, guarded by merge title marker.
+  push:
+    branches: [main]
+    paths: ['.github/workflows/youtube-person-signal-publish.yml']
   workflow_dispatch:
     inputs:
       artifact_run_id:
@@ -47,6 +50,7 @@ concurrency:
 
 jobs:
   publish:
+    if: github.event_name != 'push' || contains(github.event.head_commit.message, '[yt-b019-publish-once]')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: production
@@ -54,10 +58,10 @@ jobs:
       PUBLISH_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply?__atlas_authoring_apply_surface=youtube-person-signal-publish
       RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
       PUBLISH_AUDIENCE: atlas-person-db-youtube-signal-publish
-      ARTIFACT_RUN_ID: ${{ inputs.artifact_run_id }}
-      ARTIFACT_NAME: ${{ inputs.artifact_name }}
-      ARTIFACT_ID: ${{ inputs.artifact_id }}
-      ARTIFACT_DIGEST: ${{ inputs.artifact_digest }}
+      ARTIFACT_RUN_ID: ${{ github.event_name == 'push' && '37884953883' || inputs.artifact_run_id }}
+      ARTIFACT_NAME: ${{ github.event_name == 'push' && 'youtube-cumulative-batch019-validated' || inputs.artifact_name }}
+      ARTIFACT_ID: ${{ github.event_name == 'push' && '11595911982' || inputs.artifact_id }}
+      ARTIFACT_DIGEST: ${{ github.event_name == 'push' && 'sha256:b43b28349aa0324cdd3f75601d20cd35a160f0557f8de2a2a59721edf5c2588e' || inputs.artifact_digest }}
     steps:
       - uses: actions/checkout@v4
       - name: Verify multilingual names and reviewed spelling variants before production reads
@@ -90,9 +94,12 @@ jobs:
           mkdir -p /tmp/atlas-youtube-publication
           python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/atlas-youtube-publication/snapshot.json             --artifact-id "$ARTIFACT_ID"             --artifact-digest "$ARTIFACT_DIGEST"
           jq -e '
-            .snapshot.channel_count>=6051
-            and .snapshot.video_count>=1541677
-            and (.channels|length)>=6810
+            .snapshot.channel_count==6091
+            and .snapshot.video_count==1548247
+            and (.channels|length)==6850
+            and (.signals|length)==6403
+            and .snapshot.source_state.next_batch=="batch020"
+            and .snapshot.source_state.coverage_batches[-1]=="batch019"
             and .snapshot.source_state.channel_ids_persisted==true
             and (.channels|length)>=6770
             and (.channels|length)>=.snapshot.channel_count
