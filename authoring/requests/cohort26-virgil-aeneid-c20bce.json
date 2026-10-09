@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Virgil",
+    "display_name_ko": "베르길리우스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "start_year": -20,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -20,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Representative circa 20 BCE point during Virgil's Aeneid composition; not a claim that the poem was fully revised by this year."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Aeneid — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/arts/culture-magazines/aeneid",
+      "citation_text": "Virgil worked on the Aeneid from after 29 BCE through the last years of his life in 19 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-09",
+      "document_title": "베르길리우스",
+      "url": "https://namu.wiki/w/%EB%B2%A0%EB%A5%B4%EA%B8%B8%EB%A6%AC%EC%9A%B0%EC%8A%A4"
+    }
+  },
+  "request_id": "authoring:cohort26:virgil:aeneid-c20bce:v1"
+}

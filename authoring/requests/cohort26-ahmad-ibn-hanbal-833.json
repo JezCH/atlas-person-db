@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ahmad ibn Hanbal",
+    "display_name_ko": "아흐마드 이븐 한발",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "religion",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Abbasid Caliphate",
+    "display_name_ko": "아바스 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "3f39d4f6-eda9-544a-9cbb-32fc30213eab"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "start_year": 833,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 833,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Islamic scholar involved in Abbasid Mihna controversies beginning in 833; individual religious and intellectual activity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ahmad ibn Hanbal — Encyclopaedia Britannica",
+      "canonical_url": "https://www.britannica.com/biography/Ahmad-ibn-Hanbal",
+      "citation_text": "Historical synthesis of the Abbasid Mihna and Ahmad ibn Hanbal."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-09",
+      "document_title": "아흐마드 이븐 한발",
+      "url": "https://namu.wiki/w/%EC%95%84%ED%9D%90%EB%A7%88%EB%93%9C%20%EC%9D%B4%EB%B8%90%20%ED%95%9C%EB%B0%9C"
+    }
+  },
+  "request_id": "authoring:cohort26:ahmad-ibn-hanbal:833:v1"
+}

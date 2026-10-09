@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Du Fu",
+    "display_name_ko": "두보",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Tang Dynasty",
+    "display_name_ko": "당나라",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "1e634515-5c04-5268-ae57-b4e160d6cf04"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "start_year": 759,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 759,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 759, Du Fu resigned his Tang office and migrated toward Qinzhou and Chengdu."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Indiana University — Du Fu, Departure from Qinzhou",
+      "canonical_url": "https://scholarworks.iu.edu/iuswrrest/api/core/bitstreams/698f4723-f329-4657-b45a-75c4bd39a95e/content",
+      "citation_text": "In 759, Du Fu resigned his Tang office and migrated toward Qinzhou and Chengdu."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-09",
+      "document_title": "두보",
+      "url": "https://namu.wiki/w/%EB%91%90%EB%B3%B4"
+    }
+  },
+  "request_id": "authoring:cohort26:du-fu-759:v1"
+}

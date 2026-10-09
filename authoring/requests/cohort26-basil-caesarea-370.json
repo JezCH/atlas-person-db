@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Basil of Caesarea",
+    "display_name_ko": "바실리오스 대제",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "religion",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "start_year": 370,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 370,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Basil the Great became bishop of Caesarea in 370."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Basil of Caesarea — Encyclopaedia Britannica 1911",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Basil_%28Caesarea%29",
+      "citation_text": "Basil succeeded Eusebius as Bishop of Caesarea in 370."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-09",
+      "document_title": "바실레이오스",
+      "url": "https://namu.wiki/w/%EB%B0%94%EC%8B%A4%EB%A0%88%EC%9D%B4%EC%98%A4%EC%8A%A4"
+    }
+  },
+  "request_id": "authoring:cohort26:basil-caesarea:370:v1"
+}
