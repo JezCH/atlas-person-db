@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:al-shafii-abbasid-egypt-814:v1",
+  "person": {
+    "canonical_name_en": "Al-Shafi'i",
+    "display_name_ko": "알샤피이",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "religion",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Abbasid Caliphate",
+    "display_name_ko": "아바스 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "3f39d4f6-eda9-544a-9cbb-32fc30213eab"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Islamic jurist moving to Egypt and developing his mature legal teaching",
+    "role_display_name_ko": "이집트로 이주해 법학 이론을 발전시킨 이슬람 법학자",
+    "start_year": 814,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 814,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Al-Shafi'i's relocation from Baghdad to Egypt is usually dated around 814 CE/199 AH. A modern encyclopedia notes differences between biographical accounts of his earlier Iraq-Hejaz itineraries, so this records only the approximate Egyptian resettlement and legal scholarship, not an exact day or a year-by-year detailed trajectory. Political setting in Egypt was within the Abbasid era, while central administrative control fluctuated; active_in never claims he served the Abbasid court or governor."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "al-Shāfiʿī — Encyclopedia of Religion (Encyclopedia.com)",
+      "canonical_url": "https://www.encyclopedia.com/environment/encyclopedias-almanacs-transcripts-and-maps/shafii-al",
+      "citation_text": "Discusses al-Shafi'i leaving Iraq and moving to Egypt, with variants in transmission including a move in 814 and his final years teaching in Egypt."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Muhammad ibn Idris al-Shafi'i — World Biography (Encyclopedia.com)",
+      "canonical_url": "https://www.encyclopedia.com/history/news-wires-white-papers-and-books/muhammad-ibn-idris-al-shafii",
+      "citation_text": "Places his last Baghdad visit about 814 and subsequent move to Egypt, where he wrote his mature legal system."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Al-Shafiʿi — Encyclopaedia Britannica 11th ed.",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Sh%C4%81fi%CA%BD%C4%AB",
+      "citation_text": "Traditional account of final Egypt move after 198 AH, reflecting year-precision uncertainty."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-10",
+      "review_reason": "no_exact_document"
+    }
+  }
+}
