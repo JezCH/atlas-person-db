@@ -1,0 +1,86 @@
+{
+  "schema": "atlas-vis3-05r-b-overlay-spec/v1",
+  "src": "user-provided 1889x833 screenshot sha256 048e19a741701ce22407f434d775225fa121ac2bfb05a6f5b4013a1e449d0fa9",
+  "recorded_source_sha": "unverified",
+  "deployed_to_production": false,
+  "production_files_modified": false,
+  "rgba_brass_rgb": [
+    187,
+    165,
+    116
+  ],
+  "options": [
+    {
+      "key": "A",
+      "changed_pixels": 0,
+      "action": "unchanged source image"
+    },
+    {
+      "key": "B",
+      "changed_pixels": 777,
+      "ratio_edge": 1,
+      "regions": [
+        [
+          238,
+          136,
+          440,
+          173
+        ],
+        [
+          1586,
+          261,
+          1816,
+          269
+        ]
+      ]
+    },
+    {
+      "key": "C",
+      "changed_pixels": 402,
+      "ratio_ledger": 1,
+      "regions": [
+        [
+          225,
+          294,
+          420,
+          325
+        ]
+      ]
+    },
+    {
+      "key": "D",
+      "changed_pixels": 1179,
+      "ratio_edge": 0.68,
+      "ratio_ledger": 0.76,
+      "regions": [
+        [
+          238,
+          136,
+          440,
+          173
+        ],
+        [
+          1586,
+          261,
+          1816,
+          269
+        ],
+        [
+          225,
+          294,
+          420,
+          325
+        ]
+      ]
+    }
+  ],
+  "all_preserved_pixels": {
+    "topbar": true,
+    "hero_title": true,
+    "refresh_button": true,
+    "kpi_titles_and_six_cards": true,
+    "below_kpis": true
+  },
+  "mobile_evidence": "not captured / not approved",
+  "user_choice": "pending"
+}
