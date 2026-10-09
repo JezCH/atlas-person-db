@@ -62,16 +62,26 @@ async function openPerson(c,kind,id){
  await sleep(480);
  return result;
 }
+async function focusArchive(c,view){
+ const selectors={chronicle:".person-chronicle-activities",evidence:".person-evidence-inspector",sources:'[data-section="sources"]'};
+ const selector=selectors[view];check(selector,"Unknown archive view "+view);
+ const expression="(()=>{const panel=document.querySelector('#personMainDetail');const target=panel?.querySelector("+JSON.stringify(selector)+");if(!target)return false;panel.scrollTop+=target.getBoundingClientRect().top-panel.getBoundingClientRect().top-78;return true;})()";
+ check(await evaluate(c,expression),"Archive capture target missing: "+view);
+ await sleep(175);
+}
 async function caseAB(c,width,kind,id){
  const person=await openPerson(c,kind,id);
- await toggle(c,true);
- const before=await evaluate(c,"("+state.toString()+")()");
  const name=width+"-"+kind;
  const capture=[390,1440].includes(width);
- if(capture)await screenshot(c,"vis2-10-A-default-"+name+".png");
+ const views=["chronicle","evidence","sources"];
+ await toggle(c,true);
+ await focusArchive(c,"chronicle");
+ const before=await evaluate(c,"("+state.toString()+")()");
+ if(capture)for(const view of views){await focusArchive(c,view);await screenshot(c,"vis2-10-A-default-"+name+"-"+view+".png");}
  await toggle(c,false);
+ await focusArchive(c,"chronicle");
  const after=await evaluate(c,"("+state.toString()+")()");
- if(capture)await screenshot(c,"vis2-10-B-refined-"+name+".png");
+ if(capture)for(const view of views){await focusArchive(c,view);await screenshot(c,"vis2-10-B-refined-"+name+"-"+view+".png");}
  check(before.marker===""&&after.marker==="1","VIS2-10 activation failed",{width,kind});
  for(const k of ["width","docWidth","panelHidden","panelScrollTop","domain","genuinePortrait","imageSource","imageAlt","imageComplete","imageNaturalWidth","imageNaturalHeight","activityCount","sourceCount","evidenceCount","sourceLinkCount","mainRowCount","mainPortraitCount"])
   check(JSON.stringify(before[k])===JSON.stringify(after[k]),"Historical/detail state changed "+k,{width,kind,before:before[k],after:after[k]});
