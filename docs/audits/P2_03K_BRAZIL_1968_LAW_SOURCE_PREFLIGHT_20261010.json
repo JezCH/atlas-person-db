@@ -1,0 +1,292 @@
+{
+  "schema": "polity-p2-03k-brazil-1968-law-source-catalog-preflight/v1",
+  "unit": "POLITY-P2-03K",
+  "status": "READONLY_COLLISION_PREFLIGHT_CLOSED_REVIEW_ONLY",
+  "evidence": {
+    "github_action_run": 37950565052,
+    "github_action_job": 113887937535,
+    "source_implementation_pr": 2323,
+    "source_implementation_merge_sha": "6770109a1e72c90ecc29d44cb275acb4b71a84cd",
+    "production_deployment_id": "dpl_FvLvLeUCCUBNBg5phmhsikcprLRG",
+    "production_sha": "6770109a1e72c90ecc29d44cb275acb4b71a84cd",
+    "production_read_only": true,
+    "committed": false,
+    "artifacts": [
+      {
+        "name": "atlas-audit-full_stage2_baseline-6770109a1e72c90ecc29d44cb275acb4b71a84cd",
+        "id": 11625437555,
+        "expired": false
+      }
+    ]
+  },
+  "catalog": {
+    "source_count_total": 3322,
+    "source_type_count": 224,
+    "selected_types": [
+      {
+        "source_type": "web_bibliographic_reference",
+        "total": 1652
+      },
+      {
+        "source_type": "government_web",
+        "total": 153
+      },
+      {
+        "source_type": "government_reference",
+        "total": 94
+      },
+      {
+        "source_type": "repository_dataset",
+        "total": 20
+      },
+      {
+        "source_type": "official_legal_source",
+        "total": 2
+      },
+      {
+        "source_type": "official_legislation",
+        "total": 2
+      }
+    ],
+    "source_key_candidate": "brazil-law-5389-1968-official",
+    "official_url_variants": [
+      "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-publicacaooriginal-1-pl.html",
+      "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-norma-pl.html",
+      "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-retificacao-31071-pl.html",
+      "https://www.planalto.gov.br/ccivil_03/leis/l5389.htm",
+      "https://legis.senado.gov.br/norma/547253",
+      "https://legis.senado.gov.br/norma/547253/publicacao/15715169"
+    ],
+    "exact_url_or_key_match_count": 0,
+    "exact_url_or_key_matches": [],
+    "metadata_match_total": 0,
+    "metadata_candidates": [],
+    "metadata_search_terms": [
+      "%5389%",
+      "%5.389%",
+      "%lei 5 389%",
+      "%l5389%",
+      "%h-733%"
+    ],
+    "catalog_scan_complete": true,
+    "metadata_truncated": false,
+    "generic_samples_count": 20,
+    "generic_sample_truncated": false,
+    "generic_repository_sources": [
+      {
+        "source_id": "6ab43c8c-2d16-526a-8a2f-8159877becfe",
+        "source_key": "repository-source:pending-records-corrections.json:f74e9ad540c30dae3c626f2ef9c0de3fb463de29d72c3540d555ef3c2bf35448",
+        "source_type": "repository_dataset",
+        "title": "pending-records-corrections.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "dedf71e3-ad5f-53ec-b868-70f00438861e",
+        "source_key": "repository-source:pending-records-supplement-10.json:59dcd36b1c0b1ec53402560f4fd710c20dfc4910386ed6cff7eda8f912e09b01",
+        "source_type": "repository_dataset",
+        "title": "pending-records-supplement-10.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "cef24ac7-0016-5cbf-996b-c962c00cdfa2",
+        "source_key": "repository-source:pending-records-supplement-11.json:e5b5358ea96331bf5199b676ef21372d5711cf95076c764a96629ce4ca0d96f7",
+        "source_type": "repository_dataset",
+        "title": "pending-records-supplement-11.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "743df8e9-a7e6-5593-8863-8cf3e3797b9c",
+        "source_key": "repository-source:pending-records-supplement-2.json:c36e4669946af18222913b8fa6efa8e91608f3ee78d2ba438e4d5a8309de7a75",
+        "source_type": "repository_dataset",
+        "title": "pending-records-supplement-2.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "7f21dc19-2215-57ca-ad50-aab379abf450",
+        "source_key": "repository-source:pending-records-supplement-3.json:8e9ddc2a2a5623dee0703ab6e6fb30630a026c1cf23e0c150f2265d5b0bf455c",
+        "source_type": "repository_dataset",
+        "title": "pending-records-supplement-3.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "521297b7-7252-548d-b600-4dc89b9b651b",
+        "source_key": "repository-source:pending-records-supplement-4.json:4175719ce805726bfa809c5296e02e3adfb3578bae7ca34aa5ff8c542194168a",
+        "source_type": "repository_dataset",
+        "title": "pending-records-supplement-4.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "cc767f2f-48fb-550f-851a-b893c362b131",
+        "source_key": "repository-source:pending-records-supplement-5.json:317c8cd0f4df2fd2d3bf2e3c84304e1dad16633cfb8ce31843ba1f7e98a05e4d",
+        "source_type": "repository_dataset",
+        "title": "pending-records-supplement-5.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "c899493b-3a0e-5f0b-b7ae-3bce3e8a63c0",
+        "source_key": "repository-source:pending-records-supplement-6.json:54b23a3c209bc6bb36bc44cb1a47daa57462fcb6cf7e96ad6796fab611d7fdb7",
+        "source_type": "repository_dataset",
+        "title": "pending-records-supplement-6.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "542dea9e-a382-55f2-b522-d8865223a851",
+        "source_key": "repository-source:pending-records-supplement-7.json:6c80ab6e6ed6d3eee3e47e769abf3b3f659079f20fd271f9dad30c9d76dbcae3",
+        "source_type": "repository_dataset",
+        "title": "pending-records-supplement-7.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "28ba4b55-d9ee-5f5a-97d2-3314d352a369",
+        "source_key": "repository-source:pending-records-supplement-8.json:2e6c18765e0c23dafd582077e6b5a42e8af1e768cd929ce8e9f38ec733402257",
+        "source_type": "repository_dataset",
+        "title": "pending-records-supplement-8.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "217799b6-9b3d-51ad-bada-d445b74fd7f2",
+        "source_key": "repository-source:pending-records-supplement-9.json:98834bc15cf2f4ca1dc4d966962e04143e6d04097afa272870f9c0c4150e5974",
+        "source_type": "repository_dataset",
+        "title": "pending-records-supplement-9.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "55efaae0-3d24-5462-9d30-bc813ea7de0a",
+        "source_key": "repository-source:pending-records-supplement.json:719b77b0a781d991f6a1df24a999a90cb37d84e8be2bc5dee3b7af8c342e5093",
+        "source_type": "repository_dataset",
+        "title": "pending-records-supplement.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "a30be4b7-5a35-5781-8a41-eb6c1d836180",
+        "source_key": "repository-source:pending-records.json:8b78952fb503f17cc79de160232d60d75623b9605360c3db6fb1a36209b02f2a",
+        "source_type": "repository_dataset",
+        "title": "pending-records.json",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "c224d9f8-2277-5f7b-98a7-5d10b65f865e",
+        "source_key": "repository-source:person-locales-supplement-2.js:a329c309ed1d83343ae6e0b97e1757e1f3e10d5d9c192c7ece9dcca2360dd67e",
+        "source_type": "repository_dataset",
+        "title": "person-locales-supplement-2.js",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "ff879e52-8301-562f-9a17-e7cd2fe0e57f",
+        "source_key": "repository-source:person-locales-supplement-3.js:6ba4ba9f2987973f24a9835f922fa2dc1ec4ef1ca2b2ceab8e17a24dbfd58650",
+        "source_type": "repository_dataset",
+        "title": "person-locales-supplement-3.js",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "ea63e1a2-69df-5649-8353-608c108f97be",
+        "source_key": "repository-source:person-locales-supplement-4.js:d6d4d3a5108317323bafb876bc92d6bcca5aa84d48a9ff18e3e267a99ca4258c",
+        "source_type": "repository_dataset",
+        "title": "person-locales-supplement-4.js",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "9984ed15-404a-5fe4-b0f3-153c1aa86781",
+        "source_key": "repository-source:person-locales-supplement-5.js:dbbfa5af106d25bb65ddbdc772c833a3227d6cd6d5d4eb4aef3dc89dab8ae376",
+        "source_type": "repository_dataset",
+        "title": "person-locales-supplement-5.js",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "3b398b6f-b717-5499-bde5-85b478182179",
+        "source_key": "repository-source:person-locales-supplement-6.js:70287bd9d7e4dc4552c877ebfb7bfd202df3ad4bba0f5563183b739e2f132e04",
+        "source_type": "repository_dataset",
+        "title": "person-locales-supplement-6.js",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "a732ca86-f29a-58a2-b49f-1164c413714a",
+        "source_key": "repository-source:person-locales-supplement.js:e25bd02fb3410648a3465e12ca96473080e7202d5660808e5bffdbbe7aa37e69",
+        "source_type": "repository_dataset",
+        "title": "person-locales-supplement.js",
+        "canonical_url": null,
+        "external_identifier": null
+      },
+      {
+        "source_id": "e58c868f-01c2-5fb7-9c41-6affdaa4d841",
+        "source_key": "repository-source:person-locales.js:150586fd47814749310c5869ff43da1cfe1458cb188d8bb98c9febebce5d3c04",
+        "source_type": "repository_dataset",
+        "title": "person-locales.js",
+        "canonical_url": null,
+        "external_identifier": null
+      }
+    ],
+    "semantic_duplicate_unlabeled_content_excluded": false
+  },
+  "law": {
+    "original_act_url": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-publicacaooriginal-1-pl.html",
+    "signed_on": "1968-02-22",
+    "published_dou_on": "1968-02-23",
+    "symbols_regulation_effective_on": "1968-02-23",
+    "official_title_name_first_exclusive_use_date": null,
+    "article_1": "Coat-of-arms and seal inscription replaces old national name with República Federativa do Brasil",
+    "article_3": "Refers to modifications resulting from change of official denomination; does not expressly establish universal first exclusive official-name use date",
+    "article_4": "Effective on publication of Law 5.389",
+    "senate_date_locator": "https://legis.senado.gov.br/norma/547253",
+    "erratum_1968_03_05": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-retificacao-31071-pl.html",
+    "erratum_affects": "Art. 2 §2 historical Decree year 1899 corrected to 1889, not Art. 1 or 3 naming change",
+    "h733_full_text_verified": false,
+    "h733_official_secondary_locator": "https://www2.camara.leg.br/a-camara/conheca/historia/a5republica.html"
+  },
+  "registration_proposal": {
+    "type": "assert_source",
+    "source_id": null,
+    "source_key": "brazil-law-5389-1968-official",
+    "source_type": "web_bibliographic_reference",
+    "title": "Lei nº 5.389, de 22 de fevereiro de 1968",
+    "canonical_url": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-publicacaooriginal-1-pl.html",
+    "author_creator": "Congresso Nacional",
+    "institution": "Câmara dos Deputados",
+    "publisher": "Diário Oficial da União",
+    "publication_date": "1968-02-23",
+    "publication_year": 1968,
+    "external_identifier": "Lei nº 5.389/1968",
+    "citation_text": "Lei nº 5.389, de 22 de fevereiro de 1968; Diário Oficial da União, Seção 1, 23 de fevereiro de 1968, p. 1673; Art. 1º, incisos 2–3; Arts. 3º–4º.",
+    "sha256": null,
+    "bytes": null,
+    "bibliographic_writes_performed": false,
+    "source_uuid_issued": false,
+    "exact_before_source_id_absence_verified": false,
+    "eligible_for_automatic_apply": false,
+    "operations": []
+  },
+  "polity_decision": {
+    "parent_case": "brazil-regime-family",
+    "status": "REVIEW_REQUIRED",
+    "official_name_date_bounds_approved": false,
+    "designation_ids_issued": [],
+    "activity_transfer_performed": false,
+    "retire_or_delete_performed": false,
+    "ten_activity_exact_before_last_verified_run": 37918278937
+  },
+  "unresolved": [
+    "Generic repository_dataset payloads not semantically searched; 20 metadata-only records surfaced",
+    "Primary H-733 opinion text not obtained despite official references",
+    "Exactly when the official name first became exclusive is not established by the symbols statute",
+    "A new Source UUID and exact-before no-collision check must occur inside governed writer before canonical registration"
+  ],
+  "next_bounded_unit": "POLITY-P2-03L"
+}
