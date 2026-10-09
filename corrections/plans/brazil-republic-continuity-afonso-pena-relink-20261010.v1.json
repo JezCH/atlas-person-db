@@ -1,0 +1,123 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "brazil_republic_identity_afonso_pena_minimal_relink_20261010_v1",
+  "as_of": "2026-10-10",
+  "status": "REVIEWED_SINGLE_REPUBLIC_CONTINUITY_RELINK",
+  "release_order": 2336,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 Brazil historical-family evidence P2-03A–L, original 1889 Federal Decree No. 1 and 1891 Constitution, original 1968 Law No. 5.389, exact Production 10-Activity read-only audit #37992870364; user 2026-10-10 explicitly directed complete political-identity review and safe actual data change. NO Polity retirement/deletion authorized.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "retirement_or_delete_without_explicit_user_approval_forbidden": true,
+    "no_1968_exclusive_name_boundary_assertion": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "final_identity_decision": "The 1889 imperial monarchy to federal republic event is a regime/state-identity boundary in the Atlas model. The 1889 Estados Unidos do Brasil federal republic and current Brazil are one continuing republican state; the old constitutional/formal national name does not define a second sovereign entity. Represent Afonso Pena's 1906–1909 presidency on existing canonical Brazil Republican UUID. Leave historical original title in existing activity notes and evidence; do not fabricate exclusive 1968 name-change day.",
+    "official_sources": [
+      {
+        "url": "https://www2.camara.leg.br/legin/fed/decret/1824-1899/decreto-1-15-novembro-1889-532625-publicacaooriginal-14906-pe.html",
+        "locator": "Art. 1–2, 1889-11-15 federal Republic proclamation and Estados Unidos do Brazil"
+      },
+      {
+        "url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao91.htm",
+        "locator": "1891 Constitution title and Art. 1, Republican federal state"
+      },
+      {
+        "url": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-publicacaooriginal-1-pl.html",
+        "locator": "Arts 1(2–3),3,4 formal title recognition; NOT first exclusive country-name start date"
+      }
+    ],
+    "current_production_snapshot": {
+      "run": 37992870364,
+      "job": 114031282755,
+      "deployed_sha": "317912b8f8d4eb5345a7b0b600d2e82a4ed12194",
+      "read_only": true,
+      "committed": false,
+      "exact_activities": 10,
+      "old_republic": 1,
+      "canonical_republic": 7,
+      "empire": 2,
+      "source_links": 17
+    },
+    "candidate_activity_id": "7a021719-8a81-4367-9fd1-64e75f996563",
+    "old_republic_polity_id": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+    "canonical_republic_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+    "distinct_empire_polity_id": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+    "source_preservation": {
+      "source_id": "e91990eb-2d4a-4e05-afc0-9a5d9f6b741a",
+      "source_locator_key": "https://www.biblioteca.presidencia.gov.br/presidencia/ex-presidentes/affonso-penna/nome-do-presidente",
+      "existing_source_count": 1,
+      "expected_after_source_count": 1
+    },
+    "actor_note": "Historic person/term records retain original note about constitutional name United States of Brazil, while canonical Polity pointer changes only.",
+    "other_nine_activities_untouched": true,
+    "republican_legacy_polity_retirement_approved": false,
+    "any_source_or_designation_registration_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "brazil-republic-one-identity-relink-afonso-pena-1906-1909",
+      "type": "rewrite_activity",
+      "activity_id": "7a021719-8a81-4367-9fd1-64e75f996563",
+      "baseline_before": {
+        "person_id": "070c0e51-946a-4378-b83c-c100c99e4084",
+        "polity_id": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1906,
+        "activity_end": 1909,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "7a021719-8a81-4367-9fd1-64e75f996563",
+        "person_id": "070c0e51-946a-4378-b83c-c100c99e4084",
+        "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1906,
+        "activity_start_detail": {
+          "year": 1906,
+          "month": 11,
+          "day": 15,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end": 1909,
+        "activity_end_detail": {
+          "year": 1909,
+          "month": 6,
+          "day": 14,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "asserted_polity_designation_count": 0,
+    "political_identity_retired_count": 0,
+    "legacy_republic_expected_activity_refs_after": 0,
+    "canonical_republic_expected_activity_refs_after": 8,
+    "empire_expected_activity_refs_after": 2,
+    "production_mutation_authorized": false
+  }
+}
