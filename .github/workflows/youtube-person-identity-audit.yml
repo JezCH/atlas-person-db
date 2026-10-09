@@ -2,9 +2,6 @@ name: YouTube Person UUID Identity Audit (read-only)
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/youtube-person-identity-audit.yml']
   pull_request:
     branches: [main]
     paths:
@@ -36,8 +33,7 @@ jobs:
       - run: python -m unittest discover -s tests -p test_youtube_person_identity_sidecar.py -v
 
   audit:
-    # A one-time Batch024 push must have the exact marker in the merge commit.
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[yt-person-identity-b024-once]')
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
