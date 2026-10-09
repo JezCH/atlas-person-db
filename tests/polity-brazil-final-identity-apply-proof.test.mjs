@@ -62,5 +62,5 @@ test("review closure never implies automatic deletion, source registration or fa
   assert.equal(evidence.deferred_independent_approval.source_bibliography_registration,false);
   assert.equal(evidence.historical_decision.date_of_first_exclusive_formal_name_adoption_verified,false);
   assert.equal(evidence.historical_decision.avoid_unverified_day_precision,true);
-  assert.match(evidence.next_work,/different|DIFFERENT/i);
+  assert.match(evidence.next_work,/next nonterminal polity family/i);
 });
