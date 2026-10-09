@@ -7,6 +7,7 @@ const {
   GLOBAL_SNAPSHOT_SQL,integerOption,projectSnapshot,projectSignal
 }=require("./atlas-youtube-person-signal-read-service.js");
 const {reviewedPersonAliasesValuesSql}=require("./atlas-reviewed-person-registration-aliases.js");
+const {reviewedLivingStatus}=require("./atlas-youtube-reviewed-living-people.js");
 
 const DISCOVERY_SCHEMA="atlas-youtube-unregistered-discovery/v1";
 const CANDIDATE_ROWS_SQL=[
@@ -41,17 +42,21 @@ function registrationIndex(rows) {
   }
   return index;
 }
-function candidatesFromSource(rawRows,personRows) {
+function candidatesFromSource(rawRows,personRows,{now=Date.now()}={}) {
   if(!Array.isArray(personRows)||!personRows.length)
     throw Error("YOUTUBE_DISCOVERY_PERSON_REGISTRY_EMPTY");
   const registered=registrationIndex(personRows);
   const grouped=new Map();
-  let registeredExcluded=0,homonymReview=0,overlappingRawLabels=0;
+  let registeredExcluded=0,reviewedLivingExcluded=0,homonymReview=0,overlappingRawLabels=0;
   for(const row of rawRows) {
     const signal=projectSignal(row),key=identityKey(signal.raw_name);
     if(!key)throw Error("YOUTUBE_DISCOVERY_MISSING_RAW_IDENTITY");
     const matches=registered.get(key);
     if(matches?.size===1){registeredExcluded++;continue;}
+    if(reviewedLivingStatus(signal.raw_name,now)?.status==="living_likely") {
+      reviewedLivingExcluded++;
+      continue;
+    }
     const ambiguous=(matches?.size||0)>1;
     if(ambiguous)homonymReview++;
     const previous=grouped.get(key);
@@ -85,7 +90,7 @@ function candidatesFromSource(rawRows,personRows) {
   candidates.sort((a,b)=>b.distinct_channel_count-a.distinct_channel_count||
     b.video_count-a.video_count||a.raw_name.localeCompare(b.raw_name,"en"));
   for(let i=0;i<candidates.length;i++) candidates[i].rank=i+1;
-  return {candidates,registeredExcluded,homonymReview,overlappingRawLabels};
+  return {candidates,registeredExcluded,reviewedLivingExcluded,homonymReview,overlappingRawLabels};
 }
 async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,offset=0}={}) {
   if(!client||typeof client.query!=="function")throw Error("YOUTUBE_DISCOVERY_DB_REQUIRED");
@@ -101,7 +106,7 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     client.query(CANDIDATE_ROWS_SQL,[initial.snapshot_id]),
     client.query(PERSON_NAMES_SQL)
   ]);
-  const {candidates,registeredExcluded,homonymReview,overlappingRawLabels}=
+  const {candidates,registeredExcluded,reviewedLivingExcluded,homonymReview,overlappingRawLabels}=
     candidatesFromSource(signals.rows||[],people.rows||[]);
   const final=projectSnapshot((await client.query(GLOBAL_SNAPSHOT_SQL)).rows?.[0]);
   if(!final||final.snapshot_id!==initial.snapshot_id)
@@ -116,6 +121,7 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     population:"original_channel_id_cumulative_title_candidates",
     identity_rule:"unique_exact_registered_match_excluded_ambiguous_reviewed",
     registration_checked:true,registered_excluded_count:registeredExcluded,
+    reviewed_living_excluded_count:reviewedLivingExcluded,
     homonym_review_count:homonymReview,overlapping_raw_labels:overlappingRawLabels,
     dedup_policy:"reviewed_extraction_aliases_only_never_sum_aggregates",
     min_channels:threshold,offset:pageOffset,
