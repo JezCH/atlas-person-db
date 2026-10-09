@@ -165,336 +165,37 @@ test("REVIEW-M10 keeps mobile YouTube names and counts in separate grid rows",()
   assert.match(js,/data-label="영상"/);
 });
 
-test("REVIEW-M11 labels only unique exact registered aliases and current pending-queue matches",async()=>{
-  const vm=await import("node:vm");
+test("REVIEW-M11 displays only server-reviewed unregistered discovery candidates",()=>{
   const js=read("atlas-registration-review.js");
-  const css=read("atlas-registration-review.css");
-  const nodes=new Map();
-  const node=id=>{
-    if(!nodes.has(id)) nodes.set(id,{
-      innerHTML:"",textContent:"",value:"",dataset:{},disabled:false,
-      addEventListener(){}
-    });
-    return nodes.get(id);
-  };
-  const root={isConnected:true,innerHTML:"",querySelector:node};
-  const persons={persons:[
-    {id:"p-lincoln",canonical_name_en:"Abraham Lincoln",names:[{name:"Abraham Lincoln"}],historicity:"historical"},
-    {id:"p-sejong",canonical_name_en:"Sejong the Great",preferred_name_ko:"세종",names:[{name:"세종대왕"}],historicity:"historical"},
-    {id:"p-leonardo",canonical_name_en:"Leonardo da Vinci",names:[],historicity:"historical"},
-    {id:"p-napoleon",canonical_name_en:"Napoleon I",names:[],historicity:"historical"},
-    {id:"p-ibn",canonical_name_en:"Ibn Sina",names:[],historicity:"historical"},
-    {id:"p-cleopatra-1",canonical_name_en:"Cleopatra VII",names:[{name:"Cleopatra"}],historicity:"historical"},
-    {id:"p-cleopatra-2",canonical_name_en:"Cléopatra",names:[],historicity:"historical"},
-    {id:"p-audit-0",canonical_name_en:"Grigori Rasputin",names:[],historicity:"historical"},
-    {id:"p-audit-1",canonical_name_en:"Gautama Buddha",names:[],historicity:"historical"},
-    {id:"p-audit-2",canonical_name_en:"Ivan IV",names:[],historicity:"historical"},
-    {id:"p-audit-3",canonical_name_en:"Haile Selassie I",names:[],historicity:"historical"},
-    {id:"p-audit-4",canonical_name_en:"Sun Wu",names:[],historicity:"historical"},
-    {id:"p-audit-5",canonical_name_en:"Ashoka",names:[],historicity:"historical"},
-    {id:"p-audit-6",canonical_name_en:"Friedrich Nietzsche",names:[],historicity:"historical"},
-    {id:"p-audit-7",canonical_name_en:"Thales",names:[],historicity:"historical"},
-    {id:"p-audit-8",canonical_name_en:"Marcus Tullius Cicero",names:[],historicity:"historical"}
-  ],summary:{total:16}};
-  const queue={ok:true,summary:{pending_count:3},reviewed_person_aliases:[
-    {alias_name:"Napoleon Bonaparte",person_id:"p-napoleon",canonical_key:"Napoleon I"},
-    {alias_name:"Avicenna",person_id:"p-ibn",canonical_key:"Ibn Sina"},
-    {alias_name:"Cleopatra",person_id:"p-cleopatra-1",canonical_key:"Cleopatra VII",representative_default:true},
-    {alias_name:"Rasputin",person_id:"p-audit-0",canonical_key:"Grigori Rasputin",representative_default:false},
-    {alias_name:"Buddha",person_id:"p-audit-1",canonical_key:"Gautama Buddha",representative_default:true},
-    {alias_name:"Ivan the Terrible",person_id:"p-audit-2",canonical_key:"Ivan IV",representative_default:false},
-    {alias_name:"Haile Selassie",person_id:"p-audit-3",canonical_key:"Haile Selassie I",representative_default:false},
-    {alias_name:"Sun Tzu",person_id:"p-audit-4",canonical_key:"Sun Wu",representative_default:true},
-    {alias_name:"Ashoka the Great",person_id:"p-audit-5",canonical_key:"Ashoka",representative_default:false},
-    {alias_name:"Nietzsche",person_id:"p-audit-6",canonical_key:"Friedrich Nietzsche",representative_default:false},
-    {alias_name:"Thales of Miletus",person_id:"p-audit-7",canonical_key:"Thales",representative_default:false},
-    {alias_name:"Cicero",person_id:"p-audit-8",canonical_key:"Marcus Tullius Cicero",representative_default:false}
-  ],candidates:[
-    {candidate_id:"q-hypatia",name:"Hypatia of Alexandria",review_metadata:{lookup_names:["Hypatia"]}},
-    {candidate_id:"q-galois",name:"Évariste Galois",review_metadata:{}},
-    {candidate_id:"q-leonardo",name:"Leonardo da Vinci",review_metadata:{}}
-  ]};
-  const signals={ok:true,available_count:19,rows:[
-    {rank:1,raw_name:"Abraham Lincoln",distinct_channel_count:95,video_count:105},
-    {rank:2,raw_name:"Leonardo da Vinci",distinct_channel_count:80,video_count:100},
-    {rank:3,raw_name:"Cleopatra",distinct_channel_count:72,video_count:95},
-    {rank:4,raw_name:"Hypatia",distinct_channel_count:42,video_count:50},
-    {rank:5,raw_name:"Evariste Galois",distinct_channel_count:23,video_count:30},
-    {rank:6,raw_name:"Mansa Musa",distinct_channel_count:18,video_count:21},
-    {rank:7,raw_name:"Abraham Lincoln Biography",distinct_channel_count:7,video_count:8},
-    {rank:8,raw_name:"세종대왕",distinct_channel_count:6,video_count:7},
-    {rank:9,raw_name:"Napoleon Bonaparte",distinct_channel_count:82,video_count:94},
-    {rank:10,raw_name:"Avicenna",distinct_channel_count:18,video_count:22},
-    {rank:11,raw_name:"Rasputin",distinct_channel_count:18,video_count:22},
-    {rank:12,raw_name:"Buddha",distinct_channel_count:18,video_count:22},
-    {rank:13,raw_name:"Ivan the Terrible",distinct_channel_count:18,video_count:22},
-    {rank:14,raw_name:"Haile Selassie",distinct_channel_count:18,video_count:22},
-    {rank:15,raw_name:"Sun Tzu",distinct_channel_count:18,video_count:22},
-    {rank:16,raw_name:"Ashoka the Great",distinct_channel_count:18,video_count:22},
-    {rank:17,raw_name:"Nietzsche",distinct_channel_count:18,video_count:22},
-    {rank:18,raw_name:"Thales of Miletus",distinct_channel_count:18,video_count:22},
-    {rank:19,raw_name:"Cicero",distinct_channel_count:18,video_count:22}
-  ],snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":19},source_state:{next_batch:"batch018"}}};
-  const context={
-    window:{ATLAS_CLIENT_DATA_STORE:{loadPersons:async()=>persons},addEventListener(){}},
-    fetch:async url=>({ok:true,status:200,json:async()=>url.includes("registration-queue")?queue:signals}),
-    console,Date,setInterval:()=>7,clearInterval:()=>{}
-  };
-  vm.runInNewContext(js,context,{filename:"atlas-registration-review.js"});
-  context.window.ATLAS_REGISTRATION_REVIEW.mount(root);
-  for(let i=0;i<25 && node("#registrationReviewStatus").dataset.state!=="ready";i++)
-    await new Promise(resolve=>setImmediate(resolve));
-  assert.equal(node("#registrationReviewStatus").dataset.state,"ready");
-  const html=node("#youtubeSignalBody").innerHTML;
-  const matchingRow=name=>{
-    const item=html.split('<tr class="registration-review-signal-row"').find(part=>part.includes(`<span class="registration-review-signal-raw-name">${name}</span>`));
-    assert.ok(item,`missing ${name}`);
-    return item.slice(0,item.indexOf("</tr>"));
-  };
-  assert.match(matchingRow("Abraham Lincoln"),/data-status="registered">기등록/);
-  assert.match(matchingRow("세종대왕"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Leonardo da Vinci"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Napoleon Bonaparte"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Avicenna"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Rasputin"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Buddha"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Ivan the Terrible"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Haile Selassie"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Sun Tzu"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Ashoka the Great"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Nietzsche"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Thales of Miletus"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Cicero"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Buddha"),/data-status="representative">대표 간주: Gautama Buddha/);
-  assert.match(matchingRow("Sun Tzu"),/data-status="representative">대표 간주: Sun Wu/);
-  assert.doesNotMatch(matchingRow("Leonardo da Vinci"),/대기열 등재/);
-  assert.match(matchingRow("Cleopatra"),/data-status="registered">기등록/);
-  assert.match(matchingRow("Cleopatra"),/data-status="representative">대표 간주: Cleopatra VII/);
-  assert.match(matchingRow("Hypatia"),/data-status="queued">대기열 등재/);
-  assert.match(matchingRow("Evariste Galois"),/data-status="queued">대기열 등재/);
-  assert.match(matchingRow("Mansa Musa"),/기등록 일치 없음/);
-  assert.match(matchingRow("Mansa Musa"),/대기열 미등재/);
-  assert.doesNotMatch(matchingRow("Abraham Lincoln Biography"),/data-status="registered"/);
-  assert.match(css,/REVIEW-M11/);
-  assert.match(css,/REVIEW-M13/);
-  assert.match(css,/\.registration-review-signal-identity\[data-status="registered"\]/);
-  assert.match(js,/일치 없음은 실제 미등록을 확정하지 않습니다/);
+  assert.match(js,/mode=discovery/);
+  assert.match(js,/미등록 역사 인물 발굴/);
+  assert.match(js,/candidateStatusBadge/);
+  assert.match(js,/미등록 후보 · 검토 필요/);
+  assert.match(js,/registered_homonym_review/);
+  assert.match(js,/별칭 중복 · 원본 ID 재집계 필요/);
+  assert.doesNotMatch(js,/youtubeExcludeRegistered/);
+  assert.doesNotMatch(js,/data-signal-mode/);
+  assert.doesNotMatch(js,/인물별 통합 순위/);
 });
 
-test("REVIEW-M12 toggles registered and living exclusions independently with unknowns retained",async()=>{
-  const vm=await import("node:vm");
+test("REVIEW-M12 living-person exclusion preserves unverified evidence and uses one leaderboard",()=>{
   const js=read("atlas-registration-review.js");
-  const css=read("atlas-registration-review.css");
-  const events=new Map(),nodes=new Map();
-  const node=id=>{
-    if(!nodes.has(id)) nodes.set(id,{innerHTML:"",textContent:"",dataset:{},checked:false,isConnected:true,disabled:false,
-      addEventListener(event,callback){events.set(id+":"+event,callback)}
-    });
-    return nodes.get(id);
-  };
-  const root={isConnected:true,querySelector:node,innerHTML:""};
-  const persons={persons:[{id:"p-lincoln",canonical_name_en:"Abraham Lincoln",names:[{name:"Abraham Lincoln"}]},
-    {id:"p-napoleon",canonical_name_en:"Napoleon I",names:[{name:"Napoleon I"}]},
-    {id:"p-cleopatra-primary",canonical_name_en:"Cleopatra VII",names:[{name:"Cleopatra"}],historicity:"historical",activity_count:5},
-    {id:"p-cleopatra-other",canonical_name_en:"Cléopatra",names:[],historicity:"historical",activity_count:1},
-    {id:"p-nietzsche",canonical_name_en:"Friedrich Nietzsche",names:[],historicity:"historical"}],summary:{total:5}};
-  const queue={ok:true,summary:{pending_count:0},reviewed_person_aliases:[
-    {alias_name:"Napoleon Bonaparte",person_id:"p-napoleon",canonical_key:"Napoleon I"},
-    {alias_name:"Nietzsche",person_id:"p-nietzsche",canonical_key:"Friedrich Nietzsche"}],candidates:[]};
-  const raw=[
-    {raw_name:"Abraham Lincoln",rank:1,distinct_channel_count:95,video_count:105},
-    {raw_name:"Napoleon Bonaparte",rank:2,distinct_channel_count:80,video_count:100},
-    {raw_name:"Cleopatra",rank:3,distinct_channel_count:71,video_count:90},
-    {raw_name:"Nietzsche",rank:7,distinct_channel_count:16,video_count:32},
-    {raw_name:"Taylor Swift",rank:2,distinct_channel_count:22,video_count:29},
-    {raw_name:"Hypatia",rank:3,distinct_channel_count:12,video_count:15},
-    {raw_name:"Unknown Figure",rank:4,distinct_channel_count:8,video_count:12}
-  ];
-  const fetchCalls=[];
-  const context={
-    window:{ATLAS_CLIENT_DATA_STORE:{loadPersons:async()=>persons},addEventListener(){}},
-    fetch:async url=>{
-      fetchCalls.push(url);
-      const parsed=new URL(url,"http://localhost");
-      const surface=parsed.searchParams.get("__atlas_read_surface");
-      const payload=surface==="registration-queue" ? queue
-        : surface==="youtube-person-living"
-          ? {ok:true,evidence_unavailable:true,rows:JSON.parse(parsed.searchParams.get("names")).map(name=>({name,status:name==="Taylor Swift"?"living_likely":"unknown"}))}
-          : {ok:true,stored_count:4,available_count:4,rows:raw,
-            snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":4},source_state:{next_batch:"batch018"}}};
-      return {ok:true,status:200,json:async()=>payload};
-    },
-    console,Date,URL,setInterval:()=>1,clearInterval(){}
-  };
-  vm.runInNewContext(js,context);
-  context.window.ATLAS_REGISTRATION_REVIEW.mount(root);
-  async function ready(){
-    for(let i=0;i<40 && node("#registrationReviewStatus").dataset.state!=="ready";i++) await new Promise(resolve=>setImmediate(resolve));
-    assert.equal(node("#registrationReviewStatus").dataset.state,"ready");
-  }
-  await ready();
-  const html=()=>node("#youtubeSignalBody").innerHTML;
-  assert.match(html(),/Abraham Lincoln/);
-  assert.match(html(),/Napoleon Bonaparte/);
-  assert.match(html(),/Nietzsche/);
-  assert.match(html(),/대표 간주: Cleopatra VII/);
-  assert.match(html(),/Taylor Swift/);
-  assert.match(js,/id="youtubeExcludeRegistered"/);
   assert.match(js,/id="youtubeExcludeLiving"/);
-  const toggle=async(id,checked)=>{
-    node("#registrationReviewStatus").dataset.state="loading";
-    node("#"+id).checked=checked;
-    events.get("#youtubeSignalFilters:change")({target:{id,checked}});
-    await ready();
-  };
-  await toggle("youtubeExcludeRegistered",true);
-  assert.doesNotMatch(html(),/Abraham Lincoln/);
-  assert.doesNotMatch(html(),/Napoleon Bonaparte/);
-  assert.doesNotMatch(html(),/Nietzsche/);
-  assert.doesNotMatch(html(),/Cleopatra/);
-  assert.match(html(),/Taylor Swift/);
-  await toggle("youtubeExcludeLiving",true);
-  assert.doesNotMatch(html(),/Taylor Swift/);
-  assert.match(html(),/Hypatia/);
-  assert.match(html(),/Unknown Figure/);
-  assert.match(node("#youtubeSignalVisibleCount").textContent,/생존 미확인 포함/);
-  assert.match(node("#youtubeSignalVisibleCount").textContent,/생존 조회 실패\(제외 불완전\)/);
-  assert.ok(fetchCalls.some(url=>url.includes("youtube-person-living")));
-  await toggle("youtubeExcludeRegistered",false);
-  assert.match(html(),/Abraham Lincoln/);
-  assert.doesNotMatch(html(),/Taylor Swift/);
-  await toggle("youtubeExcludeLiving",false);
-  assert.match(html(),/Taylor Swift/);
-  assert.match(css,/REVIEW-M12/);
+  assert.match(js,/isVerifiedLiving/);
+  assert.match(js,/evidence_unavailable/);
+  assert.match(js,/collectVisibleSignals/);
+  assert.match(js,/excludedByActiveFilters/);
+  assert.match(js,/refreshSignalsOnly/);
+  assert.doesNotMatch(js,/excludeRegistered/);
+  assert.doesNotMatch(js,/signalMode/);
 });
 
-test("REVIEW-M12 refills after excluding the first 1000 registered ranks",async()=>{
-  const vm=await import("node:vm");
+test("REVIEW-M14 preserving the original registered ledger while ranking only new discovery candidates",()=>{
   const js=read("atlas-registration-review.js");
-  const events=new Map(),nodes=new Map();
-  const node=id=>{
-    if(!nodes.has(id)) nodes.set(id,{innerHTML:"",textContent:"",dataset:{},disabled:false,checked:false,
-      addEventListener(event,handler){events.set(id+":"+event,handler)}
-    });
-    return nodes.get(id);
-  };
-  const root={isConnected:true,querySelector:node,innerHTML:""};
-  const persons={persons:[{id:"p-1",canonical_name_en:"Registered Individual",names:[]}],summary:{total:1}};
-  const queue={ok:true,summary:{pending_count:0},candidates:[]};
-  const first=Array.from({length:1000},(_,i)=>({rank:i+1,raw_name:"Registered Individual",distinct_channel_count:6,video_count:7}));
-  const urls=[];
-  const context={
-    window:{ATLAS_CLIENT_DATA_STORE:{loadPersons:async()=>persons},addEventListener(){}},
-    fetch:async url=>{
-      urls.push(url);
-      const parsed=new URL(url,"http://localhost");
-      const surface=parsed.searchParams.get("__atlas_read_surface");
-      const payload=surface==="registration-queue" ? queue
-        : {ok:true,stored_count:1001,available_count:1001,
-          rows:Number(parsed.searchParams.get("offset"))===1000 ? [{rank:1001,raw_name:"New Historical Figure",distinct_channel_count:3,video_count:4}]
-            : first.slice(0,Number(parsed.searchParams.get("limit"))||300),
-          snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":1001},source_state:{next_batch:"batch018"}}};
-      return {ok:true,status:200,json:async()=>payload};
-    },
-    console,Date,URL,setInterval:()=>1,clearInterval(){}
-  };
-  vm.runInNewContext(js,context);
-  context.window.ATLAS_REGISTRATION_REVIEW.mount(root);
-  const ready=async()=>{
-    for(let i=0;i<40 && node("#registrationReviewStatus").dataset.state!=="ready";i++) await new Promise(resolve=>setImmediate(resolve));
-    assert.equal(node("#registrationReviewStatus").dataset.state,"ready");
-  };
-  await ready();
-  node("#registrationReviewStatus").dataset.state="loading";
-  events.get("#youtubeSignalFilters:change")({target:{id:"youtubeExcludeRegistered",checked:true}});
-  await ready();
-  assert.match(node("#youtubeSignalBody").innerHTML,/New Historical Figure/);
-  assert.match(node("#youtubeSignalBody").innerHTML,/>1,001</);
-  assert.doesNotMatch(node("#youtubeSignalBody").innerHTML,/Registered Individual/);
-  assert.ok(urls.some(url=>url.includes("offset=1000")));
-});
-
-test("REVIEW-M14 applies BOTH exclusions instantly while Wikidata is pending or fails",async()=>{
-  const vm=await import("node:vm");
-  const script=read("atlas-registration-review.js");
-  const shared=read("atlas-youtube-reviewed-living-people.js");
-  const serverStatus=(await import("../server/atlas-youtube-reviewed-living-people.js")).default;
-  const events=new Map(),nodes=new Map();
-  const node=id=>{
-    if(!nodes.has(id)) nodes.set(id,{
-      innerHTML:"",textContent:"",dataset:{},disabled:false,checked:false,isConnected:true,
-      addEventListener(type,listener){events.set(id+":"+type,listener)}
-    });
-    return nodes.get(id);
-  };
-  const root={innerHTML:"",isConnected:true,querySelector:node};
-  const people={persons:[{id:"p-lincoln",canonical_name_en:"Abraham Lincoln",names:[],historicity:"historical"}],summary:{total:1}};
-  const queue={ok:true,candidates:[],summary:{pending_count:0},reviewed_person_aliases:[]};
-  const ranks=[
-    {rank:1,raw_name:"Abraham Lincoln",distinct_channel_count:60,video_count:70},
-    {rank:2,raw_name:"Elon Musk",distinct_channel_count:50,video_count:55},
-    {rank:3,raw_name:"Donald Trump",distinct_channel_count:45,video_count:46},
-    {rank:4,raw_name:"Trump",distinct_channel_count:40,video_count:42},
-    {rank:5,raw_name:"Hypatia",distinct_channel_count:30,video_count:32},
-    {rank:6,raw_name:"Isaac Newton",distinct_channel_count:25,video_count:28}
-  ];
-  let unlockEvidence=null;
-  const evidenceStarted=[];
-  const evidencePromise=new Promise(resolve=>{unlockEvidence=resolve});
-  const fetch=async url=>{
-    const parsed=new URL(url,"http://local.test");
-    const surface=parsed.searchParams.get("__atlas_read_surface");
-    const payload=surface==="registration-queue" ? queue
-      : surface==="youtube-person-signals"
-        ? {ok:true,stored_count:ranks.length,available_count:ranks.length,rows:ranks,
-           snapshot:{channel_count:6011,video_count:1536512,threshold_counts:{"3":ranks.length},source_state:{next_batch:"batch018"}}}
-        : await (async()=>{
-          const queried=JSON.parse(parsed.searchParams.get("names"));
-          evidenceStarted.push(...queried);
-          await evidencePromise;
-          return {ok:true,evidence_unavailable:true,rows:queried.map(name=>({name,status:"unknown"}))};
-        })();
-    return {ok:true,status:200,json:async()=>payload};
-  };
-  const context={window:{ATLAS_CLIENT_DATA_STORE:{loadPersons:async()=>people},addEventListener(){}},
-    fetch,Date,URL,console,setInterval:()=>0,clearInterval(){}};
-  vm.runInNewContext(shared,context);
-  assert.equal(typeof context.window.ATLAS_REVIEWED_LIVING_PEOPLE?.reviewedLivingStatus,"function");
-  assert.equal(serverStatus.reviewedLivingStatus("Donald Trump")?.status,"living_likely");
-  assert.equal(context.window.ATLAS_REVIEWED_LIVING_PEOPLE.reviewedLivingStatus("Donald Trump")?.status,"living_likely");
-  vm.runInNewContext(script,context);
-  context.window.ATLAS_REGISTRATION_REVIEW.mount(root);
-  const ready=async()=>{
-    for(let i=0;i<60 && node("#registrationReviewStatus").dataset.state!=="ready";i++)
-      await new Promise(resolve=>setImmediate(resolve));
-    assert.equal(node("#registrationReviewStatus").dataset.state,"ready");
-  };
-  await ready();
-  const html=()=>node("#youtubeSignalBody").innerHTML;
-  assert.match(html(),/Donald Trump/);
-  const click=(id)=>{
-    node("#"+id).checked=true;
-    events.get("#youtubeSignalFilters:change")({target:{id,checked:true}});
-  };
-  click("youtubeExcludeRegistered");
-  assert.doesNotMatch(html(),/Abraham Lincoln/);
-  click("youtubeExcludeLiving");
-  // Exact user reproduction: both checks ON and evidence has not responded.
-  assert.equal(node("#youtubeExcludeLiving").checked,true);
-  assert.equal(node("#youtubeExcludeRegistered").checked,true);
-  assert.doesNotMatch(html(),/Abraham Lincoln/);
-  assert.doesNotMatch(html(),/Elon Musk/);
-  assert.doesNotMatch(html(),/Donald Trump/);
-  assert.doesNotMatch(html(),/Trump</);
-  assert.match(html(),/Hypatia/);
-  unlockEvidence();
-  await ready();
-  assert.doesNotMatch(html(),/Donald Trump/);
-  assert.doesNotMatch(html(),/Elon Musk/);
-  assert.doesNotMatch(html(),/Abraham Lincoln/);
-  assert.match(html(),/Isaac Newton/);
-  assert.ok(evidenceStarted.includes("Hypatia"));
-  assert.ok(!evidenceStarted.includes("Donald Trump"),"reviewed living names need no Wikidata call");
-  assert.ok(!evidenceStarted.includes("Elon Musk"),"reviewed living names need no Wikidata call");
-  assert.match(node("#youtubeSignalVisibleCount").textContent,/제외 불완전/);
+  assert.match(js,/renderRegistered\(persons,queue\)/);
+  assert.match(js,/renderQueue\(queue\)/);
+  assert.match(js,/등록대기열/);
+  assert.match(js,/미등록 역사 인물 발굴/);
+  assert.match(js,/count_lower_bound/);
+  assert.match(js,/source_state\?\.next_batch/);
 });
