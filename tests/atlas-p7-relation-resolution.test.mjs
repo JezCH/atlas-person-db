@@ -153,3 +153,9 @@ test('Correction v2 reviewed notes policy replaces misleading whole-interval not
   const out = applyActivityTemplate({ ...live, source_locator: 'legacy:1', content_hash: 'abc' }, template);
   assert.equal(out.notes, 'exact reviewed phase note');
 });
+
+test('Stage 2 semantic-key package command has no dangling P7 rehearsal imports', () => {
+  const cmd = JSON.parse(fs.readFileSync('package.json', 'utf8')).scripts['test:stage2-semantic-key-rehearsal'];
+  assert.equal(cmd, 'node scripts/verify-stage2-activity-semantic-key.mjs');
+  assert.equal(fs.existsSync('scripts/rehearse-stage2-p7-relation-resolution.mjs'), false);
+});
