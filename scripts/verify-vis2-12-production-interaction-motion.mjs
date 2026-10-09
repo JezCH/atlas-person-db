@@ -52,7 +52,8 @@ async function navigate(c,width,domain){
  await c.call("Page.navigate",{url:"about:blank"});
  await until(c,"document.readyState==='complete'",10000);
  await c.call("Page.navigate",{url:ORIGIN+"/"});
- await until(c,"Boolean(window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain && document.querySelector('link[href*="+SHEET+"]')?.sheet)",40000);
+ const linkSelector='link[href*="'+SHEET+'"]';
+ await until(c,"Boolean(window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain && document.querySelector("+JSON.stringify(linkSelector)+")?.sheet)",40000);
  check(await evalJS(c,"(()=>{const nav=window.ATLAS_MAIN_AUTHORITY_NAV;nav.showDomain("+JSON.stringify(domain)+");return nav.getDomain()==="+JSON.stringify(domain)+";})()"),"Cannot activate domain",{domain,width});
  const ready={persons:".person-register-entry",polities:"#atlasPolityMount .polity-browser-card",dashboard:"#atlasDashboardMount .dashboard-kpi",spacetime:"#personSpacetimeMount .spacetime-frame"}[domain];
  await until(c,"document.querySelectorAll("+JSON.stringify(ready)+").length>0",90000);
