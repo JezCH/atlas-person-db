@@ -135,6 +135,35 @@ jobs:
             jq '.catalogs' audit-inventory-response.json > baseline-identity-catalogs.json
           fi
 
+
+      - name: Extract Brazil current Production Activity and Source census (read-only)
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq --arg empire 'efcd0f70-bffe-5464-86e3-b28b3658404b' \
+             --arg united '750bf6be-49e9-4215-95ff-a356ba1831cd' \
+             --arg brazil 'a8b27d54-b180-4d51-a664-dd40b3eed08f' \
+             '. as $snapshot | {
+                deployment_sha: $snapshot.deployment_sha,
+                read_only: $snapshot.read_only,
+                committed: $snapshot.committed,
+                baseline_digest: $snapshot.baseline_digest,
+                polities: [$snapshot.catalogs.polities[] | select(.id == $empire or .id == $united or .id == $brazil)
+                  | {id,canonical_key,polity_type,historicity,names}],
+                activities: [$snapshot.rows[] | select(.polity_id == $empire or .polity_id == $united or .polity_id == $brazil)
+                  | {activity_id,person_id,person_name_en,polity_id,activity_start,activity_start_month,activity_start_day,
+                     activity_start_granularity,activity_end,activity_end_month,activity_end_day,activity_end_granularity,
+                     chronology_status,source_count,normalized_sources,content_hash}]
+              }' audit-inventory-response.json > brazil-activity-census.push.json
+          jq -e '.read_only == true and .committed == false and (.polities | type) == "array" and (.activities | type) == "array"' brazil-activity-census.push.json >/dev/null
+          jq -c '. as $s | {deployment_sha,read_only,committed,baseline_digest,
+            polities:[.polities[] | . as $p | {polity_id:.id,canonical_key,
+              activity_count:([$s.activities[] | select(.polity_id == $p.id)] | length),
+              source_links:([$s.activities[] | select(.polity_id == $p.id) | .source_count] | add // 0)}],
+            activity_ids:[.activities[] | {activity_id,polity_id,activity_start,activity_end,source_count}]}' \
+            brazil-activity-census.push.json | tee brazil-activity-census-summary.push.json
+
       - name: Capture complete Polity reference evidence on main push
         if: github.event_name == 'push'
         shell: bash
@@ -195,10 +224,24 @@ jobs:
                 }
             ]
           ' polity-reference-audit-response.json | tee polity-zero-activity-reference-audit.push.json
-          jq -e 'length == 28' polity-zero-activity-reference-audit.push.json >/dev/null
+          jq -e 'type == "array" and all(.[]; (.polity_id | type) == "string") and ((map(.polity_id) | length) == (map(.polity_id) | unique | length))' polity-zero-activity-reference-audit.push.json >/dev/null
           echo 'ATLAS_ZERO_ACTIVITY_POLITY_REFERENCE_AUDIT_V1'
           cat polity-zero-activity-reference-audit.push.json
           jq '[.polities[] | select(((.canonical_key // "") + " " + ([.names[]?.name] | join(" "))) | ascii_downcase | test("fifth|kamakura|tokugawa|toyotomi|liao dynasty|ming dynasty|tsardom of russia|empire of japan|shakya|haudenosaunee|swedish empire|qara khitai"))]' polity-reference-audit-response.json | tee polity-reference-candidates.push.json
+
+
+      - name: Extract Brazil current Production Polity reference counts (read-only)
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq --arg empire 'efcd0f70-bffe-5464-86e3-b28b3658404b' \
+             --arg united '750bf6be-49e9-4215-95ff-a356ba1831cd' \
+             --arg brazil 'a8b27d54-b180-4d51-a664-dd40b3eed08f' \
+             '[.polities[] | select(.polity_id == $empire or .polity_id == $united or .polity_id == $brazil)
+               | {polity_id,canonical_key,owned_reference_total,external_reference_total,external_references}]' \
+             polity-reference-audit-response.json | tee brazil-polity-reference-census.push.json
+          jq -e 'type == "array" and all(.[]; (.polity_id | type) == "string")' brazil-polity-reference-census.push.json >/dev/null
 
       - name: Upload read-only inventory evidence
         if: always()
@@ -218,6 +261,9 @@ jobs:
             polity-external-orphans.push.json
             polity-zero-activity-reference-audit.push.json
             polity-reference-candidates.push.json
+            brazil-activity-census.push.json
+            brazil-activity-census-summary.push.json
+            brazil-polity-reference-census.push.json
             docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json
           if-no-files-found: warn
           retention-days: 90
