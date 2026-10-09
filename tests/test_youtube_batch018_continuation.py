@@ -44,6 +44,31 @@ class CollectorSafety(unittest.TestCase):
             self.assertEqual(rows[0]["count"],1)
             self.assertEqual(json.loads((out/"batch018-summary.json").read_text())["supabase_requests"],0)
 
+    def test_legacy_snapshot_reports_missing_sources_without_dropping_present_ones(self):
+        import gzip
+        snap_spec=importlib.util.spec_from_file_location(
+            "snapshot_parser",Path(__file__).resolve().parents[1]/"scripts/youtube-build-person-signal-snapshot.py")
+        snapshot_parser=importlib.util.module_from_spec(snap_spec)
+        snap_spec.loader.exec_module(snapshot_parser)
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for batch,cid in (("batch001","UC_A"),("batch004b","UC_B"),("batch008","UC_C")):
+                folder=root/"out"/batch
+                (folder/"videos").mkdir(parents=True)
+                (folder/"manifest.json").write_text(
+                    json.dumps([{"channel_id":cid,"status":"OK","count":1}]),encoding="utf-8")
+                with gzip.open(folder/"videos"/f"{cid}.ndjson.gz","wt",encoding="utf-8") as target:
+                    target.write(json.dumps({"channel_id":cid,"video_id":cid,"title":"Albert Einstein: Biography"})+"\\n")
+            payload=snapshot_parser.build(root,1,"legacy-compat-test")
+            state=payload["snapshot"]["source_state"]
+            self.assertEqual(len(payload["channels"]),3)
+            self.assertIn("batch001",state["coverage_batches"])
+            self.assertIn("batch004b",state["coverage_batches"])
+            self.assertIn("batch008",state["coverage_batches"])
+            self.assertIn("batch002",state["missing_prior_batch_sources"])
+            self.assertNotIn("batch001",state["missing_prior_batch_sources"])
+            self.assertFalse(state["historical_sources_complete_from_batch001"])
+
     def test_optional_legacy_batch_is_retained(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)/"prior"
