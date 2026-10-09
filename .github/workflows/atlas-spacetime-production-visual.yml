@@ -20,6 +20,8 @@ on:
       - "atlas-person-chronicle-source-archive-v2.css"
       - "atlas-vis2-12-interaction-motion.css"
       - "scripts/verify-vis2-12-production-interaction-motion.mjs"
+      - "scripts/verify-vis2-13-production-keyboard-density.mjs"
+      - "scripts/verify-vis2-13-production-final-acceptance.mjs"
       - "atlas-vis2-11-polity-dashboard-archive.css"
       - "atlas-main-authority-nav.js"
       - "atlas-person-chronicle-detail.css"
@@ -149,6 +151,8 @@ jobs:
           curl -fsS http://127.0.0.1:9222/json/version >/dev/null
           node --check scripts/verify-vis2-11-production-polity-dashboard.mjs
           node --check scripts/verify-vis2-12-production-interaction-motion.mjs
+          node --check scripts/verify-vis2-13-production-keyboard-density.mjs
+          node scripts/verify-vis2-13-production-keyboard-density.mjs
           node scripts/verify-vis2-12-production-interaction-motion.mjs
           node scripts/verify-vis2-11-production-polity-dashboard.mjs
           node scripts/verify-spacetime-production-visual.mjs
@@ -177,6 +181,8 @@ jobs:
           node scripts/verify-vis2-09-production-detail-hero.mjs
           node --check scripts/verify-vis2-10-production-chronicle-source.mjs
           node scripts/verify-vis2-10-production-chronicle-source.mjs
+          node --check scripts/verify-vis2-13-production-final-acceptance.mjs
+          node scripts/verify-vis2-13-production-final-acceptance.mjs
           for report in "$ATLAS_VISUAL_OUT_DIR"/*.json; do
             echo "===== $report ====="
             cat "$report"
