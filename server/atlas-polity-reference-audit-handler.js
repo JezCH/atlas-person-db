@@ -121,7 +121,7 @@ function referenceCountRecord(ref, count) {
   });
 }
 
-async function queryPolityReferenceAudit(client, { includeBrazilDetails = false, includeBrazilPreflight = false, includeBrazilSourceAliases = false, includeBrazilStage2Contract = false } = {}) {
+async function queryPolityReferenceAudit(client, { includeBrazilDetails = false, includeBrazilPreflight = false, includeBrazilSourceAliases = false, includeBrazilStage2Contract = false, includeBrazilLawSourcePreflight = false } = {}) {
   await beginReadOnly(client);
   try {
     const polities = await queryPolities(client);
@@ -185,6 +185,7 @@ async function queryPolityReferenceAudit(client, { includeBrazilDetails = false,
     const brazilPreflight = includeBrazilPreflight ? await queryBrazilPreflight(client) : null;
     const brazilSourceAliases = includeBrazilSourceAliases ? await queryBrazilSourceAliases(client) : null;
     const brazilStage2Contract = includeBrazilStage2Contract ? await queryBrazilStage2Contract(client) : null;
+    const brazilLawSourcePreflight = includeBrazilLawSourcePreflight ? await queryBrazilLawSourcePreflight(client) : null;
     if (includeBrazilDetails && outputPolities.filter((row) => BRAZIL_P2_03E_POLITY_IDS.includes(row.polity_id)).length !== BRAZIL_P2_03E_POLITY_IDS.length) {
       throw new Error("POLITY_REFERENCE_AUDIT_BRAZIL_POLITY_MISSING");
     }
@@ -194,6 +195,7 @@ async function queryPolityReferenceAudit(client, { includeBrazilDetails = false,
       brazil_preflight: brazilPreflight,
       brazil_source_aliases: brazilSourceAliases,
       brazil_stage2_contract: brazilStage2Contract,
+      brazil_law_source_preflight: brazilLawSourcePreflight,
       complete: true,
       reference_model: "direct_foreign_keys_plus_atlas_v2_polity_id_columns",
       reference_catalog: Object.freeze(references.map((ref) => Object.freeze({ ...ref }))),
@@ -512,6 +514,81 @@ async function queryBrazilStage2Contract(client) {
   });
 }
 
+
+const BRAZIL_P2_03K_LAW_SOURCE_KEY = "brazil-law-5389-1968-official";
+const BRAZIL_P2_03K_OFFICIAL_LAW_URLS = Object.freeze([
+  "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-publicacaooriginal-1-pl.html",
+  "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-norma-pl.html",
+  "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-retificacao-31071-pl.html",
+  "https://www.planalto.gov.br/ccivil_03/leis/l5389.htm",
+  "https://legis.senado.gov.br/norma/547253",
+  "https://legis.senado.gov.br/norma/547253/publicacao/15715169"
+]);
+const BRAZIL_P2_03K_LAW_METADATA_TERMS = Object.freeze([
+  "%5389%","%5.389%","%lei 5 389%","%l5389%","%h-733%"
+]);
+
+/**
+ * Scoped, metadata-only Source collision preflight: exact URLs + key first,
+ * then alternate URLs and JSON bibliographies, then generic catalogue counts.
+ * Does not claim semantic exhaustion of external repository_dataset payloads.
+ * Executes INSIDE parent REPEATABLE READ READ ONLY OIDC-authenticated transaction.
+ */
+async function queryBrazilLawSourcePreflight(client) {
+  const exact=await client.query(`
+    select id::text as source_id,source_key,source_type,title,canonical_url,
+           external_identifier,citation_text,institution,publication_date::text
+      from atlas_v2.sources
+     where source_key=$1::text or canonical_url=any($2::text[])
+     order by source_key,id::text
+     limit 51`,
+    [BRAZIL_P2_03K_LAW_SOURCE_KEY,[...BRAZIL_P2_03K_OFFICIAL_LAW_URLS]]);
+  const metadataClause=`lower(concat_ws(' ',source_key,title,canonical_url,
+    external_identifier,citation_text,author_creator,institution,publisher,
+    citation_metadata::text,artifact_metadata::text)) like any($1::text[])`;
+  const [metadataCount,metadataRows,sourceClasses,genericRows]=await Promise.all([
+    client.query(`select count(*)::int as total from atlas_v2.sources where ${metadataClause}`,
+      [[...BRAZIL_P2_03K_LAW_METADATA_TERMS]]),
+    client.query(`select id::text as source_id,source_key,source_type,title,
+           canonical_url,external_identifier,citation_text,institution,
+           publication_date::text
+      from atlas_v2.sources
+     where ${metadataClause}
+     order by source_key,id::text
+     limit 51`,[[...BRAZIL_P2_03K_LAW_METADATA_TERMS]]),
+    client.query(`select source_type,count(*)::int as total
+      from atlas_v2.sources group by source_type order by total desc,source_type`),
+    client.query(`select id::text as source_id,source_key,source_type,title,
+           canonical_url,external_identifier
+      from atlas_v2.sources
+     where lower(source_type) like any($1::text[])
+        or lower(source_key) like any($2::text[])
+     order by source_key,id::text limit 51`,
+      [["%dataset%","%repository%","%legacy%","%import%"],
+       ["%dataset%","%repository%","%legacy%","%supplement%"]])
+  ]);
+  const count=Number(metadataCount.rows[0]?.total ?? 0);
+  const metadataTruncated=count>50;
+  const exactTruncated=exact.rows.length>50;
+  return Object.freeze({
+    source_key_candidate:BRAZIL_P2_03K_LAW_SOURCE_KEY,
+    official_source_urls:[...BRAZIL_P2_03K_OFFICIAL_LAW_URLS],
+    metadata_search_terms:[...BRAZIL_P2_03K_LAW_METADATA_TERMS],
+    exact_source_key_or_url_matches:exact.rows.slice(0,50),
+    exact_truncated:exactTruncated,
+    metadata_match_total:count,
+    metadata_candidates:metadataRows.rows.slice(0,50),
+    metadata_truncated:metadataTruncated,
+    source_type_counts:sourceClasses.rows,
+    generic_catalogue_samples:genericRows.rows.slice(0,50),
+    generic_catalogue_sample_truncated:genericRows.rows.length>50,
+    absence_of_semantically_duplicate_unlabeled_external_payloads_proven:false,
+    safe_for_automatic_source_assertion:false,
+    catalog_scan_complete:!metadataTruncated && !exactTruncated,
+    caveat:"Catalogue metadata, URL and key evidence only. Generic dataset content and alternate unindexed external payloads may contain the same primary law."
+  });
+}
+
 function statusForError(code) {
   if (code === "DEPLOYMENT_SHA_MISMATCH") return 409;
   if (code === "GITHUB_OIDC_INVALID" || String(code).startsWith("GITHUB_OIDC_")) return 401;
@@ -537,7 +614,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
       const includeBrazilPreflight = req.body?.include_brazil_preflight === true;
       const includeBrazilSourceAliases = req.body?.include_brazil_source_aliases === true;
       const includeBrazilStage2Contract = req.body?.include_brazil_stage2_contract === true;
-      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails, includeBrazilPreflight, includeBrazilSourceAliases, includeBrazilStage2Contract });
+      const includeBrazilLawSourcePreflight = req.body?.include_brazil_law_source_preflight === true;
+      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails, includeBrazilPreflight, includeBrazilSourceAliases, includeBrazilStage2Contract, includeBrazilLawSourcePreflight });
       return json(res, 200, {
         ok: true,
         marker: MARKER,
@@ -554,7 +632,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
         ...(includeBrazilDetails ? { brazil_details: audit.brazil_details } : {}),
         ...(includeBrazilPreflight ? { brazil_preflight: audit.brazil_preflight } : {}),
         ...(includeBrazilSourceAliases ? { brazil_source_aliases: audit.brazil_source_aliases } : {}),
-        ...(includeBrazilStage2Contract ? { brazil_stage2_contract: audit.brazil_stage2_contract } : {})
+        ...(includeBrazilStage2Contract ? { brazil_stage2_contract: audit.brazil_stage2_contract } : {}),
+        ...(includeBrazilLawSourcePreflight ? { brazil_law_source_preflight: audit.brazil_law_source_preflight } : {})
       });
     } catch (error) {
       return json(res, statusForError(error?.message), {
@@ -582,6 +661,10 @@ module.exports = Object.freeze({
   queryBrazilPreflight,
   queryBrazilSourceAliases,
   queryBrazilStage2Contract,
+  queryBrazilLawSourcePreflight,
+  BRAZIL_P2_03K_OFFICIAL_LAW_URLS,
+  BRAZIL_P2_03K_LAW_SOURCE_KEY,
+  BRAZIL_P2_03K_LAW_METADATA_TERMS,
   BRAZIL_P2_03H_SOURCE_ALIAS_PATTERN,
   summarizeBrazilPreflightRows,
   BRAZIL_P2_03E_POLITY_IDS,
