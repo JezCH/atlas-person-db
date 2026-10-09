@@ -121,7 +121,7 @@ function referenceCountRecord(ref, count) {
   });
 }
 
-async function queryPolityReferenceAudit(client) {
+async function queryPolityReferenceAudit(client, { includeBrazilDetails = false } = {}) {
   await beginReadOnly(client);
   try {
     const polities = await queryPolities(client);
@@ -181,8 +181,13 @@ async function queryPolityReferenceAudit(client) {
       });
     });
 
+    const brazilDetails = includeBrazilDetails ? await queryBrazilDetails(client) : null;
+    if (includeBrazilDetails && outputPolities.filter((row) => BRAZIL_P2_03E_POLITY_IDS.includes(row.polity_id)).length !== BRAZIL_P2_03E_POLITY_IDS.length) {
+      throw new Error("POLITY_REFERENCE_AUDIT_BRAZIL_POLITY_MISSING");
+    }
     await client.query("commit");
     return Object.freeze({
+      brazil_details: brazilDetails,
       complete: true,
       reference_model: "direct_foreign_keys_plus_atlas_v2_polity_id_columns",
       reference_catalog: Object.freeze(references.map((ref) => Object.freeze({ ...ref }))),
@@ -192,6 +197,85 @@ async function queryPolityReferenceAudit(client) {
     try { await client.query("rollback"); } catch {}
     throw error;
   }
+}
+
+
+const BRAZIL_P2_03E_POLITY_IDS = Object.freeze([
+  "efcd0f70-bffe-5464-86e3-b28b3658404b",
+  "750bf6be-49e9-4215-95ff-a356ba1831cd",
+  "a8b27d54-b180-4d51-a664-dd40b3eed08f"
+]);
+
+// P2-03E: exact three-polity evidence in the SAME repeatable-read, read-only
+// transaction as the FK census. Never infer timestamps or mutate canonical facts.
+async function queryBrazilDetails(client) {
+  const polityIds = [...BRAZIL_P2_03E_POLITY_IDS];
+  const sources = await client.query(`
+    select ps.polity_id::text as polity_id,
+           ps.source_id::text as source_id, s.source_key, s.source_type,
+           s.title, s.canonical_url, s.citation_text
+      from atlas_v2.polity_sources ps
+      join atlas_v2.sources s on s.id=ps.source_id
+     where ps.polity_id=any($1::uuid[])
+     order by ps.polity_id::text, ps.source_id::text`, [polityIds]);
+
+  const designations = await client.query(`
+    select pd.polity_id::text as polity_id,
+           to_jsonb(pd) as designation,
+           coalesce((select jsonb_agg(to_jsonb(n) order by n.locale,n.id::text)
+              from atlas_v2.polity_designation_names n
+             where n.polity_designation_id=pd.id),'[]'::jsonb) as names,
+           coalesce((select jsonb_agg(jsonb_build_object(
+              'source_id',l.source_id::text,'source_locator_key',l.source_locator_key,
+              'source_key',s.source_key,'title',s.title,'canonical_url',s.canonical_url)
+              order by l.source_id::text,l.source_locator_key)
+              from atlas_v2.polity_designation_sources l
+              join atlas_v2.sources s on s.id=l.source_id
+             where l.polity_designation_id=pd.id),'[]'::jsonb) as source_links
+      from atlas_v2.polity_designations pd
+     where pd.polity_id=any($1::uuid[])
+     order by pd.polity_id::text,pd.id::text`, [polityIds]);
+
+  const identityRelations = await client.query(`
+    select pir.predecessor_polity_id::text as predecessor_polity_id,
+           pir.successor_polity_id::text as successor_polity_id,
+           to_jsonb(pir) as relation, rt.code as relation_type,
+           coalesce((select jsonb_agg(jsonb_build_object(
+              'source_id',l.source_id::text,'source_locator_key',l.source_locator_key,
+              'source_key',s.source_key,'title',s.title,'canonical_url',s.canonical_url)
+              order by l.source_id::text,l.source_locator_key)
+              from atlas_v2.polity_identity_relation_sources l
+              join atlas_v2.sources s on s.id=l.source_id
+             where l.polity_identity_relation_id=pir.id),'[]'::jsonb) as source_links
+      from atlas_v2.polity_identity_relations pir
+      join atlas_v2.polity_identity_relation_types rt on rt.id=pir.relation_type_id
+     where pir.predecessor_polity_id=any($1::uuid[])
+        or pir.successor_polity_id=any($1::uuid[])
+     order by pir.id::text`, [polityIds]);
+
+  const governance = await client.query(`
+    select gp.polity_id::text as polity_id,
+           to_jsonb(gp) as period, gc.canonical_key as governance_context_key,
+           gc.governance_type,
+           coalesce((select jsonb_agg(jsonb_build_object(
+             'source_id',l.source_id::text,'source_locator_key',l.source_locator_key,
+             'source_key',s.source_key,'title',s.title,'canonical_url',s.canonical_url)
+             order by l.source_id::text,l.source_locator_key)
+             from atlas_v2.polity_governance_period_sources l
+             join atlas_v2.sources s on s.id=l.source_id
+            where l.polity_governance_period_id=gp.id),'[]'::jsonb) as source_links
+      from atlas_v2.polity_governance_periods gp
+      join atlas_v2.governance_contexts gc on gc.id=gp.governance_context_id
+     where gp.polity_id=any($1::uuid[])
+     order by gp.polity_id::text,gp.id::text`, [polityIds]);
+
+  return Object.freeze({
+    polity_ids: polityIds,
+    polity_sources: sources.rows,
+    designations: designations.rows,
+    identity_relations: identityRelations.rows,
+    governance_periods: governance.rows
+  });
 }
 
 function statusForError(code) {
@@ -215,7 +299,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
       const connectionString = String(env.SUPABASE_DB_URL || "").trim();
       if (!connectionString) throw new Error("SERVER_CONFIGURATION_ERROR");
       client = await createClient(connectionString, { env });
-      const audit = await queryPolityReferenceAudit(client);
+      const includeBrazilDetails = req.body?.include_brazil_details === true;
+      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails });
       return json(res, 200, {
         ok: true,
         marker: MARKER,
@@ -228,7 +313,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
         polity_count: audit.polities.length,
         external_orphan_count: audit.polities.filter((row) => row.is_external_orphan).length,
         reference_catalog: audit.reference_catalog,
-        polities: audit.polities
+        polities: audit.polities,
+        ...(includeBrazilDetails ? { brazil_details: audit.brazil_details } : {})
       });
     } catch (error) {
       return json(res, statusForError(error?.message), {
@@ -252,6 +338,8 @@ module.exports = Object.freeze({
   discoverPolityReferences,
   queryReferenceCounts,
   queryPolityReferenceAudit,
+  queryBrazilDetails,
+  BRAZIL_P2_03E_POLITY_IDS,
   createPolityReferenceAuditHandler,
   statusForError
 });
