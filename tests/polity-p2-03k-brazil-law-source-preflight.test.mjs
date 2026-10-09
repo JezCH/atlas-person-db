@@ -4,6 +4,7 @@ import {createRequire} from "node:module";
 const require=createRequire(import.meta.url);
 const {
   queryBrazilLawSourcePreflight,BRAZIL_P2_03K_LAW_SOURCE_KEY,
+  BRAZIL_P2_03L_LAW_SOURCE_ID_CANDIDATE,
   BRAZIL_P2_03K_OFFICIAL_LAW_URLS,BRAZIL_P2_03K_LAW_METADATA_TERMS
 }=require("../server/atlas-polity-reference-audit-handler.js");
 
@@ -21,6 +22,7 @@ function fakeDatabase({exact=[],metadata=[],count=metadata.length,generic=[]}={}
   const client={async query(sql,params=[]){
     calls.push({sql,params});
     assert.match(sql.trim(),/^select /i);
+    if(sql.includes("from atlas_v2.sources where id=$1::uuid"))return {rows:[]};
     if(sql.includes("where source_key=$1::text or canonical_url=any"))return {rows:exact};
     if(sql.includes("count(*)::int as total from atlas_v2.sources"))return {rows:[{total:count}]};
     if(sql.includes("where lower(concat_ws"))return {rows:metadata};
@@ -42,9 +44,12 @@ test("Source law preflight checks exact IDs, URL variants and rich metadata with
   assert.equal(result.safe_for_automatic_source_assertion,false);
   assert.equal(result.absence_of_semantically_duplicate_unlabeled_external_payloads_proven,false);
   assert.equal(result.generic_catalogue_samples.length,1);
-  assert.equal(db.calls.length,5);
-  assert.deepEqual(db.calls[0].params,[BRAZIL_P2_03K_LAW_SOURCE_KEY,[...BRAZIL_P2_03K_OFFICIAL_LAW_URLS]]);
-  assert.deepEqual(db.calls[1].params,[[...BRAZIL_P2_03K_LAW_METADATA_TERMS]]);
+  assert.equal(db.calls.length,6);
+  assert.equal(result.candidate_source_id,BRAZIL_P2_03L_LAW_SOURCE_ID_CANDIDATE);
+  assert.equal(result.candidate_id_absent_at_snapshot,true);
+  assert.deepEqual(db.calls[0].params,[BRAZIL_P2_03L_LAW_SOURCE_ID_CANDIDATE]);
+  assert.deepEqual(db.calls[1].params,[BRAZIL_P2_03K_LAW_SOURCE_KEY,[...BRAZIL_P2_03K_OFFICIAL_LAW_URLS]]);
+  assert.deepEqual(db.calls[2].params,[[...BRAZIL_P2_03K_LAW_METADATA_TERMS]]);
   for(const {sql} of db.calls){
     assert.doesNotMatch(sql,/^\s*(insert|update|delete|alter|drop|create|truncate)\b/i);
   }
