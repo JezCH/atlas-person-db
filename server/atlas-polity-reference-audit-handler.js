@@ -408,7 +408,7 @@ async function queryBrazilPreflight(client) {
            s.canonical_url,s.citation_text,s.sha256,s.bytes
       from atlas_v2.sources s
      where s.canonical_url=any($1::text[])
-     order by s.canonical_url,s.source_key,s.id::text`,[...BRAZIL_P2_03G_SOURCE_URLS]);
+     order by s.canonical_url,s.source_key,s.id::text`,[[...BRAZIL_P2_03G_SOURCE_URLS]]);
   const tombstones=await client.query(`
     select to_jsonb(r) as retirement
       from atlas_v2.polity_identity_retirements r
