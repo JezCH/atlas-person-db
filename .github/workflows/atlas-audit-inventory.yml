@@ -177,7 +177,7 @@ jobs:
 
           endpoint="${ATLAS_AUDIT_ENDPOINT}?__atlas_audit_surface=polity-reference-audit"
           payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" \
-            '{deployment_sha:$deployment_sha,include_brazil_details:true,evidence_terms:["pre-meiji japan","imperial japan","tokugawa","toyotomi","empire of japan","liao dynasty","ming dynasty","tsardom of russia","shakya","haudenosaunee","swedish empire","qara khitai"]}')"
+            '{deployment_sha:$deployment_sha,include_brazil_details:true,include_brazil_preflight:true,evidence_terms:["pre-meiji japan","imperial japan","tokugawa","toyotomi","empire of japan","liao dynasty","ming dynasty","tsardom of russia","shakya","haudenosaunee","swedish empire","qara khitai"]}')"
           fetched=false
           for attempt in $(seq 1 12); do
             oidc_token="$(request_oidc)"
@@ -266,6 +266,31 @@ jobs:
              polity-reference-audit-response.json | tee brazil-polity-reference-census.push.json
           jq -e 'type == "array" and all(.[]; (.polity_id | type) == "string")' brazil-polity-reference-census.push.json >/dev/null
 
+
+      - name: Extract Brazil exact live Production preflight (READ ONLY)
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -e '.ok == true and .read_only == true and .committed == false
+             and (.brazil_preflight.polity_ids | length) == 3
+             and (.brazil_preflight.summary.expected == 10)
+             and (.brazil_preflight.activities | type) == "array"
+             and (.brazil_preflight.activity_sources | type) == "array"
+             and (.brazil_preflight.runtime_activities | type) == "array"
+             and (.brazil_preflight.source_matches | type) == "array"
+             and (.brazil_preflight.retirement_records | type) == "array"
+             and (.brazil_preflight.link_columns | type) == "array"' polity-reference-audit-response.json >/dev/null
+          jq '.brazil_preflight' polity-reference-audit-response.json > brazil-exact-preflight.push.json
+          jq -c '.brazil_preflight | {polity_ids,summary,
+            matched_sources: [.source_matches[]|{id,source_key,source_type,title,canonical_url,citation_text,sha256,bytes}],
+            activity_before: [.activities[]|{activity_id,polity_id,activity_start:.activity.activity_start,activity_end:.activity.activity_end}],
+            runtime_rows: [.runtime_activities[]|{polity_id}],
+            referenced_table_columns: [.link_columns[]|{table_name,column_name}]
+          }' polity-reference-audit-response.json | tee brazil-exact-preflight-summary.push.json
+          jq -e '.summary.authoring_exact_before_match == true
+             and .summary.runtime_count_parity == true' brazil-exact-preflight.push.json >/dev/null
+
       - name: Upload read-only inventory evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -289,6 +314,8 @@ jobs:
             brazil-polity-reference-census.push.json
             brazil-polity-temporal-detail.push.json
             brazil-polity-temporal-summary.push.json
+            brazil-exact-preflight.push.json
+            brazil-exact-preflight-summary.push.json
             docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json
           if-no-files-found: warn
           retention-days: 90

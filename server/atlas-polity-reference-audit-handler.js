@@ -121,7 +121,7 @@ function referenceCountRecord(ref, count) {
   });
 }
 
-async function queryPolityReferenceAudit(client, { includeBrazilDetails = false } = {}) {
+async function queryPolityReferenceAudit(client, { includeBrazilDetails = false, includeBrazilPreflight = false } = {}) {
   await beginReadOnly(client);
   try {
     const polities = await queryPolities(client);
@@ -182,12 +182,14 @@ async function queryPolityReferenceAudit(client, { includeBrazilDetails = false 
     });
 
     const brazilDetails = includeBrazilDetails ? await queryBrazilDetails(client) : null;
+    const brazilPreflight = includeBrazilPreflight ? await queryBrazilPreflight(client) : null;
     if (includeBrazilDetails && outputPolities.filter((row) => BRAZIL_P2_03E_POLITY_IDS.includes(row.polity_id)).length !== BRAZIL_P2_03E_POLITY_IDS.length) {
       throw new Error("POLITY_REFERENCE_AUDIT_BRAZIL_POLITY_MISSING");
     }
     await client.query("commit");
     return Object.freeze({
       brazil_details: brazilDetails,
+      brazil_preflight: brazilPreflight,
       complete: true,
       reference_model: "direct_foreign_keys_plus_atlas_v2_polity_id_columns",
       reference_catalog: Object.freeze(references.map((ref) => Object.freeze({ ...ref }))),
@@ -278,6 +280,164 @@ async function queryBrazilDetails(client) {
   });
 }
 
+
+const BRAZIL_P2_03G_EXPECTED_ACTIVITIES = Object.freeze({
+  "538c90ab-8752-471c-98be-9b388f6c8d9f": {
+    "polity_id": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+    "activity_start": 1822,
+    "activity_end": 1831
+  },
+  "ae9b7ba9-4c62-508b-b019-2ded901413bc": {
+    "polity_id": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+    "activity_start": 1840,
+    "activity_end": 1889
+  },
+  "7a021719-8a81-4367-9fd1-64e75f996563": {
+    "polity_id": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+    "activity_start": 1906,
+    "activity_end": 1909
+  },
+  "e82ebfff-537e-43e0-b1f6-452c1b7cb27c": {
+    "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+    "activity_start": 1930,
+    "activity_end": 1934
+  },
+  "b1f52253-fcbf-4ba4-a061-37491658bf38": {
+    "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+    "activity_start": 1934,
+    "activity_end": 1945
+  },
+  "ed7c3548-8dd4-479e-94e4-c6a382264a2d": {
+    "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+    "activity_start": 1951,
+    "activity_end": 1954
+  },
+  "db3aa305-ff94-460b-a88d-2ed044a4f638": {
+    "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+    "activity_start": 1961,
+    "activity_end": 1964
+  },
+  "fbd5f4db-fcd1-4782-9b71-56fae2e1e2b7": {
+    "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+    "activity_start": 1969,
+    "activity_end": 1974
+  },
+  "21feba6a-db22-4ce2-a51e-fdd65f2ca2dd": {
+    "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+    "activity_start": 1992,
+    "activity_end": 1992
+  },
+  "52a26a9a-110e-413b-b516-960413cc39e4": {
+    "polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+    "activity_start": 1992,
+    "activity_end": 1995
+  }
+});
+const BRAZIL_P2_03G_SOURCE_URLS = Object.freeze([
+  "https://www2.camara.leg.br/legin/fed/decret/1824-1899/decreto-1-15-novembro-1889-532625-publicacaooriginal-14906-pe.html",
+  "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao91.htm",
+  "https://www.presidencia.gov.br/ccivil_03/constituicao/constituicao34.htm",
+  "https://legis.senado.gov.br/norma/579492/publicacao/15675026",
+  "https://www2.camara.leg.br/legin/fed/consti/1960-1969/constituicao-1967-24-janeiro-1967-365194-publicacaooriginal-1-pl.html",
+  "https://www2.camara.leg.br/legin/fed/emecon/1960-1969/emendaconstitucional-1-17-outubro-1969-364989-publicacaooriginal-1-pl.html",
+  "https://www.planalto.gov.br/ccivil_03/constituicao/constituicaocompilado.htm"
+]);
+
+// Read-only, bounded P2-03G preflight. Data are captured in the same
+// repeatable-read transaction as existing Production FK/Polity census.
+function summarizeBrazilPreflightRows(activities, runtimeRows) {
+  const expected = BRAZIL_P2_03G_EXPECTED_ACTIVITIES;
+  const actualIds = new Set();
+  const matched = [];
+  const missing = [];
+  const drift = [];
+  for (const [activityId, before] of Object.entries(expected)) {
+    const found = activities.find(row => String(row.activity_id).toLowerCase() === activityId);
+    if (!found) { missing.push(activityId); continue; }
+    const observed = found.activity || {};
+    if (String(found.polity_id).toLowerCase() !== before.polity_id ||
+        Number(observed.activity_start) !== before.activity_start ||
+        Number(observed.activity_end) !== before.activity_end) {
+      drift.push({ activity_id: activityId, expected: before,
+        observed: { polity_id:found.polity_id, activity_start:observed.activity_start, activity_end:observed.activity_end }});
+    } else {
+      matched.push(activityId);
+    }
+    actualIds.add(activityId);
+  }
+  const extra = activities.map(x=>String(x.activity_id).toLowerCase()).filter(id=>!(id in expected));
+  const runtimeCounts = Object.fromEntries(BRAZIL_P2_03E_POLITY_IDS.map(id => [
+    id, runtimeRows.filter(r=>String(r.polity_id).toLowerCase()===id).length
+  ]));
+  const authoringCounts = Object.fromEntries(BRAZIL_P2_03E_POLITY_IDS.map(id => [
+    id, activities.filter(r=>String(r.polity_id).toLowerCase()===id).length
+  ]));
+  const runtimeCountParity = BRAZIL_P2_03E_POLITY_IDS.every(id=>runtimeCounts[id]===authoringCounts[id]);
+  return Object.freeze({
+    expected: Object.keys(expected).length, matched: matched.length,
+    missing, drift, extra, authoring_counts:authoringCounts,
+    runtime_reference_counts:runtimeCounts, runtime_count_parity:runtimeCountParity,
+    authoring_exact_before_match:missing.length===0 && drift.length===0 && extra.length===0
+  });
+}
+
+async function queryBrazilPreflight(client) {
+  const ids=[...BRAZIL_P2_03E_POLITY_IDS];
+  const activities=await client.query(`
+    select a.id::text as activity_id, a.polity_id::text as polity_id, to_jsonb(a) as activity
+      from atlas_v2.person_politics_v2 a
+     where a.polity_id=any($1::uuid[]) or a.id=any($2::uuid[])
+     order by a.id::text`,[ids,Object.keys(BRAZIL_P2_03G_EXPECTED_ACTIVITIES)]);
+  const activitySources=await client.query(`
+    select pps.person_politics_id::text as activity_id,
+           pps.source_id::text as source_id, pps.source_locator_key,
+           s.source_key,s.source_type,s.title,s.canonical_url,s.citation_text
+      from atlas_v2.person_politics_sources pps
+      join atlas_v2.person_politics_v2 a on a.id=pps.person_politics_id
+      join atlas_v2.sources s on s.id=pps.source_id
+     where a.polity_id=any($1::uuid[]) or a.id=any($2::uuid[])
+     order by pps.person_politics_id::text,pps.source_id::text,pps.source_locator_key`,
+    [ids,Object.keys(BRAZIL_P2_03G_EXPECTED_ACTIVITIES)]);
+  const runtime=await client.query(`
+    select r.polity_id::text as polity_id, to_jsonb(r) as runtime_activity
+      from atlas_v2.runtime_person_politics_v1 r
+     where r.polity_id=any($1::uuid[])
+     order by r.polity_id::text,to_jsonb(r)::text`,[ids]);
+  const sourceMatches=await client.query(`
+    select s.id::text as id,s.source_key,s.source_type,s.title,
+           s.canonical_url,s.citation_text,s.sha256,s.bytes
+      from atlas_v2.sources s
+     where s.canonical_url=any($1::text[])
+     order by s.canonical_url,s.source_key,s.id::text`,[...BRAZIL_P2_03G_SOURCE_URLS]);
+  const tombstones=await client.query(`
+    select to_jsonb(r) as retirement
+      from atlas_v2.polity_identity_retirements r
+     where r.retired_polity_id=any($1::uuid[])
+        or r.survivor_polity_id=any($1::uuid[])
+     order by r.retired_polity_id::text`,[ids]);
+  const linkColumns=await client.query(`
+    select c.table_name,c.column_name,c.data_type
+      from information_schema.columns c
+     where c.table_schema='atlas_v2'
+       and c.column_name=any($1::text[])
+     order by c.table_name,c.column_name`,
+    [["polity_id","predecessor_polity_id","successor_polity_id",
+      "retired_polity_id","survivor_polity_id"]]);
+  const summary=summarizeBrazilPreflightRows(activities.rows,runtime.rows);
+  return Object.freeze({
+    polity_ids:ids,source_candidate_urls:[...BRAZIL_P2_03G_SOURCE_URLS],
+    activities:activities.rows,activity_sources:activitySources.rows,
+    runtime_activities:runtime.rows,source_matches:sourceMatches.rows,
+    retirement_records:tombstones.rows,link_columns:linkColumns.rows,
+    summary:Object.freeze({...summary,
+      activity_source_links:activitySources.rows.length,
+      exact_url_source_matches:sourceMatches.rows.length,
+      retired_identity_records:tombstones.rows.length,
+      linked_reference_columns:linkColumns.rows.length,
+      runtime_row_content_parity_checked:false})
+  });
+}
+
 function statusForError(code) {
   if (code === "DEPLOYMENT_SHA_MISMATCH") return 409;
   if (code === "GITHUB_OIDC_INVALID" || String(code).startsWith("GITHUB_OIDC_")) return 401;
@@ -300,7 +460,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
       if (!connectionString) throw new Error("SERVER_CONFIGURATION_ERROR");
       client = await createClient(connectionString, { env });
       const includeBrazilDetails = req.body?.include_brazil_details === true;
-      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails });
+      const includeBrazilPreflight = req.body?.include_brazil_preflight === true;
+      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails, includeBrazilPreflight });
       return json(res, 200, {
         ok: true,
         marker: MARKER,
@@ -314,7 +475,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
         external_orphan_count: audit.polities.filter((row) => row.is_external_orphan).length,
         reference_catalog: audit.reference_catalog,
         polities: audit.polities,
-        ...(includeBrazilDetails ? { brazil_details: audit.brazil_details } : {})
+        ...(includeBrazilDetails ? { brazil_details: audit.brazil_details } : {}),
+        ...(includeBrazilPreflight ? { brazil_preflight: audit.brazil_preflight } : {})
       });
     } catch (error) {
       return json(res, statusForError(error?.message), {
@@ -339,7 +501,11 @@ module.exports = Object.freeze({
   queryReferenceCounts,
   queryPolityReferenceAudit,
   queryBrazilDetails,
+  queryBrazilPreflight,
+  summarizeBrazilPreflightRows,
   BRAZIL_P2_03E_POLITY_IDS,
+  BRAZIL_P2_03G_EXPECTED_ACTIVITIES,
+  BRAZIL_P2_03G_SOURCE_URLS,
   createPolityReferenceAuditHandler,
   statusForError
 });
