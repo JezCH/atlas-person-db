@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:jeong-mong-ju-goryeo-1392:v1",
+  "person": {
+    "canonical_name_en": "Jeong Mong-ju",
+    "display_name_ko": "정몽주",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-09",
+      "document_title": "정몽주",
+      "url": "https://namu.wiki/w/%EC%A0%95%EB%AA%BD%EC%A3%BC"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Goryeo",
+    "display_name_ko": "고려",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "e255bac5-3edd-5ad4-9467-5866f59a1a08"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Goryeo minister",
+    "role_display_name_ko": "고려 문신",
+    "period_basis": "general_activity",
+    "start_year": 1392,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1392,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 1392 he opposed the movement to replace Goryeo's royal line and was assassinated at Seonjuk Bridge; this year is a specific personal political episode, not a lifetime or a posthumous office."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Jeong Mong-ju — Encyclopedia of Korean Culture",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0050190",
+      "citation_text": "Biographical discussion of the diplomat and Goryeo minister and the political confrontation leading to his assassination in 1392."
+    }
+  ]
+}

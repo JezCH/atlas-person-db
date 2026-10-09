@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:du-fu-tang-759:v1",
+  "person": {
+    "canonical_name_en": "Du Fu",
+    "display_name_ko": "두보",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-09",
+      "document_title": "두보",
+      "url": "https://namu.wiki/w/%EB%91%90%EB%B3%B4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Tang Dynasty",
+    "display_name_ko": "당나라",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "1e634515-5c04-5268-ae57-b4e160d6cf04"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Poet",
+    "role_display_name_ko": "시인",
+    "period_basis": "general_activity",
+    "start_year": 759,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 759,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 759 Du Fu left his official pursuits and eventually reached Chengdu, a distinctive life episode and part of his known literary activity under the Tang. The year does not purport to date the entire body of poetry."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Du Fu — Encyclopaedia Britannica",
+      "canonical_url": "https://www.britannica.com/biography/Du-Fu",
+      "citation_text": "The biographical timeline describes flight and the arrival at Chengdu in 759 and his major poetry."
+    }
+  ]
+}
