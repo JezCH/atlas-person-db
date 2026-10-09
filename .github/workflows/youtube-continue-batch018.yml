@@ -29,7 +29,7 @@ jobs:
       - name: Install collector
         run: |
           python -m pip install --disable-pip-version-check yt-dlp pycountry
-      # Verify source manifest interpretation before touching YouTube.
+      # Match existing batch labels using the same pattern as the published snapshot parser.
       - name: Verify append-only collector offline
         run: python -m unittest discover -s tests -p test_youtube_batch018_continuation.py -v
       - name: Append only Batch 018, without Supabase requests
