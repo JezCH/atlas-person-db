@@ -16,10 +16,6 @@
   let queueRows=[];
   let signalRows=[];
   let lastSignalPayload=null;
-  let personIdentityIndex=null;
-  let queueIdentityIndex=null;
-  let representativeIdByName=null;
-  let personById=null;
 
   function candidateStatusBadge(row) {
     if(row?.identity_state==="registered_homonym_review")return '<span class="registration-review-signal-identity" data-status="ambiguous">동명이인 · 등록여부 검토</span>';
