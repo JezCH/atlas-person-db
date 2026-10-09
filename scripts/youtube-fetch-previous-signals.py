@@ -13,7 +13,11 @@ import urllib.request
 from pathlib import Path
 
 
-def get_json(endpoint, offset, page_size=1000, retries=4):
+MAX_PAGE_BYTES = 512 * 1024
+MAX_SIGNAL_ROWS = 20000
+
+
+def get_json(endpoint, offset, page_size=1000, retries=2):
     url = endpoint + ("&" if "?" in endpoint else "?") + urllib.parse.urlencode(
         {"min_channels": 3, "limit": page_size, "offset": offset}
     )
@@ -23,11 +27,22 @@ def get_json(endpoint, offset, page_size=1000, retries=4):
                 url, headers={"Accept": "application/json", "User-Agent": "ATLAS-Youtube-Incremental-Audit/1.0"}
             )
             with urllib.request.urlopen(req, timeout=30) as response:
-                data = json.load(response)
+                raw = response.read(MAX_PAGE_BYTES + 1)
+                if len(raw) > MAX_PAGE_BYTES:
+                    raise RuntimeError("YOUTUBE_PREVIOUS_PAGE_BYTE_BUDGET_EXCEEDED")
+                data = json.loads(raw)
             if data.get("ok") is not True or data.get("available") is not True:
                 raise RuntimeError("ACTIVE_SNAPSHOT_NOT_AVAILABLE")
             return data
-        except (urllib.error.URLError, TimeoutError, ValueError, RuntimeError):
+        except urllib.error.HTTPError as exc:
+            if exc.code in (402, 401, 403, 429):
+                raise RuntimeError(f"YOUTUBE_PREVIOUS_ENDPOINT_BLOCKED_HTTP_{exc.code}") from exc
+            if attempt + 1 == retries:
+                raise
+            time.sleep(min(2**attempt, 6))
+        except RuntimeError:
+            raise
+        except (urllib.error.URLError, TimeoutError, ValueError):
             if attempt + 1 == retries:
                 raise
             time.sleep(min(2**attempt, 6))
@@ -40,6 +55,8 @@ def fetch_previous(endpoint):
     expected = first.get("stored_count")
     if not snapshot_id or not isinstance(expected, int) or expected < 1:
         raise RuntimeError("INVALID_ACTIVE_SNAPSHOT")
+    if expected > MAX_SIGNAL_ROWS:
+        raise RuntimeError("YOUTUBE_PREVIOUS_TOO_MANY_ROWS")
     page = 1000
     rows = []
     for offset in range(0, expected, page):

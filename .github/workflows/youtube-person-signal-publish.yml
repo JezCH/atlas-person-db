@@ -75,7 +75,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install parser dependency
+      - name: Verify bounded Production reads offline\n        run: python -m unittest discover -s tests -p test_youtube_read_budget.py -v\n\n      - name: Install parser dependency
         run: python -m pip install --disable-pip-version-check pycountry
 
       - name: Build exact reconstructable snapshot
@@ -136,7 +136,7 @@ jobs:
           echo "YOUTUBE_PUBLICATION_RUNTIME_NOT_READY" >&2
           exit 1
 
-      - name: Snapshot active Production before publication
+      # All Production reads must remain strictly bounded; an HTTP 402 is terminal.\n      - name: Snapshot active Production before publication
         shell: bash
         run: |
           set -euo pipefail
@@ -148,7 +148,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail-with-body --silent --show-error --retry 3 --retry-all-errors --max-time 90 \
+          curl --fail-with-body --silent --show-error --retry 1 --max-filesize 2097152 --max-time 45 \
             -H 'accept: application/json' \
             'https://atlas-person-db.vercel.app/api/atlas-person-read' \
             --output /tmp/atlas-youtube-current-persons.json
