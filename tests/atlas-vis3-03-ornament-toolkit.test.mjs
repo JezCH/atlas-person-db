@@ -22,9 +22,12 @@ test('eight distinct SVG primitives exist, are standalone, and contain no script
  }
 });
 test('every referenced asset path resolves and no foreign CSS imports are used',()=>{
- const paths=[...css.matchAll(/url\(["']?([^)"']+)["']?\)/g)].map(m=>m[1]);
- assert.equal(paths.length,8);
- for(const item of paths) assert.ok(fs.statSync(path.resolve(root,item)).isFile(),item);
+ const sharedKit=css.split('/* VIS3-04')[0];
+ const originalPaths=[...sharedKit.matchAll(/url\(["']?([^)"']+)["']?\)/g)].map(m=>m[1]);
+ assert.equal(originalPaths.length,8,'VIS3-03 keeps its original eight reusable primitives');
+ const allPaths=[...css.matchAll(/url\(["']?([^)"']+)["']?\)/g)].map(m=>m[1]);
+ assert.ok(allPaths.length>=originalPaths.length,'VIS3-04 can reuse assets without changing primitive count');
+ for(const item of allPaths) assert.ok(fs.statSync(path.resolve(root,item)).isFile(),item);
  assert.doesNotMatch(css,/@import\b|@font-face\b|https?:\/\//i);
 });
 test('CSS only mounts within an explicit namespace, preserves semantic brand tokens and provides opt-out/accessibility',()=>{
