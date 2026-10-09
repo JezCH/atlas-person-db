@@ -28,3 +28,9 @@ This session does not expose a Supabase connector. No live polity UUID, Activity
 On restoration of Production read: query exact polity names/aliases and UUIDs, per-UUID Person Activities, dated designations and Source links; decide whether the republican titles are one continuously modeled entity with temporal designations. Preserve the distinct imperial regime scope if supported by the existing schema. Do not merge, retire, delete, rewrite or assign new dates without the live census and explicit approval where required.
 
 **No terminal status and no frontier advancement:** stay on `brazil-regime-family` until bounded Production verification.
+
+## P2-03B follow-up: executable bounded Production read contract
+
+Added `db/audits/p2-03b-brazil-polity-production-readonly-20261009.sql` to run against the **connected live Production database** as soon as authorized database reads are available. It returns the exact candidate Polity UUIDs and all localized aliases, associated Activity UUIDs/Persons/periods, grouped counts, descriptor/source-relation schema discovery, and a pre-correction Activity digest. This is a **read-only** `BEGIN READ ONLY` transaction; executing it has no side effects. The scoped queries intentionally include broad Brazilian aliases and canonical keys without predetermining which UUID should survive.
+
+**2026-10-09 verification result:** current ChatGPT connectors expose no Supabase or equivalent Production SQL action. Therefore this SQL file was **authored but not run** against Production; no live census or Runtime verification may be claimed. Source-based regime findings remain provisional pending this exact read; registry `brazil-regime-family` stays `REVIEW_REQUIRED` and the next work item remains Brazil. The provided SQL is not an authorized migration or a request to run it asynchronously.
