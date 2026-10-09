@@ -92,5 +92,5 @@ test("live query contracts are parameter-bound and are SELECT only",async()=>{
   }
   assert.deepEqual(statements[0].params[0],[...BRAZIL_P2_03E_POLITY_IDS]);
   assert.deepEqual(statements[0].params[1],ids);
-  assert.deepEqual(statements[3].params,[...BRAZIL_P2_03G_SOURCE_URLS]);
+  assert.deepEqual(statements[3].params,[[...BRAZIL_P2_03G_SOURCE_URLS]]);
 });
