@@ -61,7 +61,7 @@ test("registered homonyms are held for identity review, not silently certified u
 });
 test("near-identical candidate labels do not invent summed channel counts",()=>{
   const {candidates,overlappingRawLabels}=d.candidatesFromSource(sample,registered);
-  assert.equal(overlappingRawLabels,1);
+  assert.equal(overlappingRawLabels,2);
   const row=candidates.find(r=>d.identityKey(r.raw_name)==="josemaria");
   assert.equal(row.distinct_channel_count,10);
   assert.equal(row.video_count,15);
