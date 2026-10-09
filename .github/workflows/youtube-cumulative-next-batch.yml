@@ -1,22 +1,25 @@
-name: YouTube cumulative next batch
+name: YouTube cumulative scalable next batch
 on:
   workflow_dispatch:
     inputs:
       next_batch:
-        description: "Next cumulative batch number (e.g., 19, 20)"
+        description: "Next cumulative batch number (e.g., 20, 21)"
         required: true
-        default: "19"
+        default: "20"
         type: string
       prior_run_id:
         description: "GitHub run ID holding the immediately preceding validated cumulative corpus"
         required: true
-        default: "37864463200"
+        default: "37884953883"
         type: string
       prior_artifact_name:
         description: "Immediately preceding cumulative artifact name"
         required: true
-        default: "youtube-cumulative-batch018-validated"
+        default: "youtube-cumulative-batch019-validated"
         type: string
+  push:
+    branches: [main]
+    paths: ['.github/workflows/youtube-cumulative-next-batch.yml']
   pull_request:
     branches: [main]
     paths:
@@ -42,13 +45,13 @@ jobs:
       - run: python -m pip install --disable-pip-version-check pycountry
       - run: python -m unittest discover -s tests -p test_youtube_batch018_continuation.py -v
   collect:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[yt-scaled-collect-once]')
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 100
     env:
-      NEXT_BATCH: ${{ inputs.next_batch || '19' }}
-      PRIOR_RUN_ID: ${{ inputs.prior_run_id || '37864463200' }}
-      PRIOR_ARTIFACT_NAME: ${{ inputs.prior_artifact_name || 'youtube-cumulative-batch018-validated' }}
+      NEXT_BATCH: ${{ inputs.next_batch || '20' }}
+      PRIOR_RUN_ID: ${{ inputs.prior_run_id || '37884953883' }}
+      PRIOR_ARTIFACT_NAME: ${{ inputs.prior_artifact_name || 'youtube-cumulative-batch019-validated' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -73,15 +76,15 @@ jobs:
           jq -e --arg next "batch$(printf '%03d' "$((10#$NEXT_BATCH))")" '
             .snapshot.source_state.next_batch==$next
             and .snapshot.source_state.channel_ids_persisted==true
-            and .snapshot.channel_count>=6051
-            and .snapshot.video_count>=1541677
-            and (.channels|length)>=6810
+            and .snapshot.channel_count>=6091
+            and .snapshot.video_count>=1548247
+            and (.channels|length)>=6850
           ' /tmp/atlas-youtube-previous.json >/dev/null
       - name: Collect only the next batch and SHA256-verify every previous file
         shell: bash
         run: |
           set -euo pipefail
-          python scripts/youtube-continue-batch018.py --batch "$NEXT_BATCH" --root prior --output cumulative --limit 40 --video-limit 300
+          python scripts/youtube-continue-batch018.py --batch "$NEXT_BATCH" --root prior --output cumulative --target-new-channels 800 --minimum-success 300 --search-budget 750 --workers 10 --video-limit 500
           python scripts/youtube-build-person-signal-snapshot.py --root cumulative --output /tmp/atlas-youtube-next.json --artifact-id 0 --artifact-digest pending-upload
           python - <<'PY'
           import json, os
@@ -95,12 +98,13 @@ jobs:
           new_signals={r['raw_name'] for r in current['signals']}
           assert old_channels.issubset(new_channels), 'LOST_EXISTING_CHANNEL'
           assert old_signals.issubset(new_signals), 'LOST_EXISTING_SIGNAL'
+          assert len(new_channels)-len(old_channels)>=300, 'ONLY_TINY_CHANNEL_INCREMENT'
           assert len(new_channels)>len(old_channels), 'NO_NEW_CHANNELS'
           assert current['snapshot']['video_count']>prior['snapshot']['video_count'], 'NO_NEW_VIDEOS'
           assert current['snapshot']['source_state']['next_batch']==f'batch{n+1:03d}', 'BATCH_FRONTIER_MISMATCH'
           summary=json.loads((Path('cumulative')/f'batch{n:03d}-summary.json').read_text())
           assert summary['preserved_prior_files']>6000, 'PREVIOUS_FILE_COVERAGE_INCOMPLETE'
-          assert summary['successful']>0 and summary['supabase_requests']==0, 'COLLECTION_INVALID'
+          assert summary['successful']>=300 and summary['supabase_requests']==0, 'COLLECTION_INVALID'
           print(json.dumps({
             'batch':n, 'original_channels':len(old_channels), 'new_channels':len(new_channels),
             'original_videos':prior['snapshot']['video_count'],

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Append a small YouTube discovery batch without querying or writing Supabase.
+"""Append validated YouTube discovery batches without querying or writing Supabase.
 
 Inputs: validated cumulative corpus downloaded from immutable GitHub artifact.
 Output: a copy of the complete corpus plus a new, non-overlapping batch.
@@ -11,6 +11,8 @@ import json
 import re
 import shutil
 import subprocess
+import random
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 SEARCHES = [
@@ -187,6 +189,200 @@ def collect(root, output, limit, video_limit, next_batch=18):
     (output/f"{batch_label}-summary.json").write_text(json.dumps(summary,indent=2),encoding="utf-8")
     print(json.dumps(summary))
 
+
+# Batch020+ deliberately scales discovery rather than replaying the tiny
+# ytsearch10 lists used by the first two continuation batches.
+SEARCH_REGIONS = [
+    "West Africa","East Africa","Central Africa","Southern Africa","North Africa",
+    "Sahel","Maghreb","Nile Valley","Ethiopia","Nubia","Ghana","Mali","Senegal",
+    "Nigeria","Benin","Congo","Angola","Kenya","Tanzania","Mozambique",
+    "Southeast Asia","Central Asia","East Asia","South Asia","West Asia",
+    "China","Japan","Korea","Vietnam","Cambodia","Laos","Thailand","Myanmar",
+    "Malaysia","Indonesia","Philippines","India","Pakistan","Bangladesh",
+    "Sri Lanka","Nepal","Tibet","Mongolia","Persia","Iran","Afghanistan",
+    "Iraq","Syria","Arabia","Egypt","Anatolia","Ottoman","Byzantium",
+    "Europe","Iberia","Italy","France","Germany","Britain","Scotland",
+    "Ireland","Poland","Hungary","Balkans","Scandinavia","Baltic","Ukraine",
+    "Russia","Greece","Rome","Mediterranean","Caucasus","Georgia","Armenia",
+    "Latin America","Mesoamerica","Andes","Caribbean","Mexico","Peru",
+    "Colombia","Bolivia","Ecuador","Brazil","Argentina","Chile","Haiti",
+    "North America","Indigenous America","Pacific Islands","Oceania",
+    "Australia","New Zealand","Polynesia","Micronesia","Melanesia",
+]
+SEARCH_FIELDS = [
+    "forgotten rulers biography", "historical women leaders",
+    "ancient monarchs historical biography", "medieval kings queens history",
+    "historians philosophers biography", "scientists inventors history",
+    "poets writers historical documentary", "musicians artists biography history",
+    "military commanders historical figures", "revolutionaries independence leaders",
+    "religious scholars historical figures", "explorers diplomats historical biography",
+    "political leaders biography documentary", "historical personalities documentary",
+]
+SEARCH_NON_ENGLISH = [
+    "исторические личности биографии", "историки учёные монархи документальный фильм",
+    "شخصيات تاريخية سير العلماء والملوك", "عالم تاريخي سيرة وثائقي",
+    "历史人物 传记 纪录片", "中国历史人物 名人传记",
+    "日本 歴史 人物 伝記 ドキュメンタリー", "한국 역사인물 위인 다큐",
+    "भारत इतिहास व्यक्तित्व जीवनी", "इतिहास राजा रानी जीवनी",
+    "personajes históricos biografía documental", "mujeres históricas biografías",
+    "personnages historiques biographie documentaire", "historische Persönlichkeiten Biografie",
+    "人物 sejarah tokoh biografi", "nhân vật lịch sử tiểu sử",
+    "figuras históricas biografia documentário", "antike historische Persönlichkeiten",
+    "storia personaggi storici biografia", "medieval historical figures documentary",
+]
+
+def scaled_queries(batch_number):
+    """Rotate deterministic geographic/topic coverage each batch; no fixed 32-query pool."""
+    searches = [f"{place} {subject}" for place in SEARCH_REGIONS for subject in SEARCH_FIELDS]
+    searches.extend(SEARCH_NON_ENGLISH)
+    searches.extend(SEARCHES)
+    searches.extend(BATCH019_SEARCHES)
+    rng = random.Random(batch_number)
+    rng.shuffle(searches)
+    return list(dict.fromkeys(searches))
+
+def collect_scaled(root, output, next_batch, target=800, search_budget=750,
+                   minimum_success=300, video_limit=500, workers=10):
+    """Broader discovery with bounded concurrency, exact historical-file preservation."""
+    if next_batch < 20 or next_batch > 999:
+        raise RuntimeError("SCALED_BATCH_MUST_START_AT_020")
+    if not (300 <= target <= 2000 and 1 <= minimum_success <= target
+            and 50 <= search_budget <= 2000 and 1 <= video_limit <= 500
+            and 1 <= workers <= 16):
+        raise RuntimeError("INVALID_SCALE_BOUNDS")
+    old_ids = manifests(root, next_batch=next_batch,
+                        min_channels=6850 if next_batch >= 20 else 6810)
+    if output.resolve() == root.resolve() or root.resolve() in output.resolve().parents:
+        raise RuntimeError("OUTPUT_MUST_BE_OUTSIDE_INPUT")
+    batch_label = f"batch{next_batch:03d}"
+    all_queries = scaled_queries(next_batch)[:search_budget]
+    discovered = {}
+    queries_succeeded = 0
+    queries_attempted = 0
+    stop_after = min(target * 2, 3000)
+    # Batches of concurrent searches prevent scheduling hundreds of needless
+    # requests once a sufficiently large new channel pool is available.
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        for start in range(0, len(all_queries), workers * 2):
+            group = all_queries[start:start + workers * 2]
+            futures = [executor.submit(run_yt, f"ytsearch25:{q}", 65) for q in group]
+            for query, future in zip(group, futures):
+                queries_attempted += 1
+                result = future.result()
+                if result is None:
+                    continue
+                queries_succeeded += 1
+                for entry in result.get("entries") or []:
+                    cid = entry.get("channel_id")
+                    if (isinstance(cid, str) and cid.startswith("UC")
+                            and cid not in old_ids and cid not in discovered):
+                        discovered[cid] = {
+                            "channel_id": cid,
+                            "channel_name": str(entry.get("channel") or ""),
+                            "discovered_query": query,
+                        }
+            if len(discovered) >= stop_after:
+                break
+            if queries_attempted % 100 == 0:
+                print(json.dumps({"stage": "discovery", "searched": queries_attempted,
+                                  "new_candidates": len(discovered)}), flush=True)
+    if queries_succeeded < 20 or len(discovered) < minimum_success:
+        raise RuntimeError(f"DISCOVERY_INSUFFICIENT: searches={queries_succeeded}, "
+                           f"candidates={len(discovered)}, required={minimum_success}")
+    # File writes happen only on the main thread. Failed scans are retained in
+    # the new manifest as ERR/EMPTY, never presented as successful videos.
+    batch = output / "out" / batch_label
+    videos_dir = batch / "videos"
+    videos_dir.mkdir(parents=True, exist_ok=False)
+    attempted = []
+    successful = 0
+    new_videos = 0
+
+    def scan(candidate):
+        cid = candidate["channel_id"]
+        result = run_yt(f"https://www.youtube.com/channel/{cid}/videos", 70)
+        if result is None:
+            return candidate, "ERR", []
+        ids = set()
+        videos = []
+        for entry in (result.get("entries") or [])[:video_limit]:
+            video_id = entry.get("id")
+            title = entry.get("title")
+            if not isinstance(video_id, str) or not video_id or video_id in ids:
+                continue
+            if not isinstance(title, str) or not title.strip():
+                continue
+            ids.add(video_id)
+            videos.append({"video_id": video_id, "channel_id": cid, "title": title})
+        return candidate, "OK" if videos else "EMPTY", videos
+
+    candidates = list(discovered.values())
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        for start in range(0, len(candidates), workers * 2):
+            if successful >= target:
+                break
+            group = candidates[start:start + workers * 2]
+            futures = [executor.submit(scan, row) for row in group]
+            for candidate, future in zip(group, futures):
+                scanned, status, videos = future.result()
+                if status == "OK":
+                    with gzip.open(videos_dir / f"{scanned['channel_id']}.ndjson.gz",
+                                   "wt", encoding="utf-8") as handle:
+                        for video in videos:
+                            handle.write(json.dumps(video, ensure_ascii=False,
+                                                    separators=(",", ":")) + "\n")
+                    successful += 1
+                    new_videos += len(videos)
+                attempted.append({**scanned, "status": status, "count": len(videos)})
+            if len(attempted) % 100 < workers * 2:
+                print(json.dumps({"stage": "scan", "attempted": len(attempted),
+                                  "successful_channels": successful,
+                                  "new_videos": new_videos}), flush=True)
+    if successful < minimum_success or new_videos <= 0:
+        raise RuntimeError(f"INSUFFICIENT_SUCCESSFUL_NEW_CHANNELS: {successful} "
+                           f"(minimum {minimum_success})")
+    (batch / "manifest.json").write_text(
+        json.dumps(attempted, ensure_ascii=False, indent=2), encoding="utf-8")
+    (batch / "candidates.json").write_text(
+        json.dumps(attempted, ensure_ascii=False, indent=2), encoding="utf-8")
+    (batch / "discovery.json").write_text(json.dumps({
+        "queries_attempted": queries_attempted, "queries_succeeded": queries_succeeded,
+        "new_candidates_found": len(discovered), "successful_channels": successful,
+        "target_successful_channels": target, "search_budget": search_budget,
+    }, indent=2), encoding="utf-8")
+    # The original archive remains immutable and no data is excluded because
+    # of age, format, or batch number. This is the same append-only copy path.
+    for source in root.iterdir():
+        destination = output / source.name
+        if destination.exists():
+            if source.name != "out" or not source.is_dir():
+                raise RuntimeError("SOURCE_OUTPUT_COLLISION")
+            for item in source.iterdir():
+                if (destination / item.name).exists():
+                    raise RuntimeError("EXISTING_BATCH_COLLISION")
+                if item.is_dir():
+                    shutil.copytree(item, destination / item.name)
+                else:
+                    shutil.copy2(item, destination / item.name)
+        elif source.is_dir():
+            shutil.copytree(source, destination)
+        else:
+            shutil.copy2(source, destination)
+    preserved_files = verify_preserved_files(root, output)
+    summary = {
+        "batch": batch_label, "previous_channels": len(old_ids),
+        "selected": len(attempted), "successful": successful,
+        "videos": new_videos, "preserved_prior_files": preserved_files,
+        "queries_attempted": queries_attempted,
+        "queries_succeeded": queries_succeeded,
+        "new_candidates_discovered": len(discovered),
+        "target_successful_channels": target,
+        "supabase_requests": 0,
+    }
+    (output / f"{batch_label}-summary.json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(json.dumps(summary, ensure_ascii=False), flush=True)
+
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--root",required=True)
@@ -194,10 +390,22 @@ def main():
     parser.add_argument("--output",required=True)
     parser.add_argument("--limit",type=int,default=40)
     parser.add_argument("--video-limit",type=int,default=300)
+    parser.add_argument("--target-new-channels",type=int,default=800)
+    parser.add_argument("--minimum-success",type=int,default=300)
+    parser.add_argument("--search-budget",type=int,default=750)
+    parser.add_argument("--workers",type=int,default=10)
     args=parser.parse_args()
     if not (1 <= args.limit <= 100 and 1 <= args.video_limit <= 500):
         raise RuntimeError("UNBOUNDED_COLLECTION_LIMIT")
-    collect(Path(args.root).resolve(),Path(args.output).resolve(),args.limit,args.video_limit,next_batch=args.batch)
+    if args.batch >= 20:
+        collect_scaled(Path(args.root).resolve(), Path(args.output).resolve(),
+                       next_batch=args.batch, target=args.target_new_channels,
+                       search_budget=args.search_budget,
+                       minimum_success=args.minimum_success,
+                       video_limit=args.video_limit, workers=args.workers)
+    else:
+        collect(Path(args.root).resolve(),Path(args.output).resolve(),
+                args.limit,args.video_limit,next_batch=args.batch)
 
 if __name__=="__main__":
     main()
