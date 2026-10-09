@@ -1,0 +1,119 @@
+name: YouTube Unregistered Candidate Source-ID Audit
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/youtube-unregistered-original-id-audit.yml'
+      - 'scripts/youtube-audit-discovery-alias-unions.py'
+      - 'scripts/youtube-discovery-alias-audit-targets.v1.json'
+      - 'tests/test_youtube_discovery_original_id_audit.py'
+      - 'scripts/youtube-build-person-signal-snapshot.py'
+  # Only the exact reviewed one-off audit commit is permitted to read the
+  # immutable Batch024 artifact. No Production database writes.
+  push:
+    branches: [main]
+    paths: ['.github/workflows/youtube-unregistered-original-id-audit.yml']
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: atlas-youtube-unregistered-source-id-audit
+  cancel-in-progress: false
+
+jobs:
+  test:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check pycountry
+      - run: python -m unittest discover -s tests -p test_youtube_discovery_original_id_audit.py -v
+
+  audit:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[yt-discovery-alias-id-audit-once]'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ORIGINAL_RUN_ID: '37921755392'
+      ORIGINAL_ARTIFACT_ID: '11613130249'
+      ORIGINAL_ARTIFACT_NAME: youtube-cumulative-batch024-validated
+      ORIGINAL_ARTIFACT_SHA256: sha256:8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946
+      ORIGINAL_SNAPSHOT: yt-20261009T120819Z-10127ch-rebuild-v4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify exact retained source ZIP artifact digest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ORIGINAL_ARTIFACT_ID" |
+            jq -e --arg digest "$ORIGINAL_ARTIFACT_SHA256" --arg name "$ORIGINAL_ARTIFACT_NAME" \
+              '.id==11613130249 and .name==$name and .digest==$digest and .expired==false' >/dev/null
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.ORIGINAL_ARTIFACT_NAME }}
+          run-id: ${{ env.ORIGINAL_RUN_ID }}
+          path: corpus
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check pycountry
+      - run: python -m unittest discover -s tests -p test_youtube_discovery_original_id_audit.py -v
+      - name: Reconstruct exact candidate alias overlap from source channel and video IDs
+        run: |
+          set -euo pipefail
+          python scripts/youtube-audit-discovery-alias-unions.py \
+            --root corpus \
+            --snapshot-id "$ORIGINAL_SNAPSHOT" \
+            --selected 10890 \
+            --channels 10127 \
+            --videos 2230031 \
+            --output /tmp/youtube-discovery-alias-audit/audit.json \
+            > /tmp/youtube-discovery-audit-stdout.json
+          jq -e '
+            .schema=="atlas-youtube-discovery-source-id-audit/v1"
+            and .source.production_snapshot_id=="yt-20261009T120819Z-10127ch-rebuild-v4"
+            and .source.selected_channel_count==10890
+            and .source.successful_channel_count==10127
+            and .source.source_video_rows==2230031
+            and .policy.purpose=="UNREGISTERED_PERSON_DISCOVERY"
+            and .policy.original_source_modified==false
+            and .policy.production_writes==false
+            and (.groups | length)==25
+            and ([.groups[]|select(.type=="orthographic")]|length)==19
+            and ([.groups[]|select(.type=="identity_review" and .decision=="do_not_auto_merge")]|length)==6
+            and ([.groups[]|select(.channel_id_union_count < ([.per_alias[].original_channel_count]|max))]|length)==0
+          ' /tmp/youtube-discovery-alias-audit/audit.json >/dev/null
+      - name: Summarize original-ID overlaps and identity-review gaps
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -r '
+            "## Unregistered historic Person discovery: original-ID alias audit",
+            "- Source snapshot: \(.source.production_snapshot_id)",
+            "- Source channels/videos: \(.source.successful_channel_count)/\(.source.source_video_rows)",
+            "- Orthographic groups: \([.groups[]|select(.type=="orthographic")]|length)",
+            "- Manual identity-review groups: \([.groups[]|select(.type=="identity_review")]|length)",
+            "",
+            "| Original candidate labels | Type | Deduplicated channels | Videos | Repeated channel memberships |",
+            "|---|---|---:|---:|---:|",
+            (.groups[] |
+              "| \(.aliases|join(" / ")) | \(.type) | \(.channel_id_union_count) | \(.video_id_union_count) | \(.overlapping_channel_memberships) |")
+          ' /tmp/youtube-discovery-alias-audit/audit.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-batch024-unregistered-original-id-alias-audit
+          path: /tmp/youtube-discovery-alias-audit/audit.json
+          retention-days: 90
+          if-no-files-found: error
