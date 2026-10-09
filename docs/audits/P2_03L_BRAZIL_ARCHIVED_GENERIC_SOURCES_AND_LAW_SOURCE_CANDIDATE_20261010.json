@@ -1,0 +1,377 @@
+{
+  "schema": "polity-p2-03l-brazil-source-provenance-and-offline-assertion-candidate/v1",
+  "unit": "POLITY-P2-03L",
+  "as_of": "2026-10-10",
+  "parent_case": "brazil-regime-family",
+  "state": "REVIEW_ONLY_NONEXECUTING",
+  "source_registration_authorized": false,
+  "source_writer_invoked": false,
+  "operations": [],
+  "polity_authoring_or_runtime_mutation": false,
+  "historical_snapshot": {
+    "repository_full_name": "JezCH/atlas-person-db",
+    "archive_ref": "1196e397deb506696386bae1cd88800c16c9cddf",
+    "cleanup_commit": "cdf93d65a898f49bfe0f12285408e03dde02f81d",
+    "archive_discovery": "All twenty generic Source basenames found in pre-cleanup Git tree, and their archived file contents were read and scanned; they are legacy Person/Polity activity and Korean locale records, NOT the original law text.",
+    "archived_file_count": 20,
+    "historical_source_files": [
+      {
+        "production_source_id": "6ab43c8c-2d16-526a-8a2f-8159877becfe",
+        "production_source_key": "repository-source:pending-records-corrections.json:f74e9ad540c30dae3c626f2ef9c0de3fb463de29d72c3540d555ef3c2bf35448",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-corrections.json",
+        "archived_git_blob_sha1": "6d447409ecb99e0e40ba2321818df39f16b149ed",
+        "archived_bytes": 9482,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-corrections.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "dedf71e3-ad5f-53ec-b868-70f00438861e",
+        "production_source_key": "repository-source:pending-records-supplement-10.json:59dcd36b1c0b1ec53402560f4fd710c20dfc4910386ed6cff7eda8f912e09b01",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-supplement-10.json",
+        "archived_git_blob_sha1": "662ed66a60cc0d60f7b47669f50adb21014fbb17",
+        "archived_bytes": 2924,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-supplement-10.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "cef24ac7-0016-5cbf-996b-c962c00cdfa2",
+        "production_source_key": "repository-source:pending-records-supplement-11.json:e5b5358ea96331bf5199b676ef21372d5711cf95076c764a96629ce4ca0d96f7",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-supplement-11.json",
+        "archived_git_blob_sha1": "f0bf596f5b368b9b4027539a2293373f3989fac4",
+        "archived_bytes": 3817,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-supplement-11.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "743df8e9-a7e6-5593-8863-8cf3e3797b9c",
+        "production_source_key": "repository-source:pending-records-supplement-2.json:c36e4669946af18222913b8fa6efa8e91608f3ee78d2ba438e4d5a8309de7a75",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-supplement-2.json",
+        "archived_git_blob_sha1": "b7a0185b9c787404a11b1e3f9d459bf69b167e2f",
+        "archived_bytes": 4763,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-supplement-2.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "7f21dc19-2215-57ca-ad50-aab379abf450",
+        "production_source_key": "repository-source:pending-records-supplement-3.json:8e9ddc2a2a5623dee0703ab6e6fb30630a026c1cf23e0c150f2265d5b0bf455c",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-supplement-3.json",
+        "archived_git_blob_sha1": "c90ebcabfbe1ee42bcfe344c5b9b15d76841c679",
+        "archived_bytes": 10061,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-supplement-3.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "521297b7-7252-548d-b600-4dc89b9b651b",
+        "production_source_key": "repository-source:pending-records-supplement-4.json:4175719ce805726bfa809c5296e02e3adfb3578bae7ca34aa5ff8c542194168a",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-supplement-4.json",
+        "archived_git_blob_sha1": "a440606519a792c35b4347c29069d73173b52344",
+        "archived_bytes": 7450,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-supplement-4.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "cc767f2f-48fb-550f-851a-b893c362b131",
+        "production_source_key": "repository-source:pending-records-supplement-5.json:317c8cd0f4df2fd2d3bf2e3c84304e1dad16633cfb8ce31843ba1f7e98a05e4d",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-supplement-5.json",
+        "archived_git_blob_sha1": "83766906aaf9e17b8705d87790de3532366c25e8",
+        "archived_bytes": 16202,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-supplement-5.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "c899493b-3a0e-5f0b-b7ae-3bce3e8a63c0",
+        "production_source_key": "repository-source:pending-records-supplement-6.json:54b23a3c209bc6bb36bc44cb1a47daa57462fcb6cf7e96ad6796fab611d7fdb7",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-supplement-6.json",
+        "archived_git_blob_sha1": "d5fcfe60660d745f97f879bd39964bac1dc02d92",
+        "archived_bytes": 21432,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-supplement-6.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "542dea9e-a382-55f2-b522-d8865223a851",
+        "production_source_key": "repository-source:pending-records-supplement-7.json:6c80ab6e6ed6d3eee3e47e769abf3b3f659079f20fd271f9dad30c9d76dbcae3",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-supplement-7.json",
+        "archived_git_blob_sha1": "2cdce85b79992e10e7502833a79fa5e9f6b3e231",
+        "archived_bytes": 8779,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-supplement-7.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "28ba4b55-d9ee-5f5a-97d2-3314d352a369",
+        "production_source_key": "repository-source:pending-records-supplement-8.json:2e6c18765e0c23dafd582077e6b5a42e8af1e768cd929ce8e9f38ec733402257",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-supplement-8.json",
+        "archived_git_blob_sha1": "ef3b55c2c4e08f6ba4894c2bb0ccf05eba48f4dc",
+        "archived_bytes": 2807,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-supplement-8.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "217799b6-9b3d-51ad-bada-d445b74fd7f2",
+        "production_source_key": "repository-source:pending-records-supplement-9.json:98834bc15cf2f4ca1dc4d966962e04143e6d04097afa272870f9c0c4150e5974",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-supplement-9.json",
+        "archived_git_blob_sha1": "74e69d1915469fd51a1ad099f1f5b3a7f703685b",
+        "archived_bytes": 1188,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-supplement-9.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "55efaae0-3d24-5462-9d30-bc813ea7de0a",
+        "production_source_key": "repository-source:pending-records-supplement.json:719b77b0a781d991f6a1df24a999a90cb37d84e8be2bc5dee3b7af8c342e5093",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records-supplement.json",
+        "archived_git_blob_sha1": "5cf4de632b74366ef76de97181fbf1571abcfc24",
+        "archived_bytes": 16549,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records-supplement.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "a30be4b7-5a35-5781-8a41-eb6c1d836180",
+        "production_source_key": "repository-source:pending-records.json:8b78952fb503f17cc79de160232d60d75623b9605360c3db6fb1a36209b02f2a",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "pending-records.json",
+        "archived_git_blob_sha1": "dc030f4eb67dfb7c4d9e6528aae1e51093ef9886",
+        "archived_bytes": 10686,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/pending-records.json",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "c224d9f8-2277-5f7b-98a7-5d10b65f865e",
+        "production_source_key": "repository-source:person-locales-supplement-2.js:a329c309ed1d83343ae6e0b97e1757e1f3e10d5d9c192c7ece9dcca2360dd67e",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "person-locales-supplement-2.js",
+        "archived_git_blob_sha1": "eec5ee6cf6c6fd0af026bcaccb5497c7a64af314",
+        "archived_bytes": 2177,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/person-locales-supplement-2.js",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "ff879e52-8301-562f-9a17-e7cd2fe0e57f",
+        "production_source_key": "repository-source:person-locales-supplement-3.js:6ba4ba9f2987973f24a9835f922fa2dc1ec4ef1ca2b2ceab8e17a24dbfd58650",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "person-locales-supplement-3.js",
+        "archived_git_blob_sha1": "1700bb3afed38a123f1b6307cd97980c032c3a5c",
+        "archived_bytes": 3771,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/person-locales-supplement-3.js",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "ea63e1a2-69df-5649-8353-608c108f97be",
+        "production_source_key": "repository-source:person-locales-supplement-4.js:d6d4d3a5108317323bafb876bc92d6bcca5aa84d48a9ff18e3e267a99ca4258c",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "person-locales-supplement-4.js",
+        "archived_git_blob_sha1": "86390e5aae706de0a0b47e1df95ce1329f858fa8",
+        "archived_bytes": 2707,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/person-locales-supplement-4.js",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "9984ed15-404a-5fe4-b0f3-153c1aa86781",
+        "production_source_key": "repository-source:person-locales-supplement-5.js:dbbfa5af106d25bb65ddbdc772c833a3227d6cd6d5d4eb4aef3dc89dab8ae376",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "person-locales-supplement-5.js",
+        "archived_git_blob_sha1": "211b28c7fdfb765be3815a8d02f4d61464555aad",
+        "archived_bytes": 10327,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/person-locales-supplement-5.js",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "3b398b6f-b717-5499-bde5-85b478182179",
+        "production_source_key": "repository-source:person-locales-supplement-6.js:70287bd9d7e4dc4552c877ebfb7bfd202df3ad4bba0f5563183b739e2f132e04",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "person-locales-supplement-6.js",
+        "archived_git_blob_sha1": "3b055b05b5b8e410030f0b709fb02a99671a1e02",
+        "archived_bytes": 2170,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/person-locales-supplement-6.js",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "a732ca86-f29a-58a2-b49f-1164c413714a",
+        "production_source_key": "repository-source:person-locales-supplement.js:e25bd02fb3410648a3465e12ca96473080e7202d5660808e5bffdbbe7aa37e69",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "person-locales-supplement.js",
+        "archived_git_blob_sha1": "130064fe072cc78fcac3db65bbdbc21e17888f7d",
+        "archived_bytes": 4739,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/person-locales-supplement.js",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      },
+      {
+        "production_source_id": "e58c868f-01c2-5fb7-9c41-6affdaa4d841",
+        "production_source_key": "repository-source:person-locales.js:150586fd47814749310c5869ff43da1cfe1458cb188d8bb98c9febebce5d3c04",
+        "source_category": "repository_dataset",
+        "legacy_file_path": "person-locales.js",
+        "archived_git_blob_sha1": "500840c0e150598d7b1dfad9841436de6703fd70",
+        "archived_bytes": 2855,
+        "archived_git_url": "https://github.com/JezCH/atlas-person-db/blob/1196e397deb506696386bae1cd88800c16c9cddf/person-locales.js",
+        "candidate_first_party_law_5389_source": false,
+        "strict_law_title_or_citation_text_hits_in_archived_file": 0,
+        "source_key_sha256_vs_archived_bytes_matched": false
+      }
+    ],
+    "word_search": {
+      "strict_terms": [
+        "5389",
+        "5.389",
+        "Lei 5.389",
+        "H-733",
+        "República Federativa do Brasil",
+        "Estados Unidos do Brasil",
+        "Diário Oficial da União",
+        "Federative Republic of Brazil"
+      ],
+      "file_count_queried": 20,
+      "strict_matching_archived_files": 0,
+      "unrelated_context_examples": {
+        "pending-records-corrections.json": [
+          {
+            "line": 243,
+            "context": "Portugal and Portuguese-Brazilian dynastic union, not Law 5.389"
+          }
+        ],
+        "pending-records-supplement-2.json": [
+          {
+            "line": 102,
+            "context": "Pedro II of Brazil / Empire of Brazil ruler activity, not Republic name statute"
+          }
+        ],
+        "person-locales-supplement-2.js": [
+          {
+            "line": 27,
+            "context": "Korean locale aliases for Pedro II and Empire of Brazil"
+          }
+        ],
+        "person-locales-supplement-5.js": [
+          {
+            "line": 214,
+            "context": "Korean locale alias for United Kingdom of Portugal, Brazil and Algarves"
+          }
+        ],
+        "pending-records-supplement-3.json": [
+          {
+            "line": 75,
+            "context": "Catherine de’ Medici — string similarity only, unrelated to Brazilian law"
+          }
+        ],
+        "person-locales-supplement-3.js": [
+          {
+            "line": 21,
+            "context": "Catherine de’ Medici — string similarity only, unrelated to Brazilian law"
+          }
+        ]
+      },
+      "archived_file_bytes_equivalence_to_production_source_key_sha256_verified": false,
+      "exclusion_scope": "These archived snapshots lack direct Law 5.389 references. This does not establish global absence from all indexed/unindexed sources, or SHA256 identity between an archived Git blob and the Production dataset digest."
+    }
+  },
+  "previous_prod": {
+    "run_id": 37950565052,
+    "key_and_six_url_collisions": 0,
+    "rich_law_metadata_aliases": 0,
+    "repository_dataset_count": 20
+  },
+  "offline_source_candidate": {
+    "uuid_policy": "UUIDv5 namespace 672fd6c6-f921-5ce9-86dc-c90a8796c53a, name p7:source:brazil-law-5389-1968-official",
+    "uuid_allocation_is_offline_only": true,
+    "source_record": {
+      "id": "e7ad7bd0-e77c-526b-b7d9-832bcca75dab",
+      "source_key": "brazil-law-5389-1968-official",
+      "source_type": "web_bibliographic_reference",
+      "title": "Lei nº 5.389, de 22 de fevereiro de 1968",
+      "author_creator": "Congresso Nacional; Presidência da República",
+      "institution": "Câmara dos Deputados",
+      "publisher": "Diário Oficial da União",
+      "publication_date": "1968-02-23",
+      "publication_year": 1968,
+      "canonical_url": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-publicacaooriginal-1-pl.html",
+      "external_identifier": "Lei nº 5.389/1968",
+      "citation_text": "Brasil, Lei nº 5.389, de 22 de fevereiro de 1968, arts. 1º(2–3), 3º e 4º; Diário Oficial da União, Seção 1, 23/02/1968, p. 1673. A lei altera a legenda das armas e do selo e refere-se à mudança da denominação oficial, mas não estabelece uma data de primeira utilização exclusiva do nome.",
+      "citation_metadata": {
+        "primary_sections": [
+          "Art. 1º, incisos 2–3",
+          "Art. 3º",
+          "Art. 4º"
+        ],
+        "gazette_issue": "Diário Oficial da União, Seção 1, 23/02/1968, p. 1673",
+        "corroboration_url": "https://legis.senado.gov.br/norma/547253",
+        "erratum_url": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-retificacao-31071-pl.html",
+        "scope": "Only statutory symbols inscription and recognition of a denomination change; NOT proof of first exclusive formal state name date"
+      },
+      "artifact_metadata": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "expected_exact_before": {
+      "source_absent_id": "e7ad7bd0-e77c-526b-b7d9-832bcca75dab"
+    },
+    "before_state_at_writer_transaction_verified": false,
+    "target_id_absence_on_live_prod_snapshot_verified": false,
+    "existing_source_key_url_absence_as_of_run": 37950565052,
+    "only_non_destructive_assert_source_considered": true,
+    "registered_source_uuid": null,
+    "stage2_assertion_type": "assert_source",
+    "release_authorization_required": true,
+    "status": "PROPOSED_NOT_APPLIED"
+  },
+  "legal_bounds": {
+    "formal_name_first_exclusive_use_date": null,
+    "law_effective_on": "1968-02-23",
+    "h733_primary_opinion_verified": false,
+    "temporal_designations_approved": false
+  },
+  "safeguards": [
+    "Do not apply without Release approval and Source ID+key+URL fresh exact-before under governed writer",
+    "Live Production read-only audit must show candidate ID absent; this is not a permanent guarantee",
+    "No claim 1968-02-23 is exact first exclusive name date",
+    "No movement of 10 current Person Activities, no Polity retirement or deletion without explicit user approval"
+  ],
+  "next": "POLITY-P2-03M",
+  "parent_status": "REVIEW_REQUIRED"
+}
