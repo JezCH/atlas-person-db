@@ -7,6 +7,7 @@ Output: a copy of the complete corpus plus a new, non-overlapping batch.
 import argparse
 import gzip
 import json
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -49,10 +50,12 @@ def run_yt(url, timeout=90):
 def manifests(root):
     found = {}
     for path in root.rglob("manifest.json"):
-        labels = set(part for part in path.parts if part.startswith("batch") and part[5:].isdigit())
-        if len(labels) != 1:
-            raise RuntimeError("AMBIGUOUS_BATCH_MANIFEST")
-        label = labels.pop()
+        # Match the existing validated snapshot parser: nested source folders
+        # can contain several batch identifiers; first match is canonical.
+        match = re.search(r"(?:youtube-)?batch(\\d{3})", str(path).replace("\\\\", "/"), re.I)
+        if not match:
+            continue
+        label = "batch" + match.group(1)
         if label in found:
             raise RuntimeError("DUPLICATE_BATCH_MANIFEST")
         found[label] = path
