@@ -2,6 +2,7 @@
 
 const { requireDatabaseUrl, sendJson } = require("./atlas-read-http.js");
 const { readYoutubePersonSignals } = require("./atlas-youtube-person-signal-read-service.js");
+const { readYoutubePersonIdentitySignals } = require("./atlas-youtube-person-identity-read-service.js");
 
 function queryValue(req,key) {
   const direct=req?.query?.[key];
@@ -15,9 +16,10 @@ function queryValue(req,key) {
   }
 }
 
-function createYoutubePersonSignalReadHandler({ clientFactory, env = process.env, readSignals = readYoutubePersonSignals } = {}) {
+function createYoutubePersonSignalReadHandler({ clientFactory, env = process.env, readSignals = readYoutubePersonSignals, readIdentity = readYoutubePersonIdentitySignals } = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
   if (typeof readSignals !== "function") throw new Error("readSignals is required");
+  if (typeof readIdentity !== "function") throw new Error("readIdentity is required");
 
   return async function youtubePersonSignalReadHandler(req,res) {
     if (String(req?.method || "GET").toUpperCase() !== "GET") {
@@ -34,6 +36,11 @@ function createYoutubePersonSignalReadHandler({ clientFactory, env = process.env
 
     let client=null;
     try {
+      const mode=queryValue(req,"mode");
+      if (mode!=null && mode!=="raw" && mode!=="person") {
+        sendJson(res,400,{ok:false,code:"INVALID_YOUTUBE_PERSON_SIGNAL_QUERY",error:"invalid ranking mode"});
+        return;
+      }
       const minChannels=queryValue(req,"min_channels");
       const limit=queryValue(req,"limit");
       const offset=queryValue(req,"offset");
@@ -42,13 +49,13 @@ function createYoutubePersonSignalReadHandler({ clientFactory, env = process.env
         return;
       }
       client=await clientFactory(databaseUrl);
-      const result=await readSignals({
+      const result=await (mode==="person" ? readIdentity : readSignals)({
         client,
         ...(minChannels == null ? {} : { minChannels }),
         ...(limit == null ? {} : { limit }),
         ...(offset == null ? {} : { offset })
       });
-      sendJson(res,200,{ ok:true,source:"youtube-person-signal-read-model",...result });
+      sendJson(res,200,{ ok:true,source:mode==="person"?"youtube-person-identity-read-model":"youtube-person-signal-read-model",...result });
     } catch (error) {
       if (error?.code === "INVALID_YOUTUBE_PERSON_SIGNAL_QUERY" || error?.message === "INVALID_YOUTUBE_PERSON_SIGNAL_QUERY") {
         sendJson(res,400,{ ok:false,code:"INVALID_YOUTUBE_PERSON_SIGNAL_QUERY",error:"invalid min_channels, limit or offset" });

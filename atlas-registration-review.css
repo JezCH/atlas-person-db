@@ -434,3 +434,13 @@
   white-space:normal;
   overflow-wrap:anywhere;
 }
+
+
+/* REVIEW-M14 — Separate raw-name and UUID identity rankings; no implicit merge. */
+.registration-review-signal-modes{display:inline-flex;gap:4px;flex-wrap:wrap;min-width:0}
+.registration-review-signal-modes button{border:1px solid var(--atlas-material-hairline-soft);border-radius:4px;background:transparent;color:var(--atlas-text-secondary);font-family:inherit;font-weight:600;font-size:11px;line-height:1.4;padding:7px 12px;cursor:pointer}
+.registration-review-signal-modes button[aria-pressed="true"]{border-color:var(--atlas-honor-metal);color:var(--atlas-text-strong);background:var(--atlas-surface-2)}
+.registration-review-signal-modes button:focus-visible{outline:2px solid var(--atlas-focus-ring);outline-offset:2px}
+.registration-review-mode-info{margin:0;color:var(--atlas-text-muted);font-size:11px;line-height:1.5}
+.registration-review-uuid-badge{display:inline-block;margin-left:6px;font-size:9px;font-weight:600;color:var(--atlas-success)}
+.registration-review-variants{display:block;color:var(--atlas-text-muted);font-size:10px;font-weight:400;overflow-wrap:anywhere;line-height:1.45}
