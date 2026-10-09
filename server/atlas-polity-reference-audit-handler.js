@@ -516,6 +516,9 @@ async function queryBrazilStage2Contract(client) {
 
 
 const BRAZIL_P2_03K_LAW_SOURCE_KEY = "brazil-law-5389-1968-official";
+// Offline UUIDv5 namespace 672fd6c6-f921-5ce9-86dc-c90a8796c53a
+// name "p7:source:brazil-law-5389-1968-official". Candidate, NOT registered.
+const BRAZIL_P2_03L_LAW_SOURCE_ID_CANDIDATE = "e7ad7bd0-e77c-526b-b7d9-832bcca75dab";
 const BRAZIL_P2_03K_OFFICIAL_LAW_URLS = Object.freeze([
   "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-publicacaooriginal-1-pl.html",
   "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-norma-pl.html",
@@ -535,6 +538,10 @@ const BRAZIL_P2_03K_LAW_METADATA_TERMS = Object.freeze([
  * Executes INSIDE parent REPEATABLE READ READ ONLY OIDC-authenticated transaction.
  */
 async function queryBrazilLawSourcePreflight(client) {
+  const candidateIdRows=await client.query(`
+    select id::text as source_id,source_key,source_type,title,canonical_url
+      from atlas_v2.sources where id=$1::uuid limit 1`,
+    [BRAZIL_P2_03L_LAW_SOURCE_ID_CANDIDATE]);
   const exact=await client.query(`
     select id::text as source_id,source_key,source_type,title,canonical_url,
            external_identifier,citation_text,institution,publication_date::text
@@ -571,6 +578,9 @@ async function queryBrazilLawSourcePreflight(client) {
   const metadataTruncated=count>50;
   const exactTruncated=exact.rows.length>50;
   return Object.freeze({
+    candidate_source_id:BRAZIL_P2_03L_LAW_SOURCE_ID_CANDIDATE,
+    candidate_id_collision_rows:candidateIdRows.rows,
+    candidate_id_absent_at_snapshot:candidateIdRows.rows.length===0,
     source_key_candidate:BRAZIL_P2_03K_LAW_SOURCE_KEY,
     official_source_urls:[...BRAZIL_P2_03K_OFFICIAL_LAW_URLS],
     metadata_search_terms:[...BRAZIL_P2_03K_LAW_METADATA_TERMS],
@@ -664,6 +674,7 @@ module.exports = Object.freeze({
   queryBrazilLawSourcePreflight,
   BRAZIL_P2_03K_OFFICIAL_LAW_URLS,
   BRAZIL_P2_03K_LAW_SOURCE_KEY,
+  BRAZIL_P2_03L_LAW_SOURCE_ID_CANDIDATE,
   BRAZIL_P2_03K_LAW_METADATA_TERMS,
   BRAZIL_P2_03H_SOURCE_ALIAS_PATTERN,
   summarizeBrazilPreflightRows,

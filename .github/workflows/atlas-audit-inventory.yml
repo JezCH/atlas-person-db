@@ -332,6 +332,8 @@ jobs:
           jq -e '.ok == true and .read_only == true and .committed == false
             and (.brazil_law_source_preflight.exact_source_key_or_url_matches|type) == "array"
             and (.brazil_law_source_preflight.metadata_match_total|type) == "number"
+            and (.brazil_law_source_preflight.candidate_source_id|type) == "string"
+            and (.brazil_law_source_preflight.candidate_id_collision_rows|type) == "array"
             and (.brazil_law_source_preflight.metadata_candidates|type) == "array"
             and (.brazil_law_source_preflight.source_type_counts|type) == "array"
             and (.brazil_law_source_preflight.generic_catalogue_samples|type) == "array"
@@ -340,6 +342,7 @@ jobs:
           jq '.brazil_law_source_preflight' polity-reference-audit-response.json > brazil-1968-law-source-preflight.push.json
           jq -c '.brazil_law_source_preflight | {
             source_key_candidate,official_source_urls,
+            candidate_source_id,candidate_id_collision_rows,candidate_id_absent_at_snapshot,
             exact_source_key_or_url_matches,exact_truncated,
             metadata_match_total,metadata_candidates,metadata_truncated,
             source_type_counts,generic_catalogue_samples,generic_catalogue_sample_truncated,
