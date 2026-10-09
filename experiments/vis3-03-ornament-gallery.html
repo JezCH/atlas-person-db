@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VIS3-03 | ATLAS Original Ornament Primitives</title>
+<link rel="stylesheet" href="../atlas-ui-phase3-ornaments.css">
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}
+body{margin:0;background:#0d1317;color:#e7dfd1;font:15px/1.55 system-ui,-apple-system,"Noto Sans KR",sans-serif}
+.demo-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:22px clamp(16px,5vw,60px);border-bottom:1px solid #42403a;flex-wrap:wrap}
+.demo-head h1{font:28px Georgia,serif;letter-spacing:.04em;margin:0}
+.demo-head p{font-size:12px;color:#bdb3a1;margin:5px 0 0}
+label{font-size:14px;cursor:pointer}
+input{accent-color:#c0ae88}
+main{max-width:1400px;margin:0 auto;padding:18px}
+.demo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,365px),1fr));gap:16px}
+.sample{border:1px solid #474239;border-radius:8px;padding:22px;background:linear-gradient(140deg,#191e21,#111b23)}
+.sample > h2{margin:0 0 16px;font-size:17px;color:#ded0ac}
+.sample .note{font-size:12px;color:#afaea8;margin:16px 0 0}
+.sample-title{font:25px Georgia,serif;margin:0}
+.sample-caption{font-size:12px;letter-spacing:.05em;color:#c6bda7}
+.sample-instrument{max-width:260px;margin:auto}
+.sample-rosette{margin:auto}
+.sample-initial{display:flex;align-items:center;gap:18px;min-height:120px}
+.sample-initial p{margin:0}
+body:has(#showOrnaments:not(:checked)) main.atlas-ornament-v3{--atlas-o-ornament-presence:0}
+@media(max-width:600px){.demo-head h1{font-size:23px}.sample{padding:12px}}
+</style></head>
+<body>
+<div class="demo-head"><div><h1>ATLAS · VIS3-03</h1><p>Original secular engraving / astrolabe / codex art primitives · developer preview, NOT a live product screen or historical dataset</p></div>
+<label><input id="showOrnaments" type="checkbox" checked> 장식 표시 / toggle decorative layer</label></div>
+<main class="atlas-ornament-v3">
+<section class="demo-grid">
+<article class="sample"><h2>A · Grand Atlas / large frontispiece</h2>
+<div class="atlas-o-cartouche" data-atlas-o-decor><div><h3 class="atlas-o-title">ATLAS</h3><p class="atlas-o-subtitle">CIVILIZATION · ORIGINAL CARTOUCHE</p></div></div>
+<p class="note">Runtime headings remain HTML; the engraved cartouche is pure decoration.</p></article>
+<article class="sample"><h2>A · Atlas frame, corners, folio</h2>
+<div class="atlas-o-engraved-frame atlas-o-corners" data-atlas-o-decor><div class="atlas-o-folio" data-atlas-o-decor><p class="sample-caption">FOLIO / SECTION HEADING</p></div><div class="atlas-o-divider" data-atlas-o-decor></div><p class="sample-caption" style="text-align:center">SECULAR ARCHIVAL FRAME · NO FALSE CREST</p></div>
+<p class="note">The original data row and KPI DOM do not receive decorative frames.</p></article>
+<article class="sample"><h2>B · Chronometer / non-factual instrument chrome</h2>
+<div class="atlas-o-instrument sample-instrument" data-atlas-o-decor><div style="font:13px Georgia,serif;text-align:center;max-width:90px">OBSERVATION<br>FRAME</div></div><p class="note">Only outside the plotted Spacetime dataset; no astronomical meaning asserted.</p></article>
+<article class="sample"><h2>C · Illuminated Codex / chapter title</h2>
+<div class="atlas-o-codex" data-atlas-o-decor><div><h3 class="sample-title">CHRONICLE</h3><p class="sample-caption">GENUINE PERSON / SOURCE FIELDS ONLY</p></div></div>
+<p class="note">No religious quotations, invented heraldry or fake portraits are embedded in SVG.</p></article>
+<article class="sample"><h2>C · Illuminated initial / actual heading text</h2>
+<div class="sample-initial"><div class="atlas-o-initial" data-atlas-o-decor><span>紀</span></div><div><p style="font-weight:650">기록의 시작</p><p class="sample-caption">Text is normal HTML, decoration is outside text.</p></div></div>
+<p class="note">A Korean/Hanja mixed-script demonstration, not a real Person record.</p></article>
+<article class="sample"><h2>A · Non-functional atlas seal</h2><div class="atlas-o-rosette sample-rosette" data-atlas-o-decor></div><p class="note">Rotational rosette, without north/south labels or invented political symbols.</p></article>
+</section>
+<footer style="color:#b7ab93;font-size:12px;padding:22px 2px">VIS3-03 asset preview only — styles opt-in through .atlas-ornament-v3. No production index.html changes; no records or coordinates changed.</footer>
+</main>
+</body></html>

@@ -1,0 +1,49 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+const root = path.resolve(import.meta.dirname, '..');
+const svgs = [
+ 'atlas-cartouche.svg','atlas-compass-rosette.svg','atlas-corner-filigree.svg',
+ 'atlas-chapter-divider.svg','atlas-folio-plaque.svg','atlas-astrolabe.svg',
+ 'atlas-codex-panel.svg','atlas-illuminated-initial.svg'
+];
+const cssPath=path.join(root,'atlas-ui-phase3-ornaments.css');
+const css=fs.readFileSync(cssPath,'utf8');
+test('eight distinct SVG primitives exist, are standalone, and contain no script, embedded faces, external resources or historical assertions',()=>{
+ assert.equal(new Set(svgs).size,8);
+ for (const name of svgs) {
+  const svg=fs.readFileSync(path.join(root,'assets/ui-ornaments',name),'utf8');
+  assert.match(svg,/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" viewBox="[0-9 ]+" fill="none" aria-hidden="true">/);
+  assert.match(svg,/<desc>[^<]+<\/desc>/);
+  assert.match(svg,/<\/svg>\s*$/);
+  assert.doesNotMatch(svg,/<(?:script|image|foreignObject|text|animate|animateTransform)\b|onload=|onerror=|(?:https?:)?\/\/[^<]*\.(?:png|jpg|gif)/i);
+  assert.ok(svg.length>350, name+' should contain authentic ornamental drawing');
+ }
+});
+test('every referenced asset path resolves and no foreign CSS imports are used',()=>{
+ const paths=[...css.matchAll(/url\(["']?([^)"']+)["']?\)/g)].map(m=>m[1]);
+ assert.equal(paths.length,8);
+ for(const item of paths) assert.ok(fs.statSync(path.resolve(root,item)).isFile(),item);
+ assert.doesNotMatch(css,/@import\b|@font-face\b|https?:\/\//i);
+});
+test('CSS only mounts within an explicit namespace, preserves semantic brand tokens and provides opt-out/accessibility',()=>{
+ assert.match(css,/\.atlas-ornament-v3\s*\{/);
+ assert.match(css,/data-atlas-ornament="off"/);
+ assert.match(css,/pointer-events:none/);
+ assert.match(css,/user-select:none/);
+ assert.match(css,/@media \(prefers-reduced-motion:reduce\)/);
+ assert.match(css,/@media \(forced-colors:active\)/);
+ assert.match(css,/@media \(max-width:760px\)/);
+ assert.match(css,/--atlas-honor-metal-strong/);
+ assert.doesNotMatch(css,/^\s*:root\s*\{|(?:--atlas-(?:canvas|honor-metal|text-strong))\s*:/m);
+ assert.doesNotMatch(css,/\.person-register-entry|\.spacetime-camera|\.spacetime-year-axis|#spacetime/i);
+});
+test('demo uses opt-in components and existing production entry loads none of VIS3-03',()=>{
+ const demo=fs.readFileSync(path.join(root,'experiments/vis3-03-ornament-gallery.html'),'utf8');
+ const prod=fs.readFileSync(path.join(root,'index.html'),'utf8');
+ assert.match(demo,/atlas-ui-phase3-ornaments\.css/);
+ assert.match(demo,/atlas-ornament-v3/);
+ assert.match(demo,/data-atlas-o-decor/);
+ assert.doesNotMatch(prod,/atlas-ui-phase3-ornaments\.css|assets\/ui-ornaments/);
+});

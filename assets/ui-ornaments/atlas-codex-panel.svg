@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" fill="none" aria-hidden="true"><desc>Nonreligious abstract illuminated folio frame; no borrowed sacred typography.</desc>
+<defs><linearGradient id="vellum" x1="0" x2="1" y1="0" y2="0"><stop stop-color="#453c34" stop-opacity=".18"/><stop offset=".25" stop-color="#514c3e" stop-opacity=".08"/><stop offset=".75" stop-color="#453b32" stop-opacity=".08"/><stop offset="1" stop-color="#453c34" stop-opacity=".18"/></linearGradient></defs>
+<path d="M24 18H976V282H24Z" fill="url(#vellum)" stroke="#c6ad7c" stroke-width="5"/><path d="M39 33H961V267H39Z" stroke="#f2dfb4" stroke-width="1.5"/><path d="M53 47H947V253H53Z" stroke="#8e6274" stroke-width="3"/>
+<path d="M68 63H932V237H68Z" stroke="#667d90" stroke-width="1.8"/>
+<g stroke="#c6ad7c" stroke-width="3" fill="none">
+<path d="M77 235C88 190 106 204 102 164C99 131 87 120 102 90C116 68 144 81 138 101C134 114 115 109 120 97"/>
+<path d="M923 65C912 110 894 96 898 136C901 169 913 180 898 210C884 232 856 219 862 199C866 186 885 191 880 203"/>
+<path d="M66 83C130 76 154 90 174 68C190 50 174 36 160 51"/>
+<path d="M934 217C870 224 846 210 826 232C810 250 826 264 840 249"/>
+</g>
+<g fill="#9d5670" stroke="#f2dfb4" stroke-width="1.3"><path d="M103 159q-27-17-26-38q36-1 26 38Z"/><path d="M897 141q27 17 26 38q-36 1-26-38Z"/></g>
+<g fill="#618598" stroke="#c6ad7c" stroke-width="1.1"><path d="M112 126q27-30 45-14q-7 27-45 14Z"/><path d="M888 174q-27 30-45 14q7-27 45-14Z"/></g>
+<g fill="#b99c58"><circle cx="105" cy="73" r="7"/><circle cx="895" cy="227" r="7"/><circle cx="500" cy="30" r="5"/><circle cx="500" cy="270" r="5"/></g>
+<path d="M200 59H436M564 59H800 M200 241H436M564 241H800" stroke="#c6ad7c" stroke-width="2"/>
+<path d="M474 59L500 37L526 59L500 81Z M474 241L500 219L526 241L500 263Z" stroke="#c6ad7c" stroke-width="1.7" fill="#584731" fill-opacity=".3"/>
+</svg>

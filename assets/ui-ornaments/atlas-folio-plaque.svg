@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 155" fill="none" aria-hidden="true"><desc>Folio number plaque; runtime text remains outside SVG.</desc>
+<defs><linearGradient id="plate" x2="0" y2="1"><stop stop-color="#272c2b" stop-opacity=".75"/><stop offset="1" stop-color="#11191d" stop-opacity=".85"/></linearGradient></defs>
+<path d="M93 16H627L655 48L695 77L655 107L627 139H93L65 107L25 77L65 48Z" fill="url(#plate)" stroke="#c6ad7c" stroke-width="4"/>
+<path d="M101 28H619L647 56L679 77L647 98L619 127H101L73 98L41 77L73 56Z" stroke="#f2dfb4" stroke-opacity=".75" stroke-width="1.2"/>
+<path d="M131 36H589M131 119H589" stroke="#c6ad7c" stroke-width="1.5"/><path d="M150 48H570M150 107H570" stroke="#f2dfb4" stroke-opacity=".45"/>
+<path d="M62 77l21-21 21 21-21 21Z M658 77l-21-21-21 21 21 21Z" fill="#584731" stroke="#c6ad7c" stroke-width="3"/>
+<g fill="#f2dfb4"><circle cx="83" cy="77" r="5"/><circle cx="637" cy="77" r="5"/></g>
+<path d="M204 77H250M470 77H516" stroke="#c6ad7c" stroke-width="2"/><path d="M266 77q16-18 32 0q16 18 32 0 M390 77q16-18 32 0q16 18 32 0" stroke="#c6ad7c" stroke-opacity=".48"/>
+</svg>

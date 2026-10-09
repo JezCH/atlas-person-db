@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 250" fill="none" aria-hidden="true"><desc>Original secular engraved cartouche frame; no historical names or facts.</desc>
+<defs><linearGradient id="metal" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#f2dfb4"/><stop offset=".35" stop-color="#c6ad7c"/><stop offset=".65" stop-color="#584731"/><stop offset="1" stop-color="#c6ad7c"/></linearGradient><linearGradient id="smoke" x2="0" y2="1"><stop stop-color="#3a3429" stop-opacity=".72"/><stop offset="1" stop-color="#11181d" stop-opacity=".18"/></linearGradient></defs>
+<path d="M160 58 Q188 54 212 32 H790 Q813 54 840 58 L870 93 Q900 125 870 157 L840 191 Q812 194 790 218 H210 Q188 194 160 191 L130 157 Q100 125 130 93Z" fill="url(#smoke)" stroke="url(#metal)" stroke-width="5"/>
+<path d="M169 69 Q199 65 221 43 H779 Q801 65 831 69 L858 98 Q880 125 858 152 L831 180 Q801 184 779 207 H221 Q199 184 169 180 L142 152 Q120 125 142 98Z" stroke="#f2dfb4" stroke-opacity=".66" stroke-width="1.7"/>
+<path d="M237 55H763 M237 195H763" stroke="#c6ad7c" stroke-width="3"/><path d="M268 65H732 M268 185H732" stroke="#f2dfb4" stroke-opacity=".5"/>
+<g stroke="#c6ad7c" stroke-width="3.2"><path d="M154 85C93 38 43 73 72 107C91 128 121 110 114 91C110 81 93 85 96 94"/><path d="M154 165C93 212 43 177 72 143C91 122 121 140 114 159C110 169 93 165 96 156"/><path d="M846 85C907 38 957 73 928 107C909 128 879 110 886 91C890 81 907 85 904 94"/><path d="M846 165C907 212 957 177 928 143C909 122 879 140 886 159C890 169 907 165 904 156"/></g>
+<g stroke="#f2dfb4" stroke-opacity=".72" stroke-width="2.5"><path d="M54 125H110M890 125H946"/><path d="M158 54Q202 8 238 38M842 54Q798 8 762 38"/><path d="M158 196Q202 242 238 212M842 196Q798 242 762 212"/></g>
+<g fill="#c6ad7c"><path d="M175 125l15-24 15 24-15 24Z"/><path d="M825 125l-15-24-15 24 15 24Z"/><circle cx="190" cy="125" r="4" fill="#f2dfb4"/><circle cx="810" cy="125" r="4" fill="#f2dfb4"/></g>
+<g stroke="#c6ad7c" opacity=".8"><path d="M289 44l17-16 17 16 M677 44l17-16 17 16"/><path d="M289 206l17 16 17-16 M677 206l17 16 17-16"/></g>
+</svg>

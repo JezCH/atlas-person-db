@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 96" fill="none" aria-hidden="true"><desc>Secular rosette and engraved double-line chapter separation.</desc>
+<path d="M14 44H408M592 44H986" stroke="#c6ad7c" stroke-width="2"/><path d="M14 51H407M593 51H986" stroke="#f2dfb4" stroke-opacity=".52" stroke-width=".9"/>
+<path d="M430 48C454 11 483 18 500 5C517 18 546 11 570 48C546 85 517 78 500 91C483 78 454 85 430 48Z" stroke="#c6ad7c" stroke-width="3" fill="#584731" fill-opacity=".2"/>
+<path d="M500 18L512 39 536 48 512 57 500 78 488 57 464 48 488 39Z" fill="#c6ad7c" fill-opacity=".42" stroke="#f2dfb4" stroke-width="1.4"/>
+<circle cx="500" cy="48" r="10" fill="#584731" stroke="#f2dfb4" stroke-width="2"/><circle cx="500" cy="48" r="3" fill="#f2dfb4"/>
+<g stroke="#c6ad7c" stroke-width="2.5"><path d="M410 44Q431 8 453 23M590 44Q569 8 547 23"/><path d="M410 51Q431 88 453 73M590 51Q569 88 547 73"/></g>
+<g fill="#c6ad7c"><path d="M60 44l6-6 6 6-6 6Z"/><path d="M105 44l6-6 6 6-6 6Z"/><path d="M150 44l6-6 6 6-6 6Z"/><path d="M850 44l6-6 6 6-6 6Z"/><path d="M895 44l6-6 6 6-6 6Z"/><path d="M940 44l6-6 6 6-6 6Z"/></g>
+</svg>
