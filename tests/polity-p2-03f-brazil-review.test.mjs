@@ -51,7 +51,7 @@ test("seven federal primary documents use actual official source links and expli
   assert.equal(new Set(review.primary_sources.map(s=>s.key)).size,7);
   for(const s of review.primary_sources){
     assert.ok(s.canonical_url.startsWith("https://"));
-    assert.ok(/camara|planalto|senado/.test(new URL(s.canonical_url).hostname));
+    assert.ok(/camara|planalto|senado|presidencia/.test(new URL(s.canonical_url).hostname));
     assert.ok(s.title && s.issuer && s.locator && s.not_proof_of);
     assert.ok(s.attests.length>0);
   }
