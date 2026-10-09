@@ -33,8 +33,11 @@ BATCH = "batch018"
 
 def run_yt(url, timeout=90):
     try:
+        command = ["yt-dlp", "--flat-playlist", "--dump-single-json", "--no-warnings"]
+        if "/channel/" in url:
+            command += ["--playlist-end", "500"]
         process = subprocess.run(
-            ["yt-dlp", "--flat-playlist", "--dump-single-json", "--no-warnings", url],
+            command + [url],
             capture_output=True, text=True, timeout=timeout, check=False,
         )
         if process.returncode != 0:
