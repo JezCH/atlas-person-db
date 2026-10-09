@@ -54,7 +54,7 @@ test("exact registration removes every Napoleon alias and preserves novel candid
 test("registered homonyms are held for identity review, not silently certified unregistered",()=>{
   const {candidates,homonymReview}=d.candidatesFromSource(sample,registered);
   assert.equal(homonymReview,2);
-  const cleopatra=candidates.find(x=>x.raw_name==="Cleopatra");
+  const cleopatra=candidates.find(x=>d.identityKey(x.raw_name)==="cleopatra");
   assert.ok(cleopatra);
   assert.equal(cleopatra.identity_state,"registered_homonym_review");
   assert.equal(cleopatra.registration_match_count,2);
