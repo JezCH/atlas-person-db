@@ -65,7 +65,7 @@ def manifests(root):
     # Accept older batch manifests if they are actually present, and reject
     # an already-created 018 instead of silently recreating that batch.
     if not required.issubset(found) or any(int(label[5:8]) >= 18 for label in found):
-        raise RuntimeError("INCOMPLETE_OR_ALREADY_ADVANCED_CORPUS")
+        raise RuntimeError("INCOMPLETE_PRIOR_CORPUS")
     known = set()
     for label in sorted(found):
         rows = json.loads(found[label].read_text(encoding="utf-8"))
