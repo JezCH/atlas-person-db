@@ -106,7 +106,7 @@ ORDER BY r.retired_polity_id;
 SELECT r.polity_id::text AS polity_id,to_jsonb(r) AS runtime_activity_row
 FROM atlas_v2.runtime_person_politics_v1 r
 WHERE r.polity_id IN ('efcd0f70-bffe-5464-86e3-b28b3658404b'::uuid,'750bf6be-49e9-4215-95ff-a356ba1831cd'::uuid,'a8b27d54-b180-4d51-a664-dd40b3eed08f'::uuid)
-ORDER BY r.polity_id,r.id;
+ORDER BY r.polity_id,to_jsonb(r)::text;
 SELECT a.polity_id::text AS polity_id,COUNT(*)::int AS authoring_rows,
        md5(coalesce(string_agg(to_jsonb(a)::text,'|' ORDER BY a.id::text),'')) AS authoring_digest
 FROM atlas_v2.person_politics_v2 a WHERE a.polity_id IN ('efcd0f70-bffe-5464-86e3-b28b3658404b'::uuid,'750bf6be-49e9-4215-95ff-a356ba1831cd'::uuid,'a8b27d54-b180-4d51-a664-dd40b3eed08f'::uuid)
