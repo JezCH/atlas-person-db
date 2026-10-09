@@ -1,10 +1,6 @@
 name: YouTube Person Signal Publish
 
 on:
-  # One-time Batch023 push is allowed only by an exact commit marker.
-  push:
-    branches: [main]
-    paths: ['.github/workflows/youtube-person-signal-publish.yml']
   # Publish only explicitly specified validated artifacts.
   workflow_dispatch:
     inputs:
@@ -51,7 +47,6 @@ concurrency:
 
 jobs:
   publish:
-    if: github.event_name != 'push' || contains(github.event.head_commit.message, '[yt-b023-publish-once]')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: production
@@ -59,10 +54,10 @@ jobs:
       PUBLISH_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply?__atlas_authoring_apply_surface=youtube-person-signal-publish
       RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
       PUBLISH_AUDIENCE: atlas-person-db-youtube-signal-publish
-      ARTIFACT_RUN_ID: ${{ github.event_name == 'push' && '37918442434' || inputs.artifact_run_id }}
-      ARTIFACT_NAME: ${{ github.event_name == 'push' && 'youtube-cumulative-batch023-validated' || inputs.artifact_name }}
-      ARTIFACT_ID: ${{ github.event_name == 'push' && '11610579243' || inputs.artifact_id }}
-      ARTIFACT_DIGEST: ${{ github.event_name == 'push' && 'sha256:0cc4f1d1570b8d81a824430368487f7de9431e4734b83e426385970c01b20470' || inputs.artifact_digest }}
+      ARTIFACT_RUN_ID: ${{ inputs.artifact_run_id }}
+      ARTIFACT_NAME: ${{ inputs.artifact_name }}
+      ARTIFACT_ID: ${{ inputs.artifact_id }}
+      ARTIFACT_DIGEST: ${{ inputs.artifact_digest }}
     steps:
       - uses: actions/checkout@v4
       - name: Verify multilingual names and reviewed spelling variants before production reads
