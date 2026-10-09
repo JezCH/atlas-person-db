@@ -124,6 +124,62 @@ class CollectorSafety(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,"INCOMPLETE_PRIOR_CORPUS"):
                 collector.manifests(out,next_batch=19,min_channels=6810)
 
+    def test_scaled_batch020_discovers_hundreds_and_preserves_every_old_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/"prior"
+            output=Path(tmp)/"new"
+            seed(root)
+            for batch,number in (("batch018",18),("batch019",19)):
+                folder=root/"out"/batch
+                folder.mkdir(parents=True)
+                (folder/"manifest.json").write_text(json.dumps([
+                    {"channel_id":f"UC{number:03d}{i:06d}",
+                     "status":"OK","count":0} for i in range(40)
+                ]),encoding="utf-8")
+            candidates=[{"channel_id":f"UC020{i:06d}","channel":"Historical channel"}
+                        for i in range(340)]
+            def fake(url,timeout=90):
+                if url.startswith("ytsearch"):
+                    return {"entries":[{"channel_id":"UC019000001","channel":"old"},*candidates]}
+                return {"entries":[{"id":"HISTORYVIDEO1","title":"Historical figure biography"}]}
+            with patch.object(collector,"run_yt",side_effect=fake):
+                collector.collect_scaled(root,output,20,target=300,
+                                        search_budget=50,minimum_success=300,
+                                        video_limit=5,workers=4)
+            summary=json.loads((output/"batch020-summary.json").read_text())
+            self.assertEqual(summary["successful"],300)
+            self.assertEqual(summary["previous_channels"],6850)
+            self.assertEqual(summary["videos"],300)
+            self.assertEqual(summary["supabase_requests"],0)
+            self.assertEqual(summary["preserved_prior_files"],12)
+            self.assertEqual(collector.verify_preserved_files(root,output),12)
+            rows=json.loads((output/"out"/"batch020"/"manifest.json").read_text())
+            self.assertEqual(len(rows),300)
+            self.assertTrue(all(row["channel_id"] not in collector.manifests(
+                root,next_batch=20,min_channels=6850) for row in rows))
+
+    def test_scaled_discovery_fails_closed_when_only_40_candidates(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/"prior"
+            output=Path(tmp)/"next"
+            seed(root)
+            for batch,number in (("batch018",18),("batch019",19)):
+                folder=root/"out"/batch
+                folder.mkdir(parents=True)
+                (folder/"manifest.json").write_text(json.dumps([
+                    {"channel_id":f"UC{number:03d}{i:06d}",
+                     "status":"OK","count":0} for i in range(40)
+                ]),encoding="utf-8")
+            with patch.object(collector,"run_yt",
+                              return_value={"entries":[
+                                  {"channel_id":f"UC020{i:06d}","channel":"History"}
+                                  for i in range(40)]}):
+                with self.assertRaisesRegex(RuntimeError,"DISCOVERY_INSUFFICIENT"):
+                    collector.collect_scaled(root,output,20,target=300,
+                                            search_budget=50,minimum_success=300,
+                                            video_limit=5,workers=4)
+            self.assertFalse(output.exists())
+
     def test_no_new_channels_fails_without_creating_output(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)/"prior";out=Path(tmp)/"out";seed(root)
