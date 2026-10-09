@@ -1,6 +1,9 @@
 name: YouTube Batch 018 minimal continuation
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/youtube-continue-batch018.yml']
 permissions:
   contents: read
   actions: read
