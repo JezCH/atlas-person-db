@@ -4,6 +4,20 @@ const { PUBLIC_ACTIVITY_SOURCE, readPersons, readPersonDetail } = require("./atl
 const { readPersonListSemantics } = require("./atlas-person-list-semantic-service.js");
 const { requireDatabaseUrl, sendJson } = require("./atlas-read-http.js");
 
+// Compact, read-only projection for YouTube person identity matching.
+// This avoids downloading person descriptions, Activities and source evidence.
+const PERSON_IDENTITY_SQL = `
+select p.id,
+       coalesce(jsonb_agg(
+         jsonb_build_object('name', n.name, 'locale', n.locale)
+         order by n.locale, n.name
+       ) filter (where n.name is not null), '[]'::jsonb) as names
+from atlas_v2.persons p
+left join atlas_v2.person_names n on n.person_id=p.id
+group by p.id
+order by p.id
+`;
+
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const MAX_QUERY_LENGTH = 120;
 const MAX_LIST_LIMIT = 50;
@@ -92,6 +106,12 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
       return;
     }
 
+    const requestedView = requestQueryValue(req, "view");
+    if (requestedView != null && requestedView !== "identity") {
+      sendJson(res, 400, { ok:false, code:"INVALID_PERSON_VIEW" });
+      return;
+    }
+
     const requestedPersonId = personIdFromRequest(req);
     if (requestedPersonId != null && !UUID_PATTERN.test(requestedPersonId)) {
       sendJson(res, 400, {
@@ -134,6 +154,11 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
       return;
     }
 
+    if (requestedView && (requestedPersonId || requestedQuery || requestedNamuWikiStatus || requestedLimitValue != null)) {
+      sendJson(res, 400, { ok:false, code:"PERSON_READ_MODE_CONFLICT" });
+      return;
+    }
+
     if (requestedPersonId && (requestedQuery || requestedNamuWikiStatus || requestedLimitValue != null)) {
       sendJson(res, 400, {
         ok: false,
@@ -155,6 +180,18 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
     let client = null;
     try {
       client = await clientFactory(databaseUrl);
+      if (requestedView === "identity") {
+        const result = await client.query(PERSON_IDENTITY_SQL);
+        const persons = (result.rows || []).map(row=>({
+          id:String(row.id),
+          names:Array.isArray(row.names) ? row.names : []
+        }));
+        sendJson(res, 200, {
+          ok:true, source:"v2-person-read", schema:"atlas-person-read/v1",
+          mode:"list", projection:"identity", persons
+        });
+        return;
+      }
       if (requestedPersonId) {
         const person = await readPersonDetail({ client, personId: requestedPersonId });
         if (!person) {
@@ -225,6 +262,7 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
 }
 
 module.exports = Object.freeze({
+  PERSON_IDENTITY_SQL,
   UUID_PATTERN,
   MAX_QUERY_LENGTH,
   MAX_LIST_LIMIT,
