@@ -2,10 +2,6 @@ name: YouTube Person UUID Identity Publish
 
 on:
   workflow_dispatch:
-  # One guarded production release. Never run on routine pushes.
-  push:
-    branches: [main]
-    paths: ['.github/workflows/youtube-person-identity-publish.yml']
   pull_request:
     branches: [main]
     paths:
@@ -36,7 +32,7 @@ jobs:
       - run: node --test tests/atlas-youtube-person-identity-read.test.mjs tests/atlas-youtube-person-identity-publish.test.mjs
 
   publish:
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[yt-person-uuid-publish-once]'))
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: production
