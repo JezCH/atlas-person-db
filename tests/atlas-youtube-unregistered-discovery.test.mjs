@@ -70,6 +70,20 @@ test("near-identical candidate labels do not invent summed channel counts",()=>{
   assert.equal(row.identity_state,"alias_union_needs_original_ids");
   assert.equal(candidates.filter(r=>d.identityKey(r.raw_name)==="josemaria").length,1);
 });
+test("reviewed living people never outrank unregistered historical candidates",()=>{
+  const live=[
+    {raw_name:"Elon Musk",rank:1,distinct_channel_count:94,video_count:108},
+    {raw_name:"Donald Trump",rank:2,distinct_channel_count:70,video_count:87},
+    {raw_name:"Princess Diana",rank:3,distinct_channel_count:55,video_count:87},
+    {raw_name:"Malcolm X",rank:4,distinct_channel_count:52,video_count:63}
+  ];
+  const result=d.candidatesFromSource(live,registered,
+    {now:Date.parse("2026-10-10T00:00:00Z")});
+  assert.equal(result.reviewedLivingExcluded,2);
+  assert.deepEqual(result.candidates.map(x=>x.raw_name),["Princess Diana","Malcolm X"]);
+  assert.deepEqual(result.candidates.map(x=>x.rank),[1,2]);
+});
+
 test("threshold, pagination, and ranks are recomputed after registration removal",async()=>{
   const response=await d.readYoutubeUnregisteredDiscovery({client:db(),minChannels:20,limit:1,offset:1});
   assert.equal(response.available_count,3);
