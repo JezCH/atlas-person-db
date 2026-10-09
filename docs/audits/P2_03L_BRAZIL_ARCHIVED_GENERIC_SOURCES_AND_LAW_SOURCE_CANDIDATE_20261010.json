@@ -3,7 +3,7 @@
   "unit": "POLITY-P2-03L",
   "as_of": "2026-10-10",
   "parent_case": "brazil-regime-family",
-  "state": "REVIEW_ONLY_NONEXECUTING",
+  "state": "HISTORIC_FILES_REVIEWED_AND_LIVE_SOURCE_ID_SNAPSHOT_VERIFIED_NOT_APPLIED",
   "source_registration_authorized": false,
   "source_writer_invoked": false,
   "operations": [],
@@ -315,7 +315,9 @@
     "run_id": 37950565052,
     "key_and_six_url_collisions": 0,
     "rich_law_metadata_aliases": 0,
-    "repository_dataset_count": 20
+    "repository_dataset_count": 20,
+    "latest_recheck_run": 37992870364,
+    "latest_recheck_exact_sha": "317912b8f8d4eb5345a7b0b600d2e82a4ed12194"
   },
   "offline_source_candidate": {
     "uuid_policy": "UUIDv5 namespace 672fd6c6-f921-5ce9-86dc-c90a8796c53a, name p7:source:brazil-law-5389-1968-official",
@@ -352,13 +354,25 @@
       "source_absent_id": "e7ad7bd0-e77c-526b-b7d9-832bcca75dab"
     },
     "before_state_at_writer_transaction_verified": false,
-    "target_id_absence_on_live_prod_snapshot_verified": false,
+    "target_id_absence_on_live_prod_snapshot_verified": true,
     "existing_source_key_url_absence_as_of_run": 37950565052,
     "only_non_destructive_assert_source_considered": true,
     "registered_source_uuid": null,
     "stage2_assertion_type": "assert_source",
     "release_authorization_required": true,
-    "status": "PROPOSED_NOT_APPLIED"
+    "status": "VERIFIED_SNAPSHOT_ID_ABSENT_NOT_APPLIED",
+    "snapshot_production_audit": {
+      "run_id": 37992870364,
+      "job_id": 114031282755,
+      "artifact_id": 11645692098,
+      "source_id_collision_rows": [],
+      "source_key_and_six_official_url_collisions": 0,
+      "source_law_alias_metadata_matches": 0,
+      "readonly": true,
+      "committed": false,
+      "exact_sha": "317912b8f8d4eb5345a7b0b600d2e82a4ed12194",
+      "vercel_deployment": "dpl_HnKArJJHwSBCT6eqtvhT15BthhM3"
+    }
   },
   "legal_bounds": {
     "formal_name_first_exclusive_use_date": null,
