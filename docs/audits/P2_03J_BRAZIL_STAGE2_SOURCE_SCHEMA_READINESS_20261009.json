@@ -1,0 +1,157 @@
+{
+  "schema": "atlas-polity-p2-03j-verified-source-designation-readiness/v1",
+  "work_unit": "POLITY-P2-03J",
+  "authoring_changes": "NONE",
+  "verified_on_utc": "2026-10-09T15:04:17Z",
+  "status": "SCHEMA_WRITER_CONTRACT_VERIFIED_REVIEW_ONLY",
+  "parent_case": "brazil-regime-family",
+  "parent_status": "REVIEW_REQUIRED",
+  "correction_manifest": false,
+  "auto_apply_allowed": false,
+  "operations": [],
+  "provenance": {
+    "source_blueprint": "docs/audits/P2_03I_BRAZIL_SOURCE_TEMPORAL_ASSERTION_BLUEPRINT_20261009.json",
+    "source_writer_pr": 2315,
+    "source_writer_squash_merge": "827e3dbc25731e592e61735ef036f75c889a9a17",
+    "integrity_run": 37948661662,
+    "production_readonly_run": 37948838233,
+    "production_job": 113882049448,
+    "production_deployment": "dpl_AP2TCnUZLbm9EP74QoqKH1PcS25M",
+    "production_sha": "827e3dbc25731e592e61735ef036f75c889a9a17",
+    "audited_source_metadata_candidates": 0,
+    "scope": "READ_ONLY repeatable_read OIDC; no Production canonical write"
+  },
+  "confirmed_current_production": {
+    "designation_types": [
+      "official_name",
+      "state_form",
+      "historiographic_period",
+      "conventional_temporal_label"
+    ],
+    "time_granularities": [
+      "year",
+      "month",
+      "day"
+    ],
+    "temporal_certainties": [
+      "exact",
+      "approximate",
+      "uncertain"
+    ],
+    "calendar_types": [
+      "gregorian",
+      "julian",
+      "unspecified_historical",
+      "source_calendar"
+    ],
+    "boundary_rules": "All six boundary fields NULL denotes unresolved; if year present, valid year (-10000..9999 except 0), granularity/certainty/calendar required, and month/day shapes match granularity.",
+    "source_columns": [
+      "id",
+      "source_key",
+      "source_type",
+      "title",
+      "sha256",
+      "bytes",
+      "canonical_url",
+      "citation_text",
+      "author_creator",
+      "institution",
+      "publisher",
+      "publication_date",
+      "publication_year",
+      "external_identifier",
+      "citation_metadata",
+      "artifact_metadata"
+    ],
+    "missing_columns": [],
+    "source_writer_supports_complete_bibliography": true
+  },
+  "proposed_registration_not_authorized": {
+    "source": {
+      "id": null,
+      "source_key": null,
+      "source_type": "web_bibliographic_reference",
+      "title": "Lei nº 5.389, de 22 de fevereiro de 1968",
+      "author_creator": "Congresso Nacional",
+      "institution": "Câmara dos Deputados",
+      "publisher": "Diário Oficial da União",
+      "publication_date": "1968-02-23",
+      "publication_year": 1968,
+      "canonical_url": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-publicacaooriginal-1-pl.html",
+      "external_identifier": "Lei nº 5.389/1968",
+      "citation_text": "Lei nº 5.389, de 22/02/1968, Art. 1º (itens 2-3), Arts. 3º-4º; Diário Oficial da União, Seção 1, 23/02/1968, p. 1673.",
+      "citation_metadata": {
+        "locator": "Art. 1º, incisos 2-3; Art. 3º; Art. 4º",
+        "publication_locator": "DOU 23/02/1968, Seção 1, p. 1673"
+      },
+      "artifact_metadata": null,
+      "sha256": null,
+      "bytes": null,
+      "key_unique_checked_at_commit": false,
+      "id_absent_checked_at_commit": false,
+      "real_source_uuid_links": []
+    },
+    "candidate_old_name": {
+      "intended_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "name_pt": "Estados Unidos do Brasil",
+      "designation_type": "official_name",
+      "valid_from": {
+        "year": 1889,
+        "month": 11,
+        "day": 15,
+        "granularity": "day",
+        "certainty": "exact",
+        "calendar": "gregorian"
+      },
+      "valid_to": {
+        "year": 1968,
+        "month": 2,
+        "day": 22,
+        "granularity": "day",
+        "certainty": "exact",
+        "calendar": "gregorian"
+      },
+      "designation_id": null,
+      "name_ids": [],
+      "source_uuid_links": [],
+      "legal_exclusivity_verified": false,
+      "approved_for_writer": false
+    },
+    "candidate_later_name": {
+      "intended_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "name_pt": "República Federativa do Brasil",
+      "designation_type": "official_name",
+      "valid_from": {
+        "year": 1968,
+        "month": 2,
+        "day": 23,
+        "granularity": "day",
+        "certainty": "exact",
+        "calendar": "gregorian"
+      },
+      "valid_to": null,
+      "designation_id": null,
+      "name_ids": [],
+      "source_uuid_links": [],
+      "legal_exclusivity_verified": false,
+      "approved_for_writer": false
+    },
+    "caution": "Schema-valid exact date tuple is a review-only candidate, not proof of exclusive historical title validity."
+  },
+  "remaining_blockers": [
+    "Full primary opinion H-733 (14 Sep 1968) not independently retrieved; Chamber history references but does not reproduce it.",
+    "Exclusive national proper-name start/end dates still subject to legal review; Law 5.389 governs seal/arms inscriptions and references name change.",
+    "Source IDs, unique keys, collision-safe exact-before Source assertion, Designation/name UUIDs, source links are not yet issued or approved.",
+    "Other pre-existing Brazil named source objects under unrelated/generic catalogue keys may need independent semantic review.",
+    "Afonso Pena Person-Activity still on early Republic UUID; current proposed later Brazil-UUID designations would not affect that Activity.",
+    "If any later relink, re-audit all 10 Authoring/Runtime rows, ref surfaces and source links; no retired/deleted polity without explicit user approval."
+  ],
+  "affected_activities": {
+    "unchanged_empire": 2,
+    "reviewed_early_republic_name": 5,
+    "reviewed_later_republic_name": 3,
+    "total": 10
+  },
+  "next_bounded_unit": "POLITY-P2-03K",
+  "no_politico_runtime_mutation": true
+}
