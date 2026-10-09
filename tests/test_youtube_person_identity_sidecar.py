@@ -17,7 +17,7 @@ P_YI = "ea13e48a-94ef-5648-98be-f74554778166"
 P_OTHER = "afe59ea0-afac-5c0f-b767-b6aeaa680456"
 
 
-def corpus(tmp):
+def corpus(tmp, extra_titles=None):
     root = Path(tmp)
     batch = root / "out" / "batch024"
     (batch / "videos").mkdir(parents=True)
@@ -35,6 +35,8 @@ def corpus(tmp):
             ("z2", "孔子: Chinese philosopher"),
         ],
     }
+    for channel, additions in (extra_titles or {}).items():
+        sources[channel].extend(additions)
     manifest = []
     for channel, videos in sources.items():
         with gzip.open(batch / "videos" / (channel + ".ndjson.gz"),
@@ -87,8 +89,9 @@ def run(tmp, **overrides):
                    source_digest="sha256:test", expected_channels=2,
                    expected_videos=8, expected_selected=3,
                    production_snapshot_id="yt-20261009T120819Z-10127ch-rebuild-v4")
+    extra_titles = overrides.pop("extra_titles", None)
     options.update(overrides)
-    return module.aggregate(corpus(tmp), audit, registration, reviewed, **options)
+    return module.aggregate(corpus(tmp, extra_titles), audit, registration, reviewed, **options)
 
 
 class PersonIdentitySidecarTests(unittest.TestCase):
@@ -106,6 +109,60 @@ class PersonIdentitySidecarTests(unittest.TestCase):
             self.assertEqual(result["source"]["source_video_rows"], 8)
             self.assertIs(result["method"]["production_writes"], False)
             self.assertIs(result["method"]["raw_title_rankings_modified"], False)
+
+
+    def test_full_title_multilingual_mentions_and_disambiguation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            titles = {
+                "UC_A": [
+                    ("ym1", "이순신 장군의 명량해전"),
+                    ("ym2", "이순신의 삶을 알아보자"),
+                    ("nm1", "How Napoleon Bonaparte changed Europe"),
+                    ("nm2", "The Rise of Napoleon III in France"),
+                ],
+                "UC_B": [
+                    ("ym3", "Why Yi Sun-sin mattered"),
+                    ("ym4", "李舜臣, Admiral of Joseon"),
+                ],
+            }
+            result = run(tmp, extra_titles=titles, expected_videos=14, mentions=True)
+            rows = {row["person_id"]: row for row in result["persons"]}
+            self.assertEqual(rows[P_YI]["distinct_channel_count"], 2)
+            self.assertEqual(rows[P_YI]["distinct_video_count"], 6)
+            self.assertEqual(rows[P_NAP]["distinct_channel_count"], 2)
+            self.assertEqual(rows[P_NAP]["distinct_video_count"], 3)
+            self.assertGreaterEqual(result["summary"]["mention_only_title_rows"], 5)
+            self.assertEqual(result["source"]["source_video_rows"], 14)
+            self.assertGreater(result["method"]["reviewed_in_title_alias_count"], 0)
+            self.assertIs(result["method"]["production_writes"], False)
+
+    def test_mention_boundary_avoids_substrings_homonyms_and_roman_numerals(self):
+        matcher = module.load_mention_module().ReviewedMentionMatcher({
+            "napoleon i": P_NAP, "napoleon iii": P_OTHER,
+            "이순신": P_YI, "mozart": P_OTHER,
+        })
+        self.assertEqual(matcher.find("Why Napoleon III ruled"),
+                         {("napoleon iii", P_OTHER)})
+        self.assertEqual(matcher.find("Napoleon IV"), set())
+        self.assertEqual(matcher.find("Supermozartian stories"), set())
+        self.assertEqual(matcher.find("김이순신모방"), set())
+        self.assertEqual(matcher.find("이순신의 업적"), {("이순신", P_YI)})
+        self.assertEqual(matcher.find("이순신학설"), set())
+        self.assertEqual(matcher.find("모차르트"), set())
+
+    def test_mention_catalog_rejects_unverified_single_word_surnames(self):
+        resolved = {"napoleon": P_NAP, "napoleon bonaparte": P_NAP,
+                    "alexander": P_OTHER, "이순신": P_YI}
+        doc = {"aliases": [{"alias": "이순신", "registered_basis": "Yi Sun-sin"}]}
+        matcher, catalog = module.load_mention_module().build_matcher(
+            resolved, {"napoleon": P_NAP, "napoleon bonaparte": P_NAP,
+                       "alexander": P_OTHER}, doc
+        )
+        self.assertNotIn("napoleon", catalog)
+        self.assertNotIn("alexander", catalog)
+        self.assertIn("napoleon bonaparte", catalog)
+        self.assertIn("이순신", catalog)
+        self.assertEqual(matcher.find("How Napoleon III won"), set())
 
     def test_wrong_baseline_fails_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
