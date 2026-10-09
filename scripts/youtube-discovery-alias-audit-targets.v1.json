@@ -1,0 +1,164 @@
+{
+  "schema": "atlas-youtube-discovery-alias-audit-targets/v1",
+  "purpose": "Audit source-video and channel overlap in the UNREGISTERED candidate feed, never auto-approve identities",
+  "orthographic_groups": [
+    {
+      "aliases": [
+        "Pelé",
+        "Pele"
+      ]
+    },
+    {
+      "aliases": [
+        "Antisemitism",
+        "Anti-Semitism"
+      ]
+    },
+    {
+      "aliases": [
+        "Ragnarok",
+        "Ragnarök"
+      ]
+    },
+    {
+      "aliases": [
+        "International Women's Day",
+        "International Women’s Day"
+      ]
+    },
+    {
+      "aliases": [
+        "Al-Andalus",
+        "Al Andalus"
+      ]
+    },
+    {
+      "aliases": [
+        "Gobekli Tepe",
+        "Göbeklitepe"
+      ]
+    },
+    {
+      "aliases": [
+        "Israel-Palestine Conflict",
+        "Israel Palestine Conflict"
+      ]
+    },
+    {
+      "aliases": [
+        "Jay-Z",
+        "Jay Z"
+      ]
+    },
+    {
+      "aliases": [
+        "Conference",
+        "Conférence"
+      ]
+    },
+    {
+      "aliases": [
+        "Quaid-e-Azam Muhammad Ali Jinnah",
+        "Quaid e Azam Muhammad Ali Jinnah"
+      ]
+    },
+    {
+      "aliases": [
+        "Hercules",
+        "HÉRCULES"
+      ]
+    },
+    {
+      "aliases": [
+        "Moby Dick",
+        "Moby-Dick"
+      ]
+    },
+    {
+      "aliases": [
+        "Jean-Claude Van Damme",
+        "Jean Claude Van Damme"
+      ]
+    },
+    {
+      "aliases": [
+        "Quran",
+        "Qur'an"
+      ]
+    },
+    {
+      "aliases": [
+        "Captain Ibrahim Traoré",
+        "Captain Ibrahim Traore"
+      ]
+    },
+    {
+      "aliases": [
+        "Mohenjo Daro",
+        "Mohenjo-daro"
+      ]
+    },
+    {
+      "aliases": [
+        "Tutankhamun's Tomb",
+        "Tutankhamun’s Tomb"
+      ]
+    },
+    {
+      "aliases": [
+        "Custer's Last Stand",
+        "Custer’s Last Stand"
+      ]
+    },
+    {
+      "aliases": [
+        "Marina Abramović",
+        "Marina Abramovic"
+      ]
+    }
+  ],
+  "identity_review_groups": [
+    {
+      "aliases": [
+        "Picasso",
+        "Pablo Picasso"
+      ],
+      "status": "identity_unresolved"
+    },
+    {
+      "aliases": [
+        "Dostoevsky",
+        "Fyodor Dostoevsky"
+      ],
+      "status": "identity_unresolved"
+    },
+    {
+      "aliases": [
+        "Chopin",
+        "Frédéric Chopin"
+      ],
+      "status": "identity_unresolved"
+    },
+    {
+      "aliases": [
+        "Schopenhauer",
+        "Arthur Schopenhauer"
+      ],
+      "status": "identity_unresolved"
+    },
+    {
+      "aliases": [
+        "Tchaikovsky",
+        "Pyotr Ilyich Tchaikovsky"
+      ],
+      "status": "identity_unresolved"
+    },
+    {
+      "aliases": [
+        "Diana",
+        "Princess Diana"
+      ],
+      "status": "identity_unresolved"
+    }
+  ]
+}
