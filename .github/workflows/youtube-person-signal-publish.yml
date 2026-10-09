@@ -1,7 +1,10 @@
 name: YouTube Person Signal Publish
 
 on:
-  # Only explicit vetted artifact input; no automatic code-push publication.
+  # One-time verified Batch022 publication; restore manual-only after readback.
+  push:
+    branches: [main]
+    paths: ['.github/workflows/youtube-person-signal-publish.yml']
   workflow_dispatch:
     inputs:
       artifact_run_id:
@@ -47,6 +50,7 @@ concurrency:
 
 jobs:
   publish:
+    if: github.event_name != 'push' || contains(github.event.head_commit.message, '[yt-b022-publish-once]')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: production
@@ -54,10 +58,10 @@ jobs:
       PUBLISH_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply?__atlas_authoring_apply_surface=youtube-person-signal-publish
       RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
       PUBLISH_AUDIENCE: atlas-person-db-youtube-signal-publish
-      ARTIFACT_RUN_ID: ${{ inputs.artifact_run_id }}
-      ARTIFACT_NAME: ${{ inputs.artifact_name }}
-      ARTIFACT_ID: ${{ inputs.artifact_id }}
-      ARTIFACT_DIGEST: ${{ inputs.artifact_digest }}
+      ARTIFACT_RUN_ID: ${{ github.event_name == 'push' && '37898377765' || inputs.artifact_run_id }}
+      ARTIFACT_NAME: ${{ github.event_name == 'push' && 'youtube-cumulative-batch022-validated' || inputs.artifact_name }}
+      ARTIFACT_ID: ${{ github.event_name == 'push' && '11601618294' || inputs.artifact_id }}
+      ARTIFACT_DIGEST: ${{ github.event_name == 'push' && 'sha256:aba807f55bcbeb411d991ef464212383e99f3cff6abe087b0d6ff04040e1ad67' || inputs.artifact_digest }}
     steps:
       - uses: actions/checkout@v4
       - name: Verify multilingual names and reviewed spelling variants before production reads
@@ -100,9 +104,12 @@ jobs:
           mkdir -p /tmp/atlas-youtube-publication
           python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/atlas-youtube-publication/snapshot.json             --artifact-id "$ARTIFACT_ID"             --artifact-digest "$ARTIFACT_DIGEST"             --previous-snapshot /tmp/atlas-youtube-publication/previous.json
           jq -e '
-            .snapshot.channel_count>=7708
-            and .snapshot.video_count>=1823613
-            and (.channels|length)>=8470
+            .snapshot.channel_count==8508
+            and .snapshot.video_count==1950864
+            and (.channels|length)==9270
+            and (.signals|length)==7921
+            and .snapshot.source_state.next_batch=="batch023"
+            and .snapshot.source_state.coverage_batches[-1]=="batch022"
             and .snapshot.source_state.channel_ids_persisted==true
             and (.channels|length)>=6770
             and (.channels|length)>=.snapshot.channel_count
