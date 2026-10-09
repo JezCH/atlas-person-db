@@ -175,6 +175,7 @@
     if (dashboardAssetsPromise) return dashboardAssetsPromise;
     appendStylesheetOnce("./atlas-dashboard.css?v=20261001-canonical-nontimeline-v1");
     appendStylesheetOnce("./atlas-dashboard-monumental-v11.css?v=20261008-dashboard-lux1-ledger-v1");
+    appendStylesheetOnce("./atlas-vis2-11-polity-dashboard-archive.css?v=20261009-vis2-11-v1");
     dashboardAssetsPromise = ensureSpacetimeModel()
       .then(() => loadScriptOnce("./atlas-dashboard-model.js?v=20261001-canonical-nontimeline-v1", () => Boolean(window.ATLAS_DASHBOARD_MODEL)))
       .then(() => loadScriptOnce("./atlas-dashboard.js?v=20261001-canonical-nontimeline-v1", () => Boolean(window.ATLAS_DASHBOARD)))
@@ -266,6 +267,7 @@
     if (window.ATLAS_POLITY_BROWSER_VIEW && window.ATLAS_POLITY_REVIEW_PANEL) return Promise.resolve(Object.freeze({ browser: window.ATLAS_POLITY_BROWSER_VIEW, review: window.ATLAS_POLITY_REVIEW_PANEL }));
     if (polityAssetsPromise) return polityAssetsPromise;
     appendStylesheetOnce("./atlas-polity-review-workbench.css?v=20261008-polity-lux1-inscription-v1");
+    appendStylesheetOnce("./atlas-vis2-11-polity-dashboard-archive.css?v=20261009-vis2-11-v1");
     polityAssetsPromise = loadScriptOnce("./atlas-polity-browser-reader.js?v=20260925-polity-frontier-v3", () => Boolean(window.ATLAS_POLITY_BROWSER_READER))
       .then(() => loadScriptOnce("./atlas-polity-dossier-view.js?v=20260926-polity-atlas-v1", () => Boolean(window.ATLAS_POLITY_DOSSIER_VIEW)))
       .then(() => loadScriptOnce("./atlas-polity-review-registry.js?v=20261005-polity-registry-v3", () => Boolean(window.ATLAS_POLITY_REVIEW_REGISTRY)))
