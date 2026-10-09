@@ -1,0 +1,42 @@
+/* VIS2-11 — Polity dossier / Dashboard archival finish.
+ * Reversible paint only; existing DOM, content, density and behavior are unchanged.
+ */
+:root { --atlas-vis2-11-archive-active: 1; }
+
+/* Polity: historic record plaques; never change canonical/Activity content. */
+.polity-browser-shell .polity-browser-summary {
+  border-color: rgba(180,165,130,.38);
+  background-image: linear-gradient(100deg,rgba(184,166,129,.045),transparent 63%);
+  box-shadow: inset 0 1px 0 rgba(224,209,176,.18), 0 11px 29px rgba(0,0,0,.095);
+}
+.polity-browser-shell .polity-browser-card {
+  background-image: linear-gradient(180deg,rgba(207,192,155,.045),transparent 52%),linear-gradient(0deg,rgba(0,0,0,.14),transparent 75%);
+  box-shadow: inset 0 1px 0 rgba(229,212,175,.18),inset 0 -1px 0 rgba(0,0,0,.25),0 10px 23px rgba(0,0,0,.09);
+}
+.polity-browser-shell .polity-browser-card > summary {
+  box-shadow: inset 0 1px 0 rgba(222,203,162,.16);
+}
+.polity-browser-shell .polity-browser-card[open] > summary {
+  background-image: linear-gradient(95deg,rgba(184,166,129,.13),rgba(184,166,129,.025) 45%,transparent 85%);
+  box-shadow: inset 0 1px 0 rgba(222,203,162,.2),inset 0 -1px 0 rgba(177,159,119,.2);
+}
+.polity-browser-shell .polity-dossier-overview > div {
+  box-shadow: inset 0 1px 0 rgba(229,211,170,.19),inset 0 -1px 0 rgba(0,0,0,.27);
+}
+.polity-browser-shell .polity-dossier-section-head {
+  box-shadow: inset 0 -1px 0 rgba(180,164,128,.2);
+}
+
+/* Dashboard: institutional ledger, without recoloring semantic charts/status. */
+.dashboard-control-center .dashboard-hero {
+  box-shadow: inset 0 1px 0 rgba(228,211,171,.24),inset 0 -1px 0 rgba(0,0,0,.35),0 13px 31px rgba(0,0,0,.105);
+}
+.dashboard-control-center .dashboard-panel-head {
+  box-shadow: inset 0 -1px 0 rgba(180,164,130,.29);
+}
+.dashboard-control-center .dashboard-kpi:not(.dashboard-kpi-action) {
+  box-shadow: inset 0 1px 0 rgba(225,210,176,.19),inset 0 -1px 0 rgba(0,0,0,.24);
+}
+.dashboard-control-center .dashboard-progress-track {
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.33),0 0 0 1px rgba(186,168,132,.29);
+}
