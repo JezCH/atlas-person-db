@@ -145,6 +145,8 @@ jobs:
             sleep 0.25
           done
           curl -fsS http://127.0.0.1:9222/json/version >/dev/null
+          node --check scripts/verify-vis2-11-production-polity-dashboard.mjs
+          node scripts/verify-vis2-11-production-polity-dashboard.mjs
           node scripts/verify-spacetime-production-visual.mjs
           node scripts/verify-spacetime-production-domain-colors.mjs
           node scripts/verify-ui-v10-production-visual.mjs
@@ -171,8 +173,6 @@ jobs:
           node scripts/verify-vis2-09-production-detail-hero.mjs
           node --check scripts/verify-vis2-10-production-chronicle-source.mjs
           node scripts/verify-vis2-10-production-chronicle-source.mjs
-          node --check scripts/verify-vis2-11-production-polity-dashboard.mjs
-          node scripts/verify-vis2-11-production-polity-dashboard.mjs
           for report in "$ATLAS_VISUAL_OUT_DIR"/*.json; do
             echo "===== $report ====="
             cat "$report"
