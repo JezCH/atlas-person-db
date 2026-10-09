@@ -51,11 +51,10 @@ async function navigate(c,width){
  await c.call("Page.navigate",{url:"about:blank"});
  await until(c,"document.readyState==='complete'",12000);
  await c.call("Page.navigate",{url:ORIGIN+"/"});
- await until(c,"document.querySelector('.nav-list [data-atlas-domain=polities]') && document.querySelector('.nav-list [data-atlas-domain=dashboard]')",30000);
+ await until(c,"Boolean(window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain && document.querySelector('.nav-list [data-atlas-domain=polities]') && document.querySelector('.nav-list [data-atlas-domain=dashboard]'))",45000);
 }
 async function activate(c,domain){
- const q=".nav-list [data-atlas-domain="+domain+"]";
- assert(await evalJS(c,"(()=>{const b=document.querySelector("+JSON.stringify(q)+");if(!b)return false;b.click();return true;})()"),"Navigation button missing",{domain});
+ assert(await evalJS(c,"(()=>{const nav=window.ATLAS_MAIN_AUTHORITY_NAV;if(!nav?.showDomain)return false;nav.showDomain("+JSON.stringify(domain)+");return nav.getDomain()==="+JSON.stringify(domain)+";})()"),"Authority domain activation failed",{domain});
  const ready=domain==="polities"?"#atlasPolityMount .polity-browser-card":"#atlasDashboardMount .dashboard-kpi";
  await until(c,"document.querySelectorAll("+JSON.stringify(ready)+").length>0",90000);
  const fileQuery="link[href*='"+CSS+"']";
