@@ -1,0 +1,240 @@
+/*
+ * ATLAS Phase III / VIS3-03 — Original historical ornament component kit.
+ * UNUSED by index.html until later VIS3-04/05/06/08 screen-specific opt-in.
+ *
+ * Naming contract: every selector is under .atlas-ornament-kit, and assets
+ * are nonsemantic decorative layers; no Person/Polity/Activity state changes.
+ * Existing eight representative_domain colors are untouched.
+ */
+.atlas-ornament-kit {
+  --atlas-o-metal: var(--atlas-honor-metal-strong, #c0ae88);
+  --atlas-o-metal-muted: var(--atlas-honor-metal, #9c927d);
+  --atlas-o-ink: var(--atlas-canvas-deep, #0e1114);
+  --atlas-o-text: var(--atlas-text-strong, #f0ece4);
+  --atlas-o-secondary: var(--atlas-text-secondary, #a7adb1);
+  --atlas-o-engraving: rgba(208, 188, 145, .26);
+  --atlas-o-frame-inset: clamp(8px, 1.3vw, 18px);
+  --atlas-o-script: var(--atlas-font-display, "Noto Serif KR", Georgia, serif);
+  --atlas-o-interface: system-ui, "Noto Sans KR", sans-serif;
+  color: var(--atlas-o-text);
+}
+
+.atlas-ornament-kit .atlas-o-plate,
+.atlas-ornament-kit .atlas-o-cartouche,
+.atlas-ornament-kit .atlas-o-instrument,
+.atlas-ornament-kit .atlas-o-codex,
+.atlas-ornament-kit .atlas-o-chapter {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+}
+
+.atlas-ornament-kit .atlas-o-plate {
+  padding: clamp(20px, 3.2vw, 38px);
+  border: 1px solid var(--atlas-o-engraving);
+  background:
+    linear-gradient(122deg, rgba(207, 184, 138, .046), transparent 34%, rgba(207, 184, 138, .028) 75%, transparent),
+    var(--atlas-o-ink);
+  box-shadow: inset 0 0 0 5px var(--atlas-o-ink), inset 0 0 0 6px rgba(208,188,145,.16);
+}
+
+.atlas-ornament-kit .atlas-o-plate::before,
+.atlas-ornament-kit .atlas-o-plate::after {
+  position: absolute;
+  inset: 0 auto auto 0;
+  content: "";
+  width: min(90px, 20%);
+  aspect-ratio: 1;
+  z-index: -1;
+  background: url("./assets/ornaments/atlas-v3-corner.svg") left top / contain no-repeat;
+  pointer-events: none;
+}
+.atlas-ornament-kit .atlas-o-plate::after {
+  inset: auto 0 0 auto;
+  transform: rotate(180deg);
+}
+
+.atlas-ornament-kit .atlas-o-cartouche {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  min-height: clamp(112px, 15vw, 174px);
+  margin: 0 auto;
+  padding: 27px clamp(32px, 9%, 100px);
+  max-width: 900px;
+  font-family: var(--atlas-o-script);
+}
+.atlas-ornament-kit .atlas-o-cartouche::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("./assets/ornaments/atlas-v3-cartouche.svg") center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.atlas-ornament-kit .atlas-o-cartouche__name {
+  font-family: var(--atlas-o-script);
+  font-size: clamp(1.2rem, 2.1vw, 2.35rem);
+  line-height: 1.28;
+  letter-spacing: .08em;
+  font-weight: 600;
+  text-shadow: 0 1px 0 #000;
+}
+.atlas-ornament-kit .atlas-o-cartouche__eyebrow,
+.atlas-ornament-kit .atlas-o-cartouche__sub {
+  font-family: var(--atlas-o-interface);
+  letter-spacing: .18em;
+  font-size: clamp(.65rem, 1vw, .79rem);
+  color: var(--atlas-o-secondary);
+}
+.atlas-ornament-kit .atlas-o-cartouche__eyebrow {
+  color: var(--atlas-o-metal);
+  text-transform: uppercase;
+}
+
+.atlas-ornament-kit .atlas-o-chapter {
+  text-align: center;
+  padding: 24px 6px 28px;
+  margin: 4px 0;
+}
+.atlas-ornament-kit .atlas-o-chapter::after {
+  display: block;
+  position: relative;
+  content: "";
+  width: min(100%, 660px);
+  height: 52px;
+  margin: 10px auto -18px;
+  background: url("./assets/ornaments/atlas-v3-chapter-flourish.svg") center / contain no-repeat;
+  pointer-events: none;
+}
+.atlas-ornament-kit .atlas-o-chapter__title {
+  font-family: var(--atlas-o-script);
+  font-size: clamp(1.15rem, 2vw, 1.9rem);
+  line-height: 1.4;
+  letter-spacing: .04em;
+}
+.atlas-ornament-kit .atlas-o-folio {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: .6rem;
+  padding: .48rem .85rem;
+  background: linear-gradient(90deg, rgba(183,150,100,.14), rgba(183,150,100,.025));
+  border: 1px solid var(--atlas-o-engraving);
+  box-shadow: inset 0 0 0 3px rgba(11,15,18,.7), inset 0 0 0 4px rgba(189,164,112,.15);
+  color: var(--atlas-o-metal);
+  font: 600 .75rem/1.4 var(--atlas-o-interface);
+  letter-spacing: .10em;
+}
+.atlas-ornament-kit .atlas-o-folio::before {
+  content: "◇";
+  font-size: 1rem;
+  color: var(--atlas-o-metal);
+}
+
+.atlas-ornament-kit .atlas-o-instrument {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(40,69,76,.18), transparent 70%),
+    linear-gradient(120deg, rgba(202,165,107,.05), transparent 65%);
+  border: 1px solid var(--atlas-o-engraving);
+  min-height: 190px;
+  overflow: hidden;
+}
+.atlas-ornament-kit .atlas-o-instrument__bezel {
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  width: clamp(175px, 35%, 300px);
+  aspect-ratio: 1;
+  top: 50%;
+  right: -9%;
+  transform: translateY(-50%);
+  background: url("./assets/ornaments/atlas-v3-astrolabe.svg") center / contain no-repeat;
+  opacity: .83;
+}
+.atlas-ornament-kit .atlas-o-instrument__content {
+  position: relative;
+  z-index: 1;
+  max-width: 70%;
+  padding: 34px 28px;
+}
+.atlas-ornament-kit .atlas-o-instrument__title {
+  font-family: var(--atlas-o-script);
+  color: var(--atlas-o-text);
+  font-size: clamp(1.2rem, 2.1vw, 2.15rem);
+}
+.atlas-ornament-kit .atlas-o-instrument__caption {
+  font: .8rem/1.7 var(--atlas-o-interface);
+  color: var(--atlas-o-secondary);
+}
+
+.atlas-ornament-kit .atlas-o-codex {
+  padding: 30px 22px;
+  border: 1px solid var(--atlas-o-engraving);
+  background: linear-gradient(135deg, rgba(74,86,111,.07), transparent 65%), var(--atlas-o-ink);
+  box-shadow: inset 0 0 0 6px var(--atlas-o-ink), inset 0 0 0 7px rgba(208,188,145,.17);
+}
+.atlas-ornament-kit .atlas-o-codex__heading {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.3vw, 30px);
+  min-width: 0;
+}
+.atlas-ornament-kit .atlas-o-codex__initial {
+  display: block;
+  width: clamp(72px, 11vw, 120px);
+  flex: 0 0 auto;
+  aspect-ratio: 320 / 370;
+  object-fit: contain;
+  pointer-events: none;
+}
+.atlas-ornament-kit .atlas-o-codex__title {
+  min-width: 0;
+  font: 600 clamp(1.25rem, 2.4vw, 2.4rem)/1.3 var(--atlas-o-script);
+  overflow-wrap: anywhere;
+}
+.atlas-ornament-kit .atlas-o-codex__caption {
+  display: block;
+  margin-top: 9px;
+  color: var(--atlas-o-secondary);
+  font: .8rem/1.6 var(--atlas-o-interface);
+}
+
+.atlas-ornament-kit [data-atlas-ornament-only] {
+  pointer-events: none !important;
+  user-select: none;
+}
+@media (max-width: 760px) {
+  .atlas-ornament-kit .atlas-o-plate { padding: 14px; }
+  .atlas-ornament-kit .atlas-o-plate::before,
+  .atlas-ornament-kit .atlas-o-plate::after { width: 40px; }
+  .atlas-ornament-kit .atlas-o-cartouche {
+    min-height: 92px;
+    padding: 15px 24px;
+  }
+  .atlas-ornament-kit .atlas-o-cartouche__name {
+    font-size: clamp(1.05rem, 5vw, 1.5rem);
+    letter-spacing: .025em;
+  }
+  .atlas-ornament-kit .atlas-o-cartouche__eyebrow,
+  .atlas-ornament-kit .atlas-o-cartouche__sub { letter-spacing: .06em; font-size: .65rem; }
+  .atlas-ornament-kit .atlas-o-chapter { padding: 16px 4px 15px; }
+  .atlas-ornament-kit .atlas-o-chapter::after { height: 32px; margin-bottom: -10px; }
+  .atlas-ornament-kit .atlas-o-instrument { min-height: 140px; }
+  .atlas-ornament-kit .atlas-o-instrument__bezel {
+    width: 160px;
+    right: -58px;
+    opacity: .48;
+  }
+  .atlas-ornament-kit .atlas-o-instrument__content { padding: 22px 16px; max-width: 80%; }
+  .atlas-ornament-kit .atlas-o-codex { padding: 16px 12px; }
+  .atlas-ornament-kit .atlas-o-codex__initial { width: 58px; }
+  .atlas-ornament-kit .atlas-o-codex__heading { gap: 12px; }
+  .atlas-ornament-kit .atlas-o-codex__title { font-size: 1.15rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atlas-ornament-kit,
+  .atlas-ornament-kit *,
+  .atlas-ornament-kit *::before,
+  .atlas-ornament-kit *::after { animation: none !important; transition: none !important; }
+}
