@@ -1,0 +1,76 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:seol-chong-gamsansa-amitabha-text-719:v1",
+  "person": {
+    "canonical_name_en": "Seol Chong",
+    "display_name_ko": "설총",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Silla",
+    "display_name_ko": "신라",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "0e2c8b3f-f983-5d9f-9266-cc493899647b"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Silla Confucian scholar commissioned to compose the Gamsansa Amitabha inscription",
+    "role_display_name_ko": "감산사 아미타여래상 조상기를 왕명으로 지은 것으로 비정되는 신라 유학자",
+    "start_year": 719,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 719,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The **Amitabha** (NOT Maitreya) Gamsansa stele inscription itself records that 'nama Chong' composed the text under royal command on 15 February 719 (Kaiyuan 7). The National Institute of Korean History's Ancient Historical Sources DB identifies nama Chong with Seol Chong, a scholarly identification rather than proof of the author's full proper name preserved literally on the stone. Its physical **Amitabha** image/inscription as known has a 720 completion attribution and a postscript recording patron Kim Jijeon's death on 22 April 720. A disputed later engraving of the text has also been proposed owing to administrative title anachronism. Therefore YEAR 719 is a documented inscribed historical authoring point but **certainty approximate**, NOT a claim that the extant stone or postscript were inscribed in 719, nor that he authored the 719 Maitreya inscription as directly attested, or fabricated a death year. The *Hwawang-gye* parable placed during King Sinmun (681–692) is separate and lacks an exact event year."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "National Institute of Korean History — Gamsansa Stone Standing Amitabha Buddha inscription (Korean translation)",
+      "canonical_url": "https://db.history.go.kr/id/gskh_005_0050_0020_0030",
+      "citation_text": "Original epigraphic text dated Kaiyuan 7 / 719 says nama Chong composed the inscription by royal command on 15 February; official translation labels nama Chong 'Seol Chong' by established scholarly identification, and also records a 720 postscript."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "National Institute of Korean History — Maitreya inscription exegesis (contrasting 719 vs 720 and author attribution)",
+      "canonical_url": "https://db.history.go.kr/ancient/level.do?levelId=gskh_005_0050_0010_0010",
+      "citation_text": "Official discussion distinguishes Maitreya inscription (719) from Amitabha inscription (completed 720); nama Chong is named as author only in the Amitabha text, with Maitreya attribution inferred from context. Administrative title and later-engraving caveats are also discussed."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Academy of Korean Studies — Nammwolsan Gamsansa",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0000770",
+      "citation_text": "AKS encyclopedia independently notes the Gamsansa images' 719 foundation and the Amitabha image's later 720 completion after patron Kim Jiseong's death."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "National Institute of Korean History — Hwawang-gye attributed to Seol Chong",
+      "canonical_url": "https://contents.history.go.kr/front/hm/view.do?levelId=hm_039_0040",
+      "citation_text": "Separately attests the Hwawang-gye account in Samguk Sagi, traditionally presented to King Sinmun (reigned 681–692), without converting that ruler's reign into an invented precise personal Activity year."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-10",
+      "document_title": "설총",
+      "url": "https://namu.wiki/w/%EC%84%A4%EC%B4%9D"
+    }
+  }
+}
