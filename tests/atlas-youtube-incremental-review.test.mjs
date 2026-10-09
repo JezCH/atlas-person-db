@@ -66,6 +66,26 @@ test("identity normalization does not merge homonyms by surname or substring",()
   assert.equal(tier(10),"P0");
 });
 
+test("incremental review preserves non-Latin historical names without empty keys",()=>{
+  for (const name of ["Ибн Сина","ابن سينا","王羲之","রবীন্দ্রনাথ ঠাকুর","Αριστοτέλης"]) {
+    assert.ok(nameKey(name).length>0, "non-Latin identity must be preserved: "+name);
+  }
+  assert.equal(nameKey("Chopín"),nameKey("Chopin"));
+  assert.notEqual(nameKey("王羲之"),nameKey("张择端"));
+  const before=make("yt-unicode-before",[signal(1,"Abraham Lincoln",5)]);
+  const after=make("yt-unicode-after",[
+    signal(1,"Abraham Lincoln",6),
+    signal(2,"Ибн Сина",3),
+    signal(3,"王羲之",3),
+    signal(4,"রবীন্দ্রনাথ ঠাকুর",3),
+    signal(5,"ابن سينا",3),
+    signal(6,"Αριστοτέλης",3)
+  ]);
+  const review=computeIncrementalAudit(after,before,{currentAsOf:"2026-10-09T00:00:00Z"});
+  assert.equal(review.summary.current_signals,6);
+  assert.equal(review.summary.new_raw_names,5);
+});
+
 test("ambiguous duplicate normalized keys always demand review, never silently merge",()=>{
   const prev=make("older",[signal(1,"Émile Zola",3)]);
   const curr=make("newer",[signal(1,"Emile Zola",5),signal(2,"Émile Zola",3)]);
