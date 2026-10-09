@@ -177,7 +177,7 @@ jobs:
 
           endpoint="${ATLAS_AUDIT_ENDPOINT}?__atlas_audit_surface=polity-reference-audit"
           payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" \
-            '{deployment_sha:$deployment_sha,include_brazil_details:true,include_brazil_preflight:true,include_brazil_source_aliases:true,include_brazil_stage2_contract:true,evidence_terms:["pre-meiji japan","imperial japan","tokugawa","toyotomi","empire of japan","liao dynasty","ming dynasty","tsardom of russia","shakya","haudenosaunee","swedish empire","qara khitai"]}')"
+            '{deployment_sha:$deployment_sha,include_brazil_details:true,include_brazil_preflight:true,include_brazil_source_aliases:true,include_brazil_stage2_contract:true,include_brazil_law_source_preflight:true,evidence_terms:["pre-meiji japan","imperial japan","tokugawa","toyotomi","empire of japan","liao dynasty","ming dynasty","tsardom of russia","shakya","haudenosaunee","swedish empire","qara khitai"]}')"
           fetched=false
           for attempt in $(seq 1 12); do
             oidc_token="$(request_oidc)"
@@ -323,6 +323,32 @@ jobs:
             source_column_names:[.source_columns[].column_name],missing_source_columns}' \
             polity-reference-audit-response.json | tee brazil-stage2-contract-summary.push.json
 
+
+      - name: Capture exact Brazil 1968 Law 5389 Source collision and generic catalogue census (READ ONLY)
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -e '.ok == true and .read_only == true and .committed == false
+            and (.brazil_law_source_preflight.exact_source_key_or_url_matches|type) == "array"
+            and (.brazil_law_source_preflight.metadata_match_total|type) == "number"
+            and (.brazil_law_source_preflight.metadata_candidates|type) == "array"
+            and (.brazil_law_source_preflight.source_type_counts|type) == "array"
+            and (.brazil_law_source_preflight.generic_catalogue_samples|type) == "array"
+            and .brazil_law_source_preflight.safe_for_automatic_source_assertion == false
+            and .brazil_law_source_preflight.absence_of_semantically_duplicate_unlabeled_external_payloads_proven == false' polity-reference-audit-response.json >/dev/null
+          jq '.brazil_law_source_preflight' polity-reference-audit-response.json > brazil-1968-law-source-preflight.push.json
+          jq -c '.brazil_law_source_preflight | {
+            source_key_candidate,official_source_urls,
+            exact_source_key_or_url_matches,exact_truncated,
+            metadata_match_total,metadata_candidates,metadata_truncated,
+            source_type_counts,generic_catalogue_samples,generic_catalogue_sample_truncated,
+            safe_for_automatic_source_assertion,
+            absence_of_semantically_duplicate_unlabeled_external_payloads_proven,
+            catalog_scan_complete
+          }' polity-reference-audit-response.json | tee brazil-1968-law-source-summary.push.json
+          jq -e '.brazil_law_source_preflight.catalog_scan_complete == true' polity-reference-audit-response.json >/dev/null
+
       - name: Upload read-only inventory evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -352,6 +378,8 @@ jobs:
             brazil-source-alias-summary.push.json
             brazil-stage2-contract.push.json
             brazil-stage2-contract-summary.push.json
+            brazil-1968-law-source-preflight.push.json
+            brazil-1968-law-source-summary.push.json
             docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json
           if-no-files-found: warn
           retention-days: 90
