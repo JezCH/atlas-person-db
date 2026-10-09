@@ -1,0 +1,74 @@
+{
+  "schema": "atlas-polity-p2-03h-official-name-source-review/v1",
+  "status": "REVIEW_ONLY_NOT_APPROVED",
+  "canonical_mutation": false,
+  "safe_to_apply": false,
+  "polity_family": {
+    "empire": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+    "early_republic": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+    "later_republic_survivor_candidate": "a8b27d54-b180-4d51-a664-dd40b3eed08f"
+  },
+  "current_production": {
+    "run_id": 37920065332,
+    "job_id": 113785586996,
+    "deployment_sha": "9f20916756c7c6f638cc85d219eba4f3f2d2bb4d",
+    "readonly": true,
+    "committed": false,
+    "source_metadata_candidates": 0,
+    "search_complete": true,
+    "truncated": false,
+    "exact_official_url_sources_from_p2_03g": 0,
+    "source_semantic_alias_absence_proven": false
+  },
+  "legal_name_change": {
+    "law_number": "Lei nº 5.389",
+    "signed_on": "1968-02-22",
+    "published_dou_on": "1968-02-23",
+    "effective_rule": "Art. 4: date of publication",
+    "effective_on": "1968-02-23",
+    "source_url": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-publicacaooriginal-1-pl.html",
+    "verification_url": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-norma-pl.html",
+    "independent_senate_url": "https://legis.senado.gov.br/norma/547253/publicacao/15715169",
+    "legal_locator": "Art. 1º, incisos 2 e 3; Art. 3º; Art. 4º; DOU 23/02/1968",
+    "distinction": "Statutory national-symbol inscriptions + official denomination acknowledgment; exact exclusive proper-name boundary requires final review of Opinion H-733",
+    "opinion_reference": {
+      "id": "H-733",
+      "dated_on": "1968-09-14",
+      "official_chamber_history": "https://www2.camara.leg.br/a-camara/conheca/historia/a5republica.html",
+      "full_primary_opinion_text_obtained": false
+    },
+    "conflict_caveat": "One Chamber chronology has an inconsistent 22.08.1968 entry; primary promulgation 22 Feb and DOU 23 Feb are controlling for law chronology."
+  },
+  "reviewed_boundary_candidate": {
+    "early": {
+      "name_pt": "Estados Unidos do Brasil",
+      "review_start": "1889-11-15",
+      "review_end": "1968-02-22"
+    },
+    "later": {
+      "name_pt": "República Federativa do Brasil",
+      "review_start": "1968-02-23",
+      "review_end": null
+    },
+    "origin": "Legislative and historic evidence; precision NOT approved for canonical assertion",
+    "confidence": "STRONG_CANDIDATE_PENDING_OPINION_H_733",
+    "approved_for_writer": false,
+    "designation_type": null,
+    "source_uuid_links": [],
+    "source_key_confirmed": false,
+    "designation_uuid": null
+  },
+  "source_registration_candidate": {
+    "title": "Lei nº 5.389, de 22 de fevereiro de 1968",
+    "url": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-publicacaooriginal-1-pl.html",
+    "locator": "Art. 1º, items 2–3; Arts. 3–4",
+    "source_id": null,
+    "source_type": null,
+    "source_key": null,
+    "sha256": null,
+    "bytes": null,
+    "canonical_insert_authorized": false
+  },
+  "next": "POLITY-P2-03I",
+  "parent_status": "REVIEW_REQUIRED"
+}
