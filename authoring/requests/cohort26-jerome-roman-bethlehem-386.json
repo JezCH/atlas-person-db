@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:jerome-roman-bethlehem-386:v1",
+  "person": {
+    "canonical_name_en": "Jerome",
+    "display_name_ko": "히에로니무스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "documented_death",
+    "representative_domain": "religion",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Christian scholar and biblical translator",
+    "role_display_name_ko": "기독교 교부·성경 번역가",
+    "start_year": 386,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 386,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jerome reached Bethlehem in 386 and settled into monastic scholarship. The date represents his documented personal relocation and settlement; it does not claim the Latin Vulgate was completed in 386. This is Jerome of Stridon (Saint Jerome), not Hieronymus of Syracuse, Hieronymus Wolf, or the Blue Archive fictional boss."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "St. Jerome — Catholic Encyclopedia (New Advent)",
+      "canonical_url": "https://www.newadvent.org/cathen/08341a.htm",
+      "citation_text": "The Catholic Encyclopedia gives Jerome's arrival and settlement in Bethlehem in 386 and death in 420."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "St. Eustochium Julia — Catholic Encyclopedia",
+      "canonical_url": "https://www.catholic.org/encyclopedia/view.php?id=4448",
+      "citation_text": "The contemporaneous associates Paula and Eustochium and Jerome settled in Bethlehem in 386, with the associated monasteries being established during 386–389."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-10",
+      "review_reason": "related_or_derivative_only"
+    }
+  }
+}

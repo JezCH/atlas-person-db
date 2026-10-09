@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:unsuri-ghaznavid-1031:v1",
+  "person": {
+    "canonical_name_en": "Unsuri",
+    "display_name_ko": "운수리",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Ghaznavid Empire",
+    "display_name_ko": "가즈니 왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "93bebce8-a3cb-4a40-9b50-638d2d079212"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Persian court poet of the Ghaznavids",
+    "role_display_name_ko": "가즈니 왕조 궁정 시인",
+    "start_year": 1031,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1031,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Encyclopaedia Iranica, using Bayhaqi's chronicle, reports ʿOnsori received a royal reward for an Eid poem under Sultan Masʿud I on 21 September 1031. This is a single person-attributable event, not an invented reign or entire career. His birth, death and common court anecdotes are not asserted as exact dates or verified facts."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "ʿOnṣori — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/onsori/",
+      "citation_text": "Iranica cites Bayhaqi for a specific Eid al-Fitr 422 AH/21 September 1031 reward to ʿOnsori under Masʿud I, and distinguishes unreliable later anecdotes."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-10",
+      "review_reason": "no_exact_document"
+    }
+  }
+}
