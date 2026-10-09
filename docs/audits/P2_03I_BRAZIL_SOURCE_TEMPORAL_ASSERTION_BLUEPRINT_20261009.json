@@ -1,0 +1,366 @@
+{
+  "schema": "atlas-polity-p2-03i-reviewed-nonexecuting-assertion-blueprint/v1",
+  "unit": "POLITY-P2-03I",
+  "created_on": "2026-10-09",
+  "state": "REVIEW_ONLY_NOT_APPROVED",
+  "is_correction_manifest": false,
+  "allow_authoring_write": false,
+  "allow_runtime_write": false,
+  "safe_to_apply": false,
+  "provenance": {
+    "production_exact_before_run": 37918278937,
+    "production_source_alias_run": 37920065332,
+    "source_candidate_metadata_hits": 0,
+    "source_url_hits": 0,
+    "alias_absence_semantically_proven": false,
+    "existing_polity_sources": {
+      "empire": 1,
+      "united_states_of_brazil": 0,
+      "brazil": 0
+    },
+    "existing_designation_rows_for_three": 0
+  },
+  "jurisdictions": {
+    "imperial_polity_id": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+    "early_republic_polity_id": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+    "later_republic_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f"
+  },
+  "source_bibliography_candidates": [
+    {
+      "reference_key": "decree_1889_11_15",
+      "title": "Decreto nº 1, de 15 de novembro de 1889",
+      "publisher": "Governo Provisório da República",
+      "canonical_url": "https://www2.camara.leg.br/legin/fed/decret/1824-1899/decreto-1-15-novembro-1889-532625-publicacaooriginal-14906-pe.html",
+      "citation_locator": "Arts. 1º–2º",
+      "attests": [
+        "federal_republic_proclaimed_1889_11_15",
+        "estados_unidos_do_brazil_name_1889_11_15"
+      ],
+      "not_proof_of": "exact later discontinuation date",
+      "id": null,
+      "source_key": null,
+      "source_type": "web_bibliographic_reference",
+      "sha256": null,
+      "bytes": null,
+      "bibliography_status": "PREPARED_UNREGISTERED"
+    },
+    {
+      "reference_key": "constitution_1891",
+      "title": "Constituição da República dos Estados Unidos do Brasil (1891)",
+      "publisher": "Congresso Constituinte",
+      "canonical_url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao91.htm",
+      "citation_locator": "Title and Art. 1º",
+      "attests": [
+        "estados_unidos_do_brasil_constitutional_name_1891_02_24"
+      ],
+      "not_proof_of": "1967 name termination",
+      "id": null,
+      "source_key": null,
+      "source_type": "web_bibliographic_reference",
+      "sha256": null,
+      "bytes": null,
+      "bibliography_status": "PREPARED_UNREGISTERED"
+    },
+    {
+      "reference_key": "constitution_1934",
+      "title": "Constituição da República dos Estados Unidos do Brasil (1934)",
+      "publisher": "Assembleia Nacional Constituinte",
+      "canonical_url": "https://www.presidencia.gov.br/ccivil_03/constituicao/constituicao34.htm",
+      "citation_locator": "Title and Art. 1º",
+      "attests": [
+        "estados_unidos_do_brasil_title_used_1934_07_16"
+      ],
+      "not_proof_of": "1934 new polity UUID",
+      "id": null,
+      "source_key": null,
+      "source_type": "web_bibliographic_reference",
+      "sha256": null,
+      "bytes": null,
+      "bibliography_status": "PREPARED_UNREGISTERED"
+    },
+    {
+      "reference_key": "constitution_1946",
+      "title": "Constituição dos Estados Unidos do Brasil (1946)",
+      "publisher": "Assembleia Constituinte",
+      "canonical_url": "https://legis.senado.gov.br/norma/579492/publicacao/15675026",
+      "citation_locator": "Constitution title and promulgation of 18 September 1946",
+      "attests": [
+        "estados_unidos_do_brasil_title_used_1946_09_18"
+      ],
+      "not_proof_of": "end date of name",
+      "id": null,
+      "source_key": null,
+      "source_type": "web_bibliographic_reference",
+      "sha256": null,
+      "bytes": null,
+      "bibliography_status": "PREPARED_UNREGISTERED"
+    },
+    {
+      "reference_key": "constitution_1967",
+      "title": "Constituição de 1967",
+      "publisher": "Congresso Nacional",
+      "canonical_url": "https://www2.camara.leg.br/legin/fed/consti/1960-1969/constituicao-1967-24-janeiro-1967-365194-publicacaooriginal-1-pl.html",
+      "citation_locator": "Art. 1º (federal republic), Art. 189 (entry into force on 15 March 1967)",
+      "attests": [
+        "republican_federal_form_1967",
+        "constitution_effective_1967_03_15"
+      ],
+      "not_proof_of": "first exclusive official naming as República Federativa do Brasil",
+      "id": null,
+      "source_key": null,
+      "source_type": "web_bibliographic_reference",
+      "sha256": null,
+      "bytes": null,
+      "bibliography_status": "PREPARED_UNREGISTERED"
+    },
+    {
+      "reference_key": "law_1968_5389",
+      "title": "Lei nº 5.389, de 22 de fevereiro de 1968",
+      "publisher": "Congresso Nacional / Câmara dos Deputados",
+      "canonical_url": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-publicacaooriginal-1-pl.html",
+      "official_metadata_url": "https://www2.camara.leg.br/legin/fed/lei/1960-1969/lei-5389-22-fevereiro-1968-359075-norma-pl.html",
+      "independent_official_publication_url": "https://legis.senado.gov.br/norma/547253/publicacao/15715169",
+      "citation_locator": "Art. 1º (incisos 2–3), Arts. 3º–4º; Diário Oficial da União, 23/02/1968, Seção 1, p. 1673",
+      "attests": [
+        "new_official_name_in_coat_of_arms_and_seal",
+        "official_name_change_expressly_referenced",
+        "1968_02_23_law_effectiveness"
+      ],
+      "not_proof_of": "solely and conclusively every official-name use by every institution changed on 1968-02-23",
+      "id": null,
+      "source_key": null,
+      "source_type": "web_bibliographic_reference",
+      "sha256": null,
+      "bytes": null,
+      "bibliography_status": "PREPARED_UNREGISTERED"
+    },
+    {
+      "reference_key": "amendment_1969_1",
+      "title": "Emenda Constitucional nº 1, de 17 de outubro de 1969",
+      "publisher": "Ministros da Marinha, Exército e Aeronáutica",
+      "canonical_url": "https://www2.camara.leg.br/legin/fed/emecon/1960-1969/emendaconstitucional-1-17-outubro-1969-364989-publicacaooriginal-1-pl.html",
+      "citation_locator": "Art. 1º, amended constitution title; Art. 2º (effective 30 October 1969)",
+      "attests": [
+        "republica_federativa_do_brasil_explicit_in_1969_amended_title",
+        "amendment_effective_1969_10_30"
+      ],
+      "not_proof_of": "earliest possible Republica Federativa name use",
+      "id": null,
+      "source_key": null,
+      "source_type": "web_bibliographic_reference",
+      "sha256": null,
+      "bytes": null,
+      "bibliography_status": "PREPARED_UNREGISTERED"
+    },
+    {
+      "reference_key": "constitution_1988",
+      "title": "Constituição da República Federativa do Brasil (1988)",
+      "publisher": "Assembleia Nacional Constituinte",
+      "canonical_url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicaocompilado.htm",
+      "citation_locator": "Promulgation 5 October 1988, title and Art. 1º",
+      "attests": [
+        "republica_federativa_do_brasil_title_confirmed_1988_10_05"
+      ],
+      "not_proof_of": "new distinct sovereign-state identity in 1988",
+      "id": null,
+      "source_key": null,
+      "source_type": "web_bibliographic_reference",
+      "sha256": null,
+      "bytes": null,
+      "bibliography_status": "PREPARED_UNREGISTERED"
+    }
+  ],
+  "unverified_opinion": {
+    "reference": "Parecer H-733",
+    "date": "1968-09-14",
+    "full_primary_text_verified": false,
+    "do_not_cite_as_primary_for_exact_date": true
+  },
+  "interval_candidates": [
+    {
+      "label": "early_republic_name",
+      "name_pt": "Estados Unidos do Brasil",
+      "name_en": "United States of Brazil",
+      "name_ko": "브라질 합중국",
+      "intended_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "designation_id": null,
+      "designation_type": null,
+      "candidate_valid_from": {
+        "year": 1889,
+        "month": 11,
+        "day": 15,
+        "granularity": "day",
+        "certainty": null,
+        "calendar": null
+      },
+      "candidate_valid_to": {
+        "year": 1968,
+        "month": 2,
+        "day": 22,
+        "granularity": "day",
+        "certainty": null,
+        "calendar": null
+      },
+      "basis_references": [
+        "decree_1889_11_15",
+        "constitution_1891",
+        "constitution_1934",
+        "constitution_1946",
+        "law_1968_5389"
+      ],
+      "source_uuid_links": [],
+      "source_name_ids": [],
+      "status": "STRONG_DATE_CANDIDATE_PENDING_LEGAL_AND_ENUM_REVIEW",
+      "safe_to_assert": false
+    },
+    {
+      "label": "later_republic_name",
+      "name_pt": "República Federativa do Brasil",
+      "name_en": "Federative Republic of Brazil",
+      "name_ko": "브라질 연방공화국",
+      "intended_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "designation_id": null,
+      "designation_type": null,
+      "candidate_valid_from": {
+        "year": 1968,
+        "month": 2,
+        "day": 23,
+        "granularity": "day",
+        "certainty": null,
+        "calendar": null
+      },
+      "candidate_valid_to": null,
+      "basis_references": [
+        "law_1968_5389",
+        "amendment_1969_1",
+        "constitution_1988"
+      ],
+      "source_uuid_links": [],
+      "source_name_ids": [],
+      "status": "STRONG_DATE_CANDIDATE_PENDING_LEGAL_AND_ENUM_REVIEW",
+      "safe_to_assert": false
+    }
+  ],
+  "exact_activities": [
+    {
+      "activity_id": "538c90ab-8752-471c-98be-9b388f6c8d9f",
+      "observed_polity_id": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+      "activity_start_year": 1822,
+      "activity_end_year": 1831,
+      "preview_title_bucket": "imperial_untouched",
+      "authoring_mutation_allowed": false
+    },
+    {
+      "activity_id": "ae9b7ba9-4c62-508b-b019-2ded901413bc",
+      "observed_polity_id": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+      "activity_start_year": 1840,
+      "activity_end_year": 1889,
+      "preview_title_bucket": "imperial_untouched",
+      "authoring_mutation_allowed": false
+    },
+    {
+      "activity_id": "7a021719-8a81-4367-9fd1-64e75f996563",
+      "observed_polity_id": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+      "activity_start_year": 1906,
+      "activity_end_year": 1909,
+      "preview_title_bucket": "old_republic_title",
+      "authoring_mutation_allowed": false
+    },
+    {
+      "activity_id": "e82ebfff-537e-43e0-b1f6-452c1b7cb27c",
+      "observed_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "activity_start_year": 1930,
+      "activity_end_year": 1934,
+      "preview_title_bucket": "old_republic_title",
+      "authoring_mutation_allowed": false
+    },
+    {
+      "activity_id": "b1f52253-fcbf-4ba4-a061-37491658bf38",
+      "observed_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "activity_start_year": 1934,
+      "activity_end_year": 1945,
+      "preview_title_bucket": "old_republic_title",
+      "authoring_mutation_allowed": false
+    },
+    {
+      "activity_id": "ed7c3548-8dd4-479e-94e4-c6a382264a2d",
+      "observed_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "activity_start_year": 1951,
+      "activity_end_year": 1954,
+      "preview_title_bucket": "old_republic_title",
+      "authoring_mutation_allowed": false
+    },
+    {
+      "activity_id": "db3aa305-ff94-460b-a88d-2ed044a4f638",
+      "observed_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "activity_start_year": 1961,
+      "activity_end_year": 1964,
+      "preview_title_bucket": "old_republic_title",
+      "authoring_mutation_allowed": false
+    },
+    {
+      "activity_id": "fbd5f4db-fcd1-4782-9b71-56fae2e1e2b7",
+      "observed_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "activity_start_year": 1969,
+      "activity_end_year": 1974,
+      "preview_title_bucket": "new_republic_title",
+      "authoring_mutation_allowed": false
+    },
+    {
+      "activity_id": "21feba6a-db22-4ce2-a51e-fdd65f2ca2dd",
+      "observed_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "activity_start_year": 1992,
+      "activity_end_year": 1992,
+      "preview_title_bucket": "new_republic_title",
+      "authoring_mutation_allowed": false
+    },
+    {
+      "activity_id": "52a26a9a-110e-413b-b516-960413cc39e4",
+      "observed_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+      "activity_start_year": 1992,
+      "activity_end_year": 1995,
+      "preview_title_bucket": "new_republic_title",
+      "authoring_mutation_allowed": false
+    }
+  ],
+  "exact_coverage_expectation": {
+    "imperial_untouched": 2,
+    "old_republic_title": 5,
+    "new_republic_title": 3,
+    "total": 10,
+    "note": "Authoring year-only Activities only; 5 old includes one Activity still on early-Republic UUID and 4 Activities already on Brazil UUID. Neither Source nor Designation registration transfers that Activity."
+  },
+  "operations": [],
+  "source_ids_issued": [],
+  "designation_ids_issued": [],
+  "writer_contract": {
+    "source_assertion_requires": [
+      "existing Source collision/alias recheck",
+      "reviewed new UUID with exact_before.source_absent_id equal",
+      "source_key uniqueness",
+      "source_type/title/https canonical_url/citation_text",
+      "sha256=null",
+      "bytes=null"
+    ],
+    "designation_assertion_requires": [
+      "real existing registered source UUID links and locators",
+      "new designation + name UUIDs with exact-before absence",
+      "approved designation_type and actual schema values",
+      "precision, certainty and calendar enum decisions",
+      "nonoverlapping exact dates",
+      "exact scoped ten Activities and full Runtime content check if later relinking"
+    ],
+    "source_metadata_gap": "Stage2 assert_source uses SOURCE_FIELDS whitelist of 8 fields; author_creator/institution/publisher/publication_date/identifiers are not carried through this assertion, though atlas-source-service supports those bibliographic fields. Must select explicit governed provenance enrichment path; do not silently claim those fields will persist.",
+    "activity_matching": "server/atlas-polity-temporal-designation-read.js requires EXACTLY one containing designation; year-only activities count from Jan 1 to Dec 31. Same-year boundaries may suppress display for a straddling year-only Activity; there are no 1968-straddling Activities among these exact 10."
+  },
+  "outstanding": [
+    "H-733 actual text not verified, 1968 date still reviewed candidate not conclusively exclusive name transition",
+    "Current DB designation_type and time certainty/calendar accepted values not verified by actual schema",
+    "No source UUIDs minted, Source authors/publishers metadata persistence undecided",
+    "Source semantic alias under generically named catalogue records not excluded",
+    "No approved correction manifest and no canonical writes, merges, retirements, deletions or Activity transfers"
+  ],
+  "next": "POLITY-P2-03J",
+  "parent_case": "brazil-regime-family",
+  "parent_status": "REVIEW_REQUIRED"
+}
