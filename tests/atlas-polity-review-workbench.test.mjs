@@ -202,7 +202,12 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 24);
+  assert.equal(unresolved.length, 23);
+  const brazil = byId.get('brazil-regime-family');
+  assert.equal(brazil.terminal_status, 'FIXED');
+  assert.equal(brazil.status, 'FIXED');
+  assert.match(brazil.rationale, /old United States of Brazil and Brazil are ONE continuously sovereign republic/);
+  assert.match(brazil.rationale, /Former Polity row NOT retired or deleted/);
   const macedon = byId.get('macedon-empire');
   assert.equal(macedon.terminal_status, 'KEEP_SEPARATE');
   assert.equal(macedon.reviewed_decision, 'keep_both');
