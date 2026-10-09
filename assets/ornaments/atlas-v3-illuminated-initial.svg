@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 370" role="img" aria-labelledby="title desc"><title id="title">Atlas illuminated chapter initial</title><desc id="desc">Original secular illuminated letter A and foliate frame, decorative only.</desc>
+<defs><linearGradient id="g"><stop stop-color="#d3ad66"/><stop offset=".5" stop-color="#f3dba7"/><stop offset="1" stop-color="#8f6b40"/></linearGradient><linearGradient id="f"><stop stop-color="#243b4d"/><stop offset="1" stop-color="#14202f"/></linearGradient></defs>
+<rect x="7" y="7" width="306" height="356" rx="2" fill="#171e2b" stroke="#d7b578" stroke-width="6"/><rect x="19" y="19" width="282" height="332" fill="none" stroke="#496881" stroke-width="8"/><rect x="29" y="29" width="262" height="312" fill="none" stroke="#ba6855" stroke-width="2.6"/><rect x="43" y="43" width="234" height="284" fill="url(#f)" stroke="#cfab75" stroke-width="1.4"/>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path stroke="#d7bf86" stroke-width="3.2" d="M56 316 C98 283 80 240 55 251 C38 259 50 275 61 269 M264 57 C227 87 244 128 266 117 C279 110 270 99 259 103"/>
+<path stroke="#d7bf86" stroke-width="2" d="M54 182 C101 156 78 112 53 129 C38 139 58 156 66 140 M266 181 C215 201 239 247 265 233 C283 222 262 207 251 221"/>
+<path stroke="#719f91" stroke-width="2" fill="#3e7270" d="M83 269 Q123 245 119 276 Q94 296 83 269Z M250 130 Q209 112 212 143 Q240 155 250 130Z"/>
+<path stroke="#e0b077" stroke-width="2" fill="#a65853" d="M65 95 Q98 69 97 102 Q75 122 65 95Z M244 272 Q215 245 217 282 Q240 300 244 272Z"/>
+</g>
+<path d="M101 270 L159 82 L218 270 M120 213 H196" fill="none" stroke="#573d2b" stroke-width="26" stroke-linejoin="round"/><path d="M101 270 L159 82 L218 270 M120 213 H196" fill="none" stroke="url(#g)" stroke-width="18" stroke-linejoin="round"/><path d="M159 113 L183 193 H137Z" fill="#1c3043"/><circle cx="159" cy="53" r="6" fill="#e6c486"/>
+<path d="M50 50 L62 63 M258 307 L270 320" stroke="#d9bd84" stroke-width="3"/>
+</svg>
