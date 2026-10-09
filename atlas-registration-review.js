@@ -328,9 +328,10 @@
       ? (waiting ? "통합 순위 미게시 또는 현재 누적 스냅샷과 불일치 — 기존 원시명 순위는 별도 탭에서 확인할 수 있습니다."
         : "검증된 Person UUID 기준 · 제목에 명시된 언급 포함 · 원시명 집계 별도 보존")
       : "원시 표기별 집계 · 동명이인 및 다른 표기는 별개 순위입니다.";
-    activeRoot?.querySelectorAll("#youtubeSignalMode [data-signal-mode]").forEach(button=>{
-      button.setAttribute("aria-pressed",String(button.dataset.signalMode===signalMode));
-    });
+    for(const mode of ["raw","person"]){
+      const button=activeRoot?.querySelector(`#youtubeSignalMode [data-signal-mode="${mode}"]`);
+      button?.setAttribute("aria-pressed",String(mode===signalMode));
+    }
     const telemetry=activeRoot?.querySelector("#youtubeSignalTelemetry");
     if(telemetry) {
       telemetry.innerHTML=snapshot
