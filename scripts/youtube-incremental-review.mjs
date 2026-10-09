@@ -77,9 +77,18 @@ function reviewedDecisions(raw) {
   for(const row of entries) {
     const key=nameKey(row.name);
     if(!key||!["NON_INDIVIDUAL","AMBIGUOUS","UNIDENTIFIED","MYTH_FICTION"].includes(row.disposition)
-      ||!String(row.reason||"").trim()||!String(row.reviewed_at||"").match(/^\d{4}-\d{2}-\d{2}$/)
-      ||map.has(key))throw Error("YOUTUBE_AUDIT_INVALID_REVIEW_DECISION");
-    map.set(key,row);
+      ||!String(row.reason||"").trim()||!String(row.reviewed_at||"").match(/^\d{4}-\d{2}-\d{2}$/))
+      throw Error("YOUTUBE_AUDIT_INVALID_REVIEW_DECISION");
+    const prior=map.get(key);
+    if(prior) {
+      // Alternate spellings of the same reviewed verdict are both retained.
+      // A genuinely conflicting review still halts rather than losing history.
+      if(prior.disposition!==row.disposition||prior.reason!==row.reason)
+        throw Error("YOUTUBE_AUDIT_CONFLICTING_REVIEW_DECISIONS");
+      map.set(key,{...prior,source_decisions:[...(prior.source_decisions||[prior]),row]});
+    } else {
+      map.set(key,row);
+    }
   }
   return map;
 }
