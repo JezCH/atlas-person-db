@@ -1,0 +1,37 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+const root=new URL("../",import.meta.url);
+const css=fs.readFileSync(new URL("atlas-vis2-12-interaction-motion.css",root),"utf8");
+const html=fs.readFileSync(new URL("index.html",root),"utf8");
+const v9=fs.readFileSync(new URL("atlas-ui-motion-material-v9.css",root),"utf8");
+const polity=fs.readFileSync(new URL("atlas-polity-review-workbench.css",root),"utf8");
+const dashboard=fs.readFileSync(new URL("atlas-dashboard-monumental-v11.css",root),"utf8");
+test("VIS2-12 is a single root sheet with focus-visible and reduced-motion ownership",()=>{
+ const link="atlas-vis2-12-interaction-motion.css?v=20261009-vis2-12-v1";
+ assert.equal(html.split(link).length-1,1);
+ assert.ok(html.indexOf(link)>html.indexOf("atlas-person-chronicle-source-archive-v2.css"));
+ assert.match(css,/--atlas-vis2-12-interaction-active:\s*1/);
+ assert.match(css,/@media\s*\(prefers-reduced-motion:\s*reduce\)/);
+ assert.match(css,/\.spacetime-region-head-layer/);
+ assert.match(css,/\.polity-browser-shell button/);
+ assert.match(css,/\.dashboard-control-center button/);
+ assert.match(v9,/--atlas-focus-ring/);
+ assert.match(polity,/\.polity-browser-card>summary/);
+ assert.match(dashboard,/\.dashboard-control-center/);
+});
+test("VIS2-12 preserves states/layout and does not suppress normal motion",()=>{
+ const code=css.replace(/\/\*[\s\S]*?\*\//g,"");
+ const mediaPos=code.indexOf("@media");
+ assert.ok(mediaPos>0);
+ const base=code.slice(0,mediaPos);
+ assert.doesNotMatch(base,/(?:^|[;{])\s*(?:animation|transition|display|width|height|padding|margin|transform|background|color|opacity|font)\s*:/m);
+ assert.match(base,/:focus-visible/);
+ assert.match(base,/outline:\s*1px solid var\(--atlas-focus-ring\)/);
+ const media=code.slice(mediaPos);
+ assert.match(media,/transition:\s*none\s*!important/);
+ assert.match(media,/animation:\s*none\s*!important/);
+ assert.match(media,/scroll-behavior:\s*auto\s*!important/);
+ assert.doesNotMatch(code,/\b(?:grid-template|font-size|line-height|letter-spacing|position|transform|pointer-events|text-align|opacity|z-index|background-color|border-color)\s*:/);
+ assert.doesNotMatch(code,/data-representative-domain|@keyframes|\.person-register-entry\s*\{|\b--atlas-person-domain-|content\s*:/);
+});
