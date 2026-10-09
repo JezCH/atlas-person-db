@@ -14,7 +14,7 @@ try:
 except Exception:
     pycountry = None
 
-BATCH_LABEL_RE = re.compile(r"(?:youtube-)?batch(\d{3})", re.I)
+BATCH_LABEL_RE = re.compile(r"(?:youtube-)?batch(\d{3})([a-z]?)(?=[^a-z0-9]|$)", re.I)
 SEP_RE = re.compile(r"\s*(?:\||:|\s[-–—]\s)\s*")
 PAREN_TRAIL_RE = re.compile(r"\s*[\[(][^\])]{0,80}[\])]?\s*$")
 SPACE_RE = re.compile(r"\s+")
@@ -220,7 +220,7 @@ def batch_label(path):
     match = BATCH_LABEL_RE.search(str(path).replace("\\", "/"))
     if not match:
         raise RuntimeError(f"cannot classify batch path: {path}")
-    return f"batch{match.group(1)}"
+    return f"batch{match.group(1)}{match.group(2).lower()}"
 
 
 def load_manifest_paths(root):
@@ -235,10 +235,12 @@ def load_manifest_paths(root):
         found[label] = path
     if not found:
         raise RuntimeError("no YouTube batch manifests found")
-    numbers = sorted(int(label.removeprefix("batch")) for label in found)
-    if numbers[0] != 8:
-        raise RuntimeError(f"reconstructable corpus must start at batch008, found batch{numbers[0]:03d}")
-    expected = list(range(8, numbers[-1] + 1))
+    numbers = sorted({int(label[5:8]) for label in found})
+    if numbers[0] < 1:
+        raise RuntimeError("invalid historical batch number")
+    # Preserve all earlier source batches when supplied; never force an 008 start.
+    # A gap within the supplied range is unsafe: stop rather than discard files.
+    expected = list(range(numbers[0], numbers[-1] + 1))
     if numbers != expected:
         raise RuntimeError(f"batch sequence is not contiguous: found={numbers}, expected={expected}")
     return found
@@ -346,13 +348,18 @@ def build(root, artifact_id, artifact_digest):
     source_state = {
         "workspace": "yt-discovery-core-v2",
         "coverage_mode": "single_cumulative_id_preserved",
-        "coverage_batches": sorted(manifests, key=lambda label: int(label.removeprefix("batch"))),
+        "coverage_batches": sorted(manifests, key=lambda label: (int(label[5:8]), label[8:])),
+        "source_coverage_starts_at": f"batch{min(int(label[5:8]) for label in manifests):03d}",
+        "missing_prior_batch_sources": [
+            f"batch{i:03d}" for i in range(1, min(int(label[5:8]) for label in manifests))
+        ],
+        "historical_sources_complete_from_batch001": min(int(label[5:8]) for label in manifests) == 1,
         "selected_channel_count": len(channels),
         "successful_channel_count": len(ok_ids),
         "failed_channel_count": sum(1 for row in channels if row["scan_status"] == "ERR"),
         "empty_channel_count": sum(1 for row in channels if row["scan_status"] == "EMPTY"),
         "channel_ids_persisted": True,
-        "next_batch": f"batch{max(int(label.removeprefix('batch')) for label in manifests) + 1:03d}",
+        "next_batch": f"batch{max(int(label[5:8]) for label in manifests) + 1:03d}",
         "minimum_stored_signal_channels": 3,
         "quality_rules_version": QUALITY_RULES["version"],
         "quality_counters": dict(sorted(quality_counts.items())),
