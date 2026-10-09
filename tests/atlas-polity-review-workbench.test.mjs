@@ -195,7 +195,6 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   }
 
   const unresolved = [
-    ...registry.execution_frontier,
     ...registry.carry_forward_same_identity,
     ...registry.historical_family_reviews,
     ...registry.designation_residuals,
