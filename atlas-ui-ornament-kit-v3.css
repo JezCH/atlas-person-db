@@ -45,7 +45,7 @@
   content: "";
   width: min(90px, 20%);
   aspect-ratio: 1;
-  z-index: -1;
+  z-index: 0;
   background: url("./assets/ornaments/atlas-v3-corner.svg") left top / contain no-repeat;
   pointer-events: none;
 }
@@ -68,9 +68,14 @@
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   background: url("./assets/ornaments/atlas-v3-cartouche.svg") center / 100% 100% no-repeat;
   pointer-events: none;
+}
+.atlas-ornament-kit .atlas-o-cartouche > * {
+  position: relative;
+  z-index: 1;
+  margin: 0;
 }
 .atlas-ornament-kit .atlas-o-cartouche__name {
   font-family: var(--atlas-o-script);
