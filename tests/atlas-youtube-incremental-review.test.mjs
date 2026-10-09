@@ -126,10 +126,18 @@ test("publish uses new corpus artifacts and reports increments without replaying
   if (/^  push:/m.test(yml)) {
     // An explicit, one-time, SHA-verified release must not enable routine replay.
     assert.match(yml,/branches: \[main\]/);
+    if (yml.includes('[yt-b023-publish-once]')) {
+    assert.match(yml,/github\.event_name != 'push' \|\| contains\(github\.event\.head_commit\.message, '\[yt-b023-publish-once\]'\)/);
+    assert.match(yml,/youtube-cumulative-batch023-validated/);
+    assert.match(yml,/11610579243/);
+    assert.match(yml,/sha256:0cc4f1d1570b8d81a824430368487f7de9431e4734b83e426385970c01b20470/);
+      assert.match(yml,/37918442434/);
+    } else {
     assert.match(yml,/github\.event_name != 'push' \|\| contains\(github\.event\.head_commit\.message, '\[yt-b022-publish-once\]'\)/);
     assert.match(yml,/youtube-cumulative-batch022-validated/);
     assert.match(yml,/11601618294/);
     assert.match(yml,/sha256:aba807f55bcbeb411d991ef464212383e99f3cff6abe087b0d6ff04040e1ad67/);
+    }
   } else {
     assert.doesNotMatch(yml,/branches: \[main\]/);
   }
