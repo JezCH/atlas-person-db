@@ -18,6 +18,8 @@ on:
       - "atlas-person-register-selection-focus-v2.css"
       - "atlas-person-detail-hero-frame-v2.css"
       - "atlas-person-chronicle-source-archive-v2.css"
+      - "atlas-vis2-12-interaction-motion.css"
+      - "scripts/verify-vis2-12-production-interaction-motion.mjs"
       - "atlas-vis2-11-polity-dashboard-archive.css"
       - "atlas-main-authority-nav.js"
       - "atlas-person-chronicle-detail.css"
@@ -146,6 +148,8 @@ jobs:
           done
           curl -fsS http://127.0.0.1:9222/json/version >/dev/null
           node --check scripts/verify-vis2-11-production-polity-dashboard.mjs
+          node --check scripts/verify-vis2-12-production-interaction-motion.mjs
+          node scripts/verify-vis2-12-production-interaction-motion.mjs
           node scripts/verify-vis2-11-production-polity-dashboard.mjs
           node scripts/verify-spacetime-production-visual.mjs
           node scripts/verify-spacetime-production-domain-colors.mjs
