@@ -5,7 +5,6 @@ Never substitutes a historical CSV for the active Production snapshot.
 No credentials or database writes are needed.
 """
 import argparse
-import io
 import json
 import time
 import urllib.error
@@ -15,7 +14,6 @@ from pathlib import Path
 
 
 MAX_PAGE_BYTES = 512 * 1024
-MAX_TOTAL_BYTES = 8 * 1024 * 1024
 MAX_SIGNAL_ROWS = 20000
 
 
