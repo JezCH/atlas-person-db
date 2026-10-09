@@ -87,7 +87,16 @@ test("publish uses new corpus artifacts and reports increments without replaying
   const yml=fs.readFileSync(new URL("../.github/workflows/youtube-person-signal-publish.yml",import.meta.url),"utf8");
   assert.match(yml,/workflow_dispatch:/);
   assert.match(yml,/workflow_call:/);
-  assert.doesNotMatch(yml,/branches: \[main\]/);
+  if (/^  push:/m.test(yml)) {
+    // An explicit, one-time, SHA-verified release must not enable routine replay.
+    assert.match(yml,/branches: \[main\]/);
+    assert.match(yml,/github\.event_name != 'push' \|\| contains\(github\.event\.head_commit\.message, '\[yt-b018-publish-once\]'\)/);
+    assert.match(yml,/youtube-cumulative-batch018-validated/);
+    assert.match(yml,/11587358095/);
+    assert.match(yml,/sha256:d277fc03c1d27d61390eb73293c337cad6eacc0826eeb8c55c4f37e05c2a6063/);
+  } else {
+    assert.doesNotMatch(yml,/branches: \[main\]/);
+  }
   assert.doesNotMatch(yml,/youtube-cumulative-batch017-validated/);
   assert.doesNotMatch(yml,/channel_count==6011/);
   assert.doesNotMatch(yml,/next_batch\)=="batch018"/);
