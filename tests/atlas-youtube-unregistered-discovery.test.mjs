@@ -70,6 +70,30 @@ test("near-identical candidate labels do not invent summed channel counts",()=>{
   assert.equal(row.identity_state,"alias_union_needs_original_ids");
   assert.equal(candidates.filter(r=>d.identityKey(r.raw_name)==="josemaria").length,1);
 });
+test("reviewed title metadata, places and nonhistorical myths are not person registration candidates",()=>{
+  const original=[
+    {raw_name:"Full",rank:1,distinct_channel_count:17,video_count:18},
+    {raw_name:"The Medici",rank:2,distinct_channel_count:16,video_count:17},
+    {raw_name:"The Bermuda Triangle",rank:3,distinct_channel_count:17,video_count:20},
+    {raw_name:"Paris",rank:4,distinct_channel_count:21,video_count:24},
+    {raw_name:"Hercules",rank:5,distinct_channel_count:6,video_count:8},
+    {raw_name:"Ragnarok",rank:6,distinct_channel_count:10,video_count:13},
+    {raw_name:"Pablo Picasso",rank:7,distinct_channel_count:25,video_count:27},
+    {raw_name:"Picasso",rank:8,distinct_channel_count:14,video_count:16}
+  ];
+  const output=d.candidatesFromSource(original,registered,
+    {now:Date.parse("2026-10-10T00:00:00Z")});
+  assert.equal(output.nonpersonExcluded,6);
+  assert.deepEqual(output.candidates.map(x=>x.raw_name),["Pablo Picasso","Picasso"]);
+  assert.equal(output.candidates.find(x=>x.raw_name==="Picasso").identity_state,
+    "short_name_identity_review");
+  assert.equal(output.candidates.find(x=>x.raw_name==="Pablo Picasso").identity_state,
+    "unregistered_candidate");
+  assert.equal(d.reviewedNonPerson("International Women’s Day"),true);
+  assert.equal(d.reviewedNonPerson("The Sumerians"),true);
+  assert.equal(d.reviewedNonPerson("Muhammad Ali"),false);
+});
+
 test("reviewed living people never outrank unregistered historical candidates",()=>{
   const live=[
     {raw_name:"Elon Musk",rank:1,distinct_channel_count:94,video_count:108},

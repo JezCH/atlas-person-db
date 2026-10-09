@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:anvari-seljuk-earliest-poem-1135-1136:v1",
+  "person": {
+    "canonical_name_en": "Anvari",
+    "display_name_ko": "안바리",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Great Seljuk Empire",
+    "display_name_ko": "대셀주크 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Persian court poet with an earliest dated poem under Sultan Sanjar",
+    "role_display_name_ko": "술탄 산자르의 궁정에서 활동한 페르시아 시인",
+    "start_year": 1135,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1136,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Encyclopaedia Iranica ANWARI entry identifies the earliest date mentioned in his own extant verse as 530 AH (1135–1136 CE), while his admission to Sultan Sanjar's court is estimated to have happened not long before. This interval is deliberately approximate: not an exact 1135 date, no continuous lifetime or service interval, and not the dubious anecdotal meeting with Moezzi (dead by 1127–28). Great Seljuk Empire is the actual political setting, not Ghaznavid or an anachronistic polity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "ANWARI — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/anwari/",
+      "citation_text": "Anwari's earliest poetically attested date is 530 AH = 1135–36 CE; an evidenced floruit for the court of Great Seljuk Sultan Sanjar. The source explicitly rejects romanticized biographies."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-10",
+      "review_reason": "no_exact_document"
+    }
+  }
+}
