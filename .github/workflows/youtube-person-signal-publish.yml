@@ -65,6 +65,8 @@ jobs:
       ARTIFACT_DIGEST: ${{ github.event_name == 'push' && 'sha256:d277fc03c1d27d61390eb73293c337cad6eacc0826eeb8c55c4f37e05c2a6063' || inputs.artifact_digest }}
     steps:
       - uses: actions/checkout@v4
+      - name: Verify multilingual historical names before production reads
+        run: node --test tests/atlas-youtube-incremental-review.test.mjs
 
       - name: Download cumulative discovery artifact
         uses: actions/download-artifact@v4
