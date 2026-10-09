@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc"><title id="title">Atlas corner engraving</title><desc id="desc">Original secular foliate corner in brass etching.</desc><defs><linearGradient id="metal" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f0ddb0"/><stop offset=".3" stop-color="#bda477"/><stop offset=".6" stop-color="#7a6548"/><stop offset="1" stop-color="#dcc18a"/></linearGradient></defs>
+<g fill="none" stroke="url(#metal)" stroke-linecap="round" stroke-linejoin="round">
+<path stroke-width="3.5" d="M5 150 V23 Q5 5 23 5 H150"/>
+<path stroke-width="1.1" opacity=".65" d="M13 150 V27 Q13 13 27 13 H150"/>
+<path stroke-width="2.6" d="M26 139 V53 Q26 26 53 26 H139"/>
+<path stroke-width="1.7" d="M30 118 C75 109 57 70 91 72 C113 75 100 98 89 91 C80 85 87 77 94 82"/>
+<path stroke-width="1.7" d="M118 30 C109 75 70 57 72 91"/>
+<path stroke-width="1.1" d="M43 85 Q54 70 42 61 Q30 66 43 85 Z M63 52 Q79 43 85 55 Q72 66 63 52 Z M57 110 Q63 130 48 137 Q37 126 57 110 Z"/>
+<path stroke-width="1.8" d="M36 36 L48 28 L60 36 L48 45Z"/>
+<path stroke-width=".9" d="M19 145 H46 M145 19 V46"/>
+</g><circle cx="48" cy="36" r="4" fill="#e5d2a6"/></svg>
