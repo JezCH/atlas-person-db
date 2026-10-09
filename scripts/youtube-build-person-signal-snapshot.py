@@ -238,11 +238,8 @@ def load_manifest_paths(root):
     numbers = sorted({int(label[5:8]) for label in found})
     if numbers[0] < 1:
         raise RuntimeError("invalid historical batch number")
-    # Preserve all earlier source batches when supplied; never force an 008 start.
-    # A gap within the supplied range is unsafe: stop rather than discard files.
-    expected = list(range(numbers[0], numbers[-1] + 1))
-    if numbers != expected:
-        raise RuntimeError(f"batch sequence is not contiguous: found={numbers}, expected={expected}")
+    # Keep each available batch, even if earlier source batches are still missing.
+    # Missing provenance is explicitly recorded below, never silently "retired".
     return found
 
 
@@ -351,9 +348,13 @@ def build(root, artifact_id, artifact_digest):
         "coverage_batches": sorted(manifests, key=lambda label: (int(label[5:8]), label[8:])),
         "source_coverage_starts_at": f"batch{min(int(label[5:8]) for label in manifests):03d}",
         "missing_prior_batch_sources": [
-            f"batch{i:03d}" for i in range(1, min(int(label[5:8]) for label in manifests))
+            f"batch{i:03d}" for i in range(1, max(int(label[5:8]) for label in manifests) + 1)
+            if not any(int(label[5:8]) == i for label in manifests)
         ],
-        "historical_sources_complete_from_batch001": min(int(label[5:8]) for label in manifests) == 1,
+        "historical_sources_complete_from_batch001": all(
+            any(int(label[5:8]) == i for label in manifests)
+            for i in range(1, max(int(label[5:8]) for label in manifests) + 1)
+        ),
         "selected_channel_count": len(channels),
         "successful_channel_count": len(ok_ids),
         "failed_channel_count": sum(1 for row in channels if row["scan_status"] == "ERR"),
