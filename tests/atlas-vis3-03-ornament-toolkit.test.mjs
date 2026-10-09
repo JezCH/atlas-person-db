@@ -22,9 +22,12 @@ test('eight distinct SVG primitives exist, are standalone, and contain no script
  }
 });
 test('every referenced asset path resolves and no foreign CSS imports are used',()=>{
- const paths=[...css.matchAll(/url\(["']?([^)"']+)["']?\)/g)].map(m=>m[1]);
- assert.equal(paths.length,8);
- for(const item of paths) assert.ok(fs.statSync(path.resolve(root,item)).isFile(),item);
+ const sharedKit=css.split('/* VIS3-04')[0];
+ const originalPaths=[...sharedKit.matchAll(/url\(["']?([^)"']+)["']?\)/g)].map(m=>m[1]);
+ assert.equal(originalPaths.length,8,'VIS3-03 keeps its original eight reusable primitives');
+ const allPaths=[...css.matchAll(/url\(["']?([^)"']+)["']?\)/g)].map(m=>m[1]);
+ assert.ok(allPaths.length>=originalPaths.length,'VIS3-04 can reuse assets without changing primitive count');
+ for(const item of allPaths) assert.ok(fs.statSync(path.resolve(root,item)).isFile(),item);
  assert.doesNotMatch(css,/@import\b|@font-face\b|https?:\/\//i);
 });
 test('CSS only mounts within an explicit namespace, preserves semantic brand tokens and provides opt-out/accessibility',()=>{
@@ -39,13 +42,17 @@ test('CSS only mounts within an explicit namespace, preserves semantic brand tok
  assert.doesNotMatch(css,/^\s*:root\s*\{|(?:--atlas-(?:canvas|honor-metal|text-strong))\s*:/m);
  assert.doesNotMatch(css,/\.person-register-entry|\.spacetime-camera|\.spacetime-year-axis|#spacetime/i);
 });
-test('demo uses opt-in components and existing production entry loads none of VIS3-03',()=>{
+test('demo stays isolated and VIS3-04 mounts one canonical kit only on shell chrome',()=>{
  const demo=fs.readFileSync(path.join(root,'experiments/vis3-03-ornament-gallery.html'),'utf8');
  const prod=fs.readFileSync(path.join(root,'index.html'),'utf8');
  assert.match(demo,/atlas-ui-phase3-ornaments\.css/);
  assert.match(demo,/atlas-ornament-v3/);
  assert.match(demo,/data-atlas-o-decor/);
- assert.doesNotMatch(prod,/atlas-ui-phase3-ornaments\.css|assets\/ui-ornaments/);
+ assert.match(prod,/atlas-ui-phase3-ornaments\.css\?v=20261010-vis3-04-shell-v1/);
+ assert.doesNotMatch(prod,/assets\/ui-ornaments\/.*?\.svg/);
+ assert.match(prod,/workspace-shell atlas-ornament-v3/);
+ assert.match(prod,/mobile-appbar atlas-ornament-v3/);
+ assert.match(prod,/mobile-drawer atlas-ornament-v3/);
 });
 
 
