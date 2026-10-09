@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:wang-xizhi:eastern-jin:lanting-353:v1",
+  "person": {
+    "canonical_name_en": "Wang Xizhi",
+    "display_name_ko": "왕희지",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-10",
+      "document_title": "왕희지",
+      "url": "https://namu.wiki/w/%EC%99%95%ED%9D%AC%EC%A7%80"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Eastern Jin Dynasty",
+    "display_name_ko": "동진",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Calligrapher and writer of the Lantingji Xu preface",
+    "role_display_name_ko": "서예가·난정서 서문 저술가",
+    "start_year": 353,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 353,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Wang Xizhi composed the preface associated with the Lanting gathering of 353 during the Eastern Jin period. This is a dated personal literary/calligraphic activity point, not his whole career. The surviving Lantingji Xu exemplars are later transmissions/copies; this request makes no claim that Wang's autograph survives. Eastern Jin (317–420 CE) is a distinct historical polity; Western Jin, earlier Jin state, and Jurchen Jin are not the same polity. active_in records historical location/context, not government service."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Tokyo National Museum — Wang Xizhi and the Lantingji Xu",
+      "canonical_url": "https://www.tnm.jp/150th/project/202301/exhibition_ougishiandranteijyo_ko.html",
+      "citation_text": "The museum exhibition identifies Wang Xizhi with Lantingji Xu of the Eastern Jin period, dated 353 CE, and distinguishes later copied exemplars of the work."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Academy of Korean Studies Encyves — 왕희지",
+      "canonical_url": "https://dh.aks.ac.kr/Encyves/wiki/index.php/%EC%99%95%ED%9D%AC%EC%A7%80",
+      "citation_text": "The entry describes the 353 Lanting gathering and the attribution of the preface to Wang Xizhi."
+    }
+  ]
+}
