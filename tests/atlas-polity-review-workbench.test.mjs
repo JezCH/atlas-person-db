@@ -3,7 +3,7 @@ import test from 'node:test';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
-const snapshot = fs.readFileSync(new URL('../atlas-polity-review-candidates.js', import.meta.url), 'utf8');
+const snapshot = fs.readFileSync(new URL('../docs/audits/POLITY_REVIEW_CANDIDATES_20260927_ARCHIVE.txt', import.meta.url), 'utf8');
 const registrySource = fs.readFileSync(new URL('../atlas-polity-review-registry.js', import.meta.url), 'utf8');
 const browser = fs.readFileSync(new URL('../atlas-polity-review-workbench.js', import.meta.url), 'utf8');
 const review = fs.readFileSync(new URL('../atlas-polity-review-panel.js', import.meta.url), 'utf8');
@@ -47,8 +47,8 @@ test('current registry restores every required carry-forward audit family withou
   assert.equal(registry.schema, 'atlas-polity-review-registry/v3');
   assert.equal(registry.generated_at, '2026-10-08');
   assert.equal(registry.authority.issue, 1895);
-  assert.equal(registry.execution_frontier.length, 0);
-  assert.deepEqual(Array.from(registry.execution_frontier, row => row.id), []);
+  assert.equal(Object.hasOwn(registry, 'execution_frontier'), false);
+  assert.equal(registry.snapshot_history.path, 'docs/audits/POLITY_REVIEW_CANDIDATES_20260927_ARCHIVE.txt');
   const ireland = registry.resolved_history.find(row => row.id === 'ireland-family-correction');
   assert.equal(ireland?.terminal_status, 'FIXED');
   assert.equal(ireland?.locked, true);
@@ -195,7 +195,6 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   }
 
   const unresolved = [
-    ...registry.execution_frontier,
     ...registry.carry_forward_same_identity,
     ...registry.historical_family_reviews,
     ...registry.designation_residuals,
@@ -219,6 +218,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
 });
 
 test('old 2026-09-27 candidates and Stage 2 current-named contract are explicitly demoted', () => {
+  assert.equal(fs.existsSync(new URL('../atlas-polity-review-candidates.js', import.meta.url)), false);
   assert.match(snapshot, /HISTORICAL_SNAPSHOT_ONLY/);
   assert.match(snapshot, /canonical_current: false/);
   assert.match(snapshot, /superseded_by: "atlas-polity-review-registry\.js"/);
@@ -229,15 +229,15 @@ test('old 2026-09-27 candidates and Stage 2 current-named contract are explicitl
   assert.equal(yuan.superseded_decision.terminal_status, 'KEEP_SEPARATE');
 });
 
-test('Polity review UI exposes current audit groups separately from execution priority and history', () => {
+test('Polity review UI exposes active historical-family audit groups and history without a dead execution priority tab', () => {
   assert.match(review, /ATLAS_POLITY_REVIEW_REGISTRY/);
-  assert.match(review, /function executionCases\(\)/);
+  assert.doesNotMatch(review, /function executionCases\(\)/);
   assert.match(review, /function currentAuditCases\(\)/);
   assert.match(review, /function currentCases\(\)/);
   assert.match(review, /function historyCases\(\)/);
   assert.match(review, /data-kind-filter="current"/);
-  assert.match(review, /data-kind-filter="execution"/);
-  assert.match(review, /data-kind-filter="carry_forward_same_identity"/);
+  assert.doesNotMatch(review, /data-kind-filter="execution"/);
+  assert.doesNotMatch(review, /data-kind-filter="carry_forward_same_identity"/);
   assert.match(review, /data-kind-filter="historical_family_review"/);
   assert.match(review, /data-kind-filter="designation_residual"/);
   assert.match(review, /data-kind-filter="naming_residual"/);

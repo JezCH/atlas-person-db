@@ -19,7 +19,7 @@
     }),
     source_scope: "Current Production + 2026-09-20 exhaustive audit carry-forward + later rupture-rule review + designation/naming residuals",
     snapshot_history: Object.freeze({
-      path: "atlas-polity-review-candidates.js",
+      path: "docs/audits/POLITY_REVIEW_CANDIDATES_20260927_ARCHIVE.txt",
       status: "HISTORICAL_SNAPSHOT_ONLY",
       as_of: "2026-09-27"
     }),
@@ -41,7 +41,6 @@
       entry({ code: "repair", label: "재연결·분리 수정" }),
       entry({ code: "hold", label: "보류" })
     ]),
-    execution_frontier: freezeRows([]),
     carry_forward_same_identity: freezeRows([
       {
         id: "sicily-county-kingdom",
