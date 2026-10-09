@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:abu-hanifa:kufa-umayyad:teaching-circle-c737:v1",
+  "person": {
+    "canonical_name_en": "Abu Hanifa",
+    "display_name_ko": "아부 하니파",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "documented_death",
+    "representative_domain": "religion"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-09",
+      "document_title": "아부 하니파",
+      "url": "https://namu.wiki/w/%EC%95%84%EB%B6%80%20%ED%95%98%EB%8B%88%ED%8C%8C"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Umayyad Caliphate",
+    "display_name_ko": "우마이야 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "92543cd1-48a3-43ea-82a7-51a816fc6e52"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Islamic jurist and legal teacher",
+    "role_display_name_ko": "이슬람 법학자·교육자",
+    "start_year": 737,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 737,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "The scholar Abu Hanifa took over his Kufan mentor Hammad ibn Abi Sulayman's teaching circle after Hammad's death dated AH 120/c.737–738 CE, per Encyclopaedia Iranica. Records one scholarly succession event around 737 rather than a fabricated continuous 80-year teaching career. Kufa at this date lay within Umayyad-controlled Iraq; `active_in` does not imply service to the Umayyad state. His date of birth differs across later accounts; follow academically supported 699–767, not the NamuWiki page's 669."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Abū Ḥanīfa — Encyclopaedia Iranica (Umar Faruq Abd-Allah, 1983; revised 2018)",
+      "canonical_url": "https://www.iranicaonline.org/articles/abu-hanifa-noman-b/",
+      "citation_text": "Iranica reports teacher Hammad ibn Abi Sulayman's death in AH 120/737 CE and Abu Hanifa's eventual succession to his teaching circle, and gives Abu Hanifa's dates as 699–767."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Hanafite Maḏhab — Encyclopaedia Iranica (Merlin Swartz, 2003)",
+      "canonical_url": "https://www.iranicaonline.org/articles/hanafite-madhab/",
+      "citation_text": "Iranica describes Abu Hanifa as a leading eighth-century Kufan jurist, distinguishing his teachings from the later codification by his disciples."
+    }
+  ]
+}
