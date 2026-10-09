@@ -121,7 +121,7 @@ function referenceCountRecord(ref, count) {
   });
 }
 
-async function queryPolityReferenceAudit(client, { includeBrazilDetails = false, includeBrazilPreflight = false, includeBrazilSourceAliases = false } = {}) {
+async function queryPolityReferenceAudit(client, { includeBrazilDetails = false, includeBrazilPreflight = false, includeBrazilSourceAliases = false, includeBrazilStage2Contract = false } = {}) {
   await beginReadOnly(client);
   try {
     const polities = await queryPolities(client);
@@ -184,6 +184,7 @@ async function queryPolityReferenceAudit(client, { includeBrazilDetails = false,
     const brazilDetails = includeBrazilDetails ? await queryBrazilDetails(client) : null;
     const brazilPreflight = includeBrazilPreflight ? await queryBrazilPreflight(client) : null;
     const brazilSourceAliases = includeBrazilSourceAliases ? await queryBrazilSourceAliases(client) : null;
+    const brazilStage2Contract = includeBrazilStage2Contract ? await queryBrazilStage2Contract(client) : null;
     if (includeBrazilDetails && outputPolities.filter((row) => BRAZIL_P2_03E_POLITY_IDS.includes(row.polity_id)).length !== BRAZIL_P2_03E_POLITY_IDS.length) {
       throw new Error("POLITY_REFERENCE_AUDIT_BRAZIL_POLITY_MISSING");
     }
@@ -192,6 +193,7 @@ async function queryPolityReferenceAudit(client, { includeBrazilDetails = false,
       brazil_details: brazilDetails,
       brazil_preflight: brazilPreflight,
       brazil_source_aliases: brazilSourceAliases,
+      brazil_stage2_contract: brazilStage2Contract,
       complete: true,
       reference_model: "direct_foreign_keys_plus_atlas_v2_polity_id_columns",
       reference_catalog: Object.freeze(references.map((ref) => Object.freeze({ ...ref }))),
@@ -474,6 +476,42 @@ async function queryBrazilSourceAliases(client) {
   });
 }
 
+
+async function queryBrazilStage2Contract(client) {
+  const constraints=await client.query(`
+    select c.conname as constraint_name,c.contype as constraint_type,
+           pg_get_constraintdef(c.oid,true) as definition
+      from pg_constraint c join pg_class t on t.oid=c.conrelid
+      join pg_namespace n on n.oid=t.relnamespace
+     where n.nspname='atlas_v2' and t.relname='polity_designations'
+     order by c.conname`);
+  const boundary=await client.query(`
+    select pg_get_functiondef(to_regprocedure(
+      'atlas_v2.temporal_boundary_or_unresolved_valid(integer,smallint,smallint,text,text,text)'
+    )) as definition`);
+  const detail=await client.query(`
+    select pg_get_functiondef(to_regprocedure(
+      'atlas_v2.temporal_boundary_detail_valid(smallint,smallint,text,text,text)'
+    )) as definition`);
+  const columns=await client.query(`
+    select column_name,data_type,is_nullable from information_schema.columns
+     where table_schema='atlas_v2' and table_name='sources'
+     order by ordinal_position`);
+  const fields=['id','source_key','source_type','title','author_creator','institution',
+    'publisher','publication_date','publication_year','canonical_url','external_identifier',
+    'citation_text','citation_metadata','artifact_metadata','sha256','bytes'];
+  const names=columns.rows.map(x=>x.column_name);
+  const type=constraints.rows.find(x=>x.constraint_name==='polity_designations_type_check');
+  const temporalFn=boundary.rows[0]?.definition || null;
+  const detailFn=detail.rows[0]?.definition || null;
+  return Object.freeze({
+    complete:Boolean(type && temporalFn && detailFn && fields.every(f=>names.includes(f))),
+    designation_constraints:constraints.rows,temporal_boundary_function:temporalFn,
+    temporal_detail_function:detailFn,source_columns:columns.rows,
+    missing_source_columns:fields.filter(f=>!names.includes(f))
+  });
+}
+
 function statusForError(code) {
   if (code === "DEPLOYMENT_SHA_MISMATCH") return 409;
   if (code === "GITHUB_OIDC_INVALID" || String(code).startsWith("GITHUB_OIDC_")) return 401;
@@ -498,7 +536,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
       const includeBrazilDetails = req.body?.include_brazil_details === true;
       const includeBrazilPreflight = req.body?.include_brazil_preflight === true;
       const includeBrazilSourceAliases = req.body?.include_brazil_source_aliases === true;
-      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails, includeBrazilPreflight, includeBrazilSourceAliases });
+      const includeBrazilStage2Contract = req.body?.include_brazil_stage2_contract === true;
+      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails, includeBrazilPreflight, includeBrazilSourceAliases, includeBrazilStage2Contract });
       return json(res, 200, {
         ok: true,
         marker: MARKER,
@@ -514,7 +553,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
         polities: audit.polities,
         ...(includeBrazilDetails ? { brazil_details: audit.brazil_details } : {}),
         ...(includeBrazilPreflight ? { brazil_preflight: audit.brazil_preflight } : {}),
-        ...(includeBrazilSourceAliases ? { brazil_source_aliases: audit.brazil_source_aliases } : {})
+        ...(includeBrazilSourceAliases ? { brazil_source_aliases: audit.brazil_source_aliases } : {}),
+        ...(includeBrazilStage2Contract ? { brazil_stage2_contract: audit.brazil_stage2_contract } : {})
       });
     } catch (error) {
       return json(res, statusForError(error?.message), {
@@ -541,6 +581,7 @@ module.exports = Object.freeze({
   queryBrazilDetails,
   queryBrazilPreflight,
   queryBrazilSourceAliases,
+  queryBrazilStage2Contract,
   BRAZIL_P2_03H_SOURCE_ALIAS_PATTERN,
   summarizeBrazilPreflightRows,
   BRAZIL_P2_03E_POLITY_IDS,
