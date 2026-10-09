@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Maimonides",
+    "display_name_ko": "마이모니데스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "representative_domain": "religion"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Ayyubid Sultanate",
+    "display_name_ko": "아이유브 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "cc1a203a-c6bc-5011-a6d2-b3fd6a9b3c53"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Rabbinic scholar and author",
+    "role_display_name_ko": "유대교 율법학자·저술가",
+    "period_basis": "intellectual_activity",
+    "start_month": null,
+    "start_day": null,
+    "start_calendar": "unspecified_historical",
+    "end_month": null,
+    "end_day": null,
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "start_year": 1180,
+    "start_certainty": "approximate",
+    "end_year": 1180,
+    "end_certainty": "approximate",
+    "notes": "Approximate completion circa 1178–1180 of Mishneh Torah, his legal code, during residence in Egypt under Ayyubid rule. This is an approximate representative completion year, not a claim of precise day, continuous tenure, or government office."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Moses Maimonides: Mishneh Torah — Oxford Bibliographies in Jewish Studies",
+      "canonical_url": "https://academic.oup.com/reference/62376/reference-article-abstract/554964029",
+      "citation_text": "Dates the Mishneh Torah to 1178–1180."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Mishneh Torah — My Jewish Learning",
+      "canonical_url": "https://www.myjewishlearning.com/article/the-mishneh-torah/",
+      "citation_text": "Reports the code was completed in 1180."
+    }
+  ],
+  "request_id": "authoring:maimonides:timeline-reentry:mishneh-torah-c1180:v1"
+}
