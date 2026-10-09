@@ -181,3 +181,101 @@
 @media (forced-colors:active) {
   .atlas-ornament-v3 .atlas-o-shell-signet > span {color:CanvasText;text-shadow:none;}
 }
+
+
+/* VIS3-05 — Grand Atlas frontispiece, scoped only to Dashboard chrome.
+ * The six factual KPI values and actions remain exact original DOM/data.
+ * Turn off ornament per root with data-atlas-ornament="off".
+ */
+.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece {
+  position:relative;isolation:isolate;min-width:0;min-height:196px;
+  padding:clamp(30px,2.9vw,42px) clamp(36px,4vw,70px);
+  display:flex;align-items:center;justify-content:space-between;gap:26px;overflow:hidden;
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::before {
+  inset:5px 12px;z-index:0;
+  background:url("./assets/ui-ornaments/atlas-cartouche.svg") center / 100% 100% no-repeat;
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::after {
+  left:18%;right:18%;bottom:3px;top:auto;height:28px;
+  background:url("./assets/ui-ornaments/atlas-chapter-divider.svg") center / 100% 100% no-repeat;
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece > div:first-child,
+.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece > #atlasDashboardRefresh {
+  position:relative;z-index:2;
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece > div:first-child {
+  min-width:0;max-width:780px;
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece h2 {
+  font-size:clamp(27px,3.1vw,42px);line-height:1.24;text-wrap:balance;
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece .eyebrow {letter-spacing:.25em;}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece-seal {
+  position:absolute;z-index:1;top:26px;right:clamp(170px,17vw,260px);
+  width:clamp(94px,11vw,150px);height:clamp(94px,11vw,150px);pointer-events:none;
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece-seal::before {
+  inset:0;z-index:0;
+  background:url("./assets/ui-ornaments/atlas-compass-rosette.svg") center / contain no-repeat;
+}
+/* The existing KPI region label becomes a real h3, not a new metric. */
+.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading {
+  position:relative;isolation:isolate;min-width:0;min-height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px clamp(32px,3.6vw,56px);margin:1px 0 -2px;
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading::before {
+  top:2px;bottom:2px;left:0;width:min(300px,72%);
+  background:url("./assets/ui-ornaments/atlas-folio-plaque.svg") left center / 100% 100% no-repeat;
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading::after {
+  left:min(300px,72%);right:0;top:calc(50% - 19px);height:38px;
+  background:url("./assets/ui-ornaments/atlas-chapter-divider.svg") center / 100% 100% no-repeat;
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading > * {position:relative;z-index:1;}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3 {
+  flex:0 0 auto;margin:0;font-family:var(--atlas-font-display,Georgia,serif);
+  font-weight:690;font-size:clamp(16px,1.55vw,19px);letter-spacing:.13em;color:var(--atlas-o-type);
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading > span {
+  margin-left:auto;max-width:35%;font-size:10px;font-weight:600;letter-spacing:.05em;
+  color:var(--atlas-o-soft);background:var(--atlas-o-ink);padding:3px 6px;text-align:right;
+}
+@media (max-width:1100px) {
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece-seal {
+    right:26px;top:12px;width:76px;height:76px;opacity:.45;
+  }
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece > div:first-child {max-width:65%;}
+}
+@media (max-width:600px) {
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece {
+    display:grid;gap:16px;min-height:0;padding:28px 22px 25px;
+  }
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::before {
+    inset:0 auto auto 0;width:76px;height:76px;
+    background:url("./assets/ui-ornaments/atlas-corner-filigree.svg") left top / contain no-repeat;
+  }
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::after {
+    left:12%;right:12%;bottom:0;height:19px;
+  }
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece > div:first-child {max-width:100%;}
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece h2 {
+    font-size:clamp(22px,6vw,28px);overflow-wrap:anywhere;
+  }
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece-seal {display:none;}
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading {
+    min-height:56px;padding:8px 25px;margin:0 0 -2px;
+  }
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading::before {width:min(240px,77%);}
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading::after {display:none;}
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3 {font-size:15px;}
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading > span {
+    max-width:45%;font-size:9px;text-align:right;
+  }
+}
+@media (forced-colors:active) {
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading > span {
+    background:Canvas;color:CanvasText;
+  }
+}
