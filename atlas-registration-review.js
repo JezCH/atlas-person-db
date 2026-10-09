@@ -10,8 +10,6 @@
   let refreshTimer=null;
   let requestSerial=0;
   let minChannels=3;
-  let signalMode="raw"; // Legacy ranking remains the default until identity evidence is published.
-  let excludeRegistered=false;
   let excludeLiving=false;
   const livingEvidence=new Map();
   let livingEvidenceUnavailableUntil=0;
@@ -23,107 +21,10 @@
   let representativeIdByName=null;
   let personById=null;
 
-  // The same exact-identity rule used by the registration queue: do not
-  // equate partial names or infer an unregistered Person from an absent alias.
-  function identityKey(value) {
-    return String(value ?? "")
-      .normalize("NFKD")
-      .toLowerCase()
-      .replaceAll("æ","ae").replaceAll("œ","oe").replaceAll("ß","ss")
-      .replace(/[\u0300-\u036f]/g,"")
-      .normalize("NFC") // Recompose Korean Hangul after stripping Latin diacritics.
-      .replace(/[^a-z0-9가-힣]/g,"");
+  function candidateStatusBadge(row) {
+    if(row?.identity_state==="registered_homonym_review")return '<span class="registration-review-signal-identity" data-status="ambiguous">동명이인 · 등록여부 검토</span>';
+    return '<span class="registration-review-signal-identity" data-status="unmatched">미등록 후보 · 검토 필요</span>';
   }
-
-  function identityIndex(rows, aliases, idField) {
-    const index=new Map();
-    for (const [position,row] of rows.entries()) {
-      const id=String(row?.[idField] ?? position);
-      for (const alias of aliases(row)) {
-        if (typeof alias!=="string") continue;
-        const key=identityKey(alias);
-        if (!key) continue;
-        if (!index.has(key)) index.set(key,new Set());
-        index.get(key).add(id);
-      }
-    }
-    return index;
-  }
-
-  function prepareSignalIdentities(personPayload,queuePayload) {
-    const persons=Array.isArray(personPayload?.persons) ? personPayload.persons : [];
-    personById=new Map(persons.map(person=>[String(person?.id||""),person]));
-    representativeIdByName=new Map();
-    personIdentityIndex=identityIndex(persons,person=>[
-      person?.canonical_name_en,person?.preferred_name_ko,person?.display_name,
-      ...(Array.isArray(person?.names) ? person.names.map(name=>name?.name) : [])
-    ],"id");
-    // The queue API resolves each reviewed alias to an existing Person UUID.
-    // Never mark a raw label registered merely because an alias was listed.
-    const validPersonIds=new Set(persons.map(person=>String(person?.id||"")).filter(Boolean));
-    for(const alias of queuePayload?.reviewed_person_aliases || []) {
-      const id=String(alias?.person_id||"");
-      const key=identityKey(alias?.alias_name);
-      if(!key||!validPersonIds.has(id)) continue;
-      if(!personIdentityIndex.has(key)) personIdentityIndex.set(key,new Set());
-      personIdentityIndex.get(key).add(id);
-      if(alias?.representative_default===true) representativeIdByName.set(key,id);
-    }
-    queueIdentityIndex=identityIndex(queuePayload?.candidates || [],candidate=>{
-      const metadata=candidate?.review_metadata || {};
-      return [
-        ...(typeof candidate?.name==="string" ? candidate.name.split(/\s*[|/]\s*/) : []),
-        ...(Array.isArray(metadata.lookup_names) ? metadata.lookup_names : []),
-        metadata.display_name_ko
-      ];
-    },"candidate_id");
-  }
-
-  function representativePerson(name) {
-    const key=identityKey(name);
-    const matched=key ? personIdentityIndex?.get(key) : null;
-    if(!matched?.size) return null;
-    const preference=representativeIdByName?.get(key);
-    const candidates=[...matched].map(id=>personById?.get(id)).filter(Boolean);
-    if(!candidates.length) return null;
-    // Reviewed representative defaults take precedence. For unreviewed exact
-    // homonyms, use the historical Runtime record with the most evidenced
-    // activity rows, then a stable canonical-name/id tie-break.
-    candidates.sort((a,b)=>{
-      if(a.id===preference) return -1;
-      if(b.id===preference) return 1;
-      const historical=Number(b.historicity==="historical")-Number(a.historicity==="historical");
-      if(historical) return historical;
-      const activities=Number(b.activity_count||0)-Number(a.activity_count||0);
-      if(activities) return activities;
-      const labels=String(a.canonical_name_en||a.display_name||"").localeCompare(String(b.canonical_name_en||b.display_name||""),"en");
-      return labels||String(a.id).localeCompare(String(b.id),"en");
-    });
-    const selected=candidates[0];
-    return {
-      id:String(selected.id),
-      label:String(selected.canonical_name_en||selected.display_name||selected.preferred_name_ko||selected.id),
-      representative:matched.size>1||Boolean(preference)
-    };
-  }
-
-  function signalRegistrationBadges(name) {
-    if (!personIdentityIndex || !queueIdentityIndex) {
-      return '<span class="registration-review-signal-identity" data-status="unknown">등록 대조 중</span>';
-    }
-    const selected=representativePerson(name);
-    if(selected) {
-      const base='<span class="registration-review-signal-identity" data-status="registered">기등록</span>';
-      return selected.representative
-        ? base+`<span class="registration-review-signal-identity" data-status="representative">대표 간주: ${escapeHtml(selected.label)}</span>`
-        : base;
-    }
-    const key=identityKey(name);
-    const pending=key ? (queueIdentityIndex.get(key)?.size || 0) : 0;
-    const queueLabel=pending>1 ? "대기열 복수 후보" : pending===1 ? "대기열 등재" : "대기열 미등재";
-    return `<span class="registration-review-signal-identity" data-status="unmatched">기등록 일치 없음</span><span class="registration-review-signal-identity" data-status="${pending===1 ? "queued" : pending>1 ? "ambiguous" : "unqueued"}">${queueLabel}</span>`;
-  }
-
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -214,17 +115,15 @@
   function renderSignalThresholds(snapshot,payload) {
     const host=activeRoot?.querySelector("#youtubeSignalThresholds");
     if (!host) return;
-    const counts=signalMode==="person" ? (payload?.threshold_counts || {}) : (snapshot?.threshold_counts || {});
+    const counts=payload?.threshold_counts || {};
     host.innerHTML=[3,5,10,15,20].map((threshold)=>{
       const count=counts[String(threshold)] ?? counts[`>=${threshold}`] ?? null;
       return `<button type="button" data-min-channels="${threshold}" class="${threshold===minChannels ? "is-active" : ""}">${threshold}+ 채널${count == null ? "" : ` · ${number(count)}명`}</button>`;
     }).join("");
   }
 
-  function matchesRegistered(name) { return representativePerson(name)!==null; }
-
   function signalQuery(limit,offset=0) {
-    return SIGNAL_URL+"&mode="+encodeURIComponent(signalMode)+"&min_channels="+encodeURIComponent(minChannels)+"&limit="+limit+"&offset="+offset;
+    return SIGNAL_URL+"&mode=discovery"+"&min_channels="+encodeURIComponent(minChannels)+"&limit="+limit+"&offset="+offset;
   }
 
   function isVerifiedLiving(name) {
@@ -236,7 +135,6 @@
 
   function excludedByActiveFilters(row) {
     return Boolean(
-      (signalMode==="raw" && excludeRegistered && matchesRegistered(row.raw_name)) ||
       (excludeLiving && isVerifiedLiving(row.raw_name))
     );
   }
@@ -286,7 +184,7 @@
   }
 
   async function collectVisibleSignals(initial) {
-    if(!(signalMode==="raw" && excludeRegistered) && !excludeLiving) return initial;
+    if(!excludeLiving) return initial;
     const visible=[];
     const pageSize=1000;
     let offset=0;
@@ -313,25 +211,12 @@
     return {...initial,rows:visible,filtered_checked_count:scanned,filter_evidence_unavailable:evidenceUnavailable};
   }
 
-  function filterRequestLimit() { return (signalMode==="raw" && excludeRegistered)||excludeLiving ? 1000 : 300; }
+  function filterRequestLimit() { return excludeLiving ? 1000 : 300; }
 
   function renderSignals(payload) {
     lastSignalPayload=payload;
     signalRows=Array.isArray(payload?.rows) ? payload.rows : [];
     const snapshot=payload?.snapshot || null;
-    const identityMode=signalMode==="person";
-    const waiting=identityMode && payload?.available!==true;
-    const regFilter=activeRoot?.querySelector("#youtubeExcludeRegistered");
-    if(regFilter) regFilter.disabled=identityMode;
-    const info=activeRoot?.querySelector("#youtubeSignalModeInfo");
-    if(info) info.textContent=identityMode
-      ? (waiting ? "통합 순위 미게시 또는 현재 누적 스냅샷과 불일치 — 기존 원시명 순위는 별도 탭에서 확인할 수 있습니다."
-        : "검증된 Person UUID 기준 · 제목에 명시된 언급 포함 · 원시명 집계 별도 보존")
-      : "원시 표기별 집계 · 동명이인 및 다른 표기는 별개 순위입니다.";
-    for(const mode of ["raw","person"]){
-      const button=activeRoot?.querySelector(`#youtubeSignalMode [data-signal-mode="${mode}"]`);
-      if(typeof button?.setAttribute==="function") button.setAttribute("aria-pressed",String(mode===signalMode));
-    }
     const telemetry=activeRoot?.querySelector("#youtubeSignalTelemetry");
     if(telemetry) {
       telemetry.innerHTML=snapshot
@@ -339,17 +224,13 @@
         : "<strong>아직 YouTube 수집 데이터가 없습니다.</strong>";
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
-    if(count) count.textContent=((signalMode==="raw" && excludeRegistered)||excludeLiving)
+    if(count) count.textContent=excludeLiving
       ? `상위 ${number(payload?.filtered_checked_count ?? signalRows.length)}명 확인 · 조건 일치 ${number(signalRows.length)}명 표시${excludeLiving ? " · 생존 미확인 포함" : ""}${payload?.filter_evidence_unavailable ? " · 생존 조회 실패(제외 불완전)" : ""}`
       : `전체 ${number(payload?.available_count ?? 0)}명 · 현재 ${number(signalRows.length)}명 표시`;
     renderSignalThresholds(snapshot,payload);
     const body=activeRoot?.querySelector("#youtubeSignalBody");
     if(!body) return;
     if(!signalRows.length) {
-      if(waiting) {
-        body.innerHTML='<tr><td colspan="4" class="registration-review-empty">동일 스냅샷의 통합 인물 순위가 아직 게시되지 않았습니다. 원시명 순위를 선택하세요.</td></tr>';
-        return;
-      }
       body.innerHTML='<tr><td colspan="4" class="registration-review-empty">현재 필터 조건에 맞는 인물이 없습니다.</td></tr>';
       return;
     }
@@ -357,17 +238,11 @@
     body.innerHTML=signalRows.map(row=>{
       const channels=Math.max(0,Number(row?.distinct_channel_count || 0));
       const strength=Math.min(100,(channels/maxChannels)*100);
-      const identityPerson=identityMode ? personById?.get(String(row.person_id||"")) : null;
-      const name=identityMode ? String(identityPerson?.preferred_name_ko||identityPerson?.canonical_name_en||row.raw_name) : row.raw_name;
-      const badge=identityMode
-        ? `<span class="registration-review-uuid-badge">Person UUID 연결</span>`
-        : signalRegistrationBadges(row.raw_name);
-      const variants=identityMode && Array.isArray(row.matched_variants)
-        ? `<small class="registration-review-variants">${escapeHtml(row.matched_variants.map(v=>v.raw_name_key).filter(Boolean).slice(0,6).join(" · "))}</small>`
-        : "";
+      const name=String(row.raw_name||"");
+      const badge=candidateStatusBadge(row);
       return `<tr class="registration-review-signal-row" style="--signal-strength:${strength.toFixed(2)}%">
         <td class="registration-review-rank" data-label="순위">${number(row.rank)}</td>
-        <td class="registration-review-name" data-label="인물"><span class="registration-review-signal-raw-name">${escapeHtml(name)}</span>${badge}${variants}</td>
+        <td class="registration-review-name" data-label="인물"><span class="registration-review-signal-raw-name">${escapeHtml(name)}</span>${badge}</td>
         <td class="registration-review-number" data-label="채널">${number(row.distinct_channel_count)}</td>
         <td class="registration-review-number" data-label="영상">${number(row.video_count)}</td>
         <td class="registration-review-signal-bar" aria-hidden="true"><span></span></td>
@@ -397,7 +272,6 @@
         getJson(signalQuery(filterRequestLimit()))
       ]);
       if (serial !== requestSerial || root !== activeRoot) return;
-      prepareSignalIdentities(persons,queue);
       renderRegistered(persons,queue);
       renderQueue(queue);
       const filtered=await collectVisibleSignals(signals);
@@ -443,14 +317,12 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>유튜브 반복 인물 신호</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 등록 상태는 Person 이름과 별칭을 대조하며, 동명이인은 대표 인물을 기본값으로 간주합니다. 대표 인물은 표시하며 확정적인 개인 식별을 뜻하지 않습니다. 일치 없음은 실제 미등록을 확정하지 않습니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
+          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>미등록 역사 인물 발굴</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 기등록 인물의 현재 이름·별칭을 대조하여 자동 제외합니다. 동명이인은 검토 대상으로 보류하며 신규 등록 확정이 아닙니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
         </div>
         <div class="registration-review-signal-toolbar">
-          <div id="youtubeSignalMode" class="registration-review-signal-modes" role="group" aria-label="인물 순위 집계 방식"><button type="button" data-signal-mode="raw" aria-pressed="true">원시명 순위</button><button type="button" data-signal-mode="person" aria-pressed="false">인물별 통합 순위</button></div>
-          <p id="youtubeSignalModeInfo" class="registration-review-mode-info">원시 표기별 집계</p>
+          <p class="registration-review-mode-info">기등록 인물은 자동 제외됩니다. 동명이인과 미확인 후보는 검토가 필요합니다.</p>
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
           <div id="youtubeSignalFilters" class="registration-review-signal-filters" aria-label="유튜브 인물 필터">
-            <label><input type="checkbox" id="youtubeExcludeRegistered">기등록 제외</label>
             <label><input type="checkbox" id="youtubeExcludeLiving">생존 추정 인물 제외</label>
           </div>
           <div class="registration-review-signal-meta">
@@ -466,7 +338,7 @@
               <col class="registration-review-signal-col-channels" />
               <col class="registration-review-signal-col-videos" />
             </colgroup>
-            <thead><tr><th>순위</th><th>인물 raw 이름</th><th>고유 채널</th><th>영상</th></tr></thead>
+            <thead><tr><th>순위</th><th>미등록 인물 후보</th><th>고유 채널</th><th>영상</th></tr></thead>
             <tbody id="youtubeSignalBody"><tr><td colspan="4" class="registration-review-empty">불러오는 중</td></tr></tbody>
           </table>
         </div>
@@ -491,25 +363,14 @@
     root.innerHTML=template();
     lastSignalPayload=null;
     signalRows=[];
-    root.querySelector("#youtubeExcludeRegistered").checked=excludeRegistered;
-    root.querySelector("#youtubeSignalMode")?.addEventListener("click",event=>{
-      const next=event.target.closest("[data-signal-mode]")?.dataset.signalMode;
-      if(!["raw","person"].includes(next)||next===signalMode)return;
-      signalMode=next;
-      const registeredBox=root.querySelector("#youtubeExcludeRegistered");
-      registeredBox.disabled=next==="person";
-      refreshSignalsOnly();
-    });
     root.querySelector("#youtubeExcludeLiving").checked=excludeLiving;
     root.querySelector("#registrationReviewRefresh")?.addEventListener("click",()=>refresh({ forcePersons:true }));
     root.querySelector("#registrationQueueSearch")?.addEventListener("input",renderQueueTable);
     root.querySelector("#youtubeSignalFilters")?.addEventListener("change",(event)=>{
-      if(event.target?.id==="youtubeExcludeRegistered") excludeRegistered=event.target.checked;
-      else if(event.target?.id==="youtubeExcludeLiving") excludeLiving=event.target.checked;
+      if(event.target?.id==="youtubeExcludeLiving") excludeLiving=event.target.checked;
       else return;
       immediatelyApplyVisibleFilters();
-      if(personIdentityIndex) refreshSignalsOnly();
-      else refresh({forcePersons:true});
+      refreshSignalsOnly();
     });
     root.querySelector("#youtubeSignalThresholds")?.addEventListener("click",(event)=>{
       const button=event.target.closest("[data-min-channels]");
