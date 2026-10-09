@@ -35,7 +35,7 @@ test("P2-01J closes the 1830 France boundary while the parent family remains app
   assert.match(audit,/P2-01A/);
   const workstreams=text("docs/ATLAS_CURRENT_WORKSTREAMS.md");
   assert.match(workstreams,/POLITY_P2_01J_FRANCE_RESTORATION_JULY_STATE_FORM_20261009\.md/);
-  assert.match(workstreams,/macedon-empire/);
+  assert.match(workstreams,/Macedonia is `KEEP_SEPARATE`/);
   assert.match(workstreams,/brazil-regime-family/);
   assert.match(workstreams,/approval-gated/);
   assert.doesNotMatch(workstreams,/POLITY-P2-01J CLOSED/);
