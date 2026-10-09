@@ -243,7 +243,32 @@ def load_manifest_paths(root):
     return found
 
 
-def build(root, artifact_id, artifact_digest):
+def previous_signal_map(previous):
+    """Existing display labels are part of the published record, not disposable."""
+    if previous is None:
+        return {}
+    if not isinstance(previous, dict) or not isinstance(previous.get("snapshot"), dict):
+        raise RuntimeError("INVALID_PREVIOUS_SIGNAL_SNAPSHOT")
+    rows = previous.get("signals", previous.get("rows"))
+    if not isinstance(rows, list):
+        raise RuntimeError("INVALID_PREVIOUS_SIGNAL_ROWS")
+    known = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            raise RuntimeError("INVALID_PREVIOUS_SIGNAL_ROW")
+        name = row.get("raw_name")
+        if not isinstance(name, str) or not name.strip():
+            raise RuntimeError("INVALID_PREVIOUS_SIGNAL_NAME")
+        key = name.casefold()
+        if key in known:
+            raise RuntimeError("DUPLICATE_PREVIOUS_SIGNAL_IDENTITY")
+        known[key] = row
+    if len(known) != previous["snapshot"].get("threshold_counts", {}).get("3"):
+        raise RuntimeError("PREVIOUS_SIGNAL_COUNT_MISMATCH")
+    return known
+
+
+def build(root, artifact_id, artifact_digest, previous_snapshot=None):
     manifests = load_manifest_paths(root)
     channels = []
     seen = set()
@@ -320,10 +345,22 @@ def build(root, artifact_id, artifact_digest):
     if parsed_video_rows != video_total:
         raise RuntimeError(f"video row total mismatch: manifests={video_total}, archives={parsed_video_rows}")
 
+    preserved = previous_signal_map(previous_snapshot)
     raw = []
-    for name, channel_ids in signal_channels.items():
+    for key, channel_ids in signal_channels.items():
         if len(channel_ids) >= 3:
-            raw.append((signal_names[name], len(channel_ids), int(signal_videos[name])))
+            old = preserved.get(key)
+            current_channels = len(channel_ids)
+            current_videos = int(signal_videos[key])
+            if old is not None:
+                if current_channels < int(old["distinct_channel_count"]) or current_videos < int(old["video_count"]):
+                    raise RuntimeError("PREVIOUS_SIGNAL_EVIDENCE_REGRESSION: " + old["raw_name"])
+            raw.append((old["raw_name"] if old is not None else signal_names[key],
+                        current_channels, current_videos))
+    new_keys = {name.casefold() for name, _, _ in raw}
+    missing = set(preserved) - new_keys
+    if missing:
+        raise RuntimeError("LOST_EXISTING_SIGNAL_IDENTITY: " + repr(sorted(missing)[:5]))
     raw.sort(key=lambda item: (-item[1], -item[2], item[0].casefold(), item[0]))
 
     signals = [
@@ -393,12 +430,14 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--artifact-id", type=int, required=True)
     parser.add_argument("--artifact-digest", required=True)
+    parser.add_argument("--previous-snapshot", help="Validated immediate predecessor names and counts")
     args = parser.parse_args()
 
     payload = build(
         args.root,
         args.artifact_id,
         args.artifact_digest,
+        previous_snapshot=json.loads(Path(args.previous_snapshot).read_text(encoding="utf-8")) if args.previous_snapshot else None,
     )
     Path(args.output).write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     snapshot = payload["snapshot"]
