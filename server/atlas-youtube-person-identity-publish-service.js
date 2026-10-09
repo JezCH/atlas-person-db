@@ -36,10 +36,10 @@ function normalizePublication(input){
   if(!/^yt-person-[a-zA-Z0-9._:-]+$/.test(id))throw Error("YOUTUBE_IDENTITY_SNAPSHOT_ID_INVALID");
   const sourceId=required(source.production_snapshot_id);
   if(!/^yt-[a-zA-Z0-9._:-]+$/.test(sourceId))throw Error("YOUTUBE_IDENTITY_SOURCE_ID_INVALID");
-  const artifactId=positiveInt(input.artifact_id);
+  const artifactId=positiveInt(input.artifact_id,Number.MAX_SAFE_INTEGER);
   const artifactDigest=required(input.artifact_digest,80);
   if(!SHA.test(artifactDigest))throw Error("YOUTUBE_IDENTITY_ARTIFACT_DIGEST_INVALID");
-  const runId=positiveInt(input.source_run_id);
+  const runId=positiveInt(input.source_run_id,Number.MAX_SAFE_INTEGER);
   const channels=positiveInt(source.successful_channel_count);
   const videos=positiveInt(source.source_video_rows);
   const selected=positiveInt(source.selected_channel_count);
