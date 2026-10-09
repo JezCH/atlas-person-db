@@ -321,6 +321,8 @@
     const snapshot=payload?.snapshot || null;
     const identityMode=signalMode==="person";
     const waiting=identityMode && payload?.available!==true;
+    const regFilter=activeRoot?.querySelector("#youtubeExcludeRegistered");
+    if(regFilter) regFilter.disabled=identityMode;
     const info=activeRoot?.querySelector("#youtubeSignalModeInfo");
     if(info) info.textContent=identityMode
       ? (waiting ? "통합 순위 미게시 또는 현재 누적 스냅샷과 불일치 — 기존 원시명 순위는 별도 탭에서 확인할 수 있습니다."
@@ -336,7 +338,7 @@
         : "<strong>아직 YouTube 수집 데이터가 없습니다.</strong>";
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
-    if(count) count.textContent=(excludeRegistered||excludeLiving)
+    if(count) count.textContent=((signalMode==="raw" && excludeRegistered)||excludeLiving)
       ? `상위 ${number(payload?.filtered_checked_count ?? signalRows.length)}명 확인 · 조건 일치 ${number(signalRows.length)}명 표시${excludeLiving ? " · 생존 미확인 포함" : ""}${payload?.filter_evidence_unavailable ? " · 생존 조회 실패(제외 불완전)" : ""}`
       : `전체 ${number(payload?.available_count ?? 0)}명 · 현재 ${number(signalRows.length)}명 표시`;
     renderSignalThresholds(snapshot,payload);
