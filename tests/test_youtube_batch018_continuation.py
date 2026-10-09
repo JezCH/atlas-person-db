@@ -44,6 +44,30 @@ class CollectorSafety(unittest.TestCase):
             self.assertEqual(rows[0]["count"],1)
             self.assertEqual(json.loads((out/"batch018-summary.json").read_text())["supabase_requests"],0)
 
+    def test_optional_legacy_batch_is_retained(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/"prior"
+            seed(root)
+            old=root/"out"/"batch001"/"manifest.json"
+            old.parent.mkdir(parents=True,exist_ok=True)
+            old.write_text(json.dumps([{"channel_id":"UC_LEGACY_001","status":"ERR","count":0}]),encoding="utf-8")
+            known=collector.manifests(root)
+            self.assertIn("UC_LEGACY_001",known)
+            self.assertEqual(len(known),6771)
+
+    def test_modified_prior_file_is_rejected_even_when_counts_match(self):
+        import shutil
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/"prior";out=Path(tmp)/"out"
+            seed(root)
+            shutil.copytree(root,out)
+            edited=out/"out"/"batch008"/"manifest.json"
+            edited.write_text(edited.read_text(encoding="utf-8")+" ",encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError,"PRIOR_FILE_CHANGED"):
+                collector.verify_preserved_files(root,out)
+            edited.write_bytes((root/"out"/"batch008"/"manifest.json").read_bytes())
+            self.assertEqual(collector.verify_preserved_files(root,out),10)
+
     def test_no_new_channels_fails_without_creating_output(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)/"prior";out=Path(tmp)/"out";seed(root)
