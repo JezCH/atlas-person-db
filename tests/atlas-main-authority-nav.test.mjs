@@ -28,7 +28,7 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /atlas-youtube-reviewed-living-people\.js/);
   assert.ok(nav.indexOf("atlas-youtube-reviewed-living-people.js")<nav.indexOf("atlas-registration-review.js"));
 
-  assert.match(nav, /atlas-registration-review\.css\?v=20261010-youtube-person-uuid-view-v1/);
+  assert.match(nav, /atlas-registration-review\.css\?v=20261010-youtube-unregistered-discovery-v1/);
   assert.match(html, /atlas-main-authority-nav\.css\?v=20260923-root-batch1/);
   assert.match(html, /atlas-main-authority-nav\.js\?v=[^"]+/);
   assert.match(nav, /atlasDashboardMount/);
