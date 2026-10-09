@@ -139,7 +139,8 @@ jobs:
           echo "YOUTUBE_PUBLICATION_RUNTIME_NOT_READY" >&2
           exit 1
 
-      # All Production reads must remain strictly bounded; an HTTP 402 is terminal.\n      - name: Snapshot active Production before publication
+      # All Production reads must remain strictly bounded; an HTTP 402 is terminal.
+      - name: Snapshot active Production before publication
         shell: bash
         run: |
           set -euo pipefail
@@ -153,9 +154,9 @@ jobs:
           set -euo pipefail
           curl --fail-with-body --silent --show-error --retry 1 --max-filesize 2097152 --max-time 45 \
             -H 'accept: application/json' \
-            'https://atlas-person-db.vercel.app/api/atlas-person-read' \
+            'https://atlas-person-db.vercel.app/api/atlas-person-read?view=identity' \
             --output /tmp/atlas-youtube-current-persons.json
-          jq -e '.ok==true and .mode=="list" and (.persons | length)>=2000' \
+          jq -e '.ok==true and .mode=="list" and .projection=="identity" and (.persons | length)>=2000' \
             /tmp/atlas-youtube-current-persons.json >/dev/null
 
       - name: Generate automatic incremental Person audit
