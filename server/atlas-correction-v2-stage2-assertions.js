@@ -1,6 +1,6 @@
 "use strict";
 
-const { insertExactSource } = require("./atlas-source-service.js");
+const { insertExactSource, normalizeBibliographicSource, SOURCE_FIELDS: BIBLIOGRAPHIC_SOURCE_FIELDS } = require("./atlas-source-service.js");
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const STAGE2_ASSERTION_TYPES = new Set([
@@ -35,7 +35,7 @@ const IDENTITY_RELATION_FIELDS = Object.freeze([
   "confidence","notes"
 ]);
 const IDENTITY_RELATION_UUID_FIELDS = new Set(["id","predecessor_polity_id","successor_polity_id","relation_type_id"]);
-const SOURCE_FIELDS = Object.freeze(["id","source_key","source_type","title","sha256","bytes","canonical_url","citation_text"]);
+const SOURCE_FIELDS = Object.freeze(["id", ...BIBLIOGRAPHIC_SOURCE_FIELDS]);
 
 function requireUuid(value, code) {
   const id = String(value || "").trim().toLowerCase();
@@ -174,18 +174,20 @@ function normalizeIdentityRelationBundle(raw, label) {
 
 function normalizeSourceBundle(raw, label) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error(`CORRECTION_V2_${label}_SOURCE_REQUIRED`);
-  const row = {};
-  for (const field of SOURCE_FIELDS) row[field] = raw[field] ?? null;
-  row.id = requireUuid(row.id, `CORRECTION_V2_${label}_SOURCE_ID_INVALID`);
-  row.source_key = String(row.source_key || "").trim();
-  row.source_type = String(row.source_type || "").trim();
-  row.title = String(row.title || "").trim();
-  row.canonical_url = String(row.canonical_url || "").trim();
-  row.citation_text = String(row.citation_text || "").trim();
-  if (!row.source_key || !row.source_type || !row.title) throw new Error(`CORRECTION_V2_${label}_SOURCE_METADATA_REQUIRED`);
-  if (row.sha256 !== null || row.bytes !== null) throw new Error(`CORRECTION_V2_${label}_SOURCE_FAKE_MATERIALIZATION_FORBIDDEN`);
-  if (!row.canonical_url.startsWith("https://") || !row.citation_text) throw new Error(`CORRECTION_V2_${label}_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED`);
-  return { source: row };
+  const id = requireUuid(raw.id, `CORRECTION_V2_${label}_SOURCE_ID_INVALID`);
+  const sourceKey = String(raw.source_key || "").trim();
+  const sourceType = String(raw.source_type || "").trim();
+  const title = String(raw.title || "").trim();
+  const url = String(raw.canonical_url || "").trim();
+  const citation = String(raw.citation_text || "").trim();
+  if (!sourceKey || !sourceType || !title) throw new Error(`CORRECTION_V2_${label}_SOURCE_METADATA_REQUIRED`);
+  if (raw.sha256 != null || raw.bytes != null) throw new Error(`CORRECTION_V2_${label}_SOURCE_FAKE_MATERIALIZATION_FORBIDDEN`);
+  if (!url.startsWith("https://") || !citation) throw new Error(`CORRECTION_V2_${label}_SOURCE_BIBLIOGRAPHIC_EVIDENCE_REQUIRED`);
+  const bibliography = normalizeBibliographicSource({
+    ...raw, id, source_key:sourceKey, source_type:sourceType,
+    title, canonical_url:url, citation_text:citation, sha256:null, bytes:null
+  });
+  return { source: Object.freeze({ id, ...bibliography }) };
 }
 
 function normalizeStage2AssertionOperation(raw, index) {
@@ -223,7 +225,9 @@ function normalizeStage2AssertionOperation(raw, index) {
 }
 
 async function loadSourceBundle(client, id, { forUpdate = false } = {}) {
-  const row = await client.query(`select id::text,source_key,source_type,title,sha256,bytes,canonical_url,citation_text
+  const row = await client.query(`select id::text,source_key,source_type,title,author_creator,institution,publisher,
+    publication_date::text as publication_date,publication_year,canonical_url,external_identifier,
+    citation_text,citation_metadata,artifact_metadata,sha256,bytes
     from atlas_v2.sources where id=$1::uuid${forUpdate ? " for update" : ""}`, [id]);
   if (!row.rowCount) return null;
   const source = Object.fromEntries(SOURCE_FIELDS.map((field) => [field, row.rows[0][field] ?? null]));
