@@ -121,7 +121,7 @@ function referenceCountRecord(ref, count) {
   });
 }
 
-async function queryPolityReferenceAudit(client, { includeBrazilDetails = false, includeBrazilPreflight = false } = {}) {
+async function queryPolityReferenceAudit(client, { includeBrazilDetails = false, includeBrazilPreflight = false, includeBrazilSourceAliases = false } = {}) {
   await beginReadOnly(client);
   try {
     const polities = await queryPolities(client);
@@ -183,6 +183,7 @@ async function queryPolityReferenceAudit(client, { includeBrazilDetails = false,
 
     const brazilDetails = includeBrazilDetails ? await queryBrazilDetails(client) : null;
     const brazilPreflight = includeBrazilPreflight ? await queryBrazilPreflight(client) : null;
+    const brazilSourceAliases = includeBrazilSourceAliases ? await queryBrazilSourceAliases(client) : null;
     if (includeBrazilDetails && outputPolities.filter((row) => BRAZIL_P2_03E_POLITY_IDS.includes(row.polity_id)).length !== BRAZIL_P2_03E_POLITY_IDS.length) {
       throw new Error("POLITY_REFERENCE_AUDIT_BRAZIL_POLITY_MISSING");
     }
@@ -190,6 +191,7 @@ async function queryPolityReferenceAudit(client, { includeBrazilDetails = false,
     return Object.freeze({
       brazil_details: brazilDetails,
       brazil_preflight: brazilPreflight,
+      brazil_source_aliases: brazilSourceAliases,
       complete: true,
       reference_model: "direct_foreign_keys_plus_atlas_v2_polity_id_columns",
       reference_catalog: Object.freeze(references.map((ref) => Object.freeze({ ...ref }))),
@@ -438,6 +440,40 @@ async function queryBrazilPreflight(client) {
   });
 }
 
+
+const BRAZIL_P2_03H_SOURCE_ALIAS_PATTERN = [
+  '5389','5[.]389','h[- ]?733',
+  'constitui.{0,60}(1891|1934|1946|1967|1969|1988)',
+  'decreto.{0,40}1889','1889.{0,40}decreto',
+  'estados unidos do brasil','república federativa do brasil',
+  'constituicao91','constituicao34','constituicao67',
+  'norma/579492','norma/579493','norma/547253','norma/385329',
+  'constituicaocompilado'
+].join('|');
+
+// Bounded bibliography candidate search, NOT comprehensive semantic duplicate proof.
+// Executes within the existing OIDC verified, repeatable-read, READ ONLY transaction.
+async function queryBrazilSourceAliases(client) {
+  const pattern=BRAZIL_P2_03H_SOURCE_ALIAS_PATTERN;
+  const filter="concat_ws(' ',s.source_key,s.title,s.canonical_url,s.citation_text) ~* $1::text";
+  const total=await client.query(`
+    select count(*)::int as total from atlas_v2.sources s
+    where ${filter}`,[pattern]);
+  const matches=await client.query(`
+    select s.id::text as source_id,s.source_key,s.source_type,s.title,
+           s.canonical_url,s.citation_text,s.sha256,s.bytes
+      from atlas_v2.sources s
+     where ${filter}
+     order by s.source_key,s.id::text
+     limit 101`,[pattern]);
+  const count=Number(total.rows[0]?.total ?? 0);
+  return Object.freeze({
+    pattern,total_metadata_matches:count,returned_rows:matches.rows.slice(0,100),
+    truncated:count>100,complete:count<=100 && matches.rows.length===count,
+    caveat:"Metadata candidate scan only; no claim that absent legal documents cannot be present under generic source keys."
+  });
+}
+
 function statusForError(code) {
   if (code === "DEPLOYMENT_SHA_MISMATCH") return 409;
   if (code === "GITHUB_OIDC_INVALID" || String(code).startsWith("GITHUB_OIDC_")) return 401;
@@ -461,7 +497,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
       client = await createClient(connectionString, { env });
       const includeBrazilDetails = req.body?.include_brazil_details === true;
       const includeBrazilPreflight = req.body?.include_brazil_preflight === true;
-      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails, includeBrazilPreflight });
+      const includeBrazilSourceAliases = req.body?.include_brazil_source_aliases === true;
+      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails, includeBrazilPreflight, includeBrazilSourceAliases });
       return json(res, 200, {
         ok: true,
         marker: MARKER,
@@ -476,7 +513,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
         reference_catalog: audit.reference_catalog,
         polities: audit.polities,
         ...(includeBrazilDetails ? { brazil_details: audit.brazil_details } : {}),
-        ...(includeBrazilPreflight ? { brazil_preflight: audit.brazil_preflight } : {})
+        ...(includeBrazilPreflight ? { brazil_preflight: audit.brazil_preflight } : {}),
+        ...(includeBrazilSourceAliases ? { brazil_source_aliases: audit.brazil_source_aliases } : {})
       });
     } catch (error) {
       return json(res, statusForError(error?.message), {
@@ -502,6 +540,8 @@ module.exports = Object.freeze({
   queryPolityReferenceAudit,
   queryBrazilDetails,
   queryBrazilPreflight,
+  queryBrazilSourceAliases,
+  BRAZIL_P2_03H_SOURCE_ALIAS_PATTERN,
   summarizeBrazilPreflightRows,
   BRAZIL_P2_03E_POLITY_IDS,
   BRAZIL_P2_03G_EXPECTED_ACTIVITIES,
