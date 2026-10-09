@@ -29,7 +29,7 @@ function state(){
   genuinePortrait:Boolean(portrait?.classList.contains("has-portrait")),imageSource:img?.getAttribute("src")||null,imageAlt:img?.getAttribute("alt")||null,
   imageComplete:Boolean(img?.complete),imageNaturalWidth:img?.naturalWidth||0,imageNaturalHeight:img?.naturalHeight||0,
   activityCount:document.querySelectorAll("#personMainDetail .person-chronicle-activity").length,sourceCount:document.querySelectorAll("#personMainDetail .person-source-item").length,
-  evidenceCount:document.querySelectorAll("#personMainDetail .person-evidence-inspector").length,sourceLinkCount:document.querySelectorAll("#personMainDetail .person-source-item a").length,
+  evidenceCount:document.querySelectorAll("#personMainDetail .person-evidence-inspector").length,evidenceOpenCount:document.querySelectorAll("#personMainDetail .person-evidence-inspector[open]").length,sourceLinkCount:document.querySelectorAll("#personMainDetail .person-source-item a").length,
   mainRowCount:document.querySelectorAll(".person-register-entry").length,mainPortraitCount:document.querySelectorAll("#personMainView .person-main-groups .person-detail-portrait").length,
   elements:result};
 }
@@ -63,7 +63,7 @@ async function openPerson(c,kind,id){
  return result;
 }
 async function focusArchive(c,view){
- const selectors={chronicle:".person-chronicle-activities",evidence:".person-evidence-inspector",sources:'[data-section="sources"]'};
+ const selectors={chronicle:".person-chronicle-activities",evidence:".person-evidence-inspector",sources:".person-evidence-inspector[open] .person-source-item"};
  const selector=selectors[view];check(selector,"Unknown archive view "+view);
  const expression="(()=>{const panel=document.querySelector('#personMainDetail');const target=panel?.querySelector("+JSON.stringify(selector)+");if(!target)return false;panel.scrollTop+=target.getBoundingClientRect().top-panel.getBoundingClientRect().top-78;return true;})()";
  check(await evaluate(c,expression),"Archive capture target missing: "+view);
@@ -71,6 +71,8 @@ async function focusArchive(c,view){
 }
 async function caseAB(c,width,kind,id){
  const person=await openPerson(c,kind,id);
+ const disclosure=await evaluate(c,"(()=>{const detail=document.querySelector('#personMainDetail .person-evidence-inspector');if(!detail)return false;detail.open=true;return detail.open;})()");
+ check(disclosure,"No actual Activity Evidence disclosure",{width,kind,person});
  const name=width+"-"+kind;
  const capture=[390,1440].includes(width);
  const views=["chronicle","evidence","sources"];
@@ -83,8 +85,9 @@ async function caseAB(c,width,kind,id){
  const after=await evaluate(c,"("+state.toString()+")()");
  if(capture)for(const view of views){await focusArchive(c,view);await screenshot(c,"vis2-10-B-refined-"+name+"-"+view+".png");}
  check(before.marker===""&&after.marker==="1","VIS2-10 activation failed",{width,kind});
- for(const k of ["width","docWidth","panelHidden","panelScrollTop","domain","genuinePortrait","imageSource","imageAlt","imageComplete","imageNaturalWidth","imageNaturalHeight","activityCount","sourceCount","evidenceCount","sourceLinkCount","mainRowCount","mainPortraitCount"])
+ for(const k of ["width","docWidth","panelHidden","panelScrollTop","domain","genuinePortrait","imageSource","imageAlt","imageComplete","imageNaturalWidth","imageNaturalHeight","activityCount","sourceCount","evidenceCount","evidenceOpenCount","sourceLinkCount","mainRowCount","mainPortraitCount"])
   check(JSON.stringify(before[k])===JSON.stringify(after[k]),"Historical/detail state changed "+k,{width,kind,before:before[k],after:after[k]});
+ check(before.evidenceOpenCount>=1&&before.sourceCount>0,"Evidence must expose real source rows for screenshot",{width,kind,evidenceOpenCount:before.evidenceOpenCount,sourceCount:before.sourceCount});
  check(before.docWidth<=width+1&&after.docWidth<=width+1,"Page overflow",{width,kind,docWidth:after.docWidth});
  check(!before.panelHidden&&before.elements.title?.text===person.name,"Wrong Person displayed",{width,kind,person,actual:before.elements.title?.text});
  check(before.mainPortraitCount===0,"No portraits on Person main register",{width,kind});
