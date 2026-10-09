@@ -19,7 +19,6 @@
     resolved_review: Object.freeze({ label: "종결 이력", tone: "confirmed" })
   });
   const STATUS_LABEL = Object.freeze({
-    EXECUTION_REPAIR_REQUIRED: "실행 우선 · 수정 필요",
     REVIEW_REQUIRED: "최신 Production 재판정 필요",
     FIXED: "종결 · FIXED",
     KEEP_SEPARATE: "종결 · KEEP_SEPARATE",
@@ -39,10 +38,6 @@
       .replaceAll("'", "&#039;");
   }
 
-  function executionCases() {
-    return Array.isArray(DATA.execution_frontier) ? DATA.execution_frontier.slice() : [];
-  }
-
   function auditCases() {
     return [
       ...(DATA.carry_forward_same_identity || []),
@@ -59,7 +54,7 @@
 
   function currentCases() {
     const seen = new Set();
-    return [...executionCases(), ...currentAuditCases()].filter((row) => {
+    return currentAuditCases().filter((row) => {
       if (!row?.id || seen.has(row.id)) return false;
       seen.add(row.id);
       return true;
@@ -399,7 +394,7 @@
         <div>
           <p class="eyebrow">POLITY IDENTITY REVIEW</p>
           <h2>충돌·Identity 검토</h2>
-          <p>현재 실행 우선 항목과 과거 감사에서 carry-forward된 미종결 seed를 함께 관리합니다. 옛 목록의 결론을 그대로 실행하지 않고, 각 seed를 최신 Production에서 다시 판정해 FIXED / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD_UNRESOLVED 중 하나로 닫습니다.</p>
+          <p>현재 검토 원장의 미종결 사건을 최신 Production에 대조하여 판정합니다. 옛 목록을 작업 지시로 실행하지 않고, FIXED / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD_UNRESOLVED 중 하나로 종결합니다.</p>
         </div>
         <div class="polity-review-summary-actions">
           <button type="button" class="btn" data-export-decisions>결정 JSON 내보내기</button>
@@ -419,8 +414,6 @@
       </div>
       <div class="polity-review-kpis">
         <button class="card polity-review-filter is-active" type="button" data-kind-filter="current"><small>미종결 전체</small><strong>${currentCases().length}</strong></button>
-        <button class="card polity-review-filter" type="button" data-kind-filter="execution"><small>실행 우선</small><strong>${executionCases().length}</strong></button>
-        <button class="card polity-review-filter" type="button" data-kind-filter="carry_forward_same_identity"><small>29 carry-forward</small><strong>${currentAuditCases().filter((row) => row.review_group === "carry_forward_same_identity").length}</strong></button>
         <button class="card polity-review-filter" type="button" data-kind-filter="historical_family_review"><small>역사 family</small><strong>${currentAuditCases().filter((row) => row.review_group === "historical_family_review").length}</strong></button>
         <button class="card polity-review-filter" type="button" data-kind-filter="designation_residual"><small>Designation</small><strong>${currentAuditCases().filter((row) => row.review_group === "designation_residual").length}</strong></button>
         <button class="card polity-review-filter" type="button" data-kind-filter="naming_residual"><small>명칭 충돌</small><strong>${currentAuditCases().filter((row) => row.review_group === "naming_residual").length}</strong></button>
@@ -443,21 +436,18 @@
     function render() {
       const needle = String(search?.value || "").normalize("NFKC").trim().toLocaleLowerCase("und");
       const current = currentCases();
-      const execution = executionCases();
       const audit = currentAuditCases();
       const history = historyCases();
       const scopeRows = filter === "history"
         ? history
-        : filter === "execution"
-          ? execution
-          : filter === "current"
-            ? current
-            : audit.filter((row) => row.review_group === filter);
+        : filter === "current"
+          ? current
+          : audit.filter((row) => row.review_group === filter);
       const rows = scopeRows.filter((row) => !needle || caseSearchText(live, row).includes(needle));
       const historyMode = filter === "history";
       list.innerHTML = rows.map((row) => caseHtml(live, row, decisions[row.id], { history:historyMode })).join("");
       const explicit = current.filter((row) => Boolean(decisions[row.id]?.decision || decisions[row.id]?.note)).length;
-      progress.textContent = `미종결 ${current.length} · 실행 우선 ${execution.length} · 종결/이력 ${history.length} · 현재 입력 ${explicit}`;
+      progress.textContent = `미종결 ${current.length} · 종결/이력 ${history.length} · 현재 입력 ${explicit}`;
       if (kpis) kpis.innerHTML = datasetKpis(live);
       if (liveStatus) {
         liveStatus.textContent = live.status === "ready"
