@@ -1,0 +1,209 @@
+name: YouTube Person UUID Identity Publish
+
+on:
+  workflow_dispatch:
+  # One guarded production release. Never run on routine pushes.
+  push:
+    branches: [main]
+    paths: ['.github/workflows/youtube-person-identity-publish.yml']
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/youtube-person-identity-publish.yml'
+      - 'server/atlas-youtube-person-identity-publish-service.js'
+      - 'server/atlas-youtube-person-identity-publish-handler.js'
+      - 'tests/atlas-youtube-person-identity-publish.test.mjs'
+
+permissions:
+  contents: read
+  actions: read
+  id-token: write
+
+concurrency:
+  group: atlas-youtube-uuid-publication
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --ignore-scripts
+      - run: node --test tests/atlas-youtube-person-identity-read.test.mjs tests/atlas-youtube-person-identity-publish.test.mjs
+
+  publish:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[yt-person-uuid-publish-once]'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      PUBLISH_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply?__atlas_authoring_apply_surface=youtube-person-identity-publish
+      READ_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=youtube-person-signals
+      RUNTIME_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
+      PUBLISH_AUDIENCE: atlas-person-db-youtube-identity-publish
+      SOURCE_RUN: '37948553704'
+      SOURCE_ARTIFACT_ID: '11624729509'
+      SOURCE_NAME: youtube-batch024-person-uuid-mention-audit-v2
+      SOURCE_DIGEST: sha256:14f7eeabad8c0141232c7dcaedce19fa47992300d237316885a2e4f9d745976f
+      SNAPSHOT_ID: yt-20261009T120819Z-10127ch-rebuild-v4
+      IDENTITY_ID: yt-person-uuid-20261009T120819Z-10127ch-reviewed-v2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --ignore-scripts
+      - run: node --test tests/atlas-youtube-person-identity-read.test.mjs tests/atlas-youtube-person-identity-publish.test.mjs
+      - name: Verify immutable artifact identity before download
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT_ID" |
+            jq -e --arg name "$SOURCE_NAME" --arg digest "$SOURCE_DIGEST" \
+              '.id==11624729509 and .name==$name and .digest==$digest and .expired==false' >/dev/null
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.SOURCE_NAME }}
+          run-id: ${{ env.SOURCE_RUN }}
+          path: evidence
+          repository: ${{ github.repository }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify Batch024 Person UUID counts and source evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -e --arg snapshot "$SNAPSHOT_ID" '
+            .schema=="atlas-youtube-person-identity-sidecar/v1"
+            and .source.production_snapshot_id==$snapshot
+            and .source.successful_channel_count==10127
+            and .source.selected_channel_count==10890
+            and .source.source_video_rows==2230031
+            and .summary.person_identities_with_evidence==577
+            and .summary.matched_video_rows==56456
+            and .summary.mention_only_title_rows==42467
+            and .method.production_writes==false
+            and .method.raw_title_rankings_modified==false
+            and .method.evidence=="reviewed_prefix_plus_conservative_in_title"
+            and (.persons | length)==577
+            and ([.persons[] | select(.person_id=="dfa49bd5-8672-4f78-8ab6-72932a6726d9" and .distinct_channel_count==575 and .distinct_video_count==2008)] | length)==1
+            and ([.persons[] | select(.person_id=="945b78a7-3941-5e05-a6c9-ce57e7395727" and .distinct_channel_count==401 and .distinct_video_count==505)] | length)==1
+            and ([.persons[] | select(.person_id=="7763a315-4385-404b-b0d6-92a074a2aa27" and .distinct_channel_count==265 and .distinct_video_count==590)] | length)==1
+            and ([.persons[] | select(.person_id=="f363272d-fb69-47e6-8117-b3bf7d740f0b" and .distinct_channel_count==255 and .distinct_video_count==883)] | length)==1
+            and ([.persons[] | select(.person_id=="cc98bd67-4827-4dd9-89ec-40785f231da5" and .distinct_channel_count==238 and .distinct_video_count==862)] | length)==1
+            and ([.persons[] | select(.person_id=="ea13e48a-94ef-5648-98be-f74554778166" and .distinct_channel_count==38 and .distinct_video_count==52)] | length)==1
+          ' evidence/sidecar.json > /dev/null
+      - name: Confirm active raw snapshot has not moved
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail-with-body --silent --show-error --max-time 45 "$READ_ENDPOINT&mode=raw&limit=5" > /tmp/uuid-raw.json
+          jq -e --arg snapshot "$SNAPSHOT_ID" '
+            .ok==true and .available==true and .snapshot.snapshot_id==$snapshot
+            and .snapshot.channel_count==10127 and .snapshot.video_count==2230031
+          ' /tmp/uuid-raw.json >/dev/null
+      - name: Form deterministic authenticated publication body
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/uuid-publication
+          node - <<'NODE'
+          const fs=require("node:fs");
+          const crypto=require("node:crypto");
+          const sidecar=JSON.parse(fs.readFileSync("evidence/sidecar.json","utf8"));
+          const payload={
+            schema:"atlas-youtube-person-identity-publication/v1",
+            identity_snapshot_id:process.env.IDENTITY_ID,
+            artifact_id:process.env.SOURCE_ARTIFACT_ID,
+            artifact_digest:process.env.SOURCE_DIGEST,
+            source_run_id:process.env.SOURCE_RUN,
+            source:sidecar.source,summary:sidecar.summary,persons:sidecar.persons
+          };
+          const fields={identity_snapshot_id:payload.identity_snapshot_id,source:payload.source,
+            summary:payload.summary,persons:payload.persons};
+          payload.publication_fingerprint=crypto.createHash("sha256")
+            .update(JSON.stringify(fields)).digest("hex");
+          fs.writeFileSync("/tmp/uuid-publication/payload.json",JSON.stringify(payload));
+          NODE
+      - name: Wait for deployed OIDC publisher and resolve main runtime identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 90); do
+            code="$(curl --silent --show-error --output /tmp/uuid-publication/route.json --write-out '%{http_code}' "$PUBLISH_ENDPOINT")"
+            if [[ "$code" == "405" ]]; then
+              runtime_code="$(curl --silent --show-error --output /tmp/uuid-publication/runtime.json --write-out '%{http_code}' "$RUNTIME_ENDPOINT")"
+              if [[ "$runtime_code" == "200" ]]; then
+                sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/uuid-publication/runtime.json)"
+                ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/uuid-publication/runtime.json)"
+                if [[ "$sha" =~ ^[0-9a-f]{40}$ && "$ref" == "main" ]]; then
+                  echo "UUID_RUNTIME_SHA=$sha" >> "$GITHUB_ENV"
+                  exit 0
+                fi
+              fi
+            fi
+            sleep 5
+          done
+          echo "UUID_PUBLISH_ROUTE_NOT_READY" >&2
+          exit 1
+      - name: Publish append-only UUID model using GitHub Actions OIDC
+        shell: bash
+        run: |
+          set -euo pipefail
+          oidc="$(curl --fail-with-body --silent --show-error \
+            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=$PUBLISH_AUDIENCE" | jq -er '.value')"
+          jq --arg runtime "$UUID_RUNTIME_SHA" --arg publication "$GITHUB_SHA" \
+            '. + {runtime_sha:$runtime,publication_sha:$publication}' \
+            /tmp/uuid-publication/payload.json >/tmp/uuid-publication/request.json
+          code="$(curl --silent --show-error \
+            --output /tmp/uuid-publication/response.json --write-out '%{http_code}' \
+            --request POST -H 'content-type: application/json' \
+            -H "authorization: Bearer $oidc" \
+            --data-binary @/tmp/uuid-publication/request.json "$PUBLISH_ENDPOINT")"
+          if [[ "$code" != "200" ]]; then
+            cat /tmp/uuid-publication/response.json >&2 || true
+            exit 1
+          fi
+          jq -e --arg source "$SNAPSHOT_ID" \
+            '.ok==true and .marker=="ATLAS_YOUTUBE_PERSON_IDENTITY_PUBLICATION_V1"
+             and (.outcome.committed==true or .outcome.idempotent==true)
+             and .outcome.source_snapshot_id==$source and .outcome.person_count==577' \
+            /tmp/uuid-publication/response.json >/dev/null
+      - name: Verify Production readback and complete six-person spot check
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 30); do
+            code="$(curl --silent --show-error \
+              --output /tmp/uuid-publication/readback.json --write-out '%{http_code}' \
+              "$READ_ENDPOINT&mode=person&min_channels=3&limit=1000")"
+            if [[ "$code" == "200" ]] && jq -e --arg snapshot "$SNAPSHOT_ID" '
+              .ok==true and .available==true and .mode=="person"
+              and .snapshot.snapshot_id==$snapshot
+              and .identity_snapshot.source_snapshot_id==$snapshot
+              and .identity_snapshot.person_count==577
+              and .identity_snapshot.matched_video_rows==56456
+              and (.rows | length)<=577
+              and ([.rows[] | select(.person_id=="dfa49bd5-8672-4f78-8ab6-72932a6726d9" and .distinct_channel_count==575 and .video_count==2008)] | length)==1
+              and ([.rows[] | select(.person_id=="945b78a7-3941-5e05-a6c9-ce57e7395727" and .distinct_channel_count==401 and .video_count==505)] | length)==1
+              and ([.rows[] | select(.person_id=="ea13e48a-94ef-5648-98be-f74554778166" and .distinct_channel_count==38 and .video_count==52)] | length)==1
+            ' /tmp/uuid-publication/readback.json >/dev/null; then
+              echo "UUID Production readback validated" >>"$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            sleep 5
+          done
+          cat /tmp/uuid-publication/readback.json >&2 || true
+          exit 1
+      - name: Publish immutable evidence summary without credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -r '"- Source snapshot: " + .identity_snapshot.source_snapshot_id + "\n- People: " + (.identity_snapshot.person_count|tostring) + "\n- Evidence: " + (.identity_snapshot.matched_video_rows|tostring)' \
+            /tmp/uuid-publication/readback.json >> "$GITHUB_STEP_SUMMARY"
