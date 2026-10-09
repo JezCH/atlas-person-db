@@ -2,11 +2,16 @@ name: YouTube Person UUID Identity Audit (read-only)
 
 on:
   workflow_dispatch:
+  # Single-use replay of Batch024 raw corpus; no Production writes.
+  push:
+    branches: [main]
+    paths: ['.github/workflows/youtube-person-identity-audit.yml']
   pull_request:
     branches: [main]
     paths:
       - '.github/workflows/youtube-person-identity-audit.yml'
       - 'scripts/youtube-person-identity-sidecar.py'
+      - 'scripts/youtube_person_title_mentions.py'
       - 'scripts/youtube-person-identity-reviewed-aliases.v1.json'
       - 'tests/test_youtube_person_identity_sidecar.py'
       - 'server/atlas-reviewed-person-registration-aliases.js'
@@ -33,7 +38,7 @@ jobs:
       - run: python -m unittest discover -s tests -p test_youtube_person_identity_sidecar.py -v
 
   audit:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[yt-person-mention-b024-once]')
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
@@ -78,14 +83,18 @@ jobs:
             --snapshot-id "$SOURCE_SNAPSHOT" \
             --channels 10127 \
             --videos 2230031 \
-            --selected 10890
+            --selected 10890 \
+            --mentions
           jq -e '
             .schema == "atlas-youtube-person-identity-sidecar/v1"
             and .source.production_snapshot_id == "yt-20261009T120819Z-10127ch-rebuild-v4"
             and .source.successful_channel_count == 10127
             and .source.source_video_rows == 2230031
             and .source.selected_channel_count == 10890
-            and .summary.person_identities_with_evidence > 100
+            and .summary.person_identities_with_evidence >= 577
+            and .summary.matched_video_rows >= 12983
+            and .method.reviewed_in_title_alias_count > 100
+            and .method.evidence == "reviewed_prefix_plus_conservative_in_title"
             and .method.production_writes == false
             and .method.raw_title_rankings_modified == false
             and (.persons | all(.distinct_channel_count > 0 and .distinct_video_count > 0))
@@ -99,7 +108,8 @@ jobs:
             "- Source: \(.source.production_snapshot_id)",
             "- Channels: \(.source.successful_channel_count); original videos: \(.source.source_video_rows)",
             "- Person UUID identities with at least one title hit: \(.summary.person_identities_with_evidence)",
-            "- Matched video rows: \(.summary.matched_video_rows)",
+            "- Matched person-video rows: \(.summary.matched_video_rows)",
+            "- Titles rescued beyond reviewed prefix evidence: \(.summary.mention_only_title_rows)",
             "- Ambiguous candidate rows withheld: \(.summary.ambiguous_video_rows_withheld)",
             "",
             "| Person UUID | Unique channels | Unique videos |",
@@ -109,7 +119,7 @@ jobs:
       - name: Upload identity evidence without modifying Production
         uses: actions/upload-artifact@v4
         with:
-          name: youtube-batch024-person-uuid-identity-audit
+          name: youtube-batch024-person-uuid-mention-audit-v2
           path: /tmp/atlas-youtube-person-identity/sidecar.json
           if-no-files-found: error
           retention-days: 90
