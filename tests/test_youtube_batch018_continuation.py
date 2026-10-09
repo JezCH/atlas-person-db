@@ -61,7 +61,7 @@ class CollectorSafety(unittest.TestCase):
             for cid in old_ids:
                 with gzip.open(old/"videos"/f"{cid}.ndjson.gz","wt",encoding="utf-8") as fh:
                     fh.write(json.dumps({"video_id":cid,"channel_id":cid,
-                                         "title":"Biography of PLATO"})+"\\n")
+                                         "title":"Biography of PLATO"})+"\n")
             previous=parser.build(root,1,"test")
             self.assertEqual(previous["signals"][0]["raw_name"],"PLATO")
             next_batch=root/"out"/"batch020"
@@ -72,7 +72,7 @@ class CollectorSafety(unittest.TestCase):
             with gzip.open(next_batch/"videos"/"UC0000001.ndjson.gz","wt",
                            encoding="utf-8") as fh:
                 fh.write(json.dumps({"video_id":"new","channel_id":"UC0000001",
-                                     "title":"Biography of Plato"})+"\\n")
+                                     "title":"Biography of Plato"})+"\n")
             baseline_free=parser.build(root,2,"test")
             self.assertEqual(baseline_free["signals"][0]["raw_name"],"Plato")
             current=parser.build(root,2,"test",previous_snapshot=previous)
