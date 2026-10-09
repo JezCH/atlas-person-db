@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:gregory-nazianzus-roman-381:v1",
+  "person": {
+    "canonical_name_en": "Gregory of Nazianzus",
+    "display_name_ko": "나지안조스의 그레고리오스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "documented_death",
+    "representative_domain": "religion"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-09",
+      "document_title": "나지안조스의 그레고리오스",
+      "url": "https://namu.wiki/w/%EB%82%98%EC%A7%80%EC%95%88%EC%A1%B0%EC%8A%A4%EC%9D%98%20%EA%B7%B8%EB%A0%88%EA%B3%A0%EB%A6%AC%EC%98%A4%EC%8A%A4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Christian bishop and theologian",
+    "role_display_name_ko": "기독교 주교·신학자",
+    "period_basis": "general_activity",
+    "start_year": 381,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 381,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gregory presided at the First Council of Constantinople in 381 and resigned his Constantinopolitan episcopal position that year; records a dated personal ecclesiastical event, not a continuous traditional patriarchal tenure."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Gregory of Nazianzus — Vatican biography (Benedict XVI audience, 2007)",
+      "canonical_url": "https://www.vatican.va/content/benedict-xvi/en/audiences/2007/documents/hf_ben-xvi_aud_20070808.html",
+      "citation_text": "Biography describes Gregory's service in Constantinople and his participation and resignation during the council in 381."
+    }
+  ]
+}

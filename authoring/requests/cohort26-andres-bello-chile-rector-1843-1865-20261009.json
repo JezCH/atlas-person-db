@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:andres-bello-chile-rector-1843-1865:v1",
+  "person": {
+    "canonical_name_en": "Andrés Bello",
+    "display_name_ko": "안드레스 베요",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-09",
+      "document_title": "안드레스 베요",
+      "url": "https://namu.wiki/w/%EC%95%88%EB%93%9C%EB%A0%88%EC%8A%A4%20%EB%B2%A0%EC%9A%94"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Chile",
+    "display_name_ko": "칠레",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "521d06a9-e617-42ef-b03b-e14b158789f9"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Rector of the University of Chile",
+    "role_display_name_ko": "칠레 대학교 총장",
+    "period_basis": "general_activity",
+    "start_year": 1843,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1865,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The University of Chile's first rector was Andrés Bello (1843–1865), an independently dated institutional role during his lifetime; this is not a claim he ruled the Chilean state."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Andrés Bello López (1843–1865) — Universidad de Chile",
+      "canonical_url": "https://uchile.cl/presentacion/historia/rectores-de-la-u-de-chile/andres-bello-lopez-1843-1865",
+      "citation_text": "Official university rector history confirms 1843–1865 term."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Andrés Bello López — Biblioteca Nacional de Chile",
+      "canonical_url": "https://www.memoriachilena.gob.cl/602/w3-article-3290.html",
+      "citation_text": "Chilean National Library biography corroborates his rectorship from 1843 to his death in 1865."
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:virgil-roman-aeneid-27-19bce:v1",
+  "person": {
+    "canonical_name_en": "Virgil",
+    "display_name_ko": "베르길리우스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-09",
+      "document_title": "베르길리우스",
+      "url": "https://namu.wiki/w/%EB%B2%A0%EB%A5%B4%EA%B8%B8%EB%A6%AC%EC%9A%B0%EC%8A%A4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Latin poet",
+    "role_display_name_ko": "라틴 시인",
+    "period_basis": "general_activity",
+    "start_year": -27,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -19,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ongoing composition of the unfinished Aeneid during the Augustan imperial phase, bounded here to 27–19 BCE within the existing Roman Empire polity. The poem's creation began before 27 BCE, around 29 BCE; 19 BCE marks the poet's death with the poem unfinished, not a fictitious completion date."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Virgil — Encyclopaedia Britannica",
+      "canonical_url": "https://www.britannica.com/biography/Virgil-Roman-poet",
+      "citation_text": "Britannica dates composition of the Aeneid to 29–19 BCE and reports it remained unfinished when Virgil died in 19 BCE."
+    }
+  ]
+}
