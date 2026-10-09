@@ -31,7 +31,26 @@ SEARCHES = [
     "شخصيات تاريخية سيرة",
     "历史人物 传记",
 ]
-BATCH = "batch018"
+BATCH = "batch018"  # Legacy default for existing Batch018 regression tests
+BATCH019_SEARCHES = [
+    "Persian scholars historical biographies",
+    "medieval African kingdoms monarchs biographies",
+    "Southeast Asia historical kings queens biography",
+    "Ottoman scientists architects historical figures",
+    "indigenous American historical leaders documentaries",
+    "Indian mathematicians historical biographies",
+    "Tang dynasty poets and statesmen biographies",
+    "history of women inventors pioneers documentaries",
+    "ancient Greek philosophers biography documentary",
+    "Mongol empire commanders biography history",
+    "medieval European queens biographies documentary",
+    "Korean historical scholars scientists history",
+    "mujeres históricas latinoamérica biografías",
+    "شخصيات تاريخية علماء وفلاسفة",
+    "历史名人 纪录片 传记",
+    "歴史人物 伝記 ドキュメンタリー",
+]
+
 
 def run_yt(url, timeout=90):
     try:
@@ -48,7 +67,7 @@ def run_yt(url, timeout=90):
     except (ValueError, OSError, subprocess.TimeoutExpired):
         return None
 
-def manifests(root):
+def manifests(root, next_batch=18, min_channels=6770):
     found = {}
     for path in root.rglob("manifest.json"):
         # Match the existing validated snapshot parser: nested source folders
@@ -60,11 +79,11 @@ def manifests(root):
         if label in found:
             raise RuntimeError("DUPLICATE_BATCH_MANIFEST")
         found[label] = path
-    required = {f"batch{i:03d}" for i in range(8,18)}
+    required = {f"batch{i:03d}" for i in range(8,next_batch)}
     # The recoverable 008-017 baseline is mandatory, not an exclusion rule.
     # Accept older batch manifests if they are actually present, and reject
     # an already-created 018 instead of silently recreating that batch.
-    if not required.issubset(found) or any(int(label[5:8]) >= 18 for label in found):
+    if next_batch < 18 or not required.issubset(found) or any(int(label[5:8]) >= next_batch for label in found):
         raise RuntimeError("INCOMPLETE_PRIOR_CORPUS")
     known = set()
     for label in sorted(found):
@@ -74,7 +93,7 @@ def manifests(root):
             if not channel or channel in known:
                 raise RuntimeError("DUPLICATE_OR_MISSING_PRIOR_CHANNEL_ID")
             known.add(channel)
-    if len(known) < 6770:
+    if len(known) < min_channels:
         raise RuntimeError("PRIOR_CHANNEL_BASELINE_REGRESSION")
     return known
 
@@ -102,13 +121,17 @@ def verify_preserved_files(root, output):
     return count
 
 
-def collect(root, output, limit, video_limit):
-    prior = manifests(root)
+def collect(root, output, limit, video_limit, next_batch=18):
+    if not 18 <= next_batch <= 999:
+        raise RuntimeError("INVALID_NEXT_BATCH")
+    batch_label = f"batch{next_batch:03d}"
+    prior = manifests(root, next_batch=next_batch, min_channels=6810 if next_batch>=19 else 6770)
     if output.resolve() == root.resolve() or root.resolve() in output.resolve().parents:
         raise RuntimeError("OUTPUT_MUST_BE_OUTSIDE_INPUT")
     candidates = {}
     succeeded = 0
-    for query in SEARCHES:
+    queries = BATCH019_SEARCHES + SEARCHES if next_batch>=19 else SEARCHES
+    for query in queries:
         result = run_yt(f"ytsearch10:{query}")
         if result is None:
             continue
@@ -121,7 +144,7 @@ def collect(root, output, limit, video_limit):
         raise RuntimeError("DISCOVERY_FAILED_OR_NO_NEW_CHANNELS")
     selected = list(candidates.values())[:limit]
     # First construct the new batch outside output, then copy verified originals.
-    batch = output / "out" / BATCH
+    batch = output / "out" / batch_label
     videos_dir = batch / "videos"
     videos_dir.mkdir(parents=True,exist_ok=True)
     rows = []
@@ -158,22 +181,23 @@ def collect(root, output, limit, video_limit):
         elif source.is_dir(): shutil.copytree(source,destination)
         else: shutil.copy2(source,destination)
     preserved_files = verify_preserved_files(root, output)
-    summary={"preserved_prior_files":preserved_files, "batch":BATCH,"previous_channels":len(prior),"selected":len(rows),
+    summary={"preserved_prior_files":preserved_files, "batch":batch_label,"previous_channels":len(prior),"selected":len(rows),
              "successful":sum(r["status"]=="OK" for r in rows),
              "videos":sum(r["count"] for r in rows),"supabase_requests":0}
-    (output/"batch018-summary.json").write_text(json.dumps(summary,indent=2),encoding="utf-8")
+    (output/f"{batch_label}-summary.json").write_text(json.dumps(summary,indent=2),encoding="utf-8")
     print(json.dumps(summary))
 
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--root",required=True)
+    parser.add_argument("--batch",type=int,default=18,help="Next consecutive cumulative batch (>=18)")
     parser.add_argument("--output",required=True)
     parser.add_argument("--limit",type=int,default=40)
     parser.add_argument("--video-limit",type=int,default=300)
     args=parser.parse_args()
     if not (1 <= args.limit <= 100 and 1 <= args.video_limit <= 500):
         raise RuntimeError("UNBOUNDED_COLLECTION_LIMIT")
-    collect(Path(args.root).resolve(),Path(args.output).resolve(),args.limit,args.video_limit)
+    collect(Path(args.root).resolve(),Path(args.output).resolve(),args.limit,args.video_limit,next_batch=args.batch)
 
 if __name__=="__main__":
     main()
