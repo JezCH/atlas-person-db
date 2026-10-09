@@ -59,5 +59,9 @@
       "canonical_url": "https://dh.aks.ac.kr/Encyves/wiki/index.php/%EC%99%95%ED%9D%AC%EC%A7%80",
       "citation_text": "The entry describes the 353 Lanting gathering and the attribution of the preface to Wang Xizhi."
     }
-  ]
+  ],
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Explicitly reviewed 2026-10-10 for the newly created Eastern Jin Dynasty polity. Wang Xizhi's 353 Lanting literary activity is historically situated within Eastern Jin China (Tokyo National Museum, https://www.tnm.jp/150th/project/202301/exhibition_ougishiandranteijyo_ko.html), but this registration has not independently established a canonical Place UUID, time-bounded PolityPlaceFunction or an approved static display placement for Eastern Jin. Therefore hold spatial display disposition rather than invent a geographic anchor, treating Western Jin, Warring States Jin or Jurchen Jin as substitutes, or implying the Lanting gathering is a capital."
+  }
 }
