@@ -84,198 +84,81 @@
 }
 
 
-/* VIS3-04 — Grand Atlas shell only; inherited data/interaction geometry untouched.
- * Toggle all three local roots data-atlas-ornament="off" for same-DOM A/B.
- * Pseudo backgrounds inherit the canonical toolkit's inert/hideable contracts.
- */
+
+/* VIS3-04/05 — screenshot-corrected restraint: original assets, no text overlays. */
 .atlas-ornament-v3 .atlas-o-shell-signet {
-  position:relative; isolation:isolate; flex:0 0 42px;
-  width:42px; height:42px; border:0; border-radius:0;
-  background:transparent; display:grid; place-items:center; color:var(--atlas-o-type);
+  position:relative;isolation:isolate;flex:0 0 34px;
+  width:34px;height:34px;min-width:34px;
+  border:0;border-radius:0;background:transparent;
+  display:grid;place-items:center;
 }
 .atlas-ornament-v3 .atlas-o-shell-signet::before {
-  inset:0; z-index:0;
+  inset:0;
   background:url("./assets/ui-ornaments/atlas-compass-rosette.svg") center / contain no-repeat;
 }
 .atlas-ornament-v3 .atlas-o-shell-signet > span {
-  position:relative; z-index:1; font-family:var(--atlas-font-display,Georgia,serif);
-  font-size:18px; font-weight:750; color:#f2dfb4;
-  text-shadow:0 1px 4px #0e1114,0 0 8px #0e1114;
+  position:relative;z-index:1;
+  font-family:var(--atlas-font-display,Georgia,serif);
+  font-size:17px;font-weight:700;color:#e4d3ae;
+  text-shadow:0 1px 3px #0e1114;
 }
-.atlas-ornament-v3 .atlas-o-shell-brand {
-  position:relative; isolation:isolate; min-width:0;
-}
-.atlas-ornament-v3 .atlas-o-shell-brand::before {
-  top:0; right:0; width:35px; height:35px;
-  background:url("./assets/ui-ornaments/atlas-corner-filigree.svg") center / contain no-repeat;
-  transform:scaleX(-1);
-}
-.atlas-ornament-v3 .atlas-o-shell-brand::after {
-  left:0; right:0; bottom:-7px; height:18px;
-  background:url("./assets/ui-ornaments/atlas-chapter-divider.svg") center / 100% 100% no-repeat;
-}
-.atlas-ornament-v3 .atlas-o-shell-brand > * {position:relative;z-index:1;}
-.atlas-ornament-v3 .brand.atlas-o-shell-brand {gap:9px;padding-bottom:26px;}
-.atlas-ornament-v3 .brand.atlas-o-shell-brand strong,
-.atlas-ornament-v3 .mobile-brand.atlas-o-shell-brand strong {
-  letter-spacing:.13em; font-family:var(--atlas-font-display,Georgia,serif); font-size:16px;
-}
-/* Folio surrounds only the actual unchanged runtime version string. */
-.atlas-ornament-v3 .atlas-o-shell-folio {
-  position:relative; isolation:isolate; min-height:34px; display:flex;
-  align-items:center; justify-content:center; text-align:center;
-  padding:7px 18px; color:var(--atlas-o-metal);
-}
-.atlas-ornament-v3 .atlas-o-shell-folio::before {
-  inset:0; background:url("./assets/ui-ornaments/atlas-folio-plaque.svg") center / 100% 100% no-repeat;
-}
-.atlas-ornament-v3 .atlas-o-shell-folio::after {display:none;}
-/* Desktop live domain title stays a DOM h1; cartouche and corners are ornamental. */
-.atlas-ornament-v3 .topbar.atlas-o-shell-cartouche {
-  position:relative; isolation:isolate; min-width:0; overflow:hidden;
-}
-.atlas-ornament-v3 .topbar.atlas-o-shell-cartouche::before {
-  top:0; left:0; width:min(390px,75%); height:100%;
-  background:url("./assets/ui-ornaments/atlas-cartouche.svg") center / 100% 100% no-repeat;
-}
-.atlas-ornament-v3 .topbar.atlas-o-shell-cartouche::after {
-  top:0; right:0; width:66px; height:66px;
-  background:url("./assets/ui-ornaments/atlas-corner-filigree.svg") center / contain no-repeat;
-  transform:scaleX(-1);
-}
-.atlas-ornament-v3 .topbar.atlas-o-shell-cartouche > div:first-child {
-  position:relative; z-index:1; min-width:0; padding-left:clamp(24px,3.2vw,46px); padding-block:7px;
-}
-.atlas-ornament-v3 .topbar.atlas-o-shell-cartouche > .status {
-  position:relative; z-index:1; margin-right:12px;
-}
-/* 58px mobile appbar stays an operational header; title ornaments never hit menu. */
-.atlas-ornament-v3 .atlas-o-shell-mobile-mast {
-  position:relative; isolation:isolate; overflow:hidden; padding-right:30px;
-}
-.atlas-ornament-v3 .atlas-o-shell-mobile-mast::before {
-  top:0; right:1px; width:30px; height:30px;
-  background:url("./assets/ui-ornaments/atlas-corner-filigree.svg") center / contain no-repeat;
-  transform:scaleX(-1);
-}
-.atlas-ornament-v3 .atlas-o-shell-mobile-mast::after {
-  bottom:0; left:0; right:0; height:9px;
-  background:url("./assets/ui-ornaments/atlas-chapter-divider.svg") center / 100% 100% no-repeat;
-}
-.atlas-ornament-v3 .mobile-brand.atlas-o-shell-brand {padding-bottom:15px;}
-.atlas-ornament-v3 .mobile-drawer-version.atlas-o-shell-folio {
-  width:min(100%,250px); margin-inline:auto; font-size:10px;
-}
-@media (min-width:761px) and (max-width:1239px) {
-  /* 68px sidebar collapse remains owned by UI8; ornament disappears at edge. */
-  .workspace-shell.sidebar-collapsed .atlas-o-shell-brand::before,
-  .workspace-shell.sidebar-collapsed .atlas-o-shell-brand::after {opacity:0;}
-}
-@media (max-width:760px) {
-  .atlas-ornament-v3 .atlas-o-shell-mobile-mast {min-width:0;}
-  .atlas-ornament-v3 .atlas-o-shell-mobile-mast strong,
-  .atlas-ornament-v3 .atlas-o-shell-mobile-mast small {
-    position:relative;z-index:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  }
-}
-@media (forced-colors:active) {
-  .atlas-ornament-v3 .atlas-o-shell-signet > span {color:CanvasText;text-shadow:none;}
-}
-
-
-/* VIS3-05 — Grand Atlas frontispiece, scoped only to Dashboard chrome.
- * The six factual KPI values and actions remain exact original DOM/data.
- * Turn off ornament per root with data-atlas-ornament="off".
- */
+/* One restrained engraving at a top corner, outside the live title. */
 .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece {
-  position:relative;isolation:isolate;min-width:0;min-height:196px;
-  padding:clamp(30px,2.9vw,42px) clamp(36px,4vw,70px);
-  display:flex;align-items:center;justify-content:space-between;gap:26px;overflow:hidden;
+  position:relative;isolation:isolate;display:flex;align-items:center;
+  justify-content:space-between;gap:20px;
+  min-width:0;min-height:126px;padding:22px 26px;overflow:hidden;
 }
 .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::before {
-  inset:5px 12px;z-index:0;
-  background:url("./assets/ui-ornaments/atlas-cartouche.svg") center / 100% 100% no-repeat;
-}
-.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::after {
-  left:18%;right:18%;bottom:3px;top:auto;height:28px;
-  background:url("./assets/ui-ornaments/atlas-chapter-divider.svg") center / 100% 100% no-repeat;
+  top:12px;right:12px;left:auto;bottom:auto;
+  width:54px;height:54px;z-index:0;
+  background:url("./assets/ui-ornaments/atlas-corner-filigree.svg") center / contain no-repeat;
+  transform:scaleX(-1);
+  opacity:calc(var(--atlas-o-ornament-presence) * .44);
 }
 .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece > div:first-child,
 .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece > #atlasDashboardRefresh {
-  position:relative;z-index:2;
+  position:relative;z-index:1;
 }
 .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece > div:first-child {
   min-width:0;max-width:780px;
 }
 .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece h2 {
-  font-size:clamp(27px,3.1vw,42px);line-height:1.24;text-wrap:balance;
+  font-size:clamp(24px,2.5vw,33px);line-height:1.35;
+  font-weight:620;text-wrap:balance;
 }
-.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece .eyebrow {letter-spacing:.25em;}
-.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece-seal {
-  position:absolute;z-index:1;top:26px;right:clamp(170px,17vw,260px);
-  width:clamp(94px,11vw,150px);height:clamp(94px,11vw,150px);pointer-events:none;
-}
-.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece-seal::before {
-  inset:0;z-index:0;
-  background:url("./assets/ui-ornaments/atlas-compass-rosette.svg") center / contain no-repeat;
-}
-/* The existing KPI region label becomes a real h3, not a new metric. */
 .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading {
-  position:relative;isolation:isolate;min-width:0;min-height:68px;
   display:flex;align-items:center;justify-content:space-between;
-  padding:10px clamp(32px,3.6vw,56px);margin:1px 0 -2px;
+  min-width:0;gap:12px;min-height:36px;
+  padding:5px 0 8px;margin:3px 0 0;
+  border-bottom:1px solid var(--atlas-material-hairline-soft,rgba(192,174,136,.075));
 }
-.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading::before {
-  top:2px;bottom:2px;left:0;width:min(300px,72%);
-  background:url("./assets/ui-ornaments/atlas-folio-plaque.svg") left center / 100% 100% no-repeat;
-}
-.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading::after {
-  left:min(300px,72%);right:0;top:calc(50% - 19px);height:38px;
-  background:url("./assets/ui-ornaments/atlas-chapter-divider.svg") center / 100% 100% no-repeat;
-}
-.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading > * {position:relative;z-index:1;}
 .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3 {
-  flex:0 0 auto;margin:0;font-family:var(--atlas-font-display,Georgia,serif);
-  font-weight:690;font-size:clamp(16px,1.55vw,19px);letter-spacing:.13em;color:var(--atlas-o-type);
+  margin:0;font-family:var(--atlas-font-display,Georgia,serif);
+  color:var(--atlas-text-strong,#f0ece4);
+  font-size:17px;font-weight:620;letter-spacing:.045em;
 }
 .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading > span {
-  margin-left:auto;max-width:35%;font-size:10px;font-weight:600;letter-spacing:.05em;
-  color:var(--atlas-o-soft);background:var(--atlas-o-ink);padding:3px 6px;text-align:right;
-}
-@media (max-width:1100px) {
-  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece-seal {
-    right:26px;top:12px;width:76px;height:76px;opacity:.45;
-  }
-  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece > div:first-child {max-width:65%;}
+  color:var(--atlas-text-muted,#6e767c);font-size:10px;white-space:nowrap;
 }
 @media (max-width:600px) {
   .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece {
-    display:grid;gap:16px;min-height:0;padding:28px 22px 25px;
+    display:grid;gap:14px;min-height:0;padding:18px 17px;
   }
   .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::before {
-    inset:0 auto auto 0;width:76px;height:76px;
-    background:url("./assets/ui-ornaments/atlas-corner-filigree.svg") left top / contain no-repeat;
+    width:30px;height:30px;top:8px;right:8px;
+    opacity:calc(var(--atlas-o-ornament-presence) * .34);
   }
-  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::after {
-    left:12%;right:12%;bottom:0;height:19px;
-  }
-  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece > div:first-child {max-width:100%;}
   .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece h2 {
-    font-size:clamp(22px,6vw,28px);overflow-wrap:anywhere;
+    font-size:clamp(22px,6vw,27px);overflow-wrap:anywhere;
   }
-  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece-seal {display:none;}
   .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading {
-    min-height:56px;padding:8px 25px;margin:0 0 -2px;
+    min-height:32px;padding:5px 0 7px;
   }
-  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading::before {width:min(240px,77%);}
-  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading::after {display:none;}
   .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3 {font-size:15px;}
-  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading > span {
-    max-width:45%;font-size:9px;text-align:right;
-  }
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading > span {font-size:9px;}
 }
 @media (forced-colors:active) {
-  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading > span {
-    background:Canvas;color:CanvasText;
+  .atlas-ornament-v3 .atlas-o-shell-signet > span {
+    color:CanvasText;text-shadow:none;
   }
 }

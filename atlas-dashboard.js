@@ -716,10 +716,9 @@
       <header class="dashboard-hero card dashboard-frontispiece" data-atlas-o-decor>
         <div><p class="eyebrow">ATLAS CONTROL CENTER</p><h2>데이터·작업·시스템 현황</h2><p>대시보드 전용 숫자를 저장하지 않습니다. 모든 값은 현재 기준 원본에서 즉시 파생됩니다.</p></div>
         <button id="atlasDashboardRefresh" type="button" class="btn">↻ 원본 다시 읽기</button>
-        <span class="dashboard-frontispiece-seal" data-atlas-o-decor aria-hidden="true"></span>
       </header>
 
-      <div class="dashboard-ledger-heading" data-atlas-o-decor>
+      <div class="dashboard-ledger-heading">
         <h3 id="dashboardKpiHeading">핵심 통계</h3>
         <span>현재 원본 집계</span>
       </div>
