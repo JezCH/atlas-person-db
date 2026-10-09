@@ -42,29 +42,50 @@ function registrationIndex(rows) {
   return index;
 }
 function candidatesFromSource(rawRows,personRows) {
+  if(!Array.isArray(personRows)||!personRows.length)
+    throw Error("YOUTUBE_DISCOVERY_PERSON_REGISTRY_EMPTY");
   const registered=registrationIndex(personRows);
-  const candidates=[],seenRaw=new Set();
-  let registeredExcluded=0,homonymReview=0;
+  const grouped=new Map();
+  let registeredExcluded=0,homonymReview=0,overlappingRawLabels=0;
   for(const row of rawRows) {
     const signal=projectSignal(row),key=identityKey(signal.raw_name);
-    if(!key||seenRaw.has(key))throw Error("YOUTUBE_DISCOVERY_DUPLICATE_RAW_IDENTITY");
-    seenRaw.add(key);
+    if(!key)throw Error("YOUTUBE_DISCOVERY_MISSING_RAW_IDENTITY");
     const matches=registered.get(key);
     if(matches?.size===1){registeredExcluded++;continue;}
     const ambiguous=(matches?.size||0)>1;
     if(ambiguous)homonymReview++;
-    candidates.push({
+    const previous=grouped.get(key);
+    if(previous) {
+      // Raw aggregates do NOT retain Channel IDs; summing them would inflate
+      // counts. Show a defensible lower bound until source-ID reaggregation.
+      overlappingRawLabels++;
+      previous.source_labels.push(signal.raw_name);
+      if(signal.distinct_channel_count>previous.distinct_channel_count||
+         (signal.distinct_channel_count===previous.distinct_channel_count&&
+          signal.video_count>previous.video_count)) {
+        previous.raw_name=signal.raw_name;
+        previous.distinct_channel_count=signal.distinct_channel_count;
+        previous.video_count=signal.video_count;
+      }
+      previous.identity_state=ambiguous||previous.identity_state==="registered_homonym_review"
+        ?"registered_homonym_review":"alias_union_needs_original_ids";
+      previous.count_lower_bound=true;
+      continue;
+    }
+    grouped.set(key,{
       raw_name:signal.raw_name,rank:0,
       distinct_channel_count:signal.distinct_channel_count,
       video_count:signal.video_count,
       identity_state:ambiguous?"registered_homonym_review":"unregistered_candidate",
-      registration_match_count:matches?.size||0
+      registration_match_count:matches?.size||0,
+      count_lower_bound:false,source_labels:[signal.raw_name]
     });
   }
+  const candidates=[...grouped.values()];
   candidates.sort((a,b)=>b.distinct_channel_count-a.distinct_channel_count||
     b.video_count-a.video_count||a.raw_name.localeCompare(b.raw_name,"en"));
   for(let i=0;i<candidates.length;i++) candidates[i].rank=i+1;
-  return {candidates,registeredExcluded,homonymReview};
+  return {candidates,registeredExcluded,homonymReview,overlappingRawLabels};
 }
 async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,offset=0}={}) {
   if(!client||typeof client.query!=="function")throw Error("YOUTUBE_DISCOVERY_DB_REQUIRED");
@@ -80,7 +101,7 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     client.query(CANDIDATE_ROWS_SQL,[initial.snapshot_id]),
     client.query(PERSON_NAMES_SQL)
   ]);
-  const {candidates,registeredExcluded,homonymReview}=
+  const {candidates,registeredExcluded,homonymReview,overlappingRawLabels}=
     candidatesFromSource(signals.rows||[],people.rows||[]);
   const final=projectSnapshot((await client.query(GLOBAL_SNAPSHOT_SQL)).rows?.[0]);
   if(!final||final.snapshot_id!==initial.snapshot_id)
@@ -95,7 +116,7 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     population:"original_channel_id_cumulative_title_candidates",
     identity_rule:"unique_exact_registered_match_excluded_ambiguous_reviewed",
     registration_checked:true,registered_excluded_count:registeredExcluded,
-    homonym_review_count:homonymReview,
+    homonym_review_count:homonymReview,overlapping_raw_labels:overlappingRawLabels,
     dedup_policy:"reviewed_extraction_aliases_only_never_sum_aggregates",
     min_channels:threshold,offset:pageOffset,
     available_count:selected.length,stored_count:selected.length,
