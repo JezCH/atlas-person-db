@@ -44,6 +44,49 @@ class CollectorSafety(unittest.TestCase):
             self.assertEqual(rows[0]["count"],1)
             self.assertEqual(json.loads((out/"batch018-summary.json").read_text())["supabase_requests"],0)
 
+    def test_existing_person_names_and_counts_survive_new_label_variations(self):
+        import gzip
+        module_path=Path(__file__).resolve().parents[1]/"scripts/youtube-build-person-signal-snapshot.py"
+        snap_spec=importlib.util.spec_from_file_location("snapshot_keep_labels",module_path)
+        parser=importlib.util.module_from_spec(snap_spec)
+        snap_spec.loader.exec_module(parser)
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            old=root/"out"/"batch019"
+            (old/"videos").mkdir(parents=True)
+            old_ids=["UCZ000001","UCZ000002","UCZ000003"]
+            (old/"manifest.json").write_text(json.dumps([
+                {"channel_id":cid,"status":"OK","count":1} for cid in old_ids
+            ]),encoding="utf-8")
+            for cid in old_ids:
+                with gzip.open(old/"videos"/f"{cid}.ndjson.gz","wt",encoding="utf-8") as fh:
+                    fh.write(json.dumps({"video_id":cid,"channel_id":cid,
+                                         "title":"Biography of PLATO"})+"\n")
+            previous=parser.build(root,1,"test")
+            self.assertEqual(previous["signals"][0]["raw_name"],"PLATO")
+            next_batch=root/"out"/"batch020"
+            (next_batch/"videos").mkdir(parents=True)
+            (next_batch/"manifest.json").write_text(json.dumps([
+                {"channel_id":"UC0000001","status":"OK","count":1}
+            ]),encoding="utf-8")
+            with gzip.open(next_batch/"videos"/"UC0000001.ndjson.gz","wt",
+                           encoding="utf-8") as fh:
+                fh.write(json.dumps({"video_id":"new","channel_id":"UC0000001",
+                                     "title":"Biography of Plato"})+"\n")
+            baseline_free=parser.build(root,2,"test")
+            self.assertEqual(baseline_free["signals"][0]["raw_name"],"Plato")
+            current=parser.build(root,2,"test",previous_snapshot=previous)
+            self.assertEqual(current["signals"][0]["raw_name"],"PLATO")
+            self.assertEqual(current["signals"][0]["distinct_channel_count"],4)
+            self.assertEqual(current["signals"][0]["video_count"],4)
+            self.assertEqual(current["snapshot"]["video_count"],4)
+            api_shape={"snapshot":previous["snapshot"],"rows":previous["signals"]}
+            self.assertEqual(parser.build(root,3,"test",previous_snapshot=api_shape)["signals"][0]["raw_name"],"PLATO")
+            tampered=json.loads(json.dumps(previous))
+            tampered["signals"][0]["raw_name"]="Missing Historical Name"
+            with self.assertRaisesRegex(RuntimeError,"LOST_EXISTING_SIGNAL_IDENTITY"):
+                parser.build(root,3,"test",previous_snapshot=tampered)
+
     def test_legacy_snapshot_reports_missing_sources_without_dropping_present_ones(self):
         import gzip
         snap_spec=importlib.util.spec_from_file_location(

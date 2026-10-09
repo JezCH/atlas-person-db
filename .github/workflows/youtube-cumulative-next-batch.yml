@@ -85,7 +85,7 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/youtube-continue-batch018.py --batch "$NEXT_BATCH" --root prior --output cumulative --target-new-channels 800 --minimum-success 300 --search-budget 750 --workers 10 --video-limit 500
-          python scripts/youtube-build-person-signal-snapshot.py --root cumulative --output /tmp/atlas-youtube-next.json --artifact-id 0 --artifact-digest pending-upload
+          python scripts/youtube-build-person-signal-snapshot.py --root cumulative --output /tmp/atlas-youtube-next.json --artifact-id 0 --artifact-digest pending-upload --previous-snapshot /tmp/atlas-youtube-previous.json
           python - <<'PY'
           import json, os
           from pathlib import Path
@@ -98,6 +98,11 @@ jobs:
           new_signals={r['raw_name'] for r in current['signals']}
           assert old_channels.issubset(new_channels), 'LOST_EXISTING_CHANNEL'
           assert old_signals.issubset(new_signals), 'LOST_EXISTING_SIGNAL'
+          prior_rows={x['raw_name']:x for x in prior['signals']}
+          current_rows={x['raw_name']:x for x in current['signals']}
+          assert all(current_rows[name]['distinct_channel_count']>=item['distinct_channel_count']
+                     and current_rows[name]['video_count']>=item['video_count']
+                     for name,item in prior_rows.items()), 'EXISTING_PERSON_EVIDENCE_REGRESSION'
           assert len(new_channels)-len(old_channels)>=300, 'ONLY_TINY_CHANNEL_INCREMENT'
           assert len(new_channels)>len(old_channels), 'NO_NEW_CHANNELS'
           assert current['snapshot']['video_count']>prior['snapshot']['video_count'], 'NO_NEW_VIDEOS'
