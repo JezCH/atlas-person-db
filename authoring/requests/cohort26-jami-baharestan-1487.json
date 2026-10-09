@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Jami",
+    "display_name_ko": "자미",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Timurid Empire",
+    "display_name_ko": "티무르 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "start_year": 1487,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1487,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 1487 Persian poet Jami composed Baharestan and dedicated it to the Timurid sultan Husayn Bayqara; this records a discrete authorial event, not a lifetime court appointment."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Jami Life and Works — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/jami-i/",
+      "citation_text": "Iranica confirms Baharestan was composed in 1487."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Baharestan — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/baharestan-spring-garden/",
+      "citation_text": "The work was composed in 892/1487 and dedicated to Timurid sultan Husayn Bayqara."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-09",
+      "document_title": "자미(시인)",
+      "url": "https://namu.wiki/w/%EC%9E%90%EB%AF%B8(%EC%8B%9C%EC%9D%B8)"
+    }
+  },
+  "request_id": "authoring:cohort26:jami-baharestan:1487:v1"
+}
