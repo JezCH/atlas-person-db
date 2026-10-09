@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Maimonides",
+    "display_name_ko": "마이모니데스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "representative_domain": "religion",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "documented_death"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Ayyubid Sultanate",
+    "display_name_ko": "아이유브 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "cc1a203a-c6bc-5011-a6d2-b3fd6a9b3c53"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Rabbinic scholar and author",
+    "role_display_name_ko": "유대교 율법학자·저술가",
+    "period_basis": "intellectual_activity",
+    "start_month": null,
+    "start_day": null,
+    "start_calendar": "unspecified_historical",
+    "end_month": null,
+    "end_day": null,
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "start_year": 1190,
+    "start_certainty": "exact",
+    "end_year": 1190,
+    "end_certainty": "exact",
+    "notes": "Completion of Guide of the Perplexed in 1190; a documented individual intellectual milestone during residence in Egypt under Ayyubid rule. This is a completion point, not a continuous activity interval."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Maimonides — Stanford Encyclopedia of Philosophy (revised 2024)",
+      "canonical_url": "https://plato.stanford.edu/entries/maimonides/",
+      "citation_text": "Section 1 explicitly dates completion of the Guide of the Perplexed to 1190."
+    }
+  ],
+  "request_id": "authoring:maimonides:timeline-reentry:guide-perplexed-1190:v1"
+}
