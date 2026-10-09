@@ -42,7 +42,6 @@ class CollectorSafety(unittest.TestCase):
             rows=json.loads((out/"out"/"batch018"/"manifest.json").read_text())
             self.assertEqual([r["channel_id"] for r in rows],["UC_NEW_1"])
             self.assertEqual(rows[0]["count"],1)
-            self.assertEqual(len(collector.manifests.__name__),9)
             self.assertEqual(json.loads((out/"batch018-summary.json").read_text())["supabase_requests"],0)
 
     def test_no_new_channels_fails_without_creating_output(self):
