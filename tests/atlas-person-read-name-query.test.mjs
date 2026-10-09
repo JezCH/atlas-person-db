@@ -207,3 +207,51 @@ test('Person read handler rejects conflicting or invalid list filters before DB 
   assert.equal(JSON.parse(invalidLimitRes.body).code, 'INVALID_LIST_LIMIT');
   assert.equal(factoryCalled, false);
 });
+
+test('identity view returns all names but skips expensive full Person read',async()=>{
+  const { PERSON_IDENTITY_SQL }=require('../server/atlas-person-read-handler.js');
+  const calls=[];
+  const handler=createPersonReadHandler({
+    env:{SUPABASE_DB_URL:'postgresql://example.invalid/atlas'},
+    clientFactory:async()=>({
+      async query(sql) {
+        calls.push(sql);
+        assert.equal(sql,PERSON_IDENTITY_SQL);
+        return {rows:[
+          {id:'00000000-0000-4000-8000-000000000001',names:[
+            {locale:'en',name:'Hatshepsut'},{locale:'ko',name:'하트셉수트'}]},
+          {id:'00000000-0000-4000-8000-000000000002',names:[]}
+        ]};
+      },
+      async end(){}
+    }),
+    readListSemantics:async()=>{throw Error('full Person read must not execute');}
+  });
+  const res=mockResponse();
+  await handler({method:'GET',url:'/api/atlas-person-read?view=identity'},res);
+  const body=JSON.parse(res.body);
+  assert.equal(res.statusCode,200);
+  assert.equal(body.ok,true);
+  assert.equal(body.mode,'list');
+  assert.equal(body.projection,'identity');
+  assert.equal(body.persons.length,2);
+  assert.deepEqual(body.persons[0].names.map(row=>row.name),['Hatshepsut','하트셉수트']);
+  assert.equal('descriptions' in body.persons[0],false);
+  assert.deepEqual(calls,[PERSON_IDENTITY_SQL]);
+});
+
+test('identity view rejects conflicting filters before database access',async()=>{
+  const handler=createPersonReadHandler({
+    env:{SUPABASE_DB_URL:'postgresql://example.invalid/atlas'},
+    clientFactory:async()=>{throw Error('should not connect');}
+  });
+  for (const url of [
+    '/api/atlas-person-read?view=identity&q=king',
+    '/api/atlas-person-read?view=identity&limit=1',
+    '/api/atlas-person-read?view=all'
+  ]) {
+    const res=mockResponse();
+    await handler({method:'GET',url},res);
+    assert.equal(res.statusCode,400);
+  }
+});
