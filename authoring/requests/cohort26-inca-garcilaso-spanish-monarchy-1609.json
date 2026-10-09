@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:inca-garcilaso-spanish-monarchy-1609:v1",
+  "person": {
+    "canonical_name_en": "Inca Garcilaso de la Vega",
+    "display_name_ko": "잉카 가르실라소 데 라 베가",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Spanish Monarchy",
+    "display_name_ko": "스페인 군주국",
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "existing_id": "b7f3e13a-4b68-5fd9-aad6-b2b951de0996"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Peruvian-born historian and author of Comentarios Reales",
+    "role_display_name_ko": "페루 출신 역사가·《왕실평론》 저술가",
+    "start_year": 1609,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1609,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The first part of Comentarios Reales de los Incas was printed in Lisbon in 1609. Garcilaso had moved to Spain and wrote the work there; Lisbon was then in the Habsburg Iberian Union. This is a personal literary publication point, not a continuing Activity under the extinct Inca Empire. This Inca Garcilaso (1539–1616) is distinct from the Spanish Renaissance poet Garcilaso de la Vega (d.1536); the latter's NamuWiki article must not be linked."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Fondo Antiguo — Biblioteca Nacional del Perú",
+      "canonical_url": "https://www.bnp.gob.pe/colecciones/fondo-antiguo/",
+      "citation_text": "The National Library of Peru catalogues the Inca Garcilaso de la Vega (1539–1616) and the first part of Comentarios Reales printed in Lisbon in 1609."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Primera parte de los Comentarios reales — Biblioteca Nacional de España",
+      "canonical_url": "https://www.bne.es/es/agenda-eventos-actividades/2016-obra01",
+      "citation_text": "The Spanish National Library identifies the author as Inca Garcilaso de la Vega and the first edition's Lisbon Pedro Crasbeeck imprint and 1609 date."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Inca Garcilaso de la Vega — Memoria Chilena",
+      "canonical_url": "https://www.memoriachilena.gob.cl/602/w3-article-93106.html",
+      "citation_text": "Chilean National Library recounts the book written in Spain, the 1609 first part and the posthumous 1617 second part."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-10",
+      "review_reason": "related_or_derivative_only"
+    }
+  }
+}

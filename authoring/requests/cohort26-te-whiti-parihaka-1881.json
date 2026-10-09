@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cohort26:te-whiti-parihaka-1881:v1",
+  "person": {
+    "canonical_name_en": "Te Whiti o Rongomai",
+    "display_name_ko": "테 휘티 오 롱고마이",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-10",
+    "life_status_basis": "documented_death",
+    "representative_domain": "religion",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Parihaka Māori community",
+    "display_name_ko": "파리하카 마오리 공동체",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Māori spiritual leader and Parihaka nonviolent resistance co-leader",
+    "role_display_name_ko": "마오리 종교 지도자·파리하카 비폭력 저항 공동 지도자",
+    "start_year": 1881,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1881,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Te Whiti o Rongomai and Tohu Kākahi co-led the Parihaka nonviolent resistance. On 5 November 1881, Crown forces invaded the settlement and arrested both leaders. The polity here denotes their Māori political-religious community, not any office in the New Zealand colonial government, a pan-Māori monarchy or solitary leadership; Activity is a single dated event point."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Te Whiti-o-Rongomai III, Erueti — Dictionary of New Zealand Biography / Te Ara",
+      "canonical_url": "https://teara.govt.nz/en/biographies/2t34/te-whiti-o-rongomai-iii-erueti",
+      "citation_text": "Te Ara documents the 5 November 1881 invasion and arrest of Te Whiti and Tohu at Parihaka."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "1880s — New Zealand Police Museum",
+      "canonical_url": "https://www.police.govt.nz/about-us/history-museum/museum/exhibitions/he-matapihi-o-nehe-ra/1880s",
+      "citation_text": "New Zealand Police identifies Te Whiti and Tohu as joint leaders of Parihaka and the 1881 peaceful response to the armed force."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Te Whiti — NZHistory (Manatū Taonga)",
+      "canonical_url": "https://nzhistory.govt.nz/people/erueti-te-whiti-o-rongomai-iii",
+      "citation_text": "The New Zealand Ministry for Culture and Heritage corroborates the co-leadership, 1881 arrest and later return."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-10",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "2026-10-10 independent state-of-knowledge review: Te Ara NZ Biography https://teara.govt.nz/en/biographies/2t34/te-whiti-o-rongomai-iii-erueti and NZ Police https://www.police.govt.nz/about-us/history-museum/museum/exhibitions/he-matapihi-o-nehe-ra/1880s confirm the real local Parihaka Māori community and joint religious-political leadership in 1881. No canonical first-class Place UUID, time-bounded PolityPlaceFunction or approved static Atlas spatial display anchor has been independently resolved in this registration; explicitly hold display disposition rather than invent coordinates, territory or a connection to New Zealand colonial-government office."
+  }
+}
