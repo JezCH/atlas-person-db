@@ -46,7 +46,13 @@ test("candidate first primary law has reviewed official URL, full Source bibliog
   assert.equal(candidate.stage2_assertion_type,"assert_source");
   assert.deepEqual(candidate.expected_exact_before,{source_absent_id:src.id});
   assert.equal(candidate.before_state_at_writer_transaction_verified,false);
-  assert.equal(candidate.target_id_absence_on_live_prod_snapshot_verified,false);
+  assert.equal(candidate.target_id_absence_on_live_prod_snapshot_verified,true);
+  assert.equal(candidate.snapshot_production_audit.run_id,37992870364);
+  assert.equal(candidate.snapshot_production_audit.readonly,true);
+  assert.equal(candidate.snapshot_production_audit.committed,false);
+  assert.deepEqual(candidate.snapshot_production_audit.source_id_collision_rows,[]);
+  assert.equal(candidate.snapshot_production_audit.source_key_and_six_official_url_collisions,0);
+  assert.equal(candidate.snapshot_production_audit.source_law_alias_metadata_matches,0);
   assert.match(src.citation_text,/NOT|not|não|does not/i);
   const normalized=normalizeStage2AssertionOperation({
     type:"assert_source",decision_id:"P2-03L-OFFLINE-VALIDATION-ONLY",
