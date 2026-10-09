@@ -85,10 +85,10 @@ test("real Stage 2 normalizer fails closed on unissued Source and Designation UU
   },2),/DESIGNATION_ID_INVALID/);
 });
 
-test("source bibliographic metadata needed for evidence is not projected by current Stage 2 assertion whitelist",()=>{
+test("P2-03I recorded bibliographic gap is fixed by later P2-03J source assertion contract",()=>{
   for(const field of ["author_creator","institution","publisher","publication_date","publication_year","external_identifier","citation_metadata","artifact_metadata"]){
     assert.ok(fullSourceFields.includes(field),field);
-    assert.ok(!stage2SourceFields.includes(field),field);
+    assert.ok(stage2SourceFields.includes(field),field);
   }
   assert.ok(blueprint.writer_contract.source_metadata_gap.includes("whitelist"));
 });
