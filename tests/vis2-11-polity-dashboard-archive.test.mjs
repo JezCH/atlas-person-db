@@ -30,6 +30,6 @@ test("VIS2-11 is a reversible scoped paint-only change",()=>{
   for(const p of props)assert.ok(["border-color","background-image","box-shadow"].includes(p),p);
  }
  assert.equal(polityCount,6);assert.equal(dashCount,4);
- assert.doesNotMatch(css,/(?:width|height|padding|margin|grid|gap|position|display|font|line-height|letter-spacing|opacity|transform|transition|animation|content|filter|pointer-events|color)\s*:/);
+ assert.doesNotMatch(css,/(?:^|[;{])\s*(?:width|height|padding|margin|grid|gap|position|display|font|line-height|letter-spacing|opacity|transform|transition|animation|content|filter|pointer-events|color)\s*:/m);
  assert.doesNotMatch(css,/url\(|@font-face|@keyframes|!important|data-representative-domain|person-register-entry|spacetime/);
 });
