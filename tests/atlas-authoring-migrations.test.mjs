@@ -231,9 +231,9 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(youtubeHistoryReconciliation, /snapshot_scope/i);
 
   const youtubeRetirement = migrations[32].sql;
-  assert.match(youtubeRetirement, /DELETE FROM atlas_v2\.youtube_person_signal_snapshots/i);
-  assert.match(youtubeRetirement, /snapshot_scope='global_reconciled'/i);
-  assert.match(youtubeRetirement, /DROP TABLE IF EXISTS atlas_v2\.youtube_discovery_progress_state/i);
+  // Historical YouTube provenance must survive future schema replays.
+  assert.match(youtubeRetirement, /RETIREMENT CANCELLED/i);
+  assert.doesNotMatch(youtubeRetirement, /^\\s*(?:DELETE\\s+FROM|DROP\\s+TABLE|UPDATE\\s+atlas_v2\\.)/im);
 
 });
 

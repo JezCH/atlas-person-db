@@ -1,9 +1,13 @@
 name: YouTube Batch 018 minimal continuation
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     branches: [main]
-    paths: ['.github/workflows/youtube-continue-batch018.yml']
+    paths:
+      - 'scripts/youtube-continue-batch018.py'
+      - 'scripts/youtube-build-person-signal-snapshot.py'
+      - 'tests/test_youtube_batch018_continuation.py'
+      - '.github/workflows/youtube-continue-batch018.yml'
 permissions:
   contents: read
   actions: read
@@ -11,7 +15,61 @@ concurrency:
   group: youtube-history-collection
   cancel-in-progress: false
 jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run original and legacy corpus compatibility tests
+        run: |
+          python -m pip install --disable-pip-version-check pycountry
+          python -m unittest discover -s tests -p test_youtube_batch018_continuation.py -v
+      - name: Download original Batch017 corpus
+        uses: actions/download-artifact@v4
+        with:
+          name: youtube-cumulative-batch017-validated
+          run-id: "37771318676"
+          repository: ${{ github.repository }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: baseline
+      - name: Download actual Batch018 cumulative corpus
+        uses: actions/download-artifact@v4
+        with:
+          name: youtube-cumulative-batch018-validated
+          run-id: "37864463200"
+          repository: ${{ github.repository }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: extended
+      - name: Prove real legacy source bytes and all historic IDs retained
+        run: |
+          python scripts/youtube-build-person-signal-snapshot.py --root extended --output /tmp/youtube-compatibility-proof.json --artifact-id 11587358095 --artifact-digest sha256:d277fc03c1d27d61390eb73293c337cad6eacc0826eeb8c55c4f37e05c2a6063
+          python - <<'PY'
+          import importlib.util
+          import json
+          from pathlib import Path
+          module = Path("scripts/youtube-continue-batch018.py").resolve()
+          spec = importlib.util.spec_from_file_location("youtube_collector", module)
+          collector = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(collector)
+          preserved = collector.verify_preserved_files(Path("baseline"), Path("extended"))
+          data = json.loads(Path("/tmp/youtube-compatibility-proof.json").read_text(encoding="utf-8"))
+          snapshot = data["snapshot"]
+          state = snapshot["source_state"]
+          assert preserved >= 1, "NO_BASELINE_FILES"
+          assert len(data["channels"]) == 6810, "CHANNEL_REGRESSION"
+          assert snapshot["channel_count"] == 6051, "SUCCESS_REGRESSION"
+          assert snapshot["video_count"] == 1541677, "VIDEO_REGRESSION"
+          assert state["next_batch"] == "batch019", "BATCH_FRONTIER_REGRESSION"
+          assert state["missing_prior_batch_sources"] == [f"batch{i:03d}" for i in range(1,8)], "LEGACY_GAP_NOT_EXPLICIT"
+          assert state["historical_sources_complete_from_batch001"] is False, "FALSE_HISTORY_COMPLETENESS"
+          print(json.dumps({"preserved_original_files":preserved,"channels":len(data["channels"]),"videos":snapshot["video_count"],"unavailable_earlier_batches":state["missing_prior_batch_sources"]}))
+          PY
   collect:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 55
     steps:

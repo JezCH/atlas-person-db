@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
+import { readFileSync } from "node:fs";
+import { basename } from "node:path";
 
 const require=createRequire(import.meta.url);
 const service=require("../server/atlas-youtube-person-signal-publish-service.js");
@@ -127,4 +129,14 @@ test("YouTube publication permits monotonic growth preserving every known Channe
   const result=await service.publishYoutubePersonSignalSnapshot(client,payload());
   assert.equal(result.committed,true);
   assert.equal(calls.at(-1),"COMMIT");
+});
+
+test("YouTube publication never replays destructive legacy retirement", async()=>{
+  assert.ok(!service.YOUTUBE_SIGNAL_MIGRATION_PATHS.some(p=>basename(p).includes("retire_legacy_batches")));
+  const oldMigration=readFileSync(new URL("../db/migrations/20261008_youtube_retire_legacy_batches.sql",import.meta.url),"utf8");
+  assert.doesNotMatch(oldMigration,/^\s*(?:DELETE\s+FROM|DROP\s+TABLE|UPDATE\s+atlas_v2\.)/im);
+  const executed=[];
+  const fake={async query(sql){executed.push(sql);return {rows:[]};}};
+  await service.applyYoutubeSignalMigrations(fake);
+  assert.ok(executed.every(sql=>!/DELETE\s+FROM|DROP\s+TABLE/i.test(sql)));
 });

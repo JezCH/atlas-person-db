@@ -6,6 +6,7 @@ Output: a copy of the complete corpus plus a new, non-overlapping batch.
 """
 import argparse
 import gzip
+import hashlib
 import json
 import re
 import shutil
@@ -52,15 +53,18 @@ def manifests(root):
     for path in root.rglob("manifest.json"):
         # Match the existing validated snapshot parser: nested source folders
         # can contain several batch identifiers; first match is canonical.
-        match = re.search(r"(?:youtube-)?batch(\d{3})", str(path).replace("\\\\", "/"), re.I)
+        match = re.search(r"(?:youtube-)?batch(\d{3})([a-z]?)(?=[^a-z0-9]|$)", str(path).replace("\\\\", "/"), re.I)
         if not match:
             continue
-        label = "batch" + match.group(1)
+        label = "batch" + match.group(1) + match.group(2).lower()
         if label in found:
             raise RuntimeError("DUPLICATE_BATCH_MANIFEST")
         found[label] = path
-    expected = {f"batch{i:03d}" for i in range(8,18)}
-    if set(found) != expected:
+    required = {f"batch{i:03d}" for i in range(8,18)}
+    # The recoverable 008-017 baseline is mandatory, not an exclusion rule.
+    # Accept older batch manifests if they are actually present, and reject
+    # an already-created 018 instead of silently recreating that batch.
+    if not required.issubset(found) or any(int(label[5:8]) >= 18 for label in found):
         raise RuntimeError("INCOMPLETE_PRIOR_CORPUS")
     known = set()
     for label in sorted(found):
@@ -70,9 +74,33 @@ def manifests(root):
             if not channel or channel in known:
                 raise RuntimeError("DUPLICATE_OR_MISSING_PRIOR_CHANNEL_ID")
             known.add(channel)
-    if len(known) != 6770:
-        raise RuntimeError("PRIOR_CHANNEL_BASELINE_MISMATCH")
+    if len(known) < 6770:
+        raise RuntimeError("PRIOR_CHANNEL_BASELINE_REGRESSION")
     return known
+
+def verify_preserved_files(root, output):
+    """Require byte-for-byte retention of every preexisting file, not totals only."""
+    count = 0
+    for source in root.rglob("*"):
+        if source.is_symlink():
+            raise RuntimeError("LEGACY_SYMLINK_NOT_ALLOWED")
+        if not source.is_file():
+            continue
+        target = output / source.relative_to(root)
+        if not target.is_file():
+            raise RuntimeError("PRIOR_FILE_MISSING: " + str(source.relative_to(root)))
+        digests = []
+        for path in (source, target):
+            checksum = hashlib.sha256()
+            with path.open("rb") as handle:
+                for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                    checksum.update(chunk)
+            digests.append(checksum.digest())
+        if digests[0] != digests[1]:
+            raise RuntimeError("PRIOR_FILE_CHANGED: " + str(source.relative_to(root)))
+        count += 1
+    return count
+
 
 def collect(root, output, limit, video_limit):
     prior = manifests(root)
@@ -129,7 +157,8 @@ def collect(root, output, limit, video_limit):
                 else: shutil.copy2(item,destination/item.name)
         elif source.is_dir(): shutil.copytree(source,destination)
         else: shutil.copy2(source,destination)
-    summary={"batch":BATCH,"previous_channels":len(prior),"selected":len(rows),
+    preserved_files = verify_preserved_files(root, output)
+    summary={"preserved_prior_files":preserved_files, "batch":BATCH,"previous_channels":len(prior),"selected":len(rows),
              "successful":sum(r["status"]=="OK" for r in rows),
              "videos":sum(r["count"] for r in rows),"supabase_requests":0}
     (output/"batch018-summary.json").write_text(json.dumps(summary,indent=2),encoding="utf-8")
