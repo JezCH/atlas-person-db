@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>VIS3-03 / Ornament Library Preview — Not Production</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link rel="stylesheet" href="../../../atlas-ui-ornaments-v3.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 50% 4%,#263232,#0b1117 60%);color:#f0ece4;font:14px/1.65 system-ui,sans-serif}
+.vis3-preview{max-width:1170px;margin:auto;padding:38px 20px 100px}
+.vis3-preview>header{text-align:center;margin-bottom:30px}
+.vis3-preview h1{font:500 clamp(27px,4vw,46px) Georgia,serif;margin:4px}
+.vis3-preview .eyebrow{letter-spacing:.17em;color:#c4aa82;font-size:11px}
+.vis3-preview .note{color:#b7b7b6;font-size:12px}
+.vis3-preview .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.vis3-preview section{min-width:0;background:#0f181d;border:1px solid #534b3b;padding:19px}
+.vis3-preview .full{grid-column:span 2}
+.vis3-preview h2{font:500 24px Georgia,serif;margin:3px 0 6px}
+.vis3-preview .sample{display:grid;place-items:center;min-height:250px}
+.vis3-preview .split{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-evenly;gap:22px;margin:12px 0}
+.vis3-preview .portrait-label{color:#ddc9a2;max-width:22ch;text-align:center}
+.vis3-preview .engraved-name{font:27px Georgia,serif;color:#e0cb9e}
+@media(max-width:720px){.vis3-preview{padding:18px 10px 65px}.vis3-preview .grid{grid-template-columns:1fr}.vis3-preview .full{grid-column:span 1}.vis3-preview section{padding:10px}.vis3-preview .sample{min-height:200px}}
+</style></head><body><main class="vis3-preview">
+<header><div class="eyebrow">VIS3-03 · ORIGINAL VECTOR ASSETS</div><h1>ATLAS Ornament Library</h1>
+<p class="note">고지도 · 정밀 천문기구 · 장식 필사본 / 독립 샘플입니다. 실제 역사 데이터와 제품 화면이 아닙니다.</p></header>
+<div class="grid">
+<section class="full"><h2>A / Grand Atlas — Cartouche</h2><p class="note">일반 UI 위에 임의로 덧대지 않는 독립 표제용 카르투슈입니다.</p>
+<div class="atlas-v3 atlas-v3--cartouche"><span class="atlas-v3__kicker">ATLAS · CHRONOGRAPHIC ARCHIVE</span><strong class="atlas-v3__title">CIVILIZATION ATLAS</strong><span class="atlas-v3__subtitle">인류의 시간을 기록하는 전당</span></div>
+<div class="atlas-v3 atlas-v3--chapter-rule" aria-hidden="true"></div></section>
+<section><h2>B / Chronometer</h2><p class="note">실제 시공간축이 아닌 비사실적 천문기구 세공. 차트 외곽 전용.</p>
+<div class="sample"><div class="atlas-v3 atlas-v3--astrolabe" aria-hidden="true"></div></div></section>
+<section><h2>C / Illuminated Codex</h2><p class="note">고문헌식 식물문과 장식 머리글자. 역사인물에 대한 허위 서술을 포함하지 않습니다.</p>
+<div class="atlas-v3 atlas-v3--codex-panel"><p class="atlas-v3__body"><span class="atlas-v3__initial" aria-hidden="true">A</span>ATLAS 장식 도록을 위한 예시 문구입니다. 장식은 사료의 실제 정보나 인물의 신분을 대신하지 않습니다.</p></div>
+<div class="split"><div class="atlas-v3 atlas-v3--folio-plaque">ARCHIVE · FOLIO</div><div class="atlas-v3 atlas-v3--rosette" aria-hidden="true"></div></div></section>
+<section><h2>Shared / Engraved Panel</h2><p class="note">분명한 조형적 테두리. 반복 인물 행이 아닌 단원·표제에만 사용.</p>
+<div class="atlas-v3 atlas-v3--engraved-panel"><p class="engraved-name">THE ARCHIVE</p><p>Original etched corners and neutral brass.</p><div class="atlas-v3 atlas-v3--corner" aria-hidden="true"></div></div></section>
+<section><h2>Portrait Niche</h2><p class="note">실제 등록된 초상화 자산을 삽입하는 경우에만 적용할 세공 틀입니다.</p>
+<div class="atlas-v3 atlas-v3--portrait-niche"><p class="portrait-label">AUTHENTIC PORTRAIT ONLY<br/>— 초상화 프레임 견본 —</p></div></section>
+</div><p class="note" style="text-align:center;margin-top:28px">독립 견본 / Production index.html에 포함되지 않음 / No historical data was changed.</p>
+</main></body></html>

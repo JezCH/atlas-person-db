@@ -1,0 +1,42 @@
+/* VIS3-03: isolated reusable decorative library. Not loaded by index.html.
+ * Only explicitly opted-in atlas-v3 classes may receive ornaments. */
+.atlas-v3{--v3-ink:var(--atlas-material-m0,#11181d);--v3-panel:var(--atlas-material-m1,#1b2125);--v3-metal:var(--atlas-honor-metal-strong,#c0ae88);--v3-text:var(--atlas-text-strong,#f0ece4);--v3-edge:rgba(208,188,145,.38);position:relative;isolation:isolate;box-sizing:border-box;color:var(--v3-text)}
+.atlas-v3::before,.atlas-v3::after{box-sizing:border-box;pointer-events:none}
+.atlas-v3--cartouche{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:152px;gap:.4rem;padding:25px 70px;text-align:center;background:radial-gradient(ellipse 75% 100% at center,rgba(174,146,95,.10),transparent 78%)}
+.atlas-v3--cartouche::before{content:"";position:absolute;inset:0;z-index:-1;background:center/100% 100% no-repeat url("./assets/ornaments/v3/cartouche.svg")}
+.atlas-v3__kicker{font:600 .68rem/1.3 system-ui,sans-serif;letter-spacing:.2em;color:var(--atlas-text-secondary,#acb0b2)}
+.atlas-v3__title{position:relative;max-width:100%;font:500 clamp(1rem,2.1vw,2.1rem)/1.2 var(--atlas-font-display,Georgia,serif);letter-spacing:.06em;overflow-wrap:anywhere;text-shadow:0 1px 6px #000}
+.atlas-v3__subtitle{position:relative;font:400 .78rem/1.5 system-ui,sans-serif;color:var(--atlas-text-secondary,#acb0b2)}
+.atlas-v3--chapter-rule{height:54px;width:100%;background:center/100% 100% no-repeat url("./assets/ornaments/v3/chapter-rule.svg")}
+.atlas-v3--folio-plaque{display:flex;align-items:center;justify-content:center;min-height:44px;min-width:148px;max-width:100%;width:max-content;padding:8px 37px;font:600 .75rem/1.5 var(--atlas-font-display,Georgia,serif);letter-spacing:.09em;background:center/100% 100% no-repeat url("./assets/ornaments/v3/folio-plaque.svg")}
+.atlas-v3--rosette{width:64px;height:64px;background:center/contain no-repeat url("./assets/ornaments/v3/rosette.svg")}
+.atlas-v3--corner{width:110px;height:110px;background:center/contain no-repeat url("./assets/ornaments/v3/corner.svg")}
+.atlas-v3--corner[data-atlas-v3-orientation="ne"]{transform:scaleX(-1)}
+.atlas-v3--corner[data-atlas-v3-orientation="se"]{transform:rotate(180deg)}
+.atlas-v3--corner[data-atlas-v3-orientation="sw"]{transform:scaleY(-1)}
+.atlas-v3--engraved-panel{padding:28px 32px;outline:1px solid var(--v3-edge);outline-offset:-5px;background:linear-gradient(150deg,rgba(190,163,109,.07),transparent 60%),var(--v3-panel)}
+.atlas-v3--engraved-panel::before{content:"";position:absolute;inset:7px;z-index:-1;background:url("./assets/ornaments/v3/corner.svg") top left/62px no-repeat,url("./assets/ornaments/v3/corner.svg") bottom right/62px no-repeat}
+.atlas-v3--astrolabe{display:block;width:min(100%,296px);aspect-ratio:1;background:radial-gradient(circle,rgba(179,155,111,.10),transparent 72%)}
+.atlas-v3--astrolabe::before{content:"";position:absolute;inset:0;background:center/contain no-repeat url("./assets/ornaments/v3/astrolabe.svg")}
+.atlas-v3--portrait-niche{display:grid;place-items:center;min-height:252px;padding:35px;background:var(--v3-ink)}
+.atlas-v3--portrait-niche::before{content:"";position:absolute;inset:0;background:center/100% 100% no-repeat url("./assets/ornaments/v3/portrait-frame.svg")}
+.atlas-v3--portrait-niche>*{position:relative;max-width:100%;max-height:100%}
+.atlas-v3--codex-panel{min-height:200px;padding:26px 28px 28px 83px;border:1px solid var(--v3-edge);background:linear-gradient(100deg,rgba(176,142,96,.12),transparent 76%),var(--v3-panel)}
+.atlas-v3--codex-panel::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:67px;background:left center/100% 100% no-repeat url("./assets/ornaments/v3/illuminated-foliage.svg")}
+.atlas-v3__initial{float:left;margin:-.08em .15em -.14em 0;font:600 3.1em/.95 var(--atlas-font-display,Georgia,serif);color:var(--v3-metal)}
+.atlas-v3__body{font:400 .88rem/1.7 system-ui,sans-serif;color:var(--v3-text);margin:0}
+@media(max-width:640px){
+ .atlas-v3--cartouche{min-height:115px;padding:18px 27px;gap:.2rem}
+ .atlas-v3__title{font-size:clamp(1rem,4.5vw,1.3rem)}
+ .atlas-v3__kicker{font-size:.55rem;letter-spacing:.11em}
+ .atlas-v3__subtitle{font-size:.7rem}
+ .atlas-v3--chapter-rule{height:35px}
+ .atlas-v3--folio-plaque{min-height:35px;min-width:120px;padding:5px 30px}
+ .atlas-v3--astrolabe{width:min(100%,220px)}
+ .atlas-v3--engraved-panel{padding:18px}
+ .atlas-v3--engraved-panel::before{background-size:42px,42px}
+ .atlas-v3--codex-panel{min-height:150px;padding:15px 13px 16px 55px}
+ .atlas-v3--codex-panel::before{width:45px}
+ .atlas-v3__initial{font-size:2.35em}
+}
+@media(prefers-reduced-motion:reduce){.atlas-v3,.atlas-v3::before,.atlas-v3::after{animation:none!important;transition:none!important}}
