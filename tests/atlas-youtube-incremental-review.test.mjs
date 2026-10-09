@@ -94,6 +94,22 @@ test("ambiguous duplicate normalized keys always demand review, never silently m
   assert.ok(res.attention.every(row=>row.normalized_name_collision));
 });
 
+test("reviewed spelling variants retain all verdicts without discarding evidence",()=>{
+  const decisions=JSON.parse(fs.readFileSync(new URL("../audits/youtube-reviewed-dispositions.json",import.meta.url),"utf8"));
+  const prev=make("legacy-audit-baseline",[signal(1,"Old Biography",3)]);
+  const current=make("legacy-audit-successor",[
+    signal(1,"Old Biography",3),signal(2,"Göbeklitepe",3),signal(3,"王羲之",3)
+  ]);
+  const output=computeIncrementalAudit(current,prev,{decisions,currentAsOf:"2026-10-09T00:00:00Z"});
+  assert.equal(output.summary.current_signals,3);
+  assert.ok(output.changed.find(row=>row.raw_name==="Göbeklitepe" && row.disposition==="NON_INDIVIDUAL"));
+  const conflicting={decisions:[
+    {name:"Göbeklitepe",disposition:"NON_INDIVIDUAL",reason:"Archaeological site",reviewed_at:"2026-10-09"},
+    {name:"Gobekli Tepe",disposition:"AMBIGUOUS",reason:"Person?",reviewed_at:"2026-10-09"}
+  ]};
+  assert.throws(()=>computeIncrementalAudit(current,prev,{decisions:conflicting,currentAsOf:"2026-10-09T00:00:00Z"}),/YOUTUBE_AUDIT_CONFLICTING_REVIEW_DECISIONS/);
+});
+
 test("invalid snapshots fail closed instead of creating partial review output",()=>{
   assert.throws(()=>computeIncrementalAudit(next,next,extra),/SAME_SNAPSHOT_ID/);
   assert.throws(()=>computeIncrementalAudit(
