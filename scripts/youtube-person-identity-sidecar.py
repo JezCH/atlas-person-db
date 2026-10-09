@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Read-only Person UUID sidecar for the preserved cumulative YouTube corpus.
 
-Evidence is exact, reviewed name evidence only. No fuzzy or substring matching,
-no production writes, and no modification of raw-title signal rankings.
+Legacy reviewed prefix evidence remains stable. Optional in-title mentions use
+reviewed aliases and boundary checks, never ungrounded substring identities.
+No Production writes or modifications of raw-title signal rankings.
 """
 import argparse
 import collections
@@ -20,6 +21,16 @@ _UUID = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{1
 
 def load_parser():
     spec = importlib.util.spec_from_file_location("youtube_signal_parser", PARSER_PATH)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def load_mention_module():
+    spec = importlib.util.spec_from_file_location(
+        "youtube_person_title_mentions",
+        Path(__file__).with_name("youtube_person_title_mentions.py")
+    )
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
@@ -95,11 +106,20 @@ def build_resolution(audit_path, registration_path, reviewed_path):
 
 def aggregate(root, audit, registration, reviewed, *, source_run_id, source_artifact_id,
               source_digest, expected_channels, expected_videos, expected_selected,
-              production_snapshot_id):
+              production_snapshot_id, mentions=False):
     parser = load_parser()
     resolved, ambiguous, display_names, provenance, reviewed_rows = build_resolution(
         audit, registration, reviewed
     )
+    matcher = None
+    mention_alias_count = 0
+    if mentions:
+        verified, _, _ = read_registered_audit(audit)
+        reviewed_document = json.loads(Path(reviewed).read_text(encoding="utf-8"))
+        matcher, mention_labels = load_mention_module().build_matcher(
+            resolved, verified, reviewed_document
+        )
+        mention_alias_count = len(mention_labels)
     manifests = parser.load_manifest_paths(root)
     expected_batches = sorted(manifests, key=lambda x: (int(x[5:8]), x[8:]))
     if "batch024" not in manifests or "batch025" in manifests:
@@ -110,6 +130,8 @@ def aggregate(root, audit, registration, reviewed, *, source_run_id, source_arti
     variant_channels = collections.defaultdict(lambda: collections.defaultdict(set))
     variant_videos = collections.defaultdict(lambda: collections.defaultdict(set))
     matched_records, uncertain_records, parsed_video_rows = 0, 0, 0
+    mention_only_rows = 0
+    evidence_by_person = collections.defaultdict(collections.Counter)
     for batch in expected_batches:
         manifest = manifests[batch]
         rows = json.loads(manifest.read_text(encoding="utf-8"))
@@ -135,28 +157,41 @@ def aggregate(root, audit, registration, reviewed, *, source_run_id, source_arti
                     local_rows += 1
                     title = row.get("title")
                     raw = parser.title_candidate(title)
-                    if not raw:
-                        continue
-                    normalized = parser.normalize_person_candidate(raw)
-                    label = key(normalized)
-                    if label in ambiguous:
-                        uncertain_records += 1
-                        continue
-                    pid = resolved.get(label)
-                    if pid is None:
-                        continue
-                    # The reviewed, full-name exact match can include short
-                    # non-Latin names omitted by the legacy >=3-character rule.
-                    if label not in resolved:
+                    candidates = set()
+                    prefix_pids = set()
+                    if raw:
+                        normalized = parser.normalize_person_candidate(raw)
+                        label = key(normalized)
+                        if label in ambiguous:
+                            uncertain_records += 1
+                        elif label in resolved:
+                            prefix_pids.add(resolved[label])
+                            candidates.add((label, resolved[label], "reviewed_prefix"))
+                    if matcher is not None:
+                        for label, pid in matcher.find(title):
+                            # An identical prefix + in-title hit counts as one
+                            # evidence row, with prefix taking precedence.
+                            candidates.add((label, pid, "reviewed_in_title"))
+                    if not candidates:
                         continue
                     video_id = row.get("video_id")
                     if not video_id or row.get("channel_id") != channel_id:
                         raise ValueError("MISSING_OR_MISMATCHED_VIDEO_PROVENANCE")
-                    matched_records += 1
-                    distinct_channels[pid].add(channel_id)
-                    distinct_videos[pid].add(video_id)
-                    variant_channels[pid][label].add(channel_id)
-                    variant_videos[pid][label].add(video_id)
+                    per_person = collections.defaultdict(set)
+                    for label, pid, tier in candidates:
+                        per_person[pid].add((label, tier))
+                    if not prefix_pids:
+                        mention_only_rows += 1
+                    for pid, evidences in per_person.items():
+                        matched_records += 1
+                        distinct_channels[pid].add(channel_id)
+                        distinct_videos[pid].add(video_id)
+                        for label in {label for label, _ in evidences}:
+                            variant_channels[pid][label].add(channel_id)
+                            variant_videos[pid][label].add(video_id)
+                        tier = ("reviewed_prefix" if pid in prefix_pids
+                                else "reviewed_in_title")
+                        evidence_by_person[pid][tier] += 1
             if local_rows != int(item.get("count") or 0):
                 raise ValueError("MANIFEST_VIDEO_COUNT_MISMATCH")
             parsed_video_rows += local_rows
@@ -185,6 +220,7 @@ def aggregate(root, audit, registration, reviewed, *, source_run_id, source_arti
             "distinct_channel_count": len(channels),
             "distinct_video_count": len(distinct_videos[uuid]),
             "matched_variants": variants,
+            "evidence_rows_by_type": dict(sorted(evidence_by_person[uuid].items())),
         })
     persons.sort(key=lambda p: (-p["distinct_channel_count"],
                               -p["distinct_video_count"], p["person_id"]))
@@ -205,7 +241,9 @@ def aggregate(root, audit, registration, reviewed, *, source_run_id, source_arti
         },
         "method": {
             "identity": "registered_uuid_exact_reviewed_alias_only",
-            "evidence": "legacy_strong_title_prefix_only",
+            "evidence": ("reviewed_prefix_plus_conservative_in_title"
+                         if mentions else "legacy_strong_title_prefix_only"),
+            "reviewed_in_title_alias_count": mention_alias_count,
             "channel_dedup": "set_of_original_channel_ids_per_person_id",
             "video_dedup": "set_of_original_video_ids_per_person_id",
             "raw_title_rankings_modified": False,
@@ -214,6 +252,7 @@ def aggregate(root, audit, registration, reviewed, *, source_run_id, source_arti
         "summary": {
             "person_identities_with_evidence": len(persons),
             "matched_video_rows": matched_records,
+            "mention_only_title_rows": mention_only_rows,
             "ambiguous_video_rows_withheld": uncertain_records,
             "ambiguous_alias_keys": len(ambiguous),
         },
@@ -236,13 +275,14 @@ def main():
     ap.add_argument("--channels", type=int, required=True)
     ap.add_argument("--videos", type=int, required=True)
     ap.add_argument("--selected", type=int, required=True)
+    ap.add_argument("--mentions", action="store_true", help="Enable conservative reviewed in-title matches")
     args = ap.parse_args()
     result = aggregate(
         args.root, args.audit, args.registration_aliases, args.reviewed_aliases,
         source_run_id=args.run_id, source_artifact_id=args.artifact_id,
         source_digest=args.artifact_digest, expected_channels=args.channels,
         expected_videos=args.videos, expected_selected=args.selected,
-        production_snapshot_id=args.snapshot_id
+        production_snapshot_id=args.snapshot_id, mentions=args.mentions
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
