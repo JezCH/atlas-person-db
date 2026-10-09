@@ -3,23 +3,20 @@ on:
   workflow_dispatch:
     inputs:
       next_batch:
-        description: "Next cumulative batch number (e.g., 21, 22)"
+        description: "Next cumulative batch number (e.g., 22, 23)"
         required: true
-        default: "21"
+        default: "22"
         type: string
       prior_run_id:
         description: "GitHub run ID holding the immediately preceding validated cumulative corpus"
         required: true
-        default: "37889630942"
+        default: "37895576537"
         type: string
       prior_artifact_name:
         description: "Immediately preceding cumulative artifact name"
         required: true
-        default: "youtube-cumulative-batch020-validated"
+        default: "youtube-cumulative-batch021-validated"
         type: string
-  push:
-    branches: [main]
-    paths: ['.github/workflows/youtube-cumulative-next-batch.yml']
   pull_request:
     branches: [main]
     paths:
@@ -46,13 +43,13 @@ jobs:
       - run: python -m unittest discover -s tests -p test_youtube_batch018_continuation.py -v
   collect:
     # The one-time marker must be on the actual merged commit, not just the PR title.
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[yt-b021-collect-once]')
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 100
     env:
-      NEXT_BATCH: ${{ inputs.next_batch || '21' }}
-      PRIOR_RUN_ID: ${{ inputs.prior_run_id || '37889630942' }}
-      PRIOR_ARTIFACT_NAME: ${{ inputs.prior_artifact_name || 'youtube-cumulative-batch020-validated' }}
+      NEXT_BATCH: ${{ inputs.next_batch || '22' }}
+      PRIOR_RUN_ID: ${{ inputs.prior_run_id || '37895576537' }}
+      PRIOR_ARTIFACT_NAME: ${{ inputs.prior_artifact_name || 'youtube-cumulative-batch021-validated' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -77,9 +74,9 @@ jobs:
           jq -e --arg next "batch$(printf '%03d' "$((10#$NEXT_BATCH))")" '
             .snapshot.source_state.next_batch==$next
             and .snapshot.source_state.channel_ids_persisted==true
-            and .snapshot.channel_count>=6908
-            and .snapshot.video_count>=1684134
-            and (.channels|length)>=7670
+            and .snapshot.channel_count>=7708
+            and .snapshot.video_count>=1823613
+            and (.channels|length)>=8470
           ' /tmp/atlas-youtube-previous.json >/dev/null
       - name: Collect only the next batch and SHA256-verify every previous file
         shell: bash
