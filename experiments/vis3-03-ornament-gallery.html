@@ -21,7 +21,7 @@ main{max-width:1400px;margin:0 auto;padding:18px}
 .sample-rosette{margin:auto}
 .sample-initial{display:flex;align-items:center;gap:18px;min-height:120px}
 .sample-initial p{margin:0}
-#showOrnaments:not(:checked)~main.atlas-ornament-v3{--atlas-o-ornament-presence:0}
+body:has(#showOrnaments:not(:checked)) main.atlas-ornament-v3{--atlas-o-ornament-presence:0}
 @media(max-width:600px){.demo-head h1{font-size:23px}.sample{padding:12px}}
 </style></head>
 <body>
