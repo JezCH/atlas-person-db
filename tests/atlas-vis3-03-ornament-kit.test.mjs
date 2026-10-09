@@ -64,7 +64,8 @@ test('VIS3-03 is not accidentally injected into live index/app routes', async ()
 
 test('VIS3-03 does not overwrite semantic domain palette or Spacetime coordinates', async () => {
   const css = await read('atlas-ui-ornament-kit-v3.css');
-  assert.doesNotMatch(css, /representative_domain|#D4AF37|--spacetime-(?:base|compression|axis)|zoom\s*:/i);
+  const declarations = css.replace(/\/\*[\s\S]*?\*\//g, ''); // test declarations, not descriptive comments
+  assert.doesNotMatch(declarations, /representative_domain|#D4AF37|--spacetime-(?:base|compression|axis)|zoom\s*:/i);
   assert.ok(css.indexOf('.atlas-ornament-kit') >= 0);
   const owners = [
     'atlas-ui-visual-foundation.css',
