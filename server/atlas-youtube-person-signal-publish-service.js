@@ -11,8 +11,9 @@ const CHANNEL_STATUS = new Set(["OK","ERR","EMPTY"]);
 const YOUTUBE_SIGNAL_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname,"../db/migrations/20261007_youtube_person_signal_read_model.sql"),
   path.resolve(__dirname,"../db/migrations/20261008_youtube_discovery_channel_registry.sql"),
-  path.resolve(__dirname,"../db/migrations/20261008_youtube_history_reconciliation.sql"),
-  path.resolve(__dirname,"../db/migrations/20261008_youtube_retire_legacy_batches.sql")
+  // Keep the non-destructive schema compatibility migration. Never replay the
+  // legacy retirement migration: it deletes historical snapshots and ledgers.
+  path.resolve(__dirname,"../db/migrations/20261008_youtube_history_reconciliation.sql")
 ]);
 
 function requireString(value, code, max = 512) {
