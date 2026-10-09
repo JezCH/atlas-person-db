@@ -11,6 +11,9 @@ test("VIS2-11 is a single lazy paint stylesheet for existing Polity and Dashboar
  assert.equal(nav.split(newLink).length-1,2);
  assert.match(css,/--atlas-vis2-11-archive-active:\s*1/);
  assert.ok(nav.includes("appendStylesheetOnce"));
+ assert.equal(nav.split('appendVis211FinishLast("./atlas-vis2-11-polity-dashboard-archive.css').length-1,2);
+ assert.match(nav,/function appendVis211FinishLast\\(href\\)/);
+ assert.match(nav,/document\\.head\\.append\\(existing\\)/);
  assert.match(polity,/polity-browser-card card/);
  assert.match(polity,/polity-browser-summary card/);
  assert.match(dash,/dashboard-control-center/);
