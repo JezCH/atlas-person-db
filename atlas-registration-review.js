@@ -330,7 +330,7 @@
       : "원시 표기별 집계 · 동명이인 및 다른 표기는 별개 순위입니다.";
     for(const mode of ["raw","person"]){
       const button=activeRoot?.querySelector(`#youtubeSignalMode [data-signal-mode="${mode}"]`);
-      button?.setAttribute("aria-pressed",String(mode===signalMode));
+      if(typeof button?.setAttribute==="function") button.setAttribute("aria-pressed",String(mode===signalMode));
     }
     const telemetry=activeRoot?.querySelector("#youtubeSignalTelemetry");
     if(telemetry) {
