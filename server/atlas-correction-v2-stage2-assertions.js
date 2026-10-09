@@ -35,7 +35,7 @@ const IDENTITY_RELATION_FIELDS = Object.freeze([
   "confidence","notes"
 ]);
 const IDENTITY_RELATION_UUID_FIELDS = new Set(["id","predecessor_polity_id","successor_polity_id","relation_type_id"]);
-const SOURCE_FIELDS = Object.freeze(["id", ...BIBLIOGRAPHIC_SOURCE_FIELDS]);
+const SOURCE_FIELDS = BIBLIOGRAPHIC_SOURCE_FIELDS;
 
 function requireUuid(value, code) {
   const id = String(value || "").trim().toLowerCase();
