@@ -23,9 +23,6 @@ on:
       - 'scripts/youtube-continue-batch018.py'
       - 'tests/test_youtube_batch018_continuation.py'
       - '.github/workflows/youtube-cumulative-next-batch.yml'
-  push:
-    branches: [main]
-    paths: ['.github/workflows/youtube-cumulative-next-batch.yml']
 permissions:
   contents: read
   actions: read
@@ -45,7 +42,7 @@ jobs:
       - run: python -m pip install --disable-pip-version-check pycountry
       - run: python -m unittest discover -s tests -p test_youtube_batch018_continuation.py -v
   collect:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[yt-next-collect-once]')
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 55
     env:
