@@ -1,0 +1,117 @@
+{
+  "schema": "polity-brazil-final-identity-verification/v1",
+  "unit": "POLITY-P2-03M_FINAL",
+  "as_of": "2026-10-10",
+  "review_status": "FIXED_ACTIVE_IDENTITY_LINKAGE",
+  "parent_case": "brazil-regime-family",
+  "historical_decision": {
+    "empire_separate": true,
+    "empire_uuid": "efcd0f70-bffe-5464-86e3-b28b3658404b",
+    "republican_continuity": true,
+    "canonical_republic_uuid": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+    "legacy_old_title_uuid": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+    "republic_official_names": [
+      "Estados Unidos do Brasil",
+      "República Federativa do Brasil"
+    ],
+    "date_of_first_exclusive_formal_name_adoption_verified": false,
+    "avoid_unverified_day_precision": true,
+    "original_title_preserved_in_activity_notes": true,
+    "legacy_polity_physically_retired": false,
+    "retirement_requires_explicit_user_approval": true
+  },
+  "change": {
+    "activity_id": "7a021719-8a81-4367-9fd1-64e75f996563",
+    "person": "Afonso Pena",
+    "person_id": "070c0e51-946a-4378-b83c-c100c99e4084",
+    "old_polity_id": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+    "new_polity_id": "a8b27d54-b180-4d51-a664-dd40b3eed08f",
+    "start": {
+      "year": 1906,
+      "month": 11,
+      "day": 15,
+      "calendar": "gregorian",
+      "certainty": "exact"
+    },
+    "end": {
+      "year": 1909,
+      "month": 6,
+      "day": 14,
+      "calendar": "gregorian",
+      "certainty": "exact"
+    },
+    "existing_source_id": "e91990eb-2d4a-4e05-afc0-9a5d9f6b741a",
+    "source_locator": "https://www.biblioteca.presidencia.gov.br/presidencia/ex-presidentes/affonso-penna/nome-do-presidente",
+    "notes_unchanged": true,
+    "source_locator_unchanged": true,
+    "activity_uuid_unchanged": true,
+    "any_other_activity_changed": false,
+    "source_assertions": 0,
+    "designation_assertions": 0,
+    "retirements": 0
+  },
+  "release": {
+    "correction_plan": "corrections/plans/brazil-republic-continuity-afonso-pena-relink-20261010.v1.json",
+    "pr": 2332,
+    "merge_sha": "72b06db20781fa66bc97bf3e7900ae8cae8693a7",
+    "integrity_run": 37995470343,
+    "integrity_success": true,
+    "correction_action": 37995627659,
+    "correction_job": 114040813649,
+    "correction_artifact": 11646218818,
+    "dry_run": {
+      "ok": true,
+      "committed": false,
+      "replay": false
+    },
+    "apply": {
+      "ok": true,
+      "committed": true,
+      "replay": false,
+      "request_id": "brazil_republic_identity_afonso_pena_minimal_relink_20261010_v1",
+      "exact_live_snapshot_digest": "sha256:6482ef5d16edbf028fb671c21906cc62f30dda21c7053a275294f402d78bbcf3",
+      "manifest_sha256": "sha256:fa66e0bf466cfdc5a0837c279fcadb774c72c9a5c442c8e732d7d347d068116d"
+    },
+    "post_commit_authoring_baseline": {
+      "action": 37995627659,
+      "sha": "72b06db20781fa66bc97bf3e7900ae8cae8693a7",
+      "digest": "sha256:610bfbeec44cff8f0a2ddd6410042c5bc7754c65217c104dab265a150892197c",
+      "total_activities": 2511,
+      "total_normalized_source_links": 3854,
+      "scoped_counts": {
+        "empire": 2,
+        "legacy_old_title_uuid": 0,
+        "canonical_republic": 8
+      },
+      "scoped_activity_sources": {
+        "empire": 3,
+        "legacy_old_title_uuid": 0,
+        "canonical_republic": 14
+      },
+      "target_row_in_survivor": true,
+      "target_row_date_and_source_exact_match": true
+    },
+    "runtime_projection_compile": {
+      "run": 37995685332,
+      "job": 114041023708,
+      "success": true,
+      "published_rows": 2511,
+      "compile_key": "runtime-person-politics-v1:c6db43c73291dc26b2261914945fd816eb8d91b730e1ebe4bda27ec81bc27209",
+      "independent_full_row_runtime_identity_audit": false
+    }
+  },
+  "deferred_independent_approval": {
+    "retired_empty_legacy_polity": false,
+    "reason": "User approval required for polity retirement or deletion; no remaining linked Authoring Person Activity. Full zero-reference audit would be needed before any separate retire request.",
+    "source_bibliography_registration": false,
+    "historical_1968_exact_designations": false,
+    "do_not_reopen_current_case_for_documentary_perfection": true
+  },
+  "registry": {
+    "previous_terminal": 51,
+    "total": 75,
+    "new_terminal_if_Fixed": 52,
+    "remaining": 23
+  },
+  "next_work": "Proceed to next nonterminal polity family in issue #1895; do not auto-run retirement or restart Brazil law/source sub-units."
+}
