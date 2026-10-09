@@ -8,6 +8,7 @@ const {
 }=require("./atlas-youtube-person-signal-read-service.js");
 const {reviewedPersonAliasesValuesSql}=require("./atlas-reviewed-person-registration-aliases.js");
 const {reviewedLivingStatus}=require("./atlas-youtube-reviewed-living-people.js");
+const QUALITY_RULES=require("../scripts/youtube-person-signal-quality-rules.v2.json");
 
 const DISCOVERY_SCHEMA="atlas-youtube-unregistered-discovery/v1";
 const CANDIDATE_ROWS_SQL=[
@@ -24,6 +25,60 @@ const PERSON_NAMES_SQL=[
   "join atlas_v2.persons p on p.canonical_key=aliases.canonical_key"
 ].join(" ");
 const CHANNEL_THRESHOLDS=Object.freeze([3,5,10,15,20]);
+const EXTRA_REVIEWED_NONPERSON=Object.freeze([
+  "Full",
+  "Discussion",
+  "The Bermuda Triangle",
+  "Bermuda Triangle",
+  "The Medici",
+  "Mars",
+  "The Epic of Gilgamesh",
+  "Full Speech",
+  "Clip",
+  "First Look",
+  "Recap",
+  "Just in",
+  "Debunked",
+  "The Antikythera Mechanism",
+  "The Lost Colony of Roanoke",
+  "The Fall of the Berlin Wall",
+  "The Sumerians",
+  "Unit 731",
+  "Keynote Address",
+  "Travel to Dubai",
+  "Buddhism",
+  "Christianity",
+  "Greek Fire",
+  "Antisemitism",
+  "Anti-Semitism",
+  "Ragnarok",
+  "Ragnarök",
+  "International Women's Day",
+  "International Women’s Day",
+  "Al-Andalus",
+  "Al Andalus",
+  "Gobekli Tepe",
+  "Göbeklitepe",
+  "Israel-Palestine Conflict",
+  "Israel Palestine Conflict",
+  "Conference",
+  "Conférence",
+  "Hercules",
+  "HÉRCULES",
+  "Moby Dick",
+  "Moby-Dick",
+  "Quran",
+  "Qur'an",
+  "Mohenjo Daro",
+  "Mohenjo-daro",
+  "Tutankhamun's Tomb",
+  "Tutankhamun’s Tomb",
+  "Custer's Last Stand",
+  "Custer’s Last Stand",
+  "Paris"
+]);
+const REVIEWED_UNRESOLVED_SURNAMES=Object.freeze(["Picasso","Dostoevsky","Schopenhauer","Chopin","Tchaikovsky","Diana"]);
+
 
 function identityKey(value) {
   return String(value??"").normalize("NFKD").toLowerCase()
@@ -31,6 +86,17 @@ function identityKey(value) {
     .replace(/[\u0300-\u036f]/g,"").normalize("NFC")
     .replace(/[^\p{L}\p{N}]+/gu,"");
 }
+const REVIEWED_NONPERSON_KEYS=new Set([
+  ...QUALITY_RULES.non_person_exact,
+  ...QUALITY_RULES.nonhistorical_person_exact,
+  ...EXTRA_REVIEWED_NONPERSON
+].map(identityKey));
+const UNRESOLVED_SURNAME_KEYS=new Set([
+  ...QUALITY_RULES.do_not_infer_surname_identity,
+  ...REVIEWED_UNRESOLVED_SURNAMES
+].map(identityKey));
+function reviewedNonPerson(name){return REVIEWED_NONPERSON_KEYS.has(identityKey(name));}
+
 function registrationIndex(rows) {
   if(!Array.isArray(rows))throw Error("YOUTUBE_DISCOVERY_PERSON_REGISTRY_MISSING");
   const index=new Map();
@@ -47,12 +113,16 @@ function candidatesFromSource(rawRows,personRows,{now=Date.now()}={}) {
     throw Error("YOUTUBE_DISCOVERY_PERSON_REGISTRY_EMPTY");
   const registered=registrationIndex(personRows);
   const grouped=new Map();
-  let registeredExcluded=0,reviewedLivingExcluded=0,homonymReview=0,overlappingRawLabels=0;
+  let registeredExcluded=0,reviewedLivingExcluded=0,nonpersonExcluded=0,homonymReview=0,overlappingRawLabels=0;
   for(const row of rawRows) {
     const signal=projectSignal(row),key=identityKey(signal.raw_name);
     if(!key)throw Error("YOUTUBE_DISCOVERY_MISSING_RAW_IDENTITY");
     const matches=registered.get(key);
     if(matches?.size===1){registeredExcluded++;continue;}
+    if(reviewedNonPerson(signal.raw_name)) {
+      nonpersonExcluded++;
+      continue;
+    }
     if(reviewedLivingStatus(signal.raw_name,now)?.status==="living_likely") {
       reviewedLivingExcluded++;
       continue;
@@ -81,7 +151,8 @@ function candidatesFromSource(rawRows,personRows,{now=Date.now()}={}) {
       raw_name:signal.raw_name,rank:0,
       distinct_channel_count:signal.distinct_channel_count,
       video_count:signal.video_count,
-      identity_state:ambiguous?"registered_homonym_review":"unregistered_candidate",
+      identity_state:ambiguous?"registered_homonym_review":
+        UNRESOLVED_SURNAME_KEYS.has(key)?"short_name_identity_review":"unregistered_candidate",
       registration_match_count:matches?.size||0,
       count_lower_bound:false,source_labels:[signal.raw_name]
     });
@@ -90,7 +161,7 @@ function candidatesFromSource(rawRows,personRows,{now=Date.now()}={}) {
   candidates.sort((a,b)=>b.distinct_channel_count-a.distinct_channel_count||
     b.video_count-a.video_count||a.raw_name.localeCompare(b.raw_name,"en"));
   for(let i=0;i<candidates.length;i++) candidates[i].rank=i+1;
-  return {candidates,registeredExcluded,reviewedLivingExcluded,homonymReview,overlappingRawLabels};
+  return {candidates,registeredExcluded,reviewedLivingExcluded,nonpersonExcluded,homonymReview,overlappingRawLabels};
 }
 async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,offset=0}={}) {
   if(!client||typeof client.query!=="function")throw Error("YOUTUBE_DISCOVERY_DB_REQUIRED");
@@ -106,7 +177,7 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     client.query(CANDIDATE_ROWS_SQL,[initial.snapshot_id]),
     client.query(PERSON_NAMES_SQL)
   ]);
-  const {candidates,registeredExcluded,reviewedLivingExcluded,homonymReview,overlappingRawLabels}=
+  const {candidates,registeredExcluded,reviewedLivingExcluded,nonpersonExcluded,homonymReview,overlappingRawLabels}=
     candidatesFromSource(signals.rows||[],people.rows||[]);
   const final=projectSnapshot((await client.query(GLOBAL_SNAPSHOT_SQL)).rows?.[0]);
   if(!final||final.snapshot_id!==initial.snapshot_id)
@@ -122,6 +193,7 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     identity_rule:"unique_exact_registered_match_excluded_ambiguous_reviewed",
     registration_checked:true,registered_excluded_count:registeredExcluded,
     reviewed_living_excluded_count:reviewedLivingExcluded,
+    reviewed_nonperson_excluded_count:nonpersonExcluded,
     homonym_review_count:homonymReview,overlapping_raw_labels:overlappingRawLabels,
     dedup_policy:"reviewed_extraction_aliases_only_never_sum_aggregates",
     min_channels:threshold,offset:pageOffset,
@@ -131,5 +203,5 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
 }
 module.exports=Object.freeze({
   DISCOVERY_SCHEMA,CANDIDATE_ROWS_SQL,PERSON_NAMES_SQL,CHANNEL_THRESHOLDS,
-  identityKey,registrationIndex,candidatesFromSource,readYoutubeUnregisteredDiscovery
+  identityKey,reviewedNonPerson,registrationIndex,candidatesFromSource,readYoutubeUnregisteredDiscovery
 });
