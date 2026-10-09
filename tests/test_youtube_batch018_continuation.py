@@ -93,6 +93,37 @@ class CollectorSafety(unittest.TestCase):
             edited.write_bytes((root/"out"/"batch008"/"manifest.json").read_bytes())
             self.assertEqual(collector.verify_preserved_files(root,out),10)
 
+    def test_batch019_appends_without_rewriting_any_batch018_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/"prior"
+            out=Path(tmp)/"next"
+            seed(root)
+            folder=root/"out"/"batch018"
+            folder.mkdir(parents=True)
+            rows=[{"channel_id":f"UC018{k:06d}","status":"OK","count":0} for k in range(40)]
+            (folder/"manifest.json").write_text(json.dumps(rows),encoding="utf-8")
+            old_ids=collector.manifests(root,next_batch=19,min_channels=6810)
+            self.assertEqual(len(old_ids),6810)
+            def fake(url, timeout=90):
+                if url.startswith("ytsearch"):
+                    return {"entries":[{"channel_id":"UC018000001","channel":"old"},
+                                       {"channel_id":"UC019000001","channel":"new"}]}
+                return {"entries":[{"id":"V_019","title":"Biography of a Historical Person"}]}
+            with patch.object(collector,"run_yt",side_effect=fake):
+                collector.collect(root,out,1,3,next_batch=19)
+            self.assertEqual(collector.verify_preserved_files(root,out),11)
+            self.assertEqual((root/"out"/"batch018"/"manifest.json").read_bytes(),
+                             (out/"out"/"batch018"/"manifest.json").read_bytes())
+            current=json.loads((out/"out"/"batch019"/"manifest.json").read_text())
+            self.assertEqual(len(current),1)
+            self.assertEqual(current[0]["channel_id"],"UC019000001")
+            summary=json.loads((out/"batch019-summary.json").read_text())
+            self.assertEqual(summary["previous_channels"],6810)
+            self.assertEqual(summary["preserved_prior_files"],11)
+            self.assertEqual(summary["supabase_requests"],0)
+            with self.assertRaisesRegex(RuntimeError,"INCOMPLETE_PRIOR_CORPUS"):
+                collector.manifests(out,next_batch=19,min_channels=6810)
+
     def test_no_new_channels_fails_without_creating_output(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)/"prior";out=Path(tmp)/"out";seed(root)
