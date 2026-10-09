@@ -6,12 +6,16 @@
     "display_name_ko": "마이모니데스",
     "person_type": "historical",
     "historicity": "historical",
-    "representative_domain": "religion"
+    "representative_domain": "religion",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-09",
+    "life_status_basis": "documented_death"
   },
   "external_references": {
     "namuwiki": {
       "status": "not_found",
-      "checked_at": "2026-09-30"
+      "checked_at": "2026-09-30",
+      "review_reason": "no_exact_document"
     }
   },
   "polity": {
