@@ -58,7 +58,7 @@ class CollectorSafety(unittest.TestCase):
                 (folder/"manifest.json").write_text(
                     json.dumps([{"channel_id":cid,"status":"OK","count":1}]),encoding="utf-8")
                 with gzip.open(folder/"videos"/f"{cid}.ndjson.gz","wt",encoding="utf-8") as target:
-                    target.write(json.dumps({"channel_id":cid,"video_id":cid,"title":"Albert Einstein: Biography"})+"\\n")
+                    target.write(json.dumps({"channel_id":cid,"video_id":cid,"title":"Albert Einstein: Biography"})+"\n")
             payload=snapshot_parser.build(root,1,"legacy-compat-test")
             state=payload["snapshot"]["source_state"]
             self.assertEqual(len(payload["channels"]),3)
