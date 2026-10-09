@@ -142,3 +142,41 @@ test("handler exposes only a complete read-only result", async () => {
   assert.equal(res.body.polity_count, 2);
   assert.equal(res.body.external_orphan_count, 1);
 });
+
+
+test("P2-03E opt-in Brazil readback is exact-UUID scoped and READ ONLY", async () => {
+  const { BRAZIL_P2_03E_POLITY_IDS } = require("../server/atlas-polity-reference-audit-handler.js");
+  const base = fakeClient();
+  const originalQuery = base.query.bind(base);
+  base.query = async (sql, params=[]) => {
+    const lower = String(sql).toLowerCase();
+    if (["from atlas_v2.polities p", "from atlas_v2.polity_sources ps", "from atlas_v2.polity_designations pd", "from atlas_v2.polity_identity_relations pir", "from atlas_v2.polity_governance_periods gp"].some(marker => lower.includes(marker))) {
+      base.statements.push({sql:String(sql),params});
+    }
+    if (lower.includes("from atlas_v2.polities p") && lower.includes("jsonb_agg")) {
+      return {rows:BRAZIL_P2_03E_POLITY_IDS.map(id => ({id,canonical_key:id,polity_type:"historical_polity",historicity:"historical",names:[]}))};
+    }
+    if (lower.includes("from atlas_v2.polity_sources ps")) return {rows:[{polity_id:BRAZIL_P2_03E_POLITY_IDS[0],source_id:"source-a"}]};
+    if (lower.includes("from atlas_v2.polity_designations pd")) return {rows:[{polity_id:BRAZIL_P2_03E_POLITY_IDS[1],designation:{id:"designation-a"},names:[],source_links:[]}]};
+    if (lower.includes("from atlas_v2.polity_identity_relations pir")) return {rows:[{predecessor_polity_id:BRAZIL_P2_03E_POLITY_IDS[0],successor_polity_id:BRAZIL_P2_03E_POLITY_IDS[1],relation_type:"successor",relation:{id:"edge-a"},source_links:[]}]};
+    if (lower.includes("from atlas_v2.polity_governance_periods gp")) return {rows:[]};
+    return originalQuery(sql,params);
+  };
+  const normalClient = fakeClient();
+  const defaultResult = await queryPolityReferenceAudit(normalClient);
+  assert.equal(defaultResult.brazil_details, null);
+  const audit = await queryPolityReferenceAudit(base,{includeBrazilDetails:true});
+  assert.equal(audit.complete,true);
+  assert.deepEqual(audit.brazil_details.polity_ids,[...BRAZIL_P2_03E_POLITY_IDS]);
+  assert.equal(audit.brazil_details.polity_sources.length,1);
+  assert.equal(audit.brazil_details.designations.length,1);
+  assert.equal(audit.brazil_details.identity_relations.length,1);
+  assert.equal(audit.brazil_details.governance_periods.length,0);
+  for (const {sql,params} of base.statements) {
+    assert.doesNotMatch(sql,/\b(insert|update|delete|alter|drop|create|truncate|grant|revoke)\b/i);
+    if (/from atlas_v2\.(polity_sources ps|polity_designations pd|polity_identity_relations pir|polity_governance_periods gp)/i.test(sql))
+      assert.deepEqual(params,[[...BRAZIL_P2_03E_POLITY_IDS]]);
+  }
+  assert.equal(base.statements.at(-1).sql.trim().toLowerCase(),"commit");
+});
+
