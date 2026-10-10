@@ -1,6 +1,6 @@
 # VIS3-06-P2 — 실제 인물이 표시되는 시공간표의 A/B/C 장식 검증 (2026-10-10)
 
-> **상태: 진행 중 — 최종 GitHub Actions 결과 확보 전.**
+> **상태: VIS3-06-P2 비배포 검증 완료.** [실제 Production Chrome #38030476127](https://github.com/JezCH/atlas-person-db/actions/runs/38030476127) **SUCCESS** (기존 P검사 18개 + P2 실제 인물 선택 비교 15개), [ATLAS Integrity #38030476121](https://github.com/JezCH/atlas-person-db/actions/runs/38030476121) **SUCCESS**. [실운영 PNG 33장+JSON 2개 / artifact #11661334379](https://github.com/JezCH/atlas-person-db/actions/runs/38030476127/artifacts/11661334379). 사용자 미학 승인·실제 CSS 배포는 별도 보류.
 >
 > 이 단위는 Phase III v2.0의 **비배포 비교/검증**이며 실제 CSS·운영 UI 수정, 사용자 미학 승인, VIS3-07 개발을 수행하지 않는다.
 
@@ -30,3 +30,23 @@ Phase III 전체 목표는 **Restrained Grand Atlas × Precision Chronometer × 
 실제 CI/Chrome 결과·화면 폭별 인물 수·선택 상태·원호 겹침·실패 또는 성공 판정은 워크플로 실행 후 이 문서에 기록한다. 1개 독립 작업 단위를 마무리한 뒤 작업 위치를 고정하고, VIS3-07~17은 착수하지 않는다.
 
 **다음 정확한 재개점:** P2 결과에서 필요한 보완만 수행하며, 실화면에서 실제로 보이는 B 개량안을 비배포로 A/B 비교. VIS3-06 본 구현 및 최종 미학 승인은 별도 사용자 선택을 조건으로 한다.
+
+## 실제 운영 브라우저 검증 결과 — 폐쇄된 P2 범위
+
+GitHub Actions에서 새 headless Chromium으로 Production alias를 실행해 실제 Person 자료를 검색/초점 이동/검색 해제한 뒤, 가상화된 밀집 인물 레이블을 가장 많이 볼 수 있는 위치를 탐색했다. 검색어는 실제 런타임의 `a`이며 첫 번째 **기존 실제 검색 결과**만 이용했다. 코드로 가짜 Person/Activity를 생성하지 않았다. A/B/C는 동일한 DOM/카메라 상태에서 CSS paint만 다르고 데이터 소스·역사 좌표·카메라는 변경하지 않았다.
+
+| 실제 현재 화면 상태 | 가시 Person 이름표 | 가시 Person 레일 | 이름표 상호 겹침 | B/C에 의한 UI/라벨/Inspector 추가 변화 | 장식·컨트롤 겹침 |
+| --- | ---: | ---: | ---: | --- | ---: |
+| 390px · 500% · 비선택 | **69** | **542** | 0 | 없음; 모바일 장식 숨김 | 0px² |
+| 390px · 500% · 실제 인물 이름 클릭/Inspector 선택 | **69** | **542** | 0 | 없음; 실시간 Inspector Activity 1 유지 | 0px² |
+| 1440px · 500% · 비선택 | **195** | **472** | 0 | 없음 | 0px² |
+| 1440px · 500% · 실제 인물 이름 클릭/Inspector 선택 | **195** | **472** | 0 | 없음; 실시간 Inspector Activity 1 유지 | 0px² |
+| 1440px · **1500%** · 실제 인물 선택 유지 | **28** | **54** | 0 | 없음; 실시간 Inspector Activity 1 유지 | 0px² |
+
+**15/15 P2 A/B/C measured cases PASS** = 5 different populated+selection+zoom scenes × A/B/C. 각 장면에서 baseline A의 실제 DOM 이름표 바운딩박스(최대 12 샘플)/개수/기존 겹침 결과/스크롤/Inspector 상태, 그 외 전체 year tick/9지역/툴바/초점 가능 요소 및 canvas 기하 값이 B/C 모두 정확히 같음을 테스트했다. test runner `VIS3_06_P2_REAL_POPULATED_CASES_PASS`은 `warnings:0`을 보고했다. 단어가 겹쳐 보이는 일부 시각적 혼잡/권역 경계와의 가독성은 별도 디자인·가독성 과제이며, 이 이름표 간 0건 판정은 **테스트한 그 5장면**에서의 실제 DOM 사각형 결과이지 전 연대의 전수검증은 아니다.
+
+**시각적 평가:** 실제 1440px 밀집 Person 화면에서도 44×25px B 원호는 검색·줌과 겹치지 않았으나, 도구판에서 차지하는 조형적 존재감은 제한적이었다. C는 더욱 약하다. 따라서 **기능/지오메트리 GO, 현 B/C 디자인을 그대로 Production 적용하는 것은 NO-GO.** A 현행 유지. 다음 별도 작업 단위는 허구의 고지도 눈금이나 UI를 가리는 효과 없이 *뚜렷한 역사 관측기구 이미지와 절제 사이에서 균형을 잡는 B2 비배포 디자인 대안*을 만드는 것이다.
+
+**검증의 남은 한계:** 390/1440 외 모든 width에서 밀집 인물을 별도로 재검증한 것은 아니다(기존 P에서는 다섯 폭의 빈 초기 viewport 검증). 125/150% 실제 브라우저 배율 확대, 키보드-only 순회, `details` 열린 상태, 장문 국제화 제목, WCAG AA 전체 범위 및 최종 사용자 미학 승인은 별도 게이트. 운영 DB·Person·Polity·Activity·시간/공간 축·프로덕션 UI 파일에 변경 없음.
+
+**정확한 다음 단위:** `VIS3-06-P3` — 1440/390 실화면의 **B2 절제된 관측기구 외부 프레임 비배포 시안 비교·사용자 선택 준비**. 이 작업에서 실제 애플리케이션 UI를 수정하지 않으며, Dashboard VIS3-05R 혼합 D 미학 최종 승인 대기와 향후 VIS3-06-R 접근성·시각 선택 게이트를 유지한다. VIS3-07~17의 원 계획은 보존하며 자동 착수하지 않는다.
