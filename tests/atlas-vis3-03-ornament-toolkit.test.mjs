@@ -48,7 +48,7 @@ test('demo stays isolated and VIS3-04 mounts one canonical kit only on shell chr
  assert.match(demo,/atlas-ui-phase3-ornaments\.css/);
  assert.match(demo,/atlas-ornament-v3/);
  assert.match(demo,/data-atlas-o-decor/);
- assert.match(prod,/atlas-ui-phase3-ornaments\.css\?v=20261010-vis3-05-restraint-v1/);
+ assert.match(prod,/atlas-ui-phase3-ornaments\.css\?v=20261010-vis3-05r-mixed-v1/);
  assert.doesNotMatch(prod,/assets\/ui-ornaments\/.*?\.svg/);
  assert.match(prod,/workspace-shell atlas-ornament-v3/);
  assert.match(prod,/mobile-appbar atlas-ornament-v3/);
