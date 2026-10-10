@@ -84,6 +84,7 @@ async function unifiedCounts(client) {
     (select count(*)::int from atlas_v2.person_politics_v2) as activities,
     (select count(*)::int from atlas_v2.person_politics_sources) as activity_sources,
     (select count(*)::int from atlas_v2.sources) as sources,
+    (select count(*)::int from atlas_v2.polity_sources) as polity_sources,
     (select count(*)::int from atlas_v2.chronology_claims) as chronology_claims,
     (select count(*)::int from atlas_v2.relationship_descriptions) as relationship_descriptions,
     (select count(*)::int from atlas_v2.polity_relations) as polity_relations,
@@ -105,6 +106,7 @@ function unifiedCountDeltas(operations) {
   const delta = {
     ...core.expectedCountDeltas(coreOperations),
     sources: 0,
+    polity_sources: 0,
     governance_contexts: 0,
     governance_context_names: 0,
     governance_periods: 0,
