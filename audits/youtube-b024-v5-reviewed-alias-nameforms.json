@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-youtube-b024-v5-source-identity-alias-review/v1",
+  "source_artifact_digest": "sha256:8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "batch_scope": "Batch008-Batch024 original video/channel IDs",
+  "reason": "Original-ID union must be recomputed for v5 contextual title candidates; old pre-aggregated v4 counts must NEVER be reused",
+  "approved_groups": [
+    {
+      "canonical_name": "Pablo Picasso",
+      "aliases": [
+        "Picasso",
+        "Pablo Picasso"
+      ]
+    },
+    {
+      "canonical_name": "Fyodor Dostoevsky",
+      "aliases": [
+        "Dostoevsky",
+        "Fyodor Dostoevsky"
+      ]
+    },
+    {
+      "canonical_name": "Frédéric Chopin",
+      "aliases": [
+        "Chopin",
+        "Frédéric Chopin"
+      ]
+    },
+    {
+      "canonical_name": "Arthur Schopenhauer",
+      "aliases": [
+        "Schopenhauer",
+        "Arthur Schopenhauer"
+      ]
+    },
+    {
+      "canonical_name": "Pyotr Ilyich Tchaikovsky",
+      "aliases": [
+        "Tchaikovsky",
+        "Pyotr Ilyich Tchaikovsky"
+      ]
+    }
+  ],
+  "hold": [
+    "Pelé/Pele — whole-title name is shared by Brazilian footballer and Hawaiian goddess; v4 prefix audit does not establish identity of all new v5 title mentions"
+  ],
+  "disclaimer": "This is verified NAME-FORM equivalence only; exact source-ID title occurrences are still discovery candidates, NOT approved person-centered biography video evidence.",
+  "next_batch_policy": "Any different corpus artifact SHA requires a new reviewed alias manifest."
+}
