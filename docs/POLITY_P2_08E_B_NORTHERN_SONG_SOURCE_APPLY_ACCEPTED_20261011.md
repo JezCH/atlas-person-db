@@ -35,11 +35,25 @@ Execution request ID: `polity_p2_08e_northern_song_academic_polity_source_202610
 Live Activity snapshot digest: `sha256:39dfe08e563ec100abc7fdcc0b46d7609b239d592eeac0664a79f708ff234bcf`.
 Executable manifest SHA256: `sha256:11c16c52f72a3f04a0fcde3b89b74cd47b526fa5d1cf5816d67bb86f97e6014b`.
 
-## One independent replay-only postcondition — deliberately separate
+## Independent post-commit canonical replay — SUCCESS, no new insertion
 
-After this original successful commit, a **single one-time post-acceptance replay** is requested via a metadata-only update to the same reviewed correction plan, letting the already-allowlisted GitHub Correction Apply workflow run on `main`. With an unchanged execution manifest/request ID, the canonical writer must detect its recorded ledger and verify the *live* composite Polity–Source pair and exact Source URL before reporting `replay=true`; it must **not insert a second link**. Until the new workflow artifact proves that, report **original apply accepted, independent replay pending**, not replay complete.
+[Checkpoint PR #2461](https://github.com/JezCH/atlas-person-db/pull/2461) passed Integrity [#38070181311](https://github.com/JezCH/atlas-person-db/actions/runs/38070181311) and merged SHA `3649362e00039583c66770cf998546244919286b`. Only non-executable metadata was added to the **same existing** reviewed Source plan; all executed operations, request ID and manifest hash remained unchanged. This deliberately triggered the same allowlisted GitHub OIDC Correction Apply workflow for **independent live existence / exact URL verification only**.
 
-Do not add a second workflow to the OIDC trust allowlist or bypass SHA conditions. If the replay or separate Runtime check fails, keep this scoped post-acceptance gate open rather than manufacture a PASS.
+- Protected [Production replay run #38070277196](https://github.com/JezCH/atlas-person-db/actions/runs/38070277196) — **SUCCESS**, [artifact #11676800618](https://github.com/JezCH/atlas-person-db/actions/runs/38070277196/artifacts/11676800618), ZIP digest `sha256:c268719caf29d4f618309da7ba9f5f0862689f9a6b7c4457ead444e87e7f424e`.
+- `dry_run`: `ok=true,replay=true,committed=false`; `apply`: `ok=true,replay=true,committed=true` — **existing ledger replay, no second link insert**, verified live existing composite `(polity_id,source_id)` and stored Cambridge Source URL.
+- The immutable original manifest SHA256 **still exactly** `sha256:11c16c52f72a3f04a0fcde3b89b74cd47b526fa5d1cf5816d67bb86f97e6014b`, validated in the PR's test and real replay payload. Vercel Production handler stayed `b26cffeb...`, authenticated GitHub workflow SHA was `3649362e...` under existing explicitly gated transport rebase.
+
+## Independent public three-Polity live readback — SUCCESS, exact Activity owners unchanged
+
+[PR #2462](https://github.com/JezCH/atlas-person-db/pull/2462) passed Integrity [#38070527105](https://github.com/JezCH/atlas-person-db/actions/runs/38070527105), merged SHA `21223dc8688b48ec5bbba373376d11dbfd813b70`, and triggered a **GET-only** public-production verification. [Readback run #38070612532](https://github.com/JezCH/atlas-person-db/actions/runs/38070612532) **SUCCESS**; [artifact #11677035900](https://github.com/JezCH/atlas-person-db/actions/runs/38070612532/artifacts/11677035900) ZIP digest `sha256:a0ebb0dcc20871d0d08eabfe86f50b9f859443659a32514e3641b3c519fa5f40` includes the real before/after deployment identities and three public Polity JSON bodies.
+
+- GET Production `atlas-polity-read/v1` activity-counts: **generic Song 2, Northern Song 7, Southern Song 5** — **14 distinct Activity UUIDs; duplicates zero**.
+- Generic Song retains original **Taizu `4638676d-58de-5873-b2e8-a917a0f5cccf` and Shenzong `d94907ae-eac0-518d-a26d-03adfb9534fb`**.
+- Southern Song retains **both Gaozong Activities `4517af83-d656-47b0-a558-3a3df717f726` and `d5eaf14b-417d-4ed9-a594-d819314a1ff5`**.
+- Both initial and final public Runtime identity responses report **Vercel Production `main` SHA `b26cffeb238101e218c7888f651c7f3121c6be53`**, no alias swap during the three GETs. Public test's workflow SHA `21223dc...` is not silently equated with deployed handler SHA.
+- **Scope:** the public Polity detail response **does not expose `polity_sources`**. This GET confirms preserved public Activity ownership, **not public UI Source visibility**. Actual Cambridge Source join storage is independently proven by original protected apply **and** the separate protected no-write replay. Do not infer a public source card exists.
+
+**Scoped P2-08E-B outcome: ACCEPTED as canonical Source insertion + transactional live Source replay + independent public three-Polity Activity readback.** The separate Song dy­nastic continuity/umbrella policy remains open and must not be conflated with this source-only closure.
 
 ## Historical interpretation still OPEN
 
