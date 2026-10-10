@@ -3,15 +3,15 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const read = (name) => fs.readFileSync(new URL(`../${name}`, import.meta.url), "utf8");
-const css = read("atlas-person-monumental-register.css");
+const css = read("atlas-person-desktop-domain-wash.css");
+const register = read("atlas-person-monumental-register.css");
 const html = read("index.html");
 const person = read("atlas-person-main.js");
 
 function scopedWash() {
-  const begin = css.indexOf("/* REG-M1 desktop restoration");
-  const end = css.indexOf("/* Mobile becomes a compact two-line register", begin);
-  assert.ok(begin >= 0 && end > begin, "desktop wash must be isolated before mobile rules");
-  return css.slice(begin, end);
+  assert.match(css, /^\/\* REG-M1 desktop restoration/);
+  assert.doesNotMatch(css, /@media \(max-width: 760px\)/);
+  return css;
 }
 
 test("desktop Person rows get the existing eight-domain translucent wash, not a filled identity slab", () => {
@@ -23,9 +23,9 @@ test("desktop Person rows get the existing eight-domain translucent wash, not a 
   assert.match(area, /var\(--person-register-domain-wash\) 12%/);
   assert.match(area, /transparent 35%/);
   assert.doesNotMatch(area, /background:\s*[^i]|background-color:|!important|box-shadow: none/);
-  assert.match(css, /\.person-card\[data-representative-domain\] \.person-table-identity,[\s\S]*?background: transparent !important;/);
+  assert.match(register, /\.person-card\[data-representative-domain\] \.person-table-identity,[\s\S]*?background: transparent !important;/);
   for (const domain of ["governance","military","science","technology","commerce","culture","religion","exploration"]) {
-    assert.ok(css.includes(`data-representative-domain="${domain}"`), `missing ${domain}`);
+    assert.ok(register.includes(`data-representative-domain="${domain}"`), `missing ${domain}`);
   }
   assert.match(person, /data-representative-domain="\$\{escapeHtml\(representativeDomain\)\}"/);
 });
@@ -38,12 +38,14 @@ test("hover and selected keep neutral illumination above, without hiding the sub
 });
 
 test("mobile P11 row gradient remains unchanged at <=760px", () => {
-  const mobile = css.slice(css.indexOf("/* Mobile becomes a compact two-line register"));
+  const mobile = register.slice(register.indexOf("/* Mobile becomes a compact two-line register"));
   assert.match(mobile, /@media \(max-width: 760px\)/);
   assert.match(mobile, /var\(--person-register-domain-wash\) 0%/);
   assert.match(mobile, /var\(--person-register-domain-wash\) 16%/);
   assert.match(mobile, /rgba\(0, 0, 0, 0\) 62%/);
   assert.match(mobile, /var\(--atlas-material-wash-hover\)/);
   assert.match(mobile, /var\(--atlas-material-wash-selected\)/);
-  assert.match(html, /atlas-person-monumental-register\.css\?v=20261010-desktop-domain-wash-v1/);
+  assert.match(html, /atlas-person-monumental-register\.css\?v=20261004-ui-p13-column-balance-polity-height-v1/);
+  assert.match(html, /atlas-person-desktop-domain-wash\.css\?v=20261010-desktop-domain-wash-v1/);
+  assert.ok(html.indexOf("atlas-person-desktop-domain-wash.css") > html.indexOf("atlas-person-compact-shell.css"));
 });
