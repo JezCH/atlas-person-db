@@ -38,7 +38,7 @@ function fakeClient(initial=[]){
     data,
     async query(sql,params=[]){
       commands.push(sql);
-      if(sql==="BEGIN" || sql==="COMMIT" || sql==="ROLLBACK" || sql.includes("pg_advisory_xact_lock")) return {rows:[]};
+      if(sql==="BEGIN" || sql.startsWith("BEGIN ") || sql==="COMMIT" || sql==="ROLLBACK" || sql.includes("pg_advisory_xact_lock")) return {rows:[]};
       if(sql.includes("where source_artifact_id=$1")){
         return {rows:[...data.values()].filter(x=>Number(x.source_artifact_id)===Number(params[0])).map(x=>({...x}))};
       }
