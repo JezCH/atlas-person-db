@@ -314,14 +314,25 @@
         id: "buyid-fars-family",
         review_group: "historical_family_review",
         kind: "family_review",
-        title: "Buyid Fars family ↔ Buyid successor / regional identities",
-        left: { name: "Buyid Fars family" },
-        right: { name: "Buyid successor / regional identities" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        title: "Buyid Emirate of Fars → Buyid Realm of Fars and Iraq",
+        left: { name: "Buyid Emirate of Fars", ko: "부와이흐 파르스 토후국", polity_id: "523a6c6a-a16a-4e40-bbdf-fc705a4f1e9d" },
+        right: { name: "Buyid Realm of Fars and Iraq", ko: "부와이흐 왕조령(파르스·이라크)", polity_id: "64e303be-fcda-46e4-8779-46bcc7698946" },
+        rationale: "POLITY-P2-04G (2026-10-10): Production 전체 1158 정치체의 Buyid/부와이흐 명칭 일치 범위에서 현행 2개 UUID를 확인. 아두드 앗다울라의 949–977 파르스 통치와 977–983 파르스·이라크 확대 통치는 동일 인물·권력 기반의 연속적 통치이지만, 977년 이라크 획득 및 직위·실질 지배 영역의 변화로 operational Polity 단계를 구별하는 것이 타당합니다. Encyclopaedia Iranica FĀRS iii는 두 연속 시기를 명시하며, BUYIDS 및 ʿAŻOD-AL-DAWLA는 977 바그다드/이라크 점령과 980 동부 영토의 광범위한 왕조적 통합을 구별합니다. 977년을 모든 부와이계 영토의 전면 통합일 또는 공식 국호 변경일로 해석하거나, 949년 이후 항상 단일 중앙집권 제국이 있었다고 역투사하지 않습니다. 이전 파르스 아미르 역할과 이후 부와이흐 최고 통치자 역할의 구분 및 두 reviewed Activity를 유지합니다. 왕조 내 다른 지역정권/후계정권이 한 국가였다는 판정은 이 seed의 2개 live UUID만으로 불가하므로 향후 전 Production 신규발굴·전수감사 gate에 남기되 본 현존 쌍은 KEEP_SEPARATE로 종결합니다. 기존 Source·granularity·year certainty·Person·Role 변경, canonical write, 임의 삭제/retirement 없음.",
+        suggested_action: "keep_both",
+        reviewed_decision: "keep_both",
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        locked: true,
+        evidence: [
+          "2026-10-10 live Production /api/atlas-read?__atlas_read_surface=polity — 1158 Polity rows checked by Buyid/부와이흐-related name; two direct matches: Fars 523a6c6a-a16a-4e40-bbdf-fc705a4f1e9d, Fars-and-Iraq 64e303be-fcda-46e4-8779-46bcc7698946 (bounded naming check only, not universal historical census)",
+          "2026-10-10 live Person detail: Adud al-Dawla 01abbb6c-8bdd-44a1-b77a-cc23f89c14cd; Fars Activity 503f8853-f23b-4f3a-9c91-5f742c269698, 949–977, role amir_of_fars, reviewed/well_established, year-granularity exact/exact, two existing Iranica Sources",
+          "2026-10-10 live Person detail: same Person; expanded realm Activity 375b1a46-3891-41e3-909c-8dee17b11c67, 977–983, role supreme_buyid_ruler, reviewed/well_established, year-granularity exact/exact, two existing Iranica Sources; 977 shared adjacent year does NOT evidence simultaneous independent kingship",
+          "2026-10-10 live Authoring/Runtime publication parity 2523/2523 with publication_current=true; does NOT alone prove historical correctness",
+          "Encyclopaedia Iranica, FĀRS iii. History in the Islamic Period: 338/949–366/977 Fars and 366/977–372/983 Fars + Iraq, https://www.iranicaonline.org/articles/fars-iii/",
+          "Tilman Nagel, Encyclopaedia Iranica, BUYIDS: three regional principalities rather than a monolithic state; Baghdad entry in December 977 and wider first Buyid unification in 980, https://www.iranicaonline.org/articles/buyids/",
+          "Encyclopaedia Iranica, ʿAŻOD-AL-DAWLA: defeat at Ahvaz July 977; remaining resistance 978, Hamadan 980, Fars/Iraq directly controlled at death in 983, https://www.iranicaonline.org/articles/azod-al-dawla-abu-soja/",
+          "Scoped review: docs/POLITY_P2_04G_BUYID_FARS_IRAQ_977_PHASE_AUDIT_20261010.md"
+        ]
       },
       {
         id: "gnat-turkey",
