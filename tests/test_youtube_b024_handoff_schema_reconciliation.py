@@ -82,6 +82,20 @@ class HistoricalVideoHandoffBridgeTest(unittest.TestCase):
         self.assertEqual(actual["unique_original_video_ids"],2)
         self.assertFalse(actual["publication_allowed"])
         self.assertEqual({v["original_channel_id"] for v in actual["videos"]},{UC1,UC2})
+        # The reconciled artifact MUST be directly accepted by the actual
+        # current collector without fetching or inventing real video content.
+        channels={v["video_id"]:v["original_channel_id"] for v in actual["videos"]}
+        def mock_official_snippets(ids):
+            return {"items":[{"id":vid,"snippet":{
+                "channelId":channels[vid],"title":"Updated title",
+                "description":"Historical content under review", "publishedAt":"2021-01-01T00:00:00Z"
+            }} for vid in ids]}
+        metadata=COLLECTOR.fetch_descriptions(actual,api_call=mock_official_snippets,max_batches=1)
+        self.assertEqual(metadata["fetched_metadata_rows"],2)
+        self.assertEqual(metadata["not_yet_fetched"],0)
+        self.assertFalse(metadata["automatic_person_subject_approval"])
+        resumed=COLLECTOR.fetch_descriptions(actual,api_call=mock_official_snippets,prior=metadata)
+        self.assertEqual(resumed["fetched_metadata_rows"],2)
 
     def test_reject_tampered_video_id_channel_title_or_raw_name(self):
         for mode in ("video_id","original_channel_id","original_title","name"):
