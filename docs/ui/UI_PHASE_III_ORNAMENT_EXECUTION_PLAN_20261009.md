@@ -201,8 +201,8 @@ ATLAS_UI_VISUAL_GUIDELINES.md v2.0은 현재 §14(금속 강조), §17(연대와
 
 **VIS3-05T-A 읽기 전용 감사 완료:** [VIS3-05T 감사 결과](UI_PHASE_III_VIS3_05T_A_LEGIBILITY_AUDIT_20261010.md)에 P0 연결 상태 숨김 CSS 충돌 가설, P1 긴 사이드바 라벨과 상태 설명의 공간 경쟁, P1 9px 저대비 메타정보, P1 KPI 보조 설명 밀집 및 P2 접기 버튼 위치를 기록했다. 실제 Production Chrome 증거와 CSS 정적 대비 계산을 구분해 보고했고 아직 UI·CSS·DB는 수정하지 않았다.
 
-**VIS3-05T-B 완료 — 수정 불필요:** [실제 Chrome 상태 표시 감사](UI_PHASE_III_VIS3_05T_B_CONNECTION_VISIBILITY_20261010.md). 390px에서는 `mobile-compact.css`가 상단 연결 상태를 의도적으로 숨기며, 1440px에서는 대시보드 `hidden=true`+computed `display:none`, 인물 `hidden=false`+`display:flex`로 정상이다. 과거 화면에서 나온 CSS 버그 가설은 현 Production에서 재현되지 않았으므로 임시 수정안을 철회했고 UI·DB 코드는 변경하지 않았다. 실패한 이전 Chrome 테스트의 잘못된 예상값과 실제 측정값을 구분해 기록한다.
+**VIS3-05T-B Chrome 오류 검증 완료, 최소 CSS 수정 중:** [실제 재현·정정 기록](UI_PHASE_III_VIS3_05T_B_CONNECTION_VISIBILITY_20261010.md). 390px 모바일에서는 기존 `mobile-compact.css`가 상단 상태를 정상적으로 숨긴다. 1440px 현행 Production에서는 `hidden=true`인데 computed `display:flex`인 대시보드 상태 표시 문제가 실제 재현됐다([run #38019352425](https://github.com/JezCH/atlas-person-db/actions/runs/38019352425)). 이전의 '정상' 검증은 시험용 CSS가 남았던 동일 URL 탐색 때문에 유효하지 않다. 기존 공통 CSS에 `#connectionStatus[hidden]{display:none}`만 추가하고, 새 문서에서 원본/수정안을 비교하는 별도 Chrome 검증 후 병합한다. 연결 건강 상태를 인위적으로 바꾸지 않는다.
 
-**다음 독립 작업 단위 = VIS3-05T-C:** 사이드바 긴 메뉴명 및 상태 메타데이터의 읽기 순서·대비 개선. 그다음 KPI 보조 글자와 모바일 앱바(T-04/T-07), 접기 버튼(T-05)을 별도 처리한다. VIS3-05R-E 사용자 최종 미감 승인 대기, VIS3-06~17 및 시공간 카메라/데이터 변경은 보류.
+**다음 독립 작업 단위 = VIS3-05T-C:** 사이드바 긴 메뉴명과 상태 설명의 읽기 순서·대비 개선. 이후 KPI 모바일 설명(T-04/T-07), 접기 버튼(T-05) 차례. VIS3-05R-E 혼합 D 사용자 미감 최종 승인 대기, VIS3-06~17 시공간 데이터/카메라 변경 보류.
 
 > Phase III v2.0의 성공 조건: 조형물의 총량이 아니라, 역사적 품격·읽기 쉬움·현재 데이터의 신뢰성이 함께 상승할 것.

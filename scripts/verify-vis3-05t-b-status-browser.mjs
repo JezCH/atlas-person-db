@@ -4,7 +4,7 @@ import path from 'node:path';
 const SITE=(process.env.ATLAS_PRODUCTION_ORIGIN||'https://atlas-person-db.vercel.app').replace(/\/$/,'');
 const OUT='artifacts/vis3-05t-b-status';
 fs.mkdirSync(OUT,{recursive:true});
-const data={schema:'atlas-vis3-05t-b-live-status-audit/v4',branch:process.env.GITHUB_HEAD_SHA,status:'PENDING',method:'unmodified real Production Chrome with Dashboard-Persons-Dashboard route transitions',views:[],screenshots:[]};
+const data={schema:'atlas-vis3-05t-b-browser-verification/v5',branch:process.env.GITHUB_HEAD_SHA,status:'PENDING',method:'fresh real Production document per viewport; branch-only CSS injected locally',views:[],screenshots:[]};
 const delay=n=>new Promise(r=>setTimeout(r,n));
 function ensure(c,s,x){if(!c){let e=Error(s);e.details=x;throw e}}
 class CDP{
@@ -23,23 +23,34 @@ async function route(c,domain){let expression="(()=>{const n=window.ATLAS_MAIN_A
 async function screenshot(c,name){const result=(await c.call('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false})).data;ensure(result,'empty PNG');const b=Buffer.from(result,'base64');fs.writeFileSync(path.join(OUT,name),b);data.screenshots.push({name,size:b.length})}
 async function viewport(c,width,height){
  await c.call('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<600});
- await c.call('Page.navigate',{url:SITE+'/#atlas-dashboard'});
+ /* Unique URL path query forces an entirely new document; a hash-only
+  * Page.navigate otherwise retains locally injected CSS from prior viewport. */
+ await c.call('Page.navigate',{url:SITE+'/?atlas_vis3_status_audit='+width+'#atlas-dashboard'});
  await wait(c,'Boolean(window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain)');
  await wait(c,"document.querySelectorAll('#atlasDashboardMount .dashboard-kpi').length===6",120000);
-
-
- const dashboard=await route(c,'dashboard');await screenshot(c,'dashboard-'+width+'.png');
- const persons=await route(c,'persons');await screenshot(c,'persons-'+width+'.png');
- const again=await route(c,'dashboard');
- ensure(dashboard.hidden===true&&dashboard.display==='none','Dashboard route should hide status in current Production',{width,dashboard});
- ensure(persons.hidden===false,'Persons route hidden attribute should be false',{width,persons});
- ensure(persons.display===(width<=760?'none':'flex'),'Unexpected responsive Person status CSS',{width,persons});
- ensure(again.hidden===true&&again.display==='none','Return to Dashboard visibility incorrect',{width,again});
- ensure(dashboard.kpis===6&&again.kpis===6,'KPI 6 cards not preserved',{width,dashboard,again});
- ensure(dashboard.docWidth<=width+1&&again.docWidth<=width+1,'Horizontal overflow',{width});
- data.views.push({width,height,status:'PASS',dashboard,persons,backToDashboard:again});
- console.log('VIS3_05T_B_CURRENT_PRODUCTION_PASS width='+width+' dashboard='+dashboard.display+' persons='+persons.display);
+ const beforeD=await route(c,'dashboard');await screenshot(c,'before-dashboard-'+width+'.png');
+ const beforeP=await route(c,'persons');await screenshot(c,'before-persons-'+width+'.png');
+ ensure(beforeD.hidden===true&&beforeP.hidden===false,'route hidden properties incorrect',{width,beforeD,beforeP});
+ if(width<=760){
+  ensure(beforeD.display==='none'&&beforeP.display==='none','original mobile topbar state incorrect',{width,beforeD,beforeP});
+ }else{
+  ensure(beforeD.display!=='none'&&beforeP.display!=='none','real desktop ghost could not be reproduced',{width,beforeD,beforeP});
+ }
+ /* Branch rule applied only locally to the existing live DOM. */
+ const rule=fs.readFileSync('atlas-ui-visual-foundation.css','utf8').match(/#connectionStatus\[hidden\]\s*\{\s*display:\s*none\s*;\s*\}/)?.[0];
+ ensure(rule,'branch CSS source not present');
+ const injected="(()=>{const x=document.createElement('style');x.id='atlas-vis3-05t-b-local-fix';x.textContent="+JSON.stringify(rule)+";document.head.appendChild(x);return !!x.sheet})()";
+ ensure(await js(c,injected),'cannot inject local style',{width});
+ const afterD=await route(c,'dashboard');await screenshot(c,'after-dashboard-'+width+'.png');
+ const afterP=await route(c,'persons');
+ ensure(afterD.hidden===true&&afterD.display==='none','corrected Dashboard status still visible',{width,afterD});
+ ensure(afterP.hidden===false&&afterP.display===(width<=760?'none':beforeP.display),'Person status changed by fix',{width,afterP});
+ ensure(afterD.kpis===6&&beforeD.kpis===6,'Dashboard KPI count changed',{width,beforeD,afterD});
+ ensure(afterD.docWidth<=Math.max(width,beforeD.docWidth)+1,'horizontal overflow increased',{width,beforeD,afterD});
+ data.views.push({width,height,status:'PASS',baseline:{dashboard:beforeD,persons:beforeP},locallyCorrected:{dashboard:afterD,persons:afterP}});
+ console.log('VIS3_05T_B_EXACT_CSS_CHROME_PASS width='+width+' baseline='+beforeD.display+' corrected='+afterD.display+' Persons='+afterP.display);
 }
+
 let c;
 try{
  const pages=await(await fetch('http://127.0.0.1:9225/json/list')).json();const page=pages.find(p=>p.type==='page'&&p.webSocketDebuggerUrl);ensure(page,'Chrome missing');
