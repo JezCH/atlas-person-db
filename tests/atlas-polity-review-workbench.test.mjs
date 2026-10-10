@@ -254,6 +254,17 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.match(gorkha.rationale, /1768–1769/);
   assert.match(gorkha.rationale, /같은 샤 왕조/);
 
+  const chuzan = byId.get('chuzan-ryukyu');
+  assert.equal(chuzan.status, 'REVIEW_REQUIRED');
+  assert.equal(chuzan.terminal_status, null);
+  assert.equal(chuzan.suggested_action, 'repair');
+  assert.equal(chuzan.reviewed_decision, 'provisional_keep_both_verify_1429_contemporary_evidence');
+  assert.equal(chuzan.left.polity_id, '9860fc4b-feb8-491b-acdb-97d37bae6fcb');
+  assert.equal(chuzan.right.polity_id, '701a8b03-5ba6-5ce6-a698-128944fec079');
+  assert.ok(chuzan.evidence.some(s => /d4503fea-545e-4c72-b398-f6075c2987cf/.test(s)));
+  assert.ok(chuzan.evidence.some(s => /432b442f-d2a7-42c2-9ec7-c159fe88e402/.test(s)));
+  assert.ok(chuzan.evidence.some(s => /toyo-bunko.repo.nii.ac.jp/.test(s)));
+  assert.ok(chuzan.evidence.some(s => /pref.okinawa.jp/.test(s)));
   const oman = byId.get('oman-empire-oman');
   assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
   assert.equal(oman.right.polity_id, 'ac7279b2-da5c-42df-a217-ac60f16106ff');
