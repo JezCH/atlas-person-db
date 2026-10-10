@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {createRequire} from "node:module";
+import {spawnSync} from "node:child_process";
 const require=createRequire(import.meta.url);
 const discovery=require("../server/atlas-youtube-unregistered-discovery-read-service.js");
 const review=require("../audits/youtube-v5-source-nonperson-exact-labels.json");
@@ -55,4 +56,23 @@ test("source-review does not convert two-person collectives to Person identities
  }
  assert.equal(keys.has(discovery.identityKey("Wright Brothers")),true);
  assert.equal(keys.has(discovery.identityKey("Wright Brother")),false);
+});
+
+test("future Python raw-snapshot publisher rejects every reviewed v5 non-Person label",()=>{
+ const program=[
+   "import importlib.util,json",
+   "p='scripts/youtube-build-person-signal-snapshot.py'",
+   "s=importlib.util.spec_from_file_location('youtube_v5_snapshot',p)",
+   "m=importlib.util.module_from_spec(s);s.loader.exec_module(m)",
+   "r=json.load(open('audits/youtube-v5-source-nonperson-exact-labels.json'))",
+   "assert len(r['reviewed_labels'])==23",
+   "for item in r['reviewed_labels']:",
+   "  assert not m.valid_candidate(item['name']),item['name']",
+   "  assert m.candidate_rejection(item['name']) in ('source_reviewed_non_person','reviewed_non_person'),item['name']",
+   "assert m.valid_candidate('Emmett Till')",
+   "print('PYTHON_NONPERSON_PARSER_GUARD_PASS')"
+ ].join("\n");
+ const run=spawnSync("python3",["-c",program],{encoding:"utf8",timeout:15000});
+ assert.equal(run.status,0,run.stderr||run.stdout);
+ assert.match(run.stdout,/PYTHON_NONPERSON_PARSER_GUARD_PASS/);
 });
