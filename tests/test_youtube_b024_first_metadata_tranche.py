@@ -131,6 +131,17 @@ class RealSourcePriorityAndResumableMetadataTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError,"PREVIOUS_VIDEO_METADATA_"):
                     collector.fetch_descriptions(request,prior=bad,api_call=lambda ids:{})
 
+    def test_bad_official_snippet_cannot_poison_resume_artifact(self):
+        request=self.large_source()
+        with self.assertRaisesRegex(ValueError,"API_ITEM_MISSING_REQUIRED_CHANNEL_ID"):
+            collector.fetch_descriptions(request,
+                api_call=lambda ids:{"items":[{"id":ids[0],"snippet":{}}]},
+                max_batches=1)
+        with self.assertRaisesRegex(ValueError,"API_UNKNOWN_OR_DUPLICATE_VIDEO_ID"):
+            collector.fetch_descriptions(request,
+                api_call=lambda ids:{"items":[{"id":ids[0]},{"id":ids[0]}]},
+                max_batches=1)
+
     def test_reject_wrong_person_lexicon_source_and_overlap(self):
         v=self.source()
         v["videos"].append(copy.deepcopy(v["videos"][0]))
