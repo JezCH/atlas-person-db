@@ -4,6 +4,14 @@
 // canonical Person. These aliases are *not* candidate-name substring guesses,
 // and do not mutate atlas_v2.persons or atlas_v2.person_names.
 const REVIEWED_REGISTRATION_ALIASES=Object.freeze([
+  // Verified ORIGINAL history-YouTube source-first identity review:
+  // B024 raw historical names DO NOT become new Persons when these exact
+  // aliases resolve to the registered canonical historical individuals.
+  // Source reviewed: audits/youtube-b024-source-first-36-final-registered-identity-review.json
+  // Production Person UUID confirmation re-checked 2026-10-11.
+  Object.freeze({alias_name:"Imam Bukhari",canonical_key:"Al-Bukhari",representative_default:false}),
+  Object.freeze({alias_name:"Imam Malik",canonical_key:"Malik ibn Anas",representative_default:false}),
+  Object.freeze({alias_name:"King Leonidas",canonical_key:"Leonidas I",representative_default:false}),
   // Verified 2026-10-10 live Person identity Muhammad Ali Jinnah:
   // honorific Quaid-e-Azam variants are NOT new Person registrations.
   Object.freeze({alias_name:"Quaid-e-Azam Muhammad Ali Jinnah",canonical_key:"Muhammad Ali Jinnah",representative_default:true}),
