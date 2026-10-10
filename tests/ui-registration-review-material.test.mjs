@@ -141,7 +141,7 @@ test("REVIEW-M8 visualizes YouTube signal strength with bars while preserving al
 test("REVIEW-M9 uses one exact cumulative channel ranking and a non-overlapping toolbar",()=>{
  const js=read("atlas-registration-review.js");
  const css=read("atlas-registration-review.css");
- assert.ok(js.includes("Channel ID 기반 누적 데이터"));
+ assert.ok(js.includes("채널 식별자 기반 누적 데이터"));
  assert.ok(js.includes("source_state?.next_batch"));
  assert.ok(!js.includes("cross_segment_bounds"));
  assert.ok(!js.includes("channel_count_upper_bound"));
