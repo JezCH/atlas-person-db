@@ -87,7 +87,8 @@
   }
 
   function chronologyYearsFromRow(row) {
-    const raw = String(row?.querySelector?.(".person-table-range")?.textContent || "").trim();
+    const element = row?.querySelector?.(".person-table-range");
+    const raw = String(element?.dataset?.chronologyRaw || element?.textContent || "").trim();
     if (!raw || /^주요 활동연도 미상/i.test(raw) || /^시작 미상/i.test(raw)) return { start: null, end: null };
     const matches = [...raw.toUpperCase().matchAll(/\b(BC|AD)\s*(\d+)\b/g)];
     const value = (match) => {
