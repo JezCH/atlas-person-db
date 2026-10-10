@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "person-timeline:maimonides-chronology-to-timeline:20261010:v1",
+  "release_order": 2291,
+  "evidence": {
+    "issue": "https://github.com/JezCH/atlas-person-db/issues/2291",
+    "activity_authoring_pr": "https://github.com/JezCH/atlas-person-db/pull/2290",
+    "decision": "Maimonides has three independently dated, polity-scoped Egypt writing-completion Activities. His multi-polity biography does not invalidate their timeline inclusion. Retain the canonical Person and all three Activities; change only the reviewed Person timeline disposition.",
+    "source": "https://plato.stanford.edu/entries/maimonides/",
+    "production_read_verified_at": "2026-10-10",
+    "expected_person": {
+      "historicity": "historical",
+      "representative_domain": "religion",
+      "activity_count": 3
+    },
+    "activity_milestones": [
+      "1168 Commentary on the Mishnah — Fatimid Caliphate (exact)",
+      "c.1180 Mishneh Torah — Ayyubid Sultanate (approximate)",
+      "1190 Guide of the Perplexed — Ayyubid Sultanate (exact)"
+    ]
+  },
+  "operations": [
+    {
+      "type": "set_person_timeline_disposition",
+      "case_id": "maimonides-dated-writings",
+      "person_id": "3f3cb937-b022-4b5c-9380-2a8625b33a2e",
+      "expected_current_disposition": {
+        "disposition": "chronology_unresolved",
+        "reason": "Maimonides (1138–1204) is a securely historical Jewish philosopher, rabbinic authority and physician. SEP documents birth in Cordova, forced migration through Fez, and later settlement and mature work in Fustat, Egypt. Because his life and intellectual production span distinct political and geographic contexts, ATLAS does not manufacture one polity-bound Activity rail.",
+        "basis_code": "secure_1138_1204_cordova_fez_fustat_biography_without_single_intellectual_polity_binding",
+        "traditional_year": null,
+        "traditional_year_alternative": null,
+        "review_evidence": {
+          "sources": [
+            "https://plato.stanford.edu/entries/maimonides/"
+          ],
+          "reviewed_at": "2026-09-30",
+          "authority_scope": "timeline_disposition_review_evidence_only"
+        }
+      },
+      "replacement_disposition": "timeline",
+      "expected_activity_ids": [
+        "6ffde56b-c836-4b69-b0d7-b002e872417d",
+        "69cdfc89-02e8-47c4-82c9-60a1a9642088",
+        "11a54ce1-7f84-4782-9244-a835989b589b"
+      ]
+    }
+  ]
+}
