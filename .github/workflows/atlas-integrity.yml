@@ -226,6 +226,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Test durable YouTube source storage recovery (Python)
+        run: python -m unittest discover -s tests -p test_youtube_source_upload.py -v
+
       - name: Test contextual YouTube source-ID snapshot builder (Python)
         run: python -m unittest discover -s tests -p test_youtube_v5_contextual_source_publisher.py -v
 
