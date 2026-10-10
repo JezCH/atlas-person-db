@@ -140,7 +140,7 @@ test("authenticated correction transport, reviewed release gate and activity-fre
   const manifest = synthesizeUnifiedCorrectionV2Manifest(plan, snapshot);
   assert.deepEqual(manifest.operations.map(x=>x.type), ["assert_polity_source_link"]);
   assert.equal(manifest.exact_live_snapshot_digest, snapshot.snapshot_digest);
-  const yaml = fs.readFileSync(new URL("../.github/workflows/atlas-correction-apply.yml", import.meta.url), "utf8");
+  const yaml = fs.readFileSync(new globalThis.URL("../.github/workflows/atlas-correction-apply.yml", import.meta.url), "utf8");
   assert.match(yaml, /all\(. == "assert_source"[^\n]*"assert_polity_source_link"/);
   assert.match(yaml, /any\(. == "assert_governance_context"[^\n]*"assert_polity_source_link"/);
   const invalid = { ...plan, stage2_assertions:[{type:"assert_source"}] };
