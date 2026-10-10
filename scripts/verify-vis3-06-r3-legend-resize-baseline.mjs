@@ -549,11 +549,24 @@ function r3State(){
  };
 }
 async function captureR3(c,tag,target,expectedOpen){
- const state=await evaluate(c,'('+r3State.toString()+')()');
- const labels=await evaluate(c,'('+populatedMetrics.toString()+')()');
+ let state=await evaluate(c,'('+r3State.toString()+')()');
+ let labels=await evaluate(c,'('+populatedMetrics.toString()+')()');
  assert(state?.ok && Math.abs(state.native.dpr-target)<.012,'Not actual native zoom',{tag,target,state});
  assert(state.detail.open===expectedOpen,'Unexpected actual Production legend state',{tag,expectedOpen,observed:state.detail.open});
- assert(state.personInspectorSelected && labels?.visibleLabelCount>0,'No selected real Person labels',{tag,state,labels});
+ assert(state.personInspectorSelected,'Real Production Person selection unexpectedly lost',{tag,state});
+ // Native zoom can move a virtualized dense-era scene outside the visible rows.
+ // Reacquire *actual* displayed Production Person labels by scrolling the real timeline.
+ // Preserve the DOM-state observation before movement and never fabricate Person data.
+ if(!labels?.visibleLabelCount){
+   const before={scroll:state.rootScroll,detailsOpen:state.detail.open,inspector:state.personInspectorSelected};
+   const retarget=await scanPopulatedEra(c,1440);
+   labels=await evaluate(c,'('+populatedMetrics.toString()+')()');
+   state=await evaluate(c,'('+r3State.toString()+')()');
+   report.warnings.push({type:'REAL_VIRTUALIZED_LABELS_ABSENT_AFTER_NATIVE_ZOOM',
+     tag,before,retargetSummary:{source:retarget.bestSource,labels:retarget.landed.visibleLabelCount}});
+ }
+ assert(labels?.visibleLabelCount>0,'No real visible Person labels after selected-era retarget',{tag,state,labels});
+ assert(state.detail.open===expectedOpen,'Legend state changed during natural virtualized scene re-target',{tag,state});
  assert(state.actualMacroregions===9,'Expected all nine historical regions',{tag,count:state.actualMacroregions});
  const result={tag,expectedPercent:target*100,actual:state,visiblePeople:labels.visibleLabelCount,
    visibleRailCount:labels.visibleRailCount,realActivities:labels.inspectorActivities};
