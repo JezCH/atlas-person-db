@@ -523,13 +523,25 @@
         review_group: "rupture_probe",
         kind: "rupture_review",
         title: "Roman Empire → Western / Eastern Roman Empire",
-        left: { name: "Roman Empire" },
-        right: { name: "Western / Eastern Roman Empire" },
-        rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        left: { name: "Roman Empire", ko: "로마 제국", polity_id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417" },
+        right: { name: "Western / Eastern Roman imperial administrations", ko: "서로마 / 동로마 제국 통치 영역", western_polity_id: "54e73d73-15ca-431f-b7b4-904bd48f6183", eastern_polity_id: "074510f4-f2e7-5795-8cfb-2a4206fa7254" },
+        rationale: "395년 테오도시우스 1세 사후 아르카디우스와 호노리우스의 동·서 궁정별 권한 배분은 기존 다중 황제의 행정 분담에서 발전한 실질 운영·영역 분화입니다. 당대 로마 제국은 법적·이념적으로 단일한 imperium Romanum임을 강조했고, 395년에 별개의 두 독립 주권국이 건국됐다는 서술은 정확하지 않습니다(Oxford Omissi, Oxford Contested Monarchy, Cambridge Theodosius, Salway). 따라서 ATLAS에서 기존 통합 제국·서방 궁정 운영·동방 궁정 운영을 표시하기 위해 구분한 세 정치체 UUID를 유지하되 이를 서로 무관한 국가나 완전한 395년 법적 국권 단절로 해석하지 않습니다. 서방 통치권은 5세기 붕괴하고 동로마 제국은 로마의 제도적 계속성을 보유했습니다. 실제 Production은 호노리우스의 동일 Person에 393–395년 기존 제국 공동 아우구스투스 Activity와 395–423년 서로마 황제 Activity가 각각 맞게 연결돼 있고, 히파티아의 393–395년 기존 제국·395–415년 동방 지역 활동도 동일 Person에 이어집니다. 395년은 기존 Activity의 year granularity이고 인위적인 395년 월·일 경계나 법적 국가분리 선언을 추가하지 않습니다. 기존 Byzantine 초기 동방 황제 활동 누락 가능성 및 395년 관계 명세는 후속 전체 Person/Polity 전수감사에서 확인할 별도 품질 범위입니다. 이 검토는 운영 정치체 식별자 분리 유지라는 좁은 질문만 종결합니다.",
+        suggested_action: "keep_both",
+        reviewed_decision: "keep_both_administrative_territorial_projections_under_formal_roman_unity",
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        evidence: [
+          "2026-10-10 fresh live Production Polity read: Roman Empire 5d9a6186-bbe6-5d1a-ba93-02190ae4c417 has 45 Activities / 44 Persons (-27–395 registered range), Western Roman Empire 54e73d73-15ca-431f-b7b4-904bd48f6183 has 5 Activities / 5 Persons (395–476 registered range), Byzantine Empire 074510f4-f2e7-5795-8cfb-2a4206fa7254 has 15 Activities / 13 Persons (395–1453 registered range)",
+          "2026-10-10 live public Person Honorius 8ad3cc83-c69b-4e0d-b11b-ce69dd7ed935: Roman co-Augustus Activity e14fb912-d207-49dc-a585-8f723926b00c (393–395) + Western imperial Activity ae6d2eb9-48e3-4243-b959-f4600346e1fa (395–423), both cite Oxford Classical Dictionary Honorius",
+          "2026-10-10 live public Person Hypatia 7f63697a-9164-5c4a-933f-d46ee52ed3ae: Roman Activity aa5f6b18-e362-5421-9547-5ed0161d3cb8 (393–395) and Byzantine Activity 3f0af453-7e55-5bf0-a8d8-6092788e28a6 (395–415); source links remain repository datasets",
+          "Adrastos Omissi, Oxford Emperors and Usurpers, no official formal east/west sovereign partition, https://academic.oup.com/book/10597/chapter-abstract/158556022",
+          "Oxford Contested Monarchy, succession after 395 remained formally united Imperium Romanum, https://academic.oup.com/book/57638/chapter/478445349",
+          "Peter Salway, Oxford A History of Roman Britain, 395 absolute division simplification and western administration collapses in stages, https://academic.oup.com/book/47282/chapter-abstract/422393315",
+          "The Cambridge Ancient History, Dynasty of Theodosius, still constitutionally undivided parts in 395, https://www.cambridge.org/core/books/abs/cambridge-ancient-history/dynasty-of-theodosius/13877E996427028C87E955CCD1948F9C",
+          "Oxford Handbook of Byzantine Studies political survey 250–518, 395 division and eastern 5th century continuity, https://academic.oup.com/edited-volume/29470/chapter-abstract/247163090",
+          "2026-10-10 bounded identity review docs/POLITY_P2_07C_ROMAN_WEST_EAST_ADMINISTRATIVE_CONTINUITY_20261010.md"
+        ],
+        locked: true
       },
       {
         id: "western-eastern-jin",
