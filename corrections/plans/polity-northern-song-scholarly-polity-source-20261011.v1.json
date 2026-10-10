@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_p2_08e_northern_song_academic_polity_source_20261011_v1",
+  "as_of": "2026-10-11",
+  "status": "REVIEWED_EXISTING_CAMBRIDGE_SOURCE_LINK_ONLY_WITH_GENERIC_SONG_PRESERVED",
+  "release_order": 2460,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "Polity identity cleanup #1895; P2-08D accepted and P2-08E-A protected production read-only run #38066554389 artifact #11674794701; Cambridge scholarly source previously normalized, no source creation, no new continuity type, no Song Activity rewrite.",
+  "evidence": {
+    "production_readonly_run": 38066554389,
+    "production_readonly_artifact": 11674794701,
+    "deployed_sha_at_preflight": "b00be80471a401a30a6a79b1448a86d82d4864b3",
+    "canonical_writer_code_merge_sha": "b26cffeb238101e218c7888f651c7f3121c6be53",
+    "polity_sources_before": {
+      "song_generic": 2,
+      "northern_song": 0,
+      "southern_song": 1
+    },
+    "existing_activity_counts": {
+      "song_generic": 2,
+      "northern_song": 7,
+      "southern_song": 5,
+      "total": 14,
+      "activity_source_links": 21
+    },
+    "source_review": "Ari Levine, The Reigns of Hui-tsung (1100–1126) and Ch’in-tsung (1126–1127) and the Fall of the Northern Sung, The Cambridge History of China, canonical Cambridge URL. Exact existing normalized Source UUID and URL checked in authorized Production audit.",
+    "semantic_scope": "direct source provenance of existing Northern Song polity only; not assertion of an independent dynastic founding and not an identity-continuity relation"
+  },
+  "execution_rules": {
+    "production_executable": false,
+    "production_mutation_authorized": false,
+    "exact_live_before_snapshot_required": true,
+    "only_existing_source_uuid": true,
+    "source_canonical_url_exact_match_required": true,
+    "preserve_existing_polity_sources": true,
+    "preserve_existing_activity_source_links": true,
+    "no_polity_delete_or_retire": true,
+    "no_activity_rewrite_or_relink": true,
+    "no_relation_type_creation": true
+  },
+  "operations": [],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_source_link",
+      "decision_id": "p2-08e-northern-song-direct-cambridge-ari-levine-polity-provenance",
+      "exact_before": {
+        "link_absent": {
+          "polity_id": "407d91cf-7a97-45e3-81ea-d42a3cbfba35",
+          "source_id": "a8766516-351a-4162-b477-0396f468eafe"
+        }
+      },
+      "exact_after": {
+        "link": {
+          "polity_id": "407d91cf-7a97-45e3-81ea-d42a3cbfba35",
+          "source_id": "a8766516-351a-4162-b477-0396f468eafe"
+        },
+        "source_canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/reigns-of-huitsung-11001126-and-chintsung-11261127-and-the-fall-of-the-northern-sung/C1186B649A07ED96C45F2EB2D7318D54"
+      }
+    }
+  ],
+  "expected_canonical_delta": {
+    "polity_sources": 1,
+    "persons": 0,
+    "polities": 0,
+    "activities": 0,
+    "activity_sources": 0,
+    "sources": 0,
+    "polity_identity_relations": 0
+  },
+  "acceptance_requirements": [
+    "Workflow-bound OIDC Production Correction dry_run then apply under exact live composite precondition",
+    "Single result operation assert_polity_source_link and source-canonical-URL-preserved replay",
+    "Exact total polity_sources delta +1; no changes to original 3 Song polity sources or other facts",
+    "All 14 Song Activities and 21 Activity Source pairs unchanged; Runtime readback and current Source identity verified",
+    "Identity continuity relation vocabulary remains zero pending separate reviewed model change",
+    "Parent #1895 and generic Song partial repair remain OPEN"
+  ]
+}
