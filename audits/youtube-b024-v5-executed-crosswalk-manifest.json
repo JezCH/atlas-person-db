@@ -1,0 +1,377 @@
+{
+  "schema": "atlas-youtube-b024-v5-executed-crosswalk-manifest/v1",
+  "executed": "2026-10-11",
+  "source_archive_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "original_channels": 10127,
+  "original_video_rows": 2230031,
+  "source_snapshot_id": "yt-20261009T111844Z-10127ch-rebuild-v4",
+  "production_snapshot_id": "yt-20261010T083657Z-10127ch-rebuild-v5",
+  "source_5965_ledger_sha256": "b9d9bcdb4fa98e0f917a1dc32106a84fc11b788b86780078e9c207b5c44e550c",
+  "metrics": {
+    "production_rows": 8713,
+    "source_label_rows": 5965,
+    "exact_source_matches": 5217,
+    "exact_name_collision_holds": 0,
+    "production_only": 3496,
+    "source_only": 748,
+    "matched_title_counts_differ": 4947,
+    "matched_title_counts_equal": 270,
+    "old_5720_aggregate_mismatches": 865,
+    "old_5720_high_impact_mismatches": 33,
+    "prior_245_source_id_parity": true
+  },
+  "shards": [
+    {
+      "path": "audits/youtube-b024-v5-crosswalk-matched-part1.json",
+      "row_count": 1800,
+      "byte_count": 147980
+    },
+    {
+      "path": "audits/youtube-b024-v5-crosswalk-matched-part2.json",
+      "row_count": 1800,
+      "byte_count": 148837
+    },
+    {
+      "path": "audits/youtube-b024-v5-crosswalk-matched-part3.json",
+      "row_count": 1617,
+      "byte_count": 135855
+    },
+    {
+      "path": "audits/youtube-b024-v5-crosswalk-production-only.json",
+      "row_count": 3496,
+      "byte_count": 87824
+    },
+    {
+      "path": "audits/youtube-b024-v5-crosswalk-source-only.json",
+      "row_count": 748,
+      "byte_count": 42590
+    }
+  ],
+  "row_columns": {
+    "exact_name_matched": [
+      "live_rank",
+      "live_raw_name",
+      "source_raw_name",
+      "live_title_signal_channels",
+      "live_title_signal_videos",
+      "source_original_distinct_channel_ids_count",
+      "source_original_distinct_video_ids_count",
+      "source_label_origin"
+    ],
+    "production_only": [
+      "live_rank",
+      "live_raw_name",
+      "live_title_signal_channels",
+      "live_title_signal_videos"
+    ],
+    "source_only": [
+      "source_raw_name",
+      "source_original_distinct_channel_ids_count",
+      "source_original_distinct_video_ids_count",
+      "source_label_origin"
+    ]
+  },
+  "historical_person_prioritized_groups": [
+    {
+      "identity": "Emmett Till",
+      "source_name_forms": [
+        "Emmett Till"
+      ],
+      "production_exact_matched_forms": [
+        "Emmett Till"
+      ],
+      "source_original_channel_counts_per_form": [
+        32
+      ],
+      "production_title_signal_channels_per_form": [
+        7
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Carter G. Woodson",
+      "source_name_forms": [
+        "Carter G Woodson"
+      ],
+      "production_exact_matched_forms": [
+        "Carter G Woodson"
+      ],
+      "source_original_channel_counts_per_form": [
+        33
+      ],
+      "production_title_signal_channels_per_form": [
+        7
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Booker T. Washington",
+      "source_name_forms": [
+        "Booker T Washington"
+      ],
+      "production_exact_matched_forms": [
+        "Booker T Washington"
+      ],
+      "source_original_channel_counts_per_form": [
+        62
+      ],
+      "production_title_signal_channels_per_form": [
+        5
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Meriwether Lewis",
+      "source_name_forms": [
+        "Meriwether Lewis"
+      ],
+      "production_exact_matched_forms": [
+        "Meriwether Lewis"
+      ],
+      "source_original_channel_counts_per_form": [
+        17
+      ],
+      "production_title_signal_channels_per_form": [
+        9
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Simon Kimbangu",
+      "source_name_forms": [
+        "Simon Kimbangu"
+      ],
+      "production_exact_matched_forms": [
+        "Simon Kimbangu"
+      ],
+      "source_original_channel_counts_per_form": [
+        8
+      ],
+      "production_title_signal_channels_per_form": [
+        5
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Herbert Chitepo",
+      "source_name_forms": [
+        "Herbert Chitepo"
+      ],
+      "production_exact_matched_forms": [
+        "Herbert Chitepo"
+      ],
+      "source_original_channel_counts_per_form": [
+        5
+      ],
+      "production_title_signal_channels_per_form": [
+        5
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Khudiram Bose",
+      "source_name_forms": [
+        "Khudiram Bose"
+      ],
+      "production_exact_matched_forms": [
+        "Khudiram Bose"
+      ],
+      "source_original_channel_counts_per_form": [
+        11
+      ],
+      "production_title_signal_channels_per_form": [
+        5
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Lal Bahadur Shastri",
+      "source_name_forms": [
+        "Lal Bahadur Shastri"
+      ],
+      "production_exact_matched_forms": [
+        "Lal Bahadur Shastri"
+      ],
+      "source_original_channel_counts_per_form": [
+        33
+      ],
+      "production_title_signal_channels_per_form": [
+        7
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Kazi Nazrul Islam",
+      "source_name_forms": [
+        "Kazi Nazrul Islam"
+      ],
+      "production_exact_matched_forms": [
+        "Kazi Nazrul Islam"
+      ],
+      "source_original_channel_counts_per_form": [
+        19
+      ],
+      "production_title_signal_channels_per_form": [
+        4
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Hiroo Onoda",
+      "source_name_forms": [
+        "Hiroo Onoda"
+      ],
+      "production_exact_matched_forms": [
+        "Hiroo Onoda"
+      ],
+      "source_original_channel_counts_per_form": [
+        20
+      ],
+      "production_title_signal_channels_per_form": [
+        6
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "A. P. J. Abdul Kalam",
+      "source_name_forms": [
+        "Dr APJ Abdul Kalam"
+      ],
+      "production_exact_matched_forms": [
+        "Dr APJ Abdul Kalam"
+      ],
+      "source_original_channel_counts_per_form": [
+        29
+      ],
+      "production_title_signal_channels_per_form": [
+        6
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Shivaji",
+      "source_name_forms": [
+        "Chhatrapati Shivaji Maharaj",
+        "Shivaji Maharaj"
+      ],
+      "production_exact_matched_forms": [
+        "Chhatrapati Shivaji Maharaj",
+        "Shivaji Maharaj"
+      ],
+      "source_original_channel_counts_per_form": [
+        26,
+        25
+      ],
+      "production_title_signal_channels_per_form": [
+        4,
+        6
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Mahendra of Nepal",
+      "source_name_forms": [
+        "King Mahendra"
+      ],
+      "production_exact_matched_forms": [
+        "King Mahendra"
+      ],
+      "source_original_channel_counts_per_form": [
+        20
+      ],
+      "production_title_signal_channels_per_form": [
+        6
+      ],
+      "missing_exact_source_form_in_live": [],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "C. S. Lewis",
+      "source_name_forms": [
+        "C.S Lewis"
+      ],
+      "production_exact_matched_forms": [],
+      "source_original_channel_counts_per_form": [],
+      "production_title_signal_channels_per_form": [],
+      "missing_exact_source_form_in_live": [
+        "C.S Lewis"
+      ],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    },
+    {
+      "identity": "Hürrem Sultan",
+      "source_name_forms": [
+        "Hurrem Sultan"
+      ],
+      "production_exact_matched_forms": [],
+      "source_original_channel_counts_per_form": [],
+      "production_title_signal_channels_per_form": [],
+      "missing_exact_source_form_in_live": [
+        "Hurrem Sultan"
+      ],
+      "identity_verified_from_source_review_only": true,
+      "video_content_verified": false,
+      "actual_channel_id_union_not_yet_rank_approved": true,
+      "registered_aliases_final_rescreen_pending": true
+    }
+  ],
+  "all_labels_personhood_confirmed": false,
+  "all_video_titles_individual_focus_confirmed": false,
+  "registered_person_last_gate_confirmed": false,
+  "original_id_unions_need_independent_identity_review": true,
+  "production_single_rank_publication_permitted": false
+}
