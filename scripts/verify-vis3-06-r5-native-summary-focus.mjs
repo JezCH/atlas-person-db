@@ -638,11 +638,28 @@ async function cdptab(c){
  await sleep(85);
 }
 async function cdpenter(c){
- // CDP keyDown did not trigger native <summary> activation on headful Linux Chrome.
- // Deliver a real desktop Return key while the genuine Tab-focused summary is active.
- const win=findChromeWindow();
- execFileSync('xdotool',['key','--clearmodifiers','--window',win,'Return'],{encoding:'utf8'});
- await sleep(170);
+ // Chrome DevTools keyboard synthesis requires the character event on Linux
+ // in addition to a rawKeyDown and keyUp for native <summary> activation.
+ const original=await evaluate(c,"(()=>{const e=document.activeElement;if(e?.tagName!=='SUMMARY')return null;return {open:e.parentElement.open,text:e.textContent.trim()};})()");
+ assert(original,'No browser-keyboard-focused native summary for Enter');
+ const args={key:'Enter',code:'Enter',windowsVirtualKeyCode:13,nativeVirtualKeyCode:13};
+ await c.call('Input.dispatchKeyEvent',{type:'rawKeyDown',...args});
+ await c.call('Input.dispatchKeyEvent',{type:'char',...args,text:'\r',unmodifiedText:'\r'});
+ await c.call('Input.dispatchKeyEvent',{type:'keyUp',...args});
+ await sleep(160);
+ let after=await evaluate(c,"(()=>{const e=document.activeElement;return e?.tagName==='SUMMARY'?e.parentElement.open:null;})()");
+ if(after===original.open){
+  // Native HTML summary also supports Space activation. Use the actual CDP
+  // raw key/char sequence, never artificially set details.open in this stage.
+  const sp={key:' ',code:'Space',windowsVirtualKeyCode:32,nativeVirtualKeyCode:32};
+  await c.call('Input.dispatchKeyEvent',{type:'rawKeyDown',...sp});
+  await c.call('Input.dispatchKeyEvent',{type:'char',...sp,text:' ',unmodifiedText:' '});
+  await c.call('Input.dispatchKeyEvent',{type:'keyUp',...sp});
+  await sleep(160);
+  after=await evaluate(c,"(()=>{const e=document.activeElement;return e?.tagName==='SUMMARY'?e.parentElement.open:null;})()");
+  report.keyboard_activation_fallbacks=(report.keyboard_activation_fallbacks||0)+1;
+ }
+ assert(after!==original.open&&after!==null,'CDP real keyboard Enter and Space sequences did not activate native summary',{original,after});
 }
 async function tabToSummary(c,name){
  assert(name==='precision'||name==='status','Unsupported target');
