@@ -979,3 +979,25 @@
     transition: none !important;
   }
 }
+
+/* VIS3-05T-D — KPI caption legibility; never changes values, size of
+ * headline numbers, click semantics, data model or ornamental layout. */
+.dashboard-control-center .dashboard-kpi > small {
+  font-size: 10px;
+  line-height: 1.3;
+  letter-spacing: .075em;
+}
+.dashboard-control-center .dashboard-kpi > span {
+  font-size: 10px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+@media (max-width:600px) {
+  .dashboard-control-center .dashboard-kpi > small {
+    font-size: 10px;
+  }
+  .dashboard-control-center .dashboard-kpi > span {
+    font-size: 10px;
+  }
+}
