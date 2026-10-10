@@ -1,5 +1,9 @@
 "use strict";
 
+const fs=require("node:fs");
+const path=require("node:path");
+
+const MIGRATION_PATH=path.resolve(__dirname,"../db/migrations/20261009_youtube_durable_source_catalog.sql");
 const SHA256_RE=/^[0-9a-f]{64}$/;
 const KINDS=new Set(["manifest","channel_videos"]);
 const MAX_RECORDS=10000;
@@ -74,6 +78,12 @@ from jsonb_to_recordset($1::jsonb) as x(
 on conflict(object_key) do nothing
 `;
 
+async function applyYoutubeSourceArchiveMigration(client,{readFile=fs.readFileSync}={}){
+  if(!client || typeof client.query!=="function") throw new Error("PostgreSQL client is required");
+  await client.query(readFile(MIGRATION_PATH,"utf8"));
+  return Object.freeze({applied:path.basename(MIGRATION_PATH)});
+}
+
 async function publishYoutubeSourceArchiveCatalog(client,input){
   if(!client || typeof client.query!=="function") throw new Error("PostgreSQL client is required");
   const records=normalizeRecords(input?.records);
@@ -116,7 +126,9 @@ module.exports=Object.freeze({
   normalizeRecord,
   normalizeRecords,
   equivalent,
+  applyYoutubeSourceArchiveMigration,
   publishYoutubeSourceArchiveCatalog,
+  MIGRATION_PATH,
   SELECT_SQL,
   INSERT_SQL,
   MAX_RECORDS
