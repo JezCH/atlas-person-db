@@ -222,6 +222,13 @@ jobs:
           set -o pipefail
           node --test --test-reporter=tap tests/*.test.mjs 2>&1 | tee atlas-test-results.tap
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Test contextual YouTube source-ID snapshot builder (Python)
+        run: python -m unittest discover -s tests -p test_youtube_v5_contextual_source_publisher.py -v
+
       - name: Upload test failure diagnostics
         if: failure() && steps.complete-tests.outcome == 'failure'
         uses: actions/upload-artifact@v4

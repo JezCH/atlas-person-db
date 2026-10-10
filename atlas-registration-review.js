@@ -118,7 +118,7 @@
     const counts=payload?.threshold_counts || {};
     host.innerHTML=[3,5,10,15,20].map((threshold)=>{
       const count=counts[String(threshold)] ?? counts[`>=${threshold}`] ?? null;
-      return `<button type="button" data-min-channels="${threshold}" class="${threshold===minChannels ? "is-active" : ""}">${threshold}+ 채널${count == null ? "" : ` · ${number(count)}명`}</button>`;
+      return `<button type="button" data-min-channels="${threshold}" class="${threshold===minChannels ? "is-active" : ""}">${threshold}+ 채널${count == null ? "" : ` · ${number(count)}개 후보`}</button>`;
     }).join("");
   }
 
@@ -220,13 +220,13 @@
     const telemetry=activeRoot?.querySelector("#youtubeSignalTelemetry");
     if(telemetry) {
       telemetry.innerHTML=snapshot
-        ? `<strong>누적 ${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>Channel ID 중복 제거 · ${escapeHtml(dateTime(snapshot.generated_at))} · 다음 ${escapeHtml(snapshot.source_state?.next_batch || "수집 대기")}</span>`
+        ? `<strong>누적 ${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>Channel ID 중복 제거 · ${escapeHtml(dateTime(snapshot.generated_at))} · ${snapshot.source_state?.additional_title_context_extraction===true ? "제목 문맥 추가 추출 적용(인물 중심성 미확정)" : "구형 제목 앞부분 추출 통계 · 최신 제목 문맥 감사 미반영"} · 다음 ${escapeHtml(snapshot.source_state?.next_batch || "수집 대기")}</span>`
         : "<strong>아직 YouTube 수집 데이터가 없습니다.</strong>";
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
     if(count) count.textContent=excludeLiving
       ? `상위 ${number(payload?.filtered_checked_count ?? signalRows.length)}명 확인 · 조건 일치 ${number(signalRows.length)}명 표시${excludeLiving ? " · 생존 미확인 포함" : ""}${payload?.filter_evidence_unavailable ? " · 생존 조회 실패(제외 불완전)" : ""}`
-      : `전체 ${number(payload?.available_count ?? 0)}명 · 현재 ${number(signalRows.length)}명 표시`;
+      : `전체 ${number(payload?.available_count ?? 0)}개 이름 후보 · 현재 ${number(signalRows.length)}개 표시`;
     renderSignalThresholds(snapshot,payload);
     const body=activeRoot?.querySelector("#youtubeSignalBody");
     if(!body) return;
@@ -320,7 +320,7 @@
           <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>미등록 역사 인물 발굴</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 기등록 인물의 현재 이름·별칭을 대조하여 자동 제외합니다. 동명이인은 검토 대상으로 보류하며 신규 등록 확정이 아닙니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
         </div>
         <div class="registration-review-signal-toolbar">
-          <p class="registration-review-mode-info">기등록 인물은 자동 제외됩니다. 동명이인과 미확인 후보는 검토가 필요합니다.</p>
+          <p class="registration-review-mode-info">기등록 인물은 자동 제외됩니다. 동명이인과 미확인 후보는 검토가 필요합니다. 제목에 이름이 언급된 사실만으로 해당 인물 중심 영상이 검증된 것은 아닙니다.</p>
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
           <div id="youtubeSignalFilters" class="registration-review-signal-filters" aria-label="유튜브 인물 필터">
             <label><input type="checkbox" id="youtubeExcludeLiving">생존 추정 인물 제외</label>

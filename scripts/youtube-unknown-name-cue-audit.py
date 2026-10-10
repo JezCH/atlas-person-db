@@ -18,6 +18,8 @@ from pathlib import Path
 
 CUES = (
     ("who_was", re.compile(r"\bwho\s+(?:was|is)\s+", re.I)),
+    ("did_person", re.compile(r"^\s*did\s+", re.I)),
+    ("was_person", re.compile(r"^\s*was\s+", re.I)),
     ("what_happened", re.compile(r"\bwhat\s+happened\s+to\s+", re.I)),
     ("why_did", re.compile(r"\bwhy\s+(?:did|was|is|were)\s+", re.I)),
     ("how_did", re.compile(r"\bhow\s+(?:did|was|is)\s+", re.I)),

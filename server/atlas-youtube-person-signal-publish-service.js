@@ -79,6 +79,20 @@ function normalizePublicationPayload(body) {
   if (Number.isNaN(Date.parse(generatedAt))) throw new Error("YOUTUBE_PUBLICATION_GENERATED_AT_INVALID");
 
   const sourceState = normalizeObject(snapshotInput.source_state,"YOUTUBE_PUBLICATION_SOURCE_STATE_REQUIRED");
+  if (snapshotInput.parser_version === "yt-title-person-reviewed-v5") {
+    if (sourceState.additional_title_context_extraction !== true ||
+        sourceState.source_name_generation_independent_of_registered_persons !== true ||
+        sourceState.title_context_evidence_scope !== "original_channel_video_ids" ||
+        sourceState.title_context_personhood !== "source_title_review_candidate_not_verified_person" ||
+        !Number.isSafeInteger(sourceState.quality_counters?.accepted_context_cue_video_name_ids) ||
+        sourceState.quality_counters.accepted_context_cue_video_name_ids <= 0 ||
+        !Array.isArray(sourceState.reviewed_source_unions) ||
+        sourceState.reviewed_source_unions.length !== 5 ||
+        sourceState.reviewed_source_unions_count !== 5 ||
+        sourceState.reviewed_source_unions_nameform_only_not_biography !== true) {
+      throw new Error("YOUTUBE_PUBLICATION_V5_SOURCE_EVIDENCE_GUARDS_REQUIRED");
+    }
+  }
   const channels = Array.isArray(body.channels) ? body.channels.map(normalizeChannel) : null;
   const signals = Array.isArray(body.signals) ? body.signals.map(normalizeSignal) : null;
   if (!channels || channels.length === 0 || channels.length > 20000) throw new Error("YOUTUBE_PUBLICATION_CHANNELS_INVALID");
@@ -165,6 +179,36 @@ limit 1
 const KNOWN_DISCOVERY_CHANNELS_SQL = `
 select channel_id from atlas_v2.youtube_discovery_channels
 `;
+
+const PRIOR_RAW_SIGNALS_SQL = `
+select raw_name, distinct_channel_count, video_count
+from atlas_v2.youtube_person_signals
+where snapshot_id=$1
+`;
+
+// The public discovery API excludes registered/living/nonperson candidates:
+// it is NOT the complete previous raw snapshot. Compare inside the canonical
+// DB transaction instead; protect ALL original raw labels and evidence.
+function assertPriorRawSignalCoverage(priorRows, incomingSignals) {
+  if (!Array.isArray(priorRows) || !priorRows.length) {
+    throw new Error("YOUTUBE_PUBLICATION_PRIOR_RAW_SIGNAL_ROWS_REQUIRED");
+  }
+  const key = value => String(value ?? "").normalize("NFKC").toLowerCase();
+  const next = new Map();
+  for (const row of incomingSignals) {
+    const k = key(row.raw_name);
+    if (next.has(k)) throw new Error("YOUTUBE_PUBLICATION_DUPLICATE_RAW_NORMALIZED_NAME");
+    next.set(k,row);
+  }
+  for (const prior of priorRows) {
+    const row = next.get(key(prior.raw_name));
+    if (!row) throw new Error("YOUTUBE_PUBLICATION_PREVIOUS_RAW_LABEL_LOST: "+prior.raw_name);
+    if (Number(row.distinct_channel_count)<Number(prior.distinct_channel_count) ||
+        Number(row.video_count)<Number(prior.video_count)) {
+      throw new Error("YOUTUBE_PUBLICATION_PREVIOUS_RAW_EVIDENCE_REGRESSION: "+prior.raw_name);
+    }
+  }
+}
 
 const INSERT_SNAPSHOT_SQL = `
 insert into atlas_v2.youtube_person_signal_snapshots(
@@ -273,6 +317,10 @@ async function publishYoutubePersonSignalSnapshot(client, input) {
           throw new Error("YOUTUBE_PUBLICATION_KNOWN_CHANNEL_MISSING");
         }
       }
+      if (snapshot.parser_version === "yt-title-person-reviewed-v5") {
+        const priorSignals = await client.query(PRIOR_RAW_SIGNALS_SQL,[prior.snapshot_id]);
+        assertPriorRawSignalCoverage(priorSignals.rows, payload.signals);
+      }
     }
 
     await client.query(INSERT_SNAPSHOT_SQL,[
@@ -318,7 +366,7 @@ module.exports=Object.freeze({
   publishYoutubePersonSignalSnapshot,
   EXISTING_SNAPSHOT_SQL,
   LATEST_GLOBAL_SNAPSHOT_SQL,
-  KNOWN_DISCOVERY_CHANNELS_SQL,
+  KNOWN_DISCOVERY_CHANNELS_SQL,PRIOR_RAW_SIGNALS_SQL,assertPriorRawSignalCoverage,
   INSERT_SNAPSHOT_SQL,
   INSERT_SIGNALS_SQL,
   UPSERT_CHANNELS_SQL

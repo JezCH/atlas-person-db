@@ -252,7 +252,12 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     client.query(PERSON_NAMES_SQL)
   ]);
   const reviewedGroups=initial.snapshot_id===REVIEWED_SOURCE_UNIONS.source_snapshot_id
-    ?REVIEWED_SOURCE_UNIONS.approved_groups:[];
+    ?REVIEWED_SOURCE_UNIONS.approved_groups
+    :initial.parser_version==="yt-title-person-reviewed-v5" &&
+      initial.source_state?.source_name_generation_independent_of_registered_persons===true &&
+      initial.source_state?.reviewed_source_unions_nameform_only_not_biography===true &&
+      Array.isArray(initial.source_state?.reviewed_source_unions)
+        ?initial.source_state.reviewed_source_unions:[];
   const {candidates,registeredExcluded,reviewedLivingExcluded,nonpersonExcluded,homonymReview,overlappingRawLabels,reviewedUnionsApplied}=
     candidatesFromSource(signals.rows||[],people.rows||[],{approvedUnions:reviewedGroups});
   const final=projectSnapshot((await client.query(GLOBAL_SNAPSHOT_SQL)).rows?.[0]);
@@ -272,6 +277,9 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     reviewed_nonperson_excluded_count:nonpersonExcluded,
     homonym_review_count:homonymReview,overlapping_raw_labels:overlappingRawLabels,
     reviewed_source_id_unions_applied:reviewedUnionsApplied,
+    title_context_source_included:initial.source_state?.additional_title_context_extraction===true,
+    video_person_centeredness_certified:false,
+    ranking_evidence_note:"Original title name/topic cues are source-backed review candidates, not certified Person-centered video evidence.",
     dedup_policy:"source_id_verified_reviewed_unions_plus_unknown_alias_lower_bounds",
     min_channels:threshold,offset:pageOffset,
     available_count:selected.length,stored_count:selected.length,

@@ -4,6 +4,7 @@ import collections
 import datetime as dt
 import gzip
 import hashlib
+import importlib.util
 import json
 import re
 import unicodedata
@@ -21,6 +22,23 @@ SPACE_RE = re.compile(r"\s+")
 NUMBERED_META_RE = re.compile(r"^(?:chapter|part|day|ep|episode|panel|session)\s*[-#.]?\s*\d+(?:\s*/\s*\d+)?$", re.I)
 TRAILING_BIO_RE = re.compile(r"\s+(?:biography|documentary|biographical documentary|life story|bio|for kids)\s*$", re.I)
 QUALITY_RULES_PATH = Path(__file__).with_name("youtube-person-signal-quality-rules.v2.json")
+CUE_AUDIT_PATH = Path(__file__).with_name("youtube-unknown-name-cue-audit.py")
+
+
+def source_context_name_candidates(title):
+    """Source-title Person-name cues, independent of the registered Person DB.
+
+    The cue parser discovers only review candidates, never approved Person
+    identities or certified biography videos. Reuse the already audited
+    extraction grammar without adding a second, drifting name parser.
+    """
+    if not hasattr(source_context_name_candidates, "_parser"):
+        spec = importlib.util.spec_from_file_location("atlas_youtube_source_cues", CUE_AUDIT_PATH)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        source_context_name_candidates._parser = module.title_candidates
+    return source_context_name_candidates._parser(str(title or ""))
+
 
 
 def load_quality_rules(path=QUALITY_RULES_PATH):
@@ -243,6 +261,42 @@ def load_manifest_paths(root):
     return found
 
 
+def reviewed_source_alias_unions(review, digest, channel_sets, video_id_sets, display_names):
+    """Reviewed identity NAME-FORMS only; union actual v5 original source IDs."""
+    if not review:
+        return []
+    if (review.get("schema") != "atlas-youtube-b024-v5-source-identity-alias-review/v1"
+            or review.get("source_artifact_digest") != digest):
+        raise RuntimeError("V5_SOURCE_ALIAS_REVIEW_DIGEST_MISMATCH")
+    results = []
+    used = set()
+    for group in review["approved_groups"]:
+        keys = [name.casefold() for name in group["aliases"]]
+        if len(keys) < 2 or len(set(keys)) != len(keys) or any(k in used for k in keys):
+            raise RuntimeError("V5_SOURCE_ALIAS_DUPLICATE_IDENTITY")
+        if any(k not in channel_sets or len(channel_sets[k]) < 3 for k in keys):
+            raise RuntimeError("V5_SOURCE_ALIAS_LABEL_NOT_IN_PUBLISHED_SIGNALS")
+        used.update(keys)
+        channels = set().union(*(channel_sets[k] for k in keys))
+        videos = set().union(*(video_id_sets[k] for k in keys))
+        if not channels or not videos:
+            raise RuntimeError("V5_SOURCE_ALIAS_UNION_EMPTY")
+        names = [{"name": display_names[k],
+                  "distinct_channel_count": len(channel_sets[k]),
+                  "video_count": len(video_id_sets[k])} for k in keys]
+        fingerprint = hashlib.sha256(
+            "\n".join(sorted(f"{ch}|{vid}" for ch,vid in videos)).encode("utf-8")
+        ).hexdigest()
+        results.append({
+            "canonical_name": group["canonical_name"],
+            "aliases": names,
+            "distinct_channel_count": len(channels),
+            "video_count": len(videos),
+            "union_video_ids_sha256": fingerprint
+        })
+    return results
+
+
 def previous_signal_map(previous):
     """Existing display labels are part of the published record, not disposable."""
     if previous is None:
@@ -268,7 +322,8 @@ def previous_signal_map(previous):
     return known
 
 
-def build(root, artifact_id, artifact_digest, previous_snapshot=None):
+def build(root, artifact_id, artifact_digest, previous_snapshot=None,
+          reviewed_source_aliases=None):
     manifests = load_manifest_paths(root)
     channels = []
     seen = set()
@@ -314,7 +369,7 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None):
         }
 
     signal_channels = collections.defaultdict(set)
-    signal_videos = collections.Counter()
+    signal_videos = collections.defaultdict(set)
     signal_names = {}
     quality_counts = collections.Counter()
     parsed_video_rows = 0
@@ -327,19 +382,41 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None):
             for line in handle:
                 row = json.loads(line)
                 local_count += 1
+                video_id = str(row.get("video_id") or "").strip()
+                if not video_id:
+                    raise RuntimeError(f"missing original video_id: {channel_id}")
+                # Include every accepted old prefix signal unchanged, and
+                # introduce only additionally source-derived contextual names.
+                # The same source (channel_id, video_id, name) is credited once.
                 extracted = title_candidate(row.get("title"))
-                if extracted:
-                    quality_counts["extracted"] += 1
-                    candidate = normalize_person_candidate(extracted)
-                    if valid_candidate(candidate):
-                        key = candidate.casefold()
-                        signal_channels[key].add(channel_id)
-                        signal_videos[key] += 1
-                        quality_counts["accepted_video_rows"] += 1
-                        if key not in signal_names or (signal_names[key].isupper() and not candidate.isupper()):
-                            signal_names[key] = candidate
-                    else:
+                selections = [(extracted, "prefix")] if extracted else []
+                seen_candidates = set()
+                for name, cue in source_context_name_candidates(row.get("title")):
+                    selections.append((name, "context"))
+                    quality_counts["context_cue_extractions"] += 1
+                for extracted_name, origin in selections:
+                    if not extracted_name:
+                        continue
+                    candidate = normalize_person_candidate(extracted_name)
+                    key = candidate.casefold()
+                    if key in seen_candidates:
+                        continue
+                    seen_candidates.add(key)
+                    if origin == "prefix":
+                        quality_counts["extracted"] += 1
+                    if not valid_candidate(candidate):
                         quality_counts[candidate_rejection(candidate)] += 1
+                        continue
+                    original_id = (channel_id, video_id)
+                    if original_id in signal_videos[key]:
+                        continue
+                    signal_channels[key].add(channel_id)
+                    signal_videos[key].add(original_id)
+                    quality_counts["accepted_video_rows"] += 1
+                    if origin == "context":
+                        quality_counts["accepted_context_cue_video_name_ids"] += 1
+                    if key not in signal_names or (signal_names[key].isupper() and not candidate.isupper()):
+                        signal_names[key] = candidate
         parsed_video_rows += local_count
 
     if parsed_video_rows != video_total:
@@ -351,7 +428,7 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None):
         if len(channel_ids) >= 3:
             old = preserved.get(key)
             current_channels = len(channel_ids)
-            current_videos = int(signal_videos[key])
+            current_videos = len(signal_videos[key])
             if old is not None:
                 if current_channels < int(old["distinct_channel_count"]) or current_videos < int(old["video_count"]):
                     raise RuntimeError("PREVIOUS_SIGNAL_EVIDENCE_REGRESSION: " + old["raw_name"])
@@ -377,8 +454,13 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None):
         for threshold in (3,5,10,15,20)
     }
 
+    reviewed_unions = reviewed_source_alias_unions(
+        reviewed_source_aliases, artifact_digest,
+        signal_channels, signal_videos, signal_names
+    )
+
     generated = dt.datetime.now(dt.timezone.utc).replace(microsecond=0)
-    snapshot_id = f"yt-{generated.strftime('%Y%m%dT%H%M%SZ')}-{len(ok_ids)}ch-rebuild-v4"
+    snapshot_id = f"yt-{generated.strftime('%Y%m%dT%H%M%SZ')}-{len(ok_ids)}ch-rebuild-v5"
     source_state = {
         "workspace": "yt-discovery-core-v2",
         "coverage_mode": "single_cumulative_id_preserved",
@@ -401,6 +483,13 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None):
         "minimum_stored_signal_channels": 3,
         "quality_rules_version": QUALITY_RULES["version"],
         "quality_counters": dict(sorted(quality_counts.items())),
+        "additional_title_context_extraction": True,
+        "title_context_evidence_scope": "original_channel_video_ids",
+        "title_context_personhood": "source_title_review_candidate_not_verified_person",
+        "source_name_generation_independent_of_registered_persons": True,
+        "reviewed_source_unions": reviewed_unions,
+        "reviewed_source_unions_count": len(reviewed_unions),
+        "reviewed_source_unions_nameform_only_not_biography": True,
         "artifact_id": int(artifact_id),
         "artifact_digest": artifact_digest,
         "batch_stats": batch_stats,
@@ -413,7 +502,7 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None):
             "channel_count": len(ok_ids),
             "video_count": video_total,
             "threshold_counts": thresholds,
-            "parser_version": "yt-title-person-reviewed-v4",
+            "parser_version": "yt-title-person-reviewed-v5",
             "source_state": source_state,
         },
         "channels": channels,
@@ -431,6 +520,7 @@ def main():
     parser.add_argument("--artifact-id", type=int, required=True)
     parser.add_argument("--artifact-digest", required=True)
     parser.add_argument("--previous-snapshot", help="Validated immediate predecessor names and counts")
+    parser.add_argument("--reviewed-source-aliases", help="Exact source artifact / original-ID alias review manifest")
     args = parser.parse_args()
 
     payload = build(
@@ -438,6 +528,7 @@ def main():
         args.artifact_id,
         args.artifact_digest,
         previous_snapshot=json.loads(Path(args.previous_snapshot).read_text(encoding="utf-8")) if args.previous_snapshot else None,
+        reviewed_source_aliases=json.loads(Path(args.reviewed_source_aliases).read_text(encoding="utf-8")) if args.reviewed_source_aliases else None,
     )
     Path(args.output).write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     snapshot = payload["snapshot"]
