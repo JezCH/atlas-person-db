@@ -40,7 +40,7 @@ test("VIS2-01 role bindings are limited to architectural chrome",()=>{
   assert.match(rule(".btn"),/--atlas-control-fill:\s*var\(--atlas-material-m2\)/);
   assert.match(rule(".btn-primary"),/var\(--atlas-material-m3\)/);
   assert.match(rule(".person-main-actions .btn-primary"),/var\(--atlas-material-m3\)/);
-  assert.match(index,/atlas-ui-visual-foundation.css\?v=20261008-vis2-01-material-roles-v1/);
+  assert.match(index,/atlas-ui-visual-foundation.css\?v=20261010-vis3-05t-b-hidden-v1/);
 });
 
 test("VIS2-01 does not own semantic Person rails or Spacetime geometry",()=>{

@@ -138,7 +138,7 @@ test("SHELL-M1 global shell consumes shared structural material tokens without i
   assert.match(foundation, /\.mobile-drawer \{[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline\)/);
   assert.match(foundation, /\.mobile-brand \{[\s\S]*?border-bottom: 1px solid var\(--atlas-material-hairline-soft\)/);
   assert.match(foundation, /\.mobile-brand-mark \{[\s\S]*?border-left: 1px solid var\(--atlas-material-rail-soft\)[\s\S]*?border-right: 1px solid var\(--atlas-material-hairline-strong\)/);
-  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261008-vis2-01-material-roles-v1/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261010-vis3-05t-b-hidden-v1/);
 
   const shellStart = foundation.indexOf("SHELL-M1 — Structural material normalization");
   const shellEnd = foundation.indexOf("SHELL-M2 — Navigation interaction luminance", shellStart);
@@ -170,7 +170,7 @@ test("SHELL-M2 navigation uses the shared hover / active / selected luminance sc
   assert.doesNotMatch(foundation, /\.nav-item\.active \{[\s\S]*?rgba\(192, 174, 136, \.09\)/);
   assert.doesNotMatch(foundation, /\.mobile-nav button\.active \{[\s\S]*?rgba\(192,174,136,\.09\)/);
 
-  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261008-vis2-01-material-roles-v1/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261010-vis3-05t-b-hidden-v1/);
   assert.match(html, /atlas-ui-motion-material-v9\.css\?v=20261007-controls-m2-luminance-v1/);
 });
 
@@ -214,7 +214,7 @@ test("CONTROLS-M1 keeps operational chrome quiet while sharing structural hairli
   assert.match(foundation, /\.btn-primary \{[\s\S]*?background:[\s\S]*?var\(--atlas-material-m3\)/);
   assert.match(foundation, /\.mini-btn\.danger \{[\s\S]*?rgba\(215, 114, 114, \.32\)/);
 
-  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261008-vis2-01-material-roles-v1/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261010-vis3-05t-b-hidden-v1/);
 });
 
 
@@ -242,7 +242,7 @@ test("CONTROLS-M2 layers shared hover / active luminance above neutral graphite 
   assert.doesNotMatch(motion, /\.btn-primary:active/);
   assert.doesNotMatch(motion, /\.mini-btn\.danger:active/);
 
-  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261008-vis2-01-material-roles-v1/);
+  assert.match(html, /atlas-ui-visual-foundation\.css\?v=20261010-vis3-05t-b-hidden-v1/);
   assert.match(html, /atlas-ui-motion-material-v9\.css\?v=20261007-controls-m2-luminance-v1/);
 });
 
