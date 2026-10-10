@@ -331,6 +331,27 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.match(philippines.rationale, /1897-11-01/);
   assert.match(philippines.rationale, /네그로스/);
 
+  const indonesia = byId.get('indonesia-ris-family');
+  assert.equal(indonesia.status, 'REVIEW_REQUIRED');
+  assert.equal(indonesia.terminal_status, null);
+  assert.equal(indonesia.reviewed_decision, 'retain_RI_RIS_distinction_repair_federal_constituent_RI_and_Assaat_1949_1950');
+  assert.equal(indonesia.suggested_action, 'repair');
+  assert.equal(indonesia.left.polity_id, '2682c74a-3404-42be-93ae-9bcc5875a3b0');
+  assert.equal(indonesia.right.polity_id, 'a0e85099-3cb0-4b9d-94bb-234ae8fcb232');
+  for (const id of [
+    'd27b3368-00ec-442a-9639-df45d4a2898c',
+    '9de8fc17-e187-46f7-8896-82e41cc8233e',
+    'b8a6196b-fecc-4689-85c7-193efb2b2dfc'
+  ]) assert.ok(indonesia.evidence.some(s => s.includes(id)), id);
+  assert.ok(indonesia.evidence.some(s => /2145/.test(s) && /Assaat/.test(s)));
+  assert.ok(indonesia.evidence.some(s => /16 constituent states/.test(s)));
+  assert.ok(indonesia.evidence.some(s => /anri.go.id/.test(s)));
+  assert.ok(indonesia.evidence.some(s => /jdih.kemenkeu.go.id/.test(s)));
+  assert.match(indonesia.rationale, /구성국/);
+  assert.match(indonesia.rationale, /직무대행/);
+  assert.match(indonesia.rationale, /1950-08-17/);
+  assert.match(indonesia.rationale, /no Production write/);
+
   const oman = byId.get('oman-empire-oman');
   assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
   assert.equal(oman.right.polity_id, 'ac7279b2-da5c-42df-a217-ac60f16106ff');
