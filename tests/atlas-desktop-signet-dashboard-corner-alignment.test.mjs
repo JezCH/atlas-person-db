@@ -12,7 +12,7 @@ test("desktop-only A glyph cancels the inherited four-pixel brand-label offset",
   assert.ok(match, "desktop signet override should target only the A glyph");
   assert.match(match[1], /margin-top:\s*0\s*;/);
   assert.match(match[1], /letter-spacing:\s*normal\s*;/);
-  assert.doesNotMatch(match[1], /transform:|top:|position:|margin-left:/);
+  assert.doesNotMatch(match[1], /(?:^|[;\n])\s*(?:transform|top|position|margin-left)\s*:/);
   assert.match(read("atlas-ui-visual-foundation.css"), /\.brand span\s*\{\s*margin-top: 4px;/);
   assert.match(css, /\.atlas-ornament-v3 \.atlas-o-shell-signet \{[^}]*display:grid;place-items:center;/);
   assert.match(html, /class="brand-mark atlas-o-shell-signet" data-atlas-o-decor/);
