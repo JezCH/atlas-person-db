@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {createRequire} from "node:module";
 const require=createRequire(import.meta.url);
-const {querySongDetails,SONG_P2_08_POLITY_IDS,SONG_P2_08_GAOZONG_ACTIVITIES}=require("../server/atlas-polity-reference-audit-handler.js");
+const {querySongDetails,SONG_P2_08_POLITY_IDS,SONG_P2_08_GAOZONG_ACTIVITIES,SONG_P2_08E_SOURCE_URLS}=require("../server/atlas-polity-reference-audit-handler.js");
 const all=SONG_P2_08_POLITY_IDS.map(polity_id=>({polity_id}));
 test("P2-08 exact triple existing Song polity identity, two original Gaozong segments",()=>{
  assert.deepEqual([...SONG_P2_08_POLITY_IDS],[
@@ -11,6 +11,8 @@ test("P2-08 exact triple existing Song polity identity, two original Gaozong seg
   "fe073a4c-d967-56e2-bb31-f74bdde1af87"
  ]);
  assert.equal(SONG_P2_08_GAOZONG_ACTIVITIES.length,2);
+ assert.equal(SONG_P2_08E_SOURCE_URLS.length,6);
+ assert.ok(SONG_P2_08E_SOURCE_URLS.every(url=>url.startsWith("https://www.cambridge.org/")));
 });
 test("P2-08 refuses any absent existing Song identity before DB access",async()=>{
  const client={query(){throw Error("Unexpected query");}};
@@ -26,7 +28,7 @@ test("P2-08 SELECT-only preflight rejects absent Gaozong segment without fabrica
   return {rows:[]};
  }};
  await assert.rejects(()=>querySongDetails(client,all),/POLITY_SONG_P2_08_GAOZONG_ACTIVITY_MISSING/);
- assert.equal(observed.length,8);
+ assert.equal(observed.length,12);
 });
 test("P2-08 keeps two Gaozong segments and remains noncommitting",async()=>{
  const seen=[];
@@ -41,5 +43,9 @@ test("P2-08 keeps two Gaozong segments and remains noncommitting",async()=>{
  assert.equal(r.committed,false);
  assert.deepEqual(r.polity_ids,[...SONG_P2_08_POLITY_IDS]);
  assert.equal(r.activities.length,2);
+ assert.deepEqual(r.identity_relation_types,[]);
+ assert.deepEqual(r.structural_relation_types,[]);
+ assert.deepEqual(r.source_candidates,[]);
+ assert.ok(r.relation_schema.every(row=>row && typeof row==="object"));
  assert.ok(seen.every(s=>/^\s*select\b/i.test(s)));
 });
