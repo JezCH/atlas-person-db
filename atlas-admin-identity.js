@@ -18,6 +18,13 @@
     claims_rule: "통치권 주장"
   });
 
+  const periodBasisLabels = Object.freeze({
+    reign:"재위", term:"임기", de_facto_rule:"실권 장악",
+    military_activity:"군사 활동", religious_activity:"종교 활동",
+    intellectual_activity:"학술 활동", artistic_activity:"예술 활동",
+    general_activity:"주요 활동"
+  });
+
   function value(id) {
     return String(document.getElementById(id)?.value || "").normalize("NFC").trim().replace(/\s+/g, " ");
   }
@@ -46,14 +53,14 @@
       let body = null;
       try { body = await response.json(); } catch { body = null; }
       if (!response.ok || body?.ok !== true || body?.outcome?.committed !== true) {
-        throw new Error(body?.error || `identity mutation failed (${response.status})`);
+        throw new Error(body?.error || `식별정보 저장 실패 (${response.status})`);
       }
       const outcome = body.outcome;
       const key = outcome.canonical_key || outcome.code || "";
       setResult([
         `${outcome.entity} 저장 완료${outcome.replay ? " (동일 요청 재사용)" : ""}`,
         `UUID: ${outcome.id}`,
-        key ? `Key: ${key}` : ""
+        key ? `식별 키: ${key}` : ""
       ].filter(Boolean).join("\n"), "success");
     } catch (error) {
       setResult(error.message || String(error), "error");
@@ -76,11 +83,11 @@
 
   sealRegistrationGatedIdentityForm(
     "createPersonForm",
-    "Person 직접 생성은 폐지되었습니다. 위의 ‘일반 신규 인물 등록’에서 Source · NamuWiki · timeline · 대표 분야를 포함한 canonical registration으로 등록하세요."
+    "인물 직접 생성 방식은 폐지되었습니다. 위의 ‘일반 신규 인물 등록’에서 출처·나무위키 검토·연대표 등록 여부·대표 분야를 함께 등록하세요."
   );
   sealRegistrationGatedIdentityForm(
     "createPolityForm",
-    "Polity 직접 생성은 폐지되었습니다. Polity는 canonical registration context 안에서만 생성할 수 있습니다."
+    "정치체 직접 생성 방식은 폐지되었습니다. 정치체는 검증된 등록 절차 안에서만 생성할 수 있습니다."
   );
 
   document.getElementById("createRoleForm")?.addEventListener("submit", (event) => {
@@ -94,11 +101,11 @@
   });
 
   function calendarOptions() {
-    return `<option value="unspecified_historical">unspecified_historical</option><option value="gregorian">gregorian</option><option value="julian">julian</option><option value="source_calendar">source_calendar</option>`;
+    return `<option value="unspecified_historical">역법 미특정</option><option value="gregorian">그레고리력</option><option value="julian">율리우스력</option><option value="source_calendar">출처 기록의 역법</option>`;
   }
 
   function certaintyOptions() {
-    return `<option value="exact">exact</option><option value="approximate">approximate</option><option value="uncertain">uncertain</option>`;
+    return `<option value="exact">정확</option><option value="approximate">근사</option><option value="uncertain">불확실</option>`;
   }
 
   function insertHumanAuthoringPanel() {
@@ -113,7 +120,7 @@
       <form id="humanAuthoringForm" class="identity-form">
         <div class="identity-two"><label>인물 영문명<input id="humanPersonEn" required /></label><label>인물 한국어명 <small>신규 인물 생성 시 필수</small><input id="humanPersonKo" /></label></div>
         <h3>생존 상태 검토</h3>
-        <div class="identity-two"><label>생존 상태<select id="humanLifeStatus"><option value="">기존 인물 재사용 시 생략 가능</option><option value="deceased">사망 확인됨 · deceased</option></select></label><label>검토일<input id="humanLifeStatusCheckedAt" type="date" /></label></div>
+        <div class="identity-two"><label>생존 상태<select id="humanLifeStatus"><option value="">기존 인물 재사용 시 생략 가능</option><option value="deceased">사망 확인됨</option></select></label><label>검토일<input id="humanLifeStatusCheckedAt" type="date" /></label></div>
         <label>판정 근거<select id="humanLifeStatusBasis"><option value="">선택</option><option value="documented_death">문헌·공식 기록으로 사망 확인</option><option value="historical_certainty">역사적 연대상 사망이 확실</option></select></label>
         <p class="identity-help">새 인물은 반드시 사망 확인 판정이 있어야 합니다. 현재 생존자는 직책·분야와 무관하게 제외하며, 활동 종료연도·진행 중 여부·대표 활동연도는 생존 판정에 사용하지 않습니다.</p>
         <label>대표 분야 검토<select id="humanRepresentativeDomain"><option value="">기존 인물 재사용 시 생략 · 신규 인물은 반드시 검토</option></select></label>
@@ -160,7 +167,7 @@
       if (!item?.code) continue;
       const option = document.createElement("option");
       option.value = String(item.code);
-      option.textContent = item.label_ko ? `${item.label_ko} · ${item.code}` : String(item.code);
+      option.textContent = item.label_ko ? `${item.label_ko}` : String(item.code);
       select.appendChild(option);
     }
     if (reviewedNullAllowed) {
@@ -183,7 +190,7 @@
     for (const state of states) {
       const option = document.createElement("option");
       option.value = String(state);
-      option.textContent = spatialStateLabels[state] ? `${spatialStateLabels[state]} · ${state}` : String(state);
+      option.textContent = spatialStateLabels[state] ? `${spatialStateLabels[state]}` : String(state);
       select.appendChild(option);
     }
   }
@@ -243,8 +250,8 @@
       if (relationTypes.length === 0 || periodBases.length === 0 || representativeDomains.length === 0 || spatialStates.length === 0) {
         throw new Error("관계·기간 기준·분야·공간 배치 선택 목록이 비어 있습니다.");
       }
-      appendCatalogOptions(relationSelect, relationTypes, (code) => relationLabels[code] ? `${code} · ${relationLabels[code]}` : code);
-      appendCatalogOptions(periodSelect, periodBases);
+      appendCatalogOptions(relationSelect, relationTypes, (code) => relationLabels[code] ? `${relationLabels[code]}` : code);
+      appendCatalogOptions(periodSelect, periodBases, (code) => periodBasisLabels[code] || code);
       populateRepresentativeDomains(domainSelect, representativeDomains, body.catalogs?.representative_domain_reviewed_null_allowed === true);
       populateSpatialStates(spatialSelect, spatialStates);
       syncSpatialDispositionFields();
