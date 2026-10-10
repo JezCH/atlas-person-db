@@ -36,6 +36,40 @@ def storage_call(method, base, token, key, data=None):
         return response.read()
 
 
+def bucket_call(method, base, token, data=None):
+    endpoint = base.rstrip("/") + "/storage/v1/bucket"
+    if method == "GET":
+        endpoint += "/" + urllib.parse.quote(BUCKET, safe="")
+    headers = {"Authorization": "Bearer " + token, "apikey": token}
+    body = None
+    if data is not None:
+        body = json.dumps(data, separators=(",", ":")).encode("utf-8")
+        headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(endpoint, data=body, headers=headers, method=method)
+    with urllib.request.urlopen(req, timeout=60) as response:
+        raw = response.read()
+    return json.loads(raw.decode("utf-8")) if raw else {}
+
+
+def ensure_private_bucket(base, token):
+    try:
+        bucket = bucket_call("GET", base, token)
+    except urllib.error.HTTPError as exc:
+        if exc.code != 404:
+            raise
+        try:
+            bucket_call("POST", base, token, {"id": BUCKET, "name": BUCKET, "public": False})
+        except urllib.error.HTTPError as conflict:
+            if conflict.code != 409:
+                raise
+        bucket = bucket_call("GET", base, token)
+    if str(bucket.get("id") or bucket.get("name") or "") != BUCKET:
+        raise RuntimeError("SOURCE_BUCKET_ID_MISMATCH")
+    if bucket.get("public") is not False:
+        raise RuntimeError("SOURCE_BUCKET_NOT_PRIVATE")
+    return bucket
+
+
 def batch_label(relative):
     for part in Path(relative).parts:
         match = re.search(r"batch(\d{3})", part, re.I)
@@ -157,6 +191,8 @@ def main():
     token = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
     if not args.dry_run and (not base.startswith("https://") or not token):
         raise RuntimeError("SUPABASE_SOURCE_UPLOAD_CREDENTIALS_REQUIRED")
+    if not args.dry_run:
+        ensure_private_bucket(base, token)
 
     records = []
     for file in files:
