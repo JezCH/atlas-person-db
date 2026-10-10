@@ -1,0 +1,419 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_russia_p2_05c_tsardom_empire_1721_designation_activity_precise_20261010_v1",
+  "as_of": "2026-10-10",
+  "status": "REVIEWED_SOURCE_BACKED_RUSSIAN_TSARDOM_EMPIRE_DISPLAY_REPAIR",
+  "release_order": 2405,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 Russia P2-05A/P2-05B and 2026-10-10 source-backed 1721 review; original Ivan IV Moscow Kremlin Museums museum collection and original 1721 printed speech plus historical calendar-equivalence from Russia Presidential Library.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "production_executable": false,
+    "production_mutation_authorized": false,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "preserve_existing_person_activity_polity_and_role_uuids": true,
+    "physical_person_merge_forbidden": true,
+    "polity_deletion_forbidden": true,
+    "territory_geometry_mutation_forbidden": true,
+    "source_bounded_day_precision_only": true
+  },
+  "evidence": {
+    "canonical_polity_uuid": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+    "prior_designation_count": 0,
+    "prior_russia_activity_count": 12,
+    "prior_russia_activity_source_links": 23,
+    "read_only_run": 38032211817,
+    "read_only_deployed_sha": "6ac519b118089716d872c78da7f5bf61d771e9d2",
+    "primary_1547": "https://collectiononline.kreml.ru/entity/PERSON/14",
+    "primary_1721": "https://www.prlib.ru/item/442015",
+    "calendar_comparison_1721": "https://www.prlib.ru/news/1496499",
+    "calendar_rule": "Both 1547 and 1721 exact title boundaries use historical Julian day/month values. The translated Gregorian equivalent of 1721-10-22 Julian is 1721-11-02; never silently store the translated day under a Julian calendar.",
+    "inclusive_interval_rule": "Cutover to the imperial title is 1721-10-22 Julian. Tsar prior-state inclusive modeled end 1721-10-21 Julian is an interval arithmetic consequence of the new title start, NOT a separately attested historical event.",
+    "source_quality": "Previously existing correction-file Source provenance for Peter I is preserved exactly and two presidential-library citations are added. No automatic confidence upgrade; pre-existing legacy_asserted/exact_as_recorded statuses remain.",
+    "evidence_limit": "The source-backed designation records model pre/post 1721 titles, not a separate sovereign Polity. Their 1917 end is year-granularity; a separate full Russia constitutional-discontinuity audit is not included.",
+    "live_uuid_protection": "Preserve existing four Activity IDs and both Ivan IV/Peter I Person IDs; do not alter chronology outside three documented title boundaries."
+  },
+  "operations": [
+    {
+      "case_id": "p2-05c-russia-grandprince-precision",
+      "type": "rewrite_activity",
+      "activity_id": "2acbc551-332c-4be5-bf89-ba9f30f865e3",
+      "baseline_before": {
+        "person_id": "57b00bae-2420-4ddd-b374-f70c81479bff",
+        "polity_id": "119f3866-ce15-44a1-a4f6-aa139f06f9ef",
+        "role_id": "5c67b8ac-d83c-4145-bb33-c9aa17966312",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1533,
+        "activity_end": 1547,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "2acbc551-332c-4be5-bf89-ba9f30f865e3",
+        "person_id": "57b00bae-2420-4ddd-b374-f70c81479bff",
+        "polity_id": "119f3866-ce15-44a1-a4f6-aa139f06f9ef",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "5c67b8ac-d83c-4145-bb33-c9aa17966312",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1533,
+        "activity_start_detail": {
+          "year": 1533,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1547,
+        "activity_end_detail": {
+          "year": 1547,
+          "month": 1,
+          "day": 15,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "julian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "p2-05c-russia-ivantsar-precision",
+      "type": "rewrite_activity",
+      "activity_id": "d6cdaf3b-2eab-4b98-8a17-b9c42342534f",
+      "baseline_before": {
+        "person_id": "57b00bae-2420-4ddd-b374-f70c81479bff",
+        "polity_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+        "role_id": "f41c76fe-719a-546c-b1cc-6ee313a37bd5",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1547,
+        "activity_end": 1584,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "after": {
+        "activity_id": "d6cdaf3b-2eab-4b98-8a17-b9c42342534f",
+        "person_id": "57b00bae-2420-4ddd-b374-f70c81479bff",
+        "polity_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "f41c76fe-719a-546c-b1cc-6ee313a37bd5",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1547,
+        "activity_start_detail": {
+          "year": 1547,
+          "month": 1,
+          "day": 16,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "julian"
+        },
+        "activity_end": 1584,
+        "activity_end_detail": {
+          "year": 1584,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "p2-05c-russia-petertsar-precision",
+      "type": "rewrite_activity",
+      "activity_id": "57cdefa5-9a5d-533c-b229-47e398f1d07a",
+      "baseline_before": {
+        "person_id": "072f2262-acbb-53a8-a63f-c3e798c24132",
+        "polity_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+        "role_id": "f41c76fe-719a-546c-b1cc-6ee313a37bd5",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1682,
+        "activity_end": 1721,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-corrections.json:10:6ce40468c667b404",
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "57cdefa5-9a5d-533c-b229-47e398f1d07a",
+        "person_id": "072f2262-acbb-53a8-a63f-c3e798c24132",
+        "polity_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "f41c76fe-719a-546c-b1cc-6ee313a37bd5",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1682,
+        "activity_start_detail": {
+          "year": 1682,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1721,
+        "activity_end_detail": {
+          "year": 1721,
+          "month": 10,
+          "day": 21,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "julian"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-corrections.json:10:6ce40468c667b404",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": [
+          {
+            "source_id": "562ecd76-c9e6-514c-8756-b8ee50bcbc40",
+            "source_locator_key": "https://www.prlib.ru/item/442015"
+          },
+          {
+            "source_id": "6c57933a-baca-503f-87a0-20dbd3f6b501",
+            "source_locator_key": "https://www.prlib.ru/news/1496499"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "p2-05c-russia-peteremperor-precision",
+      "type": "rewrite_activity",
+      "activity_id": "9ec53325-3a97-58a8-a7e7-81a496a47e57",
+      "baseline_before": {
+        "person_id": "072f2262-acbb-53a8-a63f-c3e798c24132",
+        "polity_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1721,
+        "activity_end": 1725,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-corrections.json:11:6de2c556dff47756",
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "9ec53325-3a97-58a8-a7e7-81a496a47e57",
+        "person_id": "072f2262-acbb-53a8-a63f-c3e798c24132",
+        "polity_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1721,
+        "activity_start_detail": {
+          "year": 1721,
+          "month": 10,
+          "day": 22,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "julian"
+        },
+        "activity_end": 1725,
+        "activity_end_detail": {
+          "year": 1725,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-corrections.json:11:6de2c556dff47756",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": [
+          {
+            "source_id": "562ecd76-c9e6-514c-8756-b8ee50bcbc40",
+            "source_locator_key": "https://www.prlib.ru/item/442015"
+          },
+          {
+            "source_id": "6c57933a-baca-503f-87a0-20dbd3f6b501",
+            "source_locator_key": "https://www.prlib.ru/news/1496499"
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "bibliographic:presidential-library:peter-i-1721-emperor-title-primary",
+      "exact_before": {
+        "source_absent_id": "562ecd76-c9e6-514c-8756-b8ee50bcbc40"
+      },
+      "exact_after": {
+        "source": {
+          "id": "562ecd76-c9e6-514c-8756-b8ee50bcbc40",
+          "source_key": "bibliographic:presidential-library:peter-i-1721-emperor-title-primary",
+          "source_type": "institutional_web",
+          "title": "Golovkin: 22 October 1721 printed Senate/Synod speech granting Peter I the Emperor title — Presidential Library",
+          "canonical_url": "https://www.prlib.ru/item/442015",
+          "citation_text": "Russian Presidential Library catalog of the original Golovkin speech, printed at Saint Petersburg on 22 October 1721 Old Style (Julian), identifies it as the Senate's bestowal of the Russian Emperor title on Peter I.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "bibliographic:presidential-library:peter-i-1721-imperial-title-history",
+      "exact_before": {
+        "source_absent_id": "6c57933a-baca-503f-87a0-20dbd3f6b501"
+      },
+      "exact_after": {
+        "source": {
+          "id": "6c57933a-baca-503f-87a0-20dbd3f6b501",
+          "source_key": "bibliographic:presidential-library:peter-i-1721-imperial-title-history",
+          "source_type": "institutional_web",
+          "title": "How Peter the Great accepted the Emperor of All Russia title — Russian Presidential Library",
+          "canonical_url": "https://www.prlib.ru/news/1496499",
+          "citation_text": "The Russian Presidential Library official historical article dates Peter I's acceptance of the Emperor title to 2 November 1721 New Style, equivalent to 22 October 1721 Julian; explicitly explains the political Tsardom-to-Empire transition.",
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "p2-05c-russia-tsardom-phase",
+      "exact_before": {
+        "designation_absent_id": "5d6d387a-c16e-57fd-a055-6b0ae29f63fb"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "5d6d387a-c16e-57fd-a055-6b0ae29f63fb",
+          "polity_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+          "designation_type": "state_form",
+          "valid_from_year": 1547,
+          "valid_from_month": 1,
+          "valid_from_day": 16,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "julian",
+          "valid_to_year": 1721,
+          "valid_to_month": 10,
+          "valid_to_day": 21,
+          "valid_to_granularity": "day",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "julian",
+          "confidence": "reviewed",
+          "notes": "Reviewed state-form designation for the stable Russian state. Ivan IV crowned as Tsar on 16 January 1547 Julian, Moscow Kremlin Museums. Peter I accepted the Emperor title on 22 October 1721 Julian (2 November Gregorian), Russian Presidential Library. The 21 October Julian inclusive display end is derived from the next-day 22 October cutover, not an independently claimed historical ceremony. DO NOT change stable Polity UUID or infer Gregorian conversion in date comparison."
+        },
+        "names": [
+          {
+            "id": "106961f1-4b0b-5386-9941-7103533cd2c0",
+            "polity_designation_id": "5d6d387a-c16e-57fd-a055-6b0ae29f63fb",
+            "locale": "en",
+            "name": "Tsardom of Russia",
+            "is_preferred": true
+          },
+          {
+            "id": "286bd913-a5ac-594e-baa8-0c405e49023d",
+            "polity_designation_id": "5d6d387a-c16e-57fd-a055-6b0ae29f63fb",
+            "locale": "ko",
+            "name": "러시아 차르국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "5d6d387a-c16e-57fd-a055-6b0ae29f63fb",
+            "source_id": "79cd5f2b-c4cf-4abd-863c-b62bc120319d",
+            "source_locator_key": "https://collectiononline.kreml.ru/entity/PERSON/14"
+          },
+          {
+            "polity_designation_id": "5d6d387a-c16e-57fd-a055-6b0ae29f63fb",
+            "source_id": "562ecd76-c9e6-514c-8756-b8ee50bcbc40",
+            "source_locator_key": "https://www.prlib.ru/item/442015"
+          },
+          {
+            "polity_designation_id": "5d6d387a-c16e-57fd-a055-6b0ae29f63fb",
+            "source_id": "6c57933a-baca-503f-87a0-20dbd3f6b501",
+            "source_locator_key": "https://www.prlib.ru/news/1496499"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "p2-05c-russia-empire-phase",
+      "exact_before": {
+        "designation_absent_id": "93efa674-5869-5607-ae9b-5821cc9852b2"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "93efa674-5869-5607-ae9b-5821cc9852b2",
+          "polity_id": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+          "designation_type": "state_form",
+          "valid_from_year": 1721,
+          "valid_from_month": 10,
+          "valid_from_day": 22,
+          "valid_from_granularity": "day",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "julian",
+          "valid_to_year": 1917,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "julian",
+          "confidence": "reviewed",
+          "notes": "Reviewed imperial state-form/name phase of the SAME canonical Russian state UUID. Peter I accepted Emperor title on 22 October 1721 Julian = 2 November Gregorian according to the Russian Presidential Library; 1917 is intentionally year-granularity because the exact collapse/end-of-imperial-state constitutional boundary is not adjudicated here. Date-exact cutover is Julian on both adjacent phase rows. No new sovereign Polity, no retroactive Gregorian date imposed on legacy records."
+        },
+        "names": [
+          {
+            "id": "f69e8d96-f8ff-53e1-834c-50b36d0cdc5e",
+            "polity_designation_id": "93efa674-5869-5607-ae9b-5821cc9852b2",
+            "locale": "en",
+            "name": "Russian Empire",
+            "is_preferred": true
+          },
+          {
+            "id": "605426af-09a6-5e22-97a1-b1ea8919748c",
+            "polity_designation_id": "93efa674-5869-5607-ae9b-5821cc9852b2",
+            "locale": "ko",
+            "name": "러시아 제국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "93efa674-5869-5607-ae9b-5821cc9852b2",
+            "source_id": "562ecd76-c9e6-514c-8756-b8ee50bcbc40",
+            "source_locator_key": "https://www.prlib.ru/item/442015"
+          },
+          {
+            "polity_designation_id": "93efa674-5869-5607-ae9b-5821cc9852b2",
+            "source_id": "6c57933a-baca-503f-87a0-20dbd3f6b501",
+            "source_locator_key": "https://www.prlib.ru/news/1496499"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "new_sources": 2,
+    "new_polity_designations": 2,
+    "new_designation_names": 4,
+    "new_designation_source_links": 5,
+    "rewrite_activity_count": 4,
+    "added_activity_source_links": 4,
+    "deleted_activities": 0,
+    "retired_polities": 0,
+    "production_mutation_authorized": false
+  }
+}
