@@ -59,7 +59,7 @@ test("dashboard model derives progress from canonical snapshots without stored d
   assert.equal(snapshot.quality.non_timeline_registry,1);
 });
 
-test("Polity concentration uses distinct Person–Polity memberships and polity-linked Activities with separate denominators", () => {
+test("Polity concentration uses distinct 인물–정치체 연결s and polity-linked Activities with separate denominators", () => {
   const polityIds=Array.from({length:11},(_,index)=>`polity-${String(index+1).padStart(2,"0")}`);
   const persons=polityIds.map((polityId,index)=>({
     id:`p${index+1}`,
@@ -92,12 +92,12 @@ test("Polity concentration uses distinct Person–Polity memberships and polity-
 });
 
 test("Polity concentration UI stays focused on concentration, supports exact Person drill-down, and preserves mobile touch targets", () => {
-  assert.match(dashboardSource,/POLITY CONCENTRATION/);
+  assert.match(dashboardSource,/정치체 집중도/);
   assert.match(dashboardSource,/정치체별 인물 집중도/);
   assert.match(dashboardSource,/data-polity-sort="persons"/);
   assert.match(dashboardSource,/data-polity-sort="activities"/);
   assert.match(dashboardSource,/data-dashboard-polity-id/);
-  assert.match(dashboardSource,/Person–Polity membership/);
+  assert.match(dashboardSource,/인물–정치체 연결/);
   assert.match(dashboardSource,/polity_concentration/);
   assert.match(dashboardSource,/ATLAS_PERSON_MAIN\?\.setDashboardFilter/);
   assert.match(dashboardCssSource,/dashboard-polity-summary/);
@@ -150,8 +150,8 @@ test("Data Quality drill-down preserves exact targets for Person, Activity, Poli
 });
 
 test("Dashboard Data Quality uses exact drill-down controls instead of broad route-only buttons", () => {
-  const start=dashboardSource.indexOf("DATA QUALITY");
-  const end=dashboardSource.indexOf("COMPLETENESS MATRIX",start);
+  const start=dashboardSource.indexOf("데이터 품질");
+  const end=dashboardSource.indexOf("데이터 완성도",start);
   const block=dashboardSource.slice(start,end);
   assert.match(block,/data-dashboard-quality="spatial_unresolved"/);
   assert.match(block,/data-dashboard-quality="spatial_review"/);
@@ -159,7 +159,7 @@ test("Dashboard Data Quality uses exact drill-down controls instead of broad rou
   assert.match(block,/data-dashboard-quality="non_timeline_registry"/);
   assert.match(block,/dashboardQualityTargets/);
   assert.doesNotMatch(block,/data-dashboard-route="spacetime"/);
-  assert.match(dashboardSource,/QUALITY TARGETS/);
+  assert.match(dashboardSource,/품질 검토 대상/);
   assert.match(dashboardSource,/data-quality-target-kind="activity"/);
   assert.match(dashboardSource,/data-quality-target-kind="polity"/);
   assert.match(dashboardSource,/data-quality-target-kind="registry"/);
@@ -390,7 +390,7 @@ test("attention queue drill-down reuses Person Main instead of creating a duplic
 test("unavailable Attention categories retain authoritative Admin diagnostics without inventing counts", () => {
   assert.match(dashboardSource, /dashboard-attention-link/);
   assert.match(dashboardSource, /data-dashboard-attention-diagnostic/);
-  assert.match(dashboardSource, /Runtime 제외 대상 원본 확인 불가/);
+  assert.match(dashboardSource, /런타임 제외 대상 원본 확인 불가/);
   assert.match(dashboardSource, /중복 후보 대상은 관리자 인증 영역에서 확인/);
   assert.match(dashboardCssSource, /dashboard-attention-link/);
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
@@ -519,20 +519,20 @@ test("dashboard KPI order groups inventory scale before completion coverage", ()
 });
 
 test("coverage KPIs expose absolute done/total and remaining work", () => {
-  assert.match(dashboardSource, /DOMAIN COVERAGE[\s\S]*w\.domain\.done[\s\S]*w\.domain\.total[\s\S]*w\.domain\.remaining/);
-  assert.match(dashboardSource, /NAMUWIKI REVIEW[\s\S]*w\.namuwiki\.linked[\s\S]*w\.namuwiki\.no_exact_document[\s\S]*w\.namuwiki\.related_or_derivative_only[\s\S]*w\.namuwiki\.remaining/);
-  assert.match(dashboardSource, /SPATIAL READY[\s\S]*w\.spatial\.done[\s\S]*w\.spatial\.total[\s\S]*w\.spatial\.remaining/);
+  assert.match(dashboardSource, /대표 분야 분류율[\s\S]*w\.domain\.done[\s\S]*w\.domain\.total[\s\S]*w\.domain\.remaining/);
+  assert.match(dashboardSource, /나무위키 검토율[\s\S]*w\.namuwiki\.linked[\s\S]*w\.namuwiki\.no_exact_document[\s\S]*w\.namuwiki\.related_or_derivative_only[\s\S]*w\.namuwiki\.remaining/);
+  assert.match(dashboardSource, /공간 배치 완료율[\s\S]*w\.spatial\.done[\s\S]*w\.spatial\.total[\s\S]*w\.spatial\.remaining/);
 });
 
 
 test("Data Quality excludes Person work counters already exposed by Needs Attention", () => {
-  const start = dashboardSource.indexOf("DATA QUALITY");
+  const start = dashboardSource.indexOf("데이터 품질");
   const end = dashboardSource.indexOf("dashboard-lower-grid", start);
   assert.ok(start >= 0 && end > start);
   const block = dashboardSource.slice(start,end);
   assert.doesNotMatch(block, /분야 미분류|나무위키 미검토|domain_unclassified|namuwiki_missing/);
-  assert.match(block, /Spatial 미해결/);
-  assert.match(block, /Spatial 검토 대기/);
+  assert.match(block, /공간 배치 미해결/);
+  assert.match(block, /공간 배치 검토 대기/);
   assert.match(block, /활동 연결 없음/);
   assert.match(block, /비연대표 등록/);
 });
@@ -587,7 +587,7 @@ test("Recent Delta model preserves canonical chronology and explicit coverage ga
 });
 
 test("Dashboard Recent Delta shows tracked mutations without inventing untracked delete counts", () => {
-  assert.match(dashboardSource, /RECENT DELTA/);
+  assert.match(dashboardSource, /최근 변경 이력/);
   assert.match(dashboardSource, /최근 추적 변경/);
   assert.match(dashboardSource, /추적 누락/);
   assert.doesNotMatch(dashboardSource, /delete(?:d)? persons?\s*[:=]\s*\$?\{?0/i);
@@ -634,7 +634,7 @@ test("System Strip distinguishes known Production main identity from unknown run
 });
 
 test("Dashboard System / Production Strip reports deployed identity without claiming GitHub main parity", () => {
-  assert.match(dashboardSource, /SYSTEM \/ PRODUCTION/);
+  assert.match(dashboardSource, /시스템·운영 환경/);
   assert.match(dashboardSource, /배포 커밋/);
   assert.match(dashboardSource, /배포 식별 정보와 CI 상태는 별도/);
   assert.doesNotMatch(dashboardSource, /main parity|GitHub main exact|CI success|Actions success/i);
@@ -712,10 +712,10 @@ test("Publication Funnel preserves missing compile state as unknown instead of f
 });
 
 test("Dashboard renders the publication funnel with Activity units and canonical exclusion reasons", () => {
-  assert.match(dashboardSource,/AUTHORING → COMPILE → RUNTIME/);
-  assert.match(dashboardSource,/현재 Runtime Compile 입력/);
-  assert.match(dashboardSource,/Runtime 제외/);
-  assert.match(dashboardSource,/Runtime 제외는 인물이 아닌 Activity 단위/);
+  assert.match(dashboardSource,/원본 등록 → 빌드 → 런타임/);
+  assert.match(dashboardSource,/현재 런타임 빌드 입력/);
+  assert.match(dashboardSource,/런타임 제외/);
+  assert.match(dashboardSource,/런타임 제외는 인물이 아닌 활동 단위/);
   assert.match(dashboardSource,/projection_matches_active_compile/);
   assert.match(dashboardSource,/START_BOUNDARY_UNRESOLVED/);
   assert.match(dashboardSource,/PROVENANCE_UNRESOLVED/);
@@ -791,7 +791,7 @@ test("Heatmap deduplicates multiple spatial segments of one Activity within the 
 test("Dashboard heatmap reuses canonical spatial resolver and renders era-normalized proportions with totals", () => {
   const dashboardModelSource=fs.readFileSync(new URL("../atlas-dashboard-model.js",import.meta.url),"utf8");
   assert.match(dashboardModelSource,/spatialModel\.resolveActivityPlacement/);
-  assert.match(dashboardSource,/ERA × REGION COVERAGE/);
+  assert.match(dashboardSource,/시대·권역별 분포/);
   assert.match(dashboardSource,/heatmap\.available/);
   assert.match(dashboardSource,/function heatmapShare/);
   assert.match(dashboardSource,/data-heatmap-level/);
@@ -799,7 +799,7 @@ test("Dashboard heatmap reuses canonical spatial resolver and renders era-normal
   assert.match(dashboardSource,/dashboard-heatmap-key/);
   assert.match(dashboardSource,/시대 합계/);
   assert.match(dashboardSource,/권역 합계/);
-  assert.match(dashboardSource,/시대-권역 셀 기준/);
+  assert.match(dashboardSource,/시대·권역 구간 기준/);
   assert.match(dashboardCssSource,/\.dashboard-heatmap\{width:100%;min-width:0;table-layout:fixed/);
   assert.match(dashboardCssSource,/data-heatmap-level="5"/);
   assert.match(dashboardCssSource,/\.dashboard-heatmap-key\{display:flex/);
@@ -917,13 +917,13 @@ test("Completeness Matrix exposes exact unresolved Spatial Activity targets with
 
 
 test("Completeness Matrix drills down exact Person and Activity targets without converting units", () => {
-  assert.match(dashboardSource,/COMPLETENESS MATRIX/);
+  assert.match(dashboardSource,/데이터 완성도/);
   assert.match(dashboardSource,/data-dashboard-completeness/);
   assert.match(dashboardSource,/item\.unit === "activity"/);
   assert.match(dashboardSource,/Array\.isArray\(item\.activity_targets\)/);
   assert.match(dashboardSource,/dashboardCompletenessActivityTargets/);
-  assert.match(dashboardSource,/ACTIVITY COMPLETENESS TARGETS/);
-  assert.match(dashboardSource,/Activity UUID/);
+  assert.match(dashboardSource,/활동 완성도 대상/);
+  assert.match(dashboardSource,/활동 UUID/);
   assert.match(dashboardSource,/panel\.innerHTML=completenessActivityTargetsTable\(item\)/);
   assert.match(dashboardSource,/panel\.hidden=false/);
   assert.match(dashboardSource,/item\.unit !== "person"/);
@@ -994,7 +994,7 @@ test("Recent Activity Timeline preserves unavailable Recent Delta as unknown ins
 });
 
 test("Dashboard replaces duplicate Recent Delta cards with one timeline view while retaining coverage metadata", () => {
-  assert.match(dashboardSource,/RECENT ACTIVITY TIMELINE/);
+  assert.match(dashboardSource,/최근 변경 이력/);
   assert.match(dashboardSource,/dashboard-timeline-entry/);
   assert.match(dashboardSource,/timeline\.person_scoped_count/);
   assert.match(dashboardSource,/추적 누락/);
@@ -1004,7 +1004,7 @@ test("Dashboard replaces duplicate Recent Delta cards with one timeline view whi
 
 test("Dashboard only expands shared source details when a source is not ready", () => {
   assert.match(dashboardSource, /sourceIssues = \(snapshot\.sources \|\| \[\]\)\.filter\(\(source\) => source\?\.status !== "ready"\)/);
-  assert.match(dashboardSource, /SOURCE ISSUES/);
+  assert.match(dashboardSource, /원본 조회 문제/);
   assert.match(dashboardSource, /sourceIssues\.map\(sourceCard\)/);
   assert.doesNotMatch(dashboardSource, /<p class="eyebrow">SOURCE HEALTH<\/p><h3>기준 원본 상태<\/h3>/);
   assert.doesNotMatch(dashboardSource, /snapshot\.sources\.map\(sourceCard\)/);
@@ -1022,19 +1022,19 @@ test("single lower Dashboard panel expands across the full lower grid", () => {
 });
 
 test("Dashboard follows operator priority from work status through analysis to system telemetry", () => {
-  const work = dashboardSource.indexOf("WORK FRONTIER");
-  const quality = dashboardSource.indexOf("DATA QUALITY");
-  const completeness = dashboardSource.indexOf("COMPLETENESS MATRIX");
+  const work = dashboardSource.indexOf("작업 진행 현황");
+  const quality = dashboardSource.indexOf("데이터 품질");
+  const completeness = dashboardSource.indexOf("데이터 완성도");
   const incomplete = dashboardSource.indexOf('aria-label="미완료 사유"');
-  const timeline = dashboardSource.indexOf("RECENT DELTA · RECENT ACTIVITY TIMELINE");
-  const domains = dashboardSource.indexOf("PERSON DOMAINS");
-  const heatmap = dashboardSource.indexOf("ERA × REGION COVERAGE");
-  const polity = dashboardSource.indexOf("POLITY CONCENTRATION");
-  const system = dashboardSource.indexOf("SYSTEM / PRODUCTION");
-  const publication = dashboardSource.indexOf("AUTHORING → COMPILE → RUNTIME");
-  const drift = dashboardSource.indexOf("RUNTIME DELTA / DRIFT");
-  const freshness = dashboardSource.indexOf("SOURCE FRESHNESS");
-  const workspace = dashboardSource.indexOf("WORKSPACE");
+  const timeline = dashboardSource.indexOf("최근 변경 이력");
+  const domains = dashboardSource.indexOf("인물 대표 분야");
+  const heatmap = dashboardSource.indexOf("시대·권역별 분포");
+  const polity = dashboardSource.indexOf("정치체 집중도");
+  const system = dashboardSource.indexOf("시스템·운영 환경");
+  const publication = dashboardSource.indexOf("원본 등록 → 빌드 → 런타임");
+  const drift = dashboardSource.indexOf("런타임 변화·불일치");
+  const freshness = dashboardSource.indexOf("원본 갱신 시각");
+  const workspace = dashboardSource.indexOf("작업 화면");
   assert.ok(work >= 0 && quality > work && completeness > quality && incomplete > completeness);
   assert.ok(timeline > incomplete && domains > timeline && heatmap > domains && polity > heatmap);
   assert.ok(system > polity && publication > system && drift > publication && freshness > drift && workspace > freshness);
@@ -1129,7 +1129,7 @@ test("Source Freshness never promotes loaded_at into canonical data freshness", 
 });
 
 test("Dashboard Source Freshness exposes source timestamp basis and last read without arbitrary stale thresholds", () => {
-  assert.match(dashboardSource,/SOURCE FRESHNESS/);
+  assert.match(dashboardSource,/원본 갱신 시각/);
   assert.match(dashboardSource,/원본 시각/);
   assert.match(dashboardSource,/마지막 읽기/);
   assert.match(dashboardSource,/원본 갱신 시각과 브라우저 마지막 읽기 시각을 구분/);
@@ -1150,7 +1150,7 @@ test("Dashboard operator copy hides implementation jargon while preserving canon
   assert.match(dashboardSource, /기준 원본에서 파생/);
   assert.match(dashboardSource, /확인된 미완료 건/);
   assert.match(dashboardSource, /인물 3항목 · 활동 3항목/);
-  assert.match(dashboardSource, /10개 시대 구간 × Spatial 대권역/);
+  assert.match(dashboardSource, /10개 시대 구간 × 공간 대권역/);
   assert.match(dashboardSource, /추적 범위 확인 완료/);
   assert.match(dashboardSource, /분야 8색 체계 적용/);
   assert.doesNotMatch(dashboardSource, /canonical snapshots only|Known outstanding checks|Known affected persons|Person 3 checks|canonical 10 Era bands|공식 8색 token 재사용/);
@@ -1183,15 +1183,15 @@ test("Dashboard completeness and source surfaces use display labels instead of r
   assert.match(dashboardSource, /function completenessLabel\(row\)/);
   assert.match(dashboardSource, /completenessLabel\(row\)/);
   assert.match(dashboardSource, /sourceDisplayLabel\(row\.source\)/);
-  assert.match(dashboardSource, /Person Activity Sources/);
+  assert.match(dashboardSource, /인물 활동 출처/);
   assert.match(dashboardSource, /출처 연결/);
   assert.match(dashboardSource, /sourceDisplayLabel\(row\.label\)/);
   assert.match(dashboardSource, /reasonLabel\(row\.data_timestamp_unavailable_reason\)/);
 });
 
 test("Dashboard system strip uses operator labels while retaining runtime identity fields", () => {
-  const start=dashboardSource.indexOf("SYSTEM / PRODUCTION");
-  const end=dashboardSource.indexOf("SOURCE FRESHNESS",start);
+  const start=dashboardSource.indexOf("시스템·운영 환경");
+  const end=dashboardSource.indexOf("원본 갱신 시각",start);
   assert.ok(start >= 0 && end > start);
   const block=dashboardSource.slice(start,end);
   assert.match(block,/배포 환경/);
@@ -1391,12 +1391,12 @@ test("shared store validates Runtime activation history instead of trusting raw 
 });
 
 test("Dashboard renders Runtime activation delta and drift from the shared publication source only", () => {
-  assert.match(dashboardSource,/RUNTIME DELTA \/ DRIFT/);
+  assert.match(dashboardSource,/런타임 변화·불일치/);
   assert.match(dashboardSource,/직전 활성화 대비 변화/);
   assert.match(dashboardSource,/runtimeDeltaDriftMarkup\(runtimeDelta\)/);
-  assert.match(dashboardSource,/직전 Production은 Compile 시각이 아닌 Runtime activation 원장 순서로 판정/);
-  assert.match(dashboardSource,/같은 Compile 재활성화/);
-  assert.match(dashboardSource,/최신 activation과 현재 Runtime projection 불일치/);
+  assert.match(dashboardSource,/직전 운영 상태는 빌드 시각이 아닌 런타임 활성화 이력 순서로 판정/);
+  assert.match(dashboardSource,/같은 빌드 재활성화/);
+  assert.match(dashboardSource,/최신 활성화 내역과 현재 런타임 집계가 다름/);
   assert.match(dashboardSource,/원장 도입 시점 관측 · 배포 SHA 없음/);
   assert.doesNotMatch(dashboardSource,/order by compiled_at|previous compile timestamp/i);
   assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
@@ -1437,15 +1437,15 @@ test("Production browser acceptance permanently verifies Activity completeness p
   assert.match(acceptance,/Rendered Runtime Activity delta differs from model/);
   assert.match(acceptance,/Rendered Runtime excluded delta differs from model/);
   assert.match(acceptance,/Rendered Runtime exclusion reason deltas differ from model/);
-  assert.match(acceptance,/"RUNTIME DELTA \/ DRIFT"/);
+  assert.match(acceptance,/"런타임 변화·불일치"/);
   assert.match(acceptance,/runtime_delta_drift:modelState\.runtime_delta_drift/);
 });
 
 test("Dashboard keeps Needs Attention immediately after KPIs and before work and system telemetry", () => {
   const kpis=dashboardSource.indexOf("dashboard-kpi-grid");
-  const attention=dashboardSource.indexOf("NEEDS ATTENTION");
-  const work=dashboardSource.indexOf("WORK FRONTIER");
-  const system=dashboardSource.indexOf("SYSTEM / PRODUCTION");
+  const attention=dashboardSource.indexOf("검토 필요");
+  const work=dashboardSource.indexOf("작업 진행 현황");
+  const system=dashboardSource.indexOf("시스템·운영 환경");
   assert.ok(kpis >= 0 && attention > kpis && work > attention && system > work);
 });
 
@@ -1463,7 +1463,7 @@ test("shared store owns and validates Runtime exclusion target reads", () => {
 test("Dashboard Runtime exclusion Attention reveals exact Activity target table", () => {
   assert.match(dashboardSource,/RUNTIME EXCLUSION TARGETS/);
   assert.match(dashboardSource,/dashboardRuntimeExclusionTargets/);
-  assert.match(dashboardSource,/Activity UUID/);
+  assert.match(dashboardSource,/활동 UUID/);
   assert.match(dashboardSource,/row\.person_display_name/);
   assert.match(dashboardSource,/row\.polity_display_name/);
   assert.match(dashboardSource,/row\.activity_id/);
@@ -1598,7 +1598,7 @@ test("Work Frontier itemizes domain, Spatial, and Activity status distributions"
   assert.match(dashboardSource,/8개 대표 분야 \+ 미분류 상태를 전체 인물 대비 표시/);
   assert.match(dashboardSource,/key:`domain-\$\{code\}`/);
   assert.match(dashboardSource,/key:"domain-unassigned"/);
-  assert.match(dashboardSource,/segmentedProgressRow\("Spatial 준비"/);
+  assert.match(dashboardSource,/segmentedProgressRow\("공간 배치 준비"/);
   assert.match(dashboardSource,/\.\.\.\(b\.spatial\?\.rows \|\| \[\]\)\.map/);
   assert.match(dashboardSource,/spatialReasonLabel\(item\.code\)/);
   assert.match(dashboardSource,/검토 대기/);
