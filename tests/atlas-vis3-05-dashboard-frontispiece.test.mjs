@@ -15,7 +15,7 @@ test('VIS3-05 grand entrance exists in both loading and live paths, six KPI data
  assert.equal((dash.match(/<section class="dashboard-control-center atlas-ornament-v3">/g)||[]).length,3);
  assert.equal((dash.match(/class="dashboard-hero card dashboard-frontispiece" data-atlas-o-decor/g)||[]).length,2);
  assert.doesNotMatch(dash,/dashboard-frontispiece-seal/);
- assert.match(dash,/<h3 id="dashboardKpiHeading">핵심 통계<\/h3>/);
+ assert.match(dash,/<h3 id="dashboardKpiHeading" data-atlas-o-decor>핵심 통계<\/h3>/);
  assert.match(dash,/<section class="dashboard-kpi-grid" aria-labelledby="dashboardKpiHeading">/);
  for(const code of ['persons','activities','polities','domain','namuwiki','spatial']) {
   assert.equal((dash.match(new RegExp('kpiCard\\(\\{code:"'+code+'"','g'))||[]).length,1,code);

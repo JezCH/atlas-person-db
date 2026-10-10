@@ -44,6 +44,33 @@ Pending distribution, calculated from the canonical registry:
 
 Review **current main**, not archived visual plans. Classify requirements `DONE / PARTIAL / MISSING / STALE_REQUIREMENT / INTENTIONALLY_NOT_EXPOSED`. Only in-scope `PARTIAL` / `MISSING` findings create tasks. Preserve source and authoring visibility, lifecycle history, and measured Spacetime/mobile regression checks; no automatic P14 Geometry work.
 
+### C. YouTube unregistered-historical-Person discovery — #2318
+
+**Active, independent from user-driven Person registration.** [#2318](https://github.com/JezCH/atlas-person-db/issues/2318) is the operational acceptance owner for one **unregistered historical Person candidate** feed. Current evidence comes from the cumulative original channel/video IDs and the one canonical live discovery read; **do not** re-create the rejected registered-UUID leaderboard or infer that raw candidate-label rows are verified missing Persons.
+
+- Original-ID review and bounded alias work have already advanced through merged [#2355](https://github.com/JezCH/atlas-person-db/pull/2355), [#2356](https://github.com/JezCH/atlas-person-db/pull/2356) and living-alias correction [#2359](https://github.com/JezCH/atlas-person-db/pull/2359). Do not start those exact units again. #2356 intentionally holds Diana/Princess Diana and other ambiguous labels rather than guessing.
+- The previously recorded 10,127-channel / 2,230,031-video / 8,053-candidate-row checkpoint is a **historical snapshot**, not a newly verified current result or 8,053 unique historical Persons. Use the current live issue + publication snapshot for newer counts; the #2359 production read-back is not implied by PR merge alone.
+- [#2216](https://github.com/JezCH/atlas-person-db/issues/2216) holds the earlier 5,657-name review cohorts and their source-bound evidence. **Do not add 5,657 to the newer 8,053 rows** or automatically repeat already reconciled aliases. Check snapshot lineage and identity-specific overlap before any residual review.
+- **Independent preservation blocker:** [#2226](https://github.com/JezCH/atlas-person-db/issues/2226) tracks durable recovery of original video/channel archives. The action-artifact baseline and older batch001–007 source gaps must not be silently called restored. Respect its no-next-crawl-before-verified-migration condition.
+
+**Completion owner:** #2318 for identity/eligibility and candidate feed; #2216 for its historic evidence cohort disposition; #2226 for durable source recoverability. These are separate acceptance conditions, **not three mutually exclusive worker locks**. Candidate selection for canonical Person creation still belongs to user-driven #1374/#1375.
+
+### D. Targeted existing-Person correction — #2291
+
+[#2291](https://github.com/JezCH/atlas-person-db/issues/2291) is an **open, bounded Maimonides timeline-disposition correction**. Three existing source-backed Activities are recorded; `chronology_unresolved → timeline` remains to be applied through the current Person Profile writer after **fresh exact-before** and verified Runtime publication. **Do not** create a duplicate Person, fabricate a lifetime rail, treat the issue as already applied, or reactivate the finished cohort-26 registration batch.
+
+### E. UI Phase III visual prototype — PR #2357 (separate from #1896)
+
+The visually scoped [#2357](https://github.com/JezCH/atlas-person-db/pull/2357) is an **OPEN implementation prototype** of the user-selected restrained Dashboard ornament mix. It is *not* final Production acceptance and is not the #1896 canonical **information-coverage** audit. Its own PR requires current-vs-preview responsive visual comparison and user approval, **not CI-only merge**. The UI lane owns the CSS and visual acceptance; a master-status change does not authorize style, layout, Spacetime geometry, or deployment edits.
+
+### F. Release / stale-PR housekeeping (read-only routing)
+
+At this checkpoint [#2338](https://github.com/JezCH/atlas-person-db/pull/2338) is a documentation-only Vercel burst-policy proposal and [#2022](https://github.com/JezCH/atlas-person-db/pull/2022) is an older assertion-only CONTROLS-M2 test correction. Neither should be blindly merged because it is OPEN. Compare only its touched files/contracts with current main and close as superseded when appropriate. Avoid extra Production deployments solely to refresh this board.
+
+**Master coordination rule:** this board indexes workstream *pointers, scope and precise blockers*; the linked live issue, canonical registry, Person writer, source archive or individual PR remains its own fact authority. No master lane claims exclusive lock or independently updates another lane's progress numbers.
+
+---
+
 ## 3. User-selected Person operations (not standing backlog)
 
 - [Candidate review #1374](https://github.com/JezCH/atlas-person-db/issues/1374): user-selected targets only.

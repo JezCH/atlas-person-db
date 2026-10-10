@@ -719,7 +719,7 @@
       </header>
 
       <div class="dashboard-ledger-heading">
-        <h3 id="dashboardKpiHeading">핵심 통계</h3>
+        <h3 id="dashboardKpiHeading" data-atlas-o-decor>핵심 통계</h3>
         <span>현재 원본 집계</span>
       </div>
       <section class="dashboard-kpi-grid" aria-labelledby="dashboardKpiHeading">
