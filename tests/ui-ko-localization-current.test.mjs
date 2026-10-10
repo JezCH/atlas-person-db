@@ -23,7 +23,7 @@ test('authority copy is externalized and includes the canonical spacetime place-
   assert.match(catalog, /ATLAS_UI_AUTHORITY_CATALOG_KO/);
   assert.match(catalog, /spacetime: entry/);
   assert.match(catalog, /수도·왕정 중심·정치 중심/);
-  assert.match(catalog, /장소 기능의 변화는 기준 Activity를 수정하지 않고 시각 배치 구간만 분할/);
+  assert.match(catalog, /장소 기능의 변화는 기준 활동을 수정하지 않고 시각 배치 구간만 분할/);
   assert.match(nav, /window\.ATLAS_UI_AUTHORITY_CATALOG_KO/);
   assert.doesNotMatch(nav, /const DOMAINS = Object\.freeze\(\{/);
   assert.doesNotMatch(nav, /검토된 수도를 사용합니다/);
