@@ -13,6 +13,7 @@ const {
   EXPECTED_WORKFLOW_REF,
   SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF,
   SWEDEN_POLITY_AUDIT_WORKFLOW_REF,
+  SONG_POLITY_AUDIT_WORKFLOW_REF,
   ALLOWED_WORKFLOW_REFS
 } = require('../server/atlas-audit-github-oidc.js');
 
@@ -44,7 +45,8 @@ test('audit OIDC workflow allowlist is exact and includes only designated audits
   assert.deepEqual(ALLOWED_WORKFLOW_REFS, [
     EXPECTED_WORKFLOW_REF,
     SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF,
-    SWEDEN_POLITY_AUDIT_WORKFLOW_REF
+    SWEDEN_POLITY_AUDIT_WORKFLOW_REF,
+    SONG_POLITY_AUDIT_WORKFLOW_REF
   ]);
   assert.equal(ALLOWED_WORKFLOW_REFS.some((ref) => ref.includes('*')), false);
 });
@@ -76,4 +78,11 @@ test('Sweden bounded read-only audit workflow has exact main-SHA OIDC permission
     /GITHUB_OIDC_SHA_MISMATCH/
   );
   assert.throws(() => verifyTrustClaims({...trustedPayload(SWEDEN_POLITY_AUDIT_WORKFLOW_REF), ref:'refs/heads/other'}, EXPECTED_SHA), /GITHUB_OIDC_REF_MISMATCH/);
+});
+
+test('Song bounded audit OIDC caller is exact-main production trusted and cannot forge a foreign SHA',()=>{
+ assert.equal(SONG_POLITY_AUDIT_WORKFLOW_REF,'JezCH/atlas-person-db/.github/workflows/atlas-polity-song-p2-08-audit.yml@refs/heads/main');
+ assert.doesNotThrow(()=>verifyTrustClaims(trustedPayload(SONG_POLITY_AUDIT_WORKFLOW_REF),EXPECTED_SHA));
+ assert.throws(()=>verifyTrustClaims(trustedPayload(SONG_POLITY_AUDIT_WORKFLOW_REF),'fedcba9876543210fedcba9876543210fedcba98'),/GITHUB_OIDC_SHA_MISMATCH/);
+ assert.throws(()=>verifyTrustClaims({...trustedPayload(SONG_POLITY_AUDIT_WORKFLOW_REF),environment:'staging'},EXPECTED_SHA),/GITHUB_OIDC_ENVIRONMENT_MISMATCH/);
 });
