@@ -350,7 +350,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.match(indonesia.rationale, /구성국/);
   assert.match(indonesia.rationale, /직무대행/);
   assert.match(indonesia.rationale, /1950-08-17/);
-  assert.match(indonesia.rationale, /Production 수정 없음/);
+  assert.match(indonesia.rationale, /no Production write/);
 
   const oman = byId.get('oman-empire-oman');
   assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
