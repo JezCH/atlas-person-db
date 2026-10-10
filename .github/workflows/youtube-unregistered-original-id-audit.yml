@@ -23,7 +23,7 @@ jobs:
   test:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -31,6 +31,49 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install --disable-pip-version-check pycountry
       - run: python -m unittest discover -s tests -p test_youtube_discovery_original_id_audit.py -v
+      - run: python -m unittest discover -s tests -p test_youtube_v5_contextual_source_publisher.py -v
+      - name: Download retained immutable Batch024 corpus for v5 publisher dry run
+        uses: actions/download-artifact@v4
+        with:
+          name: youtube-cumulative-batch024-validated
+          run-id: '37921755392'
+          path: corpus
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+      - name: Recompute new source title discovery stats — NO Production writes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/youtube-v5-preview
+          python scripts/youtube-build-person-signal-snapshot.py \
+            --root corpus \
+            --output /tmp/youtube-v5-preview/snapshot.json \
+            --artifact-id 11613130249 \
+            --artifact-digest 'sha256:8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946' \
+            --reviewed-source-aliases audits/youtube-b024-v5-reviewed-alias-nameforms.json
+          jq -e '
+            .snapshot.channel_count==10127
+            and .snapshot.video_count==2230031
+            and .snapshot.parser_version=="yt-title-person-reviewed-v5"
+            and .snapshot.source_state.reviewed_source_unions_count==5
+            and .snapshot.source_state.quality_counters.accepted_context_cue_video_name_ids>0
+            and (.signals|length)>=8862
+            and (.snapshot.threshold_counts["3"]==(.signals|length))
+          ' /tmp/youtube-v5-preview/snapshot.json >/dev/null
+          jq -r '"## Source-backed v5 DRY RUN — NOT Production",
+            "- Channels: \(.snapshot.channel_count)",
+            "- Original video rows: \(.snapshot.video_count)",
+            "- Raw name candidates (3+ channels): \(.signals|length)",
+            "- New contextual video-name hits: \(.snapshot.source_state.quality_counters.accepted_context_cue_video_name_ids)",
+            "- Reviewed original-ID alias unions: \(.snapshot.source_state.reviewed_source_unions_count)",
+            "- Top reviewed name candidate: \(.signals[0].raw_name) (\(.signals[0].distinct_channel_count) channels)"' \
+            /tmp/youtube-v5-preview/snapshot.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-b024-v5-full-source-dryrun-${{ github.sha }}
+          path: /tmp/youtube-v5-preview/snapshot.json
+          retention-days: 30
+          if-no-files-found: error
 
   audit:
     if: github.event_name == 'workflow_dispatch'
