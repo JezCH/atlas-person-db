@@ -197,7 +197,7 @@
   function timestampBasisLabel(basis) {
     if (basis === "generated_at") return "생성 시각";
     if (basis === "latest_tracked_mutation") return "최근 추적 변경";
-    if (basis === "compiled_at") return "Compile 원장 시각";
+    if (basis === "compiled_at") return "빌드 원장 시각";
     return "미제공";
   }
 
@@ -221,7 +221,7 @@
     if (label === "Recent Delta") return "최근 변경";
     if (label === "런타임 식별정보") return "배포 식별";
     if (label === "런타임 게시 정보") return "게시 파이프라인";
-    if (label === "런타임 제외 내역") return "Runtime 제외 대상";
+    if (label === "런타임 제외 내역") return "런타임 제외 대상";
     return label || "원본";
   }
 
@@ -249,9 +249,9 @@
     if (reason === "RUNTIME_IDENTITY_DATA_TIMESTAMP_NOT_EXPOSED") return "배포 식별 갱신 시각 미제공";
     if (reason === "SOURCE_DATA_TIMESTAMP_NOT_EXPOSED") return "원본 갱신 시각 미제공";
     if (reason === "SOURCE_UNAVAILABLE") return "원본 확인 불가";
-    if (reason === "RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED") return "Runtime 제외 대상 원본 확인 불가";
-    if (reason === "RUNTIME_EXCLUSION_TARGET_LEDGER_NOT_APPLIED") return "Runtime 제외 대상 원장 migration 미적용";
-    if (reason === "RUNTIME_EXCLUSION_TARGET_SNAPSHOT_INCOMPLETE") return "Runtime 제외 대상 snapshot 불완전";
+    if (reason === "RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED") return "런타임 제외 대상 원본 확인 불가";
+    if (reason === "RUNTIME_EXCLUSION_TARGET_LEDGER_NOT_APPLIED") return "런타임 제외 대상 원장 migration 미적용";
+    if (reason === "RUNTIME_EXCLUSION_TARGET_SNAPSHOT_INCOMPLETE") return "런타임 제외 대상 snapshot 불완전";
     if (reason === "RUNTIME_PROJECTION_EMPTY") return "Runtime projection 비어 있음";
     if (reason === "DUPLICATE_REVIEW_TARGET_SOURCE_REQUIRES_ADMIN_CONTRACT") return "중복 후보 대상은 관리자 인증 영역에서 확인";
     if (reason === "RUNTIME_PUBLICATION_SOURCE_UNAVAILABLE") return "게시 파이프라인 원본 확인 불가";
@@ -296,7 +296,7 @@
       ${publicationStage("현재 Authoring",funnel.current_authoring,"현재 canonical Activity")}
       ${publicationStage("현재 Runtime Compile 입력",funnel.compile_input,"sealed compile snapshot")}
       ${publicationStage("Runtime 포함",funnel.runtime_included,`현재 Runtime ${value(funnel.current_runtime)}`)}
-      ${publicationStage("Runtime 제외",funnel.runtime_excluded,"Activity 단위")}
+      ${publicationStage("런타임 제외",funnel.runtime_excluded,"Activity 단위")}
     </div>
     <div class="dashboard-publication-meta">
       <span>${escapeHtml(deltaLabel)}</span>
@@ -308,7 +308,7 @@
 
   function runtimeExclusionTargetsMarkup(runtimeExclusions) {
     if (!runtimeExclusions?.available || !Array.isArray(runtimeExclusions.targets)) {
-      return `<div class="dashboard-heatmap-unavailable">${escapeHtml(reasonLabel(runtimeExclusions?.reason) || "Runtime 제외 대상 확인 불가")}</div>`;
+      return `<div class="dashboard-heatmap-unavailable">${escapeHtml(reasonLabel(runtimeExclusions?.reason) || "런타임 제외 대상 확인 불가")}</div>`;
     }
     const rows=runtimeExclusions.targets.map((row)=>`<tr>
       <td><span class="dashboard-unit-badge">${escapeHtml(runtimeExclusionLabel(row.reason_code))}</span></td>
@@ -357,13 +357,13 @@
       : "원장 도입 시점 관측 · 배포 SHA 없음";
     return `<div class="dashboard-drift-grid">
       <article class="dashboard-drift-card" data-drift-state="${delta.drift ? "drift" : "ready"}">
-        <small>최신 Runtime</small><strong>${value(latest?.row_count)}</strong><span>${escapeHtml(activationKindLabel(latest?.activation_kind))} · ${escapeHtml(formatTimestamp(latest?.activated_at))}</span>
+        <small>최신 런타임</small><strong>${value(latest?.row_count)}</strong><span>${escapeHtml(activationKindLabel(latest?.activation_kind))} · ${escapeHtml(formatTimestamp(latest?.activated_at))}</span>
       </article>
       <article class="dashboard-drift-card">
-        <small>직전 Runtime</small><strong>${previous ? value(previous.row_count) : "—"}</strong><span>${previous ? `${escapeHtml(activationKindLabel(previous.activation_kind))} · ${escapeHtml(formatTimestamp(previous.activated_at))}` : "비교 이력 없음"}</span>
+        <small>직전 런타임</small><strong>${previous ? value(previous.row_count) : "—"}</strong><span>${previous ? `${escapeHtml(activationKindLabel(previous.activation_kind))} · ${escapeHtml(formatTimestamp(previous.activated_at))}` : "비교 이력 없음"}</span>
       </article>
       <article class="dashboard-drift-card">
-        <small>런타임 활동 증감</small><strong>${escapeHtml(signedValue(delta.runtime_activity_delta))}</strong><span>직전 activation 대비</span>
+        <small>런타임 활동 증감</small><strong>${escapeHtml(signedValue(delta.runtime_activity_delta))}</strong><span>직전 활성화 대비</span>
       </article>
       <article class="dashboard-drift-card">
         <small>런타임 제외 증감</small><strong>${escapeHtml(signedValue(delta.excluded_activity_delta))}</strong><span>현재 제외 ${value(latest?.excluded_activity_count)} 활동</span>
@@ -476,7 +476,7 @@
     const foot=heatmap.regions.map((region)=>{
       const count=Number(regionTotals[region.code] || 0);
       const share=heatmapShare(count,matrixTotal);
-      return `<td title="${escapeHtml(`${region.label} 시대-권역 셀 합계 ${count}건 · 전체 셀 집계의 ${pct(share)}`)}"><strong>${value(count)}</strong><small>${matrixTotal > 0 ? pct(share) : "—"}</small></td>`;
+      return `<td title="${escapeHtml(`${region.label} 시대·권역 구간 합계 ${count}건 · 전체 셀 집계의 ${pct(share)}`)}"><strong>${value(count)}</strong><small>${matrixTotal > 0 ? pct(share) : "—"}</small></td>`;
     }).join("");
     return `<div class="dashboard-heatmap-key" aria-label="시공간 활동 분포 범례">
       <span><b>색 농도</b> = 해당 시대 안에서 권역이 차지하는 비중</span>
@@ -486,7 +486,7 @@
     <div class="dashboard-heatmap-wrap"><table class="dashboard-heatmap">
       <thead><tr><th scope="col">시대</th>${head}<th scope="col" class="dashboard-heatmap-total-head">시대 합계</th></tr></thead>
       <tbody>${body}</tbody>
-      <tfoot><tr><th scope="row"><strong>권역 합계</strong><small>시대-권역 셀 기준</small></th>${foot}<td class="dashboard-heatmap-total-cell"><strong>${value(matrixTotal)}</strong><small>셀 합계</small></td></tr></tfoot>
+      <tfoot><tr><th scope="row"><strong>권역 합계</strong><small>시대·권역 구간 기준</small></th>${foot}<td class="dashboard-heatmap-total-cell"><strong>${value(matrixTotal)}</strong><small>셀 합계</small></td></tr></tfoot>
     </table></div>`;
   }
 
@@ -824,18 +824,18 @@
         <div class="dashboard-panel-head"><div><p class="eyebrow">시대·권역별 분포</p><h3>시공간 활동 분포</h3></div><span>${heatmap.available ? `배치 ${value(heatmap.placed_activity_count)} · 미해결 ${value(heatmap.unresolved_activity_count)}` : "원본 확인 불가"}</span></div>
         ${heatmapTable(heatmap)}
         <div class="dashboard-progress-meta">
-          <span>10개 시대 구간 × Spatial 대권역 · 색 농도는 시대별 비중 기준</span>
+          <span>10개 시대 구간 × 공간 대권역 · 색 농도는 시대별 비중 기준</span>
           <span>한 활동은 같은 시대·권역에서 1회 집계하며, 여러 시대에 걸치면 각 시대에 각각 집계</span>
         </div>
       </section>
 
       <section class="dashboard-panel card" aria-label="정치체별 인물과 활동 집중도">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">POLITY CONCENTRATION</p><h3>정치체별 인물 집중도</h3></div><span>현재 인물 런타임에서 즉시 파생</span></div>
+        <div class="dashboard-panel-head"><div><p class="eyebrow">정치체 집중도</p><h3>정치체별 인물 집중도</h3></div><span>현재 인물 런타임에서 즉시 파생</span></div>
         ${polityConcentrationMarkup(polityConcentration)}
       </section>
 
-      <section class="dashboard-panel card" aria-label="시스템 및 Production 상태">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">SYSTEM / PRODUCTION</p><h3>현재 실행 환경</h3></div><span>${sys.available ? "배포 식별 정보" : "식별 정보 없음"}</span></div>
+      <section class="dashboard-panel card" aria-label="시스템 및 운영 환경 상태">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">시스템·운영 환경</p><h3>현재 실행 환경</h3></div><span>${sys.available ? "배포 식별 정보" : "식별 정보 없음"}</span></div>
         <div class="dashboard-source-list">
           ${systemCard("배포 환경",environmentLabel(sys.environment),sys.production_main === true ? "운영 · main" : sys.production_main === false ? "운영/main 조합 아님" : "환경 판정 불가",sys.available ? "ready" : "error")}
           ${systemCard("배포 커밋",sys.git_commit_short,sys.git_commit_ref ? `브랜치 ${sys.git_commit_ref}` : "커밋/브랜치 미확인",sys.git_commit_sha && sys.git_commit_ref ? "ready" : "idle")}
@@ -846,32 +846,32 @@
           <span>${sys.identity_complete ? "배포 식별 완료" : "배포 식별 일부 미확인"}</span>
           <span>배포 식별 정보와 CI 상태는 별도</span>
         </div>
-        ${sourceIssues.length ? `<div class="dashboard-source-issues" aria-label="비정상 source 상세">
-          <p class="eyebrow">SOURCE ISSUES</p>
+        ${sourceIssues.length ? `<div class="dashboard-source-issues" aria-label="비정상 원본 상세">
+          <p class="eyebrow">원본 조회 문제</p>
           <div class="dashboard-source-list">${sourceIssues.map(sourceCard).join("")}</div>
         </div>` : ""}
       </section>
 
-      <section class="dashboard-panel card" aria-label="Authoring에서 Runtime까지 게시 파이프라인">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">AUTHORING → COMPILE → RUNTIME</p><h3>게시 파이프라인</h3></div><span>${publication?.sealed ? `Compile 원장 ${escapeHtml(formatTimestamp(publication.compiled_at))}` : "Compile 상태 확인"}</span></div>
+      <section class="dashboard-panel card" aria-label="원본 등록에서 런타임까지 게시 과정">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">원본 등록 → 빌드 → 런타임</p><h3>게시 파이프라인</h3></div><span>${publication?.sealed ? `빌드 원장 ${escapeHtml(formatTimestamp(publication.compiled_at))}` : "빌드 상태 확인"}</span></div>
         ${publicationFunnelMarkup(publication)}
         <div class="dashboard-progress-meta">
-          <span>현재 Authoring과 현재 Runtime Compile snapshot을 구분해 표시</span>
-          <span>Runtime 제외는 인물이 아닌 Activity 단위</span>
+          <span>현재 원본 등록 자료와 런타임 빌드 기록을 구분해 표시</span>
+          <span>런타임 제외는 인물이 아닌 활동 단위</span>
         </div>
       </section>
 
-      <section class="dashboard-panel card" aria-label="Runtime 직전 활성화 대비 변화와 projection drift">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">RUNTIME DELTA / DRIFT</p><h3>직전 활성화 대비 변화</h3></div><span>${runtimeDelta?.available ? (runtimeDelta.drift ? "DRIFT 감지" : runtimeDelta.comparison_available ? "활성화 비교" : "최신 activation 확인") : "활성화 이력 확인"}</span></div>
+      <section class="dashboard-panel card" aria-label="런타임 직전 활성화 대비 변화와 집계 불일치">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">런타임 변화·불일치</p><h3>직전 활성화 대비 변화</h3></div><span>${runtimeDelta?.available ? (runtimeDelta.drift ? "불일치 감지" : runtimeDelta.comparison_available ? "활성화 비교" : "최근 활성화 확인") : "활성화 이력 확인"}</span></div>
         ${runtimeDeltaDriftMarkup(runtimeDelta)}
         <div class="dashboard-progress-meta">
-          <span>직전 Production은 Compile 시각이 아닌 Runtime activation 원장 순서로 판정</span>
-          <span>증감 단위는 활동 · 재활성화도 별도 activation으로 보존</span>
+          <span>직전 운영 상태는 빌드 시각이 아닌 런타임 활성화 이력 순서로 판정</span>
+          <span>증감 단위는 활동 · 재활성화도 별도 이력으로 보존</span>
         </div>
       </section>
 
       <section class="dashboard-panel card" aria-label="기준 원본 갱신 시각과 읽기 시각">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">SOURCE FRESHNESS</p><h3>원본 시각 추적</h3></div><span>원본 시각 ${value(freshness.data_timestamp_known)}/${value(freshness.total_sources)} 확인</span></div>
+        <div class="dashboard-panel-head"><div><p class="eyebrow">원본 갱신 시각</p><h3>원본 시각 추적</h3></div><span>원본 시각 ${value(freshness.data_timestamp_known)}/${value(freshness.total_sources)} 확인</span></div>
         ${sourceFreshnessTable(freshness)}
         <div class="dashboard-progress-meta">
           <span>원본 갱신 시각과 브라우저 마지막 읽기 시각을 구분</span>
@@ -880,7 +880,7 @@
       </section>
 
       <section class="dashboard-tools card">
-        <div><p class="eyebrow">WORKSPACE</p><h3>작업 화면</h3><p>바로가기는 관제 정보 아래의 보조 기능으로만 둡니다.</p></div>
+        <div><p class="eyebrow">작업 화면</p><h3>작업 화면</h3><p>바로가기는 관제 정보 아래의 보조 기능으로만 둡니다.</p></div>
         <div class="dashboard-tool-actions">
           <button type="button" class="btn" data-dashboard-route="persons">인물</button>
           <button type="button" class="btn" data-dashboard-route="spacetime">시공간 인물도</button>
