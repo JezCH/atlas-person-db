@@ -58,6 +58,20 @@ def bucket(title, label):
     locations = [i for i in range(len(a)-len(b)+1) if a[i:i+len(b)] == b]
     if not locations:
         return "SOURCE_NAME_BOUNDARY_MISMATCH_REVIEW"
+    # Person-named buildings, festivals, institutions and works are not
+    # automatically videos ABOUT that historical individual.
+    named_objects = {
+        "day", "cathedral", "church", "chapel", "school", "university",
+        "college", "hospital", "festival", "parade", "award", "prize",
+        "museum", "statue", "film", "movie", "book", "novel",
+        "song", "poem", "painting", "artwork"
+    }
+    for location in locations:
+        remaining = a[location+len(b):]
+        if remaining and remaining[0] in named_objects:
+            return "PERSON_NAMED_EVENT_OR_INSTITUTION_REVIEW"
+        if len(remaining) >= 2 and remaining[0] == "s" and remaining[1] in named_objects:
+            return "PERSON_NAMED_EVENT_OR_INSTITUTION_REVIEW"
     if WORK.search(" ".join(a)):
         return "WORK_OR_PERFORMANCE_REVIEW"
     if JOINT.search(title) or JOINT_NAMES.search(title):
