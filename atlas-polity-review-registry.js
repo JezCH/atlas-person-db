@@ -436,14 +436,27 @@
         id: "russia-temporal-designation",
         review_group: "designation_residual",
         kind: "designation_review",
-        title: "Russia temporal designation — Tsardom / Empire",
-        left: { name: "Russia / Russian polity" },
-        right: { name: "Tsardom of Russia / Russian Empire" },
-        rationale: "Russia identity가 이미 정리됐더라도 Tsardom of Russia 시기 표시가 temporal designation으로 현재 Production에 정확히 남아 있는지 fresh read가 필요합니다.",
-        suggested_action: "hold",
+        title: "Russian Tsardom (1547–1721) / Russian Empire (1721–1917) temporal display debt",
+        left: { name: "Russian Empire (existing normalized Polity)", ko: "러시아 제국", polity_id: "dd07fc4c-b3ac-59ac-bdf2-9cc190893327" },
+        right: { name: "Tsardom of Russia / Russian Empire", ko: "러시아 차르국 / 러시아 제국" },
+        rationale: "POLITY-P2-05A 2026-10-10 source-backed Production/reader audit: 기존 정규화 Polity Russian Empire dd07fc4c-b3ac-59ac-bdf2-9cc190893327에는 1547–1917년 12개 Person Activity가 등록됐고 이반 4세(1547–1584, 차르) 및 표트르 1세(1682–1721 차르 / 1721–1725 황제)의 활동에는 모두 polity_designation_name_en/ko=NULL로 표시되어 1721년 이전 시기의 국호가 러시아 제국으로 잘못 노출됩니다. 크렘린박물관은 이반 4세의 1547-01-16 첫 차르 대관을 명시하며 러시아 대통령도서관은 1721-10-22 구력=1721-11-02 신력 표트르의 황제 칭호 채택 및 제국 표기 전환에 관한 원문을 보관합니다. 두 군주의 인물/기존 Polity UUID와 통치연속성을 임의 변경·분리하지 않고 시대별 지정명('Tsardom of Russia'/러시아 차르국, 'Russian Empire'/러시아 제국)을 명확히 제공해야 합니다. 다만 공유 1721년이 year granularity로 기록된 양쪽 표트르 Activity에 대한 현재 temporal designation SQL resolver는 designation valid_from/to가 Activity 전체를 포함하고 한 건만 매칭될 때에만 표시하므로, 이름만 1547–1721/1721–1917 연도구간으로 추가하면 1721 경계에서는 실패하거나 명칭 중복을 초래할 수 있습니다. 연호(율리우스/그레고리력)와 근거 있는 정확일 경계를 검토하고 현존 designation 행·출처·중복을 authority read로 확인한 후, source-linked writer manifest로 데이터 보정 및 실제 Runtime display 검증해야 합니다. public read의 null 결과는 성공한 designation 등록을 의미하지 않고, 기존 Designation 테이블에 행이 없다는 사실 자체도 증명하지 못합니다. 이 작업에서는 정확히 확인된 결함의 복구 계약만 잠그며 Production write/retirement/Person activity rewrite 없이 REVIEW_REQUIRED 유지.",
+        suggested_action: "repair",
+        reviewed_decision: "retain_russian_polity_repair_1547_1721_temporal_designations_and_1721_precision",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
-        evidence: ["2026-09-27 designation debt ledger", "completion evidence not yet located"]
+        evidence: [
+          "2026-10-10 live Production Polity Russian Empire dd07fc4c-b3ac-59ac-bdf2-9cc190893327 with 12 Activities, years 1547–1917, names EN=Russian Empire KO=러시아 제국. The listed public polity activities ALL returned polity_designation_name_en=null and polity_designation_name_ko=null (name rendering debt, not proof that table rows do not exist).",
+          "2026-10-10 live Ivan IV Person 57b00bae-2420-4ddd-b374-f70c81479bff: earlier Moscow Grand Duchy Activity 2acbc551-332c-4be5-bf89-ba9f30f865e3 (1533–1547, Grand Prince); Russian Empire identity Activity d6cdaf3b-2eab-4b98-8a17-b9c42342534f (1547–1584, Tsar), reviewed/well_established, year granularity, 3 source links, no designation returned",
+          "2026-10-10 live Peter I Person 072f2262-acbb-53a8-a63f-c3e798c24132: Activity 57cdefa5-9a5d-533c-b229-47e398f1d07a (1682–1721 Tsar), Activity 9ec53325-3a97-58a8-a7e7-81a496a47e57 (1721–1725 Emperor); both year/exact/unspecified_historical, chronology exact_as_recorded/legacy_asserted, source names pending-records-corrections.json and pending-records-supplement.json, no designation returned. Preserve original sources until separately verified repair.",
+          "2026-10-10 Production runtime publication 2523 Authoring=2523 Runtime, current=true; parity does not certify designation labels or 1721 Activity semantics",
+          "Current reader contract server/atlas-polity-temporal-designation-read.js: Activity start/end each required; exactly one same-polity designation must FULLY contain Activity inclusive from/to month/day; coalesce coarse start to Jan 1 and coarse end to Dec 31; a year-only Peter 1682–1721 cannot be safely made to match a Tsardom row ending in 1721-11-01, and a 1721–1725 year-only Emperor Activity cannot match a designation starting 1721-11-02. Do not force a label through role-string heuristic or SQL nearest-match ranking.",
+          "Moscow Kremlin Museums, Ivan IV first coronation 16 Jan 1547; https://old.kreml.ru/exhibitions/virtual-exhibitions.coronations-of-tsars-in-the-moscow-kremlin/venchanie-na-tsarstvo-ivana-groznogo/",
+          "Moscow Kremlin Museums, 1721 Peter adopted emperor title and proclaimed empire; https://kreml.ru/ru/museums/uspenskii-sobor/istoriia-2",
+          "Russian Presidential Library, source artifact G. I. Golovkin printed speech to Peter I awarding Emperor title (1721-10-22 Julian), https://www.prlib.ru/item/442015",
+          "Russian Presidential Library, 1721-10-22 OS / 1721-11-02 NS ceremony and Empire proclamation, https://www.prlib.ru/node/619684",
+          "United States Library of Congress guide Peter the Great: Tsar then Emperor, 1682–1725, https://guides.loc.gov/peter-the-great",
+          "Bounded repair acceptance: exact authoritative designation-bundle/source baseline; source-backed date/calendar/granularity choice at 1721 boundary and non-overlap; approved source-preserving designation creation/rewrite and if needed scoped Activity boundary updates; Authoring, compiled Runtime, Person and Polity display readback; terminal only after all tested. Report docs/POLITY_P2_05A_RUSSIA_TSARDOM_EMPIRE_TEMPORAL_DESIGNATION_20261010.md"
+        ]
       },
       {
         id: "sweden-temporal-designation",

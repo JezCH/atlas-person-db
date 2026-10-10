@@ -94,3 +94,34 @@ test("fallback projection preserves the pre-existing stable preferred polity lab
   });
   assert.equal(activity.polity.display_name, "안정 정치체");
 });
+
+test("1721 Tsardom/Empire calendar boundary remains fail-closed for Peter's year-only Activities", () => {
+  // 1721-10-22 Julian = 1721-11-02 Gregorian is a documentary transition.
+  // The year-only 1682-1721 and 1721-1725 Activities cannot be wholly
+  // contained by disjoint date-exact designations without reviewing and
+  // safely adjusting their authoritative temporal precision.
+  const yearBounds = (y, end) => [y, end ? 12 : 1, end ? 31 : 1];
+  const compare = (left, right) => {
+    for (let i = 0; i < left.length; i++) {
+      if (left[i] !== right[i]) return left[i] - right[i];
+    }
+    return 0;
+  };
+  const whollyInside = (activityStart, activityEnd, designationStart, designationEnd) =>
+    compare(designationStart, activityStart) <= 0 && compare(activityEnd, designationEnd) <= 0;
+  const cutover = [1721, 11, 2];
+  const beforeCutover = [1721, 11, 1];
+  assert.equal(
+    whollyInside(yearBounds(1682, false), yearBounds(1721, true), [1547, 1, 1], beforeCutover),
+    false,
+    "1682-1721 Tsar year-only Activity ends after the documented designation cutover"
+  );
+  assert.equal(
+    whollyInside(yearBounds(1721, false), yearBounds(1725, true), cutover, [1917, 12, 31]),
+    false,
+    "1721-1725 Emperor year-only Activity starts before the documented designation cutover"
+  );
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /when count\(\*\) = 1/);
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /coalesce\(pp\.activity_start_month, 1\)/);
+  assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL, /coalesce\(pp\.activity_end_month, 12\)/);
+});
