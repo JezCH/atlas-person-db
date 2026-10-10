@@ -307,7 +307,11 @@
   function navigatorAnchor() {
     const nav = state.nav;
     if (!nav?.getBoundingClientRect) return 0;
-    return nav.getBoundingClientRect().bottom + 10;
+    // Use the same line as scroll-margin-top: the bottom of BOTH pinned
+    // navigation and factual column header. A nav-only anchor incorrectly
+    // labels the preceding era when a jump lands below the table header.
+    const headerHeight = document.querySelector(".person-monumental-register > .person-table-head")?.getBoundingClientRect?.().height || 0;
+    return nav.getBoundingClientRect().bottom + headerHeight + 3;
   }
 
   function closestTargetForCode(code) {
@@ -453,7 +457,9 @@
     let stickyTop = 0;
     try { stickyTop = Number.parseFloat(window.getComputedStyle?.(nav)?.top || "0") || 0; } catch { stickyTop = 0; }
     const height = Number(nav.getBoundingClientRect().height || 0);
+    const headerHeight = document.querySelector(".person-monumental-register > .person-table-head")?.getBoundingClientRect?.().height || 0;
     container.style.setProperty("--person-table-sticky-top", `${Math.ceil(stickyTop + height)}px`);
+    container.style.setProperty("--person-table-head-height", `${Math.ceil(headerHeight)}px`);
   }
 
   function scheduleViewportUpdate() {
