@@ -73,7 +73,16 @@ def fetch_previous(endpoint):
         raise RuntimeError("INCOMPLETE_SNAPSHOT")
     if any(item.get("rank") != i for i, item in enumerate(rows, 1)):
         raise RuntimeError("NONCONTIGUOUS_SNAPSHOT_RANKS")
-    return {"snapshot": snapshot, "rows": rows, "stored_count": expected}
+    # The current public API is a registry-filtered discovery view, NOT the
+    # complete original-name DB snapshot (8,043 vs 8,862 on Batch024).
+    # Never hand this result to a raw preservation or identity-union gate.
+    return {
+        "snapshot": snapshot,
+        "rows": rows,
+        "stored_count": expected,
+        "projection": "registration_filtered_discovery",
+        "is_complete_raw_baseline": False,
+    }
 
 
 def main():
