@@ -45,7 +45,7 @@ test('canonical Polity listing stays live while expanded rows render a first-cla
 
 test('current registry restores every required carry-forward audit family without making it an execution queue', () => {
   assert.equal(registry.schema, 'atlas-polity-review-registry/v3');
-  assert.equal(registry.generated_at, '2026-10-08');
+  assert.equal(registry.generated_at, '2026-10-11');
   assert.equal(registry.authority.issue, 1895);
   assert.equal(Object.hasOwn(registry, 'execution_frontier'), false);
   assert.equal(registry.snapshot_history.path, 'docs/audits/POLITY_REVIEW_CANDIDATES_20260927_ARCHIVE.txt');
