@@ -8,7 +8,7 @@ const nav=read('atlas-main-authority-nav.js');
 test('connection status hidden attribute outranks the ordinary inline-flex display rule',()=>{
  assert.match(read('styles.css'),/\.status\{display:inline-flex/);
  assert.match(css,/#connectionStatus\[hidden\]\s*\{\s*display:\s*none\s*;\s*\}/);
- assert.match(html,/atlas-ui-visual-foundation\.css\?v=20261010-vis3-05t-b-hidden-v1/);
+ assert.match(html,/atlas-ui-visual-foundation\.css\?v=20261010-vis3-05t-c-navlegibility-v1/);
  assert.equal((html.match(/atlas-ui-visual-foundation\.css\?v=/g)||[]).length,1);
  assert.match(html,/id="connectionStatus" class="status status-warn">연결 확인 중/);
  assert.match(nav,/if \(connectionStatus\) connectionStatus\.hidden = false/);
