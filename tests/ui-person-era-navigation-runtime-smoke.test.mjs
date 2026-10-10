@@ -132,11 +132,18 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
   const medieval = eraGroup('medieval', '중세', 'AD 500 – 1491', 3, 500);
   container.append(ancient, medieval);
 
+  const header = createNode('div', 'person-table-head');
+  header.rect = { top: 60, bottom: 96, height: 36 };
+  const scrollListeners = {};
   const document = {
     readyState: 'complete',
     activeElement: null,
     createElement(tag) { return createNode(tag); },
-    querySelector(selector) { return selector === '#personMainGroups' ? container : null; },
+    querySelector(selector) {
+      if (selector === '#personMainGroups') return container;
+      if (selector === '.person-monumental-register > .person-table-head') return header;
+      return null;
+    },
     addEventListener() {}
   };
   const window = {
@@ -147,7 +154,7 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
       ],
       CODES: ['governance', 'military']
     },
-    addEventListener() {},
+    addEventListener(type, callback) { scrollListeners[type] = callback; },
     requestAnimationFrame(callback) { callback(); },
     setTimeout(callback) { callback(); },
     matchMedia() { return { matches: false }; },
@@ -203,8 +210,9 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
   assert.equal(domainList.children[1].dataset.domainFilter, 'governance');
   assert.ok(hasClass(domainList.children[1], 'is-active'));
   assert.equal(domainList.children[2].dataset.domainFilter, 'military');
-  // Header begins immediately after the measured 60px navigation, without the former 6px leak.
+  // The header begins immediately after navigation; era jumps include its live height.
   assert.equal(container.style.values['--person-table-sticky-top'], '60px');
+  assert.equal(container.style.values['--person-table-head-height'], '36px');
 
   const buttons = nav.querySelectorAll('button[data-era]');
   assert.equal(buttons.length, 2);
@@ -218,4 +226,14 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
   assert.equal(buttons[1].attributes['aria-current'], 'location');
   assert.ok(hasClass(buttons[1], 'is-current'));
   assert.equal(nav.querySelector('.person-era-nav-current').textContent.includes('3명'), false);
+
+  // Simulate scrollIntoView's landing: the preceding group still touches the
+  // pinned column header, but the new era begins directly beneath it.
+  nav.rect = { top: 10, bottom: 60, height: 50 };
+  ancient.rect = { top: -202, bottom: 98, height: 300 };
+  medieval.rect = { top: 98, bottom: 398, height: 300 };
+  scrollListeners.scroll();
+  assert.ok(hasClass(buttons[1], 'is-current'), 'clicked era must remain active after scroll settles');
+  assert.equal(buttons[1].attributes['aria-current'], 'location');
+  assert.equal(buttons[0].attributes['aria-current'], undefined);
 });
