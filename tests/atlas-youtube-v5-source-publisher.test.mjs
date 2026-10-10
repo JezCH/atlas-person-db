@@ -45,6 +45,21 @@ test("v5 workflow never uses the registry-filtered public discovery as the old r
   assert.ok(builder.includes('source_name_generation_independent_of_registered_persons'));
 });
 
+test("incremental QA does not invent new raw Person names from filtered old view",async()=>{
+  const {computeIncrementalAudit}=await import("../scripts/youtube-incremental-review.mjs");
+  const row=(raw_name,rank)=>({raw_name,rank,distinct_channel_count:3,video_count:3});
+  const previous={projection:"registration_filtered_discovery",
+    is_complete_raw_baseline:false,stored_count:2,
+    snapshot:{snapshot_id:"old",threshold_counts:{"3":3}},
+    rows:[row("Existing Person",1),row("Another Person",2)]};
+  const current={snapshot:{snapshot_id:"new",threshold_counts:{"3":3}},
+    signals:[row("Existing Person",1),row("Another Person",2),row("Registered Person",3)]};
+  const result=computeIncrementalAudit(current,previous);
+  assert.equal(result.summary.comparison_scope,"FILTERED_PREVIOUS_DISCOVERY_NOT_FULL_RAW");
+  assert.equal(result.summary.new_raw_names,null);
+  assert.equal(result.summary.names_absent_from_filtered_previous,1);
+});
+
 test("UI reveals stale parser and counts candidate names rather than certified Persons",()=>{
   const ui=fs.readFileSync(new URL("../atlas-registration-review.js",import.meta.url),"utf8");
   assert.ok(ui.includes("구형 제목 앞부분 추출 통계"));
