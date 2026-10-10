@@ -1,0 +1,75 @@
+name: ATLAS Sweden P2-06A Authenticated Source Inventory
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/atlas-polity-sweden-p2-06-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  sweden-read-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    environment: production
+    steps:
+      - name: Authenticated exact live Polity/Designation/Activity/Source READ ONLY
+        shell: bash
+        run: |
+          set -euo pipefail
+          AUDIT='https://atlas-person-db.vercel.app/api/atlas-audit-inventory?__atlas_audit_surface=polity-reference-audit'
+          IDENTITY='https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity'
+          for attempt in $(seq 1 45); do
+            curl --fail-with-body --silent --show-error "$IDENTITY" > identity.json
+            deployed="$(jq -r '.identity.git_commit_sha // ""' identity.json)"
+            if [[ "$deployed" =~ ^[0-9a-f]{40}$ && "$(jq -r '.identity.git_commit_ref' identity.json)" == "main" ]]; then
+              token="$(curl --fail-with-body --silent --show-error \
+                -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+                "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=atlas-person-db-audit-inventory" | jq -er '.value')"
+              payload="$(jq -cn --arg sha "$deployed" '{deployment_sha:$sha,include_sweden_details:true}')"
+              code="$(curl --silent --show-error --output audit.json --write-out '%{http_code}' \
+                -H 'content-type: application/json' -H "authorization: Bearer $token" \
+                --data "$payload" "$AUDIT")"
+              if [[ "$code" == "200" ]]; then break; fi
+              echo "Sweden exact Production audit waiting for compatible deployed code (attempt $attempt; HTTP $code, code $(jq -r '.code // "UNKNOWN"' audit.json))."
+            fi
+            sleep 10
+          done
+          jq -e '.ok==true and .complete==true and .read_only==true and .committed==false
+            and (.sweden_details.polity_ids|type)=="array"
+            and (.sweden_details.designations|type)=="array"
+            and (.sweden_details.activities|type)=="array"
+            and (.sweden_details.activity_sources|type)=="array"
+            and (.sweden_details.runtime_activities|type)=="array"
+            and .sweden_details.preflight_only==true
+            and .sweden_details.committed==false' audit.json >/dev/null
+          jq '.sweden_details' audit.json > sweden-p2-06a-authority-readonly.json
+          jq -c '.sweden_details | {
+            polity_ids, polity_source_links:(.polity_sources|length),
+            designation_count:(.designations|length),
+            designation_periods:[.designations[]|{polity_id,designation:.designation,names:.names,source_links:.source_links}],
+            identity_relations:(.identity_relations|length),
+            governance_periods:(.governance_periods|length),
+            activity_count:(.activities|length),
+            activity_year_spans:[.activities[]|{activity_id,polity_id,person_id:.activity.person_id,
+             start:.activity.activity_start,end:.activity.activity_end,
+             start_granularity:.activity.activity_start_granularity,end_granularity:.activity.activity_end_granularity}],
+            activity_source_links:(.activity_sources|length),
+            runtime_activity_count:(.runtime_activities|length)
+          }' audit.json | tee sweden-p2-06a-summary.json
+      - name: Preserve reviewable provenance and before-state
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sweden-p2-06a-authoritative-readonly
+          path: |
+            identity.json
+            audit.json
+            sweden-p2-06a-authority-readonly.json
+            sweden-p2-06a-summary.json
+          if-no-files-found: warn
+          retention-days: 90
