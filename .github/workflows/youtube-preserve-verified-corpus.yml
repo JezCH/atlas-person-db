@@ -5,6 +5,7 @@ on:
 permissions:
   contents: read
   actions: read
+  id-token: write
 
 concurrency:
   group: atlas-youtube-source-archive-preservation
@@ -18,6 +19,9 @@ jobs:
     env:
       SUPABASE_URL: https://wfrbxltvpmlprgwfysxq.supabase.co
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      CATALOG_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply?__atlas_authoring_apply_surface=youtube-source-archive-catalog
+      RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
+      CATALOG_AUDIENCE: atlas-person-db-youtube-source-archive
       SOURCE_ARTIFACT_ID: '11548326100'
       SOURCE_ARTIFACT_DIGEST: sha256:b40f8efdccfacce194afb44cc7cca3e93a4ab12a2153c5a19b70ceb3f56b0b1f
       SOURCE_ARTIFACT_SIZE: '57840666'
@@ -34,13 +38,13 @@ jobs:
         run: |
           set -euo pipefail
           gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/${SOURCE_ARTIFACT_ID}" > /tmp/source-artifact.json
-          jq -e             --argjson id "${SOURCE_ARTIFACT_ID}"             --arg digest "${SOURCE_ARTIFACT_DIGEST}"             --argjson size "${SOURCE_ARTIFACT_SIZE}" '
-              .id==$id
-              and .name=="youtube-cumulative-batch017-validated"
-              and .expired==false
-              and .digest==$digest
-              and .size_in_bytes==$size
-            ' /tmp/source-artifact.json >/dev/null
+          jq -e --argjson id "${SOURCE_ARTIFACT_ID}" --arg digest "${SOURCE_ARTIFACT_DIGEST}" --argjson size "${SOURCE_ARTIFACT_SIZE}" '
+            .id==$id
+            and .name=="youtube-cumulative-batch017-validated"
+            and .expired==false
+            and .digest==$digest
+            and .size_in_bytes==$size
+          ' /tmp/source-artifact.json >/dev/null
 
       - uses: actions/download-artifact@v4
         with:
@@ -54,24 +58,25 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Verify idempotent upload, catalog and remote restore behavior
+      - name: Verify storage resume and remote restore behavior
         run: python -m unittest discover -s tests -p test_youtube_source_upload.py -v
 
-      - name: Pin complete 6,044-member local inventory before remote writes
+      - name: Pin complete 6,044-member inventory before any remote write
         shell: bash
         run: |
           set -euo pipefail
           python scripts/youtube-preserve-verified-corpus.py             --root corpus             --output /tmp/youtube-inventory.json             --dry-run             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
-          jq -e             --argjson files "${SOURCE_MEMBER_COUNT}"             --argjson bytes "${SOURCE_MEMBER_BYTES}"             --argjson catalog "${SOURCE_CATALOG_COUNT}" '
-              .schema=="atlas-youtube-source-verified-upload/v2"
-              and .total_files_discovered==$files
-              and .total_bytes_discovered==$bytes
-              and .files_verified==$files
-              and .bytes_verified==$bytes
-              and .catalog_expected==$catalog
-              and .metadata_objects==23
-              and .uploaded==false
-            ' /tmp/youtube-inventory.json >/dev/null
+          jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson catalog "${SOURCE_CATALOG_COUNT}" '
+            .schema=="atlas-youtube-source-storage-verification/v2"
+            and .total_files_discovered==$files
+            and .total_bytes_discovered==$bytes
+            and .files_verified==$files
+            and .bytes_verified==$bytes
+            and .source_records==$catalog
+            and .metadata_objects==23
+            and .uploaded==false
+            and ([.records[] | select(.source_kind=="channel_videos") | .video_rows] | add)==1536512
+          ' /tmp/youtube-inventory.json >/dev/null
 
       - name: Validate authoritative source census before any upload
         shell: bash
@@ -87,7 +92,7 @@ jobs:
             and .snapshot.source_state.channel_ids_persisted==true
           ' /tmp/youtube-source-preflight.json >/dev/null
 
-      - name: Fail closed if production upload credentials are unavailable
+      - name: Fail closed if private Storage credentials are unavailable
         env:
           SOURCE_TOKEN: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         shell: bash
@@ -107,30 +112,93 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/youtube-preserve-verified-corpus.py             --root corpus             --output /tmp/youtube-remote-pass2.json             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
-          jq -e             --argjson files "${SOURCE_MEMBER_COUNT}"             --argjson bytes "${SOURCE_MEMBER_BYTES}"             --argjson catalog "${SOURCE_CATALOG_COUNT}" '
-              .files_verified==$files
-              and .bytes_verified==$bytes
-              and ((.new_objects + .existing_objects)==$files)
-              and .catalog_expected==$catalog
-              and ((.catalog_inserted + .catalog_existing)==$catalog)
-              and .metadata_objects==23
-            ' /tmp/youtube-remote-pass2.json >/dev/null
+          jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson catalog "${SOURCE_CATALOG_COUNT}" '
+            .files_verified==$files
+            and .bytes_verified==$bytes
+            and ((.new_objects + .existing_objects)==$files)
+            and .source_records==$catalog
+            and .metadata_objects==23
+          ' /tmp/youtube-remote-pass2.json >/dev/null
 
-      - name: Prove third pass is idempotent and restore only from remote objects
+      - name: Resolve exact deployed main runtime before canonical catalog write
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 90); do
+            status="$(curl --silent --show-error --output /tmp/runtime.json --write-out '%{http_code}' "${RUNTIME_IDENTITY_ENDPOINT}")"
+            if [[ "${status}" == "200" ]]; then
+              runtime_sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/runtime.json)"
+              runtime_ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/runtime.json)"
+              if [[ "${runtime_sha}" == "${GITHUB_SHA}" && "${runtime_ref}" == "main" ]]; then
+                echo "ATLAS_YOUTUBE_ARCHIVE_RUNTIME_SHA=${runtime_sha}" >> "${GITHUB_ENV}"
+                exit 0
+              fi
+            fi
+            sleep 5
+          done
+          cat /tmp/runtime.json >&2 || true
+          echo "YOUTUBE_SOURCE_ARCHIVE_RUNTIME_NOT_READY" >&2
+          exit 1
+
+      - name: Publish exact 6,021 verified source objects to canonical DB catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq             --arg runtime "${ATLAS_YOUTUBE_ARCHIVE_RUNTIME_SHA}"             --arg publication "${GITHUB_SHA}"             '{
+              runtime_sha:$runtime,
+              publication_sha:$publication,
+              records:[
+                .records[]
+                | select(.source_kind!="metadata")
+                | {
+                    object_key,sha256,byte_count,source_artifact_id,batch_label,
+                    source_kind,channel_id,video_rows
+                  }
+              ]
+            }' /tmp/youtube-remote-pass2.json > /tmp/youtube-catalog-request.json
+          jq -e --argjson expected "${SOURCE_CATALOG_COUNT}" '
+            (.records|length)==$expected
+            and ([.records[]|select(.source_kind=="channel_videos")|.video_rows]|add)==1536512
+          ' /tmp/youtube-catalog-request.json >/dev/null
+          oidc_token="$(curl --fail-with-body --silent --show-error             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${CATALOG_AUDIENCE}" | jq -er '.value')"
+          status="$(curl --silent --show-error             --output /tmp/youtube-catalog-pass1.json             --write-out '%{http_code}'             --request POST             -H 'content-type: application/json'             -H "authorization: Bearer ${oidc_token}"             --data-binary @/tmp/youtube-catalog-request.json             "${CATALOG_ENDPOINT}")"
+          [[ "${status}" == "200" ]] || { cat /tmp/youtube-catalog-pass1.json >&2 || true; exit 1; }
+          jq -e --argjson expected "${SOURCE_CATALOG_COUNT}" '
+            .ok==true
+            and .marker=="ATLAS_YOUTUBE_SOURCE_ARCHIVE_CATALOG_V1"
+            and .outcome.verified_count==$expected
+            and ((.outcome.inserted_count + .outcome.existing_count)==$expected)
+          ' /tmp/youtube-catalog-pass1.json >/dev/null
+
+      - name: Prove third Storage pass is zero-new and restore only from remote objects
         shell: bash
         run: |
           set -euo pipefail
           rm -rf /tmp/youtube-remote-restore
           python scripts/youtube-preserve-verified-corpus.py             --root corpus             --output /tmp/youtube-remote-final.json             --restore-dir /tmp/youtube-remote-restore             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
-          jq -e             --argjson files "${SOURCE_MEMBER_COUNT}"             --argjson bytes "${SOURCE_MEMBER_BYTES}"             --argjson catalog "${SOURCE_CATALOG_COUNT}" '
-              .files_verified==$files
-              and .new_objects==0
-              and .existing_objects==$files
-              and .catalog_inserted==0
-              and .catalog_existing==$catalog
-              and .restore.files==$files
-              and .restore.bytes==$bytes
-            ' /tmp/youtube-remote-final.json >/dev/null
+          jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" '
+            .files_verified==$files
+            and .new_objects==0
+            and .existing_objects==$files
+            and .restore.files==$files
+            and .restore.bytes==$bytes
+          ' /tmp/youtube-remote-final.json >/dev/null
+
+      - name: Prove canonical DB catalog replay is idempotent
+        shell: bash
+        run: |
+          set -euo pipefail
+          oidc_token="$(curl --fail-with-body --silent --show-error             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${CATALOG_AUDIENCE}" | jq -er '.value')"
+          status="$(curl --silent --show-error             --output /tmp/youtube-catalog-final.json             --write-out '%{http_code}'             --request POST             -H 'content-type: application/json'             -H "authorization: Bearer ${oidc_token}"             --data-binary @/tmp/youtube-catalog-request.json             "${CATALOG_ENDPOINT}")"
+          [[ "${status}" == "200" ]] || { cat /tmp/youtube-catalog-final.json >&2 || true; exit 1; }
+          jq -e --argjson expected "${SOURCE_CATALOG_COUNT}" '
+            .ok==true
+            and .outcome.idempotent==true
+            and .outcome.committed==false
+            and .outcome.verified_count==$expected
+            and .outcome.inserted_count==0
+            and .outcome.existing_count==$expected
+          ' /tmp/youtube-catalog-final.json >/dev/null
 
       - name: Rebuild authoritative census from remote-restored files only
         shell: bash
@@ -154,19 +222,20 @@ jobs:
           cp /tmp/youtube-inventory.json /tmp/youtube-source-storage-verification/local-inventory.json
           cp /tmp/youtube-remote-pass1.json /tmp/youtube-source-storage-verification/remote-pass1.json
           cp /tmp/youtube-remote-pass2.json /tmp/youtube-source-storage-verification/remote-pass2.json
+          cp /tmp/youtube-catalog-pass1.json /tmp/youtube-source-storage-verification/catalog-pass1.json
           cp /tmp/youtube-remote-final.json /tmp/youtube-source-storage-verification/remote-final.json
+          cp /tmp/youtube-catalog-final.json /tmp/youtube-source-storage-verification/catalog-final.json
           cp /tmp/youtube-remote-restore-census.json /tmp/youtube-source-storage-verification/remote-restore-census.json
-          jq '{
+          jq --slurpfile catalog /tmp/youtube-catalog-final.json '{
             schema:"atlas-youtube-durable-recovery-receipt/v1",
             source_artifact_id:.source_artifact_id,
             object_count:.files_verified,
             member_bytes:.bytes_verified,
             storage_existing:.existing_objects,
             storage_new:.new_objects,
-            catalog_verified:(.catalog_inserted + .catalog_existing),
-            catalog_inserted:.catalog_inserted,
-            catalog_existing:.catalog_existing,
+            source_records:.source_records,
             metadata_objects:.metadata_objects,
+            catalog:$catalog[0].outcome,
             restore:.restore
           }' /tmp/youtube-remote-final.json             > /tmp/youtube-source-storage-verification/summary.json
 
