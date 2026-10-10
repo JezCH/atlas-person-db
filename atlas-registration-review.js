@@ -218,9 +218,11 @@
     signalRows=Array.isArray(payload?.rows) ? payload.rows : [];
     const snapshot=payload?.snapshot || null;
     const telemetry=activeRoot?.querySelector("#youtubeSignalTelemetry");
+    const reviewedExcluded=Number(payload?.reviewed_expanded_source_nonperson_excluded_count || 0);
+    const reviewedExcludedLabel=reviewedExcluded>0 ? ` · 확인된 비인물 표기 ${number(reviewedExcluded)}개 제외` : "";
     if(telemetry) {
       telemetry.innerHTML=snapshot
-        ? `<strong>누적 ${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>Channel ID 중복 제거 · ${escapeHtml(dateTime(snapshot.generated_at))} · ${snapshot.source_state?.additional_title_context_extraction===true ? "제목 문맥 추가 추출 적용(인물 중심성 미확정)" : "구형 제목 앞부분 추출 통계 · 최신 제목 문맥 감사 미반영"} · 다음 ${escapeHtml(snapshot.source_state?.next_batch || "수집 대기")}</span>`
+        ? `<strong>누적 ${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>Channel ID 중복 제거 · ${escapeHtml(dateTime(snapshot.generated_at))} · ${snapshot.source_state?.additional_title_context_extraction===true ? "제목 문맥 추가 추출 적용(인물 중심성 미확정)" : "구형 제목 앞부분 추출 통계 · 최신 제목 문맥 감사 미반영"} · 다음 ${escapeHtml(snapshot.source_state?.next_batch || "수집 대기")}${reviewedExcludedLabel}</span>`
         : "<strong>아직 YouTube 수집 데이터가 없습니다.</strong>";
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
