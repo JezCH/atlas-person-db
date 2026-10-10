@@ -789,3 +789,57 @@ textarea:focus {
     transition: none;
   }
 }
+
+
+/* VIS3-05T-C — label-first legibility on the existing desktop rail.
+ * No new decoration, icon, semantic color, route string or data source.
+ * Long nav items use the second grid row for their exact status label.
+ * Short entries retain the existing one-row grid and active treatment.
+ */
+.nav-list .nav-item small {
+  color: #a2a9ae;
+  font-size: 10px;
+  line-height: 1.35;
+}
+.sidebar-foot {
+  color: #99a2a8;
+  font-size: 10px;
+}
+.brand span {
+  color: #99a2a8;
+  font-size: 10px;
+}
+.workspace-shell:not(.sidebar-collapsed) .nav-list .nav-item:is(
+  [data-atlas-domain="spacetime"],
+  [data-atlas-domain="polities"],
+  [data-atlas-domain="places"],
+  [data-atlas-domain="events"],
+  [data-atlas-domain="geometry"]
+) {
+  grid-template-columns: 20px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 8px;
+  row-gap: 3px;
+  align-content: center;
+  min-height: 52px;
+  padding-block: 8px;
+}
+.workspace-shell:not(.sidebar-collapsed) .nav-list .nav-item:is(
+  [data-atlas-domain="spacetime"],
+  [data-atlas-domain="polities"],
+  [data-atlas-domain="places"],
+  [data-atlas-domain="events"],
+  [data-atlas-domain="geometry"]
+) > small {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: start;
+  width: 100%;
+  min-width: 0;
+  margin-left: 0;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+  text-align: left;
+}
+/* Small screens use their independent .mobile-nav button layout. The
+ * desktop 68px rail keeps the pre-existing icon-only collapsed rules. */
