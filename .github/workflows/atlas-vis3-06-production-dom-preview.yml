@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "scripts/verify-vis3-06-production-dom-preview.mjs"
+      - "scripts/verify-vis3-06-dense-production-preview.mjs"
       - ".github/workflows/atlas-vis3-06-production-dom-preview.yml"
       - "docs/ui/UI_PHASE_III_VIS3_06_P_REAL_DOM_PREFLIGHT_20261010.md"
   workflow_dispatch:
@@ -46,7 +47,9 @@ jobs:
           "$CHROME_BIN" --version
 
       - name: Validate read-only concept runner syntax
-        run: node --check scripts/verify-vis3-06-production-dom-preview.mjs
+        run: |
+          node --check scripts/verify-vis3-06-production-dom-preview.mjs
+          node --check scripts/verify-vis3-06-dense-production-preview.mjs
 
       - name: Capture same-Production-DOM A/B/C without deployment
         shell: bash
@@ -70,6 +73,7 @@ jobs:
           done
           curl -fsS http://127.0.0.1:9222/json/version >/dev/null
           node scripts/verify-vis3-06-production-dom-preview.mjs
+          node scripts/verify-vis3-06-dense-production-preview.mjs
 
       - name: Upload comparison PNGs and structured geometry evidence
         if: always()
