@@ -167,6 +167,20 @@ class TestWholeTitleRecall(unittest.TestCase):
 
 
 
+    def test_initial_dot_does_not_hide_open_vocabulary_historical_name(self):
+        idx = module.build_index(["Carter G Woodson", "W E B Du Bois", "Emmett Till"])
+        self.assertEqual(
+            [x[0] for x in module.find_names("The Life of Carter G. Woodson", idx)],
+            ["Carter G Woodson"],
+        )
+        self.assertEqual(
+            [x[0] for x in module.find_names("W.E.B. Du Bois: Biography", idx)],
+            ["W E B Du Bois"],
+        )
+        self.assertEqual(
+            module.find_names("Carter G. someone else", idx), []
+        )
+
     def test_new_cue_labels_expand_from_same_snapshot_original_ids(self):
         with tempfile.TemporaryDirectory() as tmp:
             archive = Path(tmp) / "new_names.zip"
