@@ -14,21 +14,21 @@
 
 ### A. Polity identity / continuity cleanup — #1895
 
-**Registry snapshot: 75 total / 52 terminal / 23 `REVIEW_REQUIRED`** (2026-10-10). This is the tracked seed ledger, **not** a guarantee that all live Polity identities have been audited.
+**Registry snapshot: 75 total / 53 terminal / 22 `REVIEW_REQUIRED`** (2026-10-10). This is the tracked seed ledger, **not** a guarantee that all live Polity identities have been audited.
 
 Pending distribution, calculated from the canonical registry:
 
 | Review group | Pending |
 | --- | ---: |
-| Historical-family continuity | 11 |
+| Historical-family continuity | 10 |
 | Temporal designation | 2 |
 | Korean naming collisions | 2 |
 | Territorial / operational rupture | 8 |
-| **Total** | **23** |
+| **Total** | **22** |
 
-**Current historical-family result:** `oman-empire-oman` historical-scope audit completed as **MERGE / canonical Oman recommended, execution REVIEW_REQUIRED** because one duplicated 1806–1856 Said reign and legacy Empire retirement require reviewed source-preserving correction plus explicit user approval. Oman `ac7279b2-da5c-42df-a217-ac60f16106ff`, Omani Empire `68c83ef6-0023-5af9-a6e8-26ccf5b8e116`. No Production writes; 75 total / 52 terminal / 23 pending unchanged. [Bounded audit](POLITY_P2_04A_OMAN_IMPERIAL_SCOPE_AUDIT_20261010.md). Next independent family seed for separate user instruction: `saudi-third-state-nejd`. France remains independently approval-gated; Macedonia `KEEP_SEPARATE`, Brazil `FIXED`.
+**Current historical-family result:** `saudi-third-state-nejd` classified **terminal `KEEP_SEPARATE`** after exact five-Polity/seven-Activity Production source audit. The 1902 emirate, 1921 Nejd sultanate, concurrent 1926 Hejaz kingship, 1927 dual/composite monarchy and 1932 unified Kingdom are legally/administratively meaningful distinct phases within one continuous Al Saud ruling project. Contemporary 1926 British India Office evidence expressly distinguishes Hejaz and Nejd administrations. Existing historic Hejaz Hashemite rule and overlapping jurisdictional offices were preserved. **No Production mutation.** [Scoped audit](POLITY_P2_04B_SAUDI_STATE_PHASES_1902_1932_20261010.md). Next independent family seed: `liberia-commonwealth-republic` (Russia SFSR/Federation is already terminal `KEEP_SEPARATE`). **Separate approval-gated hold:** `oman-empire-oman` remains `REVIEW_REQUIRED` after [source-backed MERGE recommendation](POLITY_P2_04A_OMAN_IMPERIAL_SCOPE_AUDIT_20261010.md); no duplicate reign or legacy Empire was removed. France is independently approval-gated; Macedonia `KEEP_SEPARATE`, Brazil `FIXED`.
 
-**POLITY-P0-02 closed (2026-10-10):** the stale `western-eastern-jin` `NOT_PRESENT` decision is now `KEEP_SEPARATE`. Exact live Production IDs: Western Jin `77ee4f18-ba76-4e89-a925-431d00b1d214` (Sima Yan 266–290), Eastern Jin `2ab00854-f6fa-458b-8482-e9d1379036ba` (Wang Xizhi 353). Both Person→Polity Runtime detail reads succeeded; latest publication has Authoring 2,523 = Runtime 2,523 and `publication_current=true`. The 311/316 western collapse and 317 Jiankang reestablishment justify separate period/territorial identities while preserving Sima dynastic succession. **Existing 75 / 52 terminal / 23 pending totals unchanged; no Production write.** See canonical registry seed for source/evidence details.
+**POLITY-P0-02 closed (2026-10-10):** the stale `western-eastern-jin` `NOT_PRESENT` decision is now `KEEP_SEPARATE`. Exact live Production IDs: Western Jin `77ee4f18-ba76-4e89-a925-431d00b1d214` (Sima Yan 266–290), Eastern Jin `2ab00854-f6fa-458b-8482-e9d1379036ba` (Wang Xizhi 353). Both Person→Polity Runtime detail reads succeeded; latest publication has Authoring 2,523 = Runtime 2,523 and `publication_current=true`. The 311/316 western collapse and 317 Jiankang reestablishment justify separate period/territorial identities while preserving Sima dynastic succession. **Its earlier closure left the then-current review counts unchanged; later source-backed Saudi classification yields today's 75 / 53 terminal / 22 pending. No Production write in P0-02 or P2-04B.** See canonical registry seed for source/evidence details.
 
 **Active final-acceptance blockers outside the 23 seeds:**
 

@@ -210,12 +210,23 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 23);
+  assert.equal(unresolved.length, 22);
   const brazil = byId.get('brazil-regime-family');
   assert.equal(brazil.terminal_status, 'FIXED');
   assert.equal(brazil.status, 'FIXED');
   assert.match(brazil.rationale, /old United States of Brazil and Brazil are ONE continuously sovereign republic/);
   assert.match(brazil.rationale, /Former Polity row NOT retired or deleted/);
+  const saudi = byId.get('saudi-third-state-nejd');
+  assert.equal(saudi.status, 'KEEP_SEPARATE');
+  assert.equal(saudi.terminal_status, 'KEEP_SEPARATE');
+  assert.equal(saudi.reviewed_decision, 'keep_both');
+  assert.equal(saudi.locked, true);
+  assert.equal(saudi.left.polity_id, 'aa38d04d-532d-4851-8e05-27d0614fb9c0');
+  assert.equal(saudi.right.polity_id, '769b9646-457c-4a45-b7af-76b0141c2c8e');
+  assert.ok(saudi.evidence.some(x => /a05dce0f-1d35-4858-8d61-7a8da3a6e5ab/.test(x)));
+  assert.ok(saudi.evidence.some(x => /0fbb1e5b-4661-4696-9d1f-ec77bbe2d75a/.test(x)));
+  assert.ok(saudi.evidence.some(x => /qdl\.qa\/archive/.test(x)));
+
   const oman = byId.get('oman-empire-oman');
   assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
   assert.equal(oman.right.polity_id, 'ac7279b2-da5c-42df-a217-ac60f16106ff');
