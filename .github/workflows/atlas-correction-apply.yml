@@ -71,8 +71,8 @@ jobs:
                   (
                     (.operations | length == 0) and
                     (.stage2_assertions | type == "array" and length > 0) and
-                    ([.stage2_assertions[].type] | all(. == "assert_source" or . == "assert_governance_context" or . == "assert_governance_period" or . == "assert_polity_designation")) and
-                    ([.stage2_assertions[].type] | any(. == "assert_governance_context" or . == "assert_governance_period" or . == "assert_polity_designation"))
+                    ([.stage2_assertions[].type] | all(. == "assert_source" or . == "assert_governance_context" or . == "assert_governance_period" or . == "assert_polity_designation" or . == "assert_polity_source_link")) and
+                    ([.stage2_assertions[].type] | any(. == "assert_governance_context" or . == "assert_governance_period" or . == "assert_polity_designation" or . == "assert_polity_source_link"))
                   )
                 ) and
                 (.execution_rules.production_executable == false) and
