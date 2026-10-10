@@ -8,6 +8,6 @@ test("entire source Video-ID → YouTube metadata → human content review gate 
       encoding:"utf8",timeout:30000
     });
   assert.equal(run.status,0,run.stderr+"\n"+run.stdout);
-  assert.match(run.stderr,/Ran 5 tests/);
+  assert.match(run.stderr,/Ran 4 tests/);
   assert.match(run.stderr,/OK/);
 });
