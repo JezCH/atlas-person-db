@@ -1,0 +1,2960 @@
+{
+  "schema": "atlas-youtube-v5-expanded-exact-nonperson-review/v1",
+  "reviewed_at": "2026-10-10",
+  "source": "All 9122 currently visible source-derived title-signal raw name labels, independently screen exact non-Person names; not from registered Person UUIDs.",
+  "source_snapshot_id": "yt-20261010T083657Z-10127ch-rebuild-v5",
+  "source_parser_version": "yt-title-person-reviewed-v5",
+  "original_archive_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "source_channel_count": 10127,
+  "source_video_rows": 2230031,
+  "previous_visible_candidate_count": 9122,
+  "reviewed_label_count": 409,
+  "semantic_policy": "EXACT label is not a single real historical individual. Do not remove videos or channels; do not apply without snapshot and raw original archive digest parity. Historical Person identities/titles not classifiable with high certainty are NOT listed. New raw snapshots must undergo their own verification.",
+  "not_a_person_centered_accuracy_estimate": true,
+  "not_registered_person_lookup_source": true,
+  "reviewed_labels": [
+    {
+      "name": "Earth Day",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 235,
+      "previous_live_title_cue_channels": 12,
+      "previous_live_title_cue_videos": 14
+    },
+    {
+      "name": "JFK Assassination",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 245,
+      "previous_live_title_cue_channels": 12,
+      "previous_live_title_cue_videos": 13
+    },
+    {
+      "name": "The Minoans",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 262,
+      "previous_live_title_cue_channels": 12,
+      "previous_live_title_cue_videos": 12
+    },
+    {
+      "name": "Hidden Figures",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 356,
+      "previous_live_title_cue_channels": 10,
+      "previous_live_title_cue_videos": 163
+    },
+    {
+      "name": "Amazing Grace",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 367,
+      "previous_live_title_cue_channels": 10,
+      "previous_live_title_cue_videos": 17
+    },
+    {
+      "name": "Democracy",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 446,
+      "previous_live_title_cue_channels": 10,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Independence Day",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 455,
+      "previous_live_title_cue_channels": 10,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Statue of Liberty",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 476,
+      "previous_live_title_cue_channels": 10,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "The Power of Words",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 478,
+      "previous_live_title_cue_channels": 10,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "The Rothschilds",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 479,
+      "previous_live_title_cue_channels": 10,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Full Interview",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 488,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 58
+    },
+    {
+      "name": "New Discovery",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 497,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 23
+    },
+    {
+      "name": "We the People",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 504,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 17
+    },
+    {
+      "name": "Economics",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 506,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 16
+    },
+    {
+      "name": "the Ottomans",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 521,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 13
+    },
+    {
+      "name": "Dead Sea Scrolls",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 572,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Slavery",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 597,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "The East India Company",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 600,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "The Last Supper",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 601,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "The Scramble for Africa",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 602,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "The Space Race",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 603,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Inside Look",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 637,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Code of Hammurabi",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 667,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Donner Party",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 668,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Lost City of Z",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 669,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Reconquista",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 671,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Tower of Babel",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 672,
+      "previous_live_title_cue_channels": 9,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "Declaration of Independence",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 703,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 14
+    },
+    {
+      "name": "Propaganda",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 711,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 12
+    },
+    {
+      "name": "New York",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 723,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 11
+    },
+    {
+      "name": "Technology",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 727,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 11
+    },
+    {
+      "name": "Migration",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 751,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "The Louisiana Purchase",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 764,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Roman Concrete",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 805,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Gilded Age",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 811,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Iliad",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 812,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Spanish Inquisition",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 815,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "A Tale of Two Cities",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 825,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Abbasid Caliphate",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 931,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Age of Exploration",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 932,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Ark of the Covenant",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 934,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Hanseatic League",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 936,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Janissaries",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 937,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "the Mongols",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 938,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Spanish Flu",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 940,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Suez Canal",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 941,
+      "previous_live_title_cue_channels": 8,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Book of Revelation",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 982,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 14
+    },
+    {
+      "name": "On This Day",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 986,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 13
+    },
+    {
+      "name": "Wonders of Japan",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 987,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 13
+    },
+    {
+      "name": "Life After Death",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1006,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 11
+    },
+    {
+      "name": "The Hidden Truth",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1013,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 11
+    },
+    {
+      "name": "Imperialism",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1024,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Socialism",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1031,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "The Celts",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1032,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "The Nile",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1033,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Wonders of Italy",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1034,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Humans Evolve",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1048,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "Inside North Korea",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1049,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Lord of the Rings",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1058,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "Wonders of France",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1059,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "Archaeology",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1063,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "In the Beginning",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1090,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "Roman Soldiers",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1110,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Maya",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1122,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Nazca Lines",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1123,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Road Not Taken",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1124,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "The Rwandan Genocide",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1125,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "True Crime",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1132,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "A Christmas Carol",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1140,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "First Contact",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1193,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Forgotten Heroes",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1195,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Great expectations",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1207,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Hidden in Plain Sight",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1215,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Independence",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1224,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Nationalism",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1257,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Soviet Union",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1298,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Sumerians",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1300,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Bayeux Tapestry",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1306,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Great Schism of 1054",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1308,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Holodomor",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1309,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Ides of March",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1310,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Last Stand",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1311,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Magna Carta",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1312,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Medici Family",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1313,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Moon",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1314,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Normans",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1315,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Nuremberg Trials",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1316,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Partition of India",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1317,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Power of Silence",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1319,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Rosetta Stone",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1321,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Stranger",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1323,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Treaty Of Versailles",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1324,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Tuskegee Airmen",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1325,
+      "previous_live_title_cue_channels": 7,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Did You Know",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1349,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 148
+    },
+    {
+      "name": "Humans",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1360,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 22
+    },
+    {
+      "name": "The Truth",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1365,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 19
+    },
+    {
+      "name": "Wonders of Germany",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1394,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 11
+    },
+    {
+      "name": "Dark Ages",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1398,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "The Future of Work",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1415,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Wonders of Canada",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1417,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "A Day in the Life",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1419,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "Wonders of New Zealand",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1440,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "Fall of Constantinople",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1457,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "New Series",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1473,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "Wonders of China",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1489,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "Wonders of Scotland",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1490,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "Before Columbus",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1504,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Roman Britain",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1572,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Aeneid",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1598,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Armenian Genocide",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1599,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Baghdad Battery",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1600,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Basques",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1601,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Bronze Age",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1602,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Doolittle Raid",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1603,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Enlightenment",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1605,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Huns",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1606,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Lighthouse of Alexandria",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1607,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Mary Celeste",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1608,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Night Witches",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1609,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Teutonic Knights",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1610,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Wonders of Croatia",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1624,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Hell on Earth",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1730,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Jonestown Massacre",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1769,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Roman Gladiators",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1860,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Scorched Earth",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1872,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Secret Societies",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1873,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The 47 Ronin",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1893,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Age of Enlightenment",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1894,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "the Assassins",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1896,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Big Bang",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1898,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Big Bang Theory",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1899,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Christmas Truce of 1914",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1900,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Diary of Anne Frank",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1901,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Eiffel Tower",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1902,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Forbidden City",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1903,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Future is Here",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1904,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Gunpowder Plot",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1905,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "the Illuminati",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1906,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Iroquois Confederacy",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1907,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Meiji Restoration",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1910,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Milky Way",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1911,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Panama Canal",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1912,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Plantagenets",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 1913,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Power of Music",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 1914,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Stanford Prison Experiment",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 1918,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Tower of London",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 1919,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "You Know This",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1958,
+      "previous_live_title_cue_channels": 6,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "On Cam",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1970,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 42
+    },
+    {
+      "name": "The Dark Side of Fame",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1972,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 33
+    },
+    {
+      "name": "Audiobook",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1973,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 32
+    },
+    {
+      "name": "Artist Interview",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1979,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 24
+    },
+    {
+      "name": "You Are Here",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 1992,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 17
+    },
+    {
+      "name": "Hidden Histories",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2000,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 14
+    },
+    {
+      "name": "Wonders of Australia",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2005,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 14
+    },
+    {
+      "name": "New Book",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2034,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "the Romanovs",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2038,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "The Ancient Greeks",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2059,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Grapes of Wrath",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2060,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "Wonders of Portugal",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2063,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "Wonders of Spain",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2064,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Amazon Rainforest",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2084,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "the Nazis",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2085,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "Wonders of Greece",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2087,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "A Closer Look",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2089,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Before Colonization",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2098,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Capitalism",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2105,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Balkans",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2148,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Human Body",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2149,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Louvre",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2150,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Mycenaeans",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2151,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Picts",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2152,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Piri Reis Map",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2153,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The United States",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2154,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Who We Are",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2158,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Wonders of Ireland",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2159,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Wonders of Mexico",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2160,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "All In",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2167,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Early Humans",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2205,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "First love",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2214,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Forbidden Archaeology",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2216,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Genetic Engineering",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2221,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Inside Russia",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2233,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Journey",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2239,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "My Story",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2258,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Real Talk",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2270,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Rise Up",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2274,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Rwandan Genocide",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2279,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Abbasids",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2302,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Amazon",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2303,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Bataan Death March",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2304,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Civil Rights Movement",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2305,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Norman Conquest",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2308,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Scythians",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2309,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Secret Garden",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2310,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Solar System",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2311,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Trail of Tears",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2312,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Untold Truth",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2313,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Up From Slavery",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2319,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Who Am I",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2324,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Wonders of Brazil",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2328,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Wonders of Sweden",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2329,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Wonders of Wales",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2330,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "A Journey Through Time",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2334,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Before Egypt",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2378,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Dark Psychology",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2452,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Great Wall of China",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2513,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Hidden Gems",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2531,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Indian Independence",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2544,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Lost In Translation",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2621,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Lost to Time",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2622,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "New Mexico",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2679,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "New Orleans",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2680,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "New Study",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2681,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "On the edge",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2695,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Roman Emperors",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2751,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Blitz",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2823,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Brothers Karamazov",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2824,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Catcher in the Rye",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2825,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Comanche",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2826,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Council of Nicaea",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2827,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Dark Ages",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2829,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Dark Side of AI",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2830,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Discovery of America",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2832,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Fall Of Berlin",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2833,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Fall of Jerusalem",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2834,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Forgotten Genius",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2835,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Forgotten Hero",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2836,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Grand Canyon",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2838,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Holy Grail",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2841,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Hunger Games",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2842,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Khazars",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2844,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Little Prince",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2846,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Norman Conquest Of England",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2849,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Paris Commune",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2850,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Picture of Dorian Gray",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2851,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Police",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2852,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Power of Patience",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2853,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Power of Play",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2854,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Problem of Evil",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2855,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Psychology of Money",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2856,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Radium Girls",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2857,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Sacrifice",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2860,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Sea Peoples",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2861,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Shroud of Turin",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 2862,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Suez Crisis",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2863,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "the Third Reich",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2864,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Transatlantic Slave Trade",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2865,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Treaty of Tordesillas",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2866,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Unification of Italy",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2867,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Varangian Guard",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 2868,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The White House",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2870,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Who Are You",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2927,
+      "previous_live_title_cue_channels": 5,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Planet Earth",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 2968,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 26
+    },
+    {
+      "name": "The Progressive Era",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 2971,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 23
+    },
+    {
+      "name": "In Dialogue",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 2999,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 13
+    },
+    {
+      "name": "Wonders of USA",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3003,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 13
+    },
+    {
+      "name": "In Our Time",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 3008,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 12
+    },
+    {
+      "name": "The Clash",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 3028,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Romans",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 3040,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "Communism",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 3047,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "Great Fire of London",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 3083,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Crucible",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 3102,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Gokturks",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 3103,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Wonders of Argentina",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3108,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Wonders of Costa Rica",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3109,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "Wonders of Switzerland",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3110,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "All Quiet on the Western Front",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 3115,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Before Spain",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3124,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "French Foreign Legion",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 3138,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Full Remarks",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 3139,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Bahamas",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3183,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Doors",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 3185,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Four Seasons",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 3186,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Gettysburg Address",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 3187,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Great Dying",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 3188,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The Green Children of Woolpit",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 3189,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "The SS",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 3192,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Wonders of Africa",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3200,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Wonders of Austria",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3201,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Wonders of Finland",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3202,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Wonders of Kenya",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3203,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 6
+    },
+    {
+      "name": "Lost in Time",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 3342,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Never Again",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 3362,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "New Evidence",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 3363,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "New York City",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3364,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "On the Brink",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 3370,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Age of AI",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 3446,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Anglo-Saxons",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 3447,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Edict of Milan",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 3449,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The English Reformation",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 3450,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The First Amendment",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 3451,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Future of AI",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 3452,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Handmaid's Tale",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 3453,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The House of Windsor",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 3454,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Long March",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 3455,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Merovingians",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 3456,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Northman",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 3457,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Power of Dreams",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 3458,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Sassoons",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 3459,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Seven Wonders of the Ancient World",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 3461,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Star of Bethlehem",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 3463,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "The Tunguska Event",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 3464,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Windsor Castle",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3488,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Wonders of AMERICA",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3490,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Wonders of Egypt",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3491,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Wonders of England",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3492,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Wonders of Maldives",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3493,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 5
+    },
+    {
+      "name": "Africa Before Colonization",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3508,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Asaba Massacre",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 3568,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Aztecs",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 3584,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Edinburgh Castle",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3774,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Great Barrier Reef",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 3894,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Mexican Independence",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4163,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "New Frontiers",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4199,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "New Jersey",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4200,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Oceans of the world",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4226,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Roman Numerals",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4361,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Alhambra",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4501,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Alps",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4502,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Ancient World",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4504,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Aral Sea",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4507,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Bantu Migration",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4510,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Bear",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4511,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Berlin Airlift",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4512,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Book of Thoth",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4516,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Boston Massacre",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4518,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The British ROYAL Family",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4521,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Carpenters",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4524,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Caucasus",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4525,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Communist Manifesto",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4526,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Count of Monte Cristo",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4527,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Divine Comedy",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4531,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "the Dutch East India Company",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4532,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Elamites",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4535,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The End",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4536,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Enemy Within",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4537,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Fall of Troy",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4538,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The First Humans",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4540,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Forgotten Front",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4542,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Forgotten Superpower",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4543,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Gauls",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4546,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Gospel of Matthew",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4550,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Great Barrier Reef",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4551,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Great Jewish Revolt",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4552,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Great Wall",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4553,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Halifax Explosion",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4554,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Harlem Renaissance",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4555,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Hobbit",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4557,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The House of Habsburg",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4559,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "the Kamakura Shogunate",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4561,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Kennedy Assassination",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4562,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Kray Twins",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4563,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Leaning Tower of Pisa",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4567,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Lusitania",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4570,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Making Of",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4571,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Making of a Legend",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4572,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Man",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4573,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Mariana Trench",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4574,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Metamorphosis",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4576,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Moors",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4577,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Night of the Long Knives",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4578,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Old Man And The Sea",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4579,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Origins of Humankind",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4580,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Power of Focus",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4584,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Power of Not Reacting",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4585,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Power of Positive Thinking",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4586,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Real Game of Thrones",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4590,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Reign of TERROR",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4592,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Roaring Twenties",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4593,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Roman Forum",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4594,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Sahara",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4595,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "the Samurai",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4596,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Scarlet Letter",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4597,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Stasi",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4601,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Taj Mahal",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4604,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "the Taliban",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4605,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Tell-Tale Heart",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4606,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Templars",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4607,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Terrifying Truth",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4608,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Tet Offensive",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4609,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Three Musketeers",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4610,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Tokugawa Shogunate",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4611,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Trojan Horse",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4613,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Trung Sisters",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 4614,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "The Tyger by William Blake",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4615,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Tulsa Race Massacre",
+      "category": "EVENT_OR_HISTORICAL_PROCESS",
+      "previous_live_rank": 4663,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Wonders Of Bulgaria",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4734,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Wonders of Hungary",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4735,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Wonders of VietNam",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4736,
+      "previous_live_title_cue_channels": 4,
+      "previous_live_title_cue_videos": 4
+    },
+    {
+      "name": "Great Artists",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4781,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 28
+    },
+    {
+      "name": "Great books",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4791,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 23
+    },
+    {
+      "name": "The Autobiography of Benjamin Franklin",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4794,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 23
+    },
+    {
+      "name": "The Gospel of John",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4795,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 23
+    },
+    {
+      "name": "The Witcher",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4796,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 23
+    },
+    {
+      "name": "The Science of Getting Rich",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4799,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 22
+    },
+    {
+      "name": "Great Escapes",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4823,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 15
+    },
+    {
+      "name": "Her Story",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4824,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 15
+    },
+    {
+      "name": "Wonders of Europe",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4828,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 15
+    },
+    {
+      "name": "The Importance of Being Earnest",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4834,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 14
+    },
+    {
+      "name": "Signs of the Times",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4870,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 10
+    },
+    {
+      "name": "Inside Saudi Arabia",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4884,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "Student Interview",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4895,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "The Wind in the Willows",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4898,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 9
+    },
+    {
+      "name": "This Weekend",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4930,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "Wonders of Norway",
+      "category": "GEOGRAPHIC_PLACE_PERIOD_STRUCTURE",
+      "previous_live_rank": 4935,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 8
+    },
+    {
+      "name": "International Conference",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 4958,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Crown",
+      "category": "BOOK_WORK_ARTIFACT_OR_NONPERSON_TITLE",
+      "previous_live_rank": 4974,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 7
+    },
+    {
+      "name": "The Assyrians",
+      "category": "COLLECTIVE_OR_POLITICAL_ENTITY",
+      "previous_live_rank": 8439,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 3
+    },
+    {
+      "name": "The End of the World",
+      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
+      "previous_live_rank": 8507,
+      "previous_live_title_cue_channels": 3,
+      "previous_live_title_cue_videos": 3
+    }
+  ],
+  "explicit_holds": [
+    "the Buddha",
+    "The Apostle Paul",
+    "the Red Baron",
+    "The Black Prince",
+    "The Queen of Sheba",
+    "The Isdal Woman",
+    "The Egtved Girl",
+    "The Blood Countess",
+    "The Zodiac Killer",
+    "The Rock",
+    "The Weeknd",
+    "The Desert Fox",
+    "The Somerton Man",
+    "The REAL King Arthur",
+    "Saint Patrick"
+  ],
+  "hold_reason": "The REAL King Arthur describes speculative historical/legendary identity and needs identity review rather than automatic one-Person classification or automatic nonperson removal.",
+  "archive_replay_evidence": {
+    "archived_original_channel_files_read": 10127,
+    "archived_original_video_rows_read": 2230031,
+    "source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+    "source_method": "Exact title labels additionally probed against original per-channel .ndjson.gz videos; title mentions are not one-Person-centered evidence; original Channel IDs and video IDs remain untouched.",
+    "examples": [
+      {
+        "raw_name": "Earth Day",
+        "channel_id": "UCOjscjEL-lGZVP-2uooEuCA",
+        "video_id": "9LY50M04suU",
+        "title": "Skoblicki's Scientists presents: Earth Day"
+      },
+      {
+        "raw_name": "JFK Assassination",
+        "channel_id": "UCm1fqkJ-Tq64bQzM6VRMicQ",
+        "video_id": "yznRGS9f-jI",
+        "title": "Who Was the Umbrella Man? | JFK Assassination Documentary | The New York Times"
+      },
+      {
+        "raw_name": "The Minoans",
+        "channel_id": "UC9iAEi1Doz1s5gy1geBcG0g",
+        "video_id": "LErJHY0cv3s",
+        "title": "The Minoans: The Most Mysterious Civilization"
+      },
+      {
+        "raw_name": "Hidden Figures",
+        "channel_id": "UCEbHv97K65U1PAtU-1lPf3g",
+        "video_id": "u59hhJb6g9g",
+        "title": "Hidden Figures Young Readers' Edition Audiobook by Margot Lee Shetterly"
+      },
+      {
+        "raw_name": "The Scramble for Africa",
+        "channel_id": "UCF0iOVyZtAY9bgrFeNzY6kQ",
+        "video_id": "wwo34t-a678",
+        "title": "The Scramble for Africa Then and Now"
+      },
+      {
+        "raw_name": "The Last Supper",
+        "channel_id": "UCLzcocX9Q0fh64_j2U9RWxA",
+        "video_id": "09BjC_9F8vU",
+        "title": "EP.73 The Last Supper by Leonardo da Vinci | The Story Behind a Renaissance Masterpiece"
+      },
+      {
+        "raw_name": "The Great Schism of 1054",
+        "channel_id": "UCd5bCMGrhSE7-OCnuIV-wbg",
+        "video_id": "dz3KYMW8_EU",
+        "title": "The Great Schism of 1054 The Complete Story of Catholic & Orthodox Division"
+      },
+      {
+        "raw_name": "The Trung Sisters",
+        "channel_id": "UCbwyPVMYjL7ydbSEonFXBNg",
+        "video_id": "N7kk4zsIQs0",
+        "title": "The Trung Sisters: Vietnam’s Warrior Queens Who Defied the Chinese Empire"
+      },
+      {
+        "raw_name": "The Power of Words",
+        "channel_id": "UC1tCeGkob_kQOyhdZqxZ1Gg",
+        "video_id": "JmbVhAAxO3Y",
+        "title": "The Power of Words with Sherry Brown"
+      }
+    ]
+  }
+}

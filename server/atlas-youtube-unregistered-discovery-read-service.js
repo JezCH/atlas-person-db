@@ -11,6 +11,11 @@ const {reviewedLivingStatus}=require("./atlas-youtube-reviewed-living-people.js"
 const QUALITY_RULES=require("../scripts/youtube-person-signal-quality-rules.v2.json");
 const REVIEWED_SOURCE_UNIONS=require("../audits/youtube-discovery-reviewed-source-unions-b024.json");
 const REVIEWED_V5_NONPERSON=require("../audits/youtube-v5-source-nonperson-exact-labels.json");
+const EXPANDED_V5_NONPERSON=require("../audits/youtube-v5-expanded-nonperson-reviewed-exact.json");
+if(EXPANDED_V5_NONPERSON.schema!=="atlas-youtube-v5-expanded-exact-nonperson-review/v1"||
+   EXPANDED_V5_NONPERSON.reviewed_labels.length!==EXPANDED_V5_NONPERSON.reviewed_label_count||
+   EXPANDED_V5_NONPERSON.reviewed_label_count!==409)
+  throw Error("YOUTUBE_V5_EXPANDED_NONPERSON_MANIFEST_INVALID");
 if(REVIEWED_V5_NONPERSON.schema!=="atlas-youtube-v5-source-review-non-person-labels/v1"||
    REVIEWED_V5_NONPERSON.reviewed_labels.length!==23)
   throw Error("YOUTUBE_V5_REVIEWED_SOURCE_LABEL_MANIFEST_INVALID");
@@ -111,6 +116,19 @@ function reviewedNonPerson(name){return REVIEWED_NONPERSON_KEYS.has(identityKey(
 const REVIEWED_V5_NONPERSON_KEYS=new Set(REVIEWED_V5_NONPERSON.reviewed_labels.map(x=>identityKey(x.name)));
 if(REVIEWED_V5_NONPERSON_KEYS.size!==REVIEWED_V5_NONPERSON.reviewed_labels.length)
   throw Error("YOUTUBE_V5_REVIEWED_SOURCE_LABEL_COLLISION");
+const EXPANDED_V5_NONPERSON_KEYS=new Set(EXPANDED_V5_NONPERSON.reviewed_labels.map(x=>identityKey(x.name)));
+if(EXPANDED_V5_NONPERSON_KEYS.size!==EXPANDED_V5_NONPERSON.reviewed_label_count||
+   [...EXPANDED_V5_NONPERSON_KEYS].some(k=>REVIEWED_V5_NONPERSON_KEYS.has(k)))
+  throw Error("YOUTUBE_V5_EXPANDED_NONPERSON_KEY_COLLISION");
+function reviewedV5ExpandedNonPersonForSnapshot(snapshot){
+  if(snapshot?.snapshot_id!==EXPANDED_V5_NONPERSON.source_snapshot_id) return new Set();
+  if(snapshot.parser_version!==EXPANDED_V5_NONPERSON.source_parser_version||
+     snapshot.source_state?.artifact_digest!=="sha256:"+EXPANDED_V5_NONPERSON.original_archive_sha256||
+     snapshot.channel_count!==EXPANDED_V5_NONPERSON.source_channel_count||
+     snapshot.video_count!==EXPANDED_V5_NONPERSON.source_video_rows)
+    throw Error("YOUTUBE_V5_EXPANDED_NONPERSON_SOURCE_PARITY_MISMATCH");
+  return EXPANDED_V5_NONPERSON_KEYS;
+}
 function reviewedV5NonPersonForSnapshot(snapshot){
   if(snapshot?.snapshot_id!==REVIEWED_V5_NONPERSON.active_snapshot_id) return new Set();
   const expected="sha256:"+REVIEWED_V5_NONPERSON.source_archive_sha256;
@@ -192,13 +210,13 @@ function registrationIndex(rows) {
   }
   return index;
 }
-function candidatesFromSource(rawRows,personRows,{now=Date.now(),approvedUnions=[],reviewedSourceNonPersonKeys=new Set()}={}) {
+function candidatesFromSource(rawRows,personRows,{now=Date.now(),approvedUnions=[],reviewedSourceNonPersonKeys=new Set(),expandedSourceNonPersonKeys=new Set()}={}) {
   if(!Array.isArray(personRows)||!personRows.length)
     throw Error("YOUTUBE_DISCOVERY_PERSON_REGISTRY_EMPTY");
   const registered=registrationIndex(personRows);
   const reviewed=applyReviewedSourceUnions(rawRows,approvedUnions);
   const grouped=new Map();
-  let registeredExcluded=0,reviewedLivingExcluded=0,nonpersonExcluded=0,sourceNonpersonExcluded=0,homonymReview=0,overlappingRawLabels=0;
+  let registeredExcluded=0,reviewedLivingExcluded=0,nonpersonExcluded=0,sourceNonpersonExcluded=0,expandedNonpersonExcluded=0,homonymReview=0,overlappingRawLabels=0;
   for(const row of reviewed.rows) {
     const signal=projectSignal(row),key=identityKey(signal.raw_name);
     if(!key)throw Error("YOUTUBE_DISCOVERY_MISSING_RAW_IDENTITY");
@@ -210,9 +228,11 @@ function candidatesFromSource(rawRows,personRows,{now=Date.now(),approvedUnions=
     }
     const matches=matchIds; 
     if(matches.size===1){registeredExcluded++;continue;}
-    if(reviewedNonPerson(signal.raw_name) || reviewedSourceNonPersonKeys.has(key)) {
+    if(reviewedNonPerson(signal.raw_name) ||
+       reviewedSourceNonPersonKeys.has(key) || expandedSourceNonPersonKeys.has(key)) {
       nonpersonExcluded++;
       if(reviewedSourceNonPersonKeys.has(key)) sourceNonpersonExcluded++;
+      if(expandedSourceNonPersonKeys.has(key)) expandedNonpersonExcluded++;
       continue;
     }
     if(reviewedLivingStatus(signal.raw_name,now)?.status==="living_likely") {
@@ -255,7 +275,7 @@ function candidatesFromSource(rawRows,personRows,{now=Date.now(),approvedUnions=
   candidates.sort((a,b)=>b.distinct_channel_count-a.distinct_channel_count||
     b.video_count-a.video_count||a.raw_name.localeCompare(b.raw_name,"en"));
   for(let i=0;i<candidates.length;i++) candidates[i].rank=i+1;
-  return {candidates,registeredExcluded,reviewedLivingExcluded,nonpersonExcluded,sourceNonpersonExcluded,homonymReview,overlappingRawLabels,reviewedUnionsApplied:reviewed.applied};
+  return {candidates,registeredExcluded,reviewedLivingExcluded,nonpersonExcluded,sourceNonpersonExcluded,expandedNonpersonExcluded,homonymReview,overlappingRawLabels,reviewedUnionsApplied:reviewed.applied};
 }
 async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,offset=0}={}) {
   if(!client||typeof client.query!=="function")throw Error("YOUTUBE_DISCOVERY_DB_REQUIRED");
@@ -279,9 +299,10 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
       Array.isArray(initial.source_state?.reviewed_source_unions)
         ?initial.source_state.reviewed_source_unions:[];
   const reviewedSourceNonPersonKeys=reviewedV5NonPersonForSnapshot(initial);
-  const {candidates,registeredExcluded,reviewedLivingExcluded,nonpersonExcluded,sourceNonpersonExcluded,homonymReview,overlappingRawLabels,reviewedUnionsApplied}=
+  const expandedSourceNonPersonKeys=reviewedV5ExpandedNonPersonForSnapshot(initial);
+  const {candidates,registeredExcluded,reviewedLivingExcluded,nonpersonExcluded,sourceNonpersonExcluded,expandedNonpersonExcluded,homonymReview,overlappingRawLabels,reviewedUnionsApplied}=
     candidatesFromSource(signals.rows||[],people.rows||[],{
-      approvedUnions:reviewedGroups,reviewedSourceNonPersonKeys
+      approvedUnions:reviewedGroups,reviewedSourceNonPersonKeys,expandedSourceNonPersonKeys
     });
   const final=projectSnapshot((await client.query(GLOBAL_SNAPSHOT_SQL)).rows?.[0]);
   if(!final||final.snapshot_id!==initial.snapshot_id)
@@ -299,6 +320,7 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     reviewed_living_excluded_count:reviewedLivingExcluded,
     reviewed_nonperson_excluded_count:nonpersonExcluded,
     reviewed_original_source_nonperson_excluded_count:sourceNonpersonExcluded,
+    reviewed_expanded_source_nonperson_excluded_count:expandedNonpersonExcluded,
     homonym_review_count:homonymReview,overlapping_raw_labels:overlappingRawLabels,
     reviewed_source_id_unions_applied:reviewedUnionsApplied,
     title_context_source_included:initial.source_state?.additional_title_context_extraction===true,
@@ -312,5 +334,5 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
 }
 module.exports=Object.freeze({
   DISCOVERY_SCHEMA,CANDIDATE_ROWS_SQL,PERSON_NAMES_SQL,CHANNEL_THRESHOLDS,
-  identityKey,reviewedNonPerson,reviewedV5NonPersonForSnapshot,registrationIndex,applyReviewedSourceUnions,candidatesFromSource,readYoutubeUnregisteredDiscovery
+  identityKey,reviewedNonPerson,reviewedV5NonPersonForSnapshot,reviewedV5ExpandedNonPersonForSnapshot,registrationIndex,applyReviewedSourceUnions,candidatesFromSource,readYoutubeUnregisteredDiscovery
 });
