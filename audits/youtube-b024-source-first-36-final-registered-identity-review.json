@@ -1,0 +1,174 @@
+{
+  "schema": "youtube-b024-source-first-last-registry-screen-36/v1",
+  "source_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "source_snapshot_id": "yt-20261009T111844Z-10127ch-rebuild-v4",
+  "source_population": {
+    "distinct_channel_ids": 10127,
+    "original_video_rows": 2230031,
+    "prior_unreviewed_raw_name_labels": 245
+  },
+  "review_selection": "36 actual original-source high-priority raw labels, BEFORE registered Person list comparison",
+  "production_identity_check": {
+    "checked_on": "2026-10-10",
+    "public_surface": "/api/atlas-read?__atlas_read_surface=person&view=identity",
+    "person_records_read": 2145,
+    "excludes_exact_match_only": false,
+    "live_recheck_required_before_any_publication": true
+  },
+  "registered_exact": {
+    "Madam C.J Walker": {
+      "uuid": "e386d5db-ce6f-4084-bf55-0d4ba90c95e5",
+      "registered_name": "Madam C. J. Walker",
+      "basis": "EXACT_NFKD_NAME_PUNCTUATION_FOLD"
+    },
+    "Abu Hanifa": {
+      "uuid": "5c25f87b-9bda-4d30-a819-37a0c5aef8c0",
+      "registered_name": "Abu Hanifa",
+      "basis": "EXACT_NFKD_NAME_PUNCTUATION_FOLD"
+    },
+    "W.E.B Du Bois": {
+      "uuid": "3acb5664-2924-413e-955c-d12cd60e1ae8",
+      "registered_name": "W. E. B. Du Bois",
+      "basis": "EXACT_NFKD_NAME_PUNCTUATION_FOLD"
+    },
+    "Al Biruni": {
+      "uuid": "1e73d444-828b-423b-8ffd-f30651277f47",
+      "registered_name": "Al-Biruni",
+      "basis": "EXACT_NFKD_NAME_PUNCTUATION_FOLD"
+    },
+    "Khalid Ibn Al Walid": {
+      "uuid": "54583770-280a-4ec1-81db-24729ed842ab",
+      "registered_name": "Khalid ibn al-Walid",
+      "basis": "EXACT_NFKD_NAME_PUNCTUATION_FOLD"
+    },
+    "J Robert Oppenheimer": {
+      "uuid": "605d4e27-e933-4429-bb51-c023d4a20905",
+      "registered_name": "J. Robert Oppenheimer",
+      "basis": "EXACT_NFKD_NAME_PUNCTUATION_FOLD"
+    },
+    "J.R.R Tolkien": {
+      "uuid": "b9bf1082-34e6-4337-bd35-0ec5778123a0",
+      "registered_name": "J. R. R. Tolkien",
+      "basis": "EXACT_NFKD_NAME_PUNCTUATION_FOLD"
+    },
+    "Dwight D Eisenhower": {
+      "uuid": "6bea25be-e49e-4324-b5d9-f2906ced049e",
+      "registered_name": "Dwight D. Eisenhower",
+      "basis": "EXACT_NFKD_NAME_PUNCTUATION_FOLD"
+    },
+    "Simon Bolivar": {
+      "uuid": "4c5ed768-0d28-5e13-aa3d-976760d7e4ce",
+      "registered_name": "Simon Bolivar",
+      "basis": "EXACT_NFKD_NAME_PUNCTUATION_FOLD"
+    },
+    "Mary Queen of Scots": {
+      "uuid": "cf7944bc-a673-41f3-9463-381627fb2ab4",
+      "registered_name": "Mary, Queen of Scots",
+      "basis": "EXACT_NFKD_NAME_PUNCTUATION_FOLD"
+    },
+    "Salvador Dali": {
+      "uuid": "0d9c44c2-55d0-4df1-9e42-2393e363a90e",
+      "registered_name": "Salvador Dalí",
+      "basis": "EXACT_NFKD_NAME_PUNCTUATION_FOLD"
+    }
+  },
+  "registered_reviewed_alias": {
+    "Imam Bukhari": {
+      "uuid": "8de13ce6-1d9d-4627-9c15-bc4fbd7d533c",
+      "registered_name": "Al-Bukhari",
+      "basis": "REVIEWED_HISTORICAL_IDENTITY_ALIAS"
+    },
+    "Imam Malik": {
+      "uuid": "5bbd6c53-dbdd-436a-b306-15ac077caf31",
+      "registered_name": "Malik ibn Anas",
+      "basis": "REVIEWED_HISTORICAL_IDENTITY_ALIAS"
+    },
+    "King Leonidas": {
+      "uuid": "2dc2d224-5ee3-5583-a3af-75d928fb240f",
+      "registered_name": "Leonidas I",
+      "basis": "REVIEWED_HISTORICAL_IDENTITY_ALIAS"
+    },
+    "Queen Elizabeth I": {
+      "uuid": "7397a89f-a911-5e8c-a2cb-a297b64771e6",
+      "registered_name": "Elizabeth I",
+      "basis": "REVIEWED_HISTORICAL_IDENTITY_ALIAS"
+    },
+    "Ramesses II": {
+      "uuid": "554a98f3-c9d1-5314-a59d-6281a8f6524b",
+      "registered_name": "Ramses II",
+      "basis": "REVIEWED_HISTORICAL_IDENTITY_ALIAS"
+    }
+  },
+  "identity_context_hold": {
+    "Ferdinand Marcos": "FATHER_SON_SHARED_NAME",
+    "Saint Benedict": "MULTIPLE_SAINTS_WITH_SAME_NAME",
+    "St Patrick": "PERSON_HOLIDAY_CATHEDRAL_AMBIGUITY",
+    "St Valentine": "CONTESTED_SAINT_IDENTITY_HOLIDAY"
+  },
+  "source_historical_unmatched_identity_groups": {
+    "Emmett Till": [
+      "Emmett Till"
+    ],
+    "Carter G. Woodson": [
+      "Carter G Woodson"
+    ],
+    "Booker T. Washington": [
+      "Booker T Washington"
+    ],
+    "Meriwether Lewis": [
+      "Meriwether Lewis"
+    ],
+    "Simon Kimbangu": [
+      "Simon Kimbangu"
+    ],
+    "Herbert Chitepo": [
+      "Herbert Chitepo"
+    ],
+    "Khudiram Bose": [
+      "Khudiram Bose"
+    ],
+    "Lal Bahadur Shastri": [
+      "Lal Bahadur Shastri"
+    ],
+    "Kazi Nazrul Islam": [
+      "Kazi Nazrul Islam"
+    ],
+    "Hiroo Onoda": [
+      "Hiroo Onoda"
+    ],
+    "A. P. J. Abdul Kalam": [
+      "Dr APJ Abdul Kalam"
+    ],
+    "Shivaji": [
+      "Chhatrapati Shivaji Maharaj",
+      "Shivaji Maharaj"
+    ],
+    "Mahendra of Nepal": [
+      "King Mahendra"
+    ],
+    "C. S. Lewis": [
+      "C.S Lewis"
+    ],
+    "Hürrem Sultan": [
+      "Hurrem Sultan"
+    ]
+  },
+  "allowed_strong_title_cues": [
+    "BIOGRAPHICAL_TITLE_CUE_REVIEW",
+    "POST_NAME_BIOGRAPHY_CUE_REVIEW"
+  ],
+  "allowed_broad_title_cues": [
+    "BIOGRAPHICAL_TITLE_CUE_REVIEW",
+    "POST_NAME_BIOGRAPHY_CUE_REVIEW",
+    "QUESTION_TOPIC_CUE_REVIEW",
+    "NAME_HEADING_TOPIC_CUE_REVIEW"
+  ],
+  "status": "READ_ONLY_REVIEW_NOT_PUBLISHED",
+  "readme": "15 candidate historical identities from 16 independently discovered source labels NOT matched to current 2145 public registry name projections. The absence of an exact/known-alias match does NOT prove the person is absent from the complete registry. Topic-cue channel/video ID unions are title-derived REVIEW ONLY. True video-content-centeredness still requires verification. This is the same single unregistered Person discovery workflow, not a competing ranking.",
+  "source_links_for_independently_grounded_histories": {
+    "Carter G. Woodson": "https://www.nps.gov/neri/learn/historyculture/carter-g-woodson.htm",
+    "Meriwether Lewis": "https://www.nps.gov/natr/learn/historyculture/meriwether-lewis.htm",
+    "Khudiram Bose": "https://amritmahotsav.nic.in/district-reopsitory-detail.htm?1618=",
+    "Simon Kimbangu": "https://apnews.com/article/c7ba1dfff9e99e74d91840d9ba75f6f7"
+  }
+}
