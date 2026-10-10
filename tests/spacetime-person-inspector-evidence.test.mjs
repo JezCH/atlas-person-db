@@ -84,7 +84,7 @@ test("selected Person inspector renders precision, Place evidence, and both prov
   assert.match(viewSource, /function renderSelectionEvidence\(/);
   assert.match(viewSource, /spacetime-selection-evidence/);
   assert.match(viewSource, /공간 정밀도/);
-  assert.match(viewSource, /Place evidence/);
+  assert.match(viewSource, /장소 근거/);
   assert.match(viewSource, /역사 배치 근거/);
   assert.match(viewSource, /표시 정밀도 근거/);
   assert.match(viewSource, /historical_source_refs/);
