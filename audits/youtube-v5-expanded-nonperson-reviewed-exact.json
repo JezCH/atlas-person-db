@@ -8,7 +8,7 @@
   "source_channel_count": 10127,
   "source_video_rows": 2230031,
   "previous_visible_candidate_count": 9122,
-  "reviewed_label_count": 410,
+  "reviewed_label_count": 409,
   "semantic_policy": "EXACT label is not a single real historical individual. Do not remove videos or channels; do not apply without snapshot and raw original archive digest parity. Historical Person identities/titles not classifiable with high certainty are NOT listed. New raw snapshots must undergo their own verification.",
   "not_a_person_centered_accuracy_estimate": true,
   "not_registered_person_lookup_source": true,
@@ -1701,13 +1701,6 @@
       "previous_live_title_cue_videos": 5
     },
     {
-      "name": "The REAL King Arthur",
-      "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
-      "previous_live_rank": 2858,
-      "previous_live_title_cue_channels": 5,
-      "previous_live_title_cue_videos": 5
-    },
-    {
       "name": "The Sacrifice",
       "category": "GENERIC_PHRASE_OR_NONPERSON_TOPIC",
       "previous_live_rank": 2860,
@@ -2900,5 +2893,6 @@
     "The Somerton Man",
     "The REAL King Arthur",
     "Saint Patrick"
-  ]
+  ],
+  "hold_reason": "The REAL King Arthur describes speculative historical/legendary identity and needs identity review rather than automatic one-Person classification or automatic nonperson removal."
 }
