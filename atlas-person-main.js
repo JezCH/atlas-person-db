@@ -483,7 +483,7 @@
           ${sourceListHtml(person.sources)}
         </section>
         <details class="person-detail-authoring">
-          <summary><span>AUTHORING</span><strong>표시 정보·초상 편집</strong></summary>
+          <summary><span>등록·수정</span><strong>표시 정보·초상 편집</strong></summary>
           <div class="person-detail-authoring-body">${profileEditorHtml(person, portraitResult)}</div>
         </details>
       </div>`;
