@@ -6,6 +6,7 @@ read back, and then registered in atlas_v2.youtube_source_archives. Re-running
 is idempotent. Catalog registration occurs only after Storage byte/hash parity.
 """
 import argparse
+import gzip
 import hashlib
 import json
 import os
@@ -102,7 +103,10 @@ def record_for(file, root):
         "source_kind": kind,
         "source_path": relative,
         "channel_id": channel_id,
-        "video_rows": None,
+        "video_rows": (
+            sum(1 for line in gzip.decompress(contents).splitlines() if line.strip())
+            if kind == "channel_videos" else None
+        ),
         "_contents": contents,
     }
 
