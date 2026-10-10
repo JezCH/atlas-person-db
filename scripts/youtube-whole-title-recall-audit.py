@@ -71,8 +71,12 @@ def find_names(title, index):
                 continue
             separators = [title[words[j][2]:words[j + 1][1]]
                           for j in range(i, i + length - 1)]
-            if any(not gap.isspace() and gap not in ("-", "‐", "‑", "–")
-                   for gap in separators):
+            if any(
+                not gap.isspace()
+                and gap not in ("-", "‐", "‑", "–")
+                and not (len(words[i + j][0]) == 1 and re.fullmatch(r"\\.\\s*", gap))
+                for j, gap in enumerate(separators)
+            ):
                 continue
             matched.append((label, words[i][1], words[i + length - 1][2]))
             covered.update(range(i, i + length))
