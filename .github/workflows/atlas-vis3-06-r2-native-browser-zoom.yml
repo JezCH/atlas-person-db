@@ -1,0 +1,94 @@
+name: ATLAS VIS3-06 R2 Native Chrome Zoom
+
+on:
+  pull_request:
+    paths:
+      - "scripts/verify-vis3-06-r2-native-browser-zoom.mjs"
+      - ".github/workflows/atlas-vis3-06-r2-native-browser-zoom.yml"
+      - "experiments/vis3-06/b2-observatory-toolrail-plate.svg"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-vis3-06-r2-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native_chrome_zoom:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ATLAS_PRODUCTION_ORIGIN: https://atlas-person-db.vercel.app
+      ATLAS_CDP_URL: http://127.0.0.1:9222
+      ATLAS_VISUAL_OUT_DIR: artifacts/vis3-06-r2-native-browser-zoom
+      DISPLAY: ":99"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install actual X11 desktop and Korean browser fonts
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends xvfb openbox xdotool fonts-noto-cjk
+          fc-cache -f
+
+      - name: Verify original SVG, X11 tools, runner syntax
+        run: |
+          node --check scripts/verify-vis3-06-r2-native-browser-zoom.mjs
+          test -s experiments/vis3-06/b2-observatory-toolrail-plate.svg
+          command -v Xvfb
+          command -v xdotool
+          command -v openbox
+          CHROME_BIN="$(command -v google-chrome-stable || command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME_BIN"
+          echo "CHROME_BIN=$CHROME_BIN" >> "$GITHUB_ENV"
+          "$CHROME_BIN" --version
+
+      - name: Native desktop Chromium 100 125 150 browser zoom A vs B2
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$ATLAS_VISUAL_OUT_DIR"
+          Xvfb :99 -screen 0 1600x1024x24 -nolisten tcp >/tmp/atlas-r2-xvfb.log 2>&1 &
+          XVFB_PID=$!
+          trap 'kill "$CHROME_PID" "$WM_PID" "$XVFB_PID" 2>/dev/null || true' EXIT
+          for _ in $(seq 1 40); do
+            xdpyinfo -display :99 >/dev/null 2>&1 && break
+            sleep 0.25
+          done
+          xdpyinfo -display :99 >/dev/null
+          openbox --sm-disable >/tmp/atlas-r2-openbox.log 2>&1 &
+          WM_PID=$!
+          "$CHROME_BIN" \
+            --no-sandbox \
+            --disable-gpu \
+            --disable-dev-shm-usage \
+            --no-first-run \
+            --no-default-browser-check \
+            --disable-features=Translate \
+            --remote-debugging-port=9222 \
+            --user-data-dir=/tmp/atlas-r2-native-chrome \
+            --window-size=1440,900 \
+            --window-position=0,0 \
+            about:blank >/tmp/atlas-r2-chrome.log 2>&1 &
+          CHROME_PID=$!
+          for _ in $(seq 1 50); do
+            if curl -fsS http://127.0.0.1:9222/json/version >/dev/null; then break; fi
+            sleep 0.25
+          done
+          curl -fsS http://127.0.0.1:9222/json/version >/dev/null
+          xdotool search --onlyvisible --class chrome | head -3
+          node scripts/verify-vis3-06-r2-native-browser-zoom.mjs
+
+      - name: Upload real native zoom evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-vis3-06-r2-native-chrome-${{ github.sha }}
+          path: artifacts/vis3-06-r2-native-browser-zoom
+          if-no-files-found: warn
+          retention-days: 30
