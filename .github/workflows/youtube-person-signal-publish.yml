@@ -89,6 +89,17 @@ jobs:
       - name: Verify multilingual names and reviewed spelling variants before production reads
         run: node --test tests/atlas-youtube-incremental-review.test.mjs
 
+      - name: Verify source artifact immutable GitHub digest and identity
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID" |
+            jq -e --arg digest "$ARTIFACT_DIGEST" --arg name "$ARTIFACT_NAME" \
+              --argjson id "$ARTIFACT_ID" \
+              '.id==$id and .name==$name and .digest==$digest and .expired==false' >/dev/null
+
       - name: Download cumulative discovery artifact
         uses: actions/download-artifact@v4
         with:
