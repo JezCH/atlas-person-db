@@ -389,7 +389,12 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.equal(macedon.terminal_status, 'KEEP_SEPARATE');
   assert.equal(macedon.reviewed_decision, 'keep_both');
   assert.equal(macedon.locked, true);
-  assert.equal(byId.get('northern-southern-song').terminal_status, null);
+  const song = byId.get('northern-southern-song');
+  assert.equal(song.terminal_status, 'KEEP_SEPARATE');
+  assert.equal(song.reviewed_decision, 'keep_both_operative_song_periods_preserve_single_dynasty');
+  assert.equal(song.followup_key, 'song-generic-polity-activity-ownership');
+  assert.equal(song.followup_status, 'REPAIR_REQUIRED_SEPARATE_AUTHORING_GATE');
+  assert.equal(song.locked, true);
   const romanCourts = byId.get('roman-west-east');
   assert.equal(romanCourts.terminal_status, 'KEEP_SEPARATE');
   assert.equal(romanCourts.suggested_action, 'keep_both');
