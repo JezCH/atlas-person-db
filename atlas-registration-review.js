@@ -61,7 +61,7 @@
   function registeredStats(payload) {
     const persons=Array.isArray(payload?.persons) ? payload.persons : [];
     const total=Number(payload?.summary?.total ?? persons.length);
-    const historical=persons.filter((person)=>person?.historicity === "역사적 실존").length;
+    const historical=persons.filter((person)=>person?.historicity === "historical").length;
     const activities=persons.reduce((sum,person)=>sum+Number(person?.activity_count || 0),0);
     const nonTimeline=persons.filter((person)=>{
       const disposition=String(person?.timeline_disposition?.disposition || "").trim();
