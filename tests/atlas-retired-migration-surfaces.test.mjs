@@ -96,7 +96,8 @@ test("retired migration workflows have no live repository execution surface", ()
 test("retired P11 workflow can no longer mint audit or correction Production authority", () => {
   assert.deepEqual(auditOidc.ALLOWED_WORKFLOW_REFS, [
     auditOidc.EXPECTED_WORKFLOW_REF,
-    auditOidc.SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF
+    auditOidc.SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF,
+    auditOidc.SWEDEN_POLITY_AUDIT_WORKFLOW_REF
   ]);
   assert.deepEqual(correctionOidc.ALLOWED_WORKFLOW_REFS, [
     correctionOidc.EXPECTED_WORKFLOW_REF
