@@ -101,8 +101,9 @@ def title_candidates(title):
                 out.setdefault(label_key(name), (name, cue))
     return list(out.values())
 
-def audit(source_zip, known_names, *, max_examples=3, min_channels=3):
+def audit(source_zip, known_names, *, max_examples=3, min_channels=3, reviewed_exclusions=()):
     known_names = list(known_names)
+    reviewed_nonperson_keys = {orthographic_key(n) for n in reviewed_exclusions}
     known_keys = {label_key(n) for n in known_names}
     known_orthography = {orthographic_key(n) for n in known_names}
     def entry():
@@ -152,6 +153,8 @@ def audit(source_zip, known_names, *, max_examples=3, min_channels=3):
         "cues": dict(val["cues"]),
         "examples": val["examples"],
     } for key, val in stats.items() if len(val["channels"]) >= min_channels]
+    quarantined = [r for r in rows if orthographic_key(r["candidate"]) in reviewed_nonperson_keys]
+    rows = [r for r in rows if orthographic_key(r["candidate"]) not in reviewed_nonperson_keys]
     rows.sort(key=lambda r: (-r["distinct_channels"], -r["distinct_videos"], r["candidate"]))
     return {
         "schema": "youtube-open-vocabulary-name-cue-audit/v2",
@@ -159,6 +162,7 @@ def audit(source_zip, known_names, *, max_examples=3, min_channels=3):
         "source_videos": videos, "known_raw_name_labels": len(known_keys),
         "cue_extracted_occurrences": candidate_hits, "cue_counts": dict(by_cue),
         "minimum_distinct_channels": min_channels,
+        "reviewed_nonperson_quarantined_labels": len(quarantined),
         "novel_raw_name_candidate_count": len(rows),
         "possible_orthographic_variant_count": sum(
             row["candidate_fold_status"] == "POSSIBLE_ORTHOGRAPHIC_VARIANT" for row in rows
@@ -181,8 +185,13 @@ def main():
     p.add_argument("--min-channels", type=int, default=3)
     args = p.parse_args()
     reference = json.loads(Path(args.signal_json).read_text(encoding="utf-8"))
+    rules_path = Path(__file__).with_name("youtube-person-signal-quality-rules.v2.json")
+    if not rules_path.exists():
+        raise ValueError("source-reviewed non-person quality rules missing")
+    rules = json.loads(rules_path.read_text(encoding="utf-8"))
+    reviewed_exclusions = rules["non_person_exact"] + rules["nonhistorical_person_exact"]
     result = audit(args.source_zip, (row["raw_name"] for row in reference["signals"]),
-                   min_channels=args.min_channels)
+                   min_channels=args.min_channels, reviewed_exclusions=reviewed_exclusions)
     metadata = reference["snapshot"]
     if (result["source_channels"] != int(metadata["channel_count"])
             or result["source_videos"] != int(metadata["video_count"])):
