@@ -352,7 +352,7 @@ async function queryRussiaDetails(client) {
  * and Runtime rows under the authenticated, repeatable-read, READ ONLY audit.
  */
 function swedenPolityCandidates(polities) {
-  const namePattern = /\\b(?:sweden|swedish|sverige|svea)\\b|스웨덴|스웨리예/i;
+  const namePattern = /\b(?:sweden|swedish|sverige|svea)\b|스웨덴|스웨리예/i;
   return Object.freeze(polities.filter(row => {
     const names = (row.names || []).map(name => String(name.name || ""));
     return names.some(name => namePattern.test(name)) ||
