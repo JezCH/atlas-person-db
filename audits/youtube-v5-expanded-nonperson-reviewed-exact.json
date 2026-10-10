@@ -2894,5 +2894,67 @@
     "The REAL King Arthur",
     "Saint Patrick"
   ],
-  "hold_reason": "The REAL King Arthur describes speculative historical/legendary identity and needs identity review rather than automatic one-Person classification or automatic nonperson removal."
+  "hold_reason": "The REAL King Arthur describes speculative historical/legendary identity and needs identity review rather than automatic one-Person classification or automatic nonperson removal.",
+  "archive_replay_evidence": {
+    "archived_original_channel_files_read": 10127,
+    "archived_original_video_rows_read": 2230031,
+    "source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+    "source_method": "Exact title labels additionally probed against original per-channel .ndjson.gz videos; title mentions are not one-Person-centered evidence; original Channel IDs and video IDs remain untouched.",
+    "examples": [
+      {
+        "raw_name": "Earth Day",
+        "channel_id": "UCOjscjEL-lGZVP-2uooEuCA",
+        "video_id": "9LY50M04suU",
+        "title": "Skoblicki's Scientists presents: Earth Day"
+      },
+      {
+        "raw_name": "JFK Assassination",
+        "channel_id": "UCm1fqkJ-Tq64bQzM6VRMicQ",
+        "video_id": "yznRGS9f-jI",
+        "title": "Who Was the Umbrella Man? | JFK Assassination Documentary | The New York Times"
+      },
+      {
+        "raw_name": "The Minoans",
+        "channel_id": "UC9iAEi1Doz1s5gy1geBcG0g",
+        "video_id": "LErJHY0cv3s",
+        "title": "The Minoans: The Most Mysterious Civilization"
+      },
+      {
+        "raw_name": "Hidden Figures",
+        "channel_id": "UCEbHv97K65U1PAtU-1lPf3g",
+        "video_id": "u59hhJb6g9g",
+        "title": "Hidden Figures Young Readers' Edition Audiobook by Margot Lee Shetterly"
+      },
+      {
+        "raw_name": "The Scramble for Africa",
+        "channel_id": "UCF0iOVyZtAY9bgrFeNzY6kQ",
+        "video_id": "wwo34t-a678",
+        "title": "The Scramble for Africa Then and Now"
+      },
+      {
+        "raw_name": "The Last Supper",
+        "channel_id": "UCLzcocX9Q0fh64_j2U9RWxA",
+        "video_id": "09BjC_9F8vU",
+        "title": "EP.73 The Last Supper by Leonardo da Vinci | The Story Behind a Renaissance Masterpiece"
+      },
+      {
+        "raw_name": "The Great Schism of 1054",
+        "channel_id": "UCd5bCMGrhSE7-OCnuIV-wbg",
+        "video_id": "dz3KYMW8_EU",
+        "title": "The Great Schism of 1054 The Complete Story of Catholic & Orthodox Division"
+      },
+      {
+        "raw_name": "The Trung Sisters",
+        "channel_id": "UCbwyPVMYjL7ydbSEonFXBNg",
+        "video_id": "N7kk4zsIQs0",
+        "title": "The Trung Sisters: Vietnam’s Warrior Queens Who Defied the Chinese Empire"
+      },
+      {
+        "raw_name": "The Power of Words",
+        "channel_id": "UC1tCeGkob_kQOyhdZqxZ1Gg",
+        "video_id": "JmbVhAAxO3Y",
+        "title": "The Power of Words with Sherry Brown"
+      }
+    ]
+  }
 }
