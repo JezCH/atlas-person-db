@@ -14,8 +14,8 @@ test('Admin loads the isolated read-only observability surface after authenticat
   assert.match(html, /id="adminInspectorForm"/);
   assert.match(html, /id="inspectorKind"/);
   assert.match(html, /id="inspectorId"/);
-  assert.match(html, /SYSTEM \/ STATUS · READ ONLY/);
-  assert.match(html, /OBJECT INSPECTOR · READ ONLY/);
+  assert.match(html, /시스템 상태 · 읽기 전용/);
+  assert.match(html, /객체 조회 · 읽기 전용/);
   assert.match(css, /\.obs-summary-grid/);
   assert.match(css, /repeat\(auto-fit, minmax\(160px, 1fr\)\)/);
   assert.match(css, /\.obs-tree/);
@@ -49,15 +49,15 @@ test('Admin session gate treats the new read endpoints as protected session surf
   assert.match(observability, /clearAdminReadState/);
 });
 
-test('System Status exposes active Runtime compile diagnostics without creating a second truth source', () => {
+test('System Status exposes active 런타임 빌드 diagnostics without creating a second truth source', () => {
   assert.match(observability, /payload\.runtime_publication/);
-  assert.match(observability, /Runtime compile/);
-  assert.match(observability, /Runtime publication \/ active compile/);
+  assert.match(observability, /런타임 빌드/);
+  assert.match(observability, /런타임 게시·현재 빌드/);
   assert.match(observability, /projection_matches_compile_output/);
   assert.match(observability, /compile_balance_valid/);
-  assert.match(observability, /exclusion_summary_matches_excluded/);
-  assert.match(observability, /included ·/);
-  assert.match(observability, /excluded/);
+  assert.match(observability, /exclusion_summary_matches_건 제외/);
+  assert.match(observability, /건 포함 ·/);
+  assert.match(observability, /건 제외/);
   assert.doesNotMatch(observability, /__atlas_read_surface=runtime-publication/);
 });
 
@@ -79,5 +79,5 @@ test('Admin observability UI never embeds server secrets or raw audit inventory'
     assert.doesNotMatch(source, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|service_role|postgres:\/\/|postgresql:\/\//i);
     assert.doesNotMatch(source, /\/api\/atlas-audit-inventory/);
   }
-  assert.match(html, /secret 값은 표시하지 않습니다/);
+  assert.match(html, /민감한 설정값은 표시하지 않습니다/);
 });
