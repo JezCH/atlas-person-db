@@ -171,7 +171,10 @@ def fetch_descriptions(request,*,api_call,prior=None,max_batches=30,on_batch=Non
         for obj in result.get("items",[]):
             video=obj.get("id")
             if video not in allowed or video in items:raise ValueError("API_UNKNOWN_OR_DUPLICATE_VIDEO_ID")
-            items[video]=obj.get("snippet") or {}
+            snippet=obj.get("snippet")
+            if not isinstance(snippet,dict) or not snippet.get("channelId"):
+                raise ValueError("API_ITEM_MISSING_REQUIRED_CHANNEL_ID")
+            items[video]=snippet
         for source in batch:
             vid=source["video_id"]
             info=items.get(vid)
