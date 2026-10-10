@@ -64,5 +64,28 @@ class YoutubeSourceContextV5Test(unittest.TestCase):
             self.assertGreater(result["snapshot"]["source_state"]
                                ["quality_counters"]["accepted_context_cue_video_name_ids"],0)
 
+    def test_reviewed_alias_unions_use_original_channel_video_id_sets(self):
+        manifest = {
+            "schema":"atlas-youtube-b024-v5-source-identity-alias-review/v1",
+            "source_artifact_digest":"sha256:test",
+            "approved_groups":[{
+                "canonical_name":"Pablo Picasso",
+                "aliases":["Picasso","Pablo Picasso"]
+            }]
+        }
+        channels = {"picasso":{"UC1","UC2","UC3"},
+                    "pablo picasso":{"UC2","UC3","UC4"}}
+        videos = {"picasso":{("UC1","v1"),("UC2","v2"),("UC3","v3")},
+                  "pablo picasso":{("UC2","v2"),("UC3","v4"),("UC4","v5")}}
+        names = {"picasso":"Picasso","pablo picasso":"Pablo Picasso"}
+        out=mod.reviewed_source_alias_unions(manifest,"sha256:test",channels,videos,names)
+        self.assertEqual(out[0]["distinct_channel_count"],4)
+        self.assertEqual(out[0]["video_count"],5)
+        self.assertEqual(out[0]["aliases"][0]["distinct_channel_count"],3)
+        self.assertRegex(out[0]["union_video_ids_sha256"],r"^[a-f0-9]{64}$")
+        with self.assertRaisesRegex(RuntimeError,"DIGEST_MISMATCH"):
+            mod.reviewed_source_alias_unions(manifest,"sha256:changed",channels,videos,names)
+
+
 if __name__=="__main__":
     unittest.main()
