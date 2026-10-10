@@ -418,6 +418,14 @@ const SONG_P2_08_GAOZONG_ACTIVITIES = Object.freeze([
   "4517af83-d656-47b0-a558-3a3df717f726",
   "d5eaf14b-417d-4ed9-a594-d819314a1ff5"
 ]);
+const SONG_P2_08E_SOURCE_URLS = Object.freeze([
+  "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/founding-and-consolidation-of-the-sung-dynasty-under-taitsu-960976-taitsung-976997-and-chentsung-9971022/69C8668AF27659D52EBF293C0412504C",
+  "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/reigns-of-huitsung-11001126-and-chintsung-11261127-and-the-fall-of-the-northern-sung/C1186B649A07ED96C45F2EB2D7318D54",
+  "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/move-to-the-south-and-the-reign-of-kaotsung-11271162/E39FFED3578CF0BA1B97563FDB46DB1B",
+  "https://www.cambridge.org/core/books/cambridge-history-of-china/sung-government-and-politics/B360D3EB6D72ADEE74E46FD8570548EC",
+  "https://www.cambridge.org/core/books/origins-of-the-chinese-nation/D3B5D6FDAB2060CEF6C173C797E1557C",
+  "https://www.cambridge.org/core/journals/journal-of-chinese-history/article/military-institutions-as-a-defining-feature-of-the-song-dynasty/D020A447BD8666C3304D7A315CB65DFD"
+]);
 async function querySongDetails(client, polities) {
   const presentIds = new Set(polities.map(row => String(row.polity_id).toLowerCase()));
   // Fail closed if even one of the three observed, existing source Polities
@@ -426,7 +434,7 @@ async function querySongDetails(client, polities) {
     throw new Error("POLITY_SONG_P2_08_EXACT_IDENTITY_MISSING");
   }
   const polityIds = [...SONG_P2_08_POLITY_IDS];
-  const [details, activities, activitySources, runtime, sources] = await Promise.all([
+  const [details, activities, activitySources, runtime, sources, identityRelationTypes, structuralRelationTypes, sourceCandidates, relationSchema] = await Promise.all([
     queryPolityDetails(client, polityIds),
     client.query(`
       select a.id::text as activity_id, a.polity_id::text as polity_id,
@@ -453,7 +461,29 @@ async function querySongDetails(client, polities) {
              a.polity_id::text as polity_id, to_jsonb(a) as activity
         from atlas_v2.person_politics_v2 a
        where a.person_id=$1::uuid
-       order by a.id::text`, [SONG_P2_08_GAOZONG_ID])
+       order by a.id::text`, [SONG_P2_08_GAOZONG_ID]),
+    client.query(`
+      select to_jsonb(t) as relation_type
+        from atlas_v2.polity_identity_relation_types t
+       order by t.code`),
+    client.query(`
+      select to_jsonb(t) as relation_type
+        from atlas_v2.polity_relation_types t
+       order by t.code`),
+    client.query(`
+      select id::text as source_id,source_key,source_type,title,canonical_url,citation_text
+        from atlas_v2.sources
+       where canonical_url=any($1::text[])
+       order by canonical_url,source_key,id::text`, [[...SONG_P2_08E_SOURCE_URLS]]),
+    client.query(`
+      select table_name,column_name,data_type,is_nullable
+        from information_schema.columns
+       where table_schema='atlas_v2'
+         and table_name=any($1::text[])
+       order by table_name,ordinal_position`, [[
+         "polity_identity_relation_types","polity_identity_relations","polity_identity_relation_sources",
+         "polity_relation_types","polity_relations","polity_relation_sources","polity_sources"
+       ]])
   ]);
   const ownerByActivity = new Map(activities.rows.map(row => [row.activity_id, row.polity_id]));
   if (SONG_P2_08_GAOZONG_ACTIVITIES.some(id => !ownerByActivity.has(id))) {
@@ -463,6 +493,11 @@ async function querySongDetails(client, polities) {
     ...details, activities:activities.rows, activity_sources:activitySources.rows,
     runtime_activities:runtime.rows, gaozong_person_activities:sources.rows,
     gaozong_activity_ids:[...SONG_P2_08_GAOZONG_ACTIVITIES],
+    identity_relation_types:identityRelationTypes.rows.map(row=>row.relation_type),
+    structural_relation_types:structuralRelationTypes.rows.map(row=>row.relation_type),
+    source_candidate_urls:[...SONG_P2_08E_SOURCE_URLS],
+    source_candidates:sourceCandidates.rows,
+    relation_schema:relationSchema.rows,
     preflight_only:true, committed:false
   });
 }
@@ -860,6 +895,7 @@ module.exports = Object.freeze({
   querySongDetails,
   SONG_P2_08_POLITY_IDS,
   SONG_P2_08_GAOZONG_ACTIVITIES,
+  SONG_P2_08E_SOURCE_URLS,
   RUSSIA_P2_05B_POLITY_ID,
   RUSSIA_P2_05B_ACTIVITIES,
   queryBrazilPreflight,
