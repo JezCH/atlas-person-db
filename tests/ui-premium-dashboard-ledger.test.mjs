@@ -15,5 +15,5 @@ test("DASH-LUX1 enhances an archival control center without changing dashboard o
   assert.doesNotMatch(finish,/(?:^|\n)\s*(?:width|height|padding|margin|gap|font-size|line-height|grid-template-columns|grid-template-rows|position|left|right|top|bottom|transform)\s*:/);
   assert.doesNotMatch(finish,/@keyframes|animation:|!important|data-domain=|\.person-register-entry|\.person-table/);
   assert.match(css,/@media \(prefers-reduced-motion: reduce\)/);
-  assert.match(nav,/atlas-dashboard-monumental-v11\.css\?v=20261008-dashboard-lux1-ledger-v1/);
+  assert.match(nav,/atlas-dashboard-monumental-v11\.css\?v=20261010-vis3-05t-d-kpi-type-v1/);
 });
