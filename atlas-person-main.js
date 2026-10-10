@@ -600,8 +600,46 @@
       if (!keepSelection || !persons.some((person) => person.id === selectedPersonId)) selectedPersonId = null;
       renderGroups();
       if (selectedPersonId) await selectPerson(selectedPersonId, { force: true });
+      return { ok: true, count: persons.length };
     } catch (error) {
-      if (groups) groups.innerHTML = `<p class="person-empty-state is-error">Person 목록 조회 실패: ${escapeHtml(error?.code || error?.message || "unknown")}</p>`;
+      console.error("ATLAS Person list read failed", error);
+      // A failed manual refresh must not erase the last valid register.
+      if (groups && !persons.length) groups.innerHTML = `<p class="person-empty-state is-error">Person 목록 조회 실패: ${escapeHtml(error?.code || error?.message || "unknown")}</p>`;
+      return { ok: false, error };
+    }
+  }
+
+  let refreshInFlight = false;
+  async function refreshPersons() {
+    if (refreshInFlight) return false;
+    refreshInFlight = true;
+    const button = document.getElementById("personMainRefresh");
+    if (button) {
+      button.disabled = true;
+      button.setAttribute("aria-busy", "true");
+      button.textContent = "새로고침 중…";
+    }
+    window.dispatchEvent(new CustomEvent("atlas-person-refresh-state", { detail: { state: "loading" } }));
+    try {
+      const result = await loadPersons({ keepSelection: true, force: true });
+      if (!result?.ok) {
+        const message = String(result?.error?.message || "데이터 조회를 확인해주세요.");
+        window.dispatchEvent(new CustomEvent("atlas-person-refresh-state", { detail: { state: "error", message } }));
+        showOperationalMessage(`새로고침 실패: ${message}`);
+        return false;
+      }
+      // Refresh the header telemetry from the newly committed shared snapshot,
+      // avoiding a second network request and keeping Person counts in sync.
+      window.dispatchEvent(new CustomEvent("atlas-person-refresh-state", { detail: { state: "success" } }));
+      showOperationalMessage(`인물 ${result.count.toLocaleString("ko-KR")}명 새로고침 완료`);
+      return true;
+    } finally {
+      refreshInFlight = false;
+      if (button) {
+        button.disabled = false;
+        button.removeAttribute("aria-busy");
+        button.textContent = "↻ 새로고침";
+      }
     }
   }
 
@@ -844,7 +882,7 @@
       sortOrder = sort.value === "start-desc" ? "start-desc" : "start-asc";
       renderGroups();
     });
-    refresh?.addEventListener("click", () => loadPersons({ keepSelection: true, force: true }));
+    refresh?.addEventListener("click", refreshPersons);
     excelExport?.addEventListener("click", exportCurrentExcel);
     groups?.addEventListener("click", (event) => {
       if (event.target.closest("[data-person-dashboard-filter-clear]")) {
