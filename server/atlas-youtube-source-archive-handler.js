@@ -95,7 +95,9 @@ function createYoutubeSourceArchiveHandler({
     let client=null;
     try{
       client=await clientFactory(databaseUrl,{env});
-      const migration=await applyMigrations(client);
+      const migration=transport.operation==="publish_catalog"
+        ? await applyMigrations(client)
+        : Object.freeze({applied:[]});
       const outcome=transport.operation==="read_catalog"
         ? await readCatalog(client,body?.source_artifact_id)
         : await publish(client,body);
