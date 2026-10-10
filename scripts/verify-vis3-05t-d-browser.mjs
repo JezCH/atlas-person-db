@@ -71,7 +71,7 @@ async function run(c,width,height){
 }
 let chrome;
 try{
- const t=await(await fetch('http://127.0.0.1:9227/json/list')).json(),page=t.find(x=>x.type==='page'&&x.webSocketDebuggerUrl);
+ const t=await(await fetch('http://127.0.0.1:9224/json/list')).json(),page=t.find(x=>x.type==='page'&&x.webSocketDebuggerUrl);
  check(page,'No Chrome tab');chrome=new CDP(page.webSocketDebuggerUrl);await chrome.open();await chrome.call('Page.enable');await chrome.call('Runtime.enable');
  for(const [w,h] of [[390,844],[768,1000],[1440,1000],[1600,1100]])await run(chrome,w,h);
  result.status='PASS';console.log('VIS3_05T_D_BROWSER_PASS 4 viewports');
