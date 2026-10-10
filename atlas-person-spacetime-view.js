@@ -116,7 +116,7 @@
   }
 
   function spatialPrecisionLabel(segment) {
-    return ({ place: "Place", subregion: "하위 권역", macroregion: "대권역", unresolved: "미확정" })[text(segment?.spatial_precision)] || text(segment?.spatial_precision) || "미확정";
+    return ({ place: "장소", subregion: "하위 권역", macroregion: "대권역", unresolved: "미확정" })[text(segment?.spatial_precision)] || text(segment?.spatial_precision) || "미확정";
   }
 
   function normalizedEvidenceRefs(refs) {
@@ -604,7 +604,7 @@
 
   function renderMeanwhile(summary) {
     if (!summary || meanwhileSelectedOrdinal == null) {
-      return '<section class="spacetime-meanwhile is-empty" aria-label="동시대 탐색"><div><small>MEANWHILE</small><strong>동시대 보기</strong><span>Activity·연도·빈 시공간을 선택해 동시대 인물을 봅니다.</span></div></section>';
+      return '<section class="spacetime-meanwhile is-empty" aria-label="동시대 탐색"><div><small>동시대 탐색</small><strong>동시대 보기</strong><span>활동·연도·빈 시공간을 선택해 동시대 인물을 봅니다.</span></div></section>';
     }
     const momentLabel = meanwhileMomentLabel();
     const sourceLabel = meanwhileSelectionSource === "activity" ? "선택 Activity 중간 시점" : "직접 선택 시점";
@@ -614,12 +614,12 @@
     const visibleEntries = (summary.entries || []).slice(0, 24);
     const activityRows = visibleEntries.length
       ? `<div class="spacetime-meanwhile-activities">${visibleEntries.map((entry) => `<button type="button" data-spacetime-meanwhile-person="${escapeHtml(entry.person_id)}"><strong>${escapeHtml(entry.display_name)}</strong><span>${escapeHtml(polityLabel(entry.activity))}</span><small>${escapeHtml(periodLabel(entry.activity))}</small></button>`).join("")}</div>`
-      : '<p class="spacetime-empty-inline">이 시점에 주 위치가 확정된 활성 Activity가 없습니다.</p>';
+      : '<p class="spacetime-empty-inline">이 시점에 주 위치가 확정된 활성 활동이 없습니다.</p>';
     return `<section class="spacetime-meanwhile card" aria-label="${escapeHtml(momentLabel)} 동시대 탐색">
-      <div class="spacetime-meanwhile-head"><div><small>MEANWHILE · ${escapeHtml(sourceLabel)}</small><strong>${escapeHtml(momentLabel)}</strong><span>active Person ${summary.unique_person_count}명 · active Activity ${summary.activity_count}건</span></div><button id="spacetimeMeanwhileClear" type="button">시점 해제</button></div>
+      <div class="spacetime-meanwhile-head"><div><small>동시대 탐색 · ${escapeHtml(sourceLabel)}</small><strong>${escapeHtml(momentLabel)}</strong><span>활동 중인 인물 ${summary.unique_person_count}명 · 활동 기록 ${summary.activity_count}건</span></div><button id="spacetimeMeanwhileClear" type="button">시점 해제</button></div>
       <div class="spacetime-meanwhile-regions" aria-label="대권역별 동시대 인물 수">${regionCounts}</div>
       ${activityRows}
-      ${summary.entries.length > visibleEntries.length ? `<p class="spacetime-more">외 ${summary.entries.length - visibleEntries.length}개 활성 Activity</p>` : ""}
+      ${summary.entries.length > visibleEntries.length ? `<p class="spacetime-more">외 활동 기록 ${summary.entries.length - visibleEntries.length}건</p>` : ""}
     </section>`;
   }
 
@@ -939,13 +939,13 @@
         <span>${escapeHtml(relation)} · ${escapeHtml(role)}</span>
         <em>${escapeHtml(activityClassificationLabel(group))}</em>
       </button>
-      <div class="spacetime-inspector-activity-evidence">${placements || `<p class="spacetime-empty-inline">공간 배치 slice 없음${group.unresolved_reason ? ` · ${escapeHtml(reasonLabel(group.unresolved_reason))}` : ""}</p>`}</div>
+      <div class="spacetime-inspector-activity-evidence">${placements || `<p class="spacetime-empty-inline">공간 배치 구간 없음${group.unresolved_reason ? ` · ${escapeHtml(reasonLabel(group.unresolved_reason))}` : ""}</p>`}</div>
     </article>`;
   }
 
   function renderStickyInspector(track, navigationCount = 0) {
     if (!track) {
-      return `<aside class="spacetime-sticky-inspector card is-empty" id="spacetimeInspector" aria-label="Person Activity inspector"><div><small>PERSON INSPECTOR</small><strong>인물을 선택하세요</strong><p>Person을 선택하면 전체 Activity와 ATLAS 시공간 배치 근거·출처를 이 패널에서 확인할 수 있습니다.</p></div></aside>`;
+      return `<aside class="spacetime-sticky-inspector card is-empty" id="spacetimeInspector" aria-label="인물 활동 정보"><div><small>인물 정보</small><strong>인물을 선택하세요</strong><p>인물을 선택하면 전체 활동 기록과 ATLAS 시공간 배치 근거·출처를 확인할 수 있습니다.</p></div></aside>`;
     }
     const inspector = inspectorRuntime();
     const activities = inspector.groupActivities(track);
@@ -955,16 +955,16 @@
     const koName = text(track.preferred_name_ko) || text(track.display_name) || "이름 미상";
     const secondaryName = text(track.canonical_name_en) && text(track.canonical_name_en) !== koName ? text(track.canonical_name_en) : "";
     const selectedActivity = inspector.selectedActivity(track, selectedActivityId);
-    return `<aside class="spacetime-sticky-inspector card" id="spacetimeInspector" aria-label="${escapeHtml(track.display_name)} Person Activity inspector">
+    return `<aside class="spacetime-sticky-inspector card" id="spacetimeInspector" aria-label="${escapeHtml(track.display_name)} 인물 활동 정보">
       <header class="spacetime-inspector-person">
-        <small>PERSON INSPECTOR</small>
+        <small>인물 정보</small>
         <strong>${escapeHtml(koName)}</strong>
         ${secondaryName ? `<span>${escapeHtml(secondaryName)}</span>` : ""}
-        <p>${escapeHtml(extent ? ordinalRangeLabel(extent.start_ordinal, extent.end_ordinal) : "Activity 기간 미상")}</p>
+        <p>${escapeHtml(extent ? ordinalRangeLabel(extent.start_ordinal, extent.end_ordinal) : "활동 기간 미상")}</p>
         ${selectedActivity && Number.isInteger(selectedTimeOrdinal) ? `<output>선택 Activity 중간 시점 · ${escapeHtml(ordinalLabel(selectedTimeOrdinal))}</output>` : ""}
       </header>
       <div class="spacetime-inspector-actions" role="group" aria-label="선택 인물 탐색"><button id="spacetimePrevPerson" type="button"${cycleDisabled}>이전</button><button id="spacetimeFocusPerson" type="button">위치로</button><button id="spacetimeDetailPerson" type="button">확대</button><button id="spacetimeNextPerson" type="button"${cycleDisabled}>다음</button><button id="spacetimeClearPerson" type="button">해제</button></div>
-      <section class="spacetime-inspector-activities"><div class="spacetime-inspector-section-title"><strong>Activities</strong><span>${activities.length}</span></div>${activities.map(renderInspectorActivity).join("") || '<p class="spacetime-empty-inline">Activity 없음</p>'}</section>
+      <section class="spacetime-inspector-activities"><div class="spacetime-inspector-section-title"><strong>활동 내역</strong><span>${activities.length}</span></div>${activities.map(renderInspectorActivity).join("") || '<p class="spacetime-empty-inline">활동 없음</p>'}</section>
       <footer class="spacetime-inspector-disclaimer">공간 정보는 인물의 실제 거주지·활동 영역이 아니라 ATLAS의 검토된 시공간 배치 기준입니다.</footer>
     </aside>`;
   }
@@ -991,7 +991,7 @@
       if (geometry.kind === "multi-place") {
         const names = geometry.place_anchors.map((point) => point.place_name).filter(Boolean).join(" · ");
         const title = `복수 검토 Place 배치 기준: ${names || "복수 Place"} · 실제 이동 경로가 아닙니다`;
-        const points = geometry.place_anchors.map((point) => `<i class="spacetime-multi-place-anchor" style="left:${point.x - geometry.left}px" title="${escapeHtml(point.place_name || "Place")}"></i>`).join("");
+        const points = geometry.place_anchors.map((point) => `<i class="spacetime-multi-place-anchor" style="left:${point.x - geometry.left}px" title="${escapeHtml(point.place_name || "장소")}"></i>`).join("");
         return [`<button type="button" class="spacetime-spatial-uncertainty is-multi-place${selected ? " is-selected" : ""}${activitySelected ? " is-activity-selected" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" data-spacetime-activity="${escapeHtml(segment.activity_id)}" style="left:${geometry.left}px;top:${y}px;width:${geometry.width}px" title="${escapeHtml(title)}" aria-label="${escapeHtml(`${track.display_name} · ${title}`)}">${points}</button>`];
       }
       return [];
@@ -1682,7 +1682,7 @@
       </div>
       <details class="spacetime-precision-legend">
         <summary>표시 기준</summary>
-        <div class="spacetime-precision-content"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>Place</span><span><i class="is-subregion"></i>Subregion 범위</span><span><i class="is-macroregion"></i>Macroregion 범위</span><small>점선은 배치 정밀도 범위이며 실제 이동 경로가 아닙니다.</small></div>
+        <div class="spacetime-precision-content"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>장소</span><span><i class="is-subregion"></i>하위 권역 범위</span><span><i class="is-macroregion"></i>광역 권역 범위</span><small>점선은 배치 정밀도 범위이며 실제 이동 경로가 아닙니다.</small></div>
       </details>
     </section>
     ${renderSearchResults(searchItems, needle)}
@@ -1704,7 +1704,7 @@
       <div class="spacetime-region-head" style="width:${contentWidth}px">
         <div class="spacetime-region-head-layer is-macro" style="opacity:${spaceHeader.macro_opacity}">${spaceHeader.macroregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
         <div class="spacetime-region-head-layer is-subregion" style="opacity:${spaceHeader.subregion_opacity}">${spaceHeader.subregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.parent_code)}</small></div>`).join("")}</div>
-        <div class="spacetime-region-head-layer is-place" style="opacity:${spaceHeader.place_opacity}">${spaceHeader.places.map((place) => `<div class="spacetime-place-head-marker" style="left:${place.x}px" title="${escapeHtml(`검토 Place · ${place.place_name} · ${place.subregion_code}의 presentation anchor · 정확한 지리 좌표 아님`)}"><i></i><strong>${escapeHtml(place.place_name)}</strong></div>`).join("")}</div>
+        <div class="spacetime-region-head-layer is-place" style="opacity:${spaceHeader.place_opacity}">${spaceHeader.places.map((place) => `<div class="spacetime-place-head-marker" style="left:${place.x}px" title="${escapeHtml(`검토된 장소 · ${place.place_name} · ${place.subregion_code}의 표시용 기준점 · 정확한 지리 좌표 아님`)}"><i></i><strong>${escapeHtml(place.place_name)}</strong></div>`).join("")}</div>
       </div>
       <div class="spacetime-time-axis" style="height:${timelineHeight}px">
         <div class="spacetime-era-axis" style="--spacetime-era-content-opacity:${timeAxis.era_opacity}">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" data-spacetime-era="${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
@@ -1715,7 +1715,7 @@
         ${eras.filter((era) => era.top > 0).map((era) => `<i class="spacetime-era-boundary person-era-${escapeHtml(era.code)}" data-spacetime-era="${escapeHtml(era.code)}" style="top:${era.top}px"><span class="spacetime-era-boundary-emblem" aria-hidden="true"></span><b>${escapeHtml(era.label)}</b></i>`).join("")}
         ${regions.map((region) => `<i class="spacetime-region-line" style="left:${region.left}px;height:${timelineHeight}px"></i>`).join("")}
         ${spaceHeader.subregions.map((subregion) => `<i class="spacetime-subregion-line" style="left:${subregion.left}px;height:${timelineHeight}px;opacity:${spaceHeader.subregion_opacity}" title="${escapeHtml(subregion.label)}"></i>`).join("")}
-        ${spaceHeader.places.map((place) => `<i class="spacetime-place-guide" style="left:${place.x}px;opacity:${spaceHeader.place_opacity}" title="${escapeHtml(`검토 Place: ${place.place_name} · presentation anchor · 정확한 지리 좌표 아님`)}"></i>`).join("")}
+        ${spaceHeader.places.map((place) => `<i class="spacetime-place-guide" style="left:${place.x}px;opacity:${spaceHeader.place_opacity}" title="${escapeHtml(`검토된 장소: ${place.place_name} · 표시용 기준점 · 정확한 지리 좌표 아님`)}"></i>`).join("")}
         ${meanwhileOrdinal == null ? "" : `<div class="spacetime-meanwhile-line${meanwhileSelectionSource === "activity" ? " is-activity-linked" : ""}" style="top:${projection.yForOrdinal(meanwhileOrdinal)}px;width:${contentWidth}px"><span>${escapeHtml(meanwhileMomentLabel())}</span></div>`}
         <div id="spacetimeRailLayer" class="spacetime-runtime-layer"></div>
         <div id="spacetimeUncertaintyLayer" class="spacetime-runtime-layer"></div>
@@ -1728,7 +1728,7 @@
       ${renderStickyInspector(selectedTrack, navigationItems.length)}
     </aside>
     </div>
-    <section class="spacetime-unresolved-grid"><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">PLACEMENT REVIEW</p><h3>위치 미확정</h3></div><strong>${compiled.unresolvedPosition.length}</strong></div><p>검토된 정치체 권역·장소 기능으로 가로 위치를 확정할 수 없어 좌표를 만들지 않은 Activity입니다.</p>${unresolvedRows(compiled.unresolvedPosition)}</article><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">CHRONOLOGY REVIEW</p><h3>연대 미확정</h3></div><strong>${compiled.unresolvedChronology.length}</strong></div><p>Activity 시작·종료 연도를 둘 다 확정할 수 없는 경우 세로축에 임의 기간을 만들지 않습니다.</p>${unresolvedRows(compiled.unresolvedChronology)}</article></section>`;
+    <section class="spacetime-unresolved-grid"><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">공간 배치 검토</p><h3>위치 미확정</h3></div><strong>${compiled.unresolvedPosition.length}</strong></div><p>검토된 정치체 권역·장소 기능으로 가로 위치를 확정할 수 없어 좌표를 만들지 않은 Activity입니다.</p>${unresolvedRows(compiled.unresolvedPosition)}</article><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">연대 검토</p><h3>연대 미확정</h3></div><strong>${compiled.unresolvedChronology.length}</strong></div><p>Activity 시작·종료 연도를 둘 다 확정할 수 없는 경우 세로축에 임의 기간을 만들지 않습니다.</p>${unresolvedRows(compiled.unresolvedChronology)}</article></section>`;
 
     bindCameraViewport(mount, projection, navigationItems);
     const scroll = mount.querySelector(".spacetime-scroll");
@@ -1833,7 +1833,7 @@
     if (pendingViewportCameraOrdinal == null) pendingViewportCameraOrdinal = cameraCenterOrdinal;
     dataLoadGeneration += 1;
     loadPromise = null;
-    mount.innerHTML = '<section class="card spacetime-loading"><strong>시공간 인물도 준비 중</strong><p>Person track과 검토된 공간 배치 자료를 읽고 있습니다.</p></section>';
+    mount.innerHTML = '<section class="card spacetime-loading"><strong>시공간 인물도 준비 중</strong><p>인물의 활동 궤적과 검토된 공간 배치 자료를 읽고 있습니다.</p></section>';
     try {
       const prerequisites = [ensureRuntimeModules(), ensureData()];
       if (selectedPersonId) prerequisites.push(ensureInspectorModule());
