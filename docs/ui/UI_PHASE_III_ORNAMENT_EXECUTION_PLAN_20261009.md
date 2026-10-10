@@ -218,4 +218,7 @@ ATLAS_UI_VISUAL_GUIDELINES.md v2.0은 현재 §14(금속 강조), §17(연대와
 
 **VIS3-06-R0 비배포 실인물 키보드/표시 기준 상호작용 검증 완료:** [실행·판정 증거](UI_PHASE_III_VIS3_06_R0_INTERACTION_PREFLIGHT_20261010.md); [Chrome #38035327074](https://github.com/JezCH/atlas-person-db/actions/runs/38035327074) 및 [Integrity #38035326991](https://github.com/JezCH/atlas-person-db/actions/runs/38035326991) SUCCESS. 390px 69명 / 1440px 195명 실제 표시 이름표, 실제 Person Inspector 선택 1 Activity, '표시 기준' 패널 펼침/닫힘, 실제 Tab→축소·확대·summary 세 조작에 :focus-visible 확인. 동일 Production DOM A/B2 4장면×2안 **8개 사례, PNG 8장**, Button/읽을거리/지오메트리/9지역/연도축/인물/포커스 변형 0 및 장식 겹침 0. **최종 미학 승인 아님, A 현행 Production 유지.** **다음 `VIS3-06-R1`:** 사용자 A/B2 시각 선택 및 Dashboard mixed-D 사용자 최종 승인 확인. 승인 시에만 별도 실구현·native Chrome 125/150% 확대·전체 접근성·Production 수락; 이후 VIS3-07~17 순서 유지.
 
+
+**VIS3-06-R1 사용자 최종 A/B2 시각 선택 자료 준비 — 비배포, 승인 대기:** [R1 선택 자료·증거](UI_PHASE_III_VIS3_06_R1_USER_DESIGN_DECISION_20261010.md). 실제 Production P3 **18개 A/B/B2 케이스**와 R0 **8개 열린 패널/키보드 A/B2 케이스**의 실측 결과·원본 PNG/JSON을 근거로 **A 현행 유지 / B2 디자인 방향 선택 / 보류·재설계** 세 가지를 명시. B2는 장식적 184×32px 명판이며 모바일 900px 이하 자동 숨김, 역사 값/축 변경 0. **디자인 방향 승인 ≠ Production 배포 승인**, 사용자 명시적 디자인 선택 전에는 A 운영 유지, 실제 CSS/DB/API/Vercel 변경 금지. Dashboard VIS3-05R mixed-D 최종 사용자 시각 승인은 별도 대기. **정확한 재개점 = 사용자의 A/B2/재설계 선택 확인**. 이후 승인된 별도 최소 단위에서만 기술·native browser zoom/접근성·Production 인수 진행하고, VIS3-07~17 로드맵 보존.
+
 > Phase III v2.0의 성공 조건: 조형물의 총량이 아니라, 역사적 품격·읽기 쉬움·현재 데이터의 신뢰성이 함께 상승할 것.
