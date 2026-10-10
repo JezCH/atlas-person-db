@@ -81,8 +81,7 @@ jobs:
               ivan:[ $ivan[0].person.activities[] | select(.id=="d6cdaf3b-2eab-4b98-8a17-b9c42342534f") | {id,polity,start,end}],
               peter:[ $peter[0].person.activities[] | select(.id=="57cdefa5-9a5d-533c-b229-47e398f1d07a" or .id=="9ec53325-3a97-58a8-a7e7-81a496a47e57") | {id,polity,start,end,source_count:(.sources|length)}],
               catherine:[ $cath[0].person.activities[] | select(.id=="f6129bb4-c94b-46e3-9c49-396b23ab4fdc") | {id,polity}],
-              nicholas:[ $nich[0].person.activities[] | select(.id=="25353cf2-bada-4014-973b-1f0893bb072b") | {id,polity}]}'
-             > russian-p2-05c-public-acceptance.json
+              nicholas:[ $nich[0].person.activities[] | select(.id=="25353cf2-bada-4014-973b-1f0893bb072b") | {id,polity}]}' > russian-p2-05c-public-acceptance.json
           cat russian-p2-05c-public-acceptance.json
 
       - name: Preserve immutable read-only acceptance evidence
