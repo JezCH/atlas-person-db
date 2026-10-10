@@ -117,19 +117,51 @@ def youtube_batch_api(api_key):
     return fetch
 
 
-def fetch_descriptions(request,*,api_call,prior=None,max_batches=30):
+def fetch_descriptions(request,*,api_call,prior=None,max_batches=30,on_batch=None):
     if request.get("schema")!="atlas-youtube-description-enrichment-request/v1" or not request.get("original_per_video_channel_id_verified"):
         raise ValueError("UNVERIFIED_ORIGINAL_VIDEO_SOURCE_REQUEST")
     if max_batches<1 or max_batches>500:raise ValueError("UNSAFE_API_BATCH_LIMIT")
     previous={}
     if prior:
-        if prior.get("request_source_json_sha256")!=request["source_review_json_sha256"] or prior.get("source_snapshot_id")!=request["source_snapshot_id"]:
+        if (prior.get("request_source_json_sha256")!=request["source_review_json_sha256"] or
+            prior.get("source_snapshot_id")!=request["source_snapshot_id"] or
+            prior.get("source_zip_sha256")!=request["source_zip_sha256"] or
+            prior.get("requested_original_video_ids")!=request["unique_original_video_ids"] or
+            prior.get("schema")!="atlas-youtube-description-enrichment-result/v1" or
+            prior.get("automatic_person_subject_approval") is not False):
             raise ValueError("PREVIOUS_RESULT_SOURCE_MISMATCH")
         previous={r["video_id"]:r for r in prior["records"]}
         if len(previous)!=len(prior["records"]):raise ValueError("DUPLICATE_PREVIOUS_METADATA_VIDEO_ID")
     sources={r["video_id"]:r for r in request["videos"]}
     if len(sources)!=request["unique_original_video_ids"] or set(previous)-set(sources):
         raise ValueError("SOURCE_VIDEO_ID_POPULATION_MISMATCH")
+    for vid, old in previous.items():
+        source=sources[vid]
+        if (old.get("original_channel_id")!=source["original_channel_id"] or
+            old.get("original_title")!=source["original_title"] or
+            old.get("person_video_content_verified") is not False or
+            old.get("description_sha256")!=hashlib.sha256(
+                (old.get("description") or "").encode("utf-8")).hexdigest() or
+            old.get("status") not in ("NOT_FOUND_OR_UNAVAILABLE","CHANNEL_MISMATCH",
+                                     "DESCRIPTION_PRESENT","DESCRIPTION_EMPTY")):
+            raise ValueError("PREVIOUS_VIDEO_METADATA_TAMPER_OR_SOURCE_MISMATCH")
+        status=("NOT_FOUND_OR_UNAVAILABLE" if old.get("live_channel_id") is None else
+            "CHANNEL_MISMATCH" if old.get("live_channel_id")!=old["original_channel_id"] else
+            "DESCRIPTION_PRESENT" if (old.get("description") or "").strip() else "DESCRIPTION_EMPTY")
+        if old["status"]!=status:
+            raise ValueError("PREVIOUS_VIDEO_METADATA_STATUS_INCONSISTENT")
+    def make_result():
+        return {
+            "schema":"atlas-youtube-description-enrichment-result/v1",
+            "source_snapshot_id":request["source_snapshot_id"],
+            "source_zip_sha256":request["source_zip_sha256"],
+            "request_source_json_sha256":request["source_review_json_sha256"],
+            "requested_original_video_ids":len(sources),
+            "fetched_metadata_rows":len(previous),
+            "not_yet_fetched":len(sources)-len(previous),
+            "automatic_person_subject_approval":False,
+            "records":[previous[k] for k in sorted(previous)]
+        }
     todo=[v for v in request["videos"] if v["video_id"] not in previous]
     for index in range(0,min(len(todo),max_batches*50),50):
         batch=todo[index:index+50]
@@ -157,17 +189,9 @@ def fetch_descriptions(request,*,api_call,prior=None,max_batches=30):
                 "description":description,
                 "description_sha256":hashlib.sha256((description or "").encode()).hexdigest(),
                 "status":status,"person_video_content_verified":False}
-    return {
-        "schema":"atlas-youtube-description-enrichment-result/v1",
-        "source_snapshot_id":request["source_snapshot_id"],
-        "source_zip_sha256":request["source_zip_sha256"],
-        "request_source_json_sha256":request["source_review_json_sha256"],
-        "requested_original_video_ids":len(sources),
-        "fetched_metadata_rows":len(previous),
-        "not_yet_fetched":len(sources)-len(previous),
-        "automatic_person_subject_approval":False,
-        "records":[previous[k] for k in sorted(previous)]
-    }
+        if on_batch is not None:
+            on_batch(make_result())
+    return make_result()
 
 
 def main():
@@ -187,10 +211,13 @@ def main():
         output=prepare(read(args.source_evidence),
             source_digest=sha256(args.source_evidence),source_zip=args.source_zip)
     else:
+        # Atomically persist each successful official API batch before the next
+        # network request: an intermittent failure cannot erase past progress.
         output=fetch_descriptions(read(args.request),
             api_call=youtube_batch_api(os.environ.get("YOUTUBE_DATA_API_KEY")),
             prior=read(args.previous) if args.previous else None,
-            max_batches=args.max_batches)
+            max_batches=args.max_batches,
+            on_batch=lambda partial:write(args.output,partial))
     write(args.output,output)
     print(json.dumps({k:v for k,v in output.items() if k not in ("videos","records")},ensure_ascii=False))
 
