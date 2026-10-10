@@ -1,0 +1,170 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_song_gaozong_southern_two_relinks_20261011_v1",
+  "as_of": "2026-10-11",
+  "status": "REVIEWED_SOURCE_BACKED_MINIMAL_GAOZONG_SOUTHERN_SONG_OWNER_REPAIR",
+  "release_order": 2440,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 P2-08B: P2-07D source-backed Northern/Southern Song operated-phase split #2430; authenticated same-SHA read-only Production exact before-state run 38062024027/artifact 11672968298 SHA 31c8931eda1f8f508c3b0f4d003c732898cbb5f2, full 3-polity/14-Activity/19-Source-link inventory. Cambridge The Song Dynasty 960–1279 distinct Southern 1127–1279 chapter, Met Courtly Odes Gaozong (1127–1162) Southern Song / 1138 Lin'an. Existing original Archontology source documents 1129 short interruption/restoration. One Person/2 Activities already exist with exact original NPM, Archontology and Met provenance; safe minimum owner-only relink to existing Southern Song polity, do not delete generic Song umbrella or guess north royal lineage.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "artifact_id": 11672968298,
+    "workflow_run_id": 38062024027,
+    "before_deployment_sha": "31c8931eda1f8f508c3b0f4d003c732898cbb5f2",
+    "before_sha_not_reusable_for_mutation": true,
+    "person_id": "82809cc5-fc51-4e96-98e5-b290126fdcac",
+    "generic_song_polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+    "existing_southern_song_polity_id": "fe073a4c-d967-56e2-bb31-f74bdde1af87",
+    "existing_northern_song_polity_id": "407d91cf-7a97-45e3-81ea-d42a3cbfba35",
+    "actual_source_ids_by_activity": {
+      "4517af83-d656-47b0-a558-3a3df717f726": [
+        "0f511b10-277c-4b21-bf3d-878c663a80f7",
+        "5eba34b7-2b76-47b3-ae73-10e7814ad510"
+      ],
+      "d5eaf14b-417d-4ed9-a594-d819314a1ff5": [
+        "43170824-bd9f-499b-9ffa-1c71bf86432d",
+        "569f3303-46db-40a3-ae3f-f7304f87c8b1"
+      ]
+    },
+    "actual_original_source_locator_keys": {
+      "4517af83-d656-47b0-a558-3a3df717f726": [
+        "https://digitalarchive.npm.gov.tw/Collection/Detail/14767?dep=P",
+        "https://www.archontology.org/nations/china/song/00_1127_1276_s.php"
+      ],
+      "d5eaf14b-417d-4ed9-a594-d819314a1ff5": [
+        "https://www.archontology.org/nations/china/song/00_1127_1276_s.php",
+        "https://www.metmuseum.org/art/collection/search/40058"
+      ]
+    },
+    "historical_source_urls": [
+      "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/introduction-the-sung-dynasty-and-its-precursors-9071279/A3F414452623A8AF8F3E397105B92FB7",
+      "https://www.metmuseum.org/art/collection/search/40052",
+      "https://www.metmuseum.org/ja/essays/southern-song-dynasty-1127-1279",
+      "https://www.archontology.org/nations/china/song/00_1127_1276_s.php"
+    ],
+    "conservation": "Exactly two original Gaozong reign Activity UUIDs, Person UUID, rules/Emperor roles, period basis, both 1129-divided spans and all four individual normalized Source ID+locator pairs unchanged. Other 12 Song activity owner links untouched. Generic Song (initial 8) keeps six existing earlier activities; Southern Song (initial 3) should have five after relink; Northern Song remains three. Generic Song Polity and 2 direct Source links preserved; no identity retirement.",
+    "residual_authoring_debt": "Six pre-1127 generic Song authority/regent Activities still require separately scoped review; Northern Song direct Polity source count 0 and historical dynasty/period identity relation count 0 as of audit; resolve before claiming all Song family owner-source closure. No consent to retire generic Song."
+  },
+  "operations": [
+    {
+      "case_id": "gaozong-first-reign-to-southern-song",
+      "type": "rewrite_activity",
+      "activity_id": "4517af83-d656-47b0-a558-3a3df717f726",
+      "baseline_before": {
+        "person_id": "82809cc5-fc51-4e96-98e5-b290126fdcac",
+        "polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1127,
+        "activity_end": 1129,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "4517af83-d656-47b0-a558-3a3df717f726",
+        "person_id": "82809cc5-fc51-4e96-98e5-b290126fdcac",
+        "polity_id": "fe073a4c-d967-56e2-bb31-f74bdde1af87",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1127,
+        "activity_start_detail": {
+          "year": 1127,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1129,
+        "activity_end_detail": {
+          "year": 1129,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "gaozong-restored-reign-to-southern-song",
+      "type": "rewrite_activity",
+      "activity_id": "d5eaf14b-417d-4ed9-a594-d819314a1ff5",
+      "baseline_before": {
+        "person_id": "82809cc5-fc51-4e96-98e5-b290126fdcac",
+        "polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1129,
+        "activity_end": 1162,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "d5eaf14b-417d-4ed9-a594-d819314a1ff5",
+        "person_id": "82809cc5-fc51-4e96-98e5-b290126fdcac",
+        "polity_id": "fe073a4c-d967-56e2-bb31-f74bdde1af87",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1129,
+        "activity_start_detail": {
+          "year": 1129,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1162,
+        "activity_end_detail": {
+          "year": 1162,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "results": {
+    "activity_targets": 2,
+    "activity_relinks": 2,
+    "normalized_source_links_on_targets_preserved": 4,
+    "gaozong_reign_segments_preserved": 2,
+    "other_song_activities_unchanged_expected": 12,
+    "song_generic_direct_activities_before_expected": 8,
+    "song_generic_direct_activities_after_expected": 6,
+    "southern_song_direct_activities_before_expected": 3,
+    "southern_song_direct_activities_after_expected": 5,
+    "northern_song_direct_activities_before_expected": 3,
+    "northern_song_direct_activities_after_expected": 3,
+    "production_mutation_authorized": false,
+    "registry_seed_status_unchanged": true
+  }
+}
