@@ -1,6 +1,6 @@
 # VIS3-05T-B — Desktop connection-status ghost and targeted CSS correction (2026-10-10)
 
-**Status: browser reproduction CONFIRMED at 1440px; scoped source fix in PR; post-fix same-DOM verification in progress.**
+**Status: root cause and minimal source correction VALIDATED IN REAL CHROME / branch PR pending merge and actual Production read-back.**
 
 ## Why earlier checks were misleading
 
@@ -22,8 +22,8 @@ Bump its URL cache version only in `index.html`, add a narrow regression test. P
 
 ## Branch validation
 
-The PR-only Chrome workflow now forces a **new document with distinct query strings per viewport** to prevent the earlier test CSS from leaking into 1440px evidence. It checks 390px mobile baseline (both routes hidden as intended), 1440px desktop baseline (Dashboard ghost + visible Person), then injects only this exact source selector into the **same unmodified Production DOM**, asserting Dashboard hides, Person remains at its prior display, KPI 6 unchanged, no added overflow. Captures original and locally corrected screenshots and report.
+[Final real Chrome proof #38019473646](https://github.com/JezCH/atlas-person-db/actions/runs/38019473646) **SUCCESS**; [4 before/after dashboard screenshots + persons control screenshots + JSON report, artifact #11657772833](https://github.com/JezCH/atlas-person-db/actions/runs/38019473646/artifacts/11657772833). The workflow forced a **new document with distinct query strings per viewport** to prevent earlier test CSS from leaking into 1440px evidence. It checks 390px mobile baseline (both routes hidden as intended), 1440px desktop baseline (Dashboard ghost + visible Person), then injects only this exact source selector into the **same unmodified Production DOM**, asserting Dashboard hides, Person remains at its prior display, KPI 6 unchanged, no added overflow. Captures original and locally corrected screenshots and report.
 
-This confirms the CSS rule against actual live behavior, **not** that the branch has been independently deployed to Production. After passing Chrome + CI, retire temporary script/workflow, merge the narrow change, and separately check Production ready deployment + actual `index.html` and CSS parity before claiming live completion. UI ownership is isolated: no sidebar typography, ornaments, Person/Polity/Spacetime/camera or DB mutation.
+**Verified results:** 390px baseline and corrected: Dashboard `none` / Persons `none`, as expected from mobile CSS. 1440px baseline: Dashboard computed `flex` while `hidden=true`, Person `flex`. Injected exact CSS: Dashboard `none`, Person remains `flex`. Six KPI cards and document width unchanged. Both viewports passed the browser run. This validates the CSS rule against actual live behavior, **not** that the branch has been independently deployed to Production. The one-off PR Chrome script/workflow were **retired from the final patch** after recording the immutable run/artifact; the committed UI CSS, HTML cache bump and focused source tests remain. After merge verify Vercel READY + exact live CSS/index parity and actual route transitions before claiming release complete. UI ownership is isolated: no sidebar typography, ornaments, Person/Polity/Spacetime/camera or DB mutation.
 
 **Next:** VIS3-05T-C sidebar long labels and low-contrast status metadata; then KPI helper microtype, optional sidebar fold button, followed by VIS3-06~17 gates only with required user approvals. VIS3-05R-E D-art direction final user approval still pending.
