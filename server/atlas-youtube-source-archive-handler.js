@@ -4,8 +4,9 @@ const { createPostgresClient } = require("./atlas-postgres-client.js");
 const { verifyGitHubActionsOidcWithPolicy } = require("./atlas-github-oidc.js");
 const { sendJson } = require("./atlas-normalized-read-handler.js");
 const {
-  applyYoutubeSourceArchiveMigration,
-  publishYoutubeSourceArchiveCatalog
+  applyYoutubeSourceArchiveMigrations,
+  publishYoutubeSourceArchiveCatalog,
+  readYoutubeSourceArchiveCatalog
 } = require("./atlas-youtube-source-archive-service.js");
 
 const SHA_RE=/^[0-9a-f]{40}$/;
@@ -49,15 +50,20 @@ function requireTransport(body){
   const publicationSha=String(body?.publication_sha || "").trim().toLowerCase();
   if(!SHA_RE.test(runtimeSha)) throw new Error("YOUTUBE_SOURCE_ARCHIVE_RUNTIME_SHA_REQUIRED");
   if(!SHA_RE.test(publicationSha)) throw new Error("YOUTUBE_SOURCE_ARCHIVE_PUBLICATION_SHA_REQUIRED");
-  return Object.freeze({runtimeSha,publicationSha});
+  const operation=String(body?.operation || "publish_catalog").trim();
+  if(!new Set(["publish_catalog","read_catalog"]).has(operation)){
+    throw new Error("YOUTUBE_SOURCE_ARCHIVE_OPERATION_INVALID");
+  }
+  return Object.freeze({runtimeSha,publicationSha,operation});
 }
 
 function createYoutubeSourceArchiveHandler({
   env=process.env,
   clientFactory=createPostgresClient,
   verifyOidc=verifyGitHubActionsOidcWithPolicy,
-  applyMigration=applyYoutubeSourceArchiveMigration,
-  publish=publishYoutubeSourceArchiveCatalog
+  applyMigrations=applyYoutubeSourceArchiveMigrations,
+  publish=publishYoutubeSourceArchiveCatalog,
+  readCatalog=readYoutubeSourceArchiveCatalog
 }={}){
   return async function archiveHandler(req,res){
     if(String(req?.method || "").toUpperCase()!=="POST"){
@@ -89,11 +95,14 @@ function createYoutubeSourceArchiveHandler({
     let client=null;
     try{
       client=await clientFactory(databaseUrl,{env});
-      const migration=await applyMigration(client);
-      const outcome=await publish(client,body);
+      const migration=await applyMigrations(client);
+      const outcome=transport.operation==="read_catalog"
+        ? await readCatalog(client,body?.source_artifact_id)
+        : await publish(client,body);
       return sendJson(res,200,{
-        ok:true,marker:MARKER,runtime_sha:transport.runtimeSha,
-        publication_sha:transport.publicationSha,migration,outcome
+        ok:true,marker:MARKER,operation:transport.operation,
+        runtime_sha:transport.runtimeSha,publication_sha:transport.publicationSha,
+        migration,outcome
       });
     }catch(error){
       console.error("ATLAS YouTube source archive catalog failed",error);
