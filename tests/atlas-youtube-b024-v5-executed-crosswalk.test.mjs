@@ -57,9 +57,9 @@ test("every original 8,713 Production title-candidate name is reconciled exactly
 });
 
 test("the executed full-result JSON and sharded reusable rows are exactly consistent",()=>{
- assert.equal(original.metrics.source_exact_matched,5217);
- assert.equal(original.metrics.prod_exact_unmatched,3496);
- assert.equal(original.metrics.source_exact_unmatched,748);
+ assert.equal(original.metrics.production_exact_unique_source_match,5217);
+ assert.equal(original.metrics.production_no_exact_source_match,3496);
+ assert.equal(original.metrics.source_raw_labels_without_unique_production_match,748);
  assert.equal(original.metrics.exact_matched_different_title_counts,4947);
  assert.equal(original.metrics.exact_matched_equal_title_counts,270);
  assert.equal(original.metrics.old_5720_aggregate_mismatch_count,865);
