@@ -1,13 +1,6 @@
 name: YouTube Person Signal Publish
 
 on:
-  # One-time, source-pinned authorized main merge. After successful live
-  # readback, REMOVE this push block and the unique marker in one cleanup PR.
-  # No generic push-to-Production trigger is permitted.
-  push:
-    branches: [main]
-    paths:
-      - 'audits/youtube-b024-v5-one-shot-publish-request.json'
   # Publish only explicitly specified validated artifacts.
   workflow_dispatch:
     inputs:
@@ -61,31 +54,12 @@ jobs:
       PUBLISH_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply?__atlas_authoring_apply_surface=youtube-person-signal-publish
       RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
       PUBLISH_AUDIENCE: atlas-person-db-youtube-signal-publish
-      ARTIFACT_RUN_ID: ${{ github.event_name == 'push' && '37921755392' || inputs.artifact_run_id }}
-      ARTIFACT_NAME: ${{ github.event_name == 'push' && 'youtube-cumulative-batch024-validated' || inputs.artifact_name }}
-      ARTIFACT_ID: ${{ github.event_name == 'push' && '11613130249' || inputs.artifact_id }}
-      ARTIFACT_DIGEST: ${{ github.event_name == 'push' && 'sha256:8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946' || inputs.artifact_digest }}
+      ARTIFACT_RUN_ID: ${{ inputs.artifact_run_id }}
+      ARTIFACT_NAME: ${{ inputs.artifact_name }}
+      ARTIFACT_ID: ${{ inputs.artifact_id }}
+      ARTIFACT_DIGEST: ${{ inputs.artifact_digest }}
     steps:
       - uses: actions/checkout@v4
-      - name: Authorize explicitly requested ONE-TIME v5 publication
-        if: github.event_name == 'push'
-        shell: bash
-        run: |
-          set -euo pipefail
-          jq -e \
-            --arg digest "$ARTIFACT_DIGEST" \
-            --arg artifact "$ARTIFACT_ID" \
-            --arg run "$ARTIFACT_RUN_ID" \
-            '.schema=="atlas-youtube-v5-one-time-cumulative-publication/v1"
-              and .source_artifact_digest==$digest
-              and .source_artifact_id==$artifact
-              and .source_run_id==$run
-              and .expected_original_channels==10127
-              and .expected_original_videos==2230031
-              and .expected_parser=="yt-title-person-reviewed-v5"
-              and .must_verify_live_readback==true' \
-            audits/youtube-b024-v5-one-shot-publish-request.json >/dev/null
-          test "$GITHUB_REF" = 'refs/heads/main'
       - name: Verify multilingual names and reviewed spelling variants before production reads
         run: node --test tests/atlas-youtube-incremental-review.test.mjs
 
@@ -187,8 +161,7 @@ jobs:
               if [[ "$identity_status" == "200" ]]; then
                 runtime_sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/atlas-youtube-publication/runtime.json)"
                 runtime_ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/atlas-youtube-publication/runtime.json)"
-                if [[ "$runtime_sha" =~ ^[0-9a-f]{40}$ && "$runtime_ref" == "main" ]] &&
-                   { [[ "$GITHUB_EVENT_NAME" != "push" ]] || [[ "$runtime_sha" == "$GITHUB_SHA" ]]; }; then
+                if [[ "$runtime_sha" =~ ^[0-9a-f]{40}$ && "$runtime_ref" == "main" ]]; then
                   echo "ATLAS_YOUTUBE_RUNTIME_SHA=$runtime_sha" >> "$GITHUB_ENV"
                   echo "Publication route live on runtime $runtime_sha"
                   exit 0
