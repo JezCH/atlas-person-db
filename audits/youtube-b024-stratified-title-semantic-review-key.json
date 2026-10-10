@@ -1,0 +1,172 @@
+{
+  "schema": "youtube-b024-stratified-title-semantic-review-key/v1",
+  "source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "source_channel_count": 10127,
+  "source_video_count": 2230031,
+  "original_alias_source_schema": "youtube-b024-normalized-original-id-review/v1",
+  "source_name_group_count": 18,
+  "seed": "atlas-b024-person-focus-stratified-v1",
+  "selection": "lowest SHA256(seed|normalized_person_label_key|stratum|video_id), 2 per historical name-group × heading/mention/other stratum, deterministic sorted output",
+  "expected_sample_rows": 107,
+  "expected_sample_identity_sha256": "18eca0554a4cb6e7129cabf7e53f33e52e548017540fb09b13043b0b69834294",
+  "default_review_label": "PERSON_PRIMARY_TITLE",
+  "explicit_overrides": {
+    "-czgjGJvYRg": {
+      "label": "INCIDENTAL_REFERENCE_TITLE",
+      "note": "Al-Biruni is cited as a source about other people"
+    },
+    "3yP6RXtFJ5k": {
+      "label": "INCIDENTAL_REFERENCE_TITLE",
+      "note": "Travel/history montage naming several figures"
+    },
+    "Rg6sj0u0ZhU": {
+      "label": "JOINT_OR_EVENT_TITLE",
+      "note": "A historical decree/event, not a full person profile"
+    },
+    "fZcOip3WGe8": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Mere Christianity is the focus, not its author's life"
+    },
+    "avesW8whRSQ": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Book themes/theological virtues are the focus"
+    },
+    "Q3ir54VrRWM": {
+      "label": "INSUFFICIENT_TITLE_CONTEXT",
+      "note": "Part 2 subtitle does not establish historical-video subject"
+    },
+    "44PpTjGMiOw": {
+      "label": "JOINT_OR_EVENT_TITLE",
+      "note": "Investigation of historical remains"
+    },
+    "ZoHCQuzENLE": {
+      "label": "INSUFFICIENT_TITLE_CONTEXT",
+      "note": "Anniversary TV segment; person-centeredness uncertain"
+    },
+    "-lgRicEyQFA": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Nocturne performance with painters' artworks"
+    },
+    "l9_Eu8YIo8A": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Chopin prelude music performance"
+    },
+    "sjQQfsp8hsE": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Ashkenazy performance of Chopin's work"
+    },
+    "Bl0c-SpMHQc": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Roxelana television dramatization scene"
+    },
+    "n_90hcxkFKU": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Mera Sultan drama commentary"
+    },
+    "L6PStOzqruw": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Roxelana television storyline, not reliable biography"
+    },
+    "w2g6un7SSsc": {
+      "label": "JOINT_OR_EVENT_TITLE",
+      "note": "Khalid and Cortes comparative study"
+    },
+    "RKj1dCScnMM": {
+      "label": "JOINT_OR_EVENT_TITLE",
+      "note": "Yarmuk battle event involving Khalid"
+    },
+    "1sVgxa9_WHI": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Cantata about Kim Jong-il"
+    },
+    "OUe4__7u_-U": {
+      "label": "JOINT_OR_EVENT_TITLE",
+      "note": "Korean War analysis including Kim Jong-il"
+    },
+    "YMHGKNUTuFU": {
+      "label": "JOINT_OR_EVENT_TITLE",
+      "note": "Kim Jong-il and Mao co-subjects"
+    },
+    "MYtXSmeDygs": {
+      "label": "INSUFFICIENT_TITLE_CONTEXT",
+      "note": "Episode numbering cannot distinguish documentary/drama"
+    },
+    "mcIcBmV1msA": {
+      "label": "JOINT_OR_EVENT_TITLE",
+      "note": "Two historical women in a comparison"
+    },
+    "FFtglv35_X4": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Poetry/work quotation by Senghor"
+    },
+    "K7Wb3JfYN9U": {
+      "label": "INSUFFICIENT_TITLE_CONTEXT",
+      "note": "Podcast/IELTS tagged heading gives limited topic evidence"
+    },
+    "xQtYsjV3mJY": {
+      "label": "INSUFFICIENT_TITLE_CONTEXT",
+      "note": "Only the person's name, insufficient genre/topic evidence"
+    },
+    "QAO6Qw8PPH8": {
+      "label": "JOINT_OR_EVENT_TITLE",
+      "note": "Several Tudor figures and relics are co-subjects"
+    },
+    "fhqZPo3oRns": {
+      "label": "JOINT_OR_EVENT_TITLE",
+      "note": "Pietro Canonica and Atatürk are co-subjects"
+    },
+    "pixxOE0crH4": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Machiavelli's book The Prince is the focus"
+    },
+    "IdRxHTih-28": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Full audiobook of The Prince"
+    },
+    "RNM-AtEPhTs": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Great Books segment about The Prince"
+    },
+    "ZN-zrEtKHqE": {
+      "label": "INSUFFICIENT_TITLE_CONTEXT",
+      "note": "Dark chapters of Pakistan may be wider political history"
+    },
+    "zXY3ohqcHQA": {
+      "label": "INCIDENTAL_REFERENCE_TITLE",
+      "note": "Malik Barkat Ali is subject; Jinnah is contextual"
+    },
+    "WI2bGKGtbdc": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Dalí painting collection rather than biography"
+    },
+    "6B9t_86AvTM": {
+      "label": "INCIDENTAL_REFERENCE_TITLE",
+      "note": "Spain tourism itinerary including Dalí's home"
+    },
+    "alDpnY9uNKU": {
+      "label": "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE",
+      "note": "Exhibition/art-fashion relationship is focus"
+    },
+    "sw5qraIwnUg": {
+      "label": "INSUFFICIENT_TITLE_CONTEXT",
+      "note": "Grand Tour could be travel/event or biography"
+    },
+    "O1Ib9qYAtSs": {
+      "label": "JOINT_OR_EVENT_TITLE",
+      "note": "Bolívar vs Spanish Empire liberation/conflict episode"
+    }
+  },
+  "expected_review_counts": {
+    "PERSON_PRIMARY_TITLE": 71,
+    "WORK_PERFORMANCE_OR_DRAMATIZATION_TITLE": 15,
+    "JOINT_OR_EVENT_TITLE": 10,
+    "INSUFFICIENT_TITLE_CONTEXT": 7,
+    "INCIDENTAL_REFERENCE_TITLE": 4
+  },
+  "sampling_caveats": [
+    "107 title-only semantic analyst judgments, not human video-watching or validated ground truth",
+    "Stratified by 18 prior reviewed historical name-form groups and 3 syntax strata, NOT a random sample of all historical Persons or 2.23m videos",
+    "Published rank not eligible, No registered Person UUID used as source extraction lexicon, no alias auto-merges",
+    "Default person-primary label is explicitly checked against a fixed SHA256 of all 107 sample identities; any different sample fails"
+  ]
+}
