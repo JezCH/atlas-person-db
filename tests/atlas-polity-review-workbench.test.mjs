@@ -157,6 +157,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   const byId = new Map([
     ...registry.carry_forward_same_identity,
     ...registry.historical_family_reviews,
+    ...registry.designation_residuals,
     ...registry.rupture_probes
   ].map(row => [row.id, row]));
 
