@@ -170,7 +170,7 @@
       <strong>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</strong>
       ${canonical}
       <span class="person-card-range">${escapeHtml(rangeLabel(person))}</span>
-      <span class="person-card-count">Activity ${Number(person.activity_count || 0)}건</span>
+      <span class="person-card-count">활동 ${Number(person.activity_count || 0)}건</span>
       ${compactActivitiesHtml(person)}
     ${close}`;
   }
