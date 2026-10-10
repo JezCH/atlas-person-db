@@ -4,6 +4,7 @@ const { createAuthoringApplyHandler } = require("../server/atlas-authoring-apply
 
 const authoringApplyHandler=createAuthoringApplyHandler();
 let youtubePersonSignalPublishHandler=null;
+let youtubeSourceArchiveHandler=null;
 
 function queryValue(req,key) {
   const direct=req?.query?.[key];
@@ -25,9 +26,18 @@ function youtubePublishHandler() {
   return youtubePersonSignalPublishHandler;
 }
 
+function youtubeArchiveHandler() {
+  if (!youtubeSourceArchiveHandler) {
+    const { createYoutubeSourceArchiveHandler } = require("../server/atlas-youtube-source-archive-handler.js");
+    youtubeSourceArchiveHandler=createYoutubeSourceArchiveHandler();
+  }
+  return youtubeSourceArchiveHandler;
+}
+
 async function consolidatedAuthoringApplyHandler(req,res) {
   const surface=queryValue(req,"__atlas_authoring_apply_surface");
   if (surface==="youtube-person-signal-publish") return youtubePublishHandler()(req,res);
+  if (surface==="youtube-source-archive-catalog") return youtubeArchiveHandler()(req,res);
   return authoringApplyHandler(req,res);
 }
 
