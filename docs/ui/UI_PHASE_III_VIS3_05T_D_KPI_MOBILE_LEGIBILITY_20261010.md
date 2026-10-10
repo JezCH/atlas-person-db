@@ -31,3 +31,12 @@ The mobile before/after screenshots from [Chrome run #38027059020](https://githu
 - **[ATLAS Integrity #38027286728](https://github.com/JezCH/atlas-person-db/actions/runs/38027286728)** full suite PASS. Previous CI attempts failed only pinned cache-version tests; those six stale test expectations plus one V9 expectation were updated without broadening app code.
 - The independent Chrome comparison was run on current Production with only the branch's two CSS deltas applied locally. It is **not** a deployed PR preview. One-off browser script/workflow were removed after archiving evidence to avoid stale duplicated acceptance gates.
 - Next: verify the latest deployed exact SHA and postdeploy HTML/KPI stylesheet/mobile stylesheet parity before claiming Production release. VIS3-05T-E is an **optional separately scored** sidebar toggle pass, and VIS3-06–17 preserve the original design order and user final art-direction choice.
+
+## Production release verified (2026-10-10)
+
+- [PR #2383](https://github.com/JezCH/atlas-person-db/pull/2383) squash-merged at `e6abb2e3cccc15d1bca64fb008f8dbff632493a3`.
+- Vercel Production **READY** deployment `dpl_6f9hn23kXP7A65kTToDJUtLhdyHa` at this **exact** SHA.
+- Actual Production HTTPS responses for `index.html`, `atlas-dashboard-monumental-v11.css`, `atlas-ui-mobile-v8.css` and `atlas-main-authority-nav.js` all HTTP 200 and **byte-identical** to GitHub source at the same deployed SHA.
+- [ATLAS Dashboard Production Acceptance #38027545014](https://github.com/JezCH/atlas-person-db/actions/runs/38027545014) and [ATLAS CORE Final Acceptance #38027545074](https://github.com/JezCH/atlas-person-db/actions/runs/38027545074) both **SUCCESS**. They certify their respective contracts; the independent 390/768/1440/1600 styling comparison was prior same-DOM CSS injection [#38027286780](https://github.com/JezCH/atlas-person-db/actions/runs/38027286780), not a new separately measured postdeploy pixel comparison.
+- **Status: VIS3-05T-D SOURCE + PRODUCTION READY + AUTOMATED ACCEPTANCE COMPLETE.** This includes controlled natural 20px mobile KPI panel reflow and no fact hiding. User's final subjective mixed-D Dashboard approval remains pending separately.
+- **Resume: VIS3-05T-E** sidebar collapse toggle placement/keyboard focus comparison and explicit go/no-go. Do not expand ornament scope. Follow VIS3-06–17 in original Phase III order, subject to the existing visual approval gates. Maintain 8 Person domain colors, 9 Spacetime regions and P14 PARKED_BY_USER.
