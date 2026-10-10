@@ -75,6 +75,29 @@ class UnknownNameCueTest(unittest.TestCase):
             self.assertNotIn("Simón Bolívar", by_name)
             self.assertFalse(result["publication_eligible"])
 
+    def test_reviewed_nonpersons_quarantined_without_destroying_sources(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            corpus = Path(tmp) / "source.zip"
+            rows = [
+                ("a", "The Life of Santa Claus"),
+                ("b", "Who Was Santa Claus?"),
+                ("c", "The Story of Santa Claus"),
+                ("d", "Who Was Harriet Tubman?"),
+                ("e", "Who Was Harriet Tubman?"),
+                ("f", "Who Was Harriet Tubman?"),
+            ]
+            with zipfile.ZipFile(corpus, "w") as z:
+                for i, (vid, title) in enumerate(rows):
+                    text = json.dumps({"video_id": vid, "title": title}) + "\n"
+                    z.writestr(f"out/batch024/videos/UC{i}.ndjson.gz",
+                               gzip.compress(text.encode()))
+            result = names.audit(corpus, [], min_channels=3,
+                                 reviewed_exclusions=["Santa Claus"])
+            self.assertEqual(result["reviewed_nonperson_quarantined_labels"], 1)
+            self.assertEqual(len(result["rows"]), 1)
+            self.assertEqual(result["rows"][0]["candidate"], "Harriet Tubman")
+            self.assertEqual(result["source_videos"], 6)
+
     def test_unicode_orthographic_key_is_diagnostic_only(self):
         self.assertEqual(names.orthographic_key("Simón Bolívar"), "simonbolivar")
         self.assertEqual(names.orthographic_key("Carter G. Woodson"),
