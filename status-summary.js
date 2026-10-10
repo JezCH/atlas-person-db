@@ -72,6 +72,16 @@
     return section;
   }
 
+  function setConnectionStatus(state, label, detail = "") {
+    const indicator = document.getElementById("connectionStatus");
+    if (!indicator) return;
+    indicator.classList.remove("status-ok", "status-warn", "status-error");
+    indicator.classList.add(state === "ok" ? "status-ok" : state === "error" ? "status-error" : "status-warn");
+    indicator.textContent = label;
+    indicator.title = detail || label;
+    indicator.dataset.personRuntimeState = state;
+  }
+
   let requestSerial = 0;
 
   async function verifySummary({ force = false } = {}) {
@@ -83,6 +93,7 @@
     const refreshButton = document.getElementById("registrationSummaryRefresh");
     if (refreshButton) refreshButton.disabled = true;
     box.dataset.state = "loading";
+    setConnectionStatus("loading", "연결 확인 중");
     title.textContent = "Normalized V2 상태 확인 중";
     detail.textContent = "shared Person Runtime 기준 원본에서 현재 활동 레코드를 확인하고 있습니다.";
 
@@ -93,14 +104,16 @@
       const persons = Array.isArray(result?.persons) ? result.persons : [];
       const activityCount = persons.reduce((sum, person) => sum + Number(person?.activity_count || 0), 0);
       box.dataset.state = "ok";
-      title.textContent = "Person Runtime 정상";
-      detail.textContent = `${activityCount}개 활동 레코드 · shared Person Runtime 연결됨`;
+      title.textContent = "인물 데이터 연결 정상";
+      detail.textContent = `활동 ${activityCount.toLocaleString("ko-KR")}건 · 데이터 연결됨`;
+      setConnectionStatus("ok", "데이터 정상", detail.textContent);
     } catch (error) {
       if (serial !== requestSerial) return;
       console.error("ATLAS normalized V2 summary failed", error);
       box.dataset.state = "error";
-      title.textContent = "V2 DB 확인 실패";
-      detail.textContent = error?.message || "shared Person Runtime 기준 원본을 확인하세요.";
+      title.textContent = "인물 데이터 확인 실패";
+      detail.textContent = error?.message || "연결을 다시 확인해주세요.";
+      setConnectionStatus("error", "연결 오류", detail.textContent);
     } finally {
       if (serial === requestSerial && refreshButton) refreshButton.disabled = false;
     }
