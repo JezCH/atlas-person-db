@@ -85,7 +85,11 @@ function normalizePublicationPayload(body) {
         sourceState.title_context_evidence_scope !== "original_channel_video_ids" ||
         sourceState.title_context_personhood !== "source_title_review_candidate_not_verified_person" ||
         !Number.isSafeInteger(sourceState.quality_counters?.accepted_context_cue_video_name_ids) ||
-        sourceState.quality_counters.accepted_context_cue_video_name_ids <= 0) {
+        sourceState.quality_counters.accepted_context_cue_video_name_ids <= 0 ||
+        !Array.isArray(sourceState.reviewed_source_unions) ||
+        sourceState.reviewed_source_unions.length !== 5 ||
+        sourceState.reviewed_source_unions_count !== 5 ||
+        sourceState.reviewed_source_unions_nameform_only_not_biography !== true) {
       throw new Error("YOUTUBE_PUBLICATION_V5_SOURCE_EVIDENCE_GUARDS_REQUIRED");
     }
   }
