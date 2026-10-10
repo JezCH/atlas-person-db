@@ -375,7 +375,7 @@
       <span>${escapeHtml(shaLabel)}</span>
     </div>
     <div class="dashboard-timeline-summary dashboard-drift-reasons">
-      ${delta.comparison_available ? (reasonRows || "<span>제외 사유별 증감 0건</span>") : "<span>직전 activation이 없어 사유별 증감 비교 불가</span>"}
+      ${delta.comparison_available ? (reasonRows || "<span>제외 사유별 증감 0건</span>") : "<span>직전 활성화 기록이 없어 사유별 증감 비교 불가</span>"}
     </div>`;
   }
 
@@ -573,7 +573,7 @@
         <td><code>${escapeHtml(row.date_basis || "—")}</code></td>
         <td><span>${escapeHtml(row.reason || "—")}</span></td>
       </tr>`).join("");
-      return `<div class="dashboard-panel-head dashboard-quality-targets-head"><div><p class="eyebrow">품질 검토 대상</p><h3>비연대표 Registry</h3></div><span>${value(targets.length)}명</span></div>
+      return `<div class="dashboard-panel-head dashboard-quality-targets-head"><div><p class="eyebrow">품질 검토 대상</p><h3>비연대표 등록 목록</h3></div><span>${value(targets.length)}명</span></div>
         <div class="dashboard-runtime-exclusion-wrap"><table class="dashboard-runtime-exclusion-table dashboard-quality-target-table dashboard-quality-registry-table" data-quality-target-kind="registry"><thead><tr><th scope="col">인물</th><th scope="col">정치체</th><th scope="col">역사성</th><th scope="col">연대 기준</th><th scope="col">제외 사유</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     }
     return "";
