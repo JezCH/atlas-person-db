@@ -25,7 +25,9 @@
       "corroborating_publisher_page": "https://www.pbs.org/video/american-experience-kidnapping-emmett-till/",
       "independent_channel_id_source_url": "https://www.wikidata.org/wiki/Q2842919",
       "evidence_level": "PUBLIC_PUBLISHER_DESCRIPTION_AND_EXTERNAL_CHANNEL_ID_CROSS_CHECK",
-      "person_centered_actual_video_verified": false
+      "person_centered_actual_video_verified": false,
+      "original_name_cue_raw_name": "Emmett Till",
+      "original_name_cue_bucket": "BIOGRAPHICAL_TITLE_CUE_REVIEW"
     },
     {
       "video_id": "a-1mBClopWg",
@@ -39,7 +41,9 @@
       "corroborating_publisher_page": "https://www.pbs.org/video/american-experience-no-justice-emmett-till/",
       "independent_channel_id_source_url": "https://www.wikidata.org/wiki/Q2842919",
       "evidence_level": "PUBLIC_PUBLISHER_DESCRIPTION_AND_EXTERNAL_CHANNEL_ID_CROSS_CHECK",
-      "person_centered_actual_video_verified": false
+      "person_centered_actual_video_verified": false,
+      "original_name_cue_raw_name": "Emmett Till",
+      "original_name_cue_bucket": "BIOGRAPHICAL_TITLE_CUE_REVIEW"
     },
     {
       "video_id": "lkvtpeKrG4I",
@@ -53,7 +57,9 @@
       "corroborating_publisher_page": "https://www.pbs.org/video/chapter-1-murder-emmett-till/",
       "independent_channel_id_source_url": "https://www.wikidata.org/wiki/Q2842919",
       "evidence_level": "PUBLIC_PUBLISHER_DESCRIPTION_AND_EXTERNAL_CHANNEL_ID_CROSS_CHECK",
-      "person_centered_actual_video_verified": false
+      "person_centered_actual_video_verified": false,
+      "original_name_cue_raw_name": "Emmett Till",
+      "original_name_cue_bucket": "BIOGRAPHICAL_TITLE_CUE_REVIEW"
     },
     {
       "video_id": "1vbMVOA8U0o",
@@ -67,7 +73,9 @@
       "corroborating_publisher_page": "https://www.youtube.com/watch?v=1vbMVOA8U0o",
       "independent_channel_id_source_url": "https://economictimes.indiatimes.com/magazines/panache/youtubes-digi-dads-are-managing-work-home-and-play/articleshow/69809342.cms",
       "evidence_level": "PUBLIC_PUBLISHER_DESCRIPTION_AND_EXTERNAL_CHANNEL_ID_CROSS_CHECK",
-      "person_centered_actual_video_verified": false
+      "person_centered_actual_video_verified": false,
+      "original_name_cue_raw_name": "Dr APJ Abdul Kalam",
+      "original_name_cue_bucket": "BIOGRAPHICAL_TITLE_CUE_REVIEW"
     }
   ],
   "limitations": [
