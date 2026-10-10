@@ -10,6 +10,21 @@ test('validates only current mutation envelope operations', () => {
   for (const operation of ['create','update','import','reconcile']) {
     assert.equal(validateRequest({ operation, payload:{} }).valid, false);
   }
+  const timelineRequest = {
+    operation: 'set_person_timeline_disposition',
+    request_id: 'person-profile:maimonides:chronology-unresolved-to-timeline:20261009:v1',
+    payload: {
+      person_id: '3f3cb937-b022-4b5c-9380-2a8625b33a2e',
+      disposition: 'timeline',
+      expected_current_disposition: {
+        disposition: 'chronology_unresolved',
+        reason: 'reviewed exclusion',
+        review_evidence: { source: 'reviewed evidence' }
+      }
+    }
+  };
+  assert.equal(validateRequest(timelineRequest).valid, true);
+  assert.deepEqual(validateRequest(timelineRequest).request, timelineRequest);
   assert.equal(validateRequest({ operation: 'unknown', payload: {} }).valid, false);
   assert.equal(validateRequest({ operation: 'delete' }).valid, false);
 });

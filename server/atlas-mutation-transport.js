@@ -2,7 +2,7 @@
 
 const ALLOWED_OPERATIONS = new Set([
   "delete", "delete_person",
-  "set_person_korean_name", "set_person_external_reference"
+  "set_person_korean_name", "set_person_external_reference", "set_person_timeline_disposition"
 ]);
 
 function jsonResponse(status, body) {
