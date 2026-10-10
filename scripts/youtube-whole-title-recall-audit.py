@@ -74,7 +74,7 @@ def find_names(title, index):
             if any(
                 not gap.isspace()
                 and gap not in ("-", "‐", "‑", "–")
-                and not (len(words[i + j][0]) == 1 and re.fullmatch(r"\\.\\s*", gap))
+                and not (len(words[i + j][0]) == 1 and re.fullmatch(r"\.\s*", gap))
                 for j, gap in enumerate(separators)
             ):
                 continue
