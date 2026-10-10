@@ -172,6 +172,31 @@ test("reviewed title metadata, places and nonhistorical myths are not person reg
   assert.equal(d.reviewedNonPerson("Muhammad Ali"),false);
 });
 
+test("four Batch024 reviewed living-person orthographic pairs are excluded instead of counted as unregistered aliases",()=>{
+  const living=require("../atlas-youtube-reviewed-living-people.js");
+  const pairs=[
+    ["Jay-Z","Jay Z",7,3],
+    ["Jean-Claude Van Damme","Jean Claude Van Damme",5,3],
+    ["Captain Ibrahim Traoré","Captain Ibrahim Traore",4,3],
+    ["Marina Abramović","Marina Abramovic",3,3]
+  ];
+  const rows=pairs.flatMap(([first,second,a,b],i)=>[
+    {raw_name:first,rank:i*2+1,distinct_channel_count:a,video_count:a},
+    {raw_name:second,rank:i*2+2,distinct_channel_count:b,video_count:b}
+  ]);
+  rows.push({raw_name:"Historical Candidate",rank:9,distinct_channel_count:3,video_count:3});
+  const now=Date.parse("2026-10-10T00:00:00Z");
+  for(const [first,second] of pairs){
+    assert.equal(living.reviewedLivingStatus(first,now)?.status,"living_likely");
+    assert.equal(living.reviewedLivingStatus(second,now)?.status,"living_likely");
+  }
+  const result=d.candidatesFromSource(rows,registered,{now});
+  assert.equal(result.reviewedLivingExcluded,8);
+  assert.equal(result.overlappingRawLabels,0);
+  assert.deepEqual(result.candidates.map(x=>x.raw_name),["Historical Candidate"]);
+  assert.equal(living.reviewedLivingStatus("Jay Z",Date.parse("2027-01-10T00:00:00Z")),null);
+});
+
 test("reviewed living people never outrank unregistered historical candidates",()=>{
   const live=[
     {raw_name:"Elon Musk",rank:1,distinct_channel_count:94,video_count:108},

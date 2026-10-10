@@ -23,6 +23,18 @@
  * https://www.wsj.com/lifestyle/warren-buffett-youtube-watching-cb6bd1d4
  * https://www.reuters.com/business/retail-consumer/berkshire-hathaway-names-warren-buffett-chairman-emeritus-2026-09-18/
  *
+ * Oct 2026 extra exact-label variants (all before 2027-01-09 expiry):
+ * Jay-Z: 2026-10-02 documentary interview covered on 2026-10-04
+ * https://people.com/jay-z-asked-kanye-west-remove-entire-verse-2021-collab-maga-hat-12155136
+ * Jean-Claude Van Damme: 2026-10-07 recent profile / 2026-09-01 interview
+ * https://www.espinof.com/actores-y-actrices/nueva-vida-jean-claude-van-damme-cine-actor-se-ha-embarcado-nueva-actividad-que-esta-despertando-interes-varios-paises
+ * Marina Abramović: official 2026 museum exhibition described as living artist
+ * https://www.gallerieaccademia.it/en/exhibition/transforming-energy-marina-abramovic/
+ * Captain Ibrahim Traoré: presidential statement published 2026-10-05
+ * https://www.presidencedufaso.bf/2026/
+ * Orthographic aliases are covered by normalizeLivingName: one reviewed
+ * spelling per person suppresses both exact original published variants.
+ *
  * Other entries are conservative editorial defaults for living, widely
  * documented contemporaries, not a full life-status authority.
  * Known counterexample: Dolly Parton died on 2026-08-25 (Reuters), so must
@@ -43,6 +55,7 @@ const REVIEWED_LIVING_NAMES=Object.freeze([
   "Bill Gates",
   "Cristiano Ronaldo",
   "Cristiano Ronaldo dos Santos Aveiro",
+  "Captain Ibrahim Traoré",
   "Donald Trump",
   "Elon Musk",
   "Giorgia Meloni",
@@ -51,6 +64,8 @@ const REVIEWED_LIVING_NAMES=Object.freeze([
   "Imran Khan",
   "Ivanka Trump",
   "Jack Ma",
+  "Jay-Z",
+  "Jean-Claude Van Damme",
   "Jeff Bezos",
   "Jeffrey Bezos",
   "Jensen Huang",
@@ -67,6 +82,7 @@ const REVIEWED_LIVING_NAMES=Object.freeze([
   "Madonna",
   "Malala Yousafzai",
   "Mark Zuckerberg",
+  "Marina Abramović",
   "Melania Trump",
   "Melinda Gates",
   "Messi",
