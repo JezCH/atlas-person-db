@@ -1,3 +1,4 @@
+import gzip
 import importlib.util
 import tempfile
 import unittest
@@ -20,7 +21,7 @@ class VerifiedUploadTests(unittest.TestCase):
         self.root = Path(self.tmp.name)
         self.file = self.root / "out" / "batch008" / "videos" / "UC1.ndjson.gz"
         self.file.parent.mkdir(parents=True)
-        self.file.write_bytes(b"example durable video bytes")
+        self.file.write_bytes(gzip.compress(b'{"video_id":"v1"}\\n{"video_id":"v2"}\\n'))
         self.catalog_rows = {}
 
     def catalog(self, method, base, token, query="", data=None):
@@ -48,7 +49,7 @@ class VerifiedUploadTests(unittest.TestCase):
         ):
             item = uploader.upload_and_verify("https://example.invalid", "token", self.file, self.root)
         self.assertEqual(calls, ["GET"])
-        self.assertEqual(item["source_kind"], "channel_videos")
+        self.assertEqual(item["source_kind"], "channel_videos")\n        self.assertEqual(item["video_rows"], 2)
         self.assertEqual(item["catalog_state"], "existing")
         self.assertFalse(item["new_object"])
 
