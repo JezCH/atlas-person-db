@@ -92,13 +92,17 @@ jobs:
             --output /tmp/atlas-youtube-publication/previous.json
 
 
+      # The public discovery read filters out registered and other raw names.
+      # It must NEVER be used as the complete raw publication baseline.
+      # The OIDC-only database publisher now performs the full prior-label and
+      # Channel-ID non-regression check atomically from the prior raw tables.
       - name: Build exact reconstructable snapshot
         shell: bash
         run: |
           set -euo pipefail
           python -m py_compile scripts/youtube-build-person-signal-snapshot.py
           mkdir -p /tmp/atlas-youtube-publication
-          python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/atlas-youtube-publication/snapshot.json             --artifact-id "$ARTIFACT_ID"             --artifact-digest "$ARTIFACT_DIGEST"             --previous-snapshot /tmp/atlas-youtube-publication/previous.json
+          python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/atlas-youtube-publication/snapshot.json             --artifact-id "$ARTIFACT_ID"             --artifact-digest "$ARTIFACT_DIGEST"             
           jq -e '
             .snapshot.channel_count>=8508
             and .snapshot.video_count>=1950864
