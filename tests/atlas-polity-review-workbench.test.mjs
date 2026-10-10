@@ -210,7 +210,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 22);
+  assert.equal(unresolved.length, 21);
   const brazil = byId.get('brazil-regime-family');
   assert.equal(brazil.terminal_status, 'FIXED');
   assert.equal(brazil.status, 'FIXED');
@@ -239,6 +239,20 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.ok(liberia.evidence.some(x => /1847-07-26/.test(x)));
   assert.ok(liberia.evidence.some(x => /loc.gov/.test(x)));
   assert.ok(liberia.evidence.some(x => /state.gov/.test(x)));
+
+  const gorkha = byId.get('gorkha-nepal');
+  assert.equal(gorkha.status, 'KEEP_SEPARATE');
+  assert.equal(gorkha.terminal_status, 'KEEP_SEPARATE');
+  assert.equal(gorkha.reviewed_decision, 'keep_both');
+  assert.equal(gorkha.locked, true);
+  assert.equal(gorkha.left.polity_id, '0eec74a4-a2a4-43f3-b347-54370b94da14');
+  assert.equal(gorkha.right.polity_id, '7518462f-9769-413f-a245-cc3825b45d17');
+  assert.ok(gorkha.evidence.some(x => /b76ee400-deeb-4e5e-a961-58c773e93ad4/.test(x)));
+  assert.ok(gorkha.evidence.some(x => /3c267e73-5b4e-40cd-9c86-965381d58a84/.test(x)));
+  assert.ok(gorkha.evidence.some(x => /cambridge.org/.test(x)));
+  assert.ok(gorkha.evidence.some(x => /academic.oup.com/.test(x)));
+  assert.match(gorkha.rationale, /1768–1769/);
+  assert.match(gorkha.rationale, /같은 샤 왕조/);
 
   const oman = byId.get('oman-empire-oman');
   assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
