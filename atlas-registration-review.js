@@ -61,7 +61,7 @@
   function registeredStats(payload) {
     const persons=Array.isArray(payload?.persons) ? payload.persons : [];
     const total=Number(payload?.summary?.total ?? persons.length);
-    const historical=persons.filter((person)=>person?.historicity === "historical").length;
+    const historical=persons.filter((person)=>person?.historicity === "역사적 실존").length;
     const activities=persons.reduce((sum,person)=>sum+Number(person?.activity_count || 0),0);
     const nonTimeline=persons.filter((person)=>{
       const disposition=String(person?.timeline_disposition?.disposition || "").trim();
@@ -76,9 +76,9 @@
     const stats=registeredStats(payload);
     const pending=queuePayload?.summary?.pending_count;
     host.innerHTML=[
-      statCard(number(stats.total),"기등록 Person"),
-      statCard(number(stats.historical),"historical"),
-      statCard(number(stats.activities),"Authoring Activity"),
+      statCard(number(stats.total),"기등록 인물"),
+      statCard(number(stats.historical),"역사적 실존"),
+      statCard(number(stats.activities),"원본 등록 활동"),
       statCard(number(stats.nonTimeline),"비연대표 인물"),
       statCard(number(pending),"등록대기열","현재 미등록 후보")
     ].join("");
@@ -314,7 +314,7 @@
           <div><small>등록 현황</small><h3>등록 현황</h3></div>
           <div class="registration-review-head-actions"><span id="registrationReviewStatus" data-state="loading">불러오는 중</span><button id="registrationReviewRefresh" class="btn" type="button">새로고침</button></div>
         </div>
-        <div id="registrationRegisteredStats" class="registration-review-stats">${statCard("—","기등록 Person")}${statCard("—","historical")}${statCard("—","Authoring Activity")}${statCard("—","비연대표 인물")}${statCard("—","등록대기열","현재 미등록 후보")}</div>
+        <div id="registrationRegisteredStats" class="registration-review-stats">${statCard("—","기등록 인물")}${statCard("—","역사적 실존")}${statCard("—","원본 등록 활동")}${statCard("—","비연대표 인물")}${statCard("—","등록대기열","현재 미등록 후보")}</div>
       </section>
 
       <section class="registration-review-section">
