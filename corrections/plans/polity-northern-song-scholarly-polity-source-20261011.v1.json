@@ -74,5 +74,17 @@
     "All 14 Song Activities and 21 Activity Source pairs unchanged; Runtime readback and current Source identity verified",
     "Identity continuity relation vocabulary remains zero pending separate reviewed model change",
     "Parent #1895 and generic Song partial repair remain OPEN"
-  ]
+  ],
+  "post_apply_verification_request": {
+    "reason": "One independent protected readback of the already committed single Northern Song scholarly Polity–Source fact; no additional mutation authorized. This metadata is NOT an execution input, a new request ID or a new semantic operation.",
+    "original_production_correction_run": 38069670948,
+    "original_production_artifact": 11676387444,
+    "original_manifest_sha256": "sha256:11c16c52f72a3f04a0fcde3b89b74cd47b526fa5d1cf5816d67bb86f97e6014b",
+    "expected_replay": true,
+    "expected_new_polity_source_links": 0,
+    "expected_existing_composite_pair": [
+      "407d91cf-7a97-45e3-81ea-d42a3cbfba35",
+      "a8766516-351a-4162-b477-0396f468eafe"
+    ]
+  }
 }

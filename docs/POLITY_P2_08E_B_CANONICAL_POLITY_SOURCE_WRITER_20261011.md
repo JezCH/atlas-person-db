@@ -1,6 +1,8 @@
 # POLITY-P2-08E-B — Northern Song canonical direct Polity scholarly Source writer
 
-**2026-10-11 KST — code-only implementation; Production canonical mutation NOT YET APPLIED.**
+> **CURRENT ACCEPTANCE OVERRIDE (2026-10-11 KST):** The code-only phase described below has advanced to real canonical Production `committed=true` at [Correction run #38069670948](https://github.com/JezCH/atlas-person-db/actions/runs/38069670948), artifact #11676387444. Exactly one existing Northern Song Cambridge Polity–Source link was added (all global Polity Source joins 254→255); 2,523 Activities, 3,889 Activity Source joins and 3,354 Sources remained unchanged. See [actual accepted Production evidence](POLITY_P2_08E_B_NORTHERN_SONG_SOURCE_APPLY_ACCEPTED_20261011.md). The remainder of this file documents the *pre-apply plan and code gate*, not current completion state. Independent ledger replay + 3-Polity Runtime readback and historically correct dynasty continuity modeling remain separate gates. **The 75/63/12 registry and generic Song non-destructive hold have NOT changed.**
+
+**2026-10-11 KST — historical code-only implementation snapshot; subsequently applied and separately accepted as linked above.**
 Parent review #1895; prior P2-08D and P2-08E-A evidence remain authoritative. This unit introduces an exact-before, source-safe **composite Polity–Source** operation inside the **existing** unified Stage2 v2 serializable Correction authority, not an independent SQL writer.
 
 ## Existing authenticated Production before-state

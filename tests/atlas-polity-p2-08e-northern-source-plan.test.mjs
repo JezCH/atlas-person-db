@@ -48,3 +48,19 @@ test("P2-08E Plan synthesizes to only one canonical join with exact global count
     if(key!=="polity_sources") assert.equal(value,0,`unexpected delta for ${key}`);
   }
 });
+
+test("P2-08E no-write replay checkpoint preserves the exact originally committed correction manifest hash", () => {
+  const snapshot = {
+    schema:"atlas-correction-v2-target-snapshot/v1",
+    snapshot_digest:"sha256:39dfe08e563ec100abc7fdcc0b46d7609b239d592eeac0664a79f708ff234bcf",
+    activity_ids:[],activities:[],normalized_activity_source_links:[],
+    chronology_claims:[],relationship_descriptions:[]
+  };
+  assert.equal(plan.post_apply_verification_request.expected_replay,true);
+  assert.equal(plan.post_apply_verification_request.expected_new_polity_source_links,0);
+  assert.equal(plan.post_apply_verification_request.original_production_correction_run,38069670948);
+  const manifest = synthesizeUnifiedCorrectionV2Manifest(plan,snapshot);
+  assert.equal(manifest.request_id,"polity_p2_08e_northern_song_academic_polity_source_20261011_v1");
+  assert.equal(manifest.manifest_sha256,"sha256:11c16c52f72a3f04a0fcde3b89b74cd47b526fa5d1cf5816d67bb86f97e6014b");
+  assert.equal(manifest.manifest_sha256,plan.post_apply_verification_request.original_manifest_sha256);
+});
