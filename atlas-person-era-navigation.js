@@ -304,14 +304,31 @@
     }
   }
 
-  function navigatorAnchor() {
+  function measuredTableHeaderHeight() {
+    const header = document.querySelector(".person-monumental-register > .person-table-head");
+    return Math.max(0, Number(header?.getBoundingClientRect?.().height || 0));
+  }
+
+  function pinnedRegisterEdge() {
     const nav = state.nav;
     if (!nav?.getBoundingClientRect) return 0;
-    // Use the same line as scroll-margin-top: the bottom of BOTH pinned
-    // navigation and factual column header. A nav-only anchor incorrectly
-    // labels the preceding era when a jump lands below the table header.
-    const headerHeight = document.querySelector(".person-monumental-register > .person-table-head")?.getBoundingClientRect?.().height || 0;
-    return nav.getBoundingClientRect().bottom + headerHeight + 3;
+    let stickyTop = 0;
+    try { stickyTop = Number.parseFloat(window.getComputedStyle?.(nav)?.top || "0") || 0; } catch {}
+    return Math.ceil(stickyTop + nav.getBoundingClientRect().height + measuredTableHeaderHeight());
+  }
+
+  function visibleRegisterEdge() {
+    const nav = state.nav;
+    if (!nav?.getBoundingClientRect) return 0;
+    const navBottom = nav.getBoundingClientRect().bottom;
+    const tableHeadBottom = document.querySelector(".person-monumental-register > .person-table-head")?.getBoundingClientRect?.().bottom || 0;
+    return Math.max(navBottom, tableHeadBottom);
+  }
+
+  function navigatorAnchor() {
+    // Sample an actually readable row (rather than the 1px strip where the
+    // preceding era may still be clipped beneath the sticky table header).
+    return visibleRegisterEdge() + 24;
   }
 
   function closestTargetForCode(code) {
@@ -336,8 +353,21 @@
     if (!code || !state.targetsByCode.has(code)) return;
     const target = closestTargetForCode(code);
     if (!target) return;
+    syncStickyGeometry();
     setActiveEra(code, true);
-    target.scrollIntoView?.({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
+    const rect = target.getBoundingClientRect?.();
+    const currentScroll = Number(window.scrollY ?? document.scrollingElement?.scrollTop ?? 0);
+    const absoluteTop = Number(rect?.top) + currentScroll;
+    // scrollIntoView + CSS scroll-margin had a variable/sticky-boundary
+    // mismatch: the prior era's last row remained under the header.
+    // Put the target chapter immediately beneath the pinned UI in document
+    // coordinates, independently of its CSS scroll margin.
+    if (typeof window.scrollTo === "function" && Number.isFinite(absoluteTop)) {
+      const destination = Math.max(0, Math.ceil(absoluteTop - pinnedRegisterEdge() - 2));
+      window.scrollTo({ top: destination, left: Number(window.scrollX || 0), behavior: reducedMotion() ? "auto" : "smooth" });
+    } else {
+      target.scrollIntoView?.({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
+    }
   }
 
   function stepEra(delta) {
@@ -425,7 +455,20 @@
     if (previous) previous.disabled = index <= 0;
     if (next) next.disabled = index < 0 || index >= state.entries.length - 1;
 
-    activeButton?.scrollIntoView?.({ behavior: "auto", block: "nearest", inline: "nearest" });
+    // Scroll only the horizontal era strip. Calling scrollIntoView on the
+    // button can also move the DOCUMENT vertically and undo a chapter jump.
+    const list = state.nav.querySelector(".person-era-jump-list");
+    if (activeButton && typeof list?.scrollTo === "function") {
+      const listRect = list.getBoundingClientRect?.();
+      const buttonRect = activeButton.getBoundingClientRect?.();
+      if (listRect && buttonRect) {
+        const leftExcess = buttonRect.left - listRect.left;
+        const rightExcess = buttonRect.right - listRect.right;
+        if (leftExcess < 0 || rightExcess > 0) {
+          list.scrollTo({ left: Math.max(0, Number(list.scrollLeft || 0) + (leftExcess < 0 ? leftExcess : rightExcess)), behavior: "auto" });
+        }
+      }
+    }
   }
 
   function updateActiveFromViewport() {
@@ -435,6 +478,19 @@
     if (!measurable.length) return;
 
     const anchor = navigatorAnchor();
+    // Prefer the real row under the fixed header; the old geometric
+    // containsAnchor test picked the previous era when only its clipped tail
+    // occupied the top few pixels of the register.
+    const tableRect = document.querySelector(".person-monumental-register")?.getBoundingClientRect?.();
+    const width = Number(tableRect?.width || 0);
+    const x = Number(tableRect?.left || 0) + Math.min(180, Math.max(100, width * .18));
+    const y = Math.min(Number(window.innerHeight || anchor + 50) - 2, anchor);
+    const hitEra = document.elementFromPoint?.(x, y)?.closest?.(".person-era-group[data-atlas-era]");
+    if (hitEra?.dataset?.atlasEra && state.groups.includes(hitEra)) {
+      setActiveEra(String(hitEra.dataset.atlasEra));
+      return;
+    }
+
     let best = measurable[0];
     let bestDistance = Infinity;
     for (const group of measurable) {
@@ -457,7 +513,7 @@
     let stickyTop = 0;
     try { stickyTop = Number.parseFloat(window.getComputedStyle?.(nav)?.top || "0") || 0; } catch { stickyTop = 0; }
     const height = Number(nav.getBoundingClientRect().height || 0);
-    const headerHeight = document.querySelector(".person-monumental-register > .person-table-head")?.getBoundingClientRect?.().height || 0;
+    const headerHeight = measuredTableHeaderHeight();
     container.style.setProperty("--person-table-sticky-top", `${Math.ceil(stickyTop + height)}px`);
     container.style.setProperty("--person-table-head-height", `${Math.ceil(headerHeight)}px`);
   }
