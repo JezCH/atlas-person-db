@@ -70,6 +70,84 @@ test("near-identical candidate labels do not invent summed channel counts",()=>{
   assert.equal(row.identity_state,"alias_union_needs_original_ids");
   assert.equal(candidates.filter(r=>d.identityKey(r.raw_name)==="josemaria").length,1);
 });
+test("six reviewed aliases use original Channel-ID union, not summed raw counts",()=>{
+  const all=require("../audits/youtube-discovery-reviewed-source-unions-b024.json");
+  assert.equal(all.source_snapshot_id,"yt-20261009T120819Z-10127ch-rebuild-v4");
+  assert.equal(all.approved_groups.length,6);
+  const p=all.approved_groups.find(g=>g.canonical_name==="Pablo Picasso");
+  const pele=all.approved_groups.find(g=>g.canonical_name==="Pelé");
+  const orig=[
+    {raw_name:"Picasso",rank:1,distinct_channel_count:14,video_count:15},
+    {raw_name:"Pablo Picasso",rank:2,distinct_channel_count:25,video_count:29},
+    {raw_name:"Pelé",rank:3,distinct_channel_count:15,video_count:16},
+    {raw_name:"Pele",rank:4,distinct_channel_count:5,video_count:5},
+    {raw_name:"Diana",rank:5,distinct_channel_count:13,video_count:46},
+    {raw_name:"Princess Diana",rank:6,distinct_channel_count:55,video_count:87}
+  ];
+  const reviewed=d.applyReviewedSourceUnions(orig,[p,pele]);
+  assert.equal(reviewed.applied,2);
+  assert.equal(reviewed.rows.length,4);
+  const ranked=d.candidatesFromSource(orig,registered,{
+    approvedUnions:[p,pele],now:Date.parse("2026-10-10T00:00:00Z")
+  });
+  const picasso=ranked.candidates.find(row=>row.raw_name==="Pablo Picasso");
+  assert.equal(picasso.distinct_channel_count,39);
+  assert.equal(picasso.video_count,44);
+  assert.equal(picasso.source_id_union_verified,true);
+  assert.deepEqual(picasso.source_labels,["Picasso","Pablo Picasso"]);
+  assert.equal(picasso.count_lower_bound,false);
+  const pel=ranked.candidates.find(row=>row.raw_name==="Pelé");
+  assert.equal(pel.distinct_channel_count,20);
+  assert.equal(pel.video_count,21);
+  assert.equal(pel.count_lower_bound,false);
+  assert.equal(ranked.candidates.filter(row=>d.identityKey(row.raw_name)==="pele").length,1);
+  assert.equal(ranked.reviewedUnionsApplied,2);
+  // Diana includes a non-person use of her short name; it was NOT approved.
+  assert.equal(ranked.candidates.filter(row=>/Diana/.test(row.raw_name)).length,2);
+});
+test("a newly registered long name automatically suppresses reviewed short-name aliases",()=>{
+  const all=require("../audits/youtube-discovery-reviewed-source-unions-b024.json");
+  const p=all.approved_groups.find(g=>g.canonical_name==="Pablo Picasso");
+  const rows=[
+    {raw_name:"Picasso",rank:1,distinct_channel_count:14,video_count:15},
+    {raw_name:"Pablo Picasso",rank:2,distinct_channel_count:25,video_count:29}
+  ];
+  const result=d.candidatesFromSource(rows,[{person_id:"p-picasso",alias_name:"Pablo Picasso"}],{
+    approvedUnions:[p],now:Date.parse("2026-10-10T00:00:00Z")
+  });
+  assert.equal(result.registeredExcluded,1);
+  assert.deepEqual(result.candidates,[]);
+});
+test("reviewed source unions reject mismatched counts and alias collisions",()=>{
+  const all=require("../audits/youtube-discovery-reviewed-source-unions-b024.json");
+  const p=all.approved_groups.find(g=>g.canonical_name==="Pablo Picasso");
+  const rows=[
+    {raw_name:"Picasso",rank:1,distinct_channel_count:14,video_count:15},
+    {raw_name:"Pablo Picasso",rank:2,distinct_channel_count:25,video_count:29}
+  ];
+  const changed=structuredClone(rows);changed[0].distinct_channel_count=13;
+  assert.throws(()=>d.applyReviewedSourceUnions(changed,[p]),/SOURCE_COUNT_MISMATCH/);
+  assert.throws(()=>d.applyReviewedSourceUnions(rows,[p,p]),/ALIAS_COLLISION/);
+  assert.throws(()=>d.applyReviewedSourceUnions(rows.slice(0,1),[p]),/SOURCE_LABEL_MISSING/);
+});
+test("honorific title of already registered Muhammad Ali Jinnah is not a new discovery Person",()=>{
+  const reviewed=require("../server/atlas-reviewed-person-registration-aliases.js");
+  const jinnah=reviewed.REVIEWED_REGISTRATION_ALIASES.filter(x=>x.canonical_key==="Muhammad Ali Jinnah");
+  assert.deepEqual(jinnah.map(x=>x.alias_name),[
+    "Quaid-e-Azam Muhammad Ali Jinnah","Quaid e Azam Muhammad Ali Jinnah"
+  ]);
+  assert.match(d.PERSON_NAMES_SQL,/join atlas_v2\.person_names pn on pn\.name=aliases\.canonical_key/);
+  const rows=[
+    {raw_name:jinnah[0].alias_name,rank:1,distinct_channel_count:6,video_count:7},
+    {raw_name:jinnah[1].alias_name,rank:2,distinct_channel_count:4,video_count:5}
+  ];
+  const result=d.candidatesFromSource(rows,jinnah.map(x=>({
+    alias_name:x.alias_name,person_id:"ffc3f4be-bfa3-4b3b-8abe-16a5231883be"
+  })));
+  assert.equal(result.registeredExcluded,2);
+  assert.deepEqual(result.candidates,[]);
+});
+
 test("reviewed title metadata, places and nonhistorical myths are not person registration candidates",()=>{
   const original=[
     {raw_name:"Full",rank:1,distinct_channel_count:17,video_count:18},
