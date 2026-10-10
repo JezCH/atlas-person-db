@@ -40,7 +40,7 @@
 .person-domain-filter.is-active{border-color:var(--person-filter-domain-color);box-shadow:inset 0 0 0 1px var(--person-filter-domain-color);background:#1a1f22;color:#e2ddd2}
 .person-domain-filter em{min-width:18px;padding:1px 5px;border-radius:999px;background:#20262a;color:#969ea3;font-size:9px;font-style:normal;font-weight:900;text-align:center}
 .person-domain-filter:focus-visible{outline:1px solid var(--atlas-focus-ring);outline-offset:2px}
-.person-era-group{scroll-margin-top:calc(var(--person-table-sticky-top,122px) + 54px)}
+.person-era-group{scroll-margin-top:calc(var(--person-table-sticky-top,122px) + var(--person-table-head-height,36px) + 2px)}
 /* ERA-M1 — Neutral Era navigation interaction luminance.
  * Previous/next and era-jump hover use the shared GLOBAL-M2 hover wash.
  * The current era uses the selected wash; semantic domain filters remain separate.
