@@ -4,6 +4,10 @@
 // canonical Person. These aliases are *not* candidate-name substring guesses,
 // and do not mutate atlas_v2.persons or atlas_v2.person_names.
 const REVIEWED_REGISTRATION_ALIASES=Object.freeze([
+  // Verified 2026-10-10 live Person identity Muhammad Ali Jinnah:
+  // honorific Quaid-e-Azam variants are NOT new Person registrations.
+  Object.freeze({alias_name:"Quaid-e-Azam Muhammad Ali Jinnah",canonical_key:"Muhammad Ali Jinnah",representative_default:true}),
+  Object.freeze({alias_name:"Quaid e Azam Muhammad Ali Jinnah",canonical_key:"Muhammad Ali Jinnah",representative_default:true}),
   // Live Production Person-UUID matches for 51-row filtered YouTube audit, 2026-10-09.
   // Full 6,358-label Production audit: 38 additionally verified canonical UUID targets.
   Object.freeze({alias_name:"Al-Jazari",canonical_key:"Ismail al-Jazari",representative_default:true}),
