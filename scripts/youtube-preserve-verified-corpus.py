@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Preserve the validated Batch017 corpus in private Supabase Storage.
+"""Preserve or independently restore the validated Batch017 corpus.
 
-Every artifact member is addressed by SHA-256, never overwritten, independently
-read back, and optionally restored from the remote object store. Database
-catalog publication is intentionally separate and uses the canonical OIDC
-Production writer only after Storage byte/hash parity has been proven.
+Preservation uses immutable SHA-256-addressed private Supabase Storage objects.
+Independent restoration accepts only a freshly read canonical DB catalog and
+never requires the original Actions artifact or local corpus tree.
 """
 import argparse
 import gzip
@@ -19,6 +18,7 @@ import urllib.request
 
 BUCKET = "atlas-youtube-source"
 SOURCE_ARTIFACT_ID = 11548326100
+KEY_PREFIX = "validated-batch017/sha256/"
 
 
 def sha256(data):
@@ -102,7 +102,7 @@ def record_for(file, root):
     if not contents:
         raise RuntimeError("EMPTY_SOURCE_FILE: " + relative)
     digest = sha256(contents)
-    key = "validated-batch017/sha256/" + digest[:2] + "/" + digest + "/" + relative
+    key = KEY_PREFIX + digest[:2] + "/" + digest + "/" + relative
     return {
         "object_key": key,
         "sha256": digest,
@@ -148,17 +148,40 @@ def enumerate_files(root):
     return files
 
 
-def restore_remote(base, token, records, target):
+def relative_from_object_key(record):
+    key = str(record.get("object_key") or "")
+    digest = str(record.get("sha256") or "").lower()
+    if not re.fullmatch(r"[0-9a-f]{64}", digest):
+        raise RuntimeError("CATALOG_SHA256_INVALID")
+    expected_prefix = KEY_PREFIX + digest[:2] + "/" + digest + "/"
+    if not key.startswith(expected_prefix):
+        raise RuntimeError("CATALOG_OBJECT_KEY_DIGEST_MISMATCH")
+    relative = key[len(expected_prefix):]
+    rel = Path(relative)
+    if not relative or rel.is_absolute() or ".." in rel.parts or any(p in ("", ".") for p in rel.parts):
+        raise RuntimeError("UNSAFE_RESTORE_PATH: " + relative)
+    return rel
+
+
+def restore_from_catalog(base, token, records, target):
+    if not isinstance(records, list) or not records:
+        raise RuntimeError("REMOTE_CATALOG_RECORDS_REQUIRED")
     target.mkdir(parents=True, exist_ok=True)
     restored = 0
     restored_bytes = 0
+    seen = set()
     for record in records:
-        rel = Path(record["source_path"])
-        if rel.is_absolute() or ".." in rel.parts:
-            raise RuntimeError("UNSAFE_RESTORE_PATH: " + record["source_path"])
-        data = storage_call("GET", base, token, record["object_key"])
-        if len(data) != record["byte_count"] or sha256(data) != record["sha256"]:
-            raise RuntimeError("REMOTE_RESTORE_CHECKSUM_MISMATCH: " + record["source_path"])
+        rel = relative_from_object_key(record)
+        key = str(record["object_key"])
+        if key in seen:
+            raise RuntimeError("REMOTE_CATALOG_DUPLICATE_OBJECT_KEY")
+        seen.add(key)
+        expected_bytes = int(record.get("byte_count") or 0)
+        if expected_bytes <= 0:
+            raise RuntimeError("REMOTE_CATALOG_BYTE_COUNT_INVALID")
+        data = storage_call("GET", base, token, key)
+        if len(data) != expected_bytes or sha256(data) != str(record["sha256"]).lower():
+            raise RuntimeError("REMOTE_RESTORE_CHECKSUM_MISMATCH: " + rel.as_posix())
         dest = target / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_bytes(data)
@@ -167,9 +190,18 @@ def restore_remote(base, token, records, target):
     return {"files": restored, "bytes": restored_bytes}
 
 
+def credentials():
+    base = os.environ.get("SUPABASE_URL", "").strip()
+    token = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+    if not base.startswith("https://") or not token:
+        raise RuntimeError("SUPABASE_SOURCE_UPLOAD_CREDENTIALS_REQUIRED")
+    return base, token
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--root", required=True)
+    parser.add_argument("--root")
+    parser.add_argument("--catalog")
     parser.add_argument("--output", required=True)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--max-files", type=int)
@@ -177,6 +209,30 @@ def main():
     parser.add_argument("--expected-total-bytes", type=int)
     parser.add_argument("--restore-dir")
     args = parser.parse_args()
+
+    if args.catalog:
+        if args.root or args.dry_run or args.max_files is not None or not args.restore_dir:
+            raise RuntimeError("CATALOG_RESTORE_ARGUMENTS_INVALID")
+        base, token = credentials()
+        ensure_private_bucket(base, token)
+        records = json.loads(Path(args.catalog).read_text(encoding="utf-8"))
+        result = restore_from_catalog(base, token, records, Path(args.restore_dir).resolve())
+        output = {
+            "schema": "atlas-youtube-source-remote-restore/v1",
+            "source_artifact_id": SOURCE_ARTIFACT_ID,
+            "catalog_records": len(records),
+            "restore": result,
+        }
+        path = Path(args.output)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(json.dumps(output))
+        return
+
+    if not args.root:
+        raise RuntimeError("SOURCE_ROOT_REQUIRED")
+    if args.restore_dir:
+        raise RuntimeError("RESTORE_REQUIRES_CATALOG_MODE")
 
     root = Path(args.root).resolve()
     all_files = enumerate_files(root)
@@ -187,11 +243,9 @@ def main():
         raise RuntimeError(f"SOURCE_BYTE_COUNT_MISMATCH: {total_bytes} != {args.expected_total_bytes}")
 
     files = all_files[:args.max_files] if args.max_files else all_files
-    base = os.environ.get("SUPABASE_URL", "").strip()
-    token = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
-    if not args.dry_run and (not base.startswith("https://") or not token):
-        raise RuntimeError("SUPABASE_SOURCE_UPLOAD_CREDENTIALS_REQUIRED")
+    base = token = None
     if not args.dry_run:
+        base, token = credentials()
         ensure_private_bucket(base, token)
 
     records = []
@@ -203,14 +257,6 @@ def main():
         else:
             rec = upload_and_verify(base, token, file, root)
         records.append(rec)
-
-    restore = None
-    if args.restore_dir:
-        if args.dry_run:
-            raise RuntimeError("RESTORE_REQUIRES_REMOTE_ACCESS")
-        if len(files) != len(all_files):
-            raise RuntimeError("RESTORE_REQUIRES_FULL_CORPUS")
-        restore = restore_remote(base, token, records, Path(args.restore_dir).resolve())
 
     output = {
         "schema": "atlas-youtube-source-storage-verification/v2",
@@ -224,7 +270,6 @@ def main():
         "source_records": sum(1 for r in records if r["source_kind"] != "metadata"),
         "metadata_objects": sum(1 for r in records if r["source_kind"] == "metadata"),
         "uploaded": not args.dry_run,
-        "restore": restore,
         "records": records,
     }
     path = Path(args.output)
