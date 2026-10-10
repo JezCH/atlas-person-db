@@ -1,0 +1,25 @@
+/* Person register sticky stack, desktop and tablet only.
+ * One viewport scroll: navigation and factual column labels stay pinned
+ * above ordinary rows. This sheet owns no table widths or row geometry.
+ */
+@media (min-width: 761px) {
+  #personDomainRoot .person-era-navigator {
+    /* No uncovered viewport strip above the pinned navigation. */
+    top: 0;
+    z-index: 50;
+    background-color: #121518;
+  }
+
+  #personDomainRoot .person-card-grid.person-table-grid.person-monumental-register > .person-table-head {
+    /* Also restore sticky on the 761–1100px two-line register. */
+    position: sticky;
+    top: var(--person-table-sticky-top, 0px);
+    z-index: 40;
+    background-color: #121518;
+  }
+
+  #personDomainRoot .person-card-grid.person-table-grid.person-monumental-register > .person-table-head .person-table-head-cell {
+    /* Opaque cells prevent scrolled names from showing through. */
+    background-color: #121518;
+  }
+}

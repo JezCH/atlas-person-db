@@ -453,7 +453,7 @@
     let stickyTop = 0;
     try { stickyTop = Number.parseFloat(window.getComputedStyle?.(nav)?.top || "0") || 0; } catch { stickyTop = 0; }
     const height = Number(nav.getBoundingClientRect().height || 0);
-    container.style.setProperty("--person-table-sticky-top", `${Math.ceil(stickyTop + height + 6)}px`);
+    container.style.setProperty("--person-table-sticky-top", `${Math.ceil(stickyTop + height)}px`);
   }
 
   function scheduleViewportUpdate() {
