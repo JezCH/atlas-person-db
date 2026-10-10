@@ -11,7 +11,7 @@
 
   window.ATLAS_POLITY_REVIEW_REGISTRY = Object.freeze({
     schema: "atlas-polity-review-registry/v3",
-    generated_at: "2026-10-08",
+    generated_at: "2026-10-11",
     authority: Object.freeze({
       issue: 1895,
       workstream: "docs/ATLAS_CURRENT_WORKSTREAMS.md",
@@ -481,26 +481,30 @@
         review_group: "naming_residual",
         kind: "naming_review",
         title: "Song Dynasty ↔ ancient Song 한국어명 충돌",
-        left: { name: "Song Dynasty", ko: "송나라" },
-        right: { name: "Song (ancient state)", ko: "송나라" },
-        rationale: "서로 다른 historical identity가 한국어 표시에서 모두 ‘송나라’로 충돌합니다. identity는 유지하고 KO preferred/display name을 시대·문자 맥락이 드러나도록 정리할지 검토해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["Mozi registration reconfirmed ancient Song and later Song Dynasty are distinct identities"]
+        left: { name: "Song Dynasty", ko: "송나라", polity_id: "1a1983fd-1850-5756-877c-3d2c17b85e1f" },
+        right: { name: "Song (ancient state)", ko: "고대 송나라(宋)", polity_id: "f5547f25-fbae-5a84-ad65-04bdb82de1e7" },
+        rationale: "2026-10-11 전체 1,158 정치체 Public Production census에서 옛 송(宋) 제후국과 960–1279년 송 왕조가 동일 KO preferred '송나라'로 충돌한 것을 확인했습니다. #2466 정식 SERIALIZABLE Correction으로 기존 고대 송나라 preferred-name 행만 '고대 송나라(宋)'으로 수정하고 Song Dynasty 원래 '송나라'와 양쪽 Polity/Person/Activity/Source UUID를 모두 보존했습니다. Correction dry-run/commit과 독립 전체 public-census 재실행으로 '송나라' 충돌 그룹 1→0, 전체 1158 Polities·2523 Activities 불변을 확인하여 FIXED 종결합니다. 왕조 연속성 및 generic Song 소속정책 P2-08E-C는 별도 미결입니다.",
+        suggested_action: "keep_both",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        reviewed_decision: "keep_both",
+        evidence: ["Mozi and Duke Xiang of ancient Song are distinct from Zhao Song emperors", "P2-09 complete public before census GitHub run 38072668164 attempt 1, artifact 11677785165, 1158 Polities and 2 Korean homonym groups", "PR #2466 Correction run 38073045519, artifact 11678110132, committed=true and exact preferred-name-row UUID preserved", "P2-09 complete public after census GitHub run 38072668164 attempt 2, artifact 11677521661, remaining Korean preferred-name collisions 0"],
+        locked: true
       },
       {
         id: "qin-jin-ko-name-collision",
         review_group: "naming_residual",
         kind: "naming_review",
         title: "Qin 秦 ↔ Jin 晉 한국어명 ‘진나라’ 충돌",
-        left: { name: "Qin", ko: "진(秦)" },
-        right: { name: "Jin", ko: "진(晉)" },
-        rationale: "서로 다른 중국 정치체가 한국어 ‘진나라’로 충돌할 수 있습니다. 한자 disambiguation을 preferred/display name 정책에 반영할지 fresh Production 기준으로 닫아야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["Later Jin 後晉/後金 disambiguation is already complete; this is a separate residual"]
+        left: { name: "Qin", ko: "진나라", polity_id: "4ed462b6-6d39-571a-bb18-3e320bddd199" },
+        right: { name: "Jin", ko: "진(晉)", polity_id: "ddf1b350-17ea-5275-bc33-e6d86ab4d868" },
+        rationale: "2026-10-11 전체 Production 고유 정치체 감사에서 Qin(秦) 진 목공·진시황과 Jin(晉) 진 문공의 preferred KO '진나라' 충돌을 정확히 확인했습니다. #2466 정식 Correction은 고대 진(晉) 정치체의 기존 대표명 행만 '진(晉)'으로 갱신, 진(秦)의 '진나라' 및 양쪽 정치체·활동·출처 UUID는 그대로 보존했습니다. 독립 P2-09 전체 공개 감사의 재실행에서 한국어명 충돌 전체가 2→0으로 사라지고 1158 정치체·2523 활동·0 활동 UUID 중복이 보존되어 FIXED 종결합니다.",
+        suggested_action: "keep_both",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        reviewed_decision: "keep_both",
+        evidence: ["Qin (秦) and Jin (晉) different Spring and Autumn states; Cambridge Reading History Obliquely tables (2026)", "P2-09 complete public before census GitHub run 38072668164 attempt 1, artifact 11677785165", "PR #2466 Correction run 38073045519, artifact 11678110132, committed=true; no name-row UUID/Polity count mutation", "P2-09 complete public after census GitHub run 38072668164 attempt 2, artifact 11677521661; KO collision count 0"],
+        locked: true
       }
     ]),
     rupture_probes: freezeRows([

@@ -45,7 +45,7 @@ test('canonical Polity listing stays live while expanded rows render a first-cla
 
 test('current registry restores every required carry-forward audit family without making it an execution queue', () => {
   assert.equal(registry.schema, 'atlas-polity-review-registry/v3');
-  assert.equal(registry.generated_at, '2026-10-08');
+  assert.equal(registry.generated_at, '2026-10-11');
   assert.equal(registry.authority.issue, 1895);
   assert.equal(Object.hasOwn(registry, 'execution_frontier'), false);
   assert.equal(registry.snapshot_history.path, 'docs/audits/POLITY_REVIEW_CANDIDATES_20260927_ARCHIVE.txt');
@@ -138,6 +138,14 @@ test('current registry restores every required carry-forward audit family withou
   assert.equal(registry.historical_family_reviews.length, 16);
   assert.equal(registry.designation_residuals.length, 2);
   assert.equal(registry.naming_residuals.length, 2);
+  assert.deepEqual(Array.from(registry.naming_residuals, row => row.terminal_status), ['FIXED','FIXED']);
+  assert.deepEqual(Array.from(registry.naming_residuals, row => row.reviewed_decision), ['keep_both','keep_both']);
+  assert.deepEqual(Array.from(registry.naming_residuals, row => row.locked), [true,true]);
+  assert.deepEqual(Array.from(registry.naming_residuals, row => row.right.ko), ['고대 송나라(宋)','진(晉)']);
+  assert.equal(registry.naming_residuals[0].left.polity_id, '1a1983fd-1850-5756-877c-3d2c17b85e1f');
+  assert.equal(registry.naming_residuals[0].right.polity_id, 'f5547f25-fbae-5a84-ad65-04bdb82de1e7');
+  assert.equal(registry.naming_residuals[1].left.polity_id, '4ed462b6-6d39-571a-bb18-3e320bddd199');
+  assert.equal(registry.naming_residuals[1].right.polity_id, 'ddf1b350-17ea-5275-bc33-e6d86ab4d868');
   assert.equal(registry.rupture_probes.length, 16);
   assert.deepEqual(Array.from(registry.terminal_statuses), [
     'FIXED','KEEP_SEPARATE','SUPERSEDED','NOT_PRESENT','HOLD_UNRESOLVED'
@@ -211,6 +219,24 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
+  const all=[
+    ...registry.carry_forward_same_identity,
+    ...registry.historical_family_reviews,
+    ...registry.designation_residuals,
+    ...registry.naming_residuals,
+    ...registry.rupture_probes,
+    ...registry.resolved_history
+  ];
+  assert.equal(all.length,75);
+  assert.equal(all.filter(row=>Boolean(row.terminal_status)).length,65);
+  assert.equal(unresolved.length,10);
+  assert.deepEqual([
+    unresolved.filter(row=>row.review_group==='historical_family_review').length,
+    unresolved.filter(row=>row.review_group==='designation_residual').length,
+    unresolved.filter(row=>row.review_group==='naming_residual').length,
+    unresolved.filter(row=>row.review_group==='rupture_probe').length
+  ],[5,1,0,4]);
+  assert.equal(unresolved.some(row=>row.review_group==='naming_residual'),false);
   assert.ok(unresolved.length > 0);
   assert.ok(unresolved.some(row => row.id === 'sweden-temporal-designation'));
   assert.ok(!unresolved.some(row => row.id === 'russia-temporal-designation'));
