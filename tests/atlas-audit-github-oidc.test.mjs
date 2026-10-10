@@ -12,6 +12,7 @@ const {
   EXPECTED_REF,
   EXPECTED_WORKFLOW_REF,
   SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF,
+  SWEDEN_POLITY_AUDIT_WORKFLOW_REF,
   ALLOWED_WORKFLOW_REFS
 } = require('../server/atlas-audit-github-oidc.js');
 
@@ -31,7 +32,7 @@ function trustedPayload(workflowRef) {
   };
 }
 
-test('audit OIDC workflow allowlist is exact and includes spatial candidate audit', () => {
+test('audit OIDC workflow allowlist is exact and includes only designated audits', () => {
   assert.equal(
     EXPECTED_WORKFLOW_REF,
     'JezCH/atlas-person-db/.github/workflows/atlas-audit-inventory.yml@refs/heads/main'
@@ -42,7 +43,8 @@ test('audit OIDC workflow allowlist is exact and includes spatial candidate audi
   );
   assert.deepEqual(ALLOWED_WORKFLOW_REFS, [
     EXPECTED_WORKFLOW_REF,
-    SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF
+    SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF,
+    SWEDEN_POLITY_AUDIT_WORKFLOW_REF
   ]);
   assert.equal(ALLOWED_WORKFLOW_REFS.some((ref) => ref.includes('*')), false);
 });
@@ -61,4 +63,17 @@ test('unlisted audit workflow remains rejected', () => {
     ),
     /GITHUB_OIDC_WORKFLOW_MISMATCH/
   );
+});
+
+test('Sweden bounded read-only audit workflow has exact main-SHA OIDC permission', () => {
+  assert.equal(
+    SWEDEN_POLITY_AUDIT_WORKFLOW_REF,
+    'JezCH/atlas-person-db/.github/workflows/atlas-polity-sweden-p2-06-audit.yml@refs/heads/main'
+  );
+  assert.doesNotThrow(() => verifyTrustClaims(trustedPayload(SWEDEN_POLITY_AUDIT_WORKFLOW_REF), EXPECTED_SHA));
+  assert.throws(
+    () => verifyTrustClaims(trustedPayload(SWEDEN_POLITY_AUDIT_WORKFLOW_REF), 'fedcba9876543210fedcba9876543210fedcba98'),
+    /GITHUB_OIDC_SHA_MISMATCH/
+  );
+  assert.throws(() => verifyTrustClaims({...trustedPayload(SWEDEN_POLITY_AUDIT_WORKFLOW_REF), ref:'refs/heads/other'}, EXPECTED_SHA), /GITHUB_OIDC_REF_MISMATCH/);
 });
