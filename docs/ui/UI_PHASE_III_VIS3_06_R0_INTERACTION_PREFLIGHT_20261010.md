@@ -1,6 +1,6 @@
 # VIS3-06-R0 — 실제 키보드·표시 기준 패널 A/B2 비배포 확인 (2026-10-10)
 
-> **진행 상태:** 설계 검증 단위, CI 결과 기록 전. Phase III v2.0 시각 승인·운영 배포는 별도 대기.
+> **단위 완료 — 비배포 기술 검증 PASS; 최종 사용자 미학 승인 미완료.** [Chrome #38035327074](https://github.com/JezCH/atlas-person-db/actions/runs/38035327074) SUCCESS, [Integrity #38035326991](https://github.com/JezCH/atlas-person-db/actions/runs/38035326991) SUCCESS, [스크린샷 8장+JSON / GitHub artifact #11663435707](https://github.com/JezCH/atlas-person-db/actions/runs/38035327074/artifacts/11663435707). 실제 app data/API/CSS/JS/DB는 수정하지 않음.
 
 ## 전체 목적과 재개 위치
 
@@ -27,3 +27,22 @@ B2가 모든 R0 체크를 통과하더라도 **기술상 비배포 승인**이�
 ## 실행 결과
 
 자동 Chrome 및 Integrity CI 실행 이후 실제 측정값·경고·아티팩트와 PR 병합 증거를 기록한다.
+
+## 2026-10-10 실제 Production Chrome 실측 결과
+
+[실제 Chrome 실행 #38035327074](https://github.com/JezCH/atlas-person-db/actions/runs/38035327074)에서 정상적인 Production 실제 인물 데이터로 **390px 및 1440px, 펼친 '표시 기준'+Person 선택 / 닫힌 '표시 기준'+Tab 키 포커스+Person 선택, A 및 B2의 2×2×2=8개 사례 전부 PASS**. 스크린샷 8장 및 JSON 원본은 [artifact #11663435707](https://github.com/JezCH/atlas-person-db/actions/runs/38035327074/artifacts/11663435707).
+
+| 운영 실화면 상태 | 실제 가시 Person 이름표 | Inspector | 패널 및 Tab | B2/실제 텍스트·컨트롤 간섭 |
+| --- | ---: | --- | --- | ---: |
+| 390px 열린 패널 | 69 | selected / Activity 1 | summary `open=true`, 설명문 85자 | 0px² (장식 숨김) |
+| 390px Tab 포커스 | 69 | selected / Activity 1 | 줌 축소 → 줌 확대 → summary; 모두 `:focus-visible=true` | 0px² |
+| 1440px 열린 패널 | 195 | selected / Activity 1 | summary `open=true`, 설명문 81자 | 0px² |
+| 1440px Tab 포커스 | 195 | selected / Activity 1 | 줌 축소 → 줌 확대 → summary; 모두 `:focus-visible=true` | 0px² |
+
+A/B2 장식 차이를 제외하면 실제 입력·버튼·요약 포커스·설명문 문자열/실측 rect·활동 Inspector/인물 레이블·9 macroregion·연도축·카메라/스크롤·문서 전체 폭 및 focusable 수가 **완전히 동일**했다. 1440px B2 원호/세공의 실제 decorative bounding box는 `[904,139,184,32]`; 그 영역과 기능 요소/펼친 패널의 가시 문구의 충돌 면적은 **0px²**이다. 390px 장식은 숨김 정책대로 발생하지 않음. 인물/권역/연대 자체의 전체 WCAG AA 적합성까지 의미하는 결과는 아니다.
+
+시험 러너 최종 `VIS3_06_R0_INTERACTION_PASS`는 `cases:8, images:8`을 출력했고, Tab 순회는 실제 CDP `Input.dispatchKeyEvent`로 키를 전송하여 조작 버튼 포커스가 나타난 것을 증명했다. 이 장식은 구동되는 게이지나 역사 시대 지시자가 아닌 순수 보조 장식이다.
+
+**잔여:** native Chrome page zoom 125/150%는 이 단위에서 **시험하지 않음**. 소수의 Tab 키 순회가 전체 키보드/스크린리더 접근성 감사를 대신하지 않으며 장문 정보·국제화·성능도 후속 승인 단계 과제다. Dashboard VIS3-05R mixed-D의 사용자 최종 시각 수락과 시공간표 A/B2 스타일 선택은 별개의 **인간 승인 조건**이다.
+
+**정확한 다음 단위 `VIS3-06-R1`:** 사용자에게 이미 확보한 실제 1440px A/B2 비교와 모바일 숨김 정책, 펼친 표시 기준·선택 인물 화면을 제시하여 시각 디자인을 확정할지 확인한다. 사용자 별도 승인 전에는 **운영 Spacetime CSS/JS/Vercel 미변경**, P14 PARKED_BY_USER 및 워터마크 OFF 유지. 승인 후 한정 스코프 실구현→native 125/150% browser zoom/전량 keyboard·WCAG→Production acceptance를 별도 독립 단위로 진행하고, Phase III VIS3-07~17 순서를 이어간다.
