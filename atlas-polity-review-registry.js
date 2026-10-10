@@ -221,14 +221,24 @@
         id: "liberia-commonwealth-republic",
         review_group: "historical_family_review",
         kind: "family_review",
-        title: "Commonwealth of Liberia ↔ Republic of Liberia",
-        left: { name: "Commonwealth of Liberia" },
-        right: { name: "Republic of Liberia" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
-        suggested_action: "hold",
+        title: "Commonwealth of Liberia ↔ Republic of Liberia ↔ Liberia",
+        left: { name: "Commonwealth of Liberia", polity_id: "5643400c-880b-45f2-8d32-7ad64bf91391" },
+        right: { name: "Republic of Liberia", polity_id: "2ca2fd4c-1d68-4771-beb7-706e4f53370b" },
+        rationale: "POLITY-P2-04C의 사료·현행 Production 판정: ACS(미국식민협회)가 운영한 Commonwealth와 1847-07-26 독립한 주권 공화국은 주권·국제법상 권한의 실제 단절이 있어 구별해야 합니다. 그러나 독립 공화국 Republic of Liberia UUID 2ca2fd4c-1d68-4771-beb7-706e4f53370b의 1848–1876 Roberts 대통령 기록과 별도 Liberia UUID 5037f747-2d30-4479-b321-6f01b5cba162의 1944–1971 Tubman 대통령 기록 사이에 새로운 주권국가 성립 근거가 없으므로 독립 라이베리아가 중복 정체성으로 쪼개진 것으로 추정됩니다. 또한 Roberts의 1841-09-03→1848-01-03 Governor Activity는 1847 독립 시점을 가로지르며, 1841 대리/부총독과 1842 정식 총독 시점의 사료 구분도 별도 정확한 직위 검증을 요구합니다. 식민지→독립 공화국의 정치체 구별은 유지하되 Republic of Liberia↔Liberia 정체성과 활동기간 연결을 출처 보존·expected-before-state 기반으로 수정/판정하기 전 family를 종결하지 않습니다. 어떤 Polity·Activity도 사용자 명시 승인 없이 은퇴·삭제하지 않습니다.",
+        suggested_action: "repair",
+        reviewed_decision: "keep_separate_commonwealth_republic_and_review_republic_liberia_duplicate",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        evidence: [
+          "2026-10-10 fresh Production: Commonwealth 5643400c-880b-45f2-8d32-7ad64bf91391, Roberts 7bad68a3-7af2-4946-82c1-34d555acfb91 Governor Activity c6fbf7e8-8447-4425-b026-5f4994bea79f 1841-09-03→1848-01-03 (day-level)",
+          "2026-10-10 fresh Production: Republic of Liberia 2ca2fd4c-1d68-4771-beb7-706e4f53370b, Roberts President Activities c0c2816a-3955-4244-9c02-142fde048a01 1848–1856 and ccb137dc-989d-47d4-b1a7-d59c997ef4b4 1872–1876",
+          "2026-10-10 fresh Production: Liberia 5037f747-2d30-4479-b321-6f01b5cba162, Tubman d7507081-3b34-4933-880a-b232e67feed4 President Activity f29d9aac-03b4-4c63-94a4-c21361b1fdb8 1944–1971; no documented 1944 independent successor state",
+          "Library of Congress authoritative historical timeline: ACS Commonwealth 1838/1839, independence adopted 1847-07-26 and first Republic president after 1847: https://www.loc.gov/collections/maps-of-liberia-1830-to-1870/articles-and-essays/history-of-liberia/",
+          "U.S. State Department Office of the Historian: 1847 sovereign independence from American Colonization Society and late US recognition in 1862: https://history.state.gov/milestones/1830-1860/liberia",
+          "PBS chronology: Roberts election 1847-10-05 and presidential inauguration 1848-01-03 (different from independence day): https://www.pbs.org/wgbh/globalconnections/liberia/timeline/time2.html",
+          "Governor start/title qualification: archival governors chronology distinguishes acting lieutenant governor 1841 and appointed Governor 1842, without authorizing any blind date change: https://archontology.org/nations/liberia/00_1839_1848_s.php",
+          "Bounded current read audit + repair approval gate: docs/POLITY_P2_04C_LIBERIA_COMMONWEALTH_REPUBLIC_SOVEREIGNTY_20261010.md"
+        ]
       },
       {
         id: "gorkha-nepal",
