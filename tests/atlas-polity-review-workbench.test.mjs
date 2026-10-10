@@ -352,6 +352,24 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.match(indonesia.rationale, /1950-08-17/);
   assert.match(indonesia.rationale, /no Production write/);
 
+  const russianDesignation = byId.get('russia-temporal-designation');
+  assert.equal(russianDesignation.status, 'REVIEW_REQUIRED');
+  assert.equal(russianDesignation.terminal_status, null);
+  assert.equal(russianDesignation.suggested_action, 'repair');
+  assert.equal(russianDesignation.reviewed_decision, 'retain_russian_polity_repair_1547_1721_temporal_designations_and_1721_precision');
+  assert.equal(russianDesignation.left.polity_id, 'dd07fc4c-b3ac-59ac-bdf2-9cc190893327');
+  for (const activityId of [
+    'd6cdaf3b-2eab-4b98-8a17-b9c42342534f',
+    '57cdefa5-9a5d-533c-b229-47e398f1d07a',
+    '9ec53325-3a97-58a8-a7e7-81a496a47e57'
+  ]) assert.ok(russianDesignation.evidence.some(s => s.includes(activityId)), activityId);
+  assert.ok(russianDesignation.evidence.some(s => /polity_designation_name_en=null/.test(s)));
+  assert.ok(russianDesignation.evidence.some(s => /prlib.ru/.test(s)));
+  assert.ok(russianDesignation.evidence.some(s => /kreml.ru/.test(s)));
+  assert.ok(russianDesignation.evidence.some(s => /FULLY contain/.test(s)));
+  assert.match(russianDesignation.rationale, /1721/);
+  assert.match(russianDesignation.rationale, /REVIEW_REQUIRED 유지/);
+
   const oman = byId.get('oman-empire-oman');
   assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
   assert.equal(oman.right.polity_id, 'ac7279b2-da5c-42df-a217-ac60f16106ff');
