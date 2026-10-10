@@ -1,20 +1,26 @@
-# VIS3-05T-B — Connection status desktop ghost-visibility investigation (2026-10-10)
+# VIS3-05T-B — Production connection-status display audit (2026-10-10)
 
-**Status: SOURCE FIX READY / real Chrome desktop proof running / Production not yet updated.**
+**OUTCOME: TWO BREAKPOINTS VERIFIED; PREVIOUS CSS BUG HYPOTHESIS NOT REPRODUCIBLE; NO SOURCE PATCH.**
 
-## Root cause distinguished by breakpoint
+## Investigation history and actual evidence
 
-- `atlas-main-authority-nav.js:setTopbar` correctly assigns `connectionStatus.hidden=true` outside the Persons domain and `false` within Persons.
-- Common `styles.css` sets `.status{display:inline-flex}`, which can override the user-agent hidden display on **desktop**.
-- However, `mobile-compact.css` explicitly defines `.topbar .status{display:none}` at **mobile widths**, so a 390px Chrome result of `hidden=true` + `display:none` is **not** proof that the desktop bug has vanished. Likewise, on Persons mobile `hidden=false` + `display:none` is expected.
-- Early [Chrome run #38018884859](https://github.com/JezCH/atlas-person-db/actions/runs/38018884859) falsely attempted to require a 390px visible ghost and failed. A second run #38019030066 clarified that mobile Persons is hidden by design. Both failed tests are retained as diagnosis evidence, **not CI successes**.
+The October screenshot appeared to show `연결 확인 중` on the Dashboard. Source inspection proposed that initial `styles.css .status{display:inline-flex}` might override HTML `hidden` on non-Person routes. Instead of immediately merging a CSS override, we tested actual Production Chrome.
 
-**Targeted fix:** in the existing shared foundation CSS only, `#connectionStatus[hidden]{display:none}` to restore route visibility semantics for desktop non-Person domains. `index.html` cache-busts just this stylesheet. The existing mobile `.topbar .status{display:none}` rule remains unchanged. Do not fake network status or edit runtime model.
+- [Run #38018884859](https://github.com/JezCH/atlas-person-db/actions/runs/38018884859): first incorrect test expected a 390px Dashboard ghost. Chrome actually returned `hidden=true`, `display=none`. The test **failed as written**; do not mislabel it a passing regression.
+- [Run #38019030066](https://github.com/JezCH/atlas-person-db/actions/runs/38019030066): discovered mobile `persons` has `hidden=false` but `display=none`. This is intended because **`mobile-compact.css` hides `.topbar .status`** on mobile. A test that demands visible Person status at 390px would be wrong.
+- [Run #38019235913](https://github.com/JezCH/atlas-person-db/actions/runs/38019235913): extended to desktop 1440px. On Dashboard `hidden=true`, computed `display=none`, rect [0,0,0,0], 6 real KPI cards. On Persons `hidden=false`, computed `display=flex`. Thus the suspected **desktop** ghost was not reproduced either. This third workflow also **failed intentionally** because it incorrectly demanded that the pre-fix ghost be present.
+- The last read-only browser workflow on this PR removes those invalid expectations and checks **actual expected current behavior** for Dashboard→Persons→Dashboard at 390 and 1440, with PNGs and JSON evidence. This is the authoritative final verification, not a test of a nonexistent fix.
 
-## Final branch Chrome gate
+## Disposition
 
-[Read-only Chrome test workflow](../../.github/workflows/atlas-vis3-05t-b-status-browser.yml) visits current Production at 390 and 1440 CSS px, records `hidden`, computed `display`, Dashboard 6 KPI cards, actual Dashboard→Persons→Dashboard transitions; **on the same live page only** it injects the exact selector from the branch source and captures corrected Dashboard output. At 390px both routes' status is hidden by mobile CSS. At 1440px Person is visible and Dashboard is expected to show the pre-fix ghost; the new selector must hide it without hiding Person. A green browser workflow is required before merge; that workflow is not itself the deployed PR build.
+The branch originally contained a proposed `#connectionStatus[hidden]{display:none}` rule, `index.html` cache bump and a source test. **All three are reverted/deleted before merge**. There is no need to change the shared status owner JS, manipulate actual connection semantics, or deploy a redundant stylesheet fix. The historical screenshot and current build are different evidence windows; it is not proven which earlier release/state led to the visible string. A stale DOM textContent can still contain hidden status text, so use `getComputedStyle` and element geometry rather than text searches.
 
-Temporary browser workflow/script should be retired from the final PR once archival screenshots and logs exist, but keep the evidence link here. ATLAS Integrity plus post-merge Production exact-SHA/css/live route validation remain separate gates. No other VIS3-05T fonts/sidebar, 8 domain colors, six KPI computations, mixed D ornaments, Spacetime camera, or DB changed.
+The final audit PR adds only durable documentation and short-lived read-only QA evidence. No Production feature code/DB/geometry/semantics touched. The one-off browser script/workflow are removed after evidence is secured; the run and downloadable screenshots remain as a reference.
 
-Next bounded unit after closure: **VIS3-05T-C sidebar label and status-text contrast**; then KPI helper/mobile appbar readability and fold-toggle alignment. Full VIS3-06~17 roadmap remains unchanged, user final mixed D visual acceptance is not implied by this bug fix.
+## Phase III work continuation
+
+- VIS3-05R-E restrained mixed D is Production-integrated and Chrome technically validated; **user final design approval still pending**.
+- VIS3-05T-A legibility/sidebar audit completed.
+- **VIS3-05T-B current status display investigation completed with NO CODE CHANGE.**
+- **Next: VIS3-05T-C** improve sidebar long nav labels and subordinate status readability/contrast, first design the smallest scoped modification and validate expanded/collapsed desktop, mobile drawer and 390/768/1440/1600.
+- Then KPI microtype T-04/T-07, optional collapse-toggle T-05, with VIS3-06~17 sequence preserved. No new golden ornament before existing Phase III approval gates.

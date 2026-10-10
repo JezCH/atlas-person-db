@@ -4,9 +4,7 @@ import path from 'node:path';
 const SITE=(process.env.ATLAS_PRODUCTION_ORIGIN||'https://atlas-person-db.vercel.app').replace(/\/$/,'');
 const OUT='artifacts/vis3-05t-b-status';
 fs.mkdirSync(OUT,{recursive:true});
-const rule=fs.readFileSync('atlas-ui-visual-foundation.css','utf8').match(/#connectionStatus\[hidden\]\s*\{\s*display:\s*none\s*;\s*\}/)?.[0];
-if(!rule)throw Error('Missing narrow branch CSS patch');
-const data={schema:'atlas-vis3-05t-b-live-status-audit/v3',branch:process.env.GITHUB_HEAD_SHA,status:'PENDING',method:'unmodified real Production Chrome + exact branch CSS injected only in same local DOM',views:[],screenshots:[]};
+const data={schema:'atlas-vis3-05t-b-live-status-audit/v4',branch:process.env.GITHUB_HEAD_SHA,status:'PENDING',method:'unmodified real Production Chrome with Dashboard-Persons-Dashboard route transitions',views:[],screenshots:[]};
 const delay=n=>new Promise(r=>setTimeout(r,n));
 function ensure(c,s,x){if(!c){let e=Error(s);e.details=x;throw e}}
 class CDP{
@@ -29,25 +27,18 @@ async function viewport(c,width,height){
  await wait(c,'Boolean(window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain)');
  await wait(c,"document.querySelectorAll('#atlasDashboardMount .dashboard-kpi').length===6",120000);
 
- const beforeD=await route(c,'dashboard');await screenshot(c,'baseline-dashboard-'+width+'.png');
- const beforeP=await route(c,'persons');await screenshot(c,'baseline-persons-'+width+'.png');
- const backD=await route(c,'dashboard');
- ensure(beforeD.hidden===true&&beforeP.hidden===false&&backD.hidden===true,'DOM route ownership is incorrect',{width,beforeD,beforeP,backD});
- if(width<=760){
-  ensure(beforeD.display==='none'&&beforeP.display==='none','Expected mobile CSS to hide topbar status regardless of route',{width,beforeD,beforeP});
- }else{
-  ensure(beforeD.display!=='none'&&beforeP.display!=='none','Desktop status ghost bug not reproducible; stop',{width,beforeD,beforeP});
- }
- const inject="(()=>{const s=document.createElement('style');s.id='vis3-05t-b-only';s.textContent="+JSON.stringify(rule)+";document.head.appendChild(s);return !!s.sheet})()";
- ensure(await js(c,inject),'Could not install scoped CSS locally',{width});
- const afterD=await route(c,'dashboard');await screenshot(c,'corrected-dashboard-'+width+'.png');
- const afterP=await route(c,'persons');
- ensure(afterD.hidden===true&&afterD.display==='none','Dashboard should be hidden after CSS injection',{width,afterD});
- ensure(afterP.hidden===false&&afterP.display===(width<=760?'none':beforeP.display),'The Persons route status behavior changed',{width,afterP,beforeP});
- ensure(beforeD.kpis===6&&afterD.kpis===6,'Dashboard KPI count changed',{width,beforeD,afterD});
- ensure(afterD.docWidth<=Math.max(beforeD.docWidth,width)+1,'Additional horizontal overflow',{width,beforeD,afterD});
- data.views.push({width,height,status:'PASS',baseline:{dashboard:beforeD,persons:beforeP,returnDashboard:backD},locallyCorrected:{dashboard:afterD,persons:afterP}});
- console.log('VIS3_05T_B_CHROME_PASS width='+width+' desktopGhost='+Boolean(width>760)+' from='+beforeD.display+' to='+afterD.display+' person='+afterP.display);
+
+ const dashboard=await route(c,'dashboard');await screenshot(c,'dashboard-'+width+'.png');
+ const persons=await route(c,'persons');await screenshot(c,'persons-'+width+'.png');
+ const again=await route(c,'dashboard');
+ ensure(dashboard.hidden===true&&dashboard.display==='none','Dashboard route should hide status in current Production',{width,dashboard});
+ ensure(persons.hidden===false,'Persons route hidden attribute should be false',{width,persons});
+ ensure(persons.display===(width<=760?'none':'flex'),'Unexpected responsive Person status CSS',{width,persons});
+ ensure(again.hidden===true&&again.display==='none','Return to Dashboard visibility incorrect',{width,again});
+ ensure(dashboard.kpis===6&&again.kpis===6,'KPI 6 cards not preserved',{width,dashboard,again});
+ ensure(dashboard.docWidth<=width+1&&again.docWidth<=width+1,'Horizontal overflow',{width});
+ data.views.push({width,height,status:'PASS',dashboard,persons,backToDashboard:again});
+ console.log('VIS3_05T_B_CURRENT_PRODUCTION_PASS width='+width+' dashboard='+dashboard.display+' persons='+persons.display);
 }
 let c;
 try{
