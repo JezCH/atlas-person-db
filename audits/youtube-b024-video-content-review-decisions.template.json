@@ -1,0 +1,39 @@
+{
+  "schema": "atlas-youtube-person-content-review-decisions/v1",
+  "source_snapshot_id": "yt-20261009T111844Z-10127ch-rebuild-v4",
+  "source_archive_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "scope": "Separate original-video decisions for the 15 source-reviewed historical identity groups; add decisions ONLY after actually watching a timestamped segment or independently obtaining timestamped transcript with source digest.",
+  "no_reviews_have_been_completed_by_this_workflow": true,
+  "decisions": [],
+  "decision_contract": {
+    "required_per_person_primary": [
+      "video_id",
+      "raw_name",
+      "identity_for_review",
+      "verdict=PERSON_PRIMARY_CONTENT_CONFIRMED",
+      "evidence_method=VIDEO_PLAYBACK_MANUAL or TIMESTAMPED_TRANSCRIPT",
+      "source_url=https://www.youtube.com/watch?v=<video_id>",
+      "reviewer",
+      "reviewed_at",
+      "reason",
+      "content_segment.start_seconds",
+      "content_segment.end_seconds"
+    ],
+    "extra_if_transcript": [
+      "transcript_sha256",
+      "transcript_excerpt"
+    ],
+    "disallowed_as_content_proof": [
+      "title only",
+      "description only",
+      "model classification without source playback/transcript"
+    ],
+    "nonprimary_verdicts": [
+      "WORK_OR_PERFORMANCE",
+      "JOINT_PERSON_OR_EVENT",
+      "INCIDENTAL_MENTION",
+      "UNRESOLVED"
+    ]
+  },
+  "production_rank_not_authorized": true
+}
