@@ -252,14 +252,14 @@
     if (reason === "RUNTIME_EXCLUSION_TARGET_SOURCE_NOT_EXPOSED") return "런타임 제외 대상 원본 확인 불가";
     if (reason === "RUNTIME_EXCLUSION_TARGET_LEDGER_NOT_APPLIED") return "런타임 제외 대상 원장 migration 미적용";
     if (reason === "RUNTIME_EXCLUSION_TARGET_SNAPSHOT_INCOMPLETE") return "런타임 제외 대상 snapshot 불완전";
-    if (reason === "RUNTIME_PROJECTION_EMPTY") return "Runtime projection 비어 있음";
+    if (reason === "RUNTIME_PROJECTION_EMPTY") return "런타임 집계 결과 없음";
     if (reason === "DUPLICATE_REVIEW_TARGET_SOURCE_REQUIRES_ADMIN_CONTRACT") return "중복 후보 대상은 관리자 인증 영역에서 확인";
     if (reason === "RUNTIME_PUBLICATION_SOURCE_UNAVAILABLE") return "게시 파이프라인 원본 확인 불가";
-    if (reason === "RUNTIME_PUBLICATION_NO_COMPILE_RUN") return "Runtime Compile 기록 없음";
-    if (reason === "RUNTIME_ACTIVATION_HISTORY_NOT_EXPOSED") return "Runtime 활성화 이력 미노출";
-    if (reason === "RUNTIME_ACTIVATION_LEDGER_NOT_APPLIED") return "Runtime 활성화 원장 migration 미적용";
-    if (reason === "RUNTIME_ACTIVATION_HISTORY_EMPTY") return "Runtime 활성화 이력 없음";
-    if (reason === "RUNTIME_ACTIVATION_HISTORY_UNAVAILABLE") return "Runtime 활성화 이력 확인 불가";
+    if (reason === "RUNTIME_PUBLICATION_NO_COMPILE_RUN") return "런타임 빌드 기록 없음";
+    if (reason === "RUNTIME_ACTIVATION_HISTORY_NOT_EXPOSED") return "런타임 활성화 이력 미노출";
+    if (reason === "RUNTIME_ACTIVATION_LEDGER_NOT_APPLIED") return "런타임 활성화 이력 체계 미적용";
+    if (reason === "RUNTIME_ACTIVATION_HISTORY_EMPTY") return "런타임 활성화 이력 없음";
+    if (reason === "RUNTIME_ACTIVATION_HISTORY_UNAVAILABLE") return "런타임 활성화 이력 확인 불가";
     return "세부 사유 미분류";
   }
 
@@ -287,21 +287,21 @@
         ${publicationStage("현재 Authoring",funnel.current_authoring,"authoritative Activity")}
         ${publicationStage("현재 Runtime",funnel.current_runtime,"sealed projection")}
       </div>
-      <div class="dashboard-heatmap-unavailable">${escapeHtml(reasonLabel(funnel.unavailable_reason) || "Runtime Compile 기록 없음")}</div>`;
+      <div class="dashboard-heatmap-unavailable">${escapeHtml(reasonLabel(funnel.unavailable_reason) || "런타임 빌드 기록 없음")}</div>`;
     }
     const delta=Number(funnel.authoring_delta_since_compile || 0);
     const deltaLabel=delta === 0 ? "Compile 이후 Authoring 증감 0" : `Compile 이후 Authoring 증감 ${delta > 0 ? "+" : ""}${value(delta)}`;
     const exclusionRows=(funnel.exclusion_rows || []).map((row)=>`<span><b>${escapeHtml(runtimeExclusionLabel(row.code))}</b> ${value(row.count)}</span>`).join("");
     return `<div class="dashboard-publication-flow">
       ${publicationStage("현재 Authoring",funnel.current_authoring,"현재 canonical Activity")}
-      ${publicationStage("현재 Runtime Compile 입력",funnel.compile_input,"sealed compile snapshot")}
+      ${publicationStage("현재 런타임 빌드 입력",funnel.compile_input,"sealed compile snapshot")}
       ${publicationStage("Runtime 포함",funnel.runtime_included,`현재 Runtime ${value(funnel.current_runtime)}`)}
       ${publicationStage("런타임 제외",funnel.runtime_excluded,"Activity 단위")}
     </div>
     <div class="dashboard-publication-meta">
       <span>${escapeHtml(deltaLabel)}</span>
-      <span>${funnel.projection_matches_active_compile ? "Runtime projection = 현재 Runtime Compile 출력" : "Runtime projection과 현재 Runtime Compile 출력 불일치"}</span>
-      <span>${escapeHtml(funnel.compiler_version || "compiler 미확인")} · ${escapeHtml(formatTimestamp(funnel.compiled_at))}</span>
+      <span>${funnel.projection_matches_active_compile ? "런타임 집계 = 현재 런타임 빌드 출력" : "런타임 집계와 현재 런타임 빌드 출력이 다름"}</span>
+      <span>${escapeHtml(funnel.compiler_version || "빌드 도구 미확인")} · ${escapeHtml(formatTimestamp(funnel.compiled_at))}</span>
     </div>
     <div class="dashboard-timeline-summary dashboard-publication-exclusions">${exclusionRows || "<span>제외 사유 0건</span>"}</div>`;
   }
@@ -317,7 +317,7 @@
       <td><code title="${escapeHtml(row.activity_id)}">${escapeHtml(row.activity_id)}</code></td>
     </tr>`).join("");
     return `<div class="dashboard-runtime-exclusion-wrap"><table class="dashboard-runtime-exclusion-table">
-      <thead><tr><th scope="col">제외 사유</th><th scope="col">인물</th><th scope="col">정치체</th><th scope="col">Activity UUID</th></tr></thead>
+      <thead><tr><th scope="col">제외 사유</th><th scope="col">인물</th><th scope="col">정치체</th><th scope="col">활동 UUID</th></tr></thead>
       <tbody>${rows || '<tr><td colspan="4">현재 런타임 제외 활동가 없습니다.</td></tr>'}</tbody>
     </table></div>`;
   }
@@ -341,17 +341,17 @@
 
   function runtimeDeltaDriftMarkup(delta) {
     if (!delta?.available) {
-      return `<div class="dashboard-heatmap-unavailable">${escapeHtml(reasonLabel(delta?.unavailable_reason) || "Runtime 활성화 이력을 확인할 수 없습니다.")}</div>`;
+      return `<div class="dashboard-heatmap-unavailable">${escapeHtml(reasonLabel(delta?.unavailable_reason) || "런타임 활성화 이력을 확인할 수 없습니다.")}</div>`;
     }
     const latest=delta.latest;
     const previous=delta.previous;
     const reasonRows=(delta.exclusion_delta_rows || []).map((row)=>`<span><b>${escapeHtml(runtimeExclusionLabel(row.code))}</b> ${escapeHtml(signedValue(row.delta))}</span>`).join("");
     const comparisonLabel=delta.comparison_available
-      ? (delta.compile_key_changed ? "직전과 다른 Compile 활성화" : "같은 Compile 재활성화")
+      ? (delta.compile_key_changed ? "직전과 다른 Compile 활성화" : "같은 빌드 재활성화")
       : "직전 activation 기록 없음";
     const projectionLabel=delta.latest_matches_projection
       ? "최신 activation = 현재 Runtime projection"
-      : "최신 activation과 현재 Runtime projection 불일치";
+      : "최신 활성화 내역과 현재 런타임 집계가 다름";
     const shaLabel=latest?.activation_kind === "compile_commit"
       ? `Runtime ${shortSha(latest.runtime_sha)} · Authoring ${shortSha(latest.authoring_sha)}`
       : "원장 도입 시점 관측 · 배포 SHA 없음";
@@ -366,7 +366,7 @@
         <small>런타임 활동 증감</small><strong>${escapeHtml(signedValue(delta.runtime_activity_delta))}</strong><span>직전 활성화 대비</span>
       </article>
       <article class="dashboard-drift-card">
-        <small>런타임 제외 증감</small><strong>${escapeHtml(signedValue(delta.excluded_activity_delta))}</strong><span>현재 제외 ${value(latest?.excluded_activity_count)} 활동</span>
+        <small>런타임 제외 증감</small><strong>${escapeHtml(signedValue(delta.excluded_activity_delta))}</strong><span>현재 제외 활동 ${value(latest?.excluded_activity_count)}건</span>
       </article>
     </div>
     <div class="dashboard-publication-meta dashboard-drift-meta">
@@ -529,7 +529,7 @@
       <span>${value(targets.length)}${escapeHtml(unitLabel("activity"))}</span>
     </div>
     <div class="dashboard-runtime-exclusion-wrap"><table class="dashboard-runtime-exclusion-table dashboard-activity-completeness-table">
-      <thead><tr><th scope="col">사유</th><th scope="col">인물</th><th scope="col">정치체</th><th scope="col">Activity UUID</th></tr></thead>
+      <thead><tr><th scope="col">사유</th><th scope="col">인물</th><th scope="col">정치체</th><th scope="col">활동 UUID</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
   }
@@ -551,8 +551,8 @@
         <td><strong>${escapeHtml(row.polity_display_name || row.polity_id || "—")}</strong><small>${escapeHtml(row.polity_id || "")}</small></td>
         <td><code>${escapeHtml(row.activity_id || "—")}</code></td>
       </tr>`).join("");
-      return `<div class="dashboard-panel-head dashboard-quality-targets-head"><div><p class="eyebrow">품질 검토 대상</p><h3>공간 배치 미해결 Activity</h3></div><span>${value(targets.length)}건</span></div>
-        <div class="dashboard-runtime-exclusion-wrap"><table class="dashboard-runtime-exclusion-table dashboard-quality-target-table" data-quality-target-kind="activity"><thead><tr><th scope="col">사유</th><th scope="col">인물</th><th scope="col">정치체</th><th scope="col">Activity UUID</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+      return `<div class="dashboard-panel-head dashboard-quality-targets-head"><div><p class="eyebrow">품질 검토 대상</p><h3>공간 배치 미해결 활동</h3></div><span>${value(targets.length)}건</span></div>
+        <div class="dashboard-runtime-exclusion-wrap"><table class="dashboard-runtime-exclusion-table dashboard-quality-target-table" data-quality-target-kind="activity"><thead><tr><th scope="col">사유</th><th scope="col">인물</th><th scope="col">정치체</th><th scope="col">활동 UUID</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     }
     if (code === "spatial_review") {
       const targets=Array.isArray(item?.polity_targets) ? item.polity_targets : [];
@@ -561,7 +561,7 @@
         <td><strong>${value(row.affected_person_count)}명</strong><small>${escapeHtml((row.affected_person_ids || []).join(", "))}</small></td>
         <td><code>${escapeHtml((row.reason_codes || []).join(", ") || "—")}</code></td>
       </tr>`).join("");
-      return `<div class="dashboard-panel-head dashboard-quality-targets-head"><div><p class="eyebrow">품질 검토 대상</p><h3>공간 배치 검토 대기 Polity</h3></div><span>${value(targets.length)}개</span></div>
+      return `<div class="dashboard-panel-head dashboard-quality-targets-head"><div><p class="eyebrow">품질 검토 대상</p><h3>공간 배치 검토 대기 정치체</h3></div><span>${value(targets.length)}개</span></div>
         <div class="dashboard-runtime-exclusion-wrap"><table class="dashboard-runtime-exclusion-table dashboard-quality-target-table" data-quality-target-kind="polity"><thead><tr><th scope="col">정치체</th><th scope="col">영향 인물</th><th scope="col">검토 사유</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     }
     if (code === "non_timeline_registry") {
@@ -709,7 +709,7 @@
     ];
     const activityWorkSegments = [
       { key:"activity-linked", label:"활동 1건 이상 연결", count:w.runtime_activity?.done, description:"런타임에서 활동이 1건 이상 연결된 인물" },
-      { key:"activity-missing", label:"활동 연결 없음", count:w.runtime_activity?.remaining, description:"Runtime에서 연결된 Activity가 없는 인물" }
+      { key:"activity-missing", label:"활동 연결 없음", count:w.runtime_activity?.remaining, description:"런타임에서 연결된 활동이 없는 인물" }
     ];
 
     root.innerHTML = `<section class="dashboard-control-center atlas-ornament-v3">
@@ -725,7 +725,7 @@
       <section class="dashboard-kpi-grid" aria-labelledby="dashboardKpiHeading">
         ${kpiCard({code:"persons",label:"인물",primary:value(k.persons),detail:`역사적 실존 ${value(k.historical)} · 기타 ${value(k.other_historicity)}`,drilldown:kd.persons})}
         ${kpiCard({code:"activities",label:"등록 활동",primary:value(k.activities),detail:"인물 런타임 집계",drilldown:kd.activities})}
-        ${kpiCard({code:"polities",label:"사용 정치체",primary:value(k.polities),detail:"현재 Person Activity에서 참조",drilldown:kd.polities})}
+        ${kpiCard({code:"polities",label:"사용 정치체",primary:value(k.polities),detail:"현재 인물 활동에서 참조",drilldown:kd.polities})}
         ${kpiCard({code:"domain",label:"대표 분야 분류율",primary:pct(w.domain.percentage),detail:`${value(w.domain.done)} / ${value(w.domain.total)} · 잔여 ${value(w.domain.remaining)}`,drilldown:kd.domain})}
         ${kpiCard({code:"namuwiki",label:"나무위키 검토율",primary:pct(w.namuwiki.percentage),detail:`연결 ${value(w.namuwiki.linked)} · 독립 문서 없음 ${value(w.namuwiki.no_exact_document)} · 관련·파생만 ${value(w.namuwiki.related_or_derivative_only)} · URL 대기 ${value(w.namuwiki.target_url_pending)} · 사유 미기록 ${value(w.namuwiki.reviewed_reason_unrecorded)} · 검증 필요 ${value(w.namuwiki.remaining)}`,drilldown:kd.namuwiki})}
         ${kpiCard({code:"spatial",label:"공간 배치 완료율",primary:pct(w.spatial.percentage),detail:`${value(w.spatial.done)} / ${value(w.spatial.total)} · 잔여 ${value(w.spatial.remaining)}`,drilldown:kd.spatial})}
@@ -1029,7 +1029,7 @@
 
     const personResult = settledValue(persons);
     if (!personResult) {
-      root.innerHTML = `<section class="dashboard-control-center atlas-ornament-v3"><article class="dashboard-error card"><h2>Person 기준 원본을 읽지 못했습니다.</h2><p>${escapeHtml(persons.reason?.message || persons.reason || "unknown")}</p><button id="atlasDashboardRetry" class="btn" type="button">다시 시도</button></article></section>`;
+      root.innerHTML = `<section class="dashboard-control-center atlas-ornament-v3"><article class="dashboard-error card"><h2>인물 기준 원본을 읽지 못했습니다.</h2><p>${escapeHtml(persons.reason?.message || persons.reason || "unknown")}</p><button id="atlasDashboardRetry" class="btn" type="button">다시 시도</button></article></section>`;
       root.querySelector("#atlasDashboardRetry")?.addEventListener("click", () => refresh({ force:true }));
       return;
     }
