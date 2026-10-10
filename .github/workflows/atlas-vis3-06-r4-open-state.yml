@@ -22,7 +22,7 @@ jobs:
     env:
       ATLAS_PRODUCTION_ORIGIN: https://atlas-person-db.vercel.app
       ATLAS_CDP_URL: http://127.0.0.1:9222
-      ATLAS_VISUAL_OUT_DIR: artifacts/vis3-06-r2-native-browser-zoom
+      ATLAS_VISUAL_OUT_DIR: artifacts/vis3-06-r4-open-state
       DISPLAY: ":99"
     steps:
       - uses: actions/checkout@v4
@@ -91,6 +91,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: atlas-vis3-06-r4-open-state-${{ github.sha }}
-          path: artifacts/vis3-06-r2-native-browser-zoom
+          path: artifacts/vis3-06-r4-open-state
           if-no-files-found: warn
           retention-days: 30
