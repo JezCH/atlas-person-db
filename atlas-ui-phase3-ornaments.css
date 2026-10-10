@@ -157,7 +157,8 @@
     display:grid;gap:14px;min-height:0;padding:18px 17px;
   }
   .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::before {
-    width:30px;height:30px;top:8px;right:8px;
+    /* Same physical corner alignment for the smaller mobile engraving. */
+    width:30px;height:30px;top:-1.5px;right:-1.5px;
     opacity:calc(var(--atlas-o-ornament-presence) * .34);
   }
   .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece h2 {
