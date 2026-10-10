@@ -23,6 +23,7 @@ NUMBERED_META_RE = re.compile(r"^(?:chapter|part|day|ep|episode|panel|session)\s
 TRAILING_BIO_RE = re.compile(r"\s+(?:biography|documentary|biographical documentary|life story|bio|for kids)\s*$", re.I)
 QUALITY_RULES_PATH = Path(__file__).with_name("youtube-person-signal-quality-rules.v2.json")
 SOURCE_NONPERSON_REVIEW_PATH = Path(__file__).resolve().parents[1] / "audits/youtube-v5-source-nonperson-exact-labels.json"
+EXPANDED_NONPERSON_REVIEW_PATH = Path(__file__).resolve().parents[1] / "audits/youtube-v5-expanded-nonperson-reviewed-exact.json"
 CUE_AUDIT_PATH = Path(__file__).with_name("youtube-unknown-name-cue-audit.py")
 
 
@@ -82,6 +83,18 @@ SOURCE_REVIEWED_NONPERSON = frozenset(
 )
 if len(SOURCE_REVIEWED_NONPERSON) != 23:
     raise RuntimeError("SOURCE_REVIEWED_NON_PERSON_DUPLICATE_LABEL")
+EXPANDED_NONPERSON_REVIEW = json.loads(EXPANDED_NONPERSON_REVIEW_PATH.read_text(encoding="utf-8"))
+if (EXPANDED_NONPERSON_REVIEW.get("schema") != "atlas-youtube-v5-expanded-exact-nonperson-review/v1"
+        or len(EXPANDED_NONPERSON_REVIEW.get("reviewed_labels", [])) != 409
+        or EXPANDED_NONPERSON_REVIEW.get("reviewed_label_count") != 409):
+    raise RuntimeError("INVALID_EXPANDED_SOURCE_REVIEWED_NON_PERSON_MANIFEST")
+EXPANDED_SOURCE_REVIEWED_NONPERSON = frozenset(
+    unicodedata.normalize("NFKC", row["name"]).casefold().strip()
+    for row in EXPANDED_NONPERSON_REVIEW["reviewed_labels"]
+)
+if (len(EXPANDED_SOURCE_REVIEWED_NONPERSON) != 409
+        or SOURCE_REVIEWED_NONPERSON & EXPANDED_SOURCE_REVIEWED_NONPERSON):
+    raise RuntimeError("EXPANDED_SOURCE_REVIEWED_NON_PERSON_DUPLICATE_LABEL")
 
 
 LEADING_PATTERNS = (
@@ -190,6 +203,8 @@ def candidate_rejection(candidate):
         return "reviewed_non_person"
     if lowered in SOURCE_REVIEWED_NONPERSON:
         return "source_reviewed_non_person"
+    if lowered in EXPANDED_SOURCE_REVIEWED_NONPERSON:
+        return "expanded_source_reviewed_non_person"
     if lowered in REVIEWED_NONHISTORICAL:
         return "reviewed_nonhistorical"
     if NUMBERED_META_RE.fullmatch(candidate):
@@ -229,7 +244,7 @@ def valid_candidate(candidate):
     lowered = candidate.casefold()
     if NUMBERED_META_RE.fullmatch(candidate):
         return False
-    if lowered in GENERIC_EXACT or lowered in COUNTRY_NAMES or lowered in REVIEWED_NON_PERSON or lowered in SOURCE_REVIEWED_NONPERSON or lowered in REVIEWED_NONHISTORICAL:
+    if lowered in GENERIC_EXACT or lowered in COUNTRY_NAMES or lowered in REVIEWED_NON_PERSON or lowered in SOURCE_REVIEWED_NONPERSON or lowered in EXPANDED_SOURCE_REVIEWED_NONPERSON or lowered in REVIEWED_NONHISTORICAL:
         return False
     if BAD_PREFIX_RE.search(candidate) or GENERIC_TOKEN_RE.search(candidate):
         return False
@@ -452,7 +467,7 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None,
     new_keys = {name.casefold() for name, _, _ in raw}
     # Proven single-Person false positives must be removable without erasing
     # their original video/channel source records or regressing real names.
-    missing = set(preserved) - new_keys - SOURCE_REVIEWED_NONPERSON
+    missing = set(preserved) - new_keys - SOURCE_REVIEWED_NONPERSON - EXPANDED_SOURCE_REVIEWED_NONPERSON
     if missing:
         raise RuntimeError("LOST_EXISTING_SIGNAL_IDENTITY: " + repr(sorted(missing)[:5]))
     raw.sort(key=lambda item: (-item[1], -item[2], item[0].casefold(), item[0]))
@@ -501,6 +516,8 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None,
         "quality_rules_version": QUALITY_RULES["version"],
         "source_reviewed_nonperson_overlay": "youtube-v5-source-nonperson-exact-labels/v1",
         "source_reviewed_nonperson_exact_labels": len(SOURCE_REVIEWED_NONPERSON),
+        "expanded_nonperson_exact_review": "atlas-youtube-v5-expanded-exact-nonperson-review/v1",
+        "expanded_source_reviewed_nonperson_exact_labels": len(EXPANDED_SOURCE_REVIEWED_NONPERSON),
         "quality_counters": dict(sorted(quality_counts.items())),
         "additional_title_context_extraction": True,
         "title_context_evidence_scope": "original_channel_video_ids",
