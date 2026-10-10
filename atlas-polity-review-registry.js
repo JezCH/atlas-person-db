@@ -185,13 +185,22 @@
         review_group: "historical_family_review",
         kind: "family_review",
         title: "Third Saudi State ↔ Nejd / Saudi Arabia",
-        left: { name: "Third Saudi State" },
-        right: { name: "Nejd / Saudi Arabia" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        left: { name: "Third Saudi State", polity_id: "aa38d04d-532d-4851-8e05-27d0614fb9c0" },
+        right: { name: "Saudi Arabia", polity_id: "769b9646-457c-4a45-b7af-76b0141c2c8e" },
+        rationale: "2026-10-10 Production 현재 1902–1921 제3사우디국, 1921–1927 나지드 술탄국, 1926–1927 헤자즈 왕권, 1927–1932 히자즈·나지드 복합왕국, 1932 이후 사우디아라비아는 압둘아지즈의 연속 통치 프로젝트 안에 있으나 서로 구별되는 실제 시대·관할·공식 칭호입니다. 영국 India Office 1926년 기록은 헤자즈 정부를 나지드와 별도 관리한다고 명시하므로 1926년 이중 통치는 중복 Activity가 아닙니다. 1932년은 공식 통일국가의 성립 경계입니다. 행정·정체별 UUID와 전 통치기간 및 하심왕조 헤자즈 통치를 보존하고 자동 병합·삭제하지 않습니다.",
+        suggested_action: "keep_both",
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        reviewed_decision: "keep_both",
+        locked: true,
+        evidence: [
+          "2026-10-10 fresh Production: Third Saudi State aa38d04d-532d-4851-8e05-27d0614fb9c0 1902–1921 Activity 359ff20a-2a3f-4021-a08a-499a838f8d72; Sultanate of Nejd dfea8994-f42d-4b3b-99ac-e3c2b4a1cada 1921–1927 Activity bb9d4eb6-7bb4-4808-b12a-7cceb1903bef",
+          "2026-10-10 fresh Production: Hashemite/Saudi Hejaz a05dce0f-1d35-4858-8d61-7a8da3a6e5ab, Hussein 1916–1924 e6288de0-fa36-4197-bf16-5f89a675486b and Abdulaziz 1926–1927 cf01e13d-e8e4-41c8-9816-81f03f64e6a1; composite 1927–1932 0fbb1e5b-4661-4696-9d1f-ec77bbe2d75a Activity 391957ce-1264-4083-ae9d-2f8655c69aa8",
+          "2026-10-10 fresh Production: Saudi Arabia 769b9646-457c-4a45-b7af-76b0141c2c8e, Abdulaziz 1932–1953 Activity 7b9eaee4-b72e-458c-9473-04599e66fdfd; Faisal 1964–1975 Activity 464bb4de-6c70-4827-995f-b619cf87896c; current Runtime publication 2523/2523",
+          "1926 primary contemporaneous British India Office record specifically preserves concurrent King of Hejaz / Sultan of Nejd titles and separate Hejaz administration: https://www.qdl.qa/archive/81055/vdc_100079351205.0x000067",
+          "Saudi Ministry of Foreign Affairs 1902/1921/1926/1927 titles and 23 September 1932 unification decree: https://mofa.gov.sa/en/ksa/Pages/history.aspx ; Saudipedia precise title changes https://saudipedia.com/en/list-of-titles-of-king-abdulaziz",
+          "Sourced terminal verdict and no-Production-write boundary: docs/POLITY_P2_04B_SAUDI_STATE_PHASES_1902_1932_20261010.md"
+        ]
       },
       {
         id: "russian-sfsr-federation",
