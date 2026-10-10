@@ -335,6 +335,7 @@
     const mobileSubtitle = document.querySelector(".mobile-appbar-title small");
     if (mobileTitle) mobileTitle.textContent = meta?.label || personHeading.title;
     if (mobileSubtitle) mobileSubtitle.textContent = "ATLAS 편집";
+    topbar.hidden = domain === "persons";
     if (domain === "persons") {
       if (eyebrow) eyebrow.textContent = personHeading.eyebrow;
       if (title) title.textContent = personHeading.title;
