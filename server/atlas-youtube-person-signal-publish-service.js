@@ -79,6 +79,16 @@ function normalizePublicationPayload(body) {
   if (Number.isNaN(Date.parse(generatedAt))) throw new Error("YOUTUBE_PUBLICATION_GENERATED_AT_INVALID");
 
   const sourceState = normalizeObject(snapshotInput.source_state,"YOUTUBE_PUBLICATION_SOURCE_STATE_REQUIRED");
+  if (snapshotInput.parser_version === "yt-title-person-reviewed-v5") {
+    if (sourceState.additional_title_context_extraction !== true ||
+        sourceState.source_name_generation_independent_of_registered_persons !== true ||
+        sourceState.title_context_evidence_scope !== "original_channel_video_ids" ||
+        sourceState.title_context_personhood !== "source_title_review_candidate_not_verified_person" ||
+        !Number.isSafeInteger(sourceState.quality_counters?.accepted_context_cue_video_name_ids) ||
+        sourceState.quality_counters.accepted_context_cue_video_name_ids <= 0) {
+      throw new Error("YOUTUBE_PUBLICATION_V5_SOURCE_EVIDENCE_GUARDS_REQUIRED");
+    }
+  }
   const channels = Array.isArray(body.channels) ? body.channels.map(normalizeChannel) : null;
   const signals = Array.isArray(body.signals) ? body.signals.map(normalizeSignal) : null;
   if (!channels || channels.length === 0 || channels.length > 20000) throw new Error("YOUTUBE_PUBLICATION_CHANNELS_INVALID");
