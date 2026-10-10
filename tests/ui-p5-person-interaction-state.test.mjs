@@ -55,7 +55,7 @@ test("P5 motion layer owns only transitions for Person Register interaction", ()
 
 test("P5 cache keys publish the interaction-state owners in final cascade order", () => {
   const registerIndex = html.indexOf("atlas-person-monumental-register.css?v=20261004-ui-p13-column-balance-polity-height-v1");
-  const mobileIndex = html.indexOf("atlas-ui-mobile-v8.css?v=20261007-mobile-era1-ownership-v1");
+  const mobileIndex = html.indexOf("atlas-ui-mobile-v8.css?v=20261010-vis3-05t-d-appbar-type-v1");
   const motionIndex = html.indexOf("atlas-ui-motion-material-v9.css?v=20261007-controls-m2-luminance-v1");
   assert.ok(registerIndex >= 0);
   assert.ok(mobileIndex > registerIndex);

@@ -980,6 +980,13 @@
   }
 }
 
+/* On intermediate desktop/tablet the 1px reduction per internal row
+ * compensates for taller supporting glyphs without changing card dimensions. */
+@media (min-width: 601px) and (max-width: 1250px) {
+  .dashboard-kpi {
+    gap: 5px;
+  }
+}
 /* VIS3-05T-D: improve supporting type without changing card geometry,
  * primary KPI figures, truncating factual descriptions or adding ornament. */
 .dashboard-kpi small {

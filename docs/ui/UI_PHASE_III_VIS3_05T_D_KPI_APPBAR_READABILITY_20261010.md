@@ -17,3 +17,7 @@ A real Chrome **same-DOM** Production baseline vs locally injected exact changed
 Required: full ATLAS Integrity, documented Chrome screenshots/metrics, removal of temporary review workflow before merge, then separately check Vercel Production exact SHA and HTTP live HTML/CSS parity when quota allows. Do not bypass rate limits or start VIS3-06 before appropriate visual user approval.
 
 **Next separate unit:** VIS3-05T-E optional sidebar collapse-toggle alignment; then VIS3-06~17 as designed. User's final selected D aesthetic approval remains pending.
+
+## Intermediate-width Chrome correction
+
+Second real Chrome check confirmed 390px and 600px first KPI card heights remained 94px after the mobile 4px internal gap adjustment; at 768px the 10px text caused a 3px row displacement. Applied a **5px KPI inner gap only for 601–1250px** (from original 6px) to compensate glyph growth without changing explicit min-height/padding/grid. A fresh complete five-width Chrome run remains required.
