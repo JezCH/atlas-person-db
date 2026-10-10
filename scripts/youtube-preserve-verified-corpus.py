@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Preserve the validated Batch017 corpus in private Supabase Storage.
 
-All source members are addressed by SHA-256, never overwritten, independently
-read back, and then registered in atlas_v2.youtube_source_archives. Re-running
-is idempotent. Catalog registration occurs only after Storage byte/hash parity.
+Every artifact member is addressed by SHA-256, never overwritten, independently
+read back, and optionally restored from the remote object store. Database
+catalog publication is intentionally separate and uses the canonical OIDC
+Production writer only after Storage byte/hash parity has been proven.
 """
 import argparse
 import gzip
@@ -18,11 +19,6 @@ import urllib.request
 
 BUCKET = "atlas-youtube-source"
 SOURCE_ARTIFACT_ID = 11548326100
-CATALOG = "youtube_source_archives"
-CATALOG_FIELDS = (
-    "object_key", "sha256", "byte_count", "source_artifact_id", "batch_label",
-    "source_kind", "channel_id", "video_rows"
-)
 
 
 def sha256(data):
@@ -38,27 +34,6 @@ def storage_call(method, base, token, key, data=None):
     req = urllib.request.Request(endpoint, data=data, headers=headers, method=method)
     with urllib.request.urlopen(req, timeout=180) as response:
         return response.read()
-
-
-def catalog_call(method, base, token, query="", data=None):
-    endpoint = base.rstrip("/") + "/rest/v1/" + CATALOG
-    if query:
-        endpoint += "?" + query
-    headers = {
-        "Authorization": "Bearer " + token,
-        "apikey": token,
-        "Accept-Profile": "atlas_v2",
-    }
-    body = None
-    if data is not None:
-        body = json.dumps(data, separators=(",", ":")).encode("utf-8")
-        headers["Content-Type"] = "application/json"
-        headers["Content-Profile"] = "atlas_v2"
-        headers["Prefer"] = "return=representation"
-    req = urllib.request.Request(endpoint, data=body, headers=headers, method=method)
-    with urllib.request.urlopen(req, timeout=60) as response:
-        raw = response.read()
-    return json.loads(raw.decode("utf-8")) if raw else None
 
 
 def batch_label(relative):
@@ -111,45 +86,6 @@ def record_for(file, root):
     }
 
 
-def public_record(record):
-    return {k: record[k] for k in CATALOG_FIELDS}
-
-
-def catalog_query(key):
-    return urllib.parse.urlencode({
-        "object_key": "eq." + key,
-        "select": ",".join(CATALOG_FIELDS),
-    })
-
-
-def verify_catalog_row(row, record):
-    expected = public_record(record)
-    got = {k: row.get(k) for k in CATALOG_FIELDS}
-    if got != expected:
-        raise RuntimeError("SOURCE_CATALOG_MISMATCH: " + record["source_path"])
-
-
-def register_catalog(base, token, record):
-    rows = catalog_call("GET", base, token, catalog_query(record["object_key"])) or []
-    if len(rows) > 1:
-        raise RuntimeError("SOURCE_CATALOG_DUPLICATE: " + record["source_path"])
-    if rows:
-        verify_catalog_row(rows[0], record)
-        return False
-    try:
-        inserted = catalog_call("POST", base, token, data=public_record(record)) or []
-        if inserted:
-            verify_catalog_row(inserted[0], record)
-    except urllib.error.HTTPError as exc:
-        if exc.code != 409:
-            raise
-    rows = catalog_call("GET", base, token, catalog_query(record["object_key"])) or []
-    if len(rows) != 1:
-        raise RuntimeError("SOURCE_CATALOG_READBACK_MISSING: " + record["source_path"])
-    verify_catalog_row(rows[0], record)
-    return True
-
-
 def upload_and_verify(base, token, file, root):
     record = record_for(file, root)
     contents = record.pop("_contents")
@@ -168,11 +104,7 @@ def upload_and_verify(base, token, file, root):
         stored = storage_call("GET", base, token, record["object_key"])
     if len(stored) != len(contents) or sha256(stored) != record["sha256"]:
         raise RuntimeError("SOURCE_ROUNDTRIP_CHECKSUM_MISMATCH: " + record["source_path"])
-    if record["source_kind"] == "metadata":
-        catalog_state = "not_applicable"
-    else:
-        catalog_state = "inserted" if register_catalog(base, token, record) else "existing"
-    return record | {"new_object": created, "catalog_state": catalog_state}
+    return record | {"new_object": created}
 
 
 def enumerate_files(root):
@@ -231,7 +163,7 @@ def main():
         if args.dry_run:
             rec = record_for(file, root)
             rec.pop("_contents")
-            rec.update({"new_object": False, "catalog_state": "not_run" if rec["source_kind"] != "metadata" else "not_applicable"})
+            rec["new_object"] = False
         else:
             rec = upload_and_verify(base, token, file, root)
         records.append(rec)
@@ -245,7 +177,7 @@ def main():
         restore = restore_remote(base, token, records, Path(args.restore_dir).resolve())
 
     output = {
-        "schema": "atlas-youtube-source-verified-upload/v2",
+        "schema": "atlas-youtube-source-storage-verification/v2",
         "source_artifact_id": SOURCE_ARTIFACT_ID,
         "total_files_discovered": len(all_files),
         "total_bytes_discovered": total_bytes,
@@ -253,9 +185,7 @@ def main():
         "bytes_verified": sum(r["byte_count"] for r in records),
         "new_objects": sum(1 for r in records if r["new_object"]),
         "existing_objects": sum(1 for r in records if not r["new_object"]),
-        "catalog_expected": sum(1 for r in records if r["source_kind"] != "metadata"),
-        "catalog_inserted": sum(1 for r in records if r["catalog_state"] == "inserted"),
-        "catalog_existing": sum(1 for r in records if r["catalog_state"] == "existing"),
+        "source_records": sum(1 for r in records if r["source_kind"] != "metadata"),
         "metadata_objects": sum(1 for r in records if r["source_kind"] == "metadata"),
         "uploaded": not args.dry_run,
         "restore": restore,
