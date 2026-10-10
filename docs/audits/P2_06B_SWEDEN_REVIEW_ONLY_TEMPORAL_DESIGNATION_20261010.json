@@ -1,0 +1,113 @@
+{
+  "schema": "atlas-polity-temporal-historiographic-proposal/v1",
+  "decision_id": "sweden-temporal-designation",
+  "work_unit": "POLITY-P2-06B",
+  "as_of": "2026-10-10",
+  "authority": "SOURCE_BACKED_REVIEW_ONLY_NOT_PRODUCTION_EXECUTABLE",
+  "review_status": "REVIEW_REQUIRED",
+  "production_executable": false,
+  "production_mutation_authorized": false,
+  "auto_apply_allowed": false,
+  "production_authoring_verified": false,
+  "production_runtime_verified": false,
+  "exact_designation_before_state_verified": false,
+  "data_provenance_scope": "PUBLIC_PRODUCTION_POLITY_1158_AND_REVIEWED_PRIOR_PRODUCTION_SCHEMA_CONTRACT",
+  "polity": {
+    "id": "93613017-b4c4-5f82-8e96-3ce6b2d3a61e",
+    "canonical_key": "Sweden",
+    "public_activity_count": 15,
+    "separate_union_polity_id": "a47f57af-8ac2-4724-81b0-43074c64f84c",
+    "separate_union_activity_count": 3,
+    "distinct_swedish_empire_polity_should_be_created": false
+  },
+  "proposed_temporal_designation": {
+    "type": "historiographic_period",
+    "historical_semantics": "Historiographical Swedish great-power period, not an officially adopted imperial state-form, sovereign secession, imperial coronation, nor a formal change from Kingdom to Empire.",
+    "preferred_name_en": "Swedish Empire",
+    "preferred_name_ko": "스웨덴 제국",
+    "label_qualification_en": "Swedish Great Power Era / Stormaktstiden",
+    "label_qualification_ko": "스웨덴 강대국 시대",
+    "interval": {
+      "valid_from_year": 1611,
+      "valid_to_year": 1718,
+      "valid_from_granularity": "year",
+      "valid_to_granularity": "year",
+      "valid_from_certainty": "exact",
+      "valid_to_certainty": "exact",
+      "valid_from_calendar": "unspecified_historical",
+      "valid_to_calendar": "unspecified_historical",
+      "is_source_based_periodization_not_precision_claim": true
+    },
+    "candidate_designation_id": null,
+    "existing_designation_rows": null,
+    "validated_historic_type_constraint": null,
+    "source_catalog_ids": null,
+    "source_ids_must_be_allocated_only_after_authoritative_collision_preflight": true
+  },
+  "periodization_alternative": {
+    "years": "1611–1721",
+    "source": "https://utheses.univie.ac.at/detail/57229",
+    "interpretation": "Great Northern War and 1721 territorial/peace settlement; scholarly alternate span. Do not silently reconcile with 1611–1718 Lex period convention.",
+    "simultaneous_second_designation_authorized": false
+  },
+  "review_sources": [
+    {
+      "institution": "Lex (Danish National Encyclopedia)",
+      "author": "Jürgen Beyer",
+      "publication": "2025-02-20",
+      "url": "https://lex.dk/Stormagtstiden",
+      "claim": "Traditional Swedish historical period 1611–1718, from Gustav II Adolf accession to Charles XII death; contemporary official empire title is NOT claimed."
+    },
+    {
+      "institution": "Lund University / Scandia",
+      "author": "Harald Gustafsson",
+      "publication": "2026",
+      "url": "https://portal.research.lu.se/en/publications/stormakten-genom-tiderna-en-historiografisk-skiss/",
+      "claim": "The great-power-age conceptual terminology entered common Swedish historiography in the late 19th century, reinforcing historically retrospective period-name type rather than constitutional state-form."
+    },
+    {
+      "institution": "University of Vienna",
+      "author": "Tobias E. Hämmerle",
+      "publication": "2020",
+      "url": "https://utheses.univie.ac.at/detail/57229",
+      "claim": "Uses a 1611–1721 Swedish great-power era while describing the sovereign as the Swedish Kingdom."
+    }
+  ],
+  "exact_existing_activity_ids_expected_within_1611_1718": [
+    {
+      "person": "Gustav II Adolf",
+      "activity_id": "e889c50c-3a9b-4b30-90ab-0822ad5dffd6",
+      "year_start": 1611,
+      "year_end": 1632
+    },
+    {
+      "person": "Christina",
+      "activity_id": "daf85f20-db1f-50c2-aff1-86830290da8e",
+      "year_start": 1632,
+      "year_end": 1654
+    },
+    {
+      "person": "Charles XI",
+      "activity_id": "931c792b-5039-4637-b418-4d04264b7b54",
+      "year_start": 1660,
+      "year_end": 1697
+    },
+    {
+      "person": "Charles XII",
+      "activity_id": "b5a7fcfe-47ee-4332-9110-443c0d0a40be",
+      "year_start": 1697,
+      "year_end": 1718
+    }
+  ],
+  "guards": [
+    "Exact Sweden UUID remains unchanged and all 15 original Activity IDs/source links preserved",
+    "Sweden–Norway separate identity remains unchanged with 3 Activity records",
+    "No new Swedish Empire sovereign UUID or emperor-role assertion",
+    "Do not insert/replace designation before exact authenticated live same-SHA read of existing designation rows, source links and SQL type check",
+    "Do not introduce any day precision into 1611/1718 periodization or original year-only activities",
+    "If an existing designation overlaps/conflicts, fail closed; never create multiple containing interval choices",
+    "Only mark FIXED after canonical writer, Runtime Compile, and public Person+Polity labels accepted; control cases outside period must retain Sweden"
+  ],
+  "correction_plan": null,
+  "status_note": "Vercel production deploy API returned 402 api-deployments-free-per-day 2026-10-10; audited GitHub OIDC workflow #38038578263 depends on compatible Production deployment. P2-06B is an evidence-backed non-executable design until DB preflight."
+}
