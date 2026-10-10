@@ -970,7 +970,7 @@
   }
 
   function renderMinimap() {
-    return `<aside class="spacetime-minimap" aria-label="전체 시공간 미니맵"><div class="spacetime-minimap-head"><strong>전체 시공간</strong><span>클릭·드래그·방향키 이동</span></div><div id="spacetimeMinimapSurface" class="spacetime-minimap-surface" role="group" tabindex="0" aria-label="현재 전체 시공간과 카메라 범위. 방향키로 카메라 이동"><canvas id="spacetimeMinimapCanvas" class="spacetime-minimap-canvas" aria-hidden="true"></canvas><div id="spacetimeMinimapViewport" class="spacetime-minimap-viewport" aria-hidden="true"></div><i id="spacetimeMinimapSelected" class="spacetime-minimap-selected" aria-hidden="true"></i></div><output id="spacetimeMinimapStatus" class="spacetime-minimap-status">현재 화면</output></aside>`;
+    return `<aside class="spacetime-minimap" aria-label="전체 시공간 미니맵"><div class="spacetime-minimap-head"><strong>전체 시공간</strong><span>클릭·드래그·방향키 이동</span></div><div id="spacetimeMinimapSurface" class="spacetime-minimap-surface" role="group" tabindex="0" aria-label="현재 전체 시공간과 현재 표시 범위. 방향키로 카메라 이동"><canvas id="spacetimeMinimapCanvas" class="spacetime-minimap-canvas" aria-hidden="true"></canvas><div id="spacetimeMinimapViewport" class="spacetime-minimap-viewport" aria-hidden="true"></div><i id="spacetimeMinimapSelected" class="spacetime-minimap-selected" aria-hidden="true"></i></div><output id="spacetimeMinimapStatus" class="spacetime-minimap-status">현재 화면</output></aside>`;
   }
 
   function renderSpatialUncertainty(tracks, projection, contentWidth, activityOpacity) {
@@ -1687,19 +1687,19 @@
     </section>
     ${renderSearchResults(searchItems, needle)}
     <section class="spacetime-status-row">
-      <span class="spacetime-status-primary"><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person</span>
+      <span class="spacetime-status-primary"><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} 인물</span>
       <span class="spacetime-status-primary"><b>${compiled.unresolvedPosition.length}</b> 위치 미확정</span>
       <span class="spacetime-status-primary"><b>${escapeHtml(cameraZoomLabel())}</b> 줌</span>
       <details class="spacetime-status-more">
         <summary>상태 더보기</summary>
         <div class="spacetime-status-more-content">
-          <span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span>${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? '<span class="spacetime-integrity-status"><b>!</b> 근거 없는 위치는 자동 추정하지 않습니다.</span>' : ""}
+          <span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 상대 정치체 제외</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> 화면 내 인물 요소</span><span><b id="spacetimeDomSegmentCount">0</b> 화면 내 활동 구간 요소</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> 이름 표시 보류</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span>${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? '<span class="spacetime-integrity-status"><b>!</b> 근거 없는 위치는 자동 추정하지 않습니다.</span>' : ""}
         </div>
       </details>
     </section>
     ${renderMeanwhile(meanwhileSummary)}
     <div class="spacetime-workspace">
-    <section class="spacetime-frame card${responsive.mobile ? " is-mobile-presentation" : ""}" data-spacetime-visual="chronology-v6" data-spacetime-presentation="${responsive.mobile ? "mobile" : "desktop"}" data-spacetime-zoom="${Math.round(cameraZoom * 100)}" data-spacetime-overview="${cameraZoom <= CAMERA_DEFAULT_ZOOM ? "true" : "false"}" style="--spacetime-axis-width:${responsive.axisWidth}px;--spacetime-header-height:${responsive.headerHeight}px;--spacetime-era-axis-width:${responsive.eraAxisWidth}px;--spacetime-year-axis-width:${responsive.axisWidth - responsive.eraAxisWidth}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
+    <section class="spacetime-frame card${responsive.mobile ? " is-mobile-presentation" : ""}" data-spacetime-visual="chronology-v6" data-spacetime-presentation="${responsive.mobile ? "mobile" : "desktop"}" data-spacetime-zoom="${Math.round(cameraZoom * 100)}" data-spacetime-overview="${cameraZoom <= CAMERA_DEFAULT_ZOOM ? "true" : "false"}" style="--spacetime-axis-width:${responsive.axisWidth}px;--spacetime-header-height:${responsive.headerHeight}px;--spacetime-era-axis-width:${responsive.eraAxisWidth}px;--spacetime-year-axis-width:${responsive.axisWidth - responsive.eraAxisWidth}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 인물 활동 궤적 및 등록 인물 밀도 분포">
       <div class="spacetime-sticky-corner"><span>시대</span><span>연도<small>${escapeHtml(timeAxis.stage_label)}</small></span></div>
       <div class="spacetime-region-head" style="width:${contentWidth}px">
         <div class="spacetime-region-head-layer is-macro" style="opacity:${spaceHeader.macro_opacity}">${spaceHeader.macroregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
@@ -1728,7 +1728,7 @@
       ${renderStickyInspector(selectedTrack, navigationItems.length)}
     </aside>
     </div>
-    <section class="spacetime-unresolved-grid"><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">공간 배치 검토</p><h3>위치 미확정</h3></div><strong>${compiled.unresolvedPosition.length}</strong></div><p>검토된 정치체 권역·장소 기능으로 가로 위치를 확정할 수 없어 좌표를 만들지 않은 Activity입니다.</p>${unresolvedRows(compiled.unresolvedPosition)}</article><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">연대 검토</p><h3>연대 미확정</h3></div><strong>${compiled.unresolvedChronology.length}</strong></div><p>Activity 시작·종료 연도를 둘 다 확정할 수 없는 경우 세로축에 임의 기간을 만들지 않습니다.</p>${unresolvedRows(compiled.unresolvedChronology)}</article></section>`;
+    <section class="spacetime-unresolved-grid"><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">공간 배치 검토</p><h3>위치 미확정</h3></div><strong>${compiled.unresolvedPosition.length}</strong></div><p>검토된 정치체 권역·장소 기능으로 가로 위치를 확정할 수 없어 좌표를 만들지 않은 활동입니다.</p>${unresolvedRows(compiled.unresolvedPosition)}</article><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">연대 검토</p><h3>연대 미확정</h3></div><strong>${compiled.unresolvedChronology.length}</strong></div><p>활동 시작·종료 연도를 둘 다 확정할 수 없는 경우 세로축에 임의 기간을 만들지 않습니다.</p>${unresolvedRows(compiled.unresolvedChronology)}</article></section>`;
 
     bindCameraViewport(mount, projection, navigationItems);
     const scroll = mount.querySelector(".spacetime-scroll");
