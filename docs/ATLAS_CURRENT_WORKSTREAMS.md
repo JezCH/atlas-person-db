@@ -14,19 +14,19 @@
 
 ### A. Polity identity / continuity cleanup — #1895
 
-**Registry snapshot: 75 total / 57 terminal / 18 `REVIEW_REQUIRED`** (2026-10-10). This is the tracked seed ledger, **not** a guarantee that all live Polity identities have been audited.
+**Registry snapshot: 75 total / 58 terminal / 17 `REVIEW_REQUIRED`** (2026-10-10). This is the tracked seed ledger, **not** a guarantee that all live Polity identities have been audited.
 
 Pending distribution, calculated from the canonical registry:
 
 | Review group | Pending |
 | --- | ---: |
-| Historical-family continuity | 6 |
+| Historical-family continuity | 5 |
 | Temporal designation | 2 |
 | Korean naming collisions | 2 |
 | Territorial / operational rupture | 8 |
-| **Total** | **18** |
+| **Total** | **17** |
 
-**Current historical-family result:** `gnat-turkey` terminal **`KEEP_SEPARATE`** as historical **government/constitutional phase Polities, NOT two unrelated sovereign Turkish states**. Verified Production Ankara GNAT Government `55407a83-2e02-4ea1-898a-c55bc06da69e`, Atatürk Speaker Activity `02988a5b-06de-4451-8477-101ff095800b` **1920-04-24→1923-10-29** and Turkey `28448862-277d-4738-9fb4-7f51a9e4c03a`, same Atatürk President Activity `8b0b0654-b37e-46f7-a170-b92e99ab92a9` **1923-10-29→1938-11-10**, plus İnönü presidency `476c1d83-c5a8-427d-8b83-e6b289be588f` 1938–1950. 1921 Constitution original Articles 1–3 already vest sovereignty in Türkiye state and GNAT government; **1923-10-29 Law No. 364 amended that same constitution** to proclaim a Republic and institute presidency. TBMM's official list retains one Speaker term 1920–1923 notwithstanding a brief temporary chair at 1923 August second-assembly opening; no artificial reign split. These are successive legal offices under continuing national sovereignty, distinct from simultaneous Istanbul Ottoman claimant authority and from duplicate personal rule. Preserve all original day/granularity/certainty, the 3 linked Activities/Persons, their **6** Source links, roles and polity IDs; **no Production data write**. [Scoped primary-source audit](POLITY_P2_04H_GNAT_TURKEY_1920_1923_CONSTITUTIONAL_PHASE_AUDIT_20261010.md). Current registry **75 total / 57 terminal / 18 pending**, historical-family pending 6. **Next independent family seed:** `philippine-revolutionary-governments`. Full-Production discovery, Runtime/authority checks, and repair/approval blockers remain distinct project completion criteria.
+**Current historical-family result:** `philippine-revolutionary-governments` terminal **`KEEP_SEPARATE`** for the **five current Aguinaldo-led constitutional/revolutionary government stages**, not five unrelated sovereign nations. Production Person `27e3e10c-7c47-48ee-b823-f62f570f15c4` has reviewed day-exact 5 Activities: Tejeros `8cce76aa-c73d-4521-bda0-ba576fbb2403` 1897-03-22→11-01 (`78d068fd-9600-4200-85df-ad2173c668ff`), Biak-na-Bato `10563573-5f40-450e-a1ee-7694298e9d85` 1897-11-02→12-27 (`14400d6c-e544-4e0f-9341-43513a205d46`), Dictatorial `51c037b5-f299-4b88-b837-7256ca952b0a` 1898-05-24→06-23 (`e6b7bbe8-d528-4b37-be2b-4c38fec10d06`), Revolutionary `e154c1b2-ee23-4ba7-a94f-c99940c75ca9` 1898-06-23→1899-01-23 (`07c65354-4a2e-4cdf-808f-4ca00cc5bb18`), First Republic `346628f9-ded8-4b47-9244-9bcec2fb4f45` 1899-01-23→1901-03-23 (`ae7b6dc4-73aa-4145-8c49-bf8486fc9121`). Official **NHCP Aguinaldo biographical marker** corroborates dates and 1897-12 exile–1898-05 return/interruption. **November 1 Biak-na-Bato constitution vs November 2 documented presidency** should not be conflated; 1898-06-23 and 1899-01-23 shared dates represent succession boundaries, not dual independent sovereign control. Negros Cantonal Republic is a regional separate case, **not an Aguinaldo duplicate**. Preserve all 5 Activity IDs, 10 linked NHCP Source associations, original role/precision, 5 Polity UUIDs; no Production mutation. [Evidence audit](POLITY_P2_04I_PHILIPPINE_REVOLUTIONARY_GOVERNMENT_PHASES_1897_1901_20261010.md). Registry **75 / 58 terminal / 17 pending**, historical-family pending **5**. **Next independent seed:** `indonesia-ris-family`. Project-wide post-seed full-Production discovery/repair and approval/authority blockers remain required.
 
 **Previously terminal:** `gorkha-nepal` `KEEP_SEPARATE` ([Gorkha→Nepal report](POLITY_P2_04D_GORKHA_NEPAL_UNIFICATION_20261010.md)); Oman and Liberia remain approval/repair-gated.
 
