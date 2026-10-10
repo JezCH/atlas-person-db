@@ -50,6 +50,16 @@ function fakeClient(initial=[]){
   };
 }
 
+test("catalog migration helper applies the existing canonical migration",async()=>{
+  const commands=[];
+  const result=await service.applyYoutubeSourceArchiveMigration(
+    {query:async sql=>{commands.push(sql);return {rows:[]};}},
+    {readFile:()=>"-- durable source catalog migration"}
+  );
+  assert.deepEqual(result,{applied:"20261009_youtube_durable_source_catalog.sql"});
+  assert.deepEqual(commands,["-- durable source catalog migration"]);
+});
+
 test("catalog publication is transactional, exact and idempotent",async()=>{
   const a=row();
   const b=row({
@@ -102,6 +112,7 @@ test("OIDC handler binds workflow identity and exact Production runtime",async()
     },
     verifyOidc:async(_token,args)=>{policy=args.policy;},
     clientFactory:async()=>({end:async()=>{}}),
+    applyMigration:async()=>({applied:"20261009_youtube_durable_source_catalog.sql"}),
     publish:async()=>({committed:true,idempotent:false,verified_count:1,inserted_count:1,existing_count:0})
   });
   const res=response();
