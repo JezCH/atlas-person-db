@@ -66,13 +66,13 @@ test("UI V5 makes Person identity and chronology the detail hierarchy", () => {
 test("UI V5 uses numbered editorial sections and keeps Authoring subordinate", () => {
   const source = read("atlas-person-main.js");
   assert.match(source, /person-detail-section-index">01/);
-  assert.match(source, /<small>NAMES<\/small>/);
+  assert.match(source, /<small>이름 정보<\/small>/);
   assert.match(source, /person-detail-section-index">02/);
-  assert.match(source, /<small>DESCRIPTION<\/small>/);
+  assert.match(source, /<small>인물 설명<\/small>/);
   assert.match(source, /person-detail-section-index">03/);
-  assert.match(source, /<small>ACTIVITIES<\/small>/);
+  assert.match(source, /<small>활동 내역<\/small>/);
   assert.match(source, /person-detail-section-index">04/);
-  assert.match(source, /<small>SOURCES<\/small>/);
+  assert.match(source, /<small>출처 정보<\/small>/);
   assert.match(source, /<details class="person-detail-authoring">/);
   assert.match(source, /profileEditorHtml\(person, portraitResult\)/);
 });

@@ -39,7 +39,7 @@
     }
     if (outcome?.transaction_failure) messages.push(String(outcome.transaction_failure));
     if (messages.some((message) => message.includes("PERSON_DELETE_TARGET_NOT_FOUND"))) {
-      return "선택한 Person이 DB에 존재하지 않습니다. 목록을 새로고침한 뒤 다시 확인하세요.";
+      return "선택한 인물이 데이터베이스에 존재하지 않습니다. 목록을 새로고침한 뒤 다시 확인하세요.";
     }
     return messages.filter(Boolean).join("; ") || "인물 완전 삭제가 완료되지 않았습니다.";
   }
@@ -48,7 +48,7 @@
     return `<section class="person-hard-delete-zone" data-person-id="${escapeAttribute(person.id)}" data-person-name="${escapeAttribute(person.name)}">
       <div class="person-hard-delete-copy">
         <strong>인물 데이터 완전 삭제</strong>
-        <p>이 Person과 현재 연결된 Activity·출처 연결·설명·소속·이벤트 참여를 실제 데이터베이스에서 삭제합니다. 화면에서만 숨기는 기능이 아닙니다.</p>
+        <p>이 인물과 현재 연결된 활동·출처 연결·설명·소속·사건 참여를 실제 데이터베이스에서 삭제합니다. 화면에서만 숨기는 기능이 아닙니다.</p>
       </div>
       <button class="btn person-hard-delete-button" type="button">인물 완전 삭제</button>
     </section>`;
@@ -87,13 +87,13 @@
     const personId = String(zone?.dataset.personId || "").trim();
     const personName = String(zone?.dataset.personName || "").trim();
     if (!personId) {
-      window.alert("삭제할 Person UUID를 확인할 수 없습니다.");
+      window.alert("삭제할 인물의 UUID를 확인할 수 없습니다.");
       return;
     }
 
     const confirmed = window.confirm(
       `「${personName || "선택한 인물"}」을 데이터베이스에서 완전히 삭제할까요?\n\n` +
-      "연결된 Activity와 Person 종속 데이터도 함께 삭제되며 되돌릴 수 없습니다."
+      "연결된 활동과 인물 종속 데이터도 함께 삭제되며 되돌릴 수 없습니다."
     );
     if (!confirmed) return;
 
@@ -114,7 +114,7 @@
 
       const counts = outcome.v2.deleted_counts || {};
       const activities = Number(counts.activities || 0);
-      window.alert(`「${personName || "선택한 인물"}」을 완전히 삭제했습니다.\nActivity ${activities}건과 연결된 현재 Person 데이터가 함께 삭제되었고, DB 재검증도 통과했습니다.`);
+      window.alert(`「${personName || "선택한 인물"}」을 완전히 삭제했습니다.\n활동 ${activities}건과 연결된 현재 인물 데이터가 함께 삭제되었고, DB 재검증도 통과했습니다.`);
       window.location.reload();
     } catch (error) {
       console.error("ATLAS Person hard-delete failed", error);

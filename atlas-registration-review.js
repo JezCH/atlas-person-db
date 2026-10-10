@@ -76,9 +76,9 @@
     const stats=registeredStats(payload);
     const pending=queuePayload?.summary?.pending_count;
     host.innerHTML=[
-      statCard(number(stats.total),"기등록 Person"),
-      statCard(number(stats.historical),"historical"),
-      statCard(number(stats.activities),"Authoring Activity"),
+      statCard(number(stats.total),"기등록 인물"),
+      statCard(number(stats.historical),"역사적 실존"),
+      statCard(number(stats.activities),"원본 등록 활동"),
       statCard(number(stats.nonTimeline),"비연대표 인물"),
       statCard(number(pending),"등록대기열","현재 미등록 후보")
     ].join("");
@@ -311,15 +311,15 @@
     return `<section class="registration-review">
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-overview-head">
-          <div><small>REGISTRATION</small><h3>등록 현황</h3></div>
+          <div><small>등록 현황</small><h3>등록 현황</h3></div>
           <div class="registration-review-head-actions"><span id="registrationReviewStatus" data-state="loading">불러오는 중</span><button id="registrationReviewRefresh" class="btn" type="button">새로고침</button></div>
         </div>
-        <div id="registrationRegisteredStats" class="registration-review-stats">${statCard("—","기등록 Person")}${statCard("—","historical")}${statCard("—","Authoring Activity")}${statCard("—","비연대표 인물")}${statCard("—","등록대기열","현재 미등록 후보")}</div>
+        <div id="registrationRegisteredStats" class="registration-review-stats">${statCard("—","기등록 인물")}${statCard("—","역사적 실존")}${statCard("—","원본 등록 활동")}${statCard("—","비연대표 인물")}${statCard("—","등록대기열","현재 미등록 후보")}</div>
       </section>
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>YOUTUBE DISCOVERY SIGNAL</small><h3>미등록 역사 인물 발굴</h3><p>수집된 모든 배치는 하나의 Channel ID 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 DB 집계를 확인합니다. 기등록 인물의 현재 이름·별칭을 대조하여 자동 제외합니다. 동명이인은 검토 대상으로 보류하며 신규 등록 확정이 아닙니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
+          <div><small>유튜브 발굴 단서</small><h3>미등록 역사 인물 발굴</h3><p>수집된 모든 배치는 하나의 채널 식별자 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 데이터베이스 집계를 확인합니다. 기등록 인물의 현재 이름·별칭을 대조하여 자동 제외합니다. 동명이인은 검토 대상으로 보류하며 신규 등록 확정이 아닙니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
         </div>
         <div class="registration-review-signal-toolbar">
           <p class="registration-review-mode-info">기등록 인물은 자동 제외됩니다. 동명이인과 미확인 후보는 검토가 필요합니다. 제목에 이름이 언급된 사실만으로 해당 인물 중심 영상이 검증된 것은 아닙니다.</p>
@@ -347,7 +347,7 @@
       </section>
 
       <section class="registration-review-section">
-        <div class="registration-review-section-head registration-review-queue-head"><div><small>REGISTRATION QUEUE</small><h3>등록대기열</h3></div><label>검색<input id="registrationQueueSearch" type="search" placeholder="이름 · 분야 · 상태" /></label></div>
+        <div class="registration-review-section-head registration-review-queue-head"><div><small>등록 대기열</small><h3>등록대기열</h3></div><label>검색<input id="registrationQueueSearch" type="search" placeholder="이름 · 분야 · 상태" /></label></div>
         <div class="registration-review-table-wrap registration-review-queue-wrap">
           <table class="registration-review-table registration-review-queue-table">
             <thead><tr><th>이름</th><th>대표 분야</th><th>legacy 우선순위</th><th>검토 상태</th><th>출처</th><th>갱신</th></tr></thead>

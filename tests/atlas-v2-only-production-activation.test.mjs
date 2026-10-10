@@ -34,7 +34,7 @@ test("admin exact lookup uses direct normalized projection, shared semantic iden
   assert.match(adminService, /normalized semantic activity lookup is ambiguous/);
   assert.match(adminService, /result\?\.v2\?\.committed === true/);
   assert.match(adminHtml, /\.\/atlas-activity-semantics\.js/);
-  assert.match(adminHtml, /normalized v2 identity/);
+  assert.match(adminHtml, /정규화된 식별정보/);
   assert.doesNotMatch(adminHtml, /legacy \+ normalized v2/);
 });
 

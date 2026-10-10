@@ -19,7 +19,7 @@
     resolved_review: Object.freeze({ label: "종결 이력", tone: "confirmed" })
   });
   const STATUS_LABEL = Object.freeze({
-    REVIEW_REQUIRED: "최신 Production 재판정 필요",
+    REVIEW_REQUIRED: "최신 운영 환경 재판정 필요",
     FIXED: "종결 · FIXED",
     KEEP_SEPARATE: "종결 · KEEP_SEPARATE",
     SUPERSEDED: "종결 · SUPERSEDED",
@@ -119,7 +119,7 @@
   }
 
   function observedSpan(polity) {
-    if (!polity || polity.activity_count === 0) return "연결 Activity 없음";
+    if (!polity || polity.activity_count === 0) return "연결 활동 없음";
     const start = Number.isInteger(polity.first_activity_year) ? formatYear(polity.first_activity_year) : "시작 미상";
     const end = polity.has_ongoing_activity
       ? "현재"
@@ -224,9 +224,9 @@
   }
 
   function linkedPeopleHtml(polity, counterpart) {
-    if (!polity) return '<p class="polity-review-live-missing">현재 live 정치체를 정확히 해석하지 못했습니다.</p>';
+    if (!polity) return '<p class="polity-review-live-missing">현재 운영 정치체를 정확히 해석하지 못했습니다.</p>';
     const groups = groupActivitiesByPerson(polity);
-    if (!groups.length) return '<p class="polity-review-live-missing">현재 연결된 인물 Activity가 없습니다.</p>';
+    if (!groups.length) return '<p class="polity-review-live-missing">현재 연결된 인물 활동가 없습니다.</p>';
     const counterpartIds = new Set(groupActivitiesByPerson(counterpart).map((group) => group.person_id));
     return `<div class="polity-review-person-links">
       <strong>연결 인물 ${groups.length}명</strong>
@@ -251,12 +251,12 @@
     const polityId = polity?.id || entity?.polity_id || null;
     const stats = polity
       ? `<div class="polity-review-entity-stats">
-          <span><b>${polity.activity_count}</b> Activity</span>
-          <span><b>${polity.person_count}</b> Person</span>
+          <span><b>${polity.activity_count}</b> 활동</span>
+          <span><b>${polity.person_count}</b> 인물</span>
           <span><b>${escapeHtml(observedSpan(polity))}</b> 관측 범위</span>
           ${polity.unresolved_activity_count ? `<span><b>${polity.unresolved_activity_count}</b> 연대 미해결</span>` : ""}
         </div>`
-      : '<div class="polity-review-entity-stats is-missing"><span>live 통계 미해결</span></div>';
+      : '<div class="polity-review-entity-stats is-missing"><span>운영 통계 미해결</span></div>';
 
     return `<div class="polity-review-entity">
       <small>${escapeHtml(label)}</small>
@@ -325,7 +325,7 @@
       </div>
       <p class="polity-review-rationale">${escapeHtml(row.rationale)}</p>
       ${row.presentation_note ? `<div class="polity-review-presentation-note"><strong>시대별 표현 보존</strong><p>${escapeHtml(row.presentation_note)}</p></div>` : ""}
-      <div class="polity-review-evidence"><strong>감사 seed / 근거</strong><ul>${evidence}</ul></div>
+      <div class="polity-review-evidence"><strong>감사 원장 / 근거</strong><ul>${evidence}</ul></div>
       <div class="polity-review-suggestion"><span>${reviewed ? "검토 판정" : "검토 제안"}</span><strong>${escapeHtml(decisionLabel(reviewed || row.suggested_action))}</strong></div>
       <div class="polity-review-controls">
         <label>${locked ? "반영 상태" : "내 결정"}
@@ -345,9 +345,9 @@
       <div><small>전체 정치체</small><strong>${value("total_polities")}</strong></div>
       <div><small>인물 연결 정치체</small><strong>${value("linked_polities")}</strong></div>
       <div><small>연결 없음</small><strong>${value("orphan_polities")}</strong></div>
-      <div><small>Person↔Polity Activity</small><strong>${value("activity_count")}</strong></div>
+      <div><small>인물–정치체 활동 연결</small><strong>${value("activity_count")}</strong></div>
       <div><small>고유 연결 인물</small><strong>${value("unique_linked_persons")}</strong></div>
-      <div><small>Person↔Polity 연결</small><strong>${value("person_polity_links")}</strong></div>
+      <div><small>인물–정치체 연결</small><strong>${value("person_polity_links")}</strong></div>
     </div>`;
   }
 
@@ -392,9 +392,9 @@
     root.innerHTML = `<section class="polity-review-shell">
       <div class="polity-review-summary card">
         <div>
-          <p class="eyebrow">POLITY IDENTITY REVIEW</p>
-          <h2>충돌·Identity 검토</h2>
-          <p>현재 검토 원장의 미종결 사건을 최신 Production에 대조하여 판정합니다. 옛 목록을 작업 지시로 실행하지 않고, FIXED / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD_UNRESOLVED 중 하나로 종결합니다.</p>
+          <p class="eyebrow">정치체 식별정보 검토</p>
+          <h2>충돌·식별정보 검토</h2>
+          <p>현재 검토 원장의 미종결 사건을 최신 운영 환경에 대조하여 판정합니다. 옛 목록을 작업 지시로 실행하지 않고, FIXED / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD_UNRESOLVED 중 하나로 종결합니다.</p>
         </div>
         <div class="polity-review-summary-actions">
           <button type="button" class="btn" data-export-decisions>결정 JSON 내보내기</button>
@@ -403,21 +403,21 @@
       </div>
       <section class="polity-review-dataset card" aria-live="polite">
         <div class="polity-review-dataset-head">
-          <div><small>LIVE POLITY DATASET</small><strong>정치체 기본 통계</strong></div>
+          <div><small>현재 정치체 자료</small><strong>정치체 기본 통계</strong></div>
           <span data-live-status>불러오는 중</span>
         </div>
         <div data-dataset-kpis>${datasetKpis(live)}</div>
       </section>
       <div class="polity-review-model-note card">
-        <strong>Identity 통합 ≠ 시대별 표현 통합</strong>
-        <p>같은 장기 정치체 identity로 정리하더라도 국호·국가형태·공간·상징이 시대에 따라 달랐다면 그 차이는 temporal metadata로 보존해야 합니다. 검토 카드는 현재 연결 인물과 관측 연대를 보여주어 이 경계를 판단할 수 있게 합니다.</p>
+        <strong>식별정보 통합 ≠ 시대별 표현 통합</strong>
+        <p>같은 장기 정치체 식별정보로 정리하더라도 국호·국가형태·공간·상징이 시대에 따라 달랐다면 그 차이는 시대별 속성정보로 보존해야 합니다. 검토 카드는 현재 연결 인물과 관측 연대를 보여주어 이 경계를 판단할 수 있게 합니다.</p>
       </div>
       <div class="polity-review-kpis">
         <button class="card polity-review-filter is-active" type="button" data-kind-filter="current"><small>미종결 전체</small><strong>${currentCases().length}</strong></button>
-        <button class="card polity-review-filter" type="button" data-kind-filter="historical_family_review"><small>역사 family</small><strong>${currentAuditCases().filter((row) => row.review_group === "historical_family_review").length}</strong></button>
-        <button class="card polity-review-filter" type="button" data-kind-filter="designation_residual"><small>Designation</small><strong>${currentAuditCases().filter((row) => row.review_group === "designation_residual").length}</strong></button>
+        <button class="card polity-review-filter" type="button" data-kind-filter="historical_family_review"><small>역사적 계열</small><strong>${currentAuditCases().filter((row) => row.review_group === "historical_family_review").length}</strong></button>
+        <button class="card polity-review-filter" type="button" data-kind-filter="designation_residual"><small>시대별 명칭</small><strong>${currentAuditCases().filter((row) => row.review_group === "designation_residual").length}</strong></button>
         <button class="card polity-review-filter" type="button" data-kind-filter="naming_residual"><small>명칭 충돌</small><strong>${currentAuditCases().filter((row) => row.review_group === "naming_residual").length}</strong></button>
-        <button class="card polity-review-filter" type="button" data-kind-filter="rupture_probe"><small>Rupture probe</small><strong>${currentAuditCases().filter((row) => row.review_group === "rupture_probe").length}</strong></button>
+        <button class="card polity-review-filter" type="button" data-kind-filter="rupture_probe"><small>역사적 단절 검토</small><strong>${currentAuditCases().filter((row) => row.review_group === "rupture_probe").length}</strong></button>
         <button class="card polity-review-filter is-history" type="button" data-kind-filter="history"><small>종결·이력</small><strong>${historyCases().length}</strong></button>
       </div>
       <div class="polity-review-toolbar card">
@@ -451,8 +451,8 @@
       if (kpis) kpis.innerHTML = datasetKpis(live);
       if (liveStatus) {
         liveStatus.textContent = live.status === "ready"
-          ? "Production Authoring 기준"
-          : live.status === "error" ? "live 데이터 읽기 실패" : "불러오는 중";
+          ? "운영 데이터 기준"
+          : live.status === "error" ? "운영 데이터 읽기 실패" : "불러오는 중";
         liveStatus.classList.toggle("is-error", live.status === "error");
       }
     }

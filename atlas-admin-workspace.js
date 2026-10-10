@@ -5,23 +5,23 @@
   const VIEW_META = Object.freeze({
     overview: {
       label: "개요",
-      eyebrow: "READ ONLY",
-      description: "런타임·DB·semantic readiness와 데이터 규모를 한곳에서 확인합니다."
+      eyebrow: "읽기 전용",
+      description: "런타임·DB·의미 체계 준비 상태와 데이터 규모를 한곳에서 확인합니다."
     },
     review: {
       label: "중복 검토",
-      eyebrow: "REVIEW + WRITE",
-      description: "중복 후보의 근거를 검토하고 판정을 기록합니다. physical merge는 별도 안전 게이트를 따릅니다."
+      eyebrow: "검토·판정",
+      description: "중복 후보의 근거를 검토하고 판정을 기록합니다. 실제 데이터 통합은 별도 안전 게이트를 따릅니다."
     },
     authoring: {
       label: "신규 등록",
-      eyebrow: "AUTHORING",
-      description: "Person·Polity·Role identity와 Activity 관계를 authoritative write path로 등록합니다."
+      eyebrow: "원본 등록",
+      description: "인물·정치체·역할의 식별정보와 활동 관계를 승인된 등록 절차로 등록합니다."
     },
     inspector: {
-      label: "Object Inspector",
-      eyebrow: "READ ONLY",
-      description: "UUID 기준으로 Person·Activity·Polity·Role·Period Basis·Relation Type·Source 원본을 검사합니다."
+      label: "객체 조회",
+      eyebrow: "읽기 전용",
+      description: "UUID를 기준으로 인물·활동·정치체·역할·기간 기준·관계 유형·출처 원본을 검사합니다."
     }
   });
 
@@ -69,11 +69,11 @@
   workspace.innerHTML = `
     <div class="admin-workspace-nav-head">
       <div>
-        <p class="status-label">ADMIN WORKSPACE</p>
+        <p class="status-label">관리자 작업 공간</p>
         <h2 id="admin-workspace-title">관리 작업공간</h2>
         <p>모든 기존 관리 기능은 유지한 채 작업 목적별로 정리했습니다. 탭은 정보를 삭제하지 않으며 URL hash로 직접 접근할 수 있습니다.</p>
       </div>
-      <span class="admin-workspace-scope">SESSION PROTECTED</span>
+      <span class="admin-workspace-scope">인증된 사용자 전용</span>
     </div>
     <div class="admin-workspace-tabs" role="tablist" aria-label="관리자 작업공간"></div>
     <p id="adminWorkspaceDescription" class="admin-workspace-description" aria-live="polite"></p>

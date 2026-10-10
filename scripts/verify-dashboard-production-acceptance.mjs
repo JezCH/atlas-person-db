@@ -255,9 +255,9 @@ async function collectDesktopDom(client) {
     });
     const heatmapCells=qa(".dashboard-heatmap tbody td:not(.dashboard-heatmap-total-cell) strong").map((el)=>Number((el.textContent||"").replace(/,/g,"").trim())).filter(Number.isFinite);
     const panels=qa("#atlasDashboardMount .dashboard-panel");
-    const timelinePanel=panels.find((p)=>p.querySelector(".eyebrow")?.textContent?.includes("RECENT DELTA"));
+    const timelinePanel=panels.find((p)=>p.querySelector(".eyebrow")?.textContent?.includes("최근 변경 이력"));
     const timelineMeta=timelinePanel ? [...timelinePanel.querySelectorAll(".dashboard-progress-meta span")].map((x)=>(x.textContent||"").trim()) : [];
-    const runtimeDeltaPanel=panels.find((p)=>(p.querySelector(".eyebrow")?.textContent||"").trim()==="RUNTIME DELTA / DRIFT");
+    const runtimeDeltaPanel=panels.find((p)=>(p.querySelector(".eyebrow")?.textContent||"").trim()==="런타임 변화·불일치");
     const runtimeDeltaCards=runtimeDeltaPanel ? [...runtimeDeltaPanel.querySelectorAll(".dashboard-drift-card")].map((card)=>({
       label:(card.querySelector("small")?.textContent||"").trim(),
       value:(card.querySelector("strong")?.textContent||"").trim(),
@@ -747,8 +747,8 @@ async function main() {
     await dashboardReady(client);
 
     const requiredEyebrows=[
-      "SYSTEM / PRODUCTION","RUNTIME DELTA / DRIFT","SOURCE FRESHNESS","NEEDS ATTENTION","WORK FRONTIER","DATA QUALITY",
-      "COMPLETENESS MATRIX","ERA × REGION COVERAGE","RECENT DELTA · RECENT ACTIVITY TIMELINE","PERSON DOMAINS","WORKSPACE"
+      "시스템·운영 환경","런타임 변화·불일치","원본 갱신 시각","검토 필요","작업 진행 현황","데이터 품질",
+      "데이터 완성도","시대·권역별 분포","최근 변경 이력","인물 대표 분야","작업 화면"
     ];
     const desktopDom=await collectDesktopDom(client);
     assert(desktopDom.dashboard_visible, "Dashboard did not render on Desktop", desktopDom);

@@ -4,7 +4,7 @@
   const READER = window.ATLAS_POLITY_BROWSER_READER;
   const DOSSIER = window.ATLAS_POLITY_DOSSIER_VIEW;
   if (!READER?.listPolities || !DOSSIER?.createRenderer) {
-    console.warn("ATLAS canonical Polity reader or dossier view is unavailable.");
+    console.warn("ATLAS 기준 정치체 조회er or dossier view is unavailable.");
     return;
   }
 
@@ -34,7 +34,7 @@
   }
 
   function observedSpan(polity) {
-    if (!polity || polity.activity_count === 0) return "연결 Activity 없음";
+    if (!polity || polity.activity_count === 0) return "연결 활동 없음";
     const start = Number.isInteger(polity.first_activity_year) ? formatYear(polity.first_activity_year) : "시작 미상";
     const end = polity.has_ongoing_activity
       ? "현재"
@@ -115,8 +115,8 @@
           (en && normalizeText(en) !== normalizeText(ko) ? '<span>' + escapeHtml(en) + '</span>' : "") +
           '<code>' + escapeHtml(polity.id) + '</code></div>' +
         '<div class="polity-browser-card-stats">' +
-          '<span><b>' + activityCount + '</b> Activity</span>' +
-          '<span><b>' + personCount + '</b> Person</span>' +
+          '<span><b>' + activityCount + '</b> 활동</span>' +
+          '<span><b>' + personCount + '</b> 인물</span>' +
           '<span><b>' + escapeHtml(observedSpan(polity)) + '</b></span>' +
           (polity.has_ongoing_activity ? '<span>현재 활동 포함</span>' : "") +
           (unresolved ? '<span><b>' + unresolved + '</b> 연대 미해결</span>' : "") +
@@ -132,7 +132,7 @@
       '<div><small>현재 정치체</small><strong>' + value("total_polities") + '</strong></div>' +
       '<div><small>인물 연결</small><strong>' + value("linked_polities") + '</strong></div>' +
       '<div><small>연결 없음</small><strong>' + value("orphan_polities") + '</strong></div>' +
-      '<div><small>Person↔Polity Activity</small><strong>' + value("activity_count") + '</strong></div>' +
+      '<div><small>인물–정치체 활동 연결</small><strong>' + value("activity_count") + '</strong></div>' +
       '<div><small>고유 연결 인물</small><strong>' + value("unique_linked_persons") + '</strong></div>' +
       '<div><small>현재 활동 정치체</small><strong>' + value("ongoing_polities") + '</strong></div>' +
     '</div>';
@@ -157,12 +157,12 @@
 
     root.innerHTML = '<section class="polity-browser-shell">' +
       '<header class="polity-browser-summary card">' +
-        '<div><p class="eyebrow">CANONICAL POLITY BROWSER</p><h2>정치체</h2>' +
-        '<p>이 화면의 정치체 목록·이름·UUID·연결 Activity는 별도 정적 목록이 아니라 현재 canonical Polity read에서 직접 가져옵니다. 이 목록은 canonical Polity read를 직접 사용합니다. 첫 화면은 12개만 표시하고 나머지는 ‘더 보기’로 펼칩니다. 아래에는 별도의 충돌·Identity 검토 작업대를 함께 표시합니다.</p></div>' +
+        '<div><p class="eyebrow">정치체 기준 목록</p><h2>정치체</h2>' +
+        '<p>이 화면의 정치체 목록·이름·UUID·연결 활동은 별도 정적 목록이 아니라 현재 기준 정치체 조회에서 직접 가져옵니다. 이 목록은 기준 정치체 조회를 직접 사용합니다. 첫 화면은 12개만 표시하고 나머지는 ‘더 보기’로 펼칩니다. 아래에는 별도의 충돌·식별정보 검토 작업대를 함께 표시합니다.</p></div>' +
         '<button type="button" class="btn" data-polity-refresh>현재 데이터 새로고침</button>' +
       '</header>' +
       '<section class="polity-browser-dataset card" aria-live="polite">' +
-        '<div class="polity-browser-dataset-head"><div><small>LIVE CANONICAL DATASET</small><strong data-polity-source>불러오는 중</strong></div><span data-polity-status>조회 중</span></div>' +
+        '<div class="polity-browser-dataset-head"><div><small>현재 정치체 원본</small><strong data-polity-source>불러오는 중</strong></div><span data-polity-status>조회 중</span></div>' +
         '<div data-polity-kpis>' + summaryHtml(null) + '</div>' +
       '</section>' +
       '<section class="polity-browser-controls card">' +
@@ -199,7 +199,7 @@
       if (live.status === "loading") {
         list.innerHTML = '<section class="card polity-browser-state"><strong>현재 정치체 데이터를 불러오는 중입니다.</strong></section>';
       } else if (live.status === "error") {
-        list.innerHTML = '<section class="card polity-browser-state is-error"><strong>정치체 데이터를 읽지 못했습니다.</strong><p>' + escapeHtml(live.error?.message || live.error || "unknown error") + '</p></section>';
+        list.innerHTML = '<section class="card polity-browser-state is-error"><strong>정치체 데이터를 읽지 못했습니다.</strong><p>' + escapeHtml(live.error?.message || live.error || "알 수 없는 오류") + '</p></section>';
       } else if (!matched.length) {
         list.innerHTML = '<section class="card polity-browser-state"><strong>조건에 맞는 현재 정치체가 없습니다.</strong></section>';
       } else {
@@ -212,7 +212,7 @@
         status.textContent = live.status === "ready" ? "현재 DB 기준" : live.status === "error" ? "조회 실패" : "조회 중";
         status.classList.toggle("is-error", live.status === "error");
       }
-      if (source) source.textContent = live.status === "ready" ? (live.source || "canonical Polity read") : "불러오는 중";
+      if (source) source.textContent = live.status === "ready" ? (live.source || "기준 정치체 조회") : "불러오는 중";
       if (more) {
         more.hidden = live.status !== "ready" || shown.length >= matched.length;
         more.textContent = more.hidden ? "더 보기" : "더 보기 (" + (matched.length - shown.length).toLocaleString("ko-KR") + "개 남음)";

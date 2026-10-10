@@ -18,7 +18,7 @@ test('workspace preserves the four explicit Admin information domains', () => {
   assert.match(workspace, /label: "개요"/);
   assert.match(workspace, /label: "중복 검토"/);
   assert.match(workspace, /label: "신규 등록"/);
-  assert.match(workspace, /label: "Object Inspector"/);
+  assert.match(workspace, /label: "객체 조회"/);
   assert.match(workspace, /정보를 삭제하지 않으며 URL hash로 직접 접근/);
 });
 

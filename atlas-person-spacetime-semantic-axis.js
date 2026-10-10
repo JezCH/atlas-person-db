@@ -152,7 +152,7 @@
     const placeOpacity = smoothstep(PLACE_DETAIL_START_ZOOM, PLACE_DETAIL_FULL_ZOOM, zoom);
     return Object.freeze({
       stage: zoom > PLACE_DETAIL_START_ZOOM ? "place" : "subregion",
-      stage_label: zoom > PLACE_DETAIL_START_ZOOM ? "검토 Place" : "세부 지역",
+      stage_label: zoom > PLACE_DETAIL_START_ZOOM ? "검토된 장소" : "세부 지역",
       macro_opacity: 0.38,
       subregion_opacity: 1 - 0.18 * placeOpacity,
       place_opacity: placeOpacity,

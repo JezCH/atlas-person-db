@@ -18,6 +18,13 @@
     claims_rule: "통치권 주장"
   });
 
+  const periodBasisLabels = Object.freeze({
+    reign:"재위", term:"임기", de_facto_rule:"실권 장악",
+    military_activity:"군사 활동", religious_activity:"종교 활동",
+    intellectual_activity:"학술 활동", artistic_activity:"예술 활동",
+    general_activity:"주요 활동"
+  });
+
   function value(id) {
     return String(document.getElementById(id)?.value || "").normalize("NFC").trim().replace(/\s+/g, " ");
   }
@@ -46,14 +53,14 @@
       let body = null;
       try { body = await response.json(); } catch { body = null; }
       if (!response.ok || body?.ok !== true || body?.outcome?.committed !== true) {
-        throw new Error(body?.error || `identity mutation failed (${response.status})`);
+        throw new Error(body?.error || `식별정보 저장 실패 (${response.status})`);
       }
       const outcome = body.outcome;
       const key = outcome.canonical_key || outcome.code || "";
       setResult([
         `${outcome.entity} 저장 완료${outcome.replay ? " (동일 요청 재사용)" : ""}`,
         `UUID: ${outcome.id}`,
-        key ? `Key: ${key}` : ""
+        key ? `식별 키: ${key}` : ""
       ].filter(Boolean).join("\n"), "success");
     } catch (error) {
       setResult(error.message || String(error), "error");
@@ -76,11 +83,11 @@
 
   sealRegistrationGatedIdentityForm(
     "createPersonForm",
-    "Person 직접 생성은 폐지되었습니다. 위의 ‘일반 신규 인물 등록’에서 Source · NamuWiki · timeline · 대표 분야를 포함한 canonical registration으로 등록하세요."
+    "인물 직접 생성 방식은 폐지되었습니다. 위의 ‘일반 신규 인물 등록’에서 출처·나무위키 검토·연대표 등록 여부·대표 분야를 함께 등록하세요."
   );
   sealRegistrationGatedIdentityForm(
     "createPolityForm",
-    "Polity 직접 생성은 폐지되었습니다. Polity는 canonical registration context 안에서만 생성할 수 있습니다."
+    "정치체 직접 생성 방식은 폐지되었습니다. 정치체는 검증된 등록 절차 안에서만 생성할 수 있습니다."
   );
 
   document.getElementById("createRoleForm")?.addEventListener("submit", (event) => {
@@ -94,11 +101,11 @@
   });
 
   function calendarOptions() {
-    return `<option value="unspecified_historical">unspecified_historical</option><option value="gregorian">gregorian</option><option value="julian">julian</option><option value="source_calendar">source_calendar</option>`;
+    return `<option value="unspecified_historical">역법 미특정</option><option value="gregorian">그레고리력</option><option value="julian">율리우스력</option><option value="source_calendar">출처 기록의 역법</option>`;
   }
 
   function certaintyOptions() {
-    return `<option value="exact">exact</option><option value="approximate">approximate</option><option value="uncertain">uncertain</option>`;
+    return `<option value="exact">정확</option><option value="approximate">근사</option><option value="uncertain">불확실</option>`;
   }
 
   function insertHumanAuthoringPanel() {
@@ -109,37 +116,37 @@
     panel.className = "panel";
     panel.setAttribute("aria-labelledby", "human-authoring-title");
     panel.innerHTML = `
-      <div class="panel-head"><div><p class="status-label">NORMAL AUTHORING · STAGE 2 NATIVE</p><h2 id="human-authoring-title">일반 신규 인물 등록</h2><p>UUID나 JSON을 입력하지 않습니다. 기존 Person·Polity·Role·Source는 정확한 live identity가 있으면 재사용하고, 없으면 같은 트랜잭션 안에서 생성합니다. 신규 Person 또는 나무위키 미검토 Person만 나무위키 판정이 필요하며, 이미 검토된 기존 Person은 비워두면 서버가 기존 값을 재사용합니다.</p></div></div>
+      <div class="panel-head"><div><p class="status-label">일반 등록 · 2단계 원본</p><h2 id="human-authoring-title">일반 신규 인물 등록</h2><p>UUID나 JSON을 입력하지 않습니다. 기존 인물·정치체·역할·출처는 정확히 일치하는 현재 식별정보가 있으면 재사용하고, 없으면 같은 트랜잭션 안에서 생성합니다. 신규 인물 또는 나무위키 미검토 인물만 나무위키 판정이 필요하며, 이미 검토된 기존 인물은 비워두면 서버가 기존 값을 재사용합니다.</p></div></div>
       <form id="humanAuthoringForm" class="identity-form">
-        <div class="identity-two"><label>인물 영문명<input id="humanPersonEn" required /></label><label>인물 한국어명 <small>신규 Person 생성 시 필수</small><input id="humanPersonKo" /></label></div>
+        <div class="identity-two"><label>인물 영문명<input id="humanPersonEn" required /></label><label>인물 한국어명 <small>신규 인물 생성 시 필수</small><input id="humanPersonKo" /></label></div>
         <h3>생존 상태 검토</h3>
-        <div class="identity-two"><label>생존 상태<select id="humanLifeStatus"><option value="">기존 Person 재사용 시 생략 가능</option><option value="deceased">사망 확인됨 · deceased</option></select></label><label>검토일<input id="humanLifeStatusCheckedAt" type="date" /></label></div>
+        <div class="identity-two"><label>생존 상태<select id="humanLifeStatus"><option value="">기존 인물 재사용 시 생략 가능</option><option value="deceased">사망 확인됨</option></select></label><label>검토일<input id="humanLifeStatusCheckedAt" type="date" /></label></div>
         <label>판정 근거<select id="humanLifeStatusBasis"><option value="">선택</option><option value="documented_death">문헌·공식 기록으로 사망 확인</option><option value="historical_certainty">역사적 연대상 사망이 확실</option></select></label>
-        <p class="identity-help">새 Person은 반드시 deceased 판정이 있어야 합니다. 현재 생존자는 직책·분야와 무관하게 제외하며, 활동 종료연도·ongoing 여부·대표 활동연도는 생존 판정에 사용하지 않습니다.</p>
-        <label>대표 분야 검토<select id="humanRepresentativeDomain"><option value="">기존 Person 재사용 시 생략 · 신규 Person은 반드시 검토</option></select></label>
-        <p class="identity-help">대표 분야는 Activity Role에서 자동 추론하지 않습니다. 신규 Person은 8개 canonical 분야 중 하나 또는 “검토했으나 미확정”을 명시해야 하며, 기존 Person 재사용 시 비워두면 기존 값을 변경하지 않습니다.</p>
-        <div class="identity-two"><label>정치체 영문명<input id="humanPolityEn" required /></label><label>정치체 한국어명 <small>신규 Polity 생성 시 필수</small><input id="humanPolityKo" /></label></div>
-        <h3>신규 Polity 공간 검토</h3>
-        <div class="identity-two"><label>Spatial disposition<select id="humanSpatialDispositionState"><option value="">기존 Polity 재사용 · 공간 검토 생략</option></select></label><label>검토 근거<input id="humanSpatialDispositionEvidence" disabled /></label></div>
-        <p class="identity-help">새 Polity 생성이 필요한 경우에만 canonical spatial registration 상태와 근거를 선택합니다. reviewed_hold는 정상적인 검토 완료 상태이며, 여기서 Territory·Geometry·경계·좌표를 만들지 않습니다.</p>
-        <div class="identity-two"><label>관계<select id="humanRelation" required><option value="">불러오는 중...</option></select></label><label>Period basis<select id="humanPeriodBasis" required><option value="">불러오는 중...</option></select></label></div>
-        <div class="identity-two"><label>Role 영문명 <small>역할이 없으면 비움</small><input id="humanRoleEn" placeholder="예: Sultan" /></label><label>Role 한국어명 <small>신규 Role 생성 시 필수</small><input id="humanRoleKo" placeholder="예: 술탄" /></label></div>
+        <p class="identity-help">새 인물은 반드시 사망 확인 판정이 있어야 합니다. 현재 생존자는 직책·분야와 무관하게 제외하며, 활동 종료연도·진행 중 여부·대표 활동연도는 생존 판정에 사용하지 않습니다.</p>
+        <label>대표 분야 검토<select id="humanRepresentativeDomain"><option value="">기존 인물 재사용 시 생략 · 신규 인물은 반드시 검토</option></select></label>
+        <p class="identity-help">대표 분야는 Activity Role에서 자동 추론하지 않습니다. 신규 인물은 8개 기준 분야 중 하나 또는 “검토했으나 미확정”을 명시해야 하며, 기존 인물 재사용 시 비워두면 기존 값을 변경하지 않습니다.</p>
+        <div class="identity-two"><label>정치체 영문명<input id="humanPolityEn" required /></label><label>정치체 한국어명 <small>신규 정치체 생성 시 필수</small><input id="humanPolityKo" /></label></div>
+        <h3>신규 정치체 공간 검토</h3>
+        <div class="identity-two"><label>공간 배치 판정<select id="humanSpatialDispositionState"><option value="">기존 정치체 재사용 · 공간 검토 생략</option></select></label><label>검토 근거<input id="humanSpatialDispositionEvidence" disabled /></label></div>
+        <p class="identity-help">새 정치체 생성이 필요한 경우에만 기준 공간 등록 상태와 근거를 선택합니다. 검토 후 보류는 정상적인 검토 완료 상태이며, 여기서 영토·지리 형상·경계·좌표를 만들지 않습니다.</p>
+        <div class="identity-two"><label>관계<select id="humanRelation" required><option value="">불러오는 중...</option></select></label><label>기간 기준<select id="humanPeriodBasis" required><option value="">불러오는 중...</option></select></label></div>
+        <div class="identity-two"><label>역할 영문명 <small>역할이 없으면 비움</small><input id="humanRoleEn" placeholder="예: Sultan" /></label><label>역할 한국어명 <small>신규 역할 생성 시 필수</small><input id="humanRoleKo" placeholder="예: 술탄" /></label></div>
         <h3>나무위키 확인</h3>
-        <div class="identity-two"><label>문서 확인 결과<select id="humanNamuWikiStatus"><option value="">기존 검토값 재사용 · 기존 Person만</option><option value="linked">문서 있음 · 링크 연결</option><option value="not_found">문서 없음</option></select></label><label>확인일<input id="humanNamuWikiCheckedAt" type="date" /></label></div>
+        <div class="identity-two"><label>문서 확인 결과<select id="humanNamuWikiStatus"><option value="">기존 검토값 재사용 · 기존 인물만</option><option value="linked">문서 있음 · 링크 연결</option><option value="not_found">문서 없음</option></select></label><label>확인일<input id="humanNamuWikiCheckedAt" type="date" /></label></div>
         <div class="identity-two"><label>정확한 문서명 <small>문서 있음일 때 필수</small><input id="humanNamuWikiTitle" /></label><label>정확한 문서 URL <small>https://namu.wiki/w/...</small><input id="humanNamuWikiUrl" type="url" placeholder="https://namu.wiki/w/..." /></label></div>
-        <label>문서 없음 세부 사유 <small>not_found일 때 필수</small><select id="humanNamuWikiReviewReason" disabled><option value="">선택</option><option value="no_exact_document">독립 인물 문서·유의미한 관련 후보 모두 확인되지 않음 · no_exact_document</option><option value="related_or_derivative_only">관련·파생·문단/인접 문서만 확인됨 · related_or_derivative_only</option></select></label>
-        <p class="identity-help">새 Person이거나 기존 Person에 나무위키 검토값이 없으면 반드시 실제 검색 후 linked/not_found를 선택합니다. not_found는 검색 결과의 성격까지 세부 사유로 기록해야 완료됩니다. 이미 검토된 기존 Person은 첫 옵션 그대로 두면 재검사하지 않습니다.</p>
+        <label>문서 없음 세부 사유 <small>문서 없음일 때 필수</small><select id="humanNamuWikiReviewReason" disabled><option value="">선택</option><option value="no_exact_document">독립 인물 문서·유의미한 관련 후보 모두 확인되지 않음</option><option value="related_or_derivative_only">관련·파생·문단·인접 문서만 확인됨</option></select></label>
+        <p class="identity-help">새 Person이거나 기존 Person에 나무위키 검토값이 없으면 반드시 실제 검색 후 linked/not_found를 선택합니다. not_found는 검색 결과의 성격까지 세부 사유로 기록해야 완료됩니다. 이미 검토된 기존 인물은 첫 옵션 그대로 두면 재검사하지 않습니다.</p>
         <h3>활동 시작</h3>
         <div class="identity-two"><label>시작 연도 <small>비우면 경계 미상</small><input id="humanStartYear" type="number" step="1" /></label><label>시작 월 <small>연도 입력 시 선택</small><input id="humanStartMonth" type="number" min="1" max="12" step="1" /></label></div>
         <div class="identity-two"><label>시작 일 <small>선택 · 월 입력 필요</small><input id="humanStartDay" type="number" min="1" max="31" step="1" /></label><label>시작 확실성<select id="humanStartCertainty" required>${certaintyOptions()}</select></label></div>
-        <label>시작 Calendar<select id="humanStartCalendar" required>${calendarOptions()}</select></label>
+        <label>시작 역법<select id="humanStartCalendar" required>${calendarOptions()}</select></label>
         <h3>활동 종료</h3>
         <div class="identity-two"><label>종료 연도 <small>비우면 경계 미상</small><input id="humanEndYear" type="number" step="1" /></label><label>종료 월 <small>연도 입력 시 선택</small><input id="humanEndMonth" type="number" min="1" max="12" step="1" /></label></div>
         <div class="identity-two"><label>종료 일 <small>선택 · 월 입력 필요</small><input id="humanEndDay" type="number" min="1" max="31" step="1" /></label><label>종료 확실성<select id="humanEndCertainty" required>${certaintyOptions()}</select></label></div>
-        <label>종료 Calendar<select id="humanEndCalendar" required>${calendarOptions()}</select></label>
-        <label>근거 신뢰도<select id="humanConfidence" required><option value="well_established">Well established</option><option value="likely">Likely</option><option value="speculative">Speculative</option><option value="disputed">Disputed</option><option value="unknown">Unknown</option></select></label>
-        <label>출처 제목<input id="humanSourceTitle" required /></label><label>출처 URL <small>웹 출처일 때만 입력 · 같은 canonical URL은 기존 Source 자동 재사용</small><input id="humanSourceUrl" type="url" /></label><label>인용/Reference text <small>선택 · 입력 권장</small><input id="humanSourceCitation" /></label><label>활동 메모<textarea id="humanNotes" rows="3"></textarea></label>
-        <button class="button primary" type="submit">Person + Activity + Source 한 번에 등록</button>
+        <label>종료 역법<select id="humanEndCalendar" required>${calendarOptions()}</select></label>
+        <label>근거 신뢰도<select id="humanConfidence" required><option value="well_established">근거 확립</option><option value="likely">가능성 높음</option><option value="speculative">추정</option><option value="disputed">논쟁 있음</option><option value="unknown">미확정</option></select></label>
+        <label>출처 제목<input id="humanSourceTitle" required /></label><label>출처 URL <small>웹 출처일 때만 입력 · 같은 기준 URL은 기존 출처 자동 재사용</small><input id="humanSourceUrl" type="url" /></label><label>인용·참조 문구 <small>선택 · 입력 권장</small><input id="humanSourceCitation" /></label><label>활동 메모<textarea id="humanNotes" rows="3"></textarea></label>
+        <button class="button primary" type="submit">인물·활동·출처 한 번에 등록</button>
       </form><pre id="humanAuthoringResult" class="result" aria-live="polite">카탈로그를 불러오는 중...</pre>`;
     identityPanel.parentNode.insertBefore(panel, identityPanel);
   }
@@ -155,35 +162,35 @@
   }
 
   function populateRepresentativeDomains(select, definitions, reviewedNullAllowed) {
-    select.innerHTML = '<option value="">기존 Person 재사용 시 생략 · 신규 Person은 반드시 검토</option>';
+    select.innerHTML = '<option value="">기존 인물 재사용 시 생략 · 신규 인물은 반드시 검토</option>';
     for (const item of definitions) {
       if (!item?.code) continue;
       const option = document.createElement("option");
       option.value = String(item.code);
-      option.textContent = item.label_ko ? `${item.label_ko} · ${item.code}` : String(item.code);
+      option.textContent = item.label_ko ? `${item.label_ko}` : String(item.code);
       select.appendChild(option);
     }
     if (reviewedNullAllowed) {
       const option = document.createElement("option");
       option.value = "__reviewed_null__";
-      option.textContent = "검토했으나 미확정 · reviewed NULL";
+      option.textContent = "검토했으나 미확정";
       select.appendChild(option);
     }
   }
 
   const spatialStateLabels = Object.freeze({
-    existing_disposition:"기존 검토 disposition 확인",
+    existing_disposition:"기존 공간 검토 상태 확인",
     reviewed_static:"정적 지리 기준 검토 완료",
-    reviewed_place_function:"PolityPlaceFunction 기준 검토 완료",
+    reviewed_place_function:"정치체 장소 기능 기준 검토 완료",
     reviewed_hold:"검토 완료 · 위치 판단 보류"
   });
 
   function populateSpatialStates(select, states) {
-    select.innerHTML = '<option value="">기존 Polity 재사용 · 공간 검토 생략</option>';
+    select.innerHTML = '<option value="">기존 정치체 재사용 · 공간 검토 생략</option>';
     for (const state of states) {
       const option = document.createElement("option");
       option.value = String(state);
-      option.textContent = spatialStateLabels[state] ? `${spatialStateLabels[state]} · ${state}` : String(state);
+      option.textContent = spatialStateLabels[state] ? `${spatialStateLabels[state]}` : String(state);
       select.appendChild(option);
     }
   }
@@ -203,7 +210,7 @@
     if (!raw) return {};
     if (raw === "__reviewed_null__") return { representative_domain:null };
     const allowed = new Set([...select.options].map((option) => option.value).filter((code) => code && code !== "__reviewed_null__"));
-    if (!allowed.has(raw)) throw new Error("대표 분야 값이 현재 canonical catalog에 없습니다.");
+    if (!allowed.has(raw)) throw new Error("대표 분야 값이 현재 기준 목록에 없습니다.");
     return { representative_domain:raw };
   }
 
@@ -212,9 +219,9 @@
     const state = value("humanSpatialDispositionState");
     if (!state) return null;
     const allowed = new Set([...select.options].map((option) => option.value).filter(Boolean));
-    if (!allowed.has(state)) throw new Error("Spatial disposition 값이 현재 canonical catalog에 없습니다.");
+    if (!allowed.has(state)) throw new Error("공간 배치 판정값이 현재 기준 목록에 없습니다.");
     const evidence = value("humanSpatialDispositionEvidence");
-    if (!evidence) throw new Error("신규 Polity 공간 검토 근거를 입력해야 합니다.");
+    if (!evidence) throw new Error("신규 정치체 공간 검토 근거를 입력해야 합니다.");
     return { state, evidence };
   }
 
@@ -234,17 +241,17 @@
       });
       const body = await response.json();
       if (!response.ok || body?.ok !== true || body?.ready !== true) {
-        throw new Error(body?.code || `catalog load failed (${response.status})`);
+        throw new Error(body?.code || `카탈로그 조회 실패 (${response.status})`);
       }
       const relationTypes = Array.isArray(body.catalogs?.relation_types) ? body.catalogs.relation_types : [];
       const periodBases = Array.isArray(body.catalogs?.period_bases) ? body.catalogs.period_bases : [];
       const representativeDomains = Array.isArray(body.catalogs?.representative_domains) ? body.catalogs.representative_domains : [];
       const spatialStates = Array.isArray(body.catalogs?.spatial_registration_states) ? body.catalogs.spatial_registration_states : [];
       if (relationTypes.length === 0 || periodBases.length === 0 || representativeDomains.length === 0 || spatialStates.length === 0) {
-        throw new Error("활성 Relation/Period Basis/Domain/Spatial 카탈로그가 비어 있습니다.");
+        throw new Error("관계·기간 기준·분야·공간 배치 선택 목록이 비어 있습니다.");
       }
-      appendCatalogOptions(relationSelect, relationTypes, (code) => relationLabels[code] ? `${code} · ${relationLabels[code]}` : code);
-      appendCatalogOptions(periodSelect, periodBases);
+      appendCatalogOptions(relationSelect, relationTypes, (code) => relationLabels[code] ? `${relationLabels[code]}` : code);
+      appendCatalogOptions(periodSelect, periodBases, (code) => periodBasisLabels[code] || code);
       populateRepresentativeDomains(domainSelect, representativeDomains, body.catalogs?.representative_domain_reviewed_null_allowed === true);
       populateSpatialStates(spatialSelect, spatialStates);
       syncSpatialDispositionFields();
@@ -357,9 +364,9 @@
       PERSON_LIFE_STATUS_REVIEW_REQUIRED: "신규 Person 생성에는 사망 확인(deceased) 검토가 필요합니다.",
       PERSON_LIFE_STATUS_CHECKED_AT_INVALID: "생존 상태 검토일이 올바르지 않습니다.",
       PERSON_LIFE_STATUS_BASIS_INVALID: "생존 상태 판정 근거는 documented_death 또는 historical_certainty여야 합니다.",
-      HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED: "신규 Polity 생성에는 한국어명이 필요합니다. 기존 Polity 재사용이면 비워둘 수 있습니다.",
+      HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED: "신규 Polity 생성에는 한국어명이 필요합니다. 기존 정치체 재사용이면 비워둘 수 있습니다.",
       HUMAN_AUTHORING_NEW_ROLE_KO_REQUIRED: "신규 Role 생성에는 한국어명이 필요합니다. 기존 Role 재사용이면 비워둘 수 있습니다.",
-      HUMAN_AUTHORING_NAMUWIKI_REQUIRED: "신규 Person 또는 나무위키 미검토 Person은 나무위키 확인 결과가 필요합니다.",
+      HUMAN_AUTHORING_NAMUWIKI_REQUIRED: "신규 인물 또는 나무위키 미검토 인물은 나무위키 확인 결과가 필요합니다.",
       HUMAN_AUTHORING_NAMUWIKI_OVERWRITE_REVIEW_REQUIRED: "이미 연결된 나무위키 문서와 다른 값입니다. 자동 덮어쓰지 말고 별도 검토하세요.",
       HUMAN_AUTHORING_NAMUWIKI_STATUS_INVALID: "나무위키 결과는 문서 있음 또는 문서 없음이어야 합니다.",
       HUMAN_AUTHORING_NAMUWIKI_CHECKED_AT_INVALID: "나무위키 확인일이 올바르지 않습니다.",
@@ -370,9 +377,9 @@
       HUMAN_AUTHORING_SOURCE_CANONICAL_URL_AMBIGUOUS: "같은 Source URL이 여러 identity에 존재합니다. Source 중복 검토가 필요합니다.",
       HUMAN_AUTHORING_NEW_PERSON_DOMAIN_REVIEW_REQUIRED: "신규 Person은 대표 분야를 검토해야 합니다. 8개 분야 또는 ‘검토했으나 미확정’을 선택하세요.",
       PERSON_DOMAIN_VALUE_UNSUPPORTED: "대표 분야가 현재 canonical 8개 분야에 포함되지 않습니다.",
-      HUMAN_AUTHORING_SPATIAL_DISPOSITION_REQUIRED: "신규 Polity 생성에는 공간 검토 상태가 필요합니다. 기존 Polity 재사용이면 비워두세요.",
+      HUMAN_AUTHORING_SPATIAL_DISPOSITION_REQUIRED: "신규 Polity 생성에는 공간 검토 상태가 필요합니다. 기존 정치체 재사용이면 비워두세요.",
       HUMAN_AUTHORING_SPATIAL_DISPOSITION_INVALID: "공간 검토 상태가 현재 canonical registration contract에 포함되지 않습니다.",
-      HUMAN_AUTHORING_SPATIAL_DISPOSITION_EVIDENCE_REQUIRED: "신규 Polity 공간 검토에는 근거가 필요합니다."
+      HUMAN_AUTHORING_SPATIAL_DISPOSITION_EVIDENCE_REQUIRED: "신규 정치체 공간 검토에는 근거가 필요합니다."
     })[code] || fallback || code;
   }
 

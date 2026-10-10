@@ -225,7 +225,7 @@
       }),
       Object.freeze({
         code:"spatial",
-        label:"Spatial 미해결 영향 인물",
+        label:"공간 배치 미해결 영향 인물",
         available:spatialPersonIds !== null,
         count:spatialPersonIds === null ? null : spatialPersonIds.length,
         unit:"person",
@@ -243,7 +243,7 @@
       }),
       Object.freeze({
         code:"runtime_exclusion",
-        label:"Runtime exclusion",
+        label:"런타임 제외 활동",
         available:runtimeExclusionsAvailable,
         count:runtimeExclusionsAvailable ? runtimeExclusionTargets.length : null,
         unit:"activity",
@@ -311,7 +311,7 @@
       }),
       activities:Object.freeze({
         code:"activities",
-        label:"Runtime Activities",
+        label:"등록된 활동",
         available:false,
         mode:"activity",
         route:null,
@@ -333,7 +333,7 @@
       namuwiki:personTarget("namuwiki","나무위키 미검토"),
       spatial:Object.freeze({
         code:"spatial",
-        label:"Spatial Ready",
+        label:"공간 배치 완료율",
         available:false,
         mode:"activity",
         route:null,
@@ -1031,7 +1031,7 @@
       rows:Object.freeze([
         row({
           code:"domain",
-          label:"Representative Domain",
+          label:"대표 분야",
           unit:"person",
           source:"Person Domain",
           available:domainAvailable,
@@ -1043,7 +1043,7 @@
         }),
         row({
           code:"namuwiki",
-          label:"NamuWiki Review",
+          label:"나무위키 검토",
           unit:"person",
           source:"Person Runtime",
           available:true,
@@ -1054,7 +1054,7 @@
         }),
         row({
           code:"runtime_activity",
-          label:"Runtime Activity",
+          label:"런타임 활동",
           unit:"person",
           source:"Person Runtime",
           available:true,
@@ -1065,7 +1065,7 @@
         }),
         row({
           code:"chronology",
-          label:"Activity Chronology",
+          label:"활동 연대",
           unit:"activity",
           source:"Person Runtime Activity",
           available:true,
@@ -1076,7 +1076,7 @@
         }),
         row({
           code:"provenance",
-          label:"Activity Provenance",
+          label:"활동 근거",
           unit:"activity",
           source:"Person Activity Sources",
           available:true,
@@ -1087,7 +1087,7 @@
         }),
         row({
           code:"spatial",
-          label:"Spatial Placement",
+          label:"공간 배치",
           unit:"activity",
           source:"Spatial resolver",
           available:Boolean(spatialIndex),

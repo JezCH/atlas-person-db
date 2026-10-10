@@ -169,7 +169,7 @@ test("reviewed Place semantic detail appears only at high readable zoom without 
   assert.equal(floor.stage, "subregion");
   assert.equal(floor.place_opacity, 0);
   assert.equal(detail.stage, "place");
-  assert.equal(detail.stage_label, "검토 Place");
+  assert.equal(detail.stage_label, "검토된 장소");
   assert.equal(detail.place_opacity, 1);
   assert.equal(detail.places.length, 2);
   assert.deepEqual(detail.places.map((place)=>place.place_id), ["place-pella","place-rome"]);

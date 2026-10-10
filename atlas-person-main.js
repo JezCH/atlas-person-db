@@ -150,7 +150,7 @@
     const activities = Array.isArray(person?.activity_summaries) ? person.activity_summaries : [];
     if (!activities.length) {
       const timelineLabel = timelineDispositionLabel(person);
-      return `<span class="person-card-activities is-empty">${escapeHtml(timelineLabel || "등록된 Activity 없음")}</span>`;
+      return `<span class="person-card-activities is-empty">${escapeHtml(timelineLabel || "등록된 활동 없음")}</span>`;
     }
     return `<span class="person-card-activities">${activities.map(compactActivityHtml).join("")}</span>`;
   }
@@ -166,18 +166,18 @@
     const open = `<button class="person-card${selectedClass}" type="button" data-person-id="${escapeHtml(person.id)}"${domainAttribute}>`;
     const close = "</button>";
     return `${open}
-      <span class="person-card-top"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span>${escapeHtml(person.person_type || "type 미상")}</span></span>
+      <span class="person-card-top"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span>${escapeHtml(person.person_type || "유형 미상")}</span></span>
       <strong>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</strong>
       ${canonical}
       <span class="person-card-range">${escapeHtml(rangeLabel(person))}</span>
-      <span class="person-card-count">Activity ${Number(person.activity_count || 0)}건</span>
+      <span class="person-card-count">활동 ${Number(person.activity_count || 0)}건</span>
       ${compactActivitiesHtml(person)}
     ${close}`;
   }
 
   function groupSection({ title, description, rows }) {
     return `<section class="person-group person-group-historical" aria-labelledby="person-group-historical-title">
-      <header class="person-group-head"><div><p class="eyebrow">PERSONS</p><h2 id="person-group-historical-title">${escapeHtml(title)}</h2><p>${escapeHtml(description)}</p></div></header>
+      <header class="person-group-head"><div><p class="eyebrow">인물 목록</p><h2 id="person-group-historical-title">${escapeHtml(title)}</h2><p>${escapeHtml(description)}</p></div></header>
       <div class="person-card-grid">${rows.length ? rows.map(personCard).join("") : '<p class="person-empty-state">현재 조건에 해당하는 인물이 없습니다.</p>'}</div>
     </section>`;
   }
@@ -299,7 +299,7 @@
       if (child.id !== "personEraNavigator") child.remove();
     }
     if (dashboardFilter) {
-      list.insertAdjacentHTML("beforeend", `<div class="person-dashboard-filter"><strong>Dashboard · ${escapeHtml(dashboardFilter.label)}</strong><span>${dashboardFilter.ids.size.toLocaleString("ko-KR")}명</span><button type="button" class="mini-btn" data-person-dashboard-filter-clear>필터 해제</button></div>`);
+      list.insertAdjacentHTML("beforeend", `<div class="person-dashboard-filter"><strong>대시보드 · ${escapeHtml(dashboardFilter.label)}</strong><span>${dashboardFilter.ids.size.toLocaleString("ko-KR")}명</span><button type="button" class="mini-btn" data-person-dashboard-filter-clear>필터 해제</button></div>`);
     }
     list.insertAdjacentHTML("beforeend", renderedGroups);
     notifyPersonRender({ shown, polityCount: visiblePolityCount(rows) });
@@ -349,7 +349,7 @@
     if (!ids.length) return clearDashboardFilter();
     dashboardFilter = Object.freeze({
       code:String(code || "").trim(),
-      label:String(label || code || "Attention Queue").trim(),
+      label:String(label || code || "검토 대기열").trim(),
       ids:new Set(ids)
     });
     query = "";
@@ -367,7 +367,7 @@
 
   function namesHtml(names) {
     if (!Array.isArray(names) || !names.length) return '<p class="person-empty-inline">등록된 이름 없음</p>';
-    return `<div class="person-name-chips person-name-register">${names.map((row) => `<span class="person-name-entry"><b>${escapeHtml(row.name)}</b><small>${escapeHtml(row.locale || "")}${row.name_type ? ` · ${escapeHtml(row.name_type)}` : ""}${row.is_preferred ? " · preferred" : ""}</small></span>`).join("")}</div>`;
+    return `<div class="person-name-chips person-name-register">${names.map((row) => `<span class="person-name-entry"><b>${escapeHtml(row.name)}</b><small>${escapeHtml(row.locale || "")}${row.name_type ? ` · ${escapeHtml(row.name_type)}` : ""}${row.is_preferred ? " · 대표 이름" : ""}</small></span>`).join("")}</div>`;
   }
 
   function descriptionsHtml(descriptions) {
@@ -454,36 +454,36 @@
     panel.innerHTML = `<div class="person-detail-head person-chronicle-hero">
         ${portraitFrameHtml(person, portraitResult)}
         <div class="person-chronicle-identity">
-          <p class="eyebrow">ATLAS · PERSON</p>
+          <p class="eyebrow">ATLAS · 인물</p>
           <div class="person-detail-name-row"><h2>${escapeHtml(displayName)}</h2></div>
           ${canonicalName && canonicalName !== displayName ? `<p class="person-detail-canonical">${escapeHtml(canonicalName)}</p>` : ""}
           <p class="person-detail-era">${escapeHtml(rangeLabel(person))}</p>
           <p class="person-detail-domain">${escapeHtml(domainLabel)}</p>
-          <p class="person-detail-status"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "type 미상")}</span>${timelineLabel ? `<span class="person-timeline-disposition">${escapeHtml(timelineLabel)}</span>` : ""}</p>
+          <p class="person-detail-status"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "유형 미상")}</span>${timelineLabel ? `<span class="person-timeline-disposition">${escapeHtml(timelineLabel)}</span>` : ""}</p>
         </div>
       </div>
       <div class="person-chronicle-body">
         <section class="person-detail-section person-chronicle-section" data-section="names">
-          <h3><span class="person-detail-section-index">01</span><span>이름</span><small>NAMES</small></h3>
+          <h3><span class="person-detail-section-index">01</span><span>이름</span><small>이름 정보</small></h3>
           ${namesHtml(person.names)}
         </section>
         <section class="person-detail-section person-chronicle-section" data-section="description">
-          <h3><span class="person-detail-section-index">02</span><span>설명</span><small>DESCRIPTION</small></h3>
+          <h3><span class="person-detail-section-index">02</span><span>설명</span><small>인물 설명</small></h3>
           ${descriptionsHtml(person.descriptions)}
         </section>
         <section class="person-detail-section person-chronicle-section person-chronicle-activities" data-section="activities">
           <div class="person-detail-section-head">
-            <h3><span class="person-detail-section-index">03</span><span>활동 기록</span><small>ACTIVITIES</small></h3>
+            <h3><span class="person-detail-section-index">03</span><span>활동 기록</span><small>활동 내역</small></h3>
             <span>${Number(person.activity_count || 0)}건 · ${escapeHtml(rangeLabel(person))}</span>
           </div>
-          <div class="person-activity-list">${Array.isArray(person.activities) && person.activities.length ? person.activities.map((activity, index) => activityHtml(activity, index)).join("") : '<p class="person-empty-inline">등록된 Activity 없음</p>'}</div>
+          <div class="person-activity-list">${Array.isArray(person.activities) && person.activities.length ? person.activities.map((activity, index) => activityHtml(activity, index)).join("") : '<p class="person-empty-inline">등록된 활동 없음</p>'}</div>
         </section>
         <section class="person-detail-section person-chronicle-section" data-section="sources">
-          <h3><span class="person-detail-section-index">04</span><span>출처</span><small>SOURCES</small></h3>
+          <h3><span class="person-detail-section-index">04</span><span>출처</span><small>출처 정보</small></h3>
           ${sourceListHtml(person.sources)}
         </section>
         <details class="person-detail-authoring">
-          <summary><span>AUTHORING</span><strong>표시 정보·초상 편집</strong></summary>
+          <summary><span>등록·수정</span><strong>표시 정보·초상 편집</strong></summary>
           <div class="person-detail-authoring-body">${profileEditorHtml(person, portraitResult)}</div>
         </details>
       </div>`;
@@ -491,17 +491,17 @@
 
   function renderDetailLoading() {
     const panel = document.getElementById("personMainDetail");
-    if (panel) panel.innerHTML = '<p class="person-detail-placeholder">Person 상세정보를 불러오는 중입니다.</p>';
+    if (panel) panel.innerHTML = '<p class="person-detail-placeholder">인물 상세정보를 불러오는 중입니다.</p>';
   }
 
   function renderDetailError(error) {
     const panel = document.getElementById("personMainDetail");
-    if (panel) panel.innerHTML = `<p class="person-detail-placeholder is-error">상세정보 조회 실패: ${escapeHtml(error?.code || error?.message || "unknown")}</p>`;
+    if (panel) panel.innerHTML = `<p class="person-detail-placeholder is-error">상세정보 조회 실패: ${escapeHtml(error?.code || error?.message || "알 수 없는 오류")}</p>`;
   }
 
   function renderDetailPlaceholder() {
     const panel = document.getElementById("personMainDetail");
-    if (panel) panel.innerHTML = '<p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 Activity 의미를 확인할 수 있습니다.</p>';
+    if (panel) panel.innerHTML = '<p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 활동 정보를 확인할 수 있습니다.</p>';
   }
 
   function clearPortraitPreviewUrl() {
@@ -604,7 +604,7 @@
     } catch (error) {
       console.error("ATLAS Person list read failed", error);
       // A failed manual refresh must not erase the last valid register.
-      if (groups && !persons.length) groups.innerHTML = `<p class="person-empty-state is-error">Person 목록 조회 실패: ${escapeHtml(error?.code || error?.message || "unknown")}</p>`;
+      if (groups && !persons.length) groups.innerHTML = `<p class="person-empty-state is-error">인물 목록 조회 실패: ${escapeHtml(error?.code || error?.message || "알 수 없는 오류")}</p>`;
       return { ok: false, error };
     }
   }
@@ -854,15 +854,15 @@
     const title = topbar.querySelector("h1");
     const eyebrow = topbar.querySelector(".eyebrow");
     const subtitle = topbar.querySelector(".subtitle");
-    if (title) title.textContent = "Persons";
-    if (eyebrow) eyebrow.textContent = "PERSON-CENTERED DATASET";
-    if (subtitle) subtitle.textContent = "Person을 중심으로 역사성·이름·설명·활동·출처를 함께 조회합니다.";
+    if (title) title.textContent = "인물";
+    if (eyebrow) eyebrow.textContent = "인물 중심 자료";
+    if (subtitle) subtitle.textContent = "인물을 중심으로 역사성·이름·설명·활동·출처를 함께 조회합니다.";
 
     const personView = document.createElement("section");
     personView.id = "personMainView";
     personView.className = "person-main-view";
-    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><h2>인물</h2></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainExcelExport" class="btn" type="button">⇩ 엑셀 출력</button><a class="btn" href="./admin.html">관리자</a></div><div class="person-main-controls"><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
-      <div class="person-main-layout"><div id="personMainGroups" class="person-main-groups"></div><aside id="personMainDetail" class="person-main-detail card" aria-live="polite"><p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 Activity 의미를 확인할 수 있습니다.</p></aside></div>`;
+    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><h2>인물</h2></div><div class="person-main-actions" aria-label="인물 관리 도구"><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainExcelExport" class="btn" type="button">⇩ 엑셀 출력</button><a class="btn" href="./admin.html">관리자</a></div><div class="person-main-controls"><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
+      <div class="person-main-layout"><div id="personMainGroups" class="person-main-groups"></div><aside id="personMainDetail" class="person-main-detail card" aria-live="polite"><p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 활동 정보를 확인할 수 있습니다.</p></aside></div>`;
 
     topbar.insertAdjacentElement("afterend", personView);
     // The Person surface owns one visible title and one connection indicator.

@@ -113,7 +113,7 @@ test("profile write dispatch fails closed for unsupported or uncommitted writes"
   });
   await assert.rejects(
     ()=>editor.dispatchWrite({operation:"unknown",personId:"person-1"}),
-    /지원하지 않는 Person 편집 작업입니다/
+    /지원하지 않는 인물 편집 작업입니다/
   );
   await assert.rejects(
     ()=>editor.dispatchWrite({operation:"set_person_korean_name",personId:"person-1",koreanName:"x"}),
