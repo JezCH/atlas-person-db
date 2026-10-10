@@ -210,7 +210,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 18);
+  assert.equal(unresolved.length, 17);
   const brazil = byId.get('brazil-regime-family');
   assert.equal(brazil.terminal_status, 'FIXED');
   assert.equal(brazil.status, 'FIXED');
@@ -309,6 +309,27 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.match(gnat.rationale, /1921 헌법/);
   assert.match(gnat.rationale, /동일일 1923-10-29/);
   assert.match(gnat.rationale, /주권국가/);
+
+  const philippines = byId.get('philippine-revolutionary-governments');
+  assert.equal(philippines.status, 'KEEP_SEPARATE');
+  assert.equal(philippines.terminal_status, 'KEEP_SEPARATE');
+  assert.equal(philippines.reviewed_decision, 'keep_both');
+  assert.equal(philippines.suggested_action, 'keep_both');
+  assert.equal(philippines.locked, true);
+  assert.equal(philippines.left.polity_id, '8cce76aa-c73d-4521-bda0-ba576fbb2403');
+  assert.equal(philippines.right.polity_id, '346628f9-ded8-4b47-9244-9bcec2fb4f45');
+  for (const activityId of [
+    '78d068fd-9600-4200-85df-ad2173c668ff',
+    '14400d6c-e544-4e0f-9341-43513a205d46',
+    'e6b7bbe8-d528-4b37-be2b-4c38fec10d06',
+    '07c65354-4a2e-4cdf-808f-4ca00cc5bb18',
+    'ae7b6dc4-73aa-4145-8c49-bf8486fc9121'
+  ]) assert.ok(philippines.evidence.some(s => s.includes(activityId)), activityId);
+  assert.ok(philippines.evidence.some(s => /philhistoricsites.nhcp.gov.ph/.test(s)));
+  assert.ok(philippines.evidence.some(s => /officialgazette.gov.ph/.test(s)));
+  assert.match(philippines.rationale, /홍콩 망명/);
+  assert.match(philippines.rationale, /1897-11-01/);
+  assert.match(philippines.rationale, /네그로스/);
 
   const oman = byId.get('oman-empire-oman');
   assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
