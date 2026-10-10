@@ -25,7 +25,7 @@
   }
 
   function scalar(value) {
-    if (value === null || value === undefined || value === "") return '<span class="obs-null">unknown / not supplied</span>';
+    if (value === null || value === undefined || value === "") return '<span class="obs-null">미확인 / 제공되지 않음</span>';
     if (typeof value === "boolean") return `<span class="obs-boolean" data-value="${value}">${value ? "true" : "false"}</span>`;
     return `<code class="obs-value">${escapeHtml(value)}</code>`;
   }
