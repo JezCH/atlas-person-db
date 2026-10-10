@@ -125,7 +125,7 @@ test('Person detail renders identity, portrait slot, sources and user-facing Act
   assert.match(evidenceView, /신뢰도/);
   assert.match(evidenceView, /sourceListHtml\(evidence\.sources\)/);
   assert.match(main, /data-section="sources"/);
-  assert.match(main, /<small>SOURCES<\/small>/);
+  assert.match(main, /<small>출처 정보<\/small>/);
 });
 
 test('Person detail binds canonical portrait read and authoring controls without direct mutation endpoints', () => {
