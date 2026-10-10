@@ -1,0 +1,101 @@
+name: ATLAS Russia P2-05C Public Runtime Acceptance
+
+# One-shot historical acceptance evidence for the reviewed 2026-10-10 correction.
+# Not a permanent snapshot-count CI gate; no canonical write or recurrence.
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/atlas-polity-russia-p2-05c-acceptance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-russian-temporal-display:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Read current Runtime publication and actual public Person/Polity detail
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='https://atlas-person-db.vercel.app/api/atlas-read'
+          curl --fail-with-body --silent --show-error --get \
+            --data-urlencode '__atlas_read_surface=runtime-publication' \
+            "$BASE" > publication.json
+          jq -e '.ok==true and .publication_current==true and .projection_matches_active_compile==true and .authoring_matches_active_compile==true' publication.json >/dev/null
+
+          curl --fail-with-body --silent --show-error --get \
+            --data-urlencode '__atlas_read_surface=polity' \
+            --data-urlencode 'polity_id=dd07fc4c-b3ac-59ac-bdf2-9cc190893327' \
+            "$BASE" > russian-polity.json
+          jq -e --arg p 'dd07fc4c-b3ac-59ac-bdf2-9cc190893327' '
+            .ok==true and .mode=="detail" and .polity.id==$p
+            and .polity.activity_count==12
+            and ([.polity.activities[] | select(.polity_designation_name_ko==null)] | length)==0
+            and ([.polity.activities[] | select(.id=="d6cdaf3b-2eab-4b98-8a17-b9c42342534f" and .polity_designation_name_ko=="러시아 차르국")] | length)==1
+            and ([.polity.activities[] | select(.id=="57cdefa5-9a5d-533c-b229-47e398f1d07a" and .polity_designation_name_ko=="러시아 차르국")] | length)==1
+            and ([.polity.activities[] | select(.id=="9ec53325-3a97-58a8-a7e7-81a496a47e57" and .polity_designation_name_ko=="러시아 제국")] | length)==1
+          ' russian-polity.json >/dev/null
+
+          curl --fail-with-body --silent --show-error --get \
+            --data-urlencode '__atlas_read_surface=person' \
+            --data-urlencode 'person_id=57b00bae-2420-4ddd-b374-f70c81479bff' \
+            "$BASE" > ivan-person.json
+          curl --fail-with-body --silent --show-error --get \
+            --data-urlencode '__atlas_read_surface=person' \
+            --data-urlencode 'person_id=072f2262-acbb-53a8-a63f-c3e798c24132' \
+            "$BASE" > peter-person.json
+          curl --fail-with-body --silent --show-error --get \
+            --data-urlencode '__atlas_read_surface=person' \
+            --data-urlencode 'person_id=3724b16c-5f45-47cd-b76d-495f92dd34d0' \
+            "$BASE" > catherine-person.json
+          curl --fail-with-body --silent --show-error --get \
+            --data-urlencode '__atlas_read_surface=person' \
+            --data-urlencode 'person_id=4dfceb56-f4f7-4928-a285-35466c72976b' \
+            "$BASE" > nicholas-person.json
+
+          jq -e '
+            .ok==true and .mode=="detail"
+            and ([.person.activities[] | select(.id=="2acbc551-332c-4be5-bf89-ba9f30f865e3" and .polity.display_name=="모스크바 대공국" and .end.year==1547 and .end.month==1 and .end.day==15 and .end.calendar=="julian")] | length)==1
+            and ([.person.activities[] | select(.id=="d6cdaf3b-2eab-4b98-8a17-b9c42342534f" and .polity.display_name=="러시아 차르국" and .start.year==1547 and .start.month==1 and .start.day==16 and .start.calendar=="julian")] | length)==1
+          ' ivan-person.json >/dev/null
+          jq -e '
+            .ok==true and .mode=="detail"
+            and ([.person.activities[] | select(.id=="57cdefa5-9a5d-533c-b229-47e398f1d07a" and .polity.display_name=="러시아 차르국" and .end.year==1721 and .end.month==10 and .end.day==21 and .end.calendar=="julian" and (.sources|length)==4)] | length)==1
+            and ([.person.activities[] | select(.id=="9ec53325-3a97-58a8-a7e7-81a496a47e57" and .polity.display_name=="러시아 제국" and .start.year==1721 and .start.month==10 and .start.day==22 and .start.calendar=="julian" and (.sources|length)==4)] | length)==1
+          ' peter-person.json >/dev/null
+          jq -e '.ok==true and ([.person.activities[] | select(.id=="f6129bb4-c94b-46e3-9c49-396b23ab4fdc" and .polity.display_name=="러시아 제국")] | length)==1' catherine-person.json >/dev/null
+          jq -e '.ok==true and ([.person.activities[] | select(.id=="25353cf2-bada-4014-973b-1f0893bb072b" and .polity.display_name=="러시아 제국")] | length)==1' nicholas-person.json >/dev/null
+
+          jq -n --slurpfile pub publication.json --slurpfile pol russian-polity.json \
+             --slurpfile ivan ivan-person.json --slurpfile peter peter-person.json \
+             --slurpfile cath catherine-person.json --slurpfile nich nicholas-person.json '
+             {marker:"ATLAS_POLITY_P2_05C_PUBLIC_ACCEPTANCE_V1",
+              publication_current:$pub[0].publication_current,
+              polity_id:$pol[0].polity.id,
+              polity_activity_count:$pol[0].polity.activity_count,
+              designation_display_rows:[$pol[0].polity.activities[] | {id,polity_designation_name_en,polity_designation_name_ko}],
+              ivan:[ $ivan[0].person.activities[] | select(.id=="d6cdaf3b-2eab-4b98-8a17-b9c42342534f") | {id,polity,start,end}],
+              peter:[ $peter[0].person.activities[] | select(.id=="57cdefa5-9a5d-533c-b229-47e398f1d07a" or .id=="9ec53325-3a97-58a8-a7e7-81a496a47e57") | {id,polity,start,end,source_count:(.sources|length)}],
+              catherine:[ $cath[0].person.activities[] | select(.id=="f6129bb4-c94b-46e3-9c49-396b23ab4fdc") | {id,polity}],
+              nicholas:[ $nich[0].person.activities[] | select(.id=="25353cf2-bada-4014-973b-1f0893bb072b") | {id,polity}]}' > russian-p2-05c-public-acceptance.json
+          cat russian-p2-05c-public-acceptance.json
+
+      - name: Preserve immutable read-only acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: russian-p2-05c-public-runtime-acceptance
+          path: |
+            publication.json
+            russian-polity.json
+            ivan-person.json
+            peter-person.json
+            catherine-person.json
+            nicholas-person.json
+            russian-p2-05c-public-acceptance.json
+          if-no-files-found: warn
+          retention-days: 90
