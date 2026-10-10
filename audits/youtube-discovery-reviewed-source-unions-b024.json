@@ -1,0 +1,127 @@
+{
+  "schema": "atlas-youtube-discovery-reviewed-unions/v1",
+  "purpose": "single_unregistered_historical_person_discovery",
+  "source_snapshot_id": "yt-20261009T120819Z-10127ch-rebuild-v4",
+  "source_artifact": {
+    "run_id": "37921755392",
+    "artifact_id": "11613130249",
+    "sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946"
+  },
+  "original_id_audit": {
+    "run_id": "38006837223",
+    "artifact_id": "11651582512",
+    "sha256": "355677b41224d08713f924c3eb976cf49c05aa006cbc10f58c641a54daaa6980"
+  },
+  "reviewed_at": "2026-10-10",
+  "review_rule": "Only original prefix-title evidence from all matching videos on this exact corpus was reviewed. Identity matches exclude other names only after current registered-Person check. Diana/Princess Diana excluded pending ambiguity review.",
+  "approved_groups": [
+    {
+      "canonical_name": "Pelé",
+      "aliases": [
+        {
+          "name": "Pelé",
+          "distinct_channel_count": 15,
+          "video_count": 16
+        },
+        {
+          "name": "Pele",
+          "distinct_channel_count": 5,
+          "video_count": 5
+        }
+      ],
+      "distinct_channel_count": 20,
+      "video_count": 21,
+      "union_video_ids_sha256": "0c289824c235ad923a78edc3c1eee84f0fab6ccb3daf37d474708c002c3f90b1"
+    },
+    {
+      "canonical_name": "Pablo Picasso",
+      "aliases": [
+        {
+          "name": "Picasso",
+          "distinct_channel_count": 14,
+          "video_count": 15
+        },
+        {
+          "name": "Pablo Picasso",
+          "distinct_channel_count": 25,
+          "video_count": 29
+        }
+      ],
+      "distinct_channel_count": 39,
+      "video_count": 44,
+      "union_video_ids_sha256": "f4ae9eaeea812f2bb77e675214928c294665ada03f515e3eeaffee0268aae046"
+    },
+    {
+      "canonical_name": "Fyodor Dostoevsky",
+      "aliases": [
+        {
+          "name": "Dostoevsky",
+          "distinct_channel_count": 16,
+          "video_count": 20
+        },
+        {
+          "name": "Fyodor Dostoevsky",
+          "distinct_channel_count": 14,
+          "video_count": 14
+        }
+      ],
+      "distinct_channel_count": 29,
+      "video_count": 34,
+      "union_video_ids_sha256": "ac022980bccafc21a198eebe45a9a9520335d1e4688e06a13e688f02b6700e7f"
+    },
+    {
+      "canonical_name": "Frédéric Chopin",
+      "aliases": [
+        {
+          "name": "Chopin",
+          "distinct_channel_count": 15,
+          "video_count": 37
+        },
+        {
+          "name": "Frédéric Chopin",
+          "distinct_channel_count": 12,
+          "video_count": 13
+        }
+      ],
+      "distinct_channel_count": 26,
+      "video_count": 50,
+      "union_video_ids_sha256": "9227c7fda0c72ca1e09cbc387f7cd42d7b2dcd75876e4ff4fc3a47fab0c95f10"
+    },
+    {
+      "canonical_name": "Arthur Schopenhauer",
+      "aliases": [
+        {
+          "name": "Schopenhauer",
+          "distinct_channel_count": 13,
+          "video_count": 22
+        },
+        {
+          "name": "Arthur Schopenhauer",
+          "distinct_channel_count": 14,
+          "video_count": 16
+        }
+      ],
+      "distinct_channel_count": 26,
+      "video_count": 38,
+      "union_video_ids_sha256": "1b3df11d963cdebd7b1f1b58d315da706ac7a5ea47554debe5144fd35f4c7711"
+    },
+    {
+      "canonical_name": "Pyotr Ilyich Tchaikovsky",
+      "aliases": [
+        {
+          "name": "Tchaikovsky",
+          "distinct_channel_count": 14,
+          "video_count": 44
+        },
+        {
+          "name": "Pyotr Ilyich Tchaikovsky",
+          "distinct_channel_count": 4,
+          "video_count": 4
+        }
+      ],
+      "distinct_channel_count": 18,
+      "video_count": 48,
+      "union_video_ids_sha256": "e4a233f18285edb02430a1c561427d70867786820715cf4109a6f3f755a71085"
+    }
+  ]
+}
