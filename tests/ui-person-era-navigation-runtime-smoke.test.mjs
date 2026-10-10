@@ -203,7 +203,8 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
   assert.equal(domainList.children[1].dataset.domainFilter, 'governance');
   assert.ok(hasClass(domainList.children[1], 'is-active'));
   assert.equal(domainList.children[2].dataset.domainFilter, 'military');
-  assert.equal(container.style.values['--person-table-sticky-top'], '66px');
+  // Header begins immediately after the measured 60px navigation, without the former 6px leak.
+  assert.equal(container.style.values['--person-table-sticky-top'], '60px');
 
   const buttons = nav.querySelectorAll('button[data-era]');
   assert.equal(buttons.length, 2);
