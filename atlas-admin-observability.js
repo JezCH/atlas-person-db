@@ -86,33 +86,33 @@
       && publication.compile_balance_valid === true
       && publication.exclusion_summary_matches_excluded === true;
     const compileState = compileHealthy
-      ? "consistent"
+      ? "일치"
       : activeCompile || publication?.reason || publicationGuard?.error?.code
-        ? "attention"
-        : "unknown";
+        ? "확인 필요"
+        : "미확인";
     const compileDetail = activeCompile
-      ? `${activeCompile.output_row_count} included · ${activeCompile.excluded_row_count} excluded`
-      : publication?.reason || publicationGuard?.error?.code || "not supplied";
+      ? `${activeCompile.output_row_count}건 포함 · ${activeCompile.excluded_row_count}건 제외`
+      : publication?.reason || publicationGuard?.error?.code || "제공되지 않음";
     statusBody.innerHTML = `
       <div class="obs-summary-grid">
-        <div><span>Runtime</span><strong>${escapeHtml(payload.runtime?.environment ?? "unknown")}</strong><small>${escapeHtml(payload.runtime?.git_commit_ref ?? payload.runtime?.provider ?? "unknown")}</small></div>
-        <div><span>Database</span><strong>${payload.database?.reachable === true ? "reachable" : "unknown"}</strong><small>atlas_v2: ${payload.database?.atlas_v2_schema_present === true ? "present" : "not confirmed"}</small></div>
-        <div><span>atlas_v2 tables</span><strong>${tableCount === null ? "—" : escapeHtml(tableCount)}</strong><small>catalog-discovered</small></div>
-        <div><span>Actions verification</span><strong>${payload.verification?.github_actions_status_embedded === true ? "embedded" : "external"}</strong><small>${escapeHtml(payload.verification?.reason ?? "unknown")}</small></div>
-        <div><span>Runtime compile</span><strong>${escapeHtml(compileState)}</strong><small>${escapeHtml(compileDetail)}</small></div>
+        <div><span>런타임</span><strong>${escapeHtml(payload.runtime?.environment ?? "unknown")}</strong><small>${escapeHtml(payload.runtime?.git_commit_ref ?? payload.runtime?.provider ?? "unknown")}</small></div>
+        <div><span>데이터베이스</span><strong>${payload.database?.reachable === true ? "접속 가능" : "미확인"}</strong><small>atlas_v2: ${payload.database?.atlas_v2_schema_present === true ? "확인됨" : "미확인"}</small></div>
+        <div><span>atlas_v2 테이블</span><strong>${tableCount === null ? "—" : escapeHtml(tableCount)}</strong><small>카탈로그에서 확인</small></div>
+        <div><span>자동 검사 결과</span><strong>${payload.verification?.github_actions_status_embedded === true ? "내부 확인" : "외부 확인"}</strong><small>${escapeHtml(payload.verification?.reason ?? "unknown")}</small></div>
+        <div><span>런타임 빌드</span><strong>${escapeHtml(compileState)}</strong><small>${escapeHtml(compileDetail)}</small></div>
       </div>
       <div class="obs-sections">
-        ${statusSection("Runtime identity", payload.runtime, { open: true })}
-        ${statusSection("Configuration presence — values are never exposed", payload.configuration, { open: true })}
-        ${statusSection("Database identity", payload.database)}
-        ${statusSection("Migration identity", payload.migration)}
-        ${statusSection("Semantic / detector / merge versions", payload.semantics, { open: true })}
-        ${statusSection("Authoring & P10 readiness", payload.readiness, { open: true })}
-        ${statusSection("Runtime publication / active compile", payload.runtime_publication, { open: true })}
-        ${statusSection("Duplicate lifecycle", payload.duplicate_lifecycle, { open: true })}
+        ${statusSection("런타임 식별정보", payload.runtime, { open: true })}
+        ${statusSection("설정 존재 여부 — 값은 공개하지 않음", payload.configuration, { open: true })}
+        ${statusSection("데이터베이스 식별정보", payload.database)}
+        ${statusSection("마이그레이션 식별정보", payload.migration)}
+        ${statusSection("의미 체계·중복 감지·통합 버전", payload.semantics, { open: true })}
+        ${statusSection("원본 등록·P10 준비 상태", payload.readiness, { open: true })}
+        ${statusSection("런타임 게시·현재 빌드", payload.runtime_publication, { open: true })}
+        ${statusSection("중복 검토 처리 이력", payload.duplicate_lifecycle, { open: true })}
         ${statusSection("최근 Authoring / Correction 적용 이력 — 각 5건", payload.manifest_history)}
-        <details class="obs-section"><summary>atlas_v2 exact row counts</summary><div class="obs-section-body">${renderTableCounts(payload.counts?.tables)}</div></details>
-        ${statusSection("Runtime verification boundary", payload.verification)}
+        <details class="obs-section"><summary>atlas_v2 실제 행 수</summary><div class="obs-section-body">${renderTableCounts(payload.counts?.tables)}</div></details>
+        ${statusSection("런타임 검증 범위", payload.verification)}
       </div>`;
   }
 
@@ -131,7 +131,7 @@
       renderSystemStatus(payload);
       setBadge(statusBadge, "읽기 정상", "ready");
     } catch (error) {
-      statusBody.innerHTML = `<p class="empty-state">System Status 조회 실패: ${escapeHtml(error.code || error.message)}</p>`;
+      statusBody.innerHTML = `<p class="empty-state">시스템 현황 조회 실패: ${escapeHtml(error.code || error.message)}</p>`;
       setBadge(statusBadge, error.status === 401 ? "세션 필요" : "조회 실패", "error");
     } finally {
       refreshStatusButton.disabled = false;
@@ -144,10 +144,10 @@
     try {
       const payload = await getJson(INSPECTOR_ENDPOINT);
       const kinds = Array.isArray(payload.supported_kinds) ? payload.supported_kinds : [];
-      inspectorKind.innerHTML = '<option value="">Object kind 선택</option>' + kinds.map((kind) => `<option value="${escapeHtml(kind)}">${escapeHtml(KIND_LABELS[kind] || kind)}</option>`).join("");
+      inspectorKind.innerHTML = '<option value="">객체 유형 선택</option>' + kinds.map((kind) => `<option value="${escapeHtml(kind)}">${escapeHtml(KIND_LABELS[kind] || kind)}</option>`).join("");
       setBadge(inspectorBadge, kinds.length ? `${kinds.length} kinds` : "kind 없음", kinds.length ? "ready" : "error");
     } catch (error) {
-      inspectorKind.innerHTML = '<option value="">Capabilities 조회 실패</option>';
+      inspectorKind.innerHTML = '<option value="">지원 유형 조회 실패</option>';
       setBadge(inspectorBadge, error.status === 401 ? "세션 필요" : "조회 실패", "error");
     }
   }
@@ -157,7 +157,7 @@
     const kind = String(inspectorKind?.value || "").trim();
     const id = String(inspectorId?.value || "").trim();
     if (!kind || !id) {
-      if (inspectorResult) inspectorResult.textContent = "Object kind와 UUID를 모두 입력하세요.";
+      if (inspectorResult) inspectorResult.textContent = "객체 유형과 UUID를 모두 입력하세요.";
       return;
     }
     const submit = inspectorForm?.querySelector('button[type="submit"]');
@@ -172,7 +172,7 @@
       setBadge(inspectorBadge, "Object 확인", "ready");
     } catch (error) {
       if (inspectorResult) {
-        inspectorResult.textContent = `Inspector 조회 실패: ${error.code || error.message}`;
+        inspectorResult.textContent = `객체 조회 실패: ${error.code || error.message}`;
         inspectorResult.dataset.type = "error";
       }
       setBadge(inspectorBadge, error.status === 404 ? "없음" : error.status === 401 ? "세션 필요" : "조회 실패", "error");
@@ -182,9 +182,9 @@
   }
 
   function clearAdminReadState() {
-    if (statusBody) statusBody.innerHTML = '<p class="empty-state">관리자 인증 후 System Status를 불러옵니다.</p>';
+    if (statusBody) statusBody.innerHTML = '<p class="empty-state">관리자 인증 후 시스템 현황을 불러옵니다.</p>';
     if (inspectorResult) {
-      inspectorResult.textContent = "관리자 인증 후 UUID 기반 Object Inspector를 사용할 수 있습니다.";
+      inspectorResult.textContent = "관리자 인증 후 UUID 기반 객체 조회를 사용할 수 있습니다.";
       delete inspectorResult.dataset.type;
     }
     if (inspectorKind) inspectorKind.innerHTML = '<option value="">관리자 인증 필요</option>';
@@ -198,7 +198,7 @@
   inspectorClearButton?.addEventListener("click", () => {
     if (inspectorId) inspectorId.value = "";
     if (inspectorResult) {
-      inspectorResult.textContent = "Object를 선택하고 UUID를 입력하세요.";
+      inspectorResult.textContent = "객체 유형을 선택하고 UUID를 입력하세요.";
       delete inspectorResult.dataset.type;
     }
   });
