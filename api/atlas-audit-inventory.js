@@ -10,7 +10,10 @@ const { createPolityReferenceAuditHandler } = require("../server/atlas-polity-re
 
 const auditInventoryHandler = createAuditInventoryHandler();
 const polityReferenceAuditHandler = createPolityReferenceAuditHandler();
+const { createPlaceProductionAuditHandler } = require("../server/atlas-place-production-audit-handler.js");
+const placeProductionAuditHandler = createPlaceProductionAuditHandler();
 const POLITY_REFERENCE_SURFACE = "polity-reference-audit";
+const PLACE_PRODUCTION_AUTHORITY_SURFACE = "place-production-authority";
 const POLITY_EVIDENCE_MARKER = "ATLAS_POLITY_REFERENCE_AUDIT_EVIDENCE_V1";
 const MAX_EVIDENCE_TERMS = 20;
 const MAX_EVIDENCE_TERM_LENGTH = 128;
@@ -80,6 +83,7 @@ async function handler(req, res) {
   const surface = normalizedSurface(req);
   if (!surface) return auditInventoryHandler(req, res);
   if (surface === POLITY_REFERENCE_SURFACE) return polityReferenceAuditHandler(req, withPolityEvidenceLogging(req, res));
+  if (surface === PLACE_PRODUCTION_AUTHORITY_SURFACE) return placeProductionAuditHandler(req, res);
 
   res.statusCode = 404;
   res.setHeader("content-type", "application/json; charset=utf-8");
@@ -89,6 +93,7 @@ async function handler(req, res) {
 
 module.exports = handler;
 module.exports.POLITY_REFERENCE_SURFACE = POLITY_REFERENCE_SURFACE;
+module.exports.PLACE_PRODUCTION_AUTHORITY_SURFACE = PLACE_PRODUCTION_AUTHORITY_SURFACE;
 module.exports.POLITY_EVIDENCE_MARKER = POLITY_EVIDENCE_MARKER;
 module.exports.normalizedSurface = normalizedSurface;
 module.exports.normalizedEvidenceTerms = normalizedEvidenceTerms;
