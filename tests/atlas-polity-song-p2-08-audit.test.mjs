@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import {createRequire} from "node:module";
 const require=createRequire(import.meta.url);
 const {querySongDetails,SONG_P2_08_POLITY_IDS,SONG_P2_08_GAOZONG_ACTIVITIES,SONG_P2_08E_SOURCE_URLS}=require("../server/atlas-polity-reference-audit-handler.js");
@@ -48,4 +49,12 @@ test("P2-08 keeps two Gaozong segments and remains noncommitting",async()=>{
  assert.deepEqual(r.source_candidates,[]);
  assert.ok(r.relation_schema.every(row=>row && typeof row==="object"));
  assert.ok(seen.every(s=>/^\s*select\b/i.test(s)));
+});
+test("P2-08 workflow acceptance follows post-08D ownership, not stale pre-08B Gaozong ownership",()=>{
+ const workflow=fs.readFileSync(new URL("../.github/workflows/atlas-polity-song-p2-08-audit.yml",import.meta.url),"utf8");
+ assert.match(workflow,/4638676d-58de-5873-b2e8-a917a0f5cccf/);
+ assert.match(workflow,/d94907ae-eac0-518d-a26d-03adfb9534fb/);
+ assert.match(workflow,/4517af83-d656-47b0-a558-3a3df717f726/);
+ assert.match(workflow,/fe073a4c-d967-56e2-bb31-f74bdde1af87/);
+ assert.doesNotMatch(workflow,/select\(\.activity_id=="4517af83-d656-47b0-a558-3a3df717f726"[^\n]+select\(\.polity_id=="1a1983fd-1850-5756-877c-3d2c17b85e1f"/);
 });
