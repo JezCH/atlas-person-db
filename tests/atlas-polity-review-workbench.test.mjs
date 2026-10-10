@@ -138,10 +138,10 @@ test('current registry restores every required carry-forward audit family withou
   assert.equal(registry.historical_family_reviews.length, 16);
   assert.equal(registry.designation_residuals.length, 2);
   assert.equal(registry.naming_residuals.length, 2);
-  assert.deepEqual(registry.naming_residuals.map(row => row.terminal_status), ['FIXED','FIXED']);
-  assert.deepEqual(registry.naming_residuals.map(row => row.reviewed_decision), ['keep_both','keep_both']);
-  assert.deepEqual(registry.naming_residuals.map(row => row.locked), [true,true]);
-  assert.deepEqual(registry.naming_residuals.map(row => row.right.ko), ['고대 송나라(宋)','진(晉)']);
+  assert.deepEqual(Array.from(registry.naming_residuals, row => row.terminal_status), ['FIXED','FIXED']);
+  assert.deepEqual(Array.from(registry.naming_residuals, row => row.reviewed_decision), ['keep_both','keep_both']);
+  assert.deepEqual(Array.from(registry.naming_residuals, row => row.locked), [true,true]);
+  assert.deepEqual(Array.from(registry.naming_residuals, row => row.right.ko), ['고대 송나라(宋)','진(晉)']);
   assert.equal(registry.naming_residuals[0].left.polity_id, '1a1983fd-1850-5756-877c-3d2c17b85e1f');
   assert.equal(registry.naming_residuals[0].right.polity_id, 'f5547f25-fbae-5a84-ad65-04bdb82de1e7');
   assert.equal(registry.naming_residuals[1].left.polity_id, '4ed462b6-6d39-571a-bb18-3e320bddd199');
