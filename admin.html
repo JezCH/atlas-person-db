@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>ATLAS Admin</title>
+  <title>ATLAS 관리자</title>
   <link rel="stylesheet" href="./admin.css?v=20260811-maintenance-m1" />
   <link rel="stylesheet" href="./atlas-admin-observability.css?v=20260815-ui2f" />
   <link rel="stylesheet" href="./atlas-admin-workspace.css?v=20260815-ui4" />
@@ -15,16 +15,16 @@
   <main class="admin-shell">
     <header class="admin-head">
       <div>
-        <p class="eyebrow">ATLAS ADMIN V2</p>
+        <p class="eyebrow">ATLAS 관리자</p>
         <h1>데이터 관리자</h1>
-        <p>normalized v2 identity를 기준으로 인물·정치체·역할과 활동 관계, 중복 후보를 관리합니다.</p>
+        <p>정규화된 식별정보를 기준으로 인물·정치체·역할과 활동 관계, 중복 후보를 관리합니다.</p>
       </div>
-      <a class="button secondary" href="./index.html">Persons로 돌아가기</a>
+      <a class="button secondary" href="./index.html">인물 화면으로 돌아가기</a>
     </header>
 
     <section id="adminAuthPanel" class="status-card auth-card" aria-labelledby="admin-auth-title">
       <div>
-        <p class="status-label">ADMIN SESSION</p>
+        <p class="status-label">관리자 로그인</p>
         <h2 id="admin-auth-title">관리자 인증</h2>
         <p id="adminAuthMessage">현재 관리자 세션을 확인하고 있습니다.</p>
       </div>
@@ -44,9 +44,9 @@
     <section id="duplicateProtectedArea" class="admin-protected-area is-locked" inert aria-disabled="true">
       <section class="status-card" aria-labelledby="duplicate-title">
         <div>
-          <p class="status-label">PHASE 9 · REVIEW DOMAIN</p>
+          <p class="status-label">9단계 · 중복 검토</p>
           <h2 id="duplicate-title">중복 후보 검토</h2>
-          <p>이름은 후보를 찾는 근거일 뿐 identity가 아닙니다. 후보마다 근거와 신뢰도를 보고 <strong>병합 승인</strong>, <strong>별개 인물</strong>, <strong>추가 검토</strong>를 기록합니다. 병합 승인은 여기서 인물을 삭제하지 않습니다.</p>
+          <p>이름은 후보를 찾는 근거일 뿐 고유 식별정보가 아닙니다. 후보마다 근거와 신뢰도를 보고 <strong>병합 승인</strong>, <strong>별개 인물</strong>, <strong>추가 검토</strong>를 기록합니다. 병합 승인은 여기서 인물을 삭제하지 않습니다.</p>
         </div>
         <span id="duplicateStatusBadge" class="status-badge">인증 대기</span>
       </section>
@@ -55,7 +55,7 @@
         <div class="panel-head">
           <div>
             <h2 id="queue-title">검토 대기열</h2>
-            <p>후보 새로 계산은 현재 normalized names/activity를 다시 분석합니다. KEEP_SEPARATE 판정은 근거 fingerprint가 달라질 때 REVIEW로 다시 열립니다.</p>
+            <p>후보 새로 계산은 현재 정규화된 이름·활동 기록을 다시 분석합니다. 별개 인물 판정은 근거 식별값이 달라지면 추가 검토로 다시 열립니다.</p>
           </div>
           <div class="panel-actions">
             <button id="refreshCandidatesButton" class="button secondary" type="button">새로고침</button>
@@ -87,7 +87,7 @@
 
     <section class="notice merge-boundary">
       <strong>현재 병합 실행 경계</strong>
-      <p><code>MERGE</code> 판정과 실제 병합은 분리됩니다. 실제 physical Person 병합은 서버가 현재 <code>semantic-key v2</code> reconciliation, 전체 duplicate revalidation frontier, durable requirement, live evidence와 참조 표면을 모두 다시 검증해 <code>merge_execution_state.allowed=true</code>일 때만 제공됩니다. 실행 시 유지할 Person UUID와 관계 정리 방식을 명시한 하나의 PostgreSQL <code>SERIALIZABLE</code> transaction으로 처리하고, 병합 후 후보 frontier를 같은 transaction에서 다시 계산합니다.</p>
+      <p><code>MERGE</code>(병합 승인) 판정과 실제 병합은 분리됩니다. 실제 인물 데이터 통합은 서버가 현재 <code>semantic-key v2</code> reconciliation, 전체 duplicate revalidation frontier, durable requirement, live evidence와 참조 표면을 모두 다시 검증해 <code>merge_execution_state.allowed=true</code>일 때만 제공됩니다. 실행 시 유지할 Person UUID와 관계 정리 방식을 명시한 하나의 PostgreSQL <code>SERIALIZABLE</code> transaction으로 처리하고, 병합 후 후보 frontier를 같은 transaction에서 다시 계산합니다.</p>
     </section>
 
     <section id="dataProtectedArea" class="admin-protected-area is-locked" inert aria-disabled="true">
@@ -95,9 +95,9 @@
         <section class="panel" aria-labelledby="system-status-title">
           <div class="panel-head">
             <div>
-              <p class="status-label">SYSTEM / STATUS · READ ONLY</p>
+              <p class="status-label">시스템 상태 · 읽기 전용</p>
               <h2 id="system-status-title">시스템 현황</h2>
-              <p>현재 런타임이 직접 확인할 수 있는 배포 식별자, 설정 존재 여부, DB 구조·row count, authoring/P10 readiness와 중복 lifecycle을 표시합니다. 비밀번호·토큰·DB URL 같은 secret 값은 표시하지 않습니다.</p>
+              <p>현재 런타임이 직접 확인할 수 있는 배포 식별자, 설정 존재 여부, 데이터베이스 구조·행 수, 원본 등록·P10 준비 상태와 중복 처리 이력을 표시합니다. 비밀번호·토큰·DB URL 같은 민감한 설정값은 표시하지 않습니다.</p>
             </div>
             <div class="panel-actions">
               <span id="systemStatusBadge" class="status-badge">인증 대기</span>
@@ -105,7 +105,7 @@
             </div>
           </div>
           <div id="systemStatusBody" aria-live="polite">
-            <p class="empty-state">관리자 인증 후 System Status를 불러옵니다.</p>
+            <p class="empty-state">관리자 인증 후 시스템 현황을 불러옵니다.</p>
           </div>
           <p class="obs-boundary-note">GitHub Actions 결과는 런타임 내부 값이 아니므로 이 API가 임의로 정상 판정을 만들지 않습니다.</p>
         </section>
@@ -113,14 +113,14 @@
         <section class="panel" aria-labelledby="inspector-title">
           <div class="panel-head">
             <div>
-              <p class="status-label">OBJECT INSPECTOR · READ ONLY</p>
-              <h2 id="inspector-title">UUID Object Inspector</h2>
-              <p>Person, Activity, Polity, Role, Period Basis, Relation Type, Source의 authoritative UUID를 직접 조회합니다. 지원 object 종류는 서버 capabilities에서 읽습니다.</p>
+              <p class="status-label">객체 조회 · 읽기 전용</p>
+              <h2 id="inspector-title">UUID 기반 객체 조회</h2>
+              <p>인물·활동·정치체·역할·기간 기준·관계 유형·출처의 기준 UUID를 직접 조회합니다. 지원되는 객체 유형은 서버에서 확인합니다.</p>
             </div>
             <span id="inspectorStatusBadge" class="status-badge">인증 대기</span>
           </div>
           <form id="adminInspectorForm" class="obs-form">
-            <label>Object kind
+            <label>객체 유형
               <select id="inspectorKind" required>
                 <option value="">관리자 인증 필요</option>
               </select>
@@ -131,72 +131,72 @@
             <button class="button primary" type="submit">조회</button>
             <button id="clearInspectorButton" class="button secondary" type="button">초기화</button>
           </form>
-          <pre id="inspectorResult" class="result obs-inspector-result" aria-live="polite">관리자 인증 후 UUID 기반 Object Inspector를 사용할 수 있습니다.</pre>
-          <p class="obs-boundary-note">Inspector는 source UUID/key/hash/bytes와 provenance locator 같은 Admin-safe 원본 정보를 보여주지만, audit OIDC ledger나 환경변수 값·인증 secret은 조회하지 않습니다.</p>
+          <pre id="inspectorResult" class="result obs-inspector-result" aria-live="polite">관리자 인증 후 UUID 기반 객체 조회를 사용할 수 있습니다.</pre>
+          <p class="obs-boundary-note">객체 조회 화면에는 출처 UUID·키·해시·크기와 출처 위치 정보 중 관리자에게 공개 가능한 항목만 표시합니다. 감사 원장·환경변수·인증 정보는 제공하지 않습니다.</p>
         </section>
       </div>
 
       <section class="panel" aria-labelledby="identity-title">
         <div class="panel-head">
           <div>
-            <p class="status-label">IDENTITY AUTHORING</p>
-            <h2 id="identity-title">신규 Identity 등록</h2>
-            <p>새 Person·Polity·Role을 먼저 normalized identity로 생성합니다. Person/Polity는 EN canonical과 KO preferred display를 같은 SERIALIZABLE transaction에서 함께 생성합니다.</p>
+            <p class="status-label">식별정보 등록</p>
+            <h2 id="identity-title">신규 식별정보 등록</h2>
+            <p>새 인물·정치체·역할의 식별정보를 먼저 등록합니다. 인물·정치체의 영문 기준명과 한국어 대표 이름은 하나의 일관된 트랜잭션에서 함께 생성합니다.</p>
           </div>
         </div>
 
         <div class="identity-layout">
           <form id="createPersonForm" class="identity-form">
-            <h3>Person</h3>
-            <label>영문 canonical 이름<input id="personCanonicalNameEn" required /></label>
+            <h3>인물</h3>
+            <label>영문 기준 이름<input id="personCanonicalNameEn" required /></label>
             <label>한국어 표시명<input id="personDisplayNameKo" required /></label>
-            <label>Canonical key <small>비우면 영문 canonical 이름 사용</small><input id="personCanonicalKey" /></label>
+            <label>기준 식별 키 <small>비우면 영문 기준 이름 사용</small><input id="personCanonicalKey" /></label>
             <div class="identity-two">
-              <label>Person type<input id="personType" value="historical" required /></label>
-              <label>Historicity<input id="personHistoricity" value="historical" required /></label>
+              <label>인물 유형<input id="personType" value="historical" required /></label>
+              <label>역사성<input id="personHistoricity" value="historical" required /></label>
             </div>
             <h3>생존 상태 검토</h3>
             <div class="identity-two">
-              <label>생존 상태<select id="personLifeStatus" required><option value="">선택</option><option value="deceased">사망 확인됨 · deceased</option></select></label>
+              <label>생존 상태<select id="personLifeStatus" required><option value="">선택</option><option value="deceased">사망 확인됨</option></select></label>
               <label>검토일<input id="personLifeStatusCheckedAt" type="date" required /></label>
             </div>
             <label>판정 근거<select id="personLifeStatusBasis" required><option value="">선택</option><option value="documented_death">문헌·공식 기록으로 사망 확인</option><option value="historical_certainty">역사적 연대상 사망이 확실</option></select></label>
-            <p class="identity-help">ATLAS Person DB는 현재 생존 인물을 등록하지 않습니다. 활동 종료연도·ongoing 여부·대표 활동연도는 생존 판정에 사용하지 않습니다.</p>
-            <label class="identity-check"><input id="personAllowKoCollision" type="checkbox" /> 동일 한국어 표시명이 다른 Person에 있어도 검토 후 허용</label>
-            <button class="button primary" type="submit">Person 생성</button>
+            <p class="identity-help">ATLAS Person DB는 현재 생존 인물을 등록하지 않습니다. 활동 종료연도·진행 중 여부·대표 활동연도는 생존 판정에 사용하지 않습니다.</p>
+            <label class="identity-check"><input id="personAllowKoCollision" type="checkbox" /> 동일 한국어 표시명이 다른 인물에 있어도 검토 후 허용</label>
+            <button class="button primary" type="submit">인물 생성</button>
           </form>
 
           <form id="createPolityForm" class="identity-form">
-            <h3>Polity</h3>
-            <label>영문 canonical 이름<input id="polityCanonicalNameEn" required /></label>
+            <h3>정치체</h3>
+            <label>영문 기준 이름<input id="polityCanonicalNameEn" required /></label>
             <label>한국어 표시명<input id="polityDisplayNameKo" required /></label>
-            <label>Canonical key <small>비우면 영문 canonical 이름 사용</small><input id="polityCanonicalKey" /></label>
+            <label>기준 식별 키 <small>비우면 영문 기준 이름 사용</small><input id="polityCanonicalKey" /></label>
             <div class="identity-two">
-              <label>Polity type<input id="polityType" value="historical_polity" required /></label>
-              <label>Historicity<input id="polityHistoricity" value="historical" required /></label>
+              <label>정치체 유형<input id="polityType" value="historical_polity" required /></label>
+              <label>역사성<input id="polityHistoricity" value="historical" required /></label>
             </div>
-            <label class="identity-check"><input id="polityAllowKoCollision" type="checkbox" /> 동일 한국어 표시명이 다른 Polity에 있어도 검토 후 허용</label>
-            <button class="button primary" type="submit">Polity 생성</button>
+            <label class="identity-check"><input id="polityAllowKoCollision" type="checkbox" /> 동일 한국어 표시명이 다른 정치체에 있어도 검토 후 허용</label>
+            <button class="button primary" type="submit">정치체 생성</button>
           </form>
 
           <form id="createRoleForm" class="identity-form">
-            <h3>Role</h3>
-            <label>Role code<input id="roleCode" placeholder="예: emperor" required /></label>
-            <label>영문 source label<input id="roleSourceLabel" placeholder="예: Emperor" required /></label>
+            <h3>역할</h3>
+            <label>역할 코드<input id="roleCode" placeholder="예: emperor" required /></label>
+            <label>영문 출처 표기<input id="roleSourceLabel" placeholder="예: Emperor" required /></label>
             <label>한국어 표시명<input id="roleDisplayNameKo" placeholder="예: 황제" required /></label>
-            <label>Category<input id="roleCategory" placeholder="분류를 명시적으로 입력" required /></label>
-            <p class="identity-help">Role은 정확 조회가 모호해지지 않도록 code·영문 label·한국어 이름 충돌을 자동 허용하지 않습니다.</p>
-            <button class="button primary" type="submit">Role 생성</button>
+            <label>분류<input id="roleCategory" placeholder="분류를 명시적으로 입력" required /></label>
+            <p class="identity-help">역할 정보는 정확한 조회를 위해 코드·영문 표기·한국어 이름의 중복을 자동 허용하지 않습니다.</p>
+            <button class="button primary" type="submit">역할 생성</button>
           </form>
         </div>
-        <pre id="identityResult" class="result" aria-live="polite">Identity authoring 준비됨</pre>
+        <pre id="identityResult" class="result" aria-live="polite">식별정보 등록 준비 완료</pre>
       </section>
 
       <section class="panel" aria-labelledby="input-title">
         <div class="panel-head">
           <div>
             <h2 id="input-title">활동 관계 JSON 입력</h2>
-            <p>먼저 위에서 필요한 identity를 만든 뒤 활동 관계를 저장합니다. 동일 활동 판정은 Person + Polity + Relation + Role/NULL + Period basis + 전체 시작/종료 temporal boundary를 사용합니다. 역사 연도 0은 허용하지 않습니다.</p>
+            <p>먼저 위에서 필요한 식별정보를 만든 뒤 활동 관계를 저장합니다. 동일 활동 판정은 인물 + 정치체 + 관계 + 역할(없음 가능) + 기간 기준 + 전체 시작·종료 시점를 사용합니다. 역사 연도 0은 허용하지 않습니다.</p>
           </div>
           <button id="sampleButton" class="button secondary" type="button">예시 불러오기</button>
         </div>
