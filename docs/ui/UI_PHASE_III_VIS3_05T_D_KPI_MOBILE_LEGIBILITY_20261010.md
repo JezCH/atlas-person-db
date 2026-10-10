@@ -14,3 +14,7 @@
 Before any release: Chrome live Production **same-DOM baseline vs branch CSS delta** with separate fresh documents at CSS widths 390/768/1440/1600, compare KPI text and controls, six values, key position/overlap, card clipping/overflow; confirm 58px appbar geometry, title not obstructed and mobile menu click target; keyboard focus and 125/150% zoom remain separate acceptance. A normal source test cannot prove visual typography comfort.
 
 After passing, merge only after GitHub Integrity; then separately verify Vercel Production READY, exact deployed source parity, and a postdeploy browser/read-back. User final mixed-D aesthetic signoff remains pending. **Next distinct unit: VIS3-05T-E sidebar collapse-toggle alignment**, then VIS3-06~17 per existing Phase III sequence.
+
+## First Chrome attempt — layout consequence caught
+
+[Run #38026942865](https://github.com/JezCH/atlas-person-db/actions/runs/38026942865) reached actual live Production 390px browser comparison and detected the first KPI value **moved downward 3.7px** when the 8px label became 10px, without value/text change. This is a normal line-box flow consequence, not a passing invariant. The targeted browser acceptance was refined to keep numeric dimensions/column widths unchanged, bound the natural vertical shift to 6px, and detect true KPI headline/detail overlap and total panel movement. Do not describe pixel positions as strictly unchanged; let the next Chrome run determine acceptance.
