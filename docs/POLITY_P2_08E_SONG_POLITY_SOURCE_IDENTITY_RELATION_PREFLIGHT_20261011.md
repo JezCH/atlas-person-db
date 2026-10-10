@@ -67,3 +67,48 @@ The follow-up P2-08E write decision must then be made from that artifact:
 2. **Identity continuity:** use only a live supported identity-relation type whose semantics actually fit Northern Song → Southern Song / Song dynastic continuity. If no such type exists, do **not** repurpose a structural relation or invent a code inside a data correction; schema/vocabulary review becomes the next unit.
 3. **Generic Song:** remains nonempty and non-destructive. Retirement/deletion still requires explicit user approval and is outside this preflight.
 4. **No seed-count change:** `song-generic-polity-activity-ownership` remains `PARTIAL_REPAIR` until the source/relation decision and focused Production/Runtime verification are actually complete.
+
+
+## Authenticated Production result — main `b00be804…`
+
+The first merged P2-08E-A Production request **itself succeeded read-only** on exact deployed main SHA `b00be80471a401a30a6a79b1448a86d82d4864b3`. The workflow was marked failed only because its post-read jq gate still encoded the older P2-07D assumption that Gaozong's two reign Activities belonged to generic Song. Current Production correctly reflects the completed P2-08B/P2-08C/P2-08D sequence: generic Song **2**, Northern Song **7**, Southern Song **5**; Gaozong's two Activities are Southern Song, while generic Song contains only Taizu and Shenzong. The stale gate is corrected in the follow-up acceptance patch; no canonical data were changed.
+
+Read-only artifact attempt 2: GitHub Actions run `38066554389`, artifact `11674794701`, ZIP digest `sha256:922914e69ef444e0520bbda09be3c25b4bb838c32104a33f5f59d92490aa2490`.
+
+### Live relation vocabulary
+
+- `polity_identity_relation_types`: **0 rows**. The identity-relation schema/writer exists, but **Production currently has no supported identity-relation code at all**.
+- `polity_identity_relations` involving the three Song Polities: **0 rows**.
+- Structural `polity_relation_types`: exactly **5** active codes:
+  - `colonial_dependency_of`
+  - `constituent_of`
+  - `dominion_of`
+  - `nominally_subordinate_to`
+  - `vassal_of`
+- None of those structural dependency/constituency codes expresses Zhao Song dynastic continuity across the Northern/Southern operational rupture. Therefore P2-08E must **not** misuse `polity_relations` for this purpose.
+
+### Live Polity provenance
+
+Direct `polity_sources` rows in the same snapshot:
+
+- generic Song: **2**, both legacy repository datasets;
+- Northern Song: **0**;
+- Southern Song: **1**, legacy repository dataset.
+
+Exact collision scan over the six reviewed Cambridge URLs found **2 existing normalized Sources**:
+
+1. existing founding/consolidation chapter Source `5496aca8-5198-4887-a348-c66ee25eacfd`;
+2. existing Ari Levine *Fall of the Northern Sung* chapter Source `a8766516-351a-4162-b477-0396f468eafe`.
+
+The other four exact Cambridge URLs were absent under those canonical URLs at this snapshot. Thus **Northern Song does not require inventing a new scholarly source merely to obtain direct provenance**: the already-normalized Ari Levine Northern Sung source is an exact reusable candidate. However, no reviewed canonical writer for a direct `polity_sources` link has yet been identified in the current correction surface, so P2-08E-A remains read-only rather than bypassing One Resource, One Writer.
+
+### Consequence for the next unit
+
+The evidence closes the modeling ambiguity for this preflight:
+
+1. **Structural relation:** rejected for Song continuity; live vocabulary is semantically inapplicable.
+2. **Identity relation:** conceptually the correct layer, and Correction v2 already has `assert_polity_identity_relation`, but **no live identity-relation type exists**. A relation cannot be asserted until a reviewed controlled-vocabulary type is deliberately introduced through the canonical schema/authoring authority.
+3. **Northern Song source:** an exact reusable Cambridge Source already exists, but a canonical direct-Polity-source link operation must be located or added rather than direct SQL.
+4. **Generic Song:** stays nonempty and unchanged; no retirement/deletion/relink is authorized.
+
+Therefore the exact next resume point after the fixed acceptance run is **`POLITY-P2-08E-B` — direct Polity Source writer path + identity-relation controlled-vocabulary decision**. It must remain non-destructive; generic Song retirement still requires separate explicit user approval.
