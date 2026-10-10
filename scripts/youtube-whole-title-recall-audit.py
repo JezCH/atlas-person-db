@@ -16,6 +16,7 @@ import zipfile
 from pathlib import Path
 
 TOKEN_RE = re.compile(r"[^\W_]+", re.UNICODE)
+QUARANTINE_NAME_RE = re.compile(r"^(?:the|a|an|untold)\b|^(?:new york|social media|prime minister)$", re.IGNORECASE)
 FOCUS_BEFORE = re.compile(
     r"(?:^|\b)(?:"
     r"(?:the\s+)?(?:untold\s+|true\s+|secret\s+)?(?:life|story|biography|autopsy|death|murder|legacy|rise and fall)"
@@ -44,6 +45,8 @@ def build_index(names, min_words=2):
     """No guessed surname/mononym identity or registered-Person UUID dependency."""
     index = collections.defaultdict(list)
     for name in sorted(set(names)):
+        if QUARANTINE_NAME_RE.search(name):
+            continue
         ts = tuple(x[0] for x in tokens(name))
         if len(ts) < min_words or len(ts) > 8 or not all(ts):
             continue
@@ -91,6 +94,8 @@ def audit_source(source_zip, snapshot, *, min_words=2, max_examples=3):
     if not isinstance(snapshot.get("signals"), list) or not isinstance(snapshot.get("snapshot"), dict):
         raise ValueError("invalid source candidate snapshot")
     snapshot_meta = snapshot["snapshot"]
+    if min_words < 2:
+        raise ValueError("min_words must be >=2: mononyms require identity review")
     index = build_index((v["raw_name"] for v in snapshot["signals"]), min_words)
     stats = collections.defaultdict(lambda: {
         "title_mention_channel_ids": set(), "title_mention_video_ids": set(),
@@ -118,9 +123,14 @@ def audit_source(source_zip, snapshot, *, min_words=2, max_examples=3):
                     matches = find_names(title, index)
                     if matches:
                         videos_with_any_match += 1
+                    distinct_labels = {label for label, _, _ in matches}
+                    processed_labels = set()
                     for label, start, end in matches:
+                        if label in processed_labels:
+                            continue
+                        processed_labels.add(label)
                         total_match_rows += 1
-                        kind = classify_match(title, start, end, len(matches))
+                        kind = classify_match(title, start, end, len(distinct_labels))
                         item = stats[label]
                         item["title_mention_channel_ids"].add(channel_id)
                         item["title_mention_video_ids"].add(video_id)
@@ -163,6 +173,7 @@ def audit_source(source_zip, snapshot, *, min_words=2, max_examples=3):
         "min_name_words": min_words,
         "matched_name_labels": len(rows),
         "source_candidate_name_labels": len(snapshot["signals"]),
+        "indexed_name_labels": sum(len(v) for v in index.values()),
         "successful_channels": len(channels_seen),
         "original_videos": total_videos,
         "videos_with_any_known_candidate_name": videos_with_any_match,
@@ -173,6 +184,7 @@ def audit_source(source_zip, snapshot, *, min_words=2, max_examples=3):
             "Overlapping names choose longest phrase; this does NOT merge distinct aliases.",
             "Names missed by prior source extractor are absent from this candidate lexicon.",
             "Names with fewer than min_name_words tokens are excluded (hold for identity review).",
+            "Obvious generic source-label phrases are quarantined, not counted as Person.",
         ],
         "rows": rows,
     }
