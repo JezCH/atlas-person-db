@@ -244,14 +244,24 @@
         id: "gorkha-nepal",
         review_group: "historical_family_review",
         kind: "family_review",
-        title: "Gorkha ↔ Kingdom of Nepal",
-        left: { name: "Gorkha" },
-        right: { name: "Kingdom of Nepal" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        title: "Gorkha Kingdom ↔ Kingdom of Nepal",
+        left: { name: "Gorkha Kingdom", polity_id: "0eec74a4-a2a4-43f3-b347-54370b94da14" },
+        right: { name: "Kingdom of Nepal", polity_id: "7518462f-9769-413f-a245-cc3825b45d17" },
+        rationale: "POLITY-P2-04D 사료·Production 판정: 프리트비 나라얀 샤가 1743년 고르카 왕국에 즉위하여 확장하고, 1768년 카트만두 진입과 1768–1769년 계곡 정복을 계기로 통일 네팔의 카트만두 중심 통치체제로 확대했습니다. 같은 샤 왕조·같은 군주가 주권 통치를 이어간 것이며 두 나라가 동시에 존속한 별개 왕조/외부 주권 단절로 오인해서는 안 됩니다. 다만 고르카 소영역 통치단계와 수도·관할·국가형태가 확대된 통일 네팔 왕국을 구별하는 현행 역사적 단계 Polity UUID·연도단위 활동구간은 정당합니다. 1768–1769 복수 사건의 불확실성을 하나의 정확한 건국일로 고정하지 않습니다. 기존 프리트비 2개 Activity 및 트리부반 1950–1951 복위 분절 통치와 출처 전부 보존; 병합·삭제·Production 수정 필요 없음.",
+        suggested_action: "keep_both",
+        reviewed_decision: "keep_both",
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        locked: true,
+        evidence: [
+          "2026-10-10 fresh Production: Gorkha Kingdom 0eec74a4-a2a4-43f3-b347-54370b94da14 / Prithvi Narayan Shah 654b123a-dc72-4900-a404-751ae3c9f22d Activity b76ee400-deeb-4e5e-a961-58c773e93ad4 1743–1768 year-granularity reign",
+          "2026-10-10 fresh Production: Kingdom of Nepal 7518462f-9769-413f-a245-cc3825b45d17 / same Prithvi Activity 3c267e73-5b4e-40cd-9c86-965381d58a84 1768–1775 year-granularity reign",
+          "2026-10-10 fresh Production: Tribhuvan fc22be63-7d0b-40bc-b352-eeba85fc3193 activities b6dabe02-86d2-44c4-8461-fbc918a89cb4 1911→1950-11-07 and 32c6bf60-8019-42ec-992d-94c69d419035 1951-02-18→1955-03-13 on Nepal; deliberate restoration gap preserved, Runtime authoring=2523 / projection=2523 / current=true",
+          "Cambridge, John Whelpton, A History of Nepal: 1743 Gorkha accession, 1768 entry into Kathmandu and 1768–1769 valley conquest; https://www.cambridge.org/core/books/abs/history-of-nepal/unification-and-sanskritisation-1743-1885/DAEF862FA8F8FA958A092FEA357440D0",
+          "Government of Nepal, Embassy in Doha history: earlier independent Gorkha principality, transfer of seat to Kathmandu and unified Shah-ruled Nepal described from 1769; https://qa.nepalembassy.gov.np/pages/the-history-of-nepal-20/",
+          "Oxford University Press, Axel Michaels, From Gorkha to Nepal: The Saha Monarchy 1768/69–1846, continuity and transformation of the same state-builder; https://academic.oup.com/book/56088/chapter-abstract/442704231",
+          "Source-backed terminal case, caveats and no Production mutation: docs/POLITY_P2_04D_GORKHA_NEPAL_UNIFICATION_20261010.md"
+        ]
       },
       {
         id: "chuzan-ryukyu",
