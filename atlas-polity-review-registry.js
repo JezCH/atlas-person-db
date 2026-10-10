@@ -394,14 +394,27 @@
         id: "indonesia-ris-family",
         review_group: "historical_family_review",
         kind: "family_review",
-        title: "Republic of Indonesia ↔ United States of Indonesia / Republic of Indonesia",
-        left: { name: "Republic of Indonesia" },
-        right: { name: "United States of Indonesia / Republic of Indonesia" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
-        suggested_action: "hold",
+        title: "Republic of Indonesia (1945/1950) ↔ United States of Indonesia (1949–50) / RIS constituent RI",
+        left: { name: "Republic of Indonesia", ko: "인도네시아 공화국", polity_id: "2682c74a-3404-42be-93ae-9bcc5875a3b0" },
+        right: { name: "United States of Indonesia", ko: "인도네시아 합중국", polity_id: "a0e85099-3cb0-4b9d-94bb-234ae8fcb232" },
+        rationale: "POLITY-P2-04J 2026-10-10 Production 검토 + 1950년 연방법 7호 원문 + 인도네시아 국가기록원(ANRI) 교차검증: 1945년 독립공화국과 1949-12-27~1950-08-17 주권 연방 RIS, 이후 단일공화국은 연속된 인도네시아 국가의 헌정·관할 단계입니다. 그러나 RIS 존속기에는 공화국 RI 자체가 RIS 연방의 16개 구성국 중 하나로 실존하고 욕야카르타에서 아사앗(Mr. Assaat)이 RI 대통령 직무대행을 수행하여, 단순히 수카르노의 RI→RIS→RI 개인활동 3개로 완결할 수 없습니다. 최신 Production은 1158 Polity 중 인도네시아 명칭 직결 2개(REPUBLIC/RIS)와 수카르노 3개 활동만 확인되며, Person 2145 목록에 Assaat 이름이 없고 구성국 RI의 별도 대통령 직무대행 활동도 없습니다. RI/RIS 두 기존 UUID를 임의 병합해서도 안 되고, 현행 RI UUID 하나만을 1949~50 독립 공화국/연방 구성국/1950 후속 단일 국가에 무비판적으로 일괄 적용할 수도 없습니다. 정확한 구성국 RI의 identity/temporal jurisdiction 표현과 출처 있는 아사앗 Person·Acting President Activity를 별도 등록 및 작성 승인 경로로 검토해야 합니다. ANRI는 수카르노가 1949-12-20 RI 대통령직을 아사앗에게 넘긴 의식을 기록하지만, 공식 인물 초상 기술은 아사앗 1949-12-27~1950-08-15 직무대행으로 기록하고 있습니다. 법적 연방전환 1949-12-27, RI 직무 인계식 1949-12-20, 직무 종료 1950-08-15, 단일제 효력 1950-08-17을 다른 사건으로 분리해 검증 전에는 수카르노 1945-12-18~1949-12-27 또는 아사앗 새 Activity에 단정적 날짜를 부여하지 않습니다. 현행 모든 reviewed Source/Activity UUID·일자 정밀도 유지, no Production write. 누락 Person/직위·정치체 관할을 복구하고 검증하기 전까지 REVIEW_REQUIRED 유지.",
+        suggested_action: "repair",
+        reviewed_decision: "retain_RI_RIS_distinction_repair_federal_constituent_RI_and_Assaat_1949_1950",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        evidence: [
+          "2026-10-10 live Production polity list 1158 records: Republic of Indonesia 2682c74a-3404-42be-93ae-9bcc5875a3b0 (Sukarno 1945–1949 and 1950–1967; Suharto 1967–1998) vs United States of Indonesia a0e85099-3cb0-4b9d-94bb-234ae8fcb232 (Sukarno 1949–1950). Scoped naming census does not certify absence of all similarly situated unnamed entities.",
+          "2026-10-10 live Sukarno Person 7ef3851e-3927-4600-9953-bc03c15d08f7; first RI Presidency Activity d27b3368-00ec-442a-9639-df45d4a2898c 1945-08-18→1949-12-27 day/exact/gregorian, RIS presidency Activity 9de8fc17-e187-46f7-8896-82e41cc8233e 1949-12-27→1950-08-17 day/exact/gregorian, resumed unitary RI presidency Activity b8a6196b-fecc-4689-85c7-193efb2b2dfc 1950-08-17→1967-03-12 day/exact/gregorian; all 3 reviewed/well_established with same Ministry of Education source, preserve before verified correction",
+          "2026-10-10 live Production person list 2145 persons checked exact/canonical and aliases: no Assaat/Asaat name match; no separately modeled RIS constituent Republic of Indonesia matched in 1158 polity names; negative scope is name-based observed absence, not absolute proof of authoring or hidden aliases",
+          "2026-10-10 publication_current=true, Authoring=2523 and Runtime=2523; no evidence this parity alone validates missing state leader",
+          "ANRI 2017 inventory of RIS Ministry of Justice, historical organization p.iv / PDF p.5: RIS 1949-12-27; RI one of 16 constituent states; Sukarno President of RIS, Mr. Assaat Acting President of RI in Yogyakarta; federation ceased 1950-08-17: https://anri.go.id/download/inventaris-arsip-tekstual-kementerian-kehakiman-ris-1946-19491950-1613534790",
+          "1950 federal Law No 7 original text, Ministry of Finance government JDIH: explicit 1945 Indonesian state identity preamble with former unitary→federal→unitary phases, separate RIS Government and component RI Government in 19 May 1950 negotiated agreement, promulgated 1950-08-15/effective 1950-08-17: https://www.jdih.kemenkeu.go.id/api/download/fullText/1950/UUDSTAHUN~1950UUDS.HTM",
+          "BPK Indonesian law metadata UU 7/1950 enacted 1950-08-15, effective 1950-08-17: https://peraturan.bpk.go.id/Details/38102/uu-no-7-tahun-1950",
+          "ANRI public image-caption archive: Sukarno formally handed RI president office to Assaat on 1949-12-20 before RIS presidency, Assaat acting RI president to 1950-08-15; separate ANRI portrait description 1949-12-27 to 1950-08-15; distinguish ceremony vs constitutional effectiveness rather than guess: https://anri.go.id/publikasi/pameran-virtual?page=18",
+          "Indonesian Ministry of Religious Affairs citing RI law No 4 of 1950 issued at Yogyakarta 1950-04-02 and signed by acting RI president Assaat; independent proof of 1950 RI governmental action within federal era: https://kemenag.go.id/en/opini/undang-undang-sistem-pendidikan-nasional-sejarah-dan-maknanya-uGdGp",
+          "Archontology polity chronology: Republic of Indonesia from 1945 became 1949-12-27 federal constituent Republic and merged into new unitary polity on 1950-08-17; https://archontology.org/nations/indonesia/republic_of_indonesia/01_polity.php",
+          "Primary-source scope and actionable repair report: docs/POLITY_P2_04J_INDONESIA_RIS_FEDERAL_MEMBER_ASSAAT_AUDIT_20261010.md"
+        ]
       },
       {
         id: "nicaea-byzantine",
