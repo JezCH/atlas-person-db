@@ -162,3 +162,44 @@ test("OIDC handler binds workflow identity and exact Production runtime",async()
   assert.equal(policy.workflowRef,"JezCH/atlas-person-db/.github/workflows/youtube-preserve-verified-corpus.yml@refs/heads/main");
   assert.deepEqual([...policy.allowedEvents],["workflow_dispatch"]);
 });
+
+
+test("catalog read operation stays DB read-only after prior schema bootstrap",async()=>{
+  const sha="b".repeat(40);
+  let migrationCalls=0;
+  let readCalls=0;
+  const handler=handlerModule.createYoutubeSourceArchiveHandler({
+    env:{
+      VERCEL_ENV:"production",
+      VERCEL_GIT_COMMIT_REF:"main",
+      VERCEL_GIT_REPO_OWNER:"JezCH",
+      VERCEL_GIT_REPO_SLUG:"atlas-person-db",
+      VERCEL_GIT_COMMIT_SHA:sha,
+      SUPABASE_DB_URL:"postgresql://example.invalid/postgres"
+    },
+    verifyOidc:async()=>{},
+    clientFactory:async()=>({end:async()=>{}}),
+    applyMigrations:async()=>{migrationCalls+=1;return {applied:["unexpected"]};},
+    publish:async()=>{throw new Error("publish must not run");},
+    readCatalog:async(_client,id)=>{
+      readCalls+=1;
+      return {artifact_id:Number(id),record_count:1,records:[row()]};
+    }
+  });
+  const res=response();
+  await handler({
+    method:"POST",
+    headers:{authorization:"Bearer token"},
+    body:{
+      operation:"read_catalog",
+      runtime_sha:sha,
+      publication_sha:sha,
+      source_artifact_id:11548326100
+    }
+  },res);
+  assert.equal(res.statusCode,200);
+  assert.equal(res.body.operation,"read_catalog");
+  assert.deepEqual(res.body.migration,{applied:[]});
+  assert.equal(migrationCalls,0);
+  assert.equal(readCalls,1);
+});
