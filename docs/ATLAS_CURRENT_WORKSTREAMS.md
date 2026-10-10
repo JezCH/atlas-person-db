@@ -14,19 +14,19 @@
 
 ### A. Polity identity / continuity cleanup — #1895
 
-**Registry snapshot: 75 total / 56 terminal / 19 `REVIEW_REQUIRED`** (2026-10-10). This is the tracked seed ledger, **not** a guarantee that all live Polity identities have been audited.
+**Registry snapshot: 75 total / 57 terminal / 18 `REVIEW_REQUIRED`** (2026-10-10). This is the tracked seed ledger, **not** a guarantee that all live Polity identities have been audited.
 
 Pending distribution, calculated from the canonical registry:
 
 | Review group | Pending |
 | --- | ---: |
-| Historical-family continuity | 7 |
+| Historical-family continuity | 6 |
 | Temporal designation | 2 |
 | Korean naming collisions | 2 |
 | Territorial / operational rupture | 8 |
-| **Total** | **19** |
+| **Total** | **18** |
 
-**Current historical-family result:** `buyid-fars-family` **terminal `KEEP_SEPARATE`**, read-only Production source-and-identity audit. Two live Polities: Buyid Emirate of Fars `523a6c6a-a16a-4e40-bbdf-fc705a4f1e9d` (Adud al-Dawla `01abbb6c-8bdd-44a1-b77a-cc23f89c14cd`; Activity `503f8853-f23b-4f3a-9c91-5f742c269698` 949–977, `amir_of_fars`) and Buyid Realm of Fars and Iraq `64e303be-fcda-46e4-8779-46bcc7698946` (same Person; Activity `375b1a46-3891-41e3-909c-8dee17b11c67` 977–983, `supreme_buyid_ruler`). Iranica *FĀRS iii* directly corroborates the two periods; Iranica *BUYIDS* distinguishes **977 Baghdad/Iraq acquisition** from **980 wider unification** and earlier regional principalities. Sequential territorial/role stages of **one continuous monarch**, NOT simultaneous duplicate sovereign reigns, blanket dynastic unity from 949 or official state rename. Preserve original two reviewed Activities, four Iranica Source links, certainty/year granularity and political identity UUIDs. No Production/Runtime mutation. [Scoped audit](POLITY_P2_04G_BUYID_FARS_IRAQ_977_PHASE_AUDIT_20261010.md). **75 / 56 terminal / 19 pending** (historical-family 7). **Next independent family seed:** `gnat-turkey`. Full-Production all-identity reconciliation still required at the finish gate; other Buyid branch historiography is not a claim of exhaustively registered regional authorities.
+**Current historical-family result:** `gnat-turkey` terminal **`KEEP_SEPARATE`** as historical **government/constitutional phase Polities, NOT two unrelated sovereign Turkish states**. Verified Production Ankara GNAT Government `55407a83-2e02-4ea1-898a-c55bc06da69e`, Atatürk Speaker Activity `02988a5b-06de-4451-8477-101ff095800b` **1920-04-24→1923-10-29** and Turkey `28448862-277d-4738-9fb4-7f51a9e4c03a`, same Atatürk President Activity `8b0b0654-b37e-46f7-a170-b92e99ab92a9` **1923-10-29→1938-11-10**, plus İnönü presidency `476c1d83-c5a8-427d-8b83-e6b289be588f` 1938–1950. 1921 Constitution original Articles 1–3 already vest sovereignty in Türkiye state and GNAT government; **1923-10-29 Law No. 364 amended that same constitution** to proclaim a Republic and institute presidency. TBMM's official list retains one Speaker term 1920–1923 notwithstanding a brief temporary chair at 1923 August second-assembly opening; no artificial reign split. These are successive legal offices under continuing national sovereignty, distinct from simultaneous Istanbul Ottoman claimant authority and from duplicate personal rule. Preserve all original day/granularity/certainty, the 3 linked Activities/Persons, their **6** Source links, roles and polity IDs; **no Production data write**. [Scoped primary-source audit](POLITY_P2_04H_GNAT_TURKEY_1920_1923_CONSTITUTIONAL_PHASE_AUDIT_20261010.md). Current registry **75 total / 57 terminal / 18 pending**, historical-family pending 6. **Next independent family seed:** `philippine-revolutionary-governments`. Full-Production discovery, Runtime/authority checks, and repair/approval blockers remain distinct project completion criteria.
 
 **Previously terminal:** `gorkha-nepal` `KEEP_SEPARATE` ([Gorkha→Nepal report](POLITY_P2_04D_GORKHA_NEPAL_UNIFICATION_20261010.md)); Oman and Liberia remain approval/repair-gated.
 
