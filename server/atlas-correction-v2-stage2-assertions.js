@@ -8,7 +8,8 @@ const STAGE2_ASSERTION_TYPES = new Set([
   "assert_governance_context",
   "assert_governance_period",
   "assert_polity_designation",
-  "assert_polity_identity_relation"
+  "assert_polity_identity_relation",
+  "assert_polity_source_link"
 ]);
 
 const GOVERNANCE_CONTEXT_FIELDS = Object.freeze([
@@ -190,10 +191,75 @@ function normalizeSourceBundle(raw, label) {
   return { source: Object.freeze({ id, ...bibliography }) };
 }
 
+
+/**
+ * Canonical Polity provenance is a composite (polity_id, source_id) fact.
+ * Unlike Activity/Designation source joins, atlas_v2.polity_sources has no
+ * source_locator_key or synthetic UUID. Preserve that schema exactly.
+ */
+function normalizePolitySourceLinkOperation(raw, index) {
+  const label = `OP${index}_POLITY_SOURCE`;
+  const link = raw?.exact_after?.link;
+  if (!link || typeof link !== "object" || Array.isArray(link) ||
+      Object.keys(link).sort().join(",") !== "polity_id,source_id") {
+    throw new Error(`CORRECTION_V2_${label}_EXACT_LINK_REQUIRED`);
+  }
+  const polity_id = requireUuid(link.polity_id, `CORRECTION_V2_${label}_POLITY_ID_INVALID`);
+  const source_id = requireUuid(link.source_id, `CORRECTION_V2_${label}_SOURCE_ID_INVALID`);
+  const canonicalUrl = String(raw?.exact_after?.source_canonical_url || "").trim();
+  if (!/^https:\/\/[^\s]+$/.test(canonicalUrl)) throw new Error(`CORRECTION_V2_${label}_SOURCE_URL_REQUIRED`);
+  if (Object.keys(raw.exact_after).sort().join(",") !== "link,source_canonical_url") {
+    throw new Error(`CORRECTION_V2_${label}_UNSUPPORTED_AFTER_FIELDS`);
+  }
+  const absent = raw?.exact_before?.link_absent;
+  if (!absent || typeof absent !== "object" || Array.isArray(absent) ||
+      Object.keys(absent).sort().join(",") !== "polity_id,source_id" ||
+      requireUuid(absent.polity_id, `CORRECTION_V2_${label}_BEFORE_POLITY_ID_INVALID`) !== polity_id ||
+      requireUuid(absent.source_id, `CORRECTION_V2_${label}_BEFORE_SOURCE_ID_INVALID`) !== source_id ||
+      Object.keys(raw.exact_before).join(",") !== "link_absent") {
+    throw new Error(`CORRECTION_V2_${label}_EXACT_BEFORE_MISMATCH`);
+  }
+  return {
+    type:"assert_polity_source_link",
+    decision_id:String(raw.decision_id || ""),
+    exact_before:{ link_absent:{ polity_id, source_id } },
+    exact_after:{ link:{ polity_id, source_id }, source_canonical_url:canonicalUrl }
+  };
+}
+
+async function loadPolitySourceLink(client, polityId, sourceId, { forUpdate = false } = {}) {
+  const found = await client.query(`
+    select ps.polity_id::text as polity_id, ps.source_id::text as source_id,
+           s.canonical_url as source_canonical_url
+      from atlas_v2.polity_sources ps
+      join atlas_v2.sources s on s.id=ps.source_id
+     where ps.polity_id=$1::uuid and ps.source_id=$2::uuid
+     ${forUpdate ? "for update of ps" : ""}`, [polityId, sourceId]);
+  if (!found.rowCount) return null;
+  if (found.rowCount !== 1) throw new Error("CORRECTION_V2_POLITY_SOURCE_LINK_MULTIPLE");
+  const row = found.rows[0];
+  return {
+    link:{ polity_id:String(row.polity_id).toLowerCase(), source_id:String(row.source_id).toLowerCase() },
+    source_canonical_url:row.source_canonical_url
+  };
+}
+
+async function assertPolitySourceLinkPrerequisites(client, operation) {
+  const { polity_id, source_id } = operation.exact_after.link;
+  const polity = await client.query("select id::text from atlas_v2.polities where id=$1::uuid for update", [polity_id]);
+  if (polity.rowCount !== 1) throw new Error("CORRECTION_V2_POLITY_SOURCE_POLITY_MISSING");
+  const source = await client.query("select id::text,canonical_url from atlas_v2.sources where id=$1::uuid for update", [source_id]);
+  if (source.rowCount !== 1) throw new Error("CORRECTION_V2_POLITY_SOURCE_SOURCE_MISSING");
+  if (source.rows[0].canonical_url !== operation.exact_after.source_canonical_url) {
+    throw new Error("CORRECTION_V2_POLITY_SOURCE_CANONICAL_URL_DRIFT");
+  }
+}
+
 function normalizeStage2AssertionOperation(raw, index) {
   const type = String(raw?.type || "").trim();
   if (!STAGE2_ASSERTION_TYPES.has(type)) throw new Error("CORRECTION_V2_STAGE2_ASSERTION_OPERATION_UNSUPPORTED");
   const label = `OP${index}`;
+  if (type === "assert_polity_source_link") return normalizePolitySourceLinkOperation(raw, index);
   if (type === "assert_source") {
     const bundle = normalizeSourceBundle(raw.exact_after?.source, `${label}_SOURCE`);
     const absent = requireUuid(raw?.exact_before?.source_absent_id, `CORRECTION_V2_${label}_SOURCE_ABSENT_ID_INVALID`);
@@ -300,6 +366,14 @@ function exactEqual(left, right) {
 }
 
 async function assertStage2AssertionAbsent(client, operation) {
+  if (operation.type === "assert_polity_source_link") {
+    const { polity_id, source_id } = operation.exact_after.link;
+    await assertPolitySourceLinkPrerequisites(client, operation);
+    if (await loadPolitySourceLink(client, polity_id, source_id, { forUpdate:true })) {
+      throw new Error(`CORRECTION_V2_POLITY_SOURCE_LINK_ALREADY_EXISTS:${operation.decision_id}`);
+    }
+    return;
+  }
   let existing;
   if (operation.type === "assert_source") {
     existing = await loadSourceBundle(client, operation.exact_after.source.id, { forUpdate:true });
@@ -322,6 +396,12 @@ async function assertStage2AssertionAbsent(client, operation) {
 }
 
 async function insertStage2AssertionBundle(client, operation) {
+  if (operation.type === "assert_polity_source_link") {
+    const { polity_id, source_id } = operation.exact_after.link;
+    const result = await client.query("insert into atlas_v2.polity_sources(polity_id,source_id) values($1::uuid,$2::uuid)", [polity_id, source_id]);
+    if (result.rowCount !== 1) throw new Error("CORRECTION_V2_POLITY_SOURCE_INSERT_COUNT_DRIFT");
+    return;
+  }
   if (operation.type === "assert_source") {
     await insertExactSource(client, operation.exact_after.source);
     return;
@@ -354,6 +434,12 @@ async function insertStage2AssertionBundle(client, operation) {
 }
 
 async function verifyStage2AssertionApplied(client, operation) {
+  if (operation.type === "assert_polity_source_link") {
+    const { polity_id, source_id } = operation.exact_after.link;
+    const actual = await loadPolitySourceLink(client, polity_id, source_id, { forUpdate:true });
+    if (!exactEqual(actual, operation.exact_after)) throw new Error(`CORRECTION_V2_REPLAY_POLITY_SOURCE_DRIFT:${operation.decision_id}`);
+    return;
+  }
   let actual;
   if (operation.type === "assert_source") actual = await loadSourceBundle(client, operation.exact_after.source.id, { forUpdate:true });
   else if (operation.type === "assert_governance_context") actual = await loadGovernanceContextBundle(client, operation.exact_after.context.id, { forUpdate:true });
@@ -364,8 +450,10 @@ async function verifyStage2AssertionApplied(client, operation) {
 }
 
 function stage2AssertionCountDelta(operation) {
-  const delta = { sources:0, governance_contexts:0, governance_context_names:0, governance_periods:0, governance_sources:0, designations:0, designation_names:0, designation_sources:0, identity_relations:0, identity_relation_sources:0 };
-  if (operation.type === "assert_source") {
+  const delta = { sources:0, polity_sources:0, governance_contexts:0, governance_context_names:0, governance_periods:0, governance_sources:0, designations:0, designation_names:0, designation_sources:0, identity_relations:0, identity_relation_sources:0 };
+  if (operation.type === "assert_polity_source_link") {
+    delta.polity_sources = 1;
+  } else if (operation.type === "assert_source") {
     delta.sources = 1;
   } else if (operation.type === "assert_governance_context") {
     delta.governance_contexts = 1;
@@ -385,6 +473,10 @@ function stage2AssertionCountDelta(operation) {
 }
 
 function stage2AssertionIdentity(operation) {
+  if (operation.type === "assert_polity_source_link") {
+    const { polity_id, source_id } = operation.exact_after.link;
+    return { id:`polity-source:${polity_id}:${source_id}`, source_links:[], name_ids:[] };
+  }
   if (operation.type === "assert_source") return { id:operation.exact_after.source.id, source_links:[], name_ids:[] };
   if (operation.type === "assert_governance_context") return { id:operation.exact_after.context.id, source_links:[], name_ids:operation.exact_after.names.map((name) => name.id) };
   if (operation.type === "assert_governance_period") return { id:operation.exact_after.period.id, source_links:operation.exact_after.source_links, name_ids:[] };
@@ -394,6 +486,9 @@ function stage2AssertionIdentity(operation) {
 
 module.exports = Object.freeze({
   STAGE2_ASSERTION_TYPES,
+  normalizePolitySourceLinkOperation,
+  loadPolitySourceLink,
+  assertPolitySourceLinkPrerequisites,
   SOURCE_FIELDS,
   GOVERNANCE_CONTEXT_FIELDS,
   GOVERNANCE_FIELDS,
