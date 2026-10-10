@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-youtube-b024-verified-registered-alias-leaks/v1",
+  "checked_on": "2026-10-11",
+  "one_global_discovery_snapshot": "yt-20261010T083657Z-10127ch-rebuild-v5",
+  "source_snapshot": "yt-20261009T111844Z-10127ch-rebuild-v4",
+  "source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "source_original_channels": 10127,
+  "source_original_video_rows": 2230031,
+  "reviewed_identity_file": "audits/youtube-b024-source-first-36-final-registered-identity-review.json",
+  "read_only_current_registered_person_surface": "/api/atlas-read?__atlas_read_surface=person&view=identity",
+  "register_or_delete_any_person": false,
+  "video_subjecthood_certified": false,
+  "live_registered_alias_leaks": [
+    {
+      "youtube_raw_name": "Imam Bukhari",
+      "canonical_registered_name": "Al-Bukhari",
+      "registered_person_uuid": "8de13ce6-1d9d-4627-9c15-bc4fbd7d533c",
+      "original_title_mention_distinct_channels": 17,
+      "original_title_mention_distinct_videos": 22,
+      "live_v5_rank_before": 714,
+      "live_title_cue_distinct_channels_before": 8,
+      "historical_identity_review": "Imam Bukhari is the honorific name of the hadith scholar Muhammad al-Bukhari (Al-Bukhari)."
+    },
+    {
+      "youtube_raw_name": "Imam Malik",
+      "canonical_registered_name": "Malik ibn Anas",
+      "registered_person_uuid": "5bbd6c53-dbdd-436a-b306-15ac077caf31",
+      "original_title_mention_distinct_channels": 25,
+      "original_title_mention_distinct_videos": 39,
+      "live_v5_rank_before": 2333,
+      "live_title_cue_distinct_channels_before": 5,
+      "historical_identity_review": "Imam Malik is the historical scholar Malik ibn Anas, founder of the Maliki school."
+    },
+    {
+      "youtube_raw_name": "King Leonidas",
+      "canonical_registered_name": "Leonidas I",
+      "registered_person_uuid": "2dc2d224-5ee3-5583-a3af-75d928fb240f",
+      "original_title_mention_distinct_channels": 29,
+      "original_title_mention_distinct_videos": 30,
+      "live_v5_rank_before": 842,
+      "live_title_cue_distinct_channels_before": 8,
+      "historical_identity_review": "King Leonidas of Sparta is the registered historical Person Leonidas I."
+    }
+  ],
+  "excluded_solely_as_verified_registered_same_person": true,
+  "identity_alias_must_resolve_to_one_current_registered_person": true,
+  "original_title_candidate_signal_rows_do_not_equal_person_focused_biographies": true,
+  "live_expected_change": "Only these 3 currently displayed v5 title candidates disappear; future v5 and subsequent snapshots with the same registered Persons also use aliases. No raw source counts changed; threshold 3:8713→8710; 5:2691→2688; 10:476 unchanged."
+}
