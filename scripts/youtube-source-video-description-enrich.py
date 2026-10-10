@@ -168,9 +168,17 @@ def fetch_descriptions(request,*,api_call,prior=None,max_batches=30,on_batch=Non
         result=api_call([v["video_id"] for v in batch])
         allowed={v["video_id"] for v in batch}
         items={}
-        for obj in result.get("items",[]):
+        incoming=result.get("items",[])
+        seen=set()
+        # Check complete ID set BEFORE optional snippet validation so a
+        # duplicate video ID cannot be hidden behind a malformed snippet.
+        for obj in incoming:
             video=obj.get("id")
-            if video not in allowed or video in items:raise ValueError("API_UNKNOWN_OR_DUPLICATE_VIDEO_ID")
+            if video not in allowed or video in seen:
+                raise ValueError("API_UNKNOWN_OR_DUPLICATE_VIDEO_ID")
+            seen.add(video)
+        for obj in incoming:
+            video=obj["id"]
             snippet=obj.get("snippet")
             if not isinstance(snippet,dict) or not snippet.get("channelId"):
                 raise ValueError("API_ITEM_MISSING_REQUIRED_CHANNEL_ID")
