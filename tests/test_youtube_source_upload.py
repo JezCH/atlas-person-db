@@ -104,15 +104,24 @@ class VerifiedUploadTests(unittest.TestCase):
         self.assertEqual(item["source_kind"], "metadata")
         self.assertFalse(item["new_object"])
 
-    def test_restore_rehydrates_exact_paths_and_hashes(self):
+    def test_catalog_restore_rehydrates_exact_paths_and_hashes_without_source_tree(self):
         record = uploader.record_for(self.file, self.root)
         contents = record.pop("_contents")
+        source_path = record.pop("source_path")
         target = self.root / "restore"
+        self.file.unlink()
         with patch.object(uploader, "storage_call", return_value=contents):
-            result = uploader.restore_remote("https://example.invalid", "token", [record], target)
+            result = uploader.restore_from_catalog("https://example.invalid", "token", [record], target)
         self.assertEqual(result["files"], 1)
         self.assertEqual(result["bytes"], len(contents))
-        self.assertEqual((target / record["source_path"]).read_bytes(), contents)
+        self.assertEqual((target / source_path).read_bytes(), contents)
+
+    def test_catalog_object_key_must_bind_digest_and_safe_relative_path(self):
+        record = uploader.record_for(self.file, self.root)
+        record.pop("_contents")
+        record["object_key"] = record["object_key"].replace(record["sha256"], "f" * 64, 1)
+        with self.assertRaisesRegex(RuntimeError, "CATALOG_OBJECT_KEY_DIGEST_MISMATCH"):
+            uploader.relative_from_object_key(record)
 
 
 if __name__ == "__main__":
