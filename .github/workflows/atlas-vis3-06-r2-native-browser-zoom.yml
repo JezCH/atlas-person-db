@@ -33,7 +33,7 @@ jobs:
       - name: Install actual X11 desktop and Korean browser fonts
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends xvfb openbox xdotool fonts-noto-cjk
+          sudo apt-get install -y --no-install-recommends xvfb openbox xdotool x11-utils fonts-noto-cjk
           fc-cache -f
 
       - name: Verify original SVG, X11 tools, runner syntax
@@ -55,7 +55,9 @@ jobs:
           mkdir -p "$ATLAS_VISUAL_OUT_DIR"
           Xvfb :99 -screen 0 1600x1024x24 -nolisten tcp >/tmp/atlas-r2-xvfb.log 2>&1 &
           XVFB_PID=$!
-          trap 'kill "$CHROME_PID" "$WM_PID" "$XVFB_PID" 2>/dev/null || true' EXIT
+          CHROME_PID=""
+          WM_PID=""
+          trap 'for pid in "$CHROME_PID" "$WM_PID" "$XVFB_PID"; do if [ -n "$pid" ]; then kill "$pid" 2>/dev/null || true; fi; done' EXIT
           for _ in $(seq 1 40); do
             xdpyinfo -display :99 >/dev/null 2>&1 && break
             sleep 0.25
