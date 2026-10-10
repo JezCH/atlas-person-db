@@ -183,7 +183,6 @@ test('fresh Production closes the no-write seed subset without resolving still-o
 
   for (const id of [
     'western-eastern-zhou',
-    'western-eastern-jin',
     'ming-southern-ming',
     'champa-panduranga',
     'inca-neo-inca',
@@ -193,6 +192,16 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     assert.equal(byId.get(id).terminal_status, 'NOT_PRESENT', id);
     assert.equal(byId.get(id).locked, true, id);
   }
+
+  const westEastJin = byId.get('western-eastern-jin');
+  assert.equal(westEastJin.status, 'KEEP_SEPARATE');
+  assert.equal(westEastJin.terminal_status, 'KEEP_SEPARATE');
+  assert.equal(westEastJin.reviewed_decision, 'keep_both');
+  assert.equal(westEastJin.locked, true);
+  assert.equal(westEastJin.left.polity_id, '77ee4f18-ba76-4e89-a925-431d00b1d214');
+  assert.equal(westEastJin.right.polity_id, '2ab00854-f6fa-458b-8482-e9d1379036ba');
+  assert.ok(westEastJin.evidence.some(entry => /2026-10-05 NOT_PRESENT proof superseded/.test(entry)));
+  assert.ok(westEastJin.evidence.some(entry => /publication_current=true/.test(entry)));
 
   const unresolved = [
     ...registry.carry_forward_same_identity,

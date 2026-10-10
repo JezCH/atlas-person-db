@@ -406,13 +406,21 @@
         review_group: "rupture_probe",
         kind: "rupture_review",
         title: "Western Jin → Eastern Jin",
-        left: { name: "Western Jin" },
-        right: { name: "Eastern Jin" },
-        rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
-        suggested_action: "hold",
-        status: "NOT_PRESENT",
-        terminal_status: "NOT_PRESENT",
-        evidence: ["rupture-rule explicit probe", "2026-10-05 fresh Production: Eastern Jin is not present; Western Jin exists only as a bounded 266–290 identity, so this candidate pair is not present"],
+        left: { name: "Western Jin", ko: "서진", polity_id: "77ee4f18-ba76-4e89-a925-431d00b1d214" },
+        right: { name: "Eastern Jin", ko: "동진", polity_id: "2ab00854-f6fa-458b-8482-e9d1379036ba" },
+        rationale: "서진(266–316)의 낙양·장안 상실(311/316) 이후 317년 건강(建康)을 중심으로 동진(317–420)이 성립했습니다. 사마씨 왕조의 계승과 재건은 인정하지만, 실질 통치 중심·영역의 단절을 반영하여 ATLAS에서는 두 역사적 정치체 UUID를 구분해 유지합니다. 현재 서진의 266–290년 사마염, 동진의 353년 왕희지 활동만 등록돼 있다는 사실을 각 왕조 전체 활동기간으로 오해하지 않습니다.",
+        suggested_action: "keep_both",
+        reviewed_decision: "keep_both",
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        evidence: [
+          "2026-10-05 NOT_PRESENT proof superseded: Eastern Jin was subsequently created by the Wang Xizhi authoring apply (#2336/#2337)",
+          "2026-10-10 Production polity detail: Western Jin 77ee4f18-ba76-4e89-a925-431d00b1d214, Sima Yan rules Activity d3ca10de-de66-42d4-80f2-95b5a597a251 (266–290)",
+          "2026-10-10 Production polity detail: Eastern Jin 2ab00854-f6fa-458b-8482-e9d1379036ba, Wang Xizhi active_in Activity 5cfabe2d-eacf-4f2e-a809-1df4ee2021ef (353)",
+          "2026-10-10 Production person read-back: Sima Yan 9359df53-cd5f-4346-b903-7b038f7ada12 and Wang Xizhi 2d9aec8b-4914-4f13-a98f-ab6e0bbb0a40 resolve to their respective UUIDs through runtime-person-politics-v1",
+          "2026-10-10 runtime-publication/v1: authoring=2523, runtime=2523, publication_current=true, authoring_matches_active_compile=true, projection_matches_active_compile=true",
+          "Cambridge History of China, Eastern Jin (2019), https://www.cambridge.org/core/books/abs/cambridge-history-of-china/eastern-jin/26B36E30FF9DDF420EE4B53D3D3E1752 ; Journal of Asian Studies (2021), https://www.cambridge.org/core/journals/journal-of-asian-studies/article/abs/guo-pu-crosses-the-river-migration-anecdotes-in-jinshu-biographical-narratives/FFE506AA2FCABA4DC6F62171F79E6B22"
+        ],
         locked: true
       },
       {
