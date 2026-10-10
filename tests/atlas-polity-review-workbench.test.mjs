@@ -210,7 +210,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 20);
+  assert.equal(unresolved.length, 19);
   const brazil = byId.get('brazil-regime-family');
   assert.equal(brazil.terminal_status, 'FIXED');
   assert.equal(brazil.status, 'FIXED');
@@ -279,6 +279,19 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.ok(massylii.evidence.some(e => /certainty=uncertain/.test(e)));
   assert.ok(massylii.evidence.some(e => /academic.oup.com\/bics/.test(e)));
   assert.match(massylii.rationale, /왕권 단절/);
+
+  const buyid = byId.get('buyid-fars-family');
+  assert.equal(buyid.status, 'KEEP_SEPARATE');
+  assert.equal(buyid.terminal_status, 'KEEP_SEPARATE');
+  assert.equal(buyid.reviewed_decision, 'keep_both');
+  assert.equal(buyid.suggested_action, 'keep_both');
+  assert.equal(buyid.locked, true);
+  assert.equal(buyid.left.polity_id, '523a6c6a-a16a-4e40-bbdf-fc705a4f1e9d');
+  assert.equal(buyid.right.polity_id, '64e303be-fcda-46e4-8779-46bcc7698946');
+  assert.ok(buyid.evidence.some(e => /503f8853-f23b-4f3a-9c91-5f742c269698/.test(e)));
+  assert.ok(buyid.evidence.some(e => /375b1a46-3891-41e3-909c-8dee17b11c67/.test(e)));
+  assert.ok(buyid.evidence.some(e => /980/.test(e) && /iranicaonline.org\/articles\/buyids/.test(e)));
+  assert.match(buyid.rationale, /977년.*980/);
 
   const oman = byId.get('oman-empire-oman');
   assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
