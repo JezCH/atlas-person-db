@@ -34,5 +34,5 @@ test("P2-07C registry is 75/62/13 and does not quietly close Sweden or other Rom
  assert.ok(registry.rupture_probes.filter(r=>!r.terminal_status).length<=5);
  assert.equal(registry.designation_residuals.find(r=>r.id==="sweden-temporal-designation").terminal_status,null);
  for(const id of ["roman-west-east","byzantine-nicaea-rupture","liao-western-liao"]) assert.equal(registry.rupture_probes.find(r=>r.id===id).terminal_status,"KEEP_SEPARATE");
- assert.equal(registry.rupture_probes.find(r=>r.id==="northern-southern-song").terminal_status,null);
+ assert.equal(registry.rupture_probes.find(r=>r.id==="northern-southern-song").terminal_status,"KEEP_SEPARATE");
 });
