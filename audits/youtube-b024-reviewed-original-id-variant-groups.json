@@ -1,0 +1,150 @@
+{
+  "schema": "youtube-b024-reviewed-original-id-variant-groups/v1",
+  "source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "expected_source_channel_count": 10127,
+  "expected_source_video_count": 2230031,
+  "source_scope": "immutable original YouTube Batch008–024; Batch001–007 sources missing; Batch025 not part of this input",
+  "purpose": "unregistered historical Person discovery, source-ID verified name/alias audit",
+  "registered_person_uuids_used": false,
+  "publication_eligible": false,
+  "title_mentions_are_biographical_evidence": false,
+  "identity_policy": "SAME_PERSON codes identify reviewed name-form correspondence, not title topic or ATLAS registration; HOLD groups MUST NEVER be assigned to one Person from these unions",
+  "groups": [
+    {
+      "name": "Simón Bolívar",
+      "identity_review": "SAME_PERSON_ORTHOGRAPHY",
+      "variants": [
+        "Simon Bolivar",
+        "Simón Bolívar"
+      ],
+      "expected_unique_original_channel_ids": 109,
+      "expected_unique_original_video_ids": 144,
+      "expected_invalid_channel_sum_inflation": 4
+    },
+    {
+      "name": "Mary, Queen of Scots",
+      "identity_review": "SAME_PERSON_PUNCTUATION",
+      "variants": [
+        "Mary Queen of Scots",
+        "Mary, Queen of Scots"
+      ],
+      "expected_unique_original_channel_ids": 118,
+      "expected_unique_original_video_ids": 262,
+      "expected_invalid_channel_sum_inflation": 13
+    },
+    {
+      "name": "Imam al-Bukhari",
+      "identity_review": "SAME_PERSON_ROMANIZATION",
+      "variants": [
+        "Imam Bukhari",
+        "Imam Al-Bukhari",
+        "Imam Al Bukhari"
+      ],
+      "expected_unique_original_channel_ids": 26,
+      "expected_unique_original_video_ids": 36,
+      "expected_invalid_channel_sum_inflation": 4
+    },
+    {
+      "name": "Khalid ibn al-Walid",
+      "identity_review": "SAME_PERSON_ROMANIZATION",
+      "variants": [
+        "Khalid Ibn Al Walid",
+        "Khalid Ibn Walid",
+        "Khalid ibn al-Walid"
+      ],
+      "expected_unique_original_channel_ids": 51,
+      "expected_unique_original_video_ids": 108,
+      "expected_invalid_channel_sum_inflation": 7
+    },
+    {
+      "name": "Elizabeth I",
+      "identity_review": "SAME_PERSON_ROYAL_TITLE",
+      "variants": [
+        "Queen Elizabeth I",
+        "Elizabeth I"
+      ],
+      "expected_unique_original_channel_ids": 287,
+      "expected_unique_original_video_ids": 671,
+      "expected_invalid_channel_sum_inflation": 129
+    },
+    {
+      "name": "Henry VIII",
+      "identity_review": "SAME_PERSON_ROYAL_TITLE",
+      "variants": [
+        "King Henry VIII",
+        "Henry VIII"
+      ],
+      "expected_unique_original_channel_ids": 329,
+      "expected_unique_original_video_ids": 1203,
+      "expected_invalid_channel_sum_inflation": 79
+    },
+    {
+      "name": "Elizabeth Báthory",
+      "identity_review": "SAME_PERSON_ORTHOGRAPHY",
+      "variants": [
+        "Elizabeth Bathory",
+        "Elizabeth Báthory"
+      ],
+      "expected_unique_original_channel_ids": 58,
+      "expected_unique_original_video_ids": 70,
+      "expected_invalid_channel_sum_inflation": 2
+    },
+    {
+      "name": "Mansa Musa",
+      "identity_review": "SAME_PERSON_EPITHET",
+      "variants": [
+        "Mansa Musa the Richest Man",
+        "Mansa Musa"
+      ],
+      "expected_unique_original_channel_ids": 313,
+      "expected_unique_original_video_ids": 365,
+      "expected_invalid_channel_sum_inflation": 8
+    },
+    {
+      "name": "Carter G. Woodson",
+      "identity_review": "SAME_PERSON_INITIAL_PUNCTUATION",
+      "variants": [
+        "Carter G Woodson",
+        "Carter G. Woodson"
+      ],
+      "expected_unique_original_channel_ids": 33,
+      "expected_unique_original_video_ids": 38,
+      "expected_invalid_channel_sum_inflation": 1
+    },
+    {
+      "name": "Martin Luther King [father-son HOLD]",
+      "identity_review": "HOLD_HOMONYM_JR_SR",
+      "variants": [
+        "Martin Luther King",
+        "Dr Martin Luther King",
+        "Martin Luther King Jr",
+        "Martin Luther King Sr"
+      ],
+      "expected_unique_original_channel_ids": 424,
+      "expected_unique_original_video_ids": 608,
+      "expected_invalid_channel_sum_inflation": 292
+    },
+    {
+      "name": "Princess Diana [short HOLD]",
+      "identity_review": "HOLD_MONONYM",
+      "variants": [
+        "Princess Diana",
+        "Diana"
+      ],
+      "expected_unique_original_channel_ids": 603,
+      "expected_unique_original_video_ids": 1408,
+      "expected_invalid_channel_sum_inflation": 230
+    },
+    {
+      "name": "Prince Edward [place HOLD]",
+      "identity_review": "HOLD_PERSON_PLACE",
+      "variants": [
+        "Prince Edward",
+        "Prince Edward Island"
+      ],
+      "expected_unique_original_channel_ids": 41,
+      "expected_unique_original_video_ids": 83,
+      "expected_invalid_channel_sum_inflation": 10
+    }
+  ]
+}
