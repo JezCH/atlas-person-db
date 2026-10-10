@@ -121,7 +121,7 @@ function referenceCountRecord(ref, count) {
   });
 }
 
-async function queryPolityReferenceAudit(client, { includeBrazilDetails = false, includeBrazilPreflight = false, includeBrazilSourceAliases = false, includeBrazilStage2Contract = false, includeBrazilLawSourcePreflight = false } = {}) {
+async function queryPolityReferenceAudit(client, { includeBrazilDetails = false, includeBrazilPreflight = false, includeBrazilSourceAliases = false, includeBrazilStage2Contract = false, includeBrazilLawSourcePreflight = false, includeRussiaDetails = false } = {}) {
   await beginReadOnly(client);
   try {
     const polities = await queryPolities(client);
@@ -186,6 +186,7 @@ async function queryPolityReferenceAudit(client, { includeBrazilDetails = false,
     const brazilSourceAliases = includeBrazilSourceAliases ? await queryBrazilSourceAliases(client) : null;
     const brazilStage2Contract = includeBrazilStage2Contract ? await queryBrazilStage2Contract(client) : null;
     const brazilLawSourcePreflight = includeBrazilLawSourcePreflight ? await queryBrazilLawSourcePreflight(client) : null;
+    const russiaDetails = includeRussiaDetails ? await queryRussiaDetails(client) : null;
     if (includeBrazilDetails && outputPolities.filter((row) => BRAZIL_P2_03E_POLITY_IDS.includes(row.polity_id)).length !== BRAZIL_P2_03E_POLITY_IDS.length) {
       throw new Error("POLITY_REFERENCE_AUDIT_BRAZIL_POLITY_MISSING");
     }
@@ -196,6 +197,7 @@ async function queryPolityReferenceAudit(client, { includeBrazilDetails = false,
       brazil_source_aliases: brazilSourceAliases,
       brazil_stage2_contract: brazilStage2Contract,
       brazil_law_source_preflight: brazilLawSourcePreflight,
+      russia_details: russiaDetails,
       complete: true,
       reference_model: "direct_foreign_keys_plus_atlas_v2_polity_id_columns",
       reference_catalog: Object.freeze(references.map((ref) => Object.freeze({ ...ref }))),
@@ -216,8 +218,7 @@ const BRAZIL_P2_03E_POLITY_IDS = Object.freeze([
 
 // P2-03E: exact three-polity evidence in the SAME repeatable-read, read-only
 // transaction as the FK census. Never infer timestamps or mutate canonical facts.
-async function queryBrazilDetails(client) {
-  const polityIds = [...BRAZIL_P2_03E_POLITY_IDS];
+async function queryPolityDetails(client, polityIds) {
   const sources = await client.query(`
     select ps.polity_id::text as polity_id,
            ps.source_id::text as source_id, s.source_key, s.source_type,
@@ -283,6 +284,60 @@ async function queryBrazilDetails(client) {
     designations: designations.rows,
     identity_relations: identityRelations.rows,
     governance_periods: governance.rows
+  });
+}
+
+
+const RUSSIA_P2_05B_POLITY_ID = "dd07fc4c-b3ac-59ac-bdf2-9cc190893327";
+const RUSSIA_P2_05B_ACTIVITIES = Object.freeze([
+  "d6cdaf3b-2eab-4b98-8a17-b9c42342534f",
+  "57cdefa5-9a5d-533c-b229-47e398f1d07a",
+  "9ec53325-3a97-58a8-a7e7-81a496a47e57"
+]);
+
+async function queryBrazilDetails(client) {
+  return queryPolityDetails(client, [...BRAZIL_P2_03E_POLITY_IDS]);
+}
+
+// Source-linked, exact-UUID Russia inventory for P2-05B. This runs ONLY inside
+// the existing OIDC-verified repeatable-read READ ONLY audit transaction.
+// It inspects live metadata; it neither infers missing designation rows nor
+// assigns day precision to year-only Activities.
+async function queryRussiaDetails(client) {
+  const polityIds = [RUSSIA_P2_05B_POLITY_ID];
+  const [details, activities, activitySources, runtime] = await Promise.all([
+    queryPolityDetails(client, polityIds),
+    client.query(`
+      select a.id::text as activity_id, a.polity_id::text as polity_id,
+             to_jsonb(a) as activity
+        from atlas_v2.person_politics_v2 a
+       where a.polity_id = $1::uuid
+       order by a.id::text`, [RUSSIA_P2_05B_POLITY_ID]),
+    client.query(`
+      select pps.person_politics_id::text as activity_id,
+             pps.source_id::text as source_id, pps.source_locator_key,
+             s.source_key, s.source_type, s.title, s.canonical_url, s.citation_text
+        from atlas_v2.person_politics_sources pps
+        join atlas_v2.person_politics_v2 a on a.id=pps.person_politics_id
+        join atlas_v2.sources s on s.id=pps.source_id
+       where a.polity_id = $1::uuid
+       order by pps.person_politics_id::text, pps.source_id::text, pps.source_locator_key`,
+      [RUSSIA_P2_05B_POLITY_ID]),
+    client.query(`
+      select r.polity_id::text as polity_id, to_jsonb(r) as runtime_activity
+        from atlas_v2.runtime_person_politics_v1 r
+       where r.polity_id = $1::uuid
+       order by to_jsonb(r)::text`, [RUSSIA_P2_05B_POLITY_ID])
+  ]);
+  const activityIds = new Set(activities.rows.map(row => String(row.activity_id).toLowerCase()));
+  return Object.freeze({
+    ...details,
+    activities: activities.rows,
+    activity_sources: activitySources.rows,
+    runtime_activities: runtime.rows,
+    missing_reviewed_activity_ids: RUSSIA_P2_05B_ACTIVITIES.filter(id => !activityIds.has(id)),
+    preflight_only: true,
+    designation_display_repaired: false
   });
 }
 
@@ -625,7 +680,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
       const includeBrazilSourceAliases = req.body?.include_brazil_source_aliases === true;
       const includeBrazilStage2Contract = req.body?.include_brazil_stage2_contract === true;
       const includeBrazilLawSourcePreflight = req.body?.include_brazil_law_source_preflight === true;
-      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails, includeBrazilPreflight, includeBrazilSourceAliases, includeBrazilStage2Contract, includeBrazilLawSourcePreflight });
+      const includeRussiaDetails = req.body?.include_russia_details === true;
+      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails, includeBrazilPreflight, includeBrazilSourceAliases, includeBrazilStage2Contract, includeBrazilLawSourcePreflight, includeRussiaDetails });
       return json(res, 200, {
         ok: true,
         marker: MARKER,
@@ -643,7 +699,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
         ...(includeBrazilPreflight ? { brazil_preflight: audit.brazil_preflight } : {}),
         ...(includeBrazilSourceAliases ? { brazil_source_aliases: audit.brazil_source_aliases } : {}),
         ...(includeBrazilStage2Contract ? { brazil_stage2_contract: audit.brazil_stage2_contract } : {}),
-        ...(includeBrazilLawSourcePreflight ? { brazil_law_source_preflight: audit.brazil_law_source_preflight } : {})
+        ...(includeBrazilLawSourcePreflight ? { brazil_law_source_preflight: audit.brazil_law_source_preflight } : {}),
+        ...(includeRussiaDetails ? { russia_details: audit.russia_details } : {})
       });
     } catch (error) {
       return json(res, statusForError(error?.message), {
@@ -668,6 +725,9 @@ module.exports = Object.freeze({
   queryReferenceCounts,
   queryPolityReferenceAudit,
   queryBrazilDetails,
+  queryRussiaDetails,
+  RUSSIA_P2_05B_POLITY_ID,
+  RUSSIA_P2_05B_ACTIVITIES,
   queryBrazilPreflight,
   queryBrazilSourceAliases,
   queryBrazilStage2Contract,
