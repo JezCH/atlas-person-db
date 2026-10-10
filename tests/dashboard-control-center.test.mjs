@@ -1026,15 +1026,15 @@ test("Dashboard follows operator priority from work status through analysis to s
   const quality = dashboardSource.indexOf("데이터 품질");
   const completeness = dashboardSource.indexOf("데이터 완성도");
   const incomplete = dashboardSource.indexOf('aria-label="미완료 사유"');
-  const timeline = dashboardSource.indexOf("최근 변경 이력");
-  const domains = dashboardSource.indexOf("인물 대표 분야");
-  const heatmap = dashboardSource.indexOf("시대·권역별 분포");
-  const polity = dashboardSource.indexOf("정치체 집중도");
-  const system = dashboardSource.indexOf("시스템·운영 환경");
-  const publication = dashboardSource.indexOf("원본 등록 → 빌드 → 런타임");
-  const drift = dashboardSource.indexOf("런타임 변화·불일치");
-  const freshness = dashboardSource.indexOf("원본 갱신 시각");
-  const workspace = dashboardSource.indexOf("작업 화면");
+  const timeline = dashboardSource.indexOf('<p class="eyebrow">최근 변경 이력</p>');
+  const domains = dashboardSource.indexOf('<p class="eyebrow">인물 대표 분야</p>');
+  const heatmap = dashboardSource.indexOf('<p class="eyebrow">시대·권역별 분포</p>');
+  const polity = dashboardSource.indexOf('<p class="eyebrow">정치체 집중도</p>');
+  const system = dashboardSource.indexOf('<p class="eyebrow">시스템·운영 환경</p>');
+  const publication = dashboardSource.indexOf('<p class="eyebrow">원본 등록 → 빌드 → 런타임</p>');
+  const drift = dashboardSource.indexOf('<p class="eyebrow">런타임 변화·불일치</p>');
+  const freshness = dashboardSource.indexOf('<p class="eyebrow">원본 갱신 시각</p>');
+  const workspace = dashboardSource.indexOf('<p class="eyebrow">작업 화면</p>');
   assert.ok(work >= 0 && quality > work && completeness > quality && incomplete > completeness);
   assert.ok(timeline > incomplete && domains > timeline && heatmap > domains && polity > heatmap);
   assert.ok(system > polity && publication > system && drift > publication && freshness > drift && workspace > freshness);
@@ -1461,7 +1461,7 @@ test("shared store owns and validates Runtime exclusion target reads", () => {
 });
 
 test("Dashboard Runtime exclusion Attention reveals exact Activity target table", () => {
-  assert.match(dashboardSource,/RUNTIME EXCLUSION TARGETS/);
+  assert.match(dashboardSource,/런타임 제외 대상/);
   assert.match(dashboardSource,/dashboardRuntimeExclusionTargets/);
   assert.match(dashboardSource,/활동 UUID/);
   assert.match(dashboardSource,/row\.person_display_name/);
