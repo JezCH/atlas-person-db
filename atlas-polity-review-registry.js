@@ -571,13 +571,23 @@
         review_group: "rupture_probe",
         kind: "rupture_review",
         title: "Liao → Western Liao / Qara Khitai",
-        left: { name: "Liao" },
-        right: { name: "Western Liao / Qara Khitai" },
-        rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        left: { name: "Liao Dynasty", ko: "요나라", polity_id: "c7414968-29fc-5749-bfda-bf4dab331dd8" },
+        right: { name: "Western Liao", ko: "서요", polity_id: "60d35355-b385-55d4-8d5c-f9b27cad29a3" },
+        rationale: "요(907/916–1125)와 서요/카라 키타이(1124–1218)는 거란 야율 황실의 계승 연계가 있지만 동일한 작동 영토와 중앙 통치체가 아닙니다. 여진의 요 정복 과정에서 야율대석이 기존 요 황제와 분리되어 서쪽으로 이탈하고, 중앙아시아에서 발라사군을 포함하는 새 통치·봉신 지배체를 구성했습니다. 원래의 요는 중국 북부·만주에 기반했고, 서요는 중앙아시아에 기반해 독립적으로 운영됐으므로 ATLAS 식별자를 분리 유지합니다. 1124년은 야율대석 건국·재위 시작의 전통적 연도이며 활동 원본이 approximate로 표시하므로 달·일이나 불확실성 해소를 추정하지 않습니다. 현재 등록된 요 4건(916–1031), 서요 1건(1124–1143)은 전체 국가 존속기간이 아닌 등록 Activity의 범위입니다. 개인·활동·출처·UUID 변경과 삭제 없이 rupture 검토만 종결합니다.",
+        suggested_action: "keep_both",
+        reviewed_decision: "keep_both",
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        evidence: [
+          "2026-10-10 fresh public Production Polity read: Liao Dynasty c7414968-29fc-5749-bfda-bf4dab331dd8, 4 Activities, 4 Persons, registered spans 916–1031",
+          "2026-10-10 fresh public Production Polity read: Western Liao 60d35355-b385-55d4-8d5c-f9b27cad29a3, 1 Activity, 1 Person, 1124–1143, Yelü Dashi Activity 81b6ff0d-02da-411d-8c0a-b22036625721",
+          "2026-10-10 real public Person readback: Yelü Dashi 79afe5a3-48ce-4285-9963-6be701d2cad8 links Western Liao with 1124 approximate year start, 1143 exact year end and Michal Biran source; Liao Taizu 7ae7c200-ac84-5011-90b5-a08d0f9bd1eb remains linked to Liao Dynasty through Activity e9c34843-79c6-53e8-bc71-6a674d3ba9bb",
+          "Michal Biran, Oxford Research Encyclopedia (2020), https://academic.oup.com/edited-volume/61799/chapter-abstract/546311966",
+          "Michal Biran, Hebrew University research record (2020), https://cris.huji.ac.il/en/publications/the-qara-khitai/",
+          "Istvan Vasary, Encyclopaedia Iranica, Qara Ketay, https://www.iranicaonline.org/articles/qara-ketay/",
+          "2026-10-10 source-backed rupture audit report: docs/POLITY_P2_07A_LIAO_WESTERN_LIAO_TERRITORIAL_RUPTURE_20261010.md"
+        ],
+        locked: true
       },
       {
         id: "byzantine-nicaea-rupture",
