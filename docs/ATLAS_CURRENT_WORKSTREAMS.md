@@ -26,7 +26,7 @@ Pending distribution, calculated from the canonical registry:
 | Territorial / operational rupture | 8 |
 | **Total** | **23** |
 
-**Next unblocked historical-family seed:** `oman-empire-oman`. France is separately approval-gated; Macedonia is `KEEP_SEPARATE`, Brazil active-reference correction is `FIXED`. No automatic Oman or broader resequencing without a user-selected work unit.
+**Current historical-family result:** `oman-empire-oman` historical-scope audit completed as **MERGE / canonical Oman recommended, execution REVIEW_REQUIRED** because one duplicated 1806–1856 Said reign and legacy Empire retirement require reviewed source-preserving correction plus explicit user approval. Oman `ac7279b2-da5c-42df-a217-ac60f16106ff`, Omani Empire `68c83ef6-0023-5af9-a6e8-26ccf5b8e116`. No Production writes; 75 total / 52 terminal / 23 pending unchanged. [Bounded audit](POLITY_P2_04A_OMAN_IMPERIAL_SCOPE_AUDIT_20261010.md). Next independent family seed for separate user instruction: `saudi-third-state-nejd`. France remains independently approval-gated; Macedonia `KEEP_SEPARATE`, Brazil `FIXED`.
 
 **POLITY-P0-02 closed (2026-10-10):** the stale `western-eastern-jin` `NOT_PRESENT` decision is now `KEEP_SEPARATE`. Exact live Production IDs: Western Jin `77ee4f18-ba76-4e89-a925-431d00b1d214` (Sima Yan 266–290), Eastern Jin `2ab00854-f6fa-458b-8482-e9d1379036ba` (Wang Xizhi 353). Both Person→Polity Runtime detail reads succeeded; latest publication has Authoring 2,523 = Runtime 2,523 and `publication_current=true`. The 311/316 western collapse and 317 Jiankang reestablishment justify separate period/territorial identities while preserving Sima dynastic succession. **Existing 75 / 52 terminal / 23 pending totals unchanged; no Production write.** See canonical registry seed for source/evidence details.
 
@@ -60,6 +60,6 @@ Review **current main**, not archived visual plans. Classify requirements `DONE 
 
 ## 5. Resume boundary
 
-**Completed:** `POLITY-P0-02` Western/Eastern Jin, source-backed `KEEP_SEPARATE` with verified Production/Runtime and unchanged total status counts. **Next independent seeded historical-family case:** `oman-empire-oman`. Japan/Place/France remain separately tracked gates; no task-level locks, no cross-workstream automatic changes, and no Production write authorized by this board alone.
+**Completed:** `POLITY-P0-02` Western/Eastern Jin registry correction. **Oman P2-04A:** source-backed imperial-scope judgment with exact duplicate-Activity inventory, no write; parent `REVIEW_REQUIRED` pending explicit approval for duplicate Activity/Polity retirement and reviewed Correction. **Next independently reviewable seed:** `saudi-third-state-nejd` only when selected. Japan/Place/France remain separate gates; P14 stays parked. No task-level locks and no Production write authorized by this board alone.
 
 For detailed case history, use the linked immutable merged PRs and `docs/POLITY_*.md` reports rather than appending a new full transcript here.

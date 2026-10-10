@@ -162,13 +162,23 @@
         review_group: "historical_family_review",
         kind: "family_review",
         title: "Omani Empire ↔ Oman",
-        left: { name: "Omani Empire" },
-        right: { name: "Oman" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
-        suggested_action: "hold",
+        left: { name: "Omani Empire", ko: "오만 제국", polity_id: "68c83ef6-0023-5af9-a6e8-26ccf5b8e116" },
+        right: { name: "Oman", ko: "오만", polity_id: "ac7279b2-da5c-42df-a217-ac60f16106ff" },
+        rationale: "POLITY-P2-04A 사료·Production 판정: Omani Empire는 오만의 17–19세기 인도양 해양 패권과 동아프리카 지배 영역을 가리키는 제국적 범위이지, 1806–1856년 Said bin Sultan 통치 당시 Oman과 병존한 별개의 독립 주권국가라는 증거가 없습니다. Ya'aruba 시대 Saif bin Sultan(1692–1711)의 정치체 연결은 제국 쪽만 존재하고, Said bin Sultan의 동일한 1806–1856년 통치가 양쪽에 중복돼 있습니다. 현행 Oman 쪽 Said Activity는 1856-10-19까지의 검토 완료 일 단위 기록·사료 4건, 제국 쪽 Said Activity는 year-granularity legacy_asserted·저장소 데이터셋 근거 1건입니다. 권고: Oman을 지속 주권 identity로 보존하고 Omani Empire는 근거 있는 역사적 imperial-scope 명칭/시대로 보존하며, Saif 연결의 무손실 이전·Said 원본 provenance 승계·중복 Activity 및 구형 Polity 은퇴를 원자적으로 검증하는 교정 계획을 별도 승인받아야 합니다. 1856 사망 후 무스카트·오만과 잔지바르의 1861 분리는 별개로 유지합니다. 역사적 범위 판정은 완료했으나 파괴적 Activity retirement 및 Polity retirement는 사용자 명시 승인 전 실행 금지이므로 family는 REVIEW_REQUIRED 유지.",
+        suggested_action: "repair",
+        reviewed_decision: "merge",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        evidence: [
+          "POLITY-P2-04A bounded current Production and Runtime read-back 2026-10-10; docs/POLITY_P2_04A_OMAN_IMPERIAL_SCOPE_AUDIT_20261010.md",
+          "Omani Empire 68c83ef6-0023-5af9-a6e8-26ccf5b8e116: Saif bin Sultan Activity 747c2472-b051-4412-8f7b-51f551a1ec17 (1692–1711) and Said bin Sultan legacy Activity f8108b3a-2f67-526f-b996-30d8b8e91f7d (1806–1856)",
+          "Oman ac7279b2-da5c-42df-a217-ac60f16106ff: reviewed Said bin Sultan Activity d9b4af96-24a6-4a0a-86d4-c0092500118b (1806–1856-10-19) with four source records",
+          "Said Person 0fe2761a-d0b6-5428-b732-8c93d80e1b0d has 2 simultaneous rules/reign/sultan Activities: Empire record confidence legacy_asserted / chronology exact_as_recorded / 1 repository_dataset source; Oman record confidence well_established / chronology reviewed / 4 historical sources",
+          "Oman Ministry of Foreign Affairs on continuous Omani state and east African expansion https://www.fm.gov.om/en/about-oman/state/history/",
+          "Jeremy Jones and Nicholas Ridout, A History of Modern Oman, chapters Oman and the Al Bu Said / Oman, Zanzibar and Empire (Cambridge 2015): https://www.cambridge.org/core/books/abs/history-of-modern-oman/oman-and-the-al-bu-said/883ADF91B35D6E7ABD74B6F5C0F2F2AA ; https://www.cambridge.org/core/books/abs/history-of-modern-oman/oman-zanzibar-and-empire/1593B4DC97F85ECC97177DFA5F0417F9",
+          "U.S. State Department historical country background: 1856 succession and 1861 Canning Award divided Muscat/Oman from Zanzibar https://2009-2017.state.gov/outofdate/bgn/oman/47528.htm",
+          "Explicit approval required before retiring duplicate legacy Activity, retiring Empire Polity, or implementing any data mutation; preserve both current UUIDs, full source links and historical audit evidence until approved"
+        ]
       },
       {
         id: "saudi-third-state-nejd",
