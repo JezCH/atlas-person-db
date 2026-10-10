@@ -823,10 +823,16 @@
     const personView = document.createElement("section");
     personView.id = "personMainView";
     personView.className = "person-main-view";
-    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>연대 불확실성은 활동기간 표기에 직접 반영합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainExcelExport" class="btn" type="button">⇩ 엑셀 출력</button><a class="btn" href="./admin.html">관리자</a></div><div class="person-main-controls"><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
+    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><h2>인물</h2></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainExcelExport" class="btn" type="button">⇩ 엑셀 출력</button><a class="btn" href="./admin.html">관리자</a></div><div class="person-main-controls"><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
       <div class="person-main-layout"><div id="personMainGroups" class="person-main-groups"></div><aside id="personMainDetail" class="person-main-detail card" aria-live="polite"><p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 Activity 의미를 확인할 수 있습니다.</p></aside></div>`;
 
     topbar.insertAdjacentElement("afterend", personView);
+    // The Person surface owns one visible title and one connection indicator.
+    // Keep the shared topbar available for other domains, but move its live status
+    // into the compact Person toolbar before the authority router initializes.
+    const connection = document.getElementById("connectionStatus");
+    const heading = personView.querySelector(".person-main-toolbar-heading");
+    if (connection && heading) heading.append(connection);
 
     const sort = document.getElementById("personMainSort");
     const refresh = document.getElementById("personMainRefresh");
