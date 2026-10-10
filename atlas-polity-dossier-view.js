@@ -205,11 +205,11 @@
       return '<div class="polity-dossier-people">'+rows.map((row)=>
         '<article class="polity-dossier-person">'+
           '<header><button type="button" data-polity-person-id="'+escapeHtml(row.person_id)+'"><strong>'+escapeHtml(row.display_name)+'</strong><small>'+escapeHtml(row.person_id)+'</small></button>'+
-          '<span>'+escapeHtml(row.observed_span.label)+' · '+row.activity_count+' Activity</span></header>'+
+          '<span>'+escapeHtml(row.observed_span.label)+' · '+row.activity_count+' 활동</span></header>'+
           '<ul>'+row.activities.map((activity)=>{
             const designation=text(activity?.polity_designation_name_ko||activity?.polity_designation_name_en);
             const meaning=activityMeaning(activity);
-            return '<li><b>'+escapeHtml(activitySpan(activity))+'</b><span>'+escapeHtml([designation,meaning].filter(Boolean).join(" · ")||"Activity 의미 미기록")+'</span></li>';
+            return '<li><b>'+escapeHtml(activitySpan(activity))+'</b><span>'+escapeHtml([designation,meaning].filter(Boolean).join(" · ")||"활동 의미 미기록")+'</span></li>';
           }).join("")+'</ul>'+
         '</article>'
       ).join("")+'</div>';
