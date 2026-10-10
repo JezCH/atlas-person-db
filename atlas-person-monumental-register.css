@@ -830,6 +830,59 @@
   }
 }
 
+/* REG-M1 desktop restoration — same quiet representative-domain atmosphere
+ * as mobile P11. The wash is painted on the row, not the identity cell:
+ * P2's transparent identity slab, name ink, semantic rail and neutral
+ * interaction hierarchy remain intact. It fades within the first third of
+ * the factual register, leaving chronology and Activity columns neutral.
+ */
+@media (min-width: 761px) {
+  .person-monumental-register .person-register-entry[data-representative-domain] {
+    background-image:
+      linear-gradient(
+        90deg,
+        var(--person-register-domain-wash) 0%,
+        var(--person-register-domain-wash) 12%,
+        transparent 35%
+      ),
+      linear-gradient(90deg, var(--atlas-register-sheen-soft), transparent 24%);
+  }
+
+  .person-monumental-register .person-register-entry[data-representative-domain]:hover {
+    background-image:
+      linear-gradient(
+        90deg,
+        var(--atlas-material-wash-hover) 0,
+        var(--atlas-material-sheen) 26%,
+        rgba(239, 235, 226, .006) 68%,
+        transparent 100%
+      ),
+      linear-gradient(
+        90deg,
+        var(--person-register-domain-wash) 0%,
+        var(--person-register-domain-wash) 12%,
+        transparent 35%
+      );
+  }
+
+  .person-monumental-register .person-register-entry[data-representative-domain].is-selected {
+    background-image:
+      linear-gradient(
+        90deg,
+        var(--atlas-material-wash-selected) 0,
+        var(--atlas-material-sheen-strong) 24%,
+        var(--atlas-material-sheen-soft) 66%,
+        transparent 100%
+      ),
+      linear-gradient(
+        90deg,
+        var(--person-register-domain-wash) 0%,
+        var(--person-register-domain-wash) 12%,
+        transparent 35%
+      );
+  }
+}
+
 /* Mobile becomes a compact two-line register, not a stack of mini cards.
  * Typical one-Activity rows render as:
  *   name | range | count
