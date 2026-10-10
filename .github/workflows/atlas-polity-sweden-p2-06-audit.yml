@@ -26,7 +26,7 @@ jobs:
           for attempt in $(seq 1 45); do
             curl --fail-with-body --silent --show-error "$IDENTITY" > identity.json
             deployed="$(jq -r '.identity.git_commit_sha // ""' identity.json)"
-            if [[ "$deployed" =~ ^[0-9a-f]{40}$ && "$(jq -r '.identity.git_commit_ref' identity.json)" == "main" ]]; then
+            if [[ "$deployed" == "${GITHUB_SHA}" && "$(jq -r '.identity.git_commit_ref' identity.json)" == "main" ]]; then
               token="$(curl --fail-with-body --silent --show-error \
                 -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
                 "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=atlas-person-db-audit-inventory" | jq -er '.value')"
