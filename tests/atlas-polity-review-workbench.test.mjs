@@ -33,12 +33,12 @@ test('canonical Polity listing stays live while expanded rows render a first-cla
   assert.match(browser, /ATLAS_POLITY_DOSSIER_VIEW/);
   assert.match(browser, /READER\.listPolities\(\)/);
   assert.match(browser, /payload\.polities/);
-  assert.match(browser, /CANONICAL POLITY BROWSER/);
+  assert.match(browser, /정치체 기준 목록/);
   assert.match(browser, /PAGE_SIZE = 12/);
   assert.match(browser, /data-polity-load-more/);
   assert.match(browser, /dossierRenderer\.dossierHtml\(polity\)/);
   assert.match(dossier, /정치체 식별 정보/);
-  assert.match(dossier, /Activity에서 관측된 시대 명칭/);
+  assert.match(dossier, /활동 기록에서 확인된 시대 명칭/);
   assert.match(reader, /\/api\/atlas-polity-read/);
   assert.match(reader, /cache: "no-store"/);
 });
