@@ -83,7 +83,10 @@ jobs:
             sleep 0.25
           done
           curl -fsS http://127.0.0.1:9222/json/version >/dev/null
-          xdotool search --onlyvisible --class chrome | head -3
+          # Chrome startup creates transient X11 windows: xdotool search can report BadWindow.
+          # The actual Node preflight locates/activates the stable desktop window later.
+          sleep 1
+          xdotool getactivewindow >/dev/null 2>&1 || true
           node scripts/verify-vis3-06-r5-native-summary-focus.mjs
 
       - name: Archive native Chrome keyboard focus baseline and patched evidence
