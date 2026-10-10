@@ -19,7 +19,7 @@
     resolved_review: Object.freeze({ label: "종결 이력", tone: "confirmed" })
   });
   const STATUS_LABEL = Object.freeze({
-    REVIEW_REQUIRED: "최신 Production 재판정 필요",
+    REVIEW_REQUIRED: "최신 운영 환경 재판정 필요",
     FIXED: "종결 · FIXED",
     KEEP_SEPARATE: "종결 · KEEP_SEPARATE",
     SUPERSEDED: "종결 · SUPERSEDED",
@@ -325,7 +325,7 @@
       </div>
       <p class="polity-review-rationale">${escapeHtml(row.rationale)}</p>
       ${row.presentation_note ? `<div class="polity-review-presentation-note"><strong>시대별 표현 보존</strong><p>${escapeHtml(row.presentation_note)}</p></div>` : ""}
-      <div class="polity-review-evidence"><strong>감사 seed / 근거</strong><ul>${evidence}</ul></div>
+      <div class="polity-review-evidence"><strong>감사 원장 / 근거</strong><ul>${evidence}</ul></div>
       <div class="polity-review-suggestion"><span>${reviewed ? "검토 판정" : "검토 제안"}</span><strong>${escapeHtml(decisionLabel(reviewed || row.suggested_action))}</strong></div>
       <div class="polity-review-controls">
         <label>${locked ? "반영 상태" : "내 결정"}
@@ -345,9 +345,9 @@
       <div><small>전체 정치체</small><strong>${value("total_polities")}</strong></div>
       <div><small>인물 연결 정치체</small><strong>${value("linked_polities")}</strong></div>
       <div><small>연결 없음</small><strong>${value("orphan_polities")}</strong></div>
-      <div><small>Person↔Polity Activity</small><strong>${value("activity_count")}</strong></div>
+      <div><small>인물–정치체 활동 연결</small><strong>${value("activity_count")}</strong></div>
       <div><small>고유 연결 인물</small><strong>${value("unique_linked_persons")}</strong></div>
-      <div><small>Person↔Polity 연결</small><strong>${value("person_polity_links")}</strong></div>
+      <div><small>인물–정치체 연결</small><strong>${value("person_polity_links")}</strong></div>
     </div>`;
   }
 
@@ -394,7 +394,7 @@
         <div>
           <p class="eyebrow">정치체 식별정보 검토</p>
           <h2>충돌·식별정보 검토</h2>
-          <p>현재 검토 원장의 미종결 사건을 최신 Production에 대조하여 판정합니다. 옛 목록을 작업 지시로 실행하지 않고, FIXED / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD_UNRESOLVED 중 하나로 종결합니다.</p>
+          <p>현재 검토 원장의 미종결 사건을 최신 운영 환경에 대조하여 판정합니다. 옛 목록을 작업 지시로 실행하지 않고, FIXED / KEEP_SEPARATE / SUPERSEDED / NOT_PRESENT / HOLD_UNRESOLVED 중 하나로 종결합니다.</p>
         </div>
         <div class="polity-review-summary-actions">
           <button type="button" class="btn" data-export-decisions>결정 JSON 내보내기</button>
