@@ -187,7 +187,8 @@ jobs:
               if [[ "$identity_status" == "200" ]]; then
                 runtime_sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/atlas-youtube-publication/runtime.json)"
                 runtime_ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/atlas-youtube-publication/runtime.json)"
-                if [[ "$runtime_sha" =~ ^[0-9a-f]{40}$ && "$runtime_ref" == "main" ]]; then
+                if [[ "$runtime_sha" =~ ^[0-9a-f]{40}$ && "$runtime_ref" == "main" ]] &&
+                   { [[ "$GITHUB_EVENT_NAME" != "push" ]] || [[ "$runtime_sha" == "$GITHUB_SHA" ]]; }; then
                   echo "ATLAS_YOUTUBE_RUNTIME_SHA=$runtime_sha" >> "$GITHUB_ENV"
                   echo "Publication route live on runtime $runtime_sha"
                   exit 0
