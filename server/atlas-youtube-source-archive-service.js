@@ -3,9 +3,12 @@
 const fs=require("node:fs");
 const path=require("node:path");
 
-const MIGRATION_PATH=path.resolve(__dirname,"../db/migrations/20261009_youtube_durable_source_catalog.sql");
+const MIGRATION_PATHS=Object.freeze([
+  path.resolve(__dirname,"../db/migrations/20261009_youtube_durable_source_catalog.sql"),
+  path.resolve(__dirname,"../db/migrations/20261011_youtube_durable_source_complete_catalog.sql")
+]);
 const SHA256_RE=/^[0-9a-f]{64}$/;
-const KINDS=new Set(["manifest","channel_videos"]);
+const KINDS=new Set(["manifest","channel_videos","metadata"]);
 const MAX_RECORDS=10000;
 
 function requireText(value,code,max=2048){
@@ -26,7 +29,8 @@ function normalizeRecord(row){
   const sourceKind=requireText(row.source_kind,"YOUTUBE_SOURCE_ARCHIVE_KIND_REQUIRED",32);
   if(!KINDS.has(sourceKind)) throw new Error("YOUTUBE_SOURCE_ARCHIVE_KIND_INVALID");
   const channelId=row.channel_id==null ? null : requireText(row.channel_id,"YOUTUBE_SOURCE_ARCHIVE_CHANNEL_ID_INVALID",256);
-  if((sourceKind==="manifest" && channelId!==null) || (sourceKind==="channel_videos" && channelId===null)){
+  if((sourceKind==="channel_videos" && channelId===null) ||
+     (sourceKind!=="channel_videos" && channelId!==null)){
     throw new Error("YOUTUBE_SOURCE_ARCHIVE_KIND_CHANNEL_MISMATCH");
   }
   return Object.freeze({
@@ -66,6 +70,12 @@ select object_key,sha256,byte_count,source_artifact_id,batch_label,source_kind,c
 from atlas_v2.youtube_source_archives
 where object_key=any($1::text[])
 `;
+const READ_ARTIFACT_SQL=`
+select object_key,sha256,byte_count,source_artifact_id,batch_label,source_kind,channel_id,video_rows
+from atlas_v2.youtube_source_archives
+where source_artifact_id=$1
+order by object_key
+`;
 const INSERT_SQL=`
 insert into atlas_v2.youtube_source_archives(
   object_key,sha256,byte_count,source_artifact_id,batch_label,source_kind,channel_id,video_rows
@@ -78,10 +88,12 @@ from jsonb_to_recordset($1::jsonb) as x(
 on conflict(object_key) do nothing
 `;
 
-async function applyYoutubeSourceArchiveMigration(client,{readFile=fs.readFileSync}={}){
+async function applyYoutubeSourceArchiveMigrations(client,{readFile=fs.readFileSync}={}){
   if(!client || typeof client.query!=="function") throw new Error("PostgreSQL client is required");
-  await client.query(readFile(MIGRATION_PATH,"utf8"));
-  return Object.freeze({applied:path.basename(MIGRATION_PATH)});
+  for(const migrationPath of MIGRATION_PATHS){
+    await client.query(readFile(migrationPath,"utf8"));
+  }
+  return Object.freeze({applied:MIGRATION_PATHS.map(p=>path.basename(p))});
 }
 
 async function publishYoutubeSourceArchiveCatalog(client,input){
@@ -122,14 +134,32 @@ async function publishYoutubeSourceArchiveCatalog(client,input){
   }
 }
 
+async function readYoutubeSourceArchiveCatalog(client,artifactId){
+  if(!client || typeof client.query!=="function") throw new Error("PostgreSQL client is required");
+  const id=requireInt(artifactId,"YOUTUBE_SOURCE_ARCHIVE_ARTIFACT_ID_INVALID",{min:1});
+  await client.query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY");
+  try{
+    const rows=(await client.query(READ_ARTIFACT_SQL,[id])).rows || [];
+    if(rows.length===0) throw new Error("YOUTUBE_SOURCE_ARCHIVE_CATALOG_EMPTY");
+    const records=normalizeRecords(rows);
+    await client.query("COMMIT");
+    return Object.freeze({artifact_id:id,record_count:records.length,records});
+  }catch(error){
+    try{await client.query("ROLLBACK");}catch{}
+    throw error;
+  }
+}
+
 module.exports=Object.freeze({
   normalizeRecord,
   normalizeRecords,
   equivalent,
-  applyYoutubeSourceArchiveMigration,
+  applyYoutubeSourceArchiveMigrations,
   publishYoutubeSourceArchiveCatalog,
-  MIGRATION_PATH,
+  readYoutubeSourceArchiveCatalog,
+  MIGRATION_PATHS,
   SELECT_SQL,
+  READ_ARTIFACT_SQL,
   INSERT_SQL,
   MAX_RECORDS
 });
