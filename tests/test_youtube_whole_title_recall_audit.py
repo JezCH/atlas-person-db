@@ -166,5 +166,72 @@ class TestWholeTitleRecall(unittest.TestCase):
                 module.audit_source(archive, snapshot, min_words=1)
 
 
+
+    def test_initial_dot_does_not_hide_open_vocabulary_historical_name(self):
+        idx = module.build_index(["Carter G Woodson", "W E B Du Bois", "Emmett Till"])
+        self.assertEqual(
+            [x[0] for x in module.find_names("The Life of Carter G. Woodson", idx)],
+            ["Carter G Woodson"],
+        )
+        self.assertEqual(
+            [x[0] for x in module.find_names("W.E.B. Du Bois: Biography", idx)],
+            ["W E B Du Bois"],
+        )
+        self.assertEqual(
+            module.find_names("Carter G. someone else", idx), []
+        )
+
+    def test_new_cue_labels_expand_from_same_snapshot_original_ids(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            archive = Path(tmp) / "new_names.zip"
+            channels = [
+                ("UC1", "The Murder of Emmett Till"),
+                ("UC2", "Why Was Emmett Till Killed?"),
+                ("UC3", "Emmett Till: A History"),
+            ]
+            with zipfile.ZipFile(archive, "w") as z:
+                for i, (channel, title) in enumerate(channels):
+                    z.writestr(
+                        f"batch024/videos/{channel}.ndjson.gz",
+                        gzip.compress(
+                            (json.dumps({"video_id": f"v{i}", "title": title}) + "\n").encode()
+                        ),
+                    )
+            snapshot = {
+                "snapshot": {
+                    "snapshot_id": "source-a", "channel_count": 3, "video_count": 3
+                },
+                "signals": [{"raw_name": "Already Known Person"}],
+            }
+            extra = {
+                "schema": "youtube-open-vocabulary-name-cue-audit/v2",
+                "reference_source_snapshot_id": "source-a",
+                "rows": [
+                    {"candidate": "Emmett Till",
+                     "candidate_fold_status": "NEW_LABEL_REVIEW",
+                     "distinct_channels": 3},
+                    {"candidate": "Santa Claus",
+                     "candidate_fold_status": "NEW_LABEL_REVIEW",
+                     "distinct_channels": 3},
+                ],
+            }
+            result = module.audit_source(archive, snapshot, extra_candidates=extra)
+            by_name = {row["raw_name"]: row for row in result["rows"]}
+            self.assertEqual(by_name["Emmett Till"]["title_mention_distinct_channels"], 3)
+            self.assertEqual(by_name["Emmett Till"]["title_mention_distinct_videos"], 3)
+            self.assertEqual(by_name["Emmett Till"]["candidate_origin"], "open_vocabulary_cue")
+            self.assertEqual(by_name["Emmett Till"]["identity_disposition"], "NEW_LABEL_REVIEW")
+            self.assertEqual(result["extra_candidate_labels_indexed"], 1)
+            self.assertNotIn("Santa Claus", by_name)
+            self.assertFalse(result["published_rank_eligible"])
+
+            wrong_source = dict(extra, reference_source_snapshot_id="source-b")
+            with self.assertRaisesRegex(ValueError, "snapshot mismatch"):
+                module.audit_source(archive, snapshot, extra_candidates=wrong_source)
+            duplicate = dict(extra, rows=[extra["rows"][0], extra["rows"][0]])
+            with self.assertRaisesRegex(ValueError, "repeated"):
+                module.audit_source(archive, snapshot, extra_candidates=duplicate)
+
+
 if __name__ == "__main__":
     unittest.main()
