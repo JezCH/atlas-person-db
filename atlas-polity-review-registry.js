@@ -267,15 +267,25 @@
         id: "chuzan-ryukyu",
         review_group: "historical_family_review",
         kind: "family_review",
-        title: "Chūzan ↔ Ryukyu Kingdom",
-        left: { name: "Chūzan" },
-        right: { name: "Ryukyu Kingdom" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
-        suggested_action: "hold",
+        title: "Chūzan → Ryukyu Kingdom (conventional 1429 transition)",
+        left: { name: "Chūzan", ko: "중산왕국", polity_id: "9860fc4b-feb8-491b-acdb-97d37bae6fcb" },
+        right: { name: "Ryukyu Kingdom", ko: "류큐 왕국", polity_id: "701a8b03-5ba6-5ce6-a698-128944fec079" },
+        rationale: "POLITY-P2-04E (2026-10-10): 쇼 하시(Shō Hashi)의 중산 1422–1429년과 류큐 왕국 1429–1439년은 한 군주의 연속 활동으로 동시 중복 주권국가 재위가 아닙니다. 오키나와현·나하시 역사박물관·오키나와현 공문서관의 통상 연표는 1429년 삼산통일 및 류큐 왕국 성립을 구분합니다. 그러나 生田滋(Shigeru Ikuta, 1984)의 전문 연구는 명실록의 조공 중단이 정복/통일의 직접 증명이 아니고 해당 서사가 후대 편찬물에 의해 재구성됐음을 지적하므로, 현행 1429년 전환 및 1422년 즉위의 정확성과 well_established 확실성은 추가 사료심사가 필요합니다. 당장은 phase 구분을 유지하며 두 UUID 및 원 출처를 보존하고, 확인되지 않은 건국일·월일이나 제3의 통치기간을 창작하지 않습니다. 권고는 임시 keep_both이며 연대의 신뢰도 재검증 전 terminal 처리 및 Production 수정은 하지 않습니다.",
+        suggested_action: "repair",
+        reviewed_decision: "provisional_keep_both_verify_1429_contemporary_evidence",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
-      },
+        evidence: [
+          "2026-10-10 Production: Chūzan 9860fc4b-feb8-491b-acdb-97d37bae6fcb; Shō Hashi 63ae502c-cc46-4f04-8c7b-1be1be9b613b, rules/reign Activity d4503fea-545e-4c72-b398-f6075c2987cf 1422–1429 reviewed",
+          "2026-10-10 Production: Ryukyu Kingdom 701a8b03-5ba6-5ce6-a698-128944fec079; same Shō Hashi Activity 432b442f-d2a7-42c2-9ec7-c159fe88e402 1429–1439 reviewed; later Shō Shin Activity 353086c5-76e7-5b9c-b7b8-3c4f39398841 1477–1526 preserved",
+          "Person detail: both Shō Hashi Activities have Japan Tourism Agency Ryukyu chronology Source; stored year only exact, calendar unspecified_historical, confidence well_established; no Source changes",
+          "Okinawa Prefecture official standard chronology for 1429: https://www.pref.okinawa.jp/kyoiku/kodomo/1002705/1002706.html",
+          "Naha City History Museum 1416 and 1429 chronology: https://www.rekishi-archive.city.naha.okinawa.jp/en/history",
+          "Okinawa Prefectural Archives historical account: https://www.archives.pref.okinawa.jp/event_information/past_exhibitions/10811",
+          "Ikuta Shigeru, The so-called Unification of the Three Kingdoms in Ryukyu History, Toyo Gakuho vol.65 nos.3–4 (1984): critique of later unity narrative against contemporaneous Ming Shilu and Korean sources: https://toyo-bunko.repo.nii.ac.jp/records/5524",
+          "Scoped review: docs/POLITY_P2_04E_CHUZAN_RYUKYU_1429_SOURCE_AUDIT_20261010.md"
+        ]
+      }
       {
         id: "massylii-numidia",
         review_group: "historical_family_review",
