@@ -86,6 +86,12 @@ class Unreviewed245TitleEvidenceTest(unittest.TestCase):
         self.assertEqual(
             focus.bucket("The Life of Emmett Till and Another Leader","Emmett Till"),
             "JOINT_PERSON_OR_EVENT_REVIEW")
+        self.assertEqual(
+            focus.bucket("The History of St Patrick's Cathedral","St Patrick"),
+            "PERSON_NAMED_EVENT_OR_INSTITUTION_REVIEW")
+        self.assertEqual(
+            focus.bucket("St Patrick's Day Celebration","St Patrick"),
+            "PERSON_NAMED_EVENT_OR_INSTITUTION_REVIEW")
 
     def test_exact_source_identity_and_digest_guards(self):
         with tempfile.TemporaryDirectory() as temp:
