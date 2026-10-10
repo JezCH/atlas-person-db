@@ -180,3 +180,51 @@ test("P2-03E opt-in Brazil readback is exact-UUID scoped and READ ONLY", async (
   assert.equal(base.statements.at(-1).sql.trim().toLowerCase(),"commit");
 });
 
+
+
+test("P2-05B Russia opt-in Production census is exact-UUID, read-only and includes all source/designation records", async () => {
+  const { RUSSIA_P2_05B_POLITY_ID, RUSSIA_P2_05B_ACTIVITIES } =
+    require("../server/atlas-polity-reference-audit-handler.js");
+  const base = fakeClient();
+  const originalQuery = base.query.bind(base);
+  base.query = async (sql, params = []) => {
+    const lower = String(sql).toLowerCase();
+    if (lower.includes("from atlas_v2.polity_sources ps") ||
+        lower.includes("from atlas_v2.polity_designations pd") ||
+        lower.includes("from atlas_v2.polity_identity_relations pir") ||
+        lower.includes("from atlas_v2.polity_governance_periods gp") ||
+        lower.includes("from atlas_v2.person_politics_v2 a") ||
+        lower.includes("from atlas_v2.person_politics_sources pps") ||
+        lower.includes("from atlas_v2.runtime_person_politics_v1 r")) {
+      base.statements.push({ sql: String(sql), params });
+      if (lower.includes("from atlas_v2.polity_designations pd"))
+        return { rows: [{ polity_id: RUSSIA_P2_05B_POLITY_ID, designation: { id: "designation-a" },
+          names: [{ locale: "ko", name: "러시아 차르국" }], source_links: [{ source_id: "source-a" }] }] };
+      if (lower.includes("from atlas_v2.person_politics_v2 a"))
+        return { rows: RUSSIA_P2_05B_ACTIVITIES.map(id => ({ activity_id: id, polity_id: RUSSIA_P2_05B_POLITY_ID, activity: { id } })) };
+      if (lower.includes("from atlas_v2.person_politics_sources pps"))
+        return { rows: [{ activity_id: RUSSIA_P2_05B_ACTIVITIES[0], source_id: "source-a" }] };
+      if (lower.includes("from atlas_v2.runtime_person_politics_v1 r"))
+        return { rows: [{ polity_id: RUSSIA_P2_05B_POLITY_ID, runtime_activity: { id: RUSSIA_P2_05B_ACTIVITIES[0] } }] };
+      return { rows: [] };
+    }
+    return originalQuery(sql, params);
+  };
+  const baseline = await queryPolityReferenceAudit(fakeClient());
+  assert.equal(baseline.russia_details, null);
+  const audit = await queryPolityReferenceAudit(base, { includeRussiaDetails: true });
+  assert.deepEqual(audit.russia_details.polity_ids, [RUSSIA_P2_05B_POLITY_ID]);
+  assert.equal(audit.russia_details.designations.length, 1);
+  assert.equal(audit.russia_details.activity_sources.length, 1);
+  assert.equal(audit.russia_details.activities.length, 3);
+  assert.deepEqual(audit.russia_details.missing_reviewed_activity_ids, []);
+  assert.equal(audit.russia_details.designation_display_repaired, false);
+  for (const { sql, params } of base.statements) {
+    assert.doesNotMatch(sql, /\b(insert|update|delete|alter|drop|create|truncate|grant|revoke)\b/i);
+    if (/from atlas_v2\.(polity_sources ps|polity_designations pd|polity_identity_relations pir|polity_governance_periods gp)/i.test(sql))
+      assert.deepEqual(params, [[RUSSIA_P2_05B_POLITY_ID]]);
+    if (/from atlas_v2\.(person_politics_v2 a|person_politics_sources pps|runtime_person_politics_v1 r)/i.test(sql))
+      assert.deepEqual(params, [RUSSIA_P2_05B_POLITY_ID]);
+  }
+  assert.equal(base.statements.at(-1).sql.trim().toLowerCase(), "commit");
+});
