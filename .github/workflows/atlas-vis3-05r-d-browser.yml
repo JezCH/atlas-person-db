@@ -25,10 +25,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Install Korean fonts
+      - name: Ensure Korean fonts without blocking visual audit
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+          if fc-list :lang=ko family | grep -q .; then
+            echo "Preinstalled Korean font families detected"
+          else
+            timeout 35s sudo apt-get update -qq || true
+            timeout 35s sudo apt-get install -y --no-install-recommends fonts-noto-cjk || true
+          fi
+          fc-list :lang=ko family | head -n 4 || true
       - name: Start read-only Chrome
         run: |
           CHROME_BIN="$(command -v google-chrome-stable || command -v google-chrome || command -v chromium || true)"
