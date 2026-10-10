@@ -122,7 +122,7 @@ class RealSourcePriorityAndResumableMetadataTest(unittest.TestCase):
             ("original_channel_id","UC"+"Z"*22),
             ("original_title","Corrupted original title"),
             ("description","Tampered description"),
-            ("status","DESCRIPTION_PRESENT"),
+            ("status","DESCRIPTION_EMPTY"),
             ("person_video_content_verified",True),
         ]:
             bad=copy.deepcopy(checkpoint)
