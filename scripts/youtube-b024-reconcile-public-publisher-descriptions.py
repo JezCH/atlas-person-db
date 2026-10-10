@@ -60,9 +60,12 @@ def reconcile(request, manifest, *, request_sha256):
         if (entry.get("person_centered_actual_video_verified") is not False or
                 entry.get("evidence_level") != "PUBLIC_PUBLISHER_DESCRIPTION_AND_EXTERNAL_CHANNEL_ID_CROSS_CHECK"):
             raise ValueError("PUBLIC_METADATA_MUST_NOT_CREDIT_UNVIEWED_CONTENT")
-        if not any(cue.get("raw_name") in (src.get("name_cues") or [{}])[0].get("raw_name","")
-                   for cue in src.get("name_cues", [])):
-            raise ValueError("PUBLIC_METADATA_SOURCE_NAME_CUES_MISSING")
+        if (entry.get("original_name_cue_raw_name"),
+            entry.get("original_name_cue_bucket")) not in {
+                (cue.get("raw_name"), cue.get("bucket"))
+                for cue in src.get("name_cues", [])
+            }:
+            raise ValueError("PUBLIC_METADATA_SOURCE_NAME_CUES_MISMATCH")
         for field in ("publisher_display", "publisher_description_summary",
                       "corroborating_publisher_page", "independent_channel_id_source_url"):
             value = entry.get(field)
