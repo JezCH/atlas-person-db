@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-name:p2-09-song-and-qin-jin-homonym-disambiguation:2026-10-11:v1",
+  "release_order": 1370,
+  "decision_authority": "#1895 existing REVIEW_REQUIRED naming seeds song-ko-name-collision and qin-jin-ko-name-collision; public full Production census run #38072668164 artifact #11677785165, complete 1,158 Polity/2,523 Activity enumeration at deployed Vercel main SHA ad777fcb81ea7a86bd6f34ac9caa3b1e62a442c3.",
+  "evidence": {
+    "production_census_run": 38072668164,
+    "production_census_artifact": 11677785165,
+    "production_artifact_digest": "sha256:2fedde35c58112bba9c442ad72ab35021033a3e7042d3254adca5738b751039e",
+    "current_ko_collision_groups": [
+      {
+        "name": "송나라",
+        "ids": [
+          "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+          "f5547f25-fbae-5a84-ad65-04bdb82de1e7"
+        ]
+      },
+      {
+        "name": "진나라",
+        "ids": [
+          "4ed462b6-6d39-571a-bb18-3e320bddd199",
+          "ddf1b350-17ea-5275-bc33-e6d86ab4d868"
+        ]
+      }
+    ],
+    "ancient_song_proof": "Existing ancient Song UUID f5547f25-fbae-5a84-ad65-04bdb82de1e7 has Duke Xiang of Song (−650…−637 BCE), Mozi, Zhuangzi. Distinguished from Zhao Song (960…1279 CE), UUID 1a1983fd-1850-5756-877c-3d2c17b85e1f with Taizu/Shenzong. Chinese Text Project: https://ctext.org/dictionary.pl?did=1172&if=en ; KCI peer-reviewed study: https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002718595",
+    "jin_qin_proof": "Existing state Jin UUID ddf1b350-17ea-5275-bc33-e6d86ab4d868 has Duke Wen of Jin (−636…−628 BCE) and character 晉. Existing Qin UUID 4ed462b6-6d39-571a-bb18-3e320bddd199 has Duke Mu, Shi Huang and character 秦. Cambridge historiography distinguishes Jin and Qin as two states: https://www.cambridge.org/core/services/aop-cambridge-core/content/view/1365C7C3FFB36D9137D6CA9856819323/S036250282510028Xa.pdf/reading_history_obliquely_tables_on_the_spring_and_autumn_period.pdf",
+    "exact_preferred_ko_replacement_name_preflight": "The census publicly enumerated all 1,158 Polities and all public KO name entries; neither `고대 송나라(宋)` nor `진(晉)` existed as a public existing KO name; the guarded canonical writer independently checks LIVE all polity_names (preferred and aliases) for collision inside SERIALIZABLE before write.",
+    "disambiguation_rule": "Retain familiar unqualified `송나라` on Zhao Song Dynasty and `진나라` on Qin; disambiguate only minority homonyms by ancient context/Hanja. Original Polity and preferred-name-row UUIDs retained. No name/role changes on any Person, Person Activity, Polity Source, relation or Polity identity."
+  },
+  "operations": [
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "song-ko-name-collision-ancient-spring-autumn-and-warring-states-song",
+      "polity_id": "f5547f25-fbae-5a84-ad65-04bdb82de1e7",
+      "locale": "ko",
+      "expected_name": "송나라",
+      "replacement_name": "고대 송나라(宋)"
+    },
+    {
+      "type": "replace_polity_preferred_name",
+      "case_id": "qin-jin-ko-name-collision-state-jin-hanja",
+      "polity_id": "ddf1b350-17ea-5275-bc33-e6d86ab4d868",
+      "locale": "ko",
+      "expected_name": "진나라",
+      "replacement_name": "진(晉)"
+    }
+  ],
+  "expected_guards": {
+    "only_two_existing_preferred_ko_name_values_changed": true,
+    "polity_uuids_preserved": true,
+    "preferred_name_row_uuids_preserved": true,
+    "person_activities_unchanged": true,
+    "all_sources_and_source_joins_unchanged": true,
+    "qin_original_preferred_ko_untouched": true,
+    "song_dynasty_original_preferred_ko_untouched": true,
+    "no_polity_retirement_merge_relink": true,
+    "exact_live_before_state_required": true
+  }
+}
