@@ -105,7 +105,7 @@ jobs:
           set -euo pipefail
           python -m py_compile scripts/youtube-build-person-signal-snapshot.py
           mkdir -p /tmp/atlas-youtube-publication
-          python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/atlas-youtube-publication/snapshot.json             --artifact-id "$ARTIFACT_ID"             --artifact-digest "$ARTIFACT_DIGEST"             
+          python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/atlas-youtube-publication/snapshot.json             --artifact-id "$ARTIFACT_ID"             --artifact-digest "$ARTIFACT_DIGEST" --reviewed-source-aliases audits/youtube-b024-v5-reviewed-alias-nameforms.json             
           jq -e '
             .snapshot.channel_count>=8508
             and .snapshot.video_count>=1950864
@@ -119,6 +119,9 @@ jobs:
             and .snapshot.source_state.source_name_generation_independent_of_registered_persons==true
             and .snapshot.source_state.title_context_personhood=="source_title_review_candidate_not_verified_person"
             and (.snapshot.source_state.quality_counters.accepted_context_cue_video_name_ids>0)
+            and .snapshot.source_state.reviewed_source_unions_count==5
+            and (.snapshot.source_state.reviewed_source_unions|length)==5
+            and .snapshot.source_state.reviewed_source_unions_nameform_only_not_biography==true
             and .snapshot.source_state.quality_rules_version=="reviewed-20261008-v2"
             and (.snapshot.source_state.quality_counters.reviewed_non_person>0)
             and (.snapshot.source_state.quality_counters.numbered_title_metadata>0)
