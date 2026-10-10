@@ -1,0 +1,116 @@
+name: ATLAS Place Production Authority Audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/atlas-place-production-authority-audit.yml'
+      - 'api/atlas-audit-inventory.js'
+      - 'server/atlas-place-production-audit-handler.js'
+      - 'scripts/audit-place-production-authority.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-place-production-authority-read
+  cancel-in-progress: false
+
+jobs:
+  read-only-place-authority:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    env:
+      RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
+      AUDIT_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-audit-inventory?__atlas_audit_surface=place-production-authority
+      AUDIT_AUDIENCE: atlas-person-db-place-production-audit
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install locked runtime dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Verify bounded Place authority and OIDC transport tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test tests/atlas-place-production-authority.test.mjs tests/atlas-place-production-transport.test.mjs
+
+      - name: Verify exact main Production deployment is ready
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/atlas-place-production
+          for attempt in $(seq 1 75); do
+            status="$(curl --silent --show-error --max-time 15               --output /tmp/atlas-place-production/runtime.json               --write-out '%{http_code}' "${RUNTIME_IDENTITY_ENDPOINT}" || true)"
+            if [[ "${status}" == "200" ]] && jq -e --arg sha "${GITHUB_SHA}" '
+              .ok==true
+              and .identity.git_commit_ref=="main"
+              and .identity.git_commit_sha==$sha
+            ' /tmp/atlas-place-production/runtime.json >/dev/null; then
+              echo "ATLAS_PLACE_AUDIT_RUNTIME_SHA=${GITHUB_SHA}" >> "${GITHUB_ENV}"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "PLACE_AUDIT_EXACT_PRODUCTION_RUNTIME_NOT_READY" >&2
+          exit 1
+
+      - name: Execute OIDC-scoped Production repeatable-read Place census
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/atlas-place-production
+          jq -n --arg deployment "${ATLAS_PLACE_AUDIT_RUNTIME_SHA}" --arg workflow "${GITHUB_SHA}"             '{deployment_sha:$deployment,workflow_sha:$workflow}'             > /tmp/atlas-place-production/request.json
+          oidc_token="$(curl --fail-with-body --silent --show-error             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${AUDIT_AUDIENCE}" | jq -er '.value')"
+          status="$(curl --silent --show-error --max-time 55             --output /tmp/atlas-place-production/audit.json             --write-out '%{http_code}'             --request POST             -H 'content-type: application/json'             -H "authorization: Bearer ${oidc_token}"             --data-binary @/tmp/atlas-place-production/request.json             "${AUDIT_ENDPOINT}" || true)"
+          if [[ "${status}" != "200" ]]; then
+            echo "PLACE_PRODUCTION_AUTHORITY_UNPROVEN_OR_AUDIT_FAILED; HTTP ${status}" >&2
+            jq '{ok,marker,code,audit:{state:.audit.state,queried:.audit.queried,identity:.audit.identity}}'               /tmp/atlas-place-production/audit.json >&2 || true
+            exit 1
+          fi
+          jq -e --arg sha "${GITHUB_SHA}" '
+            .ok==true
+            and .marker=="ATLAS_PLACE_PRODUCTION_AUTHORITY_AUDIT_V1"
+            and .read_only==true
+            and .deployment_sha==$sha
+            and .workflow_sha==$sha
+            and .audit.queried==true
+            and .audit.identity.status=="MATCH"
+            and .audit.identity.deployment_sha==$sha
+            and (.audit.state=="TARGET_CONFIRMED_GAP" or .audit.state=="TARGET_CONFIRMED_COMPLETE")
+          ' /tmp/atlas-place-production/audit.json >/dev/null
+          jq '{
+            schema:"atlas-place-production-authority-receipt/v1",
+            deployment_sha,workflow_sha,
+            audit_state:.audit.state,
+            target:.audit.identity,
+            queried:.audit.queried,
+            polities:{expected:.audit.report.polities.expected,present:.audit.report.polities.present},
+            places:{expected:.audit.report.places.expected,present:.audit.report.places.present},
+            sources:{expected:.audit.report.sources.expected,present:.audit.report.sources.present},
+            facts:{expected:.audit.report.facts.expected,present:.audit.report.facts.present}
+          }' /tmp/atlas-place-production/audit.json > /tmp/atlas-place-production/summary.json
+          cat /tmp/atlas-place-production/summary.json
+          if jq -e '.audit.state=="TARGET_CONFIRMED_GAP"' /tmp/atlas-place-production/audit.json >/dev/null; then
+            echo "Place authority is CONFIRMED INCOMPLETE. M4 remains NO-GO." >> "${GITHUB_STEP_SUMMARY}"
+          fi
+
+      - name: Archive sanitized exact-Production read-only authority evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-place-production-authority-audit
+          path: |
+            /tmp/atlas-place-production/runtime.json
+            /tmp/atlas-place-production/audit.json
+            /tmp/atlas-place-production/summary.json
+          if-no-files-found: warn
+          retention-days: 90
