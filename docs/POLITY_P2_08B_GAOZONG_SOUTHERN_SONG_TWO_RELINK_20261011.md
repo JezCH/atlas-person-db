@@ -2,6 +2,18 @@
 
 **2026-10-11 KST | Correct exactly two existing Person Activities from the generic Song dynasty Polity to the already-existing Southern Song Polity; do not retire or delete any Polity or Person.**
 
+## Acceptance — actual verified Production and Runtime (2026-10-11 KST)
+
+**STATUS: BOUNDED TWO-ACTIVITY UNIT APPLIED AND VERIFIED. Parent Song generic-ownership debt remains PARTIAL_REPAIR.**
+
+- [PR #2436](https://github.com/JezCH/atlas-person-db/pull/2436) merged after passing complete repository CI; commit `e4471c3bf3dc35c1cd16ec1beae4f56ac2b5edbd`.
+- Protected Stage 2 [Production Correction run #38062968150](https://github.com/JezCH/atlas-person-db/actions/runs/38062968150) **success, `ok=true`, `committed=true`, `replay=false`**, after dry-run with matched manifest digest `sha256:857ac39fdca6fd049f67a789cc13bada848765cca7fb1016af09714cb4704f4a` and same exact-before digest `sha256:3cddbe3abcd1adb692479da1ebc71138a38e9f8947f83a85b86845cff79b3bdd`. [Correction exact-before / after and Baseline A artifact #11672959417](https://github.com/JezCH/atlas-person-db/actions/runs/38062968150/artifacts/11672959417), zipped SHA256 `0a0487a1ab00a15657d8055cf8ee1acf81575430013c89d76a0aca8455e7daee`.
+- We inspected both `apply.json` operation documents: **the ONLY changed Activity field on each was `polity_id`**; both original 1129-discontinuous reign Activity UUIDs and every other field (`person_id`, role/relation, notes, content hash, source locator, confidence, chronology status, year/granularity and calendar) remained equal. On each of the two operations `exact_before.normalized_source_links === exact_after.normalized_source_links` in value; all **four exact Source UUID + locator pairs retained**, no Source mutations.
+- Runtime projection [Compile run #38063018927](https://github.com/JezCH/atlas-person-db/actions/runs/38063018927) **success**. Immediately thereafter real public Production `__atlas_read_surface=person&person_id=82809cc5-fc51-4e96-98e5-b290126fdcac` and all three direct Polity detail readbacks returned both original Gaozong Activities on **Southern Song**, original two sources each and null month/day (year granularity unchanged).
+- Public direct Activities: generic `Song Dynasty`: **6** (previously 8, no Gaozong); `Northern Song`: **3** unchanged; `Southern Song`: **5** (previously 3; both Gaozong segments). Total **14** unchanged. Canonical correction before/after cross-table deltas: `activities=0`, `activity_sources=0`, `sources=0`, and no identity/governance/temporal-designation/Polity row changes. The Baseline A produced **2,523 total Activities**, **3,887 Activity Source links**, **1,158 Polities**, **2,145 Persons** at apply time, which is context not all-corpus acceptance proof.
+
+**Still open:** six earlier generic Song emperor/regent Activity owner assessments, zero Northern Song direct Polity Source links, missing explicit dynasty-period continuity relations, any necessary related Source improvements, and subsequent all-Production fresh discovery and Authoring–Runtime parity; no retirement without user approval. The registry `northern-southern-song` remains terminal `KEEP_SEPARATE`; tracked **75/63/12** unchanged. Exact next unit: `POLITY-P2-08C`.
+
 ## Authority
 
 - [Original case P2-07D](POLITY_P2_07D_NORTHERN_SOUTHERN_SONG_CONTINUITY_AND_OWNERSHIP_20261010.md) adjudicated `northern-southern-song` as distinct operated-period entities within the continuous Song dynasty. The historical Song umbrella remains meaningful and cannot be unilaterally retired.
