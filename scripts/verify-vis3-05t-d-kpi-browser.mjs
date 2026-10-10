@@ -66,6 +66,7 @@ async function runOne(c,width,height){
   const a=before.cards[i],b=after.cards[i];
   must(a.text===b.text&&a.value===b.value&&a.detail===b.detail,'KPI factual text changed',{width,i,a:a.text,b:b.text});
   must(near(a.card.x,b.card.x)&&near(a.card.y,b.card.y),'Card top/left moved',{width,i,old:a.card,new:b.card});
+  must(near(a.card.h,b.card.h),'Card height increased despite typo-only scope',{width,i,old:a.card,new:b.card});
   must(!b.overflow,'KPI supporting text clipped',{width,i,b});
   must(b.info.y>=b.main.bottom-1,'Description overlapped main KPI figure',{width,i,main:b.main,info:b.info});
   must(b.title.bottom<=b.main.y+1,'KPI label overlaps figure',{width,i,title:b.title,main:b.main});

@@ -21,3 +21,7 @@ Required: full ATLAS Integrity, documented Chrome screenshots/metrics, removal o
 ## Intermediate-width Chrome correction
 
 Second real Chrome check confirmed 390px and 600px first KPI card heights remained 94px after the mobile 4px internal gap adjustment; at 768px the 10px text caused a 3px row displacement. Applied a **5px KPI inner gap only for 601–1250px** (from original 6px) to compensate glyph growth without changing explicit min-height/padding/grid. A fresh complete five-width Chrome run remains required.
+
+## Wide-desktop geometry closure
+
+All five widths of Chrome check #38025943382 passed the prior code, but 1440/1600px first KPI card naturally gained 3px of height even though it did not overlap. To retain the original dashboard row placement, use the same **5px internal KPI gap for all widths >=601px** (instead of only through 1250px), while keeping 4px at <=600px. Browser gate now also checks **each card height**, not only its x/y, and will reject a shifted next panel. No data or main-number font change.
