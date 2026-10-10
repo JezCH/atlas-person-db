@@ -14,19 +14,19 @@
 
 ### A. Polity identity / continuity cleanup — #1895
 
-**Registry snapshot: 75 total / 55 terminal / 20 `REVIEW_REQUIRED`** (2026-10-10). This is the tracked seed ledger, **not** a guarantee that all live Polity identities have been audited.
+**Registry snapshot: 75 total / 56 terminal / 19 `REVIEW_REQUIRED`** (2026-10-10). This is the tracked seed ledger, **not** a guarantee that all live Polity identities have been audited.
 
 Pending distribution, calculated from the canonical registry:
 
 | Review group | Pending |
 | --- | ---: |
-| Historical-family continuity | 8 |
+| Historical-family continuity | 7 |
 | Temporal designation | 2 |
 | Korean naming collisions | 2 |
 | Territorial / operational rupture | 8 |
-| **Total** | **20** |
+| **Total** | **19** |
 
-**Current historical-family result:** `massylii-numidia` terminal **`KEEP_SEPARATE`**, based on exact live Production Person–Polity Activities and Lazenby (Oxford Classical Dictionary), Biggs (2025) and Livius: Masinissa twice held the eastern Massylii kingship (ca. 206–205 and ca. 203–202 BCE, separated by Syphax's dispossession), then ruled an expanded Numidian polity (ca. 202–148 BCE) created by the defeat/absorption of the rival western Masaesyli realm. **Two genuinely different territorial/governance phases** under one continuous individual and Massylian political base; no simultaneous sovereign duplicates or merely alternate country spelling. Massylii `ec9d77b4-e18e-4495-8232-c51e74b0d683` / Numidia `81ff499c-879e-452f-9893-6618ec580825`. Preserve all three reviewed Activities, approximate/uncertain date flags, 6 linked source references and exact existing Person UUID; do not invent a day in 202 BCE. **No canonical Production/Runtime write**. [Scoped audit](POLITY_P2_04F_MASSYLII_NUMIDIA_STATE_UNIFICATION_20261010.md). Registry **75 total / 55 terminal / 20 pending**, historical-family pending 8. **Next independent family seed:** `buyid-fars-family`.
+**Current historical-family result:** `buyid-fars-family` **terminal `KEEP_SEPARATE`**, read-only Production source-and-identity audit. Two live Polities: Buyid Emirate of Fars `523a6c6a-a16a-4e40-bbdf-fc705a4f1e9d` (Adud al-Dawla `01abbb6c-8bdd-44a1-b77a-cc23f89c14cd`; Activity `503f8853-f23b-4f3a-9c91-5f742c269698` 949–977, `amir_of_fars`) and Buyid Realm of Fars and Iraq `64e303be-fcda-46e4-8779-46bcc7698946` (same Person; Activity `375b1a46-3891-41e3-909c-8dee17b11c67` 977–983, `supreme_buyid_ruler`). Iranica *FĀRS iii* directly corroborates the two periods; Iranica *BUYIDS* distinguishes **977 Baghdad/Iraq acquisition** from **980 wider unification** and earlier regional principalities. Sequential territorial/role stages of **one continuous monarch**, NOT simultaneous duplicate sovereign reigns, blanket dynastic unity from 949 or official state rename. Preserve original two reviewed Activities, four Iranica Source links, certainty/year granularity and political identity UUIDs. No Production/Runtime mutation. [Scoped audit](POLITY_P2_04G_BUYID_FARS_IRAQ_977_PHASE_AUDIT_20261010.md). **75 / 56 terminal / 19 pending** (historical-family 7). **Next independent family seed:** `gnat-turkey`. Full-Production all-identity reconciliation still required at the finish gate; other Buyid branch historiography is not a claim of exhaustively registered regional authorities.
 
 **Previously terminal:** `gorkha-nepal` `KEEP_SEPARATE` ([Gorkha→Nepal report](POLITY_P2_04D_GORKHA_NEPAL_UNIFICATION_20261010.md)); Oman and Liberia remain approval/repair-gated.
 
