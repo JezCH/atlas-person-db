@@ -119,6 +119,35 @@
     }
   }
 
+  function onPersonRefreshState(event) {
+    const state = String(event?.detail?.state || "");
+    if (state === "success") {
+      // Shared store already has the freshly fetched data; no duplicate HTTP read.
+      verifySummary();
+      return;
+    }
+    // Supersede a stale status check still resolving from a previous read.
+    requestSerial += 1;
+    const box = document.getElementById("registrationSummary") || buildSummary();
+    if (state === "loading") {
+      if (box) box.dataset.state = "loading";
+      setConnectionStatus("loading", "새로고침 중");
+      return;
+    }
+    if (state === "error") {
+      const detail = document.getElementById("registrationSummaryDetail");
+      const title = document.getElementById("registrationSummaryTitle");
+      const refreshButton = document.getElementById("registrationSummaryRefresh");
+      if (box) box.dataset.state = "error";
+      if (title) title.textContent = "인물 데이터 새로고침 실패";
+      if (detail) detail.textContent = String(event?.detail?.message || "데이터를 다시 확인해주세요.");
+      if (refreshButton) refreshButton.disabled = false;
+      setConnectionStatus("error", "새로고침 실패", detail?.textContent || "");
+    }
+  }
+
+  window.addEventListener("atlas-person-refresh-state", onPersonRefreshState);
+
   function start() {
     addAdminLinks();
     buildSummary();
