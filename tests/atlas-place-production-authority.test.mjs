@@ -15,6 +15,7 @@ test("Production database attestation is exact, private and fail closed",()=>{
   assert.equal(targetAttestation(DIRECT,{VERCEL:"1",VERCEL_ENV:"preview"}).status,"UNPROVEN");
   assert.equal(targetAttestation("postgresql://postgres:dummy@db.aaaaaaaaaaaaaaaaaaaa.supabase.co/postgres",PRODUCTION).status,"DIFFERENT");
   assert.equal(targetAttestation("postgresql://postgres:dummy@unknown.invalid/postgres",PRODUCTION).status,"UNPROVEN");
+  assert.equal(targetAttestation("postgresql://postgres."+REF+":dummy@unknown.invalid/postgres",PRODUCTION).status,"UNPROVEN");
   assert.equal(targetAttestation(null,PRODUCTION).status,"UNPROVEN");
   const result=JSON.stringify(targetAttestation(POOLER,PRODUCTION));
   assert.equal(result.includes("dummy"),false);
