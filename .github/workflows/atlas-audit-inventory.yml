@@ -177,7 +177,7 @@ jobs:
 
           endpoint="${ATLAS_AUDIT_ENDPOINT}?__atlas_audit_surface=polity-reference-audit"
           payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" \
-            '{deployment_sha:$deployment_sha,include_brazil_details:true,include_brazil_preflight:true,include_brazil_source_aliases:true,include_brazil_stage2_contract:true,include_brazil_law_source_preflight:true,include_russia_details:true,evidence_terms:["pre-meiji japan","imperial japan","tokugawa","toyotomi","empire of japan","liao dynasty","ming dynasty","tsardom of russia","shakya","haudenosaunee","swedish empire","qara khitai"]}')"
+            '{deployment_sha:$deployment_sha,include_brazil_details:true,include_brazil_preflight:true,include_brazil_source_aliases:true,include_brazil_stage2_contract:true,include_brazil_law_source_preflight:true,include_russia_details:true,include_sweden_details:true,evidence_terms:["pre-meiji japan","imperial japan","tokugawa","toyotomi","empire of japan","liao dynasty","ming dynasty","tsardom of russia","shakya","haudenosaunee","swedish empire","qara khitai"]}')"
           fetched=false
           for attempt in $(seq 1 12); do
             oidc_token="$(request_oidc)"
@@ -230,6 +230,32 @@ jobs:
           jq '[.polities[] | select(((.canonical_key // "") + " " + ([.names[]?.name] | join(" "))) | ascii_downcase | test("fifth|kamakura|tokugawa|toyotomi|liao dynasty|ming dynasty|tsardom of russia|empire of japan|shakya|haudenosaunee|swedish empire|qara khitai"))]' polity-reference-audit-response.json | tee polity-reference-candidates.push.json
 
 
+
+      - name: Extract Sweden Kingdom and historiographic Great Power era current exact source-bound preflight (READ ONLY)
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -e '.ok == true and .read_only == true and .committed == false
+            and .sweden_details.preflight_only == true
+            and .sweden_details.committed == false
+            and (.sweden_details.polity_ids | type) == "array"
+            and (.sweden_details.designations | type) == "array"
+            and (.sweden_details.activities | type) == "array"
+            and (.sweden_details.activity_sources | type) == "array"
+            and (.sweden_details.runtime_activities | type) == "array"' polity-reference-audit-response.json >/dev/null
+          jq '.sweden_details' polity-reference-audit-response.json > sweden-polity-p2-06b-live-preflight.push.json
+          jq -c '.sweden_details | {
+            polity_ids, activity_count:(.activities|length),
+            activity_source_links:(.activity_sources|length),
+            designation_count:(.designations|length),
+            designations:[.designations[]|{polity_id,designation,names,source_links}],
+            polity_sources:(.polity_sources|length),
+            identity_relations:(.identity_relations|length),
+            governance_periods:(.governance_periods|length),
+            runtime_activity_count:(.runtime_activities|length),
+            preflight_only,committed
+          }' polity-reference-audit-response.json | tee sweden-polity-p2-06b-summary.push.json
 
       - name: Extract Russia Tsardom and Empire authoritative designation inventory (READ ONLY)
         if: github.event_name == 'push'
@@ -395,6 +421,8 @@ jobs:
             polity-external-orphans.push.json
             polity-zero-activity-reference-audit.push.json
             polity-reference-candidates.push.json
+            sweden-polity-p2-06b-live-preflight.push.json
+            sweden-polity-p2-06b-summary.push.json
             brazil-activity-census.push.json
             brazil-activity-census-summary.push.json
             brazil-polity-reference-census.push.json
