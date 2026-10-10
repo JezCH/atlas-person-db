@@ -1,0 +1,66 @@
+name: ATLAS P2-09 Public Entire-Production Polity Census
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/atlas-polity-p2-09-public-production-census.yml'
+      - 'scripts/audit-polity-public-production-census.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  full-public-polity-census:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run entire-production read-only Polity census, pinned to stable live deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/atlas-polity-census
+          base='https://atlas-person-db.vercel.app/api/atlas-read'
+          curl --fail-with-body --silent --show-error --retry 3 --retry-delay 2 \
+            "$base?__atlas_read_surface=runtime-identity" \
+            > /tmp/atlas-polity-census/runtime-identity-before.json
+          jq -e '.ok==true and .identity.git_commit_ref=="main" and
+            (.identity.git_commit_sha|test("^[a-f0-9]{40}$"))' \
+            /tmp/atlas-polity-census/runtime-identity-before.json >/dev/null
+          sha="$(jq -r '.identity.git_commit_sha' /tmp/atlas-polity-census/runtime-identity-before.json)"
+          curl --fail-with-body --silent --show-error --retry 3 --retry-delay 2 \
+            "$base?__atlas_read_surface=polity" \
+            > /tmp/atlas-polity-census/production-polities-public.json
+          export ATLAS_PRODUCTION_DEPLOYMENT_SHA="$sha"
+          node scripts/audit-polity-public-production-census.mjs \
+            /tmp/atlas-polity-census/production-polities-public.json \
+            /tmp/atlas-polity-census/public-census-report.json
+          curl --fail-with-body --silent --show-error --retry 3 --retry-delay 2 \
+            "$base?__atlas_read_surface=runtime-identity" \
+            > /tmp/atlas-polity-census/runtime-identity-after.json
+          jq -e --arg sha "$sha" '.ok==true and .identity.git_commit_ref=="main" and
+            .identity.git_commit_sha==$sha' \
+            /tmp/atlas-polity-census/runtime-identity-after.json >/dev/null
+          jq -e '.schema=="atlas-polity-public-complete-census/v1" and
+            .analysis_complete==true and .read_only==true and .committed==false and
+            .coverage.polities>0 and .coverage.activity_occurrences>=0 and
+            .coverage.normalized_source_rows_scanned==0 and
+            .coverage.authoring_runtime_equivalence_proven==false' \
+            /tmp/atlas-polity-census/public-census-report.json >/dev/null
+          jq --arg sha "$sha" --arg workflow_sha "$GITHUB_SHA" \
+            '{read_only,committed,analysis_complete,coverage,candidate_counts,
+              deployed_production_sha:$sha,workflow_sha:$workflow_sha,
+              scope:"public Runtime Polity list, NOT full DB Source/Authoring/Tombstone census"}' \
+            /tmp/atlas-polity-census/public-census-report.json \
+            > /tmp/atlas-polity-census/executive-summary.json
+          cat /tmp/atlas-polity-census/executive-summary.json
+      - name: Upload complete public-polity snapshot and anomaly review candidates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-polity-p2-09-complete-public-census-${{ github.sha }}
+          path: /tmp/atlas-polity-census/
+          if-no-files-found: warn
+          retention-days: 90
