@@ -60,7 +60,11 @@ jobs:
             ($s.polity_ids | index("1a1983fd-1850-5756-877c-3d2c17b85e1f") != null) and
             ($s.polity_ids | index("407d91cf-7a97-45e3-81ea-d42a3cbfba35") != null) and
             ($s.polity_ids | index("fe073a4c-d967-56e2-bb31-f74bdde1af87") != null) and
-            ([$s.activities[] | select(.activity_id=="4517af83-d656-47b0-a558-3a3df717f726" or .activity_id=="d5eaf14b-417d-4ed9-a594-d819314a1ff5") | select(.polity_id=="1a1983fd-1850-5756-877c-3d2c17b85e1f")] | length)==2' audit.json >/dev/null
+            ([$s.activities[] | select(.polity_id=="1a1983fd-1850-5756-877c-3d2c17b85e1f") | .activity_id] | sort)
+              == (["4638676d-58de-5873-b2e8-a917a0f5cccf","d94907ae-eac0-518d-a26d-03adfb9534fb"] | sort) and
+            ([$s.activities[] | select(.activity_id=="4517af83-d656-47b0-a558-3a3df717f726" or .activity_id=="d5eaf14b-417d-4ed9-a594-d819314a1ff5") | select(.polity_id=="fe073a4c-d967-56e2-bb31-f74bdde1af87")] | length)==2 and
+            ([$s.activities[] | select(.polity_id=="407d91cf-7a97-45e3-81ea-d42a3cbfba35")] | length)==7 and
+            ([$s.activities[] | select(.polity_id=="fe073a4c-d967-56e2-bb31-f74bdde1af87")] | length)==5' audit.json >/dev/null
           jq -c '.song_details | {polity_ids,n_activities:(.activities|length),n_activity_source_links:(.activity_sources|length),
             n_designations:(.designations|length),n_identity_relations:(.identity_relations|length),
             n_identity_relation_types:(.identity_relation_types|length),n_structural_relation_types:(.structural_relation_types|length),
