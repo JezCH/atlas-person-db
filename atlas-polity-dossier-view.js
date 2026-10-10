@@ -167,7 +167,7 @@
     }
 
     function designationsHtml(rows){
-      if(!rows.length) return '<p class="polity-dossier-empty">Activity에서 관측된 시대 명칭 없음</p>';
+      if(!rows.length) return '<p class="polity-dossier-empty">활동 기록에서 확인된 시대 명칭 없음</p>';
       return '<div class="polity-dossier-designations">'+rows.map((row)=>
         '<article><div><strong>'+escapeHtml(row.display_name)+'</strong>'+
           (row.canonical_name_en&&row.canonical_name_en!==row.display_name?'<small>'+escapeHtml(row.canonical_name_en)+'</small>':"")+
@@ -222,24 +222,24 @@
         '<section class="polity-dossier-overview" aria-label="정치체 관측 범위와 데이터 상태">'+
           '<div><small>관측 활동 범위</small><strong>'+escapeHtml(dossier.observed_span.label)+'</strong></div>'+
           '<div><small>연결 인물</small><strong>'+dossier.person_count+'</strong></div>'+
-          '<div><small>Activity</small><strong>'+dossier.activity_count+'</strong></div>'+
+          '<div><small>활동</small><strong>'+dossier.activity_count+'</strong></div>'+
           '<div><small>연대 미해결</small><strong>'+dossier.unresolved_activity_count+'</strong></div>'+
         '</section>'+
-        '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>IDENTITY</small><h4>정치체 식별 정보</h4></div></div>'+
+        '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>식별 정보</small><h4>정치체 식별 정보</h4></div></div>'+
           '<div class="polity-dossier-identity">'+
-            '<span><small>canonical key</small><code>'+value(id.canonical_key)+'</code></span>'+
+            '<span><small>기준 식별 키</small><code>'+value(id.canonical_key)+'</code></span>'+
             '<span><small>type</small><b>'+value(id.polity_type)+'</b></span>'+
             '<span><small>historicity</small><b>'+value(id.historicity)+'</b></span>'+
             '<span><small>UUID</small><code>'+value(id.id)+'</code></span>'+
           '</div>'+namesHtml(id.names)+
         '</section>'+
-        '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>TEMPORAL DESIGNATION</small><h4>Activity에서 관측된 시대 명칭</h4></div><p>표시 범위는 명칭 자체의 존속기간이 아니라 해당 명칭으로 연결된 Activity의 관측 범위입니다.</p></div>'+
+        '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>시대별 명칭</small><h4>활동 기록에서 확인된 시대 명칭</h4></div><p>표시 범위는 명칭 자체의 존속기간이 아니라 해당 명칭으로 연결된 Activity의 관측 범위입니다.</p></div>'+
           designationsHtml(dossier.designations)+
         '</section>'+
-        '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>GOVERNANCE</small><h4>등록된 통치체계</h4></div><p>이 정치체 UUID에 직접 연결된 사료 기반 통치기간만 표시합니다. 국가 포괄체·헌정체계·사실상 통치권을 자동으로 합치거나 법적 정통성을 추정하지 않습니다. 종료일 미등록은 현재까지 존속했다는 보증이 아닙니다.</p></div>'+
+        '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>통치체계</small><h4>등록된 통치체계</h4></div><p>이 정치체 UUID에 직접 연결된 사료 기반 통치기간만 표시합니다. 국가 포괄체·헌정체계·사실상 통치권을 자동으로 합치거나 법적 정통성을 추정하지 않습니다. 종료일 미등록은 현재까지 존속했다는 보증이 아닙니다.</p></div>'+
           governanceHtml(dossier.governance_periods)+
         '</section>'+
-        '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>PEOPLE</small><h4>연결 인물</h4></div><p>동일 인물의 여러 Activity를 한 묶음으로 표시합니다.</p></div>'+
+        '<section class="polity-dossier-section"><div class="polity-dossier-section-head"><div><small>연결 인물</small><h4>연결 인물</h4></div><p>동일 인물의 여러 활동을 한 묶음으로 표시합니다.</p></div>'+
           peopleHtml(dossier.people)+
         '</section>'+
       '</div>';
