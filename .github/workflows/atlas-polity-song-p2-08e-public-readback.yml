@@ -1,0 +1,66 @@
+name: ATLAS Song P2-08E Public Three-Polity Readback
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/atlas-polity-song-p2-08e-public-readback.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  read-public-song-polities:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Read all three existing Song Polities from one stable Production main deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p song-p2-08e-public
+          BASE='https://atlas-person-db.vercel.app/api/atlas-read'
+          curl --fail-with-body --silent --show-error --retry 2 --retry-delay 1 \
+            "$BASE?__atlas_read_surface=runtime-identity" > song-p2-08e-public/identity-before.json
+          jq -e '.ok==true and .identity.git_commit_ref=="main" and
+            (.identity.git_commit_sha|test("^[a-f0-9]{40}$"))' song-p2-08e-public/identity-before.json >/dev/null
+          sha="$(jq -r '.identity.git_commit_sha' song-p2-08e-public/identity-before.json)"
+          for target in \
+            'generic:1a1983fd-1850-5756-877c-3d2c17b85e1f:2' \
+            'northern:407d91cf-7a97-45e3-81ea-d42a3cbfba35:7' \
+            'southern:fe073a4c-d967-56e2-bb31-f74bdde1af87:5'; do
+            IFS=: read -r label polity_id count <<< "$target"
+            curl --fail-with-body --silent --show-error --retry 2 --retry-delay 1 \
+              "$BASE?__atlas_read_surface=polity&polity_id=$polity_id" > "song-p2-08e-public/$label.json"
+            jq -e --arg id "$polity_id" --argjson count "$count" \
+              '.ok==true and .schema=="atlas-polity-read/v1" and .mode=="detail" and
+                .polity.id==$id and .polity.activity_count==$count and
+                (.polity.activities|type)=="array" and (.polity.activities|length)==$count' \
+              "song-p2-08e-public/$label.json" >/dev/null
+          done
+          jq -se '
+            . as $p |
+            ([.[].polity.activities[].id]|length)==14 and
+            ([.[].polity.activities[].id]|unique|length)==14 and
+            ([.[0].polity.activities[].id]|sort)==
+              (["4638676d-58de-5873-b2e8-a917a0f5cccf","d94907ae-eac0-518d-a26d-03adfb9534fb"]|sort) and
+            ([.[2].polity.activities[]|select(.id=="4517af83-d656-47b0-a558-3a3df717f726" or .id=="d5eaf14b-417d-4ed9-a594-d819314a1ff5")]|length)==2
+          ' song-p2-08e-public/generic.json song-p2-08e-public/northern.json song-p2-08e-public/southern.json >/dev/null
+          curl --fail-with-body --silent --show-error --retry 2 --retry-delay 1 \
+            "$BASE?__atlas_read_surface=runtime-identity" > song-p2-08e-public/identity-after.json
+          jq -e --arg sha "$sha" '.ok==true and .identity.git_commit_ref=="main" and .identity.git_commit_sha==$sha' \
+            song-p2-08e-public/identity-after.json >/dev/null
+          jq -n --arg deployment_sha "$sha" \
+            --arg workflow_sha "$GITHUB_SHA" \
+            '{ok:true,read_only:true,committed:false,stable_deployment_sha:$deployment_sha,workflow_sha:$workflow_sha,
+              exactly_three_existing_polities:true,actual_activity_counts:{generic:2,northern:7,southern:5},
+              n_total_activities:14,unique_activity_ids:14,taizu_shenzong_original_generic_owner:true,
+              gaozong_both_southern:true,note:"Public Polity read does not expose Polity Source joins; scholarly Source fact independently verified by protected Correction replay #38070277196"}' \
+            > song-p2-08e-public/summary.json
+          cat song-p2-08e-public/summary.json
+      - name: Archive real three-Polity public readback and stable deployment identity
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: polity-song-p2-08e-public-readback
+          path: song-p2-08e-public/
+          retention-days: 90
+          if-no-files-found: warn
