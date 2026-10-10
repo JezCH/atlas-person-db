@@ -66,13 +66,14 @@ function requireExecutionPlan(raw) {
   if (!String(raw.batch_id || "").trim()) throw new Error("CORRECTION_V2_EXECUTION_PLAN_BATCH_ID_REQUIRED");
   if (!Array.isArray(raw.operations)) throw new Error("CORRECTION_V2_EXECUTION_PLAN_OPERATIONS_REQUIRED");
   // Permit source-backed Stage 2 structural assertions without touching unrelated Person Activities.
-  // Source-only or unknown assertion-only plans remain rejected.
+  // Bibliographic Source creation alone is not a correction; exact existing
+  // Polity-Source linking is a reviewed non-destructive assertion-only unit.
   if (raw.operations.length === 0) {
     const assertions = raw.stage2_assertions;
-    const allowed = new Set(["assert_source", "assert_governance_context", "assert_governance_period", "assert_polity_designation"]);
+    const allowed = new Set(["assert_source", "assert_governance_context", "assert_governance_period", "assert_polity_designation", "assert_polity_source_link"]);
     if (!Array.isArray(assertions) || assertions.length === 0 ||
         !assertions.every((item) => allowed.has(item?.type)) ||
-        !assertions.some((item) => item?.type === "assert_governance_context" || item?.type === "assert_governance_period" || item?.type === "assert_polity_designation")) {
+        !assertions.some((item) => item?.type === "assert_governance_context" || item?.type === "assert_governance_period" || item?.type === "assert_polity_designation" || item?.type === "assert_polity_source_link")) {
       throw new Error("CORRECTION_V2_EXECUTION_PLAN_ASSERTION_ONLY_SCOPE_INVALID");
     }
   }
