@@ -102,6 +102,15 @@
   font-size:17px;font-weight:700;color:#e4d3ae;
   text-shadow:0 1px 3px #0e1114;
 }
+/* Desktop only: .brand span adds a 4px top margin intended for its
+ * secondary label; cancel that margin on the A inside the 34px signet.
+ * Keep the mobile signet and the ATLAS wordmark as they are. */
+@media (min-width:761px) {
+  .workspace-shell.atlas-ornament-v3 .sidebar .brand .brand-mark.atlas-o-shell-signet > span {
+    margin-top:0;
+    letter-spacing:normal;
+  }
+}
 /* One restrained engraving at a top corner, outside the live title. */
 .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece {
   position:relative;isolation:isolate;display:flex;align-items:center;
@@ -109,7 +118,10 @@
   min-width:0;min-height:126px;padding:22px 26px;overflow:hidden;
 }
 .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::before {
-  top:12px;right:12px;left:auto;bottom:auto;
+  /* SVG lines begin 11 / 230 of the viewBox inside the image.
+   * At 54px that is ~2.6px: a -3px offset seats the engraving directly
+   * against the panel's top/right border without changing its size. */
+  top:-3px;right:-3px;left:auto;bottom:auto;
   width:54px;height:54px;z-index:0;
   background:url("./assets/ui-ornaments/atlas-corner-filigree.svg") center / contain no-repeat;
   transform:scaleX(-1);
@@ -145,7 +157,8 @@
     display:grid;gap:14px;min-height:0;padding:18px 17px;
   }
   .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::before {
-    width:30px;height:30px;top:8px;right:8px;
+    /* Same physical corner alignment for the smaller mobile engraving. */
+    width:30px;height:30px;top:-1.5px;right:-1.5px;
     opacity:calc(var(--atlas-o-ornament-presence) * .34);
   }
   .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece h2 {
