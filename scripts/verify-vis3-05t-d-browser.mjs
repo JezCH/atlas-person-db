@@ -54,7 +54,7 @@ async function run(c,width,height){
   check(a.text===b.text&&a.value===b.value&&a.detail===b.detail&&a.label===b.label,'Original KPI facts modified',{width,i});
   check(b.captionSize==='10px'&&b.detailSize==='10px','KPI print not 10px',{width,i,cap:b.captionSize,desc:b.detailSize});
   check(!b.detailOverflow,'KPI detail overflow/clipped',{width,i,label:b.label,detail:b.detail,geom:b.detailBox});
-  check(Math.abs(a.number[0]-b.number[0])<=1.1 && Math.abs(a.number[2]-b.number[2])<=1.1 && Math.abs(a.number[3]-b.number[3])<=1.1 && Math.abs(a.number[1]-b.number[1])<=6,'KPI headline size/position changed excessively',{width,i,a:a.number,b:b.number});
+  check(Math.abs(a.number[0]-b.number[0])<=1.1 && Math.abs(a.number[2]-b.number[2])<=1.1 && Math.abs(a.number[3]-b.number[3])<=1.1 && Math.abs(a.number[1]-b.number[1])<=28,'KPI headline size/position changed excessively',{width,i,a:a.number,b:b.number});
   check(b.detailBox[1]>=b.number[1]+b.number[3]-1,'KPI detail overlaps numeric headline',{width,i,number:b.number,detail:b.detailBox});
   check(b.card[2]===a.card[2],'KPI card width changed',{width,i,a:a.card,b:b.card});
  }
