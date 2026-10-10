@@ -1,0 +1,59 @@
+{
+  "schema": "atlas-polity-song-p2-08a-production-readonly-receipt/v1",
+  "as_of": "2026-10-10",
+  "status": "AUTHENTICATED_READ_ONLY_SUCCESS",
+  "report": "docs/POLITY_P2_08A_SONG_THREE_POLITY_AUTHENTICATED_INVENTORY_20261010.md",
+  "production_sha": "31c8931eda1f8f508c3b0f4d003c732898cbb5f2",
+  "action_run_id": 38062024027,
+  "artifact_id": 11672968298,
+  "artifact_name": "song-p2-08-source-before-readonly",
+  "zip_sha256": "bdff0f2de9f0f34f6ec56f30879ff922f4cfddebcedac0433a5ffe224b171706",
+  "invariants": {
+    "read_only": true,
+    "committed": false,
+    "production_writer_executed": false,
+    "runtime_compile_executed": false,
+    "polity_count": 3,
+    "activities": 14,
+    "activity_source_links": 19,
+    "polity_source_links": 3,
+    "source_links_by_polity": {
+      "song_dynasty": 2,
+      "northern_song": 0,
+      "southern_song": 1
+    },
+    "polity_designations": 0,
+    "polity_identity_relations": 0,
+    "governance_periods": 0,
+    "runtime_activities": 14,
+    "person_gaozong_activity_segments": 2
+  },
+  "polity_ids": {
+    "song_dynasty": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+    "northern_song": "407d91cf-7a97-45e3-81ea-d42a3cbfba35",
+    "southern_song": "fe073a4c-d967-56e2-bb31-f74bdde1af87"
+  },
+  "gaozong": {
+    "person_id": "82809cc5-fc51-4e96-98e5-b290126fdcac",
+    "first_activity_id": "4517af83-d656-47b0-a558-3a3df717f726",
+    "second_activity_id": "d5eaf14b-417d-4ed9-a594-d819314a1ff5",
+    "both_current_polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+    "first_source_ids": [
+      "0f511b10-277c-4b21-bf3d-878c663a80f7",
+      "5eba34b7-2b76-47b3-ae73-10e7814ad510"
+    ],
+    "second_source_ids": [
+      "43170824-bd9f-499b-9ffa-1c71bf86432d",
+      "569f3303-46db-40a3-ae3f-f7304f87c8b1"
+    ]
+  },
+  "pending_gate": "song-generic-polity-activity-ownership",
+  "next_unit": "POLITY-P2-08B",
+  "execution_plan": null,
+  "auto_apply_allowed": false,
+  "seed_ledger": {
+    "total": 75,
+    "terminal": 63,
+    "pending": 12
+  }
+}
