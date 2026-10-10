@@ -10,7 +10,7 @@ test('normal admin registration remains human-readable and UUID-free',()=>{
   assert.match(ui,/id="humanAuthoringForm"/);
   assert.match(ui,/인물 영문명/);
   assert.match(ui,/정치체 영문명/);
-  assert.match(ui,/Person \+ Activity \+ Source 한 번에 등록/);
+  assert.match(ui,/인물·활동·출처 한 번에 등록/);
   assert.match(ui,/crypto\.randomUUID\(\)/);
   assert.match(ui,/schema:\s*"atlas-human-authoring\/v1"/);
   assert.doesNotMatch(ui,/id="human[^\"]*Uuid/i);
@@ -21,7 +21,7 @@ test('Relation and Period Basis choices come from the authenticated live catalog
   assert.match(ui,/body\.catalogs\?\.relation_types/);
   assert.match(ui,/body\.catalogs\?\.period_bases/);
   assert.match(ui,/appendCatalogOptions\(relationSelect, relationTypes/);
-  assert.match(ui,/appendCatalogOptions\(periodSelect, periodBases\)/);
+  assert.match(ui,/appendCatalogOptions\(periodSelect, periodBases, \(code\) => periodBasisLabels\[code\] \|\| code\)/);
   assert.doesNotMatch(ui,/<option value="rules">/);
   assert.doesNotMatch(ui,/select\.value\s*=\s*"reign"/);
   assert.doesNotMatch(ui,/periodSelect\.value\s*=\s*"reign"/);
@@ -56,8 +56,8 @@ test('admin temporal input exposes separate full boundaries without asking for g
 test('existing entity reuse does not force Korean labels in the browser',()=>{
   assert.match(ui,/id="humanPersonKo" \/>/);
   assert.match(ui,/id="humanPolityKo" \/>/);
-  assert.match(ui,/신규 Person 생성 시 필수/);
-  assert.match(ui,/신규 Polity 생성 시 필수/);
+  assert.match(ui,/신규 인물 생성 시 필수/);
+  assert.match(ui,/신규 정치체 생성 시 필수/);
   assert.match(ui,/HUMAN_AUTHORING_NEW_PERSON_KO_REQUIRED/);
   assert.match(ui,/HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED/);
   assert.match(ui,/HUMAN_AUTHORING_NEW_ROLE_KO_REQUIRED/);
@@ -90,7 +90,7 @@ test('new Person representative-domain review is explicit and canonical-catalog 
   assert.match(ui,/return \{ representative_domain:null \}/);
   assert.match(ui,/\.\.\.representativeDomainReview\(\)/);
   for (const invented of ['ruler','science','diplomacy']) assert.doesNotMatch(ui,new RegExp(`value="${invented}"`));
-  assert.match(ui,/기존 Person 재사용 시 생략/);
+  assert.match(ui,/기존 인물 재사용 시 생략/);
 });
 
 test('new Polity spatial registration handshake is optional for reuse and canonical-catalog driven',()=>{
@@ -101,7 +101,7 @@ test('new Polity spatial registration handshake is optional for reuse and canoni
   assert.match(ui,/if \(!state\) return null/);
   assert.match(ui,/\.\.\.\(spatialDisposition \? \{ spatial_disposition:spatialDisposition \} : \{\}\)/);
   assert.match(ui,/reviewed_hold/);
-  assert.match(ui,/Territory·Geometry·경계·좌표/);
+  assert.match(ui,/영토·지리 형상·경계·좌표/);
   assert.doesNotMatch(ui,/latitude|longitude|polygon|geometry_payload|territory_record/i);
 });
 
