@@ -35,7 +35,7 @@ test("Russia P2-05C is a guarded current writer plan and preserves identities an
  assert.equal(plan.execution_rules.production_mutation_authorized,false);
 });
 test("1721 full containment yields exactly one historical designation for Ivan and each Peter title",()=>{
- assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL,/when count\\(\\*\\) = 1/);
+ assert.match(TEMPORAL_POLITY_DESIGNATION_JOIN_SQL,/when count\(\*\) = 1/);
  const ivan=activity("d6cdaf3b-2eab-4b98-8a17-b9c42342534f");
  const peterTsar=activity("57cdefa5-9a5d-533c-b229-47e398f1d07a");
  const peterEmperor=activity("9ec53325-3a97-58a8-a7e7-81a496a47e57");
