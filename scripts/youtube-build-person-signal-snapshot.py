@@ -22,6 +22,7 @@ SPACE_RE = re.compile(r"\s+")
 NUMBERED_META_RE = re.compile(r"^(?:chapter|part|day|ep|episode|panel|session)\s*[-#.]?\s*\d+(?:\s*/\s*\d+)?$", re.I)
 TRAILING_BIO_RE = re.compile(r"\s+(?:biography|documentary|biographical documentary|life story|bio|for kids)\s*$", re.I)
 QUALITY_RULES_PATH = Path(__file__).with_name("youtube-person-signal-quality-rules.v2.json")
+SOURCE_NONPERSON_REVIEW_PATH = Path(__file__).resolve().parents[1] / "audits/youtube-v5-source-nonperson-exact-labels.json"
 CUE_AUDIT_PATH = Path(__file__).with_name("youtube-unknown-name-cue-audit.py")
 
 
@@ -70,6 +71,18 @@ REVIEWED_NONHISTORICAL = frozenset(
     unicodedata.normalize("NFKC", label).casefold().strip()
     for label in QUALITY_RULES["nonhistorical_person_exact"]
 )
+
+SOURCE_NONPERSON_REVIEW = json.loads(SOURCE_NONPERSON_REVIEW_PATH.read_text(encoding="utf-8"))
+if (SOURCE_NONPERSON_REVIEW.get("schema") != "atlas-youtube-v5-source-review-non-person-labels/v1"
+        or len(SOURCE_NONPERSON_REVIEW.get("reviewed_labels", [])) != 23):
+    raise RuntimeError("INVALID_SOURCE_REVIEWED_NON_PERSON_MANIFEST")
+SOURCE_REVIEWED_NONPERSON = frozenset(
+    unicodedata.normalize("NFKC", row["name"]).casefold().strip()
+    for row in SOURCE_NONPERSON_REVIEW["reviewed_labels"]
+)
+if len(SOURCE_REVIEWED_NONPERSON) != 23:
+    raise RuntimeError("SOURCE_REVIEWED_NON_PERSON_DUPLICATE_LABEL")
+
 
 LEADING_PATTERNS = (
     "the life of ", "life of ", "biography of ", "the biography of ",
@@ -175,6 +188,8 @@ def candidate_rejection(candidate):
     lowered = candidate.casefold()
     if lowered in REVIEWED_NON_PERSON:
         return "reviewed_non_person"
+    if lowered in SOURCE_REVIEWED_NONPERSON:
+        return "source_reviewed_non_person"
     if lowered in REVIEWED_NONHISTORICAL:
         return "reviewed_nonhistorical"
     if NUMBERED_META_RE.fullmatch(candidate):
@@ -214,7 +229,7 @@ def valid_candidate(candidate):
     lowered = candidate.casefold()
     if NUMBERED_META_RE.fullmatch(candidate):
         return False
-    if lowered in GENERIC_EXACT or lowered in COUNTRY_NAMES or lowered in REVIEWED_NON_PERSON or lowered in REVIEWED_NONHISTORICAL:
+    if lowered in GENERIC_EXACT or lowered in COUNTRY_NAMES or lowered in REVIEWED_NON_PERSON or lowered in SOURCE_REVIEWED_NONPERSON or lowered in REVIEWED_NONHISTORICAL:
         return False
     if BAD_PREFIX_RE.search(candidate) or GENERIC_TOKEN_RE.search(candidate):
         return False
@@ -435,7 +450,9 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None,
             raw.append((old["raw_name"] if old is not None else signal_names[key],
                         current_channels, current_videos))
     new_keys = {name.casefold() for name, _, _ in raw}
-    missing = set(preserved) - new_keys
+    # Proven single-Person false positives must be removable without erasing
+    # their original video/channel source records or regressing real names.
+    missing = set(preserved) - new_keys - SOURCE_REVIEWED_NONPERSON
     if missing:
         raise RuntimeError("LOST_EXISTING_SIGNAL_IDENTITY: " + repr(sorted(missing)[:5]))
     raw.sort(key=lambda item: (-item[1], -item[2], item[0].casefold(), item[0]))
@@ -482,6 +499,8 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None,
         "next_batch": f"batch{max(int(label[5:8]) for label in manifests) + 1:03d}",
         "minimum_stored_signal_channels": 3,
         "quality_rules_version": QUALITY_RULES["version"],
+        "source_reviewed_nonperson_overlay": "youtube-v5-source-nonperson-exact-labels/v1",
+        "source_reviewed_nonperson_exact_labels": len(SOURCE_REVIEWED_NONPERSON),
         "quality_counters": dict(sorted(quality_counts.items())),
         "additional_title_context_extraction": True,
         "title_context_evidence_scope": "original_channel_video_ids",

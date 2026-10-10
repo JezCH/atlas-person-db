@@ -1,0 +1,188 @@
+{
+  "schema": "atlas-youtube-v5-source-review-non-person-labels/v1",
+  "scope": "ONLY labels not denoting ONE historical individual; original videos/channels remain immutable",
+  "source_archive_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "source_channels": 10127,
+  "source_videos": 2230031,
+  "active_snapshot_id": "yt-20261010T083657Z-10127ch-rebuild-v5",
+  "parser_version": "yt-title-person-reviewed-v5",
+  "source_digest_binding": "source_state.artifact_digest",
+  "review_timestamp": "2026-10-10",
+  "reviewed_labels": [
+    {
+      "name": "You Know",
+      "reason": "GENERIC_QUESTION_FRAGMENT",
+      "original_title_mention_channels": 719,
+      "original_title_mention_videos": 1997
+    },
+    {
+      "name": "Greek Mythology",
+      "reason": "MYTHOLOGY_TOPIC",
+      "original_title_mention_channels": 192,
+      "original_title_mention_videos": 819
+    },
+    {
+      "name": "Nazi Germany",
+      "reason": "HISTORICAL_POLITY",
+      "original_title_mention_channels": 223,
+      "original_title_mention_videos": 480
+    },
+    {
+      "name": "Human Evolution",
+      "reason": "SCIENTIFIC_PROCESS_TOPIC",
+      "original_title_mention_channels": 136,
+      "original_title_mention_videos": 243
+    },
+    {
+      "name": "Lost Civilizations",
+      "reason": "COLLECTIVE_TOPIC",
+      "original_title_mention_channels": 128,
+      "original_title_mention_videos": 231
+    },
+    {
+      "name": "Wright Brothers",
+      "reason": "MULTIPLE_DISTINCT_PERSONS",
+      "original_title_mention_channels": 108,
+      "original_title_mention_videos": 123
+    },
+    {
+      "name": "The Anunnaki",
+      "reason": "MYTHOLOGICAL_COLLECTIVE",
+      "original_title_mention_channels": 77,
+      "original_title_mention_videos": 215
+    },
+    {
+      "name": "The Berlin Conference",
+      "reason": "HISTORICAL_EVENT",
+      "original_title_mention_channels": 40,
+      "original_title_mention_videos": 45
+    },
+    {
+      "name": "The Tudors",
+      "reason": "HISTORICAL_DYNASTY",
+      "original_title_mention_channels": 76,
+      "original_title_mention_videos": 324
+    },
+    {
+      "name": "The Dead Sea Scrolls",
+      "reason": "ARTIFACT_COLLECTION",
+      "original_title_mention_channels": 91,
+      "original_title_mention_videos": 154
+    },
+    {
+      "name": "Press Conference",
+      "reason": "MEDIA_EVENT_FORMAT",
+      "original_title_mention_channels": 191,
+      "original_title_mention_videos": 840
+    },
+    {
+      "name": "the Habsburgs",
+      "reason": "HISTORICAL_DYNASTY",
+      "original_title_mention_channels": 64,
+      "original_title_mention_videos": 125
+    },
+    {
+      "name": "The Voynich Manuscript",
+      "reason": "HISTORICAL_ARTEFACT",
+      "original_title_mention_channels": 58,
+      "original_title_mention_videos": 76
+    },
+    {
+      "name": "The Wright Brothers",
+      "reason": "MULTIPLE_DISTINCT_PERSONS",
+      "original_title_mention_channels": 66,
+      "original_title_mention_videos": 74
+    },
+    {
+      "name": "Egyptian Mythology",
+      "reason": "MYTHOLOGY_TOPIC",
+      "original_title_mention_channels": 59,
+      "original_title_mention_videos": 85
+    },
+    {
+      "name": "The Protestant Reformation",
+      "reason": "HISTORICAL_MOVEMENT",
+      "original_title_mention_channels": 66,
+      "original_title_mention_videos": 94
+    },
+    {
+      "name": "The Middle Ages",
+      "reason": "HISTORICAL_PERIOD",
+      "original_title_mention_channels": 336,
+      "original_title_mention_videos": 842
+    },
+    {
+      "name": "The Rolling Stones",
+      "reason": "MUSICAL_GROUP",
+      "original_title_mention_channels": 50,
+      "original_title_mention_videos": 80
+    },
+    {
+      "name": "Empires",
+      "reason": "POLITICAL_COLLECTIVE",
+      "original_title_mention_channels": 937,
+      "original_title_mention_videos": 1898
+    },
+    {
+      "name": "The Soviet Union",
+      "reason": "HISTORICAL_POLITY",
+      "original_title_mention_channels": 346,
+      "original_title_mention_videos": 608
+    },
+    {
+      "name": "Brave New World",
+      "reason": "LITERARY_WORK",
+      "original_title_mention_channels": 59,
+      "original_title_mention_videos": 90
+    },
+    {
+      "name": "The Dyatlov Pass Incident",
+      "reason": "HISTORICAL_EVENT",
+      "original_title_mention_channels": 24,
+      "original_title_mention_videos": 24
+    },
+    {
+      "name": "The Olmecs",
+      "reason": "PEOPLE_GROUP",
+      "original_title_mention_channels": 41,
+      "original_title_mention_videos": 51
+    }
+  ],
+  "source_examples": [
+    {
+      "raw_label": "You Know",
+      "channel_id": "UC-f5iZN5zivefObxmXSUCXg",
+      "video_id": "PEwwDCopVOM",
+      "title": "Did you know telecoms policy is nationalisation and expropriation in disguise? - Xola Ntshinga"
+    },
+    {
+      "raw_label": "You Know",
+      "channel_id": "UC3i5AS_kCaFppoMwULYb99g",
+      "video_id": "aPsu68loP1w",
+      "title": "Did you know... about mitochondrial Eve?"
+    },
+    {
+      "raw_label": "Greek Mythology",
+      "title": "The Tale of Phaethon - Greek Mythology"
+    },
+    {
+      "raw_label": "The Anunnaki",
+      "title": "The Comming of the Anunnaki! |The prophecy| MOVIE TRAILER"
+    },
+    {
+      "raw_label": "The Berlin Conference",
+      "title": "The Berlin Conference: How Europe's Secret Deal Shattered Africa"
+    },
+    {
+      "raw_label": "The Rolling Stones",
+      "title": "The Story of The Rolling Stones"
+    }
+  ],
+  "review_rules": [
+    "No individual historical Person is denoted by any exact reviewed raw label.",
+    "Two-person collective 'Wright Brothers' is not a single historical Person even if individually relevant videos may exist.",
+    "Do not delete any original video or Channel ID; other Person names in those videos remain discoverable.",
+    "Do not silently apply old reviewed v5 read-filter to a different raw snapshot; future publisher must exclude these exact nonperson labels as reviewed source rules.",
+    "Original title-mention counts are provenance diagnostics, not biography-channel counts."
+  ]
+}
