@@ -47,7 +47,7 @@ def build_index(names, min_words=2):
         ts = tuple(x[0] for x in tokens(name))
         if len(ts) < min_words or len(ts) > 8 or not all(ts):
             continue
-        index[ts[0]].append((ts, name))
+        index[(ts[0], ts[1])].append((ts, name))
     for rows in index.values():
         rows.sort(key=lambda x: (-len(x[0]), x[1]))
     return index
@@ -60,7 +60,7 @@ def find_names(title, index):
     for i, (token, _, _) in enumerate(words):
         if i in covered:
             continue
-        for sequence, label in index.get(token, ()):
+        for sequence, label in index.get((token, words[i + 1][0] if i + 1 < len(words) else None), ()):
             length = len(sequence)
             if i + length > len(words):
                 continue
