@@ -76,7 +76,11 @@ test("repeated refresh clicks do not start duplicate simultaneous reads", async 
 });
 
 test("era jump and active-era viewport sampling use the same measured pinned header", () => {
-  assert.match(era, /return nav\.getBoundingClientRect\(\)\.bottom \+ headerHeight \+ 3/);
+  assert.match(era, /return visibleRegisterEdge\(\) \+ 24/);
+  assert.match(era, /function pinnedRegisterEdge\(\)/);
+  assert.match(era, /window\.scrollTo\(\{ top: destination/);
+  assert.match(era, /elementFromPoint\?\.\(x, y\)/);
+  assert.doesNotMatch(era, /activeButton\?\.scrollIntoView/);
   assert.match(era, /--person-table-head-height/);
   assert.match(css, /\.person-era-group\{scroll-margin-top:calc\(var\(--person-table-sticky-top,122px\) \+ var\(--person-table-head-height,36px\) \+ 2px\)\}/);
   assert.match(era, /target\.scrollIntoView\?\.\(\{ behavior: reducedMotion\(\) \? "auto" : "smooth", block: "start" \}\)/);
