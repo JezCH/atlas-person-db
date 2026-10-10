@@ -162,3 +162,106 @@
     color:CanvasText;text-shadow:none;
   }
 }
+
+
+/* VIS3-05R-D — restrained mixed variant selected by user.
+ * D=B(0.68) + C(0.76); composition kept BELOW original V11
+ * headline hierarchy. Decoration is paint-only and fully reversible.
+ * No cartouche/medallion, continuous double border, gradient text or
+ * repeated ornament on KPIs. Shares original VIS3-03 CSS authority.
+ */
+.dashboard-control-center.atlas-ornament-v3 {
+  --atlas-rd-brass-rgb: 187,165,116;
+}
+/* B: sparse dual etched fragments inside the existing hero border.
+ * This replaces V11's long default ::after underline; it does not add
+ * anything in the live heading, explanation, refresh or corner sectors.
+ */
+.dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::after {
+  inset:0;
+  width:auto;
+  height:auto;
+  z-index:0;
+  background-image:
+    linear-gradient(90deg,rgba(var(--atlas-rd-brass-rgb),.38),transparent),
+    linear-gradient(90deg,rgba(var(--atlas-rd-brass-rgb),.17),transparent),
+    linear-gradient(270deg,rgba(var(--atlas-rd-brass-rgb),.38),transparent),
+    linear-gradient(270deg,rgba(var(--atlas-rd-brass-rgb),.17),transparent);
+  background-size:
+    156px 1px, 116px 1px, 176px 1px, 130px 1px;
+  background-position:
+    left 20px top 7px,
+    left 20px top 10px,
+    right 25px bottom 7px,
+    right 25px bottom 10px;
+  background-repeat:no-repeat;
+  opacity:calc(var(--atlas-o-ornament-presence) * .68);
+  pointer-events:none;
+}
+/* C: a small engraved chapter title, never a floating title overlay.
+ * Border is a single hollow 1px outline; original text remains DOM h3
+ * and stays above all ornament paint. The 5px terminal is optional.
+ */
+.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor] {
+  position:relative;
+  isolation:isolate;
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  box-sizing:border-box;
+  width:132px;
+  max-width:100%;
+  min-height:28px;
+  padding:2px 14px;
+  white-space:nowrap;
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor]::before {
+  inset:0;
+  z-index:0;
+  border:1px solid rgba(var(--atlas-rd-brass-rgb),.43);
+  background:none;
+  clip-path:polygon(0 6px,6px 0,calc(100% - 6px) 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px));
+  opacity:calc(var(--atlas-o-ornament-presence) * .76);
+}
+.dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor]::after {
+  inset:auto;
+  left:calc(100% + 8px);
+  top:calc(50% - 3px);
+  width:5px;
+  height:5px;
+  transform:rotate(45deg);
+  border:1px solid rgba(var(--atlas-rd-brass-rgb),.46);
+  background:none;
+  opacity:calc(var(--atlas-o-ornament-presence) * .76);
+}
+/* At mid-width the labels retain room even with 150% effective zoom. */
+@media (max-width:900px) {
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::after {
+    background-size:92px 1px,66px 1px,108px 1px,76px 1px;
+  }
+}
+/* Mobile: keep the original single 30px corner, drop hero etching.
+ * Nameplate becomes a compact one-line chapter title without a diamond.
+ */
+@media (max-width:600px) {
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::after {
+    opacity:0;
+  }
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor] {
+    width:116px;
+    min-height:26px;
+    padding:2px 10px;
+    font-size:15px;
+  }
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor]::after {
+    display:none;
+  }
+}
+/* High-contrast users get actual content, not muted pseudo outlines. */
+@media (forced-colors:active) {
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::after,
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor]::before,
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor]::after {
+    opacity:0!important;
+  }
+}
