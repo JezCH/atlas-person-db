@@ -48,3 +48,16 @@ test("regional inspection labels and data-object codes remain separate", () => {
   assert.match(ui, /검토 후보 목록은 판단 대기열/);
   assert.match(ui, /장소 기능의 변화는 기준 활동을 수정하지 않고/);
 });
+
+test("authority catalog avoids residual English fragments and malformed Korean copy", () => {
+  const catalog = read("atlas-ui-authority-catalog.ko.js");
+  for (const phrase of ["장소·사건·출처", "정규화 전 인물명", "기원전 수천 년", "식별정보 중복", "실시간 관련 정보"]) {
+    assert.ok(catalog.includes(phrase), "missing Korean copy: " + phrase);
+  }
+  for (const leak of ["Place·Event·Source", "raw 인물명", "BC 수천 년", "identity 중복", "live context", "원본가 담당", "사실를", "분리은"]) {
+    assert.ok(!catalog.includes(leak), "residual visible English or grammar error: " + leak);
+  }
+  for (const machine of ['status_code: "backend-needed"', 'status_code: "parked"', 'status_code: "ready"']) {
+    assert.ok(catalog.includes(machine), "machine status changed: " + machine);
+  }
+});
