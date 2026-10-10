@@ -1,0 +1,281 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_song_northern_four_source_backed_relinks_20261011_v1",
+  "as_of": "2026-10-11",
+  "status": "REVIEWED_4_SOURCE_BACKED_NORTHERN_SONG_COURT_OWNER_RELINKS",
+  "release_order": 2450,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 POLITY-P2-08C; historical Northern Song period 960–1127 per Metropolitan Museum (2001), Cambridge History of China thematic chapters, University of Virginia Liu E scholarship; prior P2-07D KEEP_SEPARATE Northern/Southern operative polities and actual protected Production OIDC before audit #38062024027 artifact #11672968298 + subsequent P2-08B Gaozong applied source-preserving correction #38062968150; each of four Activities retains direct independent reviewed original source ID/locator pairs. Exclude two legacy-source-only founder/reform-era Activities until source enrichment and dynasty umbrella identity policy reviewed.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "previous_production_audit_run_id": 38062024027,
+    "original_artifact_id": 11672968298,
+    "previous_production_correction_run_id": 38062968150,
+    "fresh_before_is_required": true,
+    "old_generic_polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+    "existing_northern_polity_id": "407d91cf-7a97-45e3-81ea-d42a3cbfba35",
+    "existing_southern_polity_id": "fe073a4c-d967-56e2-bb31-f74bdde1af87",
+    "target_sources": {
+      "591435fa-a6bf-4254-8bec-e35f060a8323": [
+        {
+          "source_id": "45d0a61c-1b00-4614-9656-83e2b55ce080",
+          "source_locator_key": "https://www.cambridge.org/core/journals/journal-of-chinese-history/article/fragility-of-peace-song-chinas-northwestern-frontier-and-erosion-of-the-chanyuan-paradigm-in-the-mideleventh-century/AF2F19A32A23ED0F304C3DE814851A3F"
+        },
+        {
+          "source_id": "5496aca8-5198-4887-a348-c66ee25eacfd",
+          "source_locator_key": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/founding-and-consolidation-of-the-sung-dynasty-under-taitsu-960976-taitsung-976997-and-chentsung-9971022/69C8668AF27659D52EBF293C0412504C"
+        }
+      ],
+      "283d97e4-ea1f-4f13-aa40-0bb5f465cbb8": [
+        {
+          "source_id": "d6a97443-f9f5-44f1-afad-a057fa4ebced",
+          "source_locator_key": "https://libraetd.lib.virginia.edu/public_view/4t64gp72r"
+        }
+      ],
+      "4fb84f85-8dad-45d3-9eee-29a29ec8bb7e": [
+        {
+          "source_id": "a6eb5818-133b-492e-b0ca-8185a68f5a25",
+          "source_locator_key": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/reigns-of-jentsung-10221063-and-yingtsung-10631067/2A90B85FF443029031EAF5A19669777A"
+        }
+      ],
+      "045bd588-9848-4b4a-a87f-17fc6313c7d1": [
+        {
+          "source_id": "4417d4c4-13c2-48f2-b012-6e7862f18a88",
+          "source_locator_key": "https://www.metmuseum.org/essays/northern-song-dynasty-960-1127"
+        },
+        {
+          "source_id": "a8766516-351a-4162-b477-0396f468eafe",
+          "source_locator_key": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/reigns-of-huitsung-11001126-and-chintsung-11261127-and-the-fall-of-the-northern-sung/C1186B649A07ED96C45F2EB2D7318D54"
+        }
+      ]
+    },
+    "primary_period_authority": "https://www.metmuseum.org/essays/northern-song-dynasty-960-1127",
+    "regency_authority": "https://hub.hku.hk/handle/10722/250719",
+    "excluded_pending_original_legacy_activities": [
+      "4638676d-58de-5873-b2e8-a917a0f5cccf",
+      "d94907ae-eac0-518d-a26d-03adfb9534fb"
+    ],
+    "excluded_reasons": "Song Taizu and Song Shenzong existing Activity records only cite repository legacy supplement Source; need independent authoritative person/reign-year source augmentation and generic dynastic umbrella vs operative Northern Song model determination before moving remaining 2, to avoid prematurely zero-activity generic dynasty identity.",
+    "conservation": "Same four existing Activity UUID/Person/relation/role/period/years/notes/source locators/hash, six original normalized Activity Source IDs+locator pairs. Liu E retains governs/empress-dowager regent role, not emperor. Two generic Song legacy-source-only Activities and five Southern Song Activities are untouched."
+  },
+  "operations": [
+    {
+      "case_id": "song-northern-court-source-reviewed-zhenzong",
+      "type": "rewrite_activity",
+      "activity_id": "591435fa-a6bf-4254-8bec-e35f060a8323",
+      "baseline_before": {
+        "person_id": "7ceeec26-b44d-4523-8c0d-3c6590060cd5",
+        "polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 997,
+        "activity_end": 1022,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "591435fa-a6bf-4254-8bec-e35f060a8323",
+        "person_id": "7ceeec26-b44d-4523-8c0d-3c6590060cd5",
+        "polity_id": "407d91cf-7a97-45e3-81ea-d42a3cbfba35",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 997,
+        "activity_start_detail": {
+          "year": 997,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1022,
+        "activity_end_detail": {
+          "year": 1022,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "song-northern-court-source-reviewed-liu-e-regency",
+      "type": "rewrite_activity",
+      "activity_id": "283d97e4-ea1f-4f13-aa40-0bb5f465cbb8",
+      "baseline_before": {
+        "person_id": "335e1747-8015-4771-8772-7c6a20c8761b",
+        "polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+        "role_id": "18d682df-2be3-52f2-a879-35090759f6f5",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1022,
+        "activity_end": 1033,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "283d97e4-ea1f-4f13-aa40-0bb5f465cbb8",
+        "person_id": "335e1747-8015-4771-8772-7c6a20c8761b",
+        "polity_id": "407d91cf-7a97-45e3-81ea-d42a3cbfba35",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "18d682df-2be3-52f2-a879-35090759f6f5",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1022,
+        "activity_start_detail": {
+          "year": 1022,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1033,
+        "activity_end_detail": {
+          "year": 1033,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "song-northern-court-source-reviewed-renzong",
+      "type": "rewrite_activity",
+      "activity_id": "4fb84f85-8dad-45d3-9eee-29a29ec8bb7e",
+      "baseline_before": {
+        "person_id": "426a4513-7705-4183-9aa3-f0a12fccaf6b",
+        "polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1022,
+        "activity_end": 1063,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "4fb84f85-8dad-45d3-9eee-29a29ec8bb7e",
+        "person_id": "426a4513-7705-4183-9aa3-f0a12fccaf6b",
+        "polity_id": "407d91cf-7a97-45e3-81ea-d42a3cbfba35",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1022,
+        "activity_start_detail": {
+          "year": 1022,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1063,
+        "activity_end_detail": {
+          "year": 1063,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "song-northern-court-source-reviewed-huizong",
+      "type": "rewrite_activity",
+      "activity_id": "045bd588-9848-4b4a-a87f-17fc6313c7d1",
+      "baseline_before": {
+        "person_id": "262d6fc8-0ba3-4755-953d-1d614837c0ef",
+        "polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1100,
+        "activity_end": 1126,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "045bd588-9848-4b4a-a87f-17fc6313c7d1",
+        "person_id": "262d6fc8-0ba3-4755-953d-1d614837c0ef",
+        "polity_id": "407d91cf-7a97-45e3-81ea-d42a3cbfba35",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1100,
+        "activity_start_detail": {
+          "year": 1100,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1126,
+        "activity_end_detail": {
+          "year": 1126,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "results": {
+    "activity_targets": 4,
+    "activity_relinks": 4,
+    "original_normalized_activity_source_pairs_preserved": 6,
+    "generic_song_before_expected": 6,
+    "generic_song_after_expected": 2,
+    "northern_song_before_expected": 3,
+    "northern_song_after_expected": 7,
+    "southern_song_before_expected": 5,
+    "southern_song_after_expected": 5,
+    "all_song_activities_before_expected": 14,
+    "all_song_activities_after_expected": 14,
+    "physical_deletions": 0,
+    "production_mutation_authorized": false,
+    "overall_song_ownership_gate": "PARTIAL_REPAIR_AFTER_P2_08C",
+    "registry_seed_ledger_unchanged": "75/63/12"
+  }
+}
