@@ -132,9 +132,9 @@
         <div class="identity-two"><label>관계<select id="humanRelation" required><option value="">불러오는 중...</option></select></label><label>기간 기준<select id="humanPeriodBasis" required><option value="">불러오는 중...</option></select></label></div>
         <div class="identity-two"><label>역할 영문명 <small>역할이 없으면 비움</small><input id="humanRoleEn" placeholder="예: Sultan" /></label><label>역할 한국어명 <small>신규 역할 생성 시 필수</small><input id="humanRoleKo" placeholder="예: 술탄" /></label></div>
         <h3>나무위키 확인</h3>
-        <div class="identity-two"><label>문서 확인 결과<select id="humanNamuWikiStatus"><option value="">기존 검토값 재사용 · 기존 Person만</option><option value="linked">문서 있음 · 링크 연결</option><option value="not_found">문서 없음</option></select></label><label>확인일<input id="humanNamuWikiCheckedAt" type="date" /></label></div>
+        <div class="identity-two"><label>문서 확인 결과<select id="humanNamuWikiStatus"><option value="">기존 검토값 재사용 · 기존 인물만</option><option value="linked">문서 있음 · 링크 연결</option><option value="not_found">문서 없음</option></select></label><label>확인일<input id="humanNamuWikiCheckedAt" type="date" /></label></div>
         <div class="identity-two"><label>정확한 문서명 <small>문서 있음일 때 필수</small><input id="humanNamuWikiTitle" /></label><label>정확한 문서 URL <small>https://namu.wiki/w/...</small><input id="humanNamuWikiUrl" type="url" placeholder="https://namu.wiki/w/..." /></label></div>
-        <label>문서 없음 세부 사유 <small>not_found일 때 필수</small><select id="humanNamuWikiReviewReason" disabled><option value="">선택</option><option value="no_exact_document">독립 인물 문서·유의미한 관련 후보 모두 확인되지 않음 · no_exact_document</option><option value="related_or_derivative_only">관련·파생·문단/인접 문서만 확인됨 · related_or_derivative_only</option></select></label>
+        <label>문서 없음 세부 사유 <small>문서 없음일 때 필수</small><select id="humanNamuWikiReviewReason" disabled><option value="">선택</option><option value="no_exact_document">독립 인물 문서·유의미한 관련 후보 모두 확인되지 않음</option><option value="related_or_derivative_only">관련·파생·문단·인접 문서만 확인됨</option></select></label>
         <p class="identity-help">새 Person이거나 기존 Person에 나무위키 검토값이 없으면 반드시 실제 검색 후 linked/not_found를 선택합니다. not_found는 검색 결과의 성격까지 세부 사유로 기록해야 완료됩니다. 이미 검토된 기존 인물은 첫 옵션 그대로 두면 재검사하지 않습니다.</p>
         <h3>활동 시작</h3>
         <div class="identity-two"><label>시작 연도 <small>비우면 경계 미상</small><input id="humanStartYear" type="number" step="1" /></label><label>시작 월 <small>연도 입력 시 선택</small><input id="humanStartMonth" type="number" min="1" max="12" step="1" /></label></div>
@@ -145,7 +145,7 @@
         <div class="identity-two"><label>종료 일 <small>선택 · 월 입력 필요</small><input id="humanEndDay" type="number" min="1" max="31" step="1" /></label><label>종료 확실성<select id="humanEndCertainty" required>${certaintyOptions()}</select></label></div>
         <label>종료 역법<select id="humanEndCalendar" required>${calendarOptions()}</select></label>
         <label>근거 신뢰도<select id="humanConfidence" required><option value="well_established">근거 확립</option><option value="likely">가능성 높음</option><option value="speculative">추정</option><option value="disputed">논쟁 있음</option><option value="unknown">미확정</option></select></label>
-        <label>출처 제목<input id="humanSourceTitle" required /></label><label>출처 URL <small>웹 출처일 때만 입력 · 같은 canonical URL은 기존 Source 자동 재사용</small><input id="humanSourceUrl" type="url" /></label><label>인용·참조 문구 <small>선택 · 입력 권장</small><input id="humanSourceCitation" /></label><label>활동 메모<textarea id="humanNotes" rows="3"></textarea></label>
+        <label>출처 제목<input id="humanSourceTitle" required /></label><label>출처 URL <small>웹 출처일 때만 입력 · 같은 기준 URL은 기존 출처 자동 재사용</small><input id="humanSourceUrl" type="url" /></label><label>인용·참조 문구 <small>선택 · 입력 권장</small><input id="humanSourceCitation" /></label><label>활동 메모<textarea id="humanNotes" rows="3"></textarea></label>
         <button class="button primary" type="submit">인물·활동·출처 한 번에 등록</button>
       </form><pre id="humanAuthoringResult" class="result" aria-live="polite">카탈로그를 불러오는 중...</pre>`;
     identityPanel.parentNode.insertBefore(panel, identityPanel);
