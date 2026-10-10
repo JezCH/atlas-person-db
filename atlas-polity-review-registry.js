@@ -285,7 +285,7 @@
           "Ikuta Shigeru, The so-called Unification of the Three Kingdoms in Ryukyu History, Toyo Gakuho vol.65 nos.3–4 (1984): critique of later unity narrative against contemporaneous Ming Shilu and Korean sources: https://toyo-bunko.repo.nii.ac.jp/records/5524",
           "Scoped review: docs/POLITY_P2_04E_CHUZAN_RYUKYU_1429_SOURCE_AUDIT_20261010.md"
         ]
-      }
+      },
       {
         id: "massylii-numidia",
         review_group: "historical_family_review",
