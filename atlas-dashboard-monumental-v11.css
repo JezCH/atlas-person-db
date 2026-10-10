@@ -979,3 +979,41 @@
     transition: none !important;
   }
 }
+
+/* VIS3-05T-D: improve supporting type without changing card geometry,
+ * primary KPI figures, truncating factual descriptions or adding ornament. */
+.dashboard-kpi small {
+  color: #a6adb2;
+  font-size: 10px;
+  letter-spacing: .065em;
+  line-height: 1.3;
+}
+.dashboard-kpi span {
+  color: #aeb4b8;
+  line-height: 1.35;
+}
+@media (max-width: 600px) {
+  /* Reclaim ornamental KPI inner white space, not height/padding or data. */
+  .dashboard-kpi {
+    gap: 4px;
+  }
+  .dashboard-kpi small {
+    font-size: 10px;
+    letter-spacing: .04em;
+    line-height: 1.25;
+  }
+  .dashboard-kpi span {
+    font-size: 10px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    word-break: keep-all;
+  }
+}
+
+/* On intermediate desktop/tablet the 1px reduction per internal row
+ * compensates for taller supporting glyphs without changing card dimensions. */
+@media (min-width: 601px) {
+  .dashboard-kpi {
+    gap: 5px;
+  }
+}
