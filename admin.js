@@ -364,7 +364,7 @@
 
   async function handleApprovedMerge(button) {
     if (!mergeExecutionState.allowed) {
-      alert("실제 Person 병합은 semantic-key v2 reconciliation과 P10 후보 재검증이 완료될 때까지 차단됩니다. 병합 판정 자체는 저장할 수 있습니다.");
+      alert("실제 인물 병합은 의미 식별 키 정합성 검증과 P10 중복 후보 재검증이 끝날 때까지 차단됩니다. 병합 승인 판정은 저장할 수 있습니다.");
       return;
     }
     const card = button.closest(".candidate-card");
