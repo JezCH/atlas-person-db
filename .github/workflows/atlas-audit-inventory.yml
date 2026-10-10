@@ -177,7 +177,7 @@ jobs:
 
           endpoint="${ATLAS_AUDIT_ENDPOINT}?__atlas_audit_surface=polity-reference-audit"
           payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" \
-            '{deployment_sha:$deployment_sha,include_brazil_details:true,include_brazil_preflight:true,include_brazil_source_aliases:true,include_brazil_stage2_contract:true,include_brazil_law_source_preflight:true,evidence_terms:["pre-meiji japan","imperial japan","tokugawa","toyotomi","empire of japan","liao dynasty","ming dynasty","tsardom of russia","shakya","haudenosaunee","swedish empire","qara khitai"]}')"
+            '{deployment_sha:$deployment_sha,include_brazil_details:true,include_brazil_preflight:true,include_brazil_source_aliases:true,include_brazil_stage2_contract:true,include_brazil_law_source_preflight:true,include_russia_details:true,evidence_terms:["pre-meiji japan","imperial japan","tokugawa","toyotomi","empire of japan","liao dynasty","ming dynasty","tsardom of russia","shakya","haudenosaunee","swedish empire","qara khitai"]}')"
           fetched=false
           for attempt in $(seq 1 12); do
             oidc_token="$(request_oidc)"
@@ -230,6 +230,31 @@ jobs:
           jq '[.polities[] | select(((.canonical_key // "") + " " + ([.names[]?.name] | join(" "))) | ascii_downcase | test("fifth|kamakura|tokugawa|toyotomi|liao dynasty|ming dynasty|tsardom of russia|empire of japan|shakya|haudenosaunee|swedish empire|qara khitai"))]' polity-reference-audit-response.json | tee polity-reference-candidates.push.json
 
 
+
+      - name: Extract Russia Tsardom and Empire authoritative designation inventory (READ ONLY)
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -e '.ok == true and .read_only == true and .committed == false
+             and .russia_details.preflight_only == true
+             and .russia_details.designation_display_repaired == false
+             and .russia_details.polity_ids == ["dd07fc4c-b3ac-59ac-bdf2-9cc190893327"]
+             and (.russia_details.designations | type) == "array"
+             and (.russia_details.activities | type) == "array"
+             and (.russia_details.activity_sources | type) == "array"
+             and (.russia_details.runtime_activities | type) == "array"
+             and (.russia_details.missing_reviewed_activity_ids | type) == "array"' polity-reference-audit-response.json >/dev/null
+          jq '.russia_details' polity-reference-audit-response.json > russia-polity-p2-05b-live-preflight.push.json
+          jq -c '.russia_details | {
+            polity_ids, activity_count:(.activities | length),
+            activity_source_links:(.activity_sources | length),
+            designation_rows:(.designations | length),
+            designation_name_rows:([.designations[].names | length] | add // 0),
+            designation_source_links:([.designations[].source_links | length] | add // 0),
+            runtime_activity_rows:(.runtime_activities | length),
+            missing_reviewed_activity_ids, preflight_only, designation_display_repaired
+          }' polity-reference-audit-response.json | tee russia-polity-p2-05b-summary.push.json
 
       - name: Extract Brazil temporal designation, polity provenance and identity edges (read-only)
         if: github.event_name == 'push'
