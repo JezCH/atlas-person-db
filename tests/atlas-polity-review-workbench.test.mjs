@@ -227,6 +227,19 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.ok(saudi.evidence.some(x => /0fbb1e5b-4661-4696-9d1f-ec77bbe2d75a/.test(x)));
   assert.ok(saudi.evidence.some(x => /qdl\.qa\/archive/.test(x)));
 
+  const liberia = byId.get('liberia-commonwealth-republic');
+  assert.equal(liberia.status, 'REVIEW_REQUIRED');
+  assert.equal(liberia.terminal_status, null);
+  assert.equal(liberia.suggested_action, 'repair');
+  assert.equal(liberia.reviewed_decision, 'keep_separate_commonwealth_republic_and_review_republic_liberia_duplicate');
+  assert.equal(liberia.left.polity_id, '5643400c-880b-45f2-8d32-7ad64bf91391');
+  assert.equal(liberia.right.polity_id, '2ca2fd4c-1d68-4771-beb7-706e4f53370b');
+  assert.ok(liberia.evidence.some(x => /5037f747-2d30-4479-b321-6f01b5cba162/.test(x)));
+  assert.ok(liberia.evidence.some(x => /c6fbf7e8-8447-4425-b026-5f4994bea79f/.test(x)));
+  assert.ok(liberia.evidence.some(x => /1847-07-26/.test(x)));
+  assert.ok(liberia.evidence.some(x => /loc.gov/.test(x)));
+  assert.ok(liberia.evidence.some(x => /state.gov/.test(x)));
+
   const oman = byId.get('oman-empire-oman');
   assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
   assert.equal(oman.right.polity_id, 'ac7279b2-da5c-42df-a217-ac60f16106ff');
