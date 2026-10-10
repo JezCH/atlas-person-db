@@ -3,7 +3,10 @@
 const { createPostgresClient } = require("./atlas-postgres-client.js");
 const { verifyGitHubActionsOidcWithPolicy } = require("./atlas-github-oidc.js");
 const { sendJson } = require("./atlas-normalized-read-handler.js");
-const { publishYoutubeSourceArchiveCatalog } = require("./atlas-youtube-source-archive-service.js");
+const {
+  applyYoutubeSourceArchiveMigration,
+  publishYoutubeSourceArchiveCatalog
+} = require("./atlas-youtube-source-archive-service.js");
 
 const SHA_RE=/^[0-9a-f]{40}$/;
 const MARKER="ATLAS_YOUTUBE_SOURCE_ARCHIVE_CATALOG_V1";
@@ -53,6 +56,7 @@ function createYoutubeSourceArchiveHandler({
   env=process.env,
   clientFactory=createPostgresClient,
   verifyOidc=verifyGitHubActionsOidcWithPolicy,
+  applyMigration=applyYoutubeSourceArchiveMigration,
   publish=publishYoutubeSourceArchiveCatalog
 }={}){
   return async function archiveHandler(req,res){
@@ -85,10 +89,11 @@ function createYoutubeSourceArchiveHandler({
     let client=null;
     try{
       client=await clientFactory(databaseUrl,{env});
+      const migration=await applyMigration(client);
       const outcome=await publish(client,body);
       return sendJson(res,200,{
         ok:true,marker:MARKER,runtime_sha:transport.runtimeSha,
-        publication_sha:transport.publicationSha,outcome
+        publication_sha:transport.publicationSha,migration,outcome
       });
     }catch(error){
       console.error("ATLAS YouTube source archive catalog failed",error);
