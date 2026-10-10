@@ -108,7 +108,7 @@
 @media (min-width:761px) {
   .workspace-shell.atlas-ornament-v3 .sidebar .brand .brand-mark.atlas-o-shell-signet > span {
     margin-top:0;
-    line-height:1;
+    letter-spacing:normal;
   }
 }
 /* One restrained engraving at a top corner, outside the live title. */
