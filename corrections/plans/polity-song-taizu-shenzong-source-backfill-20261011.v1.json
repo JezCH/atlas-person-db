@@ -1,0 +1,197 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_song_taizu_shenzong_source_enrichment_20261011_v1",
+  "as_of": "2026-10-11",
+  "status": "REVIEWED_SOURCE_ONLY_ENRICHMENT_WITH_DYNASTY_UMBRELLA_RETAINED",
+  "release_order": 2452,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 P2-08D. Authenticated exact Source/Activity before-census run #38062024027 and verified current after P2-08C #38063925590; Cambridge History of China chapter 3 (Lau/Huang) Taizu 960-976 originally already registered as Source 5496aca8-5198-4887-a348-c66ee25eacfd for Zhenzong; Cambridge chapter 5 (Paul Smith) Shenzong 1067-1085 independent new bibliography. No automatic generic Song dynasty retirement; source-only addition before final 3-way dynasty identity policy.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "authoritative_original_readonly_run": 38062024027,
+    "latest_northern_four_correction_run": 38063925590,
+    "source_catalog_baseline_3353_search": "2026-10-10 original authoritatively downloaded baseline-a-identity-catalogs.json; existing Cambridge founding chapter source UUID 5496aca8-5198-4887-a348-c66ee25eacfd; no existing separate Cambridge Shenzong title/source_key in catalog",
+    "original_legacy_source_ids": {
+      "4638676d-58de-5873-b2e8-a917a0f5cccf": {
+        "source_id": "cc767f2f-48fb-550f-851a-b893c362b131",
+        "source_locator_key": "pending-records-supplement-5.json:32"
+      },
+      "d94907ae-eac0-518d-a26d-03adfb9534fb": {
+        "source_id": "c899493b-3a0e-5f0b-b7ae-3bce3e8a63c0",
+        "source_locator_key": "pending-records-supplement-6.json:61"
+      }
+    },
+    "added_scholarly_sources": {
+      "4638676d-58de-5873-b2e8-a917a0f5cccf": {
+        "source_id": "5496aca8-5198-4887-a348-c66ee25eacfd",
+        "source_locator_key": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/founding-and-consolidation-of-the-sung-dynasty-under-taitsu-960976-taitsung-976997-and-chentsung-9971022/69C8668AF27659D52EBF293C0412504C",
+        "existing": true
+      },
+      "d94907ae-eac0-518d-a26d-03adfb9534fb": {
+        "source_id": "0759fdcc-20b8-435b-9286-b4c57207cec7",
+        "source_locator_key": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/shentsungs-reign-and-the-new-policies-of-wang-anshih-10671085/4A0851FC31DE0A42AD084CB16B12476B",
+        "existing": false
+      }
+    },
+    "preserve": "Both original Activity UUIDs, Person UUIDs, generic Song polity owner, 960–976 and 1067–1085 year-boundaries, existing raw confidence/chronology flags, exact legacy source keys, notes/hash/locator; two original repository dataset sources are retained; add only two extra Cambridge bibliographic citation links, one existing and one newly source asserted",
+    "why_no_rebind": "Relinking both would leave generic Song Dynasty with zero linked Activities and no authored lineage relation, while Northern Song has zero direct normalized Polity sources and user has not approved retirement. This plan source-enriches only, deferring exact role of dynasty-wide umbrella and any later rebind/retirement."
+  },
+  "operations": [
+    {
+      "case_id": "song-taizu-source-enrichment-existing-cambridge",
+      "type": "rewrite_activity",
+      "activity_id": "4638676d-58de-5873-b2e8-a917a0f5cccf",
+      "baseline_before": {
+        "person_id": "19e941d1-a06f-5d44-9301-4a724c520e3a",
+        "polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 960,
+        "activity_end": 976,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:32:33990b2b2380c1f3",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "4638676d-58de-5873-b2e8-a917a0f5cccf",
+        "person_id": "19e941d1-a06f-5d44-9301-4a724c520e3a",
+        "polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 960,
+        "activity_start_detail": {
+          "year": 960,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 976,
+        "activity_end_detail": {
+          "year": 976,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:32:33990b2b2380c1f3",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": [
+          {
+            "source_id": "5496aca8-5198-4887-a348-c66ee25eacfd",
+            "source_locator_key": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/founding-and-consolidation-of-the-sung-dynasty-under-taitsu-960976-taitsung-976997-and-chentsung-9971022/69C8668AF27659D52EBF293C0412504C"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "song-shenzong-source-enrichment-new-cambridge",
+      "type": "rewrite_activity",
+      "activity_id": "d94907ae-eac0-518d-a26d-03adfb9534fb",
+      "baseline_before": {
+        "person_id": "1a360101-20de-5db6-935f-958e558bd8db",
+        "polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1067,
+        "activity_end": 1085,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-6.json:61:e6fc56c8a4108501",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "d94907ae-eac0-518d-a26d-03adfb9534fb",
+        "person_id": "1a360101-20de-5db6-935f-958e558bd8db",
+        "polity_id": "1a1983fd-1850-5756-877c-3d2c17b85e1f",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1067,
+        "activity_start_detail": {
+          "year": 1067,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1085,
+        "activity_end_detail": {
+          "year": 1085,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-6.json:61:e6fc56c8a4108501",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS",
+        "add_source_links": [
+          {
+            "source_id": "0759fdcc-20b8-435b-9286-b4c57207cec7",
+            "source_locator_key": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/shentsungs-reign-and-the-new-policies-of-wang-anshih-10671085/4A0851FC31DE0A42AD084CB16B12476B"
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "song-shenzong-cambridge-history-new-policies-1067-1085",
+      "exact_before": {
+        "source_absent_id": "0759fdcc-20b8-435b-9286-b4c57207cec7"
+      },
+      "exact_after": {
+        "source": {
+          "id": "0759fdcc-20b8-435b-9286-b4c57207cec7",
+          "source_key": "bibliographic:cambridge:shenzong-song-1067-1085-new-policies",
+          "source_type": "web_bibliographic_reference",
+          "title": "Shen-tsung's Reign and the New Policies of Wang An-shih, 1067–1085 — The Cambridge History of China",
+          "sha256": null,
+          "bytes": null,
+          "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/shentsungs-reign-and-the-new-policies-of-wang-anshih-10671085/4A0851FC31DE0A42AD084CB16B12476B",
+          "citation_text": "Paul Smith, 'Shen-tsung’s Reign and the New Policies of Wang An-shih, 1067–1085,' in The Cambridge History of China, online 28 March 2010. The chapter dates Emperor Shenzong's reign to 1067–1085, identifies him as Zhao Xu, and discusses Wang Anshi's New Policies."
+        }
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "results": {
+    "activities_touched": 2,
+    "unchanged_polity_ownership": true,
+    "original_source_links_preserved": 2,
+    "new_activity_source_links": 2,
+    "new_source_records": 1,
+    "generic_song_direct_before_expected": 2,
+    "generic_song_direct_after_expected": 2,
+    "northern_song_direct_before_expected": 7,
+    "northern_song_direct_after_expected": 7,
+    "southern_song_direct_before_expected": 5,
+    "southern_song_direct_after_expected": 5,
+    "all_song_activity_rows_after_expected": 14,
+    "all_song_activity_source_links_before_expected": 19,
+    "all_song_activity_source_links_after_expected": 21,
+    "production_mutation_authorized": false,
+    "parent_song_ownership_gate": "PARTIAL_REPAIR",
+    "seed_ledger_unchanged": "75/63/12"
+  }
+}
