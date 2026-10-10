@@ -44,4 +44,24 @@ if (statusMore) statusMore.open = statusMoreWasOpen;
 
 ## 실제 실행 결과
 
-Chrome/Integrity 측정치, 실 실패/성공 경계, 원본 증거, Git commit SHA를 최종 보고에 기록.
+## 2026-10-11 실제 native GUI Chrome 검증 결과
+
+[GitHub Chrome workflow #38062851525](https://github.com/JezCH/atlas-person-db/actions/runs/38062851525) **SUCCESS**. [ATLAS Integrity #38062851579](https://github.com/JezCH/atlas-person-db/actions/runs/38062851579) **SUCCESS**. 테스트 전용 mount 개별 innerHTML setter의 실제 full-render **6회 호출**을 관측했으며, 단순히 리렌더가 발생하지 않은 상태에서 성공 처리하지 않았다. [PNG 6장과 JSON 원본 artifact #11673478264](https://github.com/JezCH/atlas-person-db/actions/runs/38062851525/artifacts/11673478264).
+
+| 실제 Chrome 배율과 테스트 순간 | 사용자 표시 기준 | 사용자 상태 더보기 | 가시 실제 Person label | 실제 Inspector Activity | 리렌더 누적 |
+| --- | --- | --- | ---: | ---: | ---: |
+| 100%, 둘 다 펼친 직후 | 열림 | 열림 | 149 | 2 | 0 |
+| 125%, native 확대 후 | **열림 보존** | **열림 보존** | 121 | 2 | 2 |
+| 150%, native 확대 후 | **열림 보존** | **열림 보존** | 74 | 2 | 3 |
+| 150%, 사용자가 둘 다 닫음 | **닫힘 존중** | **닫힘 존중** | 74 | 2 | 3 |
+| 125%, native 축소 후 | **닫힘 보존** | **닫힘 보존** | 103 | 2 | 4 |
+| 100%, native 축소 후 | **닫힘 보존** | **닫힘 보존** | 125 | 2 | 6 |
+
+모든 테스트에 **9개 macroregion, 실제 year-axis tick 209, 실제 Person Inspector/Activity 2, 앱 자체 500% 카메라**가 유지됐다. Chrome GUI의 실제 DPR은 1.0/1.25/1.5이고, 앱 CSS의 축소/렌더링 방식이나 데이터 행을 수정하지 않았다. 인물 가시 개수는 각 시점의 사용자 시점/가상화 상태에 의존하므로 일치해야 하는 동일 인원 수가 아니라 양의 값과 데이터 선택 불변을 확인했다.
+
+**소스 지점(기존 `main`):** [`atlas-person-spacetime-view.js` L1622](https://github.com/JezCH/atlas-person-db/blob/main/atlas-person-spacetime-view.js#L1622) `renderInto`, [L1678](https://github.com/JezCH/atlas-person-db/blob/main/atlas-person-spacetime-view.js#L1678) full `mount.innerHTML`, [L1683/L1693](https://github.com/JezCH/atlas-person-db/blob/main/atlas-person-spacetime-view.js#L1683-L1693) 두 `details`, [L1809–1818](https://github.com/JezCH/atlas-person-db/blob/main/atlas-person-spacetime-view.js#L1809-L1818) resize 재렌더. 다음 실제 구현 시 DOM 교체 직전의 open 상태를 스냅샷하고 교체 직후 되돌리되, 두 `summary`의 키보드 포커스 보존·읽기 순서·open 상태 변경 시 프레임 재배치를 별도 검사해야 한다.
+
+**판정:** R4 **비배포 원인·원리 검증 종료, 안전한 최소 UX 패치가 유효한 후보임을 확인**. 다만 이는 브라우저 실행 중 개별 root의 native `innerHTML` setter만 테스트에서 감싼 것이며 **실제 제품 source patch/Production 검증은 아니다**. 첫 R3 검사에서 발견된 150% 화면의 설명 본문/상태행 시각적 밀집, summary 포커스 이탈, WCAG AA 전수 검증은 여전히 별개다.
+
+**정확한 재개점:** R1 사용자 A 유지/B2 채택/재설계 디자인 결정 및 Dashboard mixed-D 사용자 미감 승인 대기 유지. 디자인과 독립적인 기존 A P1 open-state UX 실구현은 사용자 승인/범위를 별도로 검토한 뒤 최소 UI 파일 변경 PR + native Chrome regressions + Production acceptance로만 처리한다. Phase III VIS3-07–17 계획 불변.
+
