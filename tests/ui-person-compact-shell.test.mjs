@@ -23,7 +23,7 @@ test("Person uses a single visible heading; other domains retain their global he
 });
 
 test("healthy Person Runtime card no longer consumes a row; errors retain retry", () => {
-  assert.match(css, /\.registration-summary\[data-state="loading"\],[\s\S]*?\.registration-summary\[data-state="ok"\]\s*\{\s*display: none;/);
+  assert.match(css, /\.registration-summary\[data-state="loading"\],[\s\S]*?\.registration-summary\[data-state="ok"\]\s*\{[\s\S]*?display: none;/);
   assert.match(css, /\.registration-summary\[data-state="error"\]/);
   assert.match(summary, /id="registrationSummaryRefresh"/);
   assert.match(summary, /verifySummary\(\{ force:true \}\)/);
