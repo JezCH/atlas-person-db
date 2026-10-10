@@ -594,13 +594,23 @@
         review_group: "rupture_probe",
         kind: "rupture_review",
         title: "Byzantine Empire → Empire of Nicaea",
-        left: { name: "Byzantine Empire" },
-        right: { name: "Empire of Nicaea" },
-        rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        left: { name: "Byzantine Empire", ko: "동로마제국", polity_id: "074510f4-f2e7-5795-8cfb-2a4206fa7254" },
+        right: { name: "Empire of Nicaea", ko: "니케아 제국", polity_id: "1868fd1e-1fb4-4cbe-b880-25b8ba8ebf8d" },
+        rationale: "1204년 제4차 십자군의 콘스탄티노폴리스 함락으로 기존 제국의 수도·영토·정부는 단절·분산되었고, 니케아에서는 라스카리스 왕조가 별도 통치기구 및 황실·정교회 제도와 수도를 갖춘 비잔티움 망명 제국 정부를 세웠습니다. 에페이로스·트라페준타 등의 경쟁 제국 계승 정부와도 구별됩니다. 1261년 니케아의 미하일 8세가 콘스탄티노폴리스를 회복해 비잔티움 제국의 통치를 복구했으므로 제국 정통성·제도 계승은 분명히 기록하되, ATLAS에서는 독립적으로 작동한 니케아 망명 정부의 정치적/영토적 실체를 원래 수도의 비잔티움 제국 표제와 구분 유지합니다. 현재 Production에서 같은 미하일 8세 Person은 니케아 1259–1261 Activity, 동로마 1261–1282 Activity로 연결되어 있습니다. 두 1261년 경계는 기존 year granularity이며 이 검토는 월·일을 만들어 덮어쓰지 않습니다. 니케아 정치체의 등록 Activity는 1건뿐이므로 라스카리스 왕조 초기 황제들의 연결 충실도는 추후 전수 등록·활동 감사 대상으로 남깁니다. 과거 historical-family seed nicaea-byzantine은 본 rupture probe에 흡수되어 SUPERSEDED 상태를 유지합니다.",
+        suggested_action: "keep_both",
+        reviewed_decision: "keep_both",
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        evidence: [
+          "2026-10-10 fresh public Production Polity detail: Byzantine Empire 074510f4-f2e7-5795-8cfb-2a4206fa7254 has 15 Activities / 13 Persons, observed registered range 395–1453; Empire of Nicaea 1868fd1e-1fb4-4cbe-b880-25b8ba8ebf8d has 1 Activity / 1 Person, observed registered 1259–1261",
+          "2026-10-10 fresh public Production Person detail: Michael VIII Palaiologos b6c47e76-f0ad-45ec-a8c8-c80623234a01 with Nicaea Activity 660acd70-9516-48b9-a4a6-5037e30db555 (1259–1261) and Byzantine Activity 60823af7-0b38-4406-9793-e0797dcc3f25 (1261–1282); both retain normalized Encyclopaedia Britannica citation",
+          "Angeliki Laiou, The Oxford Handbook of Byzantine Studies (2012), Political-Historical Survey 1204–1453, https://academic.oup.com/edited-volume/29470/chapter-abstract/247163242",
+          "Mike Carr, Wiley Blackwell Encyclopedia of the Eastern Orthodox Church (2016), Byzantine Empire: 3. 1204–1461, https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118455074.wbeoe234",
+          "Michael Angold, Cambridge University Press, Imperial authority and the orthodox church (2010), https://www.cambridge.org/core/books/abs/church-and-society-in-byzantium-under-the-comneni-10811261/imperial-authority-and-the-orthodox-church/26AE99D3E3799C14CA5675E53E8E62AA",
+          "Naomi Ruth Pitamber, University of California (2015), Replacing Byzantium: Laskarid Urban Environments and the Landscape of Loss, https://escholarship.org/uc/item/973684fr",
+          "2026-10-10 bounded case evidence: docs/POLITY_P2_07B_BYZANTINE_NICAEA_TERRITORIAL_RUPTURE_20261010.md"
+        ],
+        locked: true
       },
       {
         id: "mongol-successor-khanates",

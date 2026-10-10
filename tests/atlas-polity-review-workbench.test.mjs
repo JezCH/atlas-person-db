@@ -391,7 +391,9 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.equal(macedon.locked, true);
   assert.equal(byId.get('northern-southern-song').terminal_status, null);
   assert.equal(byId.get('roman-west-east').terminal_status, null);
-  assert.equal(byId.get('byzantine-nicaea-rupture').terminal_status, null);
+  assert.equal(byId.get('byzantine-nicaea-rupture').terminal_status, 'KEEP_SEPARATE');
+  assert.equal(byId.get('byzantine-nicaea-rupture').reviewed_decision, 'keep_both');
+  assert.equal(byId.get('byzantine-nicaea-rupture').locked, true);
   assert.equal(byId.get('roc-mainland-taiwan').terminal_status, null);
 });
 
