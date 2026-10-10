@@ -8,6 +8,6 @@ test("historical source-first video tranche and resumable official metadata coll
       encoding:"utf8",timeout:30000
   });
   assert.equal(r.status,0,r.stderr+"\n"+r.stdout);
-  assert.match(r.stderr,/Ran 4 tests/);
+  assert.match(r.stderr,/Ran 5 tests/);
   assert.match(r.stderr,/(?:^|\n)OK\n/);
 });
