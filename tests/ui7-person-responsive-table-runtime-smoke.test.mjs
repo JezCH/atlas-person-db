@@ -233,7 +233,8 @@ test('P9 promotes single-Activity approximation into the primary range without r
   vm.runInNewContext(eraSource, context);
   vm.runInNewContext(source, context);
 
-  assert.equal(rowData.range.textContent, '약 BC 3150 – 약 BC 3125');
+  assert.equal(rowData.range.textContent, '기원전 약 3150~3125년');
+  assert.equal(rowData.range.dataset.chronologyRaw, '약 BC 3150 – 약 BC 3125');
   assert.equal(rowData.range.dataset.rangeApproximationFromActivity, 'true');
   assert.ok(period.classList.contains('is-redundant'));
   assert.equal(period.getAttribute('aria-hidden'), 'true');

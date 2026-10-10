@@ -161,6 +161,24 @@
     }
   }
 
+  // Display-only Korean chronology: keep exact raw BC/AD values for era
+  // grouping and numeric sorting, including boundary-specific uncertainty.
+  function localizedRegisterRange(value) {
+    const raw = String(value || "").trim();
+    const parts = raw.match(/^(약\s*)?(BC|AD)\s*(\d+)\s*[–—-]\s*(약\s*)?(BC|AD)\s*(\d+)$/i);
+    if (!parts || parts[2].toUpperCase() !== parts[5].toUpperCase()) return raw;
+    const era = parts[2].toUpperCase() === "BC" ? "기원전" : "서기";
+    const start = parts[3], end = parts[6];
+    const startApprox = Boolean(parts[1]), endApprox = Boolean(parts[4]);
+    if (start === end && startApprox === endApprox) {
+      return `${era} ${startApprox ? "약 " : ""}${start}년`;
+    }
+    if (startApprox === endApprox) {
+      return `${era} ${startApprox ? "약 " : ""}${start}~${end}년`;
+    }
+    return `${era} ${startApprox ? "약 " : ""}${start}년~${endApprox ? "약 " : ""}${end}년`;
+  }
+
   function configureActivityHierarchy(row, count, activityRows) {
     const activityCount = activityRows.length;
     row.dataset.activityCount = String(activityCount);
@@ -198,6 +216,17 @@
     const activityRows = [...(activities?.querySelectorAll?.(".person-card-activity") || [])];
     const singleActivity = activityRows.length === 1;
     for (const activity of activityRows) humanizeActivity(activity, range, singleActivity);
+    if (range) {
+      // The period promotion above is part of the raw chronology contract.
+      range.dataset.chronologyRaw = String(range.textContent || "").trim();
+      range.textContent = localizedRegisterRange(range.dataset.chronologyRaw);
+    }
+    for (const activity of activityRows) {
+      const period = activity.querySelector?.(".person-card-activity-period");
+      if (period && !period.classList.contains("is-redundant")) {
+        period.textContent = localizedRegisterRange(period.textContent);
+      }
+    }
     configureActivityHierarchy(row, count, activityRows);
     for (const cell of [identity, range, activities, count]) if (cell) row.append(cell);
   }
@@ -212,7 +241,7 @@
 
   function eraForRow(row) {
     const range = row?.querySelector?.(":scope > .person-table-range, :scope > .person-card-range");
-    const year = chronologyYearFromRange(range?.textContent || "");
+    const year = chronologyYearFromRange(range?.dataset?.chronologyRaw || range?.textContent || "");
     return eraModel.eraForYear(year);
   }
 
