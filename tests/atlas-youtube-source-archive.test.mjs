@@ -22,7 +22,10 @@ function row(overrides={}){
 
 test("durable source catalog accepts only exact canonical source records",()=>{
   assert.deepEqual(service.normalizeRecord(row()),row());
-  assert.throws(()=>service.normalizeRecord(row({source_kind:"metadata",channel_id:null})),/KIND_INVALID/);
+  assert.deepEqual(
+    service.normalizeRecord(row({source_kind:"metadata",channel_id:null,video_rows:null})),
+    row({source_kind:"metadata",channel_id:null,video_rows:null})
+  );
   assert.throws(()=>service.normalizeRecord(row({sha256:"bad"})),/SHA256_INVALID/);
   assert.throws(()=>service.normalizeRecords([row(),row()]),/DUPLICATE_OBJECT_KEY/);
 });
@@ -36,6 +39,9 @@ function fakeClient(initial=[]){
     async query(sql,params=[]){
       commands.push(sql);
       if(sql==="BEGIN" || sql==="COMMIT" || sql==="ROLLBACK" || sql.includes("pg_advisory_xact_lock")) return {rows:[]};
+      if(sql.includes("where source_artifact_id=$1")){
+        return {rows:[...data.values()].filter(x=>Number(x.source_artifact_id)===Number(params[0])).map(x=>({...x}))};
+      }
       if(sql.includes("from atlas_v2.youtube_source_archives")){
         return {rows:(params[0]||[]).filter(k=>data.has(k)).map(k=>({...data.get(k)}))};
       }
@@ -52,12 +58,18 @@ function fakeClient(initial=[]){
 
 test("catalog migration helper applies the existing canonical migration",async()=>{
   const commands=[];
-  const result=await service.applyYoutubeSourceArchiveMigration(
+  const result=await service.applyYoutubeSourceArchiveMigrations(
     {query:async sql=>{commands.push(sql);return {rows:[]};}},
     {readFile:()=>"-- durable source catalog migration"}
   );
-  assert.deepEqual(result,{applied:"20261009_youtube_durable_source_catalog.sql"});
-  assert.deepEqual(commands,["-- durable source catalog migration"]);
+  assert.deepEqual(result,{applied:[
+    "20261009_youtube_durable_source_catalog.sql",
+    "20261011_youtube_durable_source_complete_catalog.sql"
+  ]});
+  assert.deepEqual(commands,[
+    "-- durable source catalog migration",
+    "-- durable source catalog migration"
+  ]);
 });
 
 test("catalog publication is transactional, exact and idempotent",async()=>{
@@ -78,6 +90,25 @@ test("catalog publication is transactional, exact and idempotent",async()=>{
   const second=await service.publishYoutubeSourceArchiveCatalog(client,{records:[a,b]});
   assert.deepEqual(second,{committed:false,idempotent:true,verified_count:2,inserted_count:0,existing_count:2});
   assert.equal(client.data.size,2);
+});
+
+test("catalog readback can independently enumerate the complete artifact",async()=>{
+  const a=row();
+  const metadata=row({
+    object_key:"validated-batch017/sha256/cc/"+"c".repeat(64)+"/recollection-summary.json",
+    sha256:"c".repeat(64),
+    byte_count:44,
+    batch_label:"batch017-cumulative",
+    source_kind:"metadata",
+    channel_id:null,
+    video_rows:null
+  });
+  const client=fakeClient([a,metadata]);
+  const result=await service.readYoutubeSourceArchiveCatalog(client,11548326100);
+  assert.equal(result.record_count,2);
+  assert.deepEqual(result.records.map(x=>x.source_kind).sort(),["channel_videos","metadata"]);
+  assert.equal(client.commands.at(0),"BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY");
+  assert.equal(client.commands.at(-1),"COMMIT");
 });
 
 test("catalog mismatch fails closed and rolls back",async()=>{
@@ -112,8 +143,12 @@ test("OIDC handler binds workflow identity and exact Production runtime",async()
     },
     verifyOidc:async(_token,args)=>{policy=args.policy;},
     clientFactory:async()=>({end:async()=>{}}),
-    applyMigration:async()=>({applied:"20261009_youtube_durable_source_catalog.sql"}),
-    publish:async()=>({committed:true,idempotent:false,verified_count:1,inserted_count:1,existing_count:0})
+    applyMigrations:async()=>({applied:[
+      "20261009_youtube_durable_source_catalog.sql",
+      "20261011_youtube_durable_source_complete_catalog.sql"
+    ]}),
+    publish:async()=>({committed:true,idempotent:false,verified_count:1,inserted_count:1,existing_count:0}),
+    readCatalog:async()=>({artifact_id:11548326100,record_count:1,records:[row()]})
   });
   const res=response();
   await handler({
