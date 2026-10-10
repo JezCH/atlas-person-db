@@ -128,5 +128,43 @@ class TestWholeTitleRecall(unittest.TestCase):
                 )
 
 
+    def test_generic_source_labels_quarantined(self):
+        idx = module.build_index([
+            "The Man", "The Truth", "New York", "Social Media", "Prime Minister",
+            "Alexander the Great"
+        ])
+        self.assertEqual(module.find_names("The Man told the truth", idx), [])
+        self.assertEqual(
+            [v[0] for v in module.find_names("Alexander the Great", idx)],
+            ["Alexander the Great"]
+        )
+
+    def test_repeated_name_is_not_multi_person(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            archive = Path(tmp) / "one.zip"
+            video = {
+                "video_id": "same",
+                "title": "Why was Malcolm X important? Malcolm X",
+            }
+            with zipfile.ZipFile(archive, "w") as z:
+                z.writestr(
+                    "batch024/videos/UC123.ndjson.gz",
+                    gzip.compress((json.dumps(video) + "\n").encode()),
+                )
+            snapshot = {
+                "snapshot": {
+                    "snapshot_id": "test", "channel_count": 1, "video_count": 1
+                },
+                "signals": [{"raw_name": "Malcolm X"}],
+            }
+            result = module.audit_source(archive, snapshot)
+            self.assertEqual(result["total_label_video_matches"], 1)
+            self.assertEqual(
+                result["rows"][0]["multi_person_review_distinct_videos"], 0
+            )
+            with self.assertRaisesRegex(ValueError, "min_words"):
+                module.audit_source(archive, snapshot, min_words=1)
+
+
 if __name__ == "__main__":
     unittest.main()
