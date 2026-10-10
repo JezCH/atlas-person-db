@@ -260,6 +260,12 @@ body {
   box-shadow: 0 0 0 3px rgba(167,173,177,.06);
 }
 
+/* VIS3-05T-B: the Person-only connection status obeys the HTML hidden
+ * state even though base styles declare .status { display:inline-flex }. */
+#connectionStatus[hidden] {
+  display: none;
+}
+
 .status-ok { color: var(--atlas-success); background: transparent; }
 .status-warn { color: var(--atlas-warning); background: transparent; }
 .status-error { color: var(--atlas-danger); background: transparent; }
