@@ -18,6 +18,8 @@
   let lastSignalPayload=null;
 
   function candidateStatusBadge(row) {
+    if(row?.source_id_union_verified===true)
+      return '<span class="registration-review-signal-identity" data-status="verified">원본 채널 ID 통합 검증</span>';
     if(row?.identity_state==="short_name_identity_review")return '<span class="registration-review-signal-identity" data-status="ambiguous">이름·동명이인 확인 필요</span>';
     if(row?.identity_state==="alias_union_needs_original_ids")return '<span class="registration-review-signal-identity" data-status="ambiguous">별칭 중복 · 원본 ID 재집계 필요</span>';
     if(row?.identity_state==="registered_homonym_review")return '<span class="registration-review-signal-identity" data-status="ambiguous">동명이인 · 등록여부 검토</span>';
