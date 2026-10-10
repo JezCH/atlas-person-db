@@ -118,3 +118,31 @@ test("unified production manifest accepts an exact composite assertion and rejec
   assert.equal(unified.requireUnifiedV2Manifest(manifest([raw()])).operations[0].type, "assert_polity_source_link");
   assert.throws(() => unified.requireUnifiedV2Manifest(manifest([raw(),raw()])), /ASSERTION_ID_REUSED/);
 });
+
+test("authenticated correction transport, reviewed release gate and activity-free synthesis agree on source-only plan", () => {
+  const fs = require("node:fs");
+  const { requireExecutionPlan } = require("../server/atlas-correction-apply-handler.js");
+  const { synthesizeUnifiedCorrectionV2Manifest } = require("../server/atlas-correction-v2-unified-plan-synthesizer.js");
+  const plan = {
+    schema: "atlas-stage2-correction-v2-execution-plan/v1",
+    batch_id: "p2_08e_source_only_unit",
+    execution_rules: { production_executable:false, production_mutation_authorized:false },
+    operations: [],
+    stage2_assertions: [raw()]
+  };
+  assert.equal(requireExecutionPlan(plan), plan);
+  const snapshot = {
+    schema:"atlas-correction-v2-target-snapshot/v1",
+    activity_ids:[], activities:[], normalized_activity_source_links:[],
+    chronology_claims:[], relationship_descriptions:[],
+    snapshot_digest:"sha256:" + "a".repeat(64)
+  };
+  const manifest = synthesizeUnifiedCorrectionV2Manifest(plan, snapshot);
+  assert.deepEqual(manifest.operations.map(x=>x.type), ["assert_polity_source_link"]);
+  assert.equal(manifest.exact_live_snapshot_digest, snapshot.snapshot_digest);
+  const yaml = fs.readFileSync(new URL("../.github/workflows/atlas-correction-apply.yml", import.meta.url), "utf8");
+  assert.match(yaml, /all\(. == "assert_source"[^\n]*"assert_polity_source_link"/);
+  assert.match(yaml, /any\(. == "assert_governance_context"[^\n]*"assert_polity_source_link"/);
+  const invalid = { ...plan, stage2_assertions:[{type:"assert_source"}] };
+  assert.throws(() => requireExecutionPlan(invalid), /ASSERTION_ONLY_SCOPE_INVALID/);
+});
