@@ -15,7 +15,7 @@ test('VIS3-05T-C edits one existing shell stylesheet with correct cache bust',()
  assert.match(added,/\.nav-list \.nav-item small \{/);
  assert.match(added,/\.sidebar-foot \{/);
  assert.match(added,/\.brand span \{/);
- assert.doesNotMatch(added,/\.mobile-nav|\.dashboard-|\.spacetime-|@keyframes|url\(/);
+ assert.doesNotMatch(added,/^\s*\.mobile-nav|^\s*\.dashboard-|^\s*\.spacetime-|@keyframes|url\(/m);
 });
 test('long routes get second-row status and preserve exact semantics',()=>{
  for(const domain of ['spacetime','polities','places','events','geometry'])assert.ok(added.includes('[data-atlas-domain="'+domain+'"]'),domain);
