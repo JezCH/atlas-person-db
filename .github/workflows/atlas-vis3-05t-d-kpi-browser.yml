@@ -1,0 +1,54 @@
+name: ATLAS VIS3-05T-D KPI and Appbar Chrome Compare
+
+on:
+  pull_request:
+    paths:
+      - "atlas-dashboard-monumental-v11.css"
+      - "atlas-ui-mobile-v8.css"
+      - "scripts/verify-vis3-05t-d-kpi-browser.mjs"
+      - ".github/workflows/atlas-vis3-05t-d-kpi-browser.yml"
+permissions:
+  contents: read
+jobs:
+  real_production_same_dom:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      ATLAS_PRODUCTION_ORIGIN: https://atlas-person-db.vercel.app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Ensure fallback Korean glyphs without blocking test
+        run: |
+          if ! fc-list :lang=ko family | grep -q .; then
+            timeout 30s sudo apt-get update -qq || true
+            timeout 30s sudo apt-get install -y --no-install-recommends fonts-noto-cjk || true
+          fi
+      - name: Start Chrome
+        run: |
+          CHROME_BIN="$(command -v google-chrome-stable || command -v google-chrome || command -v chromium || true)"
+          test -n "$CHROME_BIN"
+          "$CHROME_BIN" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --remote-debugging-port=9227 --user-data-dir=/tmp/atlas-vis3-05t-d-chrome \
+            about:blank >/tmp/atlas-vis3-05t-d-chrome.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:9227/json/version >/dev/null; then exit 0; fi
+            sleep .3
+          done
+          cat /tmp/atlas-vis3-05t-d-chrome.log
+          exit 1
+      - name: Compare live six KPI cards and 58px mobile appbar before and after type CSS
+        run: |
+          node --check scripts/verify-vis3-05t-d-kpi-browser.mjs
+          node scripts/verify-vis3-05t-d-kpi-browser.mjs
+      - name: Keep A/B browser screenshots and geometry record
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vis3-05t-d-kpi-appbar-${{ github.event.pull_request.head.sha }}
+          path: artifacts/vis3-05t-d-browser
+          retention-days: 21
+          if-no-files-found: warn
