@@ -1,0 +1,31 @@
+# POLITY-P2-08D — Taizu and Shenzong scholarly Source enrichment; Song dynasty identity retained
+
+**2026-10-11 KST — bounded non-destructive source-only correction.** Existing generic Song Polity `1a1983fd-1850-5756-877c-3d2c17b85e1f` still owns both reign Activities. The objective is to replace **unsupported sole reliance on repository datasets** by adding *independently attested academic citations*, without removing anything or preemptively retiring the umbrella dynasty identity.
+
+## Exact original Production and audited Source catalog
+
+The protected [P2-08A read-only audit](https://github.com/JezCH/atlas-person-db/actions/runs/38062024027) plus full Source catalog from the [P2-08C Production correction Baseline A](https://github.com/JezCH/atlas-person-db/actions/runs/38063925590) established two specific original 1-source-only Activities:
+
+| Person | Activity UUID | Year-only original reign | Old normalized Source UUID / locator |
+|---|---|---|---|
+| Song Taizu / 송 태조 | `4638676d-58de-5873-b2e8-a917a0f5cccf` | 960–976 | `cc767f2f-48fb-550f-851a-b893c362b131` / `pending-records-supplement-5.json:32` |
+| Song Shenzong / 송 신종 | `d94907ae-eac0-518d-a26d-03adfb9534fb` | 1067–1085 | `c899493b-3a0e-5f0b-b7ae-3bce3e8a63c0` / `pending-records-supplement-6.json:61` |
+
+Both retain `confidence=legacy_asserted` and `chronology_status=exact_as_recorded` until independently reviewed chronology authority upgrading is separately authorized. Their sources cannot be deleted as they document actual legacy provenance. The `Source` registry catalog contains an **existing** Cambridge founding chapter Source UUID `5496aca8-5198-4887-a348-c66ee25eacfd` used by Song Zhenzong; no second duplicate Cambridge founding source should be created.
+
+## Verified scholarship and exact source link actions
+
+- **Song Taizu**, Lau Nap-yin and Huang K’uan-chung, [*Founding and Consolidation of the Sung Dynasty under T’ai-tsu (960–976), T’ai-tsung (976–997), and Chen-tsung (997–1022)*]( https://www.cambridge.org/core/books/abs/cambridge-history-of-china/founding-and-consolidation-of-the-sung-dynasty-under-taitsu-960976-taitsung-976997-and-chentsung-9971022/69C8668AF27659D52EBF293C0412504C ), *The Cambridge History of China*, online 28 March 2010. The title and founding section independently date Taizu's ruler period to 960–976. **Reuse existing exact Source UUID** `5496aca8-5198-4887-a348-c66ee25eacfd`, append its canonical URL as Source locator to the existing Taizu Activity. No extra Source row.
+- **Song Shenzong**, Paul Smith, [*Shen-tsung’s Reign and the New Policies of Wang An-shih, 1067–1085*](https://www.cambridge.org/core/books/abs/cambridge-history-of-china/shentsungs-reign-and-the-new-policies-of-wang-anshih-10671085/4A0851FC31DE0A42AD084CB16B12476B), *The Cambridge History of China*, online 28 March 2010. Chapter summary directly states the accession of Zhao Xu in 1067 and the reign/new policies. No existing matching bibliographic Source in the audited 3,353-Source catalog. **Create one new institutional scholarly bibliography Source** `0759fdcc-20b8-435b-9286-b4c57207cec7` with title, canonical URL and explanatory citation; append one source link to the existing Shenzong Activity. Do not infer month/day.
+
+The Stage2-v2 plan in `corrections/plans/polity-song-taizu-shenzong-source-backfill-20261011.v1.json` records **exact-before on both activity tuples and their existing single source count**. Source assertion must create the Shenzong bibliographic record before source-link operations; existing Cambridge Taizu source is referenced via its real UUID. The two `rewrite_activity` operations copy every original activity field and change **no Activity columns at all**. Each has one `add_source_links` entry; the synthesizer preserves the existing dataset source and adds only the vetted academic Source link.
+
+## Why neither historical Polity is retired or merged
+
+North/South Song are separate operated court-period entities, but the dynasty remained one Zhao Song royal lineage; removing the last two direct Activities from the umbrella generic Song identity would create a zero-Activity Polity with unresolved authority/lineage semantics. Northern Song currently has **zero direct Polity Source links** and there are **zero recorded dynasty-period identity continuity relations** in the previous secured Production Song census. Neither is resolved by a safe personal-Activity citation-only unit. A future `P2-08E` must source-link the Northern Song Polity, evaluate a legitimate relationship under supported identity relation types and decide whether to retain generic Song as a non-ruler dynastic umbrella or ask explicit approval before any retirement. No new relation/retirement is implied by this case.
+
+## Acceptance tests and residual
+
+Expected after genuinely committed source-only correction + successful Runtime Compile + public two Person readbacks: generic Song 2 / Northern 7 / Southern 5 = **14** unchanged, both Persons retain generic Song link but gain a real Cambridge Source each (2 Sources on each instead of 1), original two legacy Source UUID/locators still exist. All Song Activity–Source normalized links: **19→21**; Source records total +1, Activity/Polity/Person changes 0. Verify actual protected correction commit artifact and historical same-SHA before/after; do not mark applied from this plan alone.
+
+This is independent **source provenance remediation**, not full Song identity closure. `song-generic-polity-activity-ownership` still **PARTIAL_REPAIR**, `northern-southern-song` already terminal, seed ledger **75/63/12** unchanged; Japan/Place/France/Sweden, outstanding 12, final full Production census and Authoring–Runtime parity remain mandatory.
