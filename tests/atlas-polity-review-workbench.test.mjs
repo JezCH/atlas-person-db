@@ -210,7 +210,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 21);
+  assert.equal(unresolved.length, 20);
   const brazil = byId.get('brazil-regime-family');
   assert.equal(brazil.terminal_status, 'FIXED');
   assert.equal(brazil.status, 'FIXED');
@@ -265,6 +265,21 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.ok(chuzan.evidence.some(s => /432b442f-d2a7-42c2-9ec7-c159fe88e402/.test(s)));
   assert.ok(chuzan.evidence.some(s => /toyo-bunko.repo.nii.ac.jp/.test(s)));
   assert.ok(chuzan.evidence.some(s => /pref.okinawa.jp/.test(s)));
+  const massylii = byId.get('massylii-numidia');
+  assert.equal(massylii.status, 'KEEP_SEPARATE');
+  assert.equal(massylii.terminal_status, 'KEEP_SEPARATE');
+  assert.equal(massylii.reviewed_decision, 'keep_both');
+  assert.equal(massylii.suggested_action, 'keep_both');
+  assert.equal(massylii.locked, true);
+  assert.equal(massylii.left.polity_id, 'ec9d77b4-e18e-4495-8232-c51e74b0d683');
+  assert.equal(massylii.right.polity_id, '81ff499c-879e-452f-9893-6618ec580825');
+  assert.ok(massylii.evidence.some(e => /aa666fef-cdc2-42ef-9445-74c56ce4694d/.test(e)));
+  assert.ok(massylii.evidence.some(e => /ac8bcd9e-20a7-41cf-a2e9-a9797d817dba/.test(e)));
+  assert.ok(massylii.evidence.some(e => /01fdc710-556e-426a-8902-ac9e06470472/.test(e)));
+  assert.ok(massylii.evidence.some(e => /certainty=uncertain/.test(e)));
+  assert.ok(massylii.evidence.some(e => /academic.oup.com\/bics/.test(e)));
+  assert.match(massylii.rationale, /왕권 단절/);
+
   const oman = byId.get('oman-empire-oman');
   assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
   assert.equal(oman.right.polity_id, 'ac7279b2-da5c-42df-a217-ac60f16106ff');
