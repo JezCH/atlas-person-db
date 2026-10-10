@@ -210,7 +210,7 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.naming_residuals,
     ...registry.rupture_probes
   ].filter(row => !row.terminal_status);
-  assert.equal(unresolved.length, 19);
+  assert.equal(unresolved.length, 18);
   const brazil = byId.get('brazil-regime-family');
   assert.equal(brazil.terminal_status, 'FIXED');
   assert.equal(brazil.status, 'FIXED');
@@ -292,6 +292,23 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.ok(buyid.evidence.some(e => /375b1a46-3891-41e3-909c-8dee17b11c67/.test(e)));
   assert.ok(buyid.evidence.some(e => /980/.test(e) && /iranicaonline.org\/articles\/buyids/.test(e)));
   assert.match(buyid.rationale, /977년.*980/);
+
+  const gnat = byId.get('gnat-turkey');
+  assert.equal(gnat.status, 'KEEP_SEPARATE');
+  assert.equal(gnat.terminal_status, 'KEEP_SEPARATE');
+  assert.equal(gnat.reviewed_decision, 'keep_both');
+  assert.equal(gnat.suggested_action, 'keep_both');
+  assert.equal(gnat.locked, true);
+  assert.equal(gnat.left.polity_id, '55407a83-2e02-4ea1-898a-c55bc06da69e');
+  assert.equal(gnat.right.polity_id, '28448862-277d-4738-9fb4-7f51a9e4c03a');
+  assert.ok(gnat.evidence.some(s => /02988a5b-06de-4451-8477-101ff095800b/.test(s)));
+  assert.ok(gnat.evidence.some(s => /8b0b0654-b37e-46f7-a170-b92e99ab92a9/.test(s)));
+  assert.ok(gnat.evidence.some(s => /476c1d83-c5a8-427d-8b83-e6b289be588f/.test(s)));
+  assert.ok(gnat.evidence.some(s => /364/.test(s) && /anayasa.gov.tr/.test(s)));
+  assert.ok(gnat.evidence.some(s => /tbmm.gov.tr\/meclis-baskanlarimiz/.test(s)));
+  assert.match(gnat.rationale, /1921 헌법/);
+  assert.match(gnat.rationale, /동일일 1923-10-29/);
+  assert.match(gnat.rationale, /주권국가/);
 
   const oman = byId.get('oman-empire-oman');
   assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
