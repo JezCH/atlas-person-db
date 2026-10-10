@@ -90,13 +90,56 @@ def classify_match(title, start, end, total_matches):
     return "mention_only"
 
 
-def audit_source(source_zip, snapshot, *, min_words=2, max_examples=3):
+def reviewed_extra_name_labels(extra, source_snapshot_id, source_names):
+    """Validate the cue output's source provenance; names stay UNVERIFIED."""
+    if extra is None:
+        return {}
+    if not isinstance(extra, dict) or extra.get("schema") != "youtube-open-vocabulary-name-cue-audit/v2":
+        raise ValueError("invalid open-vocabulary candidate sidecar")
+    if extra.get("reference_source_snapshot_id") != source_snapshot_id:
+        raise ValueError("open-vocabulary source snapshot mismatch")
+    if not isinstance(extra.get("rows"), list):
+        raise ValueError("open-vocabulary candidate rows missing")
+    rule_path = Path(__file__).with_name("youtube-person-signal-quality-rules.v2.json")
+    if not rule_path.is_file():
+        raise ValueError("reviewed nonperson quality rules unavailable")
+    rules = json.loads(rule_path.read_text(encoding="utf-8"))
+    quarantine = {normalize(x).replace(" ", "") for x in
+                  rules["non_person_exact"] + rules["nonhistorical_person_exact"]}
+    existing = {normalize(n).replace(" ", "") for n in source_names}
+    found = {}
+    for entry in extra["rows"]:
+        if not isinstance(entry, dict):
+            raise ValueError("invalid open-vocabulary candidate row")
+        label = entry.get("candidate")
+        if not isinstance(label, str) or not label.strip():
+            raise ValueError("missing open-vocabulary name")
+        key = normalize(label).replace(" ", "")
+        if not key or key in found:
+            raise ValueError("repeated open-vocabulary candidate")
+        if key in quarantine or key in existing:
+            continue
+        if entry.get("candidate_fold_status") not in (
+            "NEW_LABEL_REVIEW", "POSSIBLE_ORTHOGRAPHIC_VARIANT"
+        ):
+            raise ValueError("unknown open-vocabulary identity disposition")
+        if not isinstance(entry.get("distinct_channels"), int) or entry["distinct_channels"] < 3:
+            raise ValueError("open-vocabulary source channel threshold invalid")
+        found[key] = (label, entry["candidate_fold_status"])
+    return found
+
+
+def audit_source(source_zip, snapshot, *, min_words=2, max_examples=3, extra_candidates=None):
     if not isinstance(snapshot.get("signals"), list) or not isinstance(snapshot.get("snapshot"), dict):
         raise ValueError("invalid source candidate snapshot")
     snapshot_meta = snapshot["snapshot"]
     if min_words < 2:
         raise ValueError("min_words must be >=2: mononyms require identity review")
-    index = build_index((v["raw_name"] for v in snapshot["signals"]), min_words)
+    source_names = [v["raw_name"] for v in snapshot["signals"]]
+    extra = reviewed_extra_name_labels(
+        extra_candidates, snapshot_meta["snapshot_id"], source_names
+    )
+    index = build_index(source_names + [name for name, _ in extra.values()], min_words)
     stats = collections.defaultdict(lambda: {
         "title_mention_channel_ids": set(), "title_mention_video_ids": set(),
         "focus_cue_channel_ids": set(), "focus_cue_video_ids": set(),
@@ -154,6 +197,11 @@ def audit_source(source_zip, snapshot, *, min_words=2, max_examples=3):
     for label, s in stats.items():
         rows.append({
             "raw_name": label,
+            "candidate_origin": ("open_vocabulary_cue" if
+                                 normalize(label).replace(" ", "") in extra
+                                 else "source_prefix_candidate"),
+            "identity_disposition": (extra[normalize(label).replace(" ", "")][1]
+                                     if normalize(label).replace(" ", "") in extra else None),
             "title_mention_distinct_channels": len(s["title_mention_channel_ids"]),
             "title_mention_distinct_videos": len(s["title_mention_video_ids"]),
             "focus_cue_review_distinct_channels": len(s["focus_cue_channel_ids"]),
@@ -169,10 +217,13 @@ def audit_source(source_zip, snapshot, *, min_words=2, max_examples=3):
         "published_rank_eligible": False,
         "evidence_disposition": "read_only_diagnostic_non_authoritative",
         "source_snapshot_id": snapshot_meta["snapshot_id"],
-        "lexicon_source": "all_source_extracted_names_not_registered_person_uuid",
+        "lexicon_source": ("source_prefix_plus_unverified_open_vocabulary"
+                           if extra_candidates is not None
+                           else "all_source_extracted_names_not_registered_person_uuid"),
+        "extra_candidate_labels_indexed": len(extra),
+        "source_candidate_name_labels": len(snapshot["signals"]),
         "min_name_words": min_words,
         "matched_name_labels": len(rows),
-        "source_candidate_name_labels": len(snapshot["signals"]),
         "indexed_name_labels": sum(len(v) for v in index.values()),
         "successful_channels": len(channels_seen),
         "original_videos": total_videos,
@@ -182,7 +233,8 @@ def audit_source(source_zip, snapshot, *, min_words=2, max_examples=3):
             "Full-title name occurrence is not person-centered documentary evidence.",
             "Focus cues are heuristic REVIEW ONLY, not approved Person/video assignments.",
             "Overlapping names choose longest phrase; this does NOT merge distinct aliases.",
-            "Names missed by prior source extractor are absent from this candidate lexicon.",
+            ("Names missed by prior source extractor are absent unless separately "
+             "supplied as an unverified, source-matched cue candidate sidecar."),
             "Names with fewer than min_name_words tokens are excluded (hold for identity review).",
             "Obvious generic source-label phrases are quarantined, not counted as Person.",
         ],
@@ -197,10 +249,17 @@ def main():
     p.add_argument("--output", required=True)
     p.add_argument("--min-name-words", type=int, default=2)
     p.add_argument("--max-examples", type=int, default=3)
+    p.add_argument("--open-vocabulary-json", help="Same-snapshot cue candidate sidecar; no identity unions")
     args = p.parse_args()
     snapshot = json.loads(Path(args.signal_json).read_text(encoding="utf-8"))
-    result = audit_source(args.source_zip, snapshot, min_words=args.min_name_words,
-                          max_examples=args.max_examples)
+    extra_candidates = (
+        json.loads(Path(args.open_vocabulary_json).read_text(encoding="utf-8"))
+        if args.open_vocabulary_json else None
+    )
+    result = audit_source(
+        args.source_zip, snapshot, min_words=args.min_name_words,
+        max_examples=args.max_examples, extra_candidates=extra_candidates
+    )
     Path(args.output).write_text(json.dumps(result, ensure_ascii=False, indent=2),
                                  encoding="utf-8")
     print(json.dumps({key: val for key, val in result.items() if key != "rows"},
