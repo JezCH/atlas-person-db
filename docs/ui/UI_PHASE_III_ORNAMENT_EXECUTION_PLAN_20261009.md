@@ -201,6 +201,8 @@ ATLAS_UI_VISUAL_GUIDELINES.md v2.0은 현재 §14(금속 강조), §17(연대와
 
 **VIS3-05T-A 읽기 전용 감사 완료:** [VIS3-05T 감사 결과](UI_PHASE_III_VIS3_05T_A_LEGIBILITY_AUDIT_20261010.md)에 P0 연결 상태 숨김 CSS 충돌 가설, P1 긴 사이드바 라벨과 상태 설명의 공간 경쟁, P1 9px 저대비 메타정보, P1 KPI 보조 설명 밀집 및 P2 접기 버튼 위치를 기록했다. 실제 Production Chrome 증거와 CSS 정적 대비 계산을 구분해 보고했고 아직 UI·CSS·DB는 수정하지 않았다.
 
-**다음 독립 작업 단위 = VIS3-05T-B:** 먼저 Dashboard/Persons 전환에서 실제 DOM `hidden`/computed `display` 확인 및 최소 수정과 회귀 검증. 이후 상태 설명/메뉴 레이아웃과 KPI 보조 글자 개선은 소유권별 독립 검토 후 진행한다. VIS3-05R-E 사용자 미감 최종 승인 대기, VIS3-06~17의 추가 장식 일괄 구현 및 시공간 카메라/데이터 변경은 보류한다.
+**VIS3-05T-B 실제 Chrome 점검:** [상태 표시 검증](UI_PHASE_III_VIS3_05T_B_CONNECTION_VISIBILITY_20261010.md)에서 기존 CSS 충돌 가설을 검증했다. 390px Production의 대시보드는 이미 `hidden=true` + computed `display:none`이므로 가설이 재현되지 않았다. 소스 수정안은 병합하지 않고 철회했다. 1440px 및 대시보드↔인물 전환 검증은 후속 Chrome 실행 기록으로 확인한다. 옛 스크린샷만으로 현재 연결 장애·CSS 버그를 단정하지 않는다.
+
+**다음 독립 작업 단위 = VIS3-05T-C:** 사이드바 긴 메뉴명·상태 메타데이터의 구조·대비 점검과 좁은 화면 비교. 이후 KPI 보조 글자(T-04/T-07), 접기 버튼(T-05)을 각각 처리한다. VIS3-05R-E 사용자 미감 최종 승인 대기, VIS3-06~17의 추가 장식 일괄 구현 및 시공간 카메라/데이터 변경은 보류한다.
 
 > Phase III v2.0의 성공 조건: 조형물의 총량이 아니라, 역사적 품격·읽기 쉬움·현재 데이터의 신뢰성이 함께 상승할 것.
