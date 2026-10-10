@@ -14,7 +14,10 @@ export function targetAttestation(connection, env = {}) {
   if (!["postgres:", "postgresql:"].includes(u.protocol))
     return { status: "UNPROVEN", reason: "NOT_POSTGRESQL" };
   const hostRef = /^db\.([a-z0-9]{20})\.supabase\.co$/.exec(u.hostname.toLowerCase())?.[1];
-  const poolerRef = /^postgres\.([a-z0-9]{20})$/.exec(decodeURIComponent(u.username).toLowerCase())?.[1];
+  const isSupabasePooler = /^(?:[a-z0-9-]+\.)?pooler\.supabase\.com$/.test(u.hostname.toLowerCase());
+  const poolerRef = isSupabasePooler
+    ? /^postgres\.([a-z0-9]{20})$/.exec(decodeURIComponent(u.username).toLowerCase())?.[1]
+    : null;
   if (hostRef && poolerRef && hostRef!==poolerRef)
     return { status: "UNPROVEN", reason: "CONFLICTING_IDENTIFIERS" };
   const projectRef = hostRef || poolerRef;
