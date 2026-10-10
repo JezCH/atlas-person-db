@@ -114,7 +114,7 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/youtube-preserve-verified-corpus.py             --root corpus             --output /tmp/youtube-remote-pass2.json             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
-          jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson catalog "${SOURCE_CATALOG_COUNT}" '
+          jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson catalog "${SOURCE_CATALOG_COUNT}" --argjson sources "${SOURCE_SOURCE_COUNT}" '
             .files_verified==$files
             and .bytes_verified==$bytes
             and ((.new_objects + .existing_objects)==$files)
