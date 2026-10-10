@@ -68,7 +68,7 @@ test('Admin displays latest applied Authoring / Correction headers using the aut
 });
 
 test('System Status renders unknown states without fabricating GitHub Actions health', () => {
-  assert.match(observability, /unknown \/ not supplied/);
+  assert.match(observability, /미확인 \/ 제공되지 않음/);
   assert.match(observability, /github_actions_status_embedded/);
   assert.match(html, /GitHub Actions 결과는 런타임 내부 값이 아니므로/);
   assert.doesNotMatch(observability, /Actions[^\n]{0,40}(?:PASS|success|green)/i);
