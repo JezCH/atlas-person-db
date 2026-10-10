@@ -24,6 +24,14 @@ Evaluate HIGH before CAUTION; RETURN TO NORMAL is the exit condition after CAUTI
 
 **Never delay for batching:** incident/security fix, breaking UI/API defect, deployed-runtime incompatibility blocking authoring/apply, or a required exact-SHA Production verification. If Vercel itself refuses a deployment, preserve the work and use its legitimate retry/recovery path; do not bypass platform limits.
 
+## Release-request discipline (incident follow-up)
+
+- **Before asking Vercel to deploy manually**, inspect the latest Production deployment once. If the Git-connected `main` deployment is already READY and contains the required UI/runtime commit, reuse it; do not create a redundant deployment just to obtain a newer SHA. If an exact-SHA canonical writer requires an exact version, follow that writer's existing release/security procedure instead of claiming ancestry alone is sufficient.
+- **Do not equate ignored builds with free requests.** The ignore-build command is evaluated only after Vercel receives a Git deployment request. Count created and canceled deployment IDs as pressure signals; neither a green GitHub CI run nor an ignored build guarantees a free deployment-request slot.
+- **When Vercel explicitly returns a request-quota error** (including HTTP 402 with `api-deployments-free-per-day`), do not issue repeated manual deploy requests or force-new retries. Preserve merged work, record the refusal and latest READY commit, and defer an optional release until the provider accepts normal Git deployment again. Do not disable security/exact-SHA gates or change billing automatically.
+- **Use one natural release for related optional UI changes** when several are ready during CAUTION/HIGH, without blocking independent development/PR tests. Do not add a project-wide work lock, automatic merge denial, polling loop, scheduler, or background monitor.
+- **Keep observed counts and provider limits separate.** Rolling-window counts from the Vercel deployment list are advisory, may omit rejected requests, and cannot override an explicit provider quota refusal. A new attempt is justified by a needed change plus evidence the service has recovered—not by guessing that the list shows free slots.
+
 ## Verification and change control
 
 - Only consult the deployment counts when a burst is apparent or before a known large merge wave. No background monitoring service.
