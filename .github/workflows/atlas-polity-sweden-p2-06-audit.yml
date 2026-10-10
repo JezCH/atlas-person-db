@@ -1,4 +1,4 @@
-name: ATLAS Sweden P2-06A Authenticated Source Inventory
+name: ATLAS Sweden P2-06B Authenticated Source Inventory
 
 on:
   push:
@@ -23,7 +23,8 @@ jobs:
           set -euo pipefail
           AUDIT='https://atlas-person-db.vercel.app/api/atlas-audit-inventory?__atlas_audit_surface=polity-reference-audit'
           IDENTITY='https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity'
-          for attempt in $(seq 1 45); do
+          matched_deployment=false
+          for attempt in $(seq 1 60); do
             curl --fail-with-body --silent --show-error "$IDENTITY" > identity.json
             deployed="$(jq -r '.identity.git_commit_sha // ""' identity.json)"
             if [[ "$deployed" == "${GITHUB_SHA}" && "$(jq -r '.identity.git_commit_ref' identity.json)" == "main" ]]; then
@@ -34,11 +35,17 @@ jobs:
               code="$(curl --silent --show-error --output audit.json --write-out '%{http_code}' \
                 -H 'content-type: application/json' -H "authorization: Bearer $token" \
                 --data "$payload" "$AUDIT")"
-              if [[ "$code" == "200" ]]; then break; fi
+              if [[ "$code" == "200" ]]; then matched_deployment=true; break; fi
               echo "Sweden exact Production audit waiting for compatible deployed code (attempt $attempt; HTTP $code, code $(jq -r '.code // "UNKNOWN"' audit.json))."
             fi
-            sleep 10
+            echo "Production SHA preflight: deployed=$deployed audited=$GITHUB_SHA attempt=$attempt"
+            sleep 8
           done
+          if [[ "$matched_deployment" != "true" ]]; then
+            echo "SWEDEN_P2_06B_PRODUCTION_SHA_NOT_READY_OR_OIDC_DENIED: source audit not performed" >&2
+            [[ -f audit.json ]] && cat audit.json >&2 || true
+            exit 1
+          fi
           jq -e '.ok==true and .complete==true and .read_only==true and .committed==false
             and (.sweden_details.polity_ids|type)=="array"
             and (.sweden_details.designations|type)=="array"
