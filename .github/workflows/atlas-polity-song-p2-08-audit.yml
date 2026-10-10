@@ -1,0 +1,75 @@
+name: ATLAS Song P2-08 Exact Source/Activity Inventory
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/atlas-polity-song-p2-08-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  song-read-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    environment: production
+    steps:
+      - name: OIDC authenticated three-Polity/Activity/Source READ ONLY on exact deployed SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          AUDIT='https://atlas-person-db.vercel.app/api/atlas-audit-inventory?__atlas_audit_surface=polity-reference-audit'
+          IDENTITY='https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity'
+          matched=false
+          for attempt in $(seq 1 60); do
+            curl --fail-with-body --silent --show-error "$IDENTITY" > identity.json
+            deployed="$(jq -r '.identity.git_commit_sha // ""' identity.json)"
+            ref="$(jq -r '.identity.git_commit_ref // ""' identity.json)"
+            if [[ "$deployed" == "$GITHUB_SHA" && "$ref" == "main" ]]; then
+              token="$(curl --fail-with-body --silent --show-error -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=atlas-person-db-audit-inventory" | jq -er '.value')"
+              payload="$(jq -cn --arg sha "$deployed" '{deployment_sha:$sha,include_song_details:true}')"
+              status="$(curl --silent --show-error --output audit.json --write-out '%{http_code}' -H 'content-type: application/json' -H "authorization: Bearer $token" --data "$payload" "$AUDIT")"
+              if [[ "$status" == "200" ]]; then matched=true; break; fi
+              echo "Song preflight compatible deployed code not ready: HTTP=$status code=$(jq -r '.code // "UNKNOWN"' audit.json) attempt=$attempt"
+              if [[ "$status" != "404" && "$status" != "409" ]]; then cat audit.json >&2; exit 1; fi
+            fi
+            echo "Song production SHA check: deployed=$deployed requested=$GITHUB_SHA attempt=$attempt"
+            sleep 8
+          done
+          if [[ "$matched" != "true" ]]; then
+            echo "SONG_P2_08_EXACT_SHA_DEPLOYMENT_NOT_READY; NO AUTHORIZED SOURCE AUDIT WAS PERFORMED" >&2
+            exit 1
+          fi
+          jq -e --arg sha "$GITHUB_SHA" '.ok==true and .complete==true and .read_only==true and .committed==false and .deployment_sha==$sha
+            and .song_details.preflight_only==true and .song_details.committed==false
+            and (.song_details.polity_ids|length)==3
+            and (.song_details.activities|type)=="array"
+            and (.song_details.activity_sources|type)=="array"
+            and (.song_details.runtime_activities|type)=="array"
+            and (.song_details.gaozong_person_activities|type)=="array"
+            and (.song_details.designations|type)=="array"
+            and (.song_details.identity_relations|type)=="array"
+            and (.song_details.governance_periods|type)=="array"
+            and (.song_details.gaozong_activity_ids|length)==2' audit.json >/dev/null
+          jq '.song_details' audit.json > song-p2-08-exact-before.json
+          jq -e '.song_details as $s |
+            ($s.polity_ids | index("1a1983fd-1850-5756-877c-3d2c17b85e1f") != null) and
+            ($s.polity_ids | index("407d91cf-7a97-45e3-81ea-d42a3cbfba35") != null) and
+            ($s.polity_ids | index("fe073a4c-d967-56e2-bb31-f74bdde1af87") != null) and
+            ([$s.activities[] | select(.activity_id=="4517af83-d656-47b0-a558-3a3df717f726" or .activity_id=="d5eaf14b-417d-4ed9-a594-d819314a1ff5") | select(.polity_id=="1a1983fd-1850-5756-877c-3d2c17b85e1f")] | length)==2' audit.json >/dev/null
+          jq -c '.song_details | {polity_ids,n_activities:(.activities|length),n_activity_source_links:(.activity_sources|length),
+            n_designations:(.designations|length),n_identity_relations:(.identity_relations|length),
+            n_governance_periods:(.governance_periods|length),n_runtime:(.runtime_activities|length),
+            gaozong:[.activities[]|select(.activity_id=="4517af83-d656-47b0-a558-3a3df717f726" or .activity_id=="d5eaf14b-417d-4ed9-a594-d819314a1ff5")|{activity_id,polity_id,start:.activity.activity_start,end:.activity.activity_end}],preflight_only,committed}' audit.json | tee song-p2-08-summary.json
+      - name: Upload auditable exact-before canonical and source snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: song-p2-08-source-before-readonly
+          path: |
+            identity.json
+            audit.json
+            song-p2-08-exact-before.json
+            song-p2-08-summary.json
+          if-no-files-found: warn
+          retention-days: 90
