@@ -89,10 +89,10 @@ test("Polity dossier renderer exposes exact Person deep-link targets and explici
   });
   const html=renderer.dossierHtml(polityFixture());
   assert.match(html,/정치체 식별 정보/);
-  assert.match(html,/Activity에서 관측된 시대 명칭/);
+  assert.match(html,/활동 기록에서 확인된 시대 명칭/);
   assert.match(html,/명칭 자체의 존속기간이 아니라/);
-  assert.match(html,/동일 인물의 여러 Activity를 한 묶음/);
+  assert.match(html,/동일 인물의 여러 활동을 한 묶음/);
   assert.match(html,new RegExp(`data-polity-person-id="${PERSON_A}"`));
-  assert.match(html,/2 Activity/);
+  assert.match(html,/2 활동/);
   assert.doesNotMatch(html,/fetch\s*\(|XMLHttpRequest|\/api\//);
 });
