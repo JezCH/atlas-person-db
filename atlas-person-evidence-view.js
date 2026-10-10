@@ -94,7 +94,7 @@
       const sourceLabel=`출처 ${evidence.source_count}건`;
       return `<details class="person-evidence-inspector" data-activity-evidence-id="${activityId}">
         <summary>
-          <span><b>근거 보기</b><small>이 Activity의 연대·기간·출처 근거</small></span>
+          <span><b>근거 보기</b><small>이 활동의 연대·기간·출처 근거</small></span>
           <span class="person-evidence-summary-badges"><i>${escapeHtml(sourceLabel)}</i>${evidence.chronology_status?`<i>${rawValue(evidence.chronology_status,"chronology_status")}</i>`:""}${evidence.confidence?`<i>${rawValue(evidence.confidence,"confidence")}</i>`:""}</span>
         </summary>
         <div class="person-evidence-body">
