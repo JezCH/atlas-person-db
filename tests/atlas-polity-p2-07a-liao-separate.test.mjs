@@ -25,7 +25,7 @@ test("P2-07A Liao-Western Liao distinct canonical UUIDs and terminalized rupture
 });
 test("P2-07A closure keeps Sweden unresolved and live registry count 75/60/15",()=>{
  assert.ok(registry);
- const rows=[...registry.carry_forward_same_identity,...registry.historical_family_reviews,...registry.designation_residuals,...registry.naming_residuals,...registry.rupture_probes];
+ const rows=[...registry.carry_forward_same_identity,...registry.historical_family_reviews,...registry.designation_residuals,...registry.naming_residuals,...registry.rupture_probes,...registry.resolved_history];
  assert.equal(rows.length,75);
  assert.equal(rows.filter(r=>r.terminal_status).length,60);
  assert.equal(rows.filter(r=>!r.terminal_status).length,15);
