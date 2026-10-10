@@ -497,6 +497,14 @@ async function main(){
   for(const target of [1.25,1.5]){
     const moved=await advanceRealNativeZoom(c,target);report.native_shortcut_paths.push(moved);
     await sleep(600);
+    // The Production view can re-render its native <details> across browser zoom.
+    // Record that baseline behavior, then reopen through the actual summary button
+    // so each A/B2 comparison uses the *same* expanded legend state.
+    const legendAfterZoom=await evaluate(c,"(()=>{const d=document.querySelector('#personSpacetimeMount details.spacetime-precision-legend');if(!d)return null;const wasOpen=d.open;if(!d.open)d.querySelector('summary')?.click();return {wasOpen,isOpen:d.open};})()");
+    assert(legendAfterZoom?.isOpen,'Cannot reopen real Production legend after native zoom',{target,legendAfterZoom});
+    report.warnings.push({type:'REAL_PRODUCTION_BASELINE_LEGEND_STATE_ON_NATIVE_ZOOM',
+      targetPercent:target*100,wasOpenImmediatelyAfterNativeZoom:legendAfterZoom.wasOpen,
+      meaning:'Recorded as baseline UX behavior, not attributed to B2; real summary clicked to establish same comparison state'});
     let populated=await evaluate(c,'('+populatedMetrics.toString()+')()');
     if(!populated || populated.visibleLabelCount===0){
       // Focus a real existing Production Person; no fake labels or historical dates inserted.
