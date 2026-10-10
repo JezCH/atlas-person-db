@@ -37,6 +37,7 @@
     "assert_governance_period": {"polity_and_governance_uuids_required_in_execution_manifest":true,"normalized_source_links_required":true},
     "assert_polity_designation": {"polity_uuid_required":true,"normalized_source_links_required":true},
     "assert_polity_identity_relation": {"predecessor_and_successor_polity_uuids_required":true,"normalized_source_links_required":true},
+    "assert_polity_source_link": {"polity_and_existing_source_uuids_required":true,"source_canonical_url_exact_match_required":true,"composite_link_absent_precondition_required":true,"source_locator_key_not_in_schema":true,"no_existing_source_link_deleted":true},
     "migrate_entity_context": {"target_entity_type_must_be_reviewed":true,"people_event_governance_must_not_be_implemented_as_fake_polity":true}
   },
   "transaction": {
