@@ -638,9 +638,11 @@ async function cdptab(c){
  await sleep(85);
 }
 async function cdpenter(c){
- await c.call('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,nativeVirtualKeyCode:13});
- await c.call('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,nativeVirtualKeyCode:13});
- await sleep(125);
+ // CDP keyDown did not trigger native <summary> activation on headful Linux Chrome.
+ // Deliver a real desktop Return key while the genuine Tab-focused summary is active.
+ const win=findChromeWindow();
+ execFileSync('xdotool',['key','--clearmodifiers','--window',win,'Return'],{encoding:'utf8'});
+ await sleep(170);
 }
 async function tabToSummary(c,name){
  assert(name==='precision'||name==='status','Unsupported target');
