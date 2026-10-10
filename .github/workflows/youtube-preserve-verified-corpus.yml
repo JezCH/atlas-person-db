@@ -166,6 +166,7 @@ jobs:
           jq -e --argjson expected "${SOURCE_CATALOG_COUNT}" '
             .ok==true
             and .marker=="ATLAS_YOUTUBE_SOURCE_ARCHIVE_CATALOG_V1"
+            and .migration.applied=="20261009_youtube_durable_source_catalog.sql"
             and .outcome.verified_count==$expected
             and ((.outcome.inserted_count + .outcome.existing_count)==$expected)
           ' /tmp/youtube-catalog-pass1.json >/dev/null
