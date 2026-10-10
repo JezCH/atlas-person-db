@@ -22,6 +22,31 @@ class VerifiedUploadTests(unittest.TestCase):
         self.file.parent.mkdir(parents=True)
         self.file.write_bytes(gzip.compress(b'{"video_id":"v1"}\n{"video_id":"v2"}\n'))
 
+    def test_missing_bucket_is_created_private_and_read_back(self):
+        calls = []
+
+        def bucket(method, base, token, data=None):
+            calls.append((method, data))
+            if method == "GET" and len(calls) == 1:
+                raise urllib.error.HTTPError("https://example.invalid", 404, "Not found", {}, None)
+            if method == "POST":
+                return {}
+            return {"id": uploader.BUCKET, "name": uploader.BUCKET, "public": False}
+
+        with patch.object(uploader, "bucket_call", side_effect=bucket):
+            result = uploader.ensure_private_bucket("https://example.invalid", "token")
+        self.assertEqual(result["id"], uploader.BUCKET)
+        self.assertEqual([item[0] for item in calls], ["GET", "POST", "GET"])
+        self.assertEqual(calls[1][1]["public"], False)
+
+    def test_public_bucket_is_rejected(self):
+        with patch.object(
+            uploader, "bucket_call",
+            return_value={"id": uploader.BUCKET, "name": uploader.BUCKET, "public": True},
+        ):
+            with self.assertRaisesRegex(RuntimeError, "SOURCE_BUCKET_NOT_PRIVATE"):
+                uploader.ensure_private_bucket("https://example.invalid", "token")
+
     def test_existing_object_reuses_without_overwrite(self):
         record = uploader.record_for(self.file, self.root)
         contents = record.pop("_contents")
