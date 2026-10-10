@@ -39,8 +39,15 @@ function validateSignals(payload,label) {
   const snap=payload?.snapshot;
   if(!snap?.snapshot_id)throw Error("YOUTUBE_AUDIT_"+label+"_SNAPSHOT_MISSING");
   const declared=Number(snap?.threshold_counts?.["3"]);
-  if(Number.isFinite(declared)&&declared!==rows.length)
+  const priorIsFiltered = label==="PREVIOUS" &&
+    payload?.projection==="registration_filtered_discovery" &&
+    payload?.is_complete_raw_baseline===false;
+  if (priorIsFiltered) {
+    if (payload.stored_count!==rows.length)
+      throw Error("YOUTUBE_AUDIT_FILTERED_PREVIOUS_COUNT_MISMATCH");
+  } else if(Number.isFinite(declared)&&declared!==rows.length) {
     throw Error("YOUTUBE_AUDIT_"+label+"_SNAPSHOT_TOTAL_MISMATCH");
+  }
   return {rows,snapshot_id:snap.snapshot_id};
 }
 function groupByIdentity(rows) {
@@ -99,6 +106,8 @@ export function computeIncrementalAudit(current,previous,{
   const prev=validateSignals(previous,"PREVIOUS");
   if(curr.snapshot_id===prev.snapshot_id)
     throw Error("YOUTUBE_AUDIT_SAME_SNAPSHOT_ID");
+  const priorScopeIsFiltered = previous?.projection==="registration_filtered_discovery" &&
+    previous?.is_complete_raw_baseline===false;
   const old=groupByIdentity(prev.rows),newMap=groupByIdentity(curr.rows);
   const resolved=reviewedDecisions(decisions);
   const registered=new Set(registeredAliases.map(nameKey));
@@ -121,9 +130,11 @@ export function computeIncrementalAudit(current,previous,{
     const evidence=decision?.disposition||
       (matchedPersonIds.length?"REGISTERED_PERSON_ID":living.has(key)?"REVIEWED_LIVING_NAME"
         :registered.has(key)?"REVIEWED_PERSON_ALIAS":"UNRESOLVED");
+    // An absent row in the previously FILTERED 8,043-candidate view does
+    // not establish a new name in the prior 8,862-name raw corpus.
     const needsAttention=(
       evidence==="UNRESOLVED"&&
-      (change==="NEW"||change==="PRIORITY_UP"||collision)
+      ((change==="NEW"&&!priorScopeIsFiltered)||change==="PRIORITY_UP"||collision)
     )||priorDiff;
     if(change==="NEW")added++;
     if(change==="PRIORITY_UP")upgraded++;
@@ -146,7 +157,11 @@ export function computeIncrementalAudit(current,previous,{
     schema:"atlas-youtube-incremental-audit/v1",at:currentAsOf,
     previous_snapshot:prev.snapshot_id,current_snapshot:curr.snapshot_id,
     previous_signals:prev.rows.length,current_signals:curr.rows.length,
-    new_raw_names:added,priority_upgrades:upgraded,channel_growth:channelGrowth,
+    comparison_scope:priorScopeIsFiltered
+      ?"FILTERED_PREVIOUS_DISCOVERY_NOT_FULL_RAW":"COMPLETE_RAW_SNAPSHOT",
+    new_raw_names:priorScopeIsFiltered?null:added,
+    names_absent_from_filtered_previous:priorScopeIsFiltered?added:null,
+    priority_upgrades:upgraded,channel_growth:channelGrowth,
     unchanged,disappeared_keys:gone.length,
     reviewed_decisions:resolved.size,
     attention_total:attention.length,
