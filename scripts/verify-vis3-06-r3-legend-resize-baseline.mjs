@@ -521,8 +521,9 @@ function r3State(){
  const occlusions=[];
  for(const t of legendTexts)for(const o of outside){
    const a=area(t.rect,o.rect);if(a<1)continue;
-   const cx=Math.max(t.rect[0],o.rect[0])+Math.min(t.rect[0]+t.rect[2],o.rect[0]+o.rect[2])-Math.max(t.rect[0],o.rect[0]))/2;
-   const cy=Math.max(t.rect[1],o.rect[1])+Math.min(t.rect[1]+t.rect[3],o.rect[1]+o.rect[3])-Math.max(t.rect[1],o.rect[1]))/2;
+   const left=Math.max(t.rect[0],o.rect[0]),right=Math.min(t.rect[0]+t.rect[2],o.rect[0]+o.rect[2]);
+   const topY=Math.max(t.rect[1],o.rect[1]),bottomY=Math.min(t.rect[1]+t.rect[3],o.rect[1]+o.rect[3]);
+   const cx=(left+right)/2,cy=(topY+bottomY)/2;
    const top=document.elementFromPoint(cx,cy);
    occlusions.push({legendText:t.txt,underText:o.txt,overlapPx2:a,
       topInLegend:Boolean(top&&d.contains(top)),topTag:top?.tagName||null});
