@@ -993,6 +993,10 @@
   line-height: 1.35;
 }
 @media (max-width: 600px) {
+  /* Reclaim ornamental KPI inner white space, not height/padding or data. */
+  .dashboard-kpi {
+    gap: 4px;
+  }
   .dashboard-kpi small {
     font-size: 10px;
     letter-spacing: .04em;

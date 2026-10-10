@@ -11,6 +11,7 @@ test('T-D improves KPI support copy without truncating data or moving explicit g
  assert.match(p,/\.dashboard-kpi span/);
  assert.match(p,/font-size:\s*10px/);
  assert.match(p,/@media \(max-width: 600px\)/);
+ assert.match(p,/\.dashboard-kpi\s*\{\s*gap:\s*4px/);
  assert.doesNotMatch(p,/\.dashboard-kpi strong|\.dashboard-kpi-grid|min-height:|(?:^|\n)\s*(?:padding|width|height|grid-template-columns|grid-template-rows|transform):|line-clamp|text-overflow:|overflow:\s*hidden|!important|@keyframes/);
  assert.match(nav,/atlas-dashboard-monumental-v11\.css\?v=20261010-vis3-05t-d-kpi-type-v1/);
 });
