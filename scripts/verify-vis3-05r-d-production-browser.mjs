@@ -61,7 +61,7 @@ async function caseWidth(c,width,height){
  ok(a.text===b.text&&JSON.stringify(a.kpis)===JSON.stringify(b.kpis),'Production source data changed in A/B',{width});
  ok(a.nButtons===b.nButtons,'Button count changed',{width});
  ok(b.docWidth<=Math.max(a.docWidth,width)+1&&b.bodyWidth<=Math.max(a.bodyWidth,width)+1,'D variant creates horizontal overflow',{width,aDoc:a.docWidth,bDoc:b.docWidth});
- for(const name of ['hero','title','refresh','firstKpi','firstPanel'])ok(sameBox(a.boxes[name],b.boxes[name]),'D shifted content '+name,{width,a:a.boxes[name],b:b.boxes[name]});
+ for(const name of ['hero','title','refresh','firstKpi','firstPanel','heading'])ok(sameBox(a.boxes[name],b.boxes[name]),'D shifted content '+name,{width,a:a.boxes[name],b:b.boxes[name]});
  ok(!b.labelCollision,'D title plate collides with summary metadata',{width,heading:b.boxes.heading,meta:b.boxes.metadata});
  ok(aShot.sha256!==bShot.sha256,'No visual delta in real browser',{width});
  ok(width<=600?b.opacity.hero===0:b.opacity.hero>0,'Unexpected hero ornament opacity',{width,opacity:b.opacity.hero});

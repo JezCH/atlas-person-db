@@ -36,8 +36,8 @@ test('short edge engravings stay within hero pseudo-elements; no text overlay or
 test('simple hollow ledger title, unchanged semantic heading and six KPI calculations',()=>{
  assert.match(dashboard,/<h3 id="dashboardKpiHeading" data-atlas-o-decor>핵심 통계<\/h3>/);
  assert.match(dashboard,/<section class="dashboard-kpi-grid" aria-labelledby="dashboardKpiHeading">/);
- assert.match(owned,/width:132px/);
- assert.match(owned,/min-height:28px/);
+ assert.match(owned,/inset:-4px -40px -4px -7px/);
+ assert.doesNotMatch(owned,/min-height:28px|width:132px|padding:2px 14px/);
  assert.match(owned,/width:5px/);
  assert.match(owned,/height:5px/);
  assert.match(owned,/background:none/);
@@ -52,7 +52,7 @@ test('mobile and high-contrast ornament reduction: no hit targets or camera chan
  assert.match(owned,/@media \(max-width:900px\)/);
  assert.match(owned,/@media \(max-width:600px\)/);
  assert.match(owned,/\.dashboard-frontispiece::after \{\s*opacity:0;/);
- assert.match(owned,/width:116px/);
+ assert.match(owned,/inset:-3px -27px -3px -6px/);
  assert.match(owned,/::after \{\s*display:none;/);
  assert.match(owned,/@media \(forced-colors:active\)/);
  assert.match(owned,/opacity:0!important/);

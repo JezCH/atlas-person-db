@@ -206,17 +206,13 @@
   position:relative;
   isolation:isolate;
   flex:0 0 auto;
-  display:inline-flex;
-  align-items:center;
-  box-sizing:border-box;
-  width:132px;
-  max-width:100%;
-  min-height:28px;
-  padding:2px 14px;
+  /* Preserve the original h3 line box: all visible frame pixels stay
+   * absolutely positioned OUTSIDE the flow box, unlike the rejected
+   * first prototype that moved the 390px KPI grid by 5px. */
   white-space:nowrap;
 }
 .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor]::before {
-  inset:0;
+  inset:-4px -40px -4px -7px;
   z-index:0;
   border:1px solid rgba(var(--atlas-rd-brass-rgb),.43);
   background:none;
@@ -225,7 +221,7 @@
 }
 .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor]::after {
   inset:auto;
-  left:calc(100% + 8px);
+  left:calc(100% + 47px);
   top:calc(50% - 3px);
   width:5px;
   height:5px;
@@ -247,11 +243,8 @@
   .dashboard-control-center.atlas-ornament-v3 .dashboard-frontispiece::after {
     opacity:0;
   }
-  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor] {
-    width:116px;
-    min-height:26px;
-    padding:2px 10px;
-    font-size:15px;
+  .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor]::before {
+    inset:-3px -27px -3px -6px;
   }
   .dashboard-control-center.atlas-ornament-v3 .dashboard-ledger-heading h3[data-atlas-o-decor]::after {
     display:none;
