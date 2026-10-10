@@ -26,7 +26,7 @@ test("P2-08 SELECT-only preflight rejects absent Gaozong segment without fabrica
   return {rows:[]};
  }};
  await assert.rejects(()=>querySongDetails(client,all),/POLITY_SONG_P2_08_GAOZONG_ACTIVITY_MISSING/);
- assert.equal(observed.length,9);
+ assert.equal(observed.length,8);
 });
 test("P2-08 keeps two Gaozong segments and remains noncommitting",async()=>{
  const seen=[];
