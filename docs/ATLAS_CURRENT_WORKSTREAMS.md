@@ -14,19 +14,19 @@
 
 ### A. Polity identity / continuity cleanup — #1895
 
-**Registry snapshot: 75 total / 54 terminal / 21 `REVIEW_REQUIRED`** (2026-10-10). This is the tracked seed ledger, **not** a guarantee that all live Polity identities have been audited.
+**Registry snapshot: 75 total / 55 terminal / 20 `REVIEW_REQUIRED`** (2026-10-10). This is the tracked seed ledger, **not** a guarantee that all live Polity identities have been audited.
 
 Pending distribution, calculated from the canonical registry:
 
 | Review group | Pending |
 | --- | ---: |
-| Historical-family continuity | 9 |
+| Historical-family continuity | 8 |
 | Temporal designation | 2 |
 | Korean naming collisions | 2 |
 | Territorial / operational rupture | 8 |
-| **Total** | **21** |
+| **Total** | **20** |
 
-**Current historical-family result:** `chuzan-ryukyu` source/Production audit verified Shō Hashi's successive Chūzan (`9860fc4b-feb8-491b-acdb-97d37bae6fcb`, 1422–1429) and Ryukyu Kingdom (`701a8b03-5ba6-5ce6-a698-128944fec079`, 1429–1439) reign Activities, both source-linked. Okinawa public-history chronology describes **1429 unification**; Ikuta's 1984 specialist comparison with contemporary Ming *Shilu* challenges whether that conquest/unification can be independently established. **No same-person concurrent duplicate; provisional two-phase interpretation only.** Current year-level `exact/well_established` certainty needs critical source review. Thus `reviewed_decision=provisional_keep_both_verify_1429_contemporary_evidence` but **`REVIEW_REQUIRED`, not terminal**; no Production correction/deletion or invented dates. [Scoped audit](POLITY_P2_04E_CHUZAN_RYUKYU_1429_SOURCE_AUDIT_20261010.md). **75 / 54 terminal / 21 pending unchanged**. Next independent historical-family seed: `massylii-numidia`.
+**Current historical-family result:** `massylii-numidia` terminal **`KEEP_SEPARATE`**, based on exact live Production Person–Polity Activities and Lazenby (Oxford Classical Dictionary), Biggs (2025) and Livius: Masinissa twice held the eastern Massylii kingship (ca. 206–205 and ca. 203–202 BCE, separated by Syphax's dispossession), then ruled an expanded Numidian polity (ca. 202–148 BCE) created by the defeat/absorption of the rival western Masaesyli realm. **Two genuinely different territorial/governance phases** under one continuous individual and Massylian political base; no simultaneous sovereign duplicates or merely alternate country spelling. Massylii `ec9d77b4-e18e-4495-8232-c51e74b0d683` / Numidia `81ff499c-879e-452f-9893-6618ec580825`. Preserve all three reviewed Activities, approximate/uncertain date flags, 6 linked source references and exact existing Person UUID; do not invent a day in 202 BCE. **No canonical Production/Runtime write**. [Scoped audit](POLITY_P2_04F_MASSYLII_NUMIDIA_STATE_UNIFICATION_20261010.md). Registry **75 total / 55 terminal / 20 pending**, historical-family pending 8. **Next independent family seed:** `buyid-fars-family`.
 
 **Previously terminal:** `gorkha-nepal` `KEEP_SEPARATE` ([Gorkha→Nepal report](POLITY_P2_04D_GORKHA_NEPAL_UNIFICATION_20261010.md)); Oman and Liberia remain approval/repair-gated.
 

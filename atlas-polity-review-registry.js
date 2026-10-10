@@ -290,14 +290,25 @@
         id: "massylii-numidia",
         review_group: "historical_family_review",
         kind: "family_review",
-        title: "Massylii ↔ Kingdom of Numidia",
-        left: { name: "Massylii" },
-        right: { name: "Kingdom of Numidia" },
-        rationale: "2026-09-20 이후 별도 역사판단 대상으로 남은 family입니다. 자동 merge/split 금지이며 최신 Production과 rupture/continuity 기준으로 각 identity 경계를 종결 판정해야 합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["separate historical-judgment family; distinct from completed legacy 16/16 state-form program"]
+        title: "Kingdom of the Massylii → Kingdom of Numidia",
+        left: { name: "Kingdom of the Massylii", ko: "마실리 왕국", polity_id: "ec9d77b4-e18e-4495-8232-c51e74b0d683" },
+        right: { name: "Kingdom of Numidia", ko: "누미디아 왕국", polity_id: "81ff499c-879e-452f-9893-6618ec580825" },
+        rationale: "POLITY-P2-04F 2026-10-10 Production 및 고전·현대 학술자료 판정: 동부 마실리 왕권과 서부 마사에실리 왕권은 제2차 포에니 전쟁 중 서로 다른 지역정치체였습니다. 마시니사는 부왕 계승권 회복 뒤 시팍스에게 왕권을 잃었고, 203 BCE 전후 재건하여 시팍스 영토를 병합하고 로마와의 관계에서 약 202 BCE의 더 광범위한 통일 누미디아 왕국을 형성했습니다. 이는 단순 철자·왕호 변경이 아니라 서로 다른 두 왕국·연맹의 실제 통합과 지배 권역·규모 변화를 동반하므로 기존 Massylii와 이후 통일 Numidia의 operational polity UUID를 별개의 연속 단계로 유지합니다. 동일 Person의 세 Activity는 실제 왕권 단절(약 205–203 BCE)과 후속 확장을 분리한 것이며 202 BCE 전환 부근의 연도 단위 공유경계는 동시 별개 주권 통치를 주장하는 것이 아닙니다. Numidia의 출범 시점은 근사이고 기존 uncertain 시작값을 정확한 날짜로 변경하지 않습니다. 같은 군주·마실리 권력 기반의 연속성을 인정하며 장기 누미디아 통치 시작을 처음 마실리 복위까지 거꾸로 연장하지 않습니다. 출처·역사 연대·활동 역할의 기존 검토 기록과 후대 왕국 UUID를 모두 보존하고 Production 변경 없이 KEEP_SEPARATE 종결합니다.",
+        suggested_action: "keep_both",
+        reviewed_decision: "keep_both",
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        locked: true,
+        evidence: [
+          "2026-10-10 live Production: Massylii polity ec9d77b4-e18e-4495-8232-c51e74b0d683; Masinissa Person 7e21b68e-075b-49c1-a4cc-ffe9b163a300; Activity aa666fef-cdc2-42ef-9445-74c56ce4694d approx -206→-205 BCE and Activity ac8bcd9e-20a7-41cf-a2e9-a9797d817dba approx -203→-202 BCE; same rules/reign/King, two reviewed independent reign segments, both with two scholarly/primary Source links",
+          "2026-10-10 live Production: Kingdom of Numidia 81ff499c-879e-452f-9893-6618ec580825; same Person Activity 01fdc710-556e-426a-8902-ac9e06470472 approx -202→-148 BCE, start certainty=uncertain, end certainty=exact, confidence=likely, two Oxford scholarly Source links",
+          "2026-10-10 live publication: Authoring Activities=2523, Runtime=2523, publication_current=true; read-only verified; parity is not historical validation",
+          "John F. Lazenby, Masinissa, Oxford Classical Dictionary: throne recovered after father's death, lost to Syphax, recovered in Scipio war; https://academic.oup.com/edited-volume/61673/chapter-abstract/549655097",
+          "Thomas Biggs, Numidia and Rome, Bulletin of the Institute of Classical Studies 68(2), 2025: fragmented Massylii/Masaesyli realms into Numidian state around 202 BCE; https://academic.oup.com/bics/article/68/2/129/8313572",
+          "Jona Lendering, Massinissa and Syphax, Livius: competing eastern Massylii and western Masaeisyli kingdoms, interruption and Zama-era unification; https://www.livius.org/articles/person/massinissa/ and https://www.livius.org/articles/person/syphax/",
+          "Virginie Bridoux, The Kingdoms of Numidia and Rome (218–41 Bce), Bulletin of the Institute of Classical Studies 68(2), 2025: warns against treating Numidian kingship as passive Roman creation, retain local sovereign agency; https://academic.oup.com/bics/article-abstract/68/2/162/8363926",
+          "Scoped review report: docs/POLITY_P2_04F_MASSYLII_NUMIDIA_STATE_UNIFICATION_20261010.md"
+        ]
       },
       {
         id: "buyid-fars-family",
