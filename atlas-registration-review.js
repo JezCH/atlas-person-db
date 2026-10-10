@@ -2,6 +2,28 @@
   "use strict";
 
   const dataStore=window.ATLAS_CLIENT_DATA_STORE;
+  const QUEUE_REVIEW_LABELS=Object.freeze({
+    PENDING:"검토 대기",IN_REVIEW:"검토 중",APPROVED:"승인됨",
+    HOLD:"보류",REJECTED:"반려",DUPLICATE_EXISTING:"기등록 인물과 중복"
+  });
+  const QUEUE_ORIGIN_LABELS=Object.freeze({ reviewed_intake:"검토를 거쳐 접수" });
+  function queueDomainLabel(value) {
+    const code=String(value ?? "").trim();
+    return !code ? "미분류" : (window.ATLAS_PERSON_DOMAIN_REGISTRY?.LABELS?.[code] || "분야 확인 필요");
+  }
+  function queuePriorityLabel(value) {
+    const code=String(value ?? "").trim().toUpperCase();
+    return !code ? "등급 미기록" : (["SSS","SS","S","A","B","C"].includes(code) ? code : "등급 확인 필요");
+  }
+  function queueReviewStateLabel(value) {
+    const code=String(value ?? "").trim().toUpperCase();
+    return !code ? "검토 상태 미기록" : (QUEUE_REVIEW_LABELS[code] || "검토 상태 확인 필요");
+  }
+  function queueOriginLabel(value) {
+    const code=String(value ?? "").trim();
+    return !code ? "출처 미기록" : (QUEUE_ORIGIN_LABELS[code] || "출처 확인 필요");
+  }
+
   const QUEUE_URL="/api/atlas-read?__atlas_read_surface=registration-queue";
   const SIGNAL_URL="/api/atlas-read?__atlas_read_surface=youtube-person-signals";
   const REFRESH_INTERVAL_MS=10000;
@@ -95,7 +117,9 @@
     const needle=String(activeRoot?.querySelector("#registrationQueueSearch")?.value || "").trim().toLocaleLowerCase("ko");
     const rows=needle
       ? queueRows.filter((row)=>[
-          row?.name,row?.representative_domain,row?.priority,row?.review_state,row?.origin,row?.candidate_id
+          row?.name,row?.representative_domain,queueDomainLabel(row?.representative_domain),
+          row?.priority,queuePriorityLabel(row?.legacy_priority || row?.priority),
+          row?.review_state,queueReviewStateLabel(row?.review_state),row?.origin,queueOriginLabel(row?.origin),row?.candidate_id
         ].some((value)=>String(value || "").toLocaleLowerCase("ko").includes(needle)))
       : queueRows;
     if (!rows.length) {
@@ -104,10 +128,10 @@
     }
     body.innerHTML=rows.map((row)=>`<tr>
       <td class="registration-review-name" data-label="이름">${escapeHtml(row.name || "—")}</td>
-      <td data-label="대표 분야">${escapeHtml(row.representative_domain || "미분류")}</td>
-      <td data-label="우선순위">${escapeHtml(row.legacy_priority || row.priority || "—")}</td>
-      <td data-label="검토 상태">${escapeHtml(row.review_state || "—")}</td>
-      <td data-label="출처">${escapeHtml(row.origin || "—")}</td>
+      <td data-label="대표 분야">${escapeHtml(queueDomainLabel(row.representative_domain))}</td>
+      <td data-label="우선순위">${escapeHtml(queuePriorityLabel(row.legacy_priority || row.priority))}</td>
+      <td data-label="검토 상태">${escapeHtml(queueReviewStateLabel(row.review_state))}</td>
+      <td data-label="출처">${escapeHtml(queueOriginLabel(row.origin))}</td>
       <td data-label="갱신"><time>${escapeHtml(row.updated_at ? dateTime(row.updated_at) : "—")}</time></td>
     </tr>`).join("");
   }
@@ -267,7 +291,7 @@
     if (refreshButton) refreshButton.disabled=true;
     setStatus("최신 등록·YouTube 신호를 불러오는 중","loading");
     try {
-      if (!dataStore?.loadPersons) throw new Error("Person Runtime store unavailable");
+      if (!dataStore?.loadPersons) throw new Error("인물 조회 기능을 사용할 수 없습니다");
       const [persons,queue,signals]=await Promise.all([
         dataStore.loadPersons({ force:forcePersons }),
         getJson(QUEUE_URL),
@@ -283,7 +307,7 @@
     } catch (error) {
       if (serial !== requestSerial || root !== activeRoot) return;
       console.error("ATLAS registration review refresh failed",error);
-      setStatus(`갱신 실패 · ${error?.message || error}`,"error");
+      setStatus("갱신 실패 · 데이터를 불러오지 못했습니다. 다시 시도해 주세요.","error");
     } finally {
       if (serial === requestSerial && refreshButton) refreshButton.disabled=false;
     }
@@ -303,7 +327,7 @@
       setStatus(`DB 최신 스냅샷 조회 · ${new Date().toLocaleTimeString("ko-KR")}`,"ready");
     } catch (error) {
       if (serial !== requestSerial || root !== activeRoot) return;
-      setStatus(`YouTube 신호 갱신 실패 · ${error?.message || error}`,"error");
+      setStatus("유튜브 신호 갱신 실패 · 데이터를 불러오지 못했습니다. 다시 시도해 주세요.","error");
     }
   }
 
@@ -350,7 +374,7 @@
         <div class="registration-review-section-head registration-review-queue-head"><div><small>등록 대기열</small><h3>등록대기열</h3></div><label>검색<input id="registrationQueueSearch" type="search" placeholder="이름 · 분야 · 상태" /></label></div>
         <div class="registration-review-table-wrap registration-review-queue-wrap">
           <table class="registration-review-table registration-review-queue-table">
-            <thead><tr><th>이름</th><th>대표 분야</th><th>legacy 우선순위</th><th>검토 상태</th><th>출처</th><th>갱신</th></tr></thead>
+            <thead><tr><th>이름</th><th>대표 분야</th><th>기존 등급</th><th>검토 상태</th><th>출처</th><th>갱신</th></tr></thead>
             <tbody id="registrationQueueBody"><tr><td colspan="6" class="registration-review-empty">불러오는 중</td></tr></tbody>
           </table>
         </div>
