@@ -216,6 +216,16 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.equal(brazil.status, 'FIXED');
   assert.match(brazil.rationale, /old United States of Brazil and Brazil are ONE continuously sovereign republic/);
   assert.match(brazil.rationale, /Former Polity row NOT retired or deleted/);
+  const oman = byId.get('oman-empire-oman');
+  assert.equal(oman.left.polity_id, '68c83ef6-0023-5af9-a6e8-26ccf5b8e116');
+  assert.equal(oman.right.polity_id, 'ac7279b2-da5c-42df-a217-ac60f16106ff');
+  assert.equal(oman.reviewed_decision, 'merge');
+  assert.equal(oman.suggested_action, 'repair');
+  assert.equal(oman.status, 'REVIEW_REQUIRED');
+  assert.equal(oman.terminal_status, null);
+  assert.ok(oman.evidence.some(x => /f8108b3a-2f67-526f-b996-30d8b8e91f7d/.test(x)));
+  assert.ok(oman.evidence.some(x => /d9b4af96-24a6-4a0a-86d4-c0092500118b/.test(x)));
+  assert.match(oman.rationale, /명시 승인 전 실행 금지/);
   const macedon = byId.get('macedon-empire');
   assert.equal(macedon.terminal_status, 'KEEP_SEPARATE');
   assert.equal(macedon.reviewed_decision, 'keep_both');
