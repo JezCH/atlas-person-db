@@ -143,8 +143,8 @@
     return `<article class="spacetime-selection-evidence-row">
       <div class="spacetime-selection-evidence-head"><strong>${escapeHtml(polityLabel(segment.activity))}</strong><span>${escapeHtml(periodLabel(segment.activity))}</span></div>
       <div class="spacetime-selection-evidence-meta"><span>공간 정밀도: <b>${escapeHtml(spatialPrecisionLabel(segment))}</b></span><span>배치 근거: <b>${escapeHtml(placementBasisLabel(segment))}</b></span></div>
-      <div class="spacetime-selection-evidence-meta"><span>Place/region: <b>${escapeHtml(text(segment.place_name) || text(segment.subregion_code) || text(segment.macroregion_code) || "미확정")}</b></span><span>confidence: <b>${escapeHtml([text(segment.historical_confidence), text(segment.display_confidence)].filter(Boolean).join(" / ") || "미상")}</b></span></div>
-      <div class="spacetime-selection-evidence-place"><b>Place evidence</b><span>${placeFunctions.length ? placeFunctions.map((value) => escapeHtml(value)).join(" · ") : "검토된 Place 기능 없음"}</span></div>
+      <div class="spacetime-selection-evidence-meta"><span>장소·권역: <b>${escapeHtml(text(segment.place_name) || text(segment.subregion_code) || text(segment.macroregion_code) || "미확정")}</b></span><span>신뢰도: <b>${escapeHtml([text(segment.historical_confidence), text(segment.display_confidence)].filter(Boolean).join(" / ") || "미상")}</b></span></div>
+      <div class="spacetime-selection-evidence-place"><b>장소 근거</b><span>${placeFunctions.length ? placeFunctions.map((value) => escapeHtml(value)).join(" · ") : "검토된 장소 기능 없음"}</span></div>
       ${evidenceRefsHtml("역사 배치 근거", historicalRefs)}
       ${evidenceRefsHtml("표시 정밀도 근거", displayRefs)}
       <div class="spacetime-selection-evidence-note">ATLAS 시공간 배치 기준이며 실제 거주 위치·활동 영역·이동 경로를 뜻하지 않습니다.</div>
@@ -905,7 +905,7 @@
   function renderSearchResults(items, needle) {
     if (!needle) return "";
     const visible = items.slice(0, 8);
-    return `<section class="spacetime-search-results card" aria-label="검색 결과"><div class="spacetime-search-results-head"><strong>검색 결과</strong><span>${items.length}명${items.length > visible.length ? ` · 상위 ${visible.length}명 표시` : ""}</span></div>${visible.length ? `<div class="spacetime-search-result-list">${visible.map((item) => `<button id="spacetimeSearchResult-${escapeHtml(item.person_id)}" type="button" data-spacetime-search-result="${escapeHtml(item.person_id)}"><strong>${escapeHtml(item.display_name)}</strong><span>${escapeHtml(polityLabel(item.representative?.activity))}</span><small>${escapeHtml(periodLabel(item.representative?.activity))}</small></button>`).join("")}</div>` : '<p class="spacetime-empty-inline">일치하는 위치 확정 Person track이 없습니다.</p>'}</section>`;
+    return `<section class="spacetime-search-results card" aria-label="검색 결과"><div class="spacetime-search-results-head"><strong>검색 결과</strong><span>${items.length}명${items.length > visible.length ? ` · 상위 ${visible.length}명 표시` : ""}</span></div>${visible.length ? `<div class="spacetime-search-result-list">${visible.map((item) => `<button id="spacetimeSearchResult-${escapeHtml(item.person_id)}" type="button" data-spacetime-search-result="${escapeHtml(item.person_id)}"><strong>${escapeHtml(item.display_name)}</strong><span>${escapeHtml(polityLabel(item.representative?.activity))}</span><small>${escapeHtml(periodLabel(item.representative?.activity))}</small></button>`).join("")}</div>` : '<p class="spacetime-empty-inline">일치하는 위치 확정 인물이 없습니다.</p>'}</section>`;
   }
 
   function ordinalLabel(ordinal) {
@@ -1693,7 +1693,7 @@
       <details class="spacetime-status-more">
         <summary>상태 더보기</summary>
         <div class="spacetime-status-more-content">
-          <span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 상대 정치체 제외</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> 화면 내 인물 요소</span><span><b id="spacetimeDomSegmentCount">0</b> 화면 내 활동 구간 요소</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> 이름 표시 보류</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span>${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? '<span class="spacetime-integrity-status"><b>!</b> 근거 없는 위치는 자동 추정하지 않습니다.</span>' : ""}
+          <span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 상대 정치체 제외</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> 화면 내 인물 요소</span><span><b id="spacetimeDomSegmentCount">0</b> 화면 내 활동 구간 요소</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> 이름 표시 보류</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> 세부 표현 수준</span>${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? '<span class="spacetime-integrity-status"><b>!</b> 근거 없는 위치는 자동 추정하지 않습니다.</span>' : ""}
         </div>
       </details>
     </section>
