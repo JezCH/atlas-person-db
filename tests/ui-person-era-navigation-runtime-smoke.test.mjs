@@ -135,6 +135,7 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
   const header = createNode('div', 'person-table-head');
   header.rect = { top: 60, bottom: 96, height: 36 };
   const scrollListeners = {};
+  const documentScrolls = [];
   const document = {
     readyState: 'complete',
     activeElement: null,
@@ -147,6 +148,10 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
     addEventListener() {}
   };
   const window = {
+    scrollY: 400,
+    scrollX: 0,
+    scrollTo(options) { documentScrolls.push(options); },
+    innerHeight: 875,
     ATLAS_PERSON_DOMAIN_REGISTRY: {
       DEFINITIONS: [
         { code: 'governance', label: '통치·정치' },
@@ -222,7 +227,12 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
   assert.equal(buttons[1].querySelector('.person-era-jump-count').textContent, '3');
 
   window.ATLAS_PERSON_ERA_NAVIGATION.jumpToEra('medieval');
-  assert.equal(medieval.scrolled, true);
+  // 500px chapter top + 400px document scroll, minus sticky nav(10+50),
+  // actual table header(36), and 2px breathing room.
+  assert.equal(documentScrolls.length, 1);
+  assert.equal(documentScrolls[0].top, 802);
+  assert.equal(documentScrolls[0].behavior, 'smooth');
+  assert.equal(medieval.scrolled, false);
   assert.equal(buttons[1].attributes['aria-current'], 'location');
   assert.ok(hasClass(buttons[1], 'is-current'));
   assert.equal(nav.querySelector('.person-era-nav-current').textContent.includes('3명'), false);
@@ -236,4 +246,12 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
   assert.ok(hasClass(buttons[1], 'is-current'), 'clicked era must remain active after scroll settles');
   assert.equal(buttons[1].attributes['aria-current'], 'location');
   assert.equal(buttons[0].attributes['aria-current'], undefined);
+
+  // The fixed-header bottom ends at y=96; a previous era's clipped row
+  // remains visible to y=110 but the next row at y=110 is the dominant
+  // readable entry. Geometric-only containsAnchor would pick the previous.
+  ancient.rect = { top: -190, bottom: 110, height: 300 };
+  medieval.rect = { top: 110, bottom: 410, height: 300 };
+  scrollListeners.scroll();
+  assert.ok(hasClass(buttons[1], 'is-current'));
 });
