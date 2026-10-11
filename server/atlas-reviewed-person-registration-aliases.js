@@ -1,9 +1,20 @@
 "use strict";
 
+const SOURCE_REVIEWED_56_ALIASES=require("../audits/youtube-v5-registered-person-specific-aliases-reviewed-56.json");
+if(SOURCE_REVIEWED_56_ALIASES.schema!=="atlas-youtube-v5-registered-person-56-specific-aliases/v1"||
+   SOURCE_REVIEWED_56_ALIASES.reviewed_exact_alias_count!==56||
+   SOURCE_REVIEWED_56_ALIASES.aliases.length!==56)
+  throw Error("YOUTUBE_REGISTERED_SPECIFIC_56_MANIFEST_INVALID");
+
 // Reviewed Person identities. Each value must resolve to exactly one current
 // canonical Person. These aliases are *not* candidate-name substring guesses,
 // and do not mutate atlas_v2.persons or atlas_v2.person_names.
 const REVIEWED_REGISTRATION_ALIASES=Object.freeze([
+  // 56 original YouTube title-based labels reviewed against each distinct
+  // registered Person UUID. Registration is the FINAL filter, never the
+  // independent source name extraction lexicon. Do not infer new short forms.
+  ...SOURCE_REVIEWED_56_ALIASES.aliases.map(({alias_name,canonical_key})=>
+    Object.freeze({alias_name,canonical_key,representative_default:false})),
   // Verified ORIGINAL history-YouTube source-first identity review:
   // B024 raw historical names DO NOT become new Persons when these exact
   // aliases resolve to the registered canonical historical individuals.
