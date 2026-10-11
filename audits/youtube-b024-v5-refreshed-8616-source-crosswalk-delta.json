@@ -1,0 +1,591 @@
+{
+  "schema": "atlas-youtube-b024-v5-refreshed-source-crosswalk-delta/v1",
+  "captured_date": "2026-10-11",
+  "historical_8713_original_ref": "audits/youtube-v5-production-8713-title-candidate-reference.json",
+  "historical_matched": 5217,
+  "historical_production_only": 3496,
+  "historical_source_only": 748,
+  "source_original_names": 5965,
+  "source_original_archive_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "current_ref": "audits/youtube-v5-production-current-title-signal-reference-20261011.json",
+  "current_live_count": 8616,
+  "current_exact_source_matches": 5138,
+  "current_production_only": 3478,
+  "current_source_only": 827,
+  "removed_since_8713": 97,
+  "removed_matched": 79,
+  "removed_production_only": 18,
+  "added_names_after_historical_snapshot": 0,
+  "source_name_overlap_collisions_unreviewed": false,
+  "changed_title_signal_for_surviving_names": 0,
+  "matched_source_original_title_counts_differ": 4868,
+  "previous_865_source_recount_discrepancies_unresolved": true,
+  "not_certified_person_content": true,
+  "not_authorized_as_final_historical_person_rank": true,
+  "removed_labels": [
+    {
+      "name": "Sir Isaac Newton",
+      "historical_rank": 73,
+      "source_original_channels": 61,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Jackie Chan",
+      "historical_rank": 118,
+      "source_original_channels": 74,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Thomas Alva Edison",
+      "historical_rank": 122,
+      "source_original_channels": 36,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Volodymyr Zelensky",
+      "historical_rank": 177,
+      "source_original_channels": 37,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Prince Harry",
+      "historical_rank": 180,
+      "source_original_channels": 79,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Empress Wu Zetian",
+      "historical_rank": 194,
+      "source_original_channels": 31,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Aung San Suu Kyi",
+      "historical_rank": 203,
+      "source_original_channels": 54,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Prince William",
+      "historical_rank": 269,
+      "source_original_channels": 71,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Captain James Cook",
+      "historical_rank": 304,
+      "source_original_channels": 27,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Isabella of Castile",
+      "historical_rank": 309,
+      "source_original_channels": 24,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Augustus Caesar",
+      "historical_rank": 433,
+      "source_original_channels": 28,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Imam Abu Hanifa",
+      "historical_rank": 448,
+      "source_original_channels": 27,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Razia Sultana",
+      "historical_rank": 464,
+      "source_original_channels": 23,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Meghan Markle",
+      "historical_rank": 497,
+      "source_original_channels": 60,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Tsar Nicholas II",
+      "historical_rank": 520,
+      "source_original_channels": 24,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Ernesto Che Guevara",
+      "historical_rank": 612,
+      "source_original_channels": 29,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Netaji Subhas Chandra Bose",
+      "historical_rank": 632,
+      "source_original_channels": 20,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Rani Lakshmibai",
+      "historical_rank": 637,
+      "source_original_channels": 19,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Saint John Chrysostom",
+      "historical_rank": 639,
+      "source_original_channels": 16,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "The Apostle Paul",
+      "historical_rank": 683,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Dr Martin Luther King",
+      "historical_rank": 706,
+      "source_original_channels": 62,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Imam Bukhari",
+      "historical_rank": 714,
+      "source_original_channels": 17,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "David Beckham",
+      "historical_rank": 745,
+      "source_original_channels": 49,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Saint Thomas Aquinas",
+      "historical_rank": 774,
+      "source_original_channels": 20,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Aurangzeb Alamgir",
+      "historical_rank": 795,
+      "source_original_channels": 20,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "King Leonidas",
+      "historical_rank": 842,
+      "source_original_channels": 29,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Pope John Paul II",
+      "historical_rank": 870,
+      "source_original_channels": 37,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Saint Mary Magdalene",
+      "historical_rank": 879,
+      "source_original_channels": 14,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Shah Rukh Khan",
+      "historical_rank": 885,
+      "source_original_channels": 71,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Zelensky",
+      "historical_rank": 915,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "King Louis XIV",
+      "historical_rank": 934,
+      "source_original_channels": 27,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Emperor Haile Selassie",
+      "historical_rank": 1021,
+      "source_original_channels": 37,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Saint John Paul II",
+      "historical_rank": 1050,
+      "source_original_channels": 8,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Idi Amin Dada",
+      "historical_rank": 1148,
+      "source_original_channels": 18,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Queen Amina of Zazzau",
+      "historical_rank": 1200,
+      "source_original_channels": 15,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Harry Truman",
+      "historical_rank": 1356,
+      "source_original_channels": 26,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Maharaja Ranjit Singh",
+      "historical_rank": 1442,
+      "source_original_channels": 24,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Sir Francis Drake",
+      "historical_rank": 1483,
+      "source_original_channels": 20,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Sultan Mehmed II",
+      "historical_rank": 1488,
+      "source_original_channels": 19,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Imam Abu Hanifah",
+      "historical_rank": 1624,
+      "source_original_channels": 7,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Imam Malik Ibn Anas",
+      "historical_rank": 1625,
+      "source_original_channels": 6,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Saint Augustine of Hippo",
+      "historical_rank": 1739,
+      "source_original_channels": 11,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Caesar Augustus",
+      "historical_rank": 1872,
+      "source_original_channels": 17,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Kaiser Wilhelm II",
+      "historical_rank": 1915,
+      "source_original_channels": 38,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Vivek Ramaswamy",
+      "historical_rank": 1984,
+      "source_original_channels": 20,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Asim Munir",
+      "historical_rank": 1994,
+      "source_original_channels": 38,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Dwight Eisenhower",
+      "historical_rank": 2027,
+      "source_original_channels": 22,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Michelangelo Buonarroti",
+      "historical_rank": 2069,
+      "source_original_channels": 18,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Saint Faustina Kowalska",
+      "historical_rank": 2095,
+      "source_original_channels": 10,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Saint Jerome",
+      "historical_rank": 2096,
+      "source_original_channels": 15,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Sir Winston Churchill",
+      "historical_rank": 2107,
+      "source_original_channels": 18,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Admiral Yi Sun-sin",
+      "historical_rank": 2136,
+      "source_original_channels": 16,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Amir Timur",
+      "historical_rank": 2149,
+      "source_original_channels": 10,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Baba Guru Nanak",
+      "historical_rank": 2168,
+      "source_original_channels": 15,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Erling Haaland",
+      "historical_rank": 2276,
+      "source_original_channels": 28,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Imam Al-Bukhari",
+      "historical_rank": 2331,
+      "source_original_channels": 12,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Imam Al-Ghazali",
+      "historical_rank": 2332,
+      "source_original_channels": 16,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Imam Malik",
+      "historical_rank": 2333,
+      "source_original_channels": 25,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Prince Henry the Navigator",
+      "historical_rank": 2512,
+      "source_original_channels": 16,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Pythagoras of Samos",
+      "historical_rank": 2521,
+      "source_original_channels": 6,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Queen Amanirenas",
+      "historical_rank": 2522,
+      "source_original_channels": 24,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Tim Berners-Lee",
+      "historical_rank": 2625,
+      "source_original_channels": 29,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "King George III",
+      "historical_rank": 2826,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Abu Bakr Al-Siddiq",
+      "historical_rank": 2927,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Bangabandhu Sheikh Mujibur Rahman",
+      "historical_rank": 2949,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Saint Joan of Arc",
+      "historical_rank": 3129,
+      "source_original_channels": 8,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Saint John the Baptist",
+      "historical_rank": 3131,
+      "source_original_channels": 12,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Saint Stephen of Hungary",
+      "historical_rank": 3137,
+      "source_original_channels": 6,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Dr Abdus Salam",
+      "historical_rank": 3452,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Emperor Aurelian",
+      "historical_rank": 3480,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "George W Bush",
+      "historical_rank": 3558,
+      "source_original_channels": 81,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "JK Rowling",
+      "historical_rank": 3699,
+      "source_original_channels": 14,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "King Harald V",
+      "historical_rank": 3748,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "King Tutankhamun",
+      "historical_rank": 3751,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Mad Jack Churchill",
+      "historical_rank": 3818,
+      "source_original_channels": 13,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Miguel Hidalgo",
+      "historical_rank": 3852,
+      "source_original_channels": 10,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Mohammad Reza Shah Pahlavi",
+      "historical_rank": 3861,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Omar al-Mukhtar",
+      "historical_rank": 3919,
+      "source_original_channels": 16,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Orhan Gazi",
+      "historical_rank": 3927,
+      "source_original_channels": 11,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "President Jimmy Carter",
+      "historical_rank": 3974,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Queen Nefertiti",
+      "historical_rank": 3998,
+      "source_original_channels": 39,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Saint Junípero Serra",
+      "historical_rank": 4076,
+      "source_original_channels": 5,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Saint Thomas the Apostle",
+      "historical_rank": 4085,
+      "source_original_channels": 7,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Henry VIII of England",
+      "historical_rank": 5009,
+      "source_original_channels": 10,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Hildegard von Bingen",
+      "historical_rank": 5013,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Saint Hildegard of Bingen",
+      "historical_rank": 5210,
+      "source_original_channels": 5,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Abu Bakr Siddiq",
+      "historical_rank": 5387,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Aishwarya Rai",
+      "historical_rank": 5423,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Charles Robert Darwin",
+      "historical_rank": 5842,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "Hasan Sabbah",
+      "historical_rank": 6473,
+      "source_original_channels": 6,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Ibn-e-Sina",
+      "historical_rank": 6577,
+      "source_original_channels": 14,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Imam Ahmad ibn Hanbal",
+      "historical_rank": 6588,
+      "source_original_channels": 8,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Khalid Ibn Walid",
+      "historical_rank": 6834,
+      "source_original_channels": 8,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "King Ibrahim Njoya",
+      "historical_rank": 6850,
+      "source_original_channels": 4,
+      "category": "historical_exact_matched"
+    },
+    {
+      "name": "Pope John Paul I",
+      "historical_rank": 7446,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "President Woodrow Wilson",
+      "historical_rank": 7467,
+      "category": "historical_production_only"
+    },
+    {
+      "name": "St Augustine of Hippo",
+      "historical_rank": 7913,
+      "category": "historical_production_only"
+    }
+  ]
+}
