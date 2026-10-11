@@ -35,6 +35,9 @@
  * Orthographic aliases are covered by normalizeLivingName: one reviewed
  * spelling per person suppresses both exact original published variants.
  *
+ * 2026-10-11: 16 additional exact source-label individuals living currently; see
+ * audits/youtube-live-16-reviewed-living-people-20261011.json for dated evidence.
+ *
  * Other entries are conservative editorial defaults for living, widely
  * documented contemporaries, not a full life-status authority.
  * Known counterexample: Dolly Parton died on 2026-08-25 (Reuters), so must
@@ -109,7 +112,24 @@ const REVIEWED_LIVING_NAMES=Object.freeze([
   "Warren Buffett",
   "Vladimir Putin",
   "Will Smith",
-  "Xi Jinping"
+  "Xi Jinping",
+  // Reviewed 2026-10-11 from live discovery rather than a registry-name generator.
+  "Jackie Chan",
+  "Volodymyr Zelensky",
+  "Prince Harry",
+  "Aung San Suu Kyi",
+  "Prince William",
+  "Meghan Markle",
+  "David Beckham",
+  "Shah Rukh Khan",
+  "Zelensky",
+  "Vivek Ramaswamy",
+  "Asim Munir",
+  "Erling Haaland",
+  "Tim Berners-Lee",
+  "George W Bush",
+  "JK Rowling",
+  "Aishwarya Rai"
 ]);
 
 function normalizeLivingName(value) {
