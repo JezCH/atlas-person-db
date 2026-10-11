@@ -1,4 +1,4 @@
-name: ATLAS Song P2-08 Exact Source/Activity Inventory
+name: ATLAS Song & Complete Production Internal Provenance Inventory
 on:
   push:
     branches: [main]
@@ -21,13 +21,13 @@ jobs:
           AUDIT='https://atlas-person-db.vercel.app/api/atlas-audit-inventory?__atlas_audit_surface=polity-reference-audit'
           IDENTITY='https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity'
           matched=false
-          for attempt in $(seq 1 60); do
+          for attempt in $(seq 1 6); do
             curl --fail-with-body --silent --show-error "$IDENTITY" > identity.json
             deployed="$(jq -r '.identity.git_commit_sha // ""' identity.json)"
             ref="$(jq -r '.identity.git_commit_ref // ""' identity.json)"
             if [[ "$deployed" == "$GITHUB_SHA" && "$ref" == "main" ]]; then
               token="$(curl --fail-with-body --silent --show-error -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=atlas-person-db-audit-inventory" | jq -er '.value')"
-              payload="$(jq -cn --arg sha "$deployed" '{deployment_sha:$sha,include_song_details:true}')"
+              payload="$(jq -cn --arg sha "$deployed" '{deployment_sha:$sha,include_song_details:true,include_full_integrity_details:true}')"
               status="$(curl --silent --show-error --output audit.json --write-out '%{http_code}' -H 'content-type: application/json' -H "authorization: Bearer $token" --data "$payload" "$AUDIT")"
               if [[ "$status" == "200" ]]; then matched=true; break; fi
               echo "Song preflight compatible deployed code not ready: HTTP=$status code=$(jq -r '.code // "UNKNOWN"' audit.json) attempt=$attempt"
@@ -42,6 +42,15 @@ jobs:
           fi
           jq -e --arg sha "$GITHUB_SHA" '.ok==true and .complete==true and .read_only==true and .committed==false and .deployment_sha==$sha
             and .song_details.preflight_only==true and .song_details.committed==false
+            and .full_integrity_details.summary.schema=="atlas-polity-internal-provenance-integrity/v1"
+            and .full_integrity_details.summary.read_only==true
+            and .full_integrity_details.summary.committed==false
+            and .full_integrity_details.summary.no_truncation==true
+            and .full_integrity_details.summary.all_polity_count==.polity_count
+            and (.full_integrity_details.raw.sources|type)=="array"
+            and (.full_integrity_details.raw.retirements|type)=="array"
+            and (.full_integrity_details.raw.activity_sources|type)=="array"
+            and (.full_integrity_details.raw.runtime_activities|type)=="array"
             and (.song_details.polity_ids|length)==3
             and (.song_details.activities|type)=="array"
             and (.song_details.activity_sources|type)=="array"
@@ -56,6 +65,13 @@ jobs:
             and (.song_details.governance_periods|type)=="array"
             and (.song_details.gaozong_activity_ids|length)==2' audit.json >/dev/null
           jq '.song_details' audit.json > song-p2-08-exact-before.json
+          jq '.full_integrity_details' audit.json > polity-p2-10-internal-full-census.json
+          jq '.full_integrity_details.summary | {schema,read_only,committed,no_truncation,counts,all_polity_count,external_orphan_count,
+             dangling_links:(.unresolved_foreign_key_refs|length),missing_runtime_activities:(.runtime_missing_activity_ids|length),
+             extra_runtime_activities:(.runtime_extra_activity_ids|length),semantic_runtime_field_mismatches:(.runtime_semantic_field_mismatches|length),
+             contradicting_live_retirement_ids:[.live_retired_polity_uuid_conflicts[].retired_polity_id],
+             duplicate_source_keys:(.source_key_duplicates|length),duplicate_source_urls:(.source_url_duplicates|length),
+             ko_name_collisions:(.preferred_korean_name_collisions|length),human_authoring_parity_proven}' audit.json | tee polity-p2-10-internal-summary.json
           jq -e '.song_details as $s |
             ($s.polity_ids | index("1a1983fd-1850-5756-877c-3d2c17b85e1f") != null) and
             ($s.polity_ids | index("407d91cf-7a97-45e3-81ea-d42a3cbfba35") != null) and
@@ -82,5 +98,7 @@ jobs:
             audit.json
             song-p2-08-exact-before.json
             song-p2-08-summary.json
+            polity-p2-10-internal-full-census.json
+            polity-p2-10-internal-summary.json
           if-no-files-found: warn
           retention-days: 90
