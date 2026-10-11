@@ -1,0 +1,74 @@
+name: ATLAS Sweden P2-06C Independent Public Designation Readback
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/atlas-polity-sweden-p2-06c-public-readback.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-sweden-designation-readback:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: GET actual Production Sweden and union, verify deployment stable and scoped four-era labels
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p sweden-p2-06c-public
+          base='https://atlas-person-db.vercel.app/api/atlas-read'
+          curl --fail-with-body --silent --show-error --retry 2 --retry-delay 1 \
+            "$base?__atlas_read_surface=runtime-identity" > sweden-p2-06c-public/identity-before.json
+          jq -e '.ok==true and .identity.git_commit_ref=="main" and (.identity.git_commit_sha|test("^[0-9a-f]{40}$"))' \
+            sweden-p2-06c-public/identity-before.json >/dev/null
+          deployed="$(jq -er '.identity.git_commit_sha' sweden-p2-06c-public/identity-before.json)"
+          curl --fail-with-body --silent --show-error --retry 2 --retry-delay 1 \
+            "$base?__atlas_read_surface=polity&polity_id=93613017-b4c4-5f82-8e96-3ce6b2d3a61e" \
+            > sweden-p2-06c-public/sweden.json
+          curl --fail-with-body --silent --show-error --retry 2 --retry-delay 1 \
+            "$base?__atlas_read_surface=polity&polity_id=a47f57af-8ac2-4724-81b0-43074c64f84c" \
+            > sweden-p2-06c-public/sweden-norway.json
+          ids='["e889c50c-3a9b-4b30-90ab-0822ad5dffd6","daf85f20-db1f-50c2-aff1-86830290da8e","931c792b-5039-4637-b418-4d04264b7b54","b5a7fcfe-47ee-4332-9110-443c0d0a40be"]'
+          jq -e --argjson ids "$ids" '
+            .ok==true and .schema=="atlas-polity-read/v1" and .mode=="detail" and
+            .polity.id=="93613017-b4c4-5f82-8e96-3ce6b2d3a61e" and .polity.activity_count==15 and
+            (.polity.activities|length)==15 and
+            ([$ids[]]|unique|length)==4 and
+            ([.polity.activities[]|.id]|unique|length)==15 and
+            ([.polity.activities[]|select(.id as $v|($ids|index($v))!=null)]|length)==4 and
+            ([.polity.activities[]|select(.id as $v|($ids|index($v))!=null)|
+              select(.polity_designation_name_en=="Swedish Empire" and
+                     .polity_designation_name_ko=="스웨덴 제국" and
+                     ((.role_code//""|ascii_downcase|contains("emperor"))|not))]|length)==4 and
+            ([.polity.activities[]|select(.id as $v|($ids|index($v))==null)|
+              select(.polity_designation_name_en==null and .polity_designation_name_ko==null)]|length)==11 and
+            ([.polity.activities[]|select(.id=="2f882cb8-d772-4f40-8a31-a3fdb47534b2" or
+              .id=="5f93b302-8401-4a18-bf7e-53fac8efdc6a")|length)==2
+          ' sweden-p2-06c-public/sweden.json >/dev/null
+          jq -e '
+            .ok==true and .schema=="atlas-polity-read/v1" and .mode=="detail" and
+            .polity.id=="a47f57af-8ac2-4724-81b0-43074c64f84c" and
+            .polity.activity_count==3 and (.polity.activities|length)==3 and
+            ([.polity.activities[]|.id]|unique|length)==3 and
+            ([.polity.activities[]|select(.polity_designation_name_en==null and .polity_designation_name_ko==null)]|length)==3
+          ' sweden-p2-06c-public/sweden-norway.json >/dev/null
+          curl --fail-with-body --silent --show-error --retry 2 --retry-delay 1 \
+            "$base?__atlas_read_surface=runtime-identity" > sweden-p2-06c-public/identity-after.json
+          jq -e --arg sha "$deployed" '.ok==true and .identity.git_commit_ref=="main" and .identity.git_commit_sha==$sha' \
+            sweden-p2-06c-public/identity-after.json >/dev/null
+          jq -n --arg sha "$deployed" --arg workflow_sha "$GITHUB_SHA" \
+            '{ok:true,read_only:true,committed:false,deployed_sha:$sha,workflow_sha:$workflow_sha,
+              sweden_activity_count:15,sweden_norway_activity_count:3,historiographic_period_1611_1718_activity_labels:4,
+              outside_window_activities_unmodified:11,union_activities_unmodified:3,
+              note:"Public response proves temporal display only; canonical Source links separately require OIDC or correction replay proof"}' \
+            > sweden-p2-06c-public/summary.json
+          cat sweden-p2-06c-public/summary.json
+      - name: Archive actual public Person–Polity temporal labels and stable Production SHA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: polity-sweden-p2-06c-public-readback
+          path: sweden-p2-06c-public/
+          retention-days: 90
+          if-no-files-found: warn
