@@ -12,14 +12,17 @@
   const EVIDENCE_LABELS=Object.freeze({
     granularity:Object.freeze({year:"연 단위",month:"월 단위",day:"일 단위"}),
     certainty:Object.freeze({exact:"정확",approximate:"근사",uncertain:"불확실"}),
-    calendar:Object.freeze({gregorian:"그레고리력",julian:"율리우스력",unspecified_historical:"역법 미특정"}),
+    calendar:Object.freeze({gregorian:"그레고리력",julian:"율리우스력",unspecified_historical:"역법 미특정",source_calendar:"출처 기록의 역법"}),
+    period_basis:Object.freeze({reign:"재위",term:"임기",de_facto_rule:"실권 장악",military_activity:"군사 활동",religious_activity:"종교 활동",intellectual_activity:"학술 활동",artistic_activity:"예술 활동",general_activity:"주요 활동"}),
     chronology_status:Object.freeze({
       reviewed:"연대 검토됨",
+      resolved:"연대 확인됨",
       exact_as_recorded:"기록된 연대 그대로",
       reviewed_traditional_chronology_uncertain:"전통 연대 검토 · 불확실",
       TRADITIONAL_RETROSPECTIVE_UNCERTAIN:"전통적 후대 연대 · 불확실"
     }),
     confidence:Object.freeze({
+      high:"신뢰도 높음",medium:"신뢰도 보통",low:"신뢰도 낮음",
       well_established:"근거 확립",
       legacy_asserted:"기존 기록에 따른 기재",
       likely:"가능성 높음",
@@ -31,7 +34,9 @@
 
   function humanEvidenceValue(kind,value){
     const raw=text(value);
-    return raw ? (EVIDENCE_LABELS[kind]?.[raw] || raw) : "";
+    if(!raw) return "";
+    if(/[가-힣]/.test(raw) && !/[A-Za-z]/.test(raw)) return raw;
+    return EVIDENCE_LABELS[kind]?.[raw] || "표시 확인 필요";
   }
 
   function boundaryMeta(boundary){
@@ -79,8 +84,8 @@
       const raw=text(value);
       if(!raw)return '<span class="person-evidence-missing">미기록</span>';
       const human=humanEvidenceValue(kind,raw);
-      // Unknown or case-specific status codes are not guessed or flattened.
-      return human===raw?escapeHtml(raw):`<span title="${escapeHtml(raw)}">${escapeHtml(human)}</span>`;
+      // Unknown codes remain untouched in evidenceForActivity; the UI does not expose raw machine vocabulary.
+      return escapeHtml(human);
     }
 
     function boundaryHtml(label,row){
@@ -99,7 +104,7 @@
         </summary>
         <div class="person-evidence-body">
           <div class="person-evidence-facts">
-            <div><small>기간 기준</small><strong>${rawValue(evidence.period_basis)}</strong></div>
+            <div><small>기간 기준</small><strong>${rawValue(evidence.period_basis,"period_basis")}</strong></div>
             <div><small>연대 상태</small><strong>${rawValue(evidence.chronology_status,"chronology_status")}</strong></div>
             <div><small>신뢰도</small><strong>${rawValue(evidence.confidence,"confidence")}</strong></div>
           </div>
