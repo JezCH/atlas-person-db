@@ -83,6 +83,16 @@ function createPlaceProductionAuditHandler({
       if(!new Set(["TARGET_CONFIRMED_COMPLETE","TARGET_CONFIRMED_GAP"]).has(evidence.state) || evidence.queried!==true){
         return sendJson(res,500,{ok:false,marker:MARKER,code:"PLACE_AUDIT_INVALID_EVIDENCE"});
       }
+      // Missing richer metadata census is NOT a completed audit: matching
+      // UUIDs alone cannot prove the original Place and Source semantics.
+      const report=evidence.report;
+      if(!report || !Array.isArray(report.place_metadata?.drifted_ids)
+        || !Array.isArray(report.source_metadata?.drifted_ids)
+        || !Array.isArray(report.preferred_english_names?.missing_place_ids)
+        || !Array.isArray(report.preferred_english_names?.mismatched_place_ids)
+        || !Array.isArray(report.preferred_english_names?.ambiguous_place_ids)){
+        return sendJson(res,500,{ok:false,marker:MARKER,code:"PLACE_AUDIT_METADATA_CENSUS_REQUIRED"});
+      }
       return sendJson(res,200,{ok:true,marker:MARKER,read_only:true,
         deployment_sha:transport.deployed,workflow_sha:transport.workflow,audit:evidence});
     }catch(error){
