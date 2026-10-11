@@ -466,13 +466,23 @@
         review_group: "designation_residual",
         kind: "designation_review",
         title: "Sweden temporal designation — Swedish Empire",
-        left: { name: "Sweden" },
-        right: { name: "Swedish Empire" },
-        rationale: "Swedish Empire를 별도 identity가 아니라 temporal designation으로 처리한 결과가 현재 Production 표시까지 완결됐는지 fresh read가 필요합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["2026-09-27 designation debt ledger", "completion evidence not yet located"]
+        left: { name: "Sweden", polity_id: "93613017-b4c4-5f82-8e96-3ce6b2d3a61e" },
+        right: { name: "Swedish Empire", ko: "스웨덴 제국", polity_id: "93613017-b4c4-5f82-8e96-3ce6b2d3a61e", designation_id: "bf92c969-7557-51b9-87c9-6aa650e75495" },
+        rationale: "P2-06C 2026-10-11 Source-backed 실제 Production 정정 종결: 15건의 기존 스웨덴 군주 Activity는 유지하면서 1611–1718년 Stormaktstiden을 현대 역사학적 historiographic_period로만 추가했습니다. Lex Jürgen Beyer 2025의 1611–1718년 관례와 Scandia Harald Gustafsson 2026의 후대 역사학적 용어 연구를 근거로 하며, 1611–1721년 대안 연대와 스웨덴 왕국의 실제 국가 정체성을 부정하지 않습니다. 별도 주권 제국·황제 직위·가상 건국월일은 생성하지 않았습니다. 보호된 Correction 최초 apply에서 Sources +2/Designation +1/EN·KO 이름 +2/Source links +2, 기존 Activity 2523 및 Activity Source 3889 건 불변. 별도의 실제 public Runtime readback에서 해당 4개 군주 활동에 EN Swedish Empire 및 KO 스웨덴 제국을 확인하고 시대 밖 스웨덴 활동 11개 및 별도 스웨덴–노르웨이 활동 3개는 무영향이었습니다. 최초 manifest SHA로 재실행한 보호된 OIDC Correction은 replay=true/삽입 0건이며 두 Source·Designation bundle이 살아 있음을 재검증했습니다.",
+        suggested_action: "keep",
+        reviewed_decision: "keep_same_polity_add_historiographic_period",
+        status: "FIXED",
+        terminal_status: "FIXED",
+        evidence: [
+          "Protected all Production Source / temporal Polity census #38128160741 artifact #11697859340: Sweden 15 original Activities and 0 designations, separate Sweden-Norway 3 Activities, exact Lex and Scandia URLs absent",
+          "Jürgen Beyer, Stormagtstiden, Lex.dk, revised 2025-02-20, 1611–1718: https://lex.dk/Stormagtstiden",
+          "Harald Gustafsson, Stormakten genom tiderna, Scandia 92(1) (2026), retrospective terminology: https://journals.lub.lu.se/scandia/sv/article/view/29334",
+          "Actual canonical Correction #38134300667 artifact #11700142653, committed=true, two scholarly Sources and one source-linked historiographic designation",
+          "Independent entire Sweden (15 Activities) + Sweden-Norway (3 Activities) public Runtime check #38134695893 artifact #11700581801 SUCCESS, four positive + fourteen negative controls",
+          "Exact original signed manifest and normalized Source/designation replay #38134976473 artifact #11700617100 SUCCESS, replay=true and 0 new inserts",
+          "Detailed current accepted report docs/POLITY_P2_06C_SWEDEN_STORMAKTSTIDEN_PRODUCTION_ACCEPTANCE_20261011.md"
+        ],
+        locked: true
       }
     ]),
     naming_residuals: freezeRows([
