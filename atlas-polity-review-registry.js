@@ -651,11 +651,12 @@
         title: "Mongol Empire → Yuan / Golden Horde / Chagatai / Ilkhanate and other successors",
         left: { name: "Mongol Empire" },
         right: { name: "Yuan / Golden Horde / Chagatai / Ilkhanate and other successors" },
-        rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
-        suggested_action: "hold",
+        rationale: "POLITY-P2-D07-A 2026-10-11 보호된 Production 전수감사 원본과 UN 조약·UN Digital Library·미국 국무부 사료 대조 완료. 1958–1961 이집트·시리아 실제 통합 정치체는 1961년 시리아 독립으로 운영·영토 기반이 단절됐지만, 이집트는 1971-09-01까지 UAR 공식 국호를 사용했습니다. 현행 UAR UUID a602213a...에는 나세르 1958–1970과 사다트 1970–1971 활동이 연속 포함되어 union과 Egypt-only 통치범위를 혼합합니다. 전면적인 UUID 자동 병합·퇴역은 금지하며, source-preserving Activity 경계 검토 및 기존 이집트 정치체의 official_name temporal designation 가능성을 후속 교정으로 검증해야 합니다. 역사판정 단위만 완료; Production 정정 미적용이므로 REVIEW_REQUIRED 유지.",
+        suggested_action: "repair",
+        reviewed_decision: "separate_actual_1958_1961_union_from_post1961_egyptian_governance_preserve_UAR_official_name",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        evidence: ["POLITY-P2-D07-A source-backed historical and exact UUID/Activity review 2026-10-11: docs/POLITY_P2_D07_UAR_POST1961_EGYPT_REVIEW_20261011.md", "2026-10-11 protected full Production read-only run 38128160741/artifact 11697859340: UAR a602213a... Nasser e65edaa4... 1958–1970 / Sadat e100c855... 1970–1971; Arab Republic of Egypt 8c25246a... Sadat cb057be7... 1971–1981; all original Source links preserved", "UN Treaty Collection: Egypt–Syria union notified February 1958; Syrian resumed membership October 1961; Egyptian official name change 1971-09-02 (https://treaties-prod.un.org/Pages/HistoricalInfo.aspx?clang=_en)", "UN Digital Library subject authority: 1958–61 union classified United Arab Republic; 1961–71 Egypt-only while name UAR continues (https://digitallibrary.un.org/record/1284346)", "US Office of the Historian Syria: Syrian secession September 28, 1961; Egypt kept UAR name until 1971 (https://history.state.gov/countries/syria)"]
       },
       {
         id: "yuan-northern-yuan-rupture",
