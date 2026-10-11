@@ -87,3 +87,9 @@ test("the protected OIDC handler and already allowlisted Song workflow wire one 
  assert.match(y,/read_only==true/);
  assert.doesNotMatch(y,/skip.sha|ignore.sha|ignore_oidc/i);
 });
+
+test("real PolityPlaceFunction schema does NOT expose an id column; no fabricated surrogate-ID sort",()=>{
+  const sql=TABLE_QUERIES.polity_place_functions;
+  assert.match(sql,/^select to_jsonb\(f\) as polity_place_function from atlas_v2\.polity_place_functions f order by f\.polity_id::text,to_jsonb\(f\)::text$/);
+  assert.doesNotMatch(sql,/\bf\.id\b/);
+});

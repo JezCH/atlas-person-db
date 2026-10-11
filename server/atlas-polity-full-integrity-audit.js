@@ -20,7 +20,7 @@ const TABLE_QUERIES = Object.freeze({
   identity_relation_sources: "select polity_identity_relation_id::text as relation_id,source_id::text as source_id,source_locator_key from atlas_v2.polity_identity_relation_sources order by polity_identity_relation_id::text,source_id::text,source_locator_key",
   retirements: "select to_jsonb(r) as retirement from atlas_v2.polity_identity_retirements r order by r.retired_polity_id::text",
   retirement_names: "select retired_polity_id::text as retired_polity_id,locale,name,is_preferred from atlas_v2.polity_identity_retirement_names order by retired_polity_id::text,locale,name",
-  polity_place_functions: "select to_jsonb(f) as polity_place_function from atlas_v2.polity_place_functions f order by f.id::text"
+  polity_place_functions: "select to_jsonb(f) as polity_place_function from atlas_v2.polity_place_functions f order by f.polity_id::text,to_jsonb(f)::text"
 });
 
 function requireRows(rows, name) {
