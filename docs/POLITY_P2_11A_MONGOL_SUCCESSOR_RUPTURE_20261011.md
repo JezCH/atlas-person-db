@@ -19,6 +19,7 @@
 | Yuan Dynasty | `d035cbd8-e7b1-5947-8542-c7dd356d52bb` | 4 / 4 | 1271–1368 | 3 |
 | Golden Horde | `7e0522d7-1ff9-4464-927b-4376bf35ed7a` | 3 / 3 | 1242–1395 | 0 |
 | Ilkhanate | `bf88f81f-adf6-467b-aba2-66b11d96b477` | 3 / 3 | 1256–1304 | 0 |
+| Chagatai Ulus | `4c3e50cb-d76c-4b7c-b611-222849404142` | 1 / 1 | 1227–1241 | 0 |
 | Western Chagatai Khanate | `256edfeb-8f35-4cbe-adca-dd3a76169ad8` | 1 / 1 | 1360–1363 | 0 |
 | Northern Yuan | `986380c3-cc31-50d5-bb0d-6cae5fae0660` | 3 / 3 | 1368–1510 | 1 |
 
@@ -32,9 +33,9 @@ The exact protected audit proves ATLAS **already maintains** the checked Mongol 
 
 ## Separate work not silently closed
 
-1. **Chagatai coverage:** the exact 1,158-Polity census contains `Western Chagatai Khanate` but **no standalone preferred/canonical `Chagatai Khanate`** entity for its earlier phase. Whether a new Polity is needed, or existing identity aliases adequately represent that earlier period, requires a distinct scope/identity and evidence review; do not invent an Activity or founding date.
+1. **Chagatai coverage:** the exact census contains a distinct **`Chagatai Ulus`** UUID with one 1227–1241 Person Activity (original = Runtime = 1), as well as the later **`Western Chagatai Khanate`** UUID with one 1360–1363 Activity. Although the exact preferred English title `Chagatai Khanate` is absent, **that is not evidence that the early Chagatai polity is missing**. The intervening ruler/lineage coverage and the scope boundary between the two existing UUIDs still require separate source review; do not manufacture a duplicate Polity from a name-only lookup.
 2. **Dynastic/identity succession edges:** `polity_identity_relation_types = 0`, `polity_identity_relations = 0` Production-wide; no validated vocabulary supports materializing the historical successor links. Do not misuse `vassal_of`, `constituent_of`, or fabricated continuity codes. The shared lineage-model gap remains a separate architectural gate with Song P2-08E-C.
-3. **Polity-level provenance:** zero direct Polity Source rows for Golden Horde, Ilkhanate and Western Chagatai in this snapshot; recorded Activity Source counts respectively **3 / 4 / 1**, which are evidence links but do not substitute for comprehensive authoritative Polity-source coverage.
+3. **Polity-level provenance:** zero direct Polity Source rows for Golden Horde, Ilkhanate, Chagatai Ulus and Western Chagatai in this snapshot; recorded Activity Source counts respectively **3 / 4 / 1 / 1**, which are evidence links but do not substitute for comprehensive authoritative Polity-source coverage.
 4. **Completeness:** no whole-world territory geometry, political-center fact, all ruler coverage, or P14 historic map acceptance is asserted by this rupture identity review.
 5. **P3/P4:** after all remaining review seeds close, the project's global production identity-and-provenance semantic audit and Authoring→Compile→Runtime acceptance remain mandatory.
 
