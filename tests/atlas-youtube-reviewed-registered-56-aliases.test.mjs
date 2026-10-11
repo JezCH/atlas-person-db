@@ -35,7 +35,13 @@ test("all 56 are excluded in the SAME live single-rank final registered filter",
    distinct_channel_count:a.prior_reference_title_channel_count,
    video_count:a.prior_reference_title_channel_count+2
  }));
- const people=review.aliases.map(a=>({person_id:a.production_registered_person_id,alias_name:a.canonical_key}));
+ // PERSON_NAMES_SQL emits both the canonical/current Person name and its
+ // reviewed specific alias pointing to that SAME Person ID. Mimic that
+ // actual SQL projection, not canonical names alone.
+ const people=review.aliases.flatMap(a=>[
+   {person_id:a.production_registered_person_id,alias_name:a.canonical_key},
+   {person_id:a.production_registered_person_id,alias_name:a.alias_name}
+ ]);
  // Unsafe lookalikes must remain distinguishable Person identities.
  people.push({person_id:"egypt_muhammad_ali",alias_name:"Muhammad Ali of Egypt"});
  people.push({person_id:"jinnah_muhammad_ali",alias_name:"Muhammad Ali Jinnah"});
