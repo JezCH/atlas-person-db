@@ -163,7 +163,7 @@ def relative_from_object_key(record):
     if (
         not relative
         or relative.startswith("/")
-        or "\\\\" in relative
+        or "\\" in relative
         or any(part in ("", ".", "..") for part in relative.split("/"))
     ):
         raise RuntimeError("UNSAFE_RESTORE_PATH: " + relative)
