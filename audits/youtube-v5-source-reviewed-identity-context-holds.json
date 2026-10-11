@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-youtube-v5-known-original-source-identity-holds/v1",
+  "source_review_schema": "youtube-b024-source-first-last-registry-screen-36/v1",
+  "source_review_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "source_review_snapshot_id": "yt-20261009T111844Z-10127ch-rebuild-v4",
+  "active_rank_snapshot_id": "yt-20261010T083657Z-10127ch-rebuild-v5",
+  "expected_parser_version": "yt-title-person-reviewed-v5",
+  "original_channel_count": 10127,
+  "original_video_count": 2230031,
+  "policy": "Keep exact title name candidate and underlying ORIGINAL channels/videos, mark the existing source-reviewed identity-context ambiguity in the ONLY live discovery feed; never auto-assume historical Person or a valid biography; final registry screen after identity resolution.",
+  "holds": [
+    {
+      "raw_name": "Ferdinand Marcos",
+      "reason": "FATHER_SON_SHARED_NAME",
+      "source_review_status": "IDENTITY_CONTEXT_HOLD",
+      "person_identity_certified": false,
+      "may_include_nonperson_videos": true
+    },
+    {
+      "raw_name": "Saint Benedict",
+      "reason": "MULTIPLE_SAINTS_WITH_SAME_NAME",
+      "source_review_status": "IDENTITY_CONTEXT_HOLD",
+      "person_identity_certified": false,
+      "may_include_nonperson_videos": true
+    },
+    {
+      "raw_name": "St Patrick",
+      "reason": "PERSON_HOLIDAY_CATHEDRAL_AMBIGUITY",
+      "source_review_status": "IDENTITY_CONTEXT_HOLD",
+      "person_identity_certified": false,
+      "may_include_nonperson_videos": true
+    },
+    {
+      "raw_name": "St Valentine",
+      "reason": "CONTESTED_SAINT_IDENTITY_HOLIDAY",
+      "source_review_status": "IDENTITY_CONTEXT_HOLD",
+      "person_identity_certified": false,
+      "may_include_nonperson_videos": true
+    }
+  ],
+  "screening_notes": {
+    "already_fixed_in_main": "Imam Bukhari, Imam Malik and King Leonidas are known registered aliases; before remedy they appeared in the 8713 reference, but current Production and reviewed alias file exclude all three. Do not count them as new work or repeat.",
+    "observed_production_candidates_before_review_state_fix": 8710,
+    "known_holds_in_live": 4,
+    "new_historical_people_certified": 0,
+    "actual_video_content_new_approvals": 0,
+    "rank_count_change_expected": 0
+  },
+  "not_an_unregistered_person_certification": true,
+  "no_production_source_table_mutation": true
+}
