@@ -65,6 +65,8 @@ jobs:
             and (.song_details.governance_periods|type)=="array"
             and (.song_details.gaozong_activity_ids|length)==2' audit.json >/dev/null
           jq '.song_details' audit.json > song-p2-08-exact-before.json
+          curl --fail-with-body --silent --show-error "$IDENTITY" > identity-after.json
+          jq -e --arg sha "$GITHUB_SHA" '.ok==true and .identity.git_commit_ref=="main" and .identity.git_commit_sha==$sha' identity-after.json >/dev/null
           jq '.full_integrity_details' audit.json > polity-p2-10-internal-full-census.json
           jq '.full_integrity_details.summary | {schema,read_only,committed,no_truncation,counts,all_polity_count,external_orphan_count,
              dangling_links:(.unresolved_foreign_key_refs|length),missing_runtime_activities:(.runtime_missing_activity_ids|length),
@@ -92,9 +94,10 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: song-p2-08-source-before-readonly
+          name: song-p2-08-and-full-internal-provenance-${{ github.run_attempt }}
           path: |
             identity.json
+            identity-after.json
             audit.json
             song-p2-08-exact-before.json
             song-p2-08-summary.json
