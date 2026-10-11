@@ -107,10 +107,13 @@ function createYoutubeSourceArchiveHandler({
         migration,outcome
       });
     }catch(error){
-      console.error("ATLAS YouTube source archive catalog failed",error);
+      // PostgreSQL and filesystem exceptions can include private connection
+      // strings, query values or paths. Do not emit or log raw exception text.
+      console.error("ATLAS YouTube source archive catalog failed",{
+        code:"YOUTUBE_SOURCE_ARCHIVE_CATALOG_FAILED"
+      });
       return sendJson(res,500,{
-        ok:false,marker:MARKER,code:"YOUTUBE_SOURCE_ARCHIVE_CATALOG_FAILED",
-        error:error?.message || String(error)
+        ok:false,marker:MARKER,code:"YOUTUBE_SOURCE_ARCHIVE_CATALOG_FAILED"
       });
     }finally{
       if(client && typeof client.end==="function"){

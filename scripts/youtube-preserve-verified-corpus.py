@@ -157,8 +157,18 @@ def relative_from_object_key(record):
     if not key.startswith(expected_prefix):
         raise RuntimeError("CATALOG_OBJECT_KEY_DIGEST_MISMATCH")
     relative = key[len(expected_prefix):]
+    # pathlib normalizes "." and repeated separators before .parts checks.
+    # Validate the *raw* DB-sourced suffix first so no second catalog key
+    # can alias a different spelling of the same restored filesystem path.
+    if (
+        not relative
+        or relative.startswith("/")
+        or "\\" in relative
+        or any(part in ("", ".", "..") for part in relative.split("/"))
+    ):
+        raise RuntimeError("UNSAFE_RESTORE_PATH: " + relative)
     rel = Path(relative)
-    if not relative or rel.is_absolute() or ".." in rel.parts or any(p in ("", ".") for p in rel.parts):
+    if rel.is_absolute() or rel.as_posix() != relative:
         raise RuntimeError("UNSAFE_RESTORE_PATH: " + relative)
     return rel
 
@@ -166,25 +176,43 @@ def relative_from_object_key(record):
 def restore_from_catalog(base, token, records, target):
     if not isinstance(records, list) or not records:
         raise RuntimeError("REMOTE_CATALOG_RECORDS_REQUIRED")
-    target.mkdir(parents=True, exist_ok=True)
-    restored = 0
-    restored_bytes = 0
-    seen = set()
+
+    # Validate the ENTIRE remote catalog before the first Storage GET or
+    # filesystem write. An immutable object key is not a unique restore path:
+    # two differently hashed objects may still end in the same relative name.
+    prepared = []
+    seen_keys = set()
+    seen_paths = set()
     for record in records:
         rel = relative_from_object_key(record)
         key = str(record["object_key"])
-        if key in seen:
+        if key in seen_keys:
             raise RuntimeError("REMOTE_CATALOG_DUPLICATE_OBJECT_KEY")
-        seen.add(key)
+        seen_keys.add(key)
+        if rel.as_posix() in seen_paths:
+            raise RuntimeError("REMOTE_CATALOG_DUPLICATE_RESTORE_PATH")
+        seen_paths.add(rel.as_posix())
         expected_bytes = int(record.get("byte_count") or 0)
         if expected_bytes <= 0:
             raise RuntimeError("REMOTE_CATALOG_BYTE_COUNT_INVALID")
+        prepared.append((record, rel, key, expected_bytes))
+
+    # An independent recovery proof must not reuse or overwrite a populated
+    # local tree. The caller provides a new target, as the workflow already does.
+    if target.is_symlink() or (target.exists() and (not target.is_dir() or any(target.iterdir()))):
+        raise RuntimeError("REMOTE_RESTORE_TARGET_NOT_EMPTY")
+    target.mkdir(parents=True, exist_ok=True)
+
+    restored = 0
+    restored_bytes = 0
+    for record, rel, key, expected_bytes in prepared:
         data = storage_call("GET", base, token, key)
         if len(data) != expected_bytes or sha256(data) != str(record["sha256"]).lower():
             raise RuntimeError("REMOTE_RESTORE_CHECKSUM_MISMATCH: " + rel.as_posix())
         dest = target / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_bytes(data)
+        with dest.open("xb") as out:
+            out.write(data)
         restored += 1
         restored_bytes += len(data)
     return {"files": restored, "bytes": restored_bytes}
