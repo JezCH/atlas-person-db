@@ -48,7 +48,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p /tmp/atlas-place-production
-          for attempt in $(seq 1 75); do
+          for attempt in $(seq 1 8); do
             status="$(curl --silent --show-error --max-time 15               --output /tmp/atlas-place-production/runtime.json               --write-out '%{http_code}' "${RUNTIME_IDENTITY_ENDPOINT}" || true)"
             if [[ "${status}" == "200" ]] && jq -e --arg sha "${GITHUB_SHA}" '
               .ok==true
@@ -98,6 +98,8 @@ jobs:
             sources:{expected:.audit.report.sources.expected,present:.audit.report.sources.present},
             facts:{expected:.audit.report.facts.expected,present:.audit.report.facts.present}
           }' /tmp/atlas-place-production/audit.json > /tmp/atlas-place-production/summary.json
+          curl --fail-with-body --silent --show-error --max-time 15 "${RUNTIME_IDENTITY_ENDPOINT}" > /tmp/atlas-place-production/runtime-after.json
+          jq -e --arg sha "${GITHUB_SHA}" '.ok==true and .identity.git_commit_ref=="main" and .identity.git_commit_sha==$sha' /tmp/atlas-place-production/runtime-after.json >/dev/null
           cat /tmp/atlas-place-production/summary.json
           if jq -e '.audit.state=="TARGET_CONFIRMED_GAP"' /tmp/atlas-place-production/audit.json >/dev/null; then
             echo "Place authority is CONFIRMED INCOMPLETE. M4 remains NO-GO." >> "${GITHUB_STEP_SUMMARY}"
@@ -107,9 +109,10 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: atlas-place-production-authority-audit
+          name: atlas-place-production-authority-audit-${{ github.run_attempt }}
           path: |
             /tmp/atlas-place-production/runtime.json
+            /tmp/atlas-place-production/runtime-after.json
             /tmp/atlas-place-production/audit.json
             /tmp/atlas-place-production/summary.json
           if-no-files-found: warn
