@@ -24,7 +24,8 @@ test('UI7 keeps the user-facing UI-6R4 compact Activity tuple intact', () => {
   assert.match(mainSource, /activity\?\.polity\?\.display_name/);
   assert.match(mainSource, /activity\?\.relation\?\.code/);
   assert.match(mainSource, /activity\?\.role\?\.display_name/);
-  assert.match(mainSource, /activity\?\.period_basis\?\.display_name/);
+  assert.match(mainSource, /basisLabel\(activity\?\.period_basis\)/);
+  assert.match(mainSource, /value\?\.display_name/);
   assert.match(mainSource, /boundaryLabel\(activity\?\.start\)/);
   assert.match(mainSource, /boundaryLabel\(activity\?\.end\)/);
   const compactBody = mainSource.slice(mainSource.indexOf('function compactActivityHtml'), mainSource.indexOf('function groupSection'));

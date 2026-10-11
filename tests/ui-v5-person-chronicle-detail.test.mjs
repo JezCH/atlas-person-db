@@ -82,7 +82,7 @@ test("UI V5 converts Activity cards into chronological editorial records without
   assert.match(source, /person-chronicle-activity/);
   assert.match(source, /person-activity-period-display/);
   assert.match(source, /person-activity-sequence/);
-  assert.match(source, /RELATION_FILTER_LABELS\[relationCode\]/);
+  assert.match(source, /const relation = metaLabel\("relation", relationCode, "관계 유형 확인 필요"\)/);
   assert.match(source, /boundaryLabel\(activity\.start\)/);
   assert.match(source, /boundaryLabel\(activity\.end\)/);
   assert.match(source, /boundaryMeta\(activity\.start\)/);

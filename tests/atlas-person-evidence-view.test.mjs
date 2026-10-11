@@ -84,11 +84,14 @@ test("Main evidence labels translate known codes while preserving the canonical 
   assert.equal(evidenceView.humanEvidenceValue("chronology_status","exact_as_recorded"),"기록된 연대 그대로");
   assert.equal(evidenceView.humanEvidenceValue("confidence","legacy_asserted"),"기존 기록에 따른 기재");
   assert.equal(evidenceView.humanEvidenceValue("confidence","disputed"),"이견 있음");
-  assert.equal(evidenceView.humanEvidenceValue("chronology_status","reviewed_stage2_phase"),"reviewed_stage2_phase");
+  assert.equal(evidenceView.humanEvidenceValue("chronology_status","reviewed_stage2_phase"),"표시 확인 필요");
+  assert.equal(evidenceView.humanEvidenceValue("period_basis","reign"),"재위");
+  assert.equal(evidenceView.humanEvidenceValue("confidence","high"),"신뢰도 높음");
+  assert.equal(evidenceView.humanEvidenceValue("calendar","source_calendar"),"출처 기록의 역법");
   assert.equal(evidenceView.humanEvidenceValue("calendar",""),"");
 });
 
-test("Main Activity Evidence renders Korean meanings and raw-code tooltips, never rewrites evidence",()=>{
+test("Main Activity Evidence renders Korean meanings without raw-code tooltips or evidence mutation",()=>{
   const renderer=evidenceView.createRenderer({
     escapeHtml:(value)=>String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;"),
     boundaryLabel:(boundary)=>boundary?.year?String(boundary.year):"연도 미상",
@@ -112,9 +115,11 @@ test("Main Activity Evidence renders Korean meanings and raw-code tooltips, neve
     ["approximate","근사"],
     ["julian","율리우스력"]
   ]){
-    assert.ok(html.includes(`title="${raw}">${human}`),`missing label for ${raw}`);
+    assert.ok(html.includes(human),`missing label for ${raw}`);
+    assert.ok(!html.includes(`title="${raw}"`),`raw-code tooltip leaked: ${raw}`);
   }
   assert.equal(JSON.stringify(canonical),original);
   const unknownHtml=renderer.activityEvidenceHtml({...activity,chronology_status:"reviewed_stage2_phase"});
-  assert.match(unknownHtml,/reviewed_stage2_phase/);
+  assert.match(unknownHtml,/표시 확인 필요/);
+  assert.doesNotMatch(unknownHtml,/reviewed_stage2_phase/);
 });
