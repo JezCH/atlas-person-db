@@ -4,6 +4,7 @@
   const reader = window.ATLAS_PERSON_BROWSER_READER;
   const dataStore = window.ATLAS_CLIENT_DATA_STORE;
   const domainRegistry = window.ATLAS_PERSON_DOMAIN_REGISTRY;
+  const i18n = window.ATLAS_UI_I18N;
   const externalReferences = window.ATLAS_PERSON_EXTERNAL_REFERENCES;
   const portraitView = window.ATLAS_PERSON_PORTRAIT_VIEW;
   const portraitControllerFactory = window.ATLAS_PERSON_PORTRAIT_CONTROLLER;
@@ -73,6 +74,25 @@
     outcomeError
   });
 
+  function metaLabel(kind, value, fallback = "표시 확인 필요") {
+    const raw = String(value ?? "").trim();
+    if (!raw) return fallback;
+    // Preserve already-reviewed Korean names while keeping machine enums intact.
+    if (/[가-힣]/.test(raw) && !/[A-Za-z]/.test(raw)) return raw;
+    return i18n?.enumLabel?.(kind, raw, { fallback }) || fallback;
+  }
+
+  function historicityLabel(person) {
+    const reviewed = String(person?.historicity_display_ko || "").trim();
+    if (reviewed && /[가-힣]/.test(reviewed)) return reviewed;
+    return metaLabel("historicity", person?.historicity, "역사성 확인 필요");
+  }
+
+  function basisLabel(value) {
+    const name = String(value?.display_name || "").trim();
+    return metaLabel("period_basis", /[가-힣]/.test(name) ? name : value?.code || name, "기간 기준 확인 필요");
+  }
+
   function safeHttpUrl(value) {
     const raw = String(value || "").trim();
     if (!raw) return null;
@@ -129,14 +149,17 @@
 
   function boundaryMeta(boundary) {
     if (!boundary) return [];
-    return [boundary.granularity, boundary.calendar].filter((value) => value != null && String(value).trim());
+    return [
+      boundary.granularity ? metaLabel("granularity", boundary.granularity, "연대 정밀도 확인 필요") : null,
+      boundary.calendar ? metaLabel("calendar", boundary.calendar, "역법 확인 필요") : null
+    ].filter(Boolean);
   }
 
   function sourceHtml(source) {
     const display = source?.display_reference || source?.citation_text || source?.title || source?.canonical_url || "출처";
     const url = safeHttpUrl(source?.canonical_url);
     const locator = source?.locator ? `<small>위치: ${escapeHtml(source.locator)}</small>` : "";
-    const type = source?.source_type ? `<span class="person-source-type">${escapeHtml(source.source_type)}</span>` : "";
+    const type = source?.source_type ? `<span class="person-source-type">${escapeHtml(metaLabel("source_type", source.source_type, "출처 유형 확인 필요"))}</span>` : "";
     return `<li class="person-source-item"><div>${type}${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(display)}</a>` : `<span>${escapeHtml(display)}</span>`}</div>${locator}</li>`;
   }
 
@@ -149,9 +172,9 @@
 
   function compactActivityHtml(activity) {
     const polity = activity?.polity?.display_name || activity?.polity?.canonical_name_en || "정치체 미상";
-    const relation = activity?.relation?.code || "relation 미상";
+    const relation = metaLabel("relation", activity?.relation?.code, "관계 유형 확인 필요");
     const role = activity?.role?.display_name || activity?.role?.source_label || "역할 미지정";
-    const basis = activity?.period_basis?.display_name || activity?.period_basis?.code || "기간 기준 미상";
+    const basis = basisLabel(activity?.period_basis);
     const polityHead = `<span class="person-card-activity-head"><b>${escapeHtml(polity)}</b><span class="person-relation-badge">${escapeHtml(relation)}</span></span>`;
     return `<span class="person-card-activity" data-activity-id="${escapeHtml(activity?.id || "")}">
       ${polityHead}
@@ -170,8 +193,7 @@
   }
 
   function personCard(person) {
-    const rawHistoricity = person?.historicity_display_ko
-      || (person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity));
+    const rawHistoricity = historicityLabel(person);
     const canonical = person?.canonical_name_en && person.canonical_name_en !== person.display_name
       ? `<small class="person-card-canonical">${escapeHtml(person.canonical_name_en)}</small>` : "";
     const selectedClass = selectedPersonId === person.id ? " is-selected" : "";
@@ -180,7 +202,7 @@
     const open = `<button class="person-card${selectedClass}" type="button" data-person-id="${escapeHtml(person.id)}"${domainAttribute}>`;
     const close = "</button>";
     return `${open}
-      <span class="person-card-top"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span>${escapeHtml(person.person_type || "유형 미상")}</span></span>
+      <span class="person-card-top"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span>${escapeHtml(metaLabel("person_type", person.person_type, "인물 유형 확인 필요"))}</span></span>
       <strong>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</strong>
       ${canonical}
       <span class="person-card-range">${escapeHtml(rangeLabel(person))}</span>
@@ -216,7 +238,7 @@
       .map((item) => {
         const id = String(item?.id || "").trim();
         const code = String(item?.code || item?.source_label || "").trim();
-        const label = RELATION_FILTER_LABELS[code] || facetLabel(item);
+        const label = RELATION_FILTER_LABELS[code] || metaLabel("relation", code, "관계 유형 확인 필요");
         return { id, label };
       })
       .filter((item) => item.id && item.label);
@@ -381,7 +403,7 @@
 
   function namesHtml(names) {
     if (!Array.isArray(names) || !names.length) return '<p class="person-empty-inline">등록된 이름 없음</p>';
-    return `<div class="person-name-chips person-name-register">${names.map((row) => `<span class="person-name-entry"><b>${escapeHtml(row.name)}</b><small>${escapeHtml(row.locale || "")}${row.name_type ? ` · ${escapeHtml(row.name_type)}` : ""}${row.is_preferred ? " · 대표 이름" : ""}</small></span>`).join("")}</div>`;
+    return `<div class="person-name-chips person-name-register">${names.map((row) => `<span class="person-name-entry"><b>${escapeHtml(row.name)}</b><small>${escapeHtml(metaLabel("locale_name", row.locale, "언어 확인 필요"))}${row.name_type ? ` · ${escapeHtml(metaLabel("name_type", row.name_type, "이름 유형 확인 필요"))}` : ""}${row.is_preferred ? " · 대표 이름" : ""}</small></span>`).join("")}</div>`;
   }
 
   function descriptionsHtml(descriptions) {
@@ -401,14 +423,14 @@
 
   function activityHtml(activity, index = 0) {
     const role = activity.role?.display_name || activity.role?.source_label || "역할 미지정";
-    const relationCode = activity.relation?.code || "relation 미상";
-    const relation = RELATION_FILTER_LABELS[relationCode] || relationCode;
+    const relationCode = activity.relation?.code || "";
+    const relation = metaLabel("relation", relationCode, "관계 유형 확인 필요");
     const polity = activity.polity?.display_name || activity.polity?.canonical_name_en || "정치체 미상";
-    const basis = activity.period_basis?.display_name || activity.period_basis?.code || "기간 기준 미상";
+    const basis = basisLabel(activity.period_basis);
     const startMeta = boundaryMeta(activity.start);
     const endMeta = boundaryMeta(activity.end);
     const semanticMeta = [
-      activity.relation?.category ? `relation category: ${activity.relation.category}` : null
+      activity.relation?.category ? `관계 분류: ${metaLabel("relation_category", activity.relation.category, "관계 분류 확인 필요")}` : null
     ].filter(Boolean);
     const activityId = escapeHtml(activity.id || "");
     const sequence = String(index + 1).padStart(2, "0");
@@ -438,7 +460,10 @@
     const presentation = portraitPresentation.presentationFor(person, personDomainsById?.[person?.id]);
     const portrait = portraitResult?.error ? null : (portraitResult?.portrait || null);
     const href = portrait ? safeHttpUrl(portrait.asset_url) : null;
-    const meta = portrait ? [portrait.portrait_kind, portrait.evidence_level].filter(Boolean).join(" · ") : "";
+    const meta = portrait ? [
+      portrait.portrait_kind ? metaLabel("portrait_kind", portrait.portrait_kind, "초상 유형 확인 필요") : null,
+      portrait.evidence_level ? metaLabel("portrait_evidence", portrait.evidence_level, "초상 근거 수준 확인 필요") : null
+    ].filter(Boolean).join(" · ") : "";
     const titleParts = [
       displayName,
       presentation.era_label,
@@ -460,9 +485,9 @@
     if (!panel) return;
     const displayName = person.display_name || person.canonical_name_en || "이름 미상";
     const canonicalName = String(person.canonical_name_en || "").trim();
-    const rawHistoricity = person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity);
+    const rawHistoricity = historicityLabel(person);
     const domainCode = String(personDomainsById?.[person?.id] || person?.representative_domain || "").trim();
-    const domainLabel = domainCode ? String(domainRegistry?.LABELS?.[domainCode] || domainCode) : "분야 미지정";
+    const domainLabel = domainCode ? String(domainRegistry?.LABELS?.[domainCode] || "분야 확인 필요") : "분야 미지정";
     const timelineLabel = timelineDispositionLabel(person);
     panel.setAttribute("data-representative-domain", domainCode);
     panel.innerHTML = `<div class="person-detail-head person-chronicle-hero">
@@ -473,7 +498,7 @@
           ${canonicalName && canonicalName !== displayName ? `<p class="person-detail-canonical">${escapeHtml(canonicalName)}</p>` : ""}
           <p class="person-detail-era">${escapeHtml(rangeLabel(person))}</p>
           <p class="person-detail-domain">${escapeHtml(domainLabel)}</p>
-          <p class="person-detail-status"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "유형 미상")}</span>${timelineLabel ? `<span class="person-timeline-disposition">${escapeHtml(timelineLabel)}</span>` : ""}</p>
+          <p class="person-detail-status"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(metaLabel("person_type", person.person_type, "인물 유형 확인 필요"))}</span>${timelineLabel ? `<span class="person-timeline-disposition">${escapeHtml(timelineLabel)}</span>` : ""}</p>
         </div>
       </div>
       <div class="person-chronicle-body">
