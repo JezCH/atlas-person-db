@@ -12,6 +12,11 @@ const REVIEWED_REGISTRATION_ALIASES=Object.freeze([
   Object.freeze({alias_name:"Imam Bukhari",canonical_key:"Al-Bukhari",representative_default:false}),
   Object.freeze({alias_name:"Imam Malik",canonical_key:"Malik ibn Anas",representative_default:false}),
   Object.freeze({alias_name:"King Leonidas",canonical_key:"Leonidas I",representative_default:false}),
+  // Two more exact historical identity reviews already in B024 36-label source
+  // screening; keep them suppressed if future raw-video extraction reintroduces
+  // their titles. Never infer historical subjects from an unreviewed prefix.
+  Object.freeze({alias_name:"Queen Elizabeth I",canonical_key:"Elizabeth I",representative_default:false}),
+  Object.freeze({alias_name:"Ramesses II",canonical_key:"Ramses II",representative_default:false}),
   // Verified 2026-10-10 live Person identity Muhammad Ali Jinnah:
   // honorific Quaid-e-Azam variants are NOT new Person registrations.
   Object.freeze({alias_name:"Quaid-e-Azam Muhammad Ali Jinnah",canonical_key:"Muhammad Ali Jinnah",representative_default:true}),
