@@ -59,6 +59,10 @@ Checks:
 - Every canonical Polity's current discovered external references, all 25+ true zero-external-ref candidates, each existing direct source pair and name; Korean preferred names collision inventory after accepted two-case correction.
 - Immutable GitHub artifact with raw full internal rows, categorized summary, exact GitHub workflow SHA and deployed Vercel SHA. Job must **fail closed** if the required exact Production deployment isn't ready. The production handler and workflow are a pair: no OIDC relaxation, no API bypass.
 
+## First genuine exact-SHA protected execution and corrected schema finding
+
+[First full internal read-only execution #38127762957](https://github.com/JezCH/atlas-person-db/actions/runs/38127762957), GitHub main **`964da1b266a1ac1cc1503206c85efbbd676ff00a`**, was on a **READY Vercel Production deployment at the same exact SHA**, and reached the authenticated DB handler. It **FAILED CLOSED** with HTTP 500 `column f.id does not exist` inside the new full-Production SQL after it connected. No complete canonical internal result or DB mutation occurred. A two-file schema correction removes the invented `polity_place_functions.id` sort, using actual `polity_id` and stable whole-row JSON as ordering keys and adding a regression guard. **Actual rerun must still pass under a newly matching deployed SHA before P2-10 is accepted**. Do not re-label the failed first execution as an audit success.
+
 ## Acceptance & remaining gaps
 
 1. Full ATLAS Integrity CI and only then merge the code. The merge-triggered allowlisted workflow must receive an actual Vercel Production deployment of **that exact GitHub main SHA**, pass GitHub OIDC trust and `read_only=true,committed=false,complete=true`, and archive the **real** full result. Existing Vercel Hobby deployment caps have prevented some exact SHA attempts; don't pretend a CI green code validation means a DB audit passed. Avoid repeated 60-attempt waits (bounded retry 6).
