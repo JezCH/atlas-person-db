@@ -24,6 +24,6 @@ test("postcommit review metadata does not change protected original applied mani
  const loaded=requireUnifiedV2Manifest(manifest);
  assert.equal(manifest.manifest_sha256,plan.post_apply_verification_request.original_manifest_sha256);
  assert.deepEqual(loaded.operations.map(x=>x.type),["assert_source","assert_source","assert_polity_designation"]);
- assert.equal(loaded.request_id,"polity_p2_06c_sweden_historiographic_stormaktstiden_1611_1718_20261011_v1");
+ assert.equal(plan.batch_id,"polity_p2_06c_sweden_historiographic_stormaktstiden_1611_1718_20261011_v1");
  assert.equal(loaded.operations[2].exact_after.designation.polity_id,"93613017-b4c4-5f82-8e96-3ce6b2d3a61e");
 });
