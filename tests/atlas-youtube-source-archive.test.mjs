@@ -203,3 +203,32 @@ test("catalog read operation stays DB read-only after prior schema bootstrap",as
   assert.equal(migrationCalls,0);
   assert.equal(readCalls,1);
 });
+
+test("Production archive handler never reflects or logs raw PostgreSQL connection errors",async()=>{
+  const sha="c".repeat(40);
+  const secret="postgresql://private-user:secret-password@hidden.invalid/postgres";
+  const errors=[];
+  const original=console.error;
+  const handler=handlerModule.createYoutubeSourceArchiveHandler({
+    env:{
+      VERCEL_ENV:"production",VERCEL_GIT_COMMIT_REF:"main",
+      VERCEL_GIT_REPO_OWNER:"JezCH",VERCEL_GIT_REPO_SLUG:"atlas-person-db",
+      VERCEL_GIT_COMMIT_SHA:sha,SUPABASE_DB_URL:secret
+    },
+    verifyOidc:async()=>{},
+    clientFactory:async()=>{throw new Error("connect refused: "+secret);}
+  });
+  const res=response();
+  console.error=(...args)=>errors.push(args);
+  try{
+    await handler({
+      method:"POST",headers:{authorization:"Bearer signed-token"},
+      body:{runtime_sha:sha,publication_sha:sha,records:[row()]}
+    },res);
+  }finally{console.error=original;}
+  assert.equal(res.statusCode,500);
+  assert.equal(res.body.code,"YOUTUBE_SOURCE_ARCHIVE_CATALOG_FAILED");
+  assert.equal(Object.hasOwn(res.body,"error"),false);
+  assert.doesNotMatch(JSON.stringify(res.body),/private-user|secret-password|hidden.invalid/);
+  assert.doesNotMatch(JSON.stringify(errors),/private-user|secret-password|hidden.invalid/);
+});
