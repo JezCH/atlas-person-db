@@ -738,13 +738,21 @@
         review_group: "rupture_probe",
         kind: "rupture_review",
         title: "Carolingian Empire → post-partition successor kingdoms",
-        left: { name: "Carolingian Empire" },
-        right: { name: "post-partition successor kingdoms" },
-        rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
+        left: { name: "Carolingian Empire", polity_id: "24fbaaf1-a10b-5ad5-aca2-177f1e7b26d3" },
+        right: { name: "post-partition successor kingdoms", east_francia_polity_id: "5e472dc4-61f1-41b2-b520-0252b52bebdc", lotharingia_polity_id: "d4c6c00a-5309-48b9-aaaf-80d43ca3700a", frankish_kingdom_polity_id: "94f676c5-2853-4b8a-91d9-f57ef7954ee5" },
+        rationale: "POLITY-P2-07E (2026-10-11) 최신 실제 1158 Polity Production OIDC 전수감사와 Larousse·Britannica·Université de Lorraine·Oxford 사료 검토: 843년 베르됭 분할로 서·동·중프랑크 정치적 운영 영역이 분리됐으며, 855년 프륌 분할로 로타르 2세의 로타링기아가 중프랑크 일부에서 등장했습니다. 현행 카롤링거 제국은 샤를마뉴 황제 800–814년 1건, 동프랑크 왕국은 919–973년 활동 2건, 로타링기아는 855–869년 활동 1건; 843–855년 중프랑크 왕국과 서프랑크 왕국이 별도 canonical_key/보존 명칭으로는 정확히 검색되지 않습니다. 프랑크 왕국의 샤를마뉴 왕 768–814년과 카롤링거 제국의 같은 사람 황제 800–814년은 서로 다른 역할이므로 중복 국가/중복 재위로 자동 제거하지 않습니다. 결론은 843–855년 실질 분할과 855년 후속 분할을 구별하여 기존 확인된 정치체를 병합하지 않는 방향이지만, 서프랑크·중프랑크의 기존 UUID/별칭/등록 누락 및 왕별 활동·출처를 재검증하기 전에는 이 전체 seed를 종결할 수 없습니다. 새로운 서프랑크 UUID·연대·계승관계는 창작하지 않고 전부 보존합니다.",
         suggested_action: "hold",
+        reviewed_decision: "historical_keep_successor_courts_separate_verify_absent_west_middle_francia_alias_or_registration",
         status: "REVIEW_REQUIRED",
         terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        evidence: [
+          "Protected entire Production P2-10 OIDC run 38128160741 artifact 11697859340: exact 1158 stored Polity keys/localized names and original Activity/Source rows inventoried",
+          "Carolingian Empire 24fbaaf1-a10b-5ad5-aca2-177f1e7b26d3 Charlemagne emperor 800–814, East Francia 5e472dc4-61f1-41b2-b520-0252b52bebdc two Activities 919–973, Lotharingia d4c6c00a-5309-48b9-aaaf-80d43ca3700a Lothair II 855–869",
+          "Larousse Treaty of Verdun August 843 three realms: https://www.larousse.fr/encyclopedie/divers/Verdun/148594",
+          "University of Lorraine post-855 Treaty of Prüm and Lotharingia northern remnant: https://rgh.univ-lorraine.fr/articles/index.html",
+          "Oxford Academic Laury Sarti 2024 Carolingian kingship/imperium: https://academic.oup.com/book/56468/chapter-abstract/448564599",
+          "Full non-executable source and Production analysis docs/POLITY_P2_07E_CAROLINGIAN_SUCCESSOR_843_855_SOURCE_AND_PRODUCTION_GAPS_20261011.md"
+        ]
       },
       {
         id: "uar-post1961-egypt",
