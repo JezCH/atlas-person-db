@@ -640,3 +640,21 @@ test('POLITY-M3 moves top-level structural edges onto shared GLOBAL-M1 hairlines
   assert.doesNotMatch(material, /atlas-divider/);
   assert.doesNotMatch(material, /\n\s*(?:padding|grid-template-columns|font-size|line-height|width|height)\s*:/);
 });
+
+
+test('P2-07E Carolingian 843–855 stage preflight retains non-destructive rupture hold and all original sovereign UUIDs', () => {
+  const row=registry.rupture_probes.find(r=>r.id==='carolingian-partitions');
+  assert.ok(row);
+  assert.equal(row.status,'REVIEW_REQUIRED');
+  assert.equal(row.terminal_status,null);
+  assert.equal(row.left.polity_id,'24fbaaf1-a10b-5ad5-aca2-177f1e7b26d3');
+  assert.equal(row.right.east_francia_polity_id,'5e472dc4-61f1-41b2-b520-0252b52bebdc');
+  assert.equal(row.right.lotharingia_polity_id,'d4c6c00a-5309-48b9-aaaf-80d43ca3700a');
+  assert.equal(row.right.frankish_kingdom_polity_id,'94f676c5-2853-4b8a-91d9-f57ef7954ee5');
+  assert.match(row.rationale,/843년/);
+  assert.match(row.rationale,/855년/);
+  assert.match(row.rationale,/서프랑크/);
+  assert.ok(row.evidence.some(v=>v.includes('38128160741')));
+  assert.ok(row.evidence.some(v=>v.includes('larousse.fr')));
+  assert.ok(row.evidence.some(v=>v.includes('rgh.univ-lorraine.fr')));
+});
