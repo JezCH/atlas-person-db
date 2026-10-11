@@ -87,10 +87,11 @@ test('R4 Person cards render the user-facing compact Activity tuple without deta
     'activity?.polity?.display_name',
     'activity?.relation?.code',
     'activity?.role?.display_name',
-    'activity?.period_basis?.display_name',
     'activity?.start',
     'activity?.end'
   ]) assert.match(mainSource, new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.match(mainSource, /basisLabel\(activity\?\.period_basis\)/);
+  assert.match(mainSource, /value\?\.display_name/);
   assert.match(mainSource, /person-card-activities/);
   assert.match(mainSource, /역할 미지정/);
   const cardBody = mainSource.slice(mainSource.indexOf('function compactActivityHtml'), mainSource.indexOf('function groupSection'));
