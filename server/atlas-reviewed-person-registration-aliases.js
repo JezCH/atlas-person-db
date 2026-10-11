@@ -4,6 +4,15 @@
 // canonical Person. These aliases are *not* candidate-name substring guesses,
 // and do not mutate atlas_v2.persons or atlas_v2.person_names.
 const SOURCE_FIRST_LIVE_REGISTERED_ALIASES=require("../audits/youtube-source-first-live-registered-aliases-50.json");
+const ADDITIONAL_REVIEWED_28_ALIASES=require("../audits/youtube-v5-registered-28-nonoverlap-specific-aliases.json");
+if(ADDITIONAL_REVIEWED_28_ALIASES.schema!=="atlas-youtube-v5-registered-person-28-nonoverlap-aliases/v1"||
+   ADDITIONAL_REVIEWED_28_ALIASES.novel_exact_alias_count!==28||
+   ADDITIONAL_REVIEWED_28_ALIASES.aliases.length!==28)
+  throw Error("YOUTUBE_REGISTERED_ADDITIONAL_28_MANIFEST_INVALID");
+const first50Keys=new Set(SOURCE_FIRST_LIVE_REGISTERED_ALIASES.reviewed_aliases.map(r=>r.source_name));
+if(new Set(ADDITIONAL_REVIEWED_28_ALIASES.aliases.map(r=>r.alias_name)).size!==28||
+   ADDITIONAL_REVIEWED_28_ALIASES.aliases.some(r=>first50Keys.has(r.alias_name)))
+  throw Error("YOUTUBE_REGISTERED_28_OVERLAPS_EXISTING_50");
 if(SOURCE_FIRST_LIVE_REGISTERED_ALIASES.schema!=="atlas-youtube-live-registered-person-alias-lookup/v1"||
    SOURCE_FIRST_LIVE_REGISTERED_ALIASES.reviewed_aliases.length!==50)
   throw Error("YOUTUBE_SOURCE_FIRST_REGISTERED_ALIAS_MANIFEST_INVALID");
@@ -27,6 +36,13 @@ const REVIEWED_REGISTRATION_ALIASES=Object.freeze([
   // They suppress already-registered People in the ONE live discovery feed.
   ...SOURCE_FIRST_LIVE_REGISTERED_ALIASES.reviewed_aliases.map(row=>Object.freeze({
     alias_name:row.source_name,canonical_key:row.registered_name,
+    representative_default:false
+  })),
+  // Twenty-eight more reviewed aliases, explicitly disjoint from the 50
+  // already merged in another lane. This remains the FINAL registered
+  // exclusion, never a source candidate generation dictionary.
+  ...ADDITIONAL_REVIEWED_28_ALIASES.aliases.map(row=>Object.freeze({
+    alias_name:row.alias_name,canonical_key:row.canonical_key,
     representative_default:false
   })),
   // Verified 2026-10-10 live Person identity Muhammad Ali Jinnah:
