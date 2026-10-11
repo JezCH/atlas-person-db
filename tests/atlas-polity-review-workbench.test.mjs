@@ -228,14 +228,19 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.resolved_history
   ];
   assert.equal(all.length,75);
-  assert.equal(all.filter(row=>Boolean(row.terminal_status)).length,65);
-  assert.equal(unresolved.length,10);
+  assert.equal(all.filter(row=>Boolean(row.terminal_status)).length,66);
+  assert.equal(unresolved.length,9);
   assert.deepEqual([
     unresolved.filter(row=>row.review_group==='historical_family_review').length,
     unresolved.filter(row=>row.review_group==='designation_residual').length,
     unresolved.filter(row=>row.review_group==='naming_residual').length,
     unresolved.filter(row=>row.review_group==='rupture_probe').length
-  ],[5,1,0,4]);
+  ],[5,1,0,3]);
+  const mongol = byId.get('mongol-successor-khanates');
+  assert.equal(mongol.terminal_status, 'KEEP_SEPARATE');
+  assert.equal(mongol.reviewed_decision, 'keep_both');
+  assert.equal(mongol.locked, true);
+  assert.ok(mongol.evidence.some(entry=>entry.includes('2026-10-11 complete protected Production')));
   assert.equal(unresolved.some(row=>row.review_group==='naming_residual'),false);
   assert.ok(unresolved.length > 0);
   assert.ok(unresolved.some(row => row.id === 'sweden-temporal-designation'));
