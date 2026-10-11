@@ -1,6 +1,6 @@
 # POLITY-P2-10 — Internal-DB provenance, orphan, retirements, Source and Runtime audit
 
-**2026-10-11 KST | Code implemented; FRESH PRODUCTION protected census NOT ACCEPTED until GitHub OIDC/deployed SHA and immutable result artifact pass.** This is a separate essential stage following completed whole-public 1,158-Polity census P2-09 and the two KO naming fixes.
+**2026-10-11 KST | Historical pre-acceptance design, SUPERSEDED by actual successful Production protected census.** See [full live authoritative 15-table results, exact artifact and unresolved gaps](POLITY_P2_10_FULL_PROTECTED_PRODUCTION_AUDIT_RESULTS_20261011.md): [run #38128160741](https://github.com/JezCH/atlas-person-db/actions/runs/38128160741) **SUCCESS**, artifact #11697859340, deployed/OIDC SHA `8a54de696d0a257a9a8a2a060994509376a39c97`, 1158 Polities, 3354 Sources, 2523 exact original and 2523 compiled activities, three contradictory live Japan retirement tombstones, 83 Source URLs shared across UUIDs, zero Place functions, 25 orphan candidates. **This document below preserves the earlier design and older historical crosswalk; actual Production acceptance is in linked report.** This is a separate essential stage following completed whole-public 1,158-Polity census P2-09 and the two KO naming fixes.
 
 ## Global mission and discovered missed tasks
 
