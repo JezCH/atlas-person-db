@@ -174,5 +174,18 @@
     "Public Runtime four existing monarch Activities show Swedish Empire/스웨덴 제국 temporal label; outside 1611–1718 negative control unchanged, Sweden-Norway separate Polity unchanged",
     "Independent exact Production inventory readback/replay proves one 1611–1718 hist period and both normalized Source triples; no second duplicate link",
     "Only after exact applied and public readback mark sweden-temporal-designation FIXED, other 9 REVIEW_REQUIRED and Japan/Place/France/Authoring parity remains OPEN"
-  ]
+  ],
+  "post_apply_verification_request": {
+    "original_production_correction_run": 38134300667,
+    "original_production_artifact": 11700142653,
+    "original_workflow_sha": "79dcbcfa5f48314dfb4bb7012a36279347fe0683",
+    "original_manifest_sha256": "sha256:f758d383e678bb8ea31809a08074781537c7637b4fb0e49df562a2ebefb77038",
+    "original_activity_snapshot_digest": "sha256:39dfe08e563ec100abc7fdcc0b46d7609b239d592eeac0664a79f708ff234bcf",
+    "independent_public_read_run": 38134695893,
+    "independent_public_read_artifact": 11700581801,
+    "proof_only_no_new_operation": true,
+    "expected_replay": true,
+    "expected_insert_count": 0,
+    "reason": "Same protected Stage2 Correction request and immutable original manifest; post-commit ledger replay must verify actual existing Lex and Scandia Source rows plus Swedish historiographic designation and its two exact locale names/Source triples; absolutely no duplicate insert, change of Activities, or new actor."
+  }
 }
