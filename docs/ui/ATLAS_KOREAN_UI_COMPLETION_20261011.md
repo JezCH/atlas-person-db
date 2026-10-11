@@ -46,3 +46,12 @@
 - **추가 확인된 미처리 지점 (후속 화면 단위):** `atlas-person-spacetime-view.js`의 `error?.code || error?.message`, `atlas-dashboard.js`의 `persons.reason?.message`, `atlas-polity-review-workbench.js`의 `live.error?.message`, `atlas-admin-observability.js`의 API 오류 코드 출력, `atlas-admin-identity.js`·`admin.js`의 직접 오류 메시지 출력, `atlas-main-authority-nav.js`의 모듈 로드 예외 출력. 이들은 이번 Person 화면 작업 완료로 종결 처리하지 않는다.
 - **놓쳤던 인물 본문 값 (별도 고우선순위 단위):** `atlas-person-main.js`에서 `historicity`, `person_type`, `relation.code`(요약카드), `relation.category`, `source_type`, `name_type`, 연대 `granularity`·`calendar`, `portrait_kind`·`evidence_level`을 사용자용 번역 없이 출력하는 지점 확인. 이는 방금 처리한 **오류 표시 경계와 별개의 데이터 표기 문제**이며 이번 PR로 종결하지 않는다. 특히 고유 이름/원문 인용과 달리 이런 값은 기계 코드를 한국어로 투사해야 한다. `ATLAS_UI_I18N`/분야 registry에 검증된 값부터 매핑하고 미상은 정직하게 한국어 미확정 처리한다. 관계·출처·연대 정보 자체는 숨기거나 DB에서 변형하지 않는다.
 - **후속 재개점:** Person 화면의 병합·배포 증거를 확인한 다음, 상기 목록 가운데 충돌 없는 하나의 화면 오류 경계를 우선 수정하고, 나머지 동적 상태·문구·ARIA·모바일 전수조사를 이어간다.
+
+## 7. 인물 목록·상세 코드 표기 후속 작업 (2026-10-11)
+
+- **선행 배포 종결:** #2473 병합 `6d32026e9c1d0d2cca9aa69d42bb86a2a0c24a4c`와 동일한 Vercel Production READY SHA 확인. 이는 브라우저 시각 검수와 별개의 SHA·배포 상태 검증이다.
+- **현재 표시 레이어 수정:** Person 목록/상세의 역사성, 인물 유형, 관계 코드·분류, 분야, 이름 언어·유형, 출처 유형, 활동 경계의 정밀도·역법, 기간 기준. 검증된 기존 `ATLAS_UI_I18N` 표를 확장해 표시 시 번역하며 모르는 enum은 한국어 확인 필요로 둔다. Person·Activity·Source 데이터베이스, API 필드 및 검색·등록 계약은 그대로 둔다.
+- **Activity Evidence Inspector 함께 점검:** 근거 객체의 원본 값은 `evidenceForActivity`에 유지하되, 펼침 영역의 영문 raw-code tooltip과 미등록 상태값 직접 출력은 없애고 한국어 표시 안내를 제공한다.
+- **정정 사항:** 이전 문서에서 초상 `portrait_kind` / `evidence_level`을 미처리 canonical 종류처럼 열거했으나 최신 `server/atlas-person-portrait-service.js`와 관련 회귀 테스트 확인 결과 **이 분류들은 현행 초상 이미지 저장 모델에서 퇴역**했으며 복원하면 안 된다. 관련 레거시 표시 경로는 실제 값이 있을 때만 미확정 문구로 방어한다. 실존하는 새 카테고리로 임의 생성하지 않는다.
+- **여전히 별도로 남는 범위:** 인물/정치체/Role 등의 **표시 이름 자체**에 한국어 공식 명칭이 없는 경우는 출처 기반 등록·표기 검토와 별도로 처리해야 한다. 이들은 원시 영문 UI chrome과 혼동하여 추측 번역하지 않는다. 대시보드·시공간표·정치체·Admin·공통 화면 오류 원문 출력도 기존 미처리 목록 그대로 유지한다.
+- **정확한 다음 재개점:** 이 작업 PR의 테스트, 병합 및 Production 반영을 확인하고 **시공간 인물도 조회 실패 표시 경계**를 첫 번째 후속 단위로 수행한다. 이후 Dashboard, Polity, Admin, 공통 모듈 오류 표시와 상태/빈 화면/a11y/모바일 전수 확인, 최종 운영 시각 검수까지 진행한다. 전체 완료 선언은 하지 않는다.
