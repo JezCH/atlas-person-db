@@ -44,7 +44,7 @@ jobs:
             ([.polity.activities[]|select(.id as $v|($ids|index($v))==null)|
               select(.polity_designation_name_en==null and .polity_designation_name_ko==null)]|length)==11 and
             ([.polity.activities[]|select(.id=="2f882cb8-d772-4f40-8a31-a3fdb47534b2" or
-              .id=="5f93b302-8401-4a18-bf7e-53fac8efdc6a")|length)==2
+              .id=="5f93b302-8401-4a18-bf7e-53fac8efdc6a")]|length)==2
           ' sweden-p2-06c-public/sweden.json >/dev/null
           jq -e '
             .ok==true and .schema=="atlas-polity-read/v1" and .mode=="detail" and
