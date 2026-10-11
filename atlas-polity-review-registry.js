@@ -651,11 +651,20 @@
         title: "Mongol Empire → Yuan / Golden Horde / Chagatai / Ilkhanate and other successors",
         left: { name: "Mongol Empire" },
         right: { name: "Yuan / Golden Horde / Chagatai / Ilkhanate and other successors" },
-        rationale: "이 사례는 이름 유사도 스캔이 놓칠 수 있는 catastrophic territorial discontinuity explicit seed입니다. 자동 분리하지 말고 핵심 영토·정치 중심·운영 주체의 급격한 단절 여부를 최신 Production과 사료 기준으로 판정합니다.",
-        suggested_action: "hold",
-        status: "REVIEW_REQUIRED",
-        terminal_status: null,
-        evidence: ["rupture-rule explicit probe"]
+        rationale: "2026-10-11 전체 Production OIDC 스냅샷과 Cambridge·Met 연구를 대조해 KEEP_SEPARATE로 판정했습니다. 통일 몽골제국과 이후 원·킵차크 한국·일 칸국·차가타이 계열은 한 UUID에 결합된 단일 운영국가가 아니라 정치 중심과 지배권을 분리해 운영한 여러 칭기즈 왕가 정치체입니다. 현 Production은 몽골제국(6 Activity), 원(4), 킵차크 한국(3), 일 칸국(3), 서차가타이 한국(1)을 별도 UUID로 보존하며 모두 원본/Runtime Activity 수가 일치합니다. 북원(3)도 원과 별도 UUID로 유지합니다. 몽골 세계의 분열은 단일한 확정 건국일 하나로 단순화할 수 없으며 왕조적 계승 주장과 독립적 운영 정치체를 혼동하지 않습니다. 이것은 기존 UUID 분리 적정성 판정이지 모든 후계국 등록·출처·계승관계 구축 완료 선언이 아닙니다. 원래 차가타이 한국 범위의 독립 Polity가 이 스냅샷에 없고 현재 서차가타이(1360~1363)만 관측되므로 역사적 coverage와 relation-type=0 문제는 별도 후속 게이트로 명시합니다. 데이터 추가·삭제·retire·Activity relink 없음.",
+        suggested_action: "keep_both",
+        status: "KEEP_SEPARATE",
+        terminal_status: "KEEP_SEPARATE",
+        reviewed_decision: "keep_both",
+        evidence: [
+          "2026-10-11 complete protected Production OIDC census #38128160741, artifact #11697859340; deployment SHA 8a54de696d0a257a9a8a2a060994509376a39c97; exact six UUID/group Activity counts, original=Runtime, no identity relation vocabulary",
+          "David Morgan, The Decline and Fall of the Mongol Empire, Journal of the Royal Asiatic Society 19(4), 2009, DOI 10.1017/S1356186309990046: division among independent successor khanates",
+          "The Cambridge History of the Mongol Empire, 2024, Marie Favereau and Roman Pochekaev: Golden Horde politically independent while retaining ties to other khanates",
+          "Michal Biran, Mongol Central Asia, The Cambridge History of the Mongol Empire, 2024: Chaghadaid successor state",
+          "Metropolitan Museum, The Legacy of Genghis Khan: Yuan / Chagatai / Golden Horde / Ilkhanid historical branches",
+          "docs/POLITY_P2_11A_MONGOL_SUCCESSOR_RUPTURE_20261011.md"
+        ],
+        locked: true
       },
       {
         id: "yuan-northern-yuan-rupture",
