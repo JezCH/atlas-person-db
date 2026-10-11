@@ -110,3 +110,15 @@ test("read-only audit uses existing consolidated API and original source census"
   assert.match(source,/REPEATABLE READ READ ONLY/);
   assert.match(source,/ROLLBACK/);
 });
+
+
+test("Place Production audited snapshot binds exact current main deployment SHA both before and after one OIDC read",()=>{
+  const fs=require("node:fs");
+  const yaml=fs.readFileSync(new URL("../.github/workflows/atlas-place-production-authority-audit.yml",import.meta.url),"utf8");
+  assert.match(yaml,/runtime-after\.json/);
+  assert.match(yaml,/git_commit_sha==\$sha/);
+  assert.match(yaml,/github\.run_attempt/);
+  assert.match(yaml,/seq 1 8/);
+  assert.match(yaml,/audit\.state=="TARGET_CONFIRMED_GAP" or \.audit\.state=="TARGET_CONFIRMED_COMPLETE"/);
+  assert.doesNotMatch(yaml,/ignore_sha|skip_oidc|bypass/i);
+});
