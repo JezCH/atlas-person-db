@@ -1,0 +1,178 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_p2_06c_sweden_historiographic_stormaktstiden_1611_1718_20261011_v1",
+  "as_of": "2026-10-11",
+  "status": "REVIEWED_SOURCE_BACKED_TEMPORAL_DESIGNATION_NO_SOVEREIGN_IDENTITY_CHANGE",
+  "release_order": 2476,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#1895 sweden-temporal-designation REVIEW_REQUIRED; P2-06B no-write decision; protected P2-10 complete 1158-Polity/59-designation/3354-Source exact OIDC census #38128160741 artifact 11697859340 at deployed 8a54de696d0a257a9a8a2a060994509376a39c97. Existing Sweden UUID and 15 original Activities preserved. Lex 2025 + Scandia 2026 verified modern historiography, not Swedish legal sovereign title.",
+  "evidence": {
+    "existing_sweden_polity_id": "93613017-b4c4-5f82-8e96-3ce6b2d3a61e",
+    "existing_sweden_norway_union_id": "a47f57af-8ac2-4724-81b0-43074c64f84c",
+    "source_inventory_workflow": 38128160741,
+    "source_inventory_artifact": 11697859340,
+    "source_inventory_deployed_sha": "8a54de696d0a257a9a8a2a060994509376a39c97",
+    "actual_sweden_designation_count_before": 0,
+    "existing_sweden_activity_count": 15,
+    "four_required_display_activity_ids": [
+      "e889c50c-3a9b-4b30-90ab-0822ad5dffd6",
+      "daf85f20-db1f-50c2-aff1-86830290da8e",
+      "931c792b-5039-4637-b418-4d04264b7b54",
+      "b5a7fcfe-47ee-4332-9110-443c0d0a40be"
+    ],
+    "existing_sweden_norway_activity_count": 3,
+    "verified_source_url_absence_before": [
+      "https://lex.dk/Stormagtstiden",
+      "https://journals.lub.lu.se/scandia/sv/article/view/29334"
+    ],
+    "historiographic_period_source": "Jürgen Beyer, Stormagtstiden, Lex (last revised 2025-02-20), states traditional Swedish 1611–1718 periodization from Gustav II Adolf's accession to Charles XII's death; not a contemporary constitutional title.",
+    "terminology_history_source": "Harald Gustafsson, Stormakten genom tiderna: En historiografisk skiss, Scandia 92(1) (published 2026-06-08), demonstrates retroactive nineteenth-century great-power terminology.",
+    "alternate_year_convention": "1611–1721 is also scholarly used; this plan selects precisely Lex's explicitly stated 1611–1718 historical convention for complete inclusion of the four existing ruler activities, not an assertion that the 1721 convention is false.",
+    "semantic_rule": "The Swedish Empire is a conventional English rendering for this historical Swedish period; Stormaktstiden is the underlying historiographic period, NOT sovereign Emperor title, state_form, new independent Polity, or change of the underlying kingdom."
+  },
+  "execution_rules": {
+    "production_executable": false,
+    "production_mutation_authorized": false,
+    "exact_live_before_snapshot_required": true,
+    "no_polity_create_merge_relink_delete": true,
+    "no_person_activity_or_source_link_rewrite": true,
+    "no_historical_day_or_month_precision_fabrication": true,
+    "preserve_all_existing_sweden_and_union_activities": true,
+    "preserve_all_existing_polity_names": true,
+    "source_ids_authoring_only_new_exact_uuid": true,
+    "disallow_unreviewed_source_dedup": true
+  },
+  "operations": [],
+  "stage2_assertions": [
+    {
+      "type": "assert_source",
+      "decision_id": "p2-06c-lex-2025-stormagtstiden-first-original-source",
+      "exact_before": {
+        "source_absent_id": "2e1bd0b9-9b74-5870-bab9-9d05dbd45e81"
+      },
+      "exact_after": {
+        "source": {
+          "id": "2e1bd0b9-9b74-5870-bab9-9d05dbd45e81",
+          "source_key": "polity:p2-06c:sweden-stormaktstiden:lex-2025:v1",
+          "source_type": "web_bibliographic_reference",
+          "title": "Stormagtstiden — Lex",
+          "author_creator": "Jürgen Beyer",
+          "institution": null,
+          "publisher": "Lex.dk",
+          "publication_date": "2025-02-20",
+          "publication_year": 2025,
+          "canonical_url": "https://lex.dk/Stormagtstiden",
+          "external_identifier": null,
+          "citation_text": "Beyer, Jürgen. “Stormagtstiden.” Lex.dk, revised 20 February 2025. Swedish great-power period 1611–1718.",
+          "citation_metadata": null,
+          "artifact_metadata": null,
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_source",
+      "decision_id": "p2-06c-scandia-2026-swedish-period-historiography-source",
+      "exact_before": {
+        "source_absent_id": "80b599d8-8f2c-5974-873b-5790057199c0"
+      },
+      "exact_after": {
+        "source": {
+          "id": "80b599d8-8f2c-5974-873b-5790057199c0",
+          "source_key": "polity:p2-06c:sweden-stormaktstiden:scandia-2026:v1",
+          "source_type": "academic_reference",
+          "title": "Stormakten genom tiderna: En historiografisk skiss — Scandia",
+          "author_creator": "Harald Gustafsson",
+          "institution": null,
+          "publisher": "Scandia, Lund University",
+          "publication_date": "2026-06-08",
+          "publication_year": 2026,
+          "canonical_url": "https://journals.lub.lu.se/scandia/sv/article/view/29334",
+          "external_identifier": null,
+          "citation_text": "Gustafsson, Harald. “Stormakten genom tiderna: En historiografisk skiss.” Scandia 92, no. 1 (2026): 11–32. doi:10.47868/scandia.v92i1.29334.",
+          "citation_metadata": null,
+          "artifact_metadata": null,
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "p2-06c-sweden-historiographic-great-power-era-1611-1718",
+      "exact_before": {
+        "designation_absent_id": "bf92c969-7557-51b9-87c9-6aa650e75495"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "bf92c969-7557-51b9-87c9-6aa650e75495",
+          "polity_id": "93613017-b4c4-5f82-8e96-3ce6b2d3a61e",
+          "designation_type": "historiographic_period",
+          "valid_from_year": 1611,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1718,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "Stormaktstiden / Great-Power Era; traditionally periodized 1611–1718 by Lex, with scholarly 1611–1721 alternates acknowledged. Swedish Empire is a conventional historiographic English term for Sweden's great-power kingdom, NOT a formal Empire state style, no imperial monarch title, no new sovereign Polity, and no day precision. Gustafsson 2026 explains retrospective terminology."
+        },
+        "names": [
+          {
+            "id": "1246b81f-c5c6-50cc-8a6b-c76be8a9b878",
+            "polity_designation_id": "bf92c969-7557-51b9-87c9-6aa650e75495",
+            "locale": "en",
+            "name": "Swedish Empire",
+            "is_preferred": true
+          },
+          {
+            "id": "991ea0da-a033-5d6a-834f-15724b6c2e4b",
+            "polity_designation_id": "bf92c969-7557-51b9-87c9-6aa650e75495",
+            "locale": "ko",
+            "name": "스웨덴 제국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "bf92c969-7557-51b9-87c9-6aa650e75495",
+            "source_id": "2e1bd0b9-9b74-5870-bab9-9d05dbd45e81",
+            "source_locator_key": "https://lex.dk/Stormagtstiden"
+          },
+          {
+            "polity_designation_id": "bf92c969-7557-51b9-87c9-6aa650e75495",
+            "source_id": "80b599d8-8f2c-5974-873b-5790057199c0",
+            "source_locator_key": "https://journals.lub.lu.se/scandia/sv/article/view/29334"
+          }
+        ]
+      }
+    }
+  ],
+  "expected_canonical_delta": {
+    "sources": 2,
+    "polity_designations": 1,
+    "polity_designation_names": 2,
+    "polity_designation_sources": 2,
+    "persons": 0,
+    "polities": 0,
+    "activities": 0,
+    "activity_source_links": 0,
+    "polity_source_links": 0,
+    "polity_identity_relations": 0,
+    "retirements": 0
+  },
+  "acceptance_requirements": [
+    "Full Integrity CI; authenticated Correction OIDC source-only and designation exact before-state dry_run then atomic apply with observed sources:+2 designations:+1 names:+2 designation_sources:+2 and zero all other deltas",
+    "Do not modify existing 15 Sweden or 3 Sweden-Norway Activity UUIDs, monarch roles, Source links or original Polity preferred names",
+    "Public Runtime four existing monarch Activities show Swedish Empire/스웨덴 제국 temporal label; outside 1611–1718 negative control unchanged, Sweden-Norway separate Polity unchanged",
+    "Independent exact Production inventory readback/replay proves one 1611–1718 hist period and both normalized Source triples; no second duplicate link",
+    "Only after exact applied and public readback mark sweden-temporal-designation FIXED, other 9 REVIEW_REQUIRED and Japan/Place/France/Authoring parity remains OPEN"
+  ]
+}
