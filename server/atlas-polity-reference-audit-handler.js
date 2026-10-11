@@ -4,6 +4,7 @@ const {
   verifyGitHubActionsOidc
 } = require("./atlas-audit-github-oidc.js");
 const { createPostgresClient } = require("./atlas-postgres-client.js");
+const { queryFullPolityIntegrity } = require("./atlas-polity-full-integrity-audit.js");
 const { discoverIdentityReferences } = require("./atlas-destructive-lifecycle-service.js");
 const {
   bearerToken,
@@ -121,7 +122,7 @@ function referenceCountRecord(ref, count) {
   });
 }
 
-async function queryPolityReferenceAudit(client, { includeBrazilDetails = false, includeBrazilPreflight = false, includeBrazilSourceAliases = false, includeBrazilStage2Contract = false, includeBrazilLawSourcePreflight = false, includeRussiaDetails = false, includeSwedenDetails = false, includeSongDetails = false } = {}) {
+async function queryPolityReferenceAudit(client, { includeBrazilDetails = false, includeBrazilPreflight = false, includeBrazilSourceAliases = false, includeBrazilStage2Contract = false, includeBrazilLawSourcePreflight = false, includeRussiaDetails = false, includeSwedenDetails = false, includeSongDetails = false, includeFullIntegrityDetails = false } = {}) {
   await beginReadOnly(client);
   try {
     const polities = await queryPolities(client);
@@ -189,6 +190,7 @@ async function queryPolityReferenceAudit(client, { includeBrazilDetails = false,
     const russiaDetails = includeRussiaDetails ? await queryRussiaDetails(client) : null;
     const swedenDetails = includeSwedenDetails ? await querySwedenDetails(client, outputPolities) : null;
     const songDetails = includeSongDetails ? await querySongDetails(client, outputPolities) : null;
+    const fullIntegrityDetails = includeFullIntegrityDetails ? await queryFullPolityIntegrity(client,outputPolities) : null;
     if (includeBrazilDetails && outputPolities.filter((row) => BRAZIL_P2_03E_POLITY_IDS.includes(row.polity_id)).length !== BRAZIL_P2_03E_POLITY_IDS.length) {
       throw new Error("POLITY_REFERENCE_AUDIT_BRAZIL_POLITY_MISSING");
     }
@@ -202,6 +204,7 @@ async function queryPolityReferenceAudit(client, { includeBrazilDetails = false,
       russia_details: russiaDetails,
       sweden_details: swedenDetails,
       song_details: songDetails,
+      full_integrity_details: fullIntegrityDetails,
       complete: true,
       reference_model: "direct_foreign_keys_plus_atlas_v2_polity_id_columns",
       reference_catalog: Object.freeze(references.map((ref) => Object.freeze({ ...ref }))),
@@ -843,7 +846,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
       const includeRussiaDetails = req.body?.include_russia_details === true;
       const includeSwedenDetails = req.body?.include_sweden_details === true;
       const includeSongDetails = req.body?.include_song_details === true;
-      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails, includeBrazilPreflight, includeBrazilSourceAliases, includeBrazilStage2Contract, includeBrazilLawSourcePreflight, includeRussiaDetails, includeSwedenDetails, includeSongDetails });
+      const includeFullIntegrityDetails = req.body?.include_full_integrity_details === true;
+      const audit = await queryPolityReferenceAudit(client, { includeBrazilDetails, includeBrazilPreflight, includeBrazilSourceAliases, includeBrazilStage2Contract, includeBrazilLawSourcePreflight, includeRussiaDetails, includeSwedenDetails, includeSongDetails, includeFullIntegrityDetails });
       return json(res, 200, {
         ok: true,
         marker: MARKER,
@@ -864,7 +868,8 @@ function createPolityReferenceAuditHandler({ env = process.env, verifyOidc = ver
         ...(includeBrazilLawSourcePreflight ? { brazil_law_source_preflight: audit.brazil_law_source_preflight } : {}),
         ...(includeRussiaDetails ? { russia_details: audit.russia_details } : {}),
         ...(includeSwedenDetails ? { sweden_details: audit.sweden_details } : {}),
-        ...(includeSongDetails ? { song_details: audit.song_details } : {})
+        ...(includeSongDetails ? { song_details: audit.song_details } : {}),
+        ...(includeFullIntegrityDetails ? { full_integrity_details: audit.full_integrity_details } : {})
       });
     } catch (error) {
       return json(res, statusForError(error?.message), {
