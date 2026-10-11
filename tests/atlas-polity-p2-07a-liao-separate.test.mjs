@@ -29,6 +29,6 @@ test("P2-07A Liao closure persists while later independent seeds may close",()=>
  assert.equal(rows.length,75);
  assert.ok(rows.filter(r=>r.terminal_status).length>=60);
  assert.ok(rows.filter(r=>!r.terminal_status).length<=15);
- assert.equal(registry.designation_residuals.find(r=>r.id==="sweden-temporal-designation").terminal_status,null);
+ assert.equal(registry.designation_residuals.find(r=>r.id==="sweden-temporal-designation").terminal_status,"FIXED");
  assert.ok(registry.rupture_probes.filter(r=>!r.terminal_status).length<=7);
 });
