@@ -228,14 +228,14 @@ test('fresh Production closes the no-write seed subset without resolving still-o
     ...registry.resolved_history
   ];
   assert.equal(all.length,75);
-  assert.equal(all.filter(row=>Boolean(row.terminal_status)).length,66);
-  assert.equal(unresolved.length,9);
+  assert.equal(all.filter(row=>Boolean(row.terminal_status)).length,67);
+  assert.equal(unresolved.length,8);
   assert.deepEqual([
     unresolved.filter(row=>row.review_group==='historical_family_review').length,
     unresolved.filter(row=>row.review_group==='designation_residual').length,
     unresolved.filter(row=>row.review_group==='naming_residual').length,
     unresolved.filter(row=>row.review_group==='rupture_probe').length
-  ],[5,1,0,3]);
+  ],[5,0,0,3]);
   const mongol = byId.get('mongol-successor-khanates');
   assert.equal(mongol.terminal_status, 'KEEP_SEPARATE');
   assert.equal(mongol.reviewed_decision, 'keep_both');
@@ -243,7 +243,16 @@ test('fresh Production closes the no-write seed subset without resolving still-o
   assert.ok(mongol.evidence.some(entry=>entry.includes('2026-10-11 complete protected Production')));
   assert.equal(unresolved.some(row=>row.review_group==='naming_residual'),false);
   assert.ok(unresolved.length > 0);
-  assert.ok(unresolved.some(row => row.id === 'sweden-temporal-designation'));
+  assert.equal(unresolved.some(row => row.id === 'sweden-temporal-designation'),false);
+  const sweden=byId.get('sweden-temporal-designation');
+  assert.equal(sweden.terminal_status,'FIXED');
+  assert.equal(sweden.status,'FIXED');
+  assert.equal(sweden.locked,true);
+  assert.equal(sweden.left.polity_id,'93613017-b4c4-5f82-8e96-3ce6b2d3a61e');
+  assert.equal(sweden.right.polity_id,sweden.left.polity_id);
+  assert.equal(sweden.right.designation_id,'bf92c969-7557-51b9-87c9-6aa650e75495');
+  assert.ok(sweden.evidence.some(item=>item.includes('38134976473')));
+  assert.ok(sweden.evidence.some(item=>item.includes('38134695893')));
   assert.ok(!unresolved.some(row => row.id === 'russia-temporal-designation'));
   const brazil = byId.get('brazil-regime-family');
   assert.equal(brazil.terminal_status, 'FIXED');
