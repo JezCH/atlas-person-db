@@ -23,7 +23,7 @@ test('Person detail keeps the opposed polity and relation for historical context
   const detail = source.slice(detailStart, detailEnd);
 
   assert.match(detail, /const relationCode = activity\.relation\?\.code/);
-  assert.match(detail, /const relation = RELATION_FILTER_LABELS\[relationCode\] \|\| relationCode/);
+  assert.match(detail, /const relation = metaLabel\("relation", relationCode, "관계 유형 확인 필요"\)/);
   assert.match(detail, /const polity = activity\.polity\?\.display_name/);
   assert.match(detail, /person-relation-badge/);
   assert.match(detail, /<h4>\$\{escapeHtml\(polity\)\}<\/h4>/);
