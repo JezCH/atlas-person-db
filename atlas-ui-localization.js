@@ -10,6 +10,33 @@
       opposes: "대립",
       claims_rule: "통치권 주장"
     }),
+    person_type: Object.freeze({
+      historical:"역사 인물", legendary:"전설 인물", mythical:"신화 인물",
+      mythological:"신화 인물", unknown:"인물 유형 미확정"
+    }),
+    name_type: Object.freeze({
+      canonical:"기준 이름", display:"표시 이름", alias:"별칭",
+      alternative:"대체 이름", regnal:"재위명"
+    }),
+    locale_name: Object.freeze({
+      ko:"한국어", en:"영어", la:"라틴어", zh:"중국어", ja:"일본어",
+      ar:"아랍어", fr:"프랑스어", de:"독일어", es:"스페인어",
+      it:"이탈리아어", ru:"러시아어", pt:"포르투갈어",
+      el:"그리스어", hi:"힌디어", fa:"페르시아어", tr:"튀르키예어"
+    }),
+    source_type: Object.freeze({
+      book:"도서", article:"논문·기사", bibliographic_reference:"서지 자료",
+      web_bibliographic_reference:"온라인 서지 자료",
+      archival_document:"기록 보관 문서"
+    }),
+    relation_category: Object.freeze({
+      authority:"통치·권한 관계"
+    }),
+    granularity: Object.freeze({year:"연 단위",month:"월 단위",day:"일 단위"}),
+    calendar: Object.freeze({
+      gregorian:"그레고리력", julian:"율리우스력",
+      unspecified_historical:"역법 미특정", source_calendar:"출처 기록의 역법"
+    }),
     period_basis: Object.freeze({
       reign: "재위",
       term: "임기",
