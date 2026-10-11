@@ -57,6 +57,41 @@ function compareEntities(expected, actual, key) {
     missing_ids:missing,key_mismatch_ids:mismatched,key_collision_ids:collision };
 }
 
+function compareManifestFields(expected,actual,fields) {
+  const byId = new Map(actual.map(row => [String(row.id), row]));
+  const drifted_ids = [];
+  for (const item of expected) {
+    const found = byId.get(String(item.id));
+    if (found && fields.some(field => String(found[field] ?? "") !== String(item[field] ?? ""))) {
+      drifted_ids.push(String(item.id));
+    }
+  }
+  return { drifted_ids };
+}
+
+function comparePreferredEnglishNames(places, actual) {
+  const byPlace = new Map();
+  for (const row of actual) {
+    const id = String(row.place_id);
+    if (!byPlace.has(id)) byPlace.set(id, []);
+    byPlace.get(id).push(row);
+  }
+  const missing_place_ids = [], mismatched_place_ids = [], ambiguous_place_ids = [];
+  for (const place of places) {
+    const names = byPlace.get(place.id) || [];
+    if (!names.length) missing_place_ids.push(place.id);
+    else if (names.length !== 1) ambiguous_place_ids.push(place.id);
+    else if (names[0].name !== place.canonical_name_en || names[0].is_preferred !== true) {
+      mismatched_place_ids.push(place.id);
+    }
+  }
+  return {
+    expected:places.length,
+    present:places.length-missing_place_ids.length,
+    missing_place_ids, mismatched_place_ids, ambiguous_place_ids
+  };
+}
+
 function compareEdges(expected,actual,columns) {
   const key=x=>columns.map(c=>String(x[c])).join("\u0000");
   const got=new Set(actual.map(key)),wanted=new Set(expected.map(key));
@@ -69,7 +104,7 @@ export async function census(client,m) {
   await client.query("BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY");
   try {
     await client.query("SET LOCAL statement_timeout='12000ms'");
-    const names=["polities","places","sources","place_sources","polity_place_functions","polity_place_function_sources"];
+    const names=["polities","places","place_names","sources","place_sources","polity_place_functions","polity_place_function_sources"];
     const found=(await client.query(
       "SELECT table_name FROM information_schema.tables WHERE table_schema='atlas_v2' AND table_name=ANY($1::text[])",
       [names])).rows.map(r=>r.table_name);
@@ -79,11 +114,14 @@ export async function census(client,m) {
     const po=(await client.query(
       "SELECT id::text AS id FROM atlas_v2.polities WHERE id=ANY($1::uuid[])",[ids])).rows;
     const pl=(await client.query(
-      "SELECT id::text AS id,canonical_key FROM atlas_v2.places WHERE id=ANY($1::uuid[]) OR canonical_key=ANY($2::text[])",
+      "SELECT id::text AS id,canonical_key,place_type,historicity FROM atlas_v2.places WHERE id=ANY($1::uuid[]) OR canonical_key=ANY($2::text[])",
       [p.map(x=>x.id),p.map(x=>x.canonical_key)])).rows;
     const sr=(await client.query(
-      "SELECT id::text AS id,source_key FROM atlas_v2.sources WHERE id=ANY($1::uuid[]) OR source_key=ANY($2::text[])",
+      "SELECT id::text AS id,source_key,source_type,title,citation_text FROM atlas_v2.sources WHERE id=ANY($1::uuid[]) OR source_key=ANY($2::text[])",
       [s.map(x=>x.id),s.map(x=>x.source_key)])).rows;
+    const en=(await client.query(
+      "SELECT place_id::text AS place_id, name, is_preferred FROM atlas_v2.place_names WHERE place_id=ANY($1::uuid[]) AND locale='en' AND is_preferred=true",
+      [p.map(x=>x.id)])).rows;
     const fs=(await client.query(
       "SELECT fact_key,polity_id::text AS polity_id,place_id::text AS place_id,function_type,start_year,end_year,confidence FROM atlas_v2.polity_place_functions WHERE polity_id=ANY($1::uuid[])",
       [ids])).rows;
@@ -106,7 +144,10 @@ export async function census(client,m) {
     const report={
       polities:compareEntities(ids.map(id=>({id})),po),
       places:compareEntities(p,pl,"canonical_key"),
+      place_metadata:compareManifestFields(p,pl,["place_type","historicity"]),
+      preferred_english_names:comparePreferredEnglishNames(p,en),
       sources:compareEntities(s,sr,"source_key"),
+      source_metadata:compareManifestFields(s,sr,["source_type","title","citation_text"]),
       facts:{expected:fk.length,present:fk.length-missing_fact_keys.length,missing_fact_keys,drifted_fact_keys,
         other_facts_for_13_polities:fs.filter(f=>!fk.includes(f.fact_key)).length},
       place_source_links:compareEdges(expPs,psr,["place_id","source_id","source_locator_key"]),
@@ -114,6 +155,9 @@ export async function census(client,m) {
     };
     report.complete=Object.entries(report).filter(([k])=>k!=="complete").every(([name,r])=>{
       if(name==="facts") return r.missing_fact_keys.length===0 && r.drifted_fact_keys.length===0;
+      if(name==="place_metadata" || name==="source_metadata") return r.drifted_ids.length===0;
+      if(name==="preferred_english_names") return r.missing_place_ids.length===0
+        && r.mismatched_place_ids.length===0 && r.ambiguous_place_ids.length===0;
       if(name.endsWith("_links")) return r.missing.length===0 && r.extra.length===0;
       return r.missing_ids.length===0 && r.key_mismatch_ids.length===0 && r.key_collision_ids.length===0;
     });
