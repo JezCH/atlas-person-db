@@ -1,0 +1,209 @@
+{
+  "schema": "atlas-youtube-live-registered-person-alias-lookup/v1",
+  "source_live_total_before": 8710,
+  "registry_people_at_review": 2145,
+  "reviewed_aliases": [
+    {
+      "source_name": "Sir Isaac Newton",
+      "registered_name": "Isaac Newton"
+    },
+    {
+      "source_name": "Empress Wu Zetian",
+      "registered_name": "Wu Zetian"
+    },
+    {
+      "source_name": "Captain James Cook",
+      "registered_name": "James Cook"
+    },
+    {
+      "source_name": "Augustus Caesar",
+      "registered_name": "Augustus"
+    },
+    {
+      "source_name": "Caesar Augustus",
+      "registered_name": "Augustus"
+    },
+    {
+      "source_name": "Imam Abu Hanifa",
+      "registered_name": "Abu Hanifa"
+    },
+    {
+      "source_name": "Imam Abu Hanifah",
+      "registered_name": "Abu Hanifa"
+    },
+    {
+      "source_name": "Imam Malik Ibn Anas",
+      "registered_name": "Malik ibn Anas"
+    },
+    {
+      "source_name": "Imam Al-Bukhari",
+      "registered_name": "Al-Bukhari"
+    },
+    {
+      "source_name": "Imam Al-Ghazali",
+      "registered_name": "Al-Ghazali"
+    },
+    {
+      "source_name": "Razia Sultana",
+      "registered_name": "Razia Sultan"
+    },
+    {
+      "source_name": "Tsar Nicholas II",
+      "registered_name": "Nicholas II"
+    },
+    {
+      "source_name": "Ernesto Che Guevara",
+      "registered_name": "Che Guevara"
+    },
+    {
+      "source_name": "Netaji Subhas Chandra Bose",
+      "registered_name": "Subhas Chandra Bose"
+    },
+    {
+      "source_name": "Rani Lakshmibai",
+      "registered_name": "Lakshmibai"
+    },
+    {
+      "source_name": "Saint John Chrysostom",
+      "registered_name": "John Chrysostom"
+    },
+    {
+      "source_name": "Saint Thomas Aquinas",
+      "registered_name": "Thomas Aquinas"
+    },
+    {
+      "source_name": "Aurangzeb Alamgir",
+      "registered_name": "Aurangzeb"
+    },
+    {
+      "source_name": "Pope John Paul II",
+      "registered_name": "John Paul II"
+    },
+    {
+      "source_name": "Saint John Paul II",
+      "registered_name": "John Paul II"
+    },
+    {
+      "source_name": "Saint Mary Magdalene",
+      "registered_name": "Mary Magdalene"
+    },
+    {
+      "source_name": "King Louis XIV",
+      "registered_name": "Louis XIV"
+    },
+    {
+      "source_name": "Sir Francis Drake",
+      "registered_name": "Francis Drake"
+    },
+    {
+      "source_name": "Maharaja Ranjit Singh",
+      "registered_name": "Ranjit Singh"
+    },
+    {
+      "source_name": "Sultan Mehmed II",
+      "registered_name": "Mehmed II"
+    },
+    {
+      "source_name": "Saint Augustine of Hippo",
+      "registered_name": "Augustine of Hippo"
+    },
+    {
+      "source_name": "Saint Faustina Kowalska",
+      "registered_name": "Faustina Kowalska"
+    },
+    {
+      "source_name": "Saint Jerome",
+      "registered_name": "Jerome"
+    },
+    {
+      "source_name": "Sir Winston Churchill",
+      "registered_name": "Winston Churchill"
+    },
+    {
+      "source_name": "Admiral Yi Sun-sin",
+      "registered_name": "Yi Sun-sin"
+    },
+    {
+      "source_name": "Baba Guru Nanak",
+      "registered_name": "Guru Nanak"
+    },
+    {
+      "source_name": "Queen Amina of Zazzau",
+      "registered_name": "Amina of Zazzau"
+    },
+    {
+      "source_name": "Queen Amanirenas",
+      "registered_name": "Amanirenas"
+    },
+    {
+      "source_name": "Prince Henry the Navigator",
+      "registered_name": "Henry the Navigator"
+    },
+    {
+      "source_name": "Kaiser Wilhelm II",
+      "registered_name": "Wilhelm II"
+    },
+    {
+      "source_name": "Michelangelo Buonarroti",
+      "registered_name": "Michelangelo"
+    },
+    {
+      "source_name": "Emperor Aurelian",
+      "registered_name": "Aurelian"
+    },
+    {
+      "source_name": "Saint Joan of Arc",
+      "registered_name": "Joan of Arc"
+    },
+    {
+      "source_name": "Saint John the Baptist",
+      "registered_name": "John the Baptist"
+    },
+    {
+      "source_name": "Saint Junípero Serra",
+      "registered_name": "Junípero Serra"
+    },
+    {
+      "source_name": "Saint Thomas the Apostle",
+      "registered_name": "Thomas the Apostle"
+    },
+    {
+      "source_name": "Queen Nefertiti",
+      "registered_name": "Nefertiti"
+    },
+    {
+      "source_name": "King Tutankhamun",
+      "registered_name": "Tutankhamun"
+    },
+    {
+      "source_name": "Amir Timur",
+      "registered_name": "Timur"
+    },
+    {
+      "source_name": "Orhan Gazi",
+      "registered_name": "Orhan"
+    },
+    {
+      "source_name": "President Jimmy Carter",
+      "registered_name": "Jimmy Carter"
+    },
+    {
+      "source_name": "Saint Hildegard of Bingen",
+      "registered_name": "Hildegard of Bingen"
+    },
+    {
+      "source_name": "Pythagoras of Samos",
+      "registered_name": "Pythagoras"
+    },
+    {
+      "source_name": "King Harald V",
+      "registered_name": "Harald V"
+    },
+    {
+      "source_name": "Idi Amin Dada",
+      "registered_name": "Idi Amin"
+    }
+  ],
+  "provenance": "Independent live 8710 title-candidate raw-name rows, then last-stage registered identity comparison",
+  "policy": "Only exact reviewed identities may exclude live candidates; no generic substring matching or raw-channel count addition; ambiguous regnal names held."
+}
