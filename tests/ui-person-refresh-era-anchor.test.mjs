@@ -11,6 +11,10 @@ const css = read("atlas-person-era-navigation.css");
 const html = read("index.html");
 
 function refreshHarness(load) {
+  const errorBoundaryStart = main.indexOf("  const USER_FACING_PERSON_ERRORS = new Set([");
+  const errorBoundaryEnd = main.indexOf("  const portraitRenderer =", errorBoundaryStart);
+  assert.ok(errorBoundaryStart > 0 && errorBoundaryEnd > errorBoundaryStart);
+  const errorBoundary = main.slice(errorBoundaryStart, errorBoundaryEnd);
   const start = main.indexOf("  let refreshInFlight = false;");
   const end = main.indexOf("  function showOperationalMessage", start);
   assert.ok(start > 0 && end > start);
@@ -28,7 +32,7 @@ function refreshHarness(load) {
     CustomEvent: class { constructor(type, options) { this.type = type; this.detail = options?.detail; } },
     String
   };
-  const refresh = vm.runInNewContext(main.slice(start, end) + "\nrefreshPersons", context);
+  const refresh = vm.runInNewContext(errorBoundary + main.slice(start, end) + "\nrefreshPersons", context);
   return { refresh, button, events, messages };
 }
 
@@ -54,7 +58,8 @@ test("failed refresh reports the error and keeps the old register rather than wi
   assert.equal(await h.refresh(), false);
   assert.equal(h.button.disabled, false);
   assert.deepEqual(h.events.map(e => e.detail.state), ["loading","error"]);
-  assert.equal(h.events[1].detail.message, "SOURCE_UNAVAILABLE");
+  assert.equal(h.events[1].detail.message, "인물 목록을 불러오지 못했습니다. 다시 시도해 주세요.");
+  assert.doesNotMatch(h.messages[0], /SOURCE_UNAVAILABLE/);
   assert.match(h.messages[0], /새로고침 실패/);
   assert.match(main, /if \(groups && !persons\.length\) groups\.innerHTML/);
   assert.match(status, /window\.addEventListener\("atlas-person-refresh-state", onPersonRefreshState\)/);

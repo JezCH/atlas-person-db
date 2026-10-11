@@ -47,6 +47,20 @@
       .replaceAll("'", "&#039;");
   }
 
+  const USER_FACING_PERSON_ERRORS = new Set([
+    "인물 편집 서비스가 초기화되지 않았습니다.",
+    "인물 편집 대상이 올바르지 않습니다.",
+    "인물 한국어 이름 편집 서비스를 사용할 수 없습니다.",
+    "인물 외부 참조 편집 서비스를 사용할 수 없습니다.",
+    "지원하지 않는 인물 편집 작업입니다.",
+    "현재 선택한 인물과 초상화 편집 대상이 다릅니다.",
+    "초상화 저장 서비스를 사용할 수 없습니다.",
+    "초상화 삭제 서비스를 사용할 수 없습니다."
+  ]);
+  function userFacingPersonError(error, fallback) {
+    const candidate = String(error?.message || "").trim();
+    return USER_FACING_PERSON_ERRORS.has(candidate) ? candidate : fallback;
+  }
   const portraitRenderer = portraitView.createRenderer({ escapeHtml });
   const portraitController = portraitControllerFactory.createController({
     writer:profileWriter,
@@ -496,7 +510,8 @@
 
   function renderDetailError(error) {
     const panel = document.getElementById("personMainDetail");
-    if (panel) panel.innerHTML = `<p class="person-detail-placeholder is-error">상세정보 조회 실패: ${escapeHtml(error?.code || error?.message || "알 수 없는 오류")}</p>`;
+    console.error("ATLAS Person detail read failed", error);
+    if (panel) panel.innerHTML = `<p class="person-detail-placeholder is-error">상세정보 조회 실패: ${escapeHtml(userFacingPersonError(error, "인물 정보를 불러오지 못했습니다. 다시 시도해 주세요."))}</p>`;
   }
 
   function renderDetailPlaceholder() {
@@ -604,7 +619,7 @@
     } catch (error) {
       console.error("ATLAS Person list read failed", error);
       // A failed manual refresh must not erase the last valid register.
-      if (groups && !persons.length) groups.innerHTML = `<p class="person-empty-state is-error">인물 목록 조회 실패: ${escapeHtml(error?.code || error?.message || "알 수 없는 오류")}</p>`;
+      if (groups && !persons.length) groups.innerHTML = `<p class="person-empty-state is-error">인물 목록 조회 실패: ${escapeHtml(userFacingPersonError(error, "인물 목록을 불러오지 못했습니다. 다시 시도해 주세요."))}</p>`;
       return { ok: false, error };
     }
   }
@@ -623,7 +638,7 @@
     try {
       const result = await loadPersons({ keepSelection: true, force: true });
       if (!result?.ok) {
-        const message = String(result?.error?.message || "데이터 조회를 확인해주세요.");
+        const message = userFacingPersonError(result?.error, "인물 목록을 불러오지 못했습니다. 다시 시도해 주세요.");
         window.dispatchEvent(new CustomEvent("atlas-person-refresh-state", { detail: { state: "error", message } }));
         showOperationalMessage(`새로고침 실패: ${message}`);
         return false;
@@ -730,7 +745,8 @@
         showOperationalMessage(`초상화를 저장했습니다. (${converted.width_px}×${converted.height_px} WebP)`);
       }
     } catch (error) {
-      showOperationalMessage(error?.message || "초상화 저장에 실패했습니다.");
+      console.error("ATLAS Person portrait save failed", error);
+      showOperationalMessage(userFacingPersonError(error, "초상화 저장에 실패했습니다. 다시 시도해 주세요."));
     } finally {
       controls.forEach((control) => { if (control.isConnected) control.disabled = false; });
     }
@@ -749,7 +765,8 @@
         showOperationalMessage("초상화를 삭제했습니다.");
       }
     } catch (error) {
-      showOperationalMessage(error?.message || "초상화 삭제에 실패했습니다.");
+      console.error("ATLAS Person portrait deletion failed", error);
+      showOperationalMessage(userFacingPersonError(error, "초상화 삭제에 실패했습니다. 다시 시도해 주세요."));
     }
   }
 
@@ -772,7 +789,8 @@
       if (result.reloadExternalReferences) await externalReferences?.reload?.();
       showOperationalMessage(result.successMessage);
     } catch (error) {
-      showOperationalMessage(error?.message || "Person 정보 저장에 실패했습니다.");
+      console.error("ATLAS Person profile save failed", error);
+      showOperationalMessage(userFacingPersonError(error, "인물 정보 저장에 실패했습니다. 다시 시도해 주세요."));
     } finally {
       if (button?.isConnected) button.disabled = false;
     }
@@ -780,15 +798,19 @@
 
   async function deleteActivity(activityId) {
     if (!activityId) return;
-    if (!profileWriter) return showOperationalMessage("Activity 삭제 서비스를 사용할 수 없습니다.");
-    if (!window.confirm("이 Activity를 삭제할까요?")) return;
+    if (!profileWriter) return showOperationalMessage("활동 기록 삭제 서비스를 사용할 수 없습니다.");
+    if (!window.confirm("이 활동 기록을 삭제할까요?")) return;
     try {
       const outcome = await profileWriter.deleteActivity(activityId);
-      if (outcome?.committed !== true) return showOperationalMessage(outcomeError(outcome, "Activity 삭제에 실패했습니다."));
+      if (outcome?.committed !== true) {
+        console.error("ATLAS Activity delete returned an unsuccessful outcome", outcome);
+        return showOperationalMessage(userFacingPersonError(new Error(outcomeError(outcome, "")), "활동 기록 삭제에 실패했습니다. 다시 시도해 주세요."));
+      }
       await loadPersons({ keepSelection:true, force:true });
-      showOperationalMessage("Activity를 삭제했습니다.");
+      showOperationalMessage("활동 기록을 삭제했습니다.");
     } catch (error) {
-      showOperationalMessage(error?.message || "Activity 삭제에 실패했습니다.");
+      console.error("ATLAS Activity delete failed", error);
+      showOperationalMessage(userFacingPersonError(error, "활동 기록 삭제에 실패했습니다. 다시 시도해 주세요."));
     }
   }
 
@@ -861,7 +883,7 @@
     const personView = document.createElement("section");
     personView.id = "personMainView";
     personView.className = "person-main-view";
-    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><h2>인물</h2></div><div class="person-main-actions" aria-label="인물 관리 도구"><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainExcelExport" class="btn" type="button">⇩ 엑셀 출력</button><a class="btn" href="./admin.html">관리자</a></div><div class="person-main-controls"><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
+    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><h2>인물</h2></div><div class="person-main-actions" aria-label="인물 관리 도구"><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainExcelExport" class="btn" type="button">⇩ 엑셀 출력</button><a class="btn" href="./admin.html">관리자</a></div><div class="person-main-controls"><select id="personMainSort" aria-label="인물 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
       <div class="person-main-layout"><div id="personMainGroups" class="person-main-groups"></div><aside id="personMainDetail" class="person-main-detail card" aria-live="polite"><p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 활동 정보를 확인할 수 있습니다.</p></aside></div>`;
 
     topbar.insertAdjacentElement("afterend", personView);

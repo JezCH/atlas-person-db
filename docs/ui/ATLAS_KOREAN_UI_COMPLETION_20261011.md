@@ -1,6 +1,6 @@
 # ATLAS 한국어 UI 전면 현지화 — 전체 목표·종결 계획
 
-**상태: 진행 중.** 이 문서는 완료 조건과 다음 재개점을 보존하는 작업 계획이며, 운영 배포 상태나 GitHub `main`을 대신하는 원본은 아닙니다.
+**상태: 진행 중 (인물 화면 오류 경계 작업 진행).** 이 문서는 완료 조건과 다음 재개점을 보존하는 작업 계획이며, 운영 배포 상태나 GitHub `main`을 대신하는 원본은 아닙니다.
 
 ## 1. 최종 목표
 
@@ -38,3 +38,11 @@
 `WORK_EXECUTION.md`에 따라 현재 경로의 변경 차이만 확인하고, 한 번에 종결 가능한 작업 단위 하나를 **수정 → 테스트 → PR/CI → 병합 → 검증 → 보고**까지 끝낸 후 턴을 닫는다. 불필요한 전역 재감사, 무의미한 재배포, 다른 작업 축 재개는 금지한다.
 
 **등록검토 화면 단위 종료 후 다음 정확한 재개점:** 대시보드·인물·시공간표·정치체·관리자에서 **API 제공 영어 상태/오류가 실제로 표시되는 지점**을 현행 `main` 기준으로 추적해, 충돌하지 않는 가장 작은 다음 UI 수정 단위를 선택한다. 전체 남은 범위와 완료 기준은 이 문서를 계승한다.
+
+## 6. 2026-10-11 후속 발견 및 누락 추적
+
+- **배포 미확인 종결:** PR #2467 병합 SHA `828f20657df9eb85de1d8d4abdc16e966fb2801f`가 Vercel Production `READY` SHA `387e470d126dabcfa11f1e2e9f57a906c5dba7c3`의 조상임을 GitHub 비교로 확인. 이는 화면 시각 검증을 대체하지 않는다.
+- **이번 수정:** Person Main 상세/목록 조회 실패, 수동 갱신, 초상 저장/삭제, 인물 프로필 편집 및 Activity 삭제 오류에서 원시 영문 예외·API 코드를 그대로 사용자에게 출력하지 않도록 표시 경계를 분리한다. 이미 검증된 한국어 사용자용 오류는 유지하며 원문 진단은 개발 로그에 남긴다. 접근성 정렬 명칭과 Activity UI 명칭도 한국어화한다.
+- **추가 확인된 미처리 지점 (후속 화면 단위):** `atlas-person-spacetime-view.js`의 `error?.code || error?.message`, `atlas-dashboard.js`의 `persons.reason?.message`, `atlas-polity-review-workbench.js`의 `live.error?.message`, `atlas-admin-observability.js`의 API 오류 코드 출력, `atlas-admin-identity.js`·`admin.js`의 직접 오류 메시지 출력, `atlas-main-authority-nav.js`의 모듈 로드 예외 출력. 이들은 이번 Person 화면 작업 완료로 종결 처리하지 않는다.
+- **놓쳤던 인물 본문 값 (별도 고우선순위 단위):** `atlas-person-main.js`에서 `historicity`, `person_type`, `relation.code`(요약카드), `relation.category`, `source_type`, `name_type`, 연대 `granularity`·`calendar`, `portrait_kind`·`evidence_level`을 사용자용 번역 없이 출력하는 지점 확인. 이는 방금 처리한 **오류 표시 경계와 별개의 데이터 표기 문제**이며 이번 PR로 종결하지 않는다. 특히 고유 이름/원문 인용과 달리 이런 값은 기계 코드를 한국어로 투사해야 한다. `ATLAS_UI_I18N`/분야 registry에 검증된 값부터 매핑하고 미상은 정직하게 한국어 미확정 처리한다. 관계·출처·연대 정보 자체는 숨기거나 DB에서 변형하지 않는다.
+- **후속 재개점:** Person 화면의 병합·배포 증거를 확인한 다음, 상기 목록 가운데 충돌 없는 하나의 화면 오류 경계를 우선 수정하고, 나머지 동적 상태·문구·ARIA·모바일 전수조사를 이어간다.
