@@ -40,7 +40,7 @@ test("unverified target never creates a client or reads any table",async()=>{
   assert.equal(JSON.stringify(result).includes("unknown.invalid"),false);
 });
 
-function fakeClient({missingPlace=false,failQuery=false}={}){
+function fakeClient({missingPlace=false,failQuery=false,badPlaceType=false,badEnglishName=false,badSourceTitle=false}={}){
   const m=loadManifest(), commands=[];
   const fs=m.facts.map(f=>({fact_key:factKey(f),...f}));
   const placeSourceRows=m.places.flatMap(p=>p.source_links.map(s=>({...s,place_id:p.id})));
@@ -51,10 +51,22 @@ function fakeClient({missingPlace=false,failQuery=false}={}){
       commands.push({sql,params});
       if(failQuery && /atlas_v2\.places/.test(sql)) throw Object.assign(new Error("db unavailable"),{code:"DB_READ_FAILED"});
       if(sql.startsWith("BEGIN")||sql.startsWith("SET LOCAL")||sql==="ROLLBACK") return {rows:[]};
-      if(sql.includes("information_schema.tables")) return {rows:["polities","places","sources","place_sources","polity_place_functions","polity_place_function_sources"].map(table_name=>({table_name}))};
+      if(sql.includes("information_schema.tables")) return {rows:["polities","places","place_names","sources","place_sources","polity_place_functions","polity_place_function_sources"].map(table_name=>({table_name}))};
       if(sql.includes("FROM atlas_v2.polities")) return {rows:m.expected_polity_ids.map(id=>({id}))};
-      if(sql.includes("FROM atlas_v2.places")) return {rows:m.places.filter((p,i)=>!missingPlace||i!==0).map(p=>({id:p.id,canonical_key:p.canonical_key}))};
-      if(sql.includes("FROM atlas_v2.sources")) return {rows:m.sources.map(s=>({id:s.id,source_key:s.source_key}))};
+      if(sql.includes("FROM atlas_v2.places")) return {rows:m.places.filter((p,i)=>!missingPlace||i!==0).map((p,i)=>({
+        id:p.id,canonical_key:p.canonical_key,
+        place_type:badPlaceType&&i===0?"invented_type":p.place_type,
+        historicity:p.historicity
+      }))};
+      if(sql.includes("FROM atlas_v2.place_names")) return {rows:m.places.map((p,i)=>({
+        place_id:p.id,name:badEnglishName&&i===0?"Incorrect label":p.canonical_name_en,is_preferred:true
+      }))};
+      if(sql.includes("FROM atlas_v2.sources")) return {rows:m.sources.map((source,i)=>({
+        id:source.id,source_key:source.source_key,
+        source_type:source.source_type,
+        title:badSourceTitle&&i===0?"Incorrect citation title":source.title,
+        citation_text:source.citation_text
+      }))};
       if(sql.includes("FROM atlas_v2.polity_place_functions")) return {rows:fs};
       if(sql.includes("FROM atlas_v2.polity_place_function_sources")) return {rows:factSourceRows};
       if(sql.includes("FROM atlas_v2.place_sources")) return {rows:placeSourceRows};
@@ -70,6 +82,9 @@ test("one read-only repeatable-read transaction audits all 13/20/27/23 identitie
   assert.equal(data.complete,true);
   assert.equal(data.polities.present,13);
   assert.equal(data.places.present,20);
+  assert.equal(data.preferred_english_names.present,20);
+  assert.deepEqual(data.place_metadata.drifted_ids,[]);
+  assert.deepEqual(data.source_metadata.drifted_ids,[]);
   assert.equal(data.sources.present,27);
   assert.equal(data.facts.present,23);
   assert.equal(data.place_source_links.present,28);
@@ -108,4 +123,30 @@ test("script source must not contain explicit write statements or raw credential
   const src=fs.readFileSync(new URL("../scripts/audit-place-production-authority.mjs",import.meta.url),"utf8");
   assert.doesNotMatch(src,/\b(?:insert into|delete from|update atlas_v2|truncate|alter table)\b/i);
   assert.doesNotMatch(src,/JSON\.stringify\(process\.env\)/);
+});
+
+test("exact UUID/key census does not accept corrupted Place type, English title or Source citation",async()=>{
+  for(const opts of [
+    {badPlaceType:true,field:"place_metadata"},
+    {badEnglishName:true,field:"preferred_english_names"},
+    {badSourceTitle:true,field:"source_metadata"}
+  ]){
+    const client=fakeClient(opts);
+    const result=await census(client,loadManifest());
+    assert.equal(result.complete,false,opts.field);
+    if(opts.field==="preferred_english_names") assert.equal(result[opts.field].mismatched_place_ids.length,1);
+    else assert.equal(result[opts.field].drifted_ids.length,1);
+    assert.equal(result.places.present,20);
+    assert.equal(result.sources.present,27);
+    assert.equal(client.commands.at(-1).sql,"ROLLBACK");
+  }
+});
+
+test("all Place names are read through a bounded exact-UUID and preferred-en selector",async()=>{
+  const client=fakeClient();
+  await census(client,loadManifest());
+  const nameRead=client.commands.find(call=>/FROM atlas_v2\.place_names/.test(call.sql));
+  assert.ok(nameRead);
+  assert.match(nameRead.sql,/locale='en' AND is_preferred=true/);
+  assert.equal(nameRead.params[0].length,20);
 });

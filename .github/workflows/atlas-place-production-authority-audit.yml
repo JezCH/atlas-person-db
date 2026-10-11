@@ -95,7 +95,16 @@ jobs:
             queried:.audit.queried,
             polities:{expected:.audit.report.polities.expected,present:.audit.report.polities.present},
             places:{expected:.audit.report.places.expected,present:.audit.report.places.present},
+            place_metadata_drift:(.audit.report.place_metadata.drifted_ids|length),
+            preferred_english_names:{
+              expected:.audit.report.preferred_english_names.expected,
+              present:.audit.report.preferred_english_names.present,
+              missing:(.audit.report.preferred_english_names.missing_place_ids|length),
+              mismatched:(.audit.report.preferred_english_names.mismatched_place_ids|length),
+              ambiguous:(.audit.report.preferred_english_names.ambiguous_place_ids|length)
+            },
             sources:{expected:.audit.report.sources.expected,present:.audit.report.sources.present},
+            source_metadata_drift:(.audit.report.source_metadata.drifted_ids|length),
             facts:{expected:.audit.report.facts.expected,present:.audit.report.facts.present}
           }' /tmp/atlas-place-production/audit.json > /tmp/atlas-place-production/summary.json
           cat /tmp/atlas-place-production/summary.json

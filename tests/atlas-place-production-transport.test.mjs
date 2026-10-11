@@ -56,6 +56,10 @@ test("valid OIDC carries exact SHA and a read-only proven GAP without false clos
       state:"TARGET_CONFIRMED_GAP",
       identity:{status:"MATCH",basis:"supabase_dedicated_host",deployment_sha:SHA},
       report:{polities:{expected:13,present:13},places:{expected:20,present:0},
+        place_metadata:{drifted_ids:[]},
+        preferred_english_names:{expected:20,present:0,missing_place_ids:[],
+          mismatched_place_ids:[],ambiguous_place_ids:[]},
+        source_metadata:{drifted_ids:[]},
         sources:{expected:27,present:0},facts:{expected:23,present:0}}
     };}
   });
@@ -109,4 +113,16 @@ test("read-only audit uses existing consolidated API and original source census"
   const source=fs.readFileSync(new URL("../scripts/audit-place-production-authority.mjs",import.meta.url),"utf8");
   assert.match(source,/REPEATABLE READ READ ONLY/);
   assert.match(source,/ROLLBACK/);
+});
+
+test("OIDC-only Place audit must not accept a UUID-only partial evidence shape",async()=>{
+  const handler=createPlaceProductionAuditHandler({
+    env:ENV,verifyOidc:async()=>{},
+    audit:async()=>({state:"TARGET_CONFIRMED_GAP",queried:true,
+      identity:{status:"MATCH"},report:{places:{expected:20,present:0}}})
+  });
+  const res=reply();
+  await handler(request(),res);
+  assert.equal(res.statusCode,500);
+  assert.equal(res.body.code,"PLACE_AUDIT_METADATA_CENSUS_REQUIRED");
 });
