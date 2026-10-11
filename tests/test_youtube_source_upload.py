@@ -124,5 +124,46 @@ class VerifiedUploadTests(unittest.TestCase):
             uploader.relative_from_object_key(record)
 
 
+    def test_restore_catalog_rejects_colliding_paths_before_any_remote_read(self):
+        record = uploader.record_for(self.file, self.root)
+        record.pop("_contents")
+        second = dict(record)
+        second["sha256"] = "e" * 64
+        second["object_key"] = (
+            uploader.KEY_PREFIX + "ee/" + "e" * 64 + "/"
+            + record["source_path"]
+        )
+        target = self.root / "duplicate-path-target"
+        with patch.object(uploader, "storage_call") as remote:
+            with self.assertRaisesRegex(RuntimeError, "REMOTE_CATALOG_DUPLICATE_RESTORE_PATH"):
+                uploader.restore_from_catalog(
+                    "https://example.invalid", "token", [record, second], target
+                )
+        remote.assert_not_called()
+        self.assertFalse(target.exists())
+
+    def test_catalog_rejects_normalized_or_ambiguous_paths(self):
+        record = uploader.record_for(self.file, self.root)
+        record.pop("_contents")
+        original = record["object_key"]
+        for replacement in ("out//batch008", "out/./batch008", "out/../batch008", "out\\\\batch008"):
+            tampered = dict(record)
+            tampered["object_key"] = original.replace("out/batch008", replacement)
+            with self.subTest(replacement=replacement):
+                with self.assertRaisesRegex(RuntimeError, "UNSAFE_RESTORE_PATH"):
+                    uploader.relative_from_object_key(tampered)
+
+    def test_restore_rejects_nonempty_target_before_remote_access(self):
+        record = uploader.record_for(self.file, self.root)
+        record.pop("_contents")
+        target = self.root / "nonempty-restore"
+        target.mkdir()
+        (target / "unrelated.txt").write_text("preserve", encoding="utf-8")
+        with patch.object(uploader, "storage_call") as remote:
+            with self.assertRaisesRegex(RuntimeError, "REMOTE_RESTORE_TARGET_NOT_EMPTY"):
+                uploader.restore_from_catalog("https://example.invalid", "token", [record], target)
+        remote.assert_not_called()
+        self.assertEqual((target / "unrelated.txt").read_text(encoding="utf-8"), "preserve")
+
 if __name__ == "__main__":
     unittest.main()
