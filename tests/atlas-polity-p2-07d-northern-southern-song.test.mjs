@@ -31,5 +31,5 @@ test("P2-07D review does not claim total Production or Song-ownership correction
  assert.ok(all.filter(x=>!!x.terminal_status).length>=63);
  assert.ok(all.filter(x=>!x.terminal_status).length<=12);
  assert.ok(reg.rupture_probes.filter(x=>!x.terminal_status).length<=4);
- assert.equal(reg.designation_residuals.find(x=>x.id==="sweden-temporal-designation").terminal_status,null);
+ assert.equal(reg.designation_residuals.find(x=>x.id==="sweden-temporal-designation").terminal_status,"FIXED");
 });

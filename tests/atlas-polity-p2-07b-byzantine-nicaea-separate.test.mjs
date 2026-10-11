@@ -36,5 +36,5 @@ test("P2-07B has at least 61 terminal cases, 14 or fewer pending and no duplicat
  assert.ok(rows.filter(x=>!!x.terminal_status).length>=61);
  assert.ok(rows.filter(x=>!x.terminal_status).length<=14);
  assert.ok(registry.rupture_probes.filter(x=>!x.terminal_status).length<=6);
- assert.equal(registry.designation_residuals.find(x=>x.id==="sweden-temporal-designation").terminal_status,null);
+ assert.equal(registry.designation_residuals.find(x=>x.id==="sweden-temporal-designation").terminal_status,"FIXED");
 });
