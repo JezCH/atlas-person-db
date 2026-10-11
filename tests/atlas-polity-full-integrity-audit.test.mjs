@@ -84,6 +84,9 @@ test("the protected OIDC handler and already allowlisted Song workflow wire one 
  assert.match(y,/include_full_integrity_details:true/);
  assert.match(y,/polity-p2-10-internal-full-census.json/);
  assert.match(y,/GITHUB_SHA/);
+ assert.match(y,/identity-after\.json/);
+ assert.match(y,/git_commit_sha==\$sha/);
+ assert.match(y,/github\.run_attempt/);
  assert.match(y,/read_only==true/);
  assert.doesNotMatch(y,/skip.sha|ignore.sha|ignore_oidc/i);
 });
