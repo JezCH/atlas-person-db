@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Goiswintha",
+    "display_name_ko": "고이스윈타",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-12",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Visigothic Kingdom",
+    "display_name_ko": "서고트 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-12",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "request_id": "authoring:goiswintha:visigothic-reccared-court-opposition:589-point:20261012:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Court Political Figure",
+    "role_display_name_ko": "레카레드 1세 치하 궁정 정치 활동",
+    "start_year": 589,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 589,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Contemporary chronicle tradition, as assessed in historical scholarship, associates the widowed queen Goiswintha and bishop Uldila with opposition to Reccared and a palace conspiracy conventionally placed in 589. This is a REPRESENTATIVE POINT for a reported court event, not a 589 reign, proof of a formal public office, or a secure death date; conflicting death-year conventions (588/589) remain unresolved, and hostile confessional portrayals are treated critically."
+  },
+  "sources": [
+    {
+      "source_type": "academic_journal",
+      "title": "María Rosario Valverde Castro (2008), Mujeres «viriles» en la Hispania visigoda. Los casos de Gosvinta y Benedicta, Studia Historica. Historia Medieval 26, pp.17–44",
+      "canonical_url": "https://revistas.usal.es/uno/index.php/Studia_H_Historia_Medieval/es/article/view/2035",
+      "citation_text": "Researches Gosvinta's political agency and explicitly cautions that although the marriage to Athanagild is attested, the wedding's precise date is unknown."
+    },
+    {
+      "source_type": "academic_journal",
+      "title": "Ana María Jiménez Garnica (2008), Gosuintha, el fracaso de una coniux real, Studia Historica. Historia Antigua 26",
+      "canonical_url": "https://revistas.usal.es/uno/index.php/0213-2052/article/view/1618",
+      "citation_text": "University of Salamanca focused study of queen Gosuintha's marital and royal political position under Athanagild, Liuvigild, and the subsequent royal court; interpret court claims critically."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Barroso Cabrera, Morín de Pablos & Sánchez Ramos (2023), Gallaecia Gothica, Archaeopress",
+      "canonical_url": "https://www.archaeopress.com/Archaeopress/download/9781803275079",
+      "citation_text": "Scholarly analysis of late sixth-century Visigothic conflicts explicitly identifies Queen Goiswintha and Arian Bishop Uldila in the 589 court conspiracy against Reccared."
+    }
+  ]
+}
