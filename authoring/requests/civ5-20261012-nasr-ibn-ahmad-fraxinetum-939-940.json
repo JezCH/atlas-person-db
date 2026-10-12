@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-civ5-20261012:nasr-ibn-ahmad-fraxinetum-939-940:v1",
+  "person": {
+    "canonical_name_en": "Nasr ibn Ahmad (Fraxinetum)",
+    "display_name_ko": "나스르 이븐 아흐마드(프락시네툼)",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-12",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Fraxinetum",
+    "display_name_ko": "프락시네툼",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Commander of Fraxinetum",
+    "role_display_name_ko": "프락시네툼 군사 지휘관",
+    "start_year": 939,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 940,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ibn Hayyan's al-Muqtabis reports that after Abd al-Rahman III's treaties in AH 328 (approximately CE 939–940), the treaty texts were conveyed to Nasr ibn Ahmad, qa'id (commander) of Farakhshanit/Fraxinetum. This is a c.939–940 SOURCE-ANCHORED ACTIVITY WINDOW, NOT a proven full command term or a claim of sole sovereign kingship. Historian's distinction between qa'id and a governor does not prove direct Cordoban administrative rule; avoid treating Fraxinetum as mechanically identical to the Umayyad Caliphate of Córdoba. Crucially, this individual is NOT Nasr II ibn Ahmad, the Samanid ruler (914–943), despite overlapping names and dates. Canonical English name includes the Fraxinetum disambiguator to avoid a same-name collision."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Mohammed Réda B. Hassan (1990), The Arab Presence in France and Switzerland in the 10th Century, scholarly study",
+      "canonical_url": "https://www.researchgate.net/publication/249592637_The_Arab_Presence_in_France_and_Switzerland_in_the_10Th_Century",
+      "citation_text": "Study cites Ibn Hayyan's Muqtabis for AH 328 / 939–940 treaty copy sent to Fraxinetum qa'id Nasr ibn Ahmad, distinguishing the title from Cordoban civil governorship."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Paul M. Cobb (2009), The Saracens of St. Tropez, Saudi Aramco World",
+      "canonical_url": "https://archive.aramcoworld.com/issue/200905/the.saracens.of.st.tropez.htm",
+      "citation_text": "Historical article identifies Nasr ibn Ahmad specifically as commander of Farakhshanit according to Ibn Hayyan, under 939–940 treaty diplomacy."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Fraxinetum: An Islamic Frontier State in Tenth Century Provence (2015), Ballandalus",
+      "canonical_url": "https://ballandalus.wordpress.com/2015/06/08/fraxinetum-an-islamic-frontier-state-in-tenth-century-provence/",
+      "citation_text": "Source-critical overview notes the 940/941 calendrical alternative for this treaty and the distinct qa'id status of the Fraxinetum leader."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-12",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "2026-10-12: Fraxinetum / Farakhshanit was an attested 10th-century fortified Islamic base in the Provence / Gulf of Saint-Tropez area, https://archive.aramcoworld.com/issue/200905/the.saracens.of.st.tropez.htm and https://ballandalus.wordpress.com/2015/06/08/fraxinetum-an-islamic-frontier-state-in-tenth-century-provence/. Its relation to Cordoba was not an unambiguous integrated governorship. No exact current canonical Polity UUID or Place function verified under Production outage; reviewed_hold to avoid guessed map placement."
+  }
+}
