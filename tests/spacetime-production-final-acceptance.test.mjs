@@ -15,7 +15,9 @@ test("Production visual workflow auto-runs on main while retaining the exact-SHA
   assert.match(workflow, /required:\s*true/);
   assert.match(workflow, /ATLAS_EXPECTED_RUNTIME_SHA=\$EXPECTED_SHA/);
   assert.match(workflow, /Wait for exact-SHA Production parity/);
-  assert.match(workflow, /for attempt in \$\(seq 1 90\)/);
+  assert.match(workflow, /for attempt in \\$\\(seq 1 12\\)/);
+  assert.match(workflow, /DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED/);
+  assert.match(workflow, /initial_status.*402/);
   assert.match(workflow, /verify-spacetime-production-exact-sha\.mjs/);
   assert.match(workflow, /verify-spacetime-production-visual\.mjs/);
   assert.match(workflow, /verify-spacetime-production-domain-colors\.mjs/);
