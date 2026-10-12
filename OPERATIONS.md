@@ -2,6 +2,10 @@
 
 > `WORK_EXECUTION.md` is the authoritative project-wide execution rule. Older operational wording that requires broader locking, whole-project revalidation, duplicate deployment proof, or full queue replay is superseded.
 
+## 0. Vercel Hobby quota hard stop
+
+This is a **mandatory** operational constraint for every worker and connected external tool. **Never use Vercel Sandbox** for YouTube crawling, research, data repair, UI checking or testing; its CPU quota already suspended the site. Keep research compute off the Production Vercel team. No mass-download or repeat-poll of Production APIs; treat HTTP 402 as an immediate terminal failure. Only budgeted, approved independent compute is permitted. Do not upgrade the paid plan, unpause, or re-run a deployment to bypass quotas. See [the verified incident and guard policy](docs/VERCEL_HOBBY_QUOTA_GUARD.md).
+
 ## 1. Required Production environment
 
 Vercel Production server environment:
