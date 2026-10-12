@@ -1,0 +1,66 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-civ5-20261012:leonor-palenque-el-limon-1632:v1",
+  "person": {
+    "canonical_name_en": "Leonor of El Limón",
+    "display_name_ko": "엘리몬의 레오노르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-12",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Palenque El Limón",
+    "display_name_ko": "엘리몬 팔렝케",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Queen of Palenque El Limón",
+    "role_display_name_ko": "엘리몬 팔렝케의 여왕",
+    "start_year": 1632,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1632,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "This is a c.1632 HISTORICAL REPRESENTATIVE POINT for the appointment and political leadership of Leonor, a woman born at the El Limón maroon settlement near Cartagena, supported by groups from Polín and Malemba communities. María Cristina Navarrete, using 17th-century Archivo General de Indias testimonies, identifies Leonor's election and involvement in defense while Francisco continued serving as military captain. Identical year boundaries DO NOT mean she ruled only for one year. The precise beginning/end of her tenure and her date of death remain unknown; the community's destruction must not be recorded as her death. The polity is a specific self-governing maroon settlement, not all Palenques or the later town of San Basilio."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "María Cristina Navarrete (2015), De reyes, reinas y capitanes: los dirigentes de los palenques de las sierras de María, siglos XVI y XVII, Fronteras de la Historia 20(2), pp.44–62",
+      "canonical_url": "https://revistas.icanh.gov.co/index.php/fh/article/view/75/57",
+      "citation_text": "Archival AGI evidence identifies Leonor of El Limón as queen, the c.1632 shift in internal leadership, and her military participation; appointment timing is approximate."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "María Cristina Navarrete (2015), Article full text — research copy",
+      "canonical_url": "https://www.researchgate.net/publication/311553186_De_reyes_reinas_y_capitanes_los_dirigentes_de_los_palenques_de_las_sierras_de_Maria_siglos_XVI_y_XVIII",
+      "citation_text": "Author-uploaded journal study offers archival context, including the distinction between Leonor the queen and Francisco the captain."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-12",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "2026-10-12: Source-reviewed Palenque El Limón / El Limonar is a historically attested self-governed maroon settlement in the Montes de María region near Cartagena, per María Cristina Navarrete (2015), https://revistas.icanh.gov.co/index.php/fh/article/view/75/57. No exact existing canonical Polity/Place UUID, time-bounded place function or spatial point verified while Production read is unavailable. Preserve reviewed_hold rather than invent location coordinates or contemporary municipal equivalence."
+  }
+}

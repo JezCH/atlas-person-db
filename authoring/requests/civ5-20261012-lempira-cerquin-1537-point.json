@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-civ5-20261012:lempira-cerquin-1537:v1",
+  "person": {
+    "canonical_name_en": "Lempira",
+    "display_name_ko": "렘피라",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-12",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Cerquín Lenca Chiefdom",
+    "display_name_ko": "세르킨 렌카 족장령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Lenca resistance commander",
+    "role_display_name_ko": "렌카인 항스페인 저항 지휘관",
+    "start_year": 1537,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1537,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1537 is a source-attested REPRESENTATIVE POINT for Lempira (also Elempira / El Empira) leading Lenca resistance to the Spanish around Cerquín in western Honduras, not an asserted complete reign or exact year of death. A 1558 Rodrigo Ruiz probanza, published in modern research, independently attests the commander but offers a self-interested account of his death that differs from the later parley-assassination narrative. Do not encode 1558 as an Activity year: it is the retrospective document date. The term 'Cerquín Lenca Chiefdom' is a narrow local political association for the indigenous leader, not proof that all Lenca peoples formed one unified sovereign state."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Universidad Nacional Autónoma de Honduras, 20 de julio de 2026: Día del Cacique Lempira",
+      "canonical_url": "https://blogs.unah.edu.hn/presencia-universitaria/20-de-julio-de-2026-dia-del-cacique-lempira-pilar-identitario-en-honduras",
+      "citation_text": "UNAH explains Rodrigo Ruiz's Probanza de Méritos prepared in 1558 and its historicity evidence for Lempira/Elempira, noting differing death narratives."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Blanca Moreno García, Y de la épica hazaña en memoria… La probanza sin pruebas de Rodrigo Ruiz, Editorial Guaymuras (2021)",
+      "canonical_url": "https://guaymuras.hn/cienciassocialeslibro.php?idweb=54",
+      "citation_text": "Independent historical critique places Elempira's anti-Spanish resistance and rival narrative of his killing around 1537, with documentary reservations about Ruiz's testimony."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Hubert Howe Bancroft, History of Central America, Vol. II, chapter XVII: Honduras 1537–1549",
+      "canonical_url": "https://www.gutenberg.org/cache/epub/58669/pg58669-images.html",
+      "citation_text": "Historical secondary narrative of the 1537 Lenca revolt and the chieftain Lempira; differs from later Ruiz documentation on the death mechanism."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-12",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "2026-10-12: Reviewed narrow Cerquín-centered Lenca authority and anti-Spanish resistance from UNAH 2026, https://blogs.unah.edu.hn/presencia-universitaria/20-de-julio-de-2026-dia-del-cacique-lempira-pilar-identitario-en-honduras and Moreno 2021, https://guaymuras.hn/cienciassocialeslibro.php?idweb=54. The identity and delimitation of a standalone Cerquín chiefdom versus broader Lenca communities has not been resolved against live canonical Polities. No verified Place UUID, geographic bounds or precise seat: preserve reviewed_hold and avoid a fabricated all-Lenca unified country."
+  }
+}
