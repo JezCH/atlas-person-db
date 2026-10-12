@@ -32,6 +32,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Enforce no-Sandbox Hobby resource guard
+        run: node scripts/verify-vercel-resource-budget.mjs
+
       - id: range
         name: Resolve changed commit range
         shell: bash
