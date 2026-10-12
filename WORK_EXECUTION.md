@@ -2,6 +2,8 @@
 
 > Status: authoritative project-wide execution rule.
 >
+> **Hobby quota P0 guard (2026-10-12): Never invoke Vercel Sandbox in the JezCH production account for research, crawling, CI or UI checks (even through an external agent/tool). Stop nonessential Production bulk reads before quota exhaustion. HTTP 402 is terminal; do not retry it. See [docs/VERCEL_HOBBY_QUOTA_GUARD.md](docs/VERCEL_HOBBY_QUOTA_GUARD.md).**
+
 > Goal: maximize safe parallel throughput while making stale, conflicting, duplicated, or ambiguous authoritative writes fail closed at the narrowest possible resource boundary.
 >
 > This file supersedes older queue/release/process/single-writer/linear-gate rules wherever they conflict. It does **not** weaken fail-closed security or invariants already enforced by a canonical writer/endpoint.
