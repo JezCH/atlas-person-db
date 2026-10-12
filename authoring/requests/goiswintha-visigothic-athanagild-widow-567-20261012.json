@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Goiswintha",
+    "display_name_ko": "고이스윈타",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-12",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Visigothic Kingdom",
+    "display_name_ko": "서고트 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-12",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "request_id": "authoring:goiswintha:visigothic-athanagild-consort:567-point:20261012:v1",
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Queen Consort",
+    "role_display_name_ko": "아타나길드의 왕비",
+    "start_year": 567,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 567,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Athanagild's widow Goiswintha is independently documented through her subsequent remarriage to Liuvigild. As scholarship states that the date of her original marriage to Athanagild is NOT established, 567 is a SOURCE-ANCHORED REPRESENTATIVE POINT for the end of that relationship at Athanagild's death, not a claim that the entire consortship lasted one year or started in 554. Do not synthesize a 554–567 personal rail from Athanagild's royal reign alone."
+  },
+  "sources": [
+    {
+      "source_type": "academic_journal",
+      "title": "María Rosario Valverde Castro (2008), Mujeres «viriles» en la Hispania visigoda. Los casos de Gosvinta y Benedicta, Studia Historica. Historia Medieval 26, pp.17–44",
+      "canonical_url": "https://revistas.usal.es/uno/index.php/Studia_H_Historia_Medieval/es/article/view/2035",
+      "citation_text": "Researches Gosvinta's political agency and explicitly cautions that although the marriage to Athanagild is attested, the wedding's precise date is unknown."
+    },
+    {
+      "source_type": "academic_journal",
+      "title": "Ana María Jiménez Garnica (2008), Gosuintha, el fracaso de una coniux real, Studia Historica. Historia Antigua 26",
+      "canonical_url": "https://revistas.usal.es/uno/index.php/0213-2052/article/view/1618",
+      "citation_text": "University of Salamanca focused study of queen Gosuintha's marital and royal political position under Athanagild, Liuvigild, and the subsequent royal court; interpret court claims critically."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Deutsche Biographie — Godiswintha, Westgothenkönigin",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz98655.html",
+      "citation_text": "Biographical reference identifies the queen as Athanagild's wife, her later marriage to Leovigild, and her activity/death under Reccared; traditional dating of 554 for the first consort period is not a proved wedding date."
+    }
+  ]
+}
