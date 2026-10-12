@@ -12,7 +12,9 @@ const SAFE_SKIP_PREFIXES = Object.freeze([
 ]);
 
 const SAFE_SKIP_EXACT = new Set([
-  ".github/workflows/atlas-integrity.yml"
+  ".github/workflows/atlas-integrity.yml",
+  ".github/workflows/atlas-spacetime-production-visual.yml",
+  "scripts/verify-vercel-resource-budget.mjs"
 ]);
 
 // The deployed Human Authoring and reviewed Person merge endpoints can consume
