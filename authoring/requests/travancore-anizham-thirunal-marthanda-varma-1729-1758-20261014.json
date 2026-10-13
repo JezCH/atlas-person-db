@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-travancore:anizham-thirunal-marthanda-varma:reign:1729-1758:20261014:v1",
+  "person": {
+    "canonical_name_en": "Anizham Thirunal Marthanda Varma",
+    "display_name_ko": "아니잠 티루날 마르탄다 바르마",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-14",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Travancore",
+    "display_name_ko": "트라방코르 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Maharaja",
+    "role_display_name_ko": "마하라자(국왕)",
+    "start_year": 1729,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1758,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Anizham Thirunal Marthanda Varma (c.1706–1758) succeeded Rama Varma in 1729 as ruler of Venad/Travancore, consolidated and expanded that existing southern Kerala kingship, and died in 1758. This Activity is his documented 1729–1758 royal reign, NOT an assertion that an entirely new sovereign state was created ex nihilo in 1729. Venad is the earlier name/nucleus of Travancore, and any distinct live ATLAS Venad and/or Travancore identities must undergo source- and UUID-backed continuity review rather than automatic duplicate creation, false merge, or speculative reassignment. His army defeated Dutch East India Company forces at Colachel in 1741, and his dedication of the kingdom to Padmanabha in 1750 was a sacral state-form/royal-policy event, not a second reign. Year granularity only; do not infer precise accession day. Distinguish the later Uthram Thirunal Marthanda Varma (r. 1846–1860)."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Government of Kerala, Directorate of Industries and Commerce — Industrial Profile (Thiruvananthapuram)",
+      "canonical_url": "https://industry.kerala.gov.in/index.php/industrial-profile",
+      "citation_text": "Kerala state government history explicitly dates Marthanda Varma's rule to 1729–1758 and relates his consolidation of Travancore."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Government of Kerala, Revenue Department — Kumbalam Village Office historical account",
+      "canonical_url": "https://landrevenue.kerala.gov.in/core/Office_websites/about_village.php?nm=1510Kumbalamvillageoffice",
+      "citation_text": "Official Kerala revenue history explicitly identifies Anizham Thirunal Marthanda Varma as Maharaja of Travancore (1729–58), records the 1755 Karappuram annexation and clarifies separate neighboring Cochin sovereignty."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Kerala Tourism — Krishnapuram Palace, Kayamkulam",
+      "canonical_url": "https://www.keralatourism.org/kerala-article/2010/krishnapuram-palace-gajendramoksham/36",
+      "citation_text": "State tourism authority dates King Anizham Thirunal Marthanda Varma to 1729–1758 and confirms his annexation of Kayamkulam into Travancore."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Indiana University Press — Deep Cosmopolitanism, Ch. 4: Kings, Sultans, and Colonialists",
+      "canonical_url": "https://publish.iupress.indiana.edu/read/deep-cosmopolitanism-kutiyattam-dynamic-tradition-and-globalizing-heritage-in-kerala-india/section/317a36f6-bebb-446a-9ccb-7867456c87be",
+      "citation_text": "Academic historical synthesis says the rising Kingdom of Travancore had previously been known as Venad, and marks Marthanda Varma's 1729 accession as the turning point toward centralized state power."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-14",
+      "review_reason": "no_exact_document"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "2026-10-14: The Kingdom of Travancore/Venad is located in historical southern Kerala with governing centers including Padmanabhapuram and later Thiruvananthapuram. State government evidence: https://industry.kerala.gov.in/index.php/industrial-profile; https://www.keralatourism.org/kerala-article/2010/krishnapuram-palace-gajendramoksham/36 . Existing Production Polity names/UUIDs and historical Venad→Travancore continuity cannot be definitively deduplicated during deployed-API access outage; therefore review is preserved as spatial reviewed_hold, with no invented canonical Place UUID, polity_place_function or coordinate. This request must pass authoritative Production identity and alias preflight before new Polity creation; if a historically identical Venad identity exists under another canonical name, do not create a parallel duplicate."
+  }
+}
