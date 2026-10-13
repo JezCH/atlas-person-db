@@ -1,6 +1,6 @@
 # ATLAS CURRENT WORKSTREAMS
 
-**Current-state board — 2026-10-11 (KST).** Historical progress narratives, merged PRs, audit snapshots and long issue comments are **evidence**, not a task queue. This file contains only active scope, blockers, authoritative pointers and the next independent resume point. Verify fresh Production state before any mutation.
+**Current-state board — 2026-10-14 (KST; GitHub operational pointers reconciled).** Historical progress narratives, merged PRs, audit snapshots and long issue comments are **evidence**, not a task queue. This file contains only active scope, blockers, authoritative pointers and the next independent resume point. Verify fresh Production state before any mutation.
 
 ## 1. Authority and execution
 
@@ -8,6 +8,7 @@
 - **Polity review closure ledger:** [`atlas-polity-review-registry.js`](../atlas-polity-review-registry.js) — source of truth for the 75 tracked seeds and statuses. Do not independently maintain a second list of dispositions.
 - **Active Polity issue:** [#1895](https://github.com/JezCH/atlas-person-db/issues/1895). Historic candidate snapshot `docs/audits/POLITY_REVIEW_CANDIDATES_20260927_ARCHIVE.txt` is archive-only.
 - **Execution contract:** [`WORK_EXECUTION.md`](../WORK_EXECUTION.md). Parallel prepare, resource-scoped before-state preflight, atomic canonical write, one focused postcondition verification. No global single-writer queue or task-level lock.
+- **Vercel quota P0 / service availability:** [#2499](https://github.com/JezCH/atlas-person-db/issues/2499), [mandatory Hobby guard](VERCEL_HOBBY_QUOTA_GUARD.md). Production HTTP 402 was verified 2026-10-12; no Sandbox, repeat Production polling, or docs-only deployment to check service restoration. A GitHub merge/commit is not evidence of applied Production mutation or a healthy live deployment.
 - **Safety:** source-backed identity, exact UUIDs, no speculative temporal boundaries; destructive deletion/retirement needs explicit user approval. Historical material and previously completed PRs must not be silently replayed.
 
 ## 2. Active workstreams
@@ -71,23 +72,24 @@ Review **current main**, not archived visual plans. Classify requirements `DONE 
 **Active, independent from user-driven Person registration.** [#2318](https://github.com/JezCH/atlas-person-db/issues/2318) is the operational acceptance owner for one **unregistered historical Person candidate** feed. Current evidence comes from the cumulative original channel/video IDs and the one canonical live discovery read; **do not** re-create the rejected registered-UUID leaderboard or infer that raw candidate-label rows are verified missing Persons.
 
 - Original-ID review and bounded alias work have already advanced through merged [#2355](https://github.com/JezCH/atlas-person-db/pull/2355), [#2356](https://github.com/JezCH/atlas-person-db/pull/2356) and living-alias correction [#2359](https://github.com/JezCH/atlas-person-db/pull/2359). Do not start those exact units again. #2356 intentionally holds Diana/Princess Diana and other ambiguous labels rather than guessing.
-- The previously recorded 10,127-channel / 2,230,031-video / 8,053-candidate-row checkpoint is a **historical snapshot**, not a newly verified current result or 8,053 unique historical Persons. Use the current live issue + publication snapshot for newer counts; the #2359 production read-back is not implied by PR merge alone.
+- Historical 10,127-channel / 2,230,031-video / 8,053-candidate rows are **not** 8,053 certified unregistered historical Persons. The later reviewed crosswalk in **OPEN PR #2495** records the 2026-10-11 v5 8,616 live title-label reference against 5,965 original-ID source labels (5,138 exact labels in common; 3,478 live-only; 827 source-only); its unmerged audit files and title counts do **not** certify real Person-centred videos or final Production ranking. Current exact authority remains #2318 and a newly verified live snapshot when available.
 - [#2216](https://github.com/JezCH/atlas-person-db/issues/2216) holds the earlier 5,657-name review cohorts and their source-bound evidence. **Do not add 5,657 to the newer 8,053 rows** or automatically repeat already reconciled aliases. Check snapshot lineage and identity-specific overlap before any residual review.
 - **Independent preservation blocker:** [#2226](https://github.com/JezCH/atlas-person-db/issues/2226) tracks durable recovery of original video/channel archives. The action-artifact baseline and older batch001–007 source gaps must not be silently called restored. Respect its no-next-crawl-before-verified-migration condition.
 
 **Completion owner:** #2318 for identity/eligibility and candidate feed; #2216 for its historic evidence cohort disposition; #2226 for durable source recoverability. These are separate acceptance conditions, **not three mutually exclusive worker locks**. Candidate selection for canonical Person creation still belongs to user-driven #1374/#1375.
 
-### D. Targeted existing-Person correction — #2291
+### D. UI Phase III / restrained visual and native interaction (distinct from #1896)
 
-[#2291](https://github.com/JezCH/atlas-person-db/issues/2291) is an **open, bounded Maimonides timeline-disposition correction**. Three existing source-backed Activities are recorded; `chronology_unresolved → timeline` remains to be applied through the current Person Profile writer after **fresh exact-before** and verified Runtime publication. **Do not** create a duplicate Person, fabricate a lifetime rail, treat the issue as already applied, or reactivate the finished cohort-26 registration batch.
+The restrained Dashboard prototype [#2357](https://github.com/JezCH/atlas-person-db/pull/2357) is **MERGED**, not an open PR. Later typography follow-up [#2383](https://github.com/JezCH/atlas-person-db/pull/2383) also **MERGED**; this does **not** equal final subjective user visual approval. UI information coverage [#1896](https://github.com/JezCH/atlas-person-db/issues/1896) remains OPEN independently of aesthetics. Existing native Spacetime legend `<details>` open-state/keyboard-focus investigation is not a deployed fix; [#2443](https://github.com/JezCH/atlas-person-db/pull/2443) stays **DRAFT / DO NOT MERGE** pending approved implementation and a required real-browser acceptance route. Do not restart user-parked P14 Geometry or deploy cosmetic changes during quota suspension.
 
-### E. UI Phase III visual prototype — PR #2357 (separate from #1896)
+### E. Current OPEN PR inventory / exact disposition
 
-The visually scoped [#2357](https://github.com/JezCH/atlas-person-db/pull/2357) is an **OPEN implementation prototype** of the user-selected restrained Dashboard ornament mix. It is *not* final Production acceptance and is not the #1896 canonical **information-coverage** audit. Its own PR requires current-vs-preview responsive visual comparison and user approval, **not CI-only merge**. The UI lane owns the CSS and visual acceptance; a master-status change does not authorize style, layout, Spacetime geometry, or deployment edits.
+- [#2495](https://github.com/JezCH/atlas-person-db/pull/2495) — **OPEN, preserve**: source-vs-v5 8,616-label refreshed crosswalk and immutable original-ID provenance; not completed historical-person video/topic verification or final ranking.
+- [#2477](https://github.com/JezCH/atlas-person-db/pull/2477) — **OPEN, preserve**: four source-reviewed same-name Saint/Marcos identity HOLD distinctions and UI badge plus reviewed aliases. The identity HOLD manifest / read-service / badge changes are absent from current `main`; no safe superseded closure.
+- [#2443](https://github.com/JezCH/atlas-person-db/pull/2443) — **DRAFT / DO NOT MERGE**: Spacetime native disclosure/open/focus source repair; user approval and browser acceptance remain independent requirements.
+- [#2381](https://github.com/JezCH/atlas-person-db/pull/2381) — **OPEN, preserve pending UI owner reconciliation**: merged #2383 overlaps Dashboard caption changes, but current `main` mobile appbar subtitle still declares `font-size: 7.5px` rather than this PR's `10px`. Reconcile exact remaining code and visual acceptance; neither blind merge nor assumption of full supersession is justified.
 
-### F. Release / stale-PR housekeeping (read-only routing)
-
-At this checkpoint [#2338](https://github.com/JezCH/atlas-person-db/pull/2338) is a documentation-only Vercel burst-policy proposal and [#2022](https://github.com/JezCH/atlas-person-db/pull/2022) is an older assertion-only CONTROLS-M2 test correction. Neither should be blindly merged because it is OPEN. Compare only its touched files/contracts with current main and close as superseded when appropriate. Avoid extra Production deployments solely to refresh this board.
+Superseded PRs are closed **without merging** and closure rationale stays in their own PR comment/history rather than another growing master completion ledger. Never reactivate an obsolete PR from archived narrative.
 
 **Master coordination rule:** this board indexes workstream *pointers, scope and precise blockers*; the linked live issue, canonical registry, Person writer, source archive or individual PR remains its own fact authority. No master lane claims exclusive lock or independently updates another lane's progress numbers.
 
@@ -105,6 +107,7 @@ At this checkpoint [#2338](https://github.com/JezCH/atlas-person-db/pull/2338) i
 - Broad legacy registration census (#1793): closed, not an active mass-repair lane.
 - CORE v2 / P13, historic #917/#977 global queue or claim model: closed/superseded by current execution contract.
 - Historic NamuWiki legacy-drain batches (#820), Person Domain cleanup and old one-shot Place backfill transport: archived. Do not relaunch.
+- Targeted Person correction [#2291](https://github.com/JezCH/atlas-person-db/issues/2291) (Maimonides: existing three Activities, timeline disposition) is **CLOSED / completed**, not a pending registration/correction unit.
 - Completed identity corrections stay terminal unless fresh contradictory **current** evidence is documented. The redundant, unmerged South Africa PR [#1942](https://github.com/JezCH/atlas-person-db/pull/1942) was explicitly closed as superseded by #1943/#1944.
 
 ## 5. Resume boundary — P2-10 accepted, fixes and semantic audit OPEN
