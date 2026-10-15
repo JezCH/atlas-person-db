@@ -32,6 +32,13 @@ assert mod.title_candidate("Pablo Picasso: The Artist")=="Pablo Picasso"
 assert mod.title_candidate("Pablo Picasso | The Artist")=="Pablo Picasso"
 assert mod.title_candidate("Mary-Jane: Biography")=="Mary-Jane"
 assert not mod.title_candidate("The Study of Art History") 
+# Leading "The Life of Picasso" was already parsed by the prefix path.
+# The previously missing case is the same reviewed name inside a longer title.
+assert mod.title_candidate("The Life of Picasso")=="Picasso"
+assert not mod.source_context_name_candidates("Art History Explains the Life of Picasso")
+assert [x[0] for x in mod.source_context_name_candidates("Art History Explains the Life of Picasso",patterns)]==["Picasso"]
+assert [x[0] for x in mod.source_context_name_candidates("Why Museums Still Ask Who Was Picasso?",patterns)]==["Picasso"]
+assert [x[0] for x in mod.source_context_name_candidates("An Expert Explains the Biography of Picasso",patterns)]==["Picasso"]
 assert not mod.source_context_name_candidates("The Life of Picasso")
 bad_sha_blocked=False
 try:
@@ -45,9 +52,9 @@ with tempfile.TemporaryDirectory() as tmp:
     videos_dir=directory/"videos"
     videos_dir.mkdir(parents=True)
     samples={
-        "UC1":[("v1","The Life of Picasso"),("v2","Pablo Picasso: Biography"),("v3","The Life of Diana")],
-        "UC2":[("v4","Who Was Picasso?"),("v5","Pablo Picasso | Art History")],
-        "UC3":[("v6","Biography of Picasso"),("v7","Pablo Picasso - The Artist")],
+        "UC1":[("v1","Art History Explains the Life of Picasso"),("v2","Pablo Picasso: Biography"),("v3","The Life of Diana")],
+        "UC2":[("v4","Why Museums Still Ask Who Was Picasso?"),("v5","Pablo Picasso | Art History")],
+        "UC3":[("v6","An Expert Explains the Biography of Picasso"),("v7","Pablo Picasso - The Artist")],
     }
     manifest=[]
     for channel,items in samples.items():
