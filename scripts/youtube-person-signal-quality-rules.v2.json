@@ -1,7 +1,8 @@
 {
-  "version": "reviewed-20261008-v2",
+  "version": "reviewed-20261016-v3",
   "basis": "docs/YOUTUBE_PERSON_SIGNAL_RAW_NAME_AUDIT_20261008.md",
   "non_person_exact": [
+    "3I/Atlas",
     "A Day in Ancient Rome",
     "Adventures Of Sherlock Holmes",
     "Against All Odds",
@@ -77,6 +78,7 @@
     "Genesis",
     "Göbekli Tepe",
     "Gold",
+    "Golden Age",
     "Great Zimbabwe",
     "Hadrian's Wall",
     "Hadrian’s Wall",
@@ -121,7 +123,9 @@
     "Mental Health",
     "Mesopotamia",
     "MH370",
+    "Middle East",
     "Mission",
+    "My life",
     "NASA",
     "Nato",
     "Neanderthals",
@@ -160,6 +164,7 @@
     "POV",
     "Preview",
     "Promo",
+    "Pt 2",
     "Q&A",
     "Reflections",
     "Report",
@@ -374,5 +379,6 @@
     "Hitler",
     "Einstein"
   ],
-  "notes": "Expanded exact-label review of Production top 650 after v3. Explicit non-person metadata and nonhistorical figures remain out of the historical Person ranking while raw titles and the previous snapshot remain immutable. Prefix/suffix lexical cleanup is applied separately. Surname/mononym ambiguity remains unresolved."
+  "notes": "Expanded exact-label review of Production top 650 after v3. Explicit non-person metadata and nonhistorical figures remain out of the historical Person ranking while raw titles and the previous snapshot remain immutable. Prefix/suffix lexical cleanup is applied separately. Surname/mononym ambiguity remains unresolved.",
+  "additional_review": "audits/youtube-v5-high-risk-nonperson-five-20261016.json"
 }
