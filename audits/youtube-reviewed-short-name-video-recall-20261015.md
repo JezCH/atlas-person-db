@@ -2,10 +2,13 @@
 
 ## Scope
 Correct an evidenced blind spot in the independent original-Video-ID title
-signal extractor: a reviewed mononym such as **Picasso** in "**The Life of
-Picasso**" or "**Who Was Picasso?**" is dropped by the two-token open-vocabulary
-cue extractor, even though "**Pablo Picasso: Biography**" is recognized.
-This loses existing original video IDs before per-Person union.
+signal extractor: a reviewed one-word form such as **Picasso** is missed
+**inside a longer title**, e.g. "**Art History Explains the Life of Picasso**"
+or "**Why Museums Still Ask Who Was Picasso?**". The leading-prefix form
+"**The Life of Picasso**" was *already recognized* by the existing prefix
+parser; it must not be mistaken for newly recovered coverage. The source-title
+contextual cue parser requires at least two tokens, and therefore misses the
+embedded one-word identity. This can lose original video IDs prior to union.
 
 ## Bounded fix
 - Source **only** the one-word name forms in the existing immutable
@@ -22,7 +25,7 @@ This loses existing original video IDs before per-Person union.
   actual video person-centeredness.
 - The source manifest's original SHA is a hard precondition. Missing reviewed
   inputs do not silently admit one-word names.
-- Focused original-video fixture asserts 3 newly recognized Picasso video IDs,
+- Focused original-video fixture asserts 3 previously unrecognized embedded-cue Picasso video IDs,
   6 distinct union IDs, 3 independent channels, zero Diana leakage and digest
   mismatch refusal.
 
