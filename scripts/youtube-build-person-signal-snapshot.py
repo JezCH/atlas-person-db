@@ -27,19 +27,45 @@ EXPANDED_NONPERSON_REVIEW_PATH = Path(__file__).resolve().parents[1] / "audits/y
 CUE_AUDIT_PATH = Path(__file__).with_name("youtube-unknown-name-cue-audit.py")
 
 
-def source_context_name_candidates(title):
-    """Source-title Person-name cues, independent of the registered Person DB.
+def reviewed_one_token_biography_patterns(review, digest):
+    """Allow only original-archive-pinned reviewed name forms into one-word cues.
 
-    The cue parser discovers only review candidates, never approved Person
-    identities or certified biography videos. Reuse the already audited
-    extraction grammar without adding a second, drifting name parser.
+    These are title-level candidates, NOT actual video subject certification.
+    Unreviewed single names and homonyms (Diana, Pele, etc.) remain excluded.
     """
+    if review is None:
+        return ()
+    if (review.get("schema") != "atlas-youtube-b024-v5-source-identity-alias-review/v1"
+            or review.get("source_artifact_digest") != digest):
+        raise RuntimeError("V5_SOURCE_ALIAS_REVIEW_DIGEST_MISMATCH")
+    labels = set()
+    for group in review.get("approved_groups", ()):
+        if not isinstance(group.get("aliases"), list) or len(group["aliases"]) < 2:
+            raise RuntimeError("V5_SOURCE_ALIAS_INVALID_GROUP")
+        for alias in group["aliases"]:
+            if isinstance(alias, str) and len(alias.split()) == 1 and alias.isalpha():
+                labels.add(alias)
+    cue = r"(?<!\w)(?:(?:the\s+)?(?:life|biography|story|death|legacy)\s+of|who\s+(?:was|is))\s+"
+    boundary = r"(?=$|[\s?!:|,;.(\-–—])"
+    return tuple((label, re.compile(cue + re.escape(label) + boundary, re.I))
+                 for label in sorted(labels))
+
+
+def source_context_name_candidates(title, reviewed_short_patterns=()):
+    """Extract source title candidates, independent of registered Person names."""
     if not hasattr(source_context_name_candidates, "_parser"):
         spec = importlib.util.spec_from_file_location("atlas_youtube_source_cues", CUE_AUDIT_PATH)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         source_context_name_candidates._parser = module.title_candidates
-    return source_context_name_candidates._parser(str(title or ""))
+    title = str(title or "")
+    found = list(source_context_name_candidates._parser(title))
+    known = {name.casefold() for name, _ in found}
+    for label, pattern in reviewed_short_patterns:
+        if label.casefold() not in known and pattern.search(title):
+            found.append((label, "reviewed_single_name_biography_title_cue"))
+            known.add(label.casefold())
+    return found
 
 
 
@@ -182,7 +208,7 @@ def title_candidate(title):
 
     # Preserve the strong patterns used by yt-title-person-raw-v1:
     # "Name: ...", "Name | ...", and "Name - ...".
-    match = re.match(r"^(.{2,90}?)\s*(?::|\||\s[-–—]\s)\s+.+$", title)
+    match = re.match(r"^(.{2,90}?)\s*(?::|\||\s[-–—])\s+.+$", title)
     if match:
         return clean_text(match.group(1))
     return None
@@ -404,6 +430,9 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None,
             "empty": stats["EMPTY"],
         }
 
+    reviewed_short_patterns = reviewed_one_token_biography_patterns(
+        reviewed_source_aliases, artifact_digest
+    )
     signal_channels = collections.defaultdict(set)
     signal_videos = collections.defaultdict(set)
     signal_names = {}
@@ -427,9 +456,11 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None,
                 extracted = title_candidate(row.get("title"))
                 selections = [(extracted, "prefix")] if extracted else []
                 seen_candidates = set()
-                for name, cue in source_context_name_candidates(row.get("title")):
-                    selections.append((name, "context"))
+                for name, cue in source_context_name_candidates(row.get("title"), reviewed_short_patterns):
+                    selections.append((name, "reviewed_single_name" if cue == "reviewed_single_name_biography_title_cue" else "context"))
                     quality_counts["context_cue_extractions"] += 1
+                    if cue == "reviewed_single_name_biography_title_cue":
+                        quality_counts["reviewed_single_name_cue_extractions"] += 1
                 for extracted_name, origin in selections:
                     if not extracted_name:
                         continue
@@ -449,8 +480,10 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None,
                     signal_channels[key].add(channel_id)
                     signal_videos[key].add(original_id)
                     quality_counts["accepted_video_rows"] += 1
-                    if origin == "context":
+                    if origin in ("context", "reviewed_single_name"):
                         quality_counts["accepted_context_cue_video_name_ids"] += 1
+                    if origin == "reviewed_single_name":
+                        quality_counts["accepted_reviewed_single_name_video_name_ids"] += 1
                     if key not in signal_names or (signal_names[key].isupper() and not candidate.isupper()):
                         signal_names[key] = candidate
         parsed_video_rows += local_count
@@ -526,6 +559,8 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None,
         "expanded_source_reviewed_nonperson_exact_labels": len(EXPANDED_SOURCE_REVIEWED_NONPERSON),
         "quality_counters": dict(sorted(quality_counts.items())),
         "additional_title_context_extraction": True,
+        "reviewed_single_name_biography_cue_labels": [label for label, _ in reviewed_short_patterns],
+        "reviewed_single_name_cue_is_uncertified_title_evidence": True,
         "title_context_evidence_scope": "original_channel_video_ids",
         "title_context_personhood": "source_title_review_candidate_not_verified_person",
         "source_name_generation_independent_of_registered_persons": True,
