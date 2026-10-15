@@ -37,9 +37,14 @@ historic source-specific evidence and remain unmodified.
 
 ## Status and separate previously identified omissions
 
-- PR #2504 (independent): original-title embedded reviewed single-word
-  biography cue and single-spaced dash subtitle correction; existing CI
-  `classify`, `validate`, `test`, `full_test` all green.
+- PR #2504 (original isolated patch, now integrated into the current PR):
+  embedded reviewed one-word biography cues and single-spaced dash subtitles.
+  The current branch includes those exact code changes, both original
+  regression tests and this threshold unit. Its revised cross-feature fixture
+  checks two source-review single-word videos plus a dash-delimited long name,
+  both individually <3 channels, forming exactly one 3-channel original-ID
+  union. One verified integrated PR is authoritative, not two competing
+  publisher versions.
 - PR #2495 (previously executed but open): 8,616 current v5 title labels vs
   5,965 original source labels; 5,138 shared exact strings; 3,478 live-only;
   827 original-only; **4,868** same-name title-count discrepancies.
