@@ -1,0 +1,1030 @@
+{
+  "schema": "atlas-user-selected-person-identity-reconciliation/v1",
+  "selected_at": "2026-10-14",
+  "snapshot_reviewed_at": "2026-10-16",
+  "scope": "Explicit user-selected 98 Civ great people / rulers from October 2026 conversation",
+  "authority": "historical_evidence_only_not_current_production",
+  "snapshot_evidence": "GitHub proposals/person-representative-domain batch-001..129 (Production-derived historical UUIDs) and PR #686; not current-authoritative DB, because the Production endpoint returned HTTP 402 DEPLOYMENT_DISABLED on 2026-10-16",
+  "counts": {
+    "snapshot_uuid": 50,
+    "pr_confirmed": 1,
+    "request_no_readback": 9,
+    "unresolved": 38
+  },
+  "review_policy": {
+    "whole_goal": "Reconcile all 98 against FULL LIVE atlas_v2.persons and person_names once; remove every positively identified existing Person; verify semantic Activity already exists; only truly absent and source-backed Persons enter user-selected registration lane; then Authoring Apply → Runtime Compile → read-back",
+    "identity_endpoint": "/api/atlas-read?__atlas_read_surface=person&view=identity",
+    "exact_matching": "NFKC/diacritics/case/punctuation normalized equality on full name and explicit aliases only; never fuzzy auto-link",
+    "no_auto_registration": true,
+    "no_auto_queue_drain": true,
+    "fail_closed_on_402": true,
+    "no_deletion_or_merge_without_approval": true,
+    "never_assume_request_equals_applied": true
+  },
+  "prior_user_selected_pending_batches": [
+    {
+      "pr": 2497,
+      "cohort": "Goiswintha three activities",
+      "state": "GitHub merged, Production Apply HTTP 402"
+    },
+    {
+      "pr": 2500,
+      "cohort": "Leonor, Lempira, Fraxinetum Nasr",
+      "state": "GitHub merged, Production Apply HTTP 402"
+    },
+    {
+      "pr": 2501,
+      "cohort": "Marthanda Varma 1729–1758",
+      "state": "GitHub merged, Production Apply HTTP 402"
+    }
+  ],
+  "entries": [
+    {
+      "ordinal": 1,
+      "display_name_ko": "류리크",
+      "expected_name_en": "Rurik",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "67550a13-eb8b-5645-b2d9-e669ba1581fa"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot",
+      "identity_or_chronology_caveat": "Earlier 862–879 Kievan Rus relation flagged historical back-projection; correct the existing Activity rather than create a second ruler."
+    },
+    {
+      "ordinal": 2,
+      "display_name_ko": "할리드 이븐 알왈리드",
+      "expected_name_en": "Khalid ibn al-Walid",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "54583770-280a-4ec1-81db-24729ed842ab"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 3,
+      "display_name_ko": "바이바르스",
+      "expected_name_en": "Baybars",
+      "aliases_to_check": [
+        "Baibars",
+        "Baybars I",
+        "Baibars I"
+      ],
+      "historical_uuid_evidence": [
+        "cc318f79-72a4-41a7-86d3-21382ac8b176",
+        "fe5286f4-94fd-4d81-b933-5f76a790d58c"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot",
+      "identity_or_chronology_caveat": "Baybars/Baibars appears as TWO earlier snapshot UUIDs for the same 1260–1277 Mamluk reign: identity collision, do not merge/delete without approved correction."
+    },
+    {
+      "ordinal": 4,
+      "display_name_ko": "얀 지슈카",
+      "expected_name_en": "Jan Žižka",
+      "aliases_to_check": [
+        "Jan Zizka"
+      ],
+      "historical_uuid_evidence": [
+        "6ef0043a-62ab-48de-b718-4ee97fe3de57"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 5,
+      "display_name_ko": "위그 드 파앵",
+      "expected_name_en": "Hugues de Payens",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 6,
+      "display_name_ko": "가자 마다",
+      "expected_name_en": "Gajah Mada",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "d6e3ee3c-f08e-54e5-bb19-20799cc6aca4"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 7,
+      "display_name_ko": "스타니스와프 주키에프스키",
+      "expected_name_en": "Stanisław Żółkiewski",
+      "aliases_to_check": [
+        "Stanislaw Zolkiewski"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 8,
+      "display_name_ko": "카테리나 스포르차",
+      "expected_name_en": "Caterina Sforza",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "f0798d19-da83-4899-8de8-a163668542c9"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 9,
+      "display_name_ko": "에르난 코르테스",
+      "expected_name_en": "Hernán Cortés",
+      "aliases_to_check": [
+        "Hernan Cortes"
+      ],
+      "historical_uuid_evidence": [
+        "c586abbe-f30b-41b1-bbdf-895890d56e8e"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 10,
+      "display_name_ko": "칼 12세",
+      "expected_name_en": "Charles XII of Sweden",
+      "aliases_to_check": [
+        "Karl XII"
+      ],
+      "historical_uuid_evidence": [
+        "3a70999f-fb39-4b2c-ae5d-6d1c00076f0d"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 11,
+      "display_name_ko": "주세페 가리발디",
+      "expected_name_en": "Giuseppe Garibaldi",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "4755388b-6d6d-40d7-9ab6-9bf3bf28f1c9"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 12,
+      "display_name_ko": "토머스 에드워드 로렌스",
+      "expected_name_en": "T. E. Lawrence",
+      "aliases_to_check": [
+        "Thomas Edward Lawrence",
+        "Lawrence of Arabia"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 13,
+      "display_name_ko": "로만 폰 운게른슈테른베르크",
+      "expected_name_en": "Roman von Ungern-Sternberg",
+      "aliases_to_check": [
+        "Baron Roman von Ungern-Sternberg"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 14,
+      "display_name_ko": "율리시스 S. 그랜트",
+      "expected_name_en": "Ulysses S. Grant",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+    },
+    {
+      "ordinal": 15,
+      "display_name_ko": "빌리 미첼",
+      "expected_name_en": "Billy Mitchell",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 16,
+      "display_name_ko": "칼 구스타프 에밀 만네르헤임",
+      "expected_name_en": "Carl Gustaf Emil Mannerheim",
+      "aliases_to_check": [
+        "Mannerheim"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+    },
+    {
+      "ordinal": 17,
+      "display_name_ko": "마르쿠스 빕사니우스 아그리파",
+      "expected_name_en": "Marcus Vipsanius Agrippa",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 18,
+      "display_name_ko": "라그나르 로드브로크",
+      "expected_name_en": "Ragnar Lodbrok",
+      "aliases_to_check": [
+        "Ragnar Lothbrok"
+      ],
+      "historical_uuid_evidence": [
+        "9d317619-d549-4051-b8a1-46cd44604d94"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot",
+      "identity_or_chronology_caveat": "Existing non-timeline legendary individual; not an ordinary historical ruler/reign registration."
+    },
+    {
+      "ordinal": 19,
+      "display_name_ko": "로저 드 로리아",
+      "expected_name_en": "Roger of Lauria",
+      "aliases_to_check": [
+        "Roger de Lauria",
+        "Ruggero di Lauria"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 20,
+      "display_name_ko": "하이레딘 바르바로사",
+      "expected_name_en": "Hayreddin Barbarossa",
+      "aliases_to_check": [
+        "Khayr al-Din Barbarossa"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+    },
+    {
+      "ordinal": 21,
+      "display_name_ko": "미힐 더라위터르",
+      "expected_name_en": "Michiel de Ruyter",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 22,
+      "display_name_ko": "아흐마드 이븐 마지드",
+      "expected_name_en": "Ahmad ibn Majid",
+      "aliases_to_check": [
+        "Ibn Majid"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+    },
+    {
+      "ordinal": 23,
+      "display_name_ko": "헨리 모건",
+      "expected_name_en": "Henry Morgan",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "e0383913-ad19-46ec-9740-d3a23874be90"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 24,
+      "display_name_ko": "안드레아 도리아",
+      "expected_name_en": "Andrea Doria",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 25,
+      "display_name_ko": "아폰수 드 알부케르크",
+      "expected_name_en": "Afonso de Albuquerque",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "1fc8b288-d205-4217-9e81-435c1bf449d2"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 26,
+      "display_name_ko": "페이디아스",
+      "expected_name_en": "Phidias",
+      "aliases_to_check": [
+        "Pheidias"
+      ],
+      "historical_uuid_evidence": [
+        "4089c029-e224-4b4e-ad68-ca4fdcee6ddb"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 27,
+      "display_name_ko": "비트루비우스",
+      "expected_name_en": "Vitruvius",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "a9d128fb-7783-4ea2-8393-3db33e1792b2"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 28,
+      "display_name_ko": "다마스쿠스의 아폴로도로스",
+      "expected_name_en": "Apollodorus of Damascus",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 29,
+      "display_name_ko": "그라나다의 무함마드 5세",
+      "expected_name_en": "Muhammad V of Granada",
+      "aliases_to_check": [
+        "Muhammad V"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "approved_authoring_request_no_current_readback",
+      "identity_or_chronology_caveat": "Two discontinuous historical reigns 1354–1359 and 1362–1391; do not confuse Nasrid Muhammad V with dynasty founder Muhammad I."
+    },
+    {
+      "ordinal": 30,
+      "display_name_ko": "세바스티앙 보방",
+      "expected_name_en": "Sébastien Le Prestre de Vauban",
+      "aliases_to_check": [
+        "Vauban"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 31,
+      "display_name_ko": "얀 리흐워터",
+      "expected_name_en": "Jan Leeghwater",
+      "aliases_to_check": [
+        "Jan Adriaanszoon Leeghwater"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 32,
+      "display_name_ko": "필리베르 드 로르메",
+      "expected_name_en": "Philibert de l'Orme",
+      "aliases_to_check": [
+        "Philibert Delorme"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 33,
+      "display_name_ko": "우르반",
+      "expected_name_en": "Orban (cannon founder)",
+      "aliases_to_check": [
+        "Urban",
+        "Orban"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 34,
+      "display_name_ko": "이점바드 킹덤 브루넬",
+      "expected_name_en": "Isambard Kingdom Brunel",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 35,
+      "display_name_ko": "알프레드 크루프",
+      "expected_name_en": "Alfred Krupp",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 36,
+      "display_name_ko": "프란체스코 바르톨로메오 라스트렐리",
+      "expected_name_en": "Francesco Bartolomeo Rastrelli",
+      "aliases_to_check": [
+        "Bartolomeo Rastrelli"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 37,
+      "display_name_ko": "아우베르투 산토스뒤몽",
+      "expected_name_en": "Alberto Santos-Dumont",
+      "aliases_to_check": [
+        "Alberto Santos Dumont"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 38,
+      "display_name_ko": "크로이소스",
+      "expected_name_en": "Croesus",
+      "aliases_to_check": [
+        "Kroisos"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+    },
+    {
+      "ordinal": 39,
+      "display_name_ko": "이븐 바투타",
+      "expected_name_en": "Ibn Battuta",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "5ea35065-a0b6-5273-bc7b-e3f198b4284b"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 40,
+      "display_name_ko": "본 다 말라모코",
+      "expected_name_en": "Buono da Malamocco",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check",
+      "identity_or_chronology_caveat": "Legend and historical source layer of St Mark's relic translation require independent source verification before a new Person."
+    },
+    {
+      "ordinal": 41,
+      "display_name_ko": "아파나시 니키틴",
+      "expected_name_en": "Afanasy Nikitin",
+      "aliases_to_check": [
+        "Afanasiy Nikitin"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 42,
+      "display_name_ko": "윌리엄 애덤스",
+      "expected_name_en": "William Adams (Miura Anjin)",
+      "aliases_to_check": [
+        "William Adams",
+        "Miura Anjin"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 43,
+      "display_name_ko": "알렉산더 해밀턴",
+      "expected_name_en": "Alexander Hamilton",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 44,
+      "display_name_ko": "세실 로즈",
+      "expected_name_en": "Cecil Rhodes",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "49e6b8cf-2322-44d8-a79e-892026b14211"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 45,
+      "display_name_ko": "시부사와 에이이치",
+      "expected_name_en": "Shibusawa Eiichi",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 46,
+      "display_name_ko": "장 노이하우스 2세",
+      "expected_name_en": "Jean Neuhaus II",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 47,
+      "display_name_ko": "카를 파베르제",
+      "expected_name_en": "Peter Carl Fabergé",
+      "aliases_to_check": [
+        "Carl Faberge"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 48,
+      "display_name_ko": "J. P. 모건",
+      "expected_name_en": "J. P. Morgan",
+      "aliases_to_check": [
+        "John Pierpont Morgan"
+      ],
+      "historical_uuid_evidence": [
+        "f893373c-2b5e-476b-9199-27e7ed92dad9"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 49,
+      "display_name_ko": "아리스토텔레스",
+      "expected_name_en": "Aristotle",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "1ee551fc-6ad7-4c2f-80d4-5bbeb526132f"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 50,
+      "display_name_ko": "채륜",
+      "expected_name_en": "Cai Lun",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "bbd13869-4ebb-4be6-8721-3a5ec6136422"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 51,
+      "display_name_ko": "이븐 시나",
+      "expected_name_en": "Ibn Sina",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "b47fb78d-4cb4-4dfb-a576-fe304c60ac30"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 52,
+      "display_name_ko": "심괄",
+      "expected_name_en": "Shen Kuo",
+      "aliases_to_check": [
+        "Shen Gua"
+      ],
+      "historical_uuid_evidence": [
+        "1f5d04f0-4d34-479e-b0b0-c0d4f65e3799"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 53,
+      "display_name_ko": "이븐 루시드",
+      "expected_name_en": "Ibn Rushd",
+      "aliases_to_check": [
+        "Averroes"
+      ],
+      "historical_uuid_evidence": [
+        "4593467a-6dea-4d07-a40f-597185fe0f25"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 54,
+      "display_name_ko": "크리스토퍼 클라비우스",
+      "expected_name_en": "Christopher Clavius",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 55,
+      "display_name_ko": "에라스뮈스",
+      "expected_name_en": "Desiderius Erasmus",
+      "aliases_to_check": [
+        "Erasmus"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 56,
+      "display_name_ko": "마이클 패러데이",
+      "expected_name_en": "Michael Faraday",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "c9260843-643d-4ad2-ba5b-dfed67655cfe"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 57,
+      "display_name_ko": "루이 파스퇴르",
+      "expected_name_en": "Louis Pasteur",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "e0b2112b-78ae-44b1-80dc-62374673ae59"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 58,
+      "display_name_ko": "안드레이 사하로프",
+      "expected_name_en": "Andrei Sakharov",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 59,
+      "display_name_ko": "히포의 아우구스티누스",
+      "expected_name_en": "Augustine of Hippo",
+      "aliases_to_check": [
+        "Saint Augustine"
+      ],
+      "historical_uuid_evidence": [
+        "4bf8192e-0e44-43f7-8971-05b0b1f74111"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 60,
+      "display_name_ko": "후고 그로티우스",
+      "expected_name_en": "Hugo Grotius",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 61,
+      "display_name_ko": "장 자크 루소",
+      "expected_name_en": "Jean-Jacques Rousseau",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "add62f50-5dfe-4b74-b8cb-9af003f859b2"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 62,
+      "display_name_ko": "볼테르",
+      "expected_name_en": "Voltaire",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 63,
+      "display_name_ko": "프리드리히 니체",
+      "expected_name_en": "Friedrich Nietzsche",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "c5676a6d-891b-4d08-8738-d26226e78ae0"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 64,
+      "display_name_ko": "마르틴 하이데거",
+      "expected_name_en": "Martin Heidegger",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "6f029958-4714-4295-94c0-6c599aed55bc"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 65,
+      "display_name_ko": "H. P. 러브크래프트",
+      "expected_name_en": "H. P. Lovecraft",
+      "aliases_to_check": [
+        "Howard Phillips Lovecraft"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 66,
+      "display_name_ko": "로버트 E. 하워드",
+      "expected_name_en": "Robert E. Howard",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 67,
+      "display_name_ko": "로베르 슈만",
+      "expected_name_en": "Robert Schuman",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 68,
+      "display_name_ko": "마붑 울 하크",
+      "expected_name_en": "Mahbub ul Haq",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 69,
+      "display_name_ko": "앙드레 르 노트르",
+      "expected_name_en": "André Le Nôtre",
+      "aliases_to_check": [
+        "Andre Le Notre"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 70,
+      "display_name_ko": "랜슬롯 브라운",
+      "expected_name_en": "Lancelot Brown",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 71,
+      "display_name_ko": "솔로몬",
+      "expected_name_en": "Solomon",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "463b2510-1ce3-580b-a4cd-a5caeaeec4ba"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot",
+      "identity_or_chronology_caveat": "Contested biblical/archaeological chronology; preserve uncertainty."
+    },
+    {
+      "ordinal": 72,
+      "display_name_ko": "마르쿠스 아우렐리우스",
+      "expected_name_en": "Marcus Aurelius",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "b66809be-d964-4a0e-be49-dfeabaa08f46"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 73,
+      "display_name_ko": "프톨레마이오스 1세",
+      "expected_name_en": "Ptolemy I Soter",
+      "aliases_to_check": [
+        "Ptolemy I"
+      ],
+      "historical_uuid_evidence": [
+        "a3e78df5-1a41-4f04-8ed4-67d21a392893"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 74,
+      "display_name_ko": "아소카",
+      "expected_name_en": "Ashoka",
+      "aliases_to_check": [
+        "Ashoka the Great"
+      ],
+      "historical_uuid_evidence": [
+        "66d20a4e-3847-5b2c-8543-0c6796fb465c"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 75,
+      "display_name_ko": "프리드리히 2세(신성로마)",
+      "expected_name_en": "Frederick II, Holy Roman Emperor",
+      "aliases_to_check": [
+        "Frederick II Hohenstaufen"
+      ],
+      "historical_uuid_evidence": [
+        "e1c1e658-aa35-4728-be19-ff6d8cb7acdf"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 76,
+      "display_name_ko": "파라메스와라",
+      "expected_name_en": "Parameswara",
+      "aliases_to_check": [
+        "Paramesvara"
+      ],
+      "historical_uuid_evidence": [
+        "706e6449-02a8-5830-a75e-88b20247eee0"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot",
+      "identity_or_chronology_caveat": "Parameswara different name variant; old production id must be reused."
+    },
+    {
+      "ordinal": 77,
+      "display_name_ko": "샤를마뉴",
+      "expected_name_en": "Charlemagne",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "50ba5bb7-0660-5089-ae67-d692cf282b24"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 78,
+      "display_name_ko": "앨프레드 대왕",
+      "expected_name_en": "Alfred the Great",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "a036421b-7022-41c4-9619-43d7f4c80a1b"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 79,
+      "display_name_ko": "람캄행",
+      "expected_name_en": "Ramkhamhaeng",
+      "aliases_to_check": [
+        "Ram Khamhaeng"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "production_confirmed_in_pr_686"
+    },
+    {
+      "ordinal": 80,
+      "display_name_ko": "하룬 알라시드",
+      "expected_name_en": "Harun al-Rashid",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "a32487f7-b1cc-588a-a665-0fc713731d7b"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 81,
+      "display_name_ko": "비타우타스",
+      "expected_name_en": "Vytautas",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "472d03a0-3183-4d66-8855-666b680423eb"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 82,
+      "display_name_ko": "알하캄 2세",
+      "expected_name_en": "Al-Hakam II",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check"
+    },
+    {
+      "ordinal": 83,
+      "display_name_ko": "로렌초 데 메디치",
+      "expected_name_en": "Lorenzo de' Medici",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "3d8a3729-3ac1-4627-9560-7ac4ed05053b"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 84,
+      "display_name_ko": "율리오 2세",
+      "expected_name_en": "Pope Julius II",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "8c86bca3-7620-4963-816a-99948b1afdce"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 85,
+      "display_name_ko": "울루그 베그",
+      "expected_name_en": "Ulugh Beg",
+      "aliases_to_check": [
+        "Ulughbek"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "approved_authoring_request_no_current_readback",
+      "identity_or_chronology_caveat": "Previously merged person-only request; completion requires Production runtime read-back."
+    },
+    {
+      "ordinal": 86,
+      "display_name_ko": "악바르",
+      "expected_name_en": "Akbar the Great",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "19f68d28-0d0b-4712-a961-5afb84e8c1b7"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 87,
+      "display_name_ko": "루이 14세",
+      "expected_name_en": "Louis XIV",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "e2a6cf52-b9dc-5e33-ab28-b5e3f668359b"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 88,
+      "display_name_ko": "스컨데르베우",
+      "expected_name_en": "Skanderbeg",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "8e32f62c-9b6a-4e52-9290-eef620e86ef2"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 89,
+      "display_name_ko": "아스키아 무함마드",
+      "expected_name_en": "Askia Muhammad",
+      "aliases_to_check": [
+        "Askia Mohammad"
+      ],
+      "historical_uuid_evidence": [
+        "9d34a18e-442d-5189-b180-7eb8e1a04065"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 90,
+      "display_name_ko": "마리아 테레지아",
+      "expected_name_en": "Maria Theresa",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "c3248e1c-8ab3-5977-9558-e2cbcbbc263c"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 91,
+      "display_name_ko": "무함마드 알리 파샤",
+      "expected_name_en": "Muhammad Ali Pasha",
+      "aliases_to_check": [
+        "Mehmet Ali Pasha",
+        "Muhammad Ali of Egypt"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "unresolved_no_production_identity_check",
+      "identity_or_chronology_caveat": "Muhammad Ali Pasha is NOT Muhammad Ali (boxer) or Muhammad Ali Jinnah."
+    },
+    {
+      "ordinal": 92,
+      "display_name_ko": "프리트비 나라얀 샤",
+      "expected_name_en": "Prithvi Narayan Shah",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+    },
+    {
+      "ordinal": 93,
+      "display_name_ko": "오토 폰 비스마르크",
+      "expected_name_en": "Otto von Bismarck",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "5401a194-c4e1-57e9-97da-49538d756182"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 94,
+      "display_name_ko": "메이지 천황",
+      "expected_name_en": "Emperor Meiji",
+      "aliases_to_check": [
+        "Meiji Tenno"
+      ],
+      "historical_uuid_evidence": [
+        "f14bd56a-8c24-591c-811a-e731bccc4eeb"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 95,
+      "display_name_ko": "하일레 셀라시에",
+      "expected_name_en": "Haile Selassie I",
+      "aliases_to_check": [
+        "Haile Selassie"
+      ],
+      "historical_uuid_evidence": [
+        "98142a9e-e43b-5fab-be58-8004cfd1aca6"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 96,
+      "display_name_ko": "무스타파 케말 아타튀르크",
+      "expected_name_en": "Mustafa Kemal Atatürk",
+      "aliases_to_check": [
+        "Ataturk"
+      ],
+      "historical_uuid_evidence": [],
+      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+    },
+    {
+      "ordinal": 97,
+      "display_name_ko": "리콴유",
+      "expected_name_en": "Lee Kuan Yew",
+      "aliases_to_check": [],
+      "historical_uuid_evidence": [
+        "51b65864-b028-482e-a4b4-2695209fd9cf"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    },
+    {
+      "ordinal": 98,
+      "display_name_ko": "자이드 빈 술탄 알나얀",
+      "expected_name_en": "Zayed bin Sultan Al Nahyan",
+      "aliases_to_check": [
+        "Sheikh Zayed"
+      ],
+      "historical_uuid_evidence": [
+        "51849218-d58f-4858-a398-4eded6397be0"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot"
+    }
+  ]
+}
