@@ -304,13 +304,19 @@ def reviewed_source_alias_unions(review, digest, channel_sets, video_id_sets, di
         keys = [name.casefold() for name in group["aliases"]]
         if len(keys) < 2 or len(set(keys)) != len(keys) or any(k in used for k in keys):
             raise RuntimeError("V5_SOURCE_ALIAS_DUPLICATE_IDENTITY")
-        if any(k not in channel_sets or len(channel_sets[k]) < 3 for k in keys):
-            raise RuntimeError("V5_SOURCE_ALIAS_LABEL_NOT_IN_PUBLISHED_SIGNALS")
+        # Check reviewed aliases against ALL extracted original IDs, not only
+        # names individually qualifying for the >=3-channel raw signal feed.
+        # Two distinct 2-channel aliases may have a 3-channel original-ID union.
+        if any(k not in channel_sets or not channel_sets[k] or not video_id_sets.get(k)
+               for k in keys):
+            raise RuntimeError("V5_SOURCE_ALIAS_LABEL_MISSING_OR_EMPTY")
         used.update(keys)
         channels = set().union(*(channel_sets[k] for k in keys))
         videos = set().union(*(video_id_sets[k] for k in keys))
         if not channels or not videos:
             raise RuntimeError("V5_SOURCE_ALIAS_UNION_EMPTY")
+        if len(channels) < 3:
+            raise RuntimeError("V5_SOURCE_ALIAS_UNION_BELOW_DISCOVERY_THRESHOLD")
         names = [{"name": display_names[k],
                   "distinct_channel_count": len(channel_sets[k]),
                   "video_count": len(video_id_sets[k])} for k in keys]
@@ -526,6 +532,11 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None,
         "reviewed_source_unions": reviewed_unions,
         "reviewed_source_unions_count": len(reviewed_unions),
         "reviewed_source_unions_nameform_only_not_biography": True,
+        "reviewed_subthreshold_alias_nameforms": sum(
+            alias["distinct_channel_count"] < 3
+            for group in reviewed_unions for alias in group["aliases"]
+        ),
+        "reviewed_alias_union_before_raw_name_threshold": True,
         "artifact_id": int(artifact_id),
         "artifact_digest": artifact_digest,
         "batch_stats": batch_stats,
