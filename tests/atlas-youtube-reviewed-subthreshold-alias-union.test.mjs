@@ -96,6 +96,7 @@ test("missing qualified label, mismatched source counts, bad union and unreviewe
   const reviewed=originalFixture();
   const bogus=structuredClone(reviewed);
   bogus.aliases[0].distinct_channel_count=3;
+  bogus.aliases[0].video_count=3; // independently valid, but missing qualified published row
   assert.throws(()=>discovery.applyReviewedSourceUnions([],[bogus]),/SOURCE_LABEL_MISSING/);
   const impossible=structuredClone(reviewed);
   impossible.distinct_channel_count=5;
