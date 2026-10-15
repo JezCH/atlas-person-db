@@ -506,7 +506,11 @@ def build(root, artifact_id, artifact_digest, previous_snapshot=None,
     new_keys = {name.casefold() for name, _, _ in raw}
     # Proven single-Person false positives must be removable without erasing
     # their original video/channel source records or regressing real names.
-    missing = set(preserved) - new_keys - SOURCE_REVIEWED_NONPERSON - EXPANDED_SOURCE_REVIEWED_NONPERSON
+    # Explicitly reviewed non-Person quality labels are legitimate removals
+    # from earlier title-only snapshots; retain their source IDs, not the false
+    # Person signal. Every unreviewed vanished label still fails closed.
+    missing = (set(preserved) - new_keys - REVIEWED_NON_PERSON
+               - SOURCE_REVIEWED_NONPERSON - EXPANDED_SOURCE_REVIEWED_NONPERSON)
     if missing:
         raise RuntimeError("LOST_EXISTING_SIGNAL_IDENTITY: " + repr(sorted(missing)[:5]))
     raw.sort(key=lambda item: (-item[1], -item[2], item[0].casefold(), item[0]))
