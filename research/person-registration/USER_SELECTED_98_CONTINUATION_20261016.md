@@ -1,0 +1,45 @@
+# ATLAS user-selected 98 — exact Person identity reconciliation checkpoint
+
+**Date:** 2026-10-16 KST. **User's goal:** From the original *exactly 98* Civ Great People / ruler names, first exclude **every actually existing Person**, then research only genuine nonmembers, distinguish historically doubtful people and multiple terms, register newly warranted historical people once with normalized Source/Polity/Role/Domain/NamuWiki/spatial fields, run canonical Authoring Apply → Runtime Compile → authoritative readback. Historical-registered persons requiring a semantic correction are a **separate correction lane**, not an excuse to create a second Person or duplicate Activity.
+
+## Current authority / outage
+
+- Direct Production `/api/atlas-read?__atlas_read_surface=person&view=identity` checked on 2026-10-16: **HTTP 402 Payment required / DEPLOYMENT_DISABLED**. Vercel project metadata `live:false`; latest deployed artifact previously READY, which is **not** live availability.
+- Source of historic Person UUID evidence: Production-derived `proposals/person-representative-domain/batch-001..129`, uniquely matched by exact English Person identity (no `Role`-based guesses), plus merged PR #686's documented prior Production presence of Ramkhamhaeng. This historical census is **not** a fresh 2026-10-16 Production snapshot.
+- **50 of 98** have historical Person UUIDs; **1** more (Ramkhamhaeng) has an explicit prior Production-presence PR; **9** have previously approved `authoring/requests` but no independently confirmed current DB readback in this research; **38** have not yet been identified from those surfaces. These four classes are not a true current `registered/unregistered` split and **must not** be relabeled as one.
+- **Baybars / Baibars historical UUID collision**: `cc318f79-72a4-41a7-86d3-21382ac8b176` and `fe5286f4-94fd-4d81-b933-5f76a790d58c` refer to source-described Mamluk sultan 1260–1277. Both old records must be checked against *current* Persons. Do not assert they still both survive; if they do, separately propose an exact-ID, source-reviewed identity correction; no unauthorized merge/delete.
+- **Rurik** has a historical 862–879 Kievan Rus back-projection case (PR #106), distinct from a new Person registration. **Ragnar Lodbrok** is preexisting non-timeline legendary, and cannot be reintroduced as a verified dual Scandinavian sovereign. **Muhammad V of Granada** has 1354–1359 and 1362–1391 separate reigns (not Nasrid founder Muhammad I). **Muhammad Ali Pasha** must be disambiguated from the boxer and from Muhammad Ali Jinnah. **Solomon** has chronology and archaeological-history uncertainty; do not fabricate it away.
+- The domain-history and historical queue are *supporting evidence*, not an independent reliable present-tense negative lookup. Earlier 59/39 and 51/9/38 claims should **never** be called an authoritative registered/nonregistered census.
+
+## Reproducible read-only exact-first census
+
+Canonical endpoint already in ATLAS: `/api/atlas-read?__atlas_read_surface=person&view=identity`, which returns *all* Persons with their name/locale arrays and UUIDs. Once restored, run one **whole-population** request (not 98 speculative API searches):
+
+```sh
+node scripts/audit-user-selected-98-person-identities.mjs --out /tmp/atlas-user98-identity.json
+```
+
+This compares all 98 selected EN/KO labels and explicit name variants against the full live identity census; verified prior UUIDs are also matched directly. Fail-closed on HTTP errors, incomplete roster, duplicate UUIDs, malformed/partial projection, and no automatic name-only fuzzy attachment. Report near-name cases separately for manual review. *No write capability is exercised by this script.* If the API remains disabled, **do not** simulate a "0 matches" result or infer that 47 people are absent.
+
+## Required completion gates
+
+1. Restore Production API availability **by the account owner**; no bypassing payment or Vercel deployment suspension. Run exact identity census once.
+2. Resolve every existing Person: classify `COMPLETE_EXISTING` if its historical activities are present and correct; otherwise `NEEDS_CORRECTION` or source-specific `MISSING_ACTIVITY`. No person duplicate creation.
+3. For every name with no current exact UUID/name hit, investigate only plausible alternate spellings/transliterations/aliases, semantic identity and potential same-name individuals using the near-match list; a negative direct match is not a final determination. Verify living/deceased, historical vs legendary vs mythological, probable birth/death/activity window.
+4. Review new Person and their Polity/Role/Relation/Period Basis/Activity boundaries and normalized Source, NamuWiki independent exact page or justified `not_found`, representative Domain, spatial disposition **before** authoring. Separate multi-terms; never invent precise dates, places, or culturally anachronistic polities.
+5. Register the *actual confirmed absent only* in one bounded user-selected cohort, with one Production preflight batch, authoring PR, CI, apply of READY records, sealed Runtime Compile and actual public Person/Activity/domain/source readback. Leave conflict correction cases on separate reviewed lanes.
+6. Close with **98/98 dispositions**, including exact existing UUIDs, genuinely new UUIDs, legendary/HOLD exclusions, errors corrected, and no unreviewed or accidentally duplicated user-selected identities.
+
+## Separate previously selected work; **do not mix the cohorts**
+
+- [PR #2497](https://github.com/JezCH/atlas-person-db/pull/2497): Goiswintha (3 Activities), approved/merged, Authoring Apply #38229950973 blocked on 402.
+- [PR #2500](https://github.com/JezCH/atlas-person-db/pull/2500): Leonor of El Limón / Lempira / Fraxinetum Nasr ibn Ahmad, approved/merged, Apply #38241811143 blocked on 402.
+- [PR #2501](https://github.com/JezCH/atlas-person-db/pull/2501): Anizham Thirunal Marthanda Varma, approved/merged, Apply #38423738649 blocked on 402.
+- Those are **7 separate Person/Activity requests in prior PRs**, not additions to the 98-person user-selected cohort. After restoration, execute bounded preflights and verify idempotency; **never blindly replay** those immutable manifests, and do not claim Production registered from a merge.
+- User-managed #1375 candidate pool intentionally persists; **no automatic queue drain** or unrelated deletion/merges. This work's explicitly user-selected 98 alone are the registration scope.
+
+## Durable files
+
+- `user-selected-98-identity-reconciliation-20261016.v1.json`: all 98 exact original names, EN forms, aliases, historical UUID evidence, cautions and separate request states.
+- `scripts/audit-user-selected-98-person-identities.mjs`: fail-closed *read only* public identity census and exact UUID/alias reconciliation.
+- `tests/user-selected-98-person-identity-audit.test.mjs`: census integrity, alias normalization, Baybars duplicate hold, no fake Muhammad Ali Pasha match, negative-read safety.
