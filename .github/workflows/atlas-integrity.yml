@@ -185,8 +185,8 @@ jobs:
     timeout-minutes: 10
     services:
       postgres:
-        # Use the Docker Official Image mirror to avoid Docker Hub anonymous pull rate limits.
-        image: public.ecr.aws/docker/library/postgres:17
+        # Docker Hub official image: public.ecr.aws mirror was returning toomanyrequests/Data limit exceeded on 2026-10-16 (CI #38822067974).
+        image: postgres:17
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
