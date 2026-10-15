@@ -1,0 +1,75 @@
+{
+  "schema": "atlas-youtube-high-risk-exact-nonperson-correction/v1",
+  "reviewed_at": "2026-10-16",
+  "disposition": "REVIEWED_EXACT_NON_PERSON_NAME_LABEL",
+  "original_source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "original_source_channel_count": 10127,
+  "original_source_video_rows": 2230031,
+  "independent_source_label_count": 5965,
+  "source_title_population": "preexisting_independent_5720",
+  "source_evidence": "audits/youtube-b024-v5-crosswalk-matched-part1.json;audits/youtube-b024-v5-crosswalk-matched-part2.json;audits/youtube-b024-v5-crosswalk-matched-part3.json",
+  "live_reference_snapshot": "yt-20261010T083657Z-10127ch-rebuild-v5",
+  "live_reference": "PR #2495 audits/youtube-v5-production-current-title-signal-reference-20261011.json (8616 date-scoped reviewed candidate rows, immutable original source preserved)",
+  "live_reference_date": "2026-10-11",
+  "sources_are_topic_title_mentions_not_person_centered_video_reviews": true,
+  "registration_consulted_during_source_name_generation": false,
+  "original_video_and_channel_ids_deleted": false,
+  "publication_approved": false,
+  "expected_eligible_name_label_removals_if_same_snapshot_and_rules": 5,
+  "labels": [
+    {
+      "raw_name": "3I/Atlas",
+      "reason": "INTERSTELLAR_COMET_NOT_A_PERSON",
+      "source_title_distinct_channels": 52,
+      "source_title_distinct_videos": 113,
+      "prior_v5_title_channels": 10,
+      "prior_v5_title_videos": 12,
+      "prior_8713_rank": 378,
+      "current_8616_rank": 368,
+      "external_authority_url": "https://science.nasa.gov/solar-system/comets/3i-atlas/"
+    },
+    {
+      "raw_name": "Middle East",
+      "reason": "GEOGRAPHIC_REGION_NOT_A_PERSON",
+      "source_title_distinct_channels": 770,
+      "source_title_distinct_videos": 1937,
+      "prior_v5_title_channels": 6,
+      "prior_v5_title_videos": 8,
+      "prior_8713_rank": 1368,
+      "current_8616_rank": 1332
+    },
+    {
+      "raw_name": "My life",
+      "reason": "GENERIC_TITLE_EXPRESSION_NOT_A_PERSON",
+      "source_title_distinct_channels": 526,
+      "source_title_distinct_videos": 1878,
+      "prior_v5_title_channels": 5,
+      "prior_v5_title_videos": 7,
+      "prior_8713_rank": 1964,
+      "current_8616_rank": 1920
+    },
+    {
+      "raw_name": "Golden Age",
+      "reason": "HISTORICAL_ERA_OR_TOPIC_NOT_A_PERSON",
+      "source_title_distinct_channels": 629,
+      "source_title_distinct_videos": 1051,
+      "prior_v5_title_channels": 4,
+      "prior_v5_title_videos": 4,
+      "prior_8713_rank": 3573,
+      "current_8616_rank": 3502
+    },
+    {
+      "raw_name": "Pt 2",
+      "reason": "VIDEO_PART_NUMBER_NOT_A_PERSON",
+      "source_title_distinct_channels": 402,
+      "source_title_distinct_videos": 1583,
+      "prior_v5_title_channels": 3,
+      "prior_v5_title_videos": 3,
+      "prior_8713_rank": 7495,
+      "current_8616_rank": 7399
+    }
+  ],
+  "distinguish": "The 8616 current raw-name candidate reference and 5965 source-label ledger are different title-cue populations. The original source video title counts are NOT biography counts, and source channel counts across labels MUST NOT be summed.",
+  "remaining": "4,868 mismatched exact-name title counts and 865 prior grammar differences (including 33 high risk) remain review-only pending original per-Video-ID ledger. No basis to count these five as 5 of that exact 33 list. Batch008–024 original ZIP and 12MB exact Video-ID ledger are not present in current repository or runtime.",
+  "next": "Continue bounded review of actual original Video-ID anomalies from a digest-verified ledger when accessible; separately identify and fix additional confirmed false Person labels without deleting original source channels/videos. Manual publication and production API/UI readback require restored approved service."
+}
