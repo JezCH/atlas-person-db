@@ -26,6 +26,12 @@ assert [x[0] for x in mod.source_context_name_candidates("Who Was Picasso?",patt
 assert not mod.source_context_name_candidates("The Life of Diana",patterns)
 assert not mod.source_context_name_candidates("The Life of Pele",patterns)
 assert not mod.source_context_name_candidates("Picasso Museum opening",patterns)
+assert mod.title_candidate("Pablo Picasso - The Artist")=="Pablo Picasso"
+assert mod.title_candidate("Mary, Queen of Scots – History")=="Mary, Queen of Scots"
+assert mod.title_candidate("Pablo Picasso: The Artist")=="Pablo Picasso"
+assert mod.title_candidate("Pablo Picasso | The Artist")=="Pablo Picasso"
+assert mod.title_candidate("Mary-Jane: Biography")=="Mary-Jane"
+assert not mod.title_candidate("The Study of Art History") 
 assert not mod.source_context_name_candidates("The Life of Picasso")
 bad_sha_blocked=False
 try:
