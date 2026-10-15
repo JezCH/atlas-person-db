@@ -1,0 +1,55 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { identityKey, validateIdentityProjection, reconcileSelected98 } from '../scripts/audit-user-selected-98-person-identities.mjs';
+
+const roster = JSON.parse(fs.readFileSync(
+  new URL('../research/person-registration/user-selected-98-identity-reconciliation-20261016.v1.json', import.meta.url),'utf8'));
+
+test('selected roster is exact and 50+1+9+38 evidence classes are disjoint', () => {
+  assert.equal(roster.entries.length,98);
+  assert.deepEqual(roster.counts,{snapshot_uuid:50,pr_confirmed:1,request_no_readback:9,unresolved:38});
+  assert.equal(roster.entries.filter(x=>x.historical_uuid_evidence.length>0).length,50);
+  assert.equal(roster.entries.filter(x=>x.prior_evidence_kind==='approved_authoring_request_no_current_readback').length,9);
+  assert.equal(roster.entries[2].historical_uuid_evidence.length,2);
+  assert.equal(roster.entries[28].expected_name_en,'Muhammad V of Granada');
+});
+
+test('full identity projection fails closed on missing or partial data', () => {
+  assert.throws(()=>validateIdentityProjection({ok:true,persons:[]},{minPersons:1}),/INVALID_PRODUCTION_IDENTITY_PROJECTION/);
+  assert.throws(()=>validateIdentityProjection({ok:true,schema:'atlas-person-read/v1',mode:'list',projection:'identity',persons:[]},{minPersons:1}),/INCOMPLETE_PRODUCTION/);
+});
+
+test('snapshot UUIDs beat formatting differences; Baybars duplicate remains explicit HOLD', () => {
+  const persons=[];
+  for(const x of roster.entries) for(const id of x.historical_uuid_evidence){
+    persons.push({id,names:[{name:id===x.historical_uuid_evidence[0]?x.expected_name_en:'Baibars',locale:'en'}]});
+  }
+  const audit=reconcileSelected98(roster,validateIdentityProjection({
+    ok:true,schema:'atlas-person-read/v1',mode:'list',projection:'identity',persons
+  },{minPersons:50}));
+  assert.equal(audit.entries.length,98);
+  assert.equal(audit.counts.ALREADY_REGISTERED_UUID,49);
+  assert.equal(audit.counts.MULTIPLE_PERSON_UUIDS_HOLD,1);
+  assert.equal(audit.entries[2].matched_person_ids.length,2);
+  assert.equal(audit.counts.NO_EXACT_NAME_MATCH_HUMAN_REVIEW_REQUIRED,38);
+  assert.equal(audit.counts.PRIOR_APPROVED_MANIFEST_NOT_FOUND_REVIEW,9);
+  assert.equal(audit.counts.HISTORIC_PRODUCTION_CONFIRMATION_DRIFT_REVIEW,1);
+  assert.equal(audit.registration_approved,false);
+});
+
+test('true exact name match excludes even if historical proposals have no UUID', () => {
+  const person={id:'a0000000-0000-4000-8000-000000000001',
+    names:[{name:'Hugues de Payens',locale:'en'},{name:'위그 드 파앵',locale:'ko'}]};
+  const audit=reconcileSelected98(roster,[person]);
+  assert.equal(audit.entries[4].verdict,'ALREADY_REGISTERED_EXACT_NAME');
+  assert.deepEqual(audit.entries[4].matched_person_ids,[person.id]);
+});
+
+test('normalization only connects whole comparable names; no Muhammad Ali boxer false positive',()=>{
+  assert.equal(identityKey('Hernán-Cortés'),identityKey('hernan cortes'));
+  const person={id:'a0000000-0000-4000-8000-000000000002',
+    names:[{name:'Muhammad Ali',locale:'en'}]};
+  const result=reconcileSelected98(roster,[person]);
+  assert.equal(result.entries[90].verdict,'NO_EXACT_NAME_MATCH_HUMAN_REVIEW_REQUIRED');
+});
