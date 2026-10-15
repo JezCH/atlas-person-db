@@ -103,8 +103,8 @@ export function reconcileSelected98(roster, census) {
     const names = [...new Set([entry.expected_name_en, entry.display_name_ko,
       ...(entry.aliases_to_check || [])].filter(Boolean))];
     const searchTerms = [...new Set(names.map(identityKey))];
-    const exact = [...new Map(searchTerms.flatMap(k =>
-      (index.get(k)||[]).map(r=>[r.id,r])).values())];
+    const exact = Array.from(new Map(searchTerms.flatMap(k =>
+      (index.get(k)||[]).map(r=>[r.id,r]))).values());
     const historical = entry.historical_uuid_evidence || [];
     const seenHistoricIds = historical.filter(id => personsById.has(id));
     const matchedIds = [...new Set([...seenHistoricIds, ...exact.map(x => x.id)])];
