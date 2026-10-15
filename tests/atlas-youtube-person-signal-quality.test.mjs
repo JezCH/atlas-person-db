@@ -105,7 +105,7 @@ with tempfile.TemporaryDirectory() as tmp:
     assert result["snapshot"]["video_count"]==sum(len(v) for v in videos.values())
     assert result["snapshot"]["parser_version"]=="yt-title-person-reviewed-v5"
     assert result["snapshot"]["source_state"]["quality_counters"]["reviewed_non_person"]>=3
-    assert result["snapshot"]["source_state"]["quality_rules_version"]=="reviewed-20261008-v2"
+    assert result["snapshot"]["source_state"]["quality_rules_version"]=="reviewed-20261016-v3"
     assert result["snapshot"]["snapshot_id"].endswith("-rebuild-v5")
     print(json.dumps({"signal_count":len(signals),"Ibn_Sina_channels":signals["Ibn Sina"]["distinct_channel_count"],"Ibn_Sina_videos":signals["Ibn Sina"]["video_count"],"rejected_non_person":result["snapshot"]["source_state"]["quality_counters"]["reviewed_non_person"]}))
 `;
