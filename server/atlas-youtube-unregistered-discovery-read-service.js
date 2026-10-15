@@ -170,26 +170,42 @@ function applyReviewedSourceUnions(rawRows,approvedGroups=[]) {
     if(new Set(keys).size!==keys.length||keys.some(key=>used.has(key)))
       throw Error("YOUTUBE_DISCOVERY_REVIEWED_ALIAS_COLLISION");
     const rows=keys.map(key=>byLabel.get(key));
-    if(rows.some(row=>!row))throw Error("YOUTUBE_DISCOVERY_REVIEWED_SOURCE_LABEL_MISSING");
+    const aliasChannelCounts=aliases.map(a=>Number(a.distinct_channel_count));
+    const aliasVideoCounts=aliases.map(a=>Number(a.video_count));
     for(let i=0;i<aliases.length;i++) {
-      if(Number(rows[i].distinct_channel_count)!==Number(aliases[i].distinct_channel_count)||
-         Number(rows[i].video_count)!==Number(aliases[i].video_count))
+      if(!Number.isSafeInteger(aliasChannelCounts[i])||aliasChannelCounts[i]<1||
+         !Number.isSafeInteger(aliasVideoCounts[i])||
+         aliasVideoCounts[i]<aliasChannelCounts[i])
+        throw Error("YOUTUBE_DISCOVERY_REVIEWED_ALIAS_SOURCE_COUNT_INVALID");
+      // Raw publication and DB lookup intentionally retain only >=3-channel
+      // labels. A source-pinned reviewed alias with 1–2 channels is therefore
+      // absent, but its original IDs remain inside the audited union evidence.
+      // A missing alias with >=3 channels is NEVER an allowed omission.
+      if(!rows[i]) {
+        if(aliasChannelCounts[i]>=3)
+          throw Error("YOUTUBE_DISCOVERY_REVIEWED_SOURCE_LABEL_MISSING");
+      } else if(Number(rows[i].distinct_channel_count)!==aliasChannelCounts[i]||
+                Number(rows[i].video_count)!==aliasVideoCounts[i]) {
         throw Error("YOUTUBE_DISCOVERY_REVIEWED_SOURCE_COUNT_MISMATCH");
+      }
     }
     const channelCount=Number(group.distinct_channel_count);
     const videoCount=Number(group.video_count);
     if(!Number.isSafeInteger(channelCount)||!Number.isSafeInteger(videoCount)||
-       channelCount<=0||videoCount<=0||
-       channelCount<Math.max(...rows.map(r=>Number(r.distinct_channel_count)))||
-       channelCount>rows.reduce((v,r)=>v+Number(r.distinct_channel_count),0)||
-       videoCount<Math.max(...rows.map(r=>Number(r.video_count)))||
-       videoCount>rows.reduce((v,r)=>v+Number(r.video_count),0))
+       channelCount<3||videoCount<channelCount||
+       channelCount<Math.max(...aliasChannelCounts)||
+       channelCount>aliasChannelCounts.reduce((v,n)=>v+n,0)||
+       videoCount<Math.max(...aliasVideoCounts)||
+       videoCount>aliasVideoCounts.reduce((v,n)=>v+n,0))
       throw Error("YOUTUBE_DISCOVERY_REVIEWED_UNION_COUNT_INVALID");
     for(const key of keys) used.add(key);
+    const publishedRanks=rows.filter(Boolean).map(row=>Number(row.rank));
     synthetic.push({
       raw_name:group.canonical_name,
       distinct_channel_count:channelCount,video_count:videoCount,
-      rank:Math.min(...rows.map(r=>Number(r.rank))),
+      // Final rank is recomputed after registered-Person removal; zero is an
+      // internal placeholder if every reviewed alias was below 3 channels.
+      rank:publishedRanks.length?Math.min(...publishedRanks):0,
       reviewed_source_labels:aliases.map(a=>a.name),
       source_id_union_verified:true,
       union_video_ids_sha256:group.union_video_ids_sha256
