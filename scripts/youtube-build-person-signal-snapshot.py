@@ -208,7 +208,7 @@ def title_candidate(title):
 
     # Preserve the strong patterns used by yt-title-person-raw-v1:
     # "Name: ...", "Name | ...", and "Name - ...".
-    match = re.match(r"^(.{2,90}?)\s*(?::|\||\s[-–—]\s)\s+.+$", title)
+    match = re.match(r"^(.{2,90}?)\s*(?::|\||\s[-–—])\s+.+$", title)
     if match:
         return clean_text(match.group(1))
     return None
