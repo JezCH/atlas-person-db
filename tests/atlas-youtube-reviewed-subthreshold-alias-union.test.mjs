@@ -28,9 +28,9 @@ with tempfile.TemporaryDirectory() as temp:
     # Two aliases have two original channels each, overlapping at UC2.
     # Only their ORIGINAL Channel-ID union reaches three.
     grouped={
-        "UC1":[("v1","Picasso: A Life")],
-        "UC2":[("v2","Picasso | The Artist"),("v3","Pablo Picasso: A Biography")],
-        "UC3":[("v4","Pablo Picasso: The Artist")]
+        "UC1":[("v1","Art History Explains the Life of Picasso")],
+        "UC2":[("v2","Why Museums Still Ask Who Was Picasso?"),("v3","Pablo Picasso: A Biography")],
+        "UC3":[("v4","Pablo Picasso - The Artist")]
     }
     manifest=[]
     for channel,items in grouped.items():
@@ -48,6 +48,8 @@ with tempfile.TemporaryDirectory() as temp:
     assert union["distinct_channel_count"]==3
     assert union["video_count"]==4
     assert payload["snapshot"]["source_state"]["reviewed_subthreshold_alias_nameforms"]==2
+    assert payload["snapshot"]["source_state"]["quality_counters"]["accepted_reviewed_single_name_video_name_ids"]==2
+    assert mod.title_candidate("Pablo Picasso - The Artist")=="Pablo Picasso"
     assert payload["snapshot"]["source_state"]["reviewed_alias_union_before_raw_name_threshold"]
     print(json.dumps(union,ensure_ascii=False))
 `;
