@@ -67,15 +67,45 @@ if (automaticStart < 0 || manualStart < automaticStart || manualEnd < manualStar
     errors.push(visualPath + ": automatic Production run must stay <=3 scripts, while complete manual suite is preserved");
   }
 }
-// PR-based live Chrome is particularly expensive because the PR does not
-// deploy that branch to Production. The preserved visual suites are manual.
+// No PR validation may load the live Production Function or Chrome. Branch
+// previews/local contract fixtures must be used for before-merge checks.
+const manualHistorical = new Set([
+  "atlas-audit-inventory.yml",
+  "atlas-place-production-authority-audit.yml",
+  "atlas-polity-p2-09-public-production-census.yml",
+  "atlas-polity-russia-p2-05c-acceptance.yml",
+  "atlas-polity-song-p2-08-audit.yml",
+  "atlas-polity-song-p2-08e-public-readback.yml",
+  "atlas-polity-sweden-p2-06-audit.yml",
+  "atlas-polity-sweden-p2-06c-public-readback.yml",
+  "atlas-spatial-candidate-audit.yml"
+]);
 for (const name of readdirSync(join(root, ".github/workflows"))) {
-  if (!/^atlas-vis3-.*\.yml$/.test(name)) continue;
-  const workflow = readFileSync(join(root, ".github/workflows", name), "utf8");
-  if (workflow.includes("atlas-person-db.vercel.app") && /\n\s*pull_request\s*:/.test(workflow)) {
-    errors.push(name + ": Production browser suites may not start automatically on pull_request");
+  if (!/\.ya?ml$/.test(name)) continue;
+  const source = readFileSync(join(root, ".github/workflows", name), "utf8");
+  const trigger = source.split(/\non:\n/)[1]?.split(/\n(?:permissions|concurrency|jobs):\n/)[0] || "";
+  const touchesProduction = source.includes("atlas-person-db.vercel.app") || source.includes("ATLAS_PRODUCTION_ORIGIN");
+  if (touchesProduction && /^\s*pull_request\s*:/m.test(trigger)) {
+    errors.push(name + ": CI pull_request must never browse Production");
+  }
+  if (manualHistorical.has(name)) {
+    if (!/^\s*workflow_dispatch\s*:/m.test(trigger) || /^\s*(?:push|pull_request|schedule)\s*:/m.test(trigger)) {
+      errors.push(name + ": legacy full-Production census must remain manual-only");
+    }
   }
 }
+const guarded = [
+  "atlas-authoring-schema-bootstrap.yml",
+  "atlas-correction-apply.yml",
+  "atlas-reviewed-person-merge.yml",
+  "atlas-person-domain-verify.yml"
+];
+for (const name of guarded) {
+  if (!readFileSync(join(root, ".github/workflows", name), "utf8").includes("DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED")) {
+    errors.push(name + ": HTTP 402 terminal stop must be present");
+  }
+}
+
 const dashboard = readFileSync(join(root, ".github/workflows/atlas-dashboard-production-acceptance.yml"), "utf8");
 if (!dashboard.includes("DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED")) {
   errors.push("atlas-dashboard-production-acceptance.yml: HTTP 402 fail-fast missing");
