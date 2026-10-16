@@ -1,11 +1,8 @@
 name: ATLAS VIS3-06 R0 Keyboard Legend Preflight
 
+# Live Production browser inspection is an explicit release task, never
+# an automatic PR event. PR validation uses offline Integrity checks.
 on:
-  pull_request:
-    paths:
-      - "scripts/verify-vis3-06-r0-interaction-preview.mjs"
-      - "experiments/vis3-06/b2-observatory-toolrail-plate.svg"
-      - ".github/workflows/atlas-vis3-06-r0-interaction-preview.yml"
   workflow_dispatch:
 
 permissions:
