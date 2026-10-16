@@ -52,6 +52,14 @@
 - Protected Human Authoring retains conservative, schema-aware 60-attempt readiness logic for canonical safety, but stops before mutation if Vercel reports HTTP 402. Place audit retries are bounded and 402-terminal.
 - An older deployed site may return 200 while **new deployment creation is blocked**. Production feedback closes only when current deployed assets and user-visible behavior are verified. Last observed error: 402 `resource_creation_blocked` for the Hobby team, not a test failure.
 
+## 2026-10-17 P0 automatic-workflow audit (awaiting latest Production release)
+
+- Six legacy one-shot Russia/Song/Sweden/spatial Production audits now run only when explicitly dispatched. Existing historical evidence and canonical data are retained.
+- An automatic CI check rejects any PR-triggered workflow browsing live Production and any restoration of push triggers in the historical full-census audit list.
+- Authoring Schema Bootstrap, protected Correction Apply, Reviewed Person Merge and Person Domain verifier now stop on HTTP 402. Canonical write safety and compatible runtime checks remain in place.
+- Person Domain and UI Production visual checks no longer auto-run on changes to test-only scripts. Runtime and UI deployment changes continue to require Production verification for user feedback.
+- A passing GitHub check or an HTTP 200 from the old Vercel runtime does not close the release gate. The team-level deployment-creation restriction requires official provider clearance. Exact endpoint-level outgoing byte attribution is still open.
+
 ## Enforcement gap and follow-up
 
 The CI guard covers **repository-based execution** and the visual workflow; it cannot impose a hard team-level spending cap, detect tool-invoked Sandbox runs, or block anonymous API abuse before Vercel itself enforces its quotas. Platform-level budget alerts, route-level transfer observations and provider-side restrictions need separate confirmation in the Vercel account. Any claim of “zero future suspension risk” is invalid until provider-level hard limits and traffic controls are independently confirmed.
