@@ -55,6 +55,17 @@ jobs:
           echo "ATLAS_EXPECTED_RUNTIME_SHA=$EXPECTED_SHA" >> "$GITHUB_ENV"
           echo "Production acceptance target: $EXPECTED_SHA"
 
+      # No Chrome/font startup and no costly full Person read if Hobby is paused.
+      - name: Fail fast when Production is quota-disabled
+        shell: bash
+        run: |
+          set -euo pipefail
+          status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --max-time 8 'https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity' || true)"
+          if [[ "$status" == "402" ]]; then
+            echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: skip browser acceptance until Production is restored." >&2
+            exit 1
+          fi
+
       - name: Validate verifier syntax
         run: node --check scripts/verify-dashboard-production-acceptance.mjs
 
