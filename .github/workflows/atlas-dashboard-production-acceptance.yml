@@ -14,7 +14,6 @@ on:
       - "atlas-person-main.js"
       - "index.html"
       - "scripts/verify-dashboard-production-acceptance.mjs"
-      - ".github/workflows/atlas-dashboard-production-acceptance.yml"
   workflow_dispatch:
     inputs:
       expected_runtime_sha:
