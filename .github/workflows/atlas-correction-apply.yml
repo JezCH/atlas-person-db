@@ -116,6 +116,10 @@ jobs:
               oidc_token="$(request_oidc)"
               status="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' --request POST \
                 -H 'content-type: application/json' -H "authorization: Bearer ${oidc_token}" --data "$current_payload" "$ATLAS_CORRECTION_ENDPOINT")"
+              if [[ "$status" == "402" ]]; then
+                echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: stop protected Correction before apply." >&2
+                return 1
+              fi
               if [[ "$status" == "200" ]]; then return 0; fi
               code="$(jq -r '.code // "UNKNOWN"' "$response" 2>/dev/null || printf 'UNKNOWN')"
               if [[ "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ]]; then
