@@ -96,7 +96,7 @@ jobs:
           fi
 
           fetched=false
-          for attempt in $(seq 1 60); do
+          for attempt in $(seq 1 12); do
             oidc_token="$(request_oidc)"
             status="$(curl --silent --show-error --output audit-inventory-response.json --write-out '%{http_code}' --request POST \
               -H 'content-type: application/json' -H "authorization: Bearer ${oidc_token}" --data "$payload" "$endpoint")"
@@ -113,8 +113,8 @@ jobs:
             fi
             code="$(jq -r '.code // "UNKNOWN"' audit-inventory-response.json 2>/dev/null || printf 'UNKNOWN')"
             if [[ "$status" == "404" || ( "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ) ]]; then
-              echo "Production audit route for ${GITHUB_SHA} is not live yet (attempt ${attempt}/60); retrying."
-              sleep 10
+              echo "Production audit route for ${GITHUB_SHA} is not live yet (attempt ${attempt}/12); retrying."
+              if [[ "$attempt" -lt 12 ]]; then sleep 10; fi
               continue
             fi
             cat audit-inventory-response.json >&2 || true
