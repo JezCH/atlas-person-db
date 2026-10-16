@@ -1,11 +1,8 @@
 name: ATLAS VIS3-06 P3 Real-DOM B2 Concept
 
+# Live Production browser inspection is an explicit release task, never
+# an automatic PR event. PR validation uses offline Integrity checks.
 on:
-  pull_request:
-    paths:
-      - "scripts/verify-vis3-06-p3-b2-production-preview.mjs"
-      - "experiments/vis3-06/b2-observatory-toolrail-plate.svg"
-      - ".github/workflows/atlas-vis3-06-p3-b2-preview.yml"
   workflow_dispatch:
 
 permissions:
