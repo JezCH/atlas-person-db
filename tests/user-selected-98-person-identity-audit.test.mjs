@@ -6,11 +6,11 @@ import { identityKey, validateIdentityProjection, reconcileSelected98 } from '..
 const roster = JSON.parse(fs.readFileSync(
   new URL('../research/person-registration/user-selected-98-identity-reconciliation-20261016.v1.json', import.meta.url),'utf8'));
 
-test('selected roster is exact and 56+3+1+38 evidence classes are disjoint', () => {
+test('selected roster is exact and 57+3+0+38 evidence classes are disjoint', () => {
   assert.equal(roster.entries.length,98);
-  assert.deepEqual(roster.counts,{snapshot_uuid:56,pr_confirmed:3,request_no_readback:1,unresolved:38});
-  assert.equal(roster.entries.filter(x=>x.historical_uuid_evidence.length>0).length,56);
-  assert.equal(roster.entries.filter(x=>x.prior_evidence_kind==='approved_authoring_request_no_current_readback').length,1);
+  assert.deepEqual(roster.counts,{snapshot_uuid:57,pr_confirmed:3,request_no_readback:0,unresolved:38});
+  assert.equal(roster.entries.filter(x=>x.historical_uuid_evidence.length>0).length,57);
+  assert.equal(roster.entries.filter(x=>x.prior_evidence_kind==='approved_authoring_request_no_current_readback').length,0);
   assert.equal(roster.entries[2].historical_uuid_evidence.length,2);
   assert.equal(roster.entries[28].expected_name_en,'Muhammad V of Granada');
 });
@@ -29,11 +29,11 @@ test('snapshot UUIDs beat formatting differences; Baybars duplicate remains expl
     ok:true,schema:'atlas-person-read/v1',mode:'list',projection:'identity',persons
   },{minPersons:50}));
   assert.equal(audit.entries.length,98);
-  assert.equal(audit.counts.ALREADY_REGISTERED_UUID,55);
+  assert.equal(audit.counts.ALREADY_REGISTERED_UUID,56);
   assert.equal(audit.counts.MULTIPLE_PERSON_UUIDS_HOLD,1);
   assert.equal(audit.entries[2].matched_person_ids.length,2);
   assert.equal(audit.counts.NO_EXACT_NAME_MATCH_HUMAN_REVIEW_REQUIRED,38);
-  assert.equal(audit.counts.PRIOR_APPROVED_MANIFEST_NOT_FOUND_REVIEW,1);
+  assert.equal(audit.counts.PRIOR_APPROVED_MANIFEST_NOT_FOUND_REVIEW || 0,0);
   assert.equal(audit.counts.HISTORIC_PRODUCTION_CONFIRMATION_DRIFT_REVIEW,3);
   assert.equal(audit.registration_approved,false);
 });
@@ -64,4 +64,13 @@ test('five retrospective Production UUID crosswalks exclude registration but not
   }
   assert.equal(roster.production_snapshot_uuid_provenance.person_representative_domain_review,50);
   assert.equal(roster.production_snapshot_uuid_provenance.youtube_6358_registration_screen_20261009,5);
+});
+
+test('Muhammad V has same historical Person UUID and two independently verified reigns despite overall workflow failure',()=>{
+ const row=roster.entries[28];
+ assert.equal(row.prior_evidence_kind,'production_authoring_verified_20260902');
+ assert.deepEqual(row.historical_uuid_evidence,['f39ebb79-783e-4d03-b941-af5605144691']);
+ assert.deepEqual(row.existing_activity_periods.map(x=>[x.start_year,x.end_year]),[[1354,1359],[1362,1391]]);
+ assert.equal(new Set(row.existing_activity_periods.map(x=>x.request_id)).size,2);
+ assert.match(row.historical_evidence_source,/read-back VERIFIED/);
 });
