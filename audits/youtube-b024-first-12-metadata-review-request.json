@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-youtube-description-enrichment-request/v1",
+  "source_snapshot_id": "yt-20261009T111844Z-10127ch-rebuild-v4",
+  "source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "source_review_json_sha256": "2ffae480aa7b77ed6ae3ddf5e88ac9d2a3f1618b41dbf86bcc3ed7070d6b0d1a",
+  "source_channel_count": 10127,
+  "source_video_count": 2230031,
+  "reviewed_candidate_labels": 245,
+  "unique_original_video_ids": 3,
+  "original_per_video_channel_id_verified": true,
+  "source_name_generation_independent_of_registered_persons": true,
+  "publication_allowed": false,
+  "tranche_schema": "atlas-youtube-b024-12-review-metadata-priority/v1",
+  "parent_cumulative_original_video_ids": 10126,
+  "source_review_manifest": "audits/youtube-b024-first-12-original-title-triage-20261016.json",
+  "parent_original_request_replayed_in_this_run": false,
+  "actual_metadata_fetched": false,
+  "person_centered_content_videos_verified": 0,
+  "registered_person_screened": false,
+  "videos": [
+    {
+      "video_id": "-13y_Jm-pzI",
+      "original_channel_id": "UC7OkutZc6qzX44IK0HEDLJA",
+      "original_title": "Who Killed Dele Giwa?",
+      "name_cues": [
+        {
+          "raw_name": "Dele Giwa",
+          "bucket": "QUESTION_TOPIC_CUE_REVIEW"
+        }
+      ]
+    },
+    {
+      "video_id": "-1CalygxBrM",
+      "original_channel_id": "UCjD2hhUF5R8G9oAjOzQo26w",
+      "original_title": "Was Meriwether Lewis Murdered? The Shocking DNA Evidence Revealed",
+      "name_cues": [
+        {
+          "raw_name": "Meriwether Lewis",
+          "bucket": "MENTION_OR_CONTEXT_UNRESOLVED_REVIEW"
+        }
+      ]
+    },
+    {
+      "video_id": "-5Lg5mk74NA",
+      "original_channel_id": "UCesJHHdqSw_9gC0aMod9IKw",
+      "original_title": "Salvador Dali brief biography and his artwork. Great for kids and esl",
+      "name_cues": [
+        {
+          "raw_name": "Salvador Dali",
+          "bucket": "NAME_HEADING_UNRESOLVED_REVIEW"
+        }
+      ]
+    }
+  ]
+}
