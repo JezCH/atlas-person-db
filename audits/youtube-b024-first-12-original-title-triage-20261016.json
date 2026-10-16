@@ -1,0 +1,219 @@
+{
+  "schema": "atlas-youtube-b024-original-video-title-triage/v1",
+  "reviewed_date": "2026-10-16",
+  "source_snapshot_id": "yt-20261009T111844Z-10127ch-rebuild-v4",
+  "original_source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "original_source_channel_count": 10127,
+  "original_source_video_rows": 2230031,
+  "parent_original_request_video_ids": 10126,
+  "parent_source_review_json_sha256": "2ffae480aa7b77ed6ae3ddf5e88ac9d2a3f1618b41dbf86bcc3ed7070d6b0d1a",
+  "parent_original_request_source": "Project Library youtube-b024-10126-original-video-metadata-ready.json",
+  "original_full_parent_request_replayed_in_this_run": false,
+  "existing_107_sample_overlap": 0,
+  "original_source_records_deleted": false,
+  "person_primary_video_content_approvals": 0,
+  "person_registration_screen_performed": false,
+  "rank_publication_authorized": false,
+  "review_count": 12,
+  "review_status_counts": {
+    "TITLE_NONPRIMARY_REVIEW": 8,
+    "TITLE_MIXED_FOCUS_HOLD": 1,
+    "TITLE_PERSON_TOPIC_PLAUSIBLE_UNVERIFIED": 3
+  },
+  "explanation": "TITLE NONPRIMARY classifications are evidence from exact archived title ONLY, not video watching. A plausible person topic is never content verified without timestamped playback/transcript. No video credit, suppression of historical source rows, identity union, Person registration or ranked publication is authorized.",
+  "records": [
+    {
+      "video_id": "--9AzmhXCmA",
+      "original_channel_id": "UCMPQ7WjVm9nnGop2jDhCcFA",
+      "original_title": "Quran Tafseer | Quran Summary |Ramadan | Fasting in Ramadan | Roza | Ramzan| Imam Ali | Ramadan 2022",
+      "name_cues": [
+        {
+          "raw_name": "Imam Ali",
+          "bucket": "MENTION_OR_CONTEXT_UNRESOLVED_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_NONPRIMARY_REVIEW",
+      "review_reason": "RELIGIOUS_CONTEXT_NOT_INDIVIDUAL_PROFILE",
+      "review_note": "Quran, Ramadan and fasting are the topics; Imam Ali is a contextual token, not title evidence for a focused individual biography.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false
+    },
+    {
+      "video_id": "--VVfZZIoKI",
+      "original_channel_id": "UCMPQ7WjVm9nnGop2jDhCcFA",
+      "original_title": "Is Allah Watching Us|Discovering Allah|Islam|Kids Animated Video|Prophet Muhammad|Imam Ali|KAZSchool",
+      "name_cues": [
+        {
+          "raw_name": "Imam Ali",
+          "bucket": "MENTION_OR_CONTEXT_UNRESOLVED_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_NONPRIMARY_REVIEW",
+      "review_reason": "MULTI_NAME_RELIGIOUS_ANIMATION",
+      "review_note": "The title describes an Allah-focused animated lesson and mentions Prophet Muhammad alongside Imam Ali, not a single biography.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false
+    },
+    {
+      "video_id": "-13y_Jm-pzI",
+      "original_channel_id": "UC7OkutZc6qzX44IK0HEDLJA",
+      "original_title": "Who Killed Dele Giwa?",
+      "name_cues": [
+        {
+          "raw_name": "Dele Giwa",
+          "bucket": "QUESTION_TOPIC_CUE_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_PERSON_TOPIC_PLAUSIBLE_UNVERIFIED",
+      "review_reason": "DEATH_QUESTION_HISTORICAL_PERSON",
+      "review_note": "Who-killed question names Dele Giwa as the likely central subject, but actual video playback or transcript is still required.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false
+    },
+    {
+      "video_id": "-1CalygxBrM",
+      "original_channel_id": "UCjD2hhUF5R8G9oAjOzQo26w",
+      "original_title": "Was Meriwether Lewis Murdered? The Shocking DNA Evidence Revealed",
+      "name_cues": [
+        {
+          "raw_name": "Meriwether Lewis",
+          "bucket": "MENTION_OR_CONTEXT_UNRESOLVED_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_PERSON_TOPIC_PLAUSIBLE_UNVERIFIED",
+      "review_reason": "DEATH_QUESTION_HISTORICAL_PERSON",
+      "review_note": "The murder question concerns Meriwether Lewis, but an unverified title alone cannot establish individual video subjecthood.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false
+    },
+    {
+      "video_id": "-1MZzLt2F08",
+      "original_channel_id": "UCU7c62_Znm0bmzCzRbTy7Kg",
+      "original_title": "Grandson of Jacques Cousteau's Call To Action \"Zuzu Movement\" On Why Our Recycling System Is Failing",
+      "name_cues": [
+        {
+          "raw_name": "Jacques Cousteau",
+          "bucket": "MENTION_OR_CONTEXT_UNRESOLVED_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_NONPRIMARY_REVIEW",
+      "review_reason": "RELATIVE_AND_RECYCLING_CONTEXT",
+      "review_note": "This title concerns Jacques Cousteau's grandson and recycling; Jacques is a family reference rather than the named focus.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false
+    },
+    {
+      "video_id": "-1QJB982UL8",
+      "original_channel_id": "UC6sjJgorHZeriScq9umMSZg",
+      "original_title": "Maulana Fazal ur Rehman Ep 01 | Father Mufti Mehmood's Political Journey | Awais Ghauri @justajoo9",
+      "name_cues": [
+        {
+          "raw_name": "Maulana Fazal",
+          "bucket": "NAME_HEADING_UNRESOLVED_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_MIXED_FOCUS_HOLD",
+      "review_reason": "FATHER_VERSUS_HEADLINE_SUBJECT",
+      "review_note": "The heading names Maulana Fazal, but the described journey is his father's; focus and identity require an independent source review.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false
+    },
+    {
+      "video_id": "-1agiPOVU7A",
+      "original_channel_id": "UCi6ZWWAh1YSi0znGbGusfbw",
+      "original_title": "Alan Hirsch | Joining with God in His Mission | Graham Joseph Hill",
+      "name_cues": [
+        {
+          "raw_name": "Joseph Hill",
+          "bucket": "MENTION_OR_CONTEXT_UNRESOLVED_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_NONPRIMARY_REVIEW",
+      "review_reason": "SUFFIX_OF_OTHER_NAMED_PERSON",
+      "review_note": "Alan Hirsch is the headline subject, while Joseph Hill is a substring of Graham Joseph Hill in the presenter credit.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false
+    },
+    {
+      "video_id": "-686Bq00bvY",
+      "original_channel_id": "UCi6ZWWAh1YSi0znGbGusfbw",
+      "original_title": "Karina Kreminski | On Gender and the Reign of God, and Missional Spirituality | Graham Joseph Hill",
+      "name_cues": [
+        {
+          "raw_name": "Joseph Hill",
+          "bucket": "JOINT_PERSON_OR_EVENT_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_NONPRIMARY_REVIEW",
+      "review_reason": "SUFFIX_OF_OTHER_NAMED_PERSON",
+      "review_note": "Karina Kreminski is the headline subject, while extracted Joseph Hill is part of the Graham Joseph Hill credit.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false
+    },
+    {
+      "video_id": "-5IzMeI-Gck",
+      "original_channel_id": "UCo0lswMYEn-CL3rkNJHHijg",
+      "original_title": "A story of the murder of dictator Kim Jong Un's brother has come to the fore, know about 'Assassins'",
+      "name_cues": [
+        {
+          "raw_name": "Kim Jong Un",
+          "bucket": "MENTION_OR_CONTEXT_UNRESOLVED_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_NONPRIMARY_REVIEW",
+      "review_reason": "RELATIVE_AS_TRUE_SUBJECT",
+      "review_note": "The murder headline concerns Kim Jong Un's brother rather than Kim Jong Un; name mention must not yield a solo biography.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false
+    },
+    {
+      "video_id": "-5hbh0-wOzc",
+      "original_channel_id": "UCTGMCjB9BSzGVXuWLmMFGvw",
+      "original_title": "Woman by Kazi Nazrul Islam/ কাজী নজরুল ইসলাম এর নারী/ নারী কবিতা/ কাজি নজরুল ইসলাম।",
+      "name_cues": [
+        {
+          "raw_name": "Kazi Nazrul Islam",
+          "bucket": "MENTION_OR_CONTEXT_UNRESOLVED_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_NONPRIMARY_REVIEW",
+      "review_reason": "CREATIVE_POEM_AS_TOPIC",
+      "review_note": "This is explicitly framed as the poem Woman by Kazi Nazrul Islam, not a biographical profile of the poet.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false
+    },
+    {
+      "video_id": "-6G6CZT7h4k",
+      "original_channel_id": "UCMu5gPmKp5av0QCAajKTMhw",
+      "original_title": "Gandhi vs Martin Luther King Jr. Epic Rap Battles of History",
+      "name_cues": [
+        {
+          "raw_name": "Martin Luther King",
+          "bucket": "JOINT_PERSON_OR_EVENT_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_NONPRIMARY_REVIEW",
+      "review_reason": "STAGED_MULTI_PERSON_RAP_PERFORMANCE",
+      "review_note": "Epic Rap Battles of History is a staged creative rap portrayal of Gandhi and Martin Luther King Jr, not one-person documentary evidence.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false,
+      "external_genre_context": "https://www.watchmojo.com/articles/top-10-epic-rap-battles-of-history-topx-ep-18"
+    },
+    {
+      "video_id": "-5Lg5mk74NA",
+      "original_channel_id": "UCesJHHdqSw_9gC0aMod9IKw",
+      "original_title": "Salvador Dali brief biography and his artwork. Great for kids and esl",
+      "name_cues": [
+        {
+          "raw_name": "Salvador Dali",
+          "bucket": "NAME_HEADING_UNRESOLVED_REVIEW"
+        }
+      ],
+      "review_status": "TITLE_PERSON_TOPIC_PLAUSIBLE_UNVERIFIED",
+      "review_reason": "BIOGRAPHY_PLUS_ARTWORK_TITLE",
+      "review_note": "The title suggests a brief Salvador Dali biography with artworks, but the actual video's principal topic remains unverified.",
+      "review_evidence": "ORIGINAL_TITLE_ONLY",
+      "person_primary_content_verified": false
+    }
+  ]
+}
