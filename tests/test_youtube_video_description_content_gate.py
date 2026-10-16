@@ -129,12 +129,76 @@ class MetadataEvidenceTest(unittest.TestCase):
             gate.adjudicate(self.req,metadata,self.identities(),bad)
         mismatched=copy.deepcopy(metadata)
         mismatched["records"][0]["status"]="CHANNEL_MISMATCH"
-        with self.assertRaisesRegex(ValueError,"CANNOT_CREDIT_MISSING_OR_CHANNEL_MISMATCH"):
+        with self.assertRaisesRegex(ValueError,"COLLECTED_METADATA_STATUS_INCONSISTENT"):
             gate.adjudicate(self.req,mismatched,self.identities(),decisions)
         empty_reviews={"schema":"atlas-youtube-person-content-review-decisions/v1",
                        "source_snapshot_id":"test-source","decisions":[]}
         result=gate.adjudicate(self.req,metadata,self.identities(),empty_reviews)
         self.assertEqual(result["person_centered_video_ids_verified"],0)
+
+    def test_content_gate_revalidates_collected_metadata_before_any_person_credit(self):
+        metadata=enrich.fetch_descriptions(self.req,api_call=self.api)
+        self.assertEqual(gate.validate_collected_metadata(self.req,metadata)[1][VID1]["status"],
+                         "DESCRIPTION_PRESENT")
+        self.assertEqual(gate.adjudicate(self.req,metadata,self.identities(),
+                        self.decisions())["person_centered_video_ids_verified"],1)
+        # Each case used to cross the original final gate if the reviewed
+        # video's status and Channel ID were left unchanged.
+        for field,value,error in [
+            ("original_title","Substituted unrelated title","COLLECTED_METADATA_ORIGINAL_BINDING_OR_HASH_MISMATCH"),
+            ("original_channel_id",UC2,"COLLECTED_METADATA_ORIGINAL_BINDING_OR_HASH_MISMATCH"),
+            ("description","Tampered without recomputing hash","COLLECTED_METADATA_ORIGINAL_BINDING_OR_HASH_MISMATCH"),
+            ("description_sha256","0"*64,"COLLECTED_METADATA_ORIGINAL_BINDING_OR_HASH_MISMATCH"),
+            ("person_video_content_verified",True,"COLLECTED_METADATA_ORIGINAL_BINDING_OR_HASH_MISMATCH"),
+            ("status","CHANNEL_MISMATCH","COLLECTED_METADATA_STATUS_INCONSISTENT"),
+            ("live_channel_id",UC2,"COLLECTED_METADATA_STATUS_INCONSISTENT"),
+        ]:
+            modified=copy.deepcopy(metadata)
+            modified["records"][0][field]=value
+            with self.subTest(record_field=field):
+                with self.assertRaisesRegex(ValueError,error):
+                    gate.adjudicate(self.req,modified,self.identities(),self.decisions())
+        for field,value,error in [
+            ("requested_original_video_ids",999,"METADATA_COMPLETENESS_COUNT_MISMATCH"),
+            ("fetched_metadata_rows",1,"METADATA_COMPLETENESS_COUNT_MISMATCH"),
+            ("not_yet_fetched",1,"METADATA_COMPLETENESS_COUNT_MISMATCH"),
+            ("automatic_person_subject_approval",True,"COLLECTED_METADATA_CANNOT_AUTO_APPROVE_PERSON"),
+            ("request_source_json_sha256","other","SOURCE_PROVENANCE_INCONSISTENCY"),
+        ]:
+            modified=copy.deepcopy(metadata)
+            modified[field]=value
+            with self.subTest(metadata_field=field):
+                with self.assertRaisesRegex(ValueError,error):
+                    gate.adjudicate(self.req,modified,self.identities(),self.decisions())
+        duplicate=copy.deepcopy(metadata)
+        duplicate["records"].append(copy.deepcopy(duplicate["records"][0]))
+        with self.assertRaisesRegex(ValueError,"ORIGINAL_VIDEO_ID_EVIDENCE_POPULATION_MISMATCH"):
+            gate.adjudicate(self.req,duplicate,self.identities(),self.decisions())
+        modified_source=copy.deepcopy(self.req)
+        modified_source["videos"].append(copy.deepcopy(modified_source["videos"][0]))
+        modified_source["unique_original_video_ids"]=3
+        with self.assertRaisesRegex(ValueError,"ORIGINAL_VIDEO_ID_EVIDENCE_POPULATION_MISMATCH"):
+            gate.adjudicate(modified_source,metadata,self.identities(),self.decisions())
+        injected=copy.deepcopy(metadata)
+        injected["records"][0]["live_channel_id"]=None
+        injected["records"][0]["status"]="NOT_FOUND_OR_UNAVAILABLE"
+        with self.assertRaisesRegex(ValueError,"COLLECTED_METADATA_UNAVAILABLE_ROW_HAS_PUBLISHER_DATA"):
+            gate.adjudicate(self.req,injected,self.identities(),self.decisions())
+        # A genuinely incomplete official batch may provide one video only;
+        # it cannot credit an unavailable/unfetched second ID.
+        partially_fetched=copy.deepcopy(metadata)
+        partially_fetched["records"]=partially_fetched["records"][:1]
+        partially_fetched["fetched_metadata_rows"]=1
+        partially_fetched["not_yet_fetched"]=1
+        self.assertEqual(gate.validate_collected_metadata(self.req,partially_fetched)[1][VID1]["status"],
+                         "DESCRIPTION_PRESENT")
+        self.assertEqual(gate.adjudicate(self.req,partially_fetched,self.identities(),
+                         self.decisions())["person_centered_video_ids_verified"],1)
+        second=copy.deepcopy(self.decisions())
+        second["decisions"][0]["video_id"]=VID2
+        second["decisions"][0]["source_url"]="https://www.youtube.com/watch?v="+VID2
+        with self.assertRaisesRegex(ValueError,"CANNOT_CREDIT_MISSING_OR_CHANNEL_MISMATCH_VIDEO"):
+            gate.adjudicate(self.req,partially_fetched,self.identities(),second)
 
     def test_transcript_evidence_requires_sha_and_excerpt(self):
         metadata=enrich.fetch_descriptions(self.req,api_call=self.api)
