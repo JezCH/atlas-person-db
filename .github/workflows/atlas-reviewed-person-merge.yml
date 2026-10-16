@@ -70,6 +70,10 @@ jobs:
               --write-out '%{http_code}' \
               "$READINESS_ENDPOINT")"
 
+            if [[ "$status" == "402" ]]; then
+              echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: stop reviewed Person merge before apply." >&2
+              exit 1
+            fi
             if [[ "$status" == "404" ]]; then
               echo "Production readiness route is not live yet (attempt ${attempt}/75); retrying in 10s."
               sleep 10
