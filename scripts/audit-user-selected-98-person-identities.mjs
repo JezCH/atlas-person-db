@@ -26,12 +26,13 @@ export function identityKey(value) {
     .replace(/\s+/g, ' ').trim();
 }
 
-export function validateIdentityProjection(body, { minPersons = 1500 } = {}) {
+export function validateIdentityProjection(body, { minPersons = 2100 } = {}) {
   if (body?.ok !== true || body?.schema !== 'atlas-person-read/v1' ||
       body?.mode !== 'list' || body?.projection !== 'identity' ||
       !Array.isArray(body.persons)) {
     throw new Error('INVALID_PRODUCTION_IDENTITY_PROJECTION');
   }
+  // Last full audited Production Person count was 2,120 (2026-10-09); reject unexpectedly short censuses.
   if (body.persons.length < minPersons) {
     throw new Error('INCOMPLETE_PRODUCTION_PERSON_CENSUS');
   }
