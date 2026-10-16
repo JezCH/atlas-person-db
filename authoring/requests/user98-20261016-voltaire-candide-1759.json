@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected98-20261016:voltaire-candide-1759:v1",
+  "person": {
+    "canonical_name_en": "Voltaire",
+    "display_name_ko": "볼테르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Enlightenment author and philosopher",
+    "role_display_name_ko": "계몽주의 철학자·작가",
+    "start_year": 1759,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1759,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1759 is a source-attested REPRESENTATIVE PUBLICATION POINT for Voltaire's Candide (Candide, ou l'Optimisme), published in Geneva by Cramer, and is not his full intellectual career or a claim that Geneva was part of the Kingdom of France. The French Kingdom relation denotes his broader intellectual and political context; the publication's actual Geneva place is preserved in notes. Voltaire is the literary name of François-Marie Arouet, not a second Person."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Bibliothèque nationale de France, Gallica: Les classiques du XVIIIe siècle",
+      "canonical_url": "https://gallica.bnf.fr/selections/fr/html/litteratures/les-classiques-de-la-litterature-du-xviiie-siecle",
+      "citation_text": "National Library of France identifies Voltaire as the pen name of François-Marie Arouet (1694–1778), and documents the first Candide (Geneva, Cramer, 1759). "
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Bibliothèque nationale de France: Candide historical publication notes",
+      "canonical_url": "https://candide.bnf.fr/reperes",
+      "citation_text": "BnF's annotated original shows that Candide was published in 1759, printed in Geneva and broadly circulated in France and other European countries."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-16",
+      "document_title": "볼테르",
+      "url": "https://namu.wiki/w/%EB%B3%BC%ED%85%8C%EB%A5%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Candide 1759 publication in independent Geneva established by BnF; Kingdom of France expresses French national/intellectual affiliation, NOT ownership of Geneva. Person-specific exact place and temporal place-function ID were not reviewed; do not assign an arbitrary political centroid."
+  }
+}
