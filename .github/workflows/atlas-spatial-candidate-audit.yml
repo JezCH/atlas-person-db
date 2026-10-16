@@ -1,19 +1,7 @@
 name: ATLAS Spatial Candidate Audit
 
+# Historical full-Production acceptance is explicit, not a CI side effect.
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/atlas-spatial-candidate-audit.yml'
-      - 'api/atlas-audit-inventory.js'
-      - 'server/atlas-polity-reference-audit-handler.js'
-      - 'server/atlas-audit-github-oidc.js'
-      - 'scripts/build-spatial-polity-candidates.mjs'
-      - 'scripts/build-spatial-activity-candidates.mjs'
-      - 'scripts/compile-spatial-bindings*.mjs'
-      - 'spatial/**'
-      - 'atlas-polity-spatial-index.json'
   workflow_dispatch:
 
 permissions:

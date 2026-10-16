@@ -1,9 +1,6 @@
 name: ATLAS Song P2-08E Public Three-Polity Readback
+# Historical full-Production acceptance is explicit, not a CI side effect.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/atlas-polity-song-p2-08e-public-readback.yml'
   workflow_dispatch:
 permissions:
   contents: read

@@ -104,3 +104,44 @@ test("Place Production audit has a terminal 402 guard and bounded readiness wind
   assert.doesNotMatch(source, /for attempt in \$\(seq 1 75\)/);
   assert.match(source, /DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED/);
 });
+
+test("Historical one-shot audit evidence is manual-only, never a Production push side-effect", () => {
+  for (const file of [
+    "atlas-polity-russia-p2-05c-acceptance.yml",
+    "atlas-polity-song-p2-08-audit.yml",
+    "atlas-polity-song-p2-08e-public-readback.yml",
+    "atlas-polity-sweden-p2-06-audit.yml",
+    "atlas-polity-sweden-p2-06c-public-readback.yml",
+    "atlas-spatial-candidate-audit.yml"
+  ]) {
+    const source = read(".github/workflows/" + file);
+    const trigger = source.split(/\non:\n/)[1]?.split(/\n(?:permissions|concurrency|jobs):\n/)[0] || "";
+    assert.match(trigger, /^\s*workflow_dispatch:/m, file);
+    assert.doesNotMatch(trigger, /^\s*(?:push|pull_request|schedule):/m, file);
+  }
+});
+
+test("Canonical writes retain safety with a terminal Vercel Hobby quota gate", () => {
+  for (const file of [
+    "atlas-authoring-schema-bootstrap.yml",
+    "atlas-correction-apply.yml",
+    "atlas-reviewed-person-merge.yml",
+    "atlas-person-domain-verify.yml"
+  ]) {
+    assert.match(read(".github/workflows/" + file), /DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED/, file);
+  }
+  assert.match(read(".github/workflows/atlas-reviewed-person-merge.yml"), /for attempt in \$\(seq 1 75\)/);
+  assert.match(read(".github/workflows/atlas-correction-apply.yml"), /for attempt in \$\(seq 1 60\)/);
+});
+
+test("Only Production UI changes trigger automatic live-browser acceptance", () => {
+  for (const file of [
+    "atlas-spacetime-production-visual.yml",
+    "atlas-dashboard-production-acceptance.yml",
+    "atlas-person-domain-verify.yml"
+  ]) {
+    const src = read(".github/workflows/" + file);
+    const push = src.split("  push:")[1]?.split("  workflow_dispatch:")[0] || "";
+    assert.doesNotMatch(push, /scripts\/(?:verify|capture)[^\n]*/, file);
+  }
+});

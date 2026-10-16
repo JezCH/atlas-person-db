@@ -13,7 +13,6 @@ on:
       - "atlas-main-authority-nav.js"
       - "atlas-person-main.js"
       - "index.html"
-      - "scripts/verify-dashboard-production-acceptance.mjs"
   workflow_dispatch:
     inputs:
       expected_runtime_sha:

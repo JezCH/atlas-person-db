@@ -2,11 +2,8 @@ name: ATLAS Russia P2-05C Public Runtime Acceptance
 
 # One-shot historical acceptance evidence for the reviewed 2026-10-10 correction.
 # Not a permanent snapshot-count CI gate; no canonical write or recurrence.
+# Historical full-Production acceptance is explicit, not a CI side effect.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/atlas-polity-russia-p2-05c-acceptance.yml'
   workflow_dispatch:
 
 permissions:

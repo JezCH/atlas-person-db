@@ -8,7 +8,6 @@ on:
       - 'db/migrations/*.sql'
       - 'server/atlas-authoring-migrations.js'
       - 'server/atlas-authoring-readiness.js'
-      - '.github/workflows/atlas-authoring-schema-bootstrap.yml'
 
 permissions:
   contents: read
@@ -37,6 +36,10 @@ jobs:
               --output /tmp/atlas-authoring-readiness.json \
               --write-out '%{http_code}' \
               "$ATLAS_AUTHORING_ENDPOINT")"
+            if [[ "$status" == "402" ]]; then
+              echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: stop schema bootstrap without dispatch." >&2
+              exit 1
+            fi
             if [[ "$status" == "200" ]]; then
               runtime_sha="$(jq -r '.runtime_sha // ""' /tmp/atlas-authoring-readiness.json)"
               if [[ "$runtime_sha" == "$GITHUB_SHA" ]]; then
