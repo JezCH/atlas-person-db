@@ -10,7 +10,7 @@ test('selected roster is exact and 55+1+4+38 evidence classes are disjoint', () 
   assert.equal(roster.entries.length,98);
   assert.deepEqual(roster.counts,{snapshot_uuid:55,pr_confirmed:1,request_no_readback:4,unresolved:38});
   assert.equal(roster.entries.filter(x=>x.historical_uuid_evidence.length>0).length,55);
-  assert.equal(roster.entries.filter(x=>x.prior_evidence_kind==='approved_authoring_request_no_current_readback').length,9);
+  assert.equal(roster.entries.filter(x=>x.prior_evidence_kind==='approved_authoring_request_no_current_readback').length,4);
   assert.equal(roster.entries[2].historical_uuid_evidence.length,2);
   assert.equal(roster.entries[28].expected_name_en,'Muhammad V of Granada');
 });
