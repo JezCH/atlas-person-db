@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected98-20261016:hugo-grotius-mare-liberum-1609:v1",
+  "person": {
+    "canonical_name_en": "Hugo Grotius",
+    "display_name_ko": "후고 그로티우스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Dutch Republic",
+    "display_name_ko": "네덜란드 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Jurist and political theorist",
+    "role_display_name_ko": "국제법학자·정치사상가",
+    "start_year": 1609,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1609,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1609 is the source-documented publication representative point for Hugo Grotius's Mare Liberum in Leiden, Dutch Republic, not the full lifetime activity span or a political reign."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Peace Palace Library — Grotius, H., Mare Liberum, 1609",
+      "canonical_url": "https://peacepalacelibrary.nl/publication/grotius-h-mare-liberum-1609",
+      "citation_text": "Peace Palace Library original-edition holdings identify Grotius's Mare Liberum published in Leiden by Elzevier in 1609."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-16",
+      "document_title": "후고 그로티우스",
+      "url": "https://namu.wiki/w/%ED%9B%84%EA%B3%A0%20%EA%B7%B8%EB%A1%9C%ED%8B%B0%EC%9A%B0%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Reviewed 1609 Leiden original publication and Dutch Republic political context; no exact existing person-specific Place/PolityPlaceFunction UUID is verified."
+  }
+}
