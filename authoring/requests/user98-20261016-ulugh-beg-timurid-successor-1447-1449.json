@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected98-20261016:ulugh-beg-timurid-succession-1447-1449:v1",
+  "person": {
+    "canonical_name_en": "Ulugh Beg",
+    "display_name_ko": "울루그 베그",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "existing_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
+    "canonical_name_en": "Timurid Empire",
+    "display_name_ko": "티무르 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Timurid successor ruler at Samarkand",
+    "role_display_name_ko": "티무르 왕조 사마르칸트 계승 통치자",
+    "start_year": 1447,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1449,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Existing Person Ulugh Beg UUID 1137412e-532c-472c-a5ec-e32d9e530499, NOT a second namesake. Stanford's reviewed Zij-i Sultani history states that, after his father Shah Rukh died in 1447, Ulugh Beg briefly ascended to the Timurid throne and was beheaded in October 1449. This 1447-1449 claimant/successor sovereign phase is different from his earlier 1409-1447 provincial governorship. No claim of undisputed consolidated control of all Timurid branches or invented exact accession day. Reuse canonical Timurid Empire Polity UUID. Exact year 1447 transition overlaps provincial year because exact month/day of the change are not asserted."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Stanford University — Practical Astronomy in the Islamicate World: Ulugh Beg's Zij-i Sultani",
+      "canonical_url": "https://web.stanford.edu/~fparviz/introduction.html",
+      "citation_text": "Academic introduction states Ulugh Beg inherited provincial government under his father Shah Rukh, briefly ascended the Timurid throne following Shah Rukh's 1447 death, and was executed on 27 October 1449."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "University of St Andrews MacTutor — Ulugh Beg",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Ulugh_Beg/",
+      "citation_text": "St Andrews mathematicians' biographical record confirms Ulugh Beg's lifespan 1394-1449, rule and astronomical work in Samarkand and the context of succession after Shah Rukh."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-04",
+      "document_title": "울루그 베그",
+      "url": "https://namu.wiki/w/%EC%9A%B8%EB%A3%A8%EA%B7%B8%20%EB%B2%A0%EA%B7%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Ulugh Beg's succession phase had Samarkand political center; no exact person-place-function/Place UUID linked in this stage. No invented coordinates."
+  }
+}

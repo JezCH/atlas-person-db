@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected98-20261016:ulugh-beg-transoxiana-governor-1409-1447:v1",
+  "person": {
+    "canonical_name_en": "Ulugh Beg",
+    "display_name_ko": "울루그 베그",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "existing_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
+    "canonical_name_en": "Timurid Empire",
+    "display_name_ko": "티무르 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Timurid governor of Transoxiana",
+    "role_display_name_ko": "티무르 제국 트란스옥시아나 통치자",
+    "start_year": 1409,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1447,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Existing verified Person Ulugh Beg (historical UUID 1137412e-532c-472c-a5ec-e32d9e530499) currently lacks a public chronological Activity. Stanford archive explains that his father Shah Rukh granted him the Transoxiana province around 1409; his provincial authority should not be treated as sovereign rule of the entire Timurid Empire. Shah Rukh died in 1447, when Ulugh Beg began a distinct attempted empire-wide succession. The 1447 provincial term boundary is year-only and approximately delimited; distinguish the separate 1447-1449 succession Activity. Reuse canonical existing Timurid Empire Polity UUID, never create a parallel Timurid province as a fabricated independent kingdom."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Stanford University — Practical Astronomy in the Islamicate World: Ulugh Beg's Zij-i Sultani",
+      "canonical_url": "https://web.stanford.edu/~fparviz/introduction.html",
+      "citation_text": "Stanford digital critical edition's introduction reports that Shah Rukh granted the province of Mawarannahr/Transoxiana to young Ulugh Beg around 1409, and his father's death in 1447 began his attempted imperial succession."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "UNESCO Portal to the Heritage of Astronomy — Ulugh Beg Observatory",
+      "canonical_url": "https://web.astronomicalheritage.net/show-entity?identity=30",
+      "citation_text": "UNESCO heritage astronomy portal describes Ulugh Beg as ruler of Transoxiana from 1409 to 1449 and describes his 1420 educational and 1424 astronomical institutions."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-04",
+      "document_title": "울루그 베그",
+      "url": "https://namu.wiki/w/%EC%9A%B8%EB%A3%A8%EA%B7%B8%20%EB%B2%A0%EA%B7%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Ulugh Beg's Timurid provincial administration is source-linked to Transoxiana/Samarkand, but exact canonical Place and time-bounded function UUIDs were not reviewed. No invented point geometry."
+  }
+}
