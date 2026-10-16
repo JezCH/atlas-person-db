@@ -119,6 +119,62 @@ def make_priority_request(audit,*,original_parent=None,full=True):
         "registered_person_screened":False,"videos":keep
     }
 
+def validate_public_publisher_metadata(doc,request):
+    """Fail closed: public search-index evidence MUST NOT become verified video metadata."""
+    if (doc.get("schema")!="atlas-youtube-b024-public-publisher-metadata-retrieval/v1" or
+        doc.get("source_snapshot_id")!=SNAPSHOT or
+        doc.get("source_zip_sha256")!=SHA or
+        doc.get("source_review_json_sha256")!=REVIEW or
+        doc.get("queue_schema")!=QUEUE_SCHEMA or
+        doc.get("exact_requested_original_video_ids")!=3 or
+        doc.get("official_youtube_data_api_calls")!=0 or
+        doc.get("exact_source_channel_id_verified_in_public_result")!=0 or
+        doc.get("actual_video_playback_reviews")!=0 or
+        doc.get("timestamped_transcript_evidence_reviews")!=0 or
+        doc.get("person_primary_content_confirmed")!=0 or
+        doc.get("publication_allowed") is not False):
+        raise ValueError("PUBLIC_SEARCH_RESULT_CANNOT_AUTHORIZE_PERSON_VIDEO")
+    if request.get("tranche_schema")!=QUEUE_SCHEMA or request.get("schema")!=PARENT_SCHEMA:
+        raise ValueError("PUBLIC_METADATA_REQUEST_SCHEMA_CHANGED")
+    expected={r["video_id"]:r for r in request["videos"]}
+    actual=doc.get("records")
+    if not isinstance(actual,list) or len(actual)!=3 or set(expected)!=set(r.get("original_video_id") for r in actual):
+        raise ValueError("PUBLIC_METADATA_REVIEW_ORIGINAL_IDS_CHANGED")
+    found=0
+    for row in actual:
+        vid=row["original_video_id"]
+        source=expected[vid]
+        if (row.get("original_channel_id")!=source["original_channel_id"] or
+            row.get("original_title")!=source["original_title"] or
+            row.get("original_name_cues")!=source["name_cues"] or
+            row.get("original_youtube_url")!=f"https://www.youtube.com/watch?v={vid}" or
+            row.get("source_youtube_channel_id_verified") is not False or
+            row.get("publication_content_metadata_ready") is not False or
+            row.get("actual_subject_video_confirmed") is not False):
+            raise ValueError("PUBLIC_METADATA_CANNOT_CHANGE_ORIGINAL_IDS_OR_CERTIFY")
+        has_source=row.get("evidence_status")=="INDEXED_PUBLIC_YOUTUBE_PUBLISHER_DESCRIPTION"
+        if has_source:
+            found+=1
+            if (vid!="-5Lg5mk74NA" or
+                row.get("source_youtube_video_id_match") is not True or
+                row.get("source_youtube_title_match") is not True or
+                row.get("published_video_title")!=source["original_title"] or
+                row.get("published_by")!="Inma" or
+                row.get("published_date")!="2016-04-14" or
+                row.get("indexed_publisher_description")!="Vídeo sobre: Dali" or
+                row.get("public_video_page_url")!=row["original_youtube_url"]):
+                raise ValueError("PUBLIC_PUBLISHER_EVIDENCE_DOES_NOT_MATCH_SOURCE")
+        elif row.get("evidence_status")=="NO_SOURCE_SPECIFIC_PUBLIC_METADATA_RETRIEVED":
+            if row.get("source_youtube_video_id_match") is not False or row.get("source_youtube_title_match") is not False:
+                raise ValueError("PUBLIC_SEARCH_MISS_IS_NOT_VERIFIED_VIDEO")
+        else:
+            raise ValueError("UNKNOWN_PUBLIC_PUBLISHER_EVIDENCE_STATUS")
+    if found!=doc.get("public_youtube_video_page_matching_original_id_found") or found!=1:
+        raise ValueError("PUBLIC_PUBLISHER_EVIDENCE_POPULATION_CHANGED")
+    return {"indexed_original_video_matches":found,"original_channels_verified":0,
+            "content_verified_person_video_ids":0,"production_publication_allowed":False}
+
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--manifest",default="audits/youtube-b024-first-12-original-title-triage-20261016.json")
