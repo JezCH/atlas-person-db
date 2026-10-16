@@ -69,11 +69,15 @@ jobs:
           mkdir -p artifacts/core-final-acceptance
           endpoint="$(jq -er '.production_endpoint' contracts/core-final-acceptance-contract.v2.json)"
           matched=false
-          for attempt in $(seq 1 90); do
+          for attempt in $(seq 1 12); do
             status="$(curl --silent --show-error \
               --output artifacts/core-final-acceptance/production-readiness.json \
               --write-out '%{http_code}' \
               "$endpoint" || true)"
+            if [[ "$status" == "402" ]]; then
+              echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: stop CORE Production verification without polling." >&2
+              exit 1
+            fi
             if [[ "$status" == "200" ]] && jq -e --arg sha "$GITHUB_SHA" '
               .ok == true and
               .marker == "ATLAS_AUTHORING_TRANSPORT_V2" and
@@ -87,8 +91,8 @@ jobs:
               break
             fi
             runtime_sha="$(jq -r '.runtime_sha // "unavailable"' artifacts/core-final-acceptance/production-readiness.json 2>/dev/null || printf 'unavailable')"
-            echo "Production exact-SHA readiness pending: status=$status runtime_sha=$runtime_sha expected=$GITHUB_SHA attempt=$attempt/90"
-            sleep 10
+            echo "Production exact-SHA readiness pending: status=$status runtime_sha=$runtime_sha expected=$GITHUB_SHA attempt=$attempt/12"
+            if [[ "$attempt" -lt 12 ]]; then sleep 10; fi
           done
           [[ "$matched" == "true" ]] || {
             echo "Production did not expose exact ready SHA $GITHUB_SHA." >&2
