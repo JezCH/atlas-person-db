@@ -598,10 +598,23 @@
     }
   }
 
+  // Initializing an unrelated route must not fetch the entire canonical
+  // Person list. Share one request between direct links and Person navigation.
+  function ensurePersonsLoaded() {
+    if (!initialLoadPromise) {
+      initialLoadPromise = loadPersons({ keepSelection: false }).then((outcome) => {
+        if (!outcome.ok) initialLoadPromise = null; // allow the next visit to retry
+        return outcome;
+      });
+    }
+    return initialLoadPromise;
+  }
+
   async function openPerson(personId, { updateRoute = false } = {}) {
     const id = String(personId || "").trim().toLowerCase();
     if (!reader.UUID_PATTERN?.test?.(id)) return false;
-    if (initialLoadPromise) await initialLoadPromise;
+    const loaded = await ensurePersonsLoaded();
+    if (!loaded.ok) return false;
     return selectPerson(id, { force:true, updateRoute });
   }
 
@@ -970,7 +983,13 @@
   }
 
   installShell();
-  initialLoadPromise = loadPersons({ keepSelection: false });
+  // Domain routing initializes later in index.html. Resolve the initial hash
+  // now, then load on demand whenever the user navigates to Person.
+  const initialDomain = window.ATLAS_ENTITY_ROUTE?.parseHash?.(window.location.hash)?.domain || "persons";
+  if (initialDomain === "persons") void ensurePersonsLoaded();
+  window.addEventListener("atlas-authority-domain-changed", (event) => {
+    if (event?.detail?.domain === "persons") void ensurePersonsLoaded();
+  });
 
   window.ATLAS_PERSON_MAIN = Object.freeze({
     loadPersons,
