@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected98-20261016:michiel-de-ruyter-medway-1667:v1",
+  "person": {
+    "canonical_name_en": "Michiel de Ruyter",
+    "display_name_ko": "미힐 더라위터르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Dutch Republic",
+    "display_name_ko": "네덜란드 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Dutch lieutenant-admiral at Medway",
+    "role_display_name_ko": "메드웨이 공격 당시 네덜란드 해군 제독",
+    "start_year": 1667,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1667,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1667 is the personal, source-attested Medway raid representative point under Admiral Michiel de Ruyter. It is not his complete naval career or a claim that the Kingdom of the Netherlands existed in 1667. Death 1676 documented by Royal Museums Greenwich."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Royal Museums Greenwich — Dutch Attack on the Medway, June 1667",
+      "canonical_url": "https://www.rmg.co.uk/collections/objects/rmgc-object-11787",
+      "citation_text": "Royal Museums Greenwich explicitly identifies Lieutenant-Admiral de Ruyter as Dutch commander of the successful 1667 Medway raid."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Royal Museums Greenwich — Lieutenant-Admiral Michiel de Ruyter (1607–1676)",
+      "canonical_url": "https://www.rmg.co.uk/collections/objects/rmgc-object-14470",
+      "citation_text": "Historic collection attests the admiral's personal identity, lifetime and victories in the Second Anglo-Dutch War."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-16",
+      "document_title": "미힐 더라위터르",
+      "url": "https://namu.wiki/w/%EB%AF%B8%ED%9E%90%20%EB%8D%94%EB%9D%BC%EC%9C%84%ED%84%B0%EB%A5%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Medway campaign and Dutch Republic affiliation documented; do not invent precise personal place coordinates or period PlaceFunction identity."
+  }
+}
