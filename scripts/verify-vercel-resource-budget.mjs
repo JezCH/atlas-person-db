@@ -49,6 +49,38 @@ if (loops.length !== 1 || Number(loops[0][1]) > 12) {
 if (!visual.includes("DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED")) {
   errors.push(`${visualPath}: fail-fast HTTP 402 guard is missing`);
 }
+const corePath = ".github/workflows/atlas-core-final-acceptance.yml";
+const core = readFileSync(join(root, corePath), "utf8");
+const coreLoops = [...core.matchAll(/for\s+attempt\s+in\s+\$\(seq\s+1\s+(\d+)\)/g)];
+if (coreLoops.length !== 1 || Number(coreLoops[0][1]) > 12 || !core.includes("DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED")) {
+  errors.push(corePath + ": CORE must stop HTTP 402 and retry at most 12 times");
+}
+const automaticStart = visual.indexOf("# Automatic main-deployment smoke only:");
+const manualStart = visual.indexOf('if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]', automaticStart);
+const manualEnd = visual.indexOf("\n          fi\n", manualStart);
+if (automaticStart < 0 || manualStart < automaticStart || manualEnd < manualStart) {
+  errors.push(visualPath + ": automatic smoke / manual full-suite split missing");
+} else {
+  const automatic = visual.slice(automaticStart, manualStart);
+  const explicitRelease = visual.slice(manualStart, manualEnd);
+  if ((automatic.match(/node scripts\//g) || []).length > 3 || (explicitRelease.match(/node scripts\//g) || []).length < 15) {
+    errors.push(visualPath + ": automatic Production run must stay <=3 scripts, while complete manual suite is preserved");
+  }
+}
+// PR-based live Chrome is particularly expensive because the PR does not
+// deploy that branch to Production. The preserved visual suites are manual.
+for (const name of readdirSync(join(root, ".github/workflows"))) {
+  if (!/^atlas-vis3-.*\.yml$/.test(name)) continue;
+  const workflow = readFileSync(join(root, ".github/workflows", name), "utf8");
+  if (workflow.includes("atlas-person-db.vercel.app") && /\n\s*pull_request\s*:/.test(workflow)) {
+    errors.push(name + ": Production browser suites may not start automatically on pull_request");
+  }
+}
+const dashboard = readFileSync(join(root, ".github/workflows/atlas-dashboard-production-acceptance.yml"), "utf8");
+if (!dashboard.includes("DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED")) {
+  errors.push("atlas-dashboard-production-acceptance.yml: HTTP 402 fail-fast missing");
+}
+
 const integrity = readFileSync(join(root, ".github/workflows/atlas-integrity.yml"), "utf8");
 if (!integrity.includes("node scripts/verify-vercel-resource-budget.mjs")) {
   errors.push("atlas-integrity.yml: resource guard must run in mandatory CI");

@@ -77,6 +77,10 @@ jobs:
 
           for attempt in $(seq 1 60); do
             status="$(curl --silent --show-error               --output /tmp/atlas-runtime-identity.json               --write-out '%{http_code}'               "$ATLAS_RUNTIME_IDENTITY_ENDPOINT")"
+            if [[ "$status" == "402" ]]; then
+              echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: stop Runtime identity polling; no compile or publication." >&2
+              exit 1
+            fi
             if [[ "$status" == "200" ]]; then
               runtime_sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/atlas-runtime-identity.json)"
               runtime_ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/atlas-runtime-identity.json)"

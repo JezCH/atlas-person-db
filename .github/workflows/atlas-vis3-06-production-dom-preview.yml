@@ -1,12 +1,8 @@
 name: ATLAS Phase III Spacetime Concept Preview
 
+# Live Production browser inspection is an explicit release task, never
+# an automatic PR event. PR validation uses offline Integrity checks.
 on:
-  pull_request:
-    paths:
-      - "scripts/verify-vis3-06-production-dom-preview.mjs"
-      - "scripts/verify-vis3-06-dense-production-preview.mjs"
-      - ".github/workflows/atlas-vis3-06-production-dom-preview.yml"
-      - "docs/ui/UI_PHASE_III_VIS3_06_P_REAL_DOM_PREFLIGHT_20261010.md"
   workflow_dispatch:
 
 permissions:

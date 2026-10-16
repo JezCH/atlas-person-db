@@ -1,11 +1,8 @@
 name: ATLAS VIS3-06 R2 Native Chrome Zoom
 
+# Live Production browser inspection is an explicit release task, never
+# an automatic PR event. PR validation uses offline Integrity checks.
 on:
-  pull_request:
-    paths:
-      - "scripts/verify-vis3-06-r2-native-browser-zoom.mjs"
-      - ".github/workflows/atlas-vis3-06-r2-native-browser-zoom.yml"
-      - "experiments/vis3-06/b2-observatory-toolrail-plate.svg"
   workflow_dispatch:
 
 permissions:
