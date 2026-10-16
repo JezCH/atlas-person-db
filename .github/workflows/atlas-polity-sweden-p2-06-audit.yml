@@ -1,10 +1,7 @@
 name: ATLAS Sweden P2-06B Authenticated Source Inventory
 
+# Historical full-Production acceptance is explicit, not a CI side effect.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/atlas-polity-sweden-p2-06-audit.yml'
   workflow_dispatch:
 
 permissions:
