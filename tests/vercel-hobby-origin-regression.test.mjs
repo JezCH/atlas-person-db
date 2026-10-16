@@ -66,3 +66,41 @@ test("CORE and Dashboard Production checks stop immediately on suspended Hobby i
   assert.match(dashboard, /DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED/);
   assert.match(dashboard, /status.*402/);
 });
+
+
+
+test("Full-history Production census workflows are explicitly dispatched, not triggered by a code push", () => {
+  for (const workflow of [
+    ".github/workflows/atlas-audit-inventory.yml",
+    ".github/workflows/atlas-polity-p2-09-public-production-census.yml",
+    ".github/workflows/atlas-place-production-authority-audit.yml"
+  ]) {
+    const source = read(workflow);
+    const triggers = source.split(/\non:\n/)[1]?.split(/\npermissions:\n/)[0] || "";
+    assert.match(source, /\n  workflow_dispatch:/, workflow);
+    assert.doesNotMatch(triggers, /\n  push:/, workflow);
+  }
+});
+
+test("CORE Production SHA gate is triggered by runtime files, not tests and operation-only changes", () => {
+  const source = read(".github/workflows/atlas-core-final-acceptance.yml");
+  const push = source.split("  push:")[1]?.split("  workflow_dispatch:")[0] || "";
+  assert.match(push, /api\/\*\*/);
+  assert.match(push, /server\/\*\*/);
+  assert.doesNotMatch(push, /tests\/\*\*|requirements\/\*\*|scripts\/\*\*/);
+  assert.doesNotMatch(push, /atlas-core-final-acceptance\.yml/);
+});
+
+test("Canonical Authoring retains its safety window but stops a paused Production before write", () => {
+  const source = read(".github/workflows/atlas-authoring-apply.yml");
+  assert.match(source, /for attempt in \$\(seq 1 60\)/);
+  assert.match(source, /if \[\[ "\$status" == "402" \]\]; then/);
+  assert.match(source, /DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: stop Authoring apply before any mutation/);
+});
+
+test("Place Production audit has a terminal 402 guard and bounded readiness window", () => {
+  const source = read(".github/workflows/atlas-place-production-authority-audit.yml");
+  assert.match(source, /for attempt in \$\(seq 1 12\)/);
+  assert.doesNotMatch(source, /for attempt in \$\(seq 1 75\)/);
+  assert.match(source, /DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED/);
+});

@@ -44,6 +44,14 @@
 - The user evaluates changes at **Production**, not merely on a PR. A merged branch awaiting suspended Vercel remains `BLOCKED — PRODUCTION NOT LIVE` until the actual public URL is HTTP 200 and changed UI verified. No paid upgrade is permitted.
 - The Oct 8–10 origin-byte cause remains **unquantified by request path**. Investigate other PR Production browser workflows, redundant audits and 402 retry loops before calling all routes protected.
 
+## 2026-10-16 follow-up — avoid repeat Production audits and false deploy dependencies
+
+- GitHub `.github/workflows/**` files are CI configuration, not served runtime assets. Workflow-only changes must **skip Vercel builds** (mixed runtime changes still deploy). This fixes unnecessary deployments that used to wait on a SHA the `vercel-ignore-build` classifier may skip.
+- CORE Final Acceptance retains its exact-SHA Production and generated artifact gates for **deployed CORE surfaces** but no longer auto-runs for unrelated `tests/**`, `requirements/**`, generic `scripts/**`, or edits of its own workflow file. Repository integrity handles such code checks.
+- The entire read-only Stage2/Polity/Place Production censuses are **manual workflow_dispatch**; never relaunch a multi-megabyte audit simply because a handler or workflow file changed. Preserve their scripts/artifacts and invoke one focused authorized check when a real audit decision needs it.
+- Protected Human Authoring retains conservative, schema-aware 60-attempt readiness logic for canonical safety, but stops before mutation if Vercel reports HTTP 402. Place audit retries are bounded and 402-terminal.
+- An older deployed site may return 200 while **new deployment creation is blocked**. Production feedback closes only when current deployed assets and user-visible behavior are verified. Last observed error: 402 `resource_creation_blocked` for the Hobby team, not a test failure.
+
 ## Enforcement gap and follow-up
 
 The CI guard covers **repository-based execution** and the visual workflow; it cannot impose a hard team-level spending cap, detect tool-invoked Sandbox runs, or block anonymous API abuse before Vercel itself enforces its quotas. Platform-level budget alerts, route-level transfer observations and provider-side restrictions need separate confirmation in the Vercel account. Any claim of “zero future suspension risk” is invalid until provider-level hard limits and traffic controls are independently confirmed.

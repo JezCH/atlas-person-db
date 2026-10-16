@@ -73,9 +73,6 @@ const mustBuildExamples = [
   "db/migrations/example.sql",
   "corrections/requests/r0.json",
   "corrections/intents/r1.json",
-  ".github/workflows/atlas-correction-apply.yml",
-  ".github/workflows/atlas-audit-inventory.yml",
-  ".github/workflows/atlas-authoring-apply.yml",
   "vercel.json"
 ];
 for (const file of mustBuildExamples) {
@@ -83,6 +80,17 @@ for (const file of mustBuildExamples) {
     fail(`deployment-relevant path must force a build: ${file}`);
   }
 }
+const workflowOnly = [
+  ".github/workflows/atlas-correction-apply.yml",
+  ".github/workflows/atlas-audit-inventory.yml",
+  ".github/workflows/atlas-authoring-apply.yml"
+];
+for (const file of workflowOnly) {
+  if (!isSafeToSkipPath(file) || shouldBuildForChangedPaths([file])) {
+    fail(`CI-only workflow must not force a Vercel build: ${file}`);
+  }
+}
+
 if (!shouldBuildForChangedPaths(["docs/research/evidence.md", "server/atlas-correction-apply-handler.js"])) {
   fail("mixed change set must build when any deployment-relevant path exists");
 }
@@ -123,15 +131,20 @@ for (const route of [
 
 for (const [name, workflow] of [
   ["correction", correctionWorkflow],
-  ["authoring", authoringWorkflow],
-  ["audit", auditWorkflow]
+  ["authoring", authoringWorkflow]
 ]) {
   if (!/push:\s*\n\s*branches:\s*\n\s*- main/m.test(workflow)) {
-    fail(`${name} Production workflow must be main-push scoped`);
+    fail(`${name} canonical mutation workflow must remain main-push scoped`);
   }
   if (/\bpull_request\s*:/m.test(workflow)) {
-    fail(`${name} Production workflow must not run on pull_request`);
+    fail(`${name} Production writer must not run on pull_request`);
   }
+}
+// A non-mutating full inventory is an explicit audit, not a code-push side effect.
+if (!/workflow_dispatch:/m.test(auditWorkflow) ||
+    /\n\s*push\s*:/m.test(auditWorkflow) ||
+    /\bpull_request\s*:/m.test(auditWorkflow)) {
+  fail("Full Production Audit Inventory must be explicitly dispatched");
 }
 
 const requiredReleaseClauses = [

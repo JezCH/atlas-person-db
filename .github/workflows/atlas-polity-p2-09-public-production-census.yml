@@ -1,10 +1,6 @@
 name: ATLAS P2-09 Public Entire-Production Polity Census
+# The complete live Polity census must be explicitly requested.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/atlas-polity-p2-09-public-production-census.yml'
-      - 'scripts/audit-polity-public-production-census.mjs'
   workflow_dispatch:
 permissions:
   contents: read

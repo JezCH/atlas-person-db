@@ -250,6 +250,13 @@ jobs:
               --write-out '%{http_code}' \
               "$ATLAS_AUTHORING_ENDPOINT")"
 
+            # HTTP 402 is a team-wide quota block, never a deployment delay.
+            # Keep the longer readiness window for real canonical write safety.
+            if [[ "$status" == "402" ]]; then
+              echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: stop Authoring apply before any mutation." >&2
+              exit 1
+            fi
+
             if [[ "$status" == "404" ]]; then
               if [[ "$attempt" == "60" ]]; then
                 cat /tmp/atlas-authoring-evidence/readiness.json >&2 || true

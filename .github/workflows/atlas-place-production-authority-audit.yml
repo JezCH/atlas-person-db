@@ -1,12 +1,7 @@
 name: ATLAS Place Production Authority Audit
+# Production-wide Place authority census is manual; local transport
+# tests remain available on every PR via ATLAS Integrity.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/atlas-place-production-authority-audit.yml'
-      - 'api/atlas-audit-inventory.js'
-      - 'server/atlas-place-production-audit-handler.js'
-      - 'scripts/audit-place-production-authority.mjs'
   workflow_dispatch:
 
 permissions:
@@ -48,8 +43,12 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p /tmp/atlas-place-production
-          for attempt in $(seq 1 75); do
+          for attempt in $(seq 1 12); do
             status="$(curl --silent --show-error --max-time 15               --output /tmp/atlas-place-production/runtime.json               --write-out '%{http_code}' "${RUNTIME_IDENTITY_ENDPOINT}" || true)"
+            if [[ "${status}" == "402" ]]; then
+              echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: stop Place Production audit." >&2
+              exit 1
+            fi
             if [[ "${status}" == "200" ]] && jq -e --arg sha "${GITHUB_SHA}" '
               .ok==true
               and .identity.git_commit_ref=="main"
@@ -58,7 +57,7 @@ jobs:
               echo "ATLAS_PLACE_AUDIT_RUNTIME_SHA=${GITHUB_SHA}" >> "${GITHUB_ENV}"
               exit 0
             fi
-            sleep 5
+            if [[ "$attempt" -lt 12 ]]; then sleep 5; fi
           done
           echo "PLACE_AUDIT_EXACT_PRODUCTION_RUNTIME_NOT_READY" >&2
           exit 1

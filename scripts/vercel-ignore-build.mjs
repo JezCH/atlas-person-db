@@ -3,6 +3,7 @@ import { pathToFileURL } from "node:url";
 
 const SAFE_SKIP_PREFIXES = Object.freeze([
   "docs/",
+  ".github/workflows/", // CI configuration is not deployed runtime code
   "requirements/",
   "tests/",
   "corrections/evidence/",

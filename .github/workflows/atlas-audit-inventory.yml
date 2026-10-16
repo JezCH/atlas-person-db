@@ -3,22 +3,9 @@ name: ATLAS Audit Inventory
 # Japan lineage baseline refresh 2026-09-30
 # 2026-09-30: capture exact Production baseline before the reviewed Japan polity lineage repair.
 
+# A full canonical database snapshot is an explicit audit action, not a
+# side effect of a documentation, schema or workflow commit.
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/atlas-audit-inventory.yml'
-      - 'api/atlas-audit-inventory.js'
-      - 'server/atlas-audit-inventory-handler.js'
-      - 'server/atlas-polity-reference-audit-handler.js'
-      - 'server/atlas-audit-github-oidc.js'
-      - 'server/atlas-correction-polity-designation-retire-v2-service.js'
-      - 'stage2/integration/p9-legacy-temporal-metadata-migration.v1.json'
-      - 'stage2/integration/p7-explicit-person-relation-decisions-batch*.v1.json'
-      - 'stage2/integration/p7-full-relation-review-dispositions.v1.json'
-      - 'stage2/integration/p7-runtime-readiness-dispositions.v1.json'
-      - 'docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json'
   workflow_dispatch:
     inputs:
       mode:
