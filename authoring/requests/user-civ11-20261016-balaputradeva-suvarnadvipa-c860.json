@@ -34,16 +34,16 @@
     "end_certainty": "approximate",
     "start_calendar": "unspecified_historical",
     "end_calendar": "unspecified_historical",
-    "confidence": "partially_established",
+    "confidence": "likely",
     "chronology_status": "reviewed",
-    "notes": "A single approximate c.860 representative source-attested point, NOT a reign from 860 to 860 or a claim of exact 860 chronology. Devapala's Nalanda copper-plate grant (39th regnal year) attests Balaputradeva, ruler of Suvarnadvipa; scholarly datings vary roughly 844–860. Association of Suvarnadvipa/Sumatra's Sailendra rulers with Srivijaya must be checked against exact Production polity identity, not treated as a new polity synonym blindly."
+    "notes": "Nalanda copperplate names Balaputradeva king of Suvarnadvipa in Devapala's 39th regnal year. Its absolute CE date is disputed (including ca.845–850 versus the conventional ca.860); this approximate 860 event is a representative person-specific inscription point, NOT a reign lasting only one year or an exact date. Do not assume that Srivijaya and Suvarnadvipa are distinct or identical live Polities without exact identity review."
   },
   "sources": [
     {
       "source_type": "web_bibliographic_reference",
-      "title": "George Coedès, BEFEO (1933) — Les rois Šailendra de Suvarnadvîpa",
-      "canonical_url": "https://www.persee.fr/doc/befeo_0336-1519_1933_num_33_1_4618?pageId=T1_123",
-      "citation_text": "Scholarly edition discusses Nalanda copperplate issued in Devapala's 39th year naming Balaputradeva as ruler of Suvarnadvipa."
+      "title": "R. C. Majumdar (1933), Les rois Śailendra de Suvarnadvīpa, BEFEO 33:121–141",
+      "canonical_url": "https://www.persee.fr/doc/befeo_0336-1519_1933_num_33_1_4618",
+      "citation_text": "Majumdar discusses the Nalanda copperplate dated to Devapala's 39th regnal year explicitly naming Balaputradeva ruler of Suvarnadvipa; the AD date is debated."
     }
   ],
   "external_references": {

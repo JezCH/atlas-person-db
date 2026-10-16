@@ -41,9 +41,15 @@
   "sources": [
     {
       "source_type": "web_bibliographic_reference",
-      "title": "1911 Encyclopaedia Britannica — Geneva",
-      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclopaedia_Britannica/Geneva",
-      "citation_text": "Farel brought Calvin to Geneva in 1536, he was exiled in 1538, recalled in September 1541, and remained until his death in 1564."
+      "title": "Internet Encyclopedia of Philosophy — John Calvin",
+      "canonical_url": "https://iep.utm.edu/john-calvin/",
+      "citation_text": "Calvin was in Geneva 1536–1538 and again 1541–1564; the latter was uninterrupted after his Strasbourg exile."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Calvin University — John Calvin",
+      "canonical_url": "https://calvin.edu/about/history/john-calvin.html?dotcmsredir=1",
+      "citation_text": "Describes Geneva's 1538 expulsion of Calvin, subsequent Strasbourg ministry, and 1541 recall."
     }
   ],
   "external_references": {

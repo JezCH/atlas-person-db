@@ -36,7 +36,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "1815–1828 grand-ducal phase only. The same Person inherited the earlier ducal office in 1758 as a minor and began personal rule in 1775; do not collapse prior ducal reign into a polity styled Grand Duchy before its 1815 elevation. Earlier polity/ducal roles require an independent historical continuity review."
+    "notes": "Carl August's grand-ducal title and rule after the 1815 elevation until his death 1828. His earlier titles/rules are separate: Dukes of Saxe-Weimar and Saxe-Eisenach in personal union since 1758 (under Anna Amalia regency until 1775), consolidated Duchy of Saxe-Weimar-Eisenach 1809–1815. These three earlier political-office records are separately staged in the same PR; do not collapse them into the Grand Duchy or invent polity identities."
   },
   "sources": [
     {
@@ -44,6 +44,12 @@
       "title": "Klassik Stiftung Weimar — Carl August",
       "canonical_url": "https://goethe.klassik-stiftung.de/de/personen/carl-august/",
       "citation_text": "Born 1757, became personally governing duke in 1775, promoted to Grand Duke in April 1815, died 1828."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Rulers.org — German States before 1945",
+      "canonical_url": "https://www.rulers.org/gerstat1.html",
+      "citation_text": "Carl August 1758–1809 in Saxe-Weimar/Eisenach personal union, consolidated Duchy from September 1809 and Grand Duchy from April 1815."
     }
   ],
   "external_references": {
