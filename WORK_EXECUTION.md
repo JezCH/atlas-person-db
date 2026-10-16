@@ -10,6 +10,14 @@
 >
 > **Project concurrency maxim:** work is parallel; authority is singular; commit is resource-scoped.
 
+## Production-visible UI / functionality completion gate (2026-10-16)
+
+- **Production is the user's feedback surface.** For UI and functional changes, completion means: focused CI PASS, PR merged to main, Production deployment matches the intended deployed assets/version, public URL returns HTTP 200 and the changed surface is inspectable. A GitHub merge or Vercel build marked READY **alone is not user-visible completion**.
+- Changes may be merged to main after passing CI while Vercel Hobby is quota-paused, but must remain **BLOCKED — PRODUCTION NOT LIVE**, not marked released or user-accepted. Do not invent a Production verification, create costly synthetic traffic, pay for Pro, or bypass an account restriction.
+- After free-tier restoration, use **one bounded live smoke** for the merged runtime and let the user inspect the normal Production URL. Full 19-script Chrome verification is **opt-in, not repeated on every commit**. If the user requests feedback on a specific UI, prioritise the real page over PR preview status.
+- Preserve canonical write verification and historic data: local fixtures replace redundant UI browsing, **not** protected Production mutation read-backs.
+- Never let a paused endpoint trigger repeated HTTP 402 retries. Do not increase usage merely to prove the site remains paused. See [Hobby quota guard](docs/VERCEL_HOBBY_QUOTA_GUARD.md) and [P0 Issue #2499](https://github.com/JezCH/atlas-person-db/issues/2499).
+
 ## 1. Default behavior: do the work, not the ceremony
 
 A worker should spend the minimum time needed to locate the owned resource and then make forward progress.
