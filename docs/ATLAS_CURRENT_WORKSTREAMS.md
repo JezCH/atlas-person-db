@@ -84,7 +84,10 @@ The restrained Dashboard prototype [#2357](https://github.com/JezCH/atlas-person
 
 ### E. Current OPEN PR inventory / exact disposition
 
-**Verified open PRs: 8 (2026-10-17); 4 draft and 4 non-draft.** Their OPEN state does not certify runtime publication, authorize user approval, or grant exclusive ownership. The existing four older PRs were preserved in the 2026-10-14 cleanup; the four later drafts below must not be omitted.
+**Verified open PRs: 9 (2026-10-17, after P0 guard PR #2519 appeared during final read-back); 4 draft and 5 non-draft.** Their OPEN state does not certify runtime publication, authorize user approval, or grant exclusive ownership. The existing four older PRs were preserved in the 2026-10-14 cleanup; the four later drafts below must not be omitted.
+
+**P0 quota prevention — new non-draft review, not deployed:**
+- [#2519](https://github.com/JezCH/atlas-person-db/pull/2519) — **OPEN / preserve pending GitHub CI/merge and provider recovery**: closes old full-Production-audit workflow auto-triggers and shortens selected SHA/402 retries. It changes CI/workflows and resource guards (not a completed live service restore), so any merge/acceptance is governed independently by #2499. This PR was opened **after** #2518 passed its GitHub Integrity run; it was not present in that earlier 8-PR snapshot.
 
 **User-selected Person authoring — draft, canonical Production blocked:**
 - [#2517](https://github.com/JezCH/atlas-person-db/pull/2517) — **DRAFT / do not merge/apply**: one José Figueres Ferrer Person / three distinct Costa Rica governing terms (1948–49, 1953–58, 1970–74), reviewed source-backed request files. GitHub `registration_validation` PASS; live duplicate/preflight, canonical Apply and runtime read-back **not performed**.
@@ -100,7 +103,7 @@ The restrained Dashboard prototype [#2357](https://github.com/JezCH/atlas-person
 - [#2443](https://github.com/JezCH/atlas-person-db/pull/2443) — **DRAFT / do not merge**: native Spacetime legend disclosure/focus state repair. User approval and actual browser acceptance gate not satisfied; P14 geometry remains parked.
 - [#2381](https://github.com/JezCH/atlas-person-db/pull/2381) — **OPEN / preserve**: #2383 merged overlapping Dashboard caption treatment, but the appbar `font-size: 7.5px` in current main differs from this PR's `10px`; UI ownership/visual acceptance is not superseded by code overlap alone.
 
-All eight are intentionally OPEN. **No safe superseded closure is established from this inventory; never close merely to reduce the open-PR count.** `main` has unverified runtime changes past the last known Production deployment; GitHub CI PASS is not a deployed-live SHA or a canonical DB apply. Vercel #2499 remains the shared transport/provider gate. Completed historical PRs and comments remain archival evidence; do not revive them.
+All nine are intentionally OPEN. **No safe superseded closure is established from this inventory; never close merely to reduce the open-PR count.** `main` has unverified runtime changes past the last known Production deployment; GitHub CI PASS is not a deployed-live SHA or a canonical DB apply. Vercel #2499 remains the shared transport/provider gate. Completed historical PRs and comments remain archival evidence; do not revive them.
 
 **Master coordination rule:** this board indexes workstream *pointers, scope and precise blockers*; the linked live issue, canonical registry, Person writer, source archive or individual PR remains its own fact authority. No master lane claims exclusive lock or independently updates another lane's progress numbers.
 
