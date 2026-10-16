@@ -35,6 +35,15 @@
 - Never auto-upgrade, pay, restart a Sandbox, unpause Vercel or deploy merely to test quota recovery.
 - Once Vercel's Usage quota window permits, request/perform permitted Hobby service reactivation and verify publicly; **there is no guarantee of immediate/automatic reactivation**.
 
+## 2026-10-16 corrective implementation and Production feedback contract
+
+- The original main/Production Chrome visual workflow launched **19 scripts** per run. Main now runs a **three-script bounded Production smoke**; explicit manual `workflow_dispatch` retains all 19 visual validators.
+- Non-Person routes no longer start a Person full-list Function read from the initial Person module (the canonical Person view still loads full data when opened; no records are removed).
+- CORE SHA polling limited from 90 to 12; CORE, Dashboard and existing visual test stop immediately on HTTP 402. Canonical writer correctness and read-after-write remain mandatory.
+- Large dynamic JSON replies log **pathname plus uncompressed JSON byte count only** and add an `x-atlas-json-bytes` diagnostic header; this is **not** the Vercel billed transfer metric and must not be presented as exact FOT metering.
+- The user evaluates changes at **Production**, not merely on a PR. A merged branch awaiting suspended Vercel remains `BLOCKED — PRODUCTION NOT LIVE` until the actual public URL is HTTP 200 and changed UI verified. No paid upgrade is permitted.
+- The Oct 8–10 origin-byte cause remains **unquantified by request path**. Investigate other PR Production browser workflows, redundant audits and 402 retry loops before calling all routes protected.
+
 ## Enforcement gap and follow-up
 
 The CI guard covers **repository-based execution** and the visual workflow; it cannot impose a hard team-level spending cap, detect tool-invoked Sandbox runs, or block anonymous API abuse before Vercel itself enforces its quotas. Platform-level budget alerts, route-level transfer observations and provider-side restrictions need separate confirmation in the Vercel account. Any claim of “zero future suspension risk” is invalid until provider-level hard limits and traffic controls are independently confirmed.
