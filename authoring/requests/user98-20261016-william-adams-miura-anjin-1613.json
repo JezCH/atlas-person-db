@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected98-20261016:william-adams-japan-1613:v1",
+  "person": {
+    "canonical_name_en": "William Adams (Miura Anjin)",
+    "display_name_ko": "윌리엄 애덤스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "documented_death",
+    "representative_domain": "exploration",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Tokugawa Shogunate",
+    "display_name_ko": "도쿠가와 막부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "English navigator and Tokugawa diplomatic adviser",
+    "role_display_name_ko": "항해사·도쿠가와 막부 외교 고문",
+    "start_year": 1613,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1613,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative 1613 point corresponds to the English trading post established in Hirado during diplomatic-adviser William Adams's documented service under the Tokugawa regime; it is NOT his arrival in Japan (1600), the beginning of his entire advisory term, or a 1613-only lifetime. Japanese name Miura Anjin refers to the SAME individual; never register as a separate Person. The Tokugawa Shogunate began in 1603, so use this existing contemporary polity for a 1613 Activity."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Embassy of Japan in the UK — Japan400 seminar, 12 December 2023",
+      "canonical_url": "https://www.uk.emb-japan.go.jp/itpr_en/231212amb.html",
+      "citation_text": "Japanese Embassy confirms William Adams/Miura Anjin arrived 1600, served Tokugawa Ieyasu as diplomatic adviser, and the English trading post at Hirado was opened in 1613."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "William Adams Memorial, Ito City",
+      "canonical_url": "https://willadams.anjintei.jp/wa-03-will_adams-itou.html",
+      "citation_text": "Ito City memorial commemorates the navigator's 1600 arrival, his Tokugawa diplomatic service and subsequent early-17th-century shipbuilding and trade."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-16",
+      "document_title": "윌리엄 애덤스",
+      "url": "https://namu.wiki/w/%EC%9C%8C%EB%A6%AC%EC%97%84%20%EC%95%A0%EB%8D%A4%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Independent 1613 Hirado English trading post and Tokugawa diplomacy are historically attested, but an exact personal PlaceFunction or specific authoritative UUID/coordinate was not reviewed; location mapping held, no invented point."
+  }
+}
