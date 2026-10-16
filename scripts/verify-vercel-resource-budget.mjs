@@ -67,6 +67,33 @@ if (automaticStart < 0 || manualStart < automaticStart || manualEnd < manualStar
     errors.push(visualPath + ": automatic Production run must stay <=3 scripts, while complete manual suite is preserved");
   }
 }
+// Parse the actual top-level GitHub Actions event map, including "on:" at
+// byte zero and quoted YAML keys. Unknown trigger syntax must fail closed.
+export function workflowTriggerEvents(source) {
+  const lines = String(source).replace(/\r\n?/g, "\n").split("\n");
+  const eventKey = /^(?:on|"on"|'on'):\s*(?:#.*)?$/;
+  const index = lines.findIndex((line) => eventKey.test(line));
+  if (index < 0) {
+    const inline = lines.find((line) => /^(?:on|"on"|'on'):\s*\[[^\]]*\]\s*(?:#.*)?$/.test(line));
+    if (!inline) return null;
+    const names = inline.match(/\[([^\]]*)\]/)[1].split(",")
+      .map((name) => name.trim().replace(/^['"]|['"]$/g, "")).filter(Boolean);
+    return names.length && names.every((name) => /^[a-z][a-z0-9_]*$/.test(name))
+      ? new Set(names) : null;
+  }
+  const events = [];
+  let indent = null;
+  for (const line of lines.slice(index + 1)) {
+    if (!line.trim() || /^\s*#/.test(line)) continue;
+    if (!/^\s/.test(line)) break;
+    const match = line.match(/^([ \t]+)([a-z][a-z0-9_]*):(?:\s|$)/);
+    if (!match) continue;
+    if (indent === null) indent = match[1].length;
+    if (match[1].length === indent) events.push(match[2]);
+  }
+  return events.length ? new Set(events) : null;
+}
+
 // No PR validation may load the live Production Function or Chrome. Branch
 // previews/local contract fixtures must be used for before-merge checks.
 const manualHistorical = new Set([
@@ -83,13 +110,17 @@ const manualHistorical = new Set([
 for (const name of readdirSync(join(root, ".github/workflows"))) {
   if (!/\.ya?ml$/.test(name)) continue;
   const source = readFileSync(join(root, ".github/workflows", name), "utf8");
-  const trigger = source.split(/\non:\n/)[1]?.split(/\n(?:permissions|concurrency|jobs):\n/)[0] || "";
+  const events = workflowTriggerEvents(source);
+  if (!events) {
+    errors.push(name + ": cannot audit workflow events; unsupported or missing top-level on declaration");
+    continue;
+  }
   const touchesProduction = source.includes("atlas-person-db.vercel.app") || source.includes("ATLAS_PRODUCTION_ORIGIN");
-  if (touchesProduction && /^\s*pull_request\s*:/m.test(trigger)) {
+  if (touchesProduction && events.has("pull_request")) {
     errors.push(name + ": CI pull_request must never browse Production");
   }
   if (manualHistorical.has(name)) {
-    if (!/^\s*workflow_dispatch\s*:/m.test(trigger) || /^\s*(?:push|pull_request|schedule)\s*:/m.test(trigger)) {
+    if (!events.has("workflow_dispatch") || events.has("push") || events.has("pull_request") || events.has("schedule")) {
       errors.push(name + ": legacy full-Production census must remain manual-only");
     }
   }
