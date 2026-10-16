@@ -156,8 +156,16 @@ jobs:
           set -euo pipefail
           for attempt in $(seq 1 90); do
             route_status="$(curl --silent --show-error --output /tmp/atlas-youtube-publication/route.json --write-out '%{http_code}' "$PUBLISH_ENDPOINT")"
+            if [[ "$route_status" == "402" ]]; then
+              echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: stop YouTube publication poll." >&2
+              exit 1
+            fi
             if [[ "$route_status" == "405" ]]; then
               identity_status="$(curl --silent --show-error --output /tmp/atlas-youtube-publication/runtime.json --write-out '%{http_code}' "$RUNTIME_IDENTITY_ENDPOINT")"
+              if [[ "$identity_status" == "402" ]]; then
+                echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: stop YouTube identity poll." >&2
+                exit 1
+              fi
               if [[ "$identity_status" == "200" ]]; then
                 runtime_sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/atlas-youtube-publication/runtime.json)"
                 runtime_ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/atlas-youtube-publication/runtime.json)"
