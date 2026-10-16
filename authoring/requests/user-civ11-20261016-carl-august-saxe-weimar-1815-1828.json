@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-weimar-1815-1828:v1",
+  "person": {
+    "canonical_name_en": "Carl August, Grand Duke of Saxe-Weimar-Eisenach",
+    "display_name_ko": "카를 아우구스트",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Grand Duchy of Saxe-Weimar-Eisenach",
+    "display_name_ko": "작센바이마르아이제나흐 대공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Duke of Saxe-Weimar-Eisenach",
+    "role_display_name_ko": "작센바이마르아이제나흐 대공",
+    "start_year": 1815,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "end_year": 1828,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "1815–1828 grand-ducal phase only. The same Person inherited the earlier ducal office in 1758 as a minor and began personal rule in 1775; do not collapse prior ducal reign into a polity styled Grand Duchy before its 1815 elevation. Earlier polity/ducal roles require an independent historical continuity review."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Klassik Stiftung Weimar — Carl August",
+      "canonical_url": "https://goethe.klassik-stiftung.de/de/personen/carl-august/",
+      "citation_text": "Born 1757, became personally governing duke in 1775, promoted to Grand Duke in April 1815, died 1828."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-16",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed Grand Duchy of Saxe-Weimar-Eisenach temporal context and Person Activity. Canonical live Polity/Place/PolityPlaceFunction identities cannot be verified while Production returns HTTP 402; no invented place UUID or coordinates. Exact identity/alias/semantic duplicate preflight is mandatory before any write."
+  }
+}

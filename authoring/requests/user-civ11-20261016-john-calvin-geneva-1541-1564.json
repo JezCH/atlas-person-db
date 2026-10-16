@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-civ11-20261016:john-calvin-geneva-1541-1564:v1",
+  "person": {
+    "canonical_name_en": "John Calvin",
+    "display_name_ko": "장 칼뱅",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "religion",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Geneva",
+    "display_name_ko": "제네바 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Protestant reformer and Geneva church leader",
+    "role_display_name_ko": "제네바 종교개혁가",
+    "start_year": 1541,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "end_year": 1564,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Geneva's second Calvin period from his September 1541 return to his death in May 1564; excludes the exile in Strasbourg 1538–1541. Religious leadership and ecclesiastical reforms, not sovereign or dynastic rule. The prior 1536–1538 Geneva period is separately verifiable and must not be silently merged into this rail."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "1911 Encyclopaedia Britannica — Geneva",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclopaedia_Britannica/Geneva",
+      "citation_text": "Farel brought Calvin to Geneva in 1536, he was exiled in 1538, recalled in September 1541, and remained until his death in 1564."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-16",
+      "document_title": "장 칼뱅",
+      "url": "https://namu.wiki/w/%EC%9E%A5%20%EC%B9%BC%EB%B1%85"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed Republic of Geneva temporal context and Person Activity. Canonical live Polity/Place/PolityPlaceFunction identities cannot be verified while Production returns HTTP 402; no invented place UUID or coordinates. Exact identity/alias/semantic duplicate preflight is mandatory before any write."
+  }
+}

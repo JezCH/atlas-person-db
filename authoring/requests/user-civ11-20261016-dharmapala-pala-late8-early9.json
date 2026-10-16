@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-civ11-20261016:dharmapala-pala-late8-early9:v1",
+  "person": {
+    "canonical_name_en": "Dharmapala",
+    "display_name_ko": "다르마팔라",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Pala Empire",
+    "display_name_ko": "팔라 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Pala emperor",
+    "role_display_name_ko": "팔라 제국 황제",
+    "start_year": 770,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "end_year": 810,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_calendar": "unspecified_historical",
+    "confidence": "partially_established",
+    "chronology_status": "reviewed",
+    "notes": "Historiographical decade approximations (770s to 810s) for Dharmapala's rule; boundary year numbers 770 and 810 are approximate lower-decade labels and MUST NOT be treated as precise accession/death dates. His reign ended before his successor Devapala; fuller person-specific boundaries remain disputed."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopedia of Buddhism — Dharmapala of Bengal",
+      "canonical_url": "https://encyclopediaofbuddhism.org/wiki/Dharmapala_of_Bengal",
+      "citation_text": "Second Pala emperor Dharmapala, dated broadly from the 770s to 810s; son of Gopala, predecessor of Devapala."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-16",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed Pala Empire temporal context and Person Activity. Canonical live Polity/Place/PolityPlaceFunction identities cannot be verified while Production returns HTTP 402; no invented place UUID or coordinates. Exact identity/alias/semantic duplicate preflight is mandatory before any write."
+  }
+}

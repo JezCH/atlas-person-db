@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-civ11-20261016:balaputradeva-suvarnadvipa-c860:v1",
+  "person": {
+    "canonical_name_en": "Balaputradeva",
+    "display_name_ko": "발라푸트라데와",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Srivijaya",
+    "display_name_ko": "스리위자야",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Suvarnadvipa",
+    "role_display_name_ko": "수완나드비파 군주",
+    "start_year": 860,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "end_year": 860,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_calendar": "unspecified_historical",
+    "confidence": "partially_established",
+    "chronology_status": "reviewed",
+    "notes": "A single approximate c.860 representative source-attested point, NOT a reign from 860 to 860 or a claim of exact 860 chronology. Devapala's Nalanda copper-plate grant (39th regnal year) attests Balaputradeva, ruler of Suvarnadvipa; scholarly datings vary roughly 844–860. Association of Suvarnadvipa/Sumatra's Sailendra rulers with Srivijaya must be checked against exact Production polity identity, not treated as a new polity synonym blindly."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "George Coedès, BEFEO (1933) — Les rois Šailendra de Suvarnadvîpa",
+      "canonical_url": "https://www.persee.fr/doc/befeo_0336-1519_1933_num_33_1_4618?pageId=T1_123",
+      "citation_text": "Scholarly edition discusses Nalanda copperplate issued in Devapala's 39th year naming Balaputradeva as ruler of Suvarnadvipa."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-10-16",
+      "review_reason": "related_or_derivative_only"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed Srivijaya temporal context and Person Activity. Canonical live Polity/Place/PolityPlaceFunction identities cannot be verified while Production returns HTTP 402; no invented place UUID or coordinates. Exact identity/alias/semantic duplicate preflight is mandatory before any write."
+  }
+}
