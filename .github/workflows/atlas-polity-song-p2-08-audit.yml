@@ -1,9 +1,6 @@
 name: ATLAS Song & Complete Production Internal Provenance Inventory
+# Historical full-Production acceptance is explicit, not a CI side effect.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/atlas-polity-song-p2-08-audit.yml'
   workflow_dispatch:
 permissions:
   contents: read
