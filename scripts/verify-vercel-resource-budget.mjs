@@ -67,6 +67,15 @@ if (automaticStart < 0 || manualStart < automaticStart || manualEnd < manualStar
     errors.push(visualPath + ": automatic Production run must stay <=3 scripts, while complete manual suite is preserved");
   }
 }
+// PR-based live Chrome is particularly expensive because the PR does not
+// deploy that branch to Production. The preserved visual suites are manual.
+for (const name of readdirSync(join(root, ".github/workflows"))) {
+  if (!/^atlas-vis3-.*\\.yml$/.test(name)) continue;
+  const workflow = readFileSync(join(root, ".github/workflows", name), "utf8");
+  if (workflow.includes("atlas-person-db.vercel.app") && /\\n\\s*pull_request\\s*:/.test(workflow)) {
+    errors.push(name + ": Production browser suites may not start automatically on pull_request");
+  }
+}
 const dashboard = readFileSync(join(root, ".github/workflows/atlas-dashboard-production-acceptance.yml"), "utf8");
 if (!dashboard.includes("DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED")) {
   errors.push("atlas-dashboard-production-acceptance.yml: HTTP 402 fail-fast missing");
