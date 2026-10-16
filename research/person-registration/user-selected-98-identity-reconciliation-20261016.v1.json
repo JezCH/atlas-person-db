@@ -4,11 +4,11 @@
   "snapshot_reviewed_at": "2026-10-16",
   "scope": "Explicit user-selected 98 Civ great people / rulers from October 2026 conversation",
   "authority": "historical_evidence_only_not_current_production",
-  "snapshot_evidence": "GitHub proposals/person-representative-domain batch-001..129 (Production-derived historical UUIDs) and PR #686; not current-authoritative DB, because the Production endpoint returned HTTP 402 DEPLOYMENT_DISABLED on 2026-10-16",
+  "snapshot_evidence": "Historical Production Person evidence: 50 exact identity UUIDs from proposals/person-representative-domain/batch-001..129; five additional exact reviewed REGISTERED UUIDs from audits/youtube-6358-registration-living-screen-20261009.csv; and prior merged PR #686 Ramkhamhaeng. None proves present-tense 2026-10-16 survival due to Vercel HTTP 402. Additional historical Production Person UUID directly observed in docs/POLITY_P2_04D_GORKHA_NEPAL_UNIFICATION_20261010.md (Prithvi Narayan Shah). Prior committed/Production-Person-ID confirmation for Mannerheim PR #296 and Ahmad ibn Majid PR #1683; UUID unavailable from these PR review bodies, still require live rematching.",
   "counts": {
-    "snapshot_uuid": 50,
-    "pr_confirmed": 1,
-    "request_no_readback": 9,
+    "snapshot_uuid": 56,
+    "pr_confirmed": 3,
+    "request_no_readback": 1,
     "unresolved": 38
   },
   "review_policy": {
@@ -186,8 +186,11 @@
       "display_name_ko": "율리시스 S. 그랜트",
       "expected_name_en": "Ulysses S. Grant",
       "aliases_to_check": [],
-      "historical_uuid_evidence": [],
-      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+      "historical_uuid_evidence": [
+        "b73e669a-550b-4a43-98a5-f2103de4a92b"
+      ],
+      "prior_evidence_kind": "production_youtube_20261009_registered",
+      "historical_evidence_source": "audits/youtube-6358-registration-living-screen-20261009.csv; exact name+registered_uuids, review_lane=REGISTERED"
     },
     {
       "ordinal": 15,
@@ -205,7 +208,8 @@
         "Mannerheim"
       ],
       "historical_uuid_evidence": [],
-      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+      "prior_evidence_kind": "production_confirmed_in_pr_296",
+      "historical_evidence_source": "PR #296 explicitly says Mannerheim Authoring Apply committed successfully; PR #645 subsequently added Regent 1918-1919 to already-registered Person (prior Finland President 1944-1946)"
     },
     {
       "ordinal": 17,
@@ -246,8 +250,11 @@
       "aliases_to_check": [
         "Khayr al-Din Barbarossa"
       ],
-      "historical_uuid_evidence": [],
-      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+      "historical_uuid_evidence": [
+        "682ba25a-e12e-48a5-bc79-9739b28f2562"
+      ],
+      "prior_evidence_kind": "production_youtube_20261009_registered",
+      "historical_evidence_source": "audits/youtube-6358-registration-living-screen-20261009.csv; exact name+registered_uuids, review_lane=REGISTERED"
     },
     {
       "ordinal": 21,
@@ -265,7 +272,8 @@
         "Ibn Majid"
       ],
       "historical_uuid_evidence": [],
-      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+      "prior_evidence_kind": "production_confirmed_in_pr_1683",
+      "historical_evidence_source": "PR #1683 reviews Ahmad ibn Majid's NamuWiki exact not_found reason in the by_person_id Production-existing register, supported by earlier PR #400 historical registration; no current UUID read"
     },
     {
       "ordinal": 23,
@@ -420,8 +428,11 @@
       "aliases_to_check": [
         "Kroisos"
       ],
-      "historical_uuid_evidence": [],
-      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+      "historical_uuid_evidence": [
+        "57d86cbf-38f3-4f07-ae51-7501d8f5f818"
+      ],
+      "prior_evidence_kind": "production_youtube_20261009_registered",
+      "historical_evidence_source": "audits/youtube-6358-registration-living-screen-20261009.csv; exact name+registered_uuids, review_lane=REGISTERED"
     },
     {
       "ordinal": 39,
@@ -884,9 +895,12 @@
       "aliases_to_check": [
         "Ulughbek"
       ],
-      "historical_uuid_evidence": [],
-      "prior_evidence_kind": "approved_authoring_request_no_current_readback",
-      "identity_or_chronology_caveat": "Previously merged person-only request; completion requires Production runtime read-back."
+      "historical_uuid_evidence": [
+        "1137412e-532c-472c-a5ec-e32d9e530499"
+      ],
+      "prior_evidence_kind": "production_youtube_20261009_registered",
+      "identity_or_chronology_caveat": "Previously merged person-only request; completion requires Production runtime read-back.",
+      "historical_evidence_source": "audits/youtube-6358-registration-living-screen-20261009.csv; exact name+registered_uuids, review_lane=REGISTERED"
     },
     {
       "ordinal": 86,
@@ -957,8 +971,11 @@
       "display_name_ko": "프리트비 나라얀 샤",
       "expected_name_en": "Prithvi Narayan Shah",
       "aliases_to_check": [],
-      "historical_uuid_evidence": [],
-      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+      "historical_uuid_evidence": [
+        "654b123a-dc72-4900-a404-751ae3c9f22d"
+      ],
+      "prior_evidence_kind": "production_person_uuid_snapshot",
+      "historical_evidence_source": "docs/POLITY_P2_04D_GORKHA_NEPAL_UNIFICATION_20261010.md direct 2026-10-10 Production Person UUID; distinct Gorkha Activity b76ee400-deeb-4e5e-a961-58c773e93ad4 and Nepal Activity 3c267e73-5b4e-40cd-9c86-965381d58a84; SAME Person, not two Persons"
     },
     {
       "ordinal": 93,
@@ -1001,8 +1018,11 @@
       "aliases_to_check": [
         "Ataturk"
       ],
-      "historical_uuid_evidence": [],
-      "prior_evidence_kind": "approved_authoring_request_no_current_readback"
+      "historical_uuid_evidence": [
+        "6e8defc2-6ee9-4f94-9ed5-3f4be96e7066"
+      ],
+      "prior_evidence_kind": "production_youtube_20261009_registered",
+      "historical_evidence_source": "audits/youtube-6358-registration-living-screen-20261009.csv; exact name+registered_uuids, review_lane=REGISTERED"
     },
     {
       "ordinal": 97,
@@ -1026,5 +1046,10 @@
       ],
       "prior_evidence_kind": "production_person_uuid_snapshot"
     }
-  ]
+  ],
+  "production_snapshot_uuid_provenance": {
+    "person_representative_domain_review": 50,
+    "youtube_6358_registration_screen_20261009": 5,
+    "polity_p2_04d_exact_person_readback_20261010": 1
+  }
 }

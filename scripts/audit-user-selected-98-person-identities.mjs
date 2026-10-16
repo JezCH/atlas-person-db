@@ -26,12 +26,13 @@ export function identityKey(value) {
     .replace(/\s+/g, ' ').trim();
 }
 
-export function validateIdentityProjection(body, { minPersons = 1500 } = {}) {
+export function validateIdentityProjection(body, { minPersons = 2100 } = {}) {
   if (body?.ok !== true || body?.schema !== 'atlas-person-read/v1' ||
       body?.mode !== 'list' || body?.projection !== 'identity' ||
       !Array.isArray(body.persons)) {
     throw new Error('INVALID_PRODUCTION_IDENTITY_PROJECTION');
   }
+  // Last full audited Production Person count was 2,120 (2026-10-09); reject unexpectedly short censuses.
   if (body.persons.length < minPersons) {
     throw new Error('INCOMPLETE_PRODUCTION_PERSON_CENSUS');
   }
@@ -112,7 +113,7 @@ export function reconcileSelected98(roster, census) {
     if (matchedIds.length > 1) verdict = 'MULTIPLE_PERSON_UUIDS_HOLD';
     else if (matchedIds.length === 1) verdict =
       seenHistoricIds.length ? 'ALREADY_REGISTERED_UUID' : 'ALREADY_REGISTERED_EXACT_NAME';
-    else if (entry.prior_evidence_kind === 'production_confirmed_in_pr_686')
+    else if (String(entry.prior_evidence_kind).startsWith('production_confirmed_in_pr_'))
       verdict = 'HISTORIC_PRODUCTION_CONFIRMATION_DRIFT_REVIEW';
     else if (entry.prior_evidence_kind === 'approved_authoring_request_no_current_readback')
       verdict = 'PRIOR_APPROVED_MANIFEST_NOT_FOUND_REVIEW';
