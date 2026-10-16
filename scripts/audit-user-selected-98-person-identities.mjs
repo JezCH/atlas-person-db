@@ -113,7 +113,7 @@ export function reconcileSelected98(roster, census) {
     if (matchedIds.length > 1) verdict = 'MULTIPLE_PERSON_UUIDS_HOLD';
     else if (matchedIds.length === 1) verdict =
       seenHistoricIds.length ? 'ALREADY_REGISTERED_UUID' : 'ALREADY_REGISTERED_EXACT_NAME';
-    else if (entry.prior_evidence_kind === 'production_confirmed_in_pr_686')
+    else if (String(entry.prior_evidence_kind).startsWith('production_confirmed_in_pr_'))
       verdict = 'HISTORIC_PRODUCTION_CONFIRMATION_DRIFT_REVIEW';
     else if (entry.prior_evidence_kind === 'approved_authoring_request_no_current_readback')
       verdict = 'PRIOR_APPROVED_MANIFEST_NOT_FOUND_REVIEW';
