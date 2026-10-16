@@ -31,7 +31,7 @@ test("documentation, research evidence, reviewed authoring data and integrity-on
   ]), false);
 });
 
-test("runtime, schema, release-operation and production-workflow changes always build", () => {
+test("runtime, schema and deployable release-operation changes always build", () => {
   for (const file of [
     "api/atlas-correction-apply.js",
     "server/atlas-correction-apply-handler.js",
@@ -46,15 +46,25 @@ test("runtime, schema, release-operation and production-workflow changes always 
     "vercel.json",
     "corrections/requests/stage2-r0-true-activity-duplicates.json",
     "corrections/intents/stage2-r1-muhammad-pre622-medina.json",
-    ".github/workflows/atlas-correction-apply.yml",
-    ".github/workflows/atlas-audit-inventory.yml",
-    ".github/workflows/atlas-authoring-apply.yml",
     "non-timeline-persons.json",
     "migration/phase-8/scripts/live-operation.mjs"
   ]) {
     assert.equal(isSafeToSkipPath(file), false, file);
     assert.equal(shouldBuildForChangedPaths([file]), true, file);
   }
+});
+
+test("Workflow-only changes never consume a Vercel deploy; runtime edits still do", () => {
+  const workflows = [
+    ".github/workflows/atlas-correction-apply.yml",
+    ".github/workflows/atlas-audit-inventory.yml",
+    ".github/workflows/atlas-authoring-apply.yml",
+    ".github/workflows/atlas-place-production-authority-audit.yml",
+    ".github/workflows/atlas-core-final-acceptance.yml"
+  ];
+  for (const path of workflows) assert.equal(isSafeToSkipPath(path), true, path);
+  assert.equal(shouldBuildForChangedPaths(workflows), false);
+  assert.equal(shouldBuildForChangedPaths([...workflows,"server/atlas-read-http.js"]), true);
 });
 
 test("authoring runtime compatibility allows only proven non-authoring drift", () => {
