@@ -1,6 +1,6 @@
 # ATLAS CURRENT WORKSTREAMS
 
-**Current-state board — 2026-10-16 (KST; GitHub operational pointers reconciled).** Historical progress narratives, merged PRs, audit snapshots and long issue comments are **evidence**, not a task queue. This file contains only active scope, blockers, authoritative pointers and the next independent resume point. Verify fresh Production state before any mutation.
+**Current-state board — 2026-10-17 (KST; active GitHub PR inventory reconciled).** Historical progress narratives, merged PRs, audit snapshots and long issue comments are **evidence**, not a task queue. This file contains only active scope, blockers, authoritative pointers and the next independent resume point. Verify fresh Production state before any mutation.
 
 ## 1. Authority and execution
 
@@ -84,12 +84,23 @@ The restrained Dashboard prototype [#2357](https://github.com/JezCH/atlas-person
 
 ### E. Current OPEN PR inventory / exact disposition
 
-- [#2495](https://github.com/JezCH/atlas-person-db/pull/2495) — **OPEN, preserve**: source-vs-v5 8,616-label refreshed crosswalk and immutable original-ID provenance; not completed historical-person video/topic verification or final ranking.
-- [#2477](https://github.com/JezCH/atlas-person-db/pull/2477) — **OPEN, preserve**: four source-reviewed same-name Saint/Marcos identity HOLD distinctions and UI badge plus reviewed aliases. The identity HOLD manifest / read-service / badge changes are absent from current `main`; no safe superseded closure.
-- [#2443](https://github.com/JezCH/atlas-person-db/pull/2443) — **DRAFT / DO NOT MERGE**: Spacetime native disclosure/open/focus source repair; user approval and browser acceptance remain independent requirements.
-- [#2381](https://github.com/JezCH/atlas-person-db/pull/2381) — **OPEN, preserve pending UI owner reconciliation**: merged #2383 overlaps Dashboard caption changes, but current `main` mobile appbar subtitle still declares `font-size: 7.5px` rather than this PR's `10px`. Reconcile exact remaining code and visual acceptance; neither blind merge nor assumption of full supersession is justified.
+**Verified open PRs: 8 (2026-10-17); 4 draft and 4 non-draft.** Their OPEN state does not certify runtime publication, authorize user approval, or grant exclusive ownership. The existing four older PRs were preserved in the 2026-10-14 cleanup; the four later drafts below must not be omitted.
 
-Superseded PRs are closed **without merging** and closure rationale stays in their own PR comment/history rather than another growing master completion ledger. Never reactivate an obsolete PR from archived narrative.
+**User-selected Person authoring — draft, canonical Production blocked:**
+- [#2517](https://github.com/JezCH/atlas-person-db/pull/2517) — **DRAFT / do not merge/apply**: one José Figueres Ferrer Person / three distinct Costa Rica governing terms (1948–49, 1953–58, 1970–74), reviewed source-backed request files. GitHub `registration_validation` PASS; live duplicate/preflight, canonical Apply and runtime read-back **not performed**.
+- [#2512](https://github.com/JezCH/atlas-person-db/pull/2512) — **DRAFT / do not merge/apply**: user-selected eight eligible historical Persons, **12** Activities (Calvin's two terms and Carl August's four polity/office terms included). GitHub `registration_validation` PASS; Production Person/Activity/Polity duplicate preflight, actual registration and read-back **not performed**. This is independent of #2517 and must not be mistaken for a standing bulk registration queue.
+
+**YouTube independent original-ID evidence/review — distinct units, no final Person-feed claim:**
+- [#2513](https://github.com/JezCH/atlas-person-db/pull/2513) — **DRAFT / do not merge**: 12 original Video-ID title-level triages (8 non-primary, 1 mixed unresolved, 3 possible single-Person focus). Its metadata collector request is a **proposal**; zero playback-confirmed biographies and zero verified new unregistered Persons. GitHub full CI PASS, not Production acceptance.
+- [#2505](https://github.com/JezCH/atlas-person-db/pull/2505) — **DRAFT / do not merge**: original-ID alias union before threshold, reviewed short-name recall, five non-Person title-label corrections; synthetic fixtures and full CI PASS but no real-corpus reanalysis or live publication. The original 33 high-risk title-grammar discrepancies/865 older mismatches remain separate. Do not treat its overlap with #2495/#2477 as safe evidence deletion.
+- [#2495](https://github.com/JezCH/atlas-person-db/pull/2495) — **OPEN / preserve / not merge during quota block**: immutable **2026-10-11** 8,616 title-label vs 5,965 original-source-label crosswalk (5,138 common; 3,478 live-only; 827 source-only), all tests PASS; **not** real Person-topic verification. **Additional verified GitHub→Vercel blocker:** its three changes are `audits/*.json` (2) and `tests/*.mjs` (1); current `scripts/vercel-ignore-build.mjs` safely skips `tests/` but **not `audits/`**. Thus a plain merge is **not proven no-deploy**; do not blanket-exempt `audits/` because runtime code may consume audited manifests. A reviewed deploy-safe archival route or provider restoration is required before merging.
+
+**UI and live YouTube read-side code — unmerged acceptance remains:**
+- [#2477](https://github.com/JezCH/atlas-person-db/pull/2477) — **OPEN / preserve**: four source-reviewed Marcos/Saint ambiguous-identity HOLDS, Korean review badges and two historical registered aliases. Actual live feed/read-side changes not fully present in main; Production acceptance required.
+- [#2443](https://github.com/JezCH/atlas-person-db/pull/2443) — **DRAFT / do not merge**: native Spacetime legend disclosure/focus state repair. User approval and actual browser acceptance gate not satisfied; P14 geometry remains parked.
+- [#2381](https://github.com/JezCH/atlas-person-db/pull/2381) — **OPEN / preserve**: #2383 merged overlapping Dashboard caption treatment, but the appbar `font-size: 7.5px` in current main differs from this PR's `10px`; UI ownership/visual acceptance is not superseded by code overlap alone.
+
+All eight are intentionally OPEN. **No safe superseded closure is established from this inventory; never close merely to reduce the open-PR count.** `main` has unverified runtime changes past the last known Production deployment; GitHub CI PASS is not a deployed-live SHA or a canonical DB apply. Vercel #2499 remains the shared transport/provider gate. Completed historical PRs and comments remain archival evidence; do not revive them.
 
 **Master coordination rule:** this board indexes workstream *pointers, scope and precise blockers*; the linked live issue, canonical registry, Person writer, source archive or individual PR remains its own fact authority. No master lane claims exclusive lock or independently updates another lane's progress numbers.
 
