@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-costa-rica:jose-figueres-ferrer:presidency-1953-1958:20261016:v1",
+  "person": {
+    "canonical_name_en": "José Figueres Ferrer",
+    "display_name_ko": "호세 피게레스 페레르",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Costa Rica",
+    "display_name_ko": "코스타리카",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President of Costa Rica (constitutional, 1953–1958)",
+    "role_display_name_ko": "코스타리카 제32대 대통령",
+    "start_year": 1953,
+    "start_month": 11,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1958,
+    "end_month": 5,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "First elected constitutional presidency of Figueres Ferrer after interim Junta, assumed office 8 November 1953 and completed term 8 May 1958. The 1953-11-08 date is directly confirmed in his original contemporaneous inauguration address, Costa Rican parliamentary records and a Foreign Ministry historical journal. Incorrect secondary sources saying May 8, 1953 must not replace the documentary November date. Distinct from 1948–1949 junta and later 1970–1974 constitutional term; no continuous Activity across 1949–1953 gap."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_web",
+      "title": "Asamblea Legislativa — 8 November 1953 José Figueres inaugural address (primary historical record)",
+      "canonical_url": "https://www.asamblea.go.cr/sd/Mensajes%20Presidenciales/Discurso%20Toma%20Posesi%C3%B3n%201953%20J.%20Figueres%20Ferrer.pdf",
+      "citation_text": "Original inauguration address explicitly dated 8 November 1953."
+    },
+    {
+      "source_type": "institutional_web",
+      "title": "Ministerio de Relaciones Exteriores y Culto — Jorge Francisco Sáenz Carbonell, La política exterior de la primera administración Figueres Ferrer (1953–1958)",
+      "canonical_url": "https://www.rree.go.cr/files/includes/files.php?id=390&tipo=documentos",
+      "citation_text": "Costa Rican Foreign Ministry journal specifies constitutional presidency took office 8 November 1953 and the administration ended 8 May 1958."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-16",
+      "document_title": "호세 피게레스 페레르",
+      "url": "https://namu.wiki/w/%ED%98%B8%EC%84%B8%20%ED%94%BC%EA%B2%8C%EB%A0%88%EC%8A%A4%20%ED%8E%98%EB%A0%88%EB%A5%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical Costa Rica polity/temporal office identity source-reviewed. Exact live Person, historical Costa Rica Polity and PolityPlaceFunction IDs cannot be verified during Production HTTP 402 DEPLOYMENT_DISABLED. Reuse exact live IDs after bounded authoritative Production preflight; no invented coordinates, place-function IDs or duplicative state."
+  }
+}
