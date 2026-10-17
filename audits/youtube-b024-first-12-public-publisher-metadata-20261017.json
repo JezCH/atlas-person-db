@@ -1,0 +1,83 @@
+{
+  "schema": "atlas-youtube-b024-public-publisher-metadata-retrieval/v1",
+  "examined_date": "2026-10-17",
+  "source_snapshot_id": "yt-20261009T111844Z-10127ch-rebuild-v4",
+  "source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "source_review_json_sha256": "2ffae480aa7b77ed6ae3ddf5e88ac9d2a3f1618b41dbf86bcc3ed7070d6b0d1a",
+  "queue_schema": "atlas-youtube-b024-12-review-metadata-priority/v1",
+  "exact_requested_original_video_ids": 3,
+  "public_youtube_video_page_matching_original_id_found": 1,
+  "exact_source_channel_id_verified_in_public_result": 0,
+  "official_youtube_data_api_calls": 0,
+  "actual_video_playback_reviews": 0,
+  "timestamped_transcript_evidence_reviews": 0,
+  "person_primary_content_confirmed": 0,
+  "publication_allowed": false,
+  "source_retrieval_method": "Public web search of exact YouTube title and original watch URL. Search result may be incomplete or stale; absence is NOT a 404/not-found finding. Only source Video ID and title visibly matched on one YouTube-indexed video result.",
+  "records": [
+    {
+      "original_video_id": "-13y_Jm-pzI",
+      "original_channel_id": "UC7OkutZc6qzX44IK0HEDLJA",
+      "original_title": "Who Killed Dele Giwa?",
+      "original_name_cues": [
+        {
+          "raw_name": "Dele Giwa",
+          "bucket": "QUESTION_TOPIC_CUE_REVIEW"
+        }
+      ],
+      "original_youtube_url": "https://www.youtube.com/watch?v=-13y_Jm-pzI",
+      "evidence_status": "NO_SOURCE_SPECIFIC_PUBLIC_METADATA_RETRIEVED",
+      "source_youtube_video_id_match": false,
+      "source_youtube_title_match": false,
+      "source_youtube_channel_id_verified": false,
+      "publication_content_metadata_ready": false,
+      "actual_subject_video_confirmed": false,
+      "reason_not_approved": "Exact archived Video ID could not be independently confirmed from indexed publisher metadata or transcript in this review. It remains an UNRESOLVED fetch task, not a YouTube deletion."
+    },
+    {
+      "original_video_id": "-1CalygxBrM",
+      "original_channel_id": "UCjD2hhUF5R8G9oAjOzQo26w",
+      "original_title": "Was Meriwether Lewis Murdered? The Shocking DNA Evidence Revealed",
+      "original_name_cues": [
+        {
+          "raw_name": "Meriwether Lewis",
+          "bucket": "MENTION_OR_CONTEXT_UNRESOLVED_REVIEW"
+        }
+      ],
+      "original_youtube_url": "https://www.youtube.com/watch?v=-1CalygxBrM",
+      "evidence_status": "NO_SOURCE_SPECIFIC_PUBLIC_METADATA_RETRIEVED",
+      "source_youtube_video_id_match": false,
+      "source_youtube_title_match": false,
+      "source_youtube_channel_id_verified": false,
+      "publication_content_metadata_ready": false,
+      "actual_subject_video_confirmed": false,
+      "reason_not_approved": "Exact archived Video ID could not be independently confirmed from indexed publisher metadata or transcript in this review. It remains an UNRESOLVED fetch task, not a YouTube deletion."
+    },
+    {
+      "original_video_id": "-5Lg5mk74NA",
+      "original_channel_id": "UCesJHHdqSw_9gC0aMod9IKw",
+      "original_title": "Salvador Dali brief biography and his artwork. Great for kids and esl",
+      "original_name_cues": [
+        {
+          "raw_name": "Salvador Dali",
+          "bucket": "NAME_HEADING_UNRESOLVED_REVIEW"
+        }
+      ],
+      "original_youtube_url": "https://www.youtube.com/watch?v=-5Lg5mk74NA",
+      "evidence_status": "INDEXED_PUBLIC_YOUTUBE_PUBLISHER_DESCRIPTION",
+      "source_youtube_video_id_match": true,
+      "source_youtube_title_match": true,
+      "source_youtube_channel_id_verified": false,
+      "publication_content_metadata_ready": false,
+      "actual_subject_video_confirmed": false,
+      "public_video_page_url": "https://www.youtube.com/watch?v=-5Lg5mk74NA",
+      "published_video_title": "Salvador Dali brief biography and his artwork. Great for kids and esl",
+      "published_by": "Inma",
+      "published_date": "2016-04-14",
+      "indexed_publisher_description": "Vídeo sobre: Dali",
+      "published_source_evidence_level": "PUBLIC_YOUTUBE_SEARCH_INDEX_PUBLISHER_DESCRIPTION_ONLY",
+      "independent_original_id_url_corroboration": "https://www.slideserve.com/pmoeller/asdan-bronze-silver-award-module-11-expressive-arts-a-powerpoint-ppt-presentation",
+      "evidentiary_limit": "The independently indexed course presentation includes the exact video URL but does not prove original Channel ID, transcript, actual video focus or Person registration status."
+    }
+  ]
+}
