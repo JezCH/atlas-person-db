@@ -67,31 +67,50 @@ if (automaticStart < 0 || manualStart < automaticStart || manualEnd < manualStar
     errors.push(visualPath + ": automatic Production run must stay <=3 scripts, while complete manual suite is preserved");
   }
 }
-// Parse the actual top-level GitHub Actions event map, including "on:" at
-// byte zero and quoted YAML keys. Unknown trigger syntax must fail closed.
+// Inspect the top-level GitHub Actions "on" value, not a substring of YAML.
+// A single unrecognized event alongside a recognized one must fail CLOSED:
+// ignoring a quoted pull_request after workflow_dispatch bypasses the quota guard.
 export function workflowTriggerEvents(source) {
   const lines = String(source).replace(/\r\n?/g, "\n").split("\n");
-  const eventKey = /^(?:on|"on"|'on'):\s*(?:#.*)?$/;
-  const index = lines.findIndex((line) => eventKey.test(line));
-  if (index < 0) {
-    const inline = lines.find((line) => /^(?:on|"on"|'on'):\s*\[[^\]]*\]\s*(?:#.*)?$/.test(line));
+  const key = /^(?:on|"on"|'on')\s*:\s*(.*)$/;
+  const index = lines.findIndex((line) => key.test(line));
+  if (index < 0) return null;
+  const raw = lines[index].match(key)[1].trim();
+  const isEventName = (name) => /^[a-z][a-z0-9_]*$/.test(name);
+  const unquote = (name) => name.replace(/^(['"])(.*)\1$/, "$2");
+  if (raw && !raw.startsWith("#")) {
+    if (!raw.startsWith("[")) return isEventName(unquote(raw)) ? new Set([unquote(raw)]) : null;
+    const inline = raw.match(/^\[([^\]]*)\]\s*(?:#.*)?$/);
     if (!inline) return null;
-    const names = inline.match(/\[([^\]]*)\]/)[1].split(",")
-      .map((name) => name.trim().replace(/^['"]|['"]$/g, "")).filter(Boolean);
-    return names.length && names.every((name) => /^[a-z][a-z0-9_]*$/.test(name))
+    const names = inline[1].split(",").map((v) => unquote(v.trim())).filter(Boolean);
+    return names.length && names.every(isEventName) && new Set(names).size === names.length
       ? new Set(names) : null;
   }
   const events = [];
-  let indent = null;
+  let eventIndent = null;
+  let kind = null; // event map or event list; mixing is unsupported
   for (const line of lines.slice(index + 1)) {
     if (!line.trim() || /^\s*#/.test(line)) continue;
-    if (!/^\s/.test(line)) break;
-    const match = line.match(/^([ \t]+)([a-z][a-z0-9_]*):(?:\s|$)/);
-    if (!match) continue;
-    if (indent === null) indent = match[1].length;
-    if (match[1].length === indent) events.push(match[2]);
+    const whitespace = line.match(/^([ \t]+)/);
+    if (!whitespace) break; // next top-level key
+    const indent = whitespace[1].length;
+    if (eventIndent === null) eventIndent = indent;
+    if (indent < eventIndent) return null;
+    if (indent > eventIndent) continue; // event configuration, not another event
+    // Top-level event keys may themselves be quoted, independently of "on".
+    const entry = line.slice(indent).match(/^(?:([a-z][a-z0-9_]*)|(["'])([a-z][a-z0-9_]*)\2)\s*:(?:\s|$)/);
+    const item = line.slice(indent).match(/^-\s+(["']?)([a-z][a-z0-9_]*)\1\s*(?:#.*)?$/);
+    if (entry && kind !== "list") {
+      kind = "map";
+      events.push(entry[1] || entry[3]);
+    } else if (item && kind !== "map") {
+      kind = "list";
+      events.push(item[2]);
+    } else {
+      return null; // never silently skip unsupported sibling keys
+    }
   }
-  return events.length ? new Set(events) : null;
+  return events.length && new Set(events).size === events.length ? new Set(events) : null;
 }
 
 // No PR validation may load the live Production Function or Chrome. Branch
