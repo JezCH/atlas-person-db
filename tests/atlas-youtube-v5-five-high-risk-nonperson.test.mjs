@@ -16,7 +16,7 @@ test("five evidenced false Person labels are source-reviewed without changing or
   assert.equal(review.original_source_channel_count,10127);
   assert.equal(review.labels.length,5);
   assert.equal(new Set(names.map(d.identityKey)).size,5);
-  assert.equal(quality.version,"reviewed-20261016-v3");
+  assert.equal(quality.version,"reviewed-20261018-v4");
   assert.deepEqual(review.labels.map(x=>x.current_8616_rank),[368,1332,1920,3502,7399]);
   assert.equal(review.publication_approved,false);
   assert.equal(review.original_video_and_channel_ids_deleted,false);
@@ -78,7 +78,7 @@ with tempfile.TemporaryDirectory() as tmp:
     assert signals["Ada Lovelace"]["video_count"]==3
     assert report["snapshot"]["video_count"]==18
     assert report["snapshot"]["threshold_counts"]["3"]==1
-    assert report["snapshot"]["source_state"]["quality_rules_version"]=="reviewed-20261016-v3"
+    assert report["snapshot"]["source_state"]["quality_rules_version"]=="reviewed-20261018-v4"
     assert report["snapshot"]["source_state"]["quality_counters"]["reviewed_non_person"]>=15
     print(json.dumps({"remaining":list(signals),"nonperson_rejections":
         report["snapshot"]["source_state"]["quality_counters"]["reviewed_non_person"]}))
