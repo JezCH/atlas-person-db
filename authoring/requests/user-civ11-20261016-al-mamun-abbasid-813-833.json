@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-civ11-20261016:al-mamun-abbasid-813-833:v1",
+  "person": {
+    "canonical_name_en": "Al-Ma'mun",
+    "display_name_ko": "알 마문",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-16",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Abbasid Caliphate",
+    "display_name_ko": "아바스 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Abbasid caliph",
+    "role_display_name_ko": "아바스 칼리프",
+    "start_year": 813,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "end_year": 833,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Seventh Abbasid caliph, 813–833. His arrival in Baghdad in 819 was later than his accession in 813; 819 must not replace the reign start. Separate earlier Khorasan governorship would require its own reviewed Activity if needed."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopaedia Iranica — MAʾMUN",
+      "canonical_url": "https://www.iranicaonline.org/articles/mamun-abul-abbas-abd-allah/",
+      "citation_text": "Seventh Abbasid caliph ruled 813–833; remained in Khorasan early in reign and moved to Baghdad in 819."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-16",
+      "document_title": "알 마문",
+      "url": "https://namu.wiki/w/%EC%95%8C%20%EB%A7%88%EB%AC%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed Abbasid Caliphate temporal context and Person Activity. Canonical live Polity/Place/PolityPlaceFunction identities cannot be verified while Production returns HTTP 402; no invented place UUID or coordinates. Exact identity/alias/semantic duplicate preflight is mandatory before any write."
+  }
+}
