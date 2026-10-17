@@ -23,7 +23,7 @@
     "relation_type": "serves",
     "period_basis": "general_activity",
     "role": "Commander of U.S. II Corps",
-    "role_display_name_ko": "미 육군 제2군단장",
+    "role_display_name_ko": "북아프리카 전역 미군 제2군단 지휘",
     "start_year": 1943,
     "start_month": null,
     "start_day": null,
@@ -36,20 +36,20 @@
     "end_calendar": "gregorian",
     "confidence": "likely",
     "chronology_status": "reviewed",
-    "notes": "Transferred from Western Task Force/I Armored Corps to II Corps during Tunisian campaign in 1943 and relinquished command to Omar Bradley. Year 1943 a representative assignment point rather than invented complete tenure."
+    "notes": "Key representative North Africa/Tunisia field command in March–April 1943 (the 1943 year-only span is an attestation point, NOT a whole-year office or an excuse to register all interim promotions). Library of Congress personal papers and contemporary March diaries identify Patton commanding II Corps. Later reassignment to Sicily is represented separately by Seventh Army command. No new Polity created for U.S. corps."
   },
   "sources": [
     {
-      "source_type": "web_bibliographic_reference",
-      "title": "Library of Congress — George S. Patton (1885–1945): Timeline",
-      "canonical_url": "https://www.loc.gov/collections/george-s-patton-diaries/articles-and-essays/timeline/",
-      "citation_text": "Library of Congress chronology: 1916 Pershing's Punitive Expedition; 1918–1921 304th Tank Brigade; 1938–1940 Third Cavalry; 1940–1941 Second Armored Brigade; 1941–1942 Second Armored Division; 1942 I Armored Corps; 1942–1943 Western Task Force/II Corps; 1943 resuming I Armored Corps; 1943–1944 Seventh Army; 1944–1945 Third Army; 1945 Fifteenth Army."
+      "source_type": "institutional_web",
+      "title": "Library of Congress — George S. Patton Papers, March 1943 Diary",
+      "canonical_url": "https://www.loc.gov/resource/mcc.085/",
+      "citation_text": "Library of Congress establishes Patton as United States II Corps commander in the March 1943 Tunisian campaign."
     },
     {
-      "source_type": "web_bibliographic_reference",
-      "title": "National WWII Museum — General George S. Patton",
-      "canonical_url": "https://www.nationalww2museum.org/war/articles/general-george-s-patton-world-war-ii",
-      "citation_text": "Museum historian documents Patton at Pershing Mexico 1916, leading 304th Tank Brigade 1918, WWII Western Task Force in North Africa starting 8 November 1942, Sicily Seventh Army 10 July 1943, operational Third Army beginning 1 August 1944, and later Bavarian military governorship after Nazi defeat."
+      "source_type": "institutional_web",
+      "title": "Library of Congress — George S. Patton timeline",
+      "canonical_url": "https://www.loc.gov/collections/george-s-patton-diaries/articles-and-essays/timeline/",
+      "citation_text": "Official personal papers timeline separately records the North African II Corps command and the Seventh Army Sicilian campaign."
     }
   ],
   "external_references": {
