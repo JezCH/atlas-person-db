@@ -46,7 +46,7 @@ test("all 13 source-original high-risk nonpersons are consistently excluded BEFO
      distinct_channel_count:row.recount_title_channels,video_count:row.recount_title_videos})),
    {raw_name:"Ada Lovelace",rank:14,distinct_channel_count:4,video_count:4}
  ];
- const result=discovery.candidatesFromSource(rows,[]);
+ const result=discovery.candidatesFromSource(rows,[{person_id:"already-registered-identity",alias_name:"Other Registered Historical Figure"}]);
  assert.equal(result.nonpersonExcluded,13);
  assert.deepEqual(result.candidates.map(x=>x.raw_name),["Ada Lovelace"]);
  assert.equal(result.candidates[0].rank,1);
