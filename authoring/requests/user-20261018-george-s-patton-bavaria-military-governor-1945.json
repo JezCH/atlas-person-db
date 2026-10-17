@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-patton-20261018:bavaria-military-governor-1945:v1",
+  "person": {
+    "canonical_name_en": "George S. Patton",
+    "display_name_ko": "조지 S. 패튼",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "U.S. military governor in occupied Bavaria",
+    "role_display_name_ko": "미군 점령하 바이에른 군정 책임자",
+    "start_year": 1945,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Following European Nazi defeat, Patton served as military governor in occupied Bavaria as an office of US military occupation. 1945 is a representative source-documented time point, NOT an independent sovereign Bavaria head-of-state reign. US polity only as serving-state association; German occupied administration territorial control metadata unresolved."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "National WWII Museum — General George S. Patton",
+      "canonical_url": "https://www.nationalww2museum.org/war/articles/general-george-s-patton-world-war-ii",
+      "citation_text": "Museum historian documents Patton at Pershing Mexico 1916, leading 304th Tank Brigade 1918, WWII Western Task Force in North Africa starting 8 November 1942, Sicily Seventh Army 10 July 1943, operational Third Army beginning 1 August 1944, and later Bavarian military governorship after Nazi defeat."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "United States Army — The 80th Anniversary of Gen. Patton's Final Battle",
+      "canonical_url": "https://www.army.mil/article/289585/the_80th_anniversary_of_gen_pattons_final_battle",
+      "citation_text": "US Army account corroborates 1918 US Tank Corps leadership, service as military governor of Bavaria after WWII, and removal from Third Army command October 1945."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "조지 S. 패튼",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A7%80%20S.%20%ED%8C%A8%ED%8A%BC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Person-specific US military unit/office is not a sovereign Polity. Reuse existing US historical Polity on exact live Production preflight after 402 quota pause, no invented unit-as-Polity, German occupation state or personal place-function UUID. Distinguish father George Smith Patton (1856–1927), Patton IV, and fictional alternate-history derivative."
+  }
+}

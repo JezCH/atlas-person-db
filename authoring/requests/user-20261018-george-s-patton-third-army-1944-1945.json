@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-patton-20261018:third-army-1944-1945:v1",
+  "person": {
+    "canonical_name_en": "George S. Patton",
+    "display_name_ko": "조지 S. 패튼",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Commander of U.S. Third Army",
+    "role_display_name_ko": "미 육군 제3군 사령관",
+    "start_year": 1944,
+    "start_month": 8,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": 10,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Third Army activated under Patton for operational command in France 1 August 1944; he relinquished Third Army command during October 1945 after controversial postwar statements. Start is real command operational date, not pre-invasion classified preparation and not deceptive FUSAG fictional command; October exit is month-level approximate pending authoritative orders."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "National WWII Museum — General George S. Patton",
+      "canonical_url": "https://www.nationalww2museum.org/war/articles/general-george-s-patton-world-war-ii",
+      "citation_text": "Museum historian documents Patton at Pershing Mexico 1916, leading 304th Tank Brigade 1918, WWII Western Task Force in North Africa starting 8 November 1942, Sicily Seventh Army 10 July 1943, operational Third Army beginning 1 August 1944, and later Bavarian military governorship after Nazi defeat."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "U.S. Army Central — Third Army Timeline",
+      "canonical_url": "https://www.usarcent.army.mil/About/History/Timeline/",
+      "citation_text": "Official Third Army chronology lists Patton commanding US Third Army in European campaign in 1944–1945 and his death 21 December 1945."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "United States Army — The 80th Anniversary of Gen. Patton's Final Battle",
+      "canonical_url": "https://www.army.mil/article/289585/the_80th_anniversary_of_gen_pattons_final_battle",
+      "citation_text": "US Army account corroborates 1918 US Tank Corps leadership, service as military governor of Bavaria after WWII, and removal from Third Army command October 1945."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "조지 S. 패튼",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A7%80%20S.%20%ED%8C%A8%ED%8A%BC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Person-specific US military unit/office is not a sovereign Polity. Reuse existing US historical Polity on exact live Production preflight after 402 quota pause, no invented unit-as-Polity, German occupation state or personal place-function UUID. Distinguish father George Smith Patton (1856–1927), Patton IV, and fictional alternate-history derivative."
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-patton-20261018:seventh-army-1943-1944:v1",
+  "person": {
+    "canonical_name_en": "George S. Patton",
+    "display_name_ko": "조지 S. 패튼",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Commander of U.S. Seventh Army",
+    "role_display_name_ko": "미 육군 제7군 사령관",
+    "start_year": 1943,
+    "start_month": 7,
+    "start_day": 10,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1944,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Official Seventh Army Sicilian combat commenced 10 July 1943; Patton led through Sicilian campaign and into 1943–1944 transition, with actual replacement early 1944. July 10 here a person-specific command under Seventh Army, year 1944 end approximate (not an exact dismissal day). Do not create the task-force or fictional FUSAG as sovereign polities."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "National WWII Museum — General George S. Patton",
+      "canonical_url": "https://www.nationalww2museum.org/war/articles/general-george-s-patton-world-war-ii",
+      "citation_text": "Museum historian documents Patton at Pershing Mexico 1916, leading 304th Tank Brigade 1918, WWII Western Task Force in North Africa starting 8 November 1942, Sicily Seventh Army 10 July 1943, operational Third Army beginning 1 August 1944, and later Bavarian military governorship after Nazi defeat."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Library of Congress — George S. Patton (1885–1945): Timeline",
+      "canonical_url": "https://www.loc.gov/collections/george-s-patton-diaries/articles-and-essays/timeline/",
+      "citation_text": "Library of Congress chronology: 1916 Pershing's Punitive Expedition; 1918–1921 304th Tank Brigade; 1938–1940 Third Cavalry; 1940–1941 Second Armored Brigade; 1941–1942 Second Armored Division; 1942 I Armored Corps; 1942–1943 Western Task Force/II Corps; 1943 resuming I Armored Corps; 1943–1944 Seventh Army; 1944–1945 Third Army; 1945 Fifteenth Army."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "U.S. Army Center of Military History — European-African-Middle Eastern Theater",
+      "canonical_url": "https://history.army.mil/Research/Reference-Topics/Army-Campaigns/Brief-Summaries/World-War-II/World-War-II-European-African-Middle-Eastern-Theater/",
+      "citation_text": "Official US Army campaign source confirms Seventh Army under Patton participated in 10 July 1943 landing and 17 August Sicily campaign conclusion."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "조지 S. 패튼",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A7%80%20S.%20%ED%8C%A8%ED%8A%BC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Person-specific US military unit/office is not a sovereign Polity. Reuse existing US historical Polity on exact live Production preflight after 402 quota pause, no invented unit-as-Polity, German occupation state or personal place-function UUID. Distinguish father George Smith Patton (1856–1927), Patton IV, and fictional alternate-history derivative."
+  }
+}

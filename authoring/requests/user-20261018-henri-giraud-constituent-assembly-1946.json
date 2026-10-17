@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-giraud-20261018:constituent-assembly-1946:v1",
+  "person": {
+    "canonical_name_en": "Henri Giraud",
+    "display_name_ko": "앙리 지로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Member of Second French Constituent Assembly for Moselle",
+    "role_display_name_ko": "프랑스 제2차 제헌의회 모젤 의원",
+    "start_year": 1946,
+    "start_month": 6,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1946,
+    "end_month": 11,
+    "end_day": 27,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "France's National Assembly member registry explicitly establishes term 2 June to 27 November 1946 for Moselle. This elected legislative term is distinct from his wartime executive and military commands, not national head-of-state rule."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Assemblée nationale — Henri Giraud, deputy register",
+      "canonical_url": "https://www2.assemblee-nationale.fr/sycomore/fiche/3436?legislature=44",
+      "citation_text": "The French National Assembly registry states Giraud served as Moselle member of the second Constituent Assembly from 2 June to 27 November 1946."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "앙리 지로",
+      "url": "https://namu.wiki/w/%EC%95%99%EB%A6%AC%20%EC%A7%80%EB%A1%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historic normalized France/France Republic Polity and governance_context identity requires canonical Production confirmation. Last verified Vercel 402 quota gate prohibits live Person/Activity or PlaceFunction screen. Never invent geographic identity, de facto sovereign Free France/Algeria or PlaceFunction UUID."
+  }
+}

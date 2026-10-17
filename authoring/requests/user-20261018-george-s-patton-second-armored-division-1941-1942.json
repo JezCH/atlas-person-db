@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-patton-20261018:second-armored-division-1941-1942:v1",
+  "person": {
+    "canonical_name_en": "George S. Patton",
+    "display_name_ko": "조지 S. 패튼",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Commander, Second Armored Division",
+    "role_display_name_ko": "미 육군 제2기갑사단장",
+    "start_year": 1941,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1942,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "2nd Armored Division command 1941–1942; same Person promoted to I Armored Corps assignment in 1942. Approximate year-only boundaries do not purport exact day of transfer."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Library of Congress — George S. Patton (1885–1945): Timeline",
+      "canonical_url": "https://www.loc.gov/collections/george-s-patton-diaries/articles-and-essays/timeline/",
+      "citation_text": "Library of Congress chronology: 1916 Pershing's Punitive Expedition; 1918–1921 304th Tank Brigade; 1938–1940 Third Cavalry; 1940–1941 Second Armored Brigade; 1941–1942 Second Armored Division; 1942 I Armored Corps; 1942–1943 Western Task Force/II Corps; 1943 resuming I Armored Corps; 1943–1944 Seventh Army; 1944–1945 Third Army; 1945 Fifteenth Army."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "조지 S. 패튼",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A7%80%20S.%20%ED%8C%A8%ED%8A%BC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Person-specific US military unit/office is not a sovereign Polity. Reuse existing US historical Polity on exact live Production preflight after 402 quota pause, no invented unit-as-Polity, German occupation state or personal place-function UUID. Distinguish father George Smith Patton (1856–1927), Patton IV, and fictional alternate-history derivative."
+  }
+}
