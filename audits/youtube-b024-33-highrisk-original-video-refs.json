@@ -1,0 +1,509 @@
+{
+  "schema": "atlas-youtube-b024-33-highrisk-original-video-refs/v1",
+  "source_snapshot_id": "yt-20261009T111844Z-10127ch-rebuild-v4",
+  "original_source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "prior_name_forms": 5720,
+  "total_name_form_differences": 865,
+  "historical_biography_approved": false,
+  "production_publication_approved": false,
+  "original_sources_deleted": false,
+  "interpretation": "Distinct Channel/Video IDs are original TITLE matches; human manual title classifications are NOT video playback or historical Person registration, and should never be published as certified Persons.",
+  "source_reference": "Project Library youtube-b024-865-source-count-differences.json (sha256 source digest stated there); immutable original ZIP GitHub Actions run 37921755392 artifact 11613130249, SHA256 pinned.",
+  "rows": [
+    {
+      "raw_name": "Q & A",
+      "previous_channels": 2,
+      "recount_channels": 627,
+      "previous_videos": 2,
+      "recount_videos": 3056,
+      "original_example_video_ids": [
+        "-1p5ajz88-8",
+        "-1wZrWM2flI",
+        "-74nSoZdtv4",
+        "-7ybW9k72b0",
+        "-8f9u_UoHKY"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "Pt 2",
+      "previous_channels": 195,
+      "recount_channels": 402,
+      "previous_videos": 754,
+      "recount_videos": 1583,
+      "original_example_video_ids": [
+        "--3QmEMTY7U",
+        "-0IWfK42YgY",
+        "-106x9w6_d4",
+        "-7b4aQPeHfI",
+        "-9d-4gdGufc"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "Let's Talk",
+      "previous_channels": 1,
+      "recount_channels": 172,
+      "previous_videos": 1,
+      "recount_videos": 433,
+      "original_example_video_ids": [
+        "--uXrh1mCKk",
+        "-UylrYwhxtw",
+        "-e6rJ-Z0HzE",
+        "-kz1axt-xhg",
+        "-lHf0zxUXoQ"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "John F Kennedy",
+      "previous_channels": 40,
+      "recount_channels": 196,
+      "previous_videos": 44,
+      "recount_videos": 249,
+      "original_example_video_ids": [
+        "-l3SKRDABZU",
+        "0T1OmRtAdOg",
+        "0ZPxTa69V8o",
+        "0d4NwQnKyvw",
+        "1LVoGQtvqhY"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Mother's day",
+      "previous_channels": 1,
+      "recount_channels": 156,
+      "previous_videos": 1,
+      "recount_videos": 232,
+      "original_example_video_ids": [
+        "-1MhBnA7bkU",
+        "-QEW_kMJh_g",
+        "-Qgh2I3PDsg",
+        "09kAdY-iNNk",
+        "0AldB4rpAwI"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "Qur'an",
+      "previous_channels": 1,
+      "recount_channels": 145,
+      "previous_videos": 1,
+      "recount_videos": 1294,
+      "original_example_video_ids": [
+        "--0djtBx8xE",
+        "-6Ip8jvJg3w",
+        "-8P-D_agsdc",
+        "-ARB6qc_YIU",
+        "-CfkukYGw5k"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "Gobekli Tepe",
+      "previous_channels": 144,
+      "recount_channels": 45,
+      "previous_videos": 328,
+      "recount_videos": 72,
+      "original_example_video_ids": [
+        "-6HgDCfBUc8",
+        "-YxxKBemDAA",
+        "-kgo0n_rOAs",
+        "-wyUX4fAZtM",
+        "0WuX7vwK6cA"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "Elizabeth I",
+      "previous_channels": 195,
+      "recount_channels": 288,
+      "previous_videos": 468,
+      "recount_videos": 672,
+      "original_example_video_ids": [
+        "-6G7hhONLPs",
+        "-DoKJhYhMi8",
+        "-FJPSR5AtrA",
+        "-OaAEZU1Yk0",
+        "-VdEPEQwoGY"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Franklin D Roosevelt",
+      "previous_channels": 17,
+      "recount_channels": 106,
+      "previous_videos": 19,
+      "recount_videos": 119,
+      "original_example_video_ids": [
+        "-A-Ot29WYzI",
+        "-Mx3EnIXqyk",
+        "-cnbZ1ihcWw",
+        "0c0hBLQbA5w",
+        "18BM5Jy0D_Q"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Ulysses S Grant",
+      "previous_channels": 16,
+      "recount_channels": 89,
+      "previous_videos": 20,
+      "recount_videos": 126,
+      "original_example_video_ids": [
+        "-Ta7nzfdAmw",
+        "0sLYJCfHiKI",
+        "18n07cfxHvQ",
+        "1n7t5lX2JLg",
+        "1rIpGMXjE2A"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "John D Rockefeller",
+      "previous_channels": 12,
+      "recount_channels": 83,
+      "previous_videos": 13,
+      "recount_videos": 99,
+      "original_example_video_ids": [
+        "-FQNTOAaxJI",
+        "0yC-7YnYNyM",
+        "1JAtyk45cbQ",
+        "1MHbUKh51ik",
+        "2QKCDtcHWm8"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Robert E Lee",
+      "previous_channels": 8,
+      "recount_channels": 63,
+      "previous_videos": 10,
+      "recount_videos": 105,
+      "original_example_video_ids": [
+        "-YIRV1yqgzg",
+        "-jAh4K5gTeQ",
+        "0yifCFIyGow",
+        "1_adWqk-NJg",
+        "1tXAhzmR15U"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Mary, Queen of Scots",
+      "previous_channels": 64,
+      "recount_channels": 118,
+      "previous_videos": 139,
+      "recount_videos": 262,
+      "original_example_video_ids": [
+        "-78b4LyRAaw",
+        "-D6jU84-4G8",
+        "-g5mvHx9Sbw",
+        "-jOJDOwMTSI",
+        "-nVv693W8GI"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Salvador Dalí",
+      "previous_channels": 103,
+      "recount_channels": 50,
+      "previous_videos": 175,
+      "recount_videos": 88,
+      "original_example_video_ids": [
+        "-BjqwAlPAdk",
+        "-qbSES25V2I",
+        "0bwnDtYDyKQ",
+        "17v3kOz6gjM",
+        "1ROpuFBy1C4"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Rene Descartes",
+      "previous_channels": 72,
+      "recount_channels": 20,
+      "previous_videos": 95,
+      "recount_videos": 24,
+      "original_example_video_ids": [
+        "0a6DMdH2JRE",
+        "3Vbj2z_Cw4w",
+        "7EVEUlI_CKA",
+        "CFDOjEl0NW8",
+        "DsLDpVDa-Y8"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Martin Luther",
+      "previous_channels": 339,
+      "recount_channels": 289,
+      "previous_videos": 574,
+      "recount_videos": 503,
+      "original_example_video_ids": [
+        "-5-cg8Ko1gs",
+        "-72wFgintqc",
+        "-G7U31GWOF8",
+        "-YFLVaoppvo",
+        "-YvcT9Wn-ac"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Niccolo Machiavelli",
+      "previous_channels": 85,
+      "recount_channels": 35,
+      "previous_videos": 106,
+      "recount_videos": 42,
+      "original_example_video_ids": [
+        "2xfXPG7rAiY",
+        "3CPC6LdkiHE",
+        "6Y39dHDir40",
+        "9rmMH51HNH8",
+        "AHD2xC-trfQ"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Iran & Israel",
+      "previous_channels": 82,
+      "recount_channels": 131,
+      "previous_videos": 126,
+      "recount_videos": 208,
+      "original_example_video_ids": [
+        "-pDi8_Ry2L4",
+        "0G2Ge9rVJOI",
+        "0S0q8Icw53c",
+        "0dlnf_no_bQ",
+        "0zQL1N78rpA"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "Ibrahim Traoré",
+      "previous_channels": 197,
+      "recount_channels": 150,
+      "previous_videos": 1519,
+      "recount_videos": 960,
+      "original_example_video_ids": [
+        "--3ardTqT3k",
+        "-0vJ_hmQ6F0",
+        "-7VXzd71udo",
+        "-CMtjkTkIdQ",
+        "-DeSYQx1_6w"
+      ],
+      "source_title_label_review": "HOLD_IDENTITY_OR_LIVING"
+    },
+    {
+      "raw_name": "Russia-Ukraine",
+      "previous_channels": 127,
+      "recount_channels": 171,
+      "previous_videos": 323,
+      "recount_videos": 408,
+      "original_example_video_ids": [
+        "-XHNVwG_MLA",
+        "-ZkGO-eD_ZU",
+        "-_zfSm8BjBo",
+        "-aAEEKKANx8",
+        "-dItMRjLnSM"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "HIV/AIDS",
+      "previous_channels": 13,
+      "recount_channels": 57,
+      "previous_videos": 41,
+      "recount_videos": 120,
+      "original_example_video_ids": [
+        "-BJAcxquJ4k",
+        "-F9Pl6sCZ1A",
+        "0SJXbTJ4fp4",
+        "0oS2VxXlb1U",
+        "17OAdKSDPjQ"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "Tutankhamun's Tomb",
+      "previous_channels": 1,
+      "recount_channels": 45,
+      "previous_videos": 1,
+      "recount_videos": 55,
+      "original_example_video_ids": [
+        "--ly9JEA_gk",
+        "-J5vnGOuhoE",
+        "0zU6qSXDQlA",
+        "1vLzouApXVE",
+        "5d8SlwGDXXE"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "3I/Atlas",
+      "previous_channels": 11,
+      "recount_channels": 52,
+      "previous_videos": 25,
+      "recount_videos": 113,
+      "original_example_video_ids": [
+        "-7au9gsTwVc",
+        "-BDvHnBfY8c",
+        "-qxRjsP84M4",
+        "0RDxIdonU2M",
+        "0jcjYOo6w8o"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "Martin Luther King Jr",
+      "previous_channels": 285,
+      "recount_channels": 325,
+      "previous_videos": 390,
+      "recount_videos": 460,
+      "original_example_video_ids": [
+        "-6G6CZT7h4k",
+        "-P59ovVyaJY",
+        "-YFLVaoppvo",
+        "-r6dAee3Vbw",
+        "01Q7k7nsEVU"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "St George",
+      "previous_channels": 39,
+      "recount_channels": 77,
+      "previous_videos": 48,
+      "recount_videos": 96,
+      "original_example_video_ids": [
+        "0PDv5lYxEY4",
+        "0cW1jLqj6YE",
+        "0jJVxo-GDhY",
+        "1D2-b85VI4I",
+        "1YKc2RZddjg"
+      ],
+      "source_title_label_review": "HOLD_IDENTITY_OR_LIVING"
+    },
+    {
+      "raw_name": "Simón Bolívar",
+      "previous_channels": 113,
+      "recount_channels": 75,
+      "previous_videos": 148,
+      "recount_videos": 106,
+      "original_example_video_ids": [
+        "-z3p_yG9JQM",
+        "0Wh_K0TPsTg",
+        "1mbfI6YPoSE",
+        "2ASQkVcrzDs",
+        "2GRWxrNPshM"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Constantinople 1453",
+      "previous_channels": 14,
+      "recount_channels": 50,
+      "previous_videos": 14,
+      "recount_videos": 57,
+      "original_example_video_ids": [
+        "-E06sFllF4A",
+        "-cM9DPvYDCw",
+        "0w6s-Kje71g",
+        "2KSoQPCOwoQ",
+        "2ylK2g0BhYI"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "Catherine de' Medici",
+      "previous_channels": 39,
+      "recount_channels": 74,
+      "previous_videos": 41,
+      "recount_videos": 87,
+      "original_example_video_ids": [
+        "-Y0_OeNhn28",
+        "09M3ApIhaTI",
+        "0A2uI6IkAQk",
+        "0EkZxKOVmmI",
+        "0z9jnpeL7-M"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Harry & Meghan",
+      "previous_channels": 1,
+      "recount_channels": 33,
+      "previous_videos": 1,
+      "recount_videos": 119,
+      "original_example_video_ids": [
+        "-2KJd3DujBM",
+        "-T7WrV-TiEU",
+        "-mh-t5hT-kM",
+        "05LyqDCyLpE",
+        "09_cZmbmfd4"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "José Rizal",
+      "previous_channels": 42,
+      "recount_channels": 11,
+      "previous_videos": 72,
+      "recount_videos": 11,
+      "original_example_video_ids": [
+        "1DNoq65SZUU",
+        "D_HJ-dwvnsw",
+        "NmVjm63gw1Y",
+        "PfX2fmuun_k",
+        "TyC0lApGzi8"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Podcast 1",
+      "previous_channels": 8,
+      "recount_channels": 39,
+      "previous_videos": 10,
+      "recount_videos": 48,
+      "original_example_video_ids": [
+        "-IhHHQI5yS8",
+        "0ezqxJdHwtE",
+        "6k3z1CCX2wk",
+        "8_fBU6prZ8U",
+        "Cq7FZgioMok"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    },
+    {
+      "raw_name": "Elizabeth Báthory",
+      "previous_channels": 58,
+      "recount_channels": 28,
+      "previous_videos": 70,
+      "recount_videos": 32,
+      "original_example_video_ids": [
+        "58SOe3tFIyo",
+        "5F_eOkgFVeg",
+        "6Iz0DFnE4T8",
+        "9ElNbBuV6kw",
+        "9bVPdQV0Ui0"
+      ],
+      "source_title_label_review": "HISTORICAL_PERSON_NAME_REVIEW"
+    },
+    {
+      "raw_name": "Guns N' Roses",
+      "previous_channels": 4,
+      "recount_channels": 28,
+      "previous_videos": 7,
+      "recount_videos": 228,
+      "original_example_video_ids": [
+        "-4aijlGutKA",
+        "-7qYUqsaT4Q",
+        "-CLWV_QCODs",
+        "-gmGIFCXbnY",
+        "-wUvyhOAMPs"
+      ],
+      "source_title_label_review": "NON_PERSON_EXACT_LABEL"
+    }
+  ]
+}
