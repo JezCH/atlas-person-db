@@ -1,0 +1,215 @@
+{
+  "schema": "atlas-youtube-b024-13-exact-nonperson-source-review/v1",
+  "reviewed_at": "2026-10-18",
+  "source_original_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "source_channels": 10127,
+  "source_videos": 2230031,
+  "critical_33_original_id_evidence": "PR #2529 audits/youtube-b024-33-highrisk-original-video-refs.json",
+  "prior_critical_nonperson_exact_reviewed": [
+    "Pt 2",
+    "3I/Atlas"
+  ],
+  "missing_in_source_quality_before_this_review": 13,
+  "source_count_changes_are_title_syntax_not_video_biography": true,
+  "source_archive_or_original_video_ids_deleted": false,
+  "historical_person_content_videos_certified": 0,
+  "registrations_consulted_for_name_extraction": false,
+  "production_publication_approved": false,
+  "rows": [
+    {
+      "name": "Q & A",
+      "previous_title_channels": 2,
+      "recount_title_channels": 627,
+      "previous_title_videos": 2,
+      "recount_title_videos": 3056,
+      "original_example_video_ids": [
+        "-1p5ajz88-8",
+        "-1wZrWM2flI",
+        "-74nSoZdtv4",
+        "-7ybW9k72b0",
+        "-8f9u_UoHKY"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "Let's Talk",
+      "previous_title_channels": 1,
+      "recount_title_channels": 172,
+      "previous_title_videos": 1,
+      "recount_title_videos": 433,
+      "original_example_video_ids": [
+        "--uXrh1mCKk",
+        "-UylrYwhxtw",
+        "-e6rJ-Z0HzE",
+        "-kz1axt-xhg",
+        "-lHf0zxUXoQ"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "Mother's day",
+      "previous_title_channels": 1,
+      "recount_title_channels": 156,
+      "previous_title_videos": 1,
+      "recount_title_videos": 232,
+      "original_example_video_ids": [
+        "-1MhBnA7bkU",
+        "-QEW_kMJh_g",
+        "-Qgh2I3PDsg",
+        "09kAdY-iNNk",
+        "0AldB4rpAwI"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "Qur'an",
+      "previous_title_channels": 1,
+      "recount_title_channels": 145,
+      "previous_title_videos": 1,
+      "recount_title_videos": 1294,
+      "original_example_video_ids": [
+        "--0djtBx8xE",
+        "-6Ip8jvJg3w",
+        "-8P-D_agsdc",
+        "-ARB6qc_YIU",
+        "-CfkukYGw5k"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "Gobekli Tepe",
+      "previous_title_channels": 144,
+      "recount_title_channels": 45,
+      "previous_title_videos": 328,
+      "recount_title_videos": 72,
+      "original_example_video_ids": [
+        "-6HgDCfBUc8",
+        "-YxxKBemDAA",
+        "-kgo0n_rOAs",
+        "-wyUX4fAZtM",
+        "0WuX7vwK6cA"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "Iran & Israel",
+      "previous_title_channels": 82,
+      "recount_title_channels": 131,
+      "previous_title_videos": 126,
+      "recount_title_videos": 208,
+      "original_example_video_ids": [
+        "-pDi8_Ry2L4",
+        "0G2Ge9rVJOI",
+        "0S0q8Icw53c",
+        "0dlnf_no_bQ",
+        "0zQL1N78rpA"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "Russia-Ukraine",
+      "previous_title_channels": 127,
+      "recount_title_channels": 171,
+      "previous_title_videos": 323,
+      "recount_title_videos": 408,
+      "original_example_video_ids": [
+        "-XHNVwG_MLA",
+        "-ZkGO-eD_ZU",
+        "-_zfSm8BjBo",
+        "-aAEEKKANx8",
+        "-dItMRjLnSM"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "HIV/AIDS",
+      "previous_title_channels": 13,
+      "recount_title_channels": 57,
+      "previous_title_videos": 41,
+      "recount_title_videos": 120,
+      "original_example_video_ids": [
+        "-BJAcxquJ4k",
+        "-F9Pl6sCZ1A",
+        "0SJXbTJ4fp4",
+        "0oS2VxXlb1U",
+        "17OAdKSDPjQ"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "Tutankhamun's Tomb",
+      "previous_title_channels": 1,
+      "recount_title_channels": 45,
+      "previous_title_videos": 1,
+      "recount_title_videos": 55,
+      "original_example_video_ids": [
+        "--ly9JEA_gk",
+        "-J5vnGOuhoE",
+        "0zU6qSXDQlA",
+        "1vLzouApXVE",
+        "5d8SlwGDXXE"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "Constantinople 1453",
+      "previous_title_channels": 14,
+      "recount_title_channels": 50,
+      "previous_title_videos": 14,
+      "recount_title_videos": 57,
+      "original_example_video_ids": [
+        "-E06sFllF4A",
+        "-cM9DPvYDCw",
+        "0w6s-Kje71g",
+        "2KSoQPCOwoQ",
+        "2ylK2g0BhYI"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "Harry & Meghan",
+      "previous_title_channels": 1,
+      "recount_title_channels": 33,
+      "previous_title_videos": 1,
+      "recount_title_videos": 119,
+      "original_example_video_ids": [
+        "-2KJd3DujBM",
+        "-T7WrV-TiEU",
+        "-mh-t5hT-kM",
+        "05LyqDCyLpE",
+        "09_cZmbmfd4"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "Podcast 1",
+      "previous_title_channels": 8,
+      "recount_title_channels": 39,
+      "previous_title_videos": 10,
+      "recount_title_videos": 48,
+      "original_example_video_ids": [
+        "-IhHHQI5yS8",
+        "0ezqxJdHwtE",
+        "6k3z1CCX2wk",
+        "8_fBU6prZ8U",
+        "Cq7FZgioMok"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    },
+    {
+      "name": "Guns N' Roses",
+      "previous_title_channels": 4,
+      "recount_title_channels": 28,
+      "previous_title_videos": 7,
+      "recount_title_videos": 228,
+      "original_example_video_ids": [
+        "-4aijlGutKA",
+        "-7qYUqsaT4Q",
+        "-CLWV_QCODs",
+        "-gmGIFCXbnY",
+        "-wUvyhOAMPs"
+      ],
+      "source_name_classification": "EXACT_NON_PERSON_NOT_AN_INDIVIDUAL"
+    }
+  ]
+}
