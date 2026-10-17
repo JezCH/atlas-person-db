@@ -38,3 +38,29 @@ test("all checked-in workflows remain parseable and no PR runs Production checks
     assert.ok(!(prod && events.has("pull_request")), file + ": PR must not browse Production");
   }
 });
+
+test("quoted event names cannot hide pull_request next to valid workflow_dispatch", () => {
+  for (const q of ['"pull_request"', "'pull_request'"]) {
+    const src = "name: quota guard\non:\n  workflow_dispatch:\n    inputs:\n      note:\n        description: fixture\n  " + q + ":\n    branches: [main]\npermissions:\n  contents: read";
+    assert.deepEqual([...workflowTriggerEvents(src)].sort(), ["pull_request", "workflow_dispatch"]);
+  }
+});
+
+test("unrecognized sibling after valid event fails closed instead of silent omission", () => {
+  const unknown = "on:\n  workflow_dispatch:\n  !custom:\n    arbitrary: true\njobs:\n  check: {}";
+  assert.equal(workflowTriggerEvents(unknown), null);
+  const duplicate = "on:\n  workflow_dispatch:\n  workflow_dispatch:\njobs:\n  check: {}";
+  assert.equal(workflowTriggerEvents(duplicate), null);
+});
+
+test("GitHub Actions scalar and block list event layouts stay valid", () => {
+  assert.deepEqual([...workflowTriggerEvents("on: 'pull_request'")], ["pull_request"]);
+  assert.deepEqual([...workflowTriggerEvents('on: "push"')], ["push"]);
+  assert.deepEqual([...workflowTriggerEvents("on:\n  - workflow_dispatch\n  - pull_request\njobs:\n  check: {}")].sort(),
+    ["pull_request", "workflow_dispatch"]);
+});
+
+test("quoted root on and quoted event keys work with Windows line endings", () => {
+  const source = '"on":\r\n  "workflow_dispatch":\r\n  \'pull_request\':\r\njobs:\r\n  check: {}';
+  assert.deepEqual([...workflowTriggerEvents(source)].sort(), ["pull_request", "workflow_dispatch"]);
+});
