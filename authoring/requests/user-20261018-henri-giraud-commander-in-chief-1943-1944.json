@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-giraud-20261018:commander-in-chief-1943-1944:v1",
+  "person": {
+    "canonical_name_en": "Henri Giraud",
+    "display_name_ko": "앙리 지로",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Commander-in-Chief of French Armed Forces under CFLN",
+    "role_display_name_ko": "CFLN 소속 프랑스군 총사령관",
+    "start_year": 1943,
+    "start_month": 8,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1944,
+    "end_month": 4,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "CFLN decree of 4 Aug 1943 gives Giraud military command subordinated to CFLN defense policy; he was removed on 4 April 1944. His first military responsibilities before the Aug decree and copresidency overlapping through October are independent historically real roles, not duplicate offices."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Université de Perpignan, MJP — Décret du 4 août 1943 sur l'organisation du Haut Commandement",
+      "canonical_url": "https://mjp.univ-perp.fr/france/co1943cfln2.htm",
+      "citation_text": "The 4 August 1943 decree explicitly charges Giraud as Commandant en chef of all French land, sea, air forces, under CFLN's political direction."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Fondation Charles de Gaulle — Henri GIRAUD",
+      "canonical_url": "https://www.charles-de-gaulle.org/lhomme/biographies/henri-giraud/",
+      "citation_text": "Giraud Third Army 1936, Seventh Army 1939, Ninth Army after 15 May 1940, prisoner on May 18, North Africa civil-military command late 1942, CFLN copresidency 3 June to early Oct 1943, general commander in chief ending 4 April 1944, Superior War Council 1949."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ministère des Armées — Création et action du CFLN",
+      "canonical_url": "https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/ressources-historiques/seconde-guerre-mondiale/resister/france-libre/creation",
+      "citation_text": "CFLN formed 3 June 1943; co-presidency duties eroded by early August and Giraud removed from the Committee 9 November 1943. This committee-membership end differs from earlier de facto political copresidency end."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "앙리 지로",
+      "url": "https://namu.wiki/w/%EC%95%99%EB%A6%AC%20%EC%A7%80%EB%A1%9C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historic normalized France/France Republic Polity and governance_context identity requires canonical Production confirmation. Last verified Vercel 402 quota gate prohibits live Person/Activity or PlaceFunction screen. Never invent geographic identity, de facto sovereign Free France/Algeria or PlaceFunction UUID."
+  }
+}
