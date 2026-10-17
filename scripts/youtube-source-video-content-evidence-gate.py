@@ -18,29 +18,91 @@ REVIEWED_METHODS={"VIDEO_PLAYBACK_MANUAL","TIMESTAMPED_TRANSCRIPT"}
 SHA256=re.compile(r"^[a-f0-9]{64}$")
 
 
-def adjudicate(request,metadata,identities,decisions):
-    if request.get("schema")!="atlas-youtube-description-enrichment-request/v1" or not request.get("original_per_video_channel_id_verified"):
+def validate_collected_metadata(request, metadata):
+    """Verify collector artifact independently before ANY content-review credit.
+
+    The 10,126-title request is the authoritative original Video-ID/channel/title
+    population; a later public search hit or hand-edited description is not the
+    official YouTube snippet. Partially fetched artifacts remain reviewable only
+    for their actually fetched records, never for rows not yet fetched.
+    """
+    if (request.get("schema")!="atlas-youtube-description-enrichment-request/v1" or
+        request.get("original_per_video_channel_id_verified") is not True or
+        request.get("publication_allowed") is not False):
         raise ValueError("MISSING_VERIFIED_ORIGINAL_VIDEO_ID_CHANNEL_BINDING")
     if metadata.get("schema")!="atlas-youtube-description-enrichment-result/v1":
         raise ValueError("DESCRIPTION_METADATA_SCHEMA_MISMATCH")
+    if (metadata.get("source_snapshot_id")!=request.get("source_snapshot_id") or
+        metadata.get("source_zip_sha256")!=request.get("source_zip_sha256") or
+        metadata.get("request_source_json_sha256")!=request.get("source_review_json_sha256")):
+        raise ValueError("SOURCE_PROVENANCE_INCONSISTENCY")
+    rows=request.get("videos")
+    if not isinstance(rows,list):
+        raise ValueError("ORIGINAL_VIDEO_ID_EVIDENCE_POPULATION_MISMATCH")
+    original={}
+    for row in rows:
+        vid=row.get("video_id") if isinstance(row,dict) else None
+        if (not isinstance(vid,str) or not vid or vid in original or
+            not isinstance(row.get("original_channel_id"),str) or
+            not isinstance(row.get("original_title"),str) or
+            not isinstance(row.get("name_cues"),list)):
+            raise ValueError("ORIGINAL_VIDEO_ID_EVIDENCE_POPULATION_MISMATCH")
+        original[vid]=row
+    if len(original)!=request.get("unique_original_video_ids"):
+        raise ValueError("ORIGINAL_VIDEO_ID_EVIDENCE_POPULATION_MISMATCH")
+    records=metadata.get("records")
+    if not isinstance(records,list) or metadata.get("automatic_person_subject_approval") is not False:
+        raise ValueError("COLLECTED_METADATA_CANNOT_AUTO_APPROVE_PERSON")
+    actual={}
+    for row in records:
+        vid=row.get("video_id") if isinstance(row,dict) else None
+        if not isinstance(vid,str) or vid in actual or vid not in original:
+            raise ValueError("ORIGINAL_VIDEO_ID_EVIDENCE_POPULATION_MISMATCH")
+        actual[vid]=row
+    if (metadata.get("requested_original_video_ids")!=len(original) or
+        metadata.get("fetched_metadata_rows")!=len(actual) or
+        metadata.get("not_yet_fetched")!=len(original)-len(actual)):
+        raise ValueError("METADATA_COMPLETENESS_COUNT_MISMATCH")
+    for vid, row in actual.items():
+        source=original[vid]
+        description=row.get("description")
+        if description is not None and not isinstance(description,str):
+            raise ValueError("COLLECTED_METADATA_DESCRIPTION_INTEGRITY_MISMATCH")
+        description=description or ""
+        expected_hash=hashlib.sha256(description.encode("utf-8")).hexdigest()
+        if (row.get("original_channel_id")!=source["original_channel_id"] or
+            row.get("original_title")!=source["original_title"] or
+            row.get("person_video_content_verified") is not False or
+            row.get("description_sha256")!=expected_hash):
+            raise ValueError("COLLECTED_METADATA_ORIGINAL_BINDING_OR_HASH_MISMATCH")
+        live_channel=row.get("live_channel_id")
+        expected_status=("NOT_FOUND_OR_UNAVAILABLE" if live_channel is None else
+            "CHANNEL_MISMATCH" if live_channel!=source["original_channel_id"] else
+            "DESCRIPTION_PRESENT" if description.strip() else "DESCRIPTION_EMPTY")
+        if row.get("status")!=expected_status:
+            raise ValueError("COLLECTED_METADATA_STATUS_INCONSISTENT")
+        if live_channel is None and (
+            row.get("live_title") is not None or
+            row.get("published_at") is not None or
+            row.get("description") is not None):
+            raise ValueError("COLLECTED_METADATA_UNAVAILABLE_ROW_HAS_PUBLISHER_DATA")
+    return original,actual
+
+
+def adjudicate(request,metadata,identities,decisions):
+    # Do not trust an alleged collector artifact just because its source SHA
+    # strings and one reviewed Channel ID match. Validate ALL rows and counts.
+    original,actual=validate_collected_metadata(request,metadata)
     if identities.get("schema")!="youtube-b024-source-first-last-registry-screen-36/v1":
         raise ValueError("HISTORICAL_INDEPENDENT_IDENTITY_REVIEW_SCHEMA_MISMATCH")
     if decisions.get("schema")!="atlas-youtube-person-content-review-decisions/v1":
         raise ValueError("VIDEO_CONTENT_REVIEW_SCHEMA_MISMATCH")
     source=request["source_snapshot_id"]
-    if (metadata.get("source_snapshot_id")!=source or
-        identities.get("source_snapshot_id")!=source or
+    if (identities.get("source_snapshot_id")!=source or
         decisions.get("source_snapshot_id")!=source or
         identities.get("source_sha256")!=request["source_zip_sha256"] or
-        metadata.get("source_zip_sha256")!=request["source_zip_sha256"] or
-        metadata.get("request_source_json_sha256")!=request["source_review_json_sha256"]):
+        decisions.get("source_archive_sha256",request["source_zip_sha256"])!=request["source_zip_sha256"]):
         raise ValueError("SOURCE_PROVENANCE_INCONSISTENCY")
-    original={v["video_id"]:v for v in request["videos"]}
-    actual={v["video_id"]:v for v in metadata["records"]}
-    if len(original)!=request["unique_original_video_ids"] or len(actual)!=len(metadata["records"]) or set(actual)-set(original):
-        raise ValueError("ORIGINAL_VIDEO_ID_EVIDENCE_POPULATION_MISMATCH")
-    if len(actual)!=metadata["fetched_metadata_rows"] or len(original)-len(actual)!=metadata["not_yet_fetched"]:
-        raise ValueError("METADATA_COMPLETENESS_COUNT_MISMATCH")
     aliases=identities["source_historical_unmatched_identity_groups"]
     ranked=collections.defaultdict(lambda:{"channels":set(),"videos":set(),"source_reviews":[]})
     counted=collections.Counter()
