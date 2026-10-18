@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
-import { workflowTriggerEvents, workflowPrProductionViolation } from "../scripts/verify-vercel-resource-budget.mjs";
+import { workflowTriggerEvents, workflowPrProductionViolation, workflowHistoricalManualViolation } from "../scripts/verify-vercel-resource-budget.mjs";
 
 test("root-level on key cannot bypass Production pull_request guard", () => {
   const events = workflowTriggerEvents("on:\n  pull_request:\n  workflow_dispatch:\njobs:\n  verify: {}");
@@ -74,4 +74,15 @@ test("Production PR triggers are rejected while manual Production dispatch stays
     assert.equal(workflowPrProductionViolation(manual), false, production);
   }
   assert.equal(workflowPrProductionViolation("on: pull_request_target\njobs:\n  local: {}"), false);
+});
+
+
+test("historical full-Production census remains manual-only for PR target triggers", () => {
+  const manual = workflowTriggerEvents("on:\\n  workflow_dispatch:\\njobs:\\n  audit: {}");
+  assert.equal(workflowHistoricalManualViolation(manual), false);
+  for (const event of ["pull_request", "pull_request_target", "push", "schedule"]) {
+    const source = `on:\\n  workflow_dispatch:\\n  ${event}:\\njobs:\\n  audit: {}`;
+    assert.equal(workflowHistoricalManualViolation(workflowTriggerEvents(source)), true, event);
+  }
+  assert.equal(workflowHistoricalManualViolation(null), true);
 });
