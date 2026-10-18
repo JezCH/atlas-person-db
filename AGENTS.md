@@ -10,8 +10,8 @@ This file is an entry point, not a second source of project policy.
 - Never fabricate historical facts, chronology, coordinates, completeness, or Production verification.
 
 ## Safety and cost
-- Never delete or retire historical/canonical data, perform destructive schema operations, or make unapproved Production changes.
-- Never invoke Vercel Sandbox in the production account. Do not repeatedly poll Production, trigger bulk reads, or retry HTTP 402. Respect `docs/VERCEL_HOBBY_QUOTA_GUARD.md`.
+- Do not perform unauthorized deletion, retirement, identity-changing or destructive schema operations, or unapproved Production mutations. Explicitly authorized, governed changes may proceed only through the canonical writer and the applicable fail-closed preflight, evidence, rollback/replay, and completion verification requirements in `WORK_EXECUTION.md`.
+- Never invoke Vercel Sandbox in the production account. Avoid repeated Production polling and unbounded, repeated, or nonessential Production bulk reads; preserve authorized, bounded read-backs required for governed mutations or audits. Treat HTTP 402 as terminal and do not retry it. Respect `docs/VERCEL_HOBBY_QUOTA_GUARD.md`.
 - Do not upgrade paid plans, add paid AI/API dependencies, or introduce any new recurring charges without explicit user approval.
 - For UI changes, CI or merge alone does not mean Production-visible completion. Follow `WORK_EXECUTION.md`.
 
