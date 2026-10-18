@@ -1,0 +1,89 @@
+{
+  "schema": "atlas-youtube-b024-12-full-original-zip-direct-replay/v1",
+  "original_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "original_zip_bytes": 85284047,
+  "original_channel_count": 10127,
+  "original_video_rows": 2230031,
+  "reviewed_original_video_ids": 12,
+  "matched_original_video_id_count": 12,
+  "matched_exact_original_channel_and_title_count": 12,
+  "mismatches": [],
+  "original_video_content_watched_or_timestamped_transcript_verified": 0,
+  "official_youtube_current_channel_id_verified": 0,
+  "publication_authorized": false,
+  "original_archive_modified": false,
+  "records": [
+    {
+      "video_id": "--9AzmhXCmA",
+      "original_channel_id": "UCMPQ7WjVm9nnGop2jDhCcFA",
+      "original_title": "Quran Tafseer | Quran Summary |Ramadan | Fasting in Ramadan | Roza | Ramzan| Imam Ali | Ramadan 2022",
+      "original_zip_exact_channel_title_match": true
+    },
+    {
+      "video_id": "--VVfZZIoKI",
+      "original_channel_id": "UCMPQ7WjVm9nnGop2jDhCcFA",
+      "original_title": "Is Allah Watching Us|Discovering Allah|Islam|Kids Animated Video|Prophet Muhammad|Imam Ali|KAZSchool",
+      "original_zip_exact_channel_title_match": true
+    },
+    {
+      "video_id": "-13y_Jm-pzI",
+      "original_channel_id": "UC7OkutZc6qzX44IK0HEDLJA",
+      "original_title": "Who Killed Dele Giwa?",
+      "original_zip_exact_channel_title_match": true
+    },
+    {
+      "video_id": "-1CalygxBrM",
+      "original_channel_id": "UCjD2hhUF5R8G9oAjOzQo26w",
+      "original_title": "Was Meriwether Lewis Murdered? The Shocking DNA Evidence Revealed",
+      "original_zip_exact_channel_title_match": true
+    },
+    {
+      "video_id": "-1MZzLt2F08",
+      "original_channel_id": "UCU7c62_Znm0bmzCzRbTy7Kg",
+      "original_title": "Grandson of Jacques Cousteau's Call To Action \"Zuzu Movement\" On Why Our Recycling System Is Failing",
+      "original_zip_exact_channel_title_match": true
+    },
+    {
+      "video_id": "-1QJB982UL8",
+      "original_channel_id": "UC6sjJgorHZeriScq9umMSZg",
+      "original_title": "Maulana Fazal ur Rehman Ep 01 | Father Mufti Mehmood's Political Journey | Awais Ghauri @justajoo9",
+      "original_zip_exact_channel_title_match": true
+    },
+    {
+      "video_id": "-1agiPOVU7A",
+      "original_channel_id": "UCi6ZWWAh1YSi0znGbGusfbw",
+      "original_title": "Alan Hirsch | Joining with God in His Mission | Graham Joseph Hill",
+      "original_zip_exact_channel_title_match": true
+    },
+    {
+      "video_id": "-5IzMeI-Gck",
+      "original_channel_id": "UCo0lswMYEn-CL3rkNJHHijg",
+      "original_title": "A story of the murder of dictator Kim Jong Un's brother has come to the fore, know about 'Assassins'",
+      "original_zip_exact_channel_title_match": true
+    },
+    {
+      "video_id": "-5Lg5mk74NA",
+      "original_channel_id": "UCesJHHdqSw_9gC0aMod9IKw",
+      "original_title": "Salvador Dali brief biography and his artwork. Great for kids and esl",
+      "original_zip_exact_channel_title_match": true
+    },
+    {
+      "video_id": "-5hbh0-wOzc",
+      "original_channel_id": "UCTGMCjB9BSzGVXuWLmMFGvw",
+      "original_title": "Woman by Kazi Nazrul Islam/ কাজী নজরুল ইসলাম এর নারী/ নারী কবিতা/ কাজি নজরুল ইসলাম।",
+      "original_zip_exact_channel_title_match": true
+    },
+    {
+      "video_id": "-686Bq00bvY",
+      "original_channel_id": "UCi6ZWWAh1YSi0znGbGusfbw",
+      "original_title": "Karina Kreminski | On Gender and the Reign of God, and Missional Spirituality | Graham Joseph Hill",
+      "original_zip_exact_channel_title_match": true
+    },
+    {
+      "video_id": "-6G6CZT7h4k",
+      "original_channel_id": "UCMu5gPmKp5av0QCAajKTMhw",
+      "original_title": "Gandhi vs Martin Luther King Jr. Epic Rap Battles of History",
+      "original_zip_exact_channel_title_match": true
+    }
+  ]
+}
