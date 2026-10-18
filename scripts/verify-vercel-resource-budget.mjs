@@ -145,7 +145,7 @@ for (const name of readdirSync(join(root, ".github/workflows"))) {
     errors.push(name + ": CI pull_request/pull_request_target must never browse Production");
   }
   if (manualHistorical.has(name)) {
-    if (!events.has("workflow_dispatch") || events.has("push") || events.has("pull_request") || events.has("schedule")) {
+    if (!events.has("workflow_dispatch") || events.has("push") || events.has("pull_request") || events.has("pull_request_target") || events.has("schedule")) {
       errors.push(name + ": legacy full-Production census must remain manual-only");
     }
   }
