@@ -84,6 +84,31 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Bind the original uploader to the exact selected archive identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/atlas-original-source-uploader.py <<'PY'
+          import os
+          import runpy
+          approved = {
+              "017": ("11548326100", "validated-batch017/sha256/"),
+              "024": ("11613130249", "validated-batch024/sha256/"),
+          }
+          batch = os.environ.get("SOURCE_BATCH")
+          artifact_id = os.environ.get("SOURCE_ARTIFACT_ID")
+          if batch not in approved or artifact_id != approved[batch][0]:
+              raise RuntimeError("UNAPPROVED_ORIGINAL_SOURCE_ARCHIVE_NAMESPACE")
+          # One existing uploader/storage bucket; only the source provenance
+          # and content-addressed key namespace are selected at runtime.
+          mod = runpy.run_path("scripts/youtube-preserve-verified-corpus.py",
+                               run_name="archived_source_identity_loader")
+          fn = mod["main"]
+          fn.__globals__["SOURCE_ARTIFACT_ID"] = int(artifact_id)
+          fn.__globals__["KEY_PREFIX"] = approved[batch][1]
+          fn()
+          PY
+
       - name: Verify storage resume and remote restore behavior
         run: python -m unittest discover -s tests -p test_youtube_source_upload.py -v
 
@@ -91,7 +116,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python scripts/youtube-preserve-verified-corpus.py             --root corpus             --output /tmp/youtube-inventory.json             --dry-run             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
+          python /tmp/atlas-original-source-uploader.py             --root corpus             --output /tmp/youtube-inventory.json             --dry-run             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
           jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson catalog "${SOURCE_CATALOG_COUNT}" --argjson sources "${SOURCE_SOURCE_COUNT}" '
             .schema=="atlas-youtube-source-storage-verification/v2"
             and .total_files_discovered==$files
@@ -118,6 +143,16 @@ jobs:
             and .snapshot.source_state.next_batch=="batch018"
             and .snapshot.source_state.channel_ids_persisted==true
           ' /tmp/youtube-source-preflight.json >/dev/null
+
+      - name: Do not publish Batch024 through the Batch017 canonical catalog contract
+        if: ${{ inputs.phase == 'catalog_full' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_BATCH" == "017" ]] || {
+            echo "BATCH024_CANONICAL_CATALOG_NOT_AUTHORIZED: use storage_only" >&2
+            exit 1
+          }
 
       - name: Gate catalog_full on exact deployed main BEFORE Storage writes
         if: ${{ inputs.phase == 'catalog_full' }}
@@ -149,14 +184,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python scripts/youtube-preserve-verified-corpus.py             --root corpus             --output /tmp/youtube-remote-pass1.json             --max-files 1000             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
+          python /tmp/atlas-original-source-uploader.py             --root corpus             --output /tmp/youtube-remote-pass1.json             --max-files 1000             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
           jq -e '.files_verified==1000 and .uploaded==true and ((.new_objects + .existing_objects)==1000)'             /tmp/youtube-remote-pass1.json >/dev/null
 
       - name: Restart from beginning and complete all 6,044 immutable objects
         shell: bash
         run: |
           set -euo pipefail
-          python scripts/youtube-preserve-verified-corpus.py             --root corpus             --output /tmp/youtube-remote-pass2.json             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
+          python /tmp/atlas-original-source-uploader.py             --root corpus             --output /tmp/youtube-remote-pass2.json             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
           jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson catalog "${SOURCE_CATALOG_COUNT}" --argjson sources "${SOURCE_SOURCE_COUNT}" '
             .files_verified==$files
             and .bytes_verified==$bytes
@@ -190,7 +225,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python scripts/youtube-preserve-verified-corpus.py \
+          python /tmp/atlas-original-source-uploader.py \
             --root corpus \
             --output /tmp/storage-only-pass3.json \
             --expected-total-files "$SOURCE_MEMBER_COUNT" \
@@ -203,7 +238,7 @@ jobs:
           # canonical atlas_v2 catalog. No Production API request is permitted.
           jq '[.records[] | {object_key,sha256,byte_count,source_artifact_id,batch_label,source_kind,source_path,channel_id,video_rows}]' \
             /tmp/storage-only-pass3.json > /tmp/storage-only-inventory.json
-          python scripts/youtube-preserve-verified-corpus.py \
+          python /tmp/atlas-original-source-uploader.py \
             --catalog /tmp/storage-only-inventory.json \
             --output /tmp/storage-only-remote-restore.json \
             --restore-dir /tmp/storage-only-independent-restore
@@ -283,7 +318,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python scripts/youtube-preserve-verified-corpus.py             --root corpus             --output /tmp/youtube-remote-final.json             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
+          python /tmp/atlas-original-source-uploader.py             --root corpus             --output /tmp/youtube-remote-final.json             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
           jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" '
             .files_verified==$files
             and .bytes_verified==$bytes
@@ -335,7 +370,7 @@ jobs:
         run: |
           set -euo pipefail
           rm -rf corpus /tmp/youtube-remote-restore
-          python scripts/youtube-preserve-verified-corpus.py             --catalog /tmp/youtube-catalog-records.json             --output /tmp/youtube-remote-restore.json             --restore-dir /tmp/youtube-remote-restore
+          python /tmp/atlas-original-source-uploader.py             --catalog /tmp/youtube-catalog-records.json             --output /tmp/youtube-remote-restore.json             --restore-dir /tmp/youtube-remote-restore
           jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" '
             .schema=="atlas-youtube-source-remote-restore/v1"
             and .catalog_records==$files
