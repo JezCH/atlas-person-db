@@ -151,6 +151,24 @@ test("one original reviewed name form cannot be attributed to two separately ran
   /VIDEO_RANK_ORIGINAL_ALIAS_ASSIGNED_TO_MULTIPLE_IDENTITIES/);
 });
 
+test("TIMESTAMPED_TRANSCRIPT cannot reach ranking preview without actual transcript-byte provenance from Python content gate",()=>{
+ const candidate=subject("Transcript Historical Individual",triple(160));
+ candidate.content_review_provenance[0].evidence_method="TIMESTAMPED_TRANSCRIPT";
+ assert.throws(()=>engine.preview(gate([candidate]),registry(),manifest()),
+  /VIDEO_RANK_TRANSCRIPT_ACTUAL_BYTES_PROVENANCE_REQUIRED/);
+ candidate.content_review_provenance[0].transcript_evidence_sha256="a".repeat(64);
+ candidate.content_review_provenance[0].transcript_capture_method="YOUTUBE_CAPTION_TRACK";
+ candidate.content_review_provenance[0].transcript_captured_at="2026-10-09T12:00:00Z";
+ candidate.content_review_provenance[0].transcript_caption_language="en";
+ // This shape is a synthetic mechanical test, not the original authenticated transcript:
+ // the upstream Python gate is responsible for reading/sha-verifying actual bytes.
+ const result=engine.preview(gate([candidate]),registry(),manifest());
+ assert.equal(result.rank_candidate_count,1);
+ assert.equal(result.rank_candidates[0].original_content_reviews[0].transcript_evidence_sha256,
+  "a".repeat(64));
+ assert.equal(result.publication_authorized,false);
+});
+
 test("identity HOLD source and reviewed alias malformed population can never turn into a valid ranking",()=>{
  const g=gate([subject("St Patrick",triple(110))]);
  const bad=manifest();bad.holds[0].person_identity_certified=true;
