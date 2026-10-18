@@ -11,6 +11,7 @@ import collections
 import datetime as dt
 import hashlib
 import json
+import math
 import re
 from pathlib import Path
 
@@ -172,7 +173,123 @@ def validate_collected_metadata(request, metadata):
     return original,actual
 
 
-def adjudicate(request,metadata,identities,decisions):
+TRANSCRIPT_SCHEMA="atlas-youtube-original-video-transcript-evidence/v1"
+TRANSCRIPT_CAPTURE_METHODS={"YOUTUBE_CAPTION_TRACK","MANUAL_VIDEO_PLAYBACK_TRANSCRIPTION"}
+MAX_TRANSCRIPT_FILE_BYTES=2_000_000
+
+
+def aware_utc_datetime(value,code):
+    """Demand timezone-aware timestamps: naive dates defeat capture order."""
+    try:
+        result=dt.datetime.fromisoformat(str(value).replace("Z","+00:00"))
+    except (TypeError, ValueError) as e:
+        raise ValueError(code) from e
+    if result.tzinfo is None or result.utcoffset() is None:
+        raise ValueError(code)
+    return result.astimezone(dt.timezone.utc)
+
+
+def normalize_transcript_text(text):
+    return " ".join(text.split()).casefold()
+
+
+def verify_timestamped_transcript_file(item,source,source_snapshot_id,transcript_dir):
+    """Hash ACTUAL transcript file bytes, bind Video/Channel/source and excerpt.
+
+    A valid hash proves artifact integrity, NOT YouTube authenticity. Actual
+    source capture and independent human subject review are still mandatory.
+    Only the exact <original_video_id>.json in the operator-supplied directory
+    is accepted. No arbitrary file paths from a reviewer JSON are evaluated.
+    """
+    vid=item["video_id"]
+    supplied=item.get("transcript_sha256")
+    excerpt=item.get("transcript_excerpt")
+    if not isinstance(supplied,str) or not SHA256.fullmatch(supplied) or (
+       not isinstance(excerpt,str) or len(excerpt.strip())<25):
+        raise ValueError("TRANSCRIPT_SOURCE_DIGEST_AND_EXCERPT_REQUIRED")
+    if transcript_dir is None:
+        raise ValueError("ORIGINAL_VIDEO_TRANSCRIPT_ARTIFACT_REQUIRED")
+    if ORIGINAL_VIDEO_ID_PATTERN.fullmatch(str(vid)) is None:
+        raise ValueError("TRANSCRIPT_ORIGINAL_VIDEO_ID_INVALID")
+    # Naming only by the immutable original Video ID avoids path traversal
+    # or a reviewer substituting a transcript for a different video.
+    evidence_path=Path(transcript_dir)/f"{vid}.json"
+    try:
+        data=evidence_path.read_bytes()
+    except (OSError,ValueError) as e:
+        raise ValueError("ORIGINAL_VIDEO_TRANSCRIPT_ARTIFACT_REQUIRED") from e
+    if not data or len(data)>MAX_TRANSCRIPT_FILE_BYTES:
+        raise ValueError("TRANSCRIPT_EVIDENCE_ARTIFACT_SIZE_INVALID")
+    actual_sha=hashlib.sha256(data).hexdigest()
+    if actual_sha!=supplied:
+        raise ValueError("TRANSCRIPT_ACTUAL_BYTES_SHA256_MISMATCH")
+    try:
+        artifact=json.loads(data.decode("utf-8"))
+    except (ValueError,UnicodeDecodeError) as e:
+        raise ValueError("TRANSCRIPT_ARTIFACT_NOT_UTF8_JSON") from e
+    if (not isinstance(artifact,dict) or
+        artifact.get("schema")!=TRANSCRIPT_SCHEMA or
+        artifact.get("video_id")!=vid or
+        artifact.get("original_channel_id")!=source["original_channel_id"] or
+        artifact.get("original_title")!=source["original_title"] or
+        artifact.get("source_snapshot_id")!=source_snapshot_id or
+        artifact.get("source_zip_sha256")!=ORIGINAL_BATCH_024_SOURCE_SHA256 or
+        artifact.get("source_url")!=f"https://www.youtube.com/watch?v={vid}" or
+        artifact.get("capture_method") not in TRANSCRIPT_CAPTURE_METHODS or
+        not isinstance(artifact.get("captured_by"),str) or
+        len(artifact["captured_by"].strip())<3 or
+        not isinstance(artifact.get("caption_language"),str) or
+        not re.fullmatch(r"[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8}){0,3}",
+                         artifact["caption_language"])):
+        raise ValueError("TRANSCRIPT_ORIGINAL_SOURCE_PROVENANCE_MISMATCH")
+    capture_time=aware_utc_datetime(artifact.get("captured_at"),"TRANSCRIPT_CAPTURE_TIME_INVALID")
+    review_time=aware_utc_datetime(item.get("reviewed_at"),"INVALID_REVIEW_TIMESTAMP")
+    if capture_time>review_time:
+        raise ValueError("TRANSCRIPT_CAPTURE_AFTER_REVIEW_FORBIDDEN")
+    segment=item.get("content_segment")
+    if not isinstance(segment,dict):
+        raise ValueError("TIMESTAMPED_VIDEO_CONTENT_EVIDENCE_REQUIRED")
+    start,end=segment.get("start_seconds"),segment.get("end_seconds")
+    if (type(start) not in (int,float) or type(end) not in (int,float) or
+        not math.isfinite(start) or not math.isfinite(end) or
+        start<0 or end-start<10):
+        raise ValueError("TIMESTAMPED_VIDEO_CONTENT_EVIDENCE_REQUIRED")
+    cues=artifact.get("segments")
+    if not isinstance(cues,list) or not cues or len(cues)>20000:
+        raise ValueError("TRANSCRIPT_SEGMENT_POPULATION_INVALID")
+    covered=0
+    excerpt_cues=[]
+    prior_end=0
+    for cue in cues:
+        if not isinstance(cue,dict):
+            raise ValueError("TRANSCRIPT_SEGMENT_INVALID")
+        st,ed,txt=cue.get("start_seconds"),cue.get("end_seconds"),cue.get("text")
+        if (type(st) not in (int,float) or type(ed) not in (int,float) or
+            not math.isfinite(st) or not math.isfinite(ed) or
+            st<0 or ed<=st or st<prior_end or
+            not isinstance(txt,str) or not txt.strip()):
+            raise ValueError("TRANSCRIPT_SEGMENT_INVALID_OR_OVERLAPPING")
+        prior_end=ed
+        overlap=max(0,min(ed,end)-max(st,start))
+        if overlap>0:
+            covered+=overlap
+            excerpt_cues.append(txt)
+    # Do NOT credit 10 seconds of requested span if only a two-second
+    # caption cue actually intersects the observed video interval.
+    if covered+1e-6<10:
+        raise ValueError("TRANSCRIPT_TIMECODE_COVERAGE_BELOW_10_SECONDS")
+    text=normalize_transcript_text(" ".join(excerpt_cues))
+    if normalize_transcript_text(excerpt) not in text:
+        raise ValueError("TRANSCRIPT_EXCERPT_NOT_IN_REVIEWED_VIDEO_SEGMENT")
+    return {
+        "transcript_evidence_sha256":actual_sha,
+        "transcript_capture_method":artifact["capture_method"],
+        "transcript_captured_at":artifact["captured_at"],
+        "transcript_caption_language":artifact["caption_language"]
+    }
+
+
+def adjudicate(request,metadata,identities,decisions,*,transcript_evidence_dir=None):
     # Do not trust an alleged collector artifact just because its source SHA
     # strings and one reviewed Channel ID match. Validate ALL rows and counts.
     original,actual=validate_collected_metadata(request,metadata)
@@ -236,15 +353,16 @@ def adjudicate(request,metadata,identities,decisions):
         end=span.get("end_seconds")
         if not isinstance(start,(int,float)) or not isinstance(end,(int,float)) or not (0<=start<end and end-start>=10):
             raise ValueError("TIMESTAMPED_VIDEO_CONTENT_EVIDENCE_REQUIRED")
+        transcript_proof={}
         if method=="TIMESTAMPED_TRANSCRIPT":
-            if not SHA256.fullmatch(str(item.get("transcript_sha256") or "")) or len(str(item.get("transcript_excerpt") or ""))<25:
-                raise ValueError("TRANSCRIPT_SOURCE_DIGEST_AND_EXCERPT_REQUIRED")
+            transcript_proof=verify_timestamped_transcript_file(
+                item,original[vid],source,transcript_evidence_dir)
         group=ranked[name]
         group["channels"].add(channel)
         group["videos"].add(vid)
         group["source_reviews"].append({"video_id":vid,"channel_id":channel,
             "reviewer":item["reviewer"],"reviewed_at":item["reviewed_at"],
-            "content_segment":span,"evidence_method":method})
+            "content_segment":span,"evidence_method":method,**transcript_proof})
         counted[verdict]+=1
     out=[]
     for name,raw_forms in aliases.items():
@@ -273,9 +391,12 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for key in ("request","metadata","identities","decisions","output"):
         p.add_argument("--"+key,required=True)
+    p.add_argument("--transcript-evidence-dir",
+        help="Directory containing the actual <original-video-id>.json UTF-8 caption artifacts; required for any confirmed TIMESTAMPED_TRANSCRIPT review")
     a=p.parse_args()
     load=lambda path:json.loads(Path(path).read_text(encoding="utf-8"))
-    result=adjudicate(load(a.request),load(a.metadata),load(a.identities),load(a.decisions))
+    result=adjudicate(load(a.request),load(a.metadata),load(a.identities),load(a.decisions),
+        transcript_evidence_dir=a.transcript_evidence_dir)
     Path(a.output).write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(json.dumps({k:v for k,v in result.items() if k!="people"},ensure_ascii=False))
 
