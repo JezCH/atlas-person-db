@@ -100,6 +100,14 @@ function validateContentGate(gate){
         review.content_segment.start_seconds<0||
         review.content_segment.end_seconds-review.content_segment.start_seconds<10)
        throw Error("VIDEO_RANK_UNSUPPORTED_OR_DUPLICATE_CONTENT_REVIEW");
+     if(review.evidence_method==="VIDEO_PLAYBACK_MANUAL" &&
+        (!/^[a-f0-9]{64}$/.test(review.manual_playback_evidence_sha256||"")||
+         review.manual_playback_capture_method!=="MANUAL_VIDEO_PLAYBACK"||
+         typeof review.manual_playback_captured_at!=="string"||
+         !Number.isFinite(Date.parse(review.manual_playback_captured_at))||
+         typeof review.manual_playback_captured_by!=="string"||
+         review.manual_playback_captured_by!==review.reviewer))
+       throw Error("VIDEO_RANK_MANUAL_PLAYBACK_ACTUAL_BYTES_PROVENANCE_REQUIRED");
      if(review.evidence_method==="TIMESTAMPED_TRANSCRIPT" &&
         (!/^[a-f0-9]{64}$/.test(review.transcript_evidence_sha256||"")||
          !["YOUTUBE_CAPTION_TRACK","MANUAL_VIDEO_PLAYBACK_TRANSCRIPTION"]
