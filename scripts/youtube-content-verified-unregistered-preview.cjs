@@ -100,6 +100,15 @@ function validateContentGate(gate){
         review.content_segment.start_seconds<0||
         review.content_segment.end_seconds-review.content_segment.start_seconds<10)
        throw Error("VIDEO_RANK_UNSUPPORTED_OR_DUPLICATE_CONTENT_REVIEW");
+     if(review.evidence_method==="TIMESTAMPED_TRANSCRIPT" &&
+        (!/^[a-f0-9]{64}$/.test(review.transcript_evidence_sha256||"")||
+         !["YOUTUBE_CAPTION_TRACK","MANUAL_VIDEO_PLAYBACK_TRANSCRIPTION"]
+          .includes(review.transcript_capture_method)||
+         typeof review.transcript_captured_at!=="string"||
+         !Number.isFinite(Date.parse(review.transcript_captured_at))||
+         typeof review.transcript_caption_language!=="string"||
+         review.transcript_caption_language.length<2))
+       throw Error("VIDEO_RANK_TRANSCRIPT_ACTUAL_BYTES_PROVENANCE_REQUIRED");
      if(usedVideo.has(v))
        throw Error("VIDEO_RANK_SAME_ORIGINAL_VIDEO_CREDITED_TO_TWO_PEOPLE");
      usedVideo.set(v,label);
