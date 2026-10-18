@@ -12,6 +12,7 @@ const QUALITY_RULES=require("../scripts/youtube-person-signal-quality-rules.v2.j
 const REVIEWED_SOURCE_UNIONS=require("../audits/youtube-discovery-reviewed-source-unions-b024.json");
 const REVIEWED_V5_NONPERSON=require("../audits/youtube-v5-source-nonperson-exact-labels.json");
 const EXPANDED_V5_NONPERSON=require("../audits/youtube-v5-expanded-nonperson-reviewed-exact.json");
+const REVIEWED_IDENTITY_HOLDS=require("../audits/youtube-v5-source-reviewed-identity-context-holds.json");
 if(EXPANDED_V5_NONPERSON.schema!=="atlas-youtube-v5-expanded-exact-nonperson-review/v1"||
    EXPANDED_V5_NONPERSON.reviewed_labels.length!==EXPANDED_V5_NONPERSON.reviewed_label_count||
    EXPANDED_V5_NONPERSON.reviewed_label_count!==409)
@@ -129,6 +130,35 @@ function reviewedV5ExpandedNonPersonForSnapshot(snapshot){
     throw Error("YOUTUBE_V5_EXPANDED_NONPERSON_SOURCE_PARITY_MISMATCH");
   return EXPANDED_V5_NONPERSON_KEYS;
 }
+const REVIEWED_IDENTITY_HOLD_REASON_BY_KEY=new Map();
+if(REVIEWED_IDENTITY_HOLDS.schema!=="atlas-youtube-v5-known-original-source-identity-holds/v1"||
+   REVIEWED_IDENTITY_HOLDS.holds.length!==4||
+   REVIEWED_IDENTITY_HOLDS.not_an_unregistered_person_certification!==true||
+   REVIEWED_IDENTITY_HOLDS.original_channel_count!==10127||
+   REVIEWED_IDENTITY_HOLDS.original_video_count!==2230031)
+  throw Error("YOUTUBE_V5_SOURCE_REVIEWED_IDENTITY_HOLD_MANIFEST_INVALID");
+for(const hold of REVIEWED_IDENTITY_HOLDS.holds) {
+  const key=identityKey(hold.raw_name);
+  if(!key||REVIEWED_IDENTITY_HOLD_REASON_BY_KEY.has(key)||
+    !["FATHER_SON_SHARED_NAME","MULTIPLE_SAINTS_WITH_SAME_NAME",
+      "PERSON_HOLIDAY_CATHEDRAL_AMBIGUITY","CONTESTED_SAINT_IDENTITY_HOLIDAY"].includes(hold.reason)||
+    hold.person_identity_certified!==false)
+    throw Error("YOUTUBE_V5_SOURCE_REVIEWED_IDENTITY_HOLD_INVALID");
+  REVIEWED_IDENTITY_HOLD_REASON_BY_KEY.set(key,hold.reason);
+}
+function reviewedIdentityHoldsForSnapshot(snapshot) {
+  if(!snapshot) return new Map();
+  // A rebuilt v5 snapshot from the EXACT SAME immutable source archive must
+  // inherit still-unresolved human identity holds. A changed snapshot ID by
+  // itself is not new proof that Ferdinand Marcos or saints were disambiguated.
+  const sameOriginalSource=snapshot.parser_version===REVIEWED_IDENTITY_HOLDS.expected_parser_version&&
+    snapshot.source_state?.artifact_digest==="sha256:"+REVIEWED_IDENTITY_HOLDS.source_review_zip_sha256&&
+    snapshot.channel_count===REVIEWED_IDENTITY_HOLDS.original_channel_count&&
+    snapshot.video_count===REVIEWED_IDENTITY_HOLDS.original_video_count;
+  if(snapshot.snapshot_id===REVIEWED_IDENTITY_HOLDS.active_rank_snapshot_id&&!sameOriginalSource)
+    throw Error("YOUTUBE_V5_SOURCE_REVIEWED_IDENTITY_HOLD_SNAPSHOT_PARITY_MISMATCH");
+  return sameOriginalSource?new Map(REVIEWED_IDENTITY_HOLD_REASON_BY_KEY):new Map();
+}
 function reviewedV5NonPersonForSnapshot(snapshot){
   if(snapshot?.snapshot_id!==REVIEWED_V5_NONPERSON.active_snapshot_id) return new Set();
   const expected="sha256:"+REVIEWED_V5_NONPERSON.source_archive_sha256;
@@ -226,7 +256,7 @@ function registrationIndex(rows) {
   }
   return index;
 }
-function candidatesFromSource(rawRows,personRows,{now=Date.now(),approvedUnions=[],reviewedSourceNonPersonKeys=new Set(),expandedSourceNonPersonKeys=new Set()}={}) {
+function candidatesFromSource(rawRows,personRows,{now=Date.now(),approvedUnions=[],reviewedSourceNonPersonKeys=new Set(),expandedSourceNonPersonKeys=new Set(),reviewedIdentityHolds=new Map()}={}) {
   if(!Array.isArray(personRows)||!personRows.length)
     throw Error("YOUTUBE_DISCOVERY_PERSON_REGISTRY_EMPTY");
   const registered=registrationIndex(personRows);
@@ -242,8 +272,22 @@ function candidatesFromSource(rawRows,personRows,{now=Date.now(),approvedUnions=
     for(const name of [signal.raw_name,...(row.reviewed_source_labels||[])]) {
       for(const id of registered.get(identityKey(name))||[]) matchIds.add(id);
     }
-    const matches=matchIds; 
-    if(matches.size===1){registeredExcluded++;continue;}
+    const matches=matchIds;
+    // Inspect every independently reviewed original alias in the union. A
+    // reviewed unresolved name MUST NOT be laundered into a valid Person just
+    // because the synthetic canonical label has a different spelling.
+    const holdReasons=new Set(
+      [signal.raw_name,...(row.reviewed_source_labels||[])]
+        .map(name=>reviewedIdentityHolds.get(identityKey(name)))
+        .filter(Boolean)
+    );
+    if(holdReasons.size>1)
+      throw Error("YOUTUBE_DISCOVERY_REVIEWED_UNION_CONFLICTING_IDENTITY_HOLDS");
+    const identityHoldReason=holdReasons.values().next().value||null;
+    // A single registered UUID can describe only ONE of the people sharing a
+    // held name (e.g. Marcos father and son); do not silently erase a hold.
+    // Other unambiguous registered Persons are excluded in the final screen.
+    if(matches.size===1&&!identityHoldReason){registeredExcluded++;continue;}
     if(reviewedNonPerson(signal.raw_name) ||
        reviewedSourceNonPersonKeys.has(key) || expandedSourceNonPersonKeys.has(key)) {
       nonpersonExcluded++;
@@ -270,8 +314,11 @@ function candidatesFromSource(rawRows,personRows,{now=Date.now(),approvedUnions=
         previous.distinct_channel_count=signal.distinct_channel_count;
         previous.video_count=signal.video_count;
       }
-      previous.identity_state=ambiguous||previous.identity_state==="registered_homonym_review"
-        ?"registered_homonym_review":"alias_union_needs_original_ids";
+      previous.identity_state=identityHoldReason||previous.identity_state==="source_reviewed_identity_hold"
+        ?"source_reviewed_identity_hold":
+        ambiguous||previous.identity_state==="registered_homonym_review"
+          ?"registered_homonym_review":"alias_union_needs_original_ids";
+      if(identityHoldReason)previous.identity_review_reason=identityHoldReason;
       previous.count_lower_bound=true;
       continue;
     }
@@ -279,8 +326,10 @@ function candidatesFromSource(rawRows,personRows,{now=Date.now(),approvedUnions=
       raw_name:signal.raw_name,rank:0,
       distinct_channel_count:signal.distinct_channel_count,
       video_count:signal.video_count,
-      identity_state:ambiguous?"registered_homonym_review":
+      identity_state:identityHoldReason?"source_reviewed_identity_hold":
+        ambiguous?"registered_homonym_review":
         UNRESOLVED_SURNAME_KEYS.has(key)?"short_name_identity_review":"unregistered_candidate",
+      identity_review_reason:identityHoldReason,
       registration_match_count:matches.size,
       count_lower_bound:false,source_labels:row.reviewed_source_labels||[signal.raw_name],
       source_id_union_verified:row.source_id_union_verified===true,
@@ -291,7 +340,8 @@ function candidatesFromSource(rawRows,personRows,{now=Date.now(),approvedUnions=
   candidates.sort((a,b)=>b.distinct_channel_count-a.distinct_channel_count||
     b.video_count-a.video_count||a.raw_name.localeCompare(b.raw_name,"en"));
   for(let i=0;i<candidates.length;i++) candidates[i].rank=i+1;
-  return {candidates,registeredExcluded,reviewedLivingExcluded,nonpersonExcluded,sourceNonpersonExcluded,expandedNonpersonExcluded,homonymReview,overlappingRawLabels,reviewedUnionsApplied:reviewed.applied};
+  const reviewedIdentityHoldCount=candidates.filter(row=>row.identity_state==="source_reviewed_identity_hold").length;
+  return {candidates,registeredExcluded,reviewedLivingExcluded,nonpersonExcluded,sourceNonpersonExcluded,expandedNonpersonExcluded,homonymReview,reviewedIdentityHoldCount,overlappingRawLabels,reviewedUnionsApplied:reviewed.applied};
 }
 async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,offset=0}={}) {
   if(!client||typeof client.query!=="function")throw Error("YOUTUBE_DISCOVERY_DB_REQUIRED");
@@ -316,9 +366,10 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
         ?initial.source_state.reviewed_source_unions:[];
   const reviewedSourceNonPersonKeys=reviewedV5NonPersonForSnapshot(initial);
   const expandedSourceNonPersonKeys=reviewedV5ExpandedNonPersonForSnapshot(initial);
-  const {candidates,registeredExcluded,reviewedLivingExcluded,nonpersonExcluded,sourceNonpersonExcluded,expandedNonpersonExcluded,homonymReview,overlappingRawLabels,reviewedUnionsApplied}=
+  const reviewedIdentityHolds=reviewedIdentityHoldsForSnapshot(initial);
+  const {candidates,registeredExcluded,reviewedLivingExcluded,nonpersonExcluded,sourceNonpersonExcluded,expandedNonpersonExcluded,homonymReview,reviewedIdentityHoldCount,overlappingRawLabels,reviewedUnionsApplied}=
     candidatesFromSource(signals.rows||[],people.rows||[],{
-      approvedUnions:reviewedGroups,reviewedSourceNonPersonKeys,expandedSourceNonPersonKeys
+      approvedUnions:reviewedGroups,reviewedSourceNonPersonKeys,expandedSourceNonPersonKeys,reviewedIdentityHolds
     });
   const final=projectSnapshot((await client.query(GLOBAL_SNAPSHOT_SQL)).rows?.[0]);
   if(!final||final.snapshot_id!==initial.snapshot_id)
@@ -337,7 +388,8 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     reviewed_nonperson_excluded_count:nonpersonExcluded,
     reviewed_original_source_nonperson_excluded_count:sourceNonpersonExcluded,
     reviewed_expanded_source_nonperson_excluded_count:expandedNonpersonExcluded,
-    homonym_review_count:homonymReview,overlapping_raw_labels:overlappingRawLabels,
+    homonym_review_count:homonymReview,reviewed_identity_context_hold_count:reviewedIdentityHoldCount,
+    overlapping_raw_labels:overlappingRawLabels,
     reviewed_source_id_unions_applied:reviewedUnionsApplied,
     title_context_source_included:initial.source_state?.additional_title_context_extraction===true,
     video_person_centeredness_certified:false,
@@ -350,5 +402,5 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
 }
 module.exports=Object.freeze({
   DISCOVERY_SCHEMA,CANDIDATE_ROWS_SQL,PERSON_NAMES_SQL,CHANNEL_THRESHOLDS,
-  identityKey,reviewedNonPerson,reviewedV5NonPersonForSnapshot,reviewedV5ExpandedNonPersonForSnapshot,registrationIndex,applyReviewedSourceUnions,candidatesFromSource,readYoutubeUnregisteredDiscovery
+  identityKey,reviewedNonPerson,reviewedV5NonPersonForSnapshot,reviewedV5ExpandedNonPersonForSnapshot,reviewedIdentityHoldsForSnapshot,registrationIndex,applyReviewedSourceUnions,candidatesFromSource,readYoutubeUnregisteredDiscovery
 });
