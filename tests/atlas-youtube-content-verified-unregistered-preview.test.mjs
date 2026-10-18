@@ -144,6 +144,13 @@ test("unresolved common name matching two registered Persons remains a HOLD, nev
  assert.equal(output.identity_holds[0].registered_id_count,2);
 });
 
+test("one original reviewed name form cannot be attributed to two separately ranked human identities",()=>{
+ const first=subject("First Historical Person",triple(140),["First Historical Person","Shared Title Alias"]);
+ const second=subject("Second Historical Person",triple(150),["Second Historical Person","Shared Title Alias"]);
+ assert.throws(()=>engine.preview(gate([first,second]),registry(),manifest()),
+  /VIDEO_RANK_ORIGINAL_ALIAS_ASSIGNED_TO_MULTIPLE_IDENTITIES/);
+});
+
 test("identity HOLD source and reviewed alias malformed population can never turn into a valid ranking",()=>{
  const g=gate([subject("St Patrick",triple(110))]);
  const bad=manifest();bad.holds[0].person_identity_certified=true;
