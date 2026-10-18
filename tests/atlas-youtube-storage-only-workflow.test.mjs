@@ -124,3 +124,27 @@ test("durable private index proof is recovered without Actions archive or local 
   assert.match(stage, /--expected-private-index-sha256/);
   assert.match(stage, /cp \/tmp\/storage-only-index-receipt\.json \/tmp\/storage-only-receipt\/private-index-receipt\.json/);
 });
+
+test("private source integrity pin survives retention only after full restore acceptance", () => {
+  assert.match(src, /^  issues: write(?:\s|$)/m);
+  const restoreIndex = jobs.findIndex((j) => j.includes("Restore and prove selected private Storage objects"));
+  const pinIndex = jobs.findIndex((j) => j.includes("Anchor verified private index SHA beyond Actions retention"));
+  const artifactIndex = jobs.findIndex((j) => j.includes("name: youtube-source-private-storage-only-proof"));
+  assert.ok(restoreIndex >= 0 && pinIndex > restoreIndex && artifactIndex > pinIndex);
+  const step = jobs[pinIndex];
+  assert.match(step, /if: \$\{\{ inputs\.phase == 'storage_only' \}\}/);
+  assert.match(step, /GH_TOKEN: \$\{\{ github\.token \}\}/);
+  assert.match(step, /atlas-youtube-private-original-recovery-index-receipt\/v1/);
+  assert.match(step, /atlas-youtube-private-index-independent-restore\/v1/);
+  assert.match(step, /catalog_from_original_actions_artifact==false/);
+  assert.match(step, /\.restore\.files==\$members and \.restore\.bytes==\$bytes/);
+  assert.match(step, /\.snapshot\.video_count==\$videos/);
+  assert.match(step, /canonical_db_catalog_written==false/);
+  assert.match(step, /ATLAS_PRIVATE_SOURCE_INDEX_PIN_V1 artifact=\$SOURCE_ARTIFACT_ID sha256=\$sha/);
+  assert.match(step, /gh issue comment 2226/);
+  assert.match(step, /gh api --paginate "repos\/\$GITHUB_REPOSITORY\/issues\/2226\/comments\?per_page=100"/);
+  assert.match(step, /if grep -F -- "\$marker"/);
+  assert.match(step, /--body-file \/tmp\/youtube-permanent-index-pin\.md/);
+  assert.match(step, /NOT written, NOT verified/);
+  assert.doesNotMatch(step, /RUNTIME_IDENTITY_ENDPOINT|CATALOG_ENDPOINT|SUPABASE_SERVICE_ROLE_KEY|storage\/v1\/object/);
+});

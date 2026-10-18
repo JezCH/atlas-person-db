@@ -22,6 +22,7 @@ on:
 permissions:
   contents: read
   actions: read
+  issues: write # permanent SHA pin only after verified private restore
   id-token: write
 
 concurrency:
@@ -292,6 +293,78 @@ jobs:
           cp /tmp/storage-only-index-receipt.json /tmp/storage-only-receipt/private-index-receipt.json
           cp /tmp/storage-only-remote-restore.json /tmp/storage-only-receipt/restore.json
           cp /tmp/storage-only-census.json /tmp/storage-only-receipt/census.json
+
+      - name: Anchor verified private index SHA beyond Actions retention
+        if: ${{ inputs.phase == 'storage_only' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # All prior private Storage checks and the fresh remote-only original
+          # video census MUST have succeeded. Revalidate the proof boundaries.
+          jq -e --argjson artifact "$SOURCE_ARTIFACT_ID" \
+            --argjson members "$SOURCE_MEMBER_COUNT" \
+            --argjson bytes "$SOURCE_MEMBER_BYTES" '
+            .schema=="atlas-youtube-private-original-recovery-index-receipt/v1"
+            and .source_artifact_id==$artifact
+            and .member_count==$members and .member_bytes==$bytes
+            and .canonical_db_catalog_written==false
+            and .canonical_db_catalog_verified==false
+            and (.index_sha256|test("^[0-9a-f]{64}$"))
+            and (.index_object_key|type=="string")
+          ' /tmp/storage-only-index-receipt.json >/dev/null
+          jq -e --argjson artifact "$SOURCE_ARTIFACT_ID" \
+            --argjson members "$SOURCE_MEMBER_COUNT" \
+            --argjson bytes "$SOURCE_MEMBER_BYTES" '
+            .schema=="atlas-youtube-private-index-independent-restore/v1"
+            and .source_artifact_id==$artifact
+            and .catalog_from_original_actions_artifact==false
+            and .canonical_db_catalog_written==false
+            and .restore.files==$members and .restore.bytes==$bytes
+          ' /tmp/storage-only-remote-restore.json >/dev/null
+          jq -e --argjson ok "$SOURCE_OK_CHANNEL_COUNT" \
+            --argjson selected "$SOURCE_SELECTED_CHANNEL_COUNT" \
+            --argjson videos "$SOURCE_VIDEO_ROWS" \
+            --arg next "$SOURCE_NEXT_BATCH" '
+            .snapshot.channel_count==$ok and (.channels|length)==$selected
+            and .snapshot.video_count==$videos
+            and .snapshot.source_state.next_batch==$next
+          ' /tmp/storage-only-census.json >/dev/null
+          sha="$(jq -er '.index_sha256' /tmp/storage-only-index-receipt.json)"
+          key="$(jq -er '.index_object_key' /tmp/storage-only-index-receipt.json)"
+          # Stable exact source artifact ID + hash marker for idempotent reruns.
+          marker="ATLAS_PRIVATE_SOURCE_INDEX_PIN_V1 artifact=$SOURCE_ARTIFACT_ID sha256=$sha"
+          # The issue carries immutable integrity coordinates only: no private
+          # content, service-role secrets, or per-video/person private rows.
+          cat > /tmp/youtube-permanent-index-pin.md <<EOF
+          $marker
+
+          Private original source recovery verified after complete remote restore (protected GitHub Actions run $GITHUB_RUN_ID).
+
+          - Original source Batch: $SOURCE_BATCH
+          - Original Actions ZIP: artifact $SOURCE_ARTIFACT_ID, SHA256 $SOURCE_ARTIFACT_DIGEST
+          - Private bucket: atlas-youtube-source (NOT PUBLIC)
+          - Immutable recovery index object key: $key
+          - Independent private recovery index SHA256: $sha
+          - Complete restored original members: $SOURCE_MEMBER_COUNT; member bytes: $SOURCE_MEMBER_BYTES
+          - Video records verified from private-only restore: $SOURCE_VIDEO_ROWS
+          - Source run: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+          - Retention-limited run evidence: youtube-source-private-storage-only-proof
+          - Canonical Production catalog: NOT written, NOT verified. This does NOT by itself close #2226/G04B, recover Batch001-007, authorize crawl, or establish registered historical Persons.
+
+          Independent future restore: GET private recovery index by exact key, compare SHA256 to this durable issue comment, validate every original member hash/path, and rebuild the original channel and video census. No Actions ZIP or ephemeral runner inventory is required.
+          EOF
+          # Fail closed on GitHub comment-read errors; never use blind upserts.
+          gh api --paginate "repos/$GITHUB_REPOSITORY/issues/2226/comments?per_page=100" \
+            --jq '.[].body' > /tmp/youtube-existing-source-pin-comments.txt
+          if grep -F -- "$marker" /tmp/youtube-existing-source-pin-comments.txt >/dev/null; then
+            echo "EXACT_PRIVATE_INDEX_PIN_ALREADY_RECORDED"
+          else
+            gh issue comment 2226 --repo "$GITHUB_REPOSITORY" \
+              --body-file /tmp/youtube-permanent-index-pin.md
+            echo "EXACT_PRIVATE_INDEX_PIN_PUBLISHED_TO_ISSUE_2226"
+          fi
 
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.phase == 'storage_only' }}
