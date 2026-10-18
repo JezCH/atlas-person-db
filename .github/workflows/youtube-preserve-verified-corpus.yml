@@ -1,6 +1,15 @@
 name: Preserve verified YouTube original corpus
 on:
   workflow_dispatch:
+    inputs:
+      phase:
+        description: 'storage_only backs up private objects and verifies restore; catalog_full requires current deployed runtime'
+        required: true
+        type: choice
+        default: storage_only
+        options:
+          - storage_only
+          - catalog_full
 
 permissions:
   contents: read
@@ -94,6 +103,24 @@ jobs:
             and .snapshot.source_state.channel_ids_persisted==true
           ' /tmp/youtube-source-preflight.json >/dev/null
 
+      - name: Gate catalog_full on exact deployed main BEFORE Storage writes
+        if: ${{ inputs.phase == 'catalog_full' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          status="$(curl --max-time 20 --silent --show-error --output /tmp/source-preflight.json --write-out '%{http_code}' "$RUNTIME_IDENTITY_ENDPOINT" || true)"
+          if [[ "$status" == "402" ]]; then
+            echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: no Storage/catalog writes in catalog_full" >&2
+            exit 1
+          fi
+          [[ "$status" == "200" ]] || { echo "SOURCE_CATALOG_RUNTIME_NOT_READY: $status" >&2; exit 1; }
+          sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/source-preflight.json)"
+          ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/source-preflight.json)"
+          [[ "$sha" == "$GITHUB_SHA" && "$ref" == "main" ]] || {
+            echo "SOURCE_CATALOG_MAIN_SHA_UNDEPLOYED" >&2
+            exit 1
+          }
+
       - name: Fail closed if private Storage credentials are unavailable
         env:
           SOURCE_TOKEN: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -123,27 +150,85 @@ jobs:
             and ((.source_records + .metadata_objects)==$catalog)
           ' /tmp/youtube-remote-pass2.json >/dev/null
 
-      - name: Resolve exact deployed main runtime before canonical catalog write
+      - name: Reconfirm current deployed main SHA before canonical catalog write
+        if: ${{ inputs.phase == 'catalog_full' }}
         shell: bash
         run: |
           set -euo pipefail
-          for attempt in $(seq 1 90); do
-            status="$(curl --silent --show-error --output /tmp/runtime.json --write-out '%{http_code}' "${RUNTIME_IDENTITY_ENDPOINT}")"
-            if [[ "${status}" == "200" ]]; then
-              runtime_sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/runtime.json)"
-              runtime_ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/runtime.json)"
-              if [[ "${runtime_sha}" == "${GITHUB_SHA}" && "${runtime_ref}" == "main" ]]; then
-                echo "ATLAS_YOUTUBE_ARCHIVE_RUNTIME_SHA=${runtime_sha}" >> "${GITHUB_ENV}"
-                exit 0
-              fi
-            fi
-            sleep 5
-          done
-          cat /tmp/runtime.json >&2 || true
-          echo "YOUTUBE_SOURCE_ARCHIVE_RUNTIME_NOT_READY" >&2
-          exit 1
+          status="$(curl --max-time 20 --silent --show-error --output /tmp/source-catalog-final-runtime.json --write-out '%{http_code}' "$RUNTIME_IDENTITY_ENDPOINT" || true)"
+          if [[ "$status" == "402" ]]; then
+            echo "DEPLOYMENT_DISABLED_OR_PAYMENT_REQUIRED: DB catalog blocked; private objects retained" >&2
+            exit 1
+          fi
+          [[ "$status" == "200" ]] || { echo "SOURCE_CATALOG_RUNTIME_NOT_READY: $status" >&2; exit 1; }
+          sha="$(jq -r '.identity.git_commit_sha // ""' /tmp/source-catalog-final-runtime.json)"
+          ref="$(jq -r '.identity.git_commit_ref // ""' /tmp/source-catalog-final-runtime.json)"
+          [[ "$sha" == "$GITHUB_SHA" && "$ref" == "main" ]] || {
+            echo "SOURCE_CATALOG_MAIN_SHA_CHANGED" >&2
+            exit 1
+          }
+          echo "ATLAS_YOUTUBE_ARCHIVE_RUNTIME_SHA=$sha" >> "$GITHUB_ENV"
+
+      - name: Restore and prove all 6,044 private Storage objects independently of Production
+        if: ${{ inputs.phase == 'storage_only' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/youtube-preserve-verified-corpus.py \
+            --root corpus \
+            --output /tmp/storage-only-pass3.json \
+            --expected-total-files "$SOURCE_MEMBER_COUNT" \
+            --expected-total-bytes "$SOURCE_MEMBER_BYTES"
+          jq -e --argjson files "$SOURCE_MEMBER_COUNT" --argjson bytes "$SOURCE_MEMBER_BYTES" '
+            .uploaded==true and .files_verified==$files and .bytes_verified==$bytes
+            and .new_objects==0 and .existing_objects==$files
+          ' /tmp/storage-only-pass3.json >/dev/null
+          # This is an upload receipt / local inventory, NOT a committed
+          # canonical atlas_v2 catalog. No Production API request is permitted.
+          jq '[.records[] | {object_key,sha256,byte_count,source_artifact_id,batch_label,source_kind,source_path,channel_id,video_rows}]' \
+            /tmp/storage-only-pass3.json > /tmp/storage-only-inventory.json
+          python scripts/youtube-preserve-verified-corpus.py \
+            --catalog /tmp/storage-only-inventory.json \
+            --output /tmp/storage-only-remote-restore.json \
+            --restore-dir /tmp/storage-only-independent-restore
+          jq -e --argjson files "$SOURCE_MEMBER_COUNT" --argjson bytes "$SOURCE_MEMBER_BYTES" '
+            .catalog_records==$files and .restore.files==$files and .restore.bytes==$bytes
+          ' /tmp/storage-only-remote-restore.json >/dev/null
+          python scripts/youtube-build-person-signal-snapshot.py \
+            --root /tmp/storage-only-independent-restore \
+            --output /tmp/storage-only-census.json \
+            --artifact-id "$SOURCE_ARTIFACT_ID" \
+            --artifact-digest "$SOURCE_ARTIFACT_DIGEST"
+          jq -e '
+            .snapshot.channel_count==6011 and .snapshot.video_count==1536512
+            and (.channels|length)==6770
+            and .snapshot.source_state.next_batch=="batch018"
+          ' /tmp/storage-only-census.json >/dev/null
+          mkdir -p /tmp/storage-only-receipt
+          jq -n --argjson artifact "$SOURCE_ARTIFACT_ID" --argjson files "$SOURCE_MEMBER_COUNT" \
+            --argjson bytes "$SOURCE_MEMBER_BYTES" '{
+              schema:"atlas-youtube-private-storage-only-proof/v1",
+              source_artifact_id:$artifact,
+              private_storage_objects_verified:$files,
+              bytes_restored_from_private_storage:$bytes,
+              verified_video_rows:1536512,
+              source_archive_restore_verified:true,
+              canonical_db_catalog_written:false,
+              canonical_db_catalog_verified:false,
+              full_g04_durable_migration_accepted:false
+            }' > /tmp/storage-only-receipt/summary.json
+          cp /tmp/storage-only-remote-restore.json /tmp/storage-only-receipt/restore.json
+          cp /tmp/storage-only-census.json /tmp/storage-only-receipt/census.json
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ inputs.phase == 'storage_only' }}
+        with:
+          name: youtube-source-private-storage-only-proof
+          path: /tmp/storage-only-receipt/
+          retention-days: 90
 
       - name: Publish exact 6,044 verified artifact members to canonical DB catalog
+        if: ${{ inputs.phase == 'catalog_full' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -178,6 +263,7 @@ jobs:
           ' /tmp/youtube-catalog-pass1.json >/dev/null
 
       - name: Prove third Storage pass is zero-new
+        if: ${{ inputs.phase == 'catalog_full' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -190,6 +276,7 @@ jobs:
           ' /tmp/youtube-remote-final.json >/dev/null
 
       - name: Prove canonical DB catalog replay is idempotent
+        if: ${{ inputs.phase == 'catalog_full' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -206,6 +293,7 @@ jobs:
           ' /tmp/youtube-catalog-final.json >/dev/null
 
       - name: Read complete catalog back from Production without local manifest input
+        if: ${{ inputs.phase == 'catalog_full' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -226,6 +314,7 @@ jobs:
           jq '.outcome.records' /tmp/youtube-catalog-readback.json > /tmp/youtube-catalog-records.json
 
       - name: Delete local corpus and restore all 6,044 members from DB catalog plus private Storage only
+        if: ${{ inputs.phase == 'catalog_full' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -239,6 +328,7 @@ jobs:
           ' /tmp/youtube-remote-restore.json >/dev/null
 
       - name: Rebuild authoritative census from remote-restored files only
+        if: ${{ inputs.phase == 'catalog_full' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -252,6 +342,7 @@ jobs:
           ' /tmp/youtube-remote-restore-census.json >/dev/null
 
       - name: Publish sanitized durable-recovery receipts
+        if: ${{ inputs.phase == 'catalog_full' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -280,6 +371,7 @@ jobs:
           }' /tmp/youtube-remote-final.json             > /tmp/youtube-source-storage-verification/summary.json
 
       - name: Upload durable-recovery evidence
+        if: ${{ inputs.phase == 'catalog_full' }}
         uses: actions/upload-artifact@v4
         with:
           name: youtube-source-storage-verification
