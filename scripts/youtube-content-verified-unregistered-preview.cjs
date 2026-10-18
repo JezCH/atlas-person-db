@@ -52,7 +52,7 @@ function validateContentGate(gate){
     gate.actual_metadata_video_ids>gate.original_requested_video_ids||
     gate.explicit_content_review_decisions>gate.original_requested_video_ids)
   throw Error("VIDEO_RANK_UNTRUSTED_CONTENT_GATE");
- const usedVideo=new Map(),names=new Set();
+ const usedVideo=new Map(),names=new Set(),aliasOwners=new Map();
  const rows=[];
  for(const person of asArray(gate.people,"VIDEO_RANK_CONTENT_GATE_PEOPLE_MISSING")){
    const label=person?.person_identity_for_review;
@@ -68,6 +68,12 @@ function validateContentGate(gate){
      if(!a||normalizedAliases.has(a))
        throw Error("VIDEO_RANK_DUPLICATE_OR_INVALID_IDENTITY_ALIAS");
      normalizedAliases.add(a);
+   }
+   for(const alias of [label,...aliases]){
+     const normalized=normal(alias);
+     if(aliasOwners.has(normalized)&&aliasOwners.get(normalized)!==key)
+       throw Error("VIDEO_RANK_ORIGINAL_ALIAS_ASSIGNED_TO_MULTIPLE_IDENTITIES");
+     aliasOwners.set(normalized,key);
    }
    const channels=asArray(person.original_channel_ids,"VIDEO_RANK_VERIFIED_CHANNEL_IDS_MISSING");
    const videos=asArray(person.original_video_ids,"VIDEO_RANK_VERIFIED_VIDEO_IDS_MISSING");
