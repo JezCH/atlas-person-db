@@ -165,5 +165,99 @@ class VerifiedUploadTests(unittest.TestCase):
         remote.assert_not_called()
         self.assertEqual((target / "unrelated.txt").read_text(encoding="utf-8"), "preserve")
 
+    def source_index_fixture(self):
+        """Two-file exact corpus simulates each full pinned archive identity."""
+        manifest = self.root / "out" / "batch008" / "manifest.json"
+        manifest.parent.mkdir(parents=True, exist_ok=True)
+        manifest.write_text("[]", encoding="utf-8")
+        files = [self.file, manifest]
+        records, remote = [], {}
+        for file in files:
+            data = uploader.record_for(file, self.root)
+            contents = data.pop("_contents")
+            remote[data["object_key"]] = contents
+            records.append(data)
+        receipt = {
+            "schema": "atlas-youtube-source-storage-verification/v2",
+            "source_artifact_id": uploader.SOURCE_ARTIFACT_ID,
+            "uploaded": True, "new_objects": 0, "existing_objects": len(records),
+            "total_files_discovered": len(records),
+            "total_bytes_discovered": sum(record["byte_count"] for record in records),
+            "files_verified": len(records),
+            "bytes_verified": sum(record["byte_count"] for record in records),
+            "records": records,
+        }
+        census = dict(uploader.ARCHIVE_CENSUS[uploader.SOURCE_ARTIFACT_ID],
+                      members=2, bytes=receipt["bytes_verified"],
+                      channel_files=1, source_files=2, metadata_files=0, video_rows=2)
+        return receipt, census, remote
+
+    def test_remote_pinned_index_persists_idempotently_then_restores_without_local_archive(self):
+        source, census, remote = self.source_index_fixture()
+        calls = []
+
+        def storage(method, base, token, key, data=None):
+            calls.append((method, key))
+            if method == "GET" and key not in remote:
+                raise urllib.error.HTTPError("https://example.invalid", 404, "missing", {}, None)
+            if method == "POST":
+                if key in remote:
+                    raise RuntimeError("UNEXPECTED_UPSERT")
+                remote[key] = data
+                return b""
+            return remote[key]
+
+        with patch.dict(uploader.ARCHIVE_CENSUS, {uploader.SOURCE_ARTIFACT_ID: census}):
+            with patch.object(uploader, "storage_call", side_effect=storage):
+                first = uploader.persist_private_recovery_index("https://example.invalid", "t", source)
+                self.assertTrue(first["new_index_object"])
+                second = uploader.persist_private_recovery_index("https://example.invalid", "t", source)
+                self.assertFalse(second["new_index_object"])
+                self.assertEqual(first["index_sha256"], second["index_sha256"])
+                index_key, records = uploader.load_remote_recovery_index(
+                    "https://example.invalid", "t",
+                    expected_sha256=first["index_sha256"])
+                self.assertEqual(index_key, first["index_object_key"])
+                self.assertEqual(len(records), 2)
+                self.file.unlink()
+                (self.root / "out" / "batch008" / "manifest.json").unlink()
+                restored = uploader.restore_from_catalog(
+                    "https://example.invalid", "t", records, self.root / "isolated-from-private")
+                self.assertEqual(restored, {"files": 2, "bytes": first["member_bytes"]})
+                self.assertEqual((self.root / "isolated-from-private" /
+                                  "out/batch008/videos/UC1.ndjson.gz").read_bytes(),
+                                 remote[source["records"][0]["object_key"]])
+        index_posts = [key for method, key in calls if method == "POST"]
+        self.assertEqual(index_posts, [first["index_object_key"]])
+        self.assertFalse(first["canonical_db_catalog_written"])
+
+    def test_private_index_rejects_partial_source_or_tampered_remote_bytes(self):
+        source, census, remote = self.source_index_fixture()
+        with patch.dict(uploader.ARCHIVE_CENSUS, {uploader.SOURCE_ARTIFACT_ID: census}):
+            incomplete = dict(source, files_verified=1)
+            with patch.object(uploader, "storage_call") as storage:
+                with self.assertRaisesRegex(RuntimeError, "SOURCE_RECOVERY_UNVERIFIED_STORAGE_PASS"):
+                    uploader.persist_private_recovery_index("https://example.invalid", "t", incomplete)
+                storage.assert_not_called()
+            with patch.object(uploader, "storage_call") as storage:
+                with self.assertRaisesRegex(RuntimeError, "SOURCE_RECOVERY_PINNED_INDEX_SHA_REQUIRED"):
+                    uploader.load_remote_recovery_index("https://example.invalid", "t",
+                                                       expected_sha256="")
+                storage.assert_not_called()
+            damaged = dict(source["records"][1])
+            damaged["source_path"] = source["records"][0]["source_path"]
+            with self.assertRaisesRegex(RuntimeError, "SOURCE_RECOVERY_DUPLICATE_OR_INCONSISTENT_PATH"):
+                uploader.canonical_recovery_index([source["records"][0], damaged])
+            original = uploader.canonical_recovery_index(source["records"])
+            index_key = uploader.private_recovery_index_key()
+            remote[index_key] = original + b"untrusted"
+            with patch.object(uploader, "storage_call", side_effect=lambda method, base, token, key, data=None: remote[key]):
+                with self.assertRaisesRegex(RuntimeError, "SOURCE_RECOVERY_PRIVATE_INDEX_SHA_MISMATCH"):
+                    uploader.load_remote_recovery_index("https://example.invalid", "t",
+                                                       expected_sha256=uploader.sha256(original))
+                with self.assertRaisesRegex(RuntimeError, "SOURCE_RECOVERY_PRIVATE_INDEX_ROUNDTRIP_MISMATCH"):
+                    uploader.persist_private_recovery_index("https://example.invalid", "t", source)
+
+
 if __name__ == "__main__":
     unittest.main()
