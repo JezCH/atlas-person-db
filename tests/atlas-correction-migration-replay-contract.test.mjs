@@ -38,3 +38,14 @@ test('retired Stage2 correction-ledger compatibility writer stays absent', () =>
     assert.match(currentMigrationService, new RegExp(migration.replaceAll('.', '\\.')));
   }
 });
+
+test('retirement ledger replay cannot re-tombstone a restored-live Polity or restore its archived names', () => {
+  const sql = fs.readFileSync(path.join(root, 'db/migrations/20260928_polity_identity_retirements.sql'), 'utf8');
+  const retirementBackfill = sql.split('$backfill$')[1];
+  const nameBackfill = sql.split('$backfill_names$')[1];
+  assert.ok(retirementBackfill && nameBackfill, 'both replayed historical backfills must exist');
+  assert.match(retirementBackfill, /AND NOT EXISTS\s*\(\s*SELECT 1 FROM atlas_v2\.polities live\s+WHERE live\.id = retired\.retired_polity_id\s*\)/i);
+  assert.match(nameBackfill, /AND NOT EXISTS\s*\(\s*SELECT 1 FROM atlas_v2\.polities live\s+WHERE live\.id = names\.retired_polity_id\s*\)/i);
+  assert.match(retirementBackfill, /ON CONFLICT \(retired_polity_id\) DO NOTHING/i);
+  assert.match(nameBackfill, /ON CONFLICT \(retired_polity_id, locale, name\) DO NOTHING/i);
+});
