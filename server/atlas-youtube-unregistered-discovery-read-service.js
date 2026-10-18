@@ -295,7 +295,7 @@ function candidatesFromSource(rawRows,personRows,{now=Date.now(),approvedUnions=
       if(expandedSourceNonPersonKeys.has(key)) expandedNonpersonExcluded++;
       continue;
     }
-    if(reviewedLivingStatus(signal.raw_name,now)?.status==="living_likely") {
+    if(!identityHoldReason && reviewedLivingStatus(signal.raw_name,now)?.status==="living_likely") {
       reviewedLivingExcluded++;
       continue;
     }
