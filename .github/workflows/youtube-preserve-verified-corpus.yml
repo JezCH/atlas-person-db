@@ -117,17 +117,17 @@ jobs:
         run: |
           set -euo pipefail
           python /tmp/atlas-original-source-uploader.py             --root corpus             --output /tmp/youtube-inventory.json             --dry-run             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
-          jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson catalog "${SOURCE_CATALOG_COUNT}" --argjson sources "${SOURCE_SOURCE_COUNT}" '
+          jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson catalog "${SOURCE_CATALOG_COUNT}" --argjson sources "${SOURCE_SOURCE_COUNT}" --argjson metadata "${SOURCE_METADATA_COUNT}" --argjson videos "${SOURCE_VIDEO_ROWS}" '
             .schema=="atlas-youtube-source-storage-verification/v2"
             and .total_files_discovered==$files
             and .total_bytes_discovered==$bytes
             and .files_verified==$files
             and .bytes_verified==$bytes
             and .source_records==$sources
-            and .metadata_objects==23
+            and .metadata_objects==$metadata
             and ((.source_records + .metadata_objects)==$catalog)
             and .uploaded==false
-            and ([.records[] | select(.source_kind=="channel_videos") | .video_rows] | add)==1536512
+            and ([.records[] | select(.source_kind=="channel_videos") | .video_rows] | add)==$videos
           ' /tmp/youtube-inventory.json >/dev/null
 
       - name: Validate authoritative source census before any upload
@@ -136,11 +136,11 @@ jobs:
           set -euo pipefail
           python -m pip install --disable-pip-version-check pycountry
           python scripts/youtube-build-person-signal-snapshot.py             --root corpus             --output /tmp/youtube-source-preflight.json             --artifact-id "${SOURCE_ARTIFACT_ID}"             --artifact-digest "${SOURCE_ARTIFACT_DIGEST}"
-          jq -e '
-            .snapshot.channel_count==6011
-            and .snapshot.video_count==1536512
-            and (.channels|length)==6770
-            and .snapshot.source_state.next_batch=="batch018"
+          jq -e --argjson okchannels "${SOURCE_OK_CHANNEL_COUNT}" --argjson videos "${SOURCE_VIDEO_ROWS}" --argjson selected "${SOURCE_SELECTED_CHANNEL_COUNT}" --arg next "${SOURCE_NEXT_BATCH}" '
+            .snapshot.channel_count==$okchannels
+            and .snapshot.video_count==$videos
+            and (.channels|length)==$selected
+            and .snapshot.source_state.next_batch==$next
             and .snapshot.source_state.channel_ids_persisted==true
           ' /tmp/youtube-source-preflight.json >/dev/null
 
@@ -192,12 +192,12 @@ jobs:
         run: |
           set -euo pipefail
           python /tmp/atlas-original-source-uploader.py             --root corpus             --output /tmp/youtube-remote-pass2.json             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
-          jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson catalog "${SOURCE_CATALOG_COUNT}" --argjson sources "${SOURCE_SOURCE_COUNT}" '
+          jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson catalog "${SOURCE_CATALOG_COUNT}" --argjson sources "${SOURCE_SOURCE_COUNT}" --argjson metadata "${SOURCE_METADATA_COUNT}" --argjson videos "${SOURCE_VIDEO_ROWS}" '
             .files_verified==$files
             and .bytes_verified==$bytes
             and ((.new_objects + .existing_objects)==$files)
             and .source_records==$sources
-            and .metadata_objects==23
+            and .metadata_objects==$metadata
             and ((.source_records + .metadata_objects)==$catalog)
           ' /tmp/youtube-remote-pass2.json >/dev/null
 
@@ -250,19 +250,19 @@ jobs:
             --output /tmp/storage-only-census.json \
             --artifact-id "$SOURCE_ARTIFACT_ID" \
             --artifact-digest "$SOURCE_ARTIFACT_DIGEST"
-          jq -e '
-            .snapshot.channel_count==6011 and .snapshot.video_count==1536512
-            and (.channels|length)==6770
-            and .snapshot.source_state.next_batch=="batch018"
+          jq -e --argjson okchannels "${SOURCE_OK_CHANNEL_COUNT}" --argjson videos "${SOURCE_VIDEO_ROWS}" --argjson selected "${SOURCE_SELECTED_CHANNEL_COUNT}" --arg next "${SOURCE_NEXT_BATCH}" '
+            .snapshot.channel_count==$okchannels and .snapshot.video_count==$videos
+            and (.channels|length)==$selected
+            and .snapshot.source_state.next_batch==$next
           ' /tmp/storage-only-census.json >/dev/null
           mkdir -p /tmp/storage-only-receipt
-          jq -n --argjson artifact "$SOURCE_ARTIFACT_ID" --argjson files "$SOURCE_MEMBER_COUNT" \
+          jq -n --argjson artifact "$SOURCE_ARTIFACT_ID" --argjson videos "$SOURCE_VIDEO_ROWS" --argjson files "$SOURCE_MEMBER_COUNT" \
             --argjson bytes "$SOURCE_MEMBER_BYTES" '{
               schema:"atlas-youtube-private-storage-only-proof/v1",
               source_artifact_id:$artifact,
               private_storage_objects_verified:$files,
               bytes_restored_from_private_storage:$bytes,
-              verified_video_rows:1536512,
+              verified_video_rows:$videos,
               source_archive_restore_verified:true,
               canonical_db_catalog_written:false,
               canonical_db_catalog_verified:false,
@@ -294,15 +294,15 @@ jobs:
                   }
               ]
             }' /tmp/youtube-remote-pass2.json > /tmp/youtube-catalog-request.json
-          jq -e --argjson expected "${SOURCE_CATALOG_COUNT}" '
+          jq -e --argjson expected "${SOURCE_CATALOG_COUNT}" --argjson metadata "${SOURCE_METADATA_COUNT}" --argjson videos "${SOURCE_VIDEO_ROWS}" '
             (.records|length)==$expected
-            and ([.records[]|select(.source_kind=="channel_videos")|.video_rows]|add)==1536512
-            and ([.records[]|select(.source_kind=="metadata")]|length)==23
+            and ([.records[]|select(.source_kind=="channel_videos")|.video_rows]|add)==$videos
+            and ([.records[]|select(.source_kind=="metadata")]|length)==$metadata
           ' /tmp/youtube-catalog-request.json >/dev/null
           oidc_token="$(curl --fail-with-body --silent --show-error             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${CATALOG_AUDIENCE}" | jq -er '.value')"
           status="$(curl --silent --show-error             --output /tmp/youtube-catalog-pass1.json             --write-out '%{http_code}'             --request POST             -H 'content-type: application/json'             -H "authorization: Bearer ${oidc_token}"             --data-binary @/tmp/youtube-catalog-request.json             "${CATALOG_ENDPOINT}")"
           [[ "${status}" == "200" ]] || { cat /tmp/youtube-catalog-pass1.json >&2 || true; exit 1; }
-          jq -e --argjson expected "${SOURCE_CATALOG_COUNT}" '
+          jq -e --argjson expected "${SOURCE_CATALOG_COUNT}" --argjson metadata "${SOURCE_METADATA_COUNT}" --argjson videos "${SOURCE_VIDEO_ROWS}" '
             .ok==true
             and .marker=="ATLAS_YOUTUBE_SOURCE_ARCHIVE_CATALOG_V1"
             and .migration.applied==[
@@ -334,7 +334,7 @@ jobs:
           oidc_token="$(curl --fail-with-body --silent --show-error             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${CATALOG_AUDIENCE}" | jq -er '.value')"
           status="$(curl --silent --show-error             --output /tmp/youtube-catalog-final.json             --write-out '%{http_code}'             --request POST             -H 'content-type: application/json'             -H "authorization: Bearer ${oidc_token}"             --data-binary @/tmp/youtube-catalog-request.json             "${CATALOG_ENDPOINT}")"
           [[ "${status}" == "200" ]] || { cat /tmp/youtube-catalog-final.json >&2 || true; exit 1; }
-          jq -e --argjson expected "${SOURCE_CATALOG_COUNT}" '
+          jq -e --argjson expected "${SOURCE_CATALOG_COUNT}" --argjson metadata "${SOURCE_METADATA_COUNT}" --argjson videos "${SOURCE_VIDEO_ROWS}" '
             .ok==true
             and .outcome.idempotent==true
             and .outcome.committed==false
@@ -352,14 +352,14 @@ jobs:
           oidc_token="$(curl --fail-with-body --silent --show-error             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${CATALOG_AUDIENCE}" | jq -er '.value')"
           status="$(curl --silent --show-error             --output /tmp/youtube-catalog-readback.json             --write-out '%{http_code}'             --request POST             -H 'content-type: application/json'             -H "authorization: Bearer ${oidc_token}"             --data-binary @/tmp/youtube-catalog-read-request.json             "${CATALOG_ENDPOINT}")"
           [[ "${status}" == "200" ]] || { cat /tmp/youtube-catalog-readback.json >&2 || true; exit 1; }
-          jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson sources "${SOURCE_SOURCE_COUNT}" '
+          jq -e --argjson files "${SOURCE_MEMBER_COUNT}" --argjson bytes "${SOURCE_MEMBER_BYTES}" --argjson sources "${SOURCE_SOURCE_COUNT}" --argjson metadata "${SOURCE_METADATA_COUNT}" --argjson videos "${SOURCE_VIDEO_ROWS}" '
             .ok==true
             and .operation=="read_catalog"
             and .outcome.record_count==$files
             and ([.outcome.records[].byte_count]|add)==$bytes
             and ([.outcome.records[]|select(.source_kind!="metadata")]|length)==$sources
-            and ([.outcome.records[]|select(.source_kind=="metadata")]|length)==23
-            and ([.outcome.records[]|select(.source_kind=="channel_videos")|.video_rows]|add)==1536512
+            and ([.outcome.records[]|select(.source_kind=="metadata")]|length)==$metadata
+            and ([.outcome.records[]|select(.source_kind=="channel_videos")|.video_rows]|add)==$videos
             and (([.outcome.records[].object_key]|unique|length)==$files)
           ' /tmp/youtube-catalog-readback.json >/dev/null
           jq '.outcome.records' /tmp/youtube-catalog-readback.json > /tmp/youtube-catalog-records.json
@@ -384,11 +384,11 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/youtube-build-person-signal-snapshot.py             --root /tmp/youtube-remote-restore             --output /tmp/youtube-remote-restore-census.json             --artifact-id "${SOURCE_ARTIFACT_ID}"             --artifact-digest "${SOURCE_ARTIFACT_DIGEST}"
-          jq -e '
-            .snapshot.channel_count==6011
-            and .snapshot.video_count==1536512
-            and (.channels|length)==6770
-            and .snapshot.source_state.next_batch=="batch018"
+          jq -e --argjson okchannels "${SOURCE_OK_CHANNEL_COUNT}" --argjson videos "${SOURCE_VIDEO_ROWS}" --argjson selected "${SOURCE_SELECTED_CHANNEL_COUNT}" --arg next "${SOURCE_NEXT_BATCH}" '
+            .snapshot.channel_count==$okchannels
+            and .snapshot.video_count==$videos
+            and (.channels|length)==$selected
+            and .snapshot.source_state.next_batch==$next
             and .snapshot.source_state.channel_ids_persisted==true
           ' /tmp/youtube-remote-restore-census.json >/dev/null
 
