@@ -53,6 +53,23 @@ class MetadataEvidenceTest(unittest.TestCase):
                                 source_zip=self.source,verify_source_sha=False)
         self.assertEqual(self.req["unique_original_video_ids"],2)
         self.assertTrue(self.req["original_per_video_channel_id_verified"])
+        self.manual_dir=Path(self.tmp.name)/"manual"
+        self.manual_dir.mkdir()
+        self.manual_receipt={
+            "schema":gate.MANUAL_PLAYBACK_SCHEMA,
+            "video_id":VID1,"original_channel_id":UC1,
+            "original_title":"The Life of Emmett Till",
+            "source_snapshot_id":"test-source",
+            "source_zip_sha256":enrich.SOURCE_ZIP_SHA,
+            "source_url":"https://www.youtube.com/watch?v="+VID1,
+            "capture_method":"MANUAL_VIDEO_PLAYBACK",
+            "person_identity_for_review":"Emmett Till",
+            "captured_by":"human reviewer",
+            "captured_at":"2026-10-09T12:00:00Z",
+            "observations":[{"start_seconds":30,"end_seconds":60,
+              "observed_evidence":"Synthetic test observation of an individual-centered historical biography."}]
+        }
+        self.manual_sha=self.store_manual_receipt(self.manual_receipt)
 
     def api(self,ids):
         lookup={r["video_id"]:r for r in self.req["videos"]}
@@ -87,6 +104,16 @@ class MetadataEvidenceTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"YOUTUBE_DATA_API_KEY_MISSING"):
             enrich.youtube_batch_api(None)
 
+
+    def store_manual_receipt(self,receipt):
+        raw=(json.dumps(receipt,ensure_ascii=False,sort_keys=True)+"\\n").encode("utf-8")
+        (self.manual_dir/(VID1+".json")).write_bytes(raw)
+        return hashlib.sha256(raw).hexdigest()
+
+    def adjudicate(self,*args,**kwargs):
+        kwargs.setdefault("playback_evidence_dir",self.manual_dir)
+        return gate.adjudicate(*args,**kwargs)
+
     def decisions(self):
         return {"schema":"atlas-youtube-person-content-review-decisions/v1",
                 "source_snapshot_id":"test-source",
@@ -95,6 +122,7 @@ class MetadataEvidenceTest(unittest.TestCase):
                     "identity_for_review":"Emmett Till",
                     "verdict":"PERSON_PRIMARY_CONTENT_CONFIRMED",
                     "evidence_method":"VIDEO_PLAYBACK_MANUAL",
+                    "manual_playback_sha256":self.manual_sha,
                     "source_url":"https://www.youtube.com/watch?v="+VID1,
                     "reviewer":"human reviewer",
                     "reviewed_at":"2026-10-10T00:00:00Z",
@@ -110,7 +138,7 @@ class MetadataEvidenceTest(unittest.TestCase):
     def test_content_focus_credit_requires_playback_or_transcript_not_description(self):
         metadata=enrich.fetch_descriptions(self.req,api_call=self.api)
         decisions=self.decisions()
-        result=gate.adjudicate(self.req,metadata,self.identities(),decisions)
+        result=self.adjudicate(self.req,metadata,self.identities(),decisions)
         self.assertEqual(result["person_centered_video_ids_verified"],1)
         self.assertEqual(result["people"][0]["distinct_content_verified_channels"],1)
         self.assertFalse(result["registered_person_exclusion_completed"])
@@ -118,29 +146,29 @@ class MetadataEvidenceTest(unittest.TestCase):
         title_only=copy.deepcopy(decisions)
         title_only["decisions"][0]["evidence_method"]="DESCRIPTION_ONLY"
         with self.assertRaisesRegex(ValueError,"TITLE_OR_DESCRIPTION_CANNOT_PROVE_CONTENT_SUBJECT"):
-            gate.adjudicate(self.req,metadata,self.identities(),title_only)
+            self.adjudicate(self.req,metadata,self.identities(),title_only)
         bad=copy.deepcopy(decisions)
         bad["decisions"][0]["content_segment"]={"start_seconds":2,"end_seconds":6}
         with self.assertRaisesRegex(ValueError,"TIMESTAMPED_VIDEO_CONTENT_EVIDENCE_REQUIRED"):
-            gate.adjudicate(self.req,metadata,self.identities(),bad)
+            self.adjudicate(self.req,metadata,self.identities(),bad)
         bad=copy.deepcopy(decisions)
         bad["decisions"].append(copy.deepcopy(bad["decisions"][0]))
         with self.assertRaisesRegex(ValueError,"DUPLICATE_OR_UNSOURCED"):
-            gate.adjudicate(self.req,metadata,self.identities(),bad)
+            self.adjudicate(self.req,metadata,self.identities(),bad)
         mismatched=copy.deepcopy(metadata)
         mismatched["records"][0]["status"]="CHANNEL_MISMATCH"
         with self.assertRaisesRegex(ValueError,"COLLECTED_METADATA_STATUS_INCONSISTENT"):
-            gate.adjudicate(self.req,mismatched,self.identities(),decisions)
+            self.adjudicate(self.req,mismatched,self.identities(),decisions)
         empty_reviews={"schema":"atlas-youtube-person-content-review-decisions/v1",
                        "source_snapshot_id":"test-source","decisions":[]}
-        result=gate.adjudicate(self.req,metadata,self.identities(),empty_reviews)
+        result=self.adjudicate(self.req,metadata,self.identities(),empty_reviews)
         self.assertEqual(result["person_centered_video_ids_verified"],0)
 
     def test_content_gate_revalidates_collected_metadata_before_any_person_credit(self):
         metadata=enrich.fetch_descriptions(self.req,api_call=self.api)
         self.assertEqual(gate.validate_collected_metadata(self.req,metadata)[1][VID1]["status"],
                          "DESCRIPTION_PRESENT")
-        self.assertEqual(gate.adjudicate(self.req,metadata,self.identities(),
+        self.assertEqual(self.adjudicate(self.req,metadata,self.identities(),
                         self.decisions())["person_centered_video_ids_verified"],1)
         # Each case used to cross the original final gate if the reviewed
         # video's status and Channel ID were left unchanged.
@@ -157,7 +185,7 @@ class MetadataEvidenceTest(unittest.TestCase):
             modified["records"][0][field]=value
             with self.subTest(record_field=field):
                 with self.assertRaisesRegex(ValueError,error):
-                    gate.adjudicate(self.req,modified,self.identities(),self.decisions())
+                    self.adjudicate(self.req,modified,self.identities(),self.decisions())
         for field,value,error in [
             ("requested_original_video_ids",999,"METADATA_COMPLETENESS_COUNT_MISMATCH"),
             ("fetched_metadata_rows",1,"METADATA_COMPLETENESS_COUNT_MISMATCH"),
@@ -169,21 +197,21 @@ class MetadataEvidenceTest(unittest.TestCase):
             modified[field]=value
             with self.subTest(metadata_field=field):
                 with self.assertRaisesRegex(ValueError,error):
-                    gate.adjudicate(self.req,modified,self.identities(),self.decisions())
+                    self.adjudicate(self.req,modified,self.identities(),self.decisions())
         duplicate=copy.deepcopy(metadata)
         duplicate["records"].append(copy.deepcopy(duplicate["records"][0]))
         with self.assertRaisesRegex(ValueError,"ORIGINAL_VIDEO_ID_EVIDENCE_POPULATION_MISMATCH"):
-            gate.adjudicate(self.req,duplicate,self.identities(),self.decisions())
+            self.adjudicate(self.req,duplicate,self.identities(),self.decisions())
         modified_source=copy.deepcopy(self.req)
         modified_source["videos"].append(copy.deepcopy(modified_source["videos"][0]))
         modified_source["unique_original_video_ids"]=3
         with self.assertRaisesRegex(ValueError,"ORIGINAL_VIDEO_ID_EVIDENCE_POPULATION_MISMATCH"):
-            gate.adjudicate(modified_source,metadata,self.identities(),self.decisions())
+            self.adjudicate(modified_source,metadata,self.identities(),self.decisions())
         injected=copy.deepcopy(metadata)
         injected["records"][0]["live_channel_id"]=None
         injected["records"][0]["status"]="NOT_FOUND_OR_UNAVAILABLE"
         with self.assertRaisesRegex(ValueError,"COLLECTED_METADATA_UNAVAILABLE_ROW_HAS_PUBLISHER_DATA"):
-            gate.adjudicate(self.req,injected,self.identities(),self.decisions())
+            self.adjudicate(self.req,injected,self.identities(),self.decisions())
         # A genuinely incomplete official batch may provide one video only;
         # it cannot credit an unavailable/unfetched second ID.
         partially_fetched=copy.deepcopy(metadata)
@@ -192,13 +220,13 @@ class MetadataEvidenceTest(unittest.TestCase):
         partially_fetched["not_yet_fetched"]=1
         self.assertEqual(gate.validate_collected_metadata(self.req,partially_fetched)[1][VID1]["status"],
                          "DESCRIPTION_PRESENT")
-        self.assertEqual(gate.adjudicate(self.req,partially_fetched,self.identities(),
+        self.assertEqual(self.adjudicate(self.req,partially_fetched,self.identities(),
                          self.decisions())["person_centered_video_ids_verified"],1)
         second=copy.deepcopy(self.decisions())
         second["decisions"][0]["video_id"]=VID2
         second["decisions"][0]["source_url"]="https://www.youtube.com/watch?v="+VID2
         with self.assertRaisesRegex(ValueError,"CANNOT_CREDIT_MISSING_OR_CHANNEL_MISMATCH_VIDEO"):
-            gate.adjudicate(self.req,partially_fetched,self.identities(),second)
+            self.adjudicate(self.req,partially_fetched,self.identities(),second)
 
     def transcript_artifact(self):
         return {
@@ -235,17 +263,17 @@ class MetadataEvidenceTest(unittest.TestCase):
         decision=self.decisions()
         decision["decisions"][0]["evidence_method"]="TIMESTAMPED_TRANSCRIPT"
         with self.assertRaisesRegex(ValueError,"TRANSCRIPT_SOURCE_DIGEST_AND_EXCERPT_REQUIRED"):
-            gate.adjudicate(self.req,metadata,self.identities(),decision)
+            self.adjudicate(self.req,metadata,self.identities(),decision)
         decision["decisions"][0]["transcript_sha256"]="a"*64
         decision["decisions"][0]["transcript_excerpt"]="The detailed historical biography explains the primary individual's life."
         # A superficially valid SHA string and excerpt cannot claim a watched
         # video. The literal original Video ID transcript bytes are mandatory.
         with self.assertRaisesRegex(ValueError,"ORIGINAL_VIDEO_TRANSCRIPT_ARTIFACT_REQUIRED"):
-            gate.adjudicate(self.req,metadata,self.identities(),decision)
+            self.adjudicate(self.req,metadata,self.identities(),decision)
         self.store_transcript_artifact(self.transcript_artifact(),decision)
         with self.assertRaisesRegex(ValueError,"ORIGINAL_VIDEO_TRANSCRIPT_ARTIFACT_REQUIRED"):
-            gate.adjudicate(self.req,metadata,self.identities(),decision)
-        output=gate.adjudicate(self.req,metadata,self.identities(),decision,
+            self.adjudicate(self.req,metadata,self.identities(),decision)
+        output=self.adjudicate(self.req,metadata,self.identities(),decision,
                               transcript_evidence_dir=self.tmp.name)
         self.assertEqual(output["person_centered_video_ids_verified"],1)
         evidence=output["people"][0]["content_review_provenance"][0]
@@ -265,7 +293,7 @@ class MetadataEvidenceTest(unittest.TestCase):
         # plausible and the decision supplies a 10+ second review segment.
         (Path(self.tmp.name)/(VID1+".json")).write_bytes(b'{"forged":"transcript"}')
         with self.assertRaisesRegex(ValueError,"TRANSCRIPT_ACTUAL_BYTES_SHA256_MISMATCH"):
-            gate.adjudicate(self.req,metadata,self.identities(),decision,
+            self.adjudicate(self.req,metadata,self.identities(),decision,
                             transcript_evidence_dir=self.tmp.name)
         changes=[
             ("video",lambda x:x.update(video_id=VID2),
@@ -304,8 +332,56 @@ class MetadataEvidenceTest(unittest.TestCase):
             self.store_transcript_artifact(altered,decision)
             with self.subTest(reason=reason):
                 with self.assertRaisesRegex(ValueError,error):
-                    gate.adjudicate(self.req,metadata,self.identities(),decision,
+                    self.adjudicate(self.req,metadata,self.identities(),decision,
                                     transcript_evidence_dir=self.tmp.name)
+
+
+    def test_manual_video_playback_claim_requires_original_source_bound_bytes(self):
+        metadata=enrich.fetch_descriptions(self.req,api_call=self.api)
+        decision=self.decisions()
+        # This is a synthetic human report; without an inspectable receipt,
+        # even matching public metadata and a plausible 30s claim are untrusted.
+        with self.assertRaisesRegex(ValueError,"MANUAL_PLAYBACK_SOURCE_ARTIFACT_REQUIRED"):
+            gate.adjudicate(self.req,metadata,self.identities(),decision)
+        valid=self.adjudicate(self.req,metadata,self.identities(),decision)
+        proof=valid["people"][0]["content_review_provenance"][0]
+        self.assertEqual(proof["manual_playback_evidence_sha256"],self.manual_sha)
+        self.assertEqual(proof["manual_playback_capture_method"],"MANUAL_VIDEO_PLAYBACK")
+        altered=copy.deepcopy(decision)
+        altered["decisions"][0]["manual_playback_sha256"]="a"*64
+        with self.assertRaisesRegex(ValueError,"MANUAL_PLAYBACK_ACTUAL_BYTES_SHA256_MISMATCH"):
+            self.adjudicate(self.req,metadata,self.identities(),altered)
+        cases=[
+          ("wrong video",lambda x:x.update(video_id=VID2),
+           "MANUAL_PLAYBACK_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+          ("wrong channel",lambda x:x.update(original_channel_id=UC2),
+           "MANUAL_PLAYBACK_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+          ("wrong source",lambda x:x.update(source_zip_sha256="0"*64),
+           "MANUAL_PLAYBACK_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+          ("wrong human",lambda x:x.update(captured_by="unrelated party"),
+           "MANUAL_PLAYBACK_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+          ("wrong topic",lambda x:x.update(person_identity_for_review="Not Emmett Till"),
+           "MANUAL_PLAYBACK_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+          ("not video playback",lambda x:x.update(capture_method="TITLE_ONLY"),
+           "MANUAL_PLAYBACK_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+          ("capture after review",lambda x:x.update(captured_at="2026-10-11T12:00:00Z"),
+           "MANUAL_PLAYBACK_CAPTURE_AFTER_REVIEW_FORBIDDEN"),
+          ("too little video observed",lambda x:x["observations"][0].update(end_seconds=33),
+           "MANUAL_PLAYBACK_OBSERVED_COVERAGE_BELOW_10_SECONDS"),
+          ("invented clock values",lambda x:x["observations"][0].update(end_seconds=True),
+           "MANUAL_PLAYBACK_OBSERVATION_INVALID")
+        ]
+        for label,mutation,error in cases:
+            modified=copy.deepcopy(self.manual_receipt)
+            mutation(modified)
+            changed_sha=self.store_manual_receipt(modified)
+            updated=self.decisions()
+            updated["decisions"][0]["manual_playback_sha256"]=changed_sha
+            with self.subTest(case=label):
+                with self.assertRaisesRegex(ValueError,error):
+                    self.adjudicate(self.req,metadata,self.identities(),updated)
+        # Restore for any re-entrant test/reviewer use.
+        self.manual_sha=self.store_manual_receipt(self.manual_receipt)
 
 
 if __name__=="__main__":
