@@ -59,6 +59,11 @@ def tracks(info,key):
 
 def assess(request,extract=None,*,captured_at="2026-10-18T00:00:00Z"):
     """Synthetic fake extractor is allowed for TESTING only, not content credit."""
+    # Only the replay-validated immutable #2513 original-ID request is admissible.
+    # A caller must never redefine an archived title/channel and then compare
+    # a public player against their own forged before-state.
+    if request!=verified_request():
+        raise ValueError("PUBLIC_PLAYER_SOURCE_THREE_ORIGINAL_BINDINGS_INVALID")
     rows=request.get("videos")
     if (request.get("schema")!="atlas-youtube-description-enrichment-request/v1"
         or request.get("publication_allowed") is not False
