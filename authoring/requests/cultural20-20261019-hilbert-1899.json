@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:additional-hilbert:1899:v1",
+  "person": {
+    "canonical_name_en": "David Hilbert",
+    "display_name_ko": "다비트 힐베르트",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "science",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician and author of Foundations of Geometry",
+    "role_display_name_ko": "수학자·기하학 기초 공리화",
+    "start_year": 1899,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1899,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). Publication of Grundlagen der Geometrie in 1899, reflecting Göttingen's German Empire mathematical science. Paris address of 23 mathematical problems in 1900 is historically independent event but handled as notes, not an extra timeline row. Do not place the 1899 work in 1900 Paris or treat Göttingen as French."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "MacTutor History of Mathematics — David Hilbert",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Hilbert/",
+      "citation_text": "MacTutor documents Hilbert's 1899 Grundlagen der Geometrie and 1900 International Congress lecture with the influential problems."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "다비트 힐베르트",
+      "url": "https://namu.wiki/w/%EB%8B%A4%EB%B9%84%ED%8A%B8%20%ED%9E%90%EB%B2%A0%EB%A5%B4%ED%8A%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. New candidate not previously found in queue; exact live Person/alias negative check required before write."
+  }
+}

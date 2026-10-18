@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:chopin:1832:v1",
+  "person": {
+    "canonical_name_en": "Frédéric Chopin",
+    "display_name_ko": "프레데리크 쇼팽",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Romantic composer and pianist",
+    "role_display_name_ko": "낭만주의 작곡가·피아니스트",
+    "start_year": 1832,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1832,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). Paris debut at Salle Pleyel on 26 February 1832 is a source-backed representative French musical activity; Chopin was born in the Duchy of Warsaw, not in France. One representative concert/year, not a lifelong 1832 composition tenure or all of his compositions individually."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Fryderyk Chopin Institute — Chopin's Life, Paris 1832",
+      "canonical_url": "https://chopin.nifc.pl/en/chopin/kalendarium/rok/1832",
+      "citation_text": "The Polish Fryderyk Chopin Institute chronology records Chopin's public Paris debut during 1832."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "프레데리크 쇼팽",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%A0%88%EB%8D%B0%EB%A6%AC%ED%81%AC%20%EC%87%BC%ED%8C%BD"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. Existing reviewed user CORE40 queue id user-core40-20261004-chopin is reused; no duplicate queue entry."
+  }
+}

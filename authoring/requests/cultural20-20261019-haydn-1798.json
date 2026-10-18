@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:additional-haydn:1798:v1",
+  "person": {
+    "canonical_name_en": "Joseph Haydn",
+    "display_name_ko": "요제프 하이든",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Habsburg Monarchy",
+    "display_name_ko": "합스부르크 군주국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Classical composer of The Creation",
+    "role_display_name_ko": "고전주의 작곡가·천지창조 작곡가",
+    "start_year": 1798,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1798,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). The Creation (Die Schöpfung) performed in Vienna in 1798 (private premiere), source-backed representative composing/performing milestone. Vienna was under the pre-1804 Habsburg Monarchy within HRE, NOT an already-created Austrian Empire. Distinct from public 1799 performance."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopaedia Britannica — Joseph Haydn",
+      "canonical_url": "https://www.britannica.com/biography/Joseph-Haydn",
+      "citation_text": "Britannica biographical account dates Haydn's oratorio The Creation and its first Vienna private performances to 1798."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "요제프 하이든",
+      "url": "https://namu.wiki/w/%EC%9A%94%EC%A0%9C%ED%94%84%20%ED%95%98%EC%9D%B4%EB%93%A0"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. New candidate not previously found in queue; exact live Person/alias negative check required before write."
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:additional-schubert:1827:v1",
+  "person": {
+    "canonical_name_en": "Franz Schubert",
+    "display_name_ko": "프란츠 슈베르트",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Austrian Empire",
+    "display_name_ko": "오스트리아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Romantic composer of Winterreise",
+    "role_display_name_ko": "낭만주의 작곡가·겨울 나그네 작곡가",
+    "start_year": 1827,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1827,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). Schubert composed the song cycle Winterreise in 1827 in Vienna, Austrian Empire; solo representative mature music moment, not claim that Schubert's entire short life of musical composition lasted only one year."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopaedia Britannica — Franz Schubert",
+      "canonical_url": "https://www.britannica.com/biography/Franz-Schubert",
+      "citation_text": "Britannica identifies Winterreise song cycle as completed in 1827 in Schubert's Vienna years."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "프란츠 슈베르트",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%9E%80%EC%B8%A0%20%EC%8A%88%EB%B2%A0%EB%A5%B4%ED%8A%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. New candidate not previously found in queue; exact live Person/alias negative check required before write."
+  }
+}

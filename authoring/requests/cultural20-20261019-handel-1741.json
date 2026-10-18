@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:handel:1741:v1",
+  "person": {
+    "canonical_name_en": "George Frideric Handel",
+    "display_name_ko": "게오르크 프리드리히 헨델",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Great Britain",
+    "display_name_ko": "그레이트브리튼 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Baroque composer of Messiah",
+    "role_display_name_ko": "바로크 작곡가·메시아 작곡가",
+    "start_year": 1741,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1741,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). Handel composed the oratorio Messiah in London in 1741. Its first actual performance was in Dublin in 1742 under the Kingdom of Ireland, not London; this Activity describes composition in Great Britain only and does not represent Handel's German-born origin as British birth."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Encyclopaedia Britannica — Messiah, Handel",
+      "canonical_url": "https://www.britannica.com/topic/Messiah-oratorio-by-Handel",
+      "citation_text": "Britannica dates composition to 1741 in London and premiere to Dublin 1742."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "게오르크 프리드리히 헨델",
+      "url": "https://namu.wiki/w/%EA%B2%8C%EC%98%A4%EB%A5%B4%ED%81%AC%20%ED%94%84%EB%A6%AC%EB%93%9C%EB%A6%AC%ED%9E%88%20%ED%97%A8%EB%8D%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. Existing reviewed user CORE40 queue id user-core40-20261004-handel is reused; no duplicate queue entry."
+  }
+}
