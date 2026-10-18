@@ -200,7 +200,37 @@ class MetadataEvidenceTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"CANNOT_CREDIT_MISSING_OR_CHANNEL_MISMATCH_VIDEO"):
             gate.adjudicate(self.req,partially_fetched,self.identities(),second)
 
-    def test_transcript_evidence_requires_sha_and_excerpt(self):
+    def transcript_artifact(self):
+        return {
+            "schema":gate.TRANSCRIPT_SCHEMA,
+            "video_id":VID1,
+            "original_channel_id":UC1,
+            "original_title":"The Life of Emmett Till",
+            "source_snapshot_id":"test-source",
+            "source_zip_sha256":enrich.SOURCE_ZIP_SHA,
+            "source_url":"https://www.youtube.com/watch?v="+VID1,
+            "capture_method":"YOUTUBE_CAPTION_TRACK",
+            "captured_by":"synthetic test caption capturer",
+            "captured_at":"2026-10-09T12:00:00Z",
+            "caption_language":"en",
+            "segments":[
+                {"start_seconds":30,"end_seconds":42,
+                 "text":"The detailed historical biography explains"},
+                {"start_seconds":42,"end_seconds":60,
+                 "text":"the primary individual's life and enduring significance."}
+            ]
+        }
+
+    def store_transcript_artifact(self,artifact,decision):
+        raw=(json.dumps(artifact,ensure_ascii=False,sort_keys=True)+"\\n").encode("utf-8")
+        evidence=Path(self.tmp.name)/(VID1+".json")
+        evidence.write_bytes(raw)
+        decision["decisions"][0]["transcript_sha256"]=hashlib.sha256(raw).hexdigest()
+        decision["decisions"][0]["transcript_excerpt"]=(
+            "The detailed historical biography explains the primary individual's life")
+        return evidence
+
+    def test_transcript_evidence_requires_actual_bytes_and_original_source_binding(self):
         metadata=enrich.fetch_descriptions(self.req,api_call=self.api)
         decision=self.decisions()
         decision["decisions"][0]["evidence_method"]="TIMESTAMPED_TRANSCRIPT"
@@ -208,8 +238,69 @@ class MetadataEvidenceTest(unittest.TestCase):
             gate.adjudicate(self.req,metadata,self.identities(),decision)
         decision["decisions"][0]["transcript_sha256"]="a"*64
         decision["decisions"][0]["transcript_excerpt"]="The detailed historical biography explains the primary individual's life."
-        output=gate.adjudicate(self.req,metadata,self.identities(),decision)
+        # A superficially valid SHA string and excerpt cannot claim a watched
+        # video. The literal original Video ID transcript bytes are mandatory.
+        with self.assertRaisesRegex(ValueError,"ORIGINAL_VIDEO_TRANSCRIPT_ARTIFACT_REQUIRED"):
+            gate.adjudicate(self.req,metadata,self.identities(),decision)
+        self.store_transcript_artifact(self.transcript_artifact(),decision)
+        with self.assertRaisesRegex(ValueError,"ORIGINAL_VIDEO_TRANSCRIPT_ARTIFACT_REQUIRED"):
+            gate.adjudicate(self.req,metadata,self.identities(),decision)
+        output=gate.adjudicate(self.req,metadata,self.identities(),decision,
+                              transcript_evidence_dir=self.tmp.name)
         self.assertEqual(output["person_centered_video_ids_verified"],1)
+        evidence=output["people"][0]["content_review_provenance"][0]
+        self.assertEqual(evidence["transcript_evidence_sha256"],
+                         decision["decisions"][0]["transcript_sha256"])
+        self.assertEqual(evidence["transcript_capture_method"],"YOUTUBE_CAPTION_TRACK")
+        self.assertFalse(output["registered_person_exclusion_completed"])
+        self.assertFalse(output["production_ranking_publishable"])
+
+    def test_transcript_file_tampering_wrong_video_and_fake_timecodes_fail_closed(self):
+        metadata=enrich.fetch_descriptions(self.req,api_call=self.api)
+        decision=self.decisions()
+        decision["decisions"][0]["evidence_method"]="TIMESTAMPED_TRANSCRIPT"
+        original=self.transcript_artifact()
+        self.store_transcript_artifact(original,decision)
+        # Same claimed digest, DIFFERENT bytes: reject even if the text is
+        # plausible and the decision supplies a 10+ second review segment.
+        (Path(self.tmp.name)/(VID1+".json")).write_bytes(b'{"forged":"transcript"}')
+        with self.assertRaisesRegex(ValueError,"TRANSCRIPT_ACTUAL_BYTES_SHA256_MISMATCH"):
+            gate.adjudicate(self.req,metadata,self.identities(),decision,
+                            transcript_evidence_dir=self.tmp.name)
+        changes=[
+            ("video",lambda x:x.update(video_id=VID2),
+             "TRANSCRIPT_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+            ("channel",lambda x:x.update(original_channel_id=UC2),
+             "TRANSCRIPT_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+            ("title",lambda x:x.update(original_title="Unrelated presentation"),
+             "TRANSCRIPT_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+            ("snapshot",lambda x:x.update(source_snapshot_id="unrelated-archive"),
+             "TRANSCRIPT_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+            ("zip",lambda x:x.update(source_zip_sha256="f"*64),
+             "TRANSCRIPT_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+            ("URL",lambda x:x.update(source_url="https://www.youtube.com/watch?v="+VID2),
+             "TRANSCRIPT_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+            ("method",lambda x:x.update(capture_method="VIDEO_TITLE_ONLY"),
+             "TRANSCRIPT_ORIGINAL_SOURCE_PROVENANCE_MISMATCH"),
+            ("chronology",lambda x:x.update(captured_at="2026-10-11T00:00:00Z"),
+             "TRANSCRIPT_CAPTURE_AFTER_REVIEW_FORBIDDEN"),
+            ("missing excerpt",lambda x:x["segments"][0].update(text="Not the actual reviewed text"),
+             "TRANSCRIPT_EXCERPT_NOT_IN_REVIEWED_VIDEO_SEGMENT"),
+            ("false 10 sec",lambda x:x["segments"][0].update(
+                start_seconds=30,end_seconds=34),
+             "TRANSCRIPT_SEGMENT_INVALID_OR_OVERLAPPING"),
+            ("outside segment",lambda x:x.update(segments=[
+                {"start_seconds":95,"end_seconds":120,"text":"The detailed historical biography explains the primary individual's life."}]),
+             "TRANSCRIPT_TIMECODE_COVERAGE_BELOW_10_SECONDS")
+        ]
+        for reason,change,error in changes:
+            altered=copy.deepcopy(original)
+            change(altered)
+            self.store_transcript_artifact(altered,decision)
+            with self.subTest(reason=reason):
+                with self.assertRaisesRegex(ValueError,error):
+                    gate.adjudicate(self.req,metadata,self.identities(),decision,
+                                    transcript_evidence_dir=self.tmp.name)
 
 
 if __name__=="__main__":
