@@ -43,7 +43,11 @@ test("all Production runtime and catalog contact is exclusively catalog_full gat
 test("storage-only restores from exact immutable private objects, never claims DB catalog", () => {
   const restore = jobs.find((job) => job.includes("Restore and prove selected private Storage objects independently"));
   assert.ok(restore && restore.includes("if: " + storage));
-  assert.match(restore, /--catalog \/tmp\/storage-only-inventory\.json/);
+  assert.match(restore, /--publish-private-recovery-index/);
+  assert.match(restore, /--restore-from-private-recovery-index/);
+  assert.match(restore, /--expected-private-index-sha256/);
+  assert.match(restore, /canonical_db_catalog_written:false/);
+  assert.doesNotMatch(restore, /storage-only-inventory/);
   assert.match(restore, /--restore-dir \/tmp\/storage-only-independent-restore/);
   assert.match(restore, /new_objects==0 and \.existing_objects==\$files/);
   assert.match(restore, /\.snapshot\.video_count==\$videos/);
@@ -103,6 +107,20 @@ test("Storage-only source proof verifies pinned original file count, bytes, and 
   }
   const rest = jobs.find((j) => j.includes("Restore and prove selected private Storage objects"));
   assert.ok(rest && rest.includes("if: " + storage));
-  assert.match(rest, /--catalog \/tmp\/storage-only-inventory\.json/);
+  assert.match(rest, /--publish-private-recovery-index/);
+  assert.match(rest, /--restore-from-private-recovery-index/);
+  assert.match(rest, /--expected-private-index-sha256/);
   assert.match(rest, /canonical_db_catalog_written:false/);
+  assert.doesNotMatch(rest, /storage-only-inventory/);
+  assert.match(rest, /canonical_db_catalog_written:false/);
+});
+
+test("durable private index proof is recovered without Actions archive or local file list", () => {
+  const stage = jobs.find((j) => j.includes("Restore and prove selected private Storage objects"));
+  assert.match(stage, /storage-only-index-receipt\.json/);
+  assert.match(stage, /catalog_from_original_actions_artifact==false/);
+  assert.match(stage, /rm -rf corpus/);
+  assert.match(stage, /rm -f \/tmp\/storage-only-pass3\.json/);
+  assert.match(stage, /--expected-private-index-sha256/);
+  assert.match(stage, /cp \/tmp\/storage-only-index-receipt\.json \/tmp\/storage-only-receipt\/private-index-receipt\.json/);
 });

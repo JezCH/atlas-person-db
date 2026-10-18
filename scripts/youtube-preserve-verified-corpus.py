@@ -218,6 +218,170 @@ def restore_from_catalog(base, token, records, target):
     return {"files": restored, "bytes": restored_bytes}
 
 
+# The private recovery index, unlike a local CI inventory, outlives an
+# expiring GitHub Actions source ZIP. The object is pinned to its original ZIP
+# identity in the SAME Supabase private source bucket; never create a new DB.
+ARCHIVE_CENSUS = {
+    11548326100: {
+        "prefix": "validated-batch017/sha256/",
+        "source_zip_sha256": "b40f8efdccfacce194afb44cc7cca3e93a4ab12a2153c5a19b70ceb3f56b0b1f",
+        "members": 6044, "bytes": 57747470, "channel_files": 6011,
+        "source_files": 6021, "metadata_files": 23, "video_rows": 1536512,
+    },
+    11613130249: {
+        "prefix": "validated-batch024/sha256/",
+        "source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+        "members": 10186, "bytes": 85683343, "channel_files": 10127,
+        "source_files": 10144, "metadata_files": 42, "video_rows": 2230031,
+    },
+}
+
+
+def archive_identity():
+    identity = ARCHIVE_CENSUS.get(SOURCE_ARTIFACT_ID)
+    if identity is None or KEY_PREFIX != identity["prefix"]:
+        raise RuntimeError("SOURCE_RECOVERY_ARCHIVE_IDENTITY_MISMATCH")
+    return identity
+
+
+def private_recovery_index_key():
+    info = archive_identity()
+    return KEY_PREFIX + "recovery-index/" + info["source_zip_sha256"] + ".json"
+
+
+def validate_recovery_records(records, *, expected_artifact):
+    """Preflight all records and source totals before any remote Storage write/read."""
+    info = archive_identity()
+    if expected_artifact != SOURCE_ARTIFACT_ID or not isinstance(records, list):
+        raise RuntimeError("SOURCE_RECOVERY_ARTIFACT_MISMATCH")
+    if len(records) != info["members"]:
+        raise RuntimeError("SOURCE_RECOVERY_MEMBER_COUNT_MISMATCH")
+    keys, paths = set(), set()
+    n_source = n_metadata = n_channels = n_videos = n_bytes = 0
+    clean = []
+    fields = ("object_key", "sha256", "byte_count", "source_artifact_id",
+              "batch_label", "source_kind", "source_path", "channel_id", "video_rows")
+    for row in records:
+        if not isinstance(row, dict) or row.get("source_artifact_id") != SOURCE_ARTIFACT_ID:
+            raise RuntimeError("SOURCE_RECOVERY_MEMBER_ARTIFACT_MISMATCH")
+        relative = relative_from_object_key(row).as_posix()
+        key = row["object_key"]
+        if row.get("source_path") != relative or key in keys or relative in paths:
+            raise RuntimeError("SOURCE_RECOVERY_DUPLICATE_OR_INCONSISTENT_PATH")
+        keys.add(key)
+        paths.add(relative)
+        count = row.get("byte_count")
+        if type(count) is not int or count <= 0:
+            raise RuntimeError("SOURCE_RECOVERY_MEMBER_BYTE_COUNT_INVALID")
+        kind = row.get("source_kind")
+        if kind not in {"channel_videos", "manifest", "metadata"}:
+            raise RuntimeError("SOURCE_RECOVERY_MEMBER_KIND_INVALID")
+        video_rows = row.get("video_rows")
+        if kind == "channel_videos":
+            if (not relative.endswith(".ndjson.gz") or
+                    type(video_rows) is not int or video_rows < 0 or
+                    not row.get("channel_id") or
+                    not relative.endswith("/" + row["channel_id"] + ".ndjson.gz")):
+                raise RuntimeError("SOURCE_RECOVERY_VIDEO_MEMBER_INVALID")
+            n_channels += 1
+            n_videos += video_rows
+        elif video_rows is not None or row.get("channel_id") is not None:
+            raise RuntimeError("SOURCE_RECOVERY_NONVIDEO_MEMBER_INVALID")
+        if kind == "manifest" and not relative.endswith("/manifest.json"):
+            raise RuntimeError("SOURCE_RECOVERY_MANIFEST_PATH_INVALID")
+        n_source += kind != "metadata"
+        n_metadata += kind == "metadata"
+        n_bytes += count
+        clean.append({field: row.get(field) for field in fields})
+    if (n_bytes != info["bytes"] or n_source != info["source_files"]
+            or n_metadata != info["metadata_files"]
+            or n_channels != info["channel_files"] or n_videos != info["video_rows"]):
+        raise RuntimeError("SOURCE_RECOVERY_ORIGINAL_CENSUS_MISMATCH")
+    return sorted(clean, key=lambda row: row["source_path"])
+
+
+def canonical_recovery_index(records):
+    info = archive_identity()
+    return (json.dumps({
+        "schema": "atlas-youtube-private-original-recovery-index/v1",
+        "source_artifact_id": SOURCE_ARTIFACT_ID,
+        "original_zip_sha256": info["source_zip_sha256"],
+        "member_count": info["members"],
+        "member_bytes": info["bytes"],
+        "records": validate_recovery_records(records, expected_artifact=SOURCE_ARTIFACT_ID),
+    }, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8")
+
+
+def load_remote_recovery_index(base, token, *, expected_sha256):
+    key = private_recovery_index_key()
+    if not re.fullmatch(r"[0-9a-f]{64}", str(expected_sha256 or "")):
+        raise RuntimeError("SOURCE_RECOVERY_PINNED_INDEX_SHA_REQUIRED")
+    body = storage_call("GET", base, token, key)
+    if sha256(body) != expected_sha256:
+        raise RuntimeError("SOURCE_RECOVERY_PRIVATE_INDEX_SHA_MISMATCH")
+    try:
+        document = json.loads(body)
+    except (ValueError, UnicodeError) as exc:
+        raise RuntimeError("SOURCE_RECOVERY_PRIVATE_INDEX_JSON_INVALID") from exc
+    info = archive_identity()
+    if (document.get("schema") != "atlas-youtube-private-original-recovery-index/v1"
+            or document.get("source_artifact_id") != SOURCE_ARTIFACT_ID
+            or document.get("original_zip_sha256") != info["source_zip_sha256"]
+            or document.get("member_count") != info["members"]
+            or document.get("member_bytes") != info["bytes"]):
+        raise RuntimeError("SOURCE_RECOVERY_PRIVATE_INDEX_IDENTITY_MISMATCH")
+    records = validate_recovery_records(document.get("records"),
+                                        expected_artifact=SOURCE_ARTIFACT_ID)
+    if body != canonical_recovery_index(records):
+        raise RuntimeError("SOURCE_RECOVERY_PRIVATE_INDEX_NONCANONICAL")
+    return key, records
+
+
+def persist_private_recovery_index(base, token, source_receipt):
+    """Save a recoverable exact remote object manifest; do not claim DB catalog."""
+    info = archive_identity()
+    if (source_receipt.get("schema") != "atlas-youtube-source-storage-verification/v2"
+            or source_receipt.get("source_artifact_id") != SOURCE_ARTIFACT_ID
+            or source_receipt.get("uploaded") is not True
+            or source_receipt.get("new_objects") != 0
+            or source_receipt.get("existing_objects") != info["members"]
+            or source_receipt.get("total_files_discovered") != info["members"]
+            or source_receipt.get("total_bytes_discovered") != info["bytes"]
+            or source_receipt.get("files_verified") != info["members"]
+            or source_receipt.get("bytes_verified") != info["bytes"]):
+        raise RuntimeError("SOURCE_RECOVERY_UNVERIFIED_STORAGE_PASS")
+    content = canonical_recovery_index(source_receipt.get("records"))
+    key = private_recovery_index_key()
+    created = False
+    try:
+        stored = storage_call("GET", base, token, key)
+    except urllib.error.HTTPError as exc:
+        if exc.code != 404:
+            raise
+        try:
+            storage_call("POST", base, token, key, content)
+            created = True
+        except urllib.error.HTTPError as conflict:
+            if conflict.code != 409:
+                raise
+        stored = storage_call("GET", base, token, key)
+    if stored != content:
+        raise RuntimeError("SOURCE_RECOVERY_PRIVATE_INDEX_ROUNDTRIP_MISMATCH")
+    return {
+        "schema": "atlas-youtube-private-original-recovery-index-receipt/v1",
+        "original_zip_sha256": info["source_zip_sha256"],
+        "source_artifact_id": SOURCE_ARTIFACT_ID,
+        "index_object_key": key,
+        "index_sha256": sha256(stored),
+        "index_byte_count": len(stored),
+        "member_count": info["members"],
+        "member_bytes": info["bytes"],
+        "new_index_object": created,
+        "canonical_db_catalog_written": False,
+        "canonical_db_catalog_verified": False,
+    }
+
+
 def credentials():
     base = os.environ.get("SUPABASE_URL", "").strip()
     token = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
@@ -236,7 +400,50 @@ def main():
     parser.add_argument("--expected-total-files", type=int)
     parser.add_argument("--expected-total-bytes", type=int)
     parser.add_argument("--restore-dir")
+    parser.add_argument("--publish-private-recovery-index", action="store_true")
+    parser.add_argument("--storage-pass-receipt")
+    parser.add_argument("--restore-from-private-recovery-index", action="store_true")
+    parser.add_argument("--expected-private-index-sha256")
     args = parser.parse_args()
+
+    if args.publish_private_recovery_index:
+        if (args.root or args.catalog or args.restore_dir or args.dry_run or
+                args.max_files is not None or args.restore_from_private_recovery_index or
+                args.expected_private_index_sha256 or not args.storage_pass_receipt):
+            raise RuntimeError("SOURCE_RECOVERY_INDEX_PUBLICATION_ARGUMENTS_INVALID")
+        base, token = credentials()
+        ensure_private_bucket(base, token)
+        source_receipt = json.loads(Path(args.storage_pass_receipt).read_text(encoding="utf-8"))
+        outcome = persist_private_recovery_index(base, token, source_receipt)
+        Path(args.output).write_text(json.dumps(outcome, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps(outcome))
+        return
+
+    if args.restore_from_private_recovery_index:
+        if (args.root or args.catalog or args.dry_run or args.storage_pass_receipt or
+                args.max_files is not None or not args.restore_dir or
+                not args.expected_private_index_sha256):
+            raise RuntimeError("SOURCE_RECOVERY_INDEX_RESTORE_ARGUMENTS_INVALID")
+        base, token = credentials()
+        ensure_private_bucket(base, token)
+        key, records = load_remote_recovery_index(
+            base, token, expected_sha256=args.expected_private_index_sha256)
+        restored = restore_from_catalog(base, token, records, Path(args.restore_dir).resolve())
+        result = {
+            "schema": "atlas-youtube-private-index-independent-restore/v1",
+            "source_artifact_id": SOURCE_ARTIFACT_ID,
+            "index_object_key": key,
+            "index_sha256": args.expected_private_index_sha256,
+            "catalog_from_original_actions_artifact": False,
+            "canonical_db_catalog_written": False,
+            "restore": restored,
+        }
+        Path(args.output).write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps(result))
+        return
+
+    if args.storage_pass_receipt or args.expected_private_index_sha256:
+        raise RuntimeError("SOURCE_RECOVERY_INDEX_ARGUMENT_WITHOUT_MODE")
 
     if args.catalog:
         if args.root or args.dry_run or args.max_files is not None or not args.restore_dir:
