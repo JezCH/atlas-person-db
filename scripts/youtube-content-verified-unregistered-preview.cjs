@@ -60,15 +60,13 @@ function validateContentGate(gate){
    if(!key||names.has(key))throw Error("VIDEO_RANK_DUPLICATE_PERSON_IDENTITY");
    names.add(key);
    const aliases=asArray(person.reviewed_source_name_forms,"VIDEO_RANK_SOURCE_ALIASES_MISSING");
+   // An original raw alias may equal its approved canonical display name,
+   // but two entries in the SAME reviewed alias list are never acceptable.
    const normalizedAliases=new Set();
-   for(const alias of [label,...aliases]){
+   for(const alias of aliases){
      const a=normal(alias);
-     if(!a||normalizedAliases.has(a)) {
-       // Canonical label may be present among its OWN original name forms;
-       // that is not an identity collision.
-       if(a===key&&normalizedAliases.has(a))continue;
+     if(!a||normalizedAliases.has(a))
        throw Error("VIDEO_RANK_DUPLICATE_OR_INVALID_IDENTITY_ALIAS");
-     }
      normalizedAliases.add(a);
    }
    const channels=asArray(person.original_channel_ids,"VIDEO_RANK_VERIFIED_CHANNEL_IDS_MISSING");
