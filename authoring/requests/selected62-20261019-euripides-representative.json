@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-20261019:euripides:representative-literary-point:-431:v1",
+  "person": {
+    "canonical_name_en": "Euripides",
+    "display_name_ko": "에우리피데스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Athens",
+    "display_name_ko": "아테네",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Tragic playwright and author of Medea",
+    "role_display_name_ko": "비극작가·메데이아 저자",
+    "start_year": -431,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -431,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Medea production at the Greater Dionysia in Athens in 431 BCE is a representative authorial event. The historical fifth-century BCE dramatist is not the fictional Medea, the Malifaux character, or the younger Euripides associated with posthumous productions. The mythic Corinth setting is not the author's Polity. Other plays, later Macedonian residence and uncertain biographical anecdotes are not fragmented into unsourced activity rails."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Cambridge University Press — The Medea of Euripides, Greek Tragedy",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/greek-tragedy/medea-of-euripides/29C9F607F157E26A210498FD92110851",
+      "citation_text": "Academic chapter places the Medea production in 431 BCE."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Diotíma — Euripides’ Medea",
+      "canonical_url": "https://diotima-doctafemina.org/translations/greek/euripides-medea/",
+      "citation_text": "Scholarly classical-text resource identifies the first production at the Greater Dionysia in spring 431 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "에우리피데스",
+      "url": "https://namu.wiki/w/%EC%97%90%EC%9A%B0%EB%A6%AC%ED%94%BC%EB%8D%B0%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT: source-reviewed historical locality, but no current Production Person/alias/Activity/Polity/Place UUID reads permitted during Vercel suspension. Reuse exact canonical identities after restoration; do not create regional surrogate Polities or coordinates."
+  },
+  "review_context": {
+    "task": "USER-SELECTED-62 / issue #2545",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_THIS_UNIT_USER_PROHIBITED",
+    "review_scope": "Source-based identity, deceased status, independent NamuWiki title, representative Activity and historical context; no PHFC /36 score claimed.",
+    "namuwiki_evidence_method": "external indexed NamuWiki mirror, identity-specific content reviewed; canonical namu.wiki URL follows verified independent title; not a claim of direct origin fetch",
+    "namuwiki_evidence_url": "https://www.namu.moe/w/에우리피데스",
+    "apply_gate": "DRAFT ONLY; no merge, Apply, DB write, compile, deployment or readback authorized in this unit. Fresh alias/semantic Activity/Polity preflight mandatory after restoration."
+  }
+}
