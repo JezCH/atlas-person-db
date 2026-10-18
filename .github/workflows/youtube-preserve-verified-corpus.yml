@@ -112,7 +112,7 @@ jobs:
       - name: Verify storage resume and remote restore behavior
         run: python -m unittest discover -s tests -p test_youtube_source_upload.py -v
 
-      - name: Pin complete 6,044-member inventory before any remote write
+      - name: Pin complete selected original-artifact inventory before any remote write
         shell: bash
         run: |
           set -euo pipefail
@@ -187,7 +187,7 @@ jobs:
           python /tmp/atlas-original-source-uploader.py             --root corpus             --output /tmp/youtube-remote-pass1.json             --max-files 1000             --expected-total-files "${SOURCE_MEMBER_COUNT}"             --expected-total-bytes "${SOURCE_MEMBER_BYTES}"
           jq -e '.files_verified==1000 and .uploaded==true and ((.new_objects + .existing_objects)==1000)'             /tmp/youtube-remote-pass1.json >/dev/null
 
-      - name: Restart from beginning and complete all 6,044 immutable objects
+      - name: Restart and verify every original source object in the selected archive
         shell: bash
         run: |
           set -euo pipefail
@@ -220,7 +220,7 @@ jobs:
           }
           echo "ATLAS_YOUTUBE_ARCHIVE_RUNTIME_SHA=$sha" >> "$GITHUB_ENV"
 
-      - name: Restore and prove all 6,044 private Storage objects independently of Production
+      - name: Restore and prove selected private Storage objects independently of Production
         if: ${{ inputs.phase == 'storage_only' }}
         shell: bash
         run: |
