@@ -1,0 +1,130 @@
+name: YouTube B024 three original-ID official snippet evidence (manual, read-only)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/youtube-b024-first3-official-metadata.yml'
+      - 'scripts/youtube-b024-first3-official-metadata.py'
+      - 'scripts/youtube-b024-verify-first-12-original-zip.py'
+      - 'scripts/youtube-source-video-description-enrich.py'
+      - 'audits/youtube-b024-first-12-original-zip-direct-replay-20261018.json'
+      - 'audits/youtube-b024-first-12-original-title-triage-20261016.json'
+      - 'audits/youtube-b024-first-12-metadata-review-request.json'
+      - 'tests/test_youtube_b024_first3_official_metadata.py'
+      - 'tests/atlas-youtube-b024-first3-official-metadata.test.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: youtube-b024-official-original-three-snippets
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline verified-source and one-batch API-contract tests
+        run: |
+          python3 -m unittest discover -s tests -p test_youtube_b024_first12_original_zip_replay.py -v
+          python3 -m unittest discover -s tests -p test_youtube_b024_first3_official_metadata.py -v
+          node --test tests/atlas-youtube-b024-first3-official-metadata.test.mjs
+      - name: Offline preflight — ZERO external requests
+        run: |
+          python3 scripts/youtube-b024-first3-official-metadata.py \
+            --output /tmp/yt-b024-first3-preflight.json
+          python3 - <<'PY'
+          import json
+          x=json.load(open('/tmp/yt-b024-first3-preflight.json',encoding='utf8'))
+          assert x['official_youtube_api_calls']==0
+          assert x['current_channel_ids_verified']==0
+          assert x['actual_video_playback_or_transcript_certified']==0
+          assert x['publication_authorized'] is False
+          assert x['original_video_ids']==['-13y_Jm-pzI','-1CalygxBrM','-5Lg5mk74NA']
+          PY
+
+  metadata:
+    # workflow_dispatch only becomes available after this file exists on main.
+    # The workflow never merges code, writes ATLAS or calls Vercel.
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify immutable source and exact three-video request
+        run: |
+          python3 -m unittest discover -s tests -p test_youtube_b024_first12_original_zip_replay.py -v
+          python3 -m unittest discover -s tests -p test_youtube_b024_first3_official_metadata.py -v
+          python3 scripts/youtube-b024-first3-official-metadata.py \
+            --output /tmp/yt-b024-first3-preflight.json
+      - name: One explicit official snippet batch for three exact original Video IDs
+        env:
+          YOUTUBE_DATA_API_KEY: ${{ secrets.YOUTUBE_DATA_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$YOUTUBE_DATA_API_KEY" ]; then
+            echo 'YOUTUBE_DATA_API_KEY_NOT_CONFIGURED_NO_EXTERNAL_QUERY'
+            exit 1
+          fi
+          mkdir -p /tmp/yt-b024-official-first3
+          python3 scripts/youtube-b024-first3-official-metadata.py \
+            --fetch \
+            --output /tmp/yt-b024-official-first3/channel-status.json \
+            --metadata-output /tmp/yt-b024-official-first3/official-snippets.json
+      - name: Summarize real source status — NOT biography certification
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path('/tmp/yt-b024-official-first3/channel-status.json')
+          result=json.loads(p.read_text(encoding='utf8'))
+          assert result['official_youtube_videos_list_batches']==1
+          assert result['official_requested_original_video_ids']==3
+          assert result['official_metadata_rows_processed']==3
+          assert sum(result[key] for key in (
+            'source_video_channel_id_matches',
+            'source_video_channel_id_mismatches',
+            'source_video_not_found_or_unavailable'))==3
+          assert result['actual_video_playback_or_timestamped_transcript_reviews']==0
+          assert result['person_primary_content_certifications']==0
+          assert result['latest_registered_person_screen_complete'] is False
+          assert result['production_writes']==0
+          assert result['publication_authorized'] is False
+          lines=[
+            '## B024 original three-video official snippet results — NOT content certification',
+            '- YouTube videos.list(snippet) API batches: 1',
+            '- Exact original Video IDs requested: 3',
+            f"- Channel IDs matching archived originals: {result['source_video_channel_id_matches']}",
+            f"- Channel mismatch HOLDs: {result['source_video_channel_id_mismatches']}",
+            f"- Unavailable HOLDs: {result['source_video_not_found_or_unavailable']}",
+            '- Watched or timestamped transcript approvals: 0',
+            '- Registered Person exclusion: NOT EXECUTED',
+            '- ATLAS/Production writes: 0',
+            '',
+            '| Original Video ID | Official source-channel check |',
+            '|---|---|'
+          ]
+          lines += [f"| {r['video_id']} | {r['review_stage']} |"
+                    for r in result['records']]
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf8') as f:
+            f.write('\n'.join(lines)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-b024-first3-original-official-snippets-${{ github.run_id }}
+          path: /tmp/yt-b024-official-first3/
+          retention-days: 14
+          if-no-files-found: error
