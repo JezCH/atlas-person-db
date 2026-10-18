@@ -3,6 +3,7 @@ import hashlib
 import importlib.util
 import json
 import unittest
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -124,7 +125,29 @@ class ReviewedOriginalTitleNameHoldTest(unittest.TestCase):
         req,meta,ids,decision=fixture(
             "AsDfGhJkL12","Martin Luther","UC"+"C"*22,
             "Martin Luther and the 95 Theses: A Biography")
-        result=gate.adjudicate(req,meta,ids,decision)
+        # A different source video stays eligible, but even synthetic
+        # positive test review needs the new timecoded byte receipt.
+        receipt={
+            "schema":gate.MANUAL_PLAYBACK_SCHEMA,
+            "video_id":"AsDfGhJkL12",
+            "original_channel_id":"UC"+"C"*22,
+            "original_title":"Martin Luther and the 95 Theses: A Biography",
+            "source_snapshot_id":req["source_snapshot_id"],
+            "source_zip_sha256":gate.ORIGINAL_BATCH_024_SOURCE_SHA256,
+            "source_url":"https://www.youtube.com/watch?v=AsDfGhJkL12",
+            "capture_method":"MANUAL_VIDEO_PLAYBACK",
+            "person_identity_for_review":"Martin Luther",
+            "captured_by":"fixture reviewer",
+            "captured_at":"2026-10-17T00:00:00Z",
+            "observations":[{
+                "start_seconds":30,"end_seconds":55,
+                "observed_evidence":"Synthetic observation of an individual-focused Reformation biography."}]
+        }
+        with tempfile.TemporaryDirectory() as folder:
+            raw=(json.dumps(receipt,sort_keys=True)+"\n").encode("utf-8")
+            (Path(folder)/"AsDfGhJkL12.json").write_bytes(raw)
+            decision["decisions"][0]["manual_playback_sha256"]=hashlib.sha256(raw).hexdigest()
+            result=gate.adjudicate(req,meta,ids,decision,playback_evidence_dir=folder)
         self.assertEqual(result["person_centered_video_ids_verified"],1)
         self.assertEqual(result["people"][0]["person_identity_for_review"],"Martin Luther")
         self.assertFalse(result["registered_person_exclusion_completed"])
