@@ -123,3 +123,26 @@ test("Main Activity Evidence renders Korean meanings without raw-code tooltips o
   assert.match(unknownHtml,/표시 확인 필요/);
   assert.doesNotMatch(unknownHtml,/reviewed_stage2_phase/);
 });
+
+
+test("Evidence period basis localizes the canonical code when the read contract falls back to English",()=>{
+  const renderer=evidenceView.createRenderer({
+    escapeHtml:(value)=>String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;"),
+    boundaryLabel:()=>"연도 미상",
+    sourceListHtml:()=>""
+  });
+  for(const [code,name,label] of [["reign","Reign","재위"],["term","Term of office","임기"]]){
+    const canonical={...activity,period_basis:{code,canonical_name_en:name,preferred_name_ko:null,display_name:name}};
+    const before=JSON.stringify(canonical);
+    const html=renderer.activityEvidenceHtml(canonical);
+    assert.ok(html.includes(`<small>기간 기준</small><strong>${label}</strong>`));
+    assert.equal(JSON.stringify(canonical),before);
+    assert.equal(evidenceView.evidenceForActivity(canonical).period_basis,name);
+  }
+  const korean=renderer.activityEvidenceHtml({...activity,period_basis:{code:"reign",display_name:"재위 기간"}});
+  assert.match(korean,/<small>기간 기준<\/small><strong>재위 기간<\/strong>/);
+  const unknown=renderer.activityEvidenceHtml({...activity,period_basis:{code:"unreviewed_basis",display_name:"Unreviewed basis"}});
+  assert.match(unknown,/<small>기간 기준<\/small><strong>표시 확인 필요<\/strong>/);
+  const missing=renderer.activityEvidenceHtml({...activity,period_basis:null});
+  assert.match(missing,/<small>기간 기준<\/small><strong><span class="person-evidence-missing">미기록<\/span><\/strong>/);
+});
