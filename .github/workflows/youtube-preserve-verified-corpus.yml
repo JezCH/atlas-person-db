@@ -10,6 +10,14 @@ on:
         options:
           - storage_only
           - catalog_full
+      source_batch:
+        description: 'Pinned verified archive; B024 is storage-only until production catalog authority exists'
+        required: true
+        type: choice
+        default: '024'
+        options:
+          - '017'
+          - '024'
 
 permissions:
   contents: read
@@ -31,13 +39,21 @@ jobs:
       CATALOG_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply?__atlas_authoring_apply_surface=youtube-source-archive-catalog
       RUNTIME_IDENTITY_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity
       CATALOG_AUDIENCE: atlas-person-db-youtube-source-archive
-      SOURCE_ARTIFACT_ID: '11548326100'
-      SOURCE_ARTIFACT_DIGEST: sha256:b40f8efdccfacce194afb44cc7cca3e93a4ab12a2153c5a19b70ceb3f56b0b1f
-      SOURCE_ARTIFACT_SIZE: '57840666'
-      SOURCE_MEMBER_COUNT: '6044'
-      SOURCE_MEMBER_BYTES: '57747470'
-      SOURCE_CATALOG_COUNT: '6044'
-      SOURCE_SOURCE_COUNT: '6021'
+      SOURCE_BATCH: ${{ inputs.source_batch }}
+      SOURCE_ARTIFACT_NAME: ${{ inputs.source_batch == '024' && 'youtube-cumulative-batch024-validated' || 'youtube-cumulative-batch017-validated' }}
+      SOURCE_ARTIFACT_RUN_ID: ${{ inputs.source_batch == '024' && '37921755392' || '37771318676' }}
+      SOURCE_ARTIFACT_ID: ${{ inputs.source_batch == '024' && '11613130249' || '11548326100' }}
+      SOURCE_ARTIFACT_DIGEST: ${{ inputs.source_batch == '024' && 'sha256:8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946' || 'sha256:b40f8efdccfacce194afb44cc7cca3e93a4ab12a2153c5a19b70ceb3f56b0b1f' }}
+      SOURCE_ARTIFACT_SIZE: ${{ inputs.source_batch == '024' && '85284047' || '57840666' }}
+      SOURCE_MEMBER_COUNT: ${{ inputs.source_batch == '024' && '10186' || '6044' }}
+      SOURCE_MEMBER_BYTES: ${{ inputs.source_batch == '024' && '85683343' || '57747470' }}
+      SOURCE_CATALOG_COUNT: ${{ inputs.source_batch == '024' && '10186' || '6044' }}
+      SOURCE_SOURCE_COUNT: ${{ inputs.source_batch == '024' && '10144' || '6021' }}
+      SOURCE_METADATA_COUNT: ${{ inputs.source_batch == '024' && '42' || '23' }}
+      SOURCE_OK_CHANNEL_COUNT: ${{ inputs.source_batch == '024' && '10127' || '6011' }}
+      SOURCE_SELECTED_CHANNEL_COUNT: ${{ inputs.source_batch == '024' && '10890' || '6770' }}
+      SOURCE_VIDEO_ROWS: ${{ inputs.source_batch == '024' && '2230031' || '1536512' }}
+      SOURCE_NEXT_BATCH: ${{ inputs.source_batch == '024' && 'batch025' || 'batch018' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -48,9 +64,9 @@ jobs:
         run: |
           set -euo pipefail
           gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/${SOURCE_ARTIFACT_ID}" > /tmp/source-artifact.json
-          jq -e --argjson id "${SOURCE_ARTIFACT_ID}" --arg digest "${SOURCE_ARTIFACT_DIGEST}" --argjson size "${SOURCE_ARTIFACT_SIZE}" '
+          jq -e --argjson id "${SOURCE_ARTIFACT_ID}" --arg name "${SOURCE_ARTIFACT_NAME}" --arg digest "${SOURCE_ARTIFACT_DIGEST}" --argjson size "${SOURCE_ARTIFACT_SIZE}" '
             .id==$id
-            and .name=="youtube-cumulative-batch017-validated"
+            and .name==$name
             and .expired==false
             and .digest==$digest
             and .size_in_bytes==$size
@@ -58,8 +74,8 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: youtube-cumulative-batch017-validated
-          run-id: "37771318676"
+          name: ${{ env.SOURCE_ARTIFACT_NAME }}
+          run-id: ${{ env.SOURCE_ARTIFACT_RUN_ID }}
           repository: ${{ github.repository }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: corpus
