@@ -56,9 +56,12 @@ test("hold is exact source label only, never a fuzzy deletion or a registered Pe
  assert.equal(outcome.nonpersonExcluded,0);
 });
 
-test("old/new raw snapshots cannot replay v5 source ambiguity manifest",()=>{
- const noLongerV5={...snapshot,snapshot_id:"yt-next-review"};
- assert.equal(discovery.reviewedIdentityHoldsForSnapshot(noLongerV5).size,0);
+test("source-reviewed identity holds persist across same-archive v5 rebuilds, but do not auto-apply to different corpora",()=>{
+ const sameArchiveNewSnapshot={...snapshot,snapshot_id:"yt-new-v5-replay-of-same-original-b024-zip"};
+ assert.equal(discovery.reviewedIdentityHoldsForSnapshot(sameArchiveNewSnapshot).size,4);
+ const differentSource={...sameArchiveNewSnapshot,
+   source_state:{artifact_digest:"sha256:"+"0".repeat(64)}};
+ assert.equal(discovery.reviewedIdentityHoldsForSnapshot(differentSource).size,0);
  for(const altered of [
    {...snapshot,parser_version:"yt-title-person-reviewed-v4"},
    {...snapshot,source_state:{artifact_digest:"sha256:"+"0".repeat(64)}},
