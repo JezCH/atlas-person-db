@@ -234,16 +234,37 @@ jobs:
             .uploaded==true and .files_verified==$files and .bytes_verified==$bytes
             and .new_objects==0 and .existing_objects==$files
           ' /tmp/storage-only-pass3.json >/dev/null
-          # This is an upload receipt / local inventory, NOT a committed
-          # canonical atlas_v2 catalog. No Production API request is permitted.
-          jq '[.records[] | {object_key,sha256,byte_count,source_artifact_id,batch_label,source_kind,source_path,channel_id,video_rows}]' \
-            /tmp/storage-only-pass3.json > /tmp/storage-only-inventory.json
+          # Never rely on this GitHub runner's temporary object inventory after
+          # the original Actions artifact expires. Store the exact file-index
+          # INSIDE the same private Supabase bucket, with immutable source-key
+          # provenance, byte/SHA readback and independent restore by index key.
           python /tmp/atlas-original-source-uploader.py \
-            --catalog /tmp/storage-only-inventory.json \
+            --publish-private-recovery-index \
+            --storage-pass-receipt /tmp/storage-only-pass3.json \
+            --output /tmp/storage-only-index-receipt.json
+          jq -e --argjson files "$SOURCE_MEMBER_COUNT" --argjson bytes "$SOURCE_MEMBER_BYTES" '
+            .schema=="atlas-youtube-private-original-recovery-index-receipt/v1"
+            and .member_count==$files and .member_bytes==$bytes
+            and .canonical_db_catalog_written==false
+            and .canonical_db_catalog_verified==false
+            and (.index_sha256|test("^[0-9a-f]{64}$"))
+          ' /tmp/storage-only-index-receipt.json >/dev/null
+          # The source ZIP and local pass receipts are deliberately REMOVED
+          # before restore. Only the private index and private source objects
+          # can reconstruct the original complete corpus.
+          rm -rf corpus /tmp/storage-only-independent-restore
+          rm -f /tmp/storage-only-pass3.json
+          index_sha="$(jq -er '.index_sha256' /tmp/storage-only-index-receipt.json)"
+          python /tmp/atlas-original-source-uploader.py \
+            --restore-from-private-recovery-index \
+            --expected-private-index-sha256 "$index_sha" \
             --output /tmp/storage-only-remote-restore.json \
             --restore-dir /tmp/storage-only-independent-restore
           jq -e --argjson files "$SOURCE_MEMBER_COUNT" --argjson bytes "$SOURCE_MEMBER_BYTES" '
-            .catalog_records==$files and .restore.files==$files and .restore.bytes==$bytes
+            .schema=="atlas-youtube-private-index-independent-restore/v1"
+            and .catalog_from_original_actions_artifact==false
+            and .canonical_db_catalog_written==false
+            and .restore.files==$files and .restore.bytes==$bytes
           ' /tmp/storage-only-remote-restore.json >/dev/null
           python scripts/youtube-build-person-signal-snapshot.py \
             --root /tmp/storage-only-independent-restore \
@@ -268,6 +289,7 @@ jobs:
               canonical_db_catalog_verified:false,
               full_g04_durable_migration_accepted:false
             }' > /tmp/storage-only-receipt/summary.json
+          cp /tmp/storage-only-index-receipt.json /tmp/storage-only-receipt/private-index-receipt.json
           cp /tmp/storage-only-remote-restore.json /tmp/storage-only-receipt/restore.json
           cp /tmp/storage-only-census.json /tmp/storage-only-receipt/census.json
 
