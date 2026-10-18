@@ -6,6 +6,9 @@ on:
     paths:
       - '.github/workflows/youtube-b024-first3-official-metadata.yml'
       - 'scripts/youtube-b024-first3-official-metadata.py'
+      - 'scripts/youtube-b024-first3-public-player-probe.py'
+      - 'tests/test_youtube_b024_first3_public_player_probe.py'
+      - 'tests/atlas-youtube-b024-first3-public-player-probe.test.mjs'
       - 'scripts/youtube-b024-verify-first-12-original-zip.py'
       - 'scripts/youtube-source-video-description-enrich.py'
       - 'audits/youtube-b024-first-12-original-zip-direct-replay-20261018.json'
@@ -126,5 +129,62 @@ jobs:
         with:
           name: youtube-b024-first3-original-official-snippets-${{ github.run_id }}
           path: /tmp/yt-b024-official-first3/
+          retention-days: 14
+          if-no-files-found: error
+
+  public_player_probe:
+    # Public YouTube player metadata is weaker than official videos.list
+    # and proves neither real captions nor biography centrality. NO secrets.
+    # Runs for the three fixed B024 original IDs ONLY on this PR.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline original-source spoofing and nonpublication regressions
+        run: |
+          python3 -m unittest discover -s tests -p test_youtube_b024_first3_public_player_probe.py -v
+      - name: Install EXISTING corpus extractor dependency (no credentials)
+        run: python3 -m pip install --disable-pip-version-check yt-dlp
+      - name: Read ONLY three original public-player metadata records
+        run: |
+          python3 scripts/youtube-b024-first3-public-player-probe.py \
+            --fetch-public-player \
+            --output /tmp/yt-b024-first3-player-status.json
+      - name: Show only statuses and caption TRACK availability, not proof
+        run: |
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          x=json.loads(Path('/tmp/yt-b024-first3-player-status.json').read_text())
+          assert x['source_original_video_count']==3
+          assert x['public_player_queries_attempted']==3
+          assert x['person_primary_content_certifications']==0
+          assert x['original_video_watched_or_transcript_bytes_verified']==0
+          assert x['publication_authorized'] is False and x['production_writes']==0
+          lines=[
+            '## Exact original B024 public-player access probe — NOT YouTube API / watched proof',
+            '- Three source-bound URLs requested, no API key and zero ATLAS/Production writes',
+            '- Public player channel match is **not official videos.list(snippet) verification**',
+            '- Subtitle language availability is **not downloaded transcript bytes**',
+            '',
+            '| Original Video ID | Public player status | Manual track languages | Automatic track languages |',
+            '|---|---|---|---|'
+          ]
+          for r in x['records']:
+            langs=lambda k:', '.join(r[k]['languages']) or 'none shown'
+            lines.append(f"| {r['video_id']} | {r['public_player_status']} | {langs('player_subtitle_tracks')} | {langs('player_automatic_caption_tracks')} |")
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf8') as f:
+            f.write('\n'.join(lines)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-b024-first3-public-player-status-${{ github.run_id }}
+          path: /tmp/yt-b024-first3-player-status.json
           retention-days: 14
           if-no-files-found: error
