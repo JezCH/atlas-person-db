@@ -5,6 +5,7 @@ This file is an entry point, not a second source of project policy.
 ## Canonical project rules
 - Read `WORK_EXECUTION.md` before changing code or data. It is authoritative if any instruction here conflicts.
 - Load only the specific task checkpoint, affected files, and direct dependencies; do not replay entire historical issue queues or audit the whole repository.
+- If the user supplied no exact task or resume point, consult `docs/ATLAS_CURRENT_WORKSTREAMS.md` to identify current active work and blockers; then follow its authoritative task/issue pointer. Do not treat this board as a second data authority, automatically resume parked work, or replace a newer exact task checkpoint.
 - Independent research, review, implementation, and tests may proceed in parallel. Serialize only actual conflicting changes to the same resource, identity, or contract.
 - Use the repository's existing canonical writers, authoring → compile → runtime separation, tests, and completion contracts. Never bypass security or stale-write checks.
 - Never fabricate historical facts, chronology, coordinates, completeness, or Production verification.
