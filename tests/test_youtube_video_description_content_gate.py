@@ -106,7 +106,7 @@ class MetadataEvidenceTest(unittest.TestCase):
 
 
     def store_manual_receipt(self,receipt):
-        raw=(json.dumps(receipt,ensure_ascii=False,sort_keys=True)+"\\n").encode("utf-8")
+        raw=(json.dumps(receipt,ensure_ascii=False,sort_keys=True)+"\n").encode("utf-8")
         (self.manual_dir/(VID1+".json")).write_bytes(raw)
         return hashlib.sha256(raw).hexdigest()
 
