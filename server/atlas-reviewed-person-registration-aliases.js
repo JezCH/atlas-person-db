@@ -31,6 +31,10 @@ const REVIEWED_REGISTRATION_ALIASES=Object.freeze([
   Object.freeze({alias_name:"Imam Bukhari",canonical_key:"Al-Bukhari",representative_default:false}),
   Object.freeze({alias_name:"Imam Malik",canonical_key:"Malik ibn Anas",representative_default:false}),
   Object.freeze({alias_name:"King Leonidas",canonical_key:"Leonidas I",representative_default:false}),
+  // Reviewed independent B024 source identities: exclude only via registered
+  // Person canonical exact match LAST, never as a source-name seed.
+  Object.freeze({alias_name:"Queen Elizabeth I",canonical_key:"Elizabeth I",representative_default:false}),
+  Object.freeze({alias_name:"Ramesses II",canonical_key:"Ramses II",representative_default:false}),
   // 50 exact source-derived title names resolve to a single registered Person
   // by independently checked live Person UUID, not by substring resemblance.
   // They suppress already-registered People in the ONE live discovery feed.
