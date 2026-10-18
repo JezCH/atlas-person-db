@@ -289,7 +289,86 @@ def verify_timestamped_transcript_file(item,source,source_snapshot_id,transcript
     }
 
 
-def adjudicate(request,metadata,identities,decisions,*,transcript_evidence_dir=None):
+
+MANUAL_PLAYBACK_SCHEMA="atlas-youtube-original-video-manual-playback-evidence/v1"
+MAX_MANUAL_PLAYBACK_RECEIPT_BYTES=100_000
+
+
+def verify_manual_playback_file(item,source,source_snapshot_id,playback_dir):
+    """Require inspectable, byte-pinned timecoded observation, not a text-only claim.
+
+    An operator-produced record CANNOT by itself prove a YouTube video was
+    watched; source capture/witness authenticity is an independent human gate.
+    """
+    vid=item["video_id"]
+    digest=item.get("manual_playback_sha256")
+    if not isinstance(digest,str) or not SHA256.fullmatch(digest):
+        raise ValueError("MANUAL_PLAYBACK_EVIDENCE_DIGEST_REQUIRED")
+    if playback_dir is None:
+        raise ValueError("MANUAL_PLAYBACK_SOURCE_ARTIFACT_REQUIRED")
+    if ORIGINAL_VIDEO_ID_PATTERN.fullmatch(str(vid)) is None:
+        raise ValueError("MANUAL_PLAYBACK_ORIGINAL_VIDEO_ID_INVALID")
+    try:
+        raw=(Path(playback_dir)/f"{vid}.json").read_bytes()
+    except (OSError,ValueError) as e:
+        raise ValueError("MANUAL_PLAYBACK_SOURCE_ARTIFACT_REQUIRED") from e
+    if not raw or len(raw)>MAX_MANUAL_PLAYBACK_RECEIPT_BYTES:
+        raise ValueError("MANUAL_PLAYBACK_ARTIFACT_SIZE_INVALID")
+    actual=hashlib.sha256(raw).hexdigest()
+    if digest!=actual:
+        raise ValueError("MANUAL_PLAYBACK_ACTUAL_BYTES_SHA256_MISMATCH")
+    try:
+        receipt=json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError,ValueError) as e:
+        raise ValueError("MANUAL_PLAYBACK_ARTIFACT_NOT_UTF8_JSON") from e
+    if (not isinstance(receipt,dict) or
+        receipt.get("schema")!=MANUAL_PLAYBACK_SCHEMA or
+        receipt.get("video_id")!=vid or
+        receipt.get("original_channel_id")!=source["original_channel_id"] or
+        receipt.get("original_title")!=source["original_title"] or
+        receipt.get("source_snapshot_id")!=source_snapshot_id or
+        receipt.get("source_zip_sha256")!=ORIGINAL_BATCH_024_SOURCE_SHA256 or
+        receipt.get("source_url")!=f"https://www.youtube.com/watch?v={vid}" or
+        receipt.get("capture_method")!="MANUAL_VIDEO_PLAYBACK" or
+        receipt.get("person_identity_for_review")!=item.get("identity_for_review") or
+        receipt.get("captured_by")!=item.get("reviewer")):
+        raise ValueError("MANUAL_PLAYBACK_ORIGINAL_SOURCE_PROVENANCE_MISMATCH")
+    capture_time=aware_utc_datetime(receipt.get("captured_at"),"MANUAL_PLAYBACK_CAPTURE_TIME_INVALID")
+    review_time=aware_utc_datetime(item.get("reviewed_at"),"INVALID_REVIEW_TIMESTAMP")
+    if capture_time>review_time:
+        raise ValueError("MANUAL_PLAYBACK_CAPTURE_AFTER_REVIEW_FORBIDDEN")
+    span=item.get("content_segment") or {}
+    lo,hi=span.get("start_seconds"),span.get("end_seconds")
+    if (type(lo) not in (int,float) or type(hi) not in (int,float) or
+        not math.isfinite(lo) or not math.isfinite(hi) or
+        lo<0 or hi-lo<10):
+        raise ValueError("MANUAL_PLAYBACK_TIMED_REVIEW_REQUIRED")
+    observations=receipt.get("observations")
+    if not isinstance(observations,list) or not observations or len(observations)>500:
+        raise ValueError("MANUAL_PLAYBACK_OBSERVATIONS_REQUIRED")
+    total=0
+    previous=0
+    for observed in observations:
+        if not isinstance(observed,dict):
+            raise ValueError("MANUAL_PLAYBACK_OBSERVATION_INVALID")
+        start,end=observed.get("start_seconds"),observed.get("end_seconds")
+        note=observed.get("observed_evidence")
+        if (type(start) not in (int,float) or type(end) not in (int,float) or
+            not math.isfinite(start) or not math.isfinite(end) or
+            start<0 or end<=start or start<previous or
+            not isinstance(note,str) or len(note.strip())<30):
+            raise ValueError("MANUAL_PLAYBACK_OBSERVATION_INVALID")
+        previous=end
+        total+=max(0,min(end,hi)-max(start,lo))
+    if total+1e-6<10:
+        raise ValueError("MANUAL_PLAYBACK_OBSERVED_COVERAGE_BELOW_10_SECONDS")
+    return {"manual_playback_evidence_sha256":actual,
+            "manual_playback_capture_method":"MANUAL_VIDEO_PLAYBACK",
+            "manual_playback_captured_at":receipt["captured_at"],
+            "manual_playback_captured_by":receipt["captured_by"]}
+
+
+def adjudicate(request,metadata,identities,decisions,*,transcript_evidence_dir=None,playback_evidence_dir=None):
     # Do not trust an alleged collector artifact just because its source SHA
     # strings and one reviewed Channel ID match. Validate ALL rows and counts.
     original,actual=validate_collected_metadata(request,metadata)
@@ -357,6 +436,9 @@ def adjudicate(request,metadata,identities,decisions,*,transcript_evidence_dir=N
         if method=="TIMESTAMPED_TRANSCRIPT":
             transcript_proof=verify_timestamped_transcript_file(
                 item,original[vid],source,transcript_evidence_dir)
+        elif method=="VIDEO_PLAYBACK_MANUAL":
+            transcript_proof=verify_manual_playback_file(
+                item,original[vid],source,playback_evidence_dir)
         group=ranked[name]
         group["channels"].add(channel)
         group["videos"].add(vid)
@@ -393,10 +475,13 @@ def main():
         p.add_argument("--"+key,required=True)
     p.add_argument("--transcript-evidence-dir",
         help="Directory containing the actual <original-video-id>.json UTF-8 caption artifacts; required for any confirmed TIMESTAMPED_TRANSCRIPT review")
+    p.add_argument("--playback-evidence-dir",
+        help="Directory containing actual <original-video-id>.json manual playback evidence receipts; required for positive VIDEO_PLAYBACK_MANUAL reviews")
     a=p.parse_args()
     load=lambda path:json.loads(Path(path).read_text(encoding="utf-8"))
     result=adjudicate(load(a.request),load(a.metadata),load(a.identities),load(a.decisions),
-        transcript_evidence_dir=a.transcript_evidence_dir)
+        transcript_evidence_dir=a.transcript_evidence_dir,
+        playback_evidence_dir=a.playback_evidence_dir)
     Path(a.output).write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(json.dumps({k:v for k,v in result.items() if k!="people"},ensure_ascii=False))
 
