@@ -40,6 +40,18 @@
   let lastSignalPayload=null;
 
   function candidateStatusBadge(row) {
+    // Reviewed historical-name ambiguity takes precedence over verified
+    // source-ID unions. Original channel proof is NOT individual identity proof.
+    if(row?.identity_state==="source_reviewed_identity_hold") {
+      const reasonLabels={
+        FATHER_SON_SHARED_NAME:"부자 동명이인 · 정체 확인 필요",
+        MULTIPLE_SAINTS_WITH_SAME_NAME:"동명 성인 · 정체 확인 필요",
+        PERSON_HOLIDAY_CATHEDRAL_AMBIGUITY:"인물·기념일·장소 혼동",
+        CONTESTED_SAINT_IDENTITY_HOLIDAY:"성인 정체·기념일 검토"
+      };
+      const label=reasonLabels[row?.identity_review_reason] || "인물 정체·문맥 검토 필요";
+      return `<span class="registration-review-signal-identity" data-status="ambiguous">${label}</span>`;
+    }
     if(row?.source_id_union_verified===true)
       return '<span class="registration-review-signal-identity" data-status="verified">원본 채널 ID 통합 검증</span>';
     if(row?.identity_state==="short_name_identity_review")return '<span class="registration-review-signal-identity" data-status="ambiguous">이름·동명이인 확인 필요</span>';
