@@ -1,0 +1,139 @@
+{
+  "schema": "atlas-youtube-original-video-name-link-title-holds/v1",
+  "reviewed_date": "2026-10-18",
+  "original_batch008_024_source_zip_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "original_source_channel_count": 10127,
+  "original_source_video_count": 2230031,
+  "independent_original_name_review": "PR #2529 audits/youtube-b024-33-highrisk-original-id-grounding-20261018.md",
+  "original_video_id_samples_in_33_review": 164,
+  "title_name_link_holds": 12,
+  "classification": "TITLE_LEVEL_NEGATIVE_OR_IDENTITY_HOLD_NOT_ACTUAL_VIDEO_PLAYBACK",
+  "title_based_positive_person_content_certified": 0,
+  "registered_person_screen_performed": false,
+  "original_video_or_channel_data_deleted": false,
+  "source_archive_rewritten": false,
+  "production_rank_publishable": false,
+  "review_rule": "Veto only the exact archived (video_id, original_channel_id, original_title, raw_name) association when positive Person-content approval is attempted. Preserve unreviewed names and untouched original video sets; a contradicting actual watched/transcript source requires independent evidence and a NEW reviewed manifest, never an inferred override.",
+  "links": [
+    {
+      "video_id": "-l3SKRDABZU",
+      "original_channel_id": "UCFiFNlcQ32LDzLfAIogd-8A",
+      "original_title": "John F. Kennedy Jr.'s Carefree Summer Moment: Aboard the 'Honey Fitz' in 1963",
+      "raw_name": "John F Kennedy",
+      "review_reason": "WRONG_PERSON_ORDINAL_RELATIVE",
+      "source_title_explanation": "Original title identifies John F. Kennedy Jr., not President John F. Kennedy.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    },
+    {
+      "video_id": "-DoKJhYhMi8",
+      "original_channel_id": "UCQomOtwkihiW6oL3VQVHC3Q",
+      "original_title": "John Story's Gruesome Tyburn Torture: Elizabeth I's Kidnapped & Quartered Martyr!",
+      "raw_name": "Elizabeth I",
+      "review_reason": "DIFFERENT_HISTORICAL_SUBJECT",
+      "source_title_explanation": "Original title centers John Story, with Elizabeth I named as the surrounding context.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    },
+    {
+      "video_id": "1MHbUKh51ik",
+      "original_channel_id": "UChRyKvGVLjslsRYj66y9ozQ",
+      "original_title": "Preface: John D. Rockefeller's Random Reminiscences of Men and Events: Autobiography -",
+      "raw_name": "John D Rockefeller",
+      "review_reason": "WORK_OR_AUDIOBOOK",
+      "source_title_explanation": "Original title identifies a book preface, not independent evidence of an individual biographical video.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    },
+    {
+      "video_id": "-jAh4K5gTeQ",
+      "original_channel_id": "UCtRvrDqERePGnsZbXwHbQtA",
+      "original_title": "The Two Bobs \"Waiting For The Robert E. Lee\" 1912 L. Wolfe Gilbert RAGTIME Lewis F. Muir LYRICS HERE",
+      "raw_name": "Robert E Lee",
+      "review_reason": "CREATIVE_WORK_TITLE",
+      "source_title_explanation": "Original title is the song Waiting For The Robert E. Lee, not the Confederate general.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    },
+    {
+      "video_id": "-YFLVaoppvo",
+      "original_channel_id": "UCv1MgZhMIwAfDaG0f5mH-Cg",
+      "original_title": "Martin Luther King Day : MLK Day Google Doodle for Martin Luther King Jr. Day Holiday in USA in 2021",
+      "raw_name": "Martin Luther",
+      "review_reason": "WRONG_PERSON_FULL_NAME_SUBSTRING",
+      "source_title_explanation": "Original title references the Martin Luther King Jr. holiday, not the Protestant Reformer Martin Luther.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    },
+    {
+      "video_id": "2xfXPG7rAiY",
+      "original_channel_id": "UCi-SK64gKZ0jlAlfzBEqCJQ",
+      "original_title": "The Prince (Version 4) - Niccolo Machiavelli",
+      "raw_name": "Niccolo Machiavelli",
+      "review_reason": "WORK_OR_AUDIOBOOK",
+      "source_title_explanation": "Original title is an edition of The Prince rather than evidence of a documentary on Machiavelli.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    },
+    {
+      "video_id": "-6G6CZT7h4k",
+      "original_channel_id": "UCMu5gPmKp5av0QCAajKTMhw",
+      "original_title": "Gandhi vs Martin Luther King Jr. Epic Rap Battles of History",
+      "raw_name": "Martin Luther King Jr",
+      "review_reason": "STAGED_MULTI_PERSON_PERFORMANCE",
+      "source_title_explanation": "Original title explicitly identifies a staged two-character rap battle.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    },
+    {
+      "video_id": "01Q7k7nsEVU",
+      "original_channel_id": "UClnDI2sdehVm1zm_LmUHsjQ",
+      "original_title": "James Earl Ray: The Man Who Shot Martin Luther King Jr.",
+      "raw_name": "Martin Luther King Jr",
+      "review_reason": "DIFFERENT_HISTORICAL_SUBJECT",
+      "source_title_explanation": "Original title centers James Earl Ray, mentioning Martin Luther King Jr. as the victim.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    },
+    {
+      "video_id": "0cW1jLqj6YE",
+      "original_channel_id": "UC3w8jZpLGKKdI4gOAsCdd_g",
+      "original_title": "St. George 2026: The NYC Neighborhood That Demands a Tradeoff",
+      "raw_name": "St George",
+      "review_reason": "PLACE_NAME_HOMONYM",
+      "source_title_explanation": "Original title names the NYC neighborhood of St George, not a historical saint.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    },
+    {
+      "video_id": "0jJVxo-GDhY",
+      "original_channel_id": "UCqbfkMgZUDFwSHx1WwHypjQ",
+      "original_title": "Duchess Takes a Husband Audiobook by Harper St. George",
+      "raw_name": "St George",
+      "review_reason": "WRONG_PERSON_AUTHOR_SURNAME",
+      "source_title_explanation": "Original title credits author Harper St. George rather than a historical saint.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    },
+    {
+      "video_id": "2GRWxrNPshM",
+      "original_channel_id": "UCyBVuk3_ZHcEQn-rVBUYkzQ",
+      "original_title": "Claudio Abbado & Simón Bolívar Youth Orchestra: Prokofiev - Scythian Suite I & II",
+      "raw_name": "Simón Bolívar",
+      "review_reason": "ORGANIZATION_NAME_HOMONYM",
+      "source_title_explanation": "Original title names the Simón Bolívar Youth Orchestra performing Prokofiev, not the revolutionary.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    },
+    {
+      "video_id": "-Y0_OeNhn28",
+      "original_channel_id": "UCA-yLaUMC_aAVoVts0EDr7A",
+      "original_title": "Isabella Clara Eugenia: Granddaughter of Catherine de' Medici and Sovereign of the Southern Nethe...",
+      "raw_name": "Catherine de' Medici",
+      "review_reason": "RELATIVE_DIFFERENT_SUBJECT",
+      "source_title_explanation": "Original title centers Isabella Clara Eugenia, Catherine de' Medici's granddaughter.",
+      "evidence_level": "ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY",
+      "positive_person_video_credit_blocked_until_review_changed": true
+    }
+  ]
+}
