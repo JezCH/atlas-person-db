@@ -222,7 +222,7 @@ class MetadataEvidenceTest(unittest.TestCase):
         }
 
     def store_transcript_artifact(self,artifact,decision):
-        raw=(json.dumps(artifact,ensure_ascii=False,sort_keys=True)+"\\n").encode("utf-8")
+        raw=(json.dumps(artifact,ensure_ascii=False,sort_keys=True)+"\n").encode("utf-8")
         evidence=Path(self.tmp.name)/(VID1+".json")
         evidence.write_bytes(raw)
         decision["decisions"][0]["transcript_sha256"]=hashlib.sha256(raw).hexdigest()
@@ -286,9 +286,14 @@ class MetadataEvidenceTest(unittest.TestCase):
              "TRANSCRIPT_CAPTURE_AFTER_REVIEW_FORBIDDEN"),
             ("missing excerpt",lambda x:x["segments"][0].update(text="Not the actual reviewed text"),
              "TRANSCRIPT_EXCERPT_NOT_IN_REVIEWED_VIDEO_SEGMENT"),
-            ("false 10 sec",lambda x:x["segments"][0].update(
-                start_seconds=30,end_seconds=34),
+            ("overlapping cue",lambda x:x["segments"][0].update(
+                start_seconds=30,end_seconds=43),
              "TRANSCRIPT_SEGMENT_INVALID_OR_OVERLAPPING"),
+            ("under 10 seconds of actual timed caption coverage",lambda x:x.update(segments=[
+                {"start_seconds":30,"end_seconds":34,"text":"The detailed historical biography explains"},
+                {"start_seconds":35,"end_seconds":39,
+                 "text":"the primary individual's life and enduring significance."}]),
+             "TRANSCRIPT_TIMECODE_COVERAGE_BELOW_10_SECONDS"),
             ("outside segment",lambda x:x.update(segments=[
                 {"start_seconds":95,"end_seconds":120,"text":"The detailed historical biography explains the primary individual's life."}]),
              "TRANSCRIPT_TIMECODE_COVERAGE_BELOW_10_SECONDS")
