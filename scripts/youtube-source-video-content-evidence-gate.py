@@ -18,6 +18,89 @@ REVIEWED_METHODS={"VIDEO_PLAYBACK_MANUAL","TIMESTAMPED_TRANSCRIPT"}
 SHA256=re.compile(r"^[a-f0-9]{64}$")
 
 
+# Pin per-original-Video-ID NAME associations, not whole names or video IDs.
+# This is a negative title/identity evidence overlay and does NOT certify
+# any video as centered on a historical Person.
+REVIEWED_TITLE_LINK_HOLDS_PATH = (
+    Path(__file__).resolve().parents[1] /
+    "audits/youtube-b024-12-original-video-name-link-title-holds-20261018.json"
+)
+ORIGINAL_BATCH_024_SOURCE_SHA256 = (
+    "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946"
+)
+ORIGINAL_VIDEO_ID_PATTERN = re.compile(r"^[A-Za-z0-9_-]{11}$")
+ORIGINAL_CHANNEL_ID_PATTERN = re.compile(r"^UC[A-Za-z0-9_-]{22}$")
+
+
+def load_reviewed_title_link_holds(doc):
+    """Require exactly source-pinned negative edges; never accept title as bio."""
+    if (doc.get("schema")!="atlas-youtube-original-video-name-link-title-holds/v1" or
+        doc.get("original_batch008_024_source_zip_sha256")!=ORIGINAL_BATCH_024_SOURCE_SHA256 or
+        doc.get("original_source_channel_count")!=10127 or
+        doc.get("original_source_video_count")!=2230031 or
+        doc.get("original_video_id_samples_in_33_review")!=164 or
+        doc.get("title_name_link_holds")!=12 or
+        doc.get("title_based_positive_person_content_certified")!=0 or
+        doc.get("registered_person_screen_performed") is not False or
+        doc.get("original_video_or_channel_data_deleted") is not False or
+        doc.get("source_archive_rewritten") is not False or
+        doc.get("production_rank_publishable") is not False or
+        doc.get("classification")!="TITLE_LEVEL_NEGATIVE_OR_IDENTITY_HOLD_NOT_ACTUAL_VIDEO_PLAYBACK"):
+        raise ValueError("REVIEWED_TITLE_LINK_HOLD_PROVENANCE_OR_SCOPE_INVALID")
+    rows=doc.get("links")
+    if not isinstance(rows,list) or len(rows)!=12:
+        raise ValueError("REVIEWED_TITLE_LINK_HOLD_COUNT_INVALID")
+    by_video={}
+    by_edge={}
+    for row in rows:
+        vid=row.get("video_id")
+        cid=row.get("original_channel_id")
+        title=row.get("original_title")
+        name=row.get("raw_name")
+        reason=row.get("review_reason")
+        if (not isinstance(vid,str) or ORIGINAL_VIDEO_ID_PATTERN.fullmatch(vid) is None or
+            not isinstance(cid,str) or ORIGINAL_CHANNEL_ID_PATTERN.fullmatch(cid) is None or
+            not isinstance(title,str) or not title.strip() or
+            not isinstance(name,str) or not name.strip() or
+            not isinstance(reason,str) or len(reason)<8 or
+            row.get("evidence_level")!="ORIGINAL_ZIP_VIDEO_ID_CHANNEL_ID_TITLE_ONLY" or
+            row.get("positive_person_video_credit_blocked_until_review_changed") is not True or
+            not isinstance(row.get("source_title_explanation"),str) or
+            len(row["source_title_explanation"])<35):
+            raise ValueError("REVIEWED_TITLE_LINK_HOLD_ROW_INVALID")
+        key=(vid,name.casefold())
+        if key in by_edge or vid in by_video:
+            raise ValueError("DUPLICATE_REVIEWED_ORIGINAL_VIDEO_NAME_HOLD")
+        by_edge[key]=row
+        by_video[vid]=row
+    return by_video,by_edge
+
+
+ORIGINAL_TITLE_HOLD_BY_VIDEO, ORIGINAL_TITLE_HOLD_BY_VIDEO_NAME = (
+    load_reviewed_title_link_holds(
+        json.loads(REVIEWED_TITLE_LINK_HOLDS_PATH.read_text(encoding="utf-8"))
+    )
+)
+
+
+def validate_original_title_name_holds(original):
+    """Check the archived title/channel if a held original ID is in request.
+
+    Never suppress an entire person's name (including descendants or
+    similarly named artists), and never trust a changed name/channel/title.
+    """
+    known=[]
+    for vid,source in original.items():
+        reviewed=ORIGINAL_TITLE_HOLD_BY_VIDEO.get(vid)
+        if reviewed is None:
+            continue
+        if (source["original_channel_id"]!=reviewed["original_channel_id"] or
+            source["original_title"]!=reviewed["original_title"]):
+            raise ValueError("REVIEWED_TITLE_LINK_HOLD_SOURCE_VIDEO_BINDING_CHANGED")
+        known.append(vid)
+    return frozenset(known)
+
+
 def validate_collected_metadata(request, metadata):
     """Verify collector artifact independently before ANY content-review credit.
 
@@ -93,6 +176,7 @@ def adjudicate(request,metadata,identities,decisions):
     # Do not trust an alleged collector artifact just because its source SHA
     # strings and one reviewed Channel ID match. Validate ALL rows and counts.
     original,actual=validate_collected_metadata(request,metadata)
+    validate_original_title_name_holds(original)
     if identities.get("schema")!="youtube-b024-source-first-last-registry-screen-36/v1":
         raise ValueError("HISTORICAL_INDEPENDENT_IDENTITY_REVIEW_SCHEMA_MISMATCH")
     if decisions.get("schema")!="atlas-youtube-person-content-review-decisions/v1":
@@ -119,6 +203,12 @@ def adjudicate(request,metadata,identities,decisions):
         if label not in {r["raw_name"] for r in original[vid]["name_cues"]}:
             raise ValueError("ORIGINAL_VIDEO_DID_NOT_SUPPORT_THIS_NAME")
         verdict=item.get("verdict")
+        # Exact reviewed original title/name edge only. A positive reviewer
+        # cannot silently credit a wrong Person, song, group or place. A
+        # negative human decision is allowed and never destroys source IDs.
+        if (vid,label.casefold()) in ORIGINAL_TITLE_HOLD_BY_VIDEO_NAME:
+            if verdict=="PERSON_PRIMARY_CONTENT_CONFIRMED":
+                raise ValueError("REVIEWED_ORIGINAL_VIDEO_NAME_TITLE_HOLD_NO_POSITIVE_CREDIT")
         if verdict in ("WORK_OR_PERFORMANCE","JOINT_PERSON_OR_EVENT","INCIDENTAL_MENTION","UNRESOLVED"):
             counted[verdict]+=1
             continue
