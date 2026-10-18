@@ -38,6 +38,10 @@ function subject(name,idsAndChannels,forms=[name]){
   final_registered_person_exclusion_pending:true,
   content_review_provenance:idsAndChannels.map(([video_id,channel_id])=>({
     video_id,channel_id,evidence_method:"VIDEO_PLAYBACK_MANUAL",
+    manual_playback_evidence_sha256:"b".repeat(64),
+    manual_playback_capture_method:"MANUAL_VIDEO_PLAYBACK",
+    manual_playback_captured_at:"2026-10-17T12:00:00Z",
+    manual_playback_captured_by:"synthetic fixture reviewer",
     reviewer:"synthetic fixture reviewer",reviewed_at:"2026-10-18T00:00:00Z",
     content_segment:{start_seconds:20,end_seconds:40}
   }))};
@@ -181,4 +185,15 @@ test("identity HOLD source and reviewed alias malformed population can never tur
  bad3.people[0].reviewed_source_name_forms=["Person C","Person C"];
  assert.throws(()=>engine.preview(bad3,registry(),manifest()),
   /VIDEO_RANK_DUPLICATE_OR_INVALID_IDENTITY_ALIAS/);
+});
+
+test("manual playback text alone cannot be credited; downstream requires upstream byte-checked receipt",()=>{
+ const candidate=subject("Unproven Manual Playback",triple(175));
+ delete candidate.content_review_provenance[0].manual_playback_evidence_sha256;
+ assert.throws(()=>engine.preview(gate([candidate]),registry(),manifest()),
+  /VIDEO_RANK_MANUAL_PLAYBACK_ACTUAL_BYTES_PROVENANCE_REQUIRED/);
+ candidate.content_review_provenance[0].manual_playback_evidence_sha256="b".repeat(64);
+ candidate.content_review_provenance[0].manual_playback_captured_by="different unreviewed person";
+ assert.throws(()=>engine.preview(gate([candidate]),registry(),manifest()),
+  /VIDEO_RANK_MANUAL_PLAYBACK_ACTUAL_BYTES_PROVENANCE_REQUIRED/);
 });
