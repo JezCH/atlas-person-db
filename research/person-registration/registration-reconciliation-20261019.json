@@ -1,0 +1,4426 @@
+{
+  "schema": "atlas-registration-reconciliation-evidence/v1",
+  "reviewed_at": "2026-10-19",
+  "scope_start": "2026-10-12 Vercel quota incident",
+  "authority": "source_and_saved_evidence_only_NOT_current_Production",
+  "production_access_this_review": false,
+  "automatic_apply": false,
+  "evidence_sources": {
+    "pr_search_range": "created >=2026-10-12 plus older PRs updated >=2026-10-12; every returned title inspected",
+    "relevant_registration_prs": [
+      2497,
+      2500,
+      2501,
+      2511,
+      2512,
+      2514,
+      2516,
+      2517,
+      2526,
+      2528,
+      2543,
+      2544,
+      2546,
+      2548
+    ],
+    "registration_issue": "#1375 comments through 6251835087; #2545 latest checkpoint 6252266313",
+    "review_issue": "#1374 comments through 6251834939"
+  },
+  "entries": [
+    {
+      "name_en": "Rurik",
+      "name_ko": "류리크",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "67550a13-eb8b-5645-b2d9-e669ba1581fa"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Earlier 862–879 Kievan Rus relation flagged historical back-projection; correct the existing Activity rather than create a second ruler."
+      ]
+    },
+    {
+      "name_en": "Khalid ibn al-Walid",
+      "name_ko": "할리드 이븐 알왈리드",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "54583770-280a-4ec1-81db-24729ed842ab"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Baybars",
+      "name_ko": "바이바르스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "DUPLICATE_UUID_CORRECTION_HOLD",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "cc318f79-72a4-41a7-86d3-21382ac8b176",
+            "fe5286f4-94fd-4d81-b933-5f76a790d58c"
+          ],
+          "verdict": "MULTIPLE_UUIDS_HOLD",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Baybars/Baibars appears as TWO earlier snapshot UUIDs for the same 1260–1277 Mamluk reign: identity collision, do not merge/delete without approved correction."
+      ]
+    },
+    {
+      "name_en": "Jan Žižka",
+      "name_ko": "얀 지슈카",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "6ef0043a-62ab-48de-b718-4ee97fe3de57"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Hugues de Payens",
+      "name_ko": "위그 드 파앵",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Gajah Mada",
+      "name_ko": "가자 마다",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "d6e3ee3c-f08e-54e5-bb19-20799cc6aca4"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Stanisław Żółkiewski",
+      "name_ko": "스타니스와프 주키에프스키",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Caterina Sforza",
+      "name_ko": "카테리나 스포르차",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "f0798d19-da83-4899-8de8-a163668542c9"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Hernán Cortés",
+      "name_ko": "에르난 코르테스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "c586abbe-f30b-41b1-bbdf-895890d56e8e"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Charles XII of Sweden",
+      "name_ko": "칼 12세",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "3a70999f-fb39-4b2c-ae5d-6d1c00076f0d"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Giuseppe Garibaldi",
+      "name_ko": "주세페 가리발디",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "4755388b-6d6d-40d7-9ab6-9bf3bf28f1c9"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "T. E. Lawrence",
+      "name_ko": "토머스 에드워드 로렌스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Roman von Ungern-Sternberg",
+      "name_ko": "로만 폰 운게른슈테른베르크",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Ulysses S. Grant",
+      "name_ko": "율리시스 S. 그랜트",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "b73e669a-550b-4a43-98a5-f2103de4a92b"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Billy Mitchell",
+      "name_ko": "빌리 미첼",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Carl Gustaf Emil Mannerheim",
+      "name_ko": "칼 구스타프 에밀 만네르헤임",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "9385af1f-4c8f-441d-b747-f22635edc8d6"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Marcus Vipsanius Agrippa",
+      "name_ko": "마르쿠스 빕사니우스 아그리파",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [
+        {
+          "pr": 2511,
+          "path": "authoring/requests/user98-20261016-marcus-vipsanius-agrippa-actium-31bce.json",
+          "request_id": "authoring:user-selected98-20261016:agrippa-actium-bce31:v1",
+          "kind": "timeline",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "a88a927c52f0b4a09cc9d8c372699c8fd77790c38065016a9cf8e83ec0dd351c"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Ragnar Lodbrok",
+      "name_ko": "라그나르 로드브로크",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "9d317619-d549-4051-b8a1-46cd44604d94"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Existing non-timeline legendary individual; not an ordinary historical ruler/reign registration."
+      ]
+    },
+    {
+      "name_en": "Roger of Lauria",
+      "name_ko": "로저 드 로리아",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Hayreddin Barbarossa",
+      "name_ko": "하이레딘 바르바로사",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "682ba25a-e12e-48a5-bc79-9739b28f2562"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Michiel de Ruyter",
+      "name_ko": "미힐 더라위터르",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [
+        {
+          "pr": 2511,
+          "path": "authoring/requests/user98-20261016-michiel-de-ruyter-1667.json",
+          "request_id": "authoring:user-selected98-20261016:michiel-de-ruyter-medway-1667:v1",
+          "kind": "timeline",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "a058dfa7b8f9c6c52d6e0c2e1ff93e05822b5f794e1c8122e8e45c3af9d2af2c"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Ahmad ibn Majid",
+      "name_ko": "아흐마드 이븐 마지드",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "9e2b36ad-953d-457b-8622-279e399414b9"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Henry Morgan",
+      "name_ko": "헨리 모건",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "e0383913-ad19-46ec-9740-d3a23874be90"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Andrea Doria",
+      "name_ko": "안드레아 도리아",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Afonso de Albuquerque",
+      "name_ko": "아폰수 드 알부케르크",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "1fc8b288-d205-4217-9e81-435c1bf449d2"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Phidias",
+      "name_ko": "페이디아스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "4089c029-e224-4b4e-ad68-ca4fdcee6ddb"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Vitruvius",
+      "name_ko": "비트루비우스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "a9d128fb-7783-4ea2-8393-3db33e1792b2"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Apollodorus of Damascus",
+      "name_ko": "다마스쿠스의 아폴로도로스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Muhammad V of Granada",
+      "name_ko": "그라나다의 무함마드 5세",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "f39ebb79-783e-4d03-b941-af5605144691"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Two discontinuous historical reigns 1354–1359 and 1362–1391; do not confuse Nasrid Muhammad V with dynasty founder Muhammad I."
+      ]
+    },
+    {
+      "name_en": "Sébastien Le Prestre de Vauban",
+      "name_ko": "세바스티앙 보방",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Jan Leeghwater",
+      "name_ko": "얀 리흐워터",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Philibert de l'Orme",
+      "name_ko": "필리베르 드 로르메",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Orban (cannon founder)",
+      "name_ko": "우르반",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Isambard Kingdom Brunel",
+      "name_ko": "이점바드 킹덤 브루넬",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [
+        {
+          "pr": 2511,
+          "path": "authoring/requests/user98-20261016-isambard-kingdom-brunel-1837.json",
+          "request_id": "authoring:user-selected98-20261016:brunel-great-western-1837:v1",
+          "kind": "timeline",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "6f1fa5479f9018576576dc2e77ee649b89bfaffd00958ce68c39eccf616dcebc"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Alfred Krupp",
+      "name_ko": "알프레드 크루프",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Francesco Bartolomeo Rastrelli",
+      "name_ko": "프란체스코 바르톨로메오 라스트렐리",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Alberto Santos-Dumont",
+      "name_ko": "아우베르투 산토스뒤몽",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Croesus",
+      "name_ko": "크로이소스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "57d86cbf-38f3-4f07-ae51-7501d8f5f818"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Ibn Battuta",
+      "name_ko": "이븐 바투타",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "5ea35065-a0b6-5273-bc7b-e3f198b4284b"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Buono da Malamocco",
+      "name_ko": "본 다 말라모코",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Legend and historical source layer of St Mark's relic translation require independent source verification before a new Person."
+      ]
+    },
+    {
+      "name_en": "Afanasy Nikitin",
+      "name_ko": "아파나시 니키틴",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "William Adams (Miura Anjin)",
+      "name_ko": "윌리엄 애덤스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [
+        {
+          "pr": 2514,
+          "path": "authoring/requests/user98-20261016-william-adams-miura-anjin-1613.json",
+          "request_id": "authoring:user-selected98-20261016:william-adams-japan-1613:v1",
+          "kind": "timeline",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "2942af20277b95b1eaffff75c526c7826125c5c88385cba0cf90615f1cb6e6f7"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Alexander Hamilton",
+      "name_ko": "알렉산더 해밀턴",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Cecil Rhodes",
+      "name_ko": "세실 로즈",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "49e6b8cf-2322-44d8-a79e-892026b14211"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Shibusawa Eiichi",
+      "name_ko": "시부사와 에이이치",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Jean Neuhaus II",
+      "name_ko": "장 노이하우스 2세",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Peter Carl Fabergé",
+      "name_ko": "카를 파베르제",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "J. P. Morgan",
+      "name_ko": "J. P. 모건",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "f893373c-2b5e-476b-9199-27e7ed92dad9"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Aristotle",
+      "name_ko": "아리스토텔레스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "1ee551fc-6ad7-4c2f-80d4-5bbeb526132f"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Cai Lun",
+      "name_ko": "채륜",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "bbd13869-4ebb-4be6-8721-3a5ec6136422"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Ibn Sina",
+      "name_ko": "이븐 시나",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "b47fb78d-4cb4-4dfb-a576-fe304c60ac30"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Shen Kuo",
+      "name_ko": "심괄",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "1f5d04f0-4d34-479e-b0b0-c0d4f65e3799"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Ibn Rushd",
+      "name_ko": "이븐 루시드",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "4593467a-6dea-4d07-a40f-597185fe0f25"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Christopher Clavius",
+      "name_ko": "크리스토퍼 클라비우스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Desiderius Erasmus",
+      "name_ko": "에라스뮈스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Michael Faraday",
+      "name_ko": "마이클 패러데이",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "c9260843-643d-4ad2-ba5b-dfed67655cfe"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Louis Pasteur",
+      "name_ko": "루이 파스퇴르",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "e0b2112b-78ae-44b1-80dc-62374673ae59"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Andrei Sakharov",
+      "name_ko": "안드레이 사하로프",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Augustine of Hippo",
+      "name_ko": "히포의 아우구스티누스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "4bf8192e-0e44-43f7-8971-05b0b1f74111"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Hugo Grotius",
+      "name_ko": "후고 그로티우스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [
+        {
+          "pr": 2511,
+          "path": "authoring/requests/user98-20261016-hugo-grotius-1609.json",
+          "request_id": "authoring:user-selected98-20261016:hugo-grotius-mare-liberum-1609:v1",
+          "kind": "timeline",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "c53e24baa6a4e6aa39ef19228590710d1bf9401304a726bcc8d67eeb9ff73225"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Jean-Jacques Rousseau",
+      "name_ko": "장 자크 루소",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "add62f50-5dfe-4b74-b8cb-9af003f859b2"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Voltaire",
+      "name_ko": "볼테르",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [
+        {
+          "pr": 2514,
+          "path": "authoring/requests/user98-20261016-voltaire-candide-1759.json",
+          "request_id": "authoring:user-selected98-20261016:voltaire-candide-1759:v1",
+          "kind": "timeline",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "9d1ef0741cbb4650295fec4b4ed127d8441017ae1aff1867c784229a293ff206"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Friedrich Nietzsche",
+      "name_ko": "프리드리히 니체",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "c5676a6d-891b-4d08-8738-d26226e78ae0"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Martin Heidegger",
+      "name_ko": "마르틴 하이데거",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "6f029958-4714-4295-94c0-6c599aed55bc"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "H. P. Lovecraft",
+      "name_ko": "H. P. 러브크래프트",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Robert E. Howard",
+      "name_ko": "로버트 E. 하워드",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Robert Schuman",
+      "name_ko": "로베르 슈만",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Mahbub ul Haq",
+      "name_ko": "마붑 울 하크",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "André Le Nôtre",
+      "name_ko": "앙드레 르 노트르",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Lancelot Brown",
+      "name_ko": "랜슬롯 브라운",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Solomon",
+      "name_ko": "솔로몬",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "463b2510-1ce3-580b-a4cd-a5caeaeec4ba"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Contested biblical/archaeological chronology; preserve uncertainty."
+      ]
+    },
+    {
+      "name_en": "Marcus Aurelius",
+      "name_ko": "마르쿠스 아우렐리우스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "b66809be-d964-4a0e-be49-dfeabaa08f46"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Ptolemy I Soter",
+      "name_ko": "프톨레마이오스 1세",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "a3e78df5-1a41-4f04-8ed4-67d21a392893"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Ashoka",
+      "name_ko": "아소카",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "66d20a4e-3847-5b2c-8543-0c6796fb465c"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Frederick II, Holy Roman Emperor",
+      "name_ko": "프리드리히 2세(신성로마)",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "e1c1e658-aa35-4728-be19-ff6d8cb7acdf"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Parameswara",
+      "name_ko": "파라메스와라",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "706e6449-02a8-5830-a75e-88b20247eee0"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Parameswara different name variant; old production id must be reused."
+      ]
+    },
+    {
+      "name_en": "Charlemagne",
+      "name_ko": "샤를마뉴",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "50ba5bb7-0660-5089-ae67-d692cf282b24"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Alfred the Great",
+      "name_ko": "앨프레드 대왕",
+      "cohorts": [
+        "user-selected-98",
+        "review-only-existing"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "a036421b-7022-41c4-9619-43d7f4c80a1b"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        },
+        {
+          "source": "#1374 comments 6234674383 / 6243525346",
+          "observed_at": "historical review; not current DB"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Preserve existing Person; any proposed missing Activity belongs to separate exact-ID correction preflight."
+      ]
+    },
+    {
+      "name_en": "Ramkhamhaeng",
+      "name_ko": "람캄행",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "301411e9-1a12-58b5-8d65-90a81b7253c7"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Harun al-Rashid",
+      "name_ko": "하룬 알라시드",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "a32487f7-b1cc-588a-a665-0fc713731d7b"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Vytautas",
+      "name_ko": "비타우타스",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "472d03a0-3183-4d66-8855-666b680423eb"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Al-Hakam II",
+      "name_ko": "알하캄 2세",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [],
+          "verdict": "NO_DIRECT_MATCH_FURTHER_ALIAS_REVIEW",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Lorenzo de' Medici",
+      "name_ko": "로렌초 데 메디치",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "3d8a3729-3ac1-4627-9560-7ac4ed05053b"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Pope Julius II",
+      "name_ko": "율리오 2세",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "8c86bca3-7620-4963-816a-99948b1afdce"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Ulugh Beg",
+      "name_ko": "울루그 베그",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_ACTIVITY_REPAIR_PENDING",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "1137412e-532c-472c-a5ec-e32d9e530499"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [
+        {
+          "pr": 2516,
+          "path": "authoring/requests/user98-20261016-ulugh-beg-timurid-successor-1447-1449.json",
+          "request_id": "authoring:user-selected98-20261016:ulugh-beg-timurid-succession-1447-1449:v1",
+          "kind": "activity_repair_existing_person",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "ba139cca862e8f6ff123c9697039dd730d112ce515536bb3d1d490d64b85dd44"
+        },
+        {
+          "pr": 2516,
+          "path": "authoring/requests/user98-20261016-ulugh-beg-transoxiana-governor-1409-1447.json",
+          "request_id": "authoring:user-selected98-20261016:ulugh-beg-transoxiana-governor-1409-1447:v1",
+          "kind": "activity_repair_existing_person",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "964fc2fedbe0f5cc747b5ba5d19a26b1035214c25384caff8a2bf694f676992e"
+        }
+      ],
+      "notes": [
+        "Previously merged person-only request; completion requires Production runtime read-back."
+      ]
+    },
+    {
+      "name_en": "Akbar the Great",
+      "name_ko": "악바르",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "19f68d28-0d0b-4712-a961-5afb84e8c1b7"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Louis XIV",
+      "name_ko": "루이 14세",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "e2a6cf52-b9dc-5e33-ab28-b5e3f668359b"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Skanderbeg",
+      "name_ko": "스컨데르베우",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "8e32f62c-9b6a-4e52-9290-eef620e86ef2"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Askia Muhammad",
+      "name_ko": "아스키아 무함마드",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "9d34a18e-442d-5189-b180-7eb8e1a04065"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Maria Theresa",
+      "name_ko": "마리아 테레지아",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "c3248e1c-8ab3-5977-9558-e2cbcbbc263c"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Muhammad Ali Pasha",
+      "name_ko": "무함마드 알리 파샤",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "38843c44-e84c-4ef6-9115-89efa9c2dda1"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Muhammad Ali Pasha is NOT Muhammad Ali (boxer) or Muhammad Ali Jinnah."
+      ]
+    },
+    {
+      "name_en": "Prithvi Narayan Shah",
+      "name_ko": "프리트비 나라얀 샤",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "654b123a-dc72-4900-a404-751ae3c9f22d"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Otto von Bismarck",
+      "name_ko": "오토 폰 비스마르크",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "5401a194-c4e1-57e9-97da-49538d756182"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Emperor Meiji",
+      "name_ko": "메이지 천황",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "f14bd56a-8c24-591c-811a-e731bccc4eeb"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Haile Selassie I",
+      "name_ko": "하일레 셀라시에",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "98142a9e-e43b-5fab-be58-8004cfd1aca6"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Mustafa Kemal Atatürk",
+      "name_ko": "무스타파 케말 아타튀르크",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "6e8defc2-6ee9-4f94-9ed5-3f4be96e7066"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Lee Kuan Yew",
+      "name_ko": "리콴유",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "51b65864-b028-482e-a4b4-2695209fd9cf"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Zayed bin Sultan Al Nahyan",
+      "name_ko": "자이드 빈 술탄 알나얀",
+      "cohorts": [
+        "user-selected-98"
+      ],
+      "status": "EXISTING_AS_OF_20261016",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "person_ids": [
+            "51849218-d58f-4858-a398-4eded6397be0"
+          ],
+          "verdict": "EXISTING_PERSON",
+          "source": "audits/user98-live-identity-census-20261016.json"
+        }
+      ],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Adam Weishaupt",
+      "name_ko": "아담 바이스하우프트",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-adam-weishaupt-illuminati-1776.json",
+          "request_id": "authoring:user-selected-civ11-20261016:adam-weishaupt-illuminati-1776:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "47cf6d91192bf15a8020471a10171cbddf51bbf5c73ad5bbc5c7cc436b37e25e"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Al-Ma'mun",
+      "name_ko": "알 마문",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-al-mamun-abbasid-813-833.json",
+          "request_id": "authoring:user-selected-civ11-20261016:al-mamun-abbasid-813-833:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "05277fae2b3bcfece52ee49f990a538c0ccdf5f4265597be54bde18fbe3b94da"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Balaputradeva",
+      "name_ko": "발라푸트라데와",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-balaputradeva-suvarnadvipa-c860.json",
+          "request_id": "authoring:user-selected-civ11-20261016:balaputradeva-suvarnadvipa-c860:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "0320991dbcf7fb1acfc15610da24f78f3219f6f37553063b38415bb2c2b3e57d"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Carl August, Grand Duke of Saxe-Weimar-Eisenach",
+      "name_ko": "카를 아우구스트",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-eisenach-1758-1809.json",
+          "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-eisenach-1758-1809:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "521c70342ad1835a5f5424865fd337966d304fc905e66aee8faf1b35f13b6aa9"
+        },
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-weimar-1758-1809.json",
+          "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-weimar-1758-1809:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "2681784d59cbb0be72a280e97d8ebe4ccc95269ab61b85231b405e5516dfac83"
+        },
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-weimar-1815-1828.json",
+          "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-weimar-1815-1828:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "086455bf2613c6875ac76a8a33ed4d00d5ec9928a546380d525b90d6000a6340"
+        },
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-weimar-eisenach-1809-1815.json",
+          "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-weimar-eisenach-1809-1815:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "4e2487580c3ddd5339ffba16af96d4f83e4ff57749b7874ff1fecb0a46338186"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Dewashtich",
+      "name_ko": "데와슈티치",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-dewashtich-panjikant-c708-722.json",
+          "request_id": "authoring:user-selected-civ11-20261016:dewashtich-panjikant-c708-722:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "4694eced2f0a599be8f3321d441dd99c48e2db93c5308f3a91cf1ae9e8a59a4e"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Dharmapala",
+      "name_ko": "다르마팔라",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-dharmapala-pala-late8-early9.json",
+          "request_id": "authoring:user-selected-civ11-20261016:dharmapala-pala-late8-early9:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "53631ad896a3f6cbfca53eb406a6e66fb07c9778f9817e6747be6320a97046b2"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "John Calvin",
+      "name_ko": "장 칼뱅",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-john-calvin-geneva-1536-1538.json",
+          "request_id": "authoring:user-selected-civ11-20261016:john-calvin-geneva-1536-1538:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "c553402458a33319a037ff5a42e52509e8ac186080061d8911efa042dfec9e62"
+        },
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-john-calvin-geneva-1541-1564.json",
+          "request_id": "authoring:user-selected-civ11-20261016:john-calvin-geneva-1541-1564:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "51112c49ff921fac1aa8db3ecb818d990bbd88a4366a4f78a23d67dab7ff3901"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Tiglath-Pileser III",
+      "name_ko": "티글라트-필레세르 3세",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2512,
+          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "path": "authoring/requests/user-civ11-20261016-tiglath-pileser-iii-assyria-bce745-bce727.json",
+          "request_id": "authoring:user-selected-civ11-20261016:tiglath-pileser-iii-assyria-bce745-bce727:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "c6a2f58c5de47bd6779600b78e59edbb1d89a395b1f6845e63a05bbee8793b18"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "José Figueres Ferrer",
+      "name_ko": "호세 피게레스 페레르",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2517,
+          "head_sha": "10bf0147c30e202fcfa83f931a049905970bfc9d",
+          "path": "authoring/requests/user-costa-rica-jose-figueres-ferrer-junta-1948-1949-20261016.json",
+          "request_id": "authoring:user-selected-costa-rica:jose-figueres-ferrer:junta-1948-1949:20261016:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "366134e23efd1d8a16ca24d55fe2deae4d5f7ace0c5b75d484ac373a12fe1768"
+        },
+        {
+          "pr": 2517,
+          "head_sha": "10bf0147c30e202fcfa83f931a049905970bfc9d",
+          "path": "authoring/requests/user-costa-rica-jose-figueres-ferrer-presidency-1953-1958-20261016.json",
+          "request_id": "authoring:user-selected-costa-rica:jose-figueres-ferrer:presidency-1953-1958:20261016:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "edef7437357f410c7e9bd08f070d05f8b9aac43cb67536092fc4c049d624aece"
+        },
+        {
+          "pr": 2517,
+          "head_sha": "10bf0147c30e202fcfa83f931a049905970bfc9d",
+          "path": "authoring/requests/user-costa-rica-jose-figueres-ferrer-presidency-1970-1974-20261016.json",
+          "request_id": "authoring:user-selected-costa-rica:jose-figueres-ferrer:presidency-1970-1974:20261016:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "93a8e79b3b5c24b60f977bc855b8a1cc19a0eda45a8f23288cae1fb56c4302d4"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Philippe Pétain",
+      "name_ko": "필리프 페탱",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1915-second-army.json",
+          "request_id": "authoring:user-selected-petain-20261017:1915-second-army:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "b26bb99cedafe2b50aba45287840ddd8ecec148f6e66abf0d9339fd5c8f17886"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1916-centre-army-group.json",
+          "request_id": "authoring:user-selected-petain-20261017:1916-centre-army-group:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "e261cdf3266d8c2dfc432baa13a36bad018f4073f1f52c438e84cb3b02833757"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1917-chief-of-general-staff.json",
+          "request_id": "authoring:user-selected-petain-20261017:1917-chief-of-general-staff:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "021c8fd1c13131b970b80b1de0f43ca5e8a72ca816b250d51a8faf93860424b6"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1917-commander-in-chief-appointment.json",
+          "request_id": "authoring:user-selected-petain-20261017:1917-commander-in-chief-appointment:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "f118bc32bc7d6f272e7e5d425e692113cd0aa8eb32a255ee0050c323e6936c9c"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1920-high-war-council.json",
+          "request_id": "authoring:user-selected-petain-20261017:1920-high-war-council:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "5cf8f63314e75134dd0e7efd8ae23f6628361165738c4ddc56455ef536168461"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1925-rif-command.json",
+          "request_id": "authoring:user-selected-petain-20261017:1925-rif-command:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "50f57da28bc42da7ec47ba17690fa3379e0f8c620c029fd73775ea44c26f10b1"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1934-war-minister.json",
+          "request_id": "authoring:user-selected-petain-20261017:1934-war-minister:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "40daae0aa13145cd9de1b5eb300bbc1d02e761c4b963992fa9e420019429329f"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1935-state-minister.json",
+          "request_id": "authoring:user-selected-petain-20261017:1935-state-minister:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "5f69ec9aeb5b741b71d5113cd2a80ac11d5a537b0522965221504b63ceb003ce"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1939-spanish-ambassador.json",
+          "request_id": "authoring:user-selected-petain-20261017:1939-spanish-ambassador:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "59c637d1f86c11c206d56fc1980aa03adfb6dd25ef9d3312d3ffe757c1906af6"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1940-deputy-prime-minister.json",
+          "request_id": "authoring:user-selected-petain-20261017:1940-deputy-prime-minister:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "94b6a2db8415bfd50545448dc8c2a961c74834c81963993c7e55fe61741d69e1"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1940-third-republic-council-president.json",
+          "request_id": "authoring:user-selected-petain-20261017:1940-third-republic-council-president:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "47d09610784f6452dea33b21abee5f176a0e4af04633a668387556156a8fd9c0"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1940-vichy-council-president.json",
+          "request_id": "authoring:user-selected-petain-20261017:1940-vichy-council-president:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "297f857ea92b0eaf9981b74ef0088fd5bc98abb2af88df2515639927ab8edf58"
+        },
+        {
+          "pr": 2526,
+          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "path": "authoring/requests/user-petain-20261017-1940-vichy-state-head.json",
+          "request_id": "authoring:user-selected-petain-20261017:1940-vichy-state-head:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "fd1c4a2804e8a5b5861dbec769f8426cefd0bcbed5a3ee09403bb02b33024d3a"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "George S. Patton",
+      "name_ko": "조지 S. 패튼",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-george-s-patton-ii-corps-1943.json",
+          "request_id": "authoring:user-selected-patton-20261018:ii-corps-1943:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "dbdcaf2d44092354f366a8a5fcdbbbcc00bd7cf4c02a59e7ee194cd5881941f6"
+        },
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-george-s-patton-seventh-army-1943-1944.json",
+          "request_id": "authoring:user-selected-patton-20261018:seventh-army-1943-1944:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "885fe3b5e11d39a402935eb2d40dd15376bc16accd5d5909b8f4848533c2b7b3"
+        },
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-george-s-patton-third-army-1944-1945.json",
+          "request_id": "authoring:user-selected-patton-20261018:third-army-1944-1945:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "fa8e2b3f37477be199e4d2115af4540b35be210dd573221014993b7305bb2e4b"
+        },
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-george-s-patton-world-war-i-tank-brigade-1918.json",
+          "request_id": "authoring:user-selected-patton-20261018:world-war-i-tank-brigade-1918:v2",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "66bd7aaf924cd6ad7fc0a1df6f6122e29f63bd7130763b45c2540e509acee772"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Henri Giraud",
+      "name_ko": "앙리 지로",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-henri-giraud-africa-civil-military-1942-1943.json",
+          "request_id": "authoring:user-selected-giraud-20261018:africa-civil-military-1942-1943:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "69877f00db0c0669a6976bd7215fb0b7857ebd2fd69bbad44bbf481b41368a58"
+        },
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-henri-giraud-cfln-copresident-1943.json",
+          "request_id": "authoring:user-selected-giraud-20261018:cfln-copresident-1943:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "10b2a486a2e518acd95cd0df06205c873eecf4311e349b061f0ad014507e2268"
+        },
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-henri-giraud-commander-in-chief-1943-1944.json",
+          "request_id": "authoring:user-selected-giraud-20261018:commander-in-chief-1943-1944:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "c6300bd95ec1a7474b3b683c24f8d52a3a5a89c975f77b4e261f33aadec58c8f"
+        },
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-henri-giraud-constituent-assembly-1946.json",
+          "request_id": "authoring:user-selected-giraud-20261018:constituent-assembly-1946:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "35fe45a4c43df3ab161d480e0a2cd4ae2ea7f546f23dd48eed90a1587fc4ab0a"
+        },
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-henri-giraud-ninth-army-1940.json",
+          "request_id": "authoring:user-selected-giraud-20261018:ninth-army-1940:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "791bbab3d7e75ca33802f45ba1fd436d553c7b345974d5fcdfbdb26f8837fed0"
+        },
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-henri-giraud-seventh-army-1939-1940.json",
+          "request_id": "authoring:user-selected-giraud-20261018:seventh-army-1939-1940:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "2048ea67e16f3392061334b05feba70543fa35ca098b8a9a9146b85a8e4f5d56"
+        },
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-henri-giraud-superior-war-council-1949.json",
+          "request_id": "authoring:user-selected-giraud-20261018:superior-war-council-1949:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "f62ece155f0e19162c4a741e94967d033d4cf25e06e3b615dc1e779226ba151f"
+        },
+        {
+          "pr": 2528,
+          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "path": "authoring/requests/user-20261018-henri-giraud-third-army-1936.json",
+          "request_id": "authoring:user-selected-giraud-20261018:third-army-1936:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "eac18e2b9301e802b3892b7282367d2702bf4033d802acdd63852037b557c629"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Miguel de Cervantes",
+      "name_ko": "미겔 데 세르반테스",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2543,
+          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "path": "authoring/requests/user-core40-20261019-cervantes-don-quixote-1605-1615.json",
+          "request_id": "authoring:user-core40-20261004:cervantes:don-quixote-1605-1615:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "d9a9db6250738d859ccd6dfa80ca71cc13dc6887d4513ea046eadf8858069dd5"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Fyodor Dostoevsky",
+      "name_ko": "표도르 도스토옙스키",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2543,
+          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "path": "authoring/requests/user-core40-20261019-dostoevsky-major-literary-phase-1864-1880.json",
+          "request_id": "authoring:user-core40-20261004:dostoevsky:major-literary-phase-1864-1880:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "a564af53f80db88a508205c9e495a8406de44025bd3adec2f832f96429c307c9"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Leonhard Euler",
+      "name_ko": "레온하르트 오일러",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2543,
+          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "path": "authoring/requests/user-core40-20261019-euler-berlin-academy-1741-1766.json",
+          "request_id": "authoring:user-core40-20261004:euler:berlin-academy-1741-1766:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "4936e88f7dad5903b8c9f5cb2b3d16b2a58b3976b43823d4214fe2be03229dfc"
+        },
+        {
+          "pr": 2543,
+          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "path": "authoring/requests/user-core40-20261019-euler-petersburg-first-1727-1741.json",
+          "request_id": "authoring:user-core40-20261004:euler:petersburg-first-1727-1741:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "b1f71fb7a42ee58390435ba73cc52f8ba7bfb4ddcaeb5d1618e8a383d4076aa7"
+        },
+        {
+          "pr": 2543,
+          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "path": "authoring/requests/user-core40-20261019-euler-petersburg-second-1766-1783.json",
+          "request_id": "authoring:user-core40-20261004:euler:petersburg-second-1766-1783:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "199280d7926b05fe15a882100aabf70ac6927181cf7a37d4b4c03bb7f1befaa2"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Johann Wolfgang von Goethe",
+      "name_ko": "요한 볼프강 폰 괴테",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2543,
+          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "path": "authoring/requests/user-core40-20261019-goethe-faust-part-one-1808.json",
+          "request_id": "authoring:user-core40-20261004:goethe:faust-part-one-1808:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "d24663ac182bb0d4f2d01b88d730f5406796d8f419700fde044d34040c8bbf23"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Pablo Picasso",
+      "name_ko": "파블로 피카소",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2543,
+          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "path": "authoring/requests/user-core40-20261019-picasso-france-paris-1904-1973.json",
+          "request_id": "authoring:user-core40-20261004:picasso:france-paris-1904-1973:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "9ff3a94a4bf6e06cc0cf87eadb38790945d106aa041e9d3b2e520ab7a605d270"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Leo Tolstoy",
+      "name_ko": "레프 톨스토이",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2543,
+          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "path": "authoring/requests/user-core40-20261019-tolstoy-russian-major-novels-1863-1877.json",
+          "request_id": "authoring:user-core40-20261004:tolstoy:russian-major-novels-1863-1877:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "e536062f0445a3c42a075e6546f68f002196f9fed749e679afa4cb9a13afe4f6"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Johannes Brahms",
+      "name_ko": "요하네스 브람스",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-brahms-1876.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:additional-brahms:1876:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "131bf2f4cc7d0cf4dc153c6d89439a381be6d6e026560b36719c9b7a12a2a55c"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Paul Cézanne",
+      "name_ko": "폴 세잔",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-cezanne-1895.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:cezanne:1895:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "c57905792bfb29fdc5c36a6ecd02c0b2d43ed5aed4b38d6107921d69af1575ef"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Frédéric Chopin",
+      "name_ko": "프레데리크 쇼팽",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-chopin-1832.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:chopin:1832:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "cc7c1de7dcc9e3bfb63fb02df28740c474170348b727a9924e0c31d94a6edfc7"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Claude Debussy",
+      "name_ko": "클로드 드뷔시",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-debussy-1894.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:debussy:1894:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "fe1848593b658ce2f3276f34a9bd8e6822db32c90dd52c6db599751cdba46ed1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Francisco Goya",
+      "name_ko": "프란시스코 데 고야",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-goya-1799.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:additional-goya:1799:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "67a0c68283b19e539d1bd5f2224f8ff46c713dfe78bfeae0aac9622a8e502e26"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "George Frideric Handel",
+      "name_ko": "게오르크 프리드리히 헨델",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-handel-1741.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:handel:1741:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "9075b15bcc16ea7b3b07246752983f0bd44e2fa40893a8e387ad5175a13c5921"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Joseph Haydn",
+      "name_ko": "요제프 하이든",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-haydn-1798.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:additional-haydn:1798:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "fdbd1756f5a13c6dd0c62c93dffff503aaec00a669ec7c0c147fb04b4ec53b28"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "David Hilbert",
+      "name_ko": "다비트 힐베르트",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-hilbert-1899.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:additional-hilbert:1899:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "a515dce66f2dc040f2a39ceda29221dc5e812293011bdc33744df722700dad22"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Katsushika Hokusai",
+      "name_ko": "가쓰시카 호쿠사이",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-hokusai-1831.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:hokusai:1831:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "8090b87ee003798e321871616f291a081cea4930199910101560c28b59d708dc"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "James Joyce",
+      "name_ko": "제임스 조이스",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-joyce-1922.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:additional-joyce:1922:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "dbc9a9bebc53d557f144b585e2b210f01e3090473d78663786940b371207ce16"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Henri Matisse",
+      "name_ko": "앙리 마티스",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-matisse-1905.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:additional-matisse:1905:v1",
+          "kind": "timeline",
+          "state": "ARCHIVED_PENDING_ONLY",
+          "payload_sha256": "b01f3f284d6eb1f0c8a3e3ea916fc0d1389d7543b390f8b4a26ae3db3a2f052d",
+          "archived_path": "research/person-registration/withdrawn-20261019/cultural20-20261019-matisse-1905.json"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Claude Monet",
+      "name_ko": "클로드 모네",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-monet-1874.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:monet:1874:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "51265e063af75a9a0c1cc03eb06bd64b734c5ca2bb9e18c022fa6c73b9472d53"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Rembrandt van Rijn",
+      "name_ko": "렘브란트 하르먼손 판레인",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-rembrandt-1642.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:rembrandt:1642:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "093a1400b4b8496d562a1c480455516a1bfe14bf0d1e2b0d89e5c5545c480f81"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Bernhard Riemann",
+      "name_ko": "베른하르트 리만",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-riemann-1854.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:additional-riemann:1854:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "a823d858bb11a9fd1dd3739574558e62785d5ad5565d5eb74c64493c00eaaee8"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Franz Schubert",
+      "name_ko": "프란츠 슈베르트",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-schubert-1827.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:additional-schubert:1827:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "b641b004ddfaab4f0ee0a2c5183551c3c404e5090ccdc7fa9a990b127d802c41"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Baruch Spinoza",
+      "name_ko": "바뤼흐 스피노자",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-spinoza-1670.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:spinoza:1670:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "73c4abee5023261a0f4278bff98d5f19205fcdf1bad3f32fd6dd6e5d52ae3170"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Igor Stravinsky",
+      "name_ko": "이고르 스트라빈스키",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-stravinsky-1913.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:stravinsky:1913:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "1cd7e7d41f67e08cecf2871cf9fb4f4f4472796eb34d98732c0a3eb5e202451e"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Pyotr Ilyich Tchaikovsky",
+      "name_ko": "표트르 차이콥스키",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-tchaikovsky-1892.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:tchaikovsky:1892:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "88d4b32715104356169ede5d1ab4d913b3d15f616d6353e60e0063c9e3578cc5"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Diego Velázquez",
+      "name_ko": "디에고 벨라스케스",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-velazquez-1656.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:additional-velazquez:1656:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "12a5a0fd2ebb1460d387d4f2b63b45d5055738d8041b9c4c902d4345287b5f6b"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Giuseppe Verdi",
+      "name_ko": "주세페 베르디",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2544,
+          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "path": "authoring/requests/cultural20-20261019-verdi-1874.json",
+          "request_id": "authoring:user-selected-cultural20-20261019:additional-verdi:1874:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "35c04454c53599063070e745510031e224662908a96db5ee9d446a84e1e10b90"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Aeschylus",
+      "name_ko": "아이스킬로스",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2546,
+          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "path": "authoring/requests/selected62-20261019-aeschylus-representative.json",
+          "request_id": "authoring:selected62-20261019:aeschylus:representative-literary-point:-458:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "50b67aad64e623b3be22b35b539c482838fcd021abf635a0157e660e8ed248aa"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Euripides",
+      "name_ko": "에우리피데스",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2546,
+          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "path": "authoring/requests/selected62-20261019-euripides-representative.json",
+          "request_id": "authoring:selected62-20261019:euripides:representative-literary-point:-431:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "ae910954cddd4599aaf616fa8b54fd502acda3ce6843f9ef74847c0cf861c20d"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Ferdowsi",
+      "name_ko": "페르도우시",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2546,
+          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "path": "authoring/requests/selected62-20261019-ferdowsi-representative.json",
+          "request_id": "authoring:selected62-20261019:ferdowsi:representative-literary-point:1010:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "b0d801c2919ee2dbf42be25d84e1402467db6f8f70548dee357a3d6a2745ae84"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "John Milton",
+      "name_ko": "존 밀턴",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2546,
+          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "path": "authoring/requests/selected62-20261019-milton-representative.json",
+          "request_id": "authoring:selected62-20261019:milton:representative-literary-point:1667:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "ecdf5021849a19df53719f3c0b35a1b7cb3c71ce4a9592b99f8d3ee1cb277c7d"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Ovid",
+      "name_ko": "오비디우스",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2546,
+          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "path": "authoring/requests/selected62-20261019-ovid-representative.json",
+          "request_id": "authoring:selected62-20261019:ovid:representative-literary-point:8:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "42e97f0c3325b2fb845acf30e38bb9814a56bcaf49fe0db2a317b998f3ce857f"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Alexander Pushkin",
+      "name_ko": "알렉산드르 푸시킨",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2546,
+          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "path": "authoring/requests/selected62-20261019-pushkin-representative.json",
+          "request_id": "authoring:selected62-20261019:pushkin:representative-literary-point:1833:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "d0b8664bde1d4628f0db8ccdb2b0d20ed8cbe1bdf17687641962e4a88e8b39cb"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Walt Whitman",
+      "name_ko": "월트 휘트먼",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2546,
+          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "path": "authoring/requests/selected62-20261019-whitman-representative.json",
+          "request_id": "authoring:selected62-20261019:whitman:representative-literary-point:1855:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "5d7e577783f401188633ce8b4000e137bf45747258785ae2ae91e256b35afdd6"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Matsuo Basho",
+      "name_ko": "마쓰오 바쇼",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-basho.json",
+          "request_id": "authoring:selected62-remaining30-20261018:basho:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "912a53026bfb09ac9b4e1f0665840e4dfb9bf63f5bfe1d896fae9064f34d671c"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Ludwig Boltzmann",
+      "name_ko": "루트비히 볼츠만",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-boltzmann.json",
+          "request_id": "authoring:selected62-remaining30-20261018:boltzmann:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "c62e788eaef669b2af5d06e2022b8aca998d6499018aa132928c1ab2452a0895"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Georg Cantor",
+      "name_ko": "게오르크 칸토어",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-cantor.json",
+          "request_id": "authoring:selected62-remaining30-20261018:cantor:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "60dcd1698457715e1c9883480ab8254c7032d7a2d01996cfd84b066799c00aff"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Miles Davis",
+      "name_ko": "마일스 데이비스",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-davis.json",
+          "request_id": "authoring:selected62-remaining30-20261018:davis:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "63048067c403b4f2ce4cc26c7702662ea539ebf2ee4eeb90c4b49b13d2aa38dd"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Marcel Duchamp",
+      "name_ko": "마르셀 뒤샹",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-duchamp.json",
+          "request_id": "authoring:selected62-remaining30-20261018:duchamp:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "cf7aaf92d38f08957747d1a41dac9025f16ad0783af9fc57d6ff4aa67646724b"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Albrecht Durer",
+      "name_ko": "알브레히트 뒤러",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-durer.json",
+          "request_id": "authoring:selected62-remaining30-20261018:durer:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "d81af7af6aefc14b4d9c85267b7345f32285d7c310686c69ce8cb11e78883f16"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Sergei Eisenstein",
+      "name_ko": "세르게이 에이젠슈테인",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-eisenstein.json",
+          "request_id": "authoring:selected62-remaining30-20261018:eisenstein:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "19cee03da64948f59a1c4632434bec8bf9f02e139b502fddbf2d2309cacbcae7"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Duke Ellington",
+      "name_ko": "듀크 엘링턴",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-ellington.json",
+          "request_id": "authoring:selected62-remaining30-20261018:ellington:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "805cc6e3dbbeec89d149013e672b57f5c504c12214a2eb38913b3a25f8b8a3f5"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Gottlob Frege",
+      "name_ko": "고틀로프 프레게",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-frege.json",
+          "request_id": "authoring:selected62-remaining30-20261018:frege:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "b6741f9b2e6d056d17ba31012be0634b750b3e436c584ffc7ee3f7a685fe01d2"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Georg Wilhelm Friedrich Hegel",
+      "name_ko": "게오르크 빌헬름 프리드리히 헤겔",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-hegel.json",
+          "request_id": "authoring:selected62-remaining30-20261018:hegel:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "bed274eff806f12ceeb2910891888aa2d2adf302a089d09d21d54019a7471520"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Alfred Hitchcock",
+      "name_ko": "앨프리드 히치콕",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-hitchcock.json",
+          "request_id": "authoring:selected62-remaining30-20261018:hitchcock:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "90b13e2aa3dd65ab0d97a01f9e202dc24614645b0a9e83b1a0b1449a8fca7ced"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Josquin des Prez",
+      "name_ko": "조스캥 데프레",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-josquin.json",
+          "request_id": "authoring:selected62-remaining30-20261018:josquin:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "a9bcc73990cbc78bf3f5a2fcf7cb0969c8b0b53ebd412722e3f3bb7813764922"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Kalidasa",
+      "name_ko": "칼리다사",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-kalidasa-person-only.json",
+          "request_id": "authoring:selected62-remaining30-20261018:kalidasa:chronology-unresolved:v1",
+          "kind": "person_only",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "807c929d611d79a508c80043656ef051ec94be30601ba70e3ad48cceb2db9f45"
+        }
+      ],
+      "notes": [
+        "Chronology HOLD preserved: person-only chronology_unresolved; no fabricated Activity or year."
+      ]
+    },
+    {
+      "name_en": "Wassily Kandinsky",
+      "name_ko": "바실리 칸딘스키",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-kandinsky.json",
+          "request_id": "authoring:selected62-remaining30-20261018:kandinsky:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "c3842fa3d780f726de4dc9979ccb25afcfde3268ac7f4c8c181b1539afcf5a30"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Robert Koch",
+      "name_ko": "로베르트 코흐",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-koch.json",
+          "request_id": "authoring:selected62-remaining30-20261018:koch:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "34c635be1184aba67acf5c827a136530aa7fe8244b10efa7c4070a22c2adfda1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Akira Kurosawa",
+      "name_ko": "구로사와 아키라",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-kurosawa.json",
+          "request_id": "authoring:selected62-remaining30-20261018:kurosawa:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "9cd6e2ae55db6ade6c4106eb222129846460a5ab8f3f3fdb497fb19fe2fdb44f"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Joseph-Louis Lagrange",
+      "name_ko": "조제프루이 라그랑주",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-lagrange.json",
+          "request_id": "authoring:selected62-remaining30-20261018:lagrange:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "7786d6d993414609f672d4a2b3990b0a743910850c8d295717346575526e17b9"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Pierre-Simon Laplace",
+      "name_ko": "피에르시몽 라플라스",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-laplace.json",
+          "request_id": "authoring:selected62-remaining30-20261018:laplace:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "bd37b1dee7961f0994960e7f62188219de52011c9da58b47750b813120fa65fc"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Le Corbusier",
+      "name_ko": "르 코르뷔지에",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-le-corbusier.json",
+          "request_id": "authoring:selected62-remaining30-20261018:le-corbusier:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "f01bdce4a6ab4ff7bf9c92ee3eeec1c413b864dab498e0003855831b4a2ca55b"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Gustav Mahler",
+      "name_ko": "구스타프 말러",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-mahler.json",
+          "request_id": "authoring:selected62-remaining30-20261018:mahler:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "e84ece32028b1f04844e55e905b3f63f136a55dc78468f44a44e65907160a58d"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Claudio Monteverdi",
+      "name_ko": "클라우디오 몬테베르디",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-monteverdi.json",
+          "request_id": "authoring:selected62-remaining30-20261018:monteverdi:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "e08b1b5750bc85e6b5e4939afa9653535b787cde47e2097207672d5e7d1228ff"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Emmy Noether",
+      "name_ko": "에미 뇌터",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-noether.json",
+          "request_id": "authoring:selected62-remaining30-20261018:noether:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "4b6185e499f81c880639fbc7be2812efcf522039d5624f2d5dfd772b50e97999"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Henri Poincare",
+      "name_ko": "앙리 푸앵카레",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-poincare.json",
+          "request_id": "authoring:selected62-remaining30-20261018:poincare:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "deb40f4bbbc706f1e48168aac2a6771e67ec8d5532c03388e6cdf41013b2136c"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Su Shi",
+      "name_ko": "소식",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-su-shi.json",
+          "request_id": "authoring:selected62-remaining30-20261018:su-shi:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "0ae36fefe4e2c5fafb520262b845c3460ab1b4b7f3341fe5fc3c850a35610ae8"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Titian",
+      "name_ko": "티치아노",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-titian.json",
+          "request_id": "authoring:selected62-remaining30-20261018:titian:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "94a6ec0aa31bdb3118c399d4184b42859d70e3fd9d69df9e4d2b62304f197b05"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Max Weber",
+      "name_ko": "막스 베버",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-weber.json",
+          "request_id": "authoring:selected62-remaining30-20261018:weber:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "0151831b393b3c3ece303fc04af996c73ef0db3caf396173fb3e906e32a523d9"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Orson Welles",
+      "name_ko": "오슨 웰스",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-welles.json",
+          "request_id": "authoring:selected62-remaining30-20261018:welles:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "efc4d72766b902bb40f26850500ebac93d9410d67299809a440b8638a2fc93bf"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Ludwig Wittgenstein",
+      "name_ko": "루트비히 비트겐슈타인",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2548,
+          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "path": "authoring/requests/selected62-remaining30-20261018-wittgenstein.json",
+          "request_id": "authoring:selected62-remaining30-20261018:wittgenstein:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED",
+          "payload_sha256": "7b1e438909ebafabe91a89c8793f07ea41f0da2b11ac12664399d7e23ac6490d"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Goiswintha",
+      "name_ko": "고이스윈타",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2497,
+          "path": "authoring/requests/goiswintha-visigothic-athanagild-widow-567-20261012.json",
+          "request_id": "authoring:goiswintha:visigothic-athanagild-consort:567-point:20261012:v1",
+          "kind": "timeline",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "1d36158c31704b4500dedc4af8163bc40cc00806bba3ef3fb85f7b12811ed028"
+        },
+        {
+          "pr": 2497,
+          "path": "authoring/requests/goiswintha-visigothic-liuvigild-consort-569-586-20261012.json",
+          "request_id": "authoring:goiswintha:visigothic-liuvigild-queen-consort:569-586:20261012:v1",
+          "kind": "timeline",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "b8e61de92526b91ed91ba0e05888c6ae8e794e9e4f3d29affbe36c28a22c571c"
+        },
+        {
+          "pr": 2497,
+          "path": "authoring/requests/goiswintha-visigothic-reccared-court-589-20261012.json",
+          "request_id": "authoring:goiswintha:visigothic-reccared-court-opposition:589-point:20261012:v1",
+          "kind": "timeline",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "3ea75c8e76e731b61b664f1e04a00d462f0694f8665d6c93d6b7fd194a49f6cf"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Anizham Thirunal Marthanda Varma",
+      "name_ko": "아니잠 티루날 마르탄다 바르마",
+      "cohorts": [
+        "other-user-selected"
+      ],
+      "status": "NEEDS_PREFLIGHT",
+      "production_evidence": [],
+      "artifacts": [
+        {
+          "pr": 2501,
+          "path": "authoring/requests/travancore-anizham-thirunal-marthanda-varma-1729-1758-20261014.json",
+          "request_id": "authoring:user-travancore:anizham-thirunal-marthanda-varma:reign:1729-1758:20261014:v1",
+          "kind": "timeline",
+          "state": "MERGED_UNAPPLIED",
+          "payload_sha256": "aea56e31b27baffcdce80eacf9d5162c38cc0390c8cc9e80a97ccde6dc879c74"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name_en": "Lempira",
+      "name_ko": "렘피라",
+      "cohorts": [
+        "prior-civ5-existing"
+      ],
+      "status": "EXISTING_CORRECTION_ONLY_NO_CREATE",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "source": "#2500 STOP / saved full census",
+          "person_ids": [
+            "5068032a-fc0b-4c7a-9606-48f54bbd2be3"
+          ],
+          "activity_ids": [
+            "cda5e7a6-bac4-43fe-b50c-0659120a6bf5"
+          ],
+          "polity_id": "684b7679-48dd-42eb-bbd9-060e9be66a7d"
+        }
+      ],
+      "artifacts": [
+        {
+          "pr": 2500,
+          "path": "authoring/requests/civ5-20261012-lempira-cerquin-1537-point.json",
+          "request_id": "authoring:user-civ5-20261012:lempira-cerquin-1537:v1",
+          "kind": "withdrawn_duplicate_create",
+          "state": "ARCHIVE_NO_REPLAY",
+          "archived_path": "research/person-registration/withdrawn-20261019/civ5-20261012-lempira-cerquin-1537-point.json",
+          "original_bytes_sha256": "eb8047647486380caeab3436feb6f22ce96a10627cd5f10f51b8ab3fc729c44d"
+        }
+      ],
+      "notes": [
+        "Withdraw newer create request from executable authoring scope; preserve source bytes in withdrawn archive. Do not alter existing DB Person/Activity."
+      ]
+    },
+    {
+      "name_en": "Leonor of El Limón",
+      "name_ko": "엘리몬의 레오노르",
+      "cohorts": [
+        "prior-civ5-existing"
+      ],
+      "status": "EXISTING_CORRECTION_ONLY_NO_CREATE",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "source": "#2500 STOP / saved full census",
+          "person_ids": [
+            "e0bb5bca-dc5f-48c5-a79c-639765e1f353"
+          ],
+          "activity_ids": [
+            "c4022d64-fe3a-44a8-b40e-079b27c45ae1"
+          ],
+          "polity_id": "0401a7d3-bfad-44aa-aff3-c04a1dcc69e3"
+        }
+      ],
+      "artifacts": [
+        {
+          "pr": 2500,
+          "path": "authoring/requests/civ5-20261012-leonor-el-limon-1632-point.json",
+          "request_id": "authoring:user-civ5-20261012:leonor-palenque-el-limon-1632:v1",
+          "kind": "withdrawn_duplicate_create",
+          "state": "ARCHIVE_NO_REPLAY",
+          "archived_path": "research/person-registration/withdrawn-20261019/civ5-20261012-leonor-el-limon-1632-point.json",
+          "original_bytes_sha256": "238066880d22eb10bca69748b932f648c792cac2cb109715b04fec6dee118bfd"
+        }
+      ],
+      "notes": [
+        "Withdraw newer create request from executable authoring scope; preserve source bytes in withdrawn archive. Do not alter existing DB Person/Activity."
+      ]
+    },
+    {
+      "name_en": "Nasr ibn Ahmad of Fraxinetum",
+      "name_ko": "나스르 이븐 아흐마드(프락시네툼)",
+      "cohorts": [
+        "prior-civ5-existing"
+      ],
+      "status": "EXISTING_CORRECTION_ONLY_NO_CREATE",
+      "production_evidence": [
+        {
+          "observed_at": "2026-10-16",
+          "source": "#2500 STOP / saved full census",
+          "person_ids": [
+            "4ea57402-639e-4d79-b4b3-383667d90647"
+          ],
+          "activity_ids": [
+            "3a422725-2346-4775-a3d9-79a089f0b4e5"
+          ],
+          "polity_id": "819ae1cc-558d-49fe-a7cd-4a5ffd9f6d81"
+        }
+      ],
+      "artifacts": [
+        {
+          "pr": 2500,
+          "path": "authoring/requests/civ5-20261012-nasr-ibn-ahmad-fraxinetum-939-940.json",
+          "request_id": "authoring:user-civ5-20261012:nasr-ibn-ahmad-fraxinetum-939-940:v1",
+          "kind": "withdrawn_duplicate_create",
+          "state": "ARCHIVE_NO_REPLAY",
+          "archived_path": "research/person-registration/withdrawn-20261019/civ5-20261012-nasr-ibn-ahmad-fraxinetum-939-940.json",
+          "original_bytes_sha256": "6db7bbe8cac13f1c0926c167f3041eb392f11759a462b604b1e44fec5208133a"
+        }
+      ],
+      "notes": [
+        "Withdraw newer create request from executable authoring scope; preserve source bytes in withdrawn archive. Do not alter existing DB Person/Activity."
+      ]
+    },
+    {
+      "name_en": "Miklos Horthy",
+      "name_ko": "호르티 미클로시",
+      "cohorts": [
+        "review-only-existing"
+      ],
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "#1374 comments 6234674383 / 6243525346",
+          "observed_at": "historical review; not current DB"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Preserve existing Person; any proposed missing Activity belongs to separate exact-ID correction preflight."
+      ]
+    },
+    {
+      "name_en": "William the Conqueror",
+      "name_ko": "정복왕 윌리엄",
+      "cohorts": [
+        "review-only-existing"
+      ],
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "#1374 comments 6234674383 / 6243525346",
+          "observed_at": "historical review; not current DB"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Preserve existing Person; any proposed missing Activity belongs to separate exact-ID correction preflight."
+      ]
+    },
+    {
+      "name_en": "Richard I",
+      "name_ko": "리처드 1세",
+      "cohorts": [
+        "review-only-existing"
+      ],
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "#1374 comments 6234674383 / 6243525346",
+          "observed_at": "historical review; not current DB"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Preserve existing Person; any proposed missing Activity belongs to separate exact-ID correction preflight."
+      ]
+    },
+    {
+      "name_en": "Edward I of England",
+      "name_ko": "에드워드 1세",
+      "cohorts": [
+        "review-only-existing"
+      ],
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "#1374 comments 6234674383 / 6243525346",
+          "observed_at": "historical review; not current DB"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Preserve existing Person; any proposed missing Activity belongs to separate exact-ID correction preflight."
+      ]
+    },
+    {
+      "name_en": "Henry V of England",
+      "name_ko": "헨리 5세",
+      "cohorts": [
+        "review-only-existing"
+      ],
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "#1374 comments 6234674383 / 6243525346",
+          "observed_at": "historical review; not current DB"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Preserve existing Person; any proposed missing Activity belongs to separate exact-ID correction preflight."
+      ]
+    },
+    {
+      "name_en": "Sophocles",
+      "name_ko": "소포클레스",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "HOLD_NAMUWIKI_EVIDENCE",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": [
+        "Independent current Person article unresolved; search failure is not reviewed not_found."
+      ]
+    },
+    {
+      "name_en": "William Harvey",
+      "name_ko": "윌리엄 하비",
+      "cohorts": [
+        "selected-62"
+      ],
+      "status": "HOLD_NAMUWIKI_EVIDENCE",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": [
+        "Independent current Person article unresolved; search failure is not reviewed not_found."
+      ]
+    },
+    {
+      "name_en": "Anton Chekhov",
+      "name_ko": "안톤 체호프",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Gustave Flaubert",
+      "name_ko": "귀스타브 플로베르",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Peter Paul Rubens",
+      "name_ko": "페테르 파울 루벤스",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "J. M. W. Turner",
+      "name_ko": "윌리엄 터너",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Auguste Rodin",
+      "name_ko": "오귀스트 로댕",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Arnold Schoenberg",
+      "name_ko": "아르놀트 쇤베르크",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Bela Bartok",
+      "name_ko": "벨러 버르토크",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Giovanni Pierluigi da Palestrina",
+      "name_ko": "팔레스트리나",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Charlie Parker",
+      "name_ko": "찰리 파커",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "John Coltrane",
+      "name_ko": "존 콜트레인",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Edmund Husserl",
+      "name_ko": "에드문트 후설",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Stanley Kubrick",
+      "name_ko": "스탠리 큐브릭",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Ingmar Bergman",
+      "name_ko": "잉마르 베리만",
+      "cohorts": [
+        "pending-14"
+      ],
+      "status": "PENDING_ONLY",
+      "production_evidence": [],
+      "artifacts": [],
+      "notes": []
+    },
+    {
+      "name_en": "Yarima",
+      "name_ko": "야리마",
+      "cohorts": [
+        "reviewed-excluded-or-reused"
+      ],
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "#2500 reviewed scope",
+          "observed_at": "historical checkpoint"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Existing UUID 88505550-4a3e-49a5-ab8c-1c04379bec9a; reuse only."
+      ]
+    },
+    {
+      "name_en": "Harriet Tubman",
+      "name_ko": "해리엇 터브먼",
+      "cohorts": [
+        "reviewed-excluded-or-reused"
+      ],
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "#2500 reviewed scope",
+          "observed_at": "historical checkpoint"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Existing UUID de41d98d-2ca9-5858-ac9f-1de3cc7c8136; Underground Railroad is not a Polity."
+      ]
+    },
+    {
+      "name_en": "Toto (Finzenu)",
+      "name_ko": "토토(핀세누)",
+      "cohorts": [
+        "reviewed-excluded-or-reused"
+      ],
+      "status": "HOLD_PERSON_SPECIFIC_CHRONOLOGY",
+      "production_evidence": [
+        {
+          "source": "#2500 reviewed scope",
+          "observed_at": "historical checkpoint"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "No independently secure named personal year; do not borrow 1533 invasion date."
+      ]
+    },
+    {
+      "name_en": "Guacanaoma",
+      "name_ko": "과카나오마",
+      "cohorts": [
+        "reviewed-excluded-or-reused"
+      ],
+      "status": "HOLD_IDENTITY_AND_CHRONOLOGY",
+      "production_evidence": [
+        {
+          "source": "#2500 reviewed scope",
+          "observed_at": "historical checkpoint"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Early/late colonial names may refer to different individuals; no synthesized lifespan."
+      ]
+    },
+    {
+      "name_en": "Selu",
+      "name_ko": "셀루",
+      "cohorts": [
+        "reviewed-excluded-or-reused"
+      ],
+      "status": "EXCLUDED_MYTHOLOGICAL",
+      "production_evidence": [
+        {
+          "source": "#2500 reviewed scope",
+          "observed_at": "historical checkpoint"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "No new historical Person; no DB deletion performed."
+      ]
+    },
+    {
+      "name_en": "Leopold I of Belgium",
+      "name_ko": "벨기에의 레오폴드 1세",
+      "cohorts": [
+        "reviewed-excluded-or-reused"
+      ],
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "#2512 reviewed scope",
+          "observed_at": "historical checkpoint"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Already registered; excluded from Civ11 create scope."
+      ]
+    },
+    {
+      "name_en": "Jigme Singye Wangchuck",
+      "name_ko": "지그메 싱게 왕축",
+      "cohorts": [
+        "reviewed-excluded-or-reused"
+      ],
+      "status": "EXCLUDED_LIVING",
+      "production_evidence": [
+        {
+          "source": "#2512 reviewed scope",
+          "observed_at": "historical checkpoint"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Living Person excluded; historical review checkpoint, no new live-status verification."
+      ]
+    },
+    {
+      "name_en": "Priest-Queen (unidentified)",
+      "name_ko": "신원 미상 사제 여왕",
+      "cohorts": [
+        "reviewed-excluded-or-reused"
+      ],
+      "status": "EXCLUDED_UNIDENTIFIED",
+      "production_evidence": [
+        {
+          "source": "#2512 reviewed scope",
+          "observed_at": "historical checkpoint"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Generic label, not securely attested individual identity."
+      ]
+    },
+    {
+      "name_en": "Leovigild",
+      "name_ko": "레오비길드",
+      "cohorts": [
+        "reviewed-excluded-or-reused"
+      ],
+      "status": "EXISTING_REVIEW_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "#2497 reviewed scope",
+          "observed_at": "historical checkpoint"
+        }
+      ],
+      "artifacts": [],
+      "notes": [
+        "Liuvigild is an alias, not a new Person; existing #603."
+      ]
+    }
+  ],
+  "counts": {
+    "distinct_reviewed_labels": 205,
+    "statuses": {
+      "EXISTING_AS_OF_20261016": 59,
+      "DUPLICATE_UUID_CORRECTION_HOLD": 1,
+      "NEEDS_SOURCE_AND_ALIAS_REVIEW": 31,
+      "NEEDS_PREFLIGHT": 80,
+      "EXISTING_ACTIVITY_REPAIR_PENDING": 1,
+      "PENDING_ONLY": 14,
+      "EXISTING_CORRECTION_ONLY_NO_CREATE": 3,
+      "EXISTING_REVIEW_NO_CREATE": 9,
+      "HOLD_NAMUWIKI_EVIDENCE": 2,
+      "HOLD_PERSON_SPECIFIC_CHRONOLOGY": 1,
+      "HOLD_IDENTITY_AND_CHRONOLOGY": 1,
+      "EXCLUDED_MYTHOLOGICAL": 1,
+      "EXCLUDED_LIVING": 1,
+      "EXCLUDED_UNIDENTIFIED": 1
+    },
+    "new_person_draft_identities_needing_current_preflight": 80,
+    "current_production_ready": 0,
+    "current_production_registered_proven_this_review": 0
+  },
+  "scope_caveat": "205 distinct reviewed identity/label records includes 14 pending-only, generic Priest-Queen and mythical Selu; not 205 eligible real Persons. 31 user98 names remain source/alias review, not ready for registration.",
+  "withdrawal_status": "Matisse removed from #2544 active branch; three #2500 authoring creates proposed for archival by this Draft PR only, not yet removed from main."
+}
