@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:civilwar-four-20261020:yudenich:representative:v1",
+  "person": {
+    "canonical_name_en": "Nikolai Yudenich",
+    "display_name_ko": "니콜라이 유데니치",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-20",
+    "life_status_basis": "documented_death",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Russian State",
+    "display_name_ko": "러시아국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Northwestern Army commander",
+    "role_display_name_ko": "북서군 사령관",
+    "start_year": 1919,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1919,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Northwestern Army campaign against Petrograd in 1919; NOT the Allied Northern Region government. Russian State is nominal White political affiliation, not sovereign control of Estonia or Petrograd. Institutional archival catalogue gives life dates 1862-1933; reject inconsistent mirror infobox 1851 birth."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Hoover Institution Archives: Register of the Yudenich Collection 1919-1921",
+      "canonical_url": "https://cdn.calisphere.org/data/13030/zk/tf738nb1zk/files/tf738nb1zk.pdf",
+      "citation_text": "Representative activity evidence: 1919-1919; see activity notes for scope and chronology limitations."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Nikolai Yudenich: identity and documented death",
+      "canonical_url": "https://en.wikipedia.org/wiki/Nikolai_Yudenich",
+      "citation_text": "Identity corroboration and deceased status; death year 1933."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-20",
+      "document_title": "니콜라이 유데니치",
+      "url": "https://namu.wiki/w/%EB%8B%88%EC%BD%9C%EB%9D%BC%EC%9D%B4%20%EC%9C%A0%EB%8D%B0%EB%8B%88%EC%B9%98"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed context only. No current canonical Person/alias/Activity/Polity/Place preflight permitted before Production. Resolve/reuse exact IDs and current reviewed external reference; no fabricated coordinates or new political entities."
+  },
+  "review_context": {
+    "registration_state": "NEEDS_PREFLIGHT",
+    "production_access": false,
+    "source_review_only": true,
+    "namuwiki_method": "Independent exact Person article verified by external index/mirror, with same-person full name and historical context. Origin fetch not claimed.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EB%8B%88%EC%BD%9C%EB%9D%BC%EC%9D%B4%20%EC%9C%A0%EB%8D%B0%EB%8B%88%EC%B9%98",
+    "apply_gate": "DRAFT DO NOT APPLY OR MERGE; fresh canonical duplicate/Polity preflight after recovery. Importance is not identity/chronology proof. No PHFC /36 completeness claim.",
+    "review_checkpoint": "https://github.com/JezCH/atlas-person-db/issues/1374#issuecomment-6270116498",
+    "authorization": "User 2026-10-20 KST approved all four, including Antonov; draft only under standing no-Production restriction."
+  }
+}
