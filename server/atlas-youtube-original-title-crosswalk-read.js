@@ -31,7 +31,8 @@ function buildCrosswalkIndex(shards=SHARDS){
       // [historic rank, production label, source label,
       //  production channels/videos, source original channels/videos, origin]
       if(!Array.isArray(row)||row.length!==8||
-         typeof row[1]!=="string"||row[1]!==row[2]||
+         typeof row[1]!=="string"||typeof row[2]!=="string"||
+         row[1].normalize("NFKC").toLowerCase()!==row[2].normalize("NFKC").toLowerCase()||
          !Number.isSafeInteger(row[0])||row[0]<1||
          [3,4,5,6].some(i=>!Number.isSafeInteger(row[i])||row[i]<1)||
          typeof row[7]!=="string")
