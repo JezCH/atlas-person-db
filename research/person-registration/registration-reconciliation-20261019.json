@@ -118,7 +118,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -127,8 +127,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-hugues.json",
+          "request_id": "authoring:preproduction-20261019:hugues:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Hugues de Payens",
+        "name_ko": "위그 드 파앵",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-hugues.json",
+        "sources": [
+          "https://templerlexikon.webspace.tu-dresden.de/TDF-P2.html"
+        ],
+        "identity_and_chronology_review": "Presented the Templar rule at the Council of Troyes in 1129. A source-attested representative organizational event, not a guessed 1118/1119/1120 foundation date or a reign. Hugo de Paganis is the same individual; disputed birthplace and 1136/1137 death date are not asserted.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "위그 드 파앵"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Gajah Mada",
@@ -156,7 +182,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -165,8 +191,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-zolkiewski.json",
+          "request_id": "authoring:preproduction-20261019:zolkiewski:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Stanisław Żółkiewski",
+        "name_ko": "스타니스와프 주키에프스키",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-zolkiewski.json",
+        "sources": [
+          "https://muzhp.pl/kalendarium/bitwa-pod-kluszynem"
+        ],
+        "identity_and_chronology_review": "Command at Klushino in 1610; Polish-Lithuanian service affiliation, not Polish sovereign annexation of all Muscovy. Distinct from his same-named father; no fictitious uninterrupted governorship of Russia.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "스타니스와프 주키에프스키"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Caterina Sforza",
@@ -254,7 +306,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -263,8 +315,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-lawrence.json",
+          "request_id": "authoring:preproduction-20261019:lawrence:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "T. E. Lawrence",
+        "name_ko": "토머스 에드워드 로렌스",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-lawrence.json",
+        "sources": [
+          "https://www.nam.ac.uk/explore/lawrence-arabia-man-behind-robes"
+        ],
+        "identity_and_chronology_review": "British officer working with Hashemite forces during the capture of Aqaba in 1917. UK is service affiliation, not a claim that Aqaba was British sovereign territory. Auda Abu Tayi and Arab forces are not erased; distinguish the real officer from the film character and Lawrence of Arabia as a work.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "토머스 에드워드 로렌스"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Roman von Ungern-Sternberg",
@@ -272,7 +350,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -281,8 +359,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-ungern.json",
+          "request_id": "authoring:preproduction-20261019:ungern:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Roman von Ungern-Sternberg",
+        "name_ko": "로만 폰 운게른슈테른베르크",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-ungern.json",
+        "sources": [
+          "https://www.cambridge.org/core/journals/modern-asian-studies/article/mongolian-revolution-of-1921/2FD9F6600841118EEC430BB238D09AF7"
+        ],
+        "identity_and_chronology_review": "1921 military intervention in Urga and restoration of the Bogd. Not a self-invented Mongolian emperor/reign or sovereign Russian-Mongolian empire; contested and violent military context. Bogd Khanate exact canonical polity identity must be resolved by future preflight. Distinguish alternate-history game variants.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "로만 폰 운게른슈테른베르크"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Ulysses S. Grant",
@@ -310,7 +414,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -319,8 +423,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-mitchell.json",
+          "request_id": "authoring:preproduction-20261019:mitchell:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Billy Mitchell",
+        "name_ko": "빌리 미첼",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-mitchell.json",
+        "sources": [
+          "https://www.nationalmuseum.af.mil/Visit/Museum-Exhibits/Fact-Sheets/Display/Article/196947/battleship-trials/"
+        ],
+        "identity_and_chronology_review": "Commanded the First Provisional Air Brigade during the 1921 battleship bombing trials off Virginia. Representative aviation demonstration, not an independent US Air Force command before that service existed. William Billy Mitchell, not the living gamer or footballer.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "빌리 미첼"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Carl Gustaf Emil Mannerheim",
@@ -367,7 +497,13 @@
           "payload_sha256": "a88a927c52f0b4a09cc9d8c372699c8fd77790c38065016a9cf8e83ec0dd351c"
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Ragnar Lodbrok",
@@ -397,7 +533,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -407,7 +543,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Roger of Lauria",
+        "name_ko": "로저 드 로리아",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://www.enciclopedia.cat/gran-enciclopedia-catalana/roger-de-lloria-0"
+        ],
+        "identity_and_chronology_review": "Historically attested admiral, distinct from his father Roger de Lauria. 1283 Catalan-fleet command and Malta victory established. Independent exact NamuWiki Person article unresolved; no invented linked/not_found value.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Hayreddin Barbarossa",
@@ -454,7 +601,13 @@
           "payload_sha256": "a058dfa7b8f9c6c52d6e0c2e1ff93e05822b5f794e1c8122e8e45c3af9d2af2c"
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Ahmad ibn Majid",
@@ -502,7 +655,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -511,8 +664,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-doria.json",
+          "request_id": "authoring:preproduction-20261019:doria:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Andrea Doria",
+        "name_ko": "안드레아 도리아",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-doria.json",
+        "sources": [
+          "https://www.treccani.it/enciclopedia/andrea-doria_%28Enciclopedia-machiavelliana%29/"
+        ],
+        "identity_and_chronology_review": "1528 Genoese political restoration/reform and imperial naval alignment. Representative turning point, not a claimed office as Doge or an unqualified continuous sovereign reign. Distinct from Giovanni Andrea Doria, the liner, warship and fictional ship characters.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "안드레아 도리아"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Afonso de Albuquerque",
@@ -580,7 +759,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -590,7 +769,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Apollodorus of Damascus",
+        "name_ko": "다마스쿠스의 아폴로도로스",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://academic.oup.com/edited-volume/61673/chapter-abstract/548068478"
+        ],
+        "identity_and_chronology_review": "Historical architect distinguished from Athenian mythographer. Oxford/Uffizi describe attribution of Trajan’s Column conditionally; do not convert a possible attribution into a precise personal activity. NamuWiki personal title also unresolved.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Muhammad V of Granada",
@@ -620,7 +810,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -629,8 +819,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-vauban.json",
+          "request_id": "authoring:preproduction-20261019:vauban:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Sébastien Le Prestre de Vauban",
+        "name_ko": "세바스티앙 보방",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-vauban.json",
+        "sources": [
+          "https://sites-vauban.org/en/discover/vauban"
+        ],
+        "identity_and_chronology_review": "1678 appointment as General Commissioner for Fortifications, a representative institutional milestone for his engineering programme. Not all individual sieges or fortresses split into separate rows, and not a guessed full tenure. Distinct from the Warframe or modern neighbourhood bearing his name.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "세바스티앙 르 프레스트르 드 보방"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Jan Leeghwater",
@@ -638,7 +854,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -648,7 +864,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Jan Leeghwater",
+        "name_ko": "얀 리흐워터",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://www.haarlemmermeermuseum.nl/plemp"
+        ],
+        "identity_and_chronology_review": "Museum confirms historical hydraulic engineer, died 1650, and 1641 Haarlemmermeer-book. Beemster completion date alone does not prove sole authorship; later unexecuted drainage scheme is not an accomplished project. Exact independent NamuWiki title unresolved.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Philibert de l'Orme",
@@ -656,7 +883,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -666,7 +893,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Philibert de l'Orme",
+        "name_ko": "필리베르 드 로르메",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://architectura.univ-tours.fr/en/livres-notice/ensba_les1653c490/"
+        ],
+        "identity_and_chronology_review": "University of Tours identifies architectural treatise, Paris 1567–1568 imprint/first 1567 issue. Exact personal NamuWiki article unresolved across spelling variants; no guessed title link.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Orban (cannon founder)",
@@ -674,7 +912,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -684,7 +922,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Orban (cannon founder)",
+        "name_ko": "우르반",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://assets.cambridge.org/052184/3138/index/0521843138_index.htm"
+        ],
+        "identity_and_chronology_review": "Cambridge Guns for the Sultan identifies the cannon founder separately. Cannon-object/One Piece pages are not an independent Person article. Birthplace, personal death circumstances and giant-cannon attribution need source-specific caution; do not infer a full biography from the object.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Isambard Kingdom Brunel",
@@ -711,7 +960,13 @@
           "payload_sha256": "6f1fa5479f9018576576dc2e77ee649b89bfaffd00958ce68c39eccf616dcebc"
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Alfred Krupp",
@@ -719,7 +974,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -729,7 +984,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Alfred Krupp",
+        "name_ko": "알프레드 크루프",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://www.thyssenkrupp.com/en/company/history/the-founding-families/alfred-krupp.html"
+        ],
+        "identity_and_chronology_review": "Official corporate biography confirms 1812–1887 industrialist, distinct from father Friedrich, son Friedrich Alfred and later Alfried Krupp. 1853 Prussian wheel patent is a reviewed alternative to exhibition-only association. Personal NamuWiki title unresolved.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Francesco Bartolomeo Rastrelli",
@@ -737,7 +1003,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -747,7 +1013,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Francesco Bartolomeo Rastrelli",
+        "name_ko": "프란체스코 바르톨로메오 라스트렐리",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://www.hermitagemuseum.org/uploads/files/otchet_2015_en.pdf"
+        ],
+        "identity_and_chronology_review": "Hermitage attributes Winter Palace 1754–1762 to the architect, not his sculptor father Carlo Bartolomeo. Building date not retroactively a claim of every year of employment. Independent NamuWiki Person title unresolved.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Alberto Santos-Dumont",
@@ -755,7 +1032,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -764,8 +1041,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-santos-dumont.json",
+          "request_id": "authoring:preproduction-20261019:santos-dumont:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Alberto Santos-Dumont",
+        "name_ko": "아우베르투 산토스뒤몽",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-santos-dumont.json",
+        "sources": [
+          "https://old.fai.org/news/personalities/42650-12-november-1906-the-first-flight-by-santos-dumont"
+        ],
+        "identity_and_chronology_review": "14-bis public flights at Bagatelle, Paris, in 1906. The 220-metre November flight is source-attested; no universal first-ever powered-flight claim or confusion with the airport. France is actual experimental location, not Brazilian birthplace.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "아우베르투 산토스뒤몽"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Croesus",
@@ -813,7 +1116,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_HISTORICITY_CHRONOLOGY",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -825,7 +1128,18 @@
       "artifacts": [],
       "notes": [
         "Legend and historical source layer of St Mark's relic translation require independent source verification before a new Person."
-      ]
+      ],
+      "preproduction_review": {
+        "name_en": "Buono da Malamocco",
+        "name_ko": "본 다 말라모코",
+        "status": "HOLD_HISTORICITY_CHRONOLOGY",
+        "manifest_path": null,
+        "sources": [
+          "https://iris.unive.it/retrieve/d2ad95ac-d112-4ca9-8096-83e4d2267d93/956321-1217919.pdf"
+        ],
+        "identity_and_chronology_review": "Venetian university scholarship treats the 828 relic-transfer story as legend with meaningful named characters. Do not present the late narrative as a securely contemporary attested personal life or invent an ordinary timeline Activity. HISTORICITY/CHRONOLOGY HOLD, no new Person draft.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Afanasy Nikitin",
@@ -833,7 +1147,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -842,8 +1156,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-nikitin.json",
+          "request_id": "authoring:preproduction-20261019:nikitin:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Afanasy Nikitin",
+        "name_ko": "아파나시 니키틴",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-nikitin.json",
+        "sources": [
+          "https://presidentofindia.nic.in/sites/default/files/sp080515_01_0.pdf"
+        ],
+        "identity_and_chronology_review": "Representative arrival/exploration in India conventionally dated 1469, approximate rather than a fabricated exact day or full journey interval. Southern Indian activity context; exact local political binding requires source/identity preflight. Tver was not yet annexed by Muscovy. Distinct from modern athletes named Nikitin.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "아파나시 니키틴"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "William Adams (Miura Anjin)",
@@ -870,7 +1210,13 @@
           "payload_sha256": "2942af20277b95b1eaffff75c526c7826125c5c88385cba0cf90615f1cb6e6f7"
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Alexander Hamilton",
@@ -878,7 +1224,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -887,8 +1233,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-hamilton.json",
+          "request_id": "authoring:preproduction-20261019:hamilton:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Alexander Hamilton",
+        "name_ko": "알렉산더 해밀턴",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-hamilton.json",
+        "sources": [
+          "https://home.treasury.gov/about/history/prior-secretaries/alexander-hamilton-1789-1795"
+        ],
+        "identity_and_chronology_review": "First US Secretary of the Treasury, 1789–1795. One meaningful fiscal-government term; the source also provides exact boundary days but this draft preserves year granularity. Not his son Alexander Hamilton Jr., a President, or the musical.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "알렉산더 해밀턴"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Cecil Rhodes",
@@ -916,7 +1288,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -925,8 +1297,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-shibusawa.json",
+          "request_id": "authoring:preproduction-20261019:shibusawa:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Shibusawa Eiichi",
+        "name_ko": "시부사와 에이이치",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-shibusawa.json",
+        "sources": [
+          "https://www.shibusawa.or.jp/eiichi/answer02.html"
+        ],
+        "identity_and_chronology_review": "1873 founding of the First National Bank in Tokyo. A representative business institution, not a sovereign polity or every later company as a separate Activity. Distinct from present-day descendants such as Shibusawa Ken.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "시부사와 에이이치"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Jean Neuhaus II",
@@ -934,7 +1332,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -944,7 +1342,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Jean Neuhaus II",
+        "name_ko": "장 노이하우스 2세",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://www.neuhauschocolates.com/en_GB/history/History.html"
+        ],
+        "identity_and_chronology_review": "Company history establishes grandson Jean Neuhaus Jr. and 1912 filled praline, distinct from grandfather/pharmacist founder and Louise Agostini’s 1915 ballotin. An exact independently attested Person NamuWiki article remains unresolved.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Peter Carl Fabergé",
@@ -952,7 +1361,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -961,8 +1370,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-faberge.json",
+          "request_id": "authoring:preproduction-20261019:faberge:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Peter Carl Fabergé",
+        "name_ko": "카를 파베르제",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-faberge.json",
+        "sources": [
+          "https://fabergemuseum.ru/en/collections/collection-highlights/hen-easter-egg"
+        ],
+        "identity_and_chronology_review": "1885 first Imperial Hen Easter Egg in St Petersburg, a representative House of Fabergé commission. Attribution to his firm/artistic direction does not claim he personally fabricated every component. Distinct from father Gustav, descendants and racehorses named Faberge.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "페테르 카를 파베르제"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "J. P. Morgan",
@@ -1090,7 +1525,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -1100,7 +1535,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Christopher Clavius",
+        "name_ko": "크리스토퍼 클라비우스",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://mathshistory.st-andrews.ac.uk/Strick/clavius.pdf"
+        ],
+        "identity_and_chronology_review": "MacTutor establishes 1538–1612 mathematician and 1582 Gregorian reform commission role; distinguish Lilio’s scheme and Pope Gregory XIII’s enactment. Lunar crater/fictional character are not Person pages. Exact independent NamuWiki title unresolved.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Desiderius Erasmus",
@@ -1108,7 +1554,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -1117,8 +1563,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-erasmus.json",
+          "request_id": "authoring:preproduction-20261019:erasmus:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Desiderius Erasmus",
+        "name_ko": "에라스뮈스",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-erasmus.json",
+        "sources": [
+          "https://ub.unibas.ch/cmsdata/spezialkataloge/gg/higg0380.html"
+        ],
+        "identity_and_chronology_review": "1516 Basel first Greek/Latin New Testament edition. Publication context in Basel, a Swiss confederate member since 1501; exact canonical polity reuse required. Not the university, Erasmus programme, Saint Erasmus, or another life period inferred from nationality.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "에라스뮈스"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Michael Faraday",
@@ -1166,7 +1638,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -1175,8 +1647,35 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-sakharov.json",
+          "request_id": "authoring:preproduction-20261019:sakharov:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Andrei Sakharov",
+        "name_ko": "안드레이 사하로프",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-sakharov.json",
+        "sources": [
+          "https://www.europarl.europa.eu/pdf/cardoc/14402_CARDOC_11_INLAY_EN_7.pdf",
+          "https://www.nobelprize.org/laureate/534"
+        ],
+        "identity_and_chronology_review": "1968 essay on progress, peaceful coexistence and intellectual freedom, clandestinely circulated in the USSR. Domain science explicitly reviewed from his nuclear-physics career; this milestone records the physicist’s intellectual intervention, not a political office or Nobel travel to Oslo. Distinct from fictional Professor Sakharov.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "안드레이 사하로프"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Augustine of Hippo",
@@ -1223,7 +1722,13 @@
           "payload_sha256": "c53e24baa6a4e6aa39ef19228590710d1bf9401304a726bcc8d67eeb9ff73225"
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Jean-Jacques Rousseau",
@@ -1270,7 +1775,13 @@
           "payload_sha256": "9d1ef0741cbb4650295fec4b4ed127d8441017ae1aff1867c784229a293ff206"
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Friedrich Nietzsche",
@@ -1318,7 +1829,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -1327,8 +1838,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-lovecraft.json",
+          "request_id": "authoring:preproduction-20261019:lovecraft:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "H. P. Lovecraft",
+        "name_ko": "H. P. 러브크래프트",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-lovecraft.json",
+        "sources": [
+          "https://library.brown.edu/create/libnews/evolution-of-cthulhu/"
+        ],
+        "identity_and_chronology_review": "1928 publication of The Call of Cthulhu, not its 1926 manuscript composition. Real author Howard Phillips Lovecraft, not Cthulhu, a fictional namesake in Bungo Stray Dogs, or a putative ruler of his invented setting.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "하워드 필립스 러브크래프트"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Robert E. Howard",
@@ -1336,7 +1873,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -1345,8 +1882,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-howard.json",
+          "request_id": "authoring:preproduction-20261019:howard:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Robert E. Howard",
+        "name_ko": "로버트 E. 하워드",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-howard.json",
+        "sources": [
+          "https://atlas.thc.texas.gov/Details/5049004294"
+        ],
+        "identity_and_chronology_review": "1932 creation/publication-era debut of Conan as attested by the Texas Historical Commission. The historical author is separate from Conan, Solomon Kane and other fictional creations. One representative literary milestone, not each story.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "로버트 E. 하워드"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Robert Schuman",
@@ -1354,7 +1917,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -1363,8 +1926,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-schuman.json",
+          "request_id": "authoring:preproduction-20261019:schuman:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Robert Schuman",
+        "name_ko": "로베르 슈만",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-schuman.json",
+        "sources": [
+          "https://european-union.europa.eu/principles-countries-history/history-eu/1945-59/schuman-declaration-may-1950_en"
+        ],
+        "identity_and_chronology_review": "9 May 1950 Paris Schuman Declaration as French foreign minister. Not composer Robert Schumann, the 1951 treaty signature, or a claim that the EU already existed as a sovereign state in 1950.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "로베르 슈만"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Mahbub ul Haq",
@@ -1372,7 +1961,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -1382,7 +1971,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Mahbub ul Haq",
+        "name_ko": "마붑 울 하크",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://hdr.undp.org/system/files/documents/hdr1999ennostats.pdf"
+        ],
+        "identity_and_chronology_review": "UNDP establishes leadership of first 1990 Human Development Report, distinct from Amartya Sen and military ruler Zia-ul-Haq. UNDP/UN is not a sovereign Polity. Personal NamuWiki title and exact Activity political/location binding unresolved.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "André Le Nôtre",
@@ -1390,7 +1990,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -1400,7 +2000,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "André Le Nôtre",
+        "name_ko": "앙드레 르 노트르",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://en.chateauversailles.fr/le-notre"
+        ],
+        "identity_and_chronology_review": "Versailles confirms 1661–1662 initial landscape work; do not confuse with Louis Le Vau or court painting. NamuWiki independent Person title unresolved across spacing variants.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Lancelot Brown",
@@ -1408,7 +2019,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -1418,7 +2029,18 @@
         }
       ],
       "artifacts": [],
-      "notes": []
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Lancelot Brown",
+        "name_ko": "랜슬롯 브라운",
+        "status": "HOLD_SOURCE_OR_NAMUWIKI",
+        "manifest_path": null,
+        "sources": [
+          "https://www.hrp.org.uk/hampton-court-palace/whats-on/the-great-vine/"
+        ],
+        "identity_and_chronology_review": "Historic Royal Palaces identifies Capability Brown directing 1768 Hampton Court vine planting. Distinct from electrical engineer Charles Eugene Lancelot Brown. Independent NamuWiki Person title unresolved; no borrowed engineer page.",
+        "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+      }
     },
     {
       "name_en": "Solomon",
@@ -1657,7 +2279,7 @@
       "cohorts": [
         "user-selected-98"
       ],
-      "status": "NEEDS_SOURCE_AND_ALIAS_REVIEW",
+      "status": "NEEDS_PREFLIGHT",
       "production_evidence": [
         {
           "observed_at": "2026-10-16",
@@ -1666,8 +2288,34 @@
           "source": "audits/user98-live-identity-census-20261016.json"
         }
       ],
-      "artifacts": [],
-      "notes": []
+      "artifacts": [
+        {
+          "pr": 2549,
+          "path": "authoring/requests/preproduction-20261019-al-hakam-ii.json",
+          "request_id": "authoring:preproduction-20261019:al-hakam-ii:representative:v1",
+          "kind": "timeline",
+          "state": "DRAFT_UNMERGED"
+        }
+      ],
+      "notes": [],
+      "preproduction_review": {
+        "name_en": "Al-Hakam II",
+        "name_ko": "알하캄 2세",
+        "status": "NEEDS_PREFLIGHT",
+        "manifest_path": "authoring/requests/preproduction-20261019-al-hakam-ii.json",
+        "sources": [
+          "https://www.mezquita-catedraldecordoba.es/en/descubre-el-monumento/la-historia/"
+        ],
+        "identity_and_chronology_review": "961–976 Cordoban caliphate reign, not Al-Hakam I or his successor Hisham II; contemporary Andalusi political entity rather than modern Spain or the Damascus Umayyad state. Library patronage and mosque expansion remain context, not extra invented reigns.",
+        "namuwiki_status": "linked",
+        "namuwiki_document_title": "알 하캄 2세"
+      },
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Lorenzo de' Medici",
@@ -2020,16 +2668,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-adam-weishaupt-illuminati-1776.json",
           "request_id": "authoring:user-selected-civ11-20261016:adam-weishaupt-illuminati-1776:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "47cf6d91192bf15a8020471a10171cbddf51bbf5c73ad5bbc5c7cc436b37e25e"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "47cf6d91192bf15a8020471a10171cbddf51bbf5c73ad5bbc5c7cc436b37e25e",
+          "source_pr": 2512
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Al-Ma'mun",
@@ -2041,16 +2695,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-al-mamun-abbasid-813-833.json",
           "request_id": "authoring:user-selected-civ11-20261016:al-mamun-abbasid-813-833:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "05277fae2b3bcfece52ee49f990a538c0ccdf5f4265597be54bde18fbe3b94da"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "05277fae2b3bcfece52ee49f990a538c0ccdf5f4265597be54bde18fbe3b94da",
+          "source_pr": 2512
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Balaputradeva",
@@ -2062,16 +2722,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-balaputradeva-suvarnadvipa-c860.json",
           "request_id": "authoring:user-selected-civ11-20261016:balaputradeva-suvarnadvipa-c860:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "0320991dbcf7fb1acfc15610da24f78f3219f6f37553063b38415bb2c2b3e57d"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "0320991dbcf7fb1acfc15610da24f78f3219f6f37553063b38415bb2c2b3e57d",
+          "source_pr": 2512
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Carl August, Grand Duke of Saxe-Weimar-Eisenach",
@@ -2083,43 +2749,49 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-eisenach-1758-1809.json",
           "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-eisenach-1758-1809:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "521c70342ad1835a5f5424865fd337966d304fc905e66aee8faf1b35f13b6aa9"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "521c70342ad1835a5f5424865fd337966d304fc905e66aee8faf1b35f13b6aa9",
+          "source_pr": 2512
         },
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-weimar-1758-1809.json",
           "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-weimar-1758-1809:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "2681784d59cbb0be72a280e97d8ebe4ccc95269ab61b85231b405e5516dfac83"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "2681784d59cbb0be72a280e97d8ebe4ccc95269ab61b85231b405e5516dfac83",
+          "source_pr": 2512
         },
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-weimar-1815-1828.json",
           "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-weimar-1815-1828:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "086455bf2613c6875ac76a8a33ed4d00d5ec9928a546380d525b90d6000a6340"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "086455bf2613c6875ac76a8a33ed4d00d5ec9928a546380d525b90d6000a6340",
+          "source_pr": 2512
         },
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-carl-august-saxe-weimar-eisenach-1809-1815.json",
           "request_id": "authoring:user-selected-civ11-20261016:carl-august-saxe-weimar-eisenach-1809-1815:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "4e2487580c3ddd5339ffba16af96d4f83e4ff57749b7874ff1fecb0a46338186"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "4e2487580c3ddd5339ffba16af96d4f83e4ff57749b7874ff1fecb0a46338186",
+          "source_pr": 2512
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Dewashtich",
@@ -2131,16 +2803,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-dewashtich-panjikant-c708-722.json",
           "request_id": "authoring:user-selected-civ11-20261016:dewashtich-panjikant-c708-722:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "4694eced2f0a599be8f3321d441dd99c48e2db93c5308f3a91cf1ae9e8a59a4e"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "4694eced2f0a599be8f3321d441dd99c48e2db93c5308f3a91cf1ae9e8a59a4e",
+          "source_pr": 2512
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Dharmapala",
@@ -2148,20 +2826,46 @@
       "cohorts": [
         "other-user-selected"
       ],
-      "status": "NEEDS_PREFLIGHT",
-      "production_evidence": [],
+      "status": "EXISTING_DATED_EXPORT_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "user-provided atlas-persons-2026-10-18.xlsx",
+          "observed_at": "2026-10-18 export, compared 2026-10-19",
+          "export_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+          "matched_rows": [
+            {
+              "excel_row": 526,
+              "values": [
+                "다르마팔라",
+                "Dharmapala of Bengal",
+                "팔라 제국",
+                "rules",
+                "황제",
+                "약 AD 770",
+                "약 AD 810",
+                "재위"
+              ]
+            }
+          ],
+          "limitation": "No UUID/alias table in workbook. Positive identity/activity evidence; exact live correction preflight still required."
+        }
+      ],
       "artifacts": [
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-dharmapala-pala-late8-early9.json",
           "request_id": "authoring:user-selected-civ11-20261016:dharmapala-pala-late8-early9:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "53631ad896a3f6cbfca53eb406a6e66fb07c9778f9817e6747be6320a97046b2"
+          "state": "WITHDRAWN_EXISTING_ACTIVITY",
+          "payload_sha256": "53631ad896a3f6cbfca53eb406a6e66fb07c9778f9817e6747be6320a97046b2",
+          "source_pr": 2512,
+          "archived_path": "research/person-registration/withdrawn-20261019/user-civ11-20261016-dharmapala-pala-late8-early9.json",
+          "original_bytes_sha256": "7c66beb6a0558c143b4d3fd47ecb8eb4545234627cf4cae106a9cf729f760a98"
         }
       ],
-      "notes": []
+      "notes": [
+        "Remove from NEW Person write set based on dated export. Never blindly append overlapping Activity. Calvin first Geneva 1536–1538 is a distinct possible existing-Person repair; displayed 1541–1564 already exists."
+      ]
     },
     {
       "name_en": "John Calvin",
@@ -2169,29 +2873,57 @@
       "cohorts": [
         "other-user-selected"
       ],
-      "status": "NEEDS_PREFLIGHT",
-      "production_evidence": [],
+      "status": "EXISTING_ACTIVITY_REPAIR_PENDING",
+      "production_evidence": [
+        {
+          "source": "user-provided atlas-persons-2026-10-18.xlsx",
+          "observed_at": "2026-10-18 export, compared 2026-10-19",
+          "export_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+          "matched_rows": [
+            {
+              "excel_row": 1153,
+              "values": [
+                "장 칼뱅",
+                "John Calvin",
+                "제네바 공화국",
+                "active_in",
+                "종교개혁가·설교자·신학자",
+                "AD 1541",
+                "AD 1564",
+                "종교 활동"
+              ]
+            }
+          ],
+          "limitation": "No UUID/alias table in workbook. Positive identity/activity evidence; exact live correction preflight still required."
+        }
+      ],
       "artifacts": [
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-john-calvin-geneva-1536-1538.json",
           "request_id": "authoring:user-selected-civ11-20261016:john-calvin-geneva-1536-1538:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "c553402458a33319a037ff5a42e52509e8ac186080061d8911efa042dfec9e62"
+          "state": "EXISTING_PERSON_CORRECTION_REVIEW_ONLY",
+          "payload_sha256": "c553402458a33319a037ff5a42e52509e8ac186080061d8911efa042dfec9e62",
+          "source_pr": 2512,
+          "archived_path": "research/person-registration/withdrawn-20261019/user-civ11-20261016-john-calvin-geneva-1536-1538.json",
+          "original_bytes_sha256": "30e3dfabe208823b2e2948a5cca775149366a766fd34f9941a9f8862655a1f48"
         },
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-john-calvin-geneva-1541-1564.json",
           "request_id": "authoring:user-selected-civ11-20261016:john-calvin-geneva-1541-1564:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "51112c49ff921fac1aa8db3ecb818d990bbd88a4366a4f78a23d67dab7ff3901"
+          "state": "WITHDRAWN_EXISTING_ACTIVITY",
+          "payload_sha256": "51112c49ff921fac1aa8db3ecb818d990bbd88a4366a4f78a23d67dab7ff3901",
+          "source_pr": 2512,
+          "archived_path": "research/person-registration/withdrawn-20261019/user-civ11-20261016-john-calvin-geneva-1541-1564.json",
+          "original_bytes_sha256": "0e7b5f89216a3f88c683ebb082fc5fab6da2c220a90f9aa05817d5446a63c452"
         }
       ],
-      "notes": []
+      "notes": [
+        "Remove from NEW Person write set based on dated export. Never blindly append overlapping Activity. Calvin first Geneva 1536–1538 is a distinct possible existing-Person repair; displayed 1541–1564 already exists."
+      ]
     },
     {
       "name_en": "Tiglath-Pileser III",
@@ -2199,20 +2931,59 @@
       "cohorts": [
         "other-user-selected"
       ],
-      "status": "NEEDS_PREFLIGHT",
-      "production_evidence": [],
+      "status": "EXISTING_DATED_EXPORT_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "user-provided atlas-persons-2026-10-18.xlsx",
+          "observed_at": "2026-10-18 export, compared 2026-10-19",
+          "export_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+          "matched_rows": [
+            {
+              "excel_row": 61,
+              "values": [
+                "티글라트-필레세르 3세",
+                "Tiglath-Pileser III",
+                "신아시리아 제국",
+                "rules",
+                "왕",
+                "BC 745",
+                "BC 727",
+                "재위"
+              ]
+            },
+            {
+              "excel_row": 62,
+              "values": [
+                "티글라트-필레세르 3세",
+                "Tiglath-Pileser III",
+                "바빌로니아",
+                "rules",
+                "바빌론 왕",
+                "BC 729",
+                "BC 727",
+                "재위"
+              ]
+            }
+          ],
+          "limitation": "No UUID/alias table in workbook. Positive identity/activity evidence; exact live correction preflight still required."
+        }
+      ],
       "artifacts": [
         {
-          "pr": 2512,
-          "head_sha": "2d367025089071a10829f587925b2d3e82dc518c",
+          "pr": 2549,
           "path": "authoring/requests/user-civ11-20261016-tiglath-pileser-iii-assyria-bce745-bce727.json",
           "request_id": "authoring:user-selected-civ11-20261016:tiglath-pileser-iii-assyria-bce745-bce727:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "c6a2f58c5de47bd6779600b78e59edbb1d89a395b1f6845e63a05bbee8793b18"
+          "state": "WITHDRAWN_EXISTING_ACTIVITY",
+          "payload_sha256": "c6a2f58c5de47bd6779600b78e59edbb1d89a395b1f6845e63a05bbee8793b18",
+          "source_pr": 2512,
+          "archived_path": "research/person-registration/withdrawn-20261019/user-civ11-20261016-tiglath-pileser-iii-assyria-bce745-bce727.json",
+          "original_bytes_sha256": "0eaef199b127548ced010e71d0b0416b79fa77e5f61faaf06fe1a18c51d61d07"
         }
       ],
-      "notes": []
+      "notes": [
+        "Remove from NEW Person write set based on dated export. Never blindly append overlapping Activity. Calvin first Geneva 1536–1538 is a distinct possible existing-Person repair; displayed 1541–1564 already exists."
+      ]
     },
     {
       "name_en": "José Figueres Ferrer",
@@ -2220,38 +2991,94 @@
       "cohorts": [
         "other-user-selected"
       ],
-      "status": "NEEDS_PREFLIGHT",
-      "production_evidence": [],
+      "status": "EXISTING_DATED_EXPORT_NO_CREATE",
+      "production_evidence": [
+        {
+          "source": "user-provided atlas-persons-2026-10-18.xlsx",
+          "observed_at": "2026-10-18 export, compared 2026-10-19",
+          "export_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+          "matched_rows": [
+            {
+              "excel_row": 2273,
+              "values": [
+                "호세 피게레스 페레르",
+                "José Figueres Ferrer",
+                "코스타리카",
+                "governs",
+                "제2공화국 건국평의회 의장",
+                "AD 1948",
+                "AD 1949",
+                "임기"
+              ]
+            },
+            {
+              "excel_row": 2274,
+              "values": [
+                "호세 피게레스 페레르",
+                "José Figueres Ferrer",
+                "코스타리카",
+                "governs",
+                "대통령",
+                "AD 1953",
+                "AD 1958",
+                "임기"
+              ]
+            },
+            {
+              "excel_row": 2275,
+              "values": [
+                "호세 피게레스 페레르",
+                "José Figueres Ferrer",
+                "코스타리카",
+                "governs",
+                "대통령",
+                "AD 1970",
+                "AD 1974",
+                "임기"
+              ]
+            }
+          ],
+          "limitation": "No UUID/alias table in workbook. Positive identity/activity evidence; exact live correction preflight still required."
+        }
+      ],
       "artifacts": [
         {
-          "pr": 2517,
-          "head_sha": "10bf0147c30e202fcfa83f931a049905970bfc9d",
+          "pr": 2549,
           "path": "authoring/requests/user-costa-rica-jose-figueres-ferrer-junta-1948-1949-20261016.json",
           "request_id": "authoring:user-selected-costa-rica:jose-figueres-ferrer:junta-1948-1949:20261016:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "366134e23efd1d8a16ca24d55fe2deae4d5f7ace0c5b75d484ac373a12fe1768"
+          "state": "WITHDRAWN_EXISTING_ACTIVITY",
+          "payload_sha256": "366134e23efd1d8a16ca24d55fe2deae4d5f7ace0c5b75d484ac373a12fe1768",
+          "source_pr": 2517,
+          "archived_path": "research/person-registration/withdrawn-20261019/user-costa-rica-jose-figueres-ferrer-junta-1948-1949-20261016.json",
+          "original_bytes_sha256": "1b349906b385616dfa70e2cb281c54e32103f70d92021b3173a784d9d7b66d29"
         },
         {
-          "pr": 2517,
-          "head_sha": "10bf0147c30e202fcfa83f931a049905970bfc9d",
+          "pr": 2549,
           "path": "authoring/requests/user-costa-rica-jose-figueres-ferrer-presidency-1953-1958-20261016.json",
           "request_id": "authoring:user-selected-costa-rica:jose-figueres-ferrer:presidency-1953-1958:20261016:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "edef7437357f410c7e9bd08f070d05f8b9aac43cb67536092fc4c049d624aece"
+          "state": "WITHDRAWN_EXISTING_ACTIVITY",
+          "payload_sha256": "edef7437357f410c7e9bd08f070d05f8b9aac43cb67536092fc4c049d624aece",
+          "source_pr": 2517,
+          "archived_path": "research/person-registration/withdrawn-20261019/user-costa-rica-jose-figueres-ferrer-presidency-1953-1958-20261016.json",
+          "original_bytes_sha256": "87f96e94e6f9294ada5ee20d7b2b27ba4d9d690e9b43081e0afc0a5645b908ee"
         },
         {
-          "pr": 2517,
-          "head_sha": "10bf0147c30e202fcfa83f931a049905970bfc9d",
+          "pr": 2549,
           "path": "authoring/requests/user-costa-rica-jose-figueres-ferrer-presidency-1970-1974-20261016.json",
           "request_id": "authoring:user-selected-costa-rica:jose-figueres-ferrer:presidency-1970-1974:20261016:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "93a8e79b3b5c24b60f977bc855b8a1cc19a0eda45a8f23288cae1fb56c4302d4"
+          "state": "WITHDRAWN_EXISTING_ACTIVITY",
+          "payload_sha256": "93a8e79b3b5c24b60f977bc855b8a1cc19a0eda45a8f23288cae1fb56c4302d4",
+          "source_pr": 2517,
+          "archived_path": "research/person-registration/withdrawn-20261019/user-costa-rica-jose-figueres-ferrer-presidency-1970-1974-20261016.json",
+          "original_bytes_sha256": "fcb09a9a38d446d48097f56528e01f5ac3c083602bea1c97ea1c30120efaf108"
         }
       ],
-      "notes": []
+      "notes": [
+        "Remove from NEW Person write set based on dated export. Never blindly append overlapping Activity. Calvin first Geneva 1536–1538 is a distinct possible existing-Person repair; displayed 1541–1564 already exists."
+      ]
     },
     {
       "name_en": "Philippe Pétain",
@@ -2263,124 +3090,130 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1915-second-army.json",
           "request_id": "authoring:user-selected-petain-20261017:1915-second-army:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "b26bb99cedafe2b50aba45287840ddd8ecec148f6e66abf0d9339fd5c8f17886"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "b26bb99cedafe2b50aba45287840ddd8ecec148f6e66abf0d9339fd5c8f17886",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1916-centre-army-group.json",
           "request_id": "authoring:user-selected-petain-20261017:1916-centre-army-group:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "e261cdf3266d8c2dfc432baa13a36bad018f4073f1f52c438e84cb3b02833757"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "e261cdf3266d8c2dfc432baa13a36bad018f4073f1f52c438e84cb3b02833757",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1917-chief-of-general-staff.json",
           "request_id": "authoring:user-selected-petain-20261017:1917-chief-of-general-staff:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "021c8fd1c13131b970b80b1de0f43ca5e8a72ca816b250d51a8faf93860424b6"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "021c8fd1c13131b970b80b1de0f43ca5e8a72ca816b250d51a8faf93860424b6",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1917-commander-in-chief-appointment.json",
           "request_id": "authoring:user-selected-petain-20261017:1917-commander-in-chief-appointment:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "f118bc32bc7d6f272e7e5d425e692113cd0aa8eb32a255ee0050c323e6936c9c"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "f118bc32bc7d6f272e7e5d425e692113cd0aa8eb32a255ee0050c323e6936c9c",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1920-high-war-council.json",
           "request_id": "authoring:user-selected-petain-20261017:1920-high-war-council:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "5cf8f63314e75134dd0e7efd8ae23f6628361165738c4ddc56455ef536168461"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "5cf8f63314e75134dd0e7efd8ae23f6628361165738c4ddc56455ef536168461",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1925-rif-command.json",
           "request_id": "authoring:user-selected-petain-20261017:1925-rif-command:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "50f57da28bc42da7ec47ba17690fa3379e0f8c620c029fd73775ea44c26f10b1"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "50f57da28bc42da7ec47ba17690fa3379e0f8c620c029fd73775ea44c26f10b1",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1934-war-minister.json",
           "request_id": "authoring:user-selected-petain-20261017:1934-war-minister:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "40daae0aa13145cd9de1b5eb300bbc1d02e761c4b963992fa9e420019429329f"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "40daae0aa13145cd9de1b5eb300bbc1d02e761c4b963992fa9e420019429329f",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1935-state-minister.json",
           "request_id": "authoring:user-selected-petain-20261017:1935-state-minister:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "5f69ec9aeb5b741b71d5113cd2a80ac11d5a537b0522965221504b63ceb003ce"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "5f69ec9aeb5b741b71d5113cd2a80ac11d5a537b0522965221504b63ceb003ce",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1939-spanish-ambassador.json",
           "request_id": "authoring:user-selected-petain-20261017:1939-spanish-ambassador:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "59c637d1f86c11c206d56fc1980aa03adfb6dd25ef9d3312d3ffe757c1906af6"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "59c637d1f86c11c206d56fc1980aa03adfb6dd25ef9d3312d3ffe757c1906af6",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1940-deputy-prime-minister.json",
           "request_id": "authoring:user-selected-petain-20261017:1940-deputy-prime-minister:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "94b6a2db8415bfd50545448dc8c2a961c74834c81963993c7e55fe61741d69e1"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "94b6a2db8415bfd50545448dc8c2a961c74834c81963993c7e55fe61741d69e1",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1940-third-republic-council-president.json",
           "request_id": "authoring:user-selected-petain-20261017:1940-third-republic-council-president:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "47d09610784f6452dea33b21abee5f176a0e4af04633a668387556156a8fd9c0"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "47d09610784f6452dea33b21abee5f176a0e4af04633a668387556156a8fd9c0",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1940-vichy-council-president.json",
           "request_id": "authoring:user-selected-petain-20261017:1940-vichy-council-president:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "297f857ea92b0eaf9981b74ef0088fd5bc98abb2af88df2515639927ab8edf58"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "297f857ea92b0eaf9981b74ef0088fd5bc98abb2af88df2515639927ab8edf58",
+          "source_pr": 2526
         },
         {
-          "pr": 2526,
-          "head_sha": "3e07d865d616bff4afbfdc08474a4fda7d56b931",
+          "pr": 2549,
           "path": "authoring/requests/user-petain-20261017-1940-vichy-state-head.json",
           "request_id": "authoring:user-selected-petain-20261017:1940-vichy-state-head:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "fd1c4a2804e8a5b5861dbec769f8426cefd0bcbed5a3ee09403bb02b33024d3a"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "fd1c4a2804e8a5b5861dbec769f8426cefd0bcbed5a3ee09403bb02b33024d3a",
+          "source_pr": 2526
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "George S. Patton",
@@ -2392,43 +3225,49 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-george-s-patton-ii-corps-1943.json",
           "request_id": "authoring:user-selected-patton-20261018:ii-corps-1943:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "dbdcaf2d44092354f366a8a5fcdbbbcc00bd7cf4c02a59e7ee194cd5881941f6"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "dbdcaf2d44092354f366a8a5fcdbbbcc00bd7cf4c02a59e7ee194cd5881941f6",
+          "source_pr": 2528
         },
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-george-s-patton-seventh-army-1943-1944.json",
           "request_id": "authoring:user-selected-patton-20261018:seventh-army-1943-1944:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "885fe3b5e11d39a402935eb2d40dd15376bc16accd5d5909b8f4848533c2b7b3"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "885fe3b5e11d39a402935eb2d40dd15376bc16accd5d5909b8f4848533c2b7b3",
+          "source_pr": 2528
         },
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-george-s-patton-third-army-1944-1945.json",
           "request_id": "authoring:user-selected-patton-20261018:third-army-1944-1945:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "fa8e2b3f37477be199e4d2115af4540b35be210dd573221014993b7305bb2e4b"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "fa8e2b3f37477be199e4d2115af4540b35be210dd573221014993b7305bb2e4b",
+          "source_pr": 2528
         },
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-george-s-patton-world-war-i-tank-brigade-1918.json",
           "request_id": "authoring:user-selected-patton-20261018:world-war-i-tank-brigade-1918:v2",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "66bd7aaf924cd6ad7fc0a1df6f6122e29f63bd7130763b45c2540e509acee772"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "66bd7aaf924cd6ad7fc0a1df6f6122e29f63bd7130763b45c2540e509acee772",
+          "source_pr": 2528
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Henri Giraud",
@@ -2440,79 +3279,85 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-henri-giraud-africa-civil-military-1942-1943.json",
           "request_id": "authoring:user-selected-giraud-20261018:africa-civil-military-1942-1943:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "69877f00db0c0669a6976bd7215fb0b7857ebd2fd69bbad44bbf481b41368a58"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "69877f00db0c0669a6976bd7215fb0b7857ebd2fd69bbad44bbf481b41368a58",
+          "source_pr": 2528
         },
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-henri-giraud-cfln-copresident-1943.json",
           "request_id": "authoring:user-selected-giraud-20261018:cfln-copresident-1943:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "10b2a486a2e518acd95cd0df06205c873eecf4311e349b061f0ad014507e2268"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "10b2a486a2e518acd95cd0df06205c873eecf4311e349b061f0ad014507e2268",
+          "source_pr": 2528
         },
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-henri-giraud-commander-in-chief-1943-1944.json",
           "request_id": "authoring:user-selected-giraud-20261018:commander-in-chief-1943-1944:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "c6300bd95ec1a7474b3b683c24f8d52a3a5a89c975f77b4e261f33aadec58c8f"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "c6300bd95ec1a7474b3b683c24f8d52a3a5a89c975f77b4e261f33aadec58c8f",
+          "source_pr": 2528
         },
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-henri-giraud-constituent-assembly-1946.json",
           "request_id": "authoring:user-selected-giraud-20261018:constituent-assembly-1946:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "35fe45a4c43df3ab161d480e0a2cd4ae2ea7f546f23dd48eed90a1587fc4ab0a"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "35fe45a4c43df3ab161d480e0a2cd4ae2ea7f546f23dd48eed90a1587fc4ab0a",
+          "source_pr": 2528
         },
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-henri-giraud-ninth-army-1940.json",
           "request_id": "authoring:user-selected-giraud-20261018:ninth-army-1940:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "791bbab3d7e75ca33802f45ba1fd436d553c7b345974d5fcdfbdb26f8837fed0"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "791bbab3d7e75ca33802f45ba1fd436d553c7b345974d5fcdfbdb26f8837fed0",
+          "source_pr": 2528
         },
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-henri-giraud-seventh-army-1939-1940.json",
           "request_id": "authoring:user-selected-giraud-20261018:seventh-army-1939-1940:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "2048ea67e16f3392061334b05feba70543fa35ca098b8a9a9146b85a8e4f5d56"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "2048ea67e16f3392061334b05feba70543fa35ca098b8a9a9146b85a8e4f5d56",
+          "source_pr": 2528
         },
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-henri-giraud-superior-war-council-1949.json",
           "request_id": "authoring:user-selected-giraud-20261018:superior-war-council-1949:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "f62ece155f0e19162c4a741e94967d033d4cf25e06e3b615dc1e779226ba151f"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "f62ece155f0e19162c4a741e94967d033d4cf25e06e3b615dc1e779226ba151f",
+          "source_pr": 2528
         },
         {
-          "pr": 2528,
-          "head_sha": "67c9a1f7de4cf0a84b0f2154cb4df777266a4c9a",
+          "pr": 2549,
           "path": "authoring/requests/user-20261018-henri-giraud-third-army-1936.json",
           "request_id": "authoring:user-selected-giraud-20261018:third-army-1936:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "eac18e2b9301e802b3892b7282367d2702bf4033d802acdd63852037b557c629"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "eac18e2b9301e802b3892b7282367d2702bf4033d802acdd63852037b557c629",
+          "source_pr": 2528
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Miguel de Cervantes",
@@ -2524,16 +3369,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2543,
-          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "pr": 2549,
           "path": "authoring/requests/user-core40-20261019-cervantes-don-quixote-1605-1615.json",
           "request_id": "authoring:user-core40-20261004:cervantes:don-quixote-1605-1615:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "d9a9db6250738d859ccd6dfa80ca71cc13dc6887d4513ea046eadf8858069dd5"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "d9a9db6250738d859ccd6dfa80ca71cc13dc6887d4513ea046eadf8858069dd5",
+          "source_pr": 2543
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Fyodor Dostoevsky",
@@ -2545,16 +3396,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2543,
-          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "pr": 2549,
           "path": "authoring/requests/user-core40-20261019-dostoevsky-major-literary-phase-1864-1880.json",
           "request_id": "authoring:user-core40-20261004:dostoevsky:major-literary-phase-1864-1880:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "a564af53f80db88a508205c9e495a8406de44025bd3adec2f832f96429c307c9"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "a564af53f80db88a508205c9e495a8406de44025bd3adec2f832f96429c307c9",
+          "source_pr": 2543
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Leonhard Euler",
@@ -2566,34 +3423,40 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2543,
-          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "pr": 2549,
           "path": "authoring/requests/user-core40-20261019-euler-berlin-academy-1741-1766.json",
           "request_id": "authoring:user-core40-20261004:euler:berlin-academy-1741-1766:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "4936e88f7dad5903b8c9f5cb2b3d16b2a58b3976b43823d4214fe2be03229dfc"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "4936e88f7dad5903b8c9f5cb2b3d16b2a58b3976b43823d4214fe2be03229dfc",
+          "source_pr": 2543
         },
         {
-          "pr": 2543,
-          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "pr": 2549,
           "path": "authoring/requests/user-core40-20261019-euler-petersburg-first-1727-1741.json",
           "request_id": "authoring:user-core40-20261004:euler:petersburg-first-1727-1741:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "b1f71fb7a42ee58390435ba73cc52f8ba7bfb4ddcaeb5d1618e8a383d4076aa7"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "b1f71fb7a42ee58390435ba73cc52f8ba7bfb4ddcaeb5d1618e8a383d4076aa7",
+          "source_pr": 2543
         },
         {
-          "pr": 2543,
-          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "pr": 2549,
           "path": "authoring/requests/user-core40-20261019-euler-petersburg-second-1766-1783.json",
           "request_id": "authoring:user-core40-20261004:euler:petersburg-second-1766-1783:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "199280d7926b05fe15a882100aabf70ac6927181cf7a37d4b4c03bb7f1befaa2"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "199280d7926b05fe15a882100aabf70ac6927181cf7a37d4b4c03bb7f1befaa2",
+          "source_pr": 2543
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Johann Wolfgang von Goethe",
@@ -2605,16 +3468,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2543,
-          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "pr": 2549,
           "path": "authoring/requests/user-core40-20261019-goethe-faust-part-one-1808.json",
           "request_id": "authoring:user-core40-20261004:goethe:faust-part-one-1808:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "d24663ac182bb0d4f2d01b88d730f5406796d8f419700fde044d34040c8bbf23"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "d24663ac182bb0d4f2d01b88d730f5406796d8f419700fde044d34040c8bbf23",
+          "source_pr": 2543
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Pablo Picasso",
@@ -2626,16 +3495,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2543,
-          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "pr": 2549,
           "path": "authoring/requests/user-core40-20261019-picasso-france-paris-1904-1973.json",
           "request_id": "authoring:user-core40-20261004:picasso:france-paris-1904-1973:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "9ff3a94a4bf6e06cc0cf87eadb38790945d106aa041e9d3b2e520ab7a605d270"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "9ff3a94a4bf6e06cc0cf87eadb38790945d106aa041e9d3b2e520ab7a605d270",
+          "source_pr": 2543
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Leo Tolstoy",
@@ -2647,16 +3522,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2543,
-          "head_sha": "ff24ab7c1fd3a08631a734f8de9ce8ebd2ddf91a",
+          "pr": 2549,
           "path": "authoring/requests/user-core40-20261019-tolstoy-russian-major-novels-1863-1877.json",
           "request_id": "authoring:user-core40-20261004:tolstoy:russian-major-novels-1863-1877:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "e536062f0445a3c42a075e6546f68f002196f9fed749e679afa4cb9a13afe4f6"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "e536062f0445a3c42a075e6546f68f002196f9fed749e679afa4cb9a13afe4f6",
+          "source_pr": 2543
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Johannes Brahms",
@@ -2668,16 +3549,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-brahms-1876.json",
           "request_id": "authoring:user-selected-cultural20-20261019:additional-brahms:1876:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "131bf2f4cc7d0cf4dc153c6d89439a381be6d6e026560b36719c9b7a12a2a55c"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "131bf2f4cc7d0cf4dc153c6d89439a381be6d6e026560b36719c9b7a12a2a55c",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Paul Cézanne",
@@ -2689,16 +3576,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-cezanne-1895.json",
           "request_id": "authoring:user-selected-cultural20-20261019:cezanne:1895:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "c57905792bfb29fdc5c36a6ecd02c0b2d43ed5aed4b38d6107921d69af1575ef"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "c57905792bfb29fdc5c36a6ecd02c0b2d43ed5aed4b38d6107921d69af1575ef",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Frédéric Chopin",
@@ -2710,16 +3603,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-chopin-1832.json",
           "request_id": "authoring:user-selected-cultural20-20261019:chopin:1832:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "cc7c1de7dcc9e3bfb63fb02df28740c474170348b727a9924e0c31d94a6edfc7"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "cc7c1de7dcc9e3bfb63fb02df28740c474170348b727a9924e0c31d94a6edfc7",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Claude Debussy",
@@ -2731,16 +3630,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-debussy-1894.json",
           "request_id": "authoring:user-selected-cultural20-20261019:debussy:1894:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "fe1848593b658ce2f3276f34a9bd8e6822db32c90dd52c6db599751cdba46ed1"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "fe1848593b658ce2f3276f34a9bd8e6822db32c90dd52c6db599751cdba46ed1",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Francisco Goya",
@@ -2752,16 +3657,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-goya-1799.json",
           "request_id": "authoring:user-selected-cultural20-20261019:additional-goya:1799:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "67a0c68283b19e539d1bd5f2224f8ff46c713dfe78bfeae0aac9622a8e502e26"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "67a0c68283b19e539d1bd5f2224f8ff46c713dfe78bfeae0aac9622a8e502e26",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "George Frideric Handel",
@@ -2773,16 +3684,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-handel-1741.json",
           "request_id": "authoring:user-selected-cultural20-20261019:handel:1741:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "9075b15bcc16ea7b3b07246752983f0bd44e2fa40893a8e387ad5175a13c5921"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "9075b15bcc16ea7b3b07246752983f0bd44e2fa40893a8e387ad5175a13c5921",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Joseph Haydn",
@@ -2794,16 +3711,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-haydn-1798.json",
           "request_id": "authoring:user-selected-cultural20-20261019:additional-haydn:1798:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "fdbd1756f5a13c6dd0c62c93dffff503aaec00a669ec7c0c147fb04b4ec53b28"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "fdbd1756f5a13c6dd0c62c93dffff503aaec00a669ec7c0c147fb04b4ec53b28",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "David Hilbert",
@@ -2815,16 +3738,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-hilbert-1899.json",
           "request_id": "authoring:user-selected-cultural20-20261019:additional-hilbert:1899:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "a515dce66f2dc040f2a39ceda29221dc5e812293011bdc33744df722700dad22"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "a515dce66f2dc040f2a39ceda29221dc5e812293011bdc33744df722700dad22",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Katsushika Hokusai",
@@ -2836,16 +3765,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-hokusai-1831.json",
           "request_id": "authoring:user-selected-cultural20-20261019:hokusai:1831:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "8090b87ee003798e321871616f291a081cea4930199910101560c28b59d708dc"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "8090b87ee003798e321871616f291a081cea4930199910101560c28b59d708dc",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "James Joyce",
@@ -2857,16 +3792,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-joyce-1922.json",
           "request_id": "authoring:user-selected-cultural20-20261019:additional-joyce:1922:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "dbc9a9bebc53d557f144b585e2b210f01e3090473d78663786940b371207ce16"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "dbc9a9bebc53d557f144b585e2b210f01e3090473d78663786940b371207ce16",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Henri Matisse",
@@ -2900,16 +3841,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-monet-1874.json",
           "request_id": "authoring:user-selected-cultural20-20261019:monet:1874:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "51265e063af75a9a0c1cc03eb06bd64b734c5ca2bb9e18c022fa6c73b9472d53"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "51265e063af75a9a0c1cc03eb06bd64b734c5ca2bb9e18c022fa6c73b9472d53",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Rembrandt van Rijn",
@@ -2921,16 +3868,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-rembrandt-1642.json",
           "request_id": "authoring:user-selected-cultural20-20261019:rembrandt:1642:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "093a1400b4b8496d562a1c480455516a1bfe14bf0d1e2b0d89e5c5545c480f81"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "093a1400b4b8496d562a1c480455516a1bfe14bf0d1e2b0d89e5c5545c480f81",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Bernhard Riemann",
@@ -2942,16 +3895,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-riemann-1854.json",
           "request_id": "authoring:user-selected-cultural20-20261019:additional-riemann:1854:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "a823d858bb11a9fd1dd3739574558e62785d5ad5565d5eb74c64493c00eaaee8"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "a823d858bb11a9fd1dd3739574558e62785d5ad5565d5eb74c64493c00eaaee8",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Franz Schubert",
@@ -2963,16 +3922,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-schubert-1827.json",
           "request_id": "authoring:user-selected-cultural20-20261019:additional-schubert:1827:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "b641b004ddfaab4f0ee0a2c5183551c3c404e5090ccdc7fa9a990b127d802c41"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "b641b004ddfaab4f0ee0a2c5183551c3c404e5090ccdc7fa9a990b127d802c41",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Baruch Spinoza",
@@ -2984,16 +3949,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-spinoza-1670.json",
           "request_id": "authoring:user-selected-cultural20-20261019:spinoza:1670:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "73c4abee5023261a0f4278bff98d5f19205fcdf1bad3f32fd6dd6e5d52ae3170"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "73c4abee5023261a0f4278bff98d5f19205fcdf1bad3f32fd6dd6e5d52ae3170",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Igor Stravinsky",
@@ -3005,16 +3976,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-stravinsky-1913.json",
           "request_id": "authoring:user-selected-cultural20-20261019:stravinsky:1913:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "1cd7e7d41f67e08cecf2871cf9fb4f4f4472796eb34d98732c0a3eb5e202451e"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "1cd7e7d41f67e08cecf2871cf9fb4f4f4472796eb34d98732c0a3eb5e202451e",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Pyotr Ilyich Tchaikovsky",
@@ -3026,16 +4003,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-tchaikovsky-1892.json",
           "request_id": "authoring:user-selected-cultural20-20261019:tchaikovsky:1892:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "88d4b32715104356169ede5d1ab4d913b3d15f616d6353e60e0063c9e3578cc5"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "88d4b32715104356169ede5d1ab4d913b3d15f616d6353e60e0063c9e3578cc5",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Diego Velázquez",
@@ -3047,16 +4030,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-velazquez-1656.json",
           "request_id": "authoring:user-selected-cultural20-20261019:additional-velazquez:1656:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "12a5a0fd2ebb1460d387d4f2b63b45d5055738d8041b9c4c902d4345287b5f6b"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "12a5a0fd2ebb1460d387d4f2b63b45d5055738d8041b9c4c902d4345287b5f6b",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Giuseppe Verdi",
@@ -3068,16 +4057,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2544,
-          "head_sha": "7ee11825a45b891f015b08fe7cea24304236a8be",
+          "pr": 2549,
           "path": "authoring/requests/cultural20-20261019-verdi-1874.json",
           "request_id": "authoring:user-selected-cultural20-20261019:additional-verdi:1874:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "35c04454c53599063070e745510031e224662908a96db5ee9d446a84e1e10b90"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "35c04454c53599063070e745510031e224662908a96db5ee9d446a84e1e10b90",
+          "source_pr": 2544
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Aeschylus",
@@ -3089,16 +4084,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2546,
-          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-20261019-aeschylus-representative.json",
           "request_id": "authoring:selected62-20261019:aeschylus:representative-literary-point:-458:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "50b67aad64e623b3be22b35b539c482838fcd021abf635a0157e660e8ed248aa"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "50b67aad64e623b3be22b35b539c482838fcd021abf635a0157e660e8ed248aa",
+          "source_pr": 2546
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Euripides",
@@ -3110,16 +4111,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2546,
-          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-20261019-euripides-representative.json",
           "request_id": "authoring:selected62-20261019:euripides:representative-literary-point:-431:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "ae910954cddd4599aaf616fa8b54fd502acda3ce6843f9ef74847c0cf861c20d"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "ae910954cddd4599aaf616fa8b54fd502acda3ce6843f9ef74847c0cf861c20d",
+          "source_pr": 2546
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Ferdowsi",
@@ -3131,16 +4138,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2546,
-          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-20261019-ferdowsi-representative.json",
           "request_id": "authoring:selected62-20261019:ferdowsi:representative-literary-point:1010:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "b0d801c2919ee2dbf42be25d84e1402467db6f8f70548dee357a3d6a2745ae84"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "b0d801c2919ee2dbf42be25d84e1402467db6f8f70548dee357a3d6a2745ae84",
+          "source_pr": 2546
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "John Milton",
@@ -3152,16 +4165,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2546,
-          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-20261019-milton-representative.json",
           "request_id": "authoring:selected62-20261019:milton:representative-literary-point:1667:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "ecdf5021849a19df53719f3c0b35a1b7cb3c71ce4a9592b99f8d3ee1cb277c7d"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "ecdf5021849a19df53719f3c0b35a1b7cb3c71ce4a9592b99f8d3ee1cb277c7d",
+          "source_pr": 2546
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Ovid",
@@ -3173,16 +4192,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2546,
-          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-20261019-ovid-representative.json",
           "request_id": "authoring:selected62-20261019:ovid:representative-literary-point:8:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "42e97f0c3325b2fb845acf30e38bb9814a56bcaf49fe0db2a317b998f3ce857f"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "42e97f0c3325b2fb845acf30e38bb9814a56bcaf49fe0db2a317b998f3ce857f",
+          "source_pr": 2546
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Alexander Pushkin",
@@ -3194,16 +4219,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2546,
-          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-20261019-pushkin-representative.json",
           "request_id": "authoring:selected62-20261019:pushkin:representative-literary-point:1833:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "d0b8664bde1d4628f0db8ccdb2b0d20ed8cbe1bdf17687641962e4a88e8b39cb"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "d0b8664bde1d4628f0db8ccdb2b0d20ed8cbe1bdf17687641962e4a88e8b39cb",
+          "source_pr": 2546
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Walt Whitman",
@@ -3215,16 +4246,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2546,
-          "head_sha": "ce61514173e8912447e049175b3e48d2730dfbfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-20261019-whitman-representative.json",
           "request_id": "authoring:selected62-20261019:whitman:representative-literary-point:1855:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "5d7e577783f401188633ce8b4000e137bf45747258785ae2ae91e256b35afdd6"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "5d7e577783f401188633ce8b4000e137bf45747258785ae2ae91e256b35afdd6",
+          "source_pr": 2546
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Matsuo Basho",
@@ -3236,16 +4273,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-basho.json",
           "request_id": "authoring:selected62-remaining30-20261018:basho:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "912a53026bfb09ac9b4e1f0665840e4dfb9bf63f5bfe1d896fae9064f34d671c"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "912a53026bfb09ac9b4e1f0665840e4dfb9bf63f5bfe1d896fae9064f34d671c",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Ludwig Boltzmann",
@@ -3257,16 +4300,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-boltzmann.json",
           "request_id": "authoring:selected62-remaining30-20261018:boltzmann:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "c62e788eaef669b2af5d06e2022b8aca998d6499018aa132928c1ab2452a0895"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "c62e788eaef669b2af5d06e2022b8aca998d6499018aa132928c1ab2452a0895",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Georg Cantor",
@@ -3278,16 +4327,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-cantor.json",
           "request_id": "authoring:selected62-remaining30-20261018:cantor:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "60dcd1698457715e1c9883480ab8254c7032d7a2d01996cfd84b066799c00aff"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "60dcd1698457715e1c9883480ab8254c7032d7a2d01996cfd84b066799c00aff",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Miles Davis",
@@ -3299,16 +4354,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-davis.json",
           "request_id": "authoring:selected62-remaining30-20261018:davis:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "63048067c403b4f2ce4cc26c7702662ea539ebf2ee4eeb90c4b49b13d2aa38dd"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "63048067c403b4f2ce4cc26c7702662ea539ebf2ee4eeb90c4b49b13d2aa38dd",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Marcel Duchamp",
@@ -3320,16 +4381,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-duchamp.json",
           "request_id": "authoring:selected62-remaining30-20261018:duchamp:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "cf7aaf92d38f08957747d1a41dac9025f16ad0783af9fc57d6ff4aa67646724b"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "cf7aaf92d38f08957747d1a41dac9025f16ad0783af9fc57d6ff4aa67646724b",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Albrecht Durer",
@@ -3341,16 +4408,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-durer.json",
           "request_id": "authoring:selected62-remaining30-20261018:durer:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "d81af7af6aefc14b4d9c85267b7345f32285d7c310686c69ce8cb11e78883f16"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "d81af7af6aefc14b4d9c85267b7345f32285d7c310686c69ce8cb11e78883f16",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Sergei Eisenstein",
@@ -3362,16 +4435,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-eisenstein.json",
           "request_id": "authoring:selected62-remaining30-20261018:eisenstein:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "19cee03da64948f59a1c4632434bec8bf9f02e139b502fddbf2d2309cacbcae7"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "19cee03da64948f59a1c4632434bec8bf9f02e139b502fddbf2d2309cacbcae7",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Duke Ellington",
@@ -3383,16 +4462,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-ellington.json",
           "request_id": "authoring:selected62-remaining30-20261018:ellington:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "805cc6e3dbbeec89d149013e672b57f5c504c12214a2eb38913b3a25f8b8a3f5"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "805cc6e3dbbeec89d149013e672b57f5c504c12214a2eb38913b3a25f8b8a3f5",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Gottlob Frege",
@@ -3404,16 +4489,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-frege.json",
           "request_id": "authoring:selected62-remaining30-20261018:frege:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "b6741f9b2e6d056d17ba31012be0634b750b3e436c584ffc7ee3f7a685fe01d2"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "b6741f9b2e6d056d17ba31012be0634b750b3e436c584ffc7ee3f7a685fe01d2",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Georg Wilhelm Friedrich Hegel",
@@ -3425,16 +4516,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-hegel.json",
           "request_id": "authoring:selected62-remaining30-20261018:hegel:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "bed274eff806f12ceeb2910891888aa2d2adf302a089d09d21d54019a7471520"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "bed274eff806f12ceeb2910891888aa2d2adf302a089d09d21d54019a7471520",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Alfred Hitchcock",
@@ -3446,16 +4543,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-hitchcock.json",
           "request_id": "authoring:selected62-remaining30-20261018:hitchcock:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "90b13e2aa3dd65ab0d97a01f9e202dc24614645b0a9e83b1a0b1449a8fca7ced"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "90b13e2aa3dd65ab0d97a01f9e202dc24614645b0a9e83b1a0b1449a8fca7ced",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Josquin des Prez",
@@ -3467,16 +4570,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-josquin.json",
           "request_id": "authoring:selected62-remaining30-20261018:josquin:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "a9bcc73990cbc78bf3f5a2fcf7cb0969c8b0b53ebd412722e3f3bb7813764922"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "a9bcc73990cbc78bf3f5a2fcf7cb0969c8b0b53ebd412722e3f3bb7813764922",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Kalidasa",
@@ -3488,18 +4597,24 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-kalidasa-person-only.json",
           "request_id": "authoring:selected62-remaining30-20261018:kalidasa:chronology-unresolved:v1",
           "kind": "person_only",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "807c929d611d79a508c80043656ef051ec94be30601ba70e3ad48cceb2db9f45"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "807c929d611d79a508c80043656ef051ec94be30601ba70e3ad48cceb2db9f45",
+          "source_pr": 2548
         }
       ],
       "notes": [
         "Chronology HOLD preserved: person-only chronology_unresolved; no fabricated Activity or year."
-      ]
+      ],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Wassily Kandinsky",
@@ -3511,16 +4626,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-kandinsky.json",
           "request_id": "authoring:selected62-remaining30-20261018:kandinsky:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "c3842fa3d780f726de4dc9979ccb25afcfde3268ac7f4c8c181b1539afcf5a30"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "c3842fa3d780f726de4dc9979ccb25afcfde3268ac7f4c8c181b1539afcf5a30",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Robert Koch",
@@ -3532,16 +4653,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-koch.json",
           "request_id": "authoring:selected62-remaining30-20261018:koch:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "34c635be1184aba67acf5c827a136530aa7fe8244b10efa7c4070a22c2adfda1"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "34c635be1184aba67acf5c827a136530aa7fe8244b10efa7c4070a22c2adfda1",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Akira Kurosawa",
@@ -3553,16 +4680,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-kurosawa.json",
           "request_id": "authoring:selected62-remaining30-20261018:kurosawa:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "9cd6e2ae55db6ade6c4106eb222129846460a5ab8f3f3fdb497fb19fe2fdb44f"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "9cd6e2ae55db6ade6c4106eb222129846460a5ab8f3f3fdb497fb19fe2fdb44f",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Joseph-Louis Lagrange",
@@ -3574,16 +4707,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-lagrange.json",
           "request_id": "authoring:selected62-remaining30-20261018:lagrange:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "7786d6d993414609f672d4a2b3990b0a743910850c8d295717346575526e17b9"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "7786d6d993414609f672d4a2b3990b0a743910850c8d295717346575526e17b9",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Pierre-Simon Laplace",
@@ -3595,16 +4734,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-laplace.json",
           "request_id": "authoring:selected62-remaining30-20261018:laplace:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "bd37b1dee7961f0994960e7f62188219de52011c9da58b47750b813120fa65fc"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "bd37b1dee7961f0994960e7f62188219de52011c9da58b47750b813120fa65fc",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Le Corbusier",
@@ -3616,16 +4761,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-le-corbusier.json",
           "request_id": "authoring:selected62-remaining30-20261018:le-corbusier:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "f01bdce4a6ab4ff7bf9c92ee3eeec1c413b864dab498e0003855831b4a2ca55b"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "f01bdce4a6ab4ff7bf9c92ee3eeec1c413b864dab498e0003855831b4a2ca55b",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Gustav Mahler",
@@ -3637,16 +4788,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-mahler.json",
           "request_id": "authoring:selected62-remaining30-20261018:mahler:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "e84ece32028b1f04844e55e905b3f63f136a55dc78468f44a44e65907160a58d"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "e84ece32028b1f04844e55e905b3f63f136a55dc78468f44a44e65907160a58d",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Claudio Monteverdi",
@@ -3658,16 +4815,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-monteverdi.json",
           "request_id": "authoring:selected62-remaining30-20261018:monteverdi:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "e08b1b5750bc85e6b5e4939afa9653535b787cde47e2097207672d5e7d1228ff"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "e08b1b5750bc85e6b5e4939afa9653535b787cde47e2097207672d5e7d1228ff",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Emmy Noether",
@@ -3679,16 +4842,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-noether.json",
           "request_id": "authoring:selected62-remaining30-20261018:noether:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "4b6185e499f81c880639fbc7be2812efcf522039d5624f2d5dfd772b50e97999"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "4b6185e499f81c880639fbc7be2812efcf522039d5624f2d5dfd772b50e97999",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Henri Poincare",
@@ -3700,16 +4869,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-poincare.json",
           "request_id": "authoring:selected62-remaining30-20261018:poincare:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "deb40f4bbbc706f1e48168aac2a6771e67ec8d5532c03388e6cdf41013b2136c"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "deb40f4bbbc706f1e48168aac2a6771e67ec8d5532c03388e6cdf41013b2136c",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Su Shi",
@@ -3721,16 +4896,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-su-shi.json",
           "request_id": "authoring:selected62-remaining30-20261018:su-shi:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "0ae36fefe4e2c5fafb520262b845c3460ab1b4b7f3341fe5fc3c850a35610ae8"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "0ae36fefe4e2c5fafb520262b845c3460ab1b4b7f3341fe5fc3c850a35610ae8",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Titian",
@@ -3742,16 +4923,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-titian.json",
           "request_id": "authoring:selected62-remaining30-20261018:titian:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "94a6ec0aa31bdb3118c399d4184b42859d70e3fd9d69df9e4d2b62304f197b05"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "94a6ec0aa31bdb3118c399d4184b42859d70e3fd9d69df9e4d2b62304f197b05",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Max Weber",
@@ -3763,16 +4950,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-weber.json",
           "request_id": "authoring:selected62-remaining30-20261018:weber:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "0151831b393b3c3ece303fc04af996c73ef0db3caf396173fb3e906e32a523d9"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "0151831b393b3c3ece303fc04af996c73ef0db3caf396173fb3e906e32a523d9",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Orson Welles",
@@ -3784,16 +4977,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-welles.json",
           "request_id": "authoring:selected62-remaining30-20261018:welles:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "efc4d72766b902bb40f26850500ebac93d9410d67299809a440b8638a2fc93bf"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "efc4d72766b902bb40f26850500ebac93d9410d67299809a440b8638a2fc93bf",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Ludwig Wittgenstein",
@@ -3805,16 +5004,22 @@
       "production_evidence": [],
       "artifacts": [
         {
-          "pr": 2548,
-          "head_sha": "2ec7b3a0f18ce4e4cd4d2e52228a00a33f867bfb",
+          "pr": 2549,
           "path": "authoring/requests/selected62-remaining30-20261018-wittgenstein.json",
           "request_id": "authoring:selected62-remaining30-20261018:wittgenstein:representative:v1",
           "kind": "timeline",
-          "state": "DRAFT_UNMERGED",
-          "payload_sha256": "7b1e438909ebafabe91a89c8793f07ea41f0da2b11ac12664399d7e23ac6490d"
+          "state": "CONSOLIDATED_DRAFT",
+          "payload_sha256": "7b1e438909ebafabe91a89c8793f07ea41f0da2b11ac12664399d7e23ac6490d",
+          "source_pr": 2548
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Goiswintha",
@@ -3850,7 +5055,13 @@
           "payload_sha256": "3ea75c8e76e731b61b664f1e04a00d462f0694f8665d6c93d6b7fd194a49f6cf"
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Anizham Thirunal Marthanda Varma",
@@ -3870,7 +5081,13 @@
           "payload_sha256": "aea56e31b27baffcdce80eacf9d5162c38cc0390c8cc9e80a97ccde6dc879c74"
         }
       ],
-      "notes": []
+      "notes": [],
+      "offline_export_screen": {
+        "source_sha256": "295096ca6591acb6ec6863385ef33e2571a4a981c20272d9d7bb37b47c57247a",
+        "observed_at": "2026-10-18",
+        "result": "NO_EXACT_DISPLAY_LABEL_MATCH",
+        "limitation": "Not a current canonical Person/alias absence certificate."
+      }
     },
     {
       "name_en": "Lempira",
@@ -4301,11 +5518,30 @@
         {
           "source": "#2500 reviewed scope",
           "observed_at": "historical checkpoint"
+        },
+        {
+          "source": "2026-10-18 dated export",
+          "matched_rows": [
+            {
+              "excel_row": 2529,
+              "values": [
+                "과카나오마",
+                "Guacanaoma",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ]
+            }
+          ]
         }
       ],
       "artifacts": [],
       "notes": [
-        "Early/late colonial names may refer to different individuals; no synthesized lifespan."
+        "Early/late colonial names may refer to different individuals; no synthesized lifespan.",
+        "Export already contains Person-only Guacanaoma label; do not create another Person while identity/chronology HOLD remains."
       ]
     },
     {
@@ -4404,9 +5640,11 @@
     "statuses": {
       "EXISTING_AS_OF_20261016": 59,
       "DUPLICATE_UUID_CORRECTION_HOLD": 1,
-      "NEEDS_SOURCE_AND_ALIAS_REVIEW": 31,
-      "NEEDS_PREFLIGHT": 80,
-      "EXISTING_ACTIVITY_REPAIR_PENDING": 1,
+      "NEEDS_PREFLIGHT": 94,
+      "HOLD_SOURCE_OR_NAMUWIKI": 12,
+      "HOLD_HISTORICITY_CHRONOLOGY": 1,
+      "EXISTING_ACTIVITY_REPAIR_PENDING": 2,
+      "EXISTING_DATED_EXPORT_NO_CREATE": 3,
       "PENDING_ONLY": 14,
       "EXISTING_CORRECTION_ONLY_NO_CREATE": 3,
       "EXISTING_REVIEW_NO_CREATE": 9,
@@ -4417,10 +5655,11 @@
       "EXCLUDED_LIVING": 1,
       "EXCLUDED_UNIDENTIFIED": 1
     },
-    "new_person_draft_identities_needing_current_preflight": 80,
+    "new_person_draft_identities_needing_current_preflight": 94,
     "current_production_ready": 0,
-    "current_production_registered_proven_this_review": 0
+    "current_production_registered_proven_this_review": 0,
+    "existing_person_activity_repairs": 2
   },
-  "scope_caveat": "205 distinct reviewed identity/label records includes 14 pending-only, generic Priest-Queen and mythical Selu; not 205 eligible real Persons. 31 user98 names remain source/alias review, not ready for registration.",
-  "withdrawal_status": "Matisse removed from #2544 active branch; three #2500 authoring creates proposed for archival by this Draft PR only, not yet removed from main."
+  "scope_caveat": "205 distinct review labels, including excluded/pending; 31 formerly unreviewed names now have bounded source dispositions:18 draft,13 HOLD. No present DB absence or READY claim.",
+  "withdrawal_status": "#2549 is the consolidated Draft. Withdraw 3 old #2500 creates plus7 draft requests for4 additional export-existing Persons; retain Calvin1536–1538 proposal only in correction-review archive. No main merge/Production change."
 }

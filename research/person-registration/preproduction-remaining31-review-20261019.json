@@ -1,0 +1,373 @@
+{
+  "schema": "atlas-preproduction-person-review/v1",
+  "reviewed_at": "2026-10-19",
+  "production_access": false,
+  "completion_boundary": "bounded source/identity/chronology/NamuWiki review only; HOLD is not authoring READY",
+  "counts": {
+    "reviewed": 31,
+    "drafts": 18,
+    "hold": 13
+  },
+  "reviews": [
+    {
+      "name_en": "Hugues de Payens",
+      "name_ko": "위그 드 파앵",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-hugues.json",
+      "sources": [
+        "https://templerlexikon.webspace.tu-dresden.de/TDF-P2.html"
+      ],
+      "identity_and_chronology_review": "Presented the Templar rule at the Council of Troyes in 1129. A source-attested representative organizational event, not a guessed 1118/1119/1120 foundation date or a reign. Hugo de Paganis is the same individual; disputed birthplace and 1136/1137 death date are not asserted.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "위그 드 파앵"
+    },
+    {
+      "name_en": "Stanisław Żółkiewski",
+      "name_ko": "스타니스와프 주키에프스키",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-zolkiewski.json",
+      "sources": [
+        "https://muzhp.pl/kalendarium/bitwa-pod-kluszynem"
+      ],
+      "identity_and_chronology_review": "Command at Klushino in 1610; Polish-Lithuanian service affiliation, not Polish sovereign annexation of all Muscovy. Distinct from his same-named father; no fictitious uninterrupted governorship of Russia.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "스타니스와프 주키에프스키"
+    },
+    {
+      "name_en": "T. E. Lawrence",
+      "name_ko": "토머스 에드워드 로렌스",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-lawrence.json",
+      "sources": [
+        "https://www.nam.ac.uk/explore/lawrence-arabia-man-behind-robes"
+      ],
+      "identity_and_chronology_review": "British officer working with Hashemite forces during the capture of Aqaba in 1917. UK is service affiliation, not a claim that Aqaba was British sovereign territory. Auda Abu Tayi and Arab forces are not erased; distinguish the real officer from the film character and Lawrence of Arabia as a work.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "토머스 에드워드 로렌스"
+    },
+    {
+      "name_en": "Roman von Ungern-Sternberg",
+      "name_ko": "로만 폰 운게른슈테른베르크",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-ungern.json",
+      "sources": [
+        "https://www.cambridge.org/core/journals/modern-asian-studies/article/mongolian-revolution-of-1921/2FD9F6600841118EEC430BB238D09AF7"
+      ],
+      "identity_and_chronology_review": "1921 military intervention in Urga and restoration of the Bogd. Not a self-invented Mongolian emperor/reign or sovereign Russian-Mongolian empire; contested and violent military context. Bogd Khanate exact canonical polity identity must be resolved by future preflight. Distinguish alternate-history game variants.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "로만 폰 운게른슈테른베르크"
+    },
+    {
+      "name_en": "Billy Mitchell",
+      "name_ko": "빌리 미첼",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-mitchell.json",
+      "sources": [
+        "https://www.nationalmuseum.af.mil/Visit/Museum-Exhibits/Fact-Sheets/Display/Article/196947/battleship-trials/"
+      ],
+      "identity_and_chronology_review": "Commanded the First Provisional Air Brigade during the 1921 battleship bombing trials off Virginia. Representative aviation demonstration, not an independent US Air Force command before that service existed. William Billy Mitchell, not the living gamer or footballer.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "빌리 미첼"
+    },
+    {
+      "name_en": "Andrea Doria",
+      "name_ko": "안드레아 도리아",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-doria.json",
+      "sources": [
+        "https://www.treccani.it/enciclopedia/andrea-doria_%28Enciclopedia-machiavelliana%29/"
+      ],
+      "identity_and_chronology_review": "1528 Genoese political restoration/reform and imperial naval alignment. Representative turning point, not a claimed office as Doge or an unqualified continuous sovereign reign. Distinct from Giovanni Andrea Doria, the liner, warship and fictional ship characters.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "안드레아 도리아"
+    },
+    {
+      "name_en": "Sébastien Le Prestre de Vauban",
+      "name_ko": "세바스티앙 보방",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-vauban.json",
+      "sources": [
+        "https://sites-vauban.org/en/discover/vauban"
+      ],
+      "identity_and_chronology_review": "1678 appointment as General Commissioner for Fortifications, a representative institutional milestone for his engineering programme. Not all individual sieges or fortresses split into separate rows, and not a guessed full tenure. Distinct from the Warframe or modern neighbourhood bearing his name.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "세바스티앙 르 프레스트르 드 보방"
+    },
+    {
+      "name_en": "Alberto Santos-Dumont",
+      "name_ko": "아우베르투 산토스뒤몽",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-santos-dumont.json",
+      "sources": [
+        "https://old.fai.org/news/personalities/42650-12-november-1906-the-first-flight-by-santos-dumont"
+      ],
+      "identity_and_chronology_review": "14-bis public flights at Bagatelle, Paris, in 1906. The 220-metre November flight is source-attested; no universal first-ever powered-flight claim or confusion with the airport. France is actual experimental location, not Brazilian birthplace.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "아우베르투 산토스뒤몽"
+    },
+    {
+      "name_en": "Afanasy Nikitin",
+      "name_ko": "아파나시 니키틴",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-nikitin.json",
+      "sources": [
+        "https://presidentofindia.nic.in/sites/default/files/sp080515_01_0.pdf"
+      ],
+      "identity_and_chronology_review": "Representative arrival/exploration in India conventionally dated 1469, approximate rather than a fabricated exact day or full journey interval. Southern Indian activity context; exact local political binding requires source/identity preflight. Tver was not yet annexed by Muscovy. Distinct from modern athletes named Nikitin.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "아파나시 니키틴"
+    },
+    {
+      "name_en": "Alexander Hamilton",
+      "name_ko": "알렉산더 해밀턴",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-hamilton.json",
+      "sources": [
+        "https://home.treasury.gov/about/history/prior-secretaries/alexander-hamilton-1789-1795"
+      ],
+      "identity_and_chronology_review": "First US Secretary of the Treasury, 1789–1795. One meaningful fiscal-government term; the source also provides exact boundary days but this draft preserves year granularity. Not his son Alexander Hamilton Jr., a President, or the musical.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "알렉산더 해밀턴"
+    },
+    {
+      "name_en": "Shibusawa Eiichi",
+      "name_ko": "시부사와 에이이치",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-shibusawa.json",
+      "sources": [
+        "https://www.shibusawa.or.jp/eiichi/answer02.html"
+      ],
+      "identity_and_chronology_review": "1873 founding of the First National Bank in Tokyo. A representative business institution, not a sovereign polity or every later company as a separate Activity. Distinct from present-day descendants such as Shibusawa Ken.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "시부사와 에이이치"
+    },
+    {
+      "name_en": "Peter Carl Fabergé",
+      "name_ko": "카를 파베르제",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-faberge.json",
+      "sources": [
+        "https://fabergemuseum.ru/en/collections/collection-highlights/hen-easter-egg"
+      ],
+      "identity_and_chronology_review": "1885 first Imperial Hen Easter Egg in St Petersburg, a representative House of Fabergé commission. Attribution to his firm/artistic direction does not claim he personally fabricated every component. Distinct from father Gustav, descendants and racehorses named Faberge.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "페테르 카를 파베르제"
+    },
+    {
+      "name_en": "Desiderius Erasmus",
+      "name_ko": "에라스뮈스",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-erasmus.json",
+      "sources": [
+        "https://ub.unibas.ch/cmsdata/spezialkataloge/gg/higg0380.html"
+      ],
+      "identity_and_chronology_review": "1516 Basel first Greek/Latin New Testament edition. Publication context in Basel, a Swiss confederate member since 1501; exact canonical polity reuse required. Not the university, Erasmus programme, Saint Erasmus, or another life period inferred from nationality.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "에라스뮈스"
+    },
+    {
+      "name_en": "Andrei Sakharov",
+      "name_ko": "안드레이 사하로프",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-sakharov.json",
+      "sources": [
+        "https://www.europarl.europa.eu/pdf/cardoc/14402_CARDOC_11_INLAY_EN_7.pdf",
+        "https://www.nobelprize.org/laureate/534"
+      ],
+      "identity_and_chronology_review": "1968 essay on progress, peaceful coexistence and intellectual freedom, clandestinely circulated in the USSR. Domain science explicitly reviewed from his nuclear-physics career; this milestone records the physicist’s intellectual intervention, not a political office or Nobel travel to Oslo. Distinct from fictional Professor Sakharov.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "안드레이 사하로프"
+    },
+    {
+      "name_en": "H. P. Lovecraft",
+      "name_ko": "H. P. 러브크래프트",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-lovecraft.json",
+      "sources": [
+        "https://library.brown.edu/create/libnews/evolution-of-cthulhu/"
+      ],
+      "identity_and_chronology_review": "1928 publication of The Call of Cthulhu, not its 1926 manuscript composition. Real author Howard Phillips Lovecraft, not Cthulhu, a fictional namesake in Bungo Stray Dogs, or a putative ruler of his invented setting.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "하워드 필립스 러브크래프트"
+    },
+    {
+      "name_en": "Robert E. Howard",
+      "name_ko": "로버트 E. 하워드",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-howard.json",
+      "sources": [
+        "https://atlas.thc.texas.gov/Details/5049004294"
+      ],
+      "identity_and_chronology_review": "1932 creation/publication-era debut of Conan as attested by the Texas Historical Commission. The historical author is separate from Conan, Solomon Kane and other fictional creations. One representative literary milestone, not each story.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "로버트 E. 하워드"
+    },
+    {
+      "name_en": "Robert Schuman",
+      "name_ko": "로베르 슈만",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-schuman.json",
+      "sources": [
+        "https://european-union.europa.eu/principles-countries-history/history-eu/1945-59/schuman-declaration-may-1950_en"
+      ],
+      "identity_and_chronology_review": "9 May 1950 Paris Schuman Declaration as French foreign minister. Not composer Robert Schumann, the 1951 treaty signature, or a claim that the EU already existed as a sovereign state in 1950.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "로베르 슈만"
+    },
+    {
+      "name_en": "Al-Hakam II",
+      "name_ko": "알하캄 2세",
+      "status": "NEEDS_PREFLIGHT",
+      "manifest_path": "authoring/requests/preproduction-20261019-al-hakam-ii.json",
+      "sources": [
+        "https://www.mezquita-catedraldecordoba.es/en/descubre-el-monumento/la-historia/"
+      ],
+      "identity_and_chronology_review": "961–976 Cordoban caliphate reign, not Al-Hakam I or his successor Hisham II; contemporary Andalusi political entity rather than modern Spain or the Damascus Umayyad state. Library patronage and mosque expansion remain context, not extra invented reigns.",
+      "namuwiki_status": "linked",
+      "namuwiki_document_title": "알 하캄 2세"
+    },
+    {
+      "name_en": "Roger of Lauria",
+      "name_ko": "로저 드 로리아",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://www.enciclopedia.cat/gran-enciclopedia-catalana/roger-de-lloria-0"
+      ],
+      "identity_and_chronology_review": "Historically attested admiral, distinct from his father Roger de Lauria. 1283 Catalan-fleet command and Malta victory established. Independent exact NamuWiki Person article unresolved; no invented linked/not_found value.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "Apollodorus of Damascus",
+      "name_ko": "다마스쿠스의 아폴로도로스",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://academic.oup.com/edited-volume/61673/chapter-abstract/548068478"
+      ],
+      "identity_and_chronology_review": "Historical architect distinguished from Athenian mythographer. Oxford/Uffizi describe attribution of Trajan’s Column conditionally; do not convert a possible attribution into a precise personal activity. NamuWiki personal title also unresolved.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "Jan Leeghwater",
+      "name_ko": "얀 리흐워터",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://www.haarlemmermeermuseum.nl/plemp"
+      ],
+      "identity_and_chronology_review": "Museum confirms historical hydraulic engineer, died 1650, and 1641 Haarlemmermeer-book. Beemster completion date alone does not prove sole authorship; later unexecuted drainage scheme is not an accomplished project. Exact independent NamuWiki title unresolved.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "Philibert de l'Orme",
+      "name_ko": "필리베르 드 로르메",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://architectura.univ-tours.fr/en/livres-notice/ensba_les1653c490/"
+      ],
+      "identity_and_chronology_review": "University of Tours identifies architectural treatise, Paris 1567–1568 imprint/first 1567 issue. Exact personal NamuWiki article unresolved across spelling variants; no guessed title link.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "Orban (cannon founder)",
+      "name_ko": "우르반",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://assets.cambridge.org/052184/3138/index/0521843138_index.htm"
+      ],
+      "identity_and_chronology_review": "Cambridge Guns for the Sultan identifies the cannon founder separately. Cannon-object/One Piece pages are not an independent Person article. Birthplace, personal death circumstances and giant-cannon attribution need source-specific caution; do not infer a full biography from the object.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "Alfred Krupp",
+      "name_ko": "알프레드 크루프",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://www.thyssenkrupp.com/en/company/history/the-founding-families/alfred-krupp.html"
+      ],
+      "identity_and_chronology_review": "Official corporate biography confirms 1812–1887 industrialist, distinct from father Friedrich, son Friedrich Alfred and later Alfried Krupp. 1853 Prussian wheel patent is a reviewed alternative to exhibition-only association. Personal NamuWiki title unresolved.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "Francesco Bartolomeo Rastrelli",
+      "name_ko": "프란체스코 바르톨로메오 라스트렐리",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://www.hermitagemuseum.org/uploads/files/otchet_2015_en.pdf"
+      ],
+      "identity_and_chronology_review": "Hermitage attributes Winter Palace 1754–1762 to the architect, not his sculptor father Carlo Bartolomeo. Building date not retroactively a claim of every year of employment. Independent NamuWiki Person title unresolved.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "Buono da Malamocco",
+      "name_ko": "본 다 말라모코",
+      "status": "HOLD_HISTORICITY_CHRONOLOGY",
+      "manifest_path": null,
+      "sources": [
+        "https://iris.unive.it/retrieve/d2ad95ac-d112-4ca9-8096-83e4d2267d93/956321-1217919.pdf"
+      ],
+      "identity_and_chronology_review": "Venetian university scholarship treats the 828 relic-transfer story as legend with meaningful named characters. Do not present the late narrative as a securely contemporary attested personal life or invent an ordinary timeline Activity. HISTORICITY/CHRONOLOGY HOLD, no new Person draft.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "Jean Neuhaus II",
+      "name_ko": "장 노이하우스 2세",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://www.neuhauschocolates.com/en_GB/history/History.html"
+      ],
+      "identity_and_chronology_review": "Company history establishes grandson Jean Neuhaus Jr. and 1912 filled praline, distinct from grandfather/pharmacist founder and Louise Agostini’s 1915 ballotin. An exact independently attested Person NamuWiki article remains unresolved.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "Christopher Clavius",
+      "name_ko": "크리스토퍼 클라비우스",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://mathshistory.st-andrews.ac.uk/Strick/clavius.pdf"
+      ],
+      "identity_and_chronology_review": "MacTutor establishes 1538–1612 mathematician and 1582 Gregorian reform commission role; distinguish Lilio’s scheme and Pope Gregory XIII’s enactment. Lunar crater/fictional character are not Person pages. Exact independent NamuWiki title unresolved.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "Mahbub ul Haq",
+      "name_ko": "마붑 울 하크",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://hdr.undp.org/system/files/documents/hdr1999ennostats.pdf"
+      ],
+      "identity_and_chronology_review": "UNDP establishes leadership of first 1990 Human Development Report, distinct from Amartya Sen and military ruler Zia-ul-Haq. UNDP/UN is not a sovereign Polity. Personal NamuWiki title and exact Activity political/location binding unresolved.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "André Le Nôtre",
+      "name_ko": "앙드레 르 노트르",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://en.chateauversailles.fr/le-notre"
+      ],
+      "identity_and_chronology_review": "Versailles confirms 1661–1662 initial landscape work; do not confuse with Louis Le Vau or court painting. NamuWiki independent Person title unresolved across spacing variants.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    },
+    {
+      "name_en": "Lancelot Brown",
+      "name_ko": "랜슬롯 브라운",
+      "status": "HOLD_SOURCE_OR_NAMUWIKI",
+      "manifest_path": null,
+      "sources": [
+        "https://www.hrp.org.uk/hampton-court-palace/whats-on/the-great-vine/"
+      ],
+      "identity_and_chronology_review": "Historic Royal Palaces identifies Capability Brown directing 1768 Hampton Court vine planting. Distinct from electrical engineer Charles Eugene Lancelot Brown. Independent NamuWiki Person title unresolved; no borrowed engineer page.",
+      "namuwiki_status": "UNRESOLVED_NOT_A_FINAL_NOT_FOUND"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-selected-cultural20-20261019:rembrandt:1642:v1",
+  "person": {
+    "canonical_name_en": "Rembrandt van Rijn",
+    "display_name_ko": "렘브란트 하르먼손 판레인",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Dutch Republic",
+    "display_name_ko": "네덜란드 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Painter and etcher",
+    "role_display_name_ko": "화가·판화가",
+    "start_year": 1642,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1642,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Representative historical PERSON-SPECIFIC milestone point (not a claim of a single year of career). The Night Watch was completed in 1642 in Amsterdam. This is a representative personal painting milestone of Rembrandt, not a fictitious one-year art career; do not conflate him with Rembrandt Bugatti or other namesakes."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Rijksmuseum — The Night Watch",
+      "canonical_url": "https://www.rijksmuseum.nl/en/collection/SK-C-5",
+      "citation_text": "Rijksmuseum identifies Rembrandt as the maker of The Night Watch, dated 1642, created for the Amsterdam militia company."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "렘브란트 하르먼손 판레인",
+      "url": "https://namu.wiki/w/%EB%A0%98%EB%B8%8C%EB%9E%80%ED%8A%B8%20%ED%95%98%EB%A5%B4%EB%A8%BC%EC%86%90%20%ED%8C%90%EB%A0%88%EC%9D%B8"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Historical cultural/science activity period and source reviewed. Exact current Production Person, alias, Polity and Person→PlaceFunction IDs UNKNOWN due user-confirmed Vercel 402 pause; must reuse current exact matching canonical IDs on writer preflight, not create any substitute modern state, duplicate entity or fabricated coordinate. Existing reviewed user CORE40 queue id user-core40-20261004-rembrandt is reused; no duplicate queue entry."
+  }
+}

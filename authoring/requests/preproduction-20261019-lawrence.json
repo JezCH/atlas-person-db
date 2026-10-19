@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:preproduction-20261019:lawrence:representative:v1",
+  "person": {
+    "canonical_name_en": "T. E. Lawrence",
+    "display_name_ko": "토머스 에드워드 로렌스",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "military",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Military liaison officer",
+    "role_display_name_ko": "군사 연락장교",
+    "start_year": 1917,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1917,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "British officer working with Hashemite forces during the capture of Aqaba in 1917. UK is service affiliation, not a claim that Aqaba was British sovereign territory. Auda Abu Tayi and Arab forces are not erased; distinguish the real officer from the film character and Lawrence of Arabia as a work."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "National Army Museum — Lawrence of Arabia",
+      "canonical_url": "https://www.nam.ac.uk/explore/lawrence-arabia-man-behind-robes",
+      "citation_text": "British officer working with Hashemite forces during the capture of Aqaba in 1917."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "토머스 에드워드 로렌스",
+      "url": "https://namu.wiki/w/%ED%86%A0%EB%A8%B8%EC%8A%A4%20%EC%97%90%EB%93%9C%EC%9B%8C%EB%93%9C%20%EB%A1%9C%EB%A0%8C%EC%8A%A4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed context only. No current canonical Person/alias/Activity/Polity/Place preflight permitted before Production. Resolve/reuse exact IDs and current reviewed external reference; no fabricated coordinates or new political entities."
+  },
+  "review_context": {
+    "registration_state": "NEEDS_PREFLIGHT",
+    "production_access": false,
+    "source_review_only": true,
+    "namuwiki_method": "Exact independent Person article reviewed in external-index or namu.moe mirror; origin fetch not claimed.",
+    "namuwiki_evidence_url": "https://namu.moe/w/%ED%86%A0%EB%A8%B8%EC%8A%A4%20%EC%97%90%EB%93%9C%EC%9B%8C%EB%93%9C%20%EB%A1%9C%EB%A0%8C%EC%8A%A4",
+    "apply_gate": "DRAFT DO NOT APPLY OR MERGE; fresh canonical duplicate/Polity preflight after recovery. Importance is not identity/chronology proof. No PHFC /36 completeness claim."
+  }
+}

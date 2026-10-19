@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-core40-20261004:tolstoy:russian-major-novels-1863-1877:v1",
+  "person": {
+    "canonical_name_en": "Leo Tolstoy",
+    "display_name_ko": "레프 톨스토이",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Russian Empire",
+    "display_name_ko": "러시아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Novelist and literary author",
+    "role_display_name_ko": "소설가·문학가",
+    "start_year": 1863,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1877,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "A deliberately bounded principal novel-writing period in the Russian Empire: began War and Peace in 1863 (published in installments and completed 1869) and wrote Anna Karenina after beginning it 1873, final publication in 1877/1878 depending serial versus book conventions. Includes the major literary contribution without claiming the writer ceased intellectual or moral/religious writing in 1877, nor retroactively denying later Resurrection (1899). No Activity per volume or title."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Leo Tolstoy Archive — biographical chronology",
+      "canonical_url": "https://tolstoyarchive.org/Biography/Timeline.html",
+      "citation_text": "The archival biography chronicles writing War and Peace in the 1860s, beginning Anna Karenina in 1873 and completing its edition in 1877."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "1911 Encyclopaedia Britannica — Leo Tolstoy",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Tolstoy%2C_Leo",
+      "citation_text": "Contemporary authoritative reference identifies Tolstoy's two central novels War and Peace and Anna Karenina as his major literary undertakings of the 1860s and 1870s."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "레프 톨스토이",
+      "url": "https://namu.wiki/w/%EB%A0%88%ED%94%84%20%ED%86%A8%EC%8A%A4%ED%86%A0%EC%9D%B4"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed historical state/cultural activity association; existing exact canonical Person aliases, Polity identity and PlaceFunction must be checked by Production preflight. Last known Vercel Hobby HTTP 402 prevented fresh live UUID reconciliation; no guessed coordinates, no new surrogate regional state. Existing USER-CORE40 queue candidate reused instead of duplication."
+  }
+}

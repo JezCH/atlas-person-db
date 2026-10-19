@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-remaining30-20261018:su-shi:representative:v1",
+  "person": {
+    "canonical_name_en": "Su Shi",
+    "display_name_ko": "소식",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-18",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Northern Song",
+    "display_name_ko": "북송",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet",
+    "role_display_name_ko": "시인",
+    "start_year": 1082,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1082,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Huangzhou literary exile; the two Red Cliff rhapsodies in 1082 are one representative cultural activity, not the 208 battle itself. Identity review: Su Shi/Su Dongpo/소동파; not the generic word 소식 or his father Su Xun and brother Su Zhe."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Metropolitan Museum — Odes to the Red Cliff",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/916608",
+      "citation_text": "Identifies Su Dongpo (1037–1101) and the two rhapsodies composed in 1082 during political exile in Huangzhou."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-18",
+      "document_title": "소식(시인)",
+      "url": "https://namu.wiki/w/%EC%86%8C%EC%8B%9D%28%EC%8B%9C%EC%9D%B8%29"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT. Source-reviewed historical location/context only; exact canonical Person/alias/Polity/Activity/Place state is unknown. No live requests permitted during quota suspension. Reuse exact existing identities; no invented UUIDs, coordinates or surrogate cultural Polities."
+  },
+  "review_context": {
+    "task": "#2545 approved 62, remaining 30 after #2543/#2544/#2546",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_USER_PROHIBITED",
+    "identity_review": "Su Shi/Su Dongpo/소동파; not the generic word 소식 or his father Su Xun and brother Su Zhe.",
+    "namuwiki_evidence_method": "external-index independent Person mirror/title review; direct origin fetch not claimed",
+    "namuwiki_evidence_url": "https://namu.moe/w/%EC%86%8C%EC%8B%9D%28%EC%8B%9C%EC%9D%B8%29",
+    "domain_review": "Explicit v2 taxonomy review; architecture=technology, social thought/philosophy=culture, mathematics/medicine=science. Not inferred from office.",
+    "apply_gate": "DRAFT / DO NOT MERGE OR APPLY. Fresh semantic duplicate and exact historical Polity preflight required; source review is not proof of DB absence. No PHFC /36 factual coverage score claimed."
+  }
+}

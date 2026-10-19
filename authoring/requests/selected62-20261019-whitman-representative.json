@@ -1,0 +1,77 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selected62-20261019:whitman:representative-literary-point:1855:v1",
+  "person": {
+    "canonical_name_en": "Walt Whitman",
+    "display_name_ko": "월트 휘트먼",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "historical_certainty",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "United States of America",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Poet and author of Leaves of Grass",
+    "role_display_name_ko": "시인·풀잎 저자",
+    "start_year": 1855,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1855,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Brooklyn first edition of Leaves of Grass in 1855 is one representative publication Activity. Successive revisions through the 1891–1892 deathbed edition are contextual, not a claim of one uninterrupted Brooklyn residence or separate Person/Activity per edition. This is the poet Walt (Walter) Whitman (1819–1892), not his father Walter Whitman Sr., the economist Walt Whitman Rostow, or a fictional namesake. No nursing employment or minor newspaper assignment is promoted to a separate historical-impact rail."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Library of Congress — Leaves of grass, 1855",
+      "canonical_url": "https://www.loc.gov/item/03023679/",
+      "citation_text": "Original-edition catalogue identifies Walt Whitman and Brooklyn, New York, 1855."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Library of Congress — Walt Whitman, 1819 to 1892 timeline",
+      "canonical_url": "https://www.loc.gov/collections/feinberg-whitman/articles-and-essays/timeline/",
+      "citation_text": "Archival timeline distinguishes the author from his father and records the first edition announced for sale in Brooklyn and New York in July 1855."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "월트 휘트먼",
+      "url": "https://namu.wiki/w/%EC%9B%94%ED%8A%B8%20%ED%9C%98%ED%8A%B8%EB%A8%BC"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "NEEDS_PREFLIGHT: source-reviewed historical locality, but no current Production Person/alias/Activity/Polity/Place UUID reads permitted during Vercel suspension. Reuse exact canonical identities after restoration; do not create regional surrogate Polities or coordinates."
+  },
+  "review_context": {
+    "task": "USER-SELECTED-62 / issue #2545",
+    "registration_state": "NEEDS_PREFLIGHT",
+    "draft_only": true,
+    "production_screen": "NOT_PERFORMED_THIS_UNIT_USER_PROHIBITED",
+    "review_scope": "Source-based identity, deceased status, independent NamuWiki title, representative Activity and historical context; no PHFC /36 score claimed.",
+    "namuwiki_evidence_method": "external indexed NamuWiki mirror, identity-specific content reviewed; canonical namu.wiki URL follows verified independent title; not a claim of direct origin fetch",
+    "namuwiki_evidence_url": "https://m.namu.moe/w/월트%20휘트먼",
+    "apply_gate": "DRAFT ONLY; no merge, Apply, DB write, compile, deployment or readback authorized in this unit. Fresh alias/semantic Activity/Polity preflight mandatory after restoration."
+  }
+}

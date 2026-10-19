@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:user-core40-20261004:picasso:france-paris-1904-1973:v1",
+  "person": {
+    "canonical_name_en": "Pablo Picasso",
+    "display_name_ko": "파블로 피카소",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-19",
+    "life_status_basis": "documented_death",
+    "representative_domain": "culture",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "France",
+    "display_name_ko": "프랑스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Modern artist and co-founder of Cubism",
+    "role_display_name_ko": "현대미술가·입체주의 공동창시자",
+    "start_year": 1904,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1973,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "France-associated major creative production from the documented 1904 move to Paris through continued artistic work until 1973 death in France. Includes 1907 Les Demoiselles d'Avignon, co-creation of Cubism with Braque and 1937 Guernica. Picasso was Spanish-born and not misrepresented as a French-born person; the activity links the geographical/political context where most mature work occurred, not literal continuous residence at one Paris address. No separate activity for every painting or stylistic period."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Musée national Picasso-Paris — Picasso biographical chronology",
+      "canonical_url": "https://www.museepicassoparis.fr/en/picasso-biography/timeline/",
+      "citation_text": "The Picasso Museum chronology establishes his Paris move in 1904, Cubism work in Paris in 1907 and continued art production through his death in 1973."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Metropolitan Museum of Art — Pablo Picasso (1881–1973)",
+      "canonical_url": "https://www.metmuseum.org/fr/essays/pablo-picasso-1881-1973",
+      "citation_text": "The Met's synthesis covers Picasso's relocation to Paris 1904, Cubist-period breakthrough and multiple decades of artistic production."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-19",
+      "document_title": "파블로 피카소",
+      "url": "https://namu.wiki/w/%ED%8C%8C%EB%B8%94%EB%A1%9C%20%ED%94%BC%EC%B9%B4%EC%86%8C"
+    }
+  },
+  "spatial_disposition": {
+    "state": "reviewed_hold",
+    "evidence": "Source-reviewed historical state/cultural activity association; existing exact canonical Person aliases, Polity identity and PlaceFunction must be checked by Production preflight. Last known Vercel Hobby HTTP 402 prevented fresh live UUID reconciliation; no guessed coordinates, no new surrogate regional state. Existing USER-CORE40 queue candidate reused instead of duplication."
+  }
+}
