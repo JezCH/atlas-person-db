@@ -8,6 +8,7 @@ const {
 }=require("./atlas-youtube-person-signal-read-service.js");
 const {reviewedPersonAliasesValuesSql}=require("./atlas-reviewed-person-registration-aliases.js");
 const {reviewedLivingStatus}=require("./atlas-youtube-reviewed-living-people.js");
+const {annotateSourceTitleCounts}=require("./atlas-youtube-original-title-crosswalk-read.js");
 const QUALITY_RULES=require("../scripts/youtube-person-signal-quality-rules.v2.json");
 const REVIEWED_SOURCE_UNIONS=require("../audits/youtube-discovery-reviewed-source-unions-b024.json");
 const REVIEWED_V5_NONPERSON=require("../audits/youtube-v5-source-nonperson-exact-labels.json");
@@ -310,7 +311,10 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
   const counts={};
   for(const n of CHANNEL_THRESHOLDS)
     counts[String(n)]=candidates.reduce((sum,row)=>sum+(row.distinct_channel_count>=n?1:0),0);
-  const selected=candidates.filter(row=>row.distinct_channel_count>=threshold);
+  // Annotate ONLY after the live registered-Person/alias exclusion and rank.
+  // This is a sidecar from archived original TITLE mentions, not new rank input.
+  const sourceAudit=annotateSourceTitleCounts(candidates,final);
+  const selected=sourceAudit.candidates.filter(row=>row.distinct_channel_count>=threshold);
   return {
     schema:DISCOVERY_SCHEMA,available:true,snapshot:final,
     purpose:"unregistered_historical_person_discovery",
@@ -325,6 +329,9 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     reviewed_source_id_unions_applied:reviewedUnionsApplied,
     title_context_source_included:initial.source_state?.additional_title_context_extraction===true,
     video_person_centeredness_certified:false,
+    independent_original_title_audit_eligible:sourceAudit.eligible,
+    independent_original_title_audit_rows:sourceAudit.compared,
+    independent_original_title_audit_disclaimer:"Original-title matches use a different extraction grammar; unverified video topics, never replacement rank counts.",
     ranking_evidence_note:"Original title name/topic cues are source-backed review candidates, not certified Person-centered video evidence.",
     dedup_policy:"source_id_verified_reviewed_unions_plus_unknown_alias_lower_bounds",
     min_channels:threshold,offset:pageOffset,

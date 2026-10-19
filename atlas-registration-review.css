@@ -438,3 +438,21 @@
 
 
 .registration-review-mode-info{margin:0;color:var(--atlas-text-muted);font-size:11px;line-height:1.5}
+
+/* Source audit is supplementary title-only evidence inside the SAME ranked row.
+   Its independent larger counts never alter the primary rank or certify content. */
+.registration-review-source-title-audit{
+  flex-basis:100%;
+  display:block;
+  max-width:100%;
+  padding-top:2px;
+  color:var(--atlas-text-muted);
+  font-size:10px;
+  font-weight:500;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.registration-review-source-title-audit em{
+  font-style:normal;
+  color:var(--atlas-text-secondary);
+}

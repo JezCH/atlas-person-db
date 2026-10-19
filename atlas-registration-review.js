@@ -266,9 +266,15 @@
       const strength=Math.min(100,(channels/maxChannels)*100);
       const name=String(row.raw_name||"");
       const badge=candidateStatusBadge(row);
+      const audit=row?.original_source_title_audit;
+      const sourceNote=audit?.evidence_scope==="INDEPENDENT_ORIGINAL_VIDEO_TITLE_NAME_MENTION" &&
+        audit.verified_individual_primary_video_content===false &&
+        audit.not_eligible_for_ranking_count_replacement===true
+        ? `<small class="registration-review-source-title-audit" title="동일한 B024 원본에서 다른 제목 추출 규칙으로 대조했습니다. 실제 인물 중심 영상 수가 아니며 순위에 합산하지 않습니다.">별도 원본 제목 언급: ${number(audit.distinct_title_mention_channels)}채널 · ${number(audit.distinct_title_mention_videos)}영상 <em>(내용 미검증)</em></small>`
+        : "";
       return `<tr class="registration-review-signal-row" style="--signal-strength:${strength.toFixed(2)}%">
         <td class="registration-review-rank" data-label="순위">${number(row.rank)}</td>
-        <td class="registration-review-name" data-label="인물"><span class="registration-review-signal-raw-name">${escapeHtml(name)}</span>${badge}</td>
+        <td class="registration-review-name" data-label="인물"><span class="registration-review-signal-raw-name">${escapeHtml(name)}</span>${badge}${sourceNote}</td>
         <td class="registration-review-number" data-label="채널">${row.count_lower_bound?"≥":""}${number(row.distinct_channel_count)}</td>
         <td class="registration-review-number" data-label="영상">${row.count_lower_bound?"≥":""}${number(row.video_count)}</td>
         <td class="registration-review-signal-bar" aria-hidden="true"><span></span></td>
@@ -343,7 +349,7 @@
 
       <section class="registration-review-section">
         <div class="registration-review-section-head registration-review-signal-head">
-          <div><small>유튜브 발굴 단서</small><h3>미등록 역사 인물 발굴</h3><p>수집된 모든 배치는 하나의 채널 식별자 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 데이터베이스 집계를 확인합니다. 기등록 인물의 현재 이름·별칭을 대조하여 자동 제외합니다. 동명이인은 검토 대상으로 보류하며 신규 등록 확정이 아닙니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다.</strong></p></div>
+          <div><small>유튜브 발굴 단서</small><h3>미등록 역사 인물 발굴</h3><p>수집된 모든 배치는 하나의 채널 식별자 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 데이터베이스 집계를 확인합니다. 기등록 인물의 현재 이름·별칭을 대조하여 자동 제외합니다. 동명이인은 검토 대상으로 보류하며 신규 등록 확정이 아닙니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다. 원본 대조 숫자는 별도 제목 언급 범위이며 실제 영상 내용 검증이나 현재 순위 산정값의 대체가 아닙니다.</strong></p></div>
         </div>
         <div class="registration-review-signal-toolbar">
           <p class="registration-review-mode-info">기등록 인물은 자동 제외됩니다. 동명이인과 미확인 후보는 검토가 필요합니다. 제목에 이름이 언급된 사실만으로 해당 인물 중심 영상이 검증된 것은 아닙니다.</p>
@@ -364,7 +370,7 @@
               <col class="registration-review-signal-col-channels" />
               <col class="registration-review-signal-col-videos" />
             </colgroup>
-            <thead><tr><th>순위</th><th>미등록 인물 후보</th><th>고유 채널</th><th>영상</th></tr></thead>
+            <thead><tr><th>순위</th><th>미등록 인물 후보 / 원본 대조</th><th>제목 신호 채널</th><th>제목 신호 영상</th></tr></thead>
             <tbody id="youtubeSignalBody"><tr><td colspan="4" class="registration-review-empty">불러오는 중</td></tr></tbody>
           </table>
         </div>
