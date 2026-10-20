@@ -29,16 +29,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Require exact known internal review branch and SOURCE commit (no cross-PR mutation)
+      - id: stage_gate
+        name: Do not restage if the verified 536 IDs are already committed
         env:
           EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
         shell: bash
         run: |
           set -euo pipefail
           [[ "$GITHUB_HEAD_REF" == "feat/youtube-b024-broader-original-id-person-topic-20261020" ]]
-          [[ "$(git rev-parse HEAD)" == "$EXPECTED_SHA" ]]
-          test ! -f audits/youtube-b024-added-profile-title-runtime-source-20261020.json
+          if [[ -f audits/youtube-b024-added-profile-title-runtime-source-20261020.json ]]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Previously verified 536 source IDs already staged: no redundant GitHub writes" >> "$GITHUB_STEP_SUMMARY"
+          else
+            [[ "$(git rev-parse HEAD)" == "$EXPECTED_SHA" ]]
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
       - name: Verify immutable already-executed extra ORIGINAL video evidence (NO video re-scan)
+        if: steps.stage_gate.outputs.run == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
@@ -50,6 +57,7 @@ jobs:
             .digest=="sha256:2f74ff923eab322ea0bfa4bc145cda89e5fda41127567e05d3e2349e516e331e"
           ' >/dev/null
       - uses: actions/download-artifact@v4
+        if: steps.stage_gate.outputs.run == 'true'
         with:
           name: youtube-b024-existing-extra-person-profile-original-ID-evidence-39422646162
           run-id: '39422646162'
@@ -57,6 +65,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: verified-extra
       - name: Compile full additive 536 extra Video IDs and 400 identity rows with old 6162 ID parity
+        if: steps.stage_gate.outputs.run == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -76,6 +85,7 @@ jobs:
           assert d["production_rank_currently_changed"] is False
           PY
       - name: Commit verified additive input only, on same review branch; no Production or canonical DB mutation
+        if: steps.stage_gate.outputs.run == 'true'
         shell: bash
         run: |
           set -euo pipefail
