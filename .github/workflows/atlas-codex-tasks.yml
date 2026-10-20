@@ -1,0 +1,116 @@
+name: ATLAS Codex approved task runner
+
+# Dormant by default. Explicit reviewed tasks only; never a recurring scheduler.
+on:
+  workflow_dispatch:
+    inputs:
+      task_id:
+        description: Optional approved task ID; blank selects one eligible task
+        required: false
+        type: string
+  issue_comment:
+    types: [created]
+
+permissions: {}
+
+jobs:
+  dispatch:
+    if: >-
+      github.repository == 'JezCH/atlas-person-db' &&
+      github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/main' && github.run_attempt == 1
+    permissions:
+      contents: write
+      pull-requests: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Select one eligible nonconflicting task
+        id: prepare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TASK_ID: ${{ inputs.task_id }}
+        run: node scripts/atlas-codex-task-runner.mjs prepare "$RUNNER_TEMP/task.json"
+      - name: Atomically consume task and UTC-day command budget
+        if: steps.prepare.outputs.selected == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/atlas-codex-task-runner.mjs claim "$RUNNER_TEMP/task.json"
+      - name: Submit one authenticated development command without retry
+        if: steps.prepare.outputs.selected == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.ATLAS_CODEX_TRIGGER_PAT }}
+        run: |
+          set -euo pipefail
+          [[ -n "${GH_TOKEN:-}" ]] || { echo 'BLOCKED: PAT missing; admission stays consumed'; exit 1; }
+          node scripts/atlas-codex-task-runner.mjs submit "$RUNNER_TEMP/task.json"
+
+  validate:
+    if: >-
+      github.repository == 'JezCH/atlas-person-db' &&
+      github.event_name == 'issue_comment' && github.run_attempt == 1 &&
+      github.event.comment.user.id == 199175422 &&
+      github.event.comment.user.login == 'chatgpt-codex-connector[bot]' &&
+      github.event.issue.pull_request != null &&
+      contains(github.event.comment.body, 'ATLAS-CODEX-PATCH-V1')
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify task and event then test without write credentials
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/atlas-codex-task-runner.mjs receive "$GITHUB_EVENT_PATH" "$RUNNER_TEMP/plan.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codex-task-${{ github.event.comment.id }}
+          path: ${{ runner.temp }}/plan.json
+          retention-days: 1
+          if-no-files-found: error
+
+  publish:
+    needs: validate
+    if: needs.validate.result == 'success'
+    permissions:
+      contents: write
+      pull-requests: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@v4
+        with:
+          name: codex-task-${{ github.event.comment.id }}
+          path: ${{ runner.temp }}/received
+      - name: Bind to fresh original event and publish only the approved paths
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/atlas-codex-task-runner.mjs publish "$GITHUB_EVENT_PATH" "$RUNNER_TEMP/received/plan.json"
+      - name: Create Draft PR only
+        env:
+          GH_TOKEN: ${{ secrets.ATLAS_CODEX_TRIGGER_PAT }}
+        run: |
+          set -euo pipefail
+          [[ -n "${GH_TOKEN:-}" ]] || { echo 'BLOCKED: PR token missing; no automatic recovery'; exit 1; }
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/pulls" --input "$RUNNER_TEMP/pr.json" --jq '{number,html_url,head:.head.sha}'
