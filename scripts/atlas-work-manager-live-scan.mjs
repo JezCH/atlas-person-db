@@ -95,6 +95,40 @@ export async function scanLive({fetchImpl=globalThis.fetch,token='',now=Date.now
     }
     pulls.push(item);
   }
+  // This collector does not infer code quality from PR naming. The branch prefix
+  // only narrows read-only *review* candidates; a source/test pair and exact head
+  // CI must be confirmed via GitHub before triage may propose one for review.
+  if(!pulls.some(p=>resultLike(p.head_ref))){
+    const candidates=open.filter(pr=>pr.draft&&pr.head.ref.startsWith('fix/'))
+      .sort((a,b)=>b.number-a.number);
+    for(const pr of candidates){
+      guard(pr.head.repo?.full_name===REPO,'untrusted fix PR head repository');
+      const files=await get('/pulls/'+pr.number+'/files?per_page=100');
+      guard(Array.isArray(files)&&files.length<100,'candidate changed-file pagination');
+      const paths=files.map(file=>file.filename);
+      const scoped=paths.length===2&&
+        /^scripts\/[A-Za-z0-9_-]+\.mjs$/.test(paths[0])&&
+        /^tests\/[A-Za-z0-9._-]+\.test\.mjs$/.test(paths[1]);
+      if(!scoped)continue;
+      const runs=await get('/actions/runs?head_sha='+pr.head.sha+'&per_page=100');
+      guard(Array.isArray(runs?.workflow_runs)&&runs.workflow_runs.length<100,
+        'candidate Integrity runs inventory');
+      const ci=runs.workflow_runs.filter(x=>x.name==='ATLAS Integrity'&&
+        x.head_sha===pr.head.sha).sort((a,b)=>b.id-a.id)[0];
+      if(!ci)continue; // No verified CI evidence; still a manual-only backlog.
+      const fresh=await get('/pulls/'+pr.number);
+      guard(fresh?.head?.sha===pr.head.sha&&fresh?.state==='open'&&fresh?.draft===true,
+        'candidate PR moved during scan');
+      const found=pulls.find(p=>p.number===pr.number);
+      found.changed_paths=paths;
+      found.review_evidence={
+        changed_paths:paths,integrity_head_sha:ci.head_sha,
+        integrity_conclusion:ci.status==='completed'?ci.conclusion:'in_progress',
+        integrity_run_url:'https://github.com/'+REPO+'/actions/runs/'+ci.id
+      };
+      break;
+    }
+  }
   const end=await get('/branches/main');
   guard(end?.commit?.sha===sha,'main moved during inventory');
   const snapshot={version:1,repository:REPO,main_sha:sha,
