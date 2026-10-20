@@ -46,7 +46,7 @@ const AUTHORING_RUNTIME_SAFE_EXACT = new Set([
 ]);
 
 function normalizePath(value) {
-  return String(value || "").trim().replaceAll("\\", "/").replace(/^\.\//, "");
+  return String(value || "").replaceAll("\\", "/").replace(/^\.\//, "");
 }
 
 function normalizePaths(paths) {
