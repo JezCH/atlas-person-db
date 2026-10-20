@@ -31,7 +31,7 @@ function fullRegistry(...additionalNames){
   ...additionalNames.map(([name,id])=>({alias_name:name,person_id:id}))
  ];
 }
-function db({names=[],snapshot=archivedSnapshot(),shift=false,onePerson=false}={}){
+function db({names=[],snapshot=archivedSnapshot(),shift=false,onePerson=false,truncateNames=false}={}){
  let globalReads=0;
  const seen=[];
  return {
@@ -43,7 +43,10 @@ function db({names=[],snapshot=archivedSnapshot(),shift=false,onePerson=false}={
     return {rows:[shift&&globalReads===2?{...snapshot,snapshot_id:"changed"}:snapshot]};
    }
    if(sql===d.PERSON_NAMES_SQL)
-    return {rows:onePerson?[{person_id:"one-person",alias_name:"Stephen Hawking"}]:fullRegistry(...names)};
+    return {rows:onePerson?[{person_id:"one-person",alias_name:"Stephen Hawking"}]:
+      truncateNames?fullRegistry(...names).slice(0,2100):fullRegistry(...names)};
+   if(sql===d.PERSON_TOTAL_SQL)
+    return {rows:[{person_count:onePerson?1:fullRegistry(...names).length}]};
    if(sql===d.CANDIDATE_ROWS_SQL)
     throw Error("REGRESSION: old aggregate title ranking queried for EXACT real B024 source");
    throw Error("Unexpected SQL "+sql.slice(0,90));
@@ -74,6 +77,9 @@ test("actual one discovery service REPLACES legacy 72/113 with original-ID sets 
  assert.equal(rank.source_candidate_count,2241);
  assert.equal(rank.ranking_evidence_type,source.SOURCE_PROOF);
  assert.equal(rank.current_registry_distinct_persons,2104);
+ assert.equal(rank.current_registry_authoritative_person_count,2104);
+ assert.equal(rank.current_registry_person_count_parity_verified,true);
+ assert.equal(conn.seen.filter(sql=>sql===d.PERSON_TOTAL_SQL).length,1);
  assert.equal(rank.registered_excluded_count,4);
  assert.equal(rank.source_original_biography_title_video_ids,10706);
  assert.equal(rank.registration_checked,true);
@@ -88,6 +94,7 @@ test("actual one discovery service REPLACES legacy 72/113 with original-ID sets 
  assert.ok(!rank.rows.some(r=>["Stephen Hawking","Marilyn Monroe","Mother Teresa","C. S. Lewis"].includes(r.raw_name)));
  assert.equal(rank.threshold_counts["3"]<=799,true);
  assert.equal(conn.seen.filter(sql=>sql===d.PERSON_NAMES_SQL).length,1);
+ assert.equal(conn.seen.filter(sql=>sql===d.PERSON_TOTAL_SQL).length,1);
  assert.equal(conn.seen.filter(sql=>sql===d.CANDIDATE_ROWS_SQL).length,0);
  assert.equal(conn.seen.filter(sql=>sql===GLOBAL_SNAPSHOT_SQL).length,2);
 });
@@ -96,6 +103,7 @@ test("full current aliases suppress already registered historic Persons with dif
  const result=source.renderCurrentRegistryRank({
   snapshot:archivedSnapshot(),
   registryRows:fullRegistry(["Princess Diana","person-wales"],["Diana, Princess of Wales","person-wales"]),
+  expectedCurrentRegisteredPersons:2101,
   identityKey:d.identityKey
  });
  assert.ok(!result.candidates.some(r=>r.raw_name==="Princess Diana"));
@@ -119,10 +127,13 @@ test("pagination and 3/5/10/15/20 channel thresholds reflect the filtered ORIGIN
 });
 
 test("partial current DB or mismatched running snapshot fails closed rather than declaring every name unregistered",async()=>{
- await assert.rejects(()=>d.readYoutubeUnregisteredDiscovery({client:db({onePerson:true})}),/CURRENT_REGISTRY_INCOMPLETE/);
+ await assert.rejects(()=>d.readYoutubeUnregisteredDiscovery({client:db({onePerson:true})}),/CURRENT_REGISTRY_TOTAL_INVALID/);
+ await assert.rejects(()=>d.readYoutubeUnregisteredDiscovery({
+   client:db({names:[["Princess Diana","p-wales"]],truncateNames:true})
+ }),/CURRENT_REGISTRY_INCOMPLETE/);
  await assert.rejects(()=>d.readYoutubeUnregisteredDiscovery({client:db({shift:true})}),/SNAPSHOT_CHANGED/);
  const wrong=archivedSnapshot();wrong.source_state.artifact_digest="sha256:fake";
- assert.throws(()=>source.renderCurrentRegistryRank({snapshot:wrong,registryRows:fullRegistry(),identityKey:d.identityKey}),
+ assert.throws(()=>source.renderCurrentRegistryRank({snapshot:wrong,registryRows:fullRegistry(),expectedCurrentRegisteredPersons:2100,identityKey:d.identityKey}),
   /SOURCE_SNAPSHOT_MISMATCH/);
 });
 
