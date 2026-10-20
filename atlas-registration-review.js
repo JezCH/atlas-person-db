@@ -40,7 +40,7 @@
   let lastSignalPayload=null;
 
   function candidateStatusBadge(row) {
-    if(row?.evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT")
+    if((row?.evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT" || row?.evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_AND_PROFILE_TITLE_UNVERIFIED_CONTENT"))
       return '<span class="registration-review-signal-identity" data-status="unmatched">원본 ID 확인 · 역사인물/영상 내용 검토</span>';
     if(row?.source_id_union_verified===true)
       return '<span class="registration-review-signal-identity" data-status="verified">원본 채널 ID 통합 검증</span>';
@@ -248,8 +248,8 @@
     const reviewedExcludedLabel=reviewedExcluded>0 ? ` · 확인된 비인물 표기 ${number(reviewedExcluded)}개 제외` : "";
     if(telemetry) {
       telemetry.innerHTML=snapshot
-        ? payload?.ranking_evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT"
-          ? `<strong>기존 원본 ${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>전기형 제목 원본 영상 ID ${number(payload.source_original_biography_title_video_ids)}개 · 독립 Channel ID 중복 제거 · 등록 Person ${number(payload.current_registry_distinct_persons)}명과 모든 별칭 실시간 대조 · 기등록 확인 ${number(payload.registered_excluded_count)}개 추가 제외 · <strong>역사인물 정체성/영상 실제 내용 미검증</strong></span>`
+        ? (payload?.ranking_evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT" || payload?.ranking_evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_AND_PROFILE_TITLE_UNVERIFIED_CONTENT")
+          ? `<strong>기존 원본 ${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>전기형 제목 원본 영상 ID ${number(payload.source_original_biography_title_video_ids)}개 중 기검토 후보에 남은 6,162개 + 추가 인물소개형 제목 원본 ID ${number(payload.source_additional_profile_title_original_video_ids || 0)}개 (두 등급 분리) · 독립 Channel ID 중복 제거 · 등록 Person ${number(payload.current_registry_distinct_persons)}명과 모든 별칭 실시간 대조 · 기등록 확인 ${number(payload.registered_excluded_count)}개 추가 제외 · <strong>역사인물 정체성/영상 실제 내용 미검증</strong></span>`
           : `<strong>누적 ${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>Channel ID 중복 제거 · ${escapeHtml(dateTime(snapshot.generated_at))} · ${snapshot.source_state?.additional_title_context_extraction===true ? "제목 문맥 추가 추출 적용(인물 중심성 미확정)" : "구형 제목 앞부분 추출 통계 · 최신 제목 문맥 감사 미반영"} · 다음 ${escapeHtml(snapshot.source_state?.next_batch || "수집 대기")}${reviewedExcludedLabel}</span>`
         : "<strong>아직 YouTube 수집 데이터가 없습니다.</strong>";
     }
@@ -271,8 +271,8 @@
       const name=String(row.raw_name||"");
       const badge=candidateStatusBadge(row);
       const audit=row?.original_source_title_audit;
-      const originalIdNote=row?.evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT"
-        ? `<small class="registration-review-source-title-audit" title="기존 223만 영상 자료에서 명시적 생애·전기형 제목이 발견된 원본 Video ID와 Channel ID에 기반합니다. 실제 영상 콘텐츠나 인물 역사성은 확정되지 않았습니다.">전기형 제목의 원본 Video ID · 채널 ID로 집계 <em>(실제 내용 미검증)</em></small>`
+      const originalIdNote=(row?.evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT" || row?.evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_AND_PROFILE_TITLE_UNVERIFIED_CONTENT")
+        ? `<small class="registration-review-source-title-audit" title="기존 223만 영상 자료에서 명시적 생애·전기형 및 추가 인물소개형 제목이 발견된 원본 Video ID와 Channel ID에 기반합니다. 실제 영상 콘텐츠나 인물 역사성은 확정되지 않았습니다.">전기형·인물소개형 제목의 원본 Video ID · 채널 ID로 집계 <em>(실제 내용 미검증)</em></small>`
         : "";
       const sourceNote=audit?.evidence_scope==="INDEPENDENT_ORIGINAL_VIDEO_TITLE_NAME_MENTION" &&
         audit.verified_individual_primary_video_content===false &&

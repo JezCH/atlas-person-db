@@ -6,7 +6,8 @@ import {fileURLToPath} from "node:url";
 // latest-main deployment. Never starts a deployment, never polls 402, never
 // fetches YouTube, never writes DB. Read the EXISTING one discovery surface.
 const DEFAULT_ORIGIN="https://atlas-person-db.vercel.app";
-const EVIDENCE="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT";
+const EVIDENCE="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_AND_PROFILE_TITLE_UNVERIFIED_CONTENT";
+const ROW_EVIDENCE=new Set([EVIDENCE,"ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT"]);
 export const PROBE_SCHEMA="atlas-youtube-b024-one-shot-live-acceptance/v1";
 
 function assert(ok,message){
@@ -37,6 +38,8 @@ export function validateDiscovery(payload){
     payload?.ranking_evidence_type===EVIDENCE &&
     payload?.source_candidate_count===2241 &&
     payload?.source_original_biography_title_video_ids===10706 &&
+    payload?.source_additional_profile_title_original_video_ids===536 &&
+    payload?.source_total_profile_and_biography_original_video_ids===6698 &&
     payload?.registration_checked===true &&
     payload?.current_registry_person_count_parity_verified===true &&
     integer(payload?.current_registry_distinct_persons) &&
@@ -54,7 +57,7 @@ export function validateDiscovery(payload){
   }
   assert(c["3"]>=c["5"]&&c["5"]>=c["10"]&&
     c["10"]>=c["15"]&&c["15"]>=c["20"]&&
-    c["3"]<=799&&
+    c["3"]<=861&&
     integer(payload.registered_excluded_count)&&payload.registered_excluded_count>=0&&
     integer(payload.available_count)&&payload.available_count===c["3"]&&
     integer(payload.stored_count)&&payload.stored_count===payload.available_count&&
@@ -68,7 +71,7 @@ export function validateDiscovery(payload){
       typeof row.raw_name==="string"&&Boolean(row.raw_name.trim())&&
       integer(row.distinct_channel_count)&&row.distinct_channel_count>=3&&
       integer(row.video_count)&&row.video_count>=row.distinct_channel_count&&
-      row.evidence_type===EVIDENCE&&
+      ROW_EVIDENCE.has(row.evidence_type)&&
       row.registration_match_count===0&&
       row.source_id_union_verified===true&&
       row.video_person_centeredness_certified===false&&
@@ -86,6 +89,8 @@ export function validateDiscovery(payload){
     source_original_channels:payload.snapshot.channel_count,
     source_original_video_titles:payload.snapshot.video_count,
     source_biography_title_video_ids:payload.source_original_biography_title_video_ids,
+    additional_profile_title_original_video_ids:payload.source_additional_profile_title_original_video_ids,
+    total_filtered_source_title_evidence_original_video_ids:payload.source_total_profile_and_biography_original_video_ids,
     pre_registry_source_candidate_names:payload.source_candidate_count,
     authoritative_persons:payload.current_registry_authoritative_person_count,
     independently_loaded_person_UUIDs:payload.current_registry_distinct_persons,
@@ -127,7 +132,7 @@ export async function runAcceptance({fetchImpl=fetch,expectedSha,origin=DEFAULT_
   const ui=await read("/atlas-registration-review.js","js");
   assert(typeof ui==="string" &&
     ui.includes('mode=discovery') &&
-    ui.includes("ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT") &&
+    ui.includes("ORIGINAL_ID_EXPLICIT_BIOGRAPHY_AND_PROFILE_TITLE_UNVERIFIED_CONTENT") &&
     ui.includes("원본 Video ID · 채널 ID로 집계"),
     "B024_RELEASE_SINGLE_TABLE_UI_ASSET_NOT_UPDATED");
   const last=await read(identityUrl,"json");

@@ -1,0 +1,322 @@
+{
+  "schema": "atlas-b024-pinned-nonindividual-and-identity-review-holds/v1",
+  "source_archive_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "source_profile_artifact_zip_sha256": "sha256:2f74ff923eab322ea0bfa4bc145cda89e5fda41127567e05d3e2349e516e331e",
+  "reviewed_at": "2026-10-20",
+  "review_basis": "Stable category semantics and identity ambiguity; exact label HOLD only. Never delete raw video, Person DB or original ID, never infer positive historical identity.",
+  "total_held_source_labels": 62,
+  "clear_nonindividual_labels": 52,
+  "ambiguous_identity_labels": 10,
+  "rows": [
+    {
+      "name": "12 Years a Slave",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "work_title"
+    },
+    {
+      "name": "Albania Travel vlog",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "video_category"
+    },
+    {
+      "name": "Apollo 13",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "space_mission"
+    },
+    {
+      "name": "Backstreet Boys",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "music_group"
+    },
+    {
+      "name": "Black Holes",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "astronomy_concept"
+    },
+    {
+      "name": "Black Panther",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "ambiguous_fiction_or_group"
+    },
+    {
+      "name": "Black Widow",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "ambiguous_concept"
+    },
+    {
+      "name": "Black Women",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "demographic_group"
+    },
+    {
+      "name": "Bloody Mary",
+      "disposition": "AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD",
+      "reason": "homonym_between_historical_and_folklore"
+    },
+    {
+      "name": "Boko Haram",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "organization"
+    },
+    {
+      "name": "Bonnie and Clyde",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "two_people"
+    },
+    {
+      "name": "CAIN'S WIFE",
+      "disposition": "AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD",
+      "reason": "unverified_biblical_identity"
+    },
+    {
+      "name": "Captain America",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "fictional_character"
+    },
+    {
+      "name": "Central Park",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "geographic_place"
+    },
+    {
+      "name": "Chinese New Year",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "calendar_holiday"
+    },
+    {
+      "name": "Christ the Redeemer",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "statue"
+    },
+    {
+      "name": "Coca-Cola",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "product_or_company"
+    },
+    {
+      "name": "Conspiracy Theories",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "topic"
+    },
+    {
+      "name": "Dark Matter",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "science_concept"
+    },
+    {
+      "name": "Dark Web",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "technology_concept"
+    },
+    {
+      "name": "Deep Purple",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "music_group"
+    },
+    {
+      "name": "Foo Fighters",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "music_group"
+    },
+    {
+      "name": "From Slavery to Freedom",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "work_or_topic"
+    },
+    {
+      "name": "Gog and Magog",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "mythological_pair"
+    },
+    {
+      "name": "Green Day",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "music_group"
+    },
+    {
+      "name": "Guns N' Roses",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "music_group"
+    },
+    {
+      "name": "Hagia Sophia",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "architectural_place"
+    },
+    {
+      "name": "Hip Hop",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "cultural_genre"
+    },
+    {
+      "name": "Hiroshima & Nagasaki",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "two_places"
+    },
+    {
+      "name": "House of the Dragon",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "fiction_media_work"
+    },
+    {
+      "name": "Human Origins",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "research_topic"
+    },
+    {
+      "name": "Human Rights",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "social_concept"
+    },
+    {
+      "name": "Imam Mahdi",
+      "disposition": "AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD",
+      "reason": "eschatological_figure_identity_not_established"
+    },
+    {
+      "name": "Jack Johnson",
+      "disposition": "AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD",
+      "reason": "multiple_distinct_public_figures"
+    },
+    {
+      "name": "John Paul Jones",
+      "disposition": "AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD",
+      "reason": "historical_person_name_collision"
+    },
+    {
+      "name": "Led Zeppelin",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "music_group"
+    },
+    {
+      "name": "Manhattan Project",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "research_project"
+    },
+    {
+      "name": "Mona Lisa",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "artwork"
+    },
+    {
+      "name": "Mother's day",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "calendar_holiday"
+    },
+    {
+      "name": "Nagorno-Karabakh",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "geographic_region"
+    },
+    {
+      "name": "Native Americans",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "ethnic_group"
+    },
+    {
+      "name": "Northern Ireland",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "geographic_region"
+    },
+    {
+      "name": "Nuclear Weapons",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "weapons_category"
+    },
+    {
+      "name": "Our Lady of Guadalupe",
+      "disposition": "AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD",
+      "reason": "religious_epithet_not_distinct_person"
+    },
+    {
+      "name": "Our Lady of Mount Carmel",
+      "disposition": "AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD",
+      "reason": "religious_epithet_not_distinct_person"
+    },
+    {
+      "name": "Palm Sunday",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "calendar_holiday"
+    },
+    {
+      "name": "Pan-Africanism",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "ideology_or_movement"
+    },
+    {
+      "name": "Pink Floyd",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "music_group"
+    },
+    {
+      "name": "Prince Charles",
+      "disposition": "AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD",
+      "reason": "multiple_royal_individuals"
+    },
+    {
+      "name": "Princess Alice",
+      "disposition": "AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD",
+      "reason": "multiple_royal_individuals"
+    },
+    {
+      "name": "Quantum Computing",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "technology_concept"
+    },
+    {
+      "name": "Queen Esther",
+      "disposition": "AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD",
+      "reason": "biblical_historicity_not_established"
+    },
+    {
+      "name": "San Francisco",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "geographic_place"
+    },
+    {
+      "name": "Science Fiction",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "literary_genre"
+    },
+    {
+      "name": "Silicon Valley",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "geographic_region"
+    },
+    {
+      "name": "Somali Pirates",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "people_group"
+    },
+    {
+      "name": "South America",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "geographic_region"
+    },
+    {
+      "name": "Strait of Hormuz",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "geographic_place"
+    },
+    {
+      "name": "Sydney Opera House",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "architectural_place"
+    },
+    {
+      "name": "Theory of Evolution",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "scientific_theory"
+    },
+    {
+      "name": "Vatican City",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "state_or_place"
+    },
+    {
+      "name": "Westminster Abbey",
+      "disposition": "CLEAR_NONINDIVIDUAL_LABEL_HOLD",
+      "reason": "architectural_place"
+    }
+  ]
+}

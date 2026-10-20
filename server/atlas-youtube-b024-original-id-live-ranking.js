@@ -9,6 +9,9 @@ const {reviewedLivingStatus}=require("../atlas-youtube-reviewed-living-people.js
 
 const SCHEMA="atlas-youtube-b024-original-video-id-live-discovery-input/v1";
 const SOURCE_PROOF="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT";
+const PROFILE_SOURCE_PROOF="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_AND_PROFILE_TITLE_UNVERIFIED_CONTENT";
+const EXTRA_SOURCE=require("../audits/youtube-b024-added-profile-title-runtime-source-20261020.json");
+const SOURCE_HOLDS=require("../audits/youtube-b024-clear-nonindividual-and-identity-holds-20261020.json");
 const NONPERSON_EXACT=new Set([
   // Historical excluded names were already removed from the source before
   // publishing it to this read layer. This layer never invents extra aliases.
@@ -54,6 +57,66 @@ function validArchive(data=SOURCE){
 }
 const VERIFIED_SOURCE_ROWS=validArchive();
 
+function validAdditiveProfileSource(profile=EXTRA_SOURCE,holds=SOURCE_HOLDS,strictRows=VERIFIED_SOURCE_ROWS){
+  if(profile.schema!=="atlas-youtube-b024-profile-original-id-additive-runtime/v1"||
+     profile.source_archive_sha256!==ARCHIVE_SHA||
+     profile.derived_profile_artifact_id!==12264217300||
+     profile.derived_profile_artifact_zip_sha256!==
+       "sha256:2f74ff923eab322ea0bfa4bc145cda89e5fda41127567e05d3e2349e516e331e"||
+     profile.source_strict_candidate_group_count!==2241||
+     profile.source_strict_biography_title_video_id_count!==6162||
+     profile.new_original_profile_title_video_id_count!==536||
+     profile.new_profile_title_source_name_group_count!==400||
+     profile.combined_unique_profile_plus_biography_title_video_ids!==6698||
+     profile.video_media_playback_verified_count!==0||
+     profile.current_registered_Person_full_screen_completed!==false||
+     profile.production_rank_currently_changed!==false||
+     profile.title_evidence_only!==true||
+     !Array.isArray(profile.rows)||profile.rows.length!==400)
+    throw Error("B024_ADDITIVE_ORIGINAL_ID_PROFILE_PROVENANCE_INVALID");
+  const strictMap=new Map(strictRows.map(row=>[row[0],row]));
+  const used=new Set(strictRows.flatMap(row=>row[3]));
+  const extra=new Map();
+  let added=0;
+  for(const row of profile.rows){
+    if(!Array.isArray(row)||row.length!==3||extra.has(row[0])||!strictMap.has(row[0])||
+       !Array.isArray(row[1])||!Array.isArray(row[2])||!row[1].length||!row[2].length||
+       new Set(row[1]).size!==row[1].length||new Set(row[2]).size!==row[2].length||
+       row[1].some(id=>!/^UC[\w-]{22}$/.test(id))||
+       row[2].some(id=>!/^[\w-]{11}$/.test(id)))
+      throw Error("B024_ADDITIVE_ORIGINAL_ID_PROFILE_ROW_INVALID");
+    for(const vid of row[2]){
+      if(used.has(vid))throw Error("B024_ADDITIVE_ORIGINAL_VIDEO_ID_DOUBLE_CREDIT");
+      used.add(vid);added++;
+    }
+    extra.set(row[0],{channel_ids:row[1],video_ids:row[2]});
+  }
+  if(added!==536||used.size!==6698)
+    throw Error("B024_ADDITIVE_ORIGINAL_VIDEO_POPULATION_CHANGED");
+  if(holds.schema!=="atlas-b024-pinned-nonindividual-and-identity-review-holds/v1"||
+     holds.source_archive_sha256!==ARCHIVE_SHA||
+     holds.source_profile_artifact_zip_sha256!==profile.derived_profile_artifact_zip_sha256||
+     holds.total_held_source_labels!==62||holds.clear_nonindividual_labels!==52||
+     holds.ambiguous_identity_labels!==10||!Array.isArray(holds.rows)||holds.rows.length!==62)
+    throw Error("B024_NONINDIVIDUAL_HOLD_REVIEW_PROVENANCE_INVALID");
+  const quarantined=new Map();
+  for(const row of holds.rows){
+    if(!strictMap.has(row.name)||!extra.has(row.name)||quarantined.has(row.name)||
+       !["CLEAR_NONINDIVIDUAL_LABEL_HOLD","AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD"].includes(row.disposition))
+      throw Error("B024_HOLD_NOT_EXACT_PINNED_SOURCE_IDENTITY");
+    quarantined.set(row.name,row.disposition);
+  }
+  let afterUnion3=0;
+  for(const row of strictRows){
+    const e=extra.get(row[0]);
+    if(new Set([...row[2],...(e?.channel_ids||[])]).size>=3)afterUnion3++;
+  }
+  if(afterUnion3!==895)
+    throw Error("B024_ADDITIVE_SOURCE_3CHANNEL_UNION_CHANGED");
+  return Object.freeze({extra,quarantined,unfiltered_three_channel_groups:afterUnion3});
+}
+const VERIFIED_PROFILE=validAdditiveProfileSource();
+
 function renderCurrentRegistryRank({
   snapshot,registryRows,identityKey,now=Date.now(),sourceRows=VERIFIED_SOURCE_ROWS,
   minDistinctRegisteredPersons=2000,expectedCurrentRegisteredPersons
@@ -77,7 +140,7 @@ function renderCurrentRegistryRank({
     if(!index.has(key))index.set(key,new Set());
     index.get(key).add(id);
   }
-  const rejected={registered:0,living:0,ambiguous:0,collision:0};
+  const rejected={registered:0,living:0,ambiguous:0,collision:0,nonindividual:0,identity_hold:0};
   const prelim=[];
   for(const row of sourceRows){
     const [name,aliases,originalChannels,originalVideos,reviewedHistorical]=row;
@@ -87,15 +150,25 @@ function renderCurrentRegistryRank({
     }
     if(known.size===1){rejected.registered++;continue;}
     if(known.size>1){rejected.ambiguous++;continue;}
+    const hold=VERIFIED_PROFILE.quarantined.get(name);
+    if(hold==="CLEAR_NONINDIVIDUAL_LABEL_HOLD"){rejected.nonindividual++;continue;}
+    if(hold==="AMBIGUOUS_OR_NON_DISTINCT_IDENTITY_HOLD"){rejected.identity_hold++;continue;}
     if(aliases.some(alias=>reviewedLivingStatus(alias,now)?.status==="living_likely")||
        reviewedLivingStatus(name,now)?.status==="living_likely"){
       rejected.living++;continue;
     }
+    const addition=VERIFIED_PROFILE.extra.get(name);
+    const combinedChannels=new Set([...originalChannels,...(addition?.channel_ids||[])]);
+    const combinedVideos=new Set([...originalVideos,...(addition?.video_ids||[])]);
     prelim.push({
       raw_name:name,
       source_labels:aliases,
-      distinct_channel_count:originalChannels.length,
-      video_count:originalVideos.length,
+      distinct_channel_count:combinedChannels.size,
+      video_count:combinedVideos.size,
+      strict_biography_original_channel_count:originalChannels.length,
+      strict_biography_original_video_count:originalVideos.length,
+      additional_explicit_profile_original_channel_count:addition?.channel_ids.length||0,
+      additional_explicit_profile_original_video_count:addition?.video_ids.length||0,
       source_id_union_verified:true,
       count_lower_bound:false,
       identity_state:"unregistered_candidate",
@@ -103,7 +176,7 @@ function renderCurrentRegistryRank({
       historical_personhood_previously_reviewed:reviewedHistorical,
       original_video_id_example:originalVideos[0],
       original_channel_id_example:originalChannels[0],
-      evidence_type:SOURCE_PROOF,
+      evidence_type:addition?PROFILE_SOURCE_PROOF:SOURCE_PROOF,
       video_person_centeredness_certified:false,
       presently_unregistered_historical_person_certified:false
     });
@@ -135,14 +208,19 @@ function renderCurrentRegistryRank({
     additional_current_living_excluded_count:rejected.living,
     ambiguous_current_registration_holds:rejected.ambiguous,
     unreviewed_name_normalization_holds:rejected.collision,
+    newly_reviewed_nonindividual_source_holds:rejected.nonindividual,
+    newly_reviewed_ambiguous_source_holds:rejected.identity_hold,
+    additive_profile_original_video_id_count:536,
+    source_total_title_evidence_original_video_id_count:6698,
     current_registry_distinct_persons:uniqueIds.size,
     current_registry_authoritative_person_count:expectedCurrentRegisteredPersons,
     current_registry_person_count_parity_verified:true,
     exact_source_snapshot_matched:true,
-    ranking_evidence_type:SOURCE_PROOF,
+    ranking_evidence_type:PROFILE_SOURCE_PROOF,
     video_person_centeredness_certified:false,
     historical_personhood_certified_for_all:false,
     current_registration_screen_completed:true
   });
 }
-module.exports=Object.freeze({SOURCE_PROOF,VERIFIED_SOURCE_ROWS,validArchive,renderCurrentRegistryRank});
+module.exports=Object.freeze({SOURCE_PROOF,PROFILE_SOURCE_PROOF,VERIFIED_SOURCE_ROWS,
+  VERIFIED_PROFILE,validArchive,validAdditiveProfileSource,renderCurrentRegistryRank});

@@ -1,0 +1,29 @@
+name: YouTube B024 Original-ID Extra Profile Evidence Integrity (NO RESTAGE)
+
+# The 536 existing-source original IDs were committed exactly once on PR #2577.
+# Never attempt a second commit or duplicate Actions artifact download.
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'audits/youtube-b024-added-profile-title-runtime-source-20261020.json'
+      - 'audits/youtube-b024-clear-nonindividual-and-identity-holds-20261020.json'
+      - 'server/atlas-youtube-b024-original-id-live-ranking.js'
+      - '.github/workflows/youtube-b024-stage-additive-runtime-original-ids.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify_already_staged_real_original_ids:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify already staged 536 original IDs, previous 6162 and 62 exact identity holds
+        run: node --test tests/atlas-youtube-b024-real-additive-profile-evidence.test.mjs
+      - name: Do not touch Production, rescan 2.23m or push source evidence again
+        run: echo 'Existing original Video ID evidence checked; no rescan, no new files, no new video fetch, no production mutation.'
