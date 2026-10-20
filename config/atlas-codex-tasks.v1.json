@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "enabled": false,
+  "max_commands_per_utc_day": 1,
+  "tasks": [
+    {
+      "id": "atlas-integrated-root-20261020",
+      "status": "closed",
+      "priority": 0,
+      "launcher_pr": 2571,
+      "launcher_sha": "9554e9b0cf705978c51ad0163c3f74c2287ccd5c",
+      "paths": ["scripts/person-domain-authoring-origin.mjs", "tests/atlas-person-domain-authoring-origin.test.mjs"],
+      "snapshot_paths": ["scripts/person-domain-authoring-origin.mjs", "tests/atlas-person-domain-authoring-origin.test.mjs", "authoring/requests/philosophy-canon-20260928-asanga.json", "authoring/requests/philosophy-canon-20260930-al-farabi-person-only.json", "AGENTS.md", "WORK_EXECUTION.md"],
+      "not_before": "2026-10-20T11:45:00Z",
+      "expires_at": "2026-10-20T14:00:00Z",
+      "instructions": "COMPLETED: Draft PR #2573, head 3aa5250a60acebbf959731ed9f118afa62c0909d, full Integrity #39418449680 SUCCESS. Never reissue this task. Preserve original attempt receipt codex/attempt-integrated-root-20261020."
+    }
+  ]
+}

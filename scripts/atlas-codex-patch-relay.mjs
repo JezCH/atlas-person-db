@@ -38,10 +38,10 @@ export function extractPatchComment(body) {
   try { return JSON.parse(payload); } catch { throw new Error("ATLAS_PATCH_REJECTED: invalid JSON"); }
 }
 
-export function validateEnvelope(event) {
+export function validateEnvelope(event, policy = {}) {
   requireValid(event && event.action === "created", "event action");
   requireValid(event.repository?.full_name === "JezCH/atlas-person-db", "repository");
-  requireValid(event.issue?.number === LAUNCHER_PR && Boolean(event.issue.pull_request), "launcher PR");
+  requireValid(event.issue?.number === (policy.launcher_pr ?? LAUNCHER_PR) && Boolean(event.issue.pull_request), "launcher PR");
   requireValid(event.comment?.user?.login === "chatgpt-codex-connector[bot]" &&
     event.comment.user.type === "Bot" && event.comment.user.id === CODEX_BOT_ID, "sender");
   requireValid(Number.isSafeInteger(event.comment.id) && event.comment.id > 0, "comment id");
@@ -59,15 +59,16 @@ function validPath(value, group) {
     !parts[1].startsWith("atlas-codex-");
 }
 
-export function validatePlan(value) {
+export function validatePlan(value, policy = {}) {
   requireValid(value && !Array.isArray(value) && typeof value === "object", "plan");
-  requireValid(value.version === 1 && value.task_id === TASK_ID && SHA40.test(value.base_sha), "version/task/base");
+  requireValid(value.version === 1 && value.task_id === (policy.id ?? TASK_ID) && SHA40.test(value.base_sha), "version/task/base");
   requireValid(Array.isArray(value.files) && value.files.length === 2, "exactly two files");
   const roles = ["source", "test"];
   let total = 0;
   for (let i = 0; i < roles.length; i++) {
     const f = value.files[i];
     requireValid(f && validPath(f.path, roles[i]), "unsafe path/role");
+    requireValid(!policy.paths || f.path === policy.paths[i], "outside approved task paths");
     requireValid(SHA256.test(f.before_sha256), "invalid original file hash");
     requireValid(typeof f.after_base64 === "string" && /^[A-Za-z0-9+/]*={0,2}$/.test(f.after_base64), "invalid encoding");
     const bytes = Buffer.from(f.after_base64, "base64");
@@ -85,7 +86,7 @@ function git(root, args) {
 }
 
 export function applyPlan(value, root, options = {}) {
-  const plan = validatePlan(value);
+  const plan = validatePlan(value, options.policy);
   const directory = fs.realpathSync(root);
   if (!options.skipGitCheck) {
     requireValid(git(directory, ["rev-parse", "HEAD"]) === plan.base_sha, "stale base SHA");
@@ -108,8 +109,8 @@ export function applyPlan(value, root, options = {}) {
   return {test_path: pending[1].name, changed_paths:pending.map(i => i.name), base_sha:plan.base_sha};
 }
 
-export function createPlanFromEvent(event) {
-  return validatePlan(validateEnvelope(event));
+export function createPlanFromEvent(event, policy) {
+  return validatePlan(validateEnvelope(event, policy), policy);
 }
 
 // Live admission is bounded independently of schema-only fixture validation.
@@ -126,9 +127,9 @@ export function validateLiveEvent(event, now = Date.now()) {
 // The test runner can write its own artifact. Schema/preimage checks alone do
 // not bind that artifact to the bot's original proposal. Call this only with
 // the publishing job's independent GitHub event and trusted checkout.
-export function verifyPlanFromEvent(event, candidate) {
-  const original = createPlanFromEvent(event);
-  validatePlan(candidate);
+export function verifyPlanFromEvent(event, candidate, policy) {
+  const original = createPlanFromEvent(event, policy);
+  validatePlan(candidate, policy);
   requireValid(isDeepStrictEqual(candidate, original), "artifact differs from original event");
   return original;
 }
@@ -157,5 +158,6 @@ if (invoked) {
     process.exitCode = 1;
   }
 }
+
 
 
