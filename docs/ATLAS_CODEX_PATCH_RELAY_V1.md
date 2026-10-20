@@ -59,3 +59,14 @@ The relay has no scheduler and invokes no model by itself. Enabling a future fix
 
 **Project authority:** `WORK_EXECUTION.md`, `AGENTS.md`, `docs/VERCEL_HOBBY_QUOTA_GUARD.md`.
 
+
+
+## Next bounded integration — atlas-integrated-root-20261020
+
+The accepted #2568 result is preserved. This new task uses launcher #2571, output branch `codex/integrated-root-result-20261020`, and an immutable attempt ref `codex/attempt-integrated-root-20261020` whose SHA must equal the patch base. Only `scripts/person-domain-authoring-origin.mjs` and `tests/atlas-person-domain-authoring-origin.test.mjs` are admitted. The proven local defect is a missing/empty root being resolved as cwd before the root-required check; no historical data changes are requested.
+
+The dispatcher activates only on one exact authorized main merge message and attempt 1. Before one PAT-authored command it checks current main, launcher status and source/test/fixture/policy snapshot parity, checks all open PR paths, and atomically creates the attempt ref. A pre-existing ref, uncertain submission, missing PAT or failed preflight stops the task; never delete/reset that ref or rerun the model automatically. The claim is an invocation receipt for this one task, not a global writer lock.
+
+Live event admission expires at 2026-10-20T14:00:00Z and rejects responses older than 30 minutes. Model calls: at most one authorized command; no schedule or automated retry. This is not a provider-enforced token/credit cap. No paid API/new credits/auto top-up configuration is introduced. Standard shared-plan exhaustion must stop the experiment rather than trigger another call.
+
+Evidence chain to verify after activation: dispatcher run and user-authored command → Codex App payload on #2571 → receiver validate/publish → result Draft PR and full CI. Before these are observed this section is implementation, not a successful integrated execution. Exact next checkpoint is the actual dispatcher result. No source-PR auto-merge or Production acceptance is enabled.

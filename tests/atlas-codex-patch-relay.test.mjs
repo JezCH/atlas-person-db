@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import crypto from "node:crypto";
-import {extractPatchComment, validateEnvelope, validatePlan, applyPlan, verifyPlanFromEvent, TASK_ID, PATCH_MARKER} from "../scripts/atlas-codex-patch-relay.mjs";
+import {extractPatchComment, validateEnvelope, validatePlan, applyPlan, verifyPlanFromEvent, validateLiveEvent, LIVE_PATHS, LIVE_START, LIVE_DEADLINE, LAUNCHER_PR, TASK_ID, PATCH_MARKER} from "../scripts/atlas-codex-patch-relay.mjs";
 
 const sha = s => crypto.createHash("sha256").update(s).digest("hex");
 const after = s => Buffer.from(s).toString("base64");
@@ -20,7 +20,7 @@ function plan(src = "export const n = 1;\n", tst = "import test from 'node:test'
 function eventOf(payload, author = "chatgpt-codex-connector[bot]") {
   return {
     action:"created", repository:{full_name:"JezCH/atlas-person-db"},
-    issue:{number:2560, pull_request:{url:"https://api.github.com/"}},
+    issue:{number:LAUNCHER_PR, pull_request:{url:"https://api.github.com/"}},
     comment:{id:123456, user:{login:author, type:"Bot", id:199175422},
       body:PATCH_MARKER + "\n" + JSON.stringify(payload) + "\nEND-" + PATCH_MARKER}
   };
@@ -124,3 +124,17 @@ test("accept one embedded payload with the connector's View task footer; reject 
   assert.throws(()=>validateEnvelope(e),/unique complete markers required/);
 });
 
+
+
+test("live task rejects expired receipts, invalid timestamps and paths outside its approved pair", () => {
+  const p=plan();p.files.forEach((f,i)=>{f.path=LIVE_PATHS[i];});
+  const e=eventOf(p);e.comment.created_at=new Date(LIVE_START).toISOString();
+  assert.deepEqual(validateLiveEvent(e,LIVE_START+1000),p);
+  for(const now of [LIVE_START-1,LIVE_DEADLINE+1,LIVE_START+30*60*1000+1,NaN]) {
+    assert.throws(()=>validateLiveEvent(e,now),/expired or invalid live event/);
+  }
+  const invalid=structuredClone(e);invalid.comment.created_at="not a date";
+  assert.throws(()=>validateLiveEvent(invalid,LIVE_START+1000),/expired or invalid live event/);
+  const other=eventOf(plan());other.comment.created_at=e.comment.created_at;
+  assert.throws(()=>validateLiveEvent(other,LIVE_START+1000),/outside live task paths/);
+});
