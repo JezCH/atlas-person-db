@@ -1,0 +1,73 @@
+name: ATLAS Codex integrated root fix — one attempt
+
+# One exact authorized merge; no scheduler, retries or recursive model calls.
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/atlas-codex-integrated-once.yml]
+
+permissions: {}
+
+concurrency:
+  group: atlas-integrated-root-dispatch-20261020
+  cancel-in-progress: false
+
+jobs:
+  dispatch-once:
+    if: >-
+      github.repository == 'JezCH/atlas-person-db' &&
+      github.ref == 'refs/heads/main' &&
+      github.run_attempt == 1 &&
+      startsWith(github.event.head_commit.message, 'test(ci): authorize bounded Codex integrated run [atlas-integrated-root-20261020]')
+    permissions:
+      contents: write
+      pull-requests: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Preflight snapshot, open-PR overlap and permanently consume this attempt
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          node -e 'const now=Date.now();if(now<Date.parse("2026-10-20T11:45:00Z")||now>Date.parse("2026-10-20T14:00:00Z"))process.exit(1)'
+          [[ "$(gh api "repos/${GITHUB_REPOSITORY}/branches/main" --jq '.commit.sha')" == "$GITHUB_SHA" ]]
+          gh api "repos/${GITHUB_REPOSITORY}/pulls/2571" > "$RUNNER_TEMP/launcher.json"
+          jq -e '.state == "open" and .draft == true and .head.sha == "9554e9b0cf705978c51ad0163c3f74c2287ccd5c"' "$RUNNER_TEMP/launcher.json" >/dev/null
+          for FILE in scripts/person-domain-authoring-origin.mjs tests/atlas-person-domain-authoring-origin.test.mjs authoring/requests/philosophy-canon-20260928-asanga.json authoring/requests/philosophy-canon-20260930-al-farabi-person-only.json AGENTS.md WORK_EXECUTION.md; do
+            LAUNCH_BLOB="$(gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}?ref=9554e9b0cf705978c51ad0163c3f74c2287ccd5c" --jq '.sha')"
+            [[ "$LAUNCH_BLOB" == "$(git hash-object "$FILE")" ]] || { echo "BLOCKED: launcher snapshot differs: $FILE"; exit 1; }
+          done
+          gh api --paginate "repos/${GITHUB_REPOSITORY}/pulls?state=open&per_page=100" --jq '.[].number' > "$RUNNER_TEMP/open-prs"
+          while IFS= read -r PR; do
+            [[ -z "$PR" ]] && continue
+            gh api --paginate "repos/${GITHUB_REPOSITORY}/pulls/${PR}/files?per_page=100" --jq '.[].filename' > "$RUNNER_TEMP/pr-files"
+            if grep -Fxq 'scripts/person-domain-authoring-origin.mjs' "$RUNNER_TEMP/pr-files" || grep -Fxq 'tests/atlas-person-domain-authoring-origin.test.mjs' "$RUNNER_TEMP/pr-files"; then
+              echo "BLOCKED: target overlap with PR #$PR"; exit 1
+            fi
+          done < "$RUNNER_TEMP/open-prs"
+          # Atomic create, never PATCH/delete/reset. Even a failed POST consumes
+          # this run: no automatic retries after uncertain model submission.
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/git/refs" -f ref='refs/heads/codex/attempt-integrated-root-20261020' -f "sha=$GITHUB_SHA" --jq '.ref'
+          export SOURCE_HASH="$(sha256sum scripts/person-domain-authoring-origin.mjs | cut -d' ' -f1)"
+          export TEST_HASH="$(sha256sum tests/atlas-person-domain-authoring-origin.test.mjs | cut -d' ' -f1)"
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          body=Path('docs/experiments/CODEX_INTEGRATED_ROOT_REQUEST_20261020.md').read_text()
+          for key in ['GITHUB_SHA','SOURCE_HASH','TEST_HASH','GITHUB_RUN_ID']:
+              body=body.replace('@@'+key+'@@',os.environ[key])
+          Path(os.environ['RUNNER_TEMP'],'request.json').write_text(json.dumps({'body':body}))
+          PY
+      - name: Submit exactly one user-authored Codex command
+        env:
+          GH_TOKEN: ${{ secrets.ATLAS_CODEX_TRIGGER_PAT }}
+        run: |
+          set -euo pipefail
+          [[ -n "${GH_TOKEN:-}" ]] || { echo 'BLOCKED: existing PAT unavailable; attempt remains consumed'; exit 1; }
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/issues/2571/comments" --input "$RUNNER_TEMP/request.json" --jq '{id,html_url,user:.user.login}'
+

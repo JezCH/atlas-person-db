@@ -6,9 +6,12 @@ import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 
 export const PATCH_MARKER = "ATLAS-CODEX-PATCH-V1";
-export const TASK_ID = "atlas-patch-relay-pilot-20261020";
-export const LAUNCHER_PR = 2560;
+export const TASK_ID = "atlas-integrated-root-20261020";
+export const LAUNCHER_PR = 2571;
 export const CODEX_BOT_ID = 199175422;
+export const LIVE_PATHS = Object.freeze(["scripts/person-domain-authoring-origin.mjs", "tests/atlas-person-domain-authoring-origin.test.mjs"]);
+export const LIVE_START = Date.parse("2026-10-20T11:45:00Z");
+export const LIVE_DEADLINE = Date.parse("2026-10-20T14:00:00Z");
 const SHA40 = /^[0-9a-f]{40}$/;
 const SHA256 = /^[0-9a-f]{64}$/;
 const MAX_BODY_BYTES = 50000;
@@ -109,6 +112,17 @@ export function createPlanFromEvent(event) {
   return validatePlan(validateEnvelope(event));
 }
 
+// Live admission is bounded independently of schema-only fixture validation.
+export function validateLiveEvent(event, now = Date.now()) {
+  const plan = createPlanFromEvent(event);
+  const created = Date.parse(event.comment.created_at);
+  requireValid(Number.isFinite(now) && now >= LIVE_START && now <= LIVE_DEADLINE &&
+    Number.isFinite(created) && created >= LIVE_START && created <= now &&
+    now - created <= 30 * 60 * 1000, "expired or invalid live event");
+  requireValid(plan.files.every((f, i) => f.path === LIVE_PATHS[i]), "outside live task paths");
+  return plan;
+}
+
 // The test runner can write its own artifact. Schema/preimage checks alone do
 // not bind that artifact to the bot's original proposal. Call this only with
 // the publishing job's independent GitHub event and trusted checkout.
@@ -126,10 +140,11 @@ if (invoked) {
     requireValid(["extract", "verify", "apply"].includes(mode) && source && destination, "usage");
     const data = JSON.parse(fs.readFileSync(source, "utf8"));
     if (mode === "extract") {
-      const plan = createPlanFromEvent(data);
+      const plan = validateLiveEvent(data);
       fs.writeFileSync(destination, JSON.stringify(plan) + "\n", {flag:"wx", mode:0o600});
       console.log("ATLAS_PATCH_ACCEPTED: envelope + plan validated");
     } else if (mode === "verify") {
+      validateLiveEvent(data);
       verifyPlanFromEvent(data, JSON.parse(fs.readFileSync(destination, "utf8")));
       console.log("ATLAS_PATCH_VERIFIED: artifact matches original GitHub event");
     } else {
@@ -142,4 +157,5 @@ if (invoked) {
     process.exitCode = 1;
   }
 }
+
 

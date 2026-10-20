@@ -9,15 +9,16 @@ on:
 permissions: {}
 
 concurrency:
-  group: atlas-codex-patch-relay-20261020
+  group: atlas-integrated-root-20261020
   cancel-in-progress: false
 
 jobs:
   validate-without-secrets:
     if: >-
       github.repository == 'JezCH/atlas-person-db' &&
+      github.run_attempt == 1 &&
       github.event.action == 'created' &&
-      github.event.issue.number == 2560 &&
+      github.event.issue.number == 2571 &&
       github.event.issue.pull_request != null &&
       github.event.comment.user.id == 199175422 &&
       github.event.comment.user.login == 'chatgpt-codex-connector[bot]' &&
@@ -85,6 +86,8 @@ jobs:
           SOURCE="$(node -e 'const fs=require("fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1])).changed_paths[0])' "$RUNNER_TEMP/published.json")"
           TEST="$(node -e 'const fs=require("fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1])).changed_paths[1])' "$RUNNER_TEMP/published.json")"
           EXPECTED="$(node -e 'const fs=require("fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1])).base_sha)' "$RUNNER_TEMP/published.json")"
+          CLAIM="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/codex/attempt-integrated-root-20261020" --jq '.object.sha')"
+          [[ "$CLAIM" == "$EXPECTED" ]] || { echo 'BLOCKED: dispatch attempt does not match patch base'; exit 1; }
           CURRENT="$(gh api "repos/${GITHUB_REPOSITORY}/branches/main" --jq '.commit.sha')"
           if [[ "$CURRENT" != "$EXPECTED" ]]; then echo 'BLOCKED: main advanced since proposed patch'; exit 1; fi
           diff -u <(printf '%s\n' "$SOURCE" "$TEST" | sort) <(git diff --name-only | sort)
@@ -101,7 +104,7 @@ jobs:
               fi
             done < "$RUNNER_TEMP/current-pr-files"
           done < "$RUNNER_TEMP/open-prs"
-          BRANCH='codex/relay-pilot-20261020'
+          BRANCH='codex/integrated-root-result-20261020'
           if [[ -n "$(git ls-remote --heads origin "$BRANCH")" ]]; then
             echo 'BLOCKED: idempotency branch already exists'
             exit 1
@@ -120,7 +123,8 @@ jobs:
           [[ -n "${GH_TOKEN:-}" ]] || { echo 'BLOCKED: authenticated PR-create PAT secret missing'; exit 1; }
           SOURCE="$(node -e 'const fs=require("fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1])).changed_paths[0])' "$RUNNER_TEMP/published.json")"
           TEST="$(node -e 'const fs=require("fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1])).changed_paths[1])' "$RUNNER_TEMP/published.json")"
-          gh pr create --draft --base main --head 'codex/relay-pilot-20261020' \
-            --title 'fix: Codex patch relay pilot (review required)' \
-            --body "Codex patch relay v1. Only $SOURCE and $TEST. Credential-free validation and focused test PASS; exact preimage and source SHA rechecked. Full CI and human review required. Production NOT LIVE; no merge. Source: PR #2560 bot patch proposal."
+          gh pr create --draft --base main --head 'codex/integrated-root-result-20261020' \
+            --title 'fix: Codex integrated root fix (review required)' \
+            --body "Codex patch relay v1. Only $SOURCE and $TEST. Credential-free validation and focused test PASS; exact preimage and source SHA rechecked. Full CI and human review required. Production NOT LIVE; no merge. Source: PR #2571 bot patch proposal."
+
 
