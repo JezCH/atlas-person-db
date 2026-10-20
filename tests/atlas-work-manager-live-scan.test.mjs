@@ -65,3 +65,39 @@ test('optional token is used only in fixed repository GET requests',async()=>{
   assert.ok(h.calls.every(x=>x.options.headers.Authorization==='Bearer test-only'&&
     x.url.startsWith('https://api.github.com/repos/JezCH/atlas-person-db/')));
 });
+
+
+test('collector selects first scoped fix among unrelated PRs and verifies exact head CI',async()=>{
+  const candidate={number:555,draft:true,state:'open',
+    head:{ref:'fix/offline-source',sha:head,repo:{full_name:'JezCH/atlas-person-db'}},
+    base:{ref:'main'}};
+  const irrelevant={number:556,draft:true,state:'open',
+    head:{ref:'fix/data-only',sha,repo:{full_name:'JezCH/atlas-person-db'}},
+    base:{ref:'main'}};
+  const h=harness({prs:[irrelevant,candidate,ordinary],overrides:{
+    '/pulls/556/files?per_page=100':()=>response([{filename:'docs/a.md'}]),
+    '/pulls/555/files?per_page=100':()=>response([
+      {filename:'scripts/bug.mjs'},{filename:'tests/bug.test.mjs'}]),
+    ['/actions/runs?head_sha='+head+'&per_page=100']:()=>response({workflow_runs:[
+      {id:77,name:'ATLAS Integrity',head_sha:head,status:'completed',conclusion:'success'}]}),
+    '/pulls/555':()=>response(candidate)
+  }});
+  const res=await scanLive({fetchImpl:h.get,now});
+  assert.equal(res.decision.decision,'REVIEW_EXISTING_PR');
+  assert.equal(res.selected_pr,555);
+  assert.equal(res.decision.ci_run_url,'https://github.com/JezCH/atlas-person-db/actions/runs/77');
+  assert.ok(h.calls.every(x=>x.options.method==='GET'));
+});
+test('collector fails closed when selected existing PR advances during scan',async()=>{
+  const candidate={number:555,draft:true,state:'open',
+    head:{ref:'fix/offline-source',sha:head,repo:{full_name:'JezCH/atlas-person-db'}},
+    base:{ref:'main'}};
+  const h=harness({prs:[candidate],overrides:{
+    '/pulls/555/files?per_page=100':()=>response([
+      {filename:'scripts/bug.mjs'},{filename:'tests/bug.test.mjs'}]),
+    ['/actions/runs?head_sha='+head+'&per_page=100']:()=>response({workflow_runs:[
+      {id:77,name:'ATLAS Integrity',head_sha:head,status:'completed',conclusion:'success'}]}),
+    '/pulls/555':()=>response({...candidate,head:{...candidate.head,sha}})
+  }});
+  await assert.rejects(()=>scanLive({fetchImpl:h.get,now}),/candidate PR moved/);
+});
