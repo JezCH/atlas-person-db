@@ -1,0 +1,102 @@
+name: YouTube B024 Single Rank Release Readiness — OFFLINE / ONE-SHOT LIVE
+
+# Never poll or auto-read a quota-paused Vercel deployment. The offline
+# rehearsal runs in normal PR CI and does not access Production. After OFFICIAL
+# Hobby provider unblock and an approved real latest-main Production deploy,
+# dispatch ONE exact-SHA, 4-GET acceptance. 402 is terminal (zero retries).
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'server/atlas-youtube-unregistered-discovery-read-service.js'
+      - 'server/atlas-youtube-b024-original-id-live-ranking.js'
+      - 'scripts/verify-youtube-b024-one-shot-production-readiness.mjs'
+      - 'tests/atlas-youtube-b024-release-readiness.test.mjs'
+      - '.github/workflows/youtube-b024-release-one-shot-acceptance.yml'
+  workflow_dispatch:
+    inputs:
+      confirmed_hobby_unblocked_and_main_deployed:
+        description: Confirm official provider unblock AND new exact main SHA is already deployed (no polling or deploy by this workflow)
+        required: true
+        type: boolean
+        default: false
+      expected_runtime_sha:
+        description: Exact 40-char GitHub MAIN commit SHA deployed on Vercel Production
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-youtube-b024-exact-live-release-single-acceptance
+  cancel-in-progress: false
+
+jobs:
+  offline_preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate one-shot verifier syntax and OFFLINE real source rehearsal
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check scripts/verify-youtube-b024-one-shot-production-readiness.mjs
+          node --test tests/atlas-youtube-b024-release-readiness.test.mjs tests/atlas-youtube-b024-original-id-live-rank.test.mjs
+      - name: Declare scope and no automatic Production traffic
+        run: |
+          echo "Offline original-ID rank and entire-roster parity tested; NO Production URL was called."
+          echo "Actual Production finalization remains BLOCKED until provider unblock, same-main-SHA deployment and one deliberate 4-GET check." >> "$GITHUB_STEP_SUMMARY"
+
+  exact_main_production_smoke:
+    needs: offline_preflight
+    # Manually declared service restoration and explicit exact SHA are
+    # mandatory. Never run on pull_request or on main push.
+    if: github.event_name == 'workflow_dispatch' && inputs.confirmed_hobby_unblocked_and_main_deployed == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      ATLAS_EXPECTED_RUNTIME_SHA: ${{ inputs.expected_runtime_sha }}
+      ATLAS_YOUTUBE_RELEASE_EVIDENCE_DIR: artifacts/youtube-b024-live-acceptance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require the expected commit to be HEAD of main (fail before any HTTP)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          [[ "$ATLAS_EXPECTED_RUNTIME_SHA" =~ ^[0-9a-fA-F]{40}$ ]] || {
+            echo "Invalid main SHA — no Production traffic"; exit 1;
+          }
+          actual_main="$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq '.sha')"
+          [[ "$ATLAS_EXPECTED_RUNTIME_SHA" == "$actual_main" ]] || {
+            echo "Requested deployed SHA differs from latest main — do not read stale Production";
+            exit 1;
+          }
+          [[ "$GITHUB_SHA" == "$actual_main" ]] || {
+            echo "Workflow checkout is not current main; re-dispatch after latest main is deployed";
+            exit 1;
+          }
+      - name: ONE read-only exact-main-SHA Production ranked-YouTube acceptance (4 requests, HTTP402 terminal)
+        run: node scripts/verify-youtube-b024-one-shot-production-readiness.mjs
+      - name: Persist true live identity and ranked candidates evidence
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-youtube-b024-single-rank-real-production-acceptance-${{ github.run_id }}
+          path: artifacts/youtube-b024-live-acceptance/youtube-b024-one-shot-live-acceptance.json
+          if-no-files-found: error
+          retention-days: 60
+      - name: Accept ONLY inspected original-ID rank, not unverified actual video contents
+        if: success()
+        run: |
+          echo "Verified latest main on Production, 200 responses, original archive, complete Person roster parity, single ranked API and current UI asset." >> "$GITHUB_STEP_SUMMARY"
+          echo "Title-based provisional candidate ranking is live; individual video playback and historical-personhood remain separate evidence gates." >> "$GITHUB_STEP_SUMMARY"
