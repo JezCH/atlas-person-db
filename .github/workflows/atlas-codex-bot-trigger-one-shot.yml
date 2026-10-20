@@ -1,0 +1,53 @@
+name: ATLAS Codex User-Origin Dispatch — Manual One Shot
+
+# Trigger only for the authorized merge commit below or a separate manual dispatch.
+# No cron, PR-trigger, untrusted checkout, Production calls or retries.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/atlas-codex-bot-trigger-one-shot.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-codex-user-origin-pilot-one-shot
+  cancel-in-progress: false
+
+jobs:
+  user-origin-codex-smoke:
+    if: >-
+      github.repository == 'JezCH/atlas-person-db' &&
+      github.ref == 'refs/heads/main' &&
+      ((github.event_name == 'workflow_dispatch' && github.actor == 'JezCH') ||
+       (github.event_name == 'push' &&
+        startsWith(github.event.head_commit.message, 'test(actions): authorize one-shot user Codex dispatch [atlas-codex-20261020]')))
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Validate one-shot gate and dispatch only if not previously sent
+        env:
+          GH_TOKEN: ${{ secrets.ATLAS_CODEX_TRIGGER_PAT }}
+          TARGET_PR: '2443'
+          MARKER: ATLAS-CODEX-AUTHENTICATED-PILOT-20261020-ONCE
+        run: |
+          set -euo pipefail
+          if [[ -z "${GH_TOKEN:-}" ]]; then
+            echo 'BLOCKED: repository secret ATLAS_CODEX_TRIGGER_PAT is missing; nothing dispatched.'
+            exit 1
+          fi
+          PR_JSON="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${TARGET_PR}")"
+          jq -e '.state == "open" and .draft == true' <<< "$PR_JSON" >/dev/null
+          SHA="$(jq -r '.head.sha' <<< "$PR_JSON")"
+          COMMENT_BODIES="$(gh api "repos/${GITHUB_REPOSITORY}/issues/${TARGET_PR}/comments?per_page=100" --jq '.[].body')"
+          if grep -Fq "$MARKER" <<< "$COMMENT_BODIES"; then
+            echo 'NO CHANGE: authenticated Codex pilot already dispatched; no duplicate message.'
+            exit 0
+          fi
+          BODY=$(cat <<EOF
+          @codex ${MARKER}: This is a one-shot **user-authenticated GitHub Actions** origin test (not code review) for Draft PR #${TARGET_PR}, exact head ${SHA}. Start a Codex Cloud read-only task, confirm the resolved commit and task link, and report it on the PR. No edits, push/commit, CI, extra Actions, browser, Vercel/Production/Supabase access, Sandbox, deployment, merge, retries, or additional tasks.
+          EOF
+          )
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/issues/${TARGET_PR}/comments" -f "body=${BODY}" --jq '.html_url'
