@@ -1,11 +1,27 @@
 import {createPlanFromEvent, extractPatchComment} from './atlas-codex-patch-relay.mjs';
 
 export const REPOSITORY = 'JezCH/atlas-person-db';
+// A real GitHub user identity, not a text claim or a GitHub Actions secret.
+const OWNER = {id:281085255,login:'JezCH'};
+const RUN_COMMENT = /^ATLAS-CODEX-RUN-V1\n(atlas-[a-z0-9-]{1,64})\nEND-ATLAS-CODEX-RUN-V1\n?$/;
 const SHA = /^[a-f0-9]{40}$/;
 const ID = /^atlas-[a-z0-9-]{1,64}$/;
 const SOURCE = /^scripts\/(?!atlas-codex-|apply-|deploy-|verify-vercel-resource-budget)[A-Za-z0-9_-]+\.mjs$/;
 const TEST = /^tests\/(?!atlas-codex-)[A-Za-z0-9._-]+\.test\.mjs$/;
 function requireValid(ok, message) { if (!ok) throw new Error('ATLAS_TASK_REJECTED: '+message); }
+// This command ONLY requests an already reviewed task on its exact launcher PR.
+// GitHub event identity + task/launcher/replay checks remain mandatory.
+export function authorizedRunComment(event) {
+  requireValid(event?.action==='created' && event?.repository?.full_name===REPOSITORY, 'run comment repository/action');
+  requireValid(Number.isSafeInteger(event?.issue?.number) && event.issue.number>0 && event.issue.pull_request != null, 'run comment must be on PR');
+  const comment=event.comment;
+  requireValid(comment?.user?.id===OWNER.id && comment?.user?.login===OWNER.login && comment?.user?.type==='User', 'run comment GitHub author');
+  requireValid(Number.isSafeInteger(comment?.id) && comment.id>0, 'run comment ID');
+  const match=typeof comment.body==='string'?RUN_COMMENT.exec(comment.body):null;
+  requireValid(Boolean(match), 'run comment exact command format');
+  return {task_id:match[1],launcher_pr:event.issue.number,comment_id:comment.id};
+}
+
 export function dayKey(now) { return new Date(now).toISOString().slice(0,10); }
 export function taskRef(id) { return 'refs/heads/codex/task-attempt/'+id; }
 export function budgetRef(now) { return 'refs/heads/codex/daily-attempt/'+dayKey(now); }
