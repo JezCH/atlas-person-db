@@ -9,11 +9,41 @@
       "priority": 0,
       "launcher_pr": 2571,
       "launcher_sha": "9554e9b0cf705978c51ad0163c3f74c2287ccd5c",
-      "paths": ["scripts/person-domain-authoring-origin.mjs", "tests/atlas-person-domain-authoring-origin.test.mjs"],
-      "snapshot_paths": ["scripts/person-domain-authoring-origin.mjs", "tests/atlas-person-domain-authoring-origin.test.mjs", "authoring/requests/philosophy-canon-20260928-asanga.json", "authoring/requests/philosophy-canon-20260930-al-farabi-person-only.json", "AGENTS.md", "WORK_EXECUTION.md"],
+      "paths": [
+        "scripts/person-domain-authoring-origin.mjs",
+        "tests/atlas-person-domain-authoring-origin.test.mjs"
+      ],
+      "snapshot_paths": [
+        "scripts/person-domain-authoring-origin.mjs",
+        "tests/atlas-person-domain-authoring-origin.test.mjs",
+        "authoring/requests/philosophy-canon-20260928-asanga.json",
+        "authoring/requests/philosophy-canon-20260930-al-farabi-person-only.json",
+        "AGENTS.md",
+        "WORK_EXECUTION.md"
+      ],
       "not_before": "2026-10-20T11:45:00Z",
       "expires_at": "2026-10-20T14:00:00Z",
       "instructions": "COMPLETED: Draft PR #2573, head 3aa5250a60acebbf959731ed9f118afa62c0909d, full Integrity #39418449680 SUCCESS. Never reissue this task. Preserve original attempt receipt codex/attempt-integrated-root-20261020."
+    },
+    {
+      "id": "atlas-baseline-a-boolean-year-20261020",
+      "status": "approved",
+      "priority": 1,
+      "launcher_pr": 2575,
+      "launcher_sha": "845eca6fed18c2c14d06322fca8037b44f4a3335",
+      "paths": [
+        "scripts/stage2-baseline-a-intake.mjs",
+        "tests/stage2-baseline-a-intake.test.mjs"
+      ],
+      "snapshot_paths": [
+        "scripts/stage2-baseline-a-intake.mjs",
+        "tests/stage2-baseline-a-intake.test.mjs",
+        "AGENTS.md",
+        "WORK_EXECUTION.md"
+      ],
+      "not_before": "2026-10-20T12:00:00Z",
+      "expires_at": "2026-10-21T12:00:00Z",
+      "instructions": "Fix one real offline Baseline A intake defect only. crossCheckActivity currently coerces row.activity_start and row.activity_end with Number; Number(true) is 1, so Boolean true boundaries can pass the integer, nonzero and ordered chronology guard when the fixture digest is recomputed. In tests/stage2-baseline-a-intake.test.mjs add an explicit red/green regression for true/true Activity boundaries with a consistent recalculated digest, and in scripts/stage2-baseline-a-intake.mjs reject Boolean year input before coercion. Preserve valid BCE and CE integer years, existing year-zero rejection, digest/catalog/UUID guarantees and current accepted historic fixture semantics. Modify exactly this source and this test. Run node --test tests/stage2-baseline-a-intake.test.mjs and git diff --check, report BLOCKED on any uncertainty. No data writes, Production, Vercel, Sandbox, paid APIs, deployment, merge, retry or child agents. Patch V1 complete-file response only; Draft PR for independent review. The launcher is documentation-only and must not be merged. Provider-plan spend control remains unverified: DO NOT invoke unless zero new paid API/credit usage and intended one-command shared-plan policy have been checked externally."
     }
   ]
 }
