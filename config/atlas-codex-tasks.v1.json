@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "enabled": false,
+  "enabled": true,
   "max_commands_per_utc_day": 1,
   "tasks": [
     {
