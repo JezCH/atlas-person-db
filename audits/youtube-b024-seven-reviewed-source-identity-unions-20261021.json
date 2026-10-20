@@ -1,0 +1,558 @@
+{
+  "schema": "atlas-youtube-b024-reviewed-identity-source-unions/v1",
+  "review_date": "2026-10-21",
+  "purpose": "Original B024 source-name historical identity resolution, then original ID set union; NOT an independently publishable rank",
+  "source_archive_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+  "source_provenance": {
+    "source_name_population": 2241,
+    "strict_original_bio_video_count": 6162,
+    "additional_profile_original_video_count": 536,
+    "total_source_original_video_count": 6698,
+    "source_paths": [
+      "audits/youtube-b024-original-id-runtime-source-20261020.json",
+      "audits/youtube-b024-added-profile-title-runtime-source-20261020.json",
+      "audits/youtube-b024-clear-nonindividual-and-identity-holds-20261020.json",
+      "audits/youtube-b024-source-first-36-final-registered-identity-review.json",
+      "audits/youtube-b024-normalized-label-disposition-review.json"
+    ],
+    "git_blob_shas": [
+      "ea529cc9c4ec1fdf484fc1fa516eae52e03afd78",
+      "2768a9353babec6ec77f6d9bdc7f7b2555952919",
+      "486d4582ed7f3bffaa323bd7cb48c7c1a5e1d515",
+      "59ab248149718d96f9da053910344394ad32f444",
+      "0dcc91f1ed00e1187f94674664c0f6cdf606715d"
+    ]
+  },
+  "rules": {
+    "source_names_are_not_youtube_verified_person_focused_video_topics": true,
+    "original_video_id_and_channel_id_unions_only": true,
+    "person_identity_review_does_not_prove_current_atlas_unregistered": true,
+    "current_production_person_registry_fully_checked": false,
+    "content_watch_or_transcript_verification_count": 0,
+    "production_write_allowed": false,
+    "source_label_deletion_allowed": false,
+    "registry_screen_and_publish_must_remain_last": true
+  },
+  "reviewed_same_person_groups": [
+    {
+      "canonical_identity_name": "A. P. J. Abdul Kalam",
+      "external_person_id": {
+        "scheme": "Wikidata",
+        "id": "Q9513",
+        "url": "https://www.wikidata.org/wiki/Q9513"
+      },
+      "identity_review_basis": "OFFICIAL_FULL_NAME_AND_EQUIVALENT_INITIAL_PUNCTUATION",
+      "identity_provenance_urls": [
+        "https://www.presidentofindia.gov.in/dr-apj-abdul-kalam-profile",
+        "https://www.wikidata.org/wiki/Q9513"
+      ],
+      "source_name_labels": [
+        "APJ Abdul Kalam",
+        "A. P. J. Abdul Kalam"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "APJ Abdul Kalam",
+          "independent_original_channels": 5,
+          "original_title_video_ids": 5,
+          "strict_title_video_ids": 5,
+          "additional_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "A. P. J. Abdul Kalam",
+          "independent_original_channels": 5,
+          "original_title_video_ids": 5,
+          "strict_title_video_ids": 4,
+          "additional_profile_title_video_ids": 1
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC00ifCvU8YOOzbL3RdiSTDw",
+        "UC5RUhARzz7GiifbeFFmz1Gg",
+        "UC683UoCv5do2iBfVv3lMPDg",
+        "UCE8lIVlWL0I9clhtC6MRVJw",
+        "UCEDCFEAiBI-OUVyiG8VtgZQ",
+        "UCHs3bWyXIw_6J0ORvg97b2w",
+        "UCKauqZ85UD_JS-GWkLYREXg",
+        "UCR-foyF-C6VuAlwy3KZMkgA",
+        "UCUUKMJadLqllfdR1tuLCepQ",
+        "UCbke51vd2ZYN3Yi34Ts4C1A"
+      ],
+      "unique_original_video_ids": [
+        "1vbMVOA8U0o",
+        "5vSV4mY3PuE",
+        "H0mtMAyuzbY",
+        "HdHkdzDKvwA",
+        "LroFq6g9gVA",
+        "NRwMng-tgvg",
+        "OwptSUFl9UM",
+        "d94XBiyOi7o",
+        "m85N-5N0riw",
+        "mEVKdwzVCs0"
+      ],
+      "distinct_original_channel_count": 10,
+      "distinct_original_video_count": 10,
+      "naive_sum_channel_count": 10,
+      "prevented_channel_double_count": 0,
+      "strict_title_video_count": 9,
+      "additional_profile_title_video_count": 1,
+      "status": "REVIEWED_SAME_HISTORICAL_PERSON_SOURCE_NAMES_ONLY_NOT_REGISTERED_SCREENED"
+    },
+    {
+      "canonical_identity_name": "Frédéric Chopin",
+      "external_person_id": {
+        "scheme": "Wikidata",
+        "id": "Q1268",
+        "url": "https://www.wikidata.org/wiki/Q1268"
+      },
+      "identity_review_basis": "PRIOR_NORMALIZED_REVIEW_AND_WIKIDATA_SAME_PERSON",
+      "identity_provenance_urls": [
+        "https://www.wikidata.org/wiki/Q1268"
+      ],
+      "source_name_labels": [
+        "Frederic Chopin",
+        "Frédéric Chopin"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Frederic Chopin",
+          "independent_original_channels": 5,
+          "original_title_video_ids": 6,
+          "strict_title_video_ids": 4,
+          "additional_profile_title_video_ids": 2
+        },
+        {
+          "source_name": "Frédéric Chopin",
+          "independent_original_channels": 4,
+          "original_title_video_ids": 4,
+          "strict_title_video_ids": 4,
+          "additional_profile_title_video_ids": 0
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC4CjpNXtZNIUBCieQIGFd3A",
+        "UC9OfbLI0yXaIW4tNgYZORvg",
+        "UCDkR95fDstHun04pgKs8uyg",
+        "UCFdKnjmeaUvJ4ZJmENHwCCA",
+        "UCNWcTXKT7AlFuo4Qkx48jEg",
+        "UCP_SjjAYbyJfQpDtZ5wHgJA",
+        "UCbnYhaHNbZ-qIpDf7nn-7uA",
+        "UCjjE8F8xT_3XR4hcmXAcuVg",
+        "UCz0PmHG0RvQHazlEsFU-4uQ"
+      ],
+      "unique_original_video_ids": [
+        "CdOPpI_C3TI",
+        "DD6QnVWbaE4",
+        "NKh0KKURthE",
+        "SY2P_qE6Pb0",
+        "VvT1UtyjOFc",
+        "XJw4nzWqHW0",
+        "aPJ7SLcKEvQ",
+        "moOXl1cgt10",
+        "ppkw5ISDokI",
+        "xz9KZF1zq2A"
+      ],
+      "distinct_original_channel_count": 9,
+      "distinct_original_video_count": 10,
+      "naive_sum_channel_count": 9,
+      "prevented_channel_double_count": 0,
+      "strict_title_video_count": 8,
+      "additional_profile_title_video_count": 2,
+      "status": "REVIEWED_SAME_HISTORICAL_PERSON_SOURCE_NAMES_ONLY_NOT_REGISTERED_SCREENED"
+    },
+    {
+      "canonical_identity_name": "Kösem Sultan",
+      "external_person_id": {
+        "scheme": "Wikidata",
+        "id": "Q61127",
+        "url": "https://www.wikidata.org/wiki/Q61127"
+      },
+      "identity_review_basis": "PRIOR_NORMALIZED_REVIEW_AND_WIKIDATA_SAME_PERSON",
+      "identity_provenance_urls": [
+        "https://www.wikidata.org/wiki/Q61127"
+      ],
+      "source_name_labels": [
+        "Kosem Sultan",
+        "Kösem Sultan"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Kosem Sultan",
+          "independent_original_channels": 4,
+          "original_title_video_ids": 4,
+          "strict_title_video_ids": 4,
+          "additional_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "Kösem Sultan",
+          "independent_original_channels": 3,
+          "original_title_video_ids": 3,
+          "strict_title_video_ids": 2,
+          "additional_profile_title_video_ids": 1
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC5RUhARzz7GiifbeFFmz1Gg",
+        "UCMGJX_3c7ppTLOmvvN3I8Wg",
+        "UCOeuMjjCfnXI6d8eB9kyd3w",
+        "UCRjUbDyF8edWXhqPhGGr9nQ",
+        "UCYL71cinYHzvWeqWIXXrjEQ",
+        "UCmpAkHYmFIKpZgYkaYee4Og"
+      ],
+      "unique_original_video_ids": [
+        "ENbhMpKuRGs",
+        "GorKyWJK4Ck",
+        "NLdXrzFPUQ4",
+        "b22s8VXBnf8",
+        "c6epGDTs-mc",
+        "ekFbGwY5STc",
+        "l0Ip8Xx-23A"
+      ],
+      "distinct_original_channel_count": 6,
+      "distinct_original_video_count": 7,
+      "naive_sum_channel_count": 7,
+      "prevented_channel_double_count": 1,
+      "strict_title_video_count": 6,
+      "additional_profile_title_video_count": 1,
+      "status": "REVIEWED_SAME_HISTORICAL_PERSON_SOURCE_NAMES_ONLY_NOT_REGISTERED_SCREENED"
+    },
+    {
+      "canonical_identity_name": "Elizabeth Báthory",
+      "external_person_id": {
+        "scheme": "Wikidata",
+        "id": "Q170846",
+        "url": "https://www.wikidata.org/wiki/Q170846"
+      },
+      "identity_review_basis": "PRIOR_NORMALIZED_REVIEW_AND_WIKIDATA_SAME_PERSON",
+      "identity_provenance_urls": [
+        "https://www.wikidata.org/wiki/Q170846"
+      ],
+      "source_name_labels": [
+        "Elizabeth Báthory",
+        "Elizabeth Bathory"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Elizabeth Báthory",
+          "independent_original_channels": 3,
+          "original_title_video_ids": 3,
+          "strict_title_video_ids": 3,
+          "additional_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "Elizabeth Bathory",
+          "independent_original_channels": 2,
+          "original_title_video_ids": 2,
+          "strict_title_video_ids": 1,
+          "additional_profile_title_video_ids": 1
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC84lVJNGCtmyDJhvPAtE_uw",
+        "UCMhnMRK-WLznSJhPOJmi_Gw",
+        "UCNpuvuvYZsj6iW--my9MZzw",
+        "UCeeV-JU28QUt_5ZSh1sTASg",
+        "UCi52jXjgQlJr4loQ4AX_XDw"
+      ],
+      "unique_original_video_ids": [
+        "9bVPdQV0Ui0",
+        "KOU0IWhBLyc",
+        "NxPy5_HLMqw",
+        "XY_SGXjs3io",
+        "cTAuktgHtRg"
+      ],
+      "distinct_original_channel_count": 5,
+      "distinct_original_video_count": 5,
+      "naive_sum_channel_count": 5,
+      "prevented_channel_double_count": 0,
+      "strict_title_video_count": 4,
+      "additional_profile_title_video_count": 1,
+      "status": "REVIEWED_SAME_HISTORICAL_PERSON_SOURCE_NAMES_ONLY_NOT_REGISTERED_SCREENED"
+    },
+    {
+      "canonical_identity_name": "Mother Teresa",
+      "external_person_id": {
+        "scheme": "Wikidata",
+        "id": "Q30547",
+        "url": "https://www.wikidata.org/wiki/Q30547"
+      },
+      "identity_review_basis": "SAME_MOTHER_TERESA_CANONIZATION_AND_CALCUTTA_NAME",
+      "identity_provenance_urls": [
+        "https://www.nobelprize.org/prizes/peace/1979/teresa/biographical/",
+        "https://press.vatican.va/content/salastampa/en/bollettino/pubblico/2021/09/05/210905a.html",
+        "https://www.wikidata.org/wiki/Q30547"
+      ],
+      "source_name_labels": [
+        "Mother Teresa",
+        "Mother Teresa of Calcutta",
+        "Saint Teresa of Calcutta"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Mother Teresa",
+          "independent_original_channels": 28,
+          "original_title_video_ids": 28,
+          "strict_title_video_ids": 27,
+          "additional_profile_title_video_ids": 1
+        },
+        {
+          "source_name": "Mother Teresa of Calcutta",
+          "independent_original_channels": 4,
+          "original_title_video_ids": 4,
+          "strict_title_video_ids": 4,
+          "additional_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "Saint Teresa of Calcutta",
+          "independent_original_channels": 2,
+          "original_title_video_ids": 2,
+          "strict_title_video_ids": 2,
+          "additional_profile_title_video_ids": 0
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC0u2k9uInBZjFIJW3rvEwlA",
+        "UC2QuCQSkjnqV0DKyiJCFgcQ",
+        "UC2nZkzdoyi0BmHEClw2IC5g",
+        "UC5RUhARzz7GiifbeFFmz1Gg",
+        "UC5uRPFYMRSPqNScI1UDgPbg",
+        "UC9OfbLI0yXaIW4tNgYZORvg",
+        "UCBWb7FofL_WuzBsrAZiE0gg",
+        "UCC2iTo59lAdlTo88Dpzc9Mw",
+        "UCD9MLspHVUJ2fXz1-kIgDAw",
+        "UCGfnOoXEhHNHHxUJirJ11Rg",
+        "UCItY1tO6tEAv4vdi6UCoxkw",
+        "UCJ4ZC2TJtYxy6DzKwZKnT5Q",
+        "UCK5uOqGyBcYpwLXubE3aIcQ",
+        "UCLq76JMDJDp-rdP_oJXi7ZQ",
+        "UCOIiLpJAzpU7FGj06QEGDmA",
+        "UCPxh8MCNwvHOIL3s_Mcj1Wg",
+        "UCR_KgMm9UW4vMTkZdtDr8Cg",
+        "UCRqgFUg-qeFOtZAeLFtgCrA",
+        "UCSOPI9LbWuM8vqEz80MoGrw",
+        "UCYJdHBzUk_l1xsVVy6xy8Nw",
+        "UC_HiVdkzwThiMtRXwEDSgBw",
+        "UC_n9bUCEgMmN2RxAz7KrrUQ",
+        "UC_qlkMDou5QxDvXRB-A-H9Q",
+        "UCbnYhaHNbZ-qIpDf7nn-7uA",
+        "UCesJHHdqSw_9gC0aMod9IKw",
+        "UCf_lOScB29anLR-wu6MprGA",
+        "UChX4Aakz_31YJjfdcPkhOYg",
+        "UCj-jlbnJiXv9CjossEVVWuA",
+        "UCjUDNzrj33npFy-ULxTQlLw",
+        "UCkxqf5cuhGHJ5scTHHD1tTQ",
+        "UCmTUehSa91uIe2MCAJyIl4Q",
+        "UCoUS602cseWGtp0u9kPCLIw",
+        "UCvN5C8swwvPwmAnTCDWndYg"
+      ],
+      "unique_original_video_ids": [
+        "00KPJS0AkNM",
+        "04GVrp2RuBY",
+        "5KCu6GvWcmg",
+        "6M3X3YXRbFI",
+        "6tZO2AnVaM8",
+        "8yhTOImVOvA",
+        "9R4EsRo2SNI",
+        "9RfuYZBg8QY",
+        "A6iBpQAe0F0",
+        "BTd1EcT_vvY",
+        "Ds1tEmKnY64",
+        "FEt-KXB0YKA",
+        "SbxoyoVzAdQ",
+        "UBMSESVo88k",
+        "Ud1kxMBW--c",
+        "VAdB26EgJiI",
+        "Z34tI6g50do",
+        "ZCFdtLk92Ok",
+        "ZK7goSN8hd4",
+        "aJsv1GWLmEk",
+        "bZpXR-Tiooo",
+        "ezHssDC8p1Y",
+        "hvmUL9E0SFg",
+        "jQfa6WuWTAE",
+        "krzyVR2jh68",
+        "lXb1UrKnu3k",
+        "ncInQ6wzmM4",
+        "thBe0FUifA0",
+        "vFWedbLCavc",
+        "vO1izIJ1_PI",
+        "x1e28rrkePs",
+        "xM2fU42U1OI",
+        "xXunqd8oAuE",
+        "ytSVe2dJVpE"
+      ],
+      "distinct_original_channel_count": 33,
+      "distinct_original_video_count": 34,
+      "naive_sum_channel_count": 34,
+      "prevented_channel_double_count": 1,
+      "strict_title_video_count": 33,
+      "additional_profile_title_video_count": 1,
+      "status": "REVIEWED_SAME_HISTORICAL_PERSON_SOURCE_NAMES_ONLY_NOT_REGISTERED_SCREENED"
+    },
+    {
+      "canonical_identity_name": "Teresa of Ávila",
+      "external_person_id": {
+        "scheme": "Wikidata",
+        "id": "Q174880",
+        "url": "https://www.wikidata.org/wiki/Q174880"
+      },
+      "identity_review_basis": "OFFICIAL_VATICAN_AVILA_ALSO_KNOWN_AS_JESUS",
+      "identity_provenance_urls": [
+        "https://www.vatican.va/content/benedict-xvi/en/audiences/2011/documents/hf_ben-xvi_aud_20110202.html",
+        "https://www.wikidata.org/wiki/Q174880"
+      ],
+      "source_name_labels": [
+        "Saint Teresa of Ávila",
+        "Saint Teresa of Jesus"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Saint Teresa of Ávila",
+          "independent_original_channels": 3,
+          "original_title_video_ids": 3,
+          "strict_title_video_ids": 3,
+          "additional_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "Saint Teresa of Jesus",
+          "independent_original_channels": 3,
+          "original_title_video_ids": 3,
+          "strict_title_video_ids": 3,
+          "additional_profile_title_video_ids": 0
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UCGPJaYL94njlwK4ef0Iy67w",
+        "UCItY1tO6tEAv4vdi6UCoxkw",
+        "UCWIUoDUVZDavEUt7QHy9MMQ",
+        "UC_qlkMDou5QxDvXRB-A-H9Q",
+        "UCnIb5jZJxxqC27aiyoN5hdA"
+      ],
+      "unique_original_video_ids": [
+        "96gC5VfGuWY",
+        "NI5mfIAgmUg",
+        "RVWo8TGEayQ",
+        "qCO1gCGr4N8",
+        "qZu9QFIVxFE",
+        "sZ2Z0dcntl4"
+      ],
+      "distinct_original_channel_count": 5,
+      "distinct_original_video_count": 6,
+      "naive_sum_channel_count": 6,
+      "prevented_channel_double_count": 1,
+      "strict_title_video_count": 6,
+      "additional_profile_title_video_count": 0,
+      "status": "REVIEWED_SAME_HISTORICAL_PERSON_SOURCE_NAMES_ONLY_NOT_REGISTERED_SCREENED"
+    },
+    {
+      "canonical_identity_name": "Zulfikar Ali Bhutto",
+      "external_person_id": {
+        "scheme": "Wikidata",
+        "id": "Q131355",
+        "url": "https://www.wikidata.org/wiki/Q131355"
+      },
+      "identity_review_basis": "EXACT_WIKIDATA_PRIMARY_AND_ALIAS_MATCH",
+      "identity_provenance_urls": [
+        "https://www.wikidata.org/wiki/Q131355"
+      ],
+      "source_name_labels": [
+        "Zulfikar Ali Bhutto",
+        "Zulfiqar Ali Bhutto"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Zulfikar Ali Bhutto",
+          "independent_original_channels": 6,
+          "original_title_video_ids": 6,
+          "strict_title_video_ids": 5,
+          "additional_profile_title_video_ids": 1
+        },
+        {
+          "source_name": "Zulfiqar Ali Bhutto",
+          "independent_original_channels": 6,
+          "original_title_video_ids": 6,
+          "strict_title_video_ids": 5,
+          "additional_profile_title_video_ids": 1
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC3391PvL2lnUQoN9Cs9cJLQ",
+        "UC4yRAfPEVj6OfDSTl8q-8UA",
+        "UC5RUhARzz7GiifbeFFmz1Gg",
+        "UC6sjJgorHZeriScq9umMSZg",
+        "UCJLhEF-BE9qkc_sUw5wBxBw",
+        "UCKrw3hXHKZrCCHRRgtM4Hog",
+        "UCOoShrnxpVImy95W0I2wSbA",
+        "UCR_KgMm9UW4vMTkZdtDr8Cg",
+        "UC_ssESvFrOm7j4c0S62l48w",
+        "UCfRUiTE8IXJ8NIROCtJLDcg",
+        "UCtSLBfQh2J6CHaJ02Xzzxyg",
+        "UCyYrvGrY_lsdQ-GCXEeDa9g"
+      ],
+      "unique_original_video_ids": [
+        "0uWOtHt9P6c",
+        "1VmUiP2K9js",
+        "6vRw-Cv5p-o",
+        "7dxor_a_H4E",
+        "7lgUU7hA40w",
+        "98WyyWBC6xY",
+        "9u1b9FOBDkE",
+        "DZYhh3bhw2Q",
+        "EbN4huD1LYw",
+        "Fv6dwqcJn0s",
+        "NCihO-I3bxM",
+        "n1o_R2zDXzA"
+      ],
+      "distinct_original_channel_count": 12,
+      "distinct_original_video_count": 12,
+      "naive_sum_channel_count": 12,
+      "prevented_channel_double_count": 0,
+      "strict_title_video_count": 10,
+      "additional_profile_title_video_count": 2,
+      "status": "REVIEWED_SAME_HISTORICAL_PERSON_SOURCE_NAMES_ONLY_NOT_REGISTERED_SCREENED"
+    }
+  ],
+  "protected_nonmerge": {
+    "distinct_wikidata_id_groups": [
+      {
+        "left_qid": "Q30547",
+        "right_qid": "Q174880",
+        "reason": "Different Catholic historical figures; never collapse all Teresa names"
+      }
+    ],
+    "living_exact_collision_hold": [
+      {
+        "source_labels": [
+          "Kylian Mbappé",
+          "Kylian Mbappe"
+        ],
+        "normalized_review_key": "kylianmbappe",
+        "prior_review_disposition": "HOLD_LIVING_PERSON",
+        "review_source_path": "audits/youtube-b024-normalized-label-disposition-review.json",
+        "status": "KEEP_UNMERGED_EXCLUDED_FROM_HISTORICAL_UNREGISTERED_PUBLICATION",
+        "rationale": "Previously reviewed living individual: normalized collision must not create a deceased historical Person record"
+      }
+    ],
+    "blocked_broad_aliases": [
+      "Saint Teresa",
+      "Saint Francis",
+      "Queen Elizabeth",
+      "Muhammad Ali",
+      "Saint Paul"
+    ]
+  },
+  "totals": {
+    "reviewed_groups": 7,
+    "original_name_labels_resolved": 15,
+    "name_label_overcount_prevented": 8,
+    "total_unique_original_video_ids": 84,
+    "sum_distinct_original_channel_ids_per_person": 80,
+    "channel_duplicates_prevented": 3,
+    "previously_individually_three_plus_channel_labels": 13,
+    "three_plus_channel_canonical_groups": 7,
+    "high3_raw_unresolved_before_review": 852,
+    "high3_canonical_review_unit_count_after_7_exact_unions": 846,
+    "unresolved_names_before_grouping": 2168,
+    "review_units_after_7_exact_unions": 2160
+  }
+}
