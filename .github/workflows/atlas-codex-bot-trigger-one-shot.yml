@@ -1,7 +1,7 @@
-name: ATLAS Codex Real-Code Pilot — One Shot
+name: ATLAS Codex Fresh-Main Code Fix — One Shot
 
-# Single approved push-triggered task. Never periodic or PR-event triggered.
-# This commits no runtime / deployment files and never checks out untrusted branches.
+# Precisely one approved merge-commit-triggered code-fix dispatch.
+# No cron, PR events, external APIs, deployments or non-ATLAS tasks.
 on:
   push:
     branches: [main]
@@ -12,48 +12,48 @@ permissions:
   contents: read
 
 concurrency:
-  group: atlas-codex-real-code-pilot-20261020
+  group: atlas-codex-freshmain-one-shot-20261020
   cancel-in-progress: false
 
 jobs:
-  start-codex-one-off:
+  dispatch-one-codex-fix:
     if: >-
       github.repository == 'JezCH/atlas-person-db' &&
       github.ref == 'refs/heads/main' &&
-      github.event_name == 'push' &&
-      startsWith(github.event.head_commit.message, 'test(actions): authorize bounded ATLAS autocode pilot [atlas-autocode-20261020]')
+      startsWith(github.event.head_commit.message, 'test(actions): authorize fresh-main Codex fix [atlas-codefix-20261020]')
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - name: One authenticated GitHub comment starts one autonomous code task
+      - name: Comment a single authenticated code fix request
         env:
           GH_TOKEN: ${{ secrets.ATLAS_CODEX_TRIGGER_PAT }}
-          TARGET_PR: '2443'
-          MARKER: ATLAS-CODEX-AUTOCODE-PILOT-20261020-ONCE
-          MAIN_SHA: ${{ github.sha }}
+          TARGET_PR: '2560'
+          MARKER: ATLAS-CODEX-FRESHMAIN-FIX-20261020-ONCE
         run: |
           set -euo pipefail
           if [[ -z "${GH_TOKEN:-}" ]]; then
-            echo 'BLOCKED: authenticated repo-scoped PAT is absent; not dispatching.'
+            echo 'BLOCKED: user-authenticated repo-secret missing, no comment.'
             exit 1
           fi
           PR_JSON="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${TARGET_PR}")"
-          jq -e '.state == "open" and .draft == true' <<< "$PR_JSON" >/dev/null
-          EXISTING="$(gh api "repos/${GITHUB_REPOSITORY}/issues/${TARGET_PR}/comments?per_page=100" --jq '.[].body')"
-          if grep -Fq "$MARKER" <<< "$EXISTING"; then
-            echo 'NO CHANGE: already dispatched; no duplicate model work.'
+          jq -e '.state == "open" and .draft == true and .head.sha == "502c8801fa640b8db594d7f062c9e23bcae1d6ed"' <<< "$PR_JSON" >/dev/null
+          COMMENTS="$(gh api "repos/${GITHUB_REPOSITORY}/issues/${TARGET_PR}/comments?per_page=100" --jq '.[].body')"
+          if grep -Fq "$MARKER" <<< "$COMMENTS"; then
+            echo 'NO CHANGE: this model task was already submitted.'
             exit 0
           fi
           BODY=$(cat <<EOF
-          @codex ${MARKER} — ATLAS **REAL CODE IMPLEMENTATION** (not review, not read-only inspection). This is exactly one bounded autonomous development pilot.
+          @codex ${MARKER} — ATLAS **REAL SOURCE CODE FIX** (not a review). Only one bounded task.
 
-          The current discussion PR #${TARGET_PR} is ONLY the dispatch mailbox: DO NOT edit, push, or merge its branch. **Work from the latest main at exact SHA ${MAIN_SHA}**, not the old PR head. Read AGENTS.md, WORK_EXECUTION.md, and docs/ATLAS_CURRENT_WORKSTREAMS.md from current main (if missing, fetch those files from GitHub main; stop if the project policy cannot be read). Examine only enough open PR changed-path sets to avoid concrete overlap.
+          You are in fresh-main launchpad Draft PR #2560 whose checked-out HEAD must be ${targetSHA}, with local parent commit ${main}. Verify HEAD and git cat-file for this parent. **Do not git fetch or invoke inaccessible internet; do not modify the launchpad PR branch.** Read local AGENTS.md and WORK_EXECUTION.md; if missing, report BLOCKED and stop. The source paths below were checked against all open PR changed paths and have no known overlap.
 
-          Select ONE genuinely reproducible, useful, small offline code defect in an independent pure JavaScript/Node utility or non-Production test helper with no overlap to open PRs or active manual work. Exclude Production/site probing, Vercel, database/Polity/Person canonical data, YouTube crawling, browser, GitHub Actions/workflow files, costly or external network operations, other agents, and historic cleanup. If no real independent bug is justified, report **NO CHANGE** here, no branch/PR; do not invent a defect just to pass this pilot.
+          REPRODUCIBLE BUG: scripts/vercel-ignore-build.mjs calls trim() in normalizePath(), stripping legitimate leading whitespace in Git file paths. For example, isSafeToSkipPath(' docs/runtime.js') currently wrongly returns true (treated as docs/) though the actual root folder is named ' docs', not 'docs'. Similarly, ' .github/workflows/unsafe.yml' is not an actual .github/workflows path. The classifier must fail closed for these valid distinct paths without disrupting ordinary docs/workflow skip behavior.
 
-          If there is a real defect: reproduce it with a focused failing Node regression, create a **NEW branch directly from ${MAIN_SHA}** (do not reuse an open PR branch), modify only the minimal utility and regression test, run focused Node tests and git diff --check. Push this NEW branch and open exactly ONE **NEW Draft PR against main**; do not merge it. Include in the PR changed paths, exact head SHA, failing-before/passing-after evidence, CI status if actually observed, and Production NOT LIVE. Report the new PR URL back in this PR thread. If GitHub push/PR creation is blocked, report the literal error; do not attempt an alternative auth route or retries.
+          Fix only scripts/vercel-ignore-build.mjs and tests/vercel-ignore-build.test.mjs. First add focused regression cases proving unsafe paths are currently misclassified (red). Make the minimal source fix, show green results from node --test tests/vercel-ignore-build.test.mjs and git diff --check. Do not manufacture claims or run unrelated suites. If reproduction fails, report NO CHANGE and do not publish code.
 
-          No other commits/PRs, no paid API, no Vercel Sandbox, no Production/Supabase network read/write, no deploy, no merges, no destructive changes, no recurring job. End after this one unit.
+          If reproducible and tested, make a **NEW separate branch from exact parent ${main}**, NOT from this launchpad's document-only commit. Create exactly ONE NEW **Draft PR against main** with code+test only, if the Codex Cloud publishing integration permits it. Include exact head SHA, paths, red→green evidence, CI status only if observed, and Production NOT LIVE. Do not edit/merge/close PR #2560 or any existing PR. If GitHub push/PR publishing is unavailable, report exact failure and post a bounded source patch or tested diff in the task response for recovery; never request, copy, or circumvent credentials. Do not retry launch or create other tasks.
+
+          No Vercel/Production/Supabase/Sandbox, no deployment, browser, paid API, CI dispatch, data mutation, destructive operations or auto merge. Stop after one code fix or a precise blocker.
           EOF
           )
           gh api -X POST "repos/${GITHUB_REPOSITORY}/issues/${TARGET_PR}/comments" -f "body=${BODY}" --jq '.html_url'
