@@ -10,7 +10,7 @@
 
 ## Output contract
 
-For this **single fixed pilot**, only a real GitHub App comment from `chatgpt-codex-connector[bot]` (GitHub account ID `199175422`) on existing Draft PR **#2560** can submit a patch. Its entire comment body must be:
+For this **single fixed pilot**, only a real GitHub App comment from `chatgpt-codex-connector[bot]` (GitHub account ID `199175422`) on existing Draft PR **#2560** can submit a patch. Its report must contain exactly one complete delimited payload (a surrounding heading or Codex-generated View task footer is allowed):
 
 ```text
 ATLAS-CODEX-PATCH-V1
