@@ -216,7 +216,7 @@ function renderCurrentRegistryRank({
     current_registry_authoritative_person_count:expectedCurrentRegisteredPersons,
     current_registry_person_count_parity_verified:true,
     exact_source_snapshot_matched:true,
-    ranking_evidence_type:SOURCE_PROOF,
+    ranking_evidence_type:PROFILE_SOURCE_PROOF,
     video_person_centeredness_certified:false,
     historical_personhood_certified_for_all:false,
     current_registration_screen_completed:true
