@@ -39,7 +39,7 @@ test("ALL 2241 candidates are recalculated after EXACT current Person+alias chec
  assert.equal(actual.newly_reviewed_ambiguous_source_holds,10);
  assert.equal(actual.additive_profile_original_video_id_count,536);
  assert.equal(actual.source_total_title_evidence_original_video_id_count,6698);
- assert.equal(actual.threshold_counts["3"],855); // 895 raw - 34 held and 6 reviewed living
+ assert.equal(actual.threshold_counts["3"],854); // 895 raw - 34 held and 7 reviewed living
  assert.equal(actual.ranking_evidence_type,src.PROFILE_SOURCE_PROOF);
  for(const excluded of ["Black Holes","Pink Floyd","Hagia Sophia","Coca-Cola","12 Years a Slave",
                        "Guns N' Roses","Northern Ireland","Bonnie and Clyde","Princess Alice"]){
