@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yevhen-konovalets:uvo-leadership-1921-1929:v1",
+  "person": {
+    "canonical_name_en": "Yevhen Konovalets",
+    "display_name_ko": "예우헨 코노발레츠",
+    "person_type": "historical",
+    "historicity": "historical",
+    "life_status": "deceased",
+    "life_status_checked_at": "2026-10-20",
+    "life_status_basis": "documented_death",
+    "representative_domain": "governance",
+    "representative_domain_reviewed": true
+  },
+  "polity": {
+    "canonical_name_en": "Ukrainian Military Organization",
+    "display_name_ko": "우크라이나 군사조직(UVO)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Commander and organizer of the underground Ukrainian Military Organization (UVO)",
+    "role_display_name_ko": "지하 우크라이나 군사조직(UVO) 지휘관·조직 지도자",
+    "start_year": 1921,
+    "start_month": 7,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1929,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "notes": "UVO Supreme Command appointed Konovalets commander on 20 July 1921. A representative 1921–1929 leadership interval stops at the new OUN founding year solely as a conservative recorded segment: it is NOT a claim that he ceased all UVO command, that UVO dissolved in 1929, or that the organization was sovereign. UVO gradually ceased independent operations in the early 1930s as OUN absorbed it. Organization's cross-border underground operations cannot be flattened to a modern Ukrainian sovereign polity.",
+    "confidence": "well_established",
+    "chronology_status": "reviewed"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ukrainian Military Organization — Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pagesUKUkrainianMilitaryOrganization.htm",
+      "citation_text": "Dates Konovalets's appointment as UVO commander to 20 July 1921; describes merger into the OUN and gradual decline of UVO in early 1930s, without an exact dissolution date."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Konovalets, Yevhen — Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/pages/K/O/KonovaletsYevhen.htm",
+      "citation_text": "Confirms death on 23 May 1938, two Sich Riflemen command phases across the Hetmanate rupture, UVO underground leadership, and founding OUN chairmanship in 1929."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Коновалець, Євген Михайлович — Great Ukrainian Encyclopedia",
+      "canonical_url": "https://vue.gov.ua/%D0%9A%D0%BE%D0%BD%D0%BE%D0%B2%D0%B0%D0%BB%D0%B5%D1%86%D1%8C%2C_%D0%84%D0%B2%D0%B3%D0%B5%D0%BD_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%B8%D1%87",
+      "citation_text": "Biographical reference verifies 1891–1938 chronology, UPR military service, and OUN foundational leadership; distinguishes organization leadership from sovereign rule."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-10-20",
+      "document_title": "예우헨 코노발레츠",
+      "url": "https://namu.wiki/w/%EC%98%88%EC%9A%B0%ED%97%A8%20%EC%BD%94%EB%85%B8%EB%B0%9C%EB%A0%88%EC%B8%A0"
+    },
+    "spatial_disposition": {
+      "state": "reviewed_hold",
+      "evidence": "UVO was a transnational underground political-military organization; no verified canonical Place UUID, territorial sovereignty, or approved stationary representative map placement for this polity. Hold spatial placement rather than fabricate borders or coordinates."
+    }
+  }
+}
