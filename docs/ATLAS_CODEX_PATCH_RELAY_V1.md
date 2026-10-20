@@ -1,11 +1,21 @@
 # ATLAS Codex patch relay v1 — bounded experiment
 
-**Status: proposal; not proof of unattended code/PR completion.** This design avoids requiring a Codex Cloud task container to reach GitHub through the currently unreliable proxy. It does NOT repair that proxy, require OpenAI API keys or enable recurring background development.
+**Status: one Codex-authored patch reached Draft PR #2568; recurring unattended operation is not enabled or proven.** This design avoids requiring a Codex Cloud task container to push to GitHub through the unreliable proxy. No paid API or recurring model dispatch is enabled.
+
+## Accepted pilot evidence and current resume point — 2026-10-20
+
+- [Codex App comment 6288359769](https://github.com/JezCH/atlas-person-db/pull/2560#issuecomment-6288359769), account ID `199175422`, supplied the two complete replacement files. Both decoded files match PR #2568 head `d9803689eef8271fef639152d623a330d3a6cd0c` byte for byte: `scripts/classify-ci-impact.mjs` and `tests/ci-impact-routing.test.mjs`.
+- [Relay run #39404578493](https://github.com/JezCH/atlas-person-db/actions/runs/39404578493) validated and tested the patch, then committed/pushed it. PR creation alone failed under the default Actions token.
+- [Bounded recovery #39405329950](https://github.com/JezCH/atlas-person-db/actions/runs/39405329950) revalidated that exact commit and used the existing repository-scoped user PAT only to create [Draft PR #2568](https://github.com/JezCH/atlas-person-db/pull/2568). [Integrity #39405374881](https://github.com/JezCH/atlas-person-db/actions/runs/39405374881) succeeded. The PR remains draft/unmerged; no automatic merge is authorized.
+- Current publisher already separates branch publication under `GITHUB_TOKEN` from PR creation under `ATLAS_CODEX_TRIGGER_PAT`. The obsolete main-push recovery job is retired; its observed outcome above is retained as evidence. The old model dispatcher is an inert manual archive, with no PAT access or automatic trigger.
+- [Draft PR #2563](https://github.com/JezCH/atlas-person-db/pull/2563) is a separate manually orchestrated fix, not a Codex unattended success. Launcher #2560 remains open and must not be merged as a code delivery.
+- **Next incomplete unit:** design a fresh task identity, approved snapshot/paths, duplicate-call prevention and usage stop conditions before one bounded integrated Actions dispatch → Codex patch → Draft PR experiment. The origin of command comment `6288311565` is not established as scheduled dispatch. Do not rerun the completed pilot, reuse its output branch, or enable cron. There is no proven hard cap for shared model usage.
+- Production, Supabase, deployments and Vercel Sandbox are outside this unit. CI success is not Production acceptance.
 
 ## Proven starting capabilities
 
 - A narrowly scoped, expiring GitHub fine-grained PAT in Actions Secret `ATLAS_CODEX_TRIGGER_PAT` lets a trusted, manually reviewed Actions workflow post a **JezCH-authored** `@codex` command (not a bot-authored command).
-- The Codex GitHub App can acknowledge and finish read-only work. A later code-edit task returned only `Codex couldn't complete this request. Try again later.`; actual Codex Cloud code authoring has **not** been proven. Do not treat an eyeball reaction, Actions success or this document as proof of coding.
+- The Codex GitHub App completed read-only tasks and later authored the actual two-file patch accepted into #2568. An earlier code-edit task failed; that failure does not invalidate the later observed success. Reactions and dispatch success alone remain insufficient evidence.
 - Codex Cloud `git fetch origin main` can fail before GitHub with a proxy-port-8080 connection error; do not supply broader credentials or continuously retry it.
 
 ## Output contract
@@ -25,16 +35,16 @@ This is **complete-file replacement**, not a shell script or arbitrary diff. Onl
 1. **Receive** — `issue_comment:created`, gated by exact PR, GitHub App numeric identity and exact marker. All other comments skip the job.
 2. **Unprivileged validate** — checkout trusted `main` without persisted credentials. Reject stale HEAD, invalid hashes, encodings, wrong paths, pre-existing symlinks or dirty checkout. Write both files only after all validations. Run only the focused Node test and `git diff --check`. No repository write permission and no PAT.
 3. **Handoff** — one short-lived GitHub Actions artifact carries the validated JSON plan, not an executable script.
-4. **Privileged publish** — fresh checkout `main`; revalidate the entire plan, compare current remote `main` against exact base, reject file overlap with any open PR, then commit only two allowed paths to a **deterministic one-off branch**. Create one **Draft** PR if GitHub allows GitHub Actions to create pull requests. No model-authored program/test is executed with a write-capable token.
+4. **Privileged publish** — fresh checkout `main`; revalidate the entire plan, compare current remote `main` against exact base, reject file overlap with any open PR, then commit only two allowed paths to a **deterministic one-off branch**. Create one **Draft** PR in a separate step using the existing repository-scoped user PAT; the default Actions token was observed to deny PR creation. No model-authored program/test is executed with a write-capable token.
 5. **Stop** — no automatic merge, Production request, Supabase mutation, Codex repeat, polling schedule or self-healing retries.
 
-The GitHub Actions `GITHUB_TOKEN` is distinct from the manually created `ATLAS_CODEX_TRIGGER_PAT`. The receiver **never uses the user PAT**. Repository Actions settings might disallow PR creation by the default token: if so, the job must report a precise failure, not silently switch to a broader PAT.
+The GitHub Actions `GITHUB_TOKEN` is distinct from `ATLAS_CODEX_TRIGGER_PAT`. Validation has read-only repository permission and no PAT; branch publication has contents write and pull-requests read. Only the separate Draft-PR creation step receives the previously configured PAT. Missing or expired PAT is a terminal blocker; never print it or broaden its permissions automatically. Model-authored tests are never executed in the credentialed publishing job.
 
 ## Fail-closed rules and verification
 
 - One exact `task_id`, one fixed launcher PR, deterministic output branch, no cron. A second message cannot create another branch after the first succeeds.
 - Any `main` change before publishing, mismatched preimage, unknown file, collision with another open PR, missing task output or failed test aborts publication.
-- CI passes only prove the validator works against fixtures. **Actual unattended code-edit → Codex patch comment → bot-ingested Actions event → verified Draft PR** requires a separate one-time observed live receipt. That step remains unproven until all four links are observed.
+- CI passes only prove the validator works against fixtures. **Actual unattended code-edit → Codex patch comment → bot-ingested Actions event → verified Draft PR** requires a separate one-time observed live receipt. Those patch-to-PR links were observed in the accepted pilot above, with a separate one-time recovery. A single uninterrupted dispatch-to-PR run remains unproven.
 - The launcher PR #2560 was created from an older `main` snapshot; model output based on its old checkout must fail the current-main SHA gate. A real live pilot will need a fresh trusted checkout/snapshot. Do **not** label the older launcher Production-current.
 
 ## Cost and resource gate
@@ -42,3 +52,4 @@ The GitHub Actions `GITHUB_TOKEN` is distinct from the manually created `ATLAS_C
 The relay has no scheduler and invokes no model by itself. Enabling a future fixed cadence requires separate proof of model usage constraints, anti-overlap rules, branch publishing and complete logs. No Vercel Sandbox, Vercel Hobby Production browser, unrelated data audits, paid API or full backup replay.
 
 **Project authority:** `WORK_EXECUTION.md`, `AGENTS.md`, `docs/VERCEL_HOBBY_QUOTA_GUARD.md`.
+
