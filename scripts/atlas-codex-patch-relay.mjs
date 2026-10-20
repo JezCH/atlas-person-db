@@ -22,8 +22,14 @@ export function extractPatchComment(body) {
   requireValid(typeof body === "string" && Buffer.byteLength(body) <= MAX_BODY_BYTES, "body size");
   const begin = PATCH_MARKER + "\n";
   const end = "\nEND-" + PATCH_MARKER;
-  requireValid(body.startsWith(begin) && body.trimEnd().endsWith(end), "exact markers required");
-  const payload = body.slice(begin.length, body.trimEnd().length - end.length);
+  // Codex GitHub replies may prepend a report heading and append a View task link.
+  // The markers still bound exactly one machine-readable JSON payload.
+  const start = body.indexOf(begin);
+  const finish = start < 0 ? -1 : body.indexOf(end, start + begin.length);
+  requireValid(start >= 0 && finish > start &&
+    body.indexOf(begin, start + begin.length) === -1 &&
+    body.indexOf(end, finish + end.length) === -1, "unique complete markers required");
+  const payload = body.slice(start + begin.length, finish);
   requireValid(payload.length > 2 && payload.length < MAX_BODY_BYTES, "invalid payload");
   try { return JSON.parse(payload); } catch { throw new Error("ATLAS_PATCH_REJECTED: invalid JSON"); }
 }
