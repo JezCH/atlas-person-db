@@ -44,6 +44,9 @@ const PERSON_NAMES_SQL=[
   ") as aliases(alias_name,canonical_key)",
   "join atlas_v2.person_names pn on pn.name=aliases.canonical_key"
 ].join(" ");
+// Count ALL current Person UUIDs independently of names/aliases. This query
+// and the roster projection must agree exactly; 2,000+ alone is insufficient.
+const PERSON_TOTAL_SQL="select count(*)::int as person_count from atlas_v2.persons";
 const CHANNEL_THRESHOLDS=Object.freeze([3,5,10,15,20]);
 const EXTRA_REVIEWED_NONPERSON=Object.freeze([
   "Full",
@@ -295,12 +298,19 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
   // snapshot, and replaces the older raw-title aggregate on the SAME
   // discovery endpoint. The database Person/alias roster is STILL read live.
   if(matchesSnapshot(initial)){
-    const persons=await client.query(PERSON_NAMES_SQL);
+    const [persons,personCount]=await Promise.all([
+      client.query(PERSON_NAMES_SQL),
+      client.query(PERSON_TOTAL_SQL)
+    ]);
+    const authoritativeTotal=Number(personCount.rows?.[0]?.person_count);
+    if(!Number.isSafeInteger(authoritativeTotal)||authoritativeTotal<2000)
+      throw Error("B024_SINGLE_RANK_CURRENT_REGISTRY_TOTAL_INVALID");
     const final=projectSnapshot((await client.query(GLOBAL_SNAPSHOT_SQL)).rows?.[0]);
     if(!final||!matchesSnapshot(final)||final.snapshot_id!==initial.snapshot_id)
       throw Error("YOUTUBE_DISCOVERY_SNAPSHOT_CHANGED");
     const ranked=renderCurrentRegistryRank({
-      snapshot:final,registryRows:persons.rows||[],identityKey
+      snapshot:final,registryRows:persons.rows||[],identityKey,
+      expectedCurrentRegisteredPersons:authoritativeTotal
     });
     const selected=ranked.candidates.filter(row=>row.distinct_channel_count>=threshold);
     return {
@@ -310,6 +320,8 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
       identity_rule:"full_current_registered_person_id_all_names_screened_last",
       registration_checked:true,
       current_registry_distinct_persons:ranked.current_registry_distinct_persons,
+      current_registry_authoritative_person_count:ranked.current_registry_authoritative_person_count,
+      current_registry_person_count_parity_verified:true,
       registered_excluded_count:ranked.current_registered_excluded_count,
       previously_reviewed_excluded_source_labels:512,
       reviewed_living_excluded_count:ranked.additional_current_living_excluded_count,
@@ -387,6 +399,6 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
   };
 }
 module.exports=Object.freeze({
-  DISCOVERY_SCHEMA,CANDIDATE_ROWS_SQL,PERSON_NAMES_SQL,CHANNEL_THRESHOLDS,
+  DISCOVERY_SCHEMA,CANDIDATE_ROWS_SQL,PERSON_NAMES_SQL,PERSON_TOTAL_SQL,CHANNEL_THRESHOLDS,
   identityKey,reviewedNonPerson,reviewedV5NonPersonForSnapshot,reviewedV5ExpandedNonPersonForSnapshot,registrationIndex,applyReviewedSourceUnions,candidatesFromSource,readYoutubeUnregisteredDiscovery
 });

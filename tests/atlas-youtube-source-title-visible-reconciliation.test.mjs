@@ -88,6 +88,7 @@ test("existing ONE discovery API now screens archived ORIGINAL video/channel IDs
   if(sql===discovery.CANDIDATE_ROWS_SQL)
    throw Error("old raw title signal rank must not be queried for audited B024");
   if(sql===discovery.PERSON_NAMES_SQL)return {rows:currentRegistry};
+  if(sql===discovery.PERSON_TOTAL_SQL)return {rows:[{person_count:2101}]};
   throw Error("Unexpected SQL");
  }};
  const result=await discovery.readYoutubeUnregisteredDiscovery({client:db});
