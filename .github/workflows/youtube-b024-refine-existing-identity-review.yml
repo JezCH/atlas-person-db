@@ -82,7 +82,7 @@ jobs:
             '- Previous + added known registered/living exclusions: **'+str(d['actual_positive_registration_or_living_exclusions'])+'**',
             '- Source review names still not proven unregistered: **'+str(d['remaining_not_proven_unregistered_review_names'])+'**',
             '- Identity holds: **'+str(d['hold_count'])+'**',
-            '- Today's full production registry **NOT read**; content-certifications **0**; DB writes **0**',
+            "Today full production registry NOT read; content certifications 0; DB writes 0",
             '',
             '### Newly corrected names and their actual original title counts',
             '| Source name | Prior status | Corrected status | Original channels | Original videos |',
