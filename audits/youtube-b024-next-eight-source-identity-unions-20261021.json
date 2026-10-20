@@ -1,0 +1,609 @@
+{
+  "schema": "atlas-youtube-b024-additional-source-identity-unions/v1",
+  "review_date": "2026-10-21",
+  "objective": "Resolve previously ungrouped real historical individual names using external identity evidence and original ID sets; current ATLAS registered Person exclusion remains LAST",
+  "source": {
+    "archive_sha256": "8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946",
+    "strict_person_title_video_population": 6162,
+    "extra_profile_title_video_population": 536,
+    "total_original_video_ids": 6698,
+    "original_raw_label_population": 2241,
+    "existing_review_manifest": "audits/youtube-b024-seven-reviewed-source-identity-unions-20261021.json",
+    "source_path_refs": [
+      "audits/youtube-b024-original-id-runtime-source-20261020.json",
+      "audits/youtube-b024-added-profile-title-runtime-source-20261020.json",
+      "audits/youtube-b024-seven-reviewed-source-identity-unions-20261021.json",
+      "audits/youtube-b024-clear-nonindividual-and-identity-holds-20261020.json",
+      "audits/youtube-b024-source-first-36-final-registered-identity-review.json"
+    ]
+  },
+  "strict_scope": {
+    "no_new_youtube_crawling": true,
+    "no_watched_or_captions_authenticated": true,
+    "no_title_mention_as_content_certificate": true,
+    "no_live_production_person_identity_sweep": true,
+    "no_production_person_write": true,
+    "no_automatic_registered_exclusion_from_incomplete_snapshot": true,
+    "source_labels_and_ids_preserved": true
+  },
+  "reviewed_groups": [
+    {
+      "canonical_identity_name": "Carl Jung",
+      "external_identity": {
+        "scheme": "Wikidata",
+        "qid": "Q41532",
+        "url": "https://www.wikidata.org/wiki/Q41532"
+      },
+      "same_person_review_basis": "SAME_FULL_NAME_MIDDLE_NAME",
+      "person_identity_source_urls": [
+        "https://www.wikidata.org/wiki/Q41532"
+      ],
+      "source_name_labels": [
+        "Carl Jung",
+        "Carl Gustav Jung"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Carl Jung",
+          "distinct_original_channels": 8,
+          "original_title_video_ids": 8,
+          "strict_title_video_ids": 8,
+          "added_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "Carl Gustav Jung",
+          "distinct_original_channels": 2,
+          "original_title_video_ids": 2,
+          "strict_title_video_ids": 2,
+          "added_profile_title_video_ids": 0
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC2lVhdT9MfOu3RAT0C_YOAQ",
+        "UC5wgmqkM3ht3VeSACaWrZjA",
+        "UCBL31wDOEE_SPcXQrkmlI7Q",
+        "UCI14aiXuU8zQRolCS5ZrSFg",
+        "UCP_SjjAYbyJfQpDtZ5wHgJA",
+        "UCPxh8MCNwvHOIL3s_Mcj1Wg",
+        "UCWIUoDUVZDavEUt7QHy9MMQ",
+        "UC_ZugSglr4vA1-eVTJnDEQA",
+        "UCe120vrUBngop1iw3-KE6Ng",
+        "UCiyi7aqzHn98o7OYDcDS8HQ"
+      ],
+      "unique_original_video_ids": [
+        "I2h_5wjhxRg",
+        "N2xQD6JK-zM",
+        "SJwMq2xAmws",
+        "annGQei-K4I",
+        "d2dYaFeNsTM",
+        "dMwyizajciY",
+        "f-7WRWdelNY",
+        "lGvQL4wfbHA",
+        "mUcFwp5i9Wk",
+        "mnB7H_1rPSA"
+      ],
+      "distinct_original_channel_count": 10,
+      "distinct_original_video_count": 10,
+      "naive_channel_count_sum": 10,
+      "overcount_prevented": 0,
+      "strict_title_ids": 10,
+      "additional_profile_title_ids": 0,
+      "deceased_as_of_20261021": true,
+      "death_date": null,
+      "death_reference": null,
+      "historical_registration_anchor": null,
+      "atlas_registry_state": "FULL_CURRENT_REGISTRY_NOT_SCREENED",
+      "content_evidence": "ORIGINAL_BIOGRAPHY_OR_PROFILE_TITLE_ONLY_NOT_WATCHED_OR_CAPTION_AUTHENTICATED"
+    },
+    {
+      "canonical_identity_name": "Muhammad Iqbal",
+      "external_identity": {
+        "scheme": "Wikidata",
+        "qid": "Q12823513",
+        "url": "https://www.wikidata.org/wiki/Q12823513"
+      },
+      "same_person_review_basis": "SAME_PERSON_HONORIFIC_LONG_SHORT",
+      "person_identity_source_urls": [
+        "https://www.wikidata.org/wiki/Q12823513"
+      ],
+      "source_name_labels": [
+        "Allama Muhammad Iqbal",
+        "Allama Iqbal"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Allama Muhammad Iqbal",
+          "distinct_original_channels": 6,
+          "original_title_video_ids": 7,
+          "strict_title_video_ids": 7,
+          "added_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "Allama Iqbal",
+          "distinct_original_channels": 6,
+          "original_title_video_ids": 6,
+          "strict_title_video_ids": 5,
+          "added_profile_title_video_ids": 1
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC07SSVjG2sfYpGI1MCBs88g",
+        "UC5RUhARzz7GiifbeFFmz1Gg",
+        "UC5p3c_8Z5JTb9uQRsFIjM3A",
+        "UCBDHElBdfF-fNpY1HIvYYHA",
+        "UCEDT2IFqvHFTy_XYm-Dh-vg",
+        "UCGn9qTY2hW48jtKjFnhE4pg",
+        "UCJLhEF-BE9qkc_sUw5wBxBw",
+        "UCSlmbzvo4X04Mu2vxstaHDg",
+        "UCaDtLmQK_PlFYE8K9wqLjsQ",
+        "UCe6f7-fAM5fz8DgjwCG7FYg",
+        "UCkBvFelVEXF9WrGfLHJ7AQw",
+        "UClNhj6OhwZYUONdZdGqIL7w"
+      ],
+      "unique_original_video_ids": [
+        "1P7SopDUJ4s",
+        "1p-UWzVGNXY",
+        "3cJ5zGwhs9Q",
+        "6rNg3fwsUjY",
+        "DG_L7kG8j24",
+        "NmH31jCJ0Zc",
+        "TUEuw7sz17k",
+        "VtNnI7RdvBA",
+        "axQflRBiovY",
+        "g7lHrKfpnu4",
+        "qwAbqebbOgA",
+        "sFOYm8S0RZE",
+        "xK6DNTABIno"
+      ],
+      "distinct_original_channel_count": 12,
+      "distinct_original_video_count": 13,
+      "naive_channel_count_sum": 12,
+      "overcount_prevented": 0,
+      "strict_title_ids": 12,
+      "additional_profile_title_ids": 1,
+      "deceased_as_of_20261021": true,
+      "death_date": null,
+      "death_reference": null,
+      "historical_registration_anchor": null,
+      "atlas_registry_state": "FULL_CURRENT_REGISTRY_NOT_SCREENED",
+      "content_evidence": "ORIGINAL_BIOGRAPHY_OR_PROFILE_TITLE_ONLY_NOT_WATCHED_OR_CAPTION_AUTHENTICATED"
+    },
+    {
+      "canonical_identity_name": "Francis of Assisi",
+      "external_identity": {
+        "scheme": "Wikidata",
+        "qid": "Q676555",
+        "url": "https://www.wikidata.org/wiki/Q676555"
+      },
+      "same_person_review_basis": "SAME_PERSON_SAINT_PREFIX",
+      "person_identity_source_urls": [
+        "https://www.wikidata.org/wiki/Q676555"
+      ],
+      "source_name_labels": [
+        "Saint Francis of Assisi",
+        "Francis of Assisi"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Saint Francis of Assisi",
+          "distinct_original_channels": 5,
+          "original_title_video_ids": 5,
+          "strict_title_video_ids": 5,
+          "added_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "Francis of Assisi",
+          "distinct_original_channels": 2,
+          "original_title_video_ids": 2,
+          "strict_title_video_ids": 2,
+          "added_profile_title_video_ids": 0
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UCE4Q1XGd169wJ1AtL9qkUkw",
+        "UCGPJaYL94njlwK4ef0Iy67w",
+        "UCWIUoDUVZDavEUt7QHy9MMQ",
+        "UCXWehquN-NumVKaXtiBHNlQ",
+        "UCfETiKhFZ2CRt3fIS0Vo_4Q",
+        "UCnIb5jZJxxqC27aiyoN5hdA",
+        "UCpGCssD8CnaR4QG_hrdJqkg"
+      ],
+      "unique_original_video_ids": [
+        "9sKScniw_Ic",
+        "Nl8XrIPWYP8",
+        "eXqonD293Yg",
+        "fnsncERgtgs",
+        "pqzX_7Q259E",
+        "rNYDt_uViZ8",
+        "t2IIcZ_E66c"
+      ],
+      "distinct_original_channel_count": 7,
+      "distinct_original_video_count": 7,
+      "naive_channel_count_sum": 7,
+      "overcount_prevented": 0,
+      "strict_title_ids": 7,
+      "additional_profile_title_ids": 0,
+      "deceased_as_of_20261021": true,
+      "death_date": null,
+      "death_reference": null,
+      "historical_registration_anchor": null,
+      "atlas_registry_state": "FULL_CURRENT_REGISTRY_NOT_SCREENED",
+      "content_evidence": "ORIGINAL_BIOGRAPHY_OR_PROFILE_TITLE_ONLY_NOT_WATCHED_OR_CAPTION_AUTHENTICATED"
+    },
+    {
+      "canonical_identity_name": "Khaleda Zia",
+      "external_identity": {
+        "scheme": "Wikidata",
+        "qid": "Q234814",
+        "url": "https://www.wikidata.org/wiki/Q234814"
+      },
+      "same_person_review_basis": "SAME_PERSON_BEGUM_HONORIFIC",
+      "person_identity_source_urls": [
+        "https://www.wikidata.org/wiki/Q234814",
+        "https://www.reuters.com/world/asia-pacific/obituary-khaleda-zia-bangladeshs-first-female-prime-minister-dies-80-2025-12-30/"
+      ],
+      "source_name_labels": [
+        "Begum Khaleda Zia",
+        "Khaleda Zia"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Begum Khaleda Zia",
+          "distinct_original_channels": 5,
+          "original_title_video_ids": 6,
+          "strict_title_video_ids": 6,
+          "added_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "Khaleda Zia",
+          "distinct_original_channels": 2,
+          "original_title_video_ids": 2,
+          "strict_title_video_ids": 2,
+          "added_profile_title_video_ids": 0
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC5RUhARzz7GiifbeFFmz1Gg",
+        "UCKrw3hXHKZrCCHRRgtM4Hog",
+        "UCX41rLBwMkZ1q4pp3zcIRKw",
+        "UCc-2FBEAubpT8dRiFzum85Q",
+        "UCf_lOScB29anLR-wu6MprGA",
+        "UCqXmt4WhLm4YD_zDj5npYsg"
+      ],
+      "unique_original_video_ids": [
+        "0ezEOvYv9d0",
+        "3vAcjdsZnaU",
+        "7PkrxYngTmU",
+        "ILxzqP6yLAQ",
+        "Iy5X0ZMfmmM",
+        "Uo751-tGF-A",
+        "lUDWY7te6y0",
+        "qyEgPO_lvu0"
+      ],
+      "distinct_original_channel_count": 6,
+      "distinct_original_video_count": 8,
+      "naive_channel_count_sum": 7,
+      "overcount_prevented": 1,
+      "strict_title_ids": 8,
+      "additional_profile_title_ids": 0,
+      "deceased_as_of_20261021": true,
+      "death_date": "2025-12-30",
+      "death_reference": "Reuters 2025-12-30 obituary",
+      "historical_registration_anchor": null,
+      "atlas_registry_state": "FULL_CURRENT_REGISTRY_NOT_SCREENED",
+      "content_evidence": "ORIGINAL_BIOGRAPHY_OR_PROFILE_TITLE_ONLY_NOT_WATCHED_OR_CAPTION_AUTHENTICATED"
+    },
+    {
+      "canonical_identity_name": "Saladin",
+      "external_identity": {
+        "scheme": "Wikidata",
+        "qid": "Q8581",
+        "url": "https://www.wikidata.org/wiki/Q8581"
+      },
+      "same_person_review_basis": "SAME_PERSON_SULTAN_TITLE_SALADIN",
+      "person_identity_source_urls": [
+        "https://www.wikidata.org/wiki/Q8581"
+      ],
+      "source_name_labels": [
+        "Salahuddin Ayyubi",
+        "Sultan Salahuddin Ayyubi"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Salahuddin Ayyubi",
+          "distinct_original_channels": 3,
+          "original_title_video_ids": 3,
+          "strict_title_video_ids": 2,
+          "added_profile_title_video_ids": 1
+        },
+        {
+          "source_name": "Sultan Salahuddin Ayyubi",
+          "distinct_original_channels": 2,
+          "original_title_video_ids": 2,
+          "strict_title_video_ids": 1,
+          "added_profile_title_video_ids": 1
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC7SMgnInKloClAMl1szaZyw",
+        "UCNaIjO4o3Imwf-CYCoWCTvw",
+        "UCPRAEPjcjrvb3iRktrx231Q",
+        "UC_IqRq8Pd_KDY5Tv7tsLVAw",
+        "UC_ssESvFrOm7j4c0S62l48w"
+      ],
+      "unique_original_video_ids": [
+        "75NnBw5T3WY",
+        "DkvV6U73dZE",
+        "WgZNi3teU-A",
+        "kYZPlXj9W6M",
+        "tymzkx4Ez3A"
+      ],
+      "distinct_original_channel_count": 5,
+      "distinct_original_video_count": 5,
+      "naive_channel_count_sum": 5,
+      "overcount_prevented": 0,
+      "strict_title_ids": 3,
+      "additional_profile_title_ids": 2,
+      "deceased_as_of_20261021": true,
+      "death_date": null,
+      "death_reference": null,
+      "historical_registration_anchor": null,
+      "atlas_registry_state": "FULL_CURRENT_REGISTRY_NOT_SCREENED",
+      "content_evidence": "ORIGINAL_BIOGRAPHY_OR_PROFILE_TITLE_ONLY_NOT_WATCHED_OR_CAPTION_AUTHENTICATED"
+    },
+    {
+      "canonical_identity_name": "Anthony of Padua",
+      "external_identity": {
+        "scheme": "Wikidata",
+        "qid": "Q167477",
+        "url": "https://www.wikidata.org/wiki/Q167477"
+      },
+      "same_person_review_basis": "SAME_PERSON_SAINT_ABBREVIATION",
+      "person_identity_source_urls": [
+        "https://www.wikidata.org/wiki/Q167477"
+      ],
+      "source_name_labels": [
+        "St Anthony of Padua",
+        "Saint Anthony of Padua"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "St Anthony of Padua",
+          "distinct_original_channels": 3,
+          "original_title_video_ids": 3,
+          "strict_title_video_ids": 3,
+          "added_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "Saint Anthony of Padua",
+          "distinct_original_channels": 2,
+          "original_title_video_ids": 2,
+          "strict_title_video_ids": 2,
+          "added_profile_title_video_ids": 0
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UCB6MR9YojquzeBvXYjiowHQ",
+        "UCE4Q1XGd169wJ1AtL9qkUkw",
+        "UC_qlkMDou5QxDvXRB-A-H9Q",
+        "UCrL6d8IGZc6EVepCA81QX9w",
+        "UCxwGkh8qJh1dG4ej5uyfyFg"
+      ],
+      "unique_original_video_ids": [
+        "HFPVbfetMnA",
+        "SjL9ObnDRaM",
+        "ZngVRPgSUCA",
+        "ba8BZvJt-b4",
+        "q3j8C6G-9qg"
+      ],
+      "distinct_original_channel_count": 5,
+      "distinct_original_video_count": 5,
+      "naive_channel_count_sum": 5,
+      "overcount_prevented": 0,
+      "strict_title_ids": 5,
+      "additional_profile_title_ids": 0,
+      "deceased_as_of_20261021": true,
+      "death_date": null,
+      "death_reference": null,
+      "historical_registration_anchor": null,
+      "atlas_registry_state": "FULL_CURRENT_REGISTRY_NOT_SCREENED",
+      "content_evidence": "ORIGINAL_BIOGRAPHY_OR_PROFILE_TITLE_ONLY_NOT_WATCHED_OR_CAPTION_AUTHENTICATED"
+    },
+    {
+      "canonical_identity_name": "Harland Sanders",
+      "external_identity": {
+        "scheme": "Wikidata",
+        "qid": "Q120450",
+        "url": "https://www.wikidata.org/wiki/Q120450"
+      },
+      "same_person_review_basis": "SAME_PERSON_COLONEL_NICKNAME",
+      "person_identity_source_urls": [
+        "https://www.wikidata.org/wiki/Q120450"
+      ],
+      "source_name_labels": [
+        "Colonel Harland Sanders",
+        "Colonel Sanders"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Colonel Harland Sanders",
+          "distinct_original_channels": 2,
+          "original_title_video_ids": 2,
+          "strict_title_video_ids": 2,
+          "added_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "Colonel Sanders",
+          "distinct_original_channels": 2,
+          "original_title_video_ids": 2,
+          "strict_title_video_ids": 2,
+          "added_profile_title_video_ids": 0
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC5RUhARzz7GiifbeFFmz1Gg",
+        "UCHs3bWyXIw_6J0ORvg97b2w",
+        "UCYkR51xuITzwvlbAElQ_AVw",
+        "UC_n9bUCEgMmN2RxAz7KrrUQ"
+      ],
+      "unique_original_video_ids": [
+        "and7Y5he5Ao",
+        "cSkJ5tjRpZg",
+        "m9ttU0ohG1g",
+        "mUpaZLx7YFQ"
+      ],
+      "distinct_original_channel_count": 4,
+      "distinct_original_video_count": 4,
+      "naive_channel_count_sum": 4,
+      "overcount_prevented": 0,
+      "strict_title_ids": 4,
+      "additional_profile_title_ids": 0,
+      "deceased_as_of_20261021": true,
+      "death_date": null,
+      "death_reference": null,
+      "historical_registration_anchor": null,
+      "atlas_registry_state": "FULL_CURRENT_REGISTRY_NOT_SCREENED",
+      "content_evidence": "ORIGINAL_BIOGRAPHY_OR_PROFILE_TITLE_ONLY_NOT_WATCHED_OR_CAPTION_AUTHENTICATED"
+    },
+    {
+      "canonical_identity_name": "Khalid ibn al-Walid",
+      "external_identity": {
+        "scheme": "Wikidata",
+        "qid": "Q26918",
+        "url": "https://www.wikidata.org/wiki/Q26918"
+      },
+      "same_person_review_basis": "SAME_PERSON_ROMANIZATION_AND_HAZRAT_TITLE",
+      "person_identity_source_urls": [
+        "https://www.wikidata.org/wiki/Q26918"
+      ],
+      "source_name_labels": [
+        "Khalid bin Walid",
+        "Khalid Bin Waleed",
+        "Hazrat Khalid Bin Waleed"
+      ],
+      "per_source_label_evidence": [
+        {
+          "source_name": "Khalid bin Walid",
+          "distinct_original_channels": 5,
+          "original_title_video_ids": 5,
+          "strict_title_video_ids": 4,
+          "added_profile_title_video_ids": 1
+        },
+        {
+          "source_name": "Khalid Bin Waleed",
+          "distinct_original_channels": 1,
+          "original_title_video_ids": 1,
+          "strict_title_video_ids": 1,
+          "added_profile_title_video_ids": 0
+        },
+        {
+          "source_name": "Hazrat Khalid Bin Waleed",
+          "distinct_original_channels": 2,
+          "original_title_video_ids": 2,
+          "strict_title_video_ids": 1,
+          "added_profile_title_video_ids": 1
+        }
+      ],
+      "unique_original_channel_ids": [
+        "UC-LGvVebL9EQIN88nIoEyRw",
+        "UCOoShrnxpVImy95W0I2wSbA",
+        "UCSlmbzvo4X04Mu2vxstaHDg",
+        "UCUV2paitBCm35qPlQzznGag",
+        "UCe6f7-fAM5fz8DgjwCG7FYg",
+        "UCjBAg-qMsuVtTUOodRu-7Pw",
+        "UCoOaLf1Q6F8SxuWJXijMSsg",
+        "UCt4sq4jQ44GjyV-w_jzKmEQ"
+      ],
+      "unique_original_video_ids": [
+        "B83gFbY0McI",
+        "CKQS4etJ31s",
+        "L_syC3pAgvI",
+        "MtxLGVpRjek",
+        "SO-Bxh0W1sY",
+        "UaR14w6LKn8",
+        "VViicCgriYo",
+        "tcm7O0cv6cE"
+      ],
+      "distinct_original_channel_count": 8,
+      "distinct_original_video_count": 8,
+      "naive_channel_count_sum": 8,
+      "overcount_prevented": 0,
+      "strict_title_ids": 6,
+      "additional_profile_title_ids": 2,
+      "deceased_as_of_20261021": true,
+      "death_date": null,
+      "death_reference": null,
+      "historical_registration_anchor": {
+        "prior_source_name": "Khalid Ibn Al Walid",
+        "prior_registered_canonical_name": "Khalid ibn al-Walid",
+        "prior_registered_person_uuid": "54583770-280a-4ec1-81db-24729ed842ab",
+        "prior_review_source_path": "audits/youtube-b024-source-first-36-final-registered-identity-review.json",
+        "reviewed_on": "2026-10-10",
+        "current_registered_person_recheck_required": true
+      },
+      "atlas_registry_state": "PRIOR_REGISTERED_UUID_CURRENT_STATE_UNVERIFIED",
+      "content_evidence": "ORIGINAL_BIOGRAPHY_OR_PROFILE_TITLE_ONLY_NOT_WATCHED_OR_CAPTION_AUTHENTICATED"
+    }
+  ],
+  "previous_historical_registration_anchor_is_NOT_current_status": true,
+  "prevented_unsafe_merges": {
+    "distinct_person_no_merge": [
+      {
+        "left": "Muhammad Ali",
+        "right": "Quaid e Azam Muhammad Ali Jinnah",
+        "reason": "Boxer Muhammad Ali ≠ Muhammad Ali Jinnah; token overlap is not identity evidence"
+      },
+      {
+        "left": "Saint Francis of Assisi",
+        "right": "Saint Francis Xavier",
+        "reason": "Different Francis saints; never merge abbreviated Saint Francis"
+      },
+      {
+        "left": "Saint Dominic",
+        "right": "Saint Dominic Savio",
+        "reason": "Distinct historical saints"
+      },
+      {
+        "left": "Saint Paul",
+        "right": "Saint Paul of the Cross",
+        "reason": "Different historical individuals"
+      }
+    ],
+    "ambiguous_forms_needing_context": [
+      "Saint Francis",
+      "Abdul Hamid",
+      "Sultan Abdul Hamid",
+      "Saint Benedict",
+      "Queen Elizabeth",
+      "Saint Paul"
+    ],
+    "previous_review_groups_preserved": [
+      "Mother Teresa",
+      "Teresa of Ávila"
+    ],
+    "living_or_uncertainty_hold_still_applies": true
+  },
+  "new_group_totals": {
+    "groups": 8,
+    "sourceLabels": 17,
+    "uniqueVideoIds": 60,
+    "perIdentityChannelTotals": 57,
+    "overcountPrevented": 1,
+    "sourceLabelsThree": 8,
+    "canonicalGroupsThree": 8,
+    "strictTitleIds": 55,
+    "addedProfileTitleIds": 5
+  },
+  "cumulative_review_state": {
+    "reviewed_identity_groups": 15,
+    "source_name_labels_resolved": 32,
+    "original_video_ids_in_reviewed_groups": 144,
+    "sum_channel_id_counts_per_identity": 137,
+    "duplicate_channels_prevented": 4,
+    "identity_research_units_after_collapsing": 2151,
+    "identity_research_units_with_three_plus_channels": 846,
+    "live_production_current_registered_screen_done": false,
+    "reviewed_video_content_approved": 0
+  },
+  "next_step": "Continue grounded same-person QID review on remaining raw name variants; consult verified original-video content evidence for identity and Person-primary video; screen live complete Production identities and aliases LAST before publishing exactly one existing unregistered historical Person rank"
+}
