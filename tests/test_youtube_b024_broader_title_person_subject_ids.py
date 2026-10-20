@@ -85,7 +85,7 @@ class ExistingArchiveBroaderPersonTitleTest(unittest.TestCase):
                 )
             with patch.object(mod,"candidate_groups",side_effect=fake_groups), \
                  patch.object(mod.strict,"rejected_label_names",return_value=set()):
-                result=mod.run_archive(path,expected_channels=2,expected_videos=6)
+                result=mod.run_archive(path,expected_channels=2,expected_videos=6,verify_archive=False)
             self.assertEqual(result["archived_video_titles_scanned"],6)
             self.assertEqual(result["previous_strict_original_video_ids"],1)
             self.assertEqual(result["new_distinct_explicit_profile_title_original_video_ids"],3)
@@ -111,7 +111,7 @@ class ExistingArchiveBroaderPersonTitleTest(unittest.TestCase):
                  {"Alice Lovelace":{"original":True}})), \
                  patch.object(mod.strict,"rejected_label_names",return_value=set()):
                 with self.assertRaisesRegex(ValueError,"OLD_BIOGRAPHY_ID_CHANNEL_CHANGED"):
-                    mod.run_archive(path,expected_channels=2,expected_videos=6)
+                    mod.run_archive(path,expected_channels=2,expected_videos=6,verify_archive=False)
             with self.assertRaisesRegex(ValueError,"B024_SOURCE_ZIP_SHA_INVALID"):
                 mod.run_archive(path,expected_channels=2,expected_videos=6)
 
