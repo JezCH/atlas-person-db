@@ -22,6 +22,15 @@ test("Human Authoring origin validates an approved exact request", () => {
   assert.equal(result.previous_representative_domain, "knowledge");
 });
 
+test("Human Authoring origin requires an explicit nonblank string root", () => {
+  for (const invalidRoot of [undefined, null, "", " ", "\t\n", 0, false, {}, []]) {
+    assert.throws(
+      () => validateHumanAuthoringOrigin({ root:invalidRoot, entry:base }),
+      /HUMAN_AUTHORING_ORIGIN_ROOT_REQUIRED/
+    );
+  }
+});
+
 test("Human Authoring origin rejects fabricated or mismatched provenance", () => {
   assert.throws(
     () => validateHumanAuthoringOrigin({ root, entry:{ ...base, supersedes_request_id:"authoring:wrong" } }),

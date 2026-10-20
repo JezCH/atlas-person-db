@@ -13,7 +13,10 @@ function text(value) {
 }
 
 export function validateHumanAuthoringOrigin({ root, entry } = {}) {
-  const repoRoot = path.resolve(String(root || ""));
+  if (typeof root !== "string" || !root.trim()) {
+    fail("HUMAN_AUTHORING_ORIGIN_ROOT_REQUIRED");
+  }
+  const repoRoot = path.resolve(root);
   const source = text(entry?.supersedes_source);
   const requestId = text(entry?.supersedes_request_id);
   const origin = text(entry?.supersedes_origin).toLowerCase();
@@ -21,7 +24,6 @@ export function validateHumanAuthoringOrigin({ root, entry } = {}) {
   const canonicalName = text(entry?.canonical_name_en);
   const preferredNameKo = text(entry?.preferred_name_ko);
 
-  if (!repoRoot) fail("HUMAN_AUTHORING_ORIGIN_ROOT_REQUIRED");
   if (origin !== "human_authoring") fail("HUMAN_AUTHORING_ORIGIN_TYPE_REQUIRED");
   if (!SOURCE_RE.test(source)) fail("HUMAN_AUTHORING_ORIGIN_SOURCE_INVALID");
   if (!requestId) fail("HUMAN_AUTHORING_ORIGIN_REQUEST_ID_REQUIRED");
