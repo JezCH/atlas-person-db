@@ -153,7 +153,7 @@ test("leading whitespace in real Git paths cannot disguise unsafe files as appro
   for (const path of [
     " docs/runtime.js",
     " .github/workflows/unsafe.yml",
-    "\tdocs/audit.md",
+    "\tdocs/audit.js",
     " ./docs/runtime.js"
   ]) {
     assert.equal(isSafeToSkipPath(path), false, path);
