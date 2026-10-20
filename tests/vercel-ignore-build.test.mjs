@@ -1,4 +1,9 @@
 import test from "node:test";
+import { spawnSync, execFileSync } from "node:child_process";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import {
   isSafeToSkipPath,
@@ -162,4 +167,83 @@ test("leading whitespace in real Git paths cannot disguise unsafe files as appro
   }
   assert.equal(isSafeToSkipPath("docs/runtime.js"), true);
   assert.equal(isSafeToSkipPath(".github/workflows/atlas-integrity.yml"), true);
+});
+
+
+const VERCEL_IGNORE_CLI = fileURLToPath(new URL("../scripts/vercel-ignore-build.mjs", import.meta.url));
+function gitFixture(changedFiles, {previousMissing=false, workflow=""}={}) {
+  const root=mkdtempSync(join(tmpdir(),"atlas-vercel-cli-"));
+  const gitEnv={...process.env,GIT_CONFIG_NOSYSTEM:"1",GIT_CONFIG_GLOBAL:"/dev/null"};
+  const git=(...args)=>execFileSync("git",args,{cwd:root,encoding:"utf8",env:gitEnv}).trim();
+  try {
+    git("init","-q");
+    git("-c","user.name=ATLAS Test","-c","user.email=atlas@example.invalid",
+      "commit","-q","--allow-empty","-m","baseline");
+    const previous=git("rev-parse","HEAD");
+    for(const [name,body] of Object.entries(changedFiles)) {
+      const file=join(root,name);
+      mkdirSync(dirname(file),{recursive:true});
+      writeFileSync(file,body);
+    }
+    git("add","-A");
+    git("-c","user.name=ATLAS Test","-c","user.email=atlas@example.invalid",
+      "commit","-q","-m","tracked path regression");
+    const current=git("rev-parse","HEAD");
+    const result=spawnSync(process.execPath,[VERCEL_IGNORE_CLI],{
+      cwd:root,encoding:"utf8",
+      env:{...gitEnv,VERCEL_ENV:"production",VERCEL_GIT_COMMIT_SHA:current,
+        VERCEL_GIT_PREVIOUS_SHA:previousMissing?"":previous,GITHUB_WORKFLOW:workflow}
+    });
+    assert.equal(result.error,undefined);
+    return result;
+  } finally { rmSync(root,{recursive:true,force:true}); }
+}
+test("real Git CLI preserves a leading-space unsafe path and BUILDs",()=>{
+  const v=gitFixture({" docs/runtime.js":"unsafe"});
+  assert.equal(v.status,1,v.stdout+"\n"+v.stderr);
+  assert.match(v.stdout,/BUILD: deployment-relevant change detected/);
+  assert.match(v.stdout,/  docs\/runtime\.js/);
+});
+test("unsafe leading-space authoring path cannot use current-commit data-only fast skip",()=>{
+  const v=gitFixture({" authoring/requests/person.json":"{}"},{previousMissing:true});
+  assert.equal(v.status,1,v.stdout);
+  assert.doesNotMatch(v.stdout,/SKIP: current commit contains only reviewed runtime-safe data/);
+});
+test("trailing-whitespace Git path and whitespace-prefixed Markdown fail closed",()=>{
+  for(const name of ["docs/readme.md "," docs/readme.md"]) {
+    const v=gitFixture({[name]:"doc"});
+    assert.equal(v.status,1,name+": "+v.stdout);
+  }
+});
+test("Git filename with newline/quote/control bytes forces build rather than truncated names",()=>{
+  const v=gitFixture({'docs/quoted"\ncontrol.md':"doc"});
+  assert.equal(v.status,1,v.stdout);
+  assert.match(v.stdout,/BUILD/);
+});
+test("ordinary docs and workflow-only commit still skips",()=>{
+  const v=gitFixture({"docs/readme.md":"doc",".github/workflows/check.yml":"name: check"});
+  assert.equal(v.status,0,v.stdout);
+  assert.match(v.stdout,/SKIP: only non-deployable files changed/);
+});
+test("reviewed runtime-data-only commit still skips without previous Production SHA",()=>{
+  const v=gitFixture({"authoring/requests/person.json":"{}"},{previousMissing:true});
+  assert.equal(v.status,0,v.stdout);
+  assert.match(v.stdout,/SKIP: current commit contains only reviewed runtime-safe data/);
+});
+test("mixed docs plus runtime code requires build",()=>{
+  const v=gitFixture({"docs/readme.md":"doc","server/runtime.js":"code"});
+  assert.equal(v.status,1,v.stdout);
+  assert.match(v.stdout,/BUILD: deployment-relevant change detected/);
+});
+test("missing previous Production SHA still fails to build on non-data-only changes",()=>{
+  const v=gitFixture({"docs/readme.md":"doc"},{previousMissing:true});
+  assert.equal(v.status,1,v.stdout);
+  assert.match(v.stdout,/BUILD: previous successful Production SHA unavailable/);
+});
+test("unusual literal whitespace is not an approved direct-helper path",()=>{
+  for(const name of [" docs/readme.md"," docs/runtime.js","docs/readme.md ","\tdocs/readme.md"]){
+    assert.equal(isSafeToSkipPath(name),false,name);
+    assert.equal(isSafeForDeployedAuthoringRuntimePath(name),false,name);
+    assert.equal(shouldBuildForChangedPaths([name]),true,name);
+  }
 });
