@@ -32,7 +32,7 @@ function payload(){
   schema:discovery.DISCOVERY_SCHEMA,available:true,snapshot:snapshot(),
   population:"original_video_id_biography_title_candidate_sets",
   identity_rule:"full_current_registered_person_id_all_names_screened_last",
-  ranking_evidence_type:source.SOURCE_PROOF,
+  ranking_evidence_type:source.PROFILE_SOURCE_PROOF,
   registration_checked:true,
   source_candidate_count:2241,
   source_original_biography_title_video_ids:10706,
