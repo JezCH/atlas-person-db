@@ -148,3 +148,18 @@ test("empty diff does not request a build", () => {
   assert.equal(shouldBuildForChangedPaths([]), false);
   assert.equal(shouldBuildForChangedPaths(["", "./"]), false);
 });
+
+test("leading whitespace in real Git paths cannot disguise unsafe files as approved prefixes", () => {
+  for (const path of [
+    " docs/runtime.js",
+    " .github/workflows/unsafe.yml",
+    "\tdocs/audit.md",
+    " ./docs/runtime.js"
+  ]) {
+    assert.equal(isSafeToSkipPath(path), false, path);
+    assert.equal(isSafeForDeployedAuthoringRuntimePath(path), false, path);
+    assert.equal(shouldBuildForChangedPaths([path]), true, path);
+  }
+  assert.equal(isSafeToSkipPath("docs/runtime.js"), true);
+  assert.equal(isSafeToSkipPath(".github/workflows/atlas-integrity.yml"), true);
+});
