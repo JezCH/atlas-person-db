@@ -1,0 +1,108 @@
+name: YouTube B024 Refine Original Cohort Known Person Status (No Crawl)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/youtube-b024-refine-registered-living-prior-screen.py'
+      - 'audits/youtube-b024-top-source-identity-corrections-20261020.json'
+      - 'tests/test_youtube_b024_refined_priors.py'
+      - 'tests/atlas-youtube-b024-refined-prior-person-screen.test.mjs'
+      - '.github/workflows/youtube-b024-refine-existing-identity-review.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: atlas-b024-refine-existing-positive-identity-screen
+  cancel-in-progress: false
+
+jobs:
+  refine_2766_existing_names:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify reviewed registered UUID + living names with offline exact original ID tests
+        run: python3 -m unittest discover -s tests -p test_youtube_b024_refined_priors.py -v
+      - name: Check immutable PREEXISTING screened original IDs artifact (no videos reprocessed)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12243557349" | jq -e '
+            .id==12243557349 and .expired==false and
+            .name=="youtube-b024-existing-biography-identity-screen-39376781674" and
+            .digest=="sha256:e0533aa072f69345c65df97ff1c1a7bb2a5cda5322b98bcfc02aac712985a503"
+          ' >/dev/null
+      - uses: actions/download-artifact@v4
+        with:
+          name: youtube-b024-existing-biography-identity-screen-39376781674
+          run-id: '39376781674'
+          repository: ${{ github.repository }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: previous
+      - name: Actually apply additional existing registered UUID + living evidence to ALL original name cohorts
+        run: |
+          set -euo pipefail
+          python3 scripts/youtube-b024-refine-registered-living-prior-screen.py \
+            --previous-cohorts previous/youtube-b024-screened-biography-cohorts.json \
+            --output /tmp/youtube-b024-actual-reviewed-original-id-cohorts.json \
+            | tee /tmp/youtube-b024-updated-positive-identity-summary.log
+      - name: Actual result nonpublication and complete original video set parity
+        run: |
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path('/tmp/youtube-b024-actual-reviewed-original-id-cohorts.json')
+          d=json.loads(p.read_text())
+          assert d['input_existing_b024_original_video_ids']==10706
+          assert d['input_source_name_labels']==2766
+          assert len(d['rows'])==2766
+          assert d['real_video_primary_content_certified']==0
+          assert d['confirmed_current_unregistered_historical_people']==0
+          assert d['new_youtube_videos_fetched']==0
+          assert d['production_writes']==0
+          assert d['publishable'] is False
+          assert d['full_current_ATLAS_person_and_alias_census_completed'] is False
+          assert sum(d['status_counts'].values())==2766
+          assert d['additional_status_changes']>0
+          lines=[
+            '## Actually refined 2,766 EXISTING person-name original-ID cohorts — 0 new videos',
+            'Added historical UUID-positive exclusions + dated living exact-person evidence,',
+            'not guessed missing/registered status. No actual video content certified.',
+            '',
+            '- Original title-cue original Video IDs retained: **10,706**',
+            '- Additional source-confirmed status changes: **'+str(d['additional_status_changes'])+'**',
+            '- Previous + added known registered/living exclusions: **'+str(d['actual_positive_registration_or_living_exclusions'])+'**',
+            '- Source review names still not proven unregistered: **'+str(d['remaining_not_proven_unregistered_review_names'])+'**',
+            '- Identity holds: **'+str(d['hold_count'])+'**',
+            '- Today's full production registry **NOT read**; content-certifications **0**; DB writes **0**',
+            '',
+            '### Newly corrected names and their actual original title counts',
+            '| Source name | Prior status | Corrected status | Original channels | Original videos |',
+            '|---|---|---|---:|---:|',
+          ]
+          for r in d['changed'][:30]:
+            lines.append('| '+r['name'].replace('|',' ')+' | '+r['before']+' | '+r['after']+
+                         ' | '+str(r['original_channels'])+' | '+str(r['original_videos'])+' |')
+          lines+=['','### Top remaining source-first review names (NOT confirmed unregistered)',
+                  '| Source name | Original channels | Original biography-title videos | Original Video ID sample |',
+                  '|---|---:|---:|---|']
+          for r in d['top_source_first_review_priority_not_an_official_rank'][:20]:
+            lines.append('| '+r['source_name'].replace('|',' ')+' | '+str(r['original_channels'])+
+                         ' | '+str(r['original_video_titles'])+' | '+str(r['sample_original_video_id'])+' |')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf8') as f:
+            f.write('\n'.join(lines)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-b024-reviewed-existing-original-id-identity-status-${{ github.run_id }}
+          path: /tmp/youtube-b024-actual-reviewed-original-id-cohorts.json
+          if-no-files-found: error
+          retention-days: 30
