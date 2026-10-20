@@ -46,7 +46,7 @@ test("reject spoofed senders, other repositories, wrong PRs, edited actions and 
     (() => {const e=eventOf(plan()); e.issue.number=2443; return e;})(),
     (() => {const e=eventOf(plan()); e.issue.pull_request=null; return e;})(),
     (() => {const e=eventOf(plan()); e.action="edited"; return e;})(),
-    (() => {const e=eventOf(plan()); e.comment.body="Before\n"+e.comment.body; return e;})()
+    (() => {const e=eventOf(plan()); e.comment.body=PATCH_MARKER+" corrupted"; return e;})()
   ];
   for(const e of samples)assert.throws(()=>validateEnvelope(e),/ATLAS_PATCH_REJECTED/);
 });
@@ -93,4 +93,12 @@ test("reject symbolic links and unchanged source before any writes", () => {
     const other=plan();other.files[0].after_base64=after("export const n = 1;\n");
     assert.throws(()=>applyPlan(other,root,{skipGitCheck:true}),/missing or symlink source/);
   } finally {fs.rmSync(root,{recursive:true,force:true});}
+});
+
+test("accept one embedded payload with the connector's View task footer; reject ambiguity", () => {
+  const e=eventOf(plan());
+  e.comment.body="## Codex Cloud patch report\n\n"+e.comment.body+"\n\n[View task →](https://chatgpt.com/s/example)";
+  assert.deepEqual(validateEnvelope(e),plan());
+  e.comment.body+="\n"+PATCH_MARKER+"\n{}\nEND-"+PATCH_MARKER;
+  assert.throws(()=>validateEnvelope(e),/unique complete markers required/);
 });
