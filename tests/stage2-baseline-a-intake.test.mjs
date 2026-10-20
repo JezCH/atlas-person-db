@@ -107,3 +107,11 @@ test('Baseline A v2 accepts historical BCE integer convention and rejects year z
   baseline.baseline_digest = digest(baseline.rows, baseline.counts, baseline.catalogs);
   assert.throws(() => buildBaselineAIntake(baseline), /invalid historical interval/);
 });
+
+test('Baseline A v2 rejects Boolean Activity boundaries', () => {
+  const baseline = fixture();
+  baseline.rows[0].activity_start = true;
+  baseline.rows[0].activity_end = true;
+  baseline.baseline_digest = digest(baseline.rows, baseline.counts, baseline.catalogs);
+  assert.throws(() => buildBaselineAIntake(baseline), /invalid historical interval/);
+});

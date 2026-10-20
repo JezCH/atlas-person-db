@@ -102,6 +102,7 @@ function crossCheckActivity(row, index, maps) {
   const polityId = id(row.polity_id, `rows[${index}].polity_id`);
   const basisId = id(row.period_basis_id, `rows[${index}].period_basis_id`);
   const roleId = row.role_id == null ? null : id(row.role_id, `rows[${index}].role_id`);
+  assert(typeof row.activity_start !== 'boolean' && typeof row.activity_end !== 'boolean', `${activityId} invalid historical interval`);
   const start = Number(row.activity_start);
   const end = Number(row.activity_end);
   assert(Number.isInteger(start) && Number.isInteger(end) && start !== 0 && end !== 0 && end >= start, `${activityId} invalid historical interval`);
