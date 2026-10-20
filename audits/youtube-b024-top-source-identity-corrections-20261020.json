@@ -1,0 +1,38 @@
+{
+  "schema": "atlas-youtube-b024-top-known-person-review/v1",
+  "reviewed_at": "2026-10-20",
+  "policy": "Only exact original source-name labels, positively attested prior Production UUIDs or up-to-date named individual living reports; never media-content certification or current full registry absence.",
+  "prior_registered_aliases": [
+    {
+      "source_name": "Jesus Christ",
+      "registered_name": "Jesus",
+      "registered_uuid": "594d772b-bd67-5741-bbad-2df4e580eb0c",
+      "evidence_reference": "audits/youtube-6358-registration-living-screen-20261009.csv (REGISTERED exact Jesus UUID)",
+      "identity_review": "Jesus Christ and Jesus of Nazareth are the same commonly designated historical/religious figure; exact source label 'Jesus Christ' only."
+    }
+  ],
+  "living": [
+    {
+      "source_name": "Serena Williams",
+      "reviewed_status": "LIVING",
+      "source_url": "https://www.wtatennis.com/news/4515467/an-athlete-is-the-best-thing-you-can-be-serena-on-her-return-to-tennis",
+      "source_date": "2026-06-07"
+    },
+    {
+      "source_name": "Kim Kardashian",
+      "reviewed_status": "LIVING",
+      "source_url": "https://www.vogue.com/article/kim-kardashian-gets-hip-with-the-lbd-2026-10-16",
+      "source_date": "2026-10-16"
+    },
+    {
+      "source_name": "Al Pacino",
+      "reviewed_status": "LIVING",
+      "source_url": "https://www.reuters.com/business/media-telecom/godfather-star-al-pacino-receive-life-achievement-award-actors-guild-2026-10-15/",
+      "source_date": "2026-10-15"
+    }
+  ],
+  "source_video_status": "BIOGRAPHY_TITLE_ONLY_ORIGINAL_VIDEO_ID_UNCHANGED",
+  "current_production_person_registry_full_check_completed": false,
+  "person_primary_content_video_verified": false,
+  "publication_allowed": false
+}
