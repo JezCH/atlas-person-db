@@ -135,8 +135,11 @@ def rejected_label_names(root=ROOT):
 
 def run(archive,names,nonpeople,*,expected_channels=10127,expected_videos=2230031,
         verify_archive=True,max_samples=3):
+    archive_path=Path(archive)
     if verify_archive:
-        with Path(archive).open("rb") as f:
+        if archive_path.is_dir():
+            raise ValueError("B024_DIRECTORY_REQUIRES_VERIFIED_ARTIFACT_PROVENANCE")
+        with archive_path.open("rb") as f:
             if hashlib.file_digest(f,"sha256").hexdigest()!=ORIGINAL_ZIP_SHA256:
                 raise ValueError("B024_ORIGINAL_ARCHIVE_SHA_MISMATCH")
     lexicon={n for n in names if 2<=len(ORIGINAL.words(n))<=16}
@@ -151,14 +154,23 @@ def run(archive,names,nonpeople,*,expected_channels=10127,expected_videos=223003
     total_videos=0
     counted_original_video_ids=set()
     matched_any_videos=0
-    with zipfile.ZipFile(archive) as source:
-        members=sorted(p for p in source.namelist() if p.endswith(".ndjson.gz"))
+    import contextlib
+    with contextlib.ExitStack() as resources:
+        if archive_path.is_dir():
+            members=sorted(archive_path.rglob("*.ndjson.gz"))
+            def open_member(member):
+                return gzip.open(member,"rt",encoding="utf8")
+        else:
+            source=resources.enter_context(zipfile.ZipFile(archive_path))
+            members=sorted(p for p in source.namelist() if p.endswith(".ndjson.gz"))
+            def open_member(member):
+                return gzip.open(source.open(member),"rt",encoding="utf8")
         for member in members:
             channel_id=Path(member).name.removesuffix(".ndjson.gz")
             if channel_id in source_channels:
                 raise ValueError("B024_DUPLICATE_ORIGINAL_CHANNEL_FILE")
             source_channels.add(channel_id)
-            with gzip.open(source.open(member),"rt",encoding="utf8") as stream:
+            with open_member(member) as stream:
                 for line in stream:
                     item=json.loads(line)
                     total_videos+=1
@@ -241,8 +253,13 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--archive",required=True)
     p.add_argument("--output",required=True)
+    p.add_argument("--verified-extracted-artifact",action="store_true",
+                   help="Only GitHub Actions after verifying archive id/name/SHA256 and download-artifact digest")
     args=p.parse_args()
-    result=run(args.archive,source_names(),rejected_label_names())
+    if Path(args.archive).is_dir() and not args.verified_extracted_artifact:
+        p.error("B024_DIRECTORY_REQUIRES_VERIFIED_ARTIFACT_PROVENANCE")
+    result=run(args.archive,source_names(),rejected_label_names(),
+               verify_archive=not args.verified_extracted_artifact)
     path=Path(args.output)
     path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text(json.dumps(result,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf8")
