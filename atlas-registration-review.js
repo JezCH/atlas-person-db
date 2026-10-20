@@ -40,6 +40,8 @@
   let lastSignalPayload=null;
 
   function candidateStatusBadge(row) {
+    if(row?.evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT")
+      return '<span class="registration-review-signal-identity" data-status="unmatched">원본 ID 확인 · 역사인물/영상 내용 검토</span>';
     if(row?.source_id_union_verified===true)
       return '<span class="registration-review-signal-identity" data-status="verified">원본 채널 ID 통합 검증</span>';
     if(row?.identity_state==="short_name_identity_review")return '<span class="registration-review-signal-identity" data-status="ambiguous">이름·동명이인 확인 필요</span>';
@@ -246,7 +248,9 @@
     const reviewedExcludedLabel=reviewedExcluded>0 ? ` · 확인된 비인물 표기 ${number(reviewedExcluded)}개 제외` : "";
     if(telemetry) {
       telemetry.innerHTML=snapshot
-        ? `<strong>누적 ${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>Channel ID 중복 제거 · ${escapeHtml(dateTime(snapshot.generated_at))} · ${snapshot.source_state?.additional_title_context_extraction===true ? "제목 문맥 추가 추출 적용(인물 중심성 미확정)" : "구형 제목 앞부분 추출 통계 · 최신 제목 문맥 감사 미반영"} · 다음 ${escapeHtml(snapshot.source_state?.next_batch || "수집 대기")}${reviewedExcludedLabel}</span>`
+        ? payload?.ranking_evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT"
+          ? `<strong>기존 원본 ${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>전기형 제목 원본 영상 ID ${number(payload.source_original_biography_title_video_ids)}개 · 독립 Channel ID 중복 제거 · 등록 Person ${number(payload.current_registry_distinct_persons)}명과 모든 별칭 실시간 대조 · 기등록 확인 ${number(payload.registered_excluded_count)}개 추가 제외 · <strong>역사인물 정체성/영상 실제 내용 미검증</strong></span>`
+          : `<strong>누적 ${number(snapshot.channel_count)}개 채널 · ${number(snapshot.video_count)}개 영상</strong><span>Channel ID 중복 제거 · ${escapeHtml(dateTime(snapshot.generated_at))} · ${snapshot.source_state?.additional_title_context_extraction===true ? "제목 문맥 추가 추출 적용(인물 중심성 미확정)" : "구형 제목 앞부분 추출 통계 · 최신 제목 문맥 감사 미반영"} · 다음 ${escapeHtml(snapshot.source_state?.next_batch || "수집 대기")}${reviewedExcludedLabel}</span>`
         : "<strong>아직 YouTube 수집 데이터가 없습니다.</strong>";
     }
     const count=activeRoot?.querySelector("#youtubeSignalVisibleCount");
@@ -267,6 +271,9 @@
       const name=String(row.raw_name||"");
       const badge=candidateStatusBadge(row);
       const audit=row?.original_source_title_audit;
+      const originalIdNote=row?.evidence_type==="ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT"
+        ? `<small class="registration-review-source-title-audit" title="기존 223만 영상 자료에서 명시적 생애·전기형 제목이 발견된 원본 Video ID와 Channel ID에 기반합니다. 실제 영상 콘텐츠나 인물 역사성은 확정되지 않았습니다.">전기형 제목의 원본 Video ID · 채널 ID로 집계 <em>(실제 내용 미검증)</em></small>`
+        : "";
       const sourceNote=audit?.evidence_scope==="INDEPENDENT_ORIGINAL_VIDEO_TITLE_NAME_MENTION" &&
         audit.verified_individual_primary_video_content===false &&
         audit.not_eligible_for_ranking_count_replacement===true
@@ -274,7 +281,7 @@
         : "";
       return `<tr class="registration-review-signal-row" style="--signal-strength:${strength.toFixed(2)}%">
         <td class="registration-review-rank" data-label="순위">${number(row.rank)}</td>
-        <td class="registration-review-name" data-label="인물"><span class="registration-review-signal-raw-name">${escapeHtml(name)}</span>${badge}${sourceNote}</td>
+        <td class="registration-review-name" data-label="인물"><span class="registration-review-signal-raw-name">${escapeHtml(name)}</span>${badge}${originalIdNote}${sourceNote}</td>
         <td class="registration-review-number" data-label="채널">${row.count_lower_bound?"≥":""}${number(row.distinct_channel_count)}</td>
         <td class="registration-review-number" data-label="영상">${row.count_lower_bound?"≥":""}${number(row.video_count)}</td>
         <td class="registration-review-signal-bar" aria-hidden="true"><span></span></td>
@@ -352,7 +359,7 @@
           <div><small>유튜브 발굴 단서</small><h3>미등록 역사 인물 발굴</h3><p>수집된 모든 배치는 하나의 채널 식별자 기반 누적 데이터로 관리합니다. 각 인물의 채널 수는 중복을 제거한 고유 채널 수입니다. 화면은 10초마다 최신 데이터베이스 집계를 확인합니다. 기등록 인물의 현재 이름·별칭을 대조하여 자동 제외합니다. 동명이인은 검토 대상으로 보류하며 신규 등록 확정이 아닙니다. 생존 제외는 Wikidata의 출생·사망 기록을 참고한 추정치이며 미확인 인물은 유지됩니다. <strong>발굴 신호일 뿐 등록 근거나 역사적 증거가 아닙니다. 원본 대조 숫자는 별도 제목 언급 범위이며 실제 영상 내용 검증이나 현재 순위 산정값의 대체가 아닙니다.</strong></p></div>
         </div>
         <div class="registration-review-signal-toolbar">
-          <p class="registration-review-mode-info">기등록 인물은 자동 제외됩니다. 동명이인과 미확인 후보는 검토가 필요합니다. 제목에 이름이 언급된 사실만으로 해당 인물 중심 영상이 검증된 것은 아닙니다.</p>
+          <p class="registration-review-mode-info">기등록 인물은 자동 제외됩니다. 동명이인과 미확인 후보는 검토가 필요합니다. B024 원본 전기형 제목 Video ID·Channel ID 기반 순위가 적용될 때도 실제 영상 내용 및 역사인물 정체성은 별도 검증 대상입니다.</p>
           <div id="youtubeSignalThresholds" class="registration-review-thresholds" aria-label="최소 채널 수"></div>
           <div id="youtubeSignalFilters" class="registration-review-signal-filters" aria-label="유튜브 인물 필터">
             <label><input type="checkbox" id="youtubeExcludeLiving">생존 추정 인물 제외</label>
