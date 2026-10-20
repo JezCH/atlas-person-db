@@ -44,3 +44,19 @@ Tests cover disabled no-op behavior, deterministic selection, exact-path conflic
 Next incomplete unit: add one genuinely new reviewed task and validate the generalized runner once against live GitHub with the same safeguards. No model task should be repeated merely to reproduce the already-accepted #2573 result. Repeated/scheduled operation and account-wide usage enforcement remain separate unfinished decisions.
 
 Authority: AGENTS.md, WORK_EXECUTION.md, docs/VERCEL_HOBBY_QUOTA_GUARD.md.
+
+## Live second-pilot evidence and Chat-authorized manual trigger (2026-10-20)
+
+The generalized runner has now also completed a live **second** one-task chain: owner-dispatched Actions [#39426395254](https://github.com/JezCH/atlas-person-db/actions/runs/39426395254) → Codex command [6291387372](https://github.com/JezCH/atlas-person-db/pull/2575#issuecomment-6291387372) → real App response [6291467451](https://github.com/JezCH/atlas-person-db/pull/2575#issuecomment-6291467451) → receiver [#39427036896](https://github.com/JezCH/atlas-person-db/actions/runs/39427036896) → Draft [#2579](https://github.com/JezCH/atlas-person-db/pull/2579), focused-test receiver success and full Integrity [#39427140872](https://github.com/JezCH/atlas-person-db/actions/runs/39427140872) SUCCESS. PR #2579 stays Draft/unmerged for independent review. No Production effect is asserted. The spent registry task is now **closed** and the runner **disabled**; neither may be replayed.
+
+A new **manual, one-task Chat/GitHub comment trigger** eliminates the Actions UI click, without creating a scheduler or authorizing autonomous task invention. The connected GitHub user may place exactly the following plain-text comment **on that task's reviewed launcher Draft PR**, after separately reviewing its costs, instructions, 24-hour window, launcher SHA and current conflicts:
+
+```text
+ATLAS-CODEX-RUN-V1
+atlas-<approved-task-id>
+END-ATLAS-CODEX-RUN-V1
+```
+
+The actual task ID must match the canonical approved registry entry, and the PR number must match its launcher. The workflow only admits a `created` GitHub issue-comment event from the **fixed real owner GitHub user ID 281085255 / JezCH** on a PR. JavaScript independently validates the exact three-line syntax, repo, author ID/login/type, launcher issue number, and event action before *any claim*. The same authorization and task/launcher binding are rechecked during claim and PAT-only submission. No arbitrary model prompt or file paths can be supplied in the comment; the reviewed task registry controls the instruction and the two target files.
+
+This is not a GitHub webhook token, provider payment/credit ceiling, a cron schedule, an authority to approve new tasks, or evidence of fully continuous unattended AI work. Keep the registry disabled until an independently source-verified task and user-approved plan usage policy are admitted. A false/foreign/malformed comment must fail before creating either invocation receipt. Missing GitHub event data blocks instead of falling back to a manual workflow. Legacy `workflow_dispatch` remains available for the reviewed manual pathway. Only the existing single-shot runner may issue a Codex command; daily and task create-only receipts, exact snapshot checks and Draft-only output still apply. Explicit new approval is required for every next task, new recurring trigger, spend-cap change or any Production mutation.
