@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {validateRegistry,selectTask,policyForEvent,claimDispatch,taskRef,budgetRef} from '../scripts/atlas-codex-task-policy.mjs';
+import {validateRegistry,selectTask,policyForEvent,claimDispatch,taskRef,budgetRef,authorizedRunComment} from '../scripts/atlas-codex-task-policy.mjs';
 import {verifyPlanFromEvent} from '../scripts/atlas-codex-patch-relay.mjs';
 
 const now=Date.parse('2030-01-02T12:00:00Z');
@@ -59,4 +59,23 @@ test('registry rejects duplicate identities, broad mutation paths and unsafe inv
   for(const mutate of [r=>r.tasks.push({...r.tasks[0]}),r=>r.max_commands_per_utc_day=2,r=>r.tasks[0].paths[0]='scripts/apply-data.mjs',r=>r.tasks[0].paths[0]='scripts/atlas-codex-task-runner.mjs',r=>r.tasks[0].snapshot_paths.push('../secrets'),r=>r.tasks[0].expires_at='2031-01-01T00:00:00Z']) {
     const r=registry();mutate(r);assert.throws(()=>validateRegistry(r));
   }
+});
+
+test('comment dispatch requires exact user ID, real launcher PR, canonical command and event',()=>{
+  const valid={action:'created',repository:{full_name:'JezCH/atlas-person-db'},issue:{number:101,pull_request:{}},
+    comment:{id:500,user:{id:281085255,login:'JezCH',type:'User'},body:'ATLAS-CODEX-RUN-V1\\natlas-one\\nEND-ATLAS-CODEX-RUN-V1'}};
+  assert.deepEqual(authorizedRunComment(valid),{task_id:'atlas-one',launcher_pr:101,comment_id:500});
+  const mutators=[
+    e=>e.action='edited',
+    e=>e.repository.full_name='attacker/fork',
+    e=>e.issue.pull_request=null,
+    e=>e.issue.number=0,
+    e=>e.comment.user.id=42,
+    e=>e.comment.user.login='attacker',
+    e=>e.comment.user.type='Bot',
+    e=>e.comment.body+='\\nadditional instructions',
+    e=>e.comment.body='@codex atlas-one',
+    e=>e.comment.body=e.comment.body.replace('atlas-one','atlas-ONE'),
+  ];
+  for(const mutate of mutators){const event=structuredClone(valid);mutate(event);assert.throws(()=>authorizedRunComment(event));}
 });
