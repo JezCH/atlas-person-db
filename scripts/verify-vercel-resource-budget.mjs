@@ -113,6 +113,19 @@ export function workflowTriggerEvents(source) {
   return events.length && new Set(events).size === events.length ? new Set(events) : null;
 }
 
+// Shared by the repository gate and synthetic offline regression fixtures.
+export function workflowPrProductionViolation(source, events = workflowTriggerEvents(source)) {
+  const touchesProduction = source.includes("atlas-person-db.vercel.app") || source.includes("ATLAS_PRODUCTION_ORIGIN");
+  return touchesProduction && events instanceof Set &&
+    (events.has("pull_request") || events.has("pull_request_target"));
+}
+
+// Historical full-census workflows require an explicit manual dispatch only.
+export function workflowHistoricalManualViolation(events) {
+  return !(events instanceof Set) || !events.has("workflow_dispatch") ||
+    ["push", "pull_request", "pull_request_target", "schedule"].some((event) => events.has(event));
+}
+
 // No PR validation may load the live Production Function or Chrome. Branch
 // previews/local contract fixtures must be used for before-merge checks.
 const manualHistorical = new Set([
@@ -134,12 +147,11 @@ for (const name of readdirSync(join(root, ".github/workflows"))) {
     errors.push(name + ": cannot audit workflow events; unsupported or missing top-level on declaration");
     continue;
   }
-  const touchesProduction = source.includes("atlas-person-db.vercel.app") || source.includes("ATLAS_PRODUCTION_ORIGIN");
-  if (touchesProduction && events.has("pull_request")) {
-    errors.push(name + ": CI pull_request must never browse Production");
+  if (workflowPrProductionViolation(source, events)) {
+    errors.push(name + ": CI pull_request/pull_request_target must never browse Production");
   }
   if (manualHistorical.has(name)) {
-    if (!events.has("workflow_dispatch") || events.has("push") || events.has("pull_request") || events.has("schedule")) {
+    if (workflowHistoricalManualViolation(events)) {
       errors.push(name + ": legacy full-Production census must remain manual-only");
     }
   }
