@@ -79,7 +79,7 @@ test("pre-restoration OFFLINE release rehearsal validates ALL 2241-source title 
  assert.equal(r.additional_profile_title_original_video_ids,536);
  assert.equal(r.total_filtered_source_title_evidence_original_video_ids,6698);
  assert.equal(r.authoritative_persons,2100);
- assert.equal(r.current_three_channel_title_candidate_count,855); // 861 screened after 62 holds, minus 6 reviewed living
+ assert.equal(r.current_three_channel_title_candidate_count,854); // 861 screened after holds, minus 7 reviewed living
  assert.equal(r.historical_personhood_confirmed_for_all,false);
  assert.equal(r.actual_video_content_confirmed,0);
 });
