@@ -41,6 +41,6 @@
 ## Files / regression gate
 
 - `audits/youtube-b024-seven-reviewed-source-identity-unions-20261021.json` contains exact sorted original video/channel IDs, identity evidence URLs and QID, the live-registry-not-checked and content-not-watched flags.
-- `tests/atlas-youtube-b024-reviewed-source-identity-unions.test.cjs` validates original source/archive consistency, no duplicate ID or source label, union totals 84/80, QID disjointness, strict 7→15 identity union and historical-vs-living/nonmerge protection.
+- `tests/atlas-youtube-b024-reviewed-source-identity-unions.test.mjs` validates original source/archive consistency, no duplicate ID or source label, union totals 84/80, QID disjointness, strict 7→15 identity union and historical-vs-living/nonmerge protection.
 
 **Resume point:** Select the next high-impact unreviewed cross-label identities (start with genuine same-person variants, but do not infer from generic tokens), obtain external person-level identity and verified original-title subjecthood, then update the *same* pre-production candidate ledger. Finally compare complete current Production Person UUID+names/aliases before inclusion in the existing single ranked unregistered-Person UI/API. Zero existing canonical DB/Production changes by this work unit.
