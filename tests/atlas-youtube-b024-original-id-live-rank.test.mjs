@@ -75,7 +75,7 @@ test("actual one discovery service REPLACES legacy 72/113 with original-ID sets 
  const rank=await d.readYoutubeUnregisteredDiscovery({client:conn,limit:10,minChannels:3});
  assert.equal(rank.schema,d.DISCOVERY_SCHEMA);
  assert.equal(rank.source_candidate_count,2241);
- assert.equal(rank.ranking_evidence_type,source.SOURCE_PROOF);
+ assert.equal(rank.ranking_evidence_type,source.PROFILE_SOURCE_PROOF);
  assert.equal(rank.current_registry_distinct_persons,2104);
  assert.equal(rank.current_registry_authoritative_person_count,2104);
  assert.equal(rank.current_registry_person_count_parity_verified,true);
@@ -119,7 +119,7 @@ test("pagination and 3/5/10/15/20 channel thresholds reflect the filtered ORIGIN
  const first=await d.readYoutubeUnregisteredDiscovery({client:conn,minChannels:10,limit:2,offset:0});
  const second=await d.readYoutubeUnregisteredDiscovery({client:db({names:[["Stephen Hawking","p-hawking"],["Marilyn Monroe","p-monroe"]]}),minChannels:10,limit:1,offset:1});
  assert.equal(first.rows.length,2);
- assert.equal(first.rows[0].raw_name,"Mother Teresa");
+ assert.equal(first.rows[0].raw_name,"Princess Diana");
  assert.equal(second.rows[0].raw_name,first.rows[1].raw_name);
  assert.equal(second.rows[0].rank,2);
  assert.equal(first.threshold_counts["3"],853); // 861 after 62 held; 2 registered and 6 reviewed living removed
