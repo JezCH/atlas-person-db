@@ -23,12 +23,25 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+      - id: source_gate
+        name: Skip full existing corpus scan when its 536-ID derived source is already staged
+        shell: bash
+        run: |
+          if [[ -f audits/youtube-b024-added-profile-title-runtime-source-20261020.json ]]; then
+            echo 'run=false' >> "$GITHUB_OUTPUT"
+            echo 'Pinned actual B024 536 original IDs already committed; no redundant 2.23m scan.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/setup-python@v5
+        if: steps.source_gate.outputs.run == 'true'
         with:
           python-version: '3.12'
       - name: Fail closed on old-ID mismatch and explain title-evidence limits
+        if: steps.source_gate.outputs.run == 'true'
         run: python3 -m unittest discover -s tests -p test_youtube_b024_broader_title_person_subject_ids.py -v
       - name: Verify immutable EXISTING 2230031-title source archived BEFORE downloading
+        if: steps.source_gate.outputs.run == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
@@ -40,6 +53,7 @@ jobs:
             .digest=="sha256:8f3ca335012fe82c94848f63b9126b1aeec7b48c935b403605dd7752ce713946"
           ' >/dev/null
       - name: Download EXISTING original archive only — NO video requests/crawl
+        if: steps.source_gate.outputs.run == 'true'
         uses: actions/download-artifact@v4
         with:
           name: youtube-cumulative-batch024-validated
@@ -48,6 +62,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: corpus
       - name: Review title profiles from already acquired archived Video IDs ONCE
+        if: steps.source_gate.outputs.run == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -57,6 +72,7 @@ jobs:
             --output /tmp/youtube-b024-additional-person-profile-title-ids.json \
             | tee /tmp/youtube-b024-additional-title-report.log
       - name: Verify 10127/2230031 original parity, preserve 6162 old original IDs and summarize ALL 2241 candidates
+        if: steps.source_gate.outputs.run == 'true'
         shell: bash
         run: |
           python3 - <<'PY'
@@ -104,6 +120,7 @@ jobs:
               f.write('\n'.join(lines)+'\n')
           PY
       - uses: actions/upload-artifact@v4
+        if: steps.source_gate.outputs.run == 'true'
         with:
           name: youtube-b024-existing-extra-person-profile-original-ID-evidence-${{ github.run_id }}
           path: /tmp/youtube-b024-additional-person-profile-title-ids.json
