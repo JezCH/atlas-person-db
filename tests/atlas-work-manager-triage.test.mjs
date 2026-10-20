@@ -109,3 +109,56 @@ test('historical Codex relay branch without independently checked task proof blo
   delete s.pulls[0].codex_evidence;
   assert.equal(triage(s,now).decision,'BLOCKED');
 });
+
+
+test('existing scoped fix with current CI gets review priority, never a model command',()=>{
+  const s=snapshot();
+  s.pulls=s.pulls.slice(1);
+  s.pulls.push({number:555,draft:true,head_ref:'fix/safe-defect',head_sha:sha,
+    base_branch:'main',changed_paths:['scripts/example.mjs','tests/example.test.mjs'],
+    review_evidence:{
+      changed_paths:['scripts/example.mjs','tests/example.test.mjs'],
+      integrity_head_sha:sha,integrity_conclusion:'success',
+      integrity_run_url:'https://github.com/JezCH/atlas-person-db/actions/runs/9001'
+    }});
+  const v=triage(s,now);
+  assert.equal(v.decision,'REVIEW_EXISTING_PR');
+  assert.equal(v.pr_number,555);
+  assert.equal(v.model_calls,0);
+});
+test('existing review cannot override unverified Codex result priority',()=>{
+  const s=snapshot();
+  s.pulls[1]={number:555,draft:true,head_ref:'fix/another',head_sha:sha,base_branch:'main',
+    changed_paths:['scripts/example.mjs','tests/example.test.mjs'],
+    review_evidence:{changed_paths:['scripts/example.mjs','tests/example.test.mjs'],
+      integrity_head_sha:sha,integrity_conclusion:'success',
+      integrity_run_url:'https://github.com/JezCH/atlas-person-db/actions/runs/9001'}};
+  assert.equal(triage(s,now).decision,'REVIEW_DRAFT');
+});
+test('existing candidate wrong paths or wrong CI head cannot be treated as verified',()=>{
+  for(const edit of [
+    p=>p.review_evidence.changed_paths[0]='scripts/changed.mjs',
+    p=>p.review_evidence.integrity_head_sha='c'.repeat(40),
+    p=>p.review_evidence.integrity_run_url='https://untrusted.test/runs/1',
+    p=>p.head_ref='pilot/not-a-fix',
+    p=>p.draft=false
+  ]){
+    const s=snapshot();s.pulls=s.pulls.slice(1);
+    const p={number:555,draft:true,head_ref:'fix/safe-defect',head_sha:sha,base_branch:'main',
+      changed_paths:['scripts/example.mjs','tests/example.test.mjs'],
+      review_evidence:{changed_paths:['scripts/example.mjs','tests/example.test.mjs'],
+        integrity_head_sha:sha,integrity_conclusion:'success',
+        integrity_run_url:'https://github.com/JezCH/atlas-person-db/actions/runs/9001'}};
+    edit(p);s.pulls.push(p);
+    assert.equal(triage(s,now).decision,'BLOCKED');
+  }
+});
+test('existing candidate CI failure is INSPECT_CI, not review-ready',()=>{
+  const s=snapshot();s.pulls=s.pulls.slice(1);
+  s.pulls.push({number:555,draft:true,head_ref:'fix/candidate',head_sha:sha,base_branch:'main',
+    changed_paths:['scripts/a.mjs','tests/a.test.mjs'],
+    review_evidence:{changed_paths:['scripts/a.mjs','tests/a.test.mjs'],integrity_head_sha:sha,
+      integrity_conclusion:'failure',
+      integrity_run_url:'https://github.com/JezCH/atlas-person-db/actions/runs/9001'}});
+  assert.equal(triage(s,now).decision,'INSPECT_CI');
+});
