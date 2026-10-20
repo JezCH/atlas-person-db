@@ -34,7 +34,7 @@ function verifiedCodexEvidence(pr,task) {
 function looksLikeCodexResult(pr) {
   // Legacy branch patterns are only used to fail closed when evidence is missing,
   // never to grant verification or select a task.
-  return pr.codex_evidence!=null || /^codex\/(?:task-result\/|[a-z0-9-]*result[-/])/.test(pr.head_ref);
+  return pr.codex_evidence!=null || /^codex\/(?:task-result\/|relay-|[a-z0-9-]*result[-/])/.test(pr.head_ref);
 }
 
 // Read-only decision over a freshly obtained GitHub snapshot.
