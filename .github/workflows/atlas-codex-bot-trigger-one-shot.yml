@@ -1,45 +1,47 @@
-name: ATLAS Codex Bot-Origin Trigger — One Shot
+name: ATLAS Codex User-Origin Dispatch — Manual One Shot
 
-# Experimental only; opening the single named Draft PR is the entire trigger.
-# No cron, workflow_dispatch, production access, deployments or retries.
+# Inert until separately reviewed/merged to protected main AND explicitly dispatched.
+# No schedule, no pull_request trigger, no untrusted checkout or Production access.
 on:
-  pull_request:
-    types: [synchronize]
-    branches: [main]
-    paths:
-      - .github/workflows/atlas-codex-bot-trigger-one-shot.yml
+  workflow_dispatch:
 
 permissions:
   contents: read
-  issues: write
-  pull-requests: write
+
+concurrency:
+  group: atlas-codex-user-origin-pilot-one-shot
+  cancel-in-progress: false
 
 jobs:
-  codex-bot-origin-smoke:
+  user-origin-codex-smoke:
     if: >-
       github.repository == 'JezCH/atlas-person-db' &&
-      github.event.action == 'synchronize' &&
-      github.event.pull_request.number == 2556 &&
-      github.event.pull_request.commits == 2 &&
-      github.event.pull_request.draft == true &&
-      github.event.pull_request.user.login == 'JezCH' &&
-      github.event.pull_request.head.ref == 'experiment/codex-bot-trigger-20261020' &&
-      github.event.pull_request.title == '[DRAFT] ATLAS one-shot Codex bot-origin trigger test'
+      github.actor == 'JezCH' &&
+      github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 2
-    concurrency:
-      group: atlas-codex-bot-smoke-${{ github.event.pull_request.number }}
-      cancel-in-progress: true
     steps:
-      - name: Publish exactly one read-only Codex command as github-actions bot
+      - name: Validate one-shot gate and dispatch only if not previously sent
         env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          GH_TOKEN: ${{ secrets.ATLAS_CODEX_TRIGGER_PAT }}
+          TARGET_PR: '2443'
+          MARKER: ATLAS-CODEX-AUTHENTICATED-PILOT-20261020-ONCE
         run: |
           set -euo pipefail
+          if [[ -z "${GH_TOKEN:-}" ]]; then
+            echo 'BLOCKED: repository secret ATLAS_CODEX_TRIGGER_PAT is missing; nothing dispatched.'
+            exit 1
+          fi
+          PR_JSON="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${TARGET_PR}")"
+          jq -e '.state == "open" and .draft == true' <<< "$PR_JSON" >/dev/null
+          SHA="$(jq -r '.head.sha' <<< "$PR_JSON")"
+          COMMENT_BODIES="$(gh api "repos/${GITHUB_REPOSITORY}/issues/${TARGET_PR}/comments?per_page=100" --jq '.[].body')"
+          if grep -Fq "$MARKER" <<< "$COMMENT_BODIES"; then
+            echo 'NO CHANGE: authenticated Codex pilot already dispatched; no duplicate message.'
+            exit 0
+          fi
           BODY=$(cat <<EOF
-          @codex ATLAS controlled one-shot **GitHub Actions bot-origin** cloud dispatch test (NOT code review). Resolve this already-published Codex Cloud environment for PR #${PR_NUMBER}, verify the PR-head SHA ${HEAD_SHA}, and report whether you actually executed a Codex Cloud task and could read AGENTS.md. **Read-only only:** No edits, commits, push, PR creation, Actions/workflows, CI, Vercel/Production/Supabase requests, Sandbox, deployments, merges, or additional autonomous runs. Do not retry and do not create or reconfigure environments. Reply with exact results and a task URL if available.
+          @codex ${MARKER}: This is a one-shot **user-authenticated GitHub Actions** origin test (not code review) for Draft PR #${TARGET_PR}, exact head ${SHA}. Start a Codex Cloud read-only task, confirm the resolved commit and task link, and report it on the PR. No edits, push/commit, CI, extra Actions, browser, Vercel/Production/Supabase access, Sandbox, deployment, merge, retries, or additional tasks.
           EOF
           )
-          gh api -X POST "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" -f "body=${BODY}" --jq '.html_url'
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/issues/${TARGET_PR}/comments" -f "body=${BODY}" --jq '.html_url'
