@@ -74,33 +74,37 @@ test("malformed historical shards, conflicting original names and duplicate sour
   /YOUTUBE_TITLE_CROSSWALK_PROVENANCE_INVALID/);
 });
 
-test("the existing one discovery API adds source audit AFTER registered-Person exclusion",async()=>{
+test("existing ONE discovery API now screens archived ORIGINAL video/channel IDs with full current Person registry",async()=>{
  let n=0;
- const signals=[
-  {raw_name:"Princess Diana",rank:1,distinct_channel_count:72,video_count:113},
-  {raw_name:"Malcolm X",rank:2,distinct_channel_count:69,video_count:87}
+ const currentRegistry=[
+  ...Array.from({length:2100},(_,i)=>({
+   person_id:"current-person-"+i,
+   alias_name:"Registered Other Historical Name "+i
+  })),
+  {person_id:"already-registered-malcolm",alias_name:"Malcolm X"}
  ];
- const db={query:async(sql,params=[])=>{
+ const db={query:async(sql)=>{
   if(sql===GLOBAL_SNAPSHOT_SQL){n++;return {rows:[snap()]};}
-  if(sql===discovery.CANDIDATE_ROWS_SQL){
-   assert.deepEqual(params,[snap().snapshot_id]);return {rows:signals};
-  }
-  if(sql===discovery.PERSON_NAMES_SQL){
-   return {rows:[{person_id:"already-registered-malcolm",alias_name:"Malcolm X"}]};
-  }
+  if(sql===discovery.CANDIDATE_ROWS_SQL)
+   throw Error("old raw title signal rank must not be queried for audited B024");
+  if(sql===discovery.PERSON_NAMES_SQL)return {rows:currentRegistry};
   throw Error("Unexpected SQL");
  }};
  const result=await discovery.readYoutubeUnregisteredDiscovery({client:db});
  assert.equal(n,2);
- assert.equal(result.rows.length,1);
- assert.equal(result.rows[0].raw_name,"Princess Diana");
+ assert.equal(result.ranking_evidence_type,
+  "ORIGINAL_ID_EXPLICIT_BIOGRAPHY_TITLE_UNVERIFIED_CONTENT");
+ assert.equal(result.source_candidate_count,2241);
+ assert.ok(!result.rows.some(r=>r.raw_name==="Malcolm X"));
+ assert.equal(result.rows[0].raw_name,"Stephen Hawking");
  assert.equal(result.rows[0].rank,1);
- assert.equal(result.rows[0].original_source_title_audit.distinct_title_mention_channels,231);
- assert.equal(result.rows[0].distinct_channel_count,72);
+ assert.equal(result.rows[0].distinct_channel_count,36);
+ assert.equal(result.rows[0].video_count,37);
  assert.equal(result.registered_excluded_count,1);
- assert.equal(result.independent_original_title_audit_rows,1);
+ assert.equal(result.current_registry_distinct_persons,2101);
+ assert.equal(result.source_original_biography_title_video_ids,10706);
  assert.equal(result.video_person_centeredness_certified,false);
- assert.equal(result.available_count,1);
+ assert.ok(result.available_count>500);
 });
 
 test("the current UI presents independent title evidence in the existing row, not another certified leaderboard",()=>{

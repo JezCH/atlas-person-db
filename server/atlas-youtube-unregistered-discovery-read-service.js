@@ -9,6 +9,8 @@ const {
 const {reviewedPersonAliasesValuesSql}=require("./atlas-reviewed-person-registration-aliases.js");
 const {reviewedLivingStatus}=require("./atlas-youtube-reviewed-living-people.js");
 const {annotateSourceTitleCounts}=require("./atlas-youtube-original-title-crosswalk-read.js");
+const {matchesSnapshot}=require("./atlas-youtube-original-title-crosswalk-read.js");
+const {renderCurrentRegistryRank}=require("./atlas-youtube-b024-original-id-live-ranking.js");
 const QUALITY_RULES=require("../scripts/youtube-person-signal-quality-rules.v2.json");
 const REVIEWED_SOURCE_UNIONS=require("../audits/youtube-discovery-reviewed-source-unions-b024.json");
 const REVIEWED_V5_NONPERSON=require("../audits/youtube-v5-source-nonperson-exact-labels.json");
@@ -288,6 +290,51 @@ async function readYoutubeUnregisteredDiscovery({client,minChannels=3,limit=300,
     schema:DISCOVERY_SCHEMA,available:false,snapshot:null,min_channels:threshold,
     available_count:0,stored_count:0,threshold_counts:{},rows:[]
   };
+  // The audited original-ID source is already materialized in the repo.
+  // It is the authoritative TITLE-TOPIC review input for this exact B024 v5
+  // snapshot, and replaces the older raw-title aggregate on the SAME
+  // discovery endpoint. The database Person/alias roster is STILL read live.
+  if(matchesSnapshot(initial)){
+    const persons=await client.query(PERSON_NAMES_SQL);
+    const final=projectSnapshot((await client.query(GLOBAL_SNAPSHOT_SQL)).rows?.[0]);
+    if(!final||!matchesSnapshot(final)||final.snapshot_id!==initial.snapshot_id)
+      throw Error("YOUTUBE_DISCOVERY_SNAPSHOT_CHANGED");
+    const ranked=renderCurrentRegistryRank({
+      snapshot:final,registryRows:persons.rows||[],identityKey
+    });
+    const selected=ranked.candidates.filter(row=>row.distinct_channel_count>=threshold);
+    return {
+      schema:DISCOVERY_SCHEMA,available:true,snapshot:final,
+      purpose:"unregistered_historical_person_discovery",
+      population:"original_video_id_biography_title_candidate_sets",
+      identity_rule:"full_current_registered_person_id_all_names_screened_last",
+      registration_checked:true,
+      current_registry_distinct_persons:ranked.current_registry_distinct_persons,
+      registered_excluded_count:ranked.current_registered_excluded_count,
+      previously_reviewed_excluded_source_labels:512,
+      reviewed_living_excluded_count:ranked.additional_current_living_excluded_count,
+      reviewed_nonperson_excluded_count:0,
+      homonym_review_count:ranked.ambiguous_current_registration_holds,
+      unreviewed_name_normalization_holds:ranked.unreviewed_name_normalization_holds,
+      previously_reviewed_homonym_holds:11,
+      source_candidate_count:ranked.prior_source_label_count,
+      source_original_video_title_rows:2230031,
+      source_original_biography_title_video_ids:10706,
+      source_original_biography_title_provisional_rows:2241,
+      ranking_evidence_type:ranked.ranking_evidence_type,
+      video_person_centeredness_certified:false,
+      historical_personhood_certified_for_all:false,
+      source_id_union_verified:true,
+      ranking_evidence_note:"Actual archived Video/Channel ID sets with explicit biography TITLE grammar. Neither actual watched content nor independently confirmed historical Person identity for all candidates.",
+      min_channels:threshold,offset:pageOffset,
+      available_count:selected.length,stored_count:selected.length,
+      threshold_counts:ranked.threshold_counts,
+      rows:selected.slice(pageOffset,pageOffset+pageSize)
+    };
+  }
+  // Older/newer unrecognized snapshots preserve the legacy title candidate
+  // ranking with its original evidence label; NEVER graft B024 original IDs
+  // onto a mismatched YouTube source.
   const [signals,people]=await Promise.all([
     client.query(CANDIDATE_ROWS_SQL,[initial.snapshot_id]),
     client.query(PERSON_NAMES_SQL)
