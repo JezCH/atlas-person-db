@@ -150,7 +150,7 @@ def run_archive(archive,*,verified_extracted_artifact=False,expected_channels=10
             if hashlib.file_digest(fp,"sha256").hexdigest()!=SRC_SHA:
                 raise ValueError("B024_SOURCE_ZIP_SHA_INVALID")
     forms,old_by_identity,old_by_video,lexicon=candidate_groups(source_root)
-    tri=matcher.make_index(set(lexicon))
+    tri=matcher.make_index({name for name in lexicon if 2<=len(NAME_WORD(name))<=16})
     nonperson=strict.rejected_label_names(source_root)
     extra_videos=collections.defaultdict(set)
     extra_channels=collections.defaultdict(set)
