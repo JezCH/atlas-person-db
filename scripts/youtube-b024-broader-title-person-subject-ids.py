@@ -48,7 +48,7 @@ AFTER=(
 )
 BEFORE=(
     "historical profile","a profile of","profile of",
-    "facts about","amazing facts about","the untold story of",
+    "facts about","10 facts about","5 facts about","amazing facts about","the untold story of",
     "rise and fall of","the rise and fall of",
     "what you need to know about","all about",
     "life and legacy of","early life of",
@@ -139,13 +139,13 @@ def candidate_groups(root=ROOT):
         raise ValueError("B024_INDEPENDENT_5965_SOURCE_NOT_MATCHED")
     return forms,old_by_identity,old_by_video,lexicon
 
-def run_archive(archive,*,verified_extracted_artifact=False,expected_channels=10127,expected_videos=2230031,
+def run_archive(archive,*,verified_extracted_artifact=False,verify_archive=True,expected_channels=10127,expected_videos=2230031,
                 source_root=ROOT):
     path=Path(archive)
     if path.is_dir():
         if not verified_extracted_artifact:
             raise ValueError("B024_EXTRACTED_SOURCE_ARTIFACT_PROVENANCE_REQUIRED")
-    else:
+    elif verify_archive:
         with path.open("rb") as fp:
             if hashlib.file_digest(fp,"sha256").hexdigest()!=SRC_SHA:
                 raise ValueError("B024_SOURCE_ZIP_SHA_INVALID")
