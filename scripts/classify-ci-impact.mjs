@@ -35,7 +35,7 @@ const UI_EXACT = new Set([
 ]);
 
 function normalizePath(value) {
-  return String(value || '').trim().replaceAll('\\', '/').replace(/^\.\//, '');
+  return String(value || '').replaceAll('\\', '/').replace(/^\.\//, '');
 }
 
 function normalizePaths(paths) {
@@ -44,7 +44,9 @@ function normalizePaths(paths) {
 
 export function classifyPath(value) {
   const file = normalizePath(value);
-  if (!file) return 'full';
+  // Git paths are literal: whitespace is not a safe path normalization.
+  // Otherwise ' docs/guide.md' still matches the .md suffix and is under-tested.
+  if (!file || /^\s|\s$/u.test(file)) return 'full';
 
   if (
     (/^authoring\/requests\/[A-Za-z0-9._-]+\.json$/).test(file)

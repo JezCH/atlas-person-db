@@ -111,3 +111,30 @@ test('active serialized Production mutation workflow remains non-cancelling and 
     '../.github/workflows/atlas-place-authority-backfill.yml'
   ]) assert.equal(fs.existsSync(new URL(relative, import.meta.url)), false);
 });
+
+
+test('literal whitespace-prefixed and suffixed Git paths always require full integrity', () => {
+  for (const name of [
+    ' docs/runbook.md', '\tdocs/readme.md',
+    ' requirements/plan.md', ' public/icon.svg', ' app.css',
+    ' index.html', ' authoring/requests/a.json',
+    ' atlas-admin-dialog.js', ' ./docs/readme.md',
+    'docs/readme.md ', 'public/icon.svg ', 'authoring/requests/a.json ',
+    '\u00a0public/icon.svg'
+  ]) {
+    assert.equal(classifyPath(name), 'full', JSON.stringify(name));
+  }
+});
+test('valid unmodified Git paths preserve narrow CI routing', () => {
+  assert.equal(classifyPath('docs/runbook.md'), 'governance');
+  assert.equal(classifyPath('public/icon.svg'), 'ui');
+  assert.equal(classifyPath('authoring/requests/a.json'), 'registration');
+  assert.equal(classifyPath('./docs/runbook.md'), 'governance');
+  assert.equal(classifyPath('app.css'), 'ui');
+});
+test('mixed literal unsafe path cannot be hidden by a valid registration path', () => {
+  const result = classifyImpacts(['authoring/requests/a.json', ' docs/runbook.md']);
+  assert.equal(result.registration,true);
+  assert.equal(result.full,true);
+  assert.equal(result.governance,false);
+});
