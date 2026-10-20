@@ -82,17 +82,19 @@ test("actual one discovery service REPLACES legacy 72/113 with original-ID sets 
  assert.equal(conn.seen.filter(sql=>sql===d.PERSON_TOTAL_SQL).length,1);
  assert.equal(rank.registered_excluded_count,4);
  assert.equal(rank.source_original_biography_title_video_ids,10706);
+ assert.equal(rank.source_additional_profile_title_original_video_ids,536);
+ assert.equal(rank.source_total_profile_and_biography_original_video_ids,6698);
  assert.equal(rank.registration_checked,true);
  assert.equal(rank.video_person_centeredness_certified,false);
  assert.equal(rank.historical_personhood_certified_for_all,false);
  assert.equal(rank.rows[0].rank,1);
  assert.equal(rank.rows[0].raw_name,"Princess Diana");
- assert.equal(rank.rows[0].distinct_channel_count,26);
- assert.equal(rank.rows[0].video_count,29);
+ assert.equal(rank.rows[0].distinct_channel_count,32);
+ assert.equal(rank.rows[0].video_count,35);
  assert.equal(rank.rows[0].source_id_union_verified,true);
  assert.equal(rank.rows[0].presently_unregistered_historical_person_certified,false);
  assert.ok(!rank.rows.some(r=>["Stephen Hawking","Marilyn Monroe","Mother Teresa","C. S. Lewis"].includes(r.raw_name)));
- assert.equal(rank.threshold_counts["3"]<=799,true);
+ assert.equal(rank.threshold_counts["3"]<=861,true);
  assert.equal(conn.seen.filter(sql=>sql===d.PERSON_NAMES_SQL).length,1);
  assert.equal(conn.seen.filter(sql=>sql===d.PERSON_TOTAL_SQL).length,1);
  assert.equal(conn.seen.filter(sql=>sql===d.CANDIDATE_ROWS_SQL).length,0);
@@ -120,7 +122,7 @@ test("pagination and 3/5/10/15/20 channel thresholds reflect the filtered ORIGIN
  assert.equal(first.rows[0].raw_name,"Mother Teresa");
  assert.equal(second.rows[0].raw_name,first.rows[1].raw_name);
  assert.equal(second.rows[0].rank,2);
- assert.equal(first.threshold_counts["3"],791); // 799 original; 2 current registered and 6 reviewed living removed
+ assert.equal(first.threshold_counts["3"],853); // 861 after 62 held; 2 registered and 6 reviewed living removed
  assert.equal(first.available_count,first.threshold_counts["10"]);
  assert.equal(first.threshold_counts["3"]>=first.threshold_counts["5"],true);
  assert.equal(first.threshold_counts["5"]>=first.threshold_counts["10"],true);
@@ -139,7 +141,7 @@ test("partial current DB or mismatched running snapshot fails closed rather than
 
 test("single existing UI states the exact original title evidence, registration and content uncertainty",()=>{
  const ui=fs.readFileSync(new URL("../atlas-registration-review.js",import.meta.url),"utf8");
- assert.match(ui,/원본 Video ID · 채널 ID로 집계/);
+ assert.match(ui,/전기형·인물소개형 제목의 원본 Video ID · 채널 ID로 집계/);
  assert.match(ui,/등록 Person/);
  assert.match(ui,/내용 미검증/);
  assert.doesNotMatch(ui,/youtubeSignalMode|인물별 통합 순위|원시명 순위/);
